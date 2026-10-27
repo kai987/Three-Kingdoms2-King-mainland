@@ -116,7 +116,8 @@ class HistoricalScenarioTests(unittest.TestCase):
         game = self.game('188-06', 'sun_jian')
         expected = {'san14-candidate-0551', 'san14-candidate-0703',
                     'san14-candidate-0247', 'san14-candidate-0176',
-                    'san14-candidate-0390'}
+                    'san14-candidate-0390', 'san14-candidate-0289',
+                    'san14-candidate-0543'}
         self.assertNotIn('ou_xing', game.catalog.factions)
         self.assertEqual(game.catalog.factions['sun_jian']['city'], 'changsha')
         self.assertEqual(game.state.cities['changsha'].owner, 'sun_jian')
@@ -415,7 +416,9 @@ class EarlyIndependentRulerTests(unittest.TestCase):
                 self.assert_posting(game, person_id, 'wei', 'qiao',
                                     ruler=person_id == 'san14-candidate-0521')
         self.assertEqual(faction_officer_counts(game.catalog)['wei'], 17)
-        self.assertEqual(faction_officer_counts(game.catalog)['zhang_miao'], 2)
+        self.assert_posting(game, 'san14-candidate-0709', 'zhang_miao', 'chenliu')
+        self.assert_posting(game, 'historical-zhao-chong', 'zhang_miao', 'chenliu')
+        self.assertEqual(faction_officer_counts(game.catalog)['zhang_miao'], 4)
         # Zhang Chao was already a separate Donghai governor, not a spare
         # member to be moved to his brother's newly represented command.
         self.assert_posting(game, 'san14-candidate-0647', 'zhang_chao', 'donghai', ruler=True)
@@ -470,7 +473,7 @@ class EarlyIndependentRulerTests(unittest.TestCase):
                 # The displaced regular garrison keeps its own allegiance.
                 preserved = {
                     '197-07': ('shu', ('san14-candidate-0147', 'san14-candidate-0185',
-                                      'san14-candidate-0409', 'san14-candidate-0656',
+                                      'san14-candidate-0656',
                                       'san14-candidate-0674', 'san14-candidate-0793')),
                     '198-03': ('lubu', ('san14-candidate-0043', 'san14-candidate-0188',
                                        'san14-candidate-0212', 'san14-candidate-0254',
@@ -485,6 +488,9 @@ class EarlyIndependentRulerTests(unittest.TestCase):
                     self.assertEqual(game.state.cities[city].owner, faction)
                     self.assertIn(ident, game.state.cities[city].roster.officer_ids)
                     self.assertNotEqual(city, 'donghai')
+                if chapter == '197-07':
+                    # Chang Xi's local band is not an ordinary Liu Bei unit.
+                    self.assert_free_posting(game, 'san14-candidate-0409', 'donghai')
 
     def test_early_chronology_does_not_revive_governor_liu_dai_or_kill_fan_chou_in_192(self):
         liu_dai = 'san14-candidate-0947'
@@ -793,11 +799,11 @@ class Nanzhong225SetupTests(unittest.TestCase):
 
     def test_other_garrisons_and_total_membership_are_preserved_without_duplicates(self):
         game = self.game()
-        self.assertEqual(len(self.catalog.data['initial_officers']), 310)
+        self.assertEqual(len(self.catalog.data['initial_officers']), 313)
         self.assertEqual(len(self.catalog.data['initial_free_officers']), 79)
         self.assertEqual(Counter(o.faction_id for o in game.state.officers.values()
                                  if o.faction_id),
-                         dict(wei=125, shu=80, wu=77, nanman=15, shi_xie=7, gongsun=6))
+                         dict(wei=127, shu=79, wu=78, nanman=16, shi_xie=7, gongsun=6))
         for faction, metadata in self.catalog.factions.items():
             self.assertEqual(metadata['initial_officers'], sum(
                 o.faction_id == faction for o in game.state.officers.values()))
@@ -818,7 +824,7 @@ class Nanzhong225SetupTests(unittest.TestCase):
             for ident in city.roster.officer_ids:
                 self.assertEqual(game.state.officers[ident].faction_id, city.owner)
             stationed.extend(city.roster.officer_ids)
-        self.assertEqual(len(stationed), 310)
+        self.assertEqual(len(stationed), 313)
         self.assertEqual(len(stationed), len(set(stationed)))
         self.assertEqual(max(len(c.roster.officer_ids) for c in game.state.cities.values()),
                          self.catalog.data['coverage']['planned_max_city_roster'])

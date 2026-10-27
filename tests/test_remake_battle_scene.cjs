@@ -128,7 +128,9 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   assert.equal(japanese.get(0),'備');assert.equal(japanese.get(2),'飛');assert.equal(japanese.get(11),'淵');
   assert.equal(japanese.get(13),'夏','A lone夏 is not grouped with夏侯');assert.equal(japanese.get(14),'司','A lone司 is not grouped with司馬');
   assert.equal(JSON.stringify(units),original,'Marker labels are read-only');
-  assert.equal(standalone.familyName(' 皇甫嵩 '),'皇甫');assert.equal(standalone.familyName('毌丘俭'),'毌丘');
+  assert.equal(standalone.familyName(' 皇甫嵩 '),'皇甫');assert.equal(standalone.familyName('公仇称'),'公仇');
+  const gongNames=['公仇称','公孙瓒','公孫度'];assert.deepEqual(Array.from(standalone.markerLabels(gongNames.map((_,id)=>({id,side:'attackers'})),id=>gongNames[id]).values()),['公','瓒','度'],'公仇 stays distinct from the 公孫 family');
+ assert.equal(standalone.familyName('毌丘俭'),'毌丘');
   const zhongNames=['钟离牧','鍾離斐','钟会'];assert.deepEqual(Array.from(standalone.markerLabels(zhongNames.map((_,id)=>({id,side:'attackers'})),id=>zhongNames[id]).values()),['牧','斐','钟'],'鍾離 and単姓鍾 remain distinct families');
  }
  {

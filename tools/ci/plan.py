@@ -47,6 +47,7 @@ DERIVED_REPORTS = {
     'docs/officer-stat-scenarios-v1.json',
     'docs/scenario-history-audit-20261025.json',
     'docs/ruler-affiliation-audit-20261027.json',
+    'docs/retainer-affiliation-audit-20261027.json',
 }
 SMALL_UI_TESTS = {
     'tests/test_remake_loading_cover.cjs', 'tests/test_remake_site_icon.py',

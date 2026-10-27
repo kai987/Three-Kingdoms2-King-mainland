@@ -220,6 +220,9 @@ jobs:
           python tools/officer-placement/audit_campaign_stats.py --check
           python tools/scenario-history/audit.py --check
           python tools/scenario-history/ruler_audit.py --check
+          python tools/scenario-history/retainer_audit.py --check
+          python tools/officer-placement/build_original_equipment.py --check
+          python tools/officer-placement/import_original_stats.py --check
           python game/build_map_anchors.py
           python game/build_map_presentation.py
           python game/build_message_locales.py

@@ -8042,17 +8042,23 @@
             "ruler": false
           },
           "after": {
-            "status": "serving",
-            "faction": "shu",
-            "city": "qiao",
+            "status": "free",
+            "faction": null,
+            "city": "donghai",
             "ruler": false
           },
-          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "note": "後續配下審核修正：昌豨為自領部曲的東海屯帥；不能僅因地處臧霸附近便改作其私屬，也不再編為劉備私屬。本作以東海在野表示，非宣稱史料記其無官職。見 retainer-affiliation-review.json 的同劇本判定。",
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷18",
             "https://zh.wikisource.org/wiki/資治通鑑/卷062"
           ],
-          "certainty": "authorial_garrison_relocation"
+          "certainty": "dated_primary_independent_commander_proxy",
+          "previous_review_after": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "qiao",
+            "ruler": false
+          }
         },
         {
           "person_id": "san14-candidate-0656",
@@ -18449,15 +18455,17 @@
           "certainty": "structural_scope_only"
         },
         {
-          "status": "free",
-          "faction": null,
+          "status": "serving",
+          "faction": "gongsun",
           "city": "liaodong",
           "person_id": "san14-candidate-0263",
-          "review_level": "structural_offstage_or_free_plan",
-          "disposition": "not_another_factions_serving_ruler_case",
-          "note": "本行覆蓋全候選池的當前配置；已獨立、在野、未登場或已退出者不是本輪「在他勢力普通任職」的疑似項。不據本行宣稱全部生卒月與任官駐城均經原典重新證實。",
-          "source_urls": [],
-          "certainty": "structural_scope_only"
+          "review_level": "dated_placement_correction",
+          "disposition": "correct",
+          "note": "本次配下核查補充：204年康襲位後封弟恭為永寧鄉侯，後恭繼位；212年單獨列在野沒有相應記錄，補回公孫家族。此時不設君主。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_affiliation_with_career_continuity"
         },
         {
           "status": "serving",
@@ -29329,6 +29337,13 @@
           "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
         }
       ]
+    }
+  ],
+  "supplemental_reviews": [
+    {
+      "reference": "game/config/references/retainer-affiliation-review.json",
+      "base_commit": "f65d3abae2c2c50293c5cf08d07f49413d60cbf6",
+      "note": "更新本輪明列的配下歸屬決定；先前67人考察的範圍與留保不變。"
     }
   ]
 }

@@ -335,8 +335,29 @@ def compile_report():
         coups = review_coups(data, decision, people, defined)
         for adjustment in decision.get('resource_adjustments', []):
             city, field, pid = adjustment['city'], adjustment['field'], adjustment['returned_person_id']
+            # Keep the original refund as evidence while checking later,
+            # separately authored refunds against the frozen retainer review.
+            later = adjustment.get('subsequent_returns', [])
+            later_total, seen = 0, {pid}
+            for refund in later:
+                person_id, troops = refund['person_id'], refund['troops']
+                retainer = read(ROOT / 'game/config/references/retainer-affiliation-review.json')
+                reviewed = next(row for row in retainer['scenarios'] if row['id'] == ident)
+                correction = next(row for row in reviewed['changes'] if row['person_id'] == person_id)
+                require(person_id not in seen and type(troops) is int and troops > 0
+                        and correction['before']['city'] == city
+                        and correction['before']['status'] == 'serving'
+                        and correction['before']['troops'] == troops
+                        and correction['after']['status'] == 'free'
+                        and correction['after']['troops'] == 0
+                        and opening.get(person_id, {}).get('status') == 'free',
+                        ident + ': invalid subsequent troop refund')
+                seen.add(person_id)
+                later_total += troops
+            final = adjustment['after'] + later_total
             require(city in active and field == 'reserves'
-                    and data['initial_city_resources'][city][field] == adjustment['after']
+                    and data['initial_city_resources'][city][field] == final
+                    and adjustment.get('current_after', final) == final
                     and adjustment['after'] - adjustment['before'] == adjustment['returned_initial_troops']
                     and opening.get(pid, {}).get('status') == 'free',
                     ident + ': returned opening troops differ from the reserve adjustment')

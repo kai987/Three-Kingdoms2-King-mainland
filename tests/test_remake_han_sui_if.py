@@ -6,6 +6,7 @@ are retained separately so updating a roster cannot create money, grain or men.
 No Git checkout, network response, or player save is used as a test oracle.
 """
 from hashlib import sha256
+from copy import deepcopy
 import json
 from pathlib import Path
 import sys
@@ -26,7 +27,7 @@ HISTORICAL_OPENINGS = {
 }
 # serving, free, troops, gold, grain, reserves, Ma-family capital,
 # unaffected initial-garrison hash, immutable person/ability hash.
-BASELINES = {
+PRE_RETAINER_BASELINES = {
     '197-07': (270, 169, 81000, 137820, 477325, 146180, 'wuwei',
         'c7ea4b81cdca56393d41a19d1e9c876e9cf7639725f1bfe775bd52ec214b43a9',
         'ab9e4252c752bc8e5159a97d947fee89d9ad96cd5d4b0ee5c05a236ef2a4d9a5'),
@@ -42,6 +43,35 @@ BASELINES = {
     '212-06': (378, 39, 113400, 157380, 550975, 172000, 'henan',
         'ae2c80af3005646844a2f505716a6f11f26ee2d65b4397fcf69d032583dd1a67',
         '01346a510190fc4e1b7b874770f3a1b58c831fcf2518a15fb039193f34089ffd'),
+}
+
+# Replayed against f65d3ab before accepting the retainer review. These hashes
+# remain above as a separate oracle; new people must not erase the old checks.
+# Current serving/free counts change only through the frozen, named review.
+BASELINES = {
+    '197-07': (275, 172, 82500, 137820, 477325, 144680, 'wuwei',
+        '5210972bf1f3e1f54be6e900980c1eefd5630d42e71a374149218403476b6d87',
+        '531fceb5390ac03a0f4a27b5feff776e991902f81df9cd98e6796434e8300cc5'),
+    '201-05': (294, 130, 88200, 148290, 525325, 157150, 'wuwei',
+        'b3e8d3b921fcac7ebca7b5b796607c4eb7645c77dc1d85149bd9f52849dea9fd',
+        'b372f01a022b92bcf1da7ce4530c5de3a5b90ffa18af4fa893bcd461edc1d809'),
+    '209-06': (392, 46, 117600, 148630, 523825, 156270, 'wuwei',
+        'e2674abee0335b386c97f6a2a0392ed8ca5bcf8781f901917aa766e5401b4c01',
+        'b372f01a022b92bcf1da7ce4530c5de3a5b90ffa18af4fa893bcd461edc1d809'),
+    '210-11': (381, 60, 114300, 148630, 523825, 156270, 'wuwei',
+        'cb434a4db7fd560e862e72c3c3ab1ac1b4cec967d178046077c9438a3abcf126',
+        'c87363e212257fc9e0d77a4761764f9acc0e4e39cde5a6e0060775799d3b944c'),
+    '212-06': (382, 42, 114600, 157380, 550975, 170800, 'henan',
+        'b9c282b7b88cbefeab5a5f6ec06e7961ce6531f00c168bc8dc7b2009e7434141',
+        '69c59ba7ea15a1b46f85fe58536b685ad8619ea44c019f5eb15b85775c1f590c'),
+}
+BASE_PEOPLE_SHA256 = '0aaaeb86c6414b250ec6b3bab35c14d9f989bd108b24017719c57691f7a7acd3'
+BASE_EQUIPMENT_SHA256 = '9a8b24cfca5812d2e0ccc038626a8aec8ca7d7672a6b7927d9dfc9ce8f906601'
+DATE_CORRECTIONS = {
+    'san14-candidate-0190': (221, 220),
+    'san14-candidate-0475': (220, 230),
+    'san14-candidate-0693': (211, 228),
+    'san14-candidate-0969': (211, 212),
 }
 
 # Before the independent-ruler audit: serving, free, troops, gold, grain,
@@ -70,6 +100,93 @@ class HanSuiIfTests(unittest.TestCase):
                         for catalog in map(Catalog, cls.paths)}
         cls.if_paths = [root / 'campaigns' / (chapter + '.json')
                         for chapter in BASELINES]
+        cls.review = json.loads((ROOT / 'game/config/references/retainer-affiliation-review.json').read_text())
+        cls.decisions = {row['id']: row for row in cls.review['scenarios']}
+        canonical = json.loads((ROOT / 'game/config/campaigns/people.json').read_text())
+        cls.base_order = canonical['order'][:1030]
+        cls.base_ids = set(cls.base_order)
+        cls.base_snapshot = dict(order=cls.base_order,
+                                 people={pid: canonical['people'][pid] for pid in cls.base_order})
+        cls.new_ids = set(canonical['order'][1030:])
+
+    def legacy_attributes(self, data):
+        """Restore only explicitly reviewed death-year fields for the f65 hash.
+
+        Full current hashes are asserted separately. No game state, save,
+        native parity input, stat, equipment or unreviewed year is normalized.
+        """
+        rows = {row['person_id']: {key: deepcopy(row[key]) for key in
+                ('runtime_id', 'birth_year', 'service_year', 'death_year', 'profile', 'initialization')}
+                for row in data['people'] if row['person_id'] in self.base_ids}
+        for correction in self.decisions[data['id']]['chronology']:
+            pid = correction['person_id']
+            self.assertIn(pid, DATE_CORRECTIONS)
+            before, after = DATE_CORRECTIONS[pid]
+            self.assertEqual((correction['before'], correction['death_year']), (before, after))
+            self.assertEqual(rows[pid]['death_year'], after)
+            self.assertEqual((rows[pid]['birth_year'], rows[pid]['service_year']),
+                             (correction['birth_year'], correction['service_year']))
+            rows[pid]['death_year'] = before
+        self.assertEqual(set(rows), self.base_ids)
+        return rows
+
+    def legacy_garrisons(self, data):
+        """Reconstruct f65 rows only from the accepted before/after decisions."""
+        current = {row['person_id']: row for row in data['initial_officers']}
+        free = {row['person_id']: row for row in data['initial_free_officers']}
+        changes = {row['person_id']: row for row in self.decisions[data['id']]['changes']}
+        restored, missing = {}, []
+        for pid in self.base_order:
+            row, review = current.get(pid), changes.get(pid)
+            if review:
+                if row is not None:
+                    actual = dict(status='serving', faction=data['initial_owners'][row['city']],
+                                  city=row['city'], ruler=bool(row.get('ruler')), troops=row['troops'])
+                elif pid in free:
+                    actual = dict(status='free', faction=None, city=free[pid]['city'], ruler=False, troops=0)
+                else:
+                    era = data['era_assignments'][pid]
+                    actual = dict(status=era['status'], faction=era.get('faction'),
+                                  city=era.get('city'), ruler=False, troops=0)
+                self.assertEqual(actual, review['after'], pid)
+                old = review['before']
+                if old['status'] != 'serving':
+                    continue
+                row = (dict(row) if row is not None else
+                       dict(person_id=pid, resolve_death_year=False))
+                row.update(city=old['city'], troops=old['troops'], ruler=old['ruler'])
+                restored[pid] = dict(row, owner=old['faction'])
+                if pid not in current:
+                    missing.append(pid)
+            elif row is not None:
+                restored[pid] = dict(row, owner=data['initial_owners'][row['city']])
+        # Retain every still-serving old officer's actual relative order. Only
+        # the explicitly freed old rows are reinserted at their original pool
+        # position; rebuilding the current rows in sorted order could hide a
+        # command/AI ordering change unrelated to the historical correction.
+        ordered = [row['person_id'] for row in data['initial_officers']
+                   if row['person_id'] in restored]
+        rank = {pid: index for index, pid in enumerate(self.base_order)}
+        for pid in missing:
+            at = next((index for index, other in enumerate(ordered) if rank[other] > rank[pid]), len(ordered))
+            ordered.insert(at, pid)
+        self.assertEqual(set(ordered), set(restored))
+        return [restored[pid] for pid in ordered]
+
+    def test_old_canonical_objects_and_equipment_are_not_rewritten_by_new_retainers(self):
+        self.assertEqual(self.review['base_commit'], 'f65d3abae2c2c50293c5cf08d07f49413d60cbf6')
+        self.assertEqual(self.review['base_person_count'], 1030)
+        self.assertEqual(self.review['person_count'], 1052)
+        self.assertEqual(self.review['base_people_snapshot_sha256'], BASE_PEOPLE_SHA256)
+        self.assertEqual(digest(self.base_snapshot), BASE_PEOPLE_SHA256)
+        self.assertEqual(len(self.new_ids), 22)
+        self.assertEqual(self.new_ids, {row['person_id'] for row in self.review['new_people']})
+        for chapter, catalog in self.catalogs.items():
+            with self.subTest(chapter=chapter):
+                equipment = {pid: row for pid, row in catalog.data['equipment_initial'].items()
+                             if pid in self.base_ids}
+                self.assertEqual(set(equipment), self.base_ids)
+                self.assertEqual(digest(equipment), BASE_EQUIPMENT_SHA256)
 
     def test_ma_teng_and_ma_chao_are_not_han_sui_retainers_in_any_of_29_openings(self):
         for chapter, catalog in self.catalogs.items():
@@ -147,7 +264,7 @@ class HanSuiIfTests(unittest.TestCase):
                   *(sum(data['initial_city_resources'].get(city, data['initial_resources'])[field]
                         for city in data['active_cities'])
                     for field in ('gold', 'grain', 'reserves')))
-        self.assertEqual(actual, (111, 230, 33300, 147640, 520075, 154560))
+        self.assertEqual(actual, (109, 232, 32700, 147640, 520075, 155160))
         prior = PRIOR_OPENINGS['188-06']
         self.assertEqual((actual[3], actual[4], actual[2] + actual[5]),
                          (prior[3], prior[4], prior[2] + prior[5]))
@@ -162,11 +279,17 @@ class HanSuiIfTests(unittest.TestCase):
                       ('runtime_id', 'birth_year', 'service_year', 'death_year',
                        'profile', 'initialization')} for row in data['people']}
         self.assertEqual(digest(attributes),
+                         '891d0f3e935fb65d53d48918aeeaf2483113d430eb49d13d9c95b6cb277b5546')
+        self.assertEqual(digest(self.legacy_attributes(data)),
                          '68c5a3ec40e611f85733e230ae7b6d599b0c7aa810102e6355120831e18b5e50')
         other = [dict(row, owner=data['initial_owners'][row['city']])
                  for row in data['initial_officers']
                  if row['person_id'] not in {'san14-candidate-0771', 'san14-candidate-0830'}]
         self.assertEqual(digest(other),
+                         '484aff796fd3196d5d83cf1c98f3a08e26f292ec5823909de5552d8dca2b000e')
+        legacy_other = [row for row in self.legacy_garrisons(data)
+                        if row['person_id'] not in {'san14-candidate-0771', 'san14-candidate-0830'}]
+        self.assertEqual(digest(legacy_other),
                          '2b32526869b318818e5f6fbdcde81d45add73628a6a0c75b1da534d712123fe7')
 
     def test_all_29_openings_do_not_make_han_sui_a_ma_family_retainer(self):
@@ -292,6 +415,11 @@ class HanSuiIfTests(unittest.TestCase):
                               ('runtime_id', 'birth_year', 'service_year', 'death_year',
                                'profile', 'initialization')} for row in data['people']}
                 self.assertEqual(digest(attributes), baseline[8])
+                old = PRE_RETAINER_BASELINES[chapter]
+                legacy_other = [row for row in self.legacy_garrisons(data)
+                                if row['person_id'] not in MEMBERS]
+                self.assertEqual(digest(legacy_other), old[7])
+                self.assertEqual(digest(self.legacy_attributes(data)), old[8])
                 ma_family = next(row for row in data['factions'] if row['id'] == 'ma_teng')
                 self.assertEqual(ma_family['city'], baseline[6])
 

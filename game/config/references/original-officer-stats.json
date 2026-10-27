@@ -5,11 +5,11 @@
   "record_size": 12,
   "field_policy": "Only original virtue is applied; SAN14 martial/intellect and remake health/affinity/initialization remain unchanged.",
   "identity_source": "game/config/portrait-identity-map.json",
-  "identity_source_sha256": "43331b4e5762a213ebcb514a39ff1f5a88e5d824344c4fff387563a1b0b78ada",
+  "identity_source_sha256": "a12da599b2f391f759f529dcbe2442dfe2386af697e97c8bc8815c7fba23c9df",
   "identity_policy": "Reviewed ROM name-glyph transcription and unique exact name/orthographic identity; no likeness, statistical, ordinal or runtime-ID joins.",
   "original_records": 237,
-  "bound_people": 220,
-  "unbound_original_records": 17,
+  "bound_people": 221,
+  "unbound_original_records": 16,
   "audit": {
     "changed_people": 214,
     "prior_default_changes": 89,
@@ -1843,7 +1843,7 @@
     },
     {
       "original_id": 11,
-      "person_id": null,
+      "person_id": "historical-wang-jian-liaodong",
       "transcribed_name": "王建",
       "rom_offset": 139412,
       "record_hex": "2A 18 4B 3B 29 00 D0 07 00 00 01 21",

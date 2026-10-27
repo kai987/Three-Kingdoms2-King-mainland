@@ -90,6 +90,7 @@ class ScopePlanTests(unittest.TestCase):
         self.changed('docs/nested/design.md', 'Plan\n')
         self.changed('docs/scenario-history-audit-20261025.md', 'Historical report prose\n')
         self.changed('docs/ruler-affiliation-audit-20261027.md', 'Ruler report prose\n')
+        self.changed('docs/retainer-affiliation-audit-20261027.md', 'Retainer report prose\n')
         result = self.repo.plan(event_name='push', ref='refs/heads/main')
         self.assertEqual(result['mode'], 'docs')
         self.assertEqual(result['groups'], [])
@@ -104,7 +105,8 @@ class ScopePlanTests(unittest.TestCase):
         # their Markdown companions retain the ordinary documentation policy.
         for path in ('docs/officer-stat-scenarios-v1.json',
                      'docs/scenario-history-audit-20261025.json',
-                     'docs/ruler-affiliation-audit-20261027.json'):
+                     'docs/ruler-affiliation-audit-20261027.json',
+                     'docs/retainer-affiliation-audit-20261027.json'):
             with self.subTest(path=path):
                 self.changed(path, {})
                 result = self.repo.plan()

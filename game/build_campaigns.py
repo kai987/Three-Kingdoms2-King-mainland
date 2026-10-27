@@ -168,11 +168,11 @@ def load_sources(*, timing=True):
         current_people = apply_patch(persons, source.get('people_overrides', {}))
         if set(current_people) != set(order):
             raise ValueError('A campaign may not add or remove canonical person identities')
-        validate_original_virtue(current_people, original_stats, original_identities)
+        original_people = validate_original_virtue(current_people, original_stats, original_identities)
         stat_counts = validate_campaign_stats(current_people, public_stats, san14_abilities)
         data['coverage'].update(
             virtue=f"SAN14 charisma for{stat_counts['charisma']} people; explicit default60 for{stat_counts['default']} missing sources",
-            original_virtue_profiles=0, retained_original_reference_profiles=220,
+            original_virtue_profiles=0, retained_original_reference_profiles=len(original_people),
             san14_charisma_profiles=stat_counts['charisma'],
             default_virtue_profiles=stat_counts['default'], history_designs_total=0,
             original_initial_health_profiles=stat_counts['original_health'],
@@ -191,7 +191,7 @@ def load_sources(*, timing=True):
         equipment_appearances=read('game/config/duel-appearances.json')
         data['equipment_rules']=deepcopy(EQUIPMENT_RULES)
         data['equipment_initial']=build_initials(data['people'],equipment_reference['records'],equipment_appearances['profiles'])
-        data['design_notes'].append('初始裝備按223名原版對照及名將專屬覆蓋配置；隱藏武具按條件唯一取得，重量會影響單挑命中、回避、先手與退卻。未證的精確倍率為本作規則。')
+        data['design_notes'].append(f"初始裝備按{len(equipment_reference['records'])}名原版對照及名將專屬覆蓋配置；隱藏武具按條件唯一取得，重量會影響單挑命中、回避、先手與退卻。未證的精確倍率為本作規則。")
         apply_navigation_sources(data, navigation)
         if timing:
             apply_route_timing(data, geometry, geometry_sha256)

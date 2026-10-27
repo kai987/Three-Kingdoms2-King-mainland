@@ -101,7 +101,7 @@ class SongJianLuXingTests(unittest.TestCase):
 
     def test_seven_new_identities_keep_1024_to_1030_without_reusing_wei_li_tong(self):
         catalog = self.catalogs['mainland263-05']
-        self.assertEqual(len(catalog.ids), 1030)
+        self.assertEqual(len(catalog.ids), 1052)
         self.assertEqual(len(catalog.ids), len(self.data['mainland263-05']['era_assignments']))
         self.assertEqual(len(set(catalog.ids.values())), len(catalog.ids))
         self.assertNotIn(1005, catalog.by_id)
@@ -172,15 +172,17 @@ class SongJianLuXingTests(unittest.TestCase):
             self.assertEqual(state.officers[ident].troops, 300)
             plan = game.catalog.data['era_assignments'][state.officers[ident].person_id]
             self.assertEqual((plan['faction'], plan['city']), ('dong_zhuo', 'anding'))
-        self.assertEqual(state.cities['wuwei'].reserves, 1560)
+        # Yan Xing is now also a local candidate; his former300 troops return
+        # to the same city rather than disappearing or creating soldiers.
+        self.assertEqual(state.cities['wuwei'].reserves, 1860)
         self.assertIsNone(state.officers[165].faction_id)
         self.assertEqual(state.officers[165].troops, 0)
         self.assertEqual(state.extension['free_locations']['165'], 'jincheng')
         self.assertEqual(state.soldiers['initial'], 194760)
         self.assertEqual(sum(c.reserves for c in state.cities.values())
                          + sum(o.troops for o in state.officers.values()), 194760)
-        self.assertEqual(len(game.catalog.data['initial_officers']), 136)
-        self.assertEqual(len(game.catalog.data['initial_free_officers']), 155)
+        self.assertEqual(len(game.catalog.data['initial_officers']), 135)
+        self.assertEqual(len(game.catalog.data['initial_free_officers']), 156)
         game.validate(state)
 
     def test_seventeen_lifetime_openings_include_five_if_and_keep_longxi_name(self):
@@ -250,7 +252,10 @@ class SongJianLuXingTests(unittest.TestCase):
         game = self.opening('mainland212-12', 'song_jian')
         free = [row['person_id'] for row in game.catalog.data['initial_free_officers']
                 if row['city'] == 'longxi']
-        self.assertEqual(len(free), 9)
+        self.assertEqual(len(free), 7)
+        for pid in ('san14-candidate-0259', 'san14-candidate-0693'):
+            self.assertEqual(game.catalog.data['era_assignments'][pid]['faction'], 'zhang_lu')
+            self.assertEqual(game.catalog.data['era_assignments'][pid]['city'], 'hanzhong')
         for pid in free:
             ident = game.catalog.ids[pid]
             self.assertIsNone(game.state.officers[ident].faction_id)
@@ -268,7 +273,7 @@ class SongJianLuXingTests(unittest.TestCase):
             self.assertNotIn('neutral_label', data['city_history'][key])
         self.assertEqual(data['initial_owners']['hepu'], 'wu')
         expected = {'historical-lu-xing': 'jiaozhi', 'historical-tang-pu': 'jiaozhi',
-                    'historical-li-tong-jiaozhi': 'jiuzhen'}
+                    'historical-li-tong-jiaozhi': 'jiaozhi'}
         actual = {row['person_id']: row['city'] for row in data['initial_officers']
                   if data['initial_owners'][row['city']] == 'lu_xing'}
         self.assertEqual(actual, expected)
@@ -276,13 +281,18 @@ class SongJianLuXingTests(unittest.TestCase):
         revolt = data['era_assignments']['historical-lu-xing']['placement_review']
         self.assertEqual(revolt['reference_date'], [263, 5])
         self.assertEqual(revolt['historical_certainty'], 'primary_text_month_regional_mapping')
-        for pid in ('historical-tang-pu', 'historical-li-tong-jiaozhi'):
-            review = data['era_assignments'][pid]['placement_review']
-            self.assertEqual(review['historical_certainty'], 'authorial_retinue_window')
-            self.assertIn('推定', review['note'])
+        tang = data['era_assignments']['historical-tang-pu']['placement_review']
+        self.assertEqual(tang['historical_certainty'], 'authorial_retinue_window')
+        self.assertIn('推定', tang['note'])
+        li = data['era_assignments']['historical-li-tong-jiaozhi']['placement_review']
+        self.assertEqual(li['historical_certainty'], 'office_seat_mapping_if_canonical_id_matches')
+        self.assertIn('功曹', li['note'])
+        self.assertEqual(set(li['source_urls']), {
+            'https://zh.wikisource.org/wiki/晉書/卷057',
+            'https://zh.wikisource.org/wiki/華陽國志/卷四'})
         self.assertEqual(data['era_assignments']['historical-tang-pu']['placement_review']['reference_date'],
                          [264, 9])
-        self.assertIsNone(data['era_assignments']['historical-li-tong-jiaozhi']['placement_review']['reference_date'])
+        self.assertEqual(li['reference_date'], [263, 5])
 
     def test_explicit_scenario_scope_prevents_unreviewed_future_appearance(self):
         for key, data in self.data.items():

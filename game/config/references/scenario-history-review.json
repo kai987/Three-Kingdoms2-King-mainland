@@ -512,6 +512,19 @@
           "source_urls": [
             "https://zh.wikisource.org/zh-hant/後漢書/卷72"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0030",
+          "status": "free",
+          "faction": null,
+          "city": "jincheng",
+          "note": "原文初隨韓約，從未給馬騰效力。韓遂尚未按使用者劇情起兵時可在金城在野，避免先當馬騰臣。確切184入韓年月不詳；此項是保守的劇情前在野映射，不強制改18411既定四人事件。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷15",
+            "https://zh.wikisource.org/wiki/後漢書/卷72"
+          ],
+          "certainty": "bounded_pre_founding_free_projection",
+          "name": "阎行"
         }
       ],
       "notes": [
@@ -637,7 +650,14 @@
           "after": 1560,
           "returned_person_id": "san14-candidate-0166",
           "returned_initial_troops": 300,
-          "note": "韓遂原帶兵300歸原城預備兵；轉金城在野時不新增或刪除兵員。"
+          "note": "韓遂原帶兵300歸原城預備兵；轉金城在野時不新增或刪除兵員。 後續配下審核另將閻行300人歸還原城；保留本次韓遂單筆調整的原前後值，最終預備兵為兩次歸還後合計。",
+          "subsequent_returns": [
+            {
+              "person_id": "san14-candidate-0030",
+              "troops": 300
+            }
+          ],
+          "current_after": 1860
         }
       ],
       "initial_soldier_total": 194760,
@@ -961,6 +981,54 @@
             "https://zh.wikisource.org/wiki/三國志/卷32",
             "https://zh.wikisource.org/wiki/後漢書/卷75"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0289",
+          "status": "serving",
+          "faction": "sun_jian",
+          "city": "changsha",
+          "note": "吳景常隨孫堅征伐，188漢廷陳留配置缺乏對應記錄；放長沙代表孫堅軍府，非考定當月駐防。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷50"
+          ],
+          "certainty": "bounded_early_follower_career_inference",
+          "name": "吴景"
+        },
+        {
+          "person_id": "san14-candidate-0543",
+          "status": "serving",
+          "faction": "sun_jian",
+          "city": "changsha",
+          "note": "孫河少從孫堅征討、任前驅腹心，不宜成為漢廷洛陽隨機守將；長沙為軍府代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷51"
+          ],
+          "certainty": "bounded_early_follower_career_inference",
+          "name": "孙河"
+        },
+        {
+          "person_id": "san14-candidate-0572",
+          "status": "free",
+          "faction": null,
+          "city": "wujun",
+          "note": "孫賁去郡吏從孫堅在長沙舉義兵，通常指討董。不能因此稱188已任孫堅將；可把漢廷洛陽的任意駐軍改為吳郡在野。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷51"
+          ],
+          "certainty": "bounded_hometown_proxy_not_proven_188_follower",
+          "name": "孙贲"
+        },
+        {
+          "person_id": "san14-candidate-0567",
+          "status": "free",
+          "faction": null,
+          "city": "wujun",
+          "note": "孫靜糾鄉曲宗室守家鄉，196方會孫策且不樂出仕；不能僅因宗親就塞入長沙軍府。可用吳郡在野代理地方族兵。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷51"
+          ],
+          "certainty": "primary_local_family_force_with_regional_proxy",
+          "name": "孙静"
         }
       ],
       "notes": [
@@ -977,7 +1045,8 @@
       },
       "removed_factions": [
         "ou_xing"
-      ]
+      ],
+      "initial_soldier_total": 187860
     },
     {
       "id": "mainland190-01",
@@ -1489,15 +1558,14 @@
             "city": "henei",
             "status": "serving"
           },
-          "faction": "zhang_yang",
-          "city": "shangdang",
-          "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "faction": "wang_kuang",
+          "city": "henei",
+          "certainty": "primary_text_office_bounded_opening_month",
+          "note": "原編張楊，王匡從事關係明確。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷01",
-            "https://zh.wikisource.org/wiki/三國志/卷08",
-            "https://zh.wikisource.org/wiki/三國志/卷12"
-          ]
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ],
+          "status": "serving"
         },
         {
           "person_id": "san14-candidate-0818",
@@ -1507,15 +1575,14 @@
             "city": "henei",
             "status": "serving"
           },
-          "faction": "zhang_yang",
-          "city": "shangdang",
-          "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "faction": "wang_kuang",
+          "city": "henei",
+          "certainty": "romance_compatibility_only",
+          "note": "原張楊錯配；若保留本作演義人物，應王匡；不可列正史。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷01",
-            "https://zh.wikisource.org/wiki/三國志/卷08",
-            "https://zh.wikisource.org/wiki/三國志/卷12"
-          ]
+            "https://zh.wikisource.org/zh-hant/三國演義/第005回"
+          ],
+          "status": "serving"
         },
         {
           "person_id": "san14-candidate-0835",
@@ -1741,15 +1808,14 @@
             "city": "dongping",
             "status": "serving"
           },
-          "faction": "liu_dai",
-          "city": "jiyin",
-          "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "faction": "bao_xin",
+          "city": "dongping",
+          "certainty": "primary_text_affiliation_bounded_local_city_proxy",
+          "note": "原編劉岱，應鮑信；東平代理濟北，轉曹在192領兗州後。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷01",
-            "https://zh.wikisource.org/wiki/三國志/卷08",
-            "https://zh.wikisource.org/wiki/三國志/卷12"
-          ]
+            "https://zh.wikisource.org/zh-hant/三國志/卷17"
+          ],
+          "status": "serving"
         },
         {
           "person_id": "san14-candidate-0826",
@@ -2161,6 +2227,78 @@
             "https://zh.wikisource.org/wiki/三國志/卷07",
             "https://zh.wikisource.org/wiki/資治通鑑/卷061"
           ]
+        },
+        {
+          "person_id": "historical-zhao-chong",
+          "status": "serving",
+          "faction": "zhang_miao",
+          "city": "chenliu",
+          "note": "張邈軍司馬。190/191是初平年範圍內的開局映射；194是否反曹未載，不自動跟張邈叛或入曹。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "赵宠"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫度親吏。與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 隨公孫度的任職延續為推定，非逐月名冊。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-gongchou-cheng",
+          "status": "serving",
+          "faction": "sun_jian",
+          "city": "changsha",
+          "note": "孫堅軍長史、軍糧運輸。魯陽送行督軍糧時確任長史；190一月提前呈現為同年任職回推，191延續亦屬推定。地圖無魯陽，可用長沙軍府代理，不改南陽所有權。生卒均無確年。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷46"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "公仇称"
+        },
+        {
+          "person_id": "historical-sun-xiang",
+          "status": "serving",
+          "faction": "sun_jian",
+          "city": "changsha",
+          "note": "孫堅從征郎中、後袁術汝南太守。孫賁傳注稱孫香父孫孺為孫堅再從弟；孫香從孫堅征伐有功，後為袁術用，197袁術稱帝時未能東歸。不可把已入袁術的194/198仍掛孫堅。190/191起始服務為生涯回推，194/198應袁術；197皇帝呂布IF可隨接收袁軍但要標IF改編。死於壽春，無確切年，不冒稱197/199為史證卒年。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷51"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙香"
+        },
+        {
+          "person_id": "san14-candidate-0709",
+          "status": "serving",
+          "faction": "zhang_miao",
+          "city": "chenliu",
+          "note": "初平張邈軍士，後才夏侯惇。190在野、191提前魏；190/191同張邈，194起魏，轉屬確月未知。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_relationship_transfer_year_bounded_game_inference",
+          "name": "典韦"
+        },
+        {
+          "person_id": "san14-candidate-0214",
+          "status": "free",
+          "faction": null,
+          "city": "yingchuan",
+          "note": "孔伷收容關係可證，但具體任官不載；若嚴格客居，應改同城在野而非serving。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷38"
+          ],
+          "certainty": "primary_refuge_relationship_playable_affiliation_mapping",
+          "name": "许靖"
         }
       ],
       "notes": [
@@ -2181,7 +2319,8 @@
         "longxi": "song_jian",
         "qiao": "wei",
         "chenliu": "zhang_miao"
-      }
+      },
+      "initial_soldier_total": 223570
     },
     {
       "id": "mainland191-10",
@@ -2789,15 +2928,14 @@
             "city": "chenliu",
             "status": "serving"
           },
-          "faction": "wei",
-          "city": "dongjun",
-          "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "faction": "zhang_miao",
+          "city": "chenliu",
+          "certainty": "primary_relationship_transfer_year_bounded_game_inference",
+          "note": "初平張邈軍士，後才夏侯惇。190在野、191提前魏；190/191同張邈，194起魏，轉屬確月未知。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷01",
-            "https://zh.wikisource.org/wiki/三國志/卷08",
-            "https://zh.wikisource.org/wiki/三國志/卷12"
-          ]
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "status": "serving"
         },
         {
           "person_id": "san14-candidate-0751",
@@ -3221,15 +3359,14 @@
             "city": "dongping",
             "status": "serving"
           },
-          "faction": "liu_dai",
-          "city": "jiyin",
-          "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "faction": "bao_xin",
+          "city": "dongping",
+          "certainty": "primary_text_affiliation_bounded_local_city_proxy",
+          "note": "原編劉岱，應鮑信；東平代理濟北，轉曹在192領兗州後。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷01",
-            "https://zh.wikisource.org/wiki/三國志/卷08",
-            "https://zh.wikisource.org/wiki/三國志/卷12"
-          ]
+            "https://zh.wikisource.org/zh-hant/三國志/卷17"
+          ],
+          "status": "serving"
         },
         {
           "person_id": "san14-candidate-0826",
@@ -3316,6 +3453,66 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
+        },
+        {
+          "person_id": "historical-zhao-chong",
+          "status": "serving",
+          "faction": "zhang_miao",
+          "city": "chenliu",
+          "note": "張邈軍司馬。190/191是初平年範圍內的開局映射；194是否反曹未載，不自動跟張邈叛或入曹。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "赵宠"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫度親吏。與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 隨公孫度的任職延續為推定，非逐月名冊。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-gongchou-cheng",
+          "status": "serving",
+          "faction": "sun_jian",
+          "city": "changsha",
+          "note": "孫堅軍長史、軍糧運輸。魯陽送行督軍糧時確任長史；190一月提前呈現為同年任職回推，191延續亦屬推定。地圖無魯陽，可用長沙軍府代理，不改南陽所有權。生卒均無確年。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷46"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "公仇称"
+        },
+        {
+          "person_id": "historical-sun-xiang",
+          "status": "serving",
+          "faction": "sun_jian",
+          "city": "changsha",
+          "note": "孫堅從征郎中、後袁術汝南太守。孫賁傳注稱孫香父孫孺為孫堅再從弟；孫香從孫堅征伐有功，後為袁術用，197袁術稱帝時未能東歸。不可把已入袁術的194/198仍掛孫堅。190/191起始服務為生涯回推，194/198應袁術；197皇帝呂布IF可隨接收袁軍但要標IF改編。死於壽春，無確切年，不冒稱197/199為史證卒年。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷51"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙香"
+        },
+        {
+          "person_id": "san14-candidate-0214",
+          "status": "free",
+          "faction": null,
+          "city": "runan",
+          "note": "孔伷亡後轉陳禕/許貢/王朗的確月未載；無依據劉備。保守先汝南在野並註過渡地為籍貫代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷38"
+          ],
+          "certainty": "bounded_transit_region_game_proxy",
+          "name": "许靖"
         }
       ],
       "notes": [
@@ -3331,7 +3528,8 @@
         "shanyang": "yuan_yi",
         "dongping": "bao_xin",
         "longxi": "song_jian"
-      }
+      },
+      "initial_soldier_total": 236450
     },
     {
       "id": "mainland194-06",
@@ -4382,6 +4580,90 @@
             "https://zh.wikisource.org/wiki/三國志/卷08",
             "https://zh.wikisource.org/wiki/資治通鑑/卷062"
           ]
+        },
+        {
+          "person_id": "historical-zhao-chong",
+          "status": "free",
+          "faction": null,
+          "city": "chenliu",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 190/191是初平年範圍內的開局映射；194是否反曹未載，不自動跟張邈叛或入曹。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "赵宠"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "lubu",
+          "city": "dongjun",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 194叛曹以濮陽聯軍代理，不稱張邈私屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "lubu",
+          "city": "dongjun",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。 194叛曹以濮陽聯軍代理，不稱張邈私屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫度親吏。與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 隨公孫度的任職延續為推定，非逐月名冊。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-gongchou-cheng",
+          "status": "free",
+          "faction": null,
+          "city": "changsha",
+          "note": "生年不詳；160年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 魯陽送行督軍糧時確任長史；190一月提前呈現為同年任職回推，191延續亦屬推定。地圖無魯陽，可用長沙軍府代理，不改南陽所有權。生卒均無確年。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷46"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "公仇称"
+        },
+        {
+          "person_id": "historical-sun-xiang",
+          "status": "serving",
+          "faction": "yuan_shu",
+          "city": "jiujiang",
+          "note": "孫堅從征郎中、後袁術汝南太守。孫賁傳注稱孫香父孫孺為孫堅再從弟；孫香從孫堅征伐有功，後為袁術用，197袁術稱帝時未能東歸。不可把已入袁術的194/198仍掛孫堅。190/191起始服務為生涯回推，194/198應袁術；197皇帝呂布IF可隨接收袁軍但要標IF改編。死於壽春，無確切年，不冒稱197/199為史證卒年。 本作該任官區域非本方所有，改駐現有本方軍府，不改城主。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷51"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙香"
+        },
+        {
+          "person_id": "san14-candidate-0214",
+          "status": "free",
+          "faction": null,
+          "city": "kuaiji",
+          "note": "許靖客居王朗，未證正式任官；山陰僅會稽避難地域代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷38"
+          ],
+          "certainty": "primary_refuge_relation_without_attested_office",
+          "name": "许靖"
         }
       ],
       "notes": [
@@ -4410,7 +4692,8 @@
         "jiyin": "wei",
         "longxi": "song_jian",
         "hongnong": "zhang_ji"
-      }
+      },
+      "initial_soldier_total": 232740
     },
     {
       "id": "mainland196-06",
@@ -5079,6 +5362,102 @@
             "https://zh.wikisource.org/wiki/三國志/卷18",
             "https://zh.wikisource.org/wiki/資治通鑑/卷062"
           ]
+        },
+        {
+          "person_id": "historical-zhao-chong",
+          "status": "free",
+          "faction": null,
+          "city": "chenliu",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 190/191是初平年範圍內的開局映射；194是否反曹未載，不自動跟張邈叛或入曹。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "赵宠"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "free",
+          "faction": null,
+          "city": "donghai",
+          "note": "生年不詳；160年為可玩年齡估計，192年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "free",
+          "faction": null,
+          "city": "donghai",
+          "note": "生年不詳；160年為可玩年齡估計，192年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 同徐翕。不得把毛玠、毛嘉等他人資料借入。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-liu-yi-yuzhang",
+          "status": "serving",
+          "faction": "hua_xin",
+          "city": "yuzhang",
+          "note": "華歆府功曹。孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷13"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "刘壹"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫度親吏。與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 隨公孫度的任職延續為推定，非逐月名冊。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-gongchou-cheng",
+          "status": "free",
+          "faction": null,
+          "city": "changsha",
+          "note": "生年不詳；160年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 魯陽送行督軍糧時確任長史；190一月提前呈現為同年任職回推，191延續亦屬推定。地圖無魯陽，可用長沙軍府代理，不改南陽所有權。生卒均無確年。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷46"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "公仇称"
+        },
+        {
+          "person_id": "historical-sun-xiang",
+          "status": "serving",
+          "faction": "yuan_shu",
+          "city": "jiujiang",
+          "note": "孫堅從征郎中、後袁術汝南太守。孫賁傳注稱孫香父孫孺為孫堅再從弟；孫香從孫堅征伐有功，後為袁術用，197袁術稱帝時未能東歸。不可把已入袁術的194/198仍掛孫堅。190/191起始服務為生涯回推，194/198應袁術；197皇帝呂布IF可隨接收袁軍但要標IF改編。死於壽春，無確切年，不冒稱197/199為史證卒年。 本作該任官區域非本方所有，改駐現有本方軍府，不改城主。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷51"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙香"
+        },
+        {
+          "person_id": "san14-candidate-0214",
+          "status": "free",
+          "faction": null,
+          "city": "kuaiji",
+          "note": "許靖客居王朗，未證正式任官；山陰僅會稽避難地域代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷38"
+          ],
+          "certainty": "primary_refuge_relation_without_attested_office",
+          "name": "许靖"
         }
       ],
       "notes": [
@@ -5095,7 +5474,8 @@
         "yuzhang": "hua_xin",
         "longxi": "song_jian",
         "hongnong": "zhang_ji"
-      }
+      },
+      "initial_soldier_total": 229210
     },
     {
       "id": "mainland198-03",
@@ -5679,6 +6059,138 @@
             "https://zh.wikisource.org/wiki/三國志/卷18",
             "https://zh.wikisource.org/wiki/資治通鑑/卷062"
           ]
+        },
+        {
+          "person_id": "historical-zhao-chong",
+          "status": "free",
+          "faction": null,
+          "city": "chenliu",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 190/191是初平年範圍內的開局映射；194是否反曹未載，不自動跟張邈叛或入曹。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "赵宠"
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "zang_ba",
+          "city": "donghai",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 開陽軍營以東海代理，首次任職年未載，197/198為在場回推。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "zang_ba",
+          "city": "donghai",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "zang_ba",
+          "city": "donghai",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-liu-yi-yuzhang",
+          "status": "serving",
+          "faction": "hua_xin",
+          "city": "yuzhang",
+          "note": "華歆府功曹。孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷13"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "刘壹"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫度親吏。與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 隨公孫度的任職延續為推定，非逐月名冊。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-gongchou-cheng",
+          "status": "free",
+          "faction": null,
+          "city": "changsha",
+          "note": "生年不詳；160年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 魯陽送行督軍糧時確任長史；190一月提前呈現為同年任職回推，191延續亦屬推定。地圖無魯陽，可用長沙軍府代理，不改南陽所有權。生卒均無確年。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷46"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "公仇称"
+        },
+        {
+          "person_id": "historical-sun-xiang",
+          "status": "serving",
+          "faction": "yuan_shu",
+          "city": "runan",
+          "note": "孫堅從征郎中、後袁術汝南太守。孫賁傳注稱孫香父孫孺為孫堅再從弟；孫香從孫堅征伐有功，後為袁術用，197袁術稱帝時未能東歸。不可把已入袁術的194/198仍掛孫堅。190/191起始服務為生涯回推，194/198應袁術；197皇帝呂布IF可隨接收袁軍但要標IF改編。死於壽春，無確切年，不冒稱197/199為史證卒年。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷51"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙香"
+        },
+        {
+          "person_id": "san14-candidate-0214",
+          "status": "free",
+          "faction": null,
+          "city": "jiaozhi",
+          "note": "孫策渡江、會稽失守後客居交州，非魏洛陽。交趾為既有城代理，非逐月確址。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷38"
+          ],
+          "certainty": "primary_refuge_region_dated_campaign_inference",
+          "name": "许靖"
+        },
+        {
+          "person_id": "san14-candidate-0409",
+          "status": "free",
+          "faction": null,
+          "city": "donghai",
+          "note": "197/198不提前寫劉備私屬；198秋才可證聯呂布。更保守為地方在野，可招募，不強寫臧霸私屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷062"
+          ],
+          "certainty": "bounded_independent_local_army_region_proxy",
+          "name": "昌豨"
+        },
+        {
+          "person_id": "san14-candidate-0996",
+          "status": "free",
+          "faction": null,
+          "city": "liaoxi",
+          "note": "樓班屬烏桓首領系統，不能當公孫度普通兵將。遼西僅地域代理，未新增烏桓可玩城。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷30"
+          ],
+          "certainty": "primary_separate_tribal_leader_regional_proxy",
+          "name": "楼班"
         }
       ],
       "notes": [
@@ -5691,7 +6203,8 @@
         "yinping": "neutral",
         "longxi": "song_jian",
         "donghai": "zang_ba"
-      }
+      },
+      "initial_soldier_total": 232880
     },
     {
       "id": "mainland200-01",
@@ -6488,6 +7001,90 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/資治通鑑/卷061"
           ]
+        },
+        {
+          "person_id": "historical-zhao-chong",
+          "status": "free",
+          "faction": null,
+          "city": "chenliu",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 190/191是初平年範圍內的開局映射；194是否反曹未載，不自動跟張邈叛或入曹。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "赵宠"
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "wei",
+          "city": "yingchuan",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 受曹任城陽太守後，青州任職延續及北海鄰區駐點為本作映射，非史稱北海太守。 本作該任官區域非本方所有，改駐現有本方軍府，不改城主。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "wei",
+          "city": "yingchuan",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。 本作該任官區域非本方所有，改駐現有本方軍府，不改城主。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "wei",
+          "city": "yingchuan",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。 本作該任官區域非本方所有，改駐現有本方軍府，不改城主。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-liu-yi-yuzhang",
+          "status": "free",
+          "faction": null,
+          "city": "yuzhang",
+          "note": "生年不詳；160年為可玩年齡估計，196年為本作出場起點，不冒稱首次任官年。卒年不詳；215年僅為本作壽命退出估界。 孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷13"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "刘壹"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫度親吏。與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 隨公孫度的任職延續為推定，非逐月名冊。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-gongchou-cheng",
+          "status": "free",
+          "faction": null,
+          "city": "changsha",
+          "note": "生年不詳；160年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 魯陽送行督軍糧時確任長史；190一月提前呈現為同年任職回推，191延續亦屬推定。地圖無魯陽，可用長沙軍府代理，不改南陽所有權。生卒均無確年。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷46"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "公仇称"
         }
       ],
       "notes": [
@@ -6505,7 +7102,8 @@
         "gaoliang": "shi_xie",
         "linhe": "neutral",
         "longxi": "song_jian"
-      }
+      },
+      "initial_soldier_total": 249250
     },
     {
       "id": "mainland202-06",
@@ -7266,6 +7864,90 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/資治通鑑/卷061"
           ]
+        },
+        {
+          "person_id": "historical-zhao-chong",
+          "status": "free",
+          "faction": null,
+          "city": "chenliu",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 190/191是初平年範圍內的開局映射；194是否反曹未載，不自動跟張邈叛或入曹。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "赵宠"
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "wei",
+          "city": "yingchuan",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 受曹任城陽太守後，青州任職延續及北海鄰區駐點為本作映射，非史稱北海太守。 本作該任官區域非本方所有，改駐現有本方軍府，不改城主。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "wei",
+          "city": "yingchuan",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。 本作該任官區域非本方所有，改駐現有本方軍府，不改城主。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "wei",
+          "city": "yingchuan",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。 本作該任官區域非本方所有，改駐現有本方軍府，不改城主。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-liu-yi-yuzhang",
+          "status": "free",
+          "faction": null,
+          "city": "yuzhang",
+          "note": "生年不詳；160年為可玩年齡估計，196年為本作出場起點，不冒稱首次任官年。卒年不詳；215年僅為本作壽命退出估界。 孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷13"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "刘壹"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫度親吏。與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 隨公孫度的任職延續為推定，非逐月名冊。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-gongchou-cheng",
+          "status": "free",
+          "faction": null,
+          "city": "changsha",
+          "note": "生年不詳；160年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 魯陽送行督軍糧時確任長史；190一月提前呈現為同年任職回推，191延續亦屬推定。地圖無魯陽，可用長沙軍府代理，不改南陽所有權。生卒均無確年。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷46"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "公仇称"
         }
       ],
       "notes": [
@@ -7283,7 +7965,8 @@
         "gaoliang": "shi_xie",
         "linhe": "neutral",
         "longxi": "song_jian"
-      }
+      },
+      "initial_soldier_total": 251350
     },
     {
       "id": "mainland207-09",
@@ -8776,6 +9459,142 @@
             "https://zh.wikisource.org/wiki/三國志/卷08",
             "https://zh.wikisource.org/wiki/資治通鑑/卷062"
           ]
+        },
+        {
+          "person_id": "historical-zhao-chong",
+          "status": "free",
+          "faction": null,
+          "city": "chenliu",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 190/191是初平年範圍內的開局映射；194是否反曹未載，不自動跟張邈叛或入曹。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "赵宠"
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 受曹任城陽太守後，青州任職延續及北海鄰區駐點為本作映射，非史稱北海太守。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-liu-yi-yuzhang",
+          "status": "free",
+          "faction": null,
+          "city": "yuzhang",
+          "note": "生年不詳；160年為可玩年齡估計，196年為本作出場起點，不冒稱首次任官年。卒年不詳；215年僅為本作壽命退出估界。 孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷13"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "刘壹"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-qu-jing-cangwu",
+          "status": "serving",
+          "faction": "wu_ju",
+          "city": "cangwu",
+          "note": "吳巨都督。水經注引交廣春秋繫建安16年(211)與吳巨同被斬；其他編年可用210，保留210/211差異。207/208歸巨為近年軍府回推。生年不詳，不強訂出生年。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "区景"
+        },
+        {
+          "person_id": "historical-heng-yi-cangwu",
+          "status": "serving",
+          "faction": "wu_ju",
+          "city": "cangwu",
+          "note": "吳巨部伍將領。原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "衡毅"
+        },
+        {
+          "person_id": "historical-qian-bo-cangwu",
+          "status": "serving",
+          "faction": "wu_ju",
+          "city": "cangwu",
+          "note": "吳巨部伍將領。同衡毅屬巨舊部；另三國志53說錢博本為張津故將，改屬吳巨不可漏。水經注未明他與毅同死；不強填卒年，不因二手異寫另造第二人。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/三國志/卷53"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "钱博"
+        },
+        {
+          "person_id": "historical-gongchou-cheng",
+          "status": "free",
+          "faction": null,
+          "city": "changsha",
+          "note": "生年不詳；160年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 魯陽送行督軍糧時確任長史；190一月提前呈現為同年任職回推，191延續亦屬推定。地圖無魯陽，可用長沙軍府代理，不改南陽所有權。生卒均無確年。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷46"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "公仇称"
+        },
+        {
+          "person_id": "san14-candidate-0996",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "白狼山敗後奔遼東是逃亡客，並非康普通部屬；與兩袁的同年殺害月差處理一致，開局若保活應在野/客居，保留resolve_death_year。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷30",
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_fugitive_guest_with_month_uncertainty",
+          "name": "楼班"
         }
       ],
       "notes": [
@@ -8793,7 +9612,8 @@
         "gaoliang": "shi_xie",
         "linhe": "wu_ju",
         "longxi": "song_jian"
-      }
+      },
+      "initial_soldier_total": 264930
     },
     {
       "id": "mainland208-10",
@@ -10317,6 +11137,129 @@
             "https://zh.wikisource.org/wiki/華陽國志/卷四",
             "https://zh.wikisource.org/wiki/三國志/卷43"
           ]
+        },
+        {
+          "person_id": "historical-zhao-chong",
+          "status": "free",
+          "faction": null,
+          "city": "chenliu",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 190/191是初平年範圍內的開局映射；194是否反曹未載，不自動跟張邈叛或入曹。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "赵宠"
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 受曹任城陽太守後，青州任職延續及北海鄰區駐點為本作映射，非史稱北海太守。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-liu-yi-yuzhang",
+          "status": "free",
+          "faction": null,
+          "city": "yuzhang",
+          "note": "生年不詳；160年為可玩年齡估計，196年為本作出場起點，不冒稱首次任官年。卒年不詳；215年僅為本作壽命退出估界。 孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷13"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "刘壹"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-qu-jing-cangwu",
+          "status": "serving",
+          "faction": "wu_ju",
+          "city": "cangwu",
+          "note": "吳巨都督。水經注引交廣春秋繫建安16年(211)與吳巨同被斬；其他編年可用210，保留210/211差異。207/208歸巨為近年軍府回推。生年不詳，不強訂出生年。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "区景"
+        },
+        {
+          "person_id": "historical-heng-yi-cangwu",
+          "status": "serving",
+          "faction": "wu_ju",
+          "city": "cangwu",
+          "note": "吳巨部伍將領。原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "衡毅"
+        },
+        {
+          "person_id": "historical-qian-bo-cangwu",
+          "status": "serving",
+          "faction": "wu_ju",
+          "city": "cangwu",
+          "note": "吳巨部伍將領。同衡毅屬巨舊部；另三國志53說錢博本為張津故將，改屬吳巨不可漏。水經注未明他與毅同死；不強填卒年，不因二手異寫另造第二人。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/三國志/卷53"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "钱博"
+        },
+        {
+          "person_id": "historical-gongchou-cheng",
+          "status": "free",
+          "faction": null,
+          "city": "changsha",
+          "note": "生年不詳；160年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 魯陽送行督軍糧時確任長史；190一月提前呈現為同年任職回推，191延續亦屬推定。地圖無魯陽，可用長沙軍府代理，不改南陽所有權。生卒均無確年。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷46"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "公仇称"
         }
       ],
       "notes": [
@@ -10334,7 +11277,8 @@
         "gaoliang": "shi_xie",
         "linhe": "wu_ju",
         "longxi": "song_jian"
-      }
+      },
+      "initial_soldier_total": 273570
     },
     {
       "id": "mainland212-12",
@@ -10605,19 +11549,15 @@
             "city": "anding",
             "status": "serving"
           },
-          "faction": null,
-          "city": "longxi",
-          "certainty": "bounded_regional_inference",
-          "note": "潼關敗後隴右殘部；依通鑑213年攻冀口徑，212年末不虛構固定郡城。",
+          "faction": "zhang_lu",
+          "city": "hanzhong",
+          "certainty": "primary_text_affiliation_with_regional_city_proxy",
+          "note": "211敗後與程銀南入漢中，215才隨張魯降。21212不應滯在野陇西。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/資治通鑑/卷066",
-            "https://zh.wikisource.org/wiki/三國志/卷32",
-            "https://zh.wikisource.org/wiki/三國志/卷40",
-            "https://zh.wikisource.org/wiki/三國志/卷41",
-            "https://zh.wikisource.org/wiki/三國志/卷43",
-            "https://zh.wikisource.org/wiki/三國志/卷45",
-            "https://zh.wikisource.org/wiki/三國志/卷47"
-          ]
+            "https://zh.wikisource.org/wiki/魏略輯本/卷七",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷067"
+          ],
+          "status": "serving"
         },
         {
           "person_id": "san14-candidate-0475",
@@ -10776,19 +11716,14 @@
             "city": "longxi",
             "status": "serving"
           },
-          "faction": null,
-          "city": "longxi",
-          "certainty": "bounded_regional_inference",
-          "note": "潼關敗後隴右殘部；依通鑑213年攻冀口徑，212年末不虛構固定郡城。",
+          "faction": "wei",
+          "city": "anding",
+          "certainty": "primary_text_affiliation_with_regional_city_proxy",
+          "note": "211十月楊秋降曹且留撫安定，21212應為魏而非在野陇西。安定是其最後確證據點之延續映射。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/資治通鑑/卷066",
-            "https://zh.wikisource.org/wiki/三國志/卷32",
-            "https://zh.wikisource.org/wiki/三國志/卷40",
-            "https://zh.wikisource.org/wiki/三國志/卷41",
-            "https://zh.wikisource.org/wiki/三國志/卷43",
-            "https://zh.wikisource.org/wiki/三國志/卷45",
-            "https://zh.wikisource.org/wiki/三國志/卷47"
-          ]
+            "https://zh.wikisource.org/wiki/三國志/卷01"
+          ],
+          "status": "serving"
         },
         {
           "person_id": "san14-candidate-0264",
@@ -10816,15 +11751,14 @@
             "city": "liaodong",
             "status": "serving"
           },
-          "faction": null,
+          "faction": "gongsun",
           "city": "liaodong",
-          "certainty": "bounded_regional_inference",
-          "note": "公孫康在位，公孫恭不提前作君主。",
+          "certainty": "primary_affiliation_with_career_continuity",
+          "note": "204年康襲位後封弟恭為永寧鄉侯，後恭繼位；212年單獨列在野沒有相應記錄，補回公孫家族。此時不設君主。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷01",
-            "https://zh.wikisource.org/wiki/三國志/卷08",
-            "https://zh.wikisource.org/wiki/三國志/卷12"
-          ]
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "status": "serving"
         },
         {
           "person_id": "san14-candidate-0079",
@@ -12233,6 +13167,105 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷36"
           ]
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 受曹任城陽太守後，青州任職延續及北海鄰區駐點為本作映射，非史稱北海太守。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-liu-yi-yuzhang",
+          "status": "free",
+          "faction": null,
+          "city": "yuzhang",
+          "note": "生年不詳；160年為可玩年齡估計，196年為本作出場起點，不冒稱首次任官年。卒年不詳；215年僅為本作壽命退出估界。 孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷13"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "刘壹"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-heng-yi-cangwu",
+          "status": "chronology_excluded",
+          "faction": null,
+          "city": null,
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。《水經注》引《交廣春秋》及《太平御覽》引《南越志》繫建安十六年(211)投水死，無確月；死亡年開局不強行視為仍存活。 原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "衡毅"
+        },
+        {
+          "person_id": "historical-qian-bo-cangwu",
+          "status": "free",
+          "faction": null,
+          "city": "cangwu",
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。卒年不詳；230年僅為本作壽命退出估界。 同衡毅屬巨舊部；另三國志53說錢博本為張津故將，改屬吳巨不可漏。水經注未明他與毅同死；不強填卒年，不因二手異寫另造第二人。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/三國志/卷53"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "钱博"
+        },
+        {
+          "person_id": "san14-candidate-0693",
+          "status": "serving",
+          "faction": "zhang_lu",
+          "city": "hanzhong",
+          "note": "與侯選同奔漢中並215降曹，211卒是錯誤退出值；先修正生命策略再恢復張魯客軍編組。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/魏略輯本/卷七",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷067"
+          ],
+          "certainty": "primary_text_affiliation_with_regional_city_proxy",
+          "name": "程银"
         }
       ],
       "notes": [
@@ -12251,7 +13284,8 @@
         "xiping": "han_sui",
         "wudu": "neutral",
         "yinping": "neutral"
-      }
+      },
+      "initial_soldier_total": 279400
     },
     {
       "id": "mainland211-07-tongguan",
@@ -13002,6 +14036,92 @@
             "https://zh.wikisource.org/wiki/華陽國志/卷四",
             "https://zh.wikisource.org/wiki/三國志/卷43"
           ]
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 受曹任城陽太守後，青州任職延續及北海鄰區駐點為本作映射，非史稱北海太守。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-liu-yi-yuzhang",
+          "status": "free",
+          "faction": null,
+          "city": "yuzhang",
+          "note": "生年不詳；160年為可玩年齡估計，196年為本作出場起點，不冒稱首次任官年。卒年不詳；215年僅為本作壽命退出估界。 孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷13"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "刘壹"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-heng-yi-cangwu",
+          "status": "chronology_excluded",
+          "faction": null,
+          "city": null,
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。《水經注》引《交廣春秋》及《太平御覽》引《南越志》繫建安十六年(211)投水死，無確月；死亡年開局不強行視為仍存活。 原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "衡毅"
+        },
+        {
+          "person_id": "historical-qian-bo-cangwu",
+          "status": "free",
+          "faction": null,
+          "city": "cangwu",
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。卒年不詳；230年僅為本作壽命退出估界。 同衡毅屬巨舊部；另三國志53說錢博本為張津故將，改屬吳巨不可漏。水經注未明他與毅同死；不強填卒年，不因二手異寫另造第二人。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/三國志/卷53"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "钱博"
         }
       ],
       "notes": [
@@ -13014,7 +14134,8 @@
         "wudu": "neutral",
         "yinping": "neutral",
         "longxi": "song_jian"
-      }
+      },
+      "initial_soldier_total": 289000
     },
     {
       "id": "mainland215-08",
@@ -13077,12 +14198,138 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷36"
           ]
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 受曹任城陽太守後，青州任職延續及北海鄰區駐點為本作映射，非史稱北海太守。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-heng-yi-cangwu",
+          "status": "chronology_excluded",
+          "faction": null,
+          "city": null,
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。《水經注》引《交廣春秋》及《太平御覽》引《南越志》繫建安十六年(211)投水死，無確月；死亡年開局不強行視為仍存活。 原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "衡毅"
+        },
+        {
+          "person_id": "historical-qian-bo-cangwu",
+          "status": "free",
+          "faction": null,
+          "city": "cangwu",
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。卒年不詳；230年僅為本作壽命退出估界。 同衡毅屬巨舊部；另三國志53說錢博本為張津故將，改屬吳巨不可漏。水經注未明他與毅同死；不強填卒年，不因二手異寫另造第二人。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/三國志/卷53"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "钱博"
+        },
+        {
+          "person_id": "san14-candidate-0693",
+          "status": "free",
+          "faction": null,
+          "city": "hanzhong",
+          "note": "通鑑記隨張魯在215十一月降；2158不可提前設成可操作魏將。現劇本七月漢中已歸魏且無張魯勢力，故此after是未歸曹之張魯殘部/客軍的在野代理，不表示史實無主。不要把整座漢中倒改張魯；若另有巴中殘部模型可用該模型代替。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷067",
+            "https://zh.wikisource.org/wiki/魏略輯本/卷七"
+          ],
+          "certainty": "primary_text_late_surrender_authorial_guest_projection",
+          "name": "程银"
+        },
+        {
+          "person_id": "san14-candidate-0259",
+          "status": "free",
+          "faction": null,
+          "city": "hanzhong",
+          "note": "通鑑記隨張魯在215十一月降；2158不可提前設成可操作魏將。現劇本七月漢中已歸魏且無張魯勢力，故此after是未歸曹之張魯殘部/客軍的在野代理，不表示史實無主。不要把整座漢中倒改張魯；若另有巴中殘部模型可用該模型代替。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷067",
+            "https://zh.wikisource.org/wiki/魏略輯本/卷七"
+          ],
+          "certainty": "primary_text_late_surrender_authorial_guest_projection",
+          "name": "侯选"
+        },
+        {
+          "person_id": "san14-candidate-0830",
+          "status": "free",
+          "faction": null,
+          "city": "hanzhong",
+          "note": "通鑑記隨張魯在215十一月降；2158不可提前設成可操作魏將。現劇本七月漢中已歸魏且無張魯勢力，故此after是未歸曹之張魯殘部/客軍的在野代理，不表示史實無主。不要把整座漢中倒改張魯；若另有巴中殘部模型可用該模型代替。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷067",
+            "https://zh.wikisource.org/wiki/三國志/卷18"
+          ],
+          "certainty": "primary_text_late_surrender_authorial_guest_projection",
+          "name": "庞德"
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "status": "serving",
+          "faction": "wei",
+          "city": "anding",
+          "note": "楊秋於211年十月降曹並撫安定；後年沿用任職及安定為駐點推定，不挪作遼西將領。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01"
+          ],
+          "certainty": "attested_submission_bounded_career_station_continuity",
+          "name": "杨秋"
         }
       ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
-      "owner_expectations": {}
+      "owner_expectations": {},
+      "initial_soldier_total": 282930
     },
     {
       "id": "mainland219-07",
@@ -13162,12 +14409,125 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷08"
           ]
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 受曹任城陽太守後，青州任職延續及北海鄰區駐點為本作映射，非史稱北海太守。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-heng-yi-cangwu",
+          "status": "chronology_excluded",
+          "faction": null,
+          "city": null,
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。《水經注》引《交廣春秋》及《太平御覽》引《南越志》繫建安十六年(211)投水死，無確月；死亡年開局不強行視為仍存活。 原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "衡毅"
+        },
+        {
+          "person_id": "historical-qian-bo-cangwu",
+          "status": "free",
+          "faction": null,
+          "city": "cangwu",
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。卒年不詳；230年僅為本作壽命退出估界。 同衡毅屬巨舊部；另三國志53說錢博本為張津故將，改屬吳巨不可漏。水經注未明他與毅同死；不強填卒年，不因二手異寫另造第二人。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/三國志/卷53"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "钱博"
+        },
+        {
+          "person_id": "san14-candidate-0693",
+          "status": "serving",
+          "faction": "wei",
+          "city": "jingzhao",
+          "note": "215年隨張魯降曹後獲復官爵；後續生涯與長安駐點為本作延續推定，228非史證卒年。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/魏略輯本/卷七",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷067"
+          ],
+          "certainty": "post_attestation_career_and_station_inference",
+          "name": "程银"
+        },
+        {
+          "person_id": "san14-candidate-0475",
+          "status": "serving",
+          "faction": "wei",
+          "city": "jingzhao",
+          "note": "成公英降曹後為參軍，221年尚率騎作戰；長安為西北軍政代理，230退出為本作估界。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷15",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷069"
+          ],
+          "certainty": "primary_service_with_station_and_lifetime_inference",
+          "name": "成公英"
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "status": "serving",
+          "faction": "wei",
+          "city": "anding",
+          "note": "楊秋於211年十月降曹並撫安定；後年沿用任職及安定為駐點推定，不挪作遼西將領。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01"
+          ],
+          "certainty": "attested_submission_bounded_career_station_continuity",
+          "name": "杨秋"
         }
       ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
-      "owner_expectations": {}
+      "owner_expectations": {},
+      "initial_soldier_total": 281640
     },
     {
       "id": "mainland221-07",
@@ -13230,12 +14590,101 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷08"
           ]
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 受曹任城陽太守後，青州任職延續及北海鄰區駐點為本作映射，非史稱北海太守。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-heng-yi-cangwu",
+          "status": "chronology_excluded",
+          "faction": null,
+          "city": null,
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。《水經注》引《交廣春秋》及《太平御覽》引《南越志》繫建安十六年(211)投水死，無確月；死亡年開局不強行視為仍存活。 原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "衡毅"
+        },
+        {
+          "person_id": "historical-qian-bo-cangwu",
+          "status": "serving",
+          "faction": "wu",
+          "city": "gaoliang",
+          "note": "《三國志·呂岱傳》記220年錢博降吳、拜高涼西部都尉；沿用至本開局為職業延續推定，高涼城為郡級地區代理，非史證逐月駐城。230僅本作退出估界，非史證卒年。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷60#呂岱",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "attested_office_with_bounded_career_and_city_proxy",
+          "name": "钱博"
+        },
+        {
+          "person_id": "san14-candidate-0190",
+          "status": "chronology_excluded",
+          "faction": null,
+          "city": null,
+          "note": "麴演220五月被蘇則誘斬，2217不能仍在野。別名曲演/麴演/麹演均同0190，不得新造重複ID。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷069"
+          ],
+          "certainty": "primary_text_death_year_correction",
+          "name": "曲演"
+        },
+        {
+          "person_id": "san14-candidate-0475",
+          "status": "serving",
+          "faction": "wei",
+          "city": "jingzhao",
+          "note": "221十一月尚領騎戰河西，故2217必活。為前往河西前的魏軍幕以長安代理；不能稱史料已證七月駐長安。需修正220退出值，真實卒年不詳。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷15",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷069"
+          ],
+          "certainty": "primary_text_alive_by_year_authorial_city_proxy",
+          "name": "成公英"
+        },
+        {
+          "person_id": "san14-candidate-0693",
+          "status": "serving",
+          "faction": "wei",
+          "city": "jingzhao",
+          "note": "215年隨張魯降曹後獲復官爵；後續生涯與長安駐點為本作延續推定，228非史證卒年。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/魏略輯本/卷七",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷067"
+          ],
+          "certainty": "post_attestation_career_and_station_inference",
+          "name": "程银"
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "status": "serving",
+          "faction": "wei",
+          "city": "anding",
+          "note": "楊秋於211年十月降曹並撫安定；後年沿用任職及安定為駐點推定，不挪作遼西將領。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01"
+          ],
+          "certainty": "attested_submission_bounded_career_station_continuity",
+          "name": "杨秋"
         }
       ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
-      "owner_expectations": {}
+      "owner_expectations": {},
+      "initial_soldier_total": 281870
     },
     {
       "id": "mainland225-07",
@@ -13457,6 +14906,83 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷08"
           ]
+        },
+        {
+          "person_id": "historical-heng-yi-cangwu",
+          "status": "chronology_excluded",
+          "faction": null,
+          "city": null,
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。《水經注》引《交廣春秋》及《太平御覽》引《南越志》繫建安十六年(211)投水死，無確月；死亡年開局不強行視為仍存活。 原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "衡毅"
+        },
+        {
+          "person_id": "historical-qian-bo-cangwu",
+          "status": "serving",
+          "faction": "wu",
+          "city": "gaoliang",
+          "note": "《三國志·呂岱傳》記220年錢博降吳、拜高涼西部都尉；沿用至本開局為職業延續推定，高涼城為郡級地區代理，非史證逐月駐城。230僅本作退出估界，非史證卒年。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷60#呂岱",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "attested_office_with_bounded_career_and_city_proxy",
+          "name": "钱博"
+        },
+        {
+          "person_id": "san14-candidate-0096",
+          "status": "serving",
+          "faction": "nanman",
+          "city": "jianning",
+          "note": "鄂煥為演義高定部將，非正史新增證據；本作225年保留高定在孟獲陣營，則鄂煥不宜已在蜀文山。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國演義/第087回",
+            "https://zh.wikisource.org/wiki/三國演義/第088回"
+          ],
+          "certainty": "romance_compatibility_under_explicit_user_225_exception",
+          "name": "鄂焕"
+        },
+        {
+          "person_id": "san14-candidate-0693",
+          "status": "serving",
+          "faction": "wei",
+          "city": "jingzhao",
+          "note": "215年隨張魯降曹後獲復官爵；後續生涯與長安駐點為本作延續推定，228非史證卒年。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/魏略輯本/卷七",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷067"
+          ],
+          "certainty": "post_attestation_career_and_station_inference",
+          "name": "程银"
+        },
+        {
+          "person_id": "san14-candidate-0475",
+          "status": "serving",
+          "faction": "wei",
+          "city": "jingzhao",
+          "note": "成公英降曹後為參軍，221年尚率騎作戰；長安為西北軍政代理，230退出為本作估界。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷15",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷069"
+          ],
+          "certainty": "primary_service_with_station_and_lifetime_inference",
+          "name": "成公英"
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "status": "serving",
+          "faction": "wei",
+          "city": "anding",
+          "note": "楊秋於211年十月降曹並撫安定；後年沿用任職及安定為駐點推定，不挪作遼西將領。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01"
+          ],
+          "certainty": "attested_submission_bounded_career_station_continuity",
+          "name": "杨秋"
         }
       ],
       "notes": [
@@ -13465,7 +14991,8 @@
       ],
       "owner_expectations": {
         "zangke": "nanman"
-      }
+      },
+      "initial_soldier_total": 271350
     },
     {
       "id": "mainland227-02",
@@ -13563,12 +15090,77 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷08"
           ]
+        },
+        {
+          "person_id": "historical-heng-yi-cangwu",
+          "status": "chronology_excluded",
+          "faction": null,
+          "city": null,
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。《水經注》引《交廣春秋》及《太平御覽》引《南越志》繫建安十六年(211)投水死，無確月；死亡年開局不強行視為仍存活。 原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "衡毅"
+        },
+        {
+          "person_id": "historical-qian-bo-cangwu",
+          "status": "serving",
+          "faction": "wu",
+          "city": "gaoliang",
+          "note": "《三國志·呂岱傳》記220年錢博降吳、拜高涼西部都尉；沿用至本開局為職業延續推定，高涼城為郡級地區代理，非史證逐月駐城。230僅本作退出估界，非史證卒年。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷60#呂岱",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "attested_office_with_bounded_career_and_city_proxy",
+          "name": "钱博"
+        },
+        {
+          "person_id": "san14-candidate-0693",
+          "status": "serving",
+          "faction": "wei",
+          "city": "jingzhao",
+          "note": "215年隨張魯降曹後獲復官爵；後續生涯與長安駐點為本作延續推定，228非史證卒年。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/魏略輯本/卷七",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷067"
+          ],
+          "certainty": "post_attestation_career_and_station_inference",
+          "name": "程银"
+        },
+        {
+          "person_id": "san14-candidate-0475",
+          "status": "serving",
+          "faction": "wei",
+          "city": "jingzhao",
+          "note": "成公英降曹後為參軍，221年尚率騎作戰；長安為西北軍政代理，230退出為本作估界。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷15",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷069"
+          ],
+          "certainty": "primary_service_with_station_and_lifetime_inference",
+          "name": "成公英"
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "status": "serving",
+          "faction": "wei",
+          "city": "anding",
+          "note": "楊秋於211年十月降曹並撫安定；後年沿用任職及安定為駐點推定，不挪作遼西將領。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01"
+          ],
+          "certainty": "attested_submission_bounded_career_station_continuity",
+          "name": "杨秋"
         }
       ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
-      "owner_expectations": {}
+      "owner_expectations": {},
+      "initial_soldier_total": 281150
     },
     {
       "id": "mainland234-02",
@@ -13702,12 +15294,87 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷08"
           ]
+        },
+        {
+          "person_id": "historical-su-shu-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫淵校尉、使者。232出使、233返遼東；234後繼續任職為生涯延續推定，生卒均未載。勿與吳使被殺者合併。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷47",
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "宿舒"
+        },
+        {
+          "person_id": "historical-sun-zong-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫淵郎中令、使者。與宿舒出使並返遼東；不等同孫峻/孫宗。後續開局延續映射，不稱史證當月在任。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷47",
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙综"
+        },
+        {
+          "person_id": "historical-liu-yuan-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫淵長史。233在沓津配合韓起誘吳使。不同於柳毅、柳浦；234後為同一軍府任職延續推定。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "柳远"
+        },
+        {
+          "person_id": "historical-gongsun-heng",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫淵西曹掾。奉送吳方印綬與使者首級赴魏。雖同姓，原文未給親緣，不造父子/兄弟。後續任職為推定。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "公孙珩"
+        },
+        {
+          "person_id": "historical-wang-zan-xuantu",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫氏玄菟太守。玄菟節點不在地圖，可用襄平/遼東軍府代理；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷47"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "王赞"
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "status": "serving",
+          "faction": "wei",
+          "city": "anding",
+          "note": "楊秋於211年十月降曹並撫安定；後年沿用任職及安定為駐點推定，不挪作遼西將領。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01"
+          ],
+          "certainty": "attested_submission_bounded_career_station_continuity",
+          "name": "杨秋"
         }
       ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
-      "owner_expectations": {}
+      "owner_expectations": {},
+      "initial_soldier_total": 273780
     },
     {
       "id": "mainland238-01",
@@ -13841,12 +15508,148 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷08"
           ]
+        },
+        {
+          "person_id": "historical-su-shu-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫淵校尉、使者。232出使、233返遼東；234後繼續任職為生涯延續推定，生卒均未載。勿與吳使被殺者合併。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷47",
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "宿舒"
+        },
+        {
+          "person_id": "historical-sun-zong-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫淵郎中令、使者。與宿舒出使並返遼東；不等同孫峻/孫宗。後續開局延續映射，不稱史證當月在任。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷47",
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙综"
+        },
+        {
+          "person_id": "historical-liu-yuan-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫淵長史。233在沓津配合韓起誘吳使。不同於柳毅、柳浦；234後為同一軍府任職延續推定。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "柳远"
+        },
+        {
+          "person_id": "historical-gongsun-heng",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫淵西曹掾。奉送吳方印綬與使者首級赴魏。雖同姓，原文未給親緣，不造父子/兄弟。後續任職為推定。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "公孙珩"
+        },
+        {
+          "person_id": "historical-wang-zan-xuantu",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫氏玄菟太守。玄菟節點不在地圖，可用襄平/遼東軍府代理；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷47"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "王赞"
+        },
+        {
+          "person_id": "historical-guo-xin-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫淵長史。237官屬上魏書的署名；必須是三國遼東郭昕，不能套唐代安西郭昕生平。238一月延續是鄰年任職映射。 238年一月任職為同年事跡的開局回推，不冒稱確知一月官職。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "郭昕"
+        },
+        {
+          "person_id": "historical-liu-fu-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫淵御史大夫。SGZ8作參軍柳浦，晉書作御史大夫柳甫；依異文同人處理僅建1ID，須明示編者識別而非原文直接說兩段同人。不同柳毅、柳遠。238被斬明確，生年不詳；開局一月此官為同年回推。 238年一月任職為同年事跡的開局回推，不冒稱確知一月官職。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/晉書/卷001"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "柳甫"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫淵相國。與柳甫求降被殺，原文二人老耄，僅可知年長，不得虛構確切生年。238一月任職為同年回推。 238年一月任職為同年事跡的開局回推，不冒稱確知一月官職。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/晉書/卷001"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "王建"
+        },
+        {
+          "person_id": "historical-wei-yan-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫淵侍中。繼王建柳甫後求剋日送任。結局未載，不可把列傳城破千人被殺概括為他必死；開局一月任職回推。 238年一月任職為同年事跡的開局回推，不冒稱確知一月官職。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/晉書/卷001"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "卫演"
+        },
+        {
+          "person_id": "historical-bi-sheng",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫淵將軍。城破後列名被殺，確為直屬將軍。只有238年記錄，開局一月任職為同年回推。 238年一月任職為同年事跡的開局回推，不冒稱確知一月官職。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/晉書/卷001"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毕盛"
+        },
+        {
+          "person_id": "historical-gongsun-xiu",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫氏突圍騎將。233表稱脩別屬亡弟、238正文稱淵子，親生/過繼表述有別。只記家族年輕成員，不硬填親生父；238突圍被殺。生年未載；開局一月可作同年在場推定。 238年一月任職為同年事跡的開局回推，不冒稱確知一月官職。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "公孙修"
         }
       ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
-      "owner_expectations": {}
+      "owner_expectations": {},
+      "initial_soldier_total": 272620
     },
     {
       "id": "mainland249-01",
@@ -13944,12 +15747,99 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷08"
           ]
+        },
+        {
+          "person_id": "historical-su-shu-liaodong",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；195年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 232出使、233返遼東；234後繼續任職為生涯延續推定，生卒均未載。勿與吳使被殺者合併。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷47",
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "宿舒"
+        },
+        {
+          "person_id": "historical-sun-zong-liaodong",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；195年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 與宿舒出使並返遼東；不等同孫峻/孫宗。後續開局延續映射，不稱史證當月在任。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷47",
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "孙综"
+        },
+        {
+          "person_id": "historical-liu-yuan-liaodong",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 233在沓津配合韓起誘吳使。不同於柳毅、柳浦；234後為同一軍府任職延續推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "柳远"
+        },
+        {
+          "person_id": "historical-gongsun-heng",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；195年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 奉送吳方印綬與使者首級赴魏。雖同姓，原文未給親緣，不造父子/兄弟。後續任職為推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "公孙珩"
+        },
+        {
+          "person_id": "historical-wang-zan-xuantu",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 玄菟節點不在地圖，可用襄平/遼東軍府代理；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷47"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "王赞"
+        },
+        {
+          "person_id": "historical-guo-xin-liaodong",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；190年為可玩年齡估計，237年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 237官屬上魏書的署名；必須是三國遼東郭昕，不能套唐代安西郭昕生平。238一月延續是鄰年任職映射。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "郭昕"
+        },
+        {
+          "person_id": "historical-wei-yan-liaodong",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；195年為可玩年齡估計，238年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 繼王建柳甫後求剋日送任。結局未載，不可把列傳城破千人被殺概括為他必死；開局一月任職回推。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/晉書/卷001"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "卫演"
         }
       ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
-      "owner_expectations": {}
+      "owner_expectations": {},
+      "initial_soldier_total": 261520
     },
     {
       "id": "mainland263-05",
@@ -14083,14 +15973,14 @@
             "status": "not_in_previous_pool"
           },
           "faction": "lu_xing",
-          "city": "jiuzhen",
-          "certainty": "authorial_retinue_window",
-          "note": "《晉書》卷057陶璜傳記呂興被其功曹李統所殺，可證李統曾屬呂興，未載263年五月任職地。本篇依使用者要求以本陣營任職窗口推定配置九真，不聲稱該地曾任功曹；此李統與魏將李通為不同人物。該傳把事件繫於孫皓、晉武帝時，年代與《三國志》卷48不同，本作採後者的263年起事年月，生卒邊界另標估計。",
+          "city": "jiaozhi",
+          "certainty": "office_seat_mapping_if_canonical_id_matches",
+          "note": "《晉書·陶璜傳》記李統為呂興功曹；採交趾郡府作任職地區代理，具體駐城與263年五月任職月仍屬本作推定。此李統與魏將李通為不同人物；既有生卒估界與原典編年差異的留保不變。",
           "source_urls": [
-            "https://zh.wikisource.org/zh-hant/晉書/卷057",
-            "https://zh.wikisource.org/zh-hant/三國志/卷48",
-            "https://zh.wikisource.org/zh-hant/三國志/卷04"
-          ]
+            "https://zh.wikisource.org/wiki/晉書/卷057",
+            "https://zh.wikisource.org/wiki/華陽國志/卷四"
+          ],
+          "status": "serving"
         },
         {
           "person_id": "san14-candidate-0947",
@@ -14205,7 +16095,8 @@
         "jiaozhi": "lu_xing",
         "jiuzhen": "lu_xing",
         "rinan": "lu_xing"
-      }
+      },
+      "initial_soldier_total": 227800
     },
     {
       "id": "mainland217-07",
@@ -14302,12 +16193,125 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷36"
           ]
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 受曹任城陽太守後，青州任職延續及北海鄰區駐點為本作映射，非史稱北海太守。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-heng-yi-cangwu",
+          "status": "chronology_excluded",
+          "faction": null,
+          "city": null,
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。《水經注》引《交廣春秋》及《太平御覽》引《南越志》繫建安十六年(211)投水死，無確月；死亡年開局不強行視為仍存活。 原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "衡毅"
+        },
+        {
+          "person_id": "historical-qian-bo-cangwu",
+          "status": "free",
+          "faction": null,
+          "city": "cangwu",
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。卒年不詳；230年僅為本作壽命退出估界。 同衡毅屬巨舊部；另三國志53說錢博本為張津故將，改屬吳巨不可漏。水經注未明他與毅同死；不強填卒年，不因二手異寫另造第二人。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/三國志/卷53"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "钱博"
+        },
+        {
+          "person_id": "san14-candidate-0693",
+          "status": "serving",
+          "faction": "wei",
+          "city": "jingzhao",
+          "note": "215年隨張魯降曹後獲復官爵；後續生涯與長安駐點為本作延續推定，228非史證卒年。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/魏略輯本/卷七",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷067"
+          ],
+          "certainty": "post_attestation_career_and_station_inference",
+          "name": "程银"
+        },
+        {
+          "person_id": "san14-candidate-0475",
+          "status": "serving",
+          "faction": "wei",
+          "city": "jingzhao",
+          "note": "成公英降曹後為參軍，221年尚率騎作戰；長安為西北軍政代理，230退出為本作估界。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷15",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷069"
+          ],
+          "certainty": "primary_service_with_station_and_lifetime_inference",
+          "name": "成公英"
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "status": "serving",
+          "faction": "wei",
+          "city": "anding",
+          "note": "楊秋於211年十月降曹並撫安定；後年沿用任職及安定為駐點推定，不挪作遼西將領。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01"
+          ],
+          "certainty": "attested_submission_bounded_career_station_continuity",
+          "name": "杨秋"
         }
       ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
-      "owner_expectations": {}
+      "owner_expectations": {},
+      "initial_soldier_total": 283620
     }
   ],
   "limits": [
@@ -14657,14 +16661,14 @@
             "city": "donghai",
             "ruler": false
           },
-          "faction": "shu",
-          "city": "qiao",
-          "certainty": "authorial_garrison_relocation",
-          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "faction": null,
+          "city": "donghai",
+          "certainty": "bounded_independent_local_army_region_proxy",
+          "note": "197/198不提前寫劉備私屬；198秋才可證聯呂布。更保守為地方在野，可招募，不強寫臧霸私屬。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷18",
-            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
-          ]
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷062"
+          ],
+          "status": "free"
         },
         {
           "person_id": "san14-candidate-0656",
@@ -14992,6 +16996,102 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷46"
           ]
+        },
+        {
+          "person_id": "historical-zhao-chong",
+          "status": "free",
+          "faction": null,
+          "city": "chenliu",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 190/191是初平年範圍內的開局映射；194是否反曹未載，不自動跟張邈叛或入曹。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "赵宠"
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "zang_ba",
+          "city": "donghai",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 開陽軍營以東海代理，首次任職年未載，197/198為在場回推。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "zang_ba",
+          "city": "donghai",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "zang_ba",
+          "city": "donghai",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-liu-yi-yuzhang",
+          "status": "serving",
+          "faction": "hua_xin",
+          "city": "yuzhang",
+          "note": "華歆府功曹。孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷13"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "刘壹"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫度親吏。與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 隨公孫度的任職延續為推定，非逐月名冊。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-gongchou-cheng",
+          "status": "free",
+          "faction": null,
+          "city": "changsha",
+          "note": "生年不詳；160年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 魯陽送行督軍糧時確任長史；190一月提前呈現為同年任職回推，191延續亦屬推定。地圖無魯陽，可用長沙軍府代理，不改南陽所有權。生卒均無確年。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷46"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "公仇称"
+        },
+        {
+          "person_id": "historical-sun-xiang",
+          "status": "serving",
+          "faction": "lubu",
+          "city": "jiujiang",
+          "note": "孫堅從征郎中、後袁術汝南太守。孫賁傳注稱孫香父孫孺為孫堅再從弟；孫香從孫堅征伐有功，後為袁術用，197袁術稱帝時未能東歸。不可把已入袁術的194/198仍掛孫堅。190/191起始服務為生涯回推，194/198應袁術；197皇帝呂布IF可隨接收袁軍但要標IF改編。死於壽春，無確切年，不冒稱197/199為史證卒年。 本假想中袁術軍由呂布接收，孫香隨該軍改編；非官方逐人表或史實投呂布。 本作該任官區域非本方所有，改駐現有本方軍府，不改城主。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷51"
+          ],
+          "certainty": "fictional_inherited_yuan_army_affiliation_mapping",
+          "name": "孙香"
         }
       ],
       "owner_expectations": {
@@ -15007,7 +17107,8 @@
         "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
         "本假想劇本保留遊戲／演義把兗州刺史劉岱與曹軍同名同字將領合併的例外；不得把它作為刺史192年後史實降曹的證據。史實劇本則按192年退出原ID。",
         "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
-      ]
+      ],
+      "initial_soldier_total": 227180
     },
     {
       "id": "mainland201-05",
@@ -15187,6 +17288,90 @@
             "https://zh.wikisource.org/wiki/三國志/卷36",
             "https://zh.wikisource.org/wiki/三國志/卷15"
           ]
+        },
+        {
+          "person_id": "historical-zhao-chong",
+          "status": "free",
+          "faction": null,
+          "city": "chenliu",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 190/191是初平年範圍內的開局映射；194是否反曹未載，不自動跟張邈叛或入曹。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "赵宠"
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "wei",
+          "city": "nanyang",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 受曹任城陽太守後，青州任職延續及北海鄰區駐點為本作映射，非史稱北海太守。 本作該任官區域非本方所有，改駐現有本方軍府，不改城主。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "wei",
+          "city": "nanyang",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。 本作該任官區域非本方所有，改駐現有本方軍府，不改城主。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "wei",
+          "city": "nanyang",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。 本作該任官區域非本方所有，改駐現有本方軍府，不改城主。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-liu-yi-yuzhang",
+          "status": "free",
+          "faction": null,
+          "city": "yuzhang",
+          "note": "生年不詳；160年為可玩年齡估計，196年為本作出場起點，不冒稱首次任官年。卒年不詳；215年僅為本作壽命退出估界。 孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷13"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "刘壹"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "serving",
+          "faction": "gongsun",
+          "city": "liaodong",
+          "note": "公孫度親吏。與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 隨公孫度的任職延續為推定，非逐月名冊。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-gongchou-cheng",
+          "status": "free",
+          "faction": null,
+          "city": "changsha",
+          "note": "生年不詳；160年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 魯陽送行督軍糧時確任長史；190一月提前呈現為同年任職回推，191延續亦屬推定。地圖無魯陽，可用長沙軍府代理，不改南陽所有權。生卒均無確年。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷46"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "公仇称"
         }
       ],
       "owner_expectations": {
@@ -15198,7 +17383,8 @@
         "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
         "本假想劇本保留遊戲／演義把兗州刺史劉岱與曹軍同名同字將領合併的例外；不得把它作為刺史192年後史實降曹的證據。史實劇本則按192年退出原ID。",
         "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
-      ]
+      ],
+      "initial_soldier_total": 245350
     },
     {
       "id": "mainland209-06",
@@ -15429,6 +17615,129 @@
             "https://zh.wikisource.org/wiki/三國志/卷36",
             "https://zh.wikisource.org/wiki/三國志/卷15"
           ]
+        },
+        {
+          "person_id": "historical-zhao-chong",
+          "status": "free",
+          "faction": null,
+          "city": "chenliu",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 190/191是初平年範圍內的開局映射；194是否反曹未載，不自動跟張邈叛或入曹。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "赵宠"
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 受曹任城陽太守後，青州任職延續及北海鄰區駐點為本作映射，非史稱北海太守。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-liu-yi-yuzhang",
+          "status": "free",
+          "faction": null,
+          "city": "yuzhang",
+          "note": "生年不詳；160年為可玩年齡估計，196年為本作出場起點，不冒稱首次任官年。卒年不詳；215年僅為本作壽命退出估界。 孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷13"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "刘壹"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-qu-jing-cangwu",
+          "status": "free",
+          "faction": null,
+          "city": "cangwu",
+          "note": "生年不詳；170年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。211年卒有原典記錄。 水經注引交廣春秋繫建安16年(211)與吳巨同被斬；其他編年可用210，保留210/211差異。207/208歸巨為近年軍府回推。生年不詳，不強訂出生年。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "区景"
+        },
+        {
+          "person_id": "historical-heng-yi-cangwu",
+          "status": "free",
+          "faction": null,
+          "city": "cangwu",
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。《水經注》引《交廣春秋》及《太平御覽》引《南越志》繫建安十六年(211)投水死，無確月；死亡年開局不強行視為仍存活。 原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "衡毅"
+        },
+        {
+          "person_id": "historical-qian-bo-cangwu",
+          "status": "free",
+          "faction": null,
+          "city": "cangwu",
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。卒年不詳；230年僅為本作壽命退出估界。 同衡毅屬巨舊部；另三國志53說錢博本為張津故將，改屬吳巨不可漏。水經注未明他與毅同死；不強填卒年，不因二手異寫另造第二人。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/三國志/卷53"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "钱博"
+        },
+        {
+          "person_id": "historical-gongchou-cheng",
+          "status": "free",
+          "faction": null,
+          "city": "changsha",
+          "note": "生年不詳；160年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 魯陽送行督軍糧時確任長史；190一月提前呈現為同年任職回推，191延續亦屬推定。地圖無魯陽，可用長沙軍府代理，不改南陽所有權。生卒均無確年。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷46"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "公仇称"
         }
       ],
       "owner_expectations": {
@@ -15439,7 +17748,8 @@
         "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions.",
         "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
         "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
-      ]
+      ],
+      "initial_soldier_total": 273870
     },
     {
       "id": "mainland210-11",
@@ -15721,6 +18031,105 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷08"
           ]
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 受曹任城陽太守後，青州任職延續及北海鄰區駐點為本作映射，非史稱北海太守。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-liu-yi-yuzhang",
+          "status": "free",
+          "faction": null,
+          "city": "yuzhang",
+          "note": "生年不詳；160年為可玩年齡估計，196年為本作出場起點，不冒稱首次任官年。卒年不詳；215年僅為本作壽命退出估界。 孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷13"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "刘壹"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-qu-jing-cangwu",
+          "status": "free",
+          "faction": null,
+          "city": "cangwu",
+          "note": "生年不詳；170年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。211年卒有原典記錄。 水經注引交廣春秋繫建安16年(211)與吳巨同被斬；其他編年可用210，保留210/211差異。207/208歸巨為近年軍府回推。生年不詳，不強訂出生年。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "区景"
+        },
+        {
+          "person_id": "historical-heng-yi-cangwu",
+          "status": "free",
+          "faction": null,
+          "city": "cangwu",
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。《水經注》引《交廣春秋》及《太平御覽》引《南越志》繫建安十六年(211)投水死，無確月；死亡年開局不強行視為仍存活。 原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "衡毅"
+        },
+        {
+          "person_id": "historical-qian-bo-cangwu",
+          "status": "free",
+          "faction": null,
+          "city": "cangwu",
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。卒年不詳；230年僅為本作壽命退出估界。 同衡毅屬巨舊部；另三國志53說錢博本為張津故將，改屬吳巨不可漏。水經注未明他與毅同死；不強填卒年，不因二手異寫另造第二人。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/三國志/卷53"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "钱博"
         }
       ],
       "owner_expectations": {
@@ -15731,7 +18140,8 @@
         "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions.",
         "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
         "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
-      ]
+      ],
+      "initial_soldier_total": 270570
     },
     {
       "id": "mainland212-06",
@@ -15911,6 +18321,105 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷08"
           ]
+        },
+        {
+          "person_id": "historical-sun-kang",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "臧霸軍將、後城陽太守。明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 受曹任城陽太守後，青州任職延續及北海鄰區駐點為本作映射，非史稱北海太守。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "孙康"
+        },
+        {
+          "person_id": "historical-xu-xi",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "徐翕"
+        },
+        {
+          "person_id": "historical-mao-hui",
+          "status": "serving",
+          "faction": "wei",
+          "city": "beihai",
+          "note": "兗州軍將、後依臧霸。同徐翕。不得把毛玠、毛嘉等他人資料借入。 平呂布後受赦任郡守，郡名未載；北海是本作青州駐點代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷18"
+          ],
+          "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
+          "name": "毛晖"
+        },
+        {
+          "person_id": "historical-liu-yi-yuzhang",
+          "status": "free",
+          "faction": null,
+          "city": "yuzhang",
+          "note": "生年不詳；160年為可玩年齡估計，196年為本作出場起點，不冒稱首次任官年。卒年不詳；215年僅為本作壽命退出估界。 孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷13"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "刘壹"
+        },
+        {
+          "person_id": "historical-yang-yi-liaodong",
+          "status": "free",
+          "faction": null,
+          "city": "liaodong",
+          "note": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "阳仪"
+        },
+        {
+          "person_id": "historical-heng-yi-cangwu",
+          "status": "chronology_excluded",
+          "faction": null,
+          "city": null,
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。《水經注》引《交廣春秋》及《太平御覽》引《南越志》繫建安十六年(211)投水死，無確月；死亡年開局不強行視為仍存活。 原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "衡毅"
+        },
+        {
+          "person_id": "historical-qian-bo-cangwu",
+          "status": "free",
+          "faction": null,
+          "city": "cangwu",
+          "note": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。卒年不詳；230年僅為本作壽命退出估界。 同衡毅屬巨舊部；另三國志53說錢博本為張津故將，改屬吳巨不可漏。水經注未明他與毅同死；不強填卒年，不因二手異寫另造第二人。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/水經注/37",
+            "https://zh.wikisource.org/wiki/三國志/卷53"
+          ],
+          "certainty": "attested_identity_explicit_game_lifetime_and_region",
+          "name": "钱博"
+        },
+        {
+          "person_id": "san14-candidate-0693",
+          "status": "serving",
+          "faction": "ma_teng",
+          "city": "fufeng",
+          "note": "此IF明示馬超勝，程銀真實亦未死211，可繼續列於馬氏盟軍編組，不按失敗後奔張魯配置。駐扶風為原聯軍地域代理。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/魏略輯本/卷七",
+            "https://zh.wikisource.org/wiki/三國志/卷36"
+          ],
+          "certainty": "fictional_victory_affiliation_and_authorial_city_proxy",
+          "name": "程银"
         }
       ],
       "owner_expectations": {
@@ -15921,7 +18430,8 @@
         "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions.",
         "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
         "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
-      ]
+      ],
+      "initial_soldier_total": 285400
     }
   ]
 }

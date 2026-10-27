@@ -96,10 +96,12 @@ class Frontier194ReviewTests(unittest.TestCase):
                 self.assertEqual(self.data['appearance_locations'][pid], city)
         self.assertEqual(game.state.extension['leaders']['wei'], self.catalog.ids['san14-candidate-0521'])
         self.assertEqual(faction_officer_counts(self.catalog)['wei'], 32)
-        self.assertEqual(faction_officer_counts(self.catalog)['lubu'], 19)
+        # Xu Xi and Mao Hui join this dated local-army mapping before their
+        # later refuge with Zang Ba; the original Cao bridgehead is unchanged.
+        self.assertEqual(faction_officer_counts(self.catalog)['lubu'], 21)
         self.assertEqual(faction_officer_counts(self.catalog)['zhang_miao'], 2)
-        self.assertEqual(len(self.data['initial_officers']), 291)
-        self.assertEqual(len(self.catalog.ids), 1030)
+        self.assertEqual(len(self.data['initial_officers']), 294)
+        self.assertEqual(len(self.catalog.ids), 1052)
 
     def test_primary_postings_and_authorial_garrisons_keep_separate_evidence(self):
         for pid in ('san14-candidate-0393', 'san14-candidate-0124',

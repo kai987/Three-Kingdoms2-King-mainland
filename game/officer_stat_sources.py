@@ -51,7 +51,7 @@ def validate_original_virtue(people, reference, identities):
                     or design.get('rom_offset') != row['rom_offset'] + 4
                     or design.get('record_sha256') != row['record_sha256']):
                 raise ValueError('Retained original virtue evidence differs: ' + pid)
-    if len(bound) != 220:
+    if len(bound) != 221:
         raise ValueError('Reviewed original person coverage differs')
     return bound
 

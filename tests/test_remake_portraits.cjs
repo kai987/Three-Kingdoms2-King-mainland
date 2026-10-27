@@ -136,7 +136,12 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
  const additions=['historical-song-jian','historical-lu-xing','historical-tang-pu','historical-li-tong-jiaozhi','historical-beigong-boyu','historical-li-wenhou','historical-bian-zhang'];
  i18n.locale='zh-Hant';
  const released=create({i18n,fetch:async()=>({ok:true,json:async()=>shipped})});assert(await released.load());
- const allGenerated=Object.entries(shipped.people).filter(([,row])=>row.kind==='generated');assert.equal(allGenerated.length,810);
+ const allGenerated=Object.entries(shipped.people).filter(([,row])=>row.kind==='generated');assert.equal(allGenerated.length,831);
+ assert.equal(Object.keys(shipped.people).length,1052);
+ assert.equal(Object.values(shipped.people).filter(row=>row.kind==='nes_original').length,221);
+ assert.equal(shipped.by_runtime_id['1044'],'historical-wang-jian-liaodong');
+ assert.equal(shipped.people['historical-wang-jian-liaodong'].kind,'nes_original');
+ assert.equal(shipped.people['historical-wang-jian-liaodong'].original_id,11);
  for(const[pid,row]of allGenerated){
   const display=released.asset(pid);assert.equal(display.enhanced,true,pid);
   assert.equal(display.path,row.enhanced.path,pid);assert.equal(display.width,128,pid);assert.equal(display.height,160,pid);

@@ -52,32 +52,71 @@ const escaped=context.initialStatDescription({...person,person_id:'"><img src=x>
 assert(!escaped.includes('<script>'));assert(!escaped.includes('<img'));assert(escaped.includes('&lt;script&gt;'));assert(escaped.includes('&quot;&gt;&lt;img'));
 const python=spawnSync(process.env.PYTHON||'python3',['-B','-c',`
 import json,sys
+from copy import deepcopy
 from pathlib import Path
 sys.path.insert(0,'source')
 from remake.campaign import Campaign,Catalog
+from remake.officers import appearance_values
 rows=[]
 for date,side in [('217-07','wu'),('191-10','wei'),('201-05','wei')]:
     game=Campaign(Catalog(Path('game/data/campaigns')/(date+'.json')))
     game.state=game._new(side,2026)
     game.validate(game.state)
     rows.append(dict(date=date,library=game._expanded_catalog_view(game.state)['library'],leaders=game.state.extension['leaders']))
+later=Campaign(Catalog(Path('game/data/campaigns/238-01.json')))
+later.state=later._new('gongsun',2026)
+later.validate(later.state)
+wang=later.state.officers[1044]
+initial=later.catalog.by_id[1044]['initialization']
+profile=later.catalog.profiles[1044]
+contexts={key:appearance_values(profile,initial,faction_id=owner)['loyalty']
+          for key,owner in [('free',None),('gongsun','gongsun'),('yuan_shao','yuan_shao')]}
+explicit=deepcopy(initial)
+explicit['source_loyalty']['faction_ids']=['gongsun']
+rows[0]['wang_jian']=dict(person_id=wang.person_id,health=wang.health,loyalty=wang.loyalty,
+    weapon_id=wang.weapon_id,armor_id=wang.armor_id,health_max=wang.profile.health_max,context_loyalty=contexts,
+    explicit_match=appearance_values(profile,explicit,faction_id='gongsun')['loyalty'],
+    explicit_other=appearance_values(profile,explicit,faction_id='wei')['loyalty'],
+    ruler=appearance_values(profile,initial,faction_id='gongsun',is_ruler=True)['loyalty'])
 print(json.dumps(rows,ensure_ascii=False))
 `],{cwd:root,encoding:'utf8',maxBuffer:16*1024*1024,env:{...process.env,MARCH_CORE_BACKEND:'python',PYTHONDONTWRITEBYTECODE:'1'}});
 if(python.status!==0)throw new Error(python.stderr||'Runtime fixture generation failed');
 const rows=JSON.parse(python.stdout);
 for(const row of rows){
  const before=JSON.stringify(row.library),counts=JSON.parse(JSON.stringify(context.libraryEntryCounts(row.library)));
- assert.equal(Object.values(counts).reduce((a,b)=>a+b,0),1030,'Every identity must be counted exactly once');
+ assert.equal(Object.values(counts).reduce((a,b)=>a+b,0),1052,'Every identity must be counted exactly once');
  assert.equal(JSON.stringify(row.library),before,'Classification must not mutate the library');
  const serving=row.library.filter(p=>p.alive===true&&p.faction!==null).length,free=row.library.filter(p=>p.alive===true&&p.faction===null).length;
  assert.equal(counts.serving,serving);assert.equal(counts.free,free);
  const [year,month]=row.date.split('-').map(Number),summary=context.libraryEntrySummary(row.library,{year,month});
- assert(summary.includes('data-locale-only="zh-Hant"'));assert(summary.includes('data-locale-only="ja"'));assert(summary.includes(`已登場 ${serving+free}／總庫 1030`));
+ assert(summary.includes('data-locale-only="zh-Hant"'));assert(summary.includes('data-locale-only="ja"'));assert(summary.includes(`已登場 ${serving+free}／總庫 1052`));
  assert.equal(counts.pending_history,0);assert.equal(counts.pending_capacity,0);assert.equal(counts.pending_faction,0);
+ const wang=row.library.find(p=>p.person_id==='historical-wang-jian-liaodong');
+ assert.equal(wang.id,1044);assert.equal(wang.health_max,80);assert.equal(wang.initialization.health,42);
+ assert.equal(wang.initialization.source_loyalty.value,59);
+ assert.equal(wang.initialization.source_loyalty.source_row_id,'cnblogs-line-0229');
+ assert.deepEqual(wang.initialization.source_loyalty.faction_ids,[],'袁紹右側空城 is a location hint, never a faction loyalty context');
+ assert.equal(wang.year_state,'not_appeared');assert.equal(wang.alive,null);
+ assert.equal(wang.era_assignment.appearance_plan.status,'future_free');
+ assert.deepEqual(wang.era_assignment.appearance_plan.start,[238,1]);
+ assert(context.libraryFilterMatches(wang,'unentered'));assert(!context.libraryFilterMatches(wang,'free'));
+ assert(!context.libraryFilterMatches(wang,'serving'));assert(!context.libraryFilterMatches(wang,'own','gongsun'));
+ const xiu=row.library.find(p=>p.person_id==='historical-gongsun-xiu');
+ assert.equal(xiu.id,1047);assert.equal(xiu.year_state,'not_born');
+ assert(context.libraryFilterMatches(xiu,'unentered'));assert(!context.libraryFilterMatches(xiu,'free'));
  if(row.date==='217-07'){
-  // Gongsun Kang's restored opening entry replaces Zhao Fan in the serving
-  // count; Zhao Fan remains alive as a free officer, so only free grows by1.
-  assert.equal(counts.serving,365);assert.equal(counts.free,53);
+  assert.equal(counts.serving,369);assert.equal(counts.free,55);
+  const current=row.wang_jian;
+  assert.equal(current.person_id,'historical-wang-jian-liaodong');
+  assert.equal(current.health,42);assert.equal(current.health_max,80);
+  assert.equal(current.weapon_id,1);assert.equal(current.armor_id,0,'Source0229 starts with 飛剣／綸巾');
+  assert.equal(current.loyalty,80);assert.deepEqual(current.context_loyalty,{free:0,gongsun:80,yuan_shao:80});
+  assert.equal(current.explicit_match,59);assert.equal(current.explicit_other,80);assert.equal(current.ruler,100);
+  const healthText=context.initialStatDescription(wang,current);
+  assert(healthText.includes('data-initial-health="42"'));assert(healthText.includes('data-current-health>42<'));
+  assert(healthText.includes('data-current-loyalty>80<'));assert(healthText.includes('data-source-loyalty>59<'));
+  const sun=row.library.find(p=>p.person_id==='historical-sun-kang');
+  assert.equal(sun.alive,true);assert.equal(sun.faction,'wei');assert(context.libraryFilterMatches(sun,'serving'));
   const kang=row.library.find(p=>p.person_id==='san14-candidate-0264');
   const gong=row.library.find(p=>p.person_id==='san14-candidate-0263');
   const zhao=row.library.find(p=>p.person_id==='san14-candidate-0654');
@@ -92,9 +131,21 @@ for(const row of rows){
   assert(!context.libraryFilterMatches(zhao,'own','shu'));assert(!context.libraryFilterMatches(zhao,'serving'));
   assert(!context.libraryFilterMatches(zhao,'unentered'));
  }
- if(row.date==='191-10'){assert.equal(counts.serving,301);assert.equal(counts.free,96);}
+ if(row.date==='191-10'){
+  assert.equal(counts.serving,304);assert.equal(counts.free,97);
+  const zhaoChong=row.library.find(p=>p.person_id==='historical-zhao-chong');
+  assert.equal(zhaoChong.id,1031);assert.equal(zhaoChong.faction,'zhang_miao');assert.equal(zhaoChong.alive,true);
+  assert(context.libraryFilterMatches(zhaoChong,'own','zhang_miao'));
+  const sun=row.library.find(p=>p.person_id==='historical-sun-kang');
+  assert.equal(sun.year_state,'not_appeared');assert.equal(sun.alive,null);
+  assert.equal(sun.era_assignment.appearance_plan.status,'future_free');
+  assert(context.libraryFilterMatches(sun,'unentered'));assert(!context.libraryFilterMatches(sun,'serving'));
+ }
  if(row.date==='201-05'){
-  assert.equal(counts.serving,290);assert.equal(counts.free,127);
+  assert.equal(counts.serving,294);assert.equal(counts.free,130);
+  const zhaoChong=row.library.find(p=>p.person_id==='historical-zhao-chong');
+  assert.equal(zhaoChong.alive,true);assert.equal(zhaoChong.faction,null);assert.equal(zhaoChong.location,'chenliu');
+  assert(context.libraryFilterMatches(zhaoChong,'free'));assert(!context.libraryFilterMatches(zhaoChong,'own','zhang_miao'));
   assert.equal(row.library.filter(p=>context.libraryPlacementFilter(p,'entry:pending_capacity')).length,0);
  }
 }

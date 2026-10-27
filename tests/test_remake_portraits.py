@@ -48,8 +48,8 @@ class PortraitIdentityTests(unittest.TestCase):
                     self.assertEqual(row['status'], 'manual_name_glyph_match')
                     bound.append(row['person_id'])
         self.assertEqual(len(bound), len(set(bound)))
-        self.assertEqual(len(bound), 220)
-        self.assertEqual(len(self.people) - len(bound), 810)
+        self.assertEqual(len(bound), 221)
+        self.assertEqual(len(self.people) - len(bound), 831)
 
     def test_independently_reviewed_names_do_not_bind_similar_people(self):
         self.assertEqual(self.records[108]['transcribed_name'], '諸葛瞻')
@@ -59,7 +59,9 @@ class PortraitIdentityTests(unittest.TestCase):
         self.assertEqual(self.records[217]['person_id'], 'san14-candidate-0914')
         self.assertEqual(self.records[223]['transcribed_name'], '留平')
         self.assertEqual(self.records[223]['person_id'], 'san14-candidate-0957')
-        pending = {11, 39, 40, 53, 60, 62, 83, 84, 105, 115, 148, 152, 172, 195, 209, 215, 236}
+        self.assertEqual(self.records[11]['person_id'], 'historical-wang-jian-liaodong')
+        self.assertEqual(self.records[11]['identity_context']['public_table_city_label'], '辽东')
+        pending = {39, 40, 53, 60, 62, 83, 84, 105, 115, 148, 152, 172, 195, 209, 215, 236}
         self.assertEqual({k for k, row in self.records.items() if row['person_id'] is None}, pending)
         # The two current Zhang Nan records must not be collapsed into one ROM ID.
         self.assertEqual(self.records[152]['transcribed_name'], '張南')
@@ -98,11 +100,11 @@ class PortraitReleaseTests(unittest.TestCase):
     def test_all_canonical_people_have_real_assets_and_explicit_provenance(self):
         index = self.index
         self.assertEqual(index['counts'], {
-            'people': 1030, 'nes_original': 220, 'generated': 810, 'original_archive': 237,
+            'people': 1052, 'nes_original': 221, 'generated': 831, 'original_archive': 237,
             'original_unique_pixels': 183, 'bound_original_unique_pixels': 179,
-            'generated_unique_pixels': 810, 'original_identity_pending': 17})
+            'generated_unique_pixels': 831, 'original_identity_pending': 16})
         self.assertEqual(set(index['people']), set(builder.identities()))
-        self.assertEqual(set(index['by_runtime_id']), {str(i) for i in range(1031)} - {'1005'})
+        self.assertEqual(set(index['by_runtime_id']), {str(i) for i in range(1053)} - {'1005'})
         self.assertEqual((index['width'], index['height']), (32, 40))
         for person_id, row in index['people'].items():
             with self.subTest(person_id=person_id):
@@ -112,7 +114,7 @@ class PortraitReleaseTests(unittest.TestCase):
                     self.assertIsNone(row['original_id'])
                     self.assertEqual(row['source'], 'imagegen_new_pixel_art')
                     self.assertEqual(row['art_direction_basis'], 'authorial_game_art_not_historical_likeness')
-                    # All810 additions, including the earlier803 identities,
+                    # All831 additions, including the earlier803 identities,
                     # require the real4x display asset; optional HD support in
                     # the generic parser must not hide a missing released one.
                     enhanced = row['enhanced']
@@ -130,7 +132,9 @@ class PortraitReleaseTests(unittest.TestCase):
         expected = ['historical-song-jian', 'historical-lu-xing',
                     'historical-tang-pu', 'historical-li-tong-jiaozhi',
                     'historical-beigong-boyu', 'historical-li-wenhou', 'historical-bian-zhang']
-        self.assertEqual(canonical['order'][1023:], expected)
+        self.assertEqual(canonical['order'][1023:1030], expected)
+        self.assertEqual(canonical['order'][1030:],
+                         [row['person_id'] for row in read('art/portraits/retainer-additions-v1/plan.json')['people']])
         released = [[pid, canonical['people'][pid]['runtime_id']] for pid in canonical['order'][:1023]]
         self.assertEqual(builder.sha(json.dumps(released, separators=(',', ':')).encode()),
                          '0fb983fdb518092176cd672f32a4c079b6143741b5d6eaee804336b364fdf21d')

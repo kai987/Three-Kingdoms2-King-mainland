@@ -1,7 +1,7 @@
 {
   "schema": "tk2-original-equipment-v1",
   "source_file": "game/config/references/cnblogs-officer-stats.json",
-  "source_file_sha256": "e1917f03558182172154e3a9b2a5cc5da13ba6e9c0d83668af4feade51a4c310",
+  "source_file_sha256": "fee9b0e47615f676c25bea80900bdb60896a193253f4eb8e4a9c4e3ed8605fef",
   "source": {
     "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
     "archive_url": "https://files-cdn.cnblogs.com/files/strick/霸王的大陆武将.zip",
@@ -9,7 +9,7 @@
     "member_sha256": "231c554b6de801ecf9d2387e42b549ce49a3e12ae94dd237a8e6153f1bb18187",
     "provenance": "Third-party original-FC game-stat transcription, not an official export or an independently re-extracted ROM equipment table."
   },
-  "identity_policy": "Reuse the 223 previously reviewed person_id bindings in the source file; no fuzzy, statistical, portrait or ordinal join.",
+  "identity_policy": "Reuse the223 frozen equipment bindings plus the single explicitly reviewed Liaodong Wang Jian source0229 binding; no fuzzy, statistical, portrait or ordinal join.",
   "field_policy": "Original equipment labels are retained exactly and mapped through explicit spelling aliases to existing zero-based weapon/armor IDs. No iconic novel overrides, new item stats or unrelated source fields are introduced.",
   "weapon_aliases": {
     "短剣": 0,
@@ -39,9 +39,18 @@
     "甲胄": 5
   },
   "source_records": 237,
-  "bound_people": 223,
-  "unbound_source_records": 14,
-  "factual_records_sha256": "838143a3bb653f6375c8eb7830823251c6ccca760b206ae271632ec20c9530c9",
+  "bound_people": 224,
+  "unbound_source_records": 13,
+  "factual_records_sha256": "c0df1b2eb22ff666962ad092b92a9e152197e5e3f627306fe08a8534048f2892",
+  "append_review": {
+    "base_commit": "f65d3abae2c2c50293c5cf08d07f49413d60cbf6",
+    "base_bound_people": 223,
+    "base_source_file_sha256": "e1917f03558182172154e3a9b2a5cc5da13ba6e9c0d83668af4feade51a4c310",
+    "retained_records_sha256": "838143a3bb653f6375c8eb7830823251c6ccca760b206ae271632ec20c9530c9",
+    "added_person_id": "historical-wang-jian-liaodong",
+    "added_source_row_id": "cnblogs-line-0229",
+    "note": "僅加入已審核的遼東王建，飛剣／綸巾取自同一原表0229；原223人完整條目逐物件保留。這是原遊戲初裝轉錄，不把兵器、原表年份或位置標籤當成史實。"
+  },
   "records": [
     {
       "person_id": "san14-candidate-0952",
@@ -1889,6 +1898,16 @@
       "source_name": "陈琳",
       "weapon_label": "短剣",
       "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "historical-wang-jian-liaodong",
+      "source_row_id": "cnblogs-line-0229",
+      "source_name": "王建",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
       "armor_label": "纶巾",
       "armor_id": 0,
       "basis": "cnblogs_original_equipment_transcription"

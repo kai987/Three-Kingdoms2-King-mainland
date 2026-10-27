@@ -16,7 +16,7 @@
  const clone=value=>JSON.parse(JSON.stringify(value));
  // Group on canonical names, before locale translation; simplified/traditional
  // spellings identify the same family, counted independently for each army.
- const COMPOUND_SURNAMES=new Set(['公孫','司馬','諸葛','夏侯','皇甫','太史','上官','歐陽','令狐','尉遲','呼延','宇文','慕容','毌丘','鮮于','閭丘','東方','南宮','軒轅','鍾離','澹臺','申屠','仲長','第五','段干','長孫','拓跋','濮陽','羊舌','百里','淳于']);
+ const COMPOUND_SURNAMES=new Set(['公孫','公仇','司馬','諸葛','夏侯','皇甫','太史','上官','歐陽','令狐','尉遲','呼延','宇文','慕容','毌丘','鮮于','閭丘','東方','南宮','軒轅','鍾離','澹臺','申屠','仲長','第五','段干','長孫','拓跋','濮陽','羊舌','百里','淳于']);
  const SURNAME_EQUIVALENTS={'孙':'孫','马':'馬','诸':'諸','欧':'歐','迟':'遲','鲜':'鮮','闾':'閭','东':'東','宫':'宮','轩':'軒','辕':'轅','钟':'鍾','离':'離','台':'臺','长':'長','阳':'陽','刘':'劉','张':'張','陈':'陳','许':'許','郑':'鄭','卫':'衛','黄':'黃','赵':'趙','邓':'鄧','庞':'龐','陆':'陸','吕':'呂','吴':'吳','严':'嚴','华':'華','韩':'韓','贾':'賈','顾':'顧','阎':'閻','韦':'韋','费':'費','乐':'樂','满':'滿','鲁':'魯','骆':'駱','钱':'錢','乔':'喬','蒋':'蔣','冯':'馮','谯':'譙','步':'歩','郤':'郄'};
  function familyName(name){
   const chars=Array.from(String(name??'').trim().normalize('NFKC')).map(c=>SURNAME_EQUIVALENTS[c]||c),compound=chars.slice(0,2).join('');

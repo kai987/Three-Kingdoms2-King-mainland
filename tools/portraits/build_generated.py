@@ -26,6 +26,7 @@ from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from supplement_redraw import PLAN as REDRAW_PLAN, bake as bake_redraw
+from retainer_assets import append_retainer_assets
 
 ROOT = Path(__file__).resolve().parents[2]
 PLAN = ROOT / 'art/portraits/plan.json'
@@ -322,6 +323,8 @@ def build(check=False):
     if len(entries) != plan['new_count'] or len(used_hashes) != plan['new_count']:
         raise ValueError('New portrait identity/pixel count mismatch')
     supplements = [append_supplement(entries, outputs, atlases, used_hashes, path) for path in SUPPLEMENTS]
+    retainers = append_retainer_assets(ROOT, entries, outputs, atlases, used_hashes,
+                                       prepare_atlas=prepare_atlas, bake_cell=bake_cell)
     manifest = dict(schema='tk2-generated-portraits-v1', count=len(entries), unique_pixel_images=len(used_hashes),
                     native_size=list(SIZE), source='imagegen_new_pixel_art',
                     art_direction_basis='authorial_game_art_not_historical_likeness',
@@ -331,6 +334,8 @@ def build(check=False):
                     assigned_by_gender=dict(Counter(entry['gender_design'] for entry in entries.values())),
                     duplicate_fallback_count=sum('duplicate_fallback' in entry for entry in entries.values()),
                     by_person_id=entries)
+    if retainers is not None:
+        manifest['retainer_plan'] = retainers
     outputs[MANIFEST] = (json.dumps(manifest, ensure_ascii=False, indent=2) + '\n').encode()
     if DESTINATION.exists():
         extra = set(DESTINATION.glob('*.png')) - set(outputs)

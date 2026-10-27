@@ -23,15 +23,15 @@
     "faction_label": "Literal source faction/retinue/location label; location-only labels map to no faction",
     "other_fields": "Retained factual source columns only; not applied to martial/intellect/experience/equipment/chronology"
   },
-  "identity_policy": "Reviewed unique exact canonical names/aliases plus 11 explicit individual spelling/context decisions; no approximate-name or ability-based identity joins",
+  "identity_policy": "Reviewed unique exact canonical names/aliases plus 12 explicit individual spelling/context decisions; no approximate-name or ability-based identity joins",
   "source_records": 237,
-  "bound_people": 223,
-  "unbound_source_records": 14,
+  "bound_people": 224,
+  "unbound_source_records": 13,
   "identity_counts": {
     "reviewed_exact_name": 212,
     "reviewed_spelling": 9,
-    "unbound": 14,
-    "reviewed_context_identity": 2
+    "unbound": 13,
+    "reviewed_context_identity": 3
   },
   "identity_disagreements": [
     {
@@ -5763,9 +5763,9 @@
       "weapon_label": "飞剣",
       "armor_label": "纶巾",
       "faction_label": "袁绍右侧空城",
-      "person_id": null,
-      "identity_status": "unbound",
-      "identity_basis": "No exact person or reviewed spelling identity; source retained without overwriting another person",
+      "person_id": "historical-wang-jian-liaodong",
+      "identity_status": "reviewed_context_identity",
+      "identity_basis": "Explicit 三國-era 遼東/196 free-person game context identifies the Gongsun Yuan chancellor 王建 attested in 晉書卷一; not a Tang-era namesake or an ability/portrait-based join. Source196 appearance and249 lifespan are original game settings, not historical dates; 袁紹右側空城 is a location hint, not Yuan Shao allegiance.",
       "faction_ids": []
     },
     {
@@ -6871,6 +6871,18 @@
         "wu",
         "sun_jian"
       ]
+    }
+  ],
+  "identity_reviews": [
+    {
+      "source_row_id": "cnblogs-line-0229",
+      "person_id": "historical-wang-jian-liaodong",
+      "identity_status": "reviewed_context_identity",
+      "source_urls": [
+        "https://www.cnblogs.com/strick/p/10171248.html",
+        "https://zh.wikisource.org/wiki/晉書/卷001"
+      ],
+      "note": "原表以王建、196年、遼東在野定位三國人物；《晉書》卷一載公孫淵相國王建與柳甫於238年求降被殺。本次僅閉合此一身份，不以武知、頭像或行序作匹配，也不混同唐代同名人物。196出場和249壽命均為原遊戲設定，不能改寫史實年代；袁紹右側空城僅為位置說明，faction_ids保持空，所以原表忠59不套用為公孫氏臣屬的忠誠。原表體力42是初始值，恢復上限仍為本作80；原表德41留作來源欄，不覆蓋缺SAN14魅力時的德60。"
     }
   ]
 }

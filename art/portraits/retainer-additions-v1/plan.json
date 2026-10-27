@@ -1,0 +1,395 @@
+{
+  "schema": "tk2-retainer-portrait-additions-v1",
+  "native_size": [
+    32,
+    40
+  ],
+  "enhanced_size": [
+    128,
+    160
+  ],
+  "source": "16 previously unassigned imagegen source cells,5 new authored portraits and1 identity-preserving original Wang Jian redraw; not historical likeness",
+  "people": [
+    {
+      "person_id": "historical-zhao-chong",
+      "name": "赵宠",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 47,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-sun-kang",
+      "name": "孙康",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 48,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-xu-xi",
+      "name": "徐翕",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 49,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-mao-hui",
+      "name": "毛晖",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 50,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-liu-yi-yuzhang",
+      "name": "刘壹",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 51,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-yang-yi-liaodong",
+      "name": "阳仪",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 52,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-su-shu-liaodong",
+      "name": "宿舒",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 53,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-sun-zong-liaodong",
+      "name": "孙综",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 54,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-liu-yuan-liaodong",
+      "name": "柳远",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 55,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-gongsun-heng",
+      "name": "公孙珩",
+      "art_gender_design": "male",
+      "source_kind": "imagegen_new_pixel_art",
+      "source_path": "art/portraits/retainer-additions-v1/source/historical-gongsun-heng.png",
+      "source_sha256": "948c5938fa6d23cb5474ea61ef4484586260918dcc951d4e9b594e68f93d98d0",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "alpha",
+      "prompt": "art/portraits/retainer-additions-v1/prompts/historical-gongsun-heng.txt",
+      "prompt_sha256": "54324d2fd26b82147ac97cc9acd4813940c19a12ea469b7321de462c1eec096d"
+    },
+    {
+      "person_id": "historical-wang-zan-xuantu",
+      "name": "王赞",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 56,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-guo-xin-liaodong",
+      "name": "郭昕",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 57,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-liu-fu-liaodong",
+      "name": "柳甫",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 58,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-wang-jian-liaodong",
+      "name": "王建",
+      "art_gender_design": "male",
+      "source_kind": "original_portrait_redraw",
+      "source_sha256": "6219d365c82133c6bf9f6dab473e19f2044339971619620374abd02e3dc9e67c",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "alpha",
+      "source_path": "art/portraits/retainer-additions-v1/source/historical-wang-jian-liaodong.png",
+      "prompt": "art/portraits/retainer-additions-v1/prompts/historical-wang-jian-liaodong.txt",
+      "prompt_sha256": "22b802bba3f752e0101aebbf3ef6c40dfdb06474aa7a03b0e3d59cc128c068b1",
+      "native_original_id": 11,
+      "native_original_path": "game/assets/portraits/original/011.png",
+      "native_original_sha256": "a38597416450cb9032c7f54203dfafd70bc747c3dadebb49c6854752b6542b3a"
+    },
+    {
+      "person_id": "historical-wei-yan-liaodong",
+      "name": "卫演",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 60,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-bi-sheng",
+      "name": "毕盛",
+      "art_gender_design": "male",
+      "source_kind": "imagegen_new_pixel_art",
+      "source_path": "art/portraits/retainer-additions-v1/source/historical-bi-sheng.png",
+      "source_sha256": "f197075eb304cef9770c926725599b5b2ff268f524585284943c6c34abb890af",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "alpha",
+      "prompt": "art/portraits/retainer-additions-v1/prompts/historical-bi-sheng.txt",
+      "prompt_sha256": "5739dceda647df28666c4b13c6332a54cdcc0c942a9254ab01fc2660a1e0da01"
+    },
+    {
+      "person_id": "historical-gongsun-xiu",
+      "name": "公孙修",
+      "art_gender_design": "male",
+      "source_kind": "imagegen_new_pixel_art",
+      "source_path": "art/portraits/retainer-additions-v1/source/historical-gongsun-xiu.png",
+      "source_sha256": "c79328ccb1c4853f59fa3d9fe8bcd92775855413147d1f33afe207913c5d4f90",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "alpha",
+      "prompt": "art/portraits/retainer-additions-v1/prompts/historical-gongsun-xiu.txt",
+      "prompt_sha256": "8934737fe39637168a9837e133f5f5f2932b91c57ef3bf19df10876dabd08f6e"
+    },
+    {
+      "person_id": "historical-qu-jing-cangwu",
+      "name": "区景",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 61,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-heng-yi-cangwu",
+      "name": "衡毅",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 62,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-qian-bo-cangwu",
+      "name": "钱博",
+      "art_gender_design": "male",
+      "source_kind": "reused_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "grid": [
+        8,
+        8
+      ],
+      "cell_index": 63,
+      "source_matte": "black"
+    },
+    {
+      "person_id": "historical-gongchou-cheng",
+      "name": "公仇称",
+      "art_gender_design": "male",
+      "source_kind": "imagegen_new_pixel_art",
+      "source_path": "art/portraits/retainer-additions-v1/source/historical-gongchou-cheng.png",
+      "source_sha256": "ca520f922f1a276ff98178f15e77e865d2c84bb07b9e56b677670480ec6180ce",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "alpha",
+      "prompt": "art/portraits/retainer-additions-v1/prompts/historical-gongchou-cheng.txt",
+      "prompt_sha256": "e550f66a86d6694d63ad7cd781fcb2eeb9bfddce83185674a0b5d966cf9eb9cc"
+    },
+    {
+      "person_id": "historical-sun-xiang",
+      "name": "孙香",
+      "art_gender_design": "male",
+      "source_kind": "imagegen_new_pixel_art",
+      "source_path": "art/portraits/retainer-additions-v1/source/historical-sun-xiang.png",
+      "source_sha256": "83186ba74ba79640863a8a070f09cfd2fb75fc9c0c1677aca63f974904b68637",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "alpha",
+      "prompt": "art/portraits/retainer-additions-v1/prompts/historical-sun-xiang.txt",
+      "prompt_sha256": "678051cbe20392d278a5b77849d76890941ea9330e93775019b87249055fd6de"
+    }
+  ]
+}

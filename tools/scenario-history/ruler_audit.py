@@ -32,7 +32,7 @@ REPORT_JSON = ROOT / 'docs/ruler-affiliation-audit-20261027.json'
 REPORT_MD = ROOT / 'docs/ruler-affiliation-audit-20261027.md'
 EXPECTED_SCENARIOS = 29
 EXPECTED_POOL = 67
-EXPECTED_PEOPLE = 1030
+EXPECTED_PEOPLE = 1052
 LOCATION_FIELDS = ('status', 'faction', 'city')
 STATE_FIELDS = (*LOCATION_FIELDS, 'ruler')
 
@@ -138,7 +138,7 @@ def check_catalog(data, decision, pool, presentation):
             and decision['fictional'] == is_fictional(data),
             ident + ': historical/IF classification differs')
     people = indexed(data['people'], 'person_id', ident + ' people')
-    require(len(people) == EXPECTED_PEOPLE, ident + ': expected 1030 complete person plans')
+    require(len(people) == EXPECTED_PEOPLE, ident + ': expected 1052 complete person plans')
     by_runtime = indexed(data['people'], 'runtime_id', ident + ' runtime identities')
     eras = data['era_assignments']
     require(set(eras) == set(people), ident + ': every person requires exactly one era plan')
@@ -402,7 +402,7 @@ def markdown(report):
         '| 仮想・演義の例外 | 公式の仮想シナリオの前提や利用者指定を維持したもの。現実の歴史へ一律に置き換えません。 |',
         '| 地域代理 | 固定都市にない営地や地域を既存ノードへ対応させたもの。郡全体の実効支配を認定しません。 |',
         '| 構造照合のみ | 既に君主、在野、登場前または対象外で、今回の「他勢力に誤編入」の候補でなかった配置。伝記の再考証を意味しません。 |', '',
-        '開幕の君主名・人物ID・本拠都市・所有者・君主フラグ、全1030人の配置根拠集計、資源の保存を別々に検証します。'
+        '開幕の君主名・人物ID・本拠都市・所有者・君主フラグ、全1052人の配置根拠集計、資源の保存を別々に検証します。'
         '184年2月の後日起兵する勢力は定義があっても開幕君主に数えず、既定の条件付き起兵処理を維持します。'
         '資金・兵糧は開放都市だけ、兵員は開放都市の予備兵と在籍武将の帯兵の合計です。'
         '在野化するときの帯兵は予備兵へ返し、兵員総数を増減させません。', '',

@@ -1,7 +1,7 @@
 {
   "schema": "tk2-generated-portraits-v1",
-  "count": 810,
-  "unique_pixel_images": 810,
+  "count": 831,
+  "unique_pixel_images": 831,
   "native_size": [
     32,
     40
@@ -1641,10 +1641,82 @@
           ]
         ]
       }
+    },
+    {
+      "id": "historical-gongsun-heng",
+      "path": "art/portraits/retainer-additions-v1/source/historical-gongsun-heng.png",
+      "sha256": "948c5938fa6d23cb5474ea61ef4484586260918dcc951d4e9b594e68f93d98d0",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json"
+    },
+    {
+      "id": "historical-wang-jian-liaodong",
+      "path": "art/portraits/retainer-additions-v1/source/historical-wang-jian-liaodong.png",
+      "sha256": "6219d365c82133c6bf9f6dab473e19f2044339971619620374abd02e3dc9e67c",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json"
+    },
+    {
+      "id": "historical-bi-sheng",
+      "path": "art/portraits/retainer-additions-v1/source/historical-bi-sheng.png",
+      "sha256": "f197075eb304cef9770c926725599b5b2ff268f524585284943c6c34abb890af",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json"
+    },
+    {
+      "id": "historical-gongsun-xiu",
+      "path": "art/portraits/retainer-additions-v1/source/historical-gongsun-xiu.png",
+      "sha256": "c79328ccb1c4853f59fa3d9fe8bcd92775855413147d1f33afe207913c5d4f90",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json"
+    },
+    {
+      "id": "historical-gongchou-cheng",
+      "path": "art/portraits/retainer-additions-v1/source/historical-gongchou-cheng.png",
+      "sha256": "ca520f922f1a276ff98178f15e77e865d2c84bb07b9e56b677670480ec6180ce",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json"
+    },
+    {
+      "id": "historical-sun-xiang",
+      "path": "art/portraits/retainer-additions-v1/source/historical-sun-xiang.png",
+      "sha256": "83186ba74ba79640863a8a070f09cfd2fb75fc9c0c1677aca63f974904b68637",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json"
     }
   ],
   "assigned_by_gender": {
-    "male": 758,
+    "male": 779,
     "female": 52
   },
   "duplicate_fallback_count": 0,
@@ -34048,6 +34120,1161 @@
         31,
         39
       ]
+    },
+    "historical-zhao-chong": {
+      "path": "/assets/portraits/generated/historical-zhao-chong.png",
+      "png_sha256": "08b78cfafea1ae09491aca99934630f4318220e510f0ba0fea2a437e10e7e740",
+      "rgba_sha256": "deb33f4b6ca86400e4894054f9fbac5408998a2b89d6c779562ea46d2612e030",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 433,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "赵宠",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 47,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 550,
+      "source_cell_box": [
+        894,
+        958,
+        1024,
+        1153
+      ],
+      "declared_grid_cell_box": [
+        896,
+        960,
+        1024,
+        1152
+      ],
+      "source_visible_box": [
+        904,
+        975,
+        1009,
+        1136
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        28,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-sun-kang": {
+      "path": "/assets/portraits/generated/historical-sun-kang.png",
+      "png_sha256": "76b76d9982087baf3f7850bbe5ea45d3f9fa0e0dd87368d5cb2075c4ac4504d3",
+      "rgba_sha256": "6d2bf8ae03e803b51cd4fa0d7ee260cba3ee7a9c2670a6c498e7ca081e98c90f",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 424,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "孙康",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 48,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 563,
+      "source_cell_box": [
+        0,
+        1153,
+        133,
+        1338
+      ],
+      "declared_grid_cell_box": [
+        0,
+        1152,
+        128,
+        1344
+      ],
+      "source_visible_box": [
+        17,
+        1170,
+        124,
+        1325
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-xu-xi": {
+      "path": "/assets/portraits/generated/historical-xu-xi.png",
+      "png_sha256": "918eae25b063f47c3f1f23fb51a0c046dc7a5009c7db836c32b5fb696afd8a17",
+      "rgba_sha256": "dc89171ddc7b9f708e4fc0bbc91945df1f801ae6d9ea41fcce641727d211bc4b",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 416,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "徐翕",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 49,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 484,
+      "source_cell_box": [
+        133,
+        1153,
+        258,
+        1338
+      ],
+      "declared_grid_cell_box": [
+        128,
+        1152,
+        256,
+        1344
+      ],
+      "source_visible_box": [
+        143,
+        1170,
+        249,
+        1325
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-mao-hui": {
+      "path": "/assets/portraits/generated/historical-mao-hui.png",
+      "png_sha256": "d7ea1fe95c1859c9dc78a3bbafd1e436f612369e9f46acd22ca109902a94a6d8",
+      "rgba_sha256": "347537058fa9b57b66c4b3fd81715e59bd60374752f8f00ebf5152d09f78f578",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 429,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "毛晖",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 50,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 590,
+      "source_cell_box": [
+        258,
+        1153,
+        384,
+        1338
+      ],
+      "declared_grid_cell_box": [
+        256,
+        1152,
+        384,
+        1344
+      ],
+      "source_visible_box": [
+        269,
+        1170,
+        375,
+        1325
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-liu-yi-yuzhang": {
+      "path": "/assets/portraits/generated/historical-liu-yi-yuzhang.png",
+      "png_sha256": "48f922427fa1198ac85b7d1cbd8c60ac15e6eeebee2991992f5e71091c32791c",
+      "rgba_sha256": "88363569aff30f0353a73fccad1eec278ad5682406dd8e0ce8f2997614e587f0",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 430,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "刘壹",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 51,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 623,
+      "source_cell_box": [
+        384,
+        1153,
+        510,
+        1338
+      ],
+      "declared_grid_cell_box": [
+        384,
+        1152,
+        512,
+        1344
+      ],
+      "source_visible_box": [
+        395,
+        1170,
+        500,
+        1325
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-yang-yi-liaodong": {
+      "path": "/assets/portraits/generated/historical-yang-yi-liaodong.png",
+      "png_sha256": "5b9c7601483c2d3f41811a5966893726f98420037ebc9bd2f6f5789c390ad769",
+      "rgba_sha256": "9e73f4c13419967b752a1f718c93b7748026efc43e5599498c85f0bbb474717c",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 426,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "阳仪",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 52,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 513,
+      "source_cell_box": [
+        510,
+        1153,
+        638,
+        1338
+      ],
+      "declared_grid_cell_box": [
+        512,
+        1152,
+        640,
+        1344
+      ],
+      "source_visible_box": [
+        520,
+        1174,
+        627,
+        1325
+      ],
+      "native_fitted_box": [
+        2,
+        1,
+        29,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-su-shu-liaodong": {
+      "path": "/assets/portraits/generated/historical-su-shu-liaodong.png",
+      "png_sha256": "3e6727ee5b5fcdc1cdfb286be3b25c8966589debbe20515a5e29194c1143ce55",
+      "rgba_sha256": "8ba43b2f717a949e83c14d4fd3aaf32385d8bc239c87579780d40e8d8ce7c111",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 426,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "宿舒",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 53,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 555,
+      "source_cell_box": [
+        638,
+        1153,
+        767,
+        1338
+      ],
+      "declared_grid_cell_box": [
+        640,
+        1152,
+        768,
+        1344
+      ],
+      "source_visible_box": [
+        648,
+        1170,
+        757,
+        1325
+      ],
+      "native_fitted_box": [
+        2,
+        1,
+        29,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-sun-zong-liaodong": {
+      "path": "/assets/portraits/generated/historical-sun-zong-liaodong.png",
+      "png_sha256": "30f67bf5b45c3d7de5a6e81683f2ac09023537d9fb477164773a2ae67362ea34",
+      "rgba_sha256": "3da34a4cac45a0e065a0a04c03bc2df31d88866d8a84e45d53ca487d4a788c14",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 404,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "孙综",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 54,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 504,
+      "source_cell_box": [
+        767,
+        1153,
+        894,
+        1338
+      ],
+      "declared_grid_cell_box": [
+        768,
+        1152,
+        896,
+        1344
+      ],
+      "source_visible_box": [
+        777,
+        1170,
+        884,
+        1325
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-liu-yuan-liaodong": {
+      "path": "/assets/portraits/generated/historical-liu-yuan-liaodong.png",
+      "png_sha256": "f12059620e41bb04a7e0b817ba14680af7842e87c15cf364e5ed6303b9dd488c",
+      "rgba_sha256": "15ef886030d7065f6df3a430b2df22c77c6ec505e69c75a34c8b989f38fc41c0",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 386,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "柳远",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 55,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 462,
+      "source_cell_box": [
+        894,
+        1153,
+        1024,
+        1338
+      ],
+      "declared_grid_cell_box": [
+        896,
+        1152,
+        1024,
+        1344
+      ],
+      "source_visible_box": [
+        904,
+        1172,
+        1009,
+        1325
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-gongsun-heng": {
+      "path": "/assets/portraits/generated/historical-gongsun-heng.png",
+      "png_sha256": "091d60f0f1d5fe98bc778120f7a73a31ab22a7f973c2012bf968b0e150d6c70c",
+      "rgba_sha256": "e8a44bd846b0b7ef7b7ee64cb89563218714a7386ef4bfce7e6fc8db98a971f6",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 348,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "公孙珩",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/retainer-additions-v1/source/historical-gongsun-heng.png",
+      "original_source_sha256": "948c5938fa6d23cb5474ea61ef4484586260918dcc951d4e9b594e68f93d98d0",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "alpha",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/retainer-additions-v1/source/historical-gongsun-heng.png",
+      "source_sha256": "948c5938fa6d23cb5474ea61ef4484586260918dcc951d4e9b594e68f93d98d0",
+      "opaque_pixels": 427,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        9,
+        74,
+        1109,
+        1363
+      ],
+      "native_fitted_box": [
+        1,
+        4,
+        31,
+        39
+      ]
+    },
+    "historical-wang-zan-xuantu": {
+      "path": "/assets/portraits/generated/historical-wang-zan-xuantu.png",
+      "png_sha256": "7d0d706df792232e5598db08922924cba1ae1568cab49692a0a07147af8706c3",
+      "rgba_sha256": "4cb9e7cebc4d68b1c2c2e2b14bfb56fe057ad44f583a807721ff1af936ffc414",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 400,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "王赞",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 56,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 499,
+      "source_cell_box": [
+        0,
+        1338,
+        133,
+        1536
+      ],
+      "declared_grid_cell_box": [
+        0,
+        1344,
+        128,
+        1536
+      ],
+      "source_visible_box": [
+        16,
+        1351,
+        123,
+        1510
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-guo-xin-liaodong": {
+      "path": "/assets/portraits/generated/historical-guo-xin-liaodong.png",
+      "png_sha256": "38da09e11724d7b9f7a1a581797ce40d016f695d01665f3572ad25cc0cb55c80",
+      "rgba_sha256": "c808717b47caccb792f0fb607fc9077e363f4ebb0c382a4fe129a940b063b6eb",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 393,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "郭昕",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 57,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 461,
+      "source_cell_box": [
+        133,
+        1338,
+        258,
+        1536
+      ],
+      "declared_grid_cell_box": [
+        128,
+        1344,
+        256,
+        1536
+      ],
+      "source_visible_box": [
+        143,
+        1355,
+        249,
+        1510
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-liu-fu-liaodong": {
+      "path": "/assets/portraits/generated/historical-liu-fu-liaodong.png",
+      "png_sha256": "1ad29558dad109aed01bc005964a8e66c249da707015354af6aecc72c21660b5",
+      "rgba_sha256": "1c2c0fbe53edc504816ea0dca02d6e297646266059532882d3b7051f48c036f1",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 431,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "柳甫",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 58,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 546,
+      "source_cell_box": [
+        258,
+        1338,
+        384,
+        1536
+      ],
+      "declared_grid_cell_box": [
+        256,
+        1344,
+        384,
+        1536
+      ],
+      "source_visible_box": [
+        268,
+        1351,
+        374,
+        1510
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        28,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-wei-yan-liaodong": {
+      "path": "/assets/portraits/generated/historical-wei-yan-liaodong.png",
+      "png_sha256": "a87e6e1edacd41c5d02550d2ece90d62fd89e62fcfc253dcf7f27a8d5495c3cc",
+      "rgba_sha256": "bdbbdcf1f06b5be285fd3a3936c751f7aa02003182b4c7a6f189bbb6c7f2655f",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 414,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "卫演",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 60,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 506,
+      "source_cell_box": [
+        510,
+        1338,
+        638,
+        1536
+      ],
+      "declared_grid_cell_box": [
+        512,
+        1344,
+        640,
+        1536
+      ],
+      "source_visible_box": [
+        520,
+        1357,
+        626,
+        1510
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-bi-sheng": {
+      "path": "/assets/portraits/generated/historical-bi-sheng.png",
+      "png_sha256": "d9e1cdc13f5b631cb15a614ea48a6861b8e4ce4ef5c59d6bd9d27db12e74dfd4",
+      "rgba_sha256": "597e5091b12f8d37e897d5025c3a67d7513df3ce0bf3acd88e1bc54655fbe527",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 447,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "毕盛",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/retainer-additions-v1/source/historical-bi-sheng.png",
+      "original_source_sha256": "f197075eb304cef9770c926725599b5b2ff268f524585284943c6c34abb890af",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "alpha",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/retainer-additions-v1/source/historical-bi-sheng.png",
+      "source_sha256": "f197075eb304cef9770c926725599b5b2ff268f524585284943c6c34abb890af",
+      "opaque_pixels": 419,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        8,
+        36,
+        1114,
+        1383
+      ],
+      "native_fitted_box": [
+        1,
+        2,
+        31,
+        39
+      ]
+    },
+    "historical-gongsun-xiu": {
+      "path": "/assets/portraits/generated/historical-gongsun-xiu.png",
+      "png_sha256": "674f93af7505a5bb6e9724acbd40075435f59b3f1a087df12a69af34ed550ce2",
+      "rgba_sha256": "d6a23abd00b3016b41f9b4069d925ebac1a3616f0a9d6daaed98c3f2d60cadfe",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 414,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "公孙修",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/retainer-additions-v1/source/historical-gongsun-xiu.png",
+      "original_source_sha256": "c79328ccb1c4853f59fa3d9fe8bcd92775855413147d1f33afe207913c5d4f90",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "alpha",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/retainer-additions-v1/source/historical-gongsun-xiu.png",
+      "source_sha256": "c79328ccb1c4853f59fa3d9fe8bcd92775855413147d1f33afe207913c5d4f90",
+      "opaque_pixels": 439,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        38,
+        80,
+        1080,
+        1367
+      ],
+      "native_fitted_box": [
+        1,
+        2,
+        31,
+        39
+      ]
+    },
+    "historical-qu-jing-cangwu": {
+      "path": "/assets/portraits/generated/historical-qu-jing-cangwu.png",
+      "png_sha256": "1bec91e4a5372085ea12fd42dd50ccab26e359e6e52c90645f67926eae3cc67b",
+      "rgba_sha256": "5ae4a34c939e4e14216e9f2541e9ec4430dc8b060e7a1c9e566ddda289545743",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 458,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "区景",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 61,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 615,
+      "source_cell_box": [
+        638,
+        1338,
+        767,
+        1536
+      ],
+      "declared_grid_cell_box": [
+        640,
+        1344,
+        768,
+        1536
+      ],
+      "source_visible_box": [
+        647,
+        1356,
+        757,
+        1510
+      ],
+      "native_fitted_box": [
+        2,
+        1,
+        29,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-heng-yi-cangwu": {
+      "path": "/assets/portraits/generated/historical-heng-yi-cangwu.png",
+      "png_sha256": "6bf6473b37c4085b5196b569f9d11719c72bfd4c113cc20d0a3ec3e54608fe3d",
+      "rgba_sha256": "5ff45385dfdd8cbfbfbbccaae879dd68654b3ced09338b42ef0e8ca8d99f4468",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 435,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "衡毅",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 62,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 531,
+      "source_cell_box": [
+        767,
+        1338,
+        894,
+        1536
+      ],
+      "declared_grid_cell_box": [
+        768,
+        1344,
+        896,
+        1536
+      ],
+      "source_visible_box": [
+        777,
+        1359,
+        884,
+        1510
+      ],
+      "native_fitted_box": [
+        2,
+        1,
+        29,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-qian-bo-cangwu": {
+      "path": "/assets/portraits/generated/historical-qian-bo-cangwu.png",
+      "png_sha256": "86f90e5451322fdb1dfe324934c7ca4ef777b487f6878355a974c1ac852e32e0",
+      "rgba_sha256": "f7a5033655e4dff515093fbce8ae23581496e4e25d7dfc385b114995d9622a7b",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 424,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "钱博",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/source-atlases/new-12.png",
+      "original_source_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "source_size": [
+        1024,
+        1536
+      ],
+      "source_matte": "black",
+      "source_origin": "retained_unassigned_imagegen_cell",
+      "source_atlas": "art/portraits/source-atlases/new-12.png",
+      "source_atlas_sha256": "a83ea7e4b8510fd7cd99a3273f56a49f4a013deb8a06ca427eabbea5bcf94423",
+      "cell_index": 63,
+      "grid": [
+        8,
+        8
+      ],
+      "opaque_pixels": 531,
+      "source_cell_box": [
+        894,
+        1338,
+        1024,
+        1536
+      ],
+      "declared_grid_cell_box": [
+        896,
+        1344,
+        1024,
+        1536
+      ],
+      "source_visible_box": [
+        904,
+        1355,
+        1009,
+        1510
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ],
+      "reuse_notice": "Previously authored, unassigned imagegen artwork; newly bound to this person ID, not newly generated for this person or a historical likeness."
+    },
+    "historical-gongchou-cheng": {
+      "path": "/assets/portraits/generated/historical-gongchou-cheng.png",
+      "png_sha256": "dc8c82fe0c3dc97fd9e87d657987039050c1c9236914ff80020c21f6a7765936",
+      "rgba_sha256": "0630b00af4ce1f0eb172e194cf884991302ad5a56b6dc1b4bb16417d99009cbc",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 404,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "公仇称",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/retainer-additions-v1/source/historical-gongchou-cheng.png",
+      "original_source_sha256": "ca520f922f1a276ff98178f15e77e865d2c84bb07b9e56b677670480ec6180ce",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "alpha",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/retainer-additions-v1/source/historical-gongchou-cheng.png",
+      "source_sha256": "ca520f922f1a276ff98178f15e77e865d2c84bb07b9e56b677670480ec6180ce",
+      "opaque_pixels": 438,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        35,
+        95,
+        1092,
+        1335
+      ],
+      "native_fitted_box": [
+        1,
+        4,
+        31,
+        39
+      ]
+    },
+    "historical-sun-xiang": {
+      "path": "/assets/portraits/generated/historical-sun-xiang.png",
+      "png_sha256": "8af00ce13d3f06c892b9e643dd40a8183151cb0e5774744320e8eba7be5e6409",
+      "rgba_sha256": "a35c24c269e2525d6143f3c3a3f5c36e5d7e18e4c6b8ffed4dfbac0360bc39af",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 399,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "孙香",
+      "retainer_plan": "art/portraits/retainer-additions-v1/plan.json",
+      "retainer_plan_sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/retainer-additions-v1/source/historical-sun-xiang.png",
+      "original_source_sha256": "83186ba74ba79640863a8a070f09cfd2fb75fc9c0c1677aca63f974904b68637",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "alpha",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/retainer-additions-v1/source/historical-sun-xiang.png",
+      "source_sha256": "83186ba74ba79640863a8a070f09cfd2fb75fc9c0c1677aca63f974904b68637",
+      "opaque_pixels": 480,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        24,
+        77,
+        1094,
+        1355
+      ],
+      "native_fitted_box": [
+        1,
+        3,
+        31,
+        39
+      ]
     }
+  },
+  "retainer_plan": {
+    "path": "art/portraits/retainer-additions-v1/plan.json",
+    "sha256": "c32bca32badb19ac9890eef2d35931cfa14902ac15c442109d9d93a07ecea84b",
+    "count": 22,
+    "generated_count": 21,
+    "original_count": 1,
+    "source_images": 7,
+    "method": "retainer_authored_source_direct128_fixed_palette"
   }
 }

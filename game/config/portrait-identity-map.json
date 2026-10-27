@@ -1,11 +1,11 @@
 {
   "schema": "tk2-portrait-identities-v1",
   "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
-  "pool_count": 1023,
+  "pool_count": 1052,
   "original_name_records": 237,
-  "bound_original_people": 220,
-  "unbound_original_records": 17,
-  "generated_people_needed": 803,
+  "bound_original_people": 221,
+  "unbound_original_records": 16,
+  "generated_people_needed": 831,
   "policy": "Stable person_id bindings only; official list ordinals and runtime IDs are not NES IDs. Same-name candidates and uncertain ROM names remain unbound, and receive new art instead.",
   "transcription": "237 original ROM name records manually transcribed from rendered glyph pixels; orthographic forms may resolve to the same exact identity, but similar names never merge distinct people.",
   "normalization_note": "Only displayed traditional/Japanese orthographic variants are normalized for the exact-match review. No pronunciation-only, surname-only, ordinal-based or statistical matching.",
@@ -239,9 +239,11 @@
     {
       "original_id": 11,
       "transcribed_name": "王建",
-      "person_id": null,
-      "candidate_matches": [],
-      "status": "identity_pending",
+      "person_id": "historical-wang-jian-liaodong",
+      "candidate_matches": [
+        "historical-wang-jian-liaodong"
+      ],
+      "status": "manual_name_glyph_match",
       "evidence": {
         "rom_name_record_offset": 142931,
         "rom_name_record_sha256": "bb353e65fc3d2e977b4336e3a94414866d9599041fb99791f66e00c36372f440",
@@ -254,8 +256,15 @@
           32
         ]
       },
-      "review_note": "No unique exact-name identity in the current 1023-person pool; not bound by resemblance.",
-      "identity_basis": "reserved until independent identity review"
+      "review_note": "ROM glyphs read 王建. Independently reviewed 遼東/196 source-table context and 晉書卷一 公孫淵相國王建 identify the same Three-Kingdoms person; not a later namesake and not a portrait/ability/ordinal match.",
+      "identity_basis": "manual ROM name-glyph transcription plus independently reviewed exact-name and Liaodong context",
+      "identity_context": {
+        "primary_url": "https://zh.wikisource.org/zh-hant/晉書/卷001",
+        "primary_role": "公孫淵相國；景初二年遣王建與柳甫出使司馬懿",
+        "public_table_source_row_id": "cnblogs-line-0229",
+        "public_table_city_label": "辽东",
+        "public_table_appearance_is_game_data": true
+      }
     },
     {
       "original_id": 12,

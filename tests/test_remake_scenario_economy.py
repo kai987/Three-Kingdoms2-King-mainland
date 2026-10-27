@@ -35,12 +35,40 @@ class DatedScenarioEconomyTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.index = read('game/data/campaigns/index.json')
+        cls.retainer_review = {row['id']: row for row in read(
+            'game/config/references/retainer-affiliation-review.json')['scenarios']}
         cls.catalogs = {}
         for path in cls.index['catalogs']:
             catalog = Catalog(ROOT / 'game/data' / path)
             date = catalog.data['start_year'], catalog.data['start_month']
             key = date + (catalog.data['scenario_variant'],) if catalog.data.get('scenario_variant') else date
             cls.catalogs[key] = catalog
+
+    def opening_transfers(self, data, city):
+        """Explicit reserve transactions, in their two reviewed stage orders."""
+        return [row for stage in ('ruler_affiliation_review', 'retainer_affiliation_review')
+                for row in data['main_scenario'][stage]['resource_transfers']
+                if row['city'] == city]
+
+    def pre_review_stocks(self, data, city):
+        """Undo reviewed troop transfers, never reinterpret them as city growth.
+
+        The compiled reserves are after city-size scaling. actual_* keeps
+        those same units, while raw_* belongs to the unscaled authoring file.
+        Each stage's transactions must form an exact chronological chain.
+        """
+        stocks = dict(data['initial_city_resources'][city])
+        for transfer in reversed(self.opening_transfers(data, city)):
+            for field in ('actual_before', 'actual_after', 'actual_delta', 'raw_before', 'raw_after'):
+                self.assertIs(type(transfer[field]), int, (data['id'], city, field))
+            self.assertGreaterEqual(transfer['actual_before'], 0)
+            self.assertGreaterEqual(transfer['actual_after'], 0)
+            self.assertEqual(transfer['actual_after'] - transfer['actual_before'],
+                             transfer['actual_delta'], (data['id'], city, transfer['person_id']))
+            self.assertEqual(stocks['reserves'], transfer['actual_after'],
+                             (data['id'], city, transfer['person_id']))
+            stocks['reserves'] = transfer['actual_before']
+        return stocks
 
     def game(self, date=(217, 7), side='wu', *, city_disasters=True):
         catalog = self.catalogs[date]
@@ -65,15 +93,49 @@ class DatedScenarioEconomyTests(unittest.TestCase):
             data = catalog.data
             with self.subTest(date=date):
                 self.assertEqual(data['schema'], 'tk2-campaign-v1')
-                self.assertTrue(all(r['troops'] == 300 for r in data['initial_officers']))
+                frozen = self.retainer_review[data['id']]
+                changes = {row['person_id']: row for row in frozen['changes']}
+                for row in data['initial_officers']:
+                    # Reviewed additions draw from existing city reserves.
+                    # Exhaustion can give partial or zero troops; unchanged
+                    # released officers still retain their exact300 baseline.
+                    change = changes.get(row['person_id'])
+                    expected = change['after']['troops'] if change else 300
+                    self.assertIs(type(row['troops']), int)
+                    self.assertGreaterEqual(row['troops'], 0)
+                    self.assertLessEqual(row['troops'], 300)
+                    self.assertEqual(row['troops'], expected, (date, row['person_id']))
+                    if change:
+                        self.assertEqual(change['after']['status'], 'serving')
+                        self.assertEqual(change['after']['city'], row['city'])
+                actual_material = dict(
+                    gold=sum(data['initial_city_resources'][city]['gold'] for city in data['active_cities']),
+                    grain=sum(data['initial_city_resources'][city]['grain'] for city in data['active_cities']),
+                    soldiers=sum(data['initial_city_resources'][city]['reserves'] for city in data['active_cities'])
+                             + sum(row['troops'] for row in data['initial_officers']))
+                self.assertEqual(actual_material, frozen['material'])
                 patterns = {tuple(data['initial_city_resources'][key][field] for field in FIELDS)
                             for key in data['active_cities']}
                 self.assertGreaterEqual(len(patterns), 25)
                 for city in data['cities']:
                     key = city['id']
-                    for values in (data['initial_city_resources'][key], data['city_income'][key]):
+                    stocks = data['initial_city_resources'][key]
+                    baseline = self.pre_review_stocks(data, key)
+                    for values in (stocks, data['city_income'][key]):
                         self.assertEqual(set(values), set(FIELDS))
-                        self.assertTrue(all(type(value) is int and 0 < value < 100000 for value in values.values()))
+                        for field, value in values.items():
+                            self.assertIs(type(value), int)
+                            self.assertLess(value, 100000)
+                            if values is stocks and field == 'reserves':
+                                self.assertGreaterEqual(value, 0)
+                                if value == 0:
+                                    self.assertGreater(baseline['reserves'], 0)
+                                    self.assertTrue(any(transfer['actual_delta'] < 0
+                                        and transfer['actual_after'] == 0
+                                        for transfer in self.opening_transfers(data, key)),
+                                        (date, key, 'zero reserves need a reviewed exhaustion receipt'))
+                            else:
+                                self.assertGreater(value, 0)
                     profile = data['city_profiles'][key]
                     self.assertIn(profile['tier'], ('normal', 'large', 'giant'))
                     self.assertIs(profile['is_SAN14_starting_resources'], False)
@@ -261,7 +323,8 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                 # Canonical date values were already quantized before this size
                 # edit; changing tiers may differ by at most two stock quanta.
                 multiplier = 2 if qiao_tier == 'large' else 1
-                chenliu_stocks = dict(data['initial_city_resources']['chenliu'])
+                qiao_stocks = self.pre_review_stocks(data, 'qiao')
+                chenliu_stocks = self.pre_review_stocks(data, 'chenliu')
                 if date[:2] == (196, 6):
                     # Liu Dai's reviewed death returns his existing 300 men to
                     # Chenliu; this dated transfer is separate from city size.
@@ -273,16 +336,17 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                     self.assertEqual((transfer['person_id'], transfer['actual_before'],
                                       transfer['actual_after'], transfer['actual_delta']),
                                      ('san14-candidate-0947', 1080, 1380, 300))
-                    self.assertEqual(chenliu_stocks['reserves'], transfer['actual_after'])
+                    self.assertEqual(data['initial_city_resources']['chenliu']['reserves'],
+                                     transfer['actual_after'])
                     self.assertEqual(data['era_assignments']['san14-candidate-0947']['status'],
                                      'chronology_excluded')
                     self.assertNotIn('san14-candidate-0947',
                                      {row['person_id'] for row in data['initial_officers']})
                     self.assertEqual(review['material_before']['soldiers'],
                                      review['material_after']['soldiers'])
-                    chenliu_stocks['reserves'] -= transfer['actual_delta']
+                    self.assertEqual(chenliu_stocks['reserves'], transfer['actual_before'])
                 for field in FIELDS:
-                    self.assertLessEqual(abs(data['initial_city_resources']['qiao'][field] -
+                    self.assertLessEqual(abs(qiao_stocks[field] -
                                              chenliu_stocks[field] * multiplier),
                                          data['city_scale_rules']['stock_quantum'][field] * 2)
                 for field in FIELDS:

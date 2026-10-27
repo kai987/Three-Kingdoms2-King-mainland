@@ -15,12 +15,14 @@
 
 ## 逐人的原版初始裝備
 
-[原版裝備轉錄檔](../game/config/references/original-equipment-v1.json)只從既有[cnblogs武將轉錄](../game/config/references/cnblogs-officer-stats.json)提取武器／防具欄，沿用已審核的人物ID綁定，不變更舊來源檔。
+[原版裝備轉錄檔](../game/config/references/original-equipment-v1.json)只從[cnblogs武將轉錄](../game/config/references/cnblogs-officer-stats.json)提取武器／防具欄，沿用已審核的人物ID綁定，保留原始數值與字形；新增身份另有明示審核，不改舊記錄。
 
-- 原資料237人，其中223人已綁定本作人物ID；14人仍未綁定，不以相似姓名、能力、排序或肖像補配。
-- 223人都有非空裝備欄。17種原始武器字形、6種防具字形，透過檔內明列的字形對照表轉為現有零起算ID，沒有模糊比對。
+- 原資料237人，其中224人已綁定本作人物ID；13人仍未綁定，不以相似姓名、能力、排序或肖像補配。
+- 224人都有非空裝備欄。17種原始武器字形、6種防具字形，透過檔內明列的字形對照表轉為現有零起算ID，沒有模糊比對。
 - 本批來源沒有武將初始持有隱藏特殊裝備，不能把單挑掉落表誤當成其初始持有表。
 - 原始字形、來源行ID、人物ID、來源檔SHA及轉錄結果SHA一併保留，能逐行重算。
+
+本次只加入已確認身分的遼東王建 `cnblogs-line-0229`，使用原表飛剣ID1、綸巾ID0，不採通用短劍配備。原223人完整裝備條目逐物件不變；濾除王建後的既有摘要仍為 `838143a3bb653f6375c8eb7830823251c6ccca760b206ae271632ec20c9530c9`。`append_review`另記舊來源檔SHA與新增來源行，避免把身份新增當成整份來源數值重寫。其初始體力42、來源忠59的語境及德60政策另見[屬性資料](officer-attribute-sources.md)。
 
 | 武將 | 附件的原始武器／防具 | 本作既有零起算ID |
 | --- | --- | --- |
@@ -32,32 +34,17 @@
 | 趙雲 | 單鉤槍／兜 | 武器18、防具2 |
 | 典韋 | 雙戟／兜 | 武器17、防具2 |
 | 諸葛亮 | 長剣／鶴氅 | 武器2、防具4 |
+| 王建（遼東） | 飞剣／纶巾（原表字形） | 武器1、防具0 |
 
 這是FC附件基線。名將依《三國演義》或使用者指定的專屬兵器覆蓋時，須另標來源和本作數值設計，並保留這份基線以便查核。未對應原版資料的新增人物採本作明示的通用初始化，不宣稱查到了原版設定。初始配備只用於首次登場；招募、轉屬、繼承、移動及讀檔不得重新發放或重置已持有裝備。
 
 以下指令只驗證轉錄與來源一致，不修改檔案：
 
 ```sh
-python3 -B - <<'PY'
-import hashlib, json
-from pathlib import Path
-p = Path('game/config/references/original-equipment-v1.json')
-e = json.loads(p.read_text())
-raw = Path(e['source_file']).read_bytes()
-assert hashlib.sha256(raw).hexdigest() == e['source_file_sha256']
-s = json.loads(raw)
-rows = [dict(person_id=r['person_id'], source_row_id=r['source_row_id'],
-    source_name=r['name'], weapon_label=r['weapon_label'],
-    weapon_id=e['weapon_aliases'][r['weapon_label']], armor_label=r['armor_label'],
-    armor_id=e['armor_aliases'][r['armor_label']],
-    basis='cnblogs_original_equipment_transcription')
-    for r in s['records'] if r.get('person_id')]
-assert rows == e['records'] and len(rows) == 223
-encoded = (json.dumps(rows, ensure_ascii=False, separators=(',', ':'))+'\n').encode()
-assert hashlib.sha256(encoded).hexdigest() == e['factual_records_sha256']
-print('223 source equipment bindings verified')
-PY
+python3 -B tools/officer-placement/build_original_equipment.py --check
 ```
+
+構建工具封閉檢查224個審核綁定、原223條摘要及唯一新增的王建0229行；`--check`逐位元組核對參考檔，不寫人物、裝備規則或既有遊戲狀態。
 
 ## 本作的名將初始覆蓋
 
@@ -135,6 +122,6 @@ PY
 
 元の能力と装備を分けて表示します。武器・防具を替えても出典の武・知・徳・体力上限は書き換えません。Namcoの説明書44–47ページでは、一騎討ちの攻防に装備が働くこと、軽い武器が先手を取りやすいことを確認できます。正確な重量、命中、逃走時の消耗式までは載っていません。本作では総重量と武から負荷を出し、命中・回避・先手・一騎討ちからの離脱と部隊の敗退・撤退精算時の体力に同じ式を適用します。具体式は上の「本作實際採用的計算」に公開し、原作の確定値と混同しません。
 
-元の武将表で人物IDが確認済みの223人は、明示した字形表で初期武器・防具を変換します。未対応14人を名前の似方で結び付けません。劉備の長剣、関羽の偃月刀などのFC初期値と、演義に基づく本作の専用武器は別に記録します。登用・所属変更・相続・移動・ロードで初期装備を再配布しません。
+元の武将表で人物IDが確認済みの224人は、明示した字形表で初期武器・防具を変換します。未対応13人を名前の似方で結び付けません。以前の223人の記録は保ち、王建の飛剣・綸巾だけを原表0229から追加しました。劉備の長剣、関羽の偃月刀などのFC初期値と、演義に基づく本作の専用武器は別に記録します。登用・所属変更・相続・移動・ロードで初期装備を再配布しません。
 
 特殊装備は旧攻略の条件を参考にし、倚天30%、竜牙50%を採用する表と、異なる割合の後年記事を区別しています。聖者の衣の条件も「知90」「知と徳90」「徳90」の記述があり、本作で採用する徳90は公式説明書で確定した条件ではありません。戦闘中の店を都市画面にまとめる場合、撃破をHP1の敗走と扱う場合、重量の式や追加専用武器を設計する場合は、本作の適応として明記します。プレイヤーとAIで取得条件や唯一性、費用を変えません。

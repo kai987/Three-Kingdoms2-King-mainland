@@ -299,7 +299,7 @@ class DelegationReplayTests(unittest.TestCase):
             self.assertTrue(self.staff_battles, 'A generated officer must enter and act in a real arrival battle')
             self.assertGreater(final.officers[self.generated].experience, 0)
             self.assertNotIn(self.generated, catalog.by_id)
-            self.assertEqual(len(catalog.definitions), 1030)
+            self.assertEqual(len(catalog.definitions), 1052)
         if filename == '184-02.json':
             self.assertTrue(self.reappointed_military,
                 'Real persuasion must be followed by a legal replacement military appointment')

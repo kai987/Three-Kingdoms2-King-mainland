@@ -427,6 +427,26 @@
         "people"
       ]
     },
+    "tests/test_remake_retainer_audit.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios",
+        "people"
+      ]
+    },
+    "tests/test_remake_retainer_openings.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios",
+        "people"
+      ]
+    },
+    "tests/test_remake_retainer_portraits.py": {
+      "tier": "global",
+      "groups": [
+        "people"
+      ]
+    },
     "tests/test_remake_river_network.py": {
       "tier": "related",
       "groups": [

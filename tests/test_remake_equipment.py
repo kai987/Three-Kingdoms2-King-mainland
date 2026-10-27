@@ -2,9 +2,11 @@
 from collections import Counter
 from copy import deepcopy
 from dataclasses import replace
+import importlib.util
 import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -45,13 +47,17 @@ class EquipmentTests(unittest.TestCase):
         state.turn+=1
         for city in state.cities.values():city.action_used=False
 
-    def test_original_223_identity_mapping_and_signature_overrides_preserve_profiles(self):
+    def test_original_224_identity_mapping_and_signature_overrides_preserve_profiles(self):
         data=json.loads((ROOT/'game/data/campaigns/217-07.json').read_text())
         source=json.loads((ROOT/'game/config/references/original-equipment-v1.json').read_text())['records']
         before=deepcopy(data['people'])
         initials=equipment.build_initials(data['people'],source,{})
-        self.assertEqual(len(initials),1030)
-        self.assertEqual(sum('source' in row for row in initials.values()),223)
+        self.assertEqual(len(initials),1052)
+        self.assertEqual(sum('source' in row for row in initials.values()),224)
+        wang=initials['historical-wang-jian-liaodong']
+        self.assertEqual((wang['weapon_id'],wang['armor_id']),(1,0))
+        self.assertEqual(wang['source']['source_row_id'],'cnblogs-line-0229')
+        self.assertEqual((wang['source']['weapon_label'],wang['source']['armor_label']),('飞剣','纶巾'))
         for pid,ident in equipment.SIGNATURES.items():
             self.assertEqual(initials[pid]['weapon_id'],ident)
             self.assertEqual(initials[pid]['basis'],'explicit_requested_novel_signature_override')
@@ -61,6 +67,34 @@ class EquipmentTests(unittest.TestCase):
         self.assertEqual(data['people'],before)
         unbound=[row for row in initials.values() if 'source' not in row and 'signature' not in row]
         self.assertTrue(all(row['weapon_id'] in (0,2,16) and row['armor_id'] in (0,1,2) for row in unbound))
+
+    def test_original_equipment_append_preserves_all223_frozen_records(self):
+        spec=importlib.util.spec_from_file_location('equipment_reference_review',
+            ROOT/'tools/officer-placement/build_original_equipment.py')
+        builder=importlib.util.module_from_spec(spec);spec.loader.exec_module(builder)
+        before_source=builder.SOURCE.read_bytes();before_people=builder.PEOPLE.read_bytes()
+        actual=builder.check()
+        retained=[row for row in actual['records'] if row['person_id']!=builder.WANG_JIAN]
+        self.assertEqual(len(retained),223)
+        self.assertEqual(builder.records_digest(retained),builder.BASE_RECORDS_SHA256)
+        self.assertEqual((actual['bound_people'],actual['unbound_source_records']),(224,13))
+        self.assertEqual(len(actual['records']),224)
+        self.assertEqual(actual['append_review']['added_source_row_id'],'cnblogs-line-0229')
+        with tempfile.TemporaryDirectory() as directory:
+            output=Path(directory)/'equipment.json'
+            output.write_bytes(builder.encode(actual)+b'\n')
+            with self.assertRaisesRegex(ValueError,'reference is stale'):
+                builder.check(output=output)
+            self.assertTrue(output.read_bytes().endswith(b'\n\n'))
+            source=Path(directory)/'source.json'
+            forged=json.loads(before_source)
+            row=next(row for row in forged['records'] if row['source_row_id']=='cnblogs-line-0229')
+            row['weapon_label']='短剣'
+            source.write_text(json.dumps(forged,ensure_ascii=False))
+            with self.assertRaisesRegex(ValueError,'source facts differ'):
+                builder.build(source_path=source)
+        self.assertEqual(builder.SOURCE.read_bytes(),before_source)
+        self.assertEqual(builder.PEOPLE.read_bytes(),before_people)
 
     def test_first_appearance_applies_once_and_preview_is_pure(self):
         game,state=fixture()

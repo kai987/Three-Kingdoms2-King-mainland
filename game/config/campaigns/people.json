@@ -1030,7 +1030,29 @@
     "historical-li-tong-jiaozhi",
     "historical-beigong-boyu",
     "historical-li-wenhou",
-    "historical-bian-zhang"
+    "historical-bian-zhang",
+    "historical-zhao-chong",
+    "historical-sun-kang",
+    "historical-xu-xi",
+    "historical-mao-hui",
+    "historical-liu-yi-yuzhang",
+    "historical-yang-yi-liaodong",
+    "historical-su-shu-liaodong",
+    "historical-sun-zong-liaodong",
+    "historical-liu-yuan-liaodong",
+    "historical-gongsun-heng",
+    "historical-wang-zan-xuantu",
+    "historical-guo-xin-liaodong",
+    "historical-liu-fu-liaodong",
+    "historical-wang-jian-liaodong",
+    "historical-wei-yan-liaodong",
+    "historical-bi-sheng",
+    "historical-gongsun-xiu",
+    "historical-qu-jing-cangwu",
+    "historical-heng-yi-cangwu",
+    "historical-qian-bo-cangwu",
+    "historical-gongchou-cheng",
+    "historical-sun-xiang"
   ],
   "people": {
     "san14-candidate-0001": {
@@ -133866,6 +133888,2543 @@
         "default_loyalty": 80,
         "source_loyalty": null
       }
+    },
+    "historical-zhao-chong": {
+      "person_id": "historical-zhao-chong",
+      "name": "赵宠",
+      "runtime_id": 1031,
+      "birth_year": 155,
+      "service_year": 190,
+      "death_year": 210,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 190/191是初平年範圍內的開局映射；194是否反曹未載，不自動跟張邈叛或入曹。",
+      "chronology_design": {
+        "birth_year": 155,
+        "service_year": 190,
+        "death_year": 210,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 193,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 190/191是初平年範圍內的開局映射；194是否反曹未載，不自動跟張邈叛或入曹。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 56,
+        "intellect": 51,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "赵宠",
+        "趙寵"
+      ],
+      "virtue_design": {
+        "person_id": "historical-zhao-chong",
+        "name": "赵宠",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷18"
+        ],
+        "notes": "張邈軍司馬。生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 190/191是初平年範圍內的開局映射；194是否反曹未載，不自動跟張邈叛或入曹。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "趙寵"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 56,
+          "intellect": 51,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-zhao-chong",
+          "name": "赵宠",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-sun-kang": {
+      "person_id": "historical-sun-kang",
+      "name": "孙康",
+      "runtime_id": 1032,
+      "birth_year": 155,
+      "service_year": 197,
+      "death_year": 225,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；155年為可玩年齡估計，197年為本作出場起點，不冒稱首次任官年。卒年不詳；225年僅為本作壽命退出估界。 明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。",
+      "chronology_design": {
+        "birth_year": 155,
+        "service_year": 197,
+        "death_year": 225,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 205,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；155年為可玩年齡估計，197年為本作出場起點，不冒稱首次任官年。卒年不詳；225年僅為本作壽命退出估界。 明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 65,
+        "intellect": 59,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "孙康",
+        "孫康"
+      ],
+      "virtue_design": {
+        "person_id": "historical-sun-kang",
+        "name": "孙康",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷18"
+        ],
+        "notes": "臧霸軍將、後城陽太守。生年不詳；155年為可玩年齡估計，197年為本作出場起點，不冒稱首次任官年。卒年不詳；225年僅為本作壽命退出估界。 明確曹操招降在198末/199；197及198年3月前推屬明列推定。205南皮僅群體上下文，不是確定其卒年。200後魏，城陽節點不存在時只能地域代理，不能混公孫康。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "孫康"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 65,
+          "intellect": 59,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-sun-kang",
+          "name": "孙康",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-xu-xi": {
+      "person_id": "historical-xu-xi",
+      "name": "徐翕",
+      "runtime_id": 1033,
+      "birth_year": 160,
+      "service_year": 192,
+      "death_year": 220,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；160年為可玩年齡估計，192年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。",
+      "chronology_design": {
+        "birth_year": 160,
+        "service_year": 192,
+        "death_year": 220,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 199,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；160年為可玩年齡估計，192年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 53,
+        "intellect": 57,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "徐翕"
+      ],
+      "virtue_design": {
+        "person_id": "historical-xu-xi",
+        "name": "徐翕",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷18"
+        ],
+        "notes": "兗州軍將、後依臧霸。生年不詳；160年為可玩年齡估計，192年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 約195兗州定後投霸；198末/199曹操任其郡守，何郡不詳。190不提前編曹、194哪座叛軍城未載，200後可魏地域代理但生卒不得冒作確年。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "徐翕"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 53,
+          "intellect": 57,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-xu-xi",
+          "name": "徐翕",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-mao-hui": {
+      "person_id": "historical-mao-hui",
+      "name": "毛晖",
+      "runtime_id": 1034,
+      "birth_year": 160,
+      "service_year": 192,
+      "death_year": 220,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；160年為可玩年齡估計，192年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 同徐翕。不得把毛玠、毛嘉等他人資料借入。",
+      "chronology_design": {
+        "birth_year": 160,
+        "service_year": 192,
+        "death_year": 220,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 199,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；160年為可玩年齡估計，192年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 同徐翕。不得把毛玠、毛嘉等他人資料借入。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 57,
+        "intellect": 54,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "毛晖",
+        "毛暉"
+      ],
+      "virtue_design": {
+        "person_id": "historical-mao-hui",
+        "name": "毛晖",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷18"
+        ],
+        "notes": "兗州軍將、後依臧霸。生年不詳；160年為可玩年齡估計，192年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 同徐翕。不得把毛玠、毛嘉等他人資料借入。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "毛暉"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 57,
+          "intellect": 54,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-mao-hui",
+          "name": "毛晖",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-liu-yi-yuzhang": {
+      "person_id": "historical-liu-yi-yuzhang",
+      "name": "刘壹",
+      "runtime_id": 1035,
+      "birth_year": 160,
+      "service_year": 196,
+      "death_year": 215,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；160年為可玩年齡估計，196年為本作出場起點，不冒稱首次任官年。卒年不詳；215年僅為本作壽命退出估界。 孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。",
+      "chronology_design": {
+        "birth_year": 160,
+        "service_year": 196,
+        "death_year": 215,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 200,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；160年為可玩年齡估計，196年為本作出場起點，不冒稱首次任官年。卒年不詳；215年僅為本作壽命退出估界。 孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 32,
+        "intellect": 68,
+        "virtue": 60,
+        "terrain_affinity": 2,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "刘壹",
+        "劉壹"
+      ],
+      "virtue_design": {
+        "person_id": "historical-liu-yi-yuzhang",
+        "name": "刘壹",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷13"
+        ],
+        "notes": "華歆府功曹。生年不詳；160年為可玩年齡估計，196年為本作出場起點，不冒稱首次任官年。卒年不詳；215年僅為本作壽命退出估界。 孫策取豫章語境約199末至200初的功曹關係可證，但本段沒有獨立紀年。196—198的入府年推定須明示；孫策受降後未載去向，不能把保持吳籍到死冒作史實。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "劉壹"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 32,
+          "intellect": 68,
+          "virtue": 60,
+          "terrain_affinity": 2,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-liu-yi-yuzhang",
+          "name": "刘壹",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-yang-yi-liaodong": {
+      "person_id": "historical-yang-yi-liaodong",
+      "name": "阳仪",
+      "runtime_id": 1036,
+      "birth_year": 155,
+      "service_year": 190,
+      "death_year": 220,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。",
+      "chronology_design": {
+        "birth_year": 155,
+        "service_year": 190,
+        "death_year": 220,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 190,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 42,
+        "intellect": 64,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "阳仪",
+        "陽儀"
+      ],
+      "virtue_design": {
+        "person_id": "historical-yang-yi-liaodong",
+        "name": "阳仪",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷08"
+        ],
+        "notes": "公孫度親吏。生年不詳；155年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；220年僅為本作壽命退出估界。 與柳毅同被度告以圖王。不能綁定188生的蜀漢楊儀；生卒不詳，不能沿柳毅的205卒年替他造卒年。190後在職延續至度在世各局為本作推定。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "陽儀"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 42,
+          "intellect": 64,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-yang-yi-liaodong",
+          "name": "阳仪",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-su-shu-liaodong": {
+      "person_id": "historical-su-shu-liaodong",
+      "name": "宿舒",
+      "runtime_id": 1037,
+      "birth_year": 195,
+      "service_year": 233,
+      "death_year": 250,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；195年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 232出使、233返遼東；234後繼續任職為生涯延續推定，生卒均未載。勿與吳使被殺者合併。",
+      "chronology_design": {
+        "birth_year": 195,
+        "service_year": 233,
+        "death_year": 250,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 233,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；195年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 232出使、233返遼東；234後繼續任職為生涯延續推定，生卒均未載。勿與吳使被殺者合併。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 49,
+        "intellect": 62,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "宿舒"
+      ],
+      "virtue_design": {
+        "person_id": "historical-su-shu-liaodong",
+        "name": "宿舒",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷47",
+          "https://zh.wikisource.org/wiki/三國志/卷08"
+        ],
+        "notes": "公孫淵校尉、使者。生年不詳；195年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 232出使、233返遼東；234後繼續任職為生涯延續推定，生卒均未載。勿與吳使被殺者合併。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "宿舒"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 49,
+          "intellect": 62,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-su-shu-liaodong",
+          "name": "宿舒",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-sun-zong-liaodong": {
+      "person_id": "historical-sun-zong-liaodong",
+      "name": "孙综",
+      "runtime_id": 1038,
+      "birth_year": 195,
+      "service_year": 233,
+      "death_year": 250,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；195年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 與宿舒出使並返遼東；不等同孫峻/孫宗。後續開局延續映射，不稱史證當月在任。",
+      "chronology_design": {
+        "birth_year": 195,
+        "service_year": 233,
+        "death_year": 250,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 233,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；195年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 與宿舒出使並返遼東；不等同孫峻/孫宗。後續開局延續映射，不稱史證當月在任。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 51,
+        "intellect": 64,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "孙综",
+        "孫綜"
+      ],
+      "virtue_design": {
+        "person_id": "historical-sun-zong-liaodong",
+        "name": "孙综",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷47",
+          "https://zh.wikisource.org/wiki/三國志/卷08"
+        ],
+        "notes": "公孫淵郎中令、使者。生年不詳；195年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 與宿舒出使並返遼東；不等同孫峻/孫宗。後續開局延續映射，不稱史證當月在任。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "孫綜"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 51,
+          "intellect": 64,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-sun-zong-liaodong",
+          "name": "孙综",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-liu-yuan-liaodong": {
+      "person_id": "historical-liu-yuan-liaodong",
+      "name": "柳远",
+      "runtime_id": 1039,
+      "birth_year": 190,
+      "service_year": 233,
+      "death_year": 250,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 233在沓津配合韓起誘吳使。不同於柳毅、柳浦；234後為同一軍府任職延續推定。",
+      "chronology_design": {
+        "birth_year": 190,
+        "service_year": 233,
+        "death_year": 250,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 233,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 233在沓津配合韓起誘吳使。不同於柳毅、柳浦；234後為同一軍府任職延續推定。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 39,
+        "intellect": 68,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "柳远",
+        "柳遠"
+      ],
+      "virtue_design": {
+        "person_id": "historical-liu-yuan-liaodong",
+        "name": "柳远",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷08"
+        ],
+        "notes": "公孫淵長史。生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 233在沓津配合韓起誘吳使。不同於柳毅、柳浦；234後為同一軍府任職延續推定。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "柳遠"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 39,
+          "intellect": 68,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-liu-yuan-liaodong",
+          "name": "柳远",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-gongsun-heng": {
+      "person_id": "historical-gongsun-heng",
+      "name": "公孙珩",
+      "runtime_id": 1040,
+      "birth_year": 195,
+      "service_year": 233,
+      "death_year": 250,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；195年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 奉送吳方印綬與使者首級赴魏。雖同姓，原文未給親緣，不造父子/兄弟。後續任職為推定。",
+      "chronology_design": {
+        "birth_year": 195,
+        "service_year": 233,
+        "death_year": 250,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 233,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；195年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 奉送吳方印綬與使者首級赴魏。雖同姓，原文未給親緣，不造父子/兄弟。後續任職為推定。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 36,
+        "intellect": 65,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "公孙珩",
+        "公孫珩"
+      ],
+      "virtue_design": {
+        "person_id": "historical-gongsun-heng",
+        "name": "公孙珩",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷08"
+        ],
+        "notes": "公孫淵西曹掾。生年不詳；195年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 奉送吳方印綬與使者首級赴魏。雖同姓，原文未給親緣，不造父子/兄弟。後續任職為推定。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "公孫珩"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 36,
+          "intellect": 65,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-gongsun-heng",
+          "name": "公孙珩",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-wang-zan-xuantu": {
+      "person_id": "historical-wang-zan-xuantu",
+      "name": "王赞",
+      "runtime_id": 1041,
+      "birth_year": 190,
+      "service_year": 233,
+      "death_year": 250,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 玄菟節點不在地圖，可用襄平/遼東軍府代理；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。",
+      "chronology_design": {
+        "birth_year": 190,
+        "service_year": 233,
+        "death_year": 250,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 233,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 玄菟節點不在地圖，可用襄平/遼東軍府代理；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 48,
+        "intellect": 62,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "王赞",
+        "王贊"
+      ],
+      "virtue_design": {
+        "person_id": "historical-wang-zan-xuantu",
+        "name": "王赞",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷47"
+        ],
+        "notes": "公孫氏玄菟太守。生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 玄菟節點不在地圖，可用襄平/遼東軍府代理；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "王贊"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 48,
+          "intellect": 62,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-wang-zan-xuantu",
+          "name": "王赞",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-guo-xin-liaodong": {
+      "person_id": "historical-guo-xin-liaodong",
+      "name": "郭昕",
+      "runtime_id": 1042,
+      "birth_year": 190,
+      "service_year": 237,
+      "death_year": 250,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；190年為可玩年齡估計，237年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 237官屬上魏書的署名；必須是三國遼東郭昕，不能套唐代安西郭昕生平。238一月延續是鄰年任職映射。",
+      "chronology_design": {
+        "birth_year": 190,
+        "service_year": 237,
+        "death_year": 250,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 237,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；190年為可玩年齡估計，237年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 237官屬上魏書的署名；必須是三國遼東郭昕，不能套唐代安西郭昕生平。238一月延續是鄰年任職映射。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 41,
+        "intellect": 66,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "郭昕"
+      ],
+      "virtue_design": {
+        "person_id": "historical-guo-xin-liaodong",
+        "name": "郭昕",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷08"
+        ],
+        "notes": "公孫淵長史。生年不詳；190年為可玩年齡估計，237年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 237官屬上魏書的署名；必須是三國遼東郭昕，不能套唐代安西郭昕生平。238一月延續是鄰年任職映射。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "郭昕"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 41,
+          "intellect": 66,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-guo-xin-liaodong",
+          "name": "郭昕",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-liu-fu-liaodong": {
+      "person_id": "historical-liu-fu-liaodong",
+      "name": "柳甫",
+      "runtime_id": 1043,
+      "birth_year": 185,
+      "service_year": 237,
+      "death_year": 238,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；185年為可玩年齡估計，237年為本作出場起點，不冒稱首次任官年。238年卒有原典記錄。 SGZ8作參軍柳浦，晉書作御史大夫柳甫；依異文同人處理僅建1ID，須明示編者識別而非原文直接說兩段同人。不同柳毅、柳遠。238被斬明確，生年不詳；開局一月此官為同年回推。",
+      "chronology_design": {
+        "birth_year": 185,
+        "service_year": 237,
+        "death_year": 238,
+        "historical_birth_year": null,
+        "historical_death_year": 238,
+        "last_attested_year": 238,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "attested_year_month_not_used_by_annual_lifecycle"
+        },
+        "basis": "生年不詳；185年為可玩年齡估計，237年為本作出場起點，不冒稱首次任官年。238年卒有原典記錄。 SGZ8作參軍柳浦，晉書作御史大夫柳甫；依異文同人處理僅建1ID，須明示編者識別而非原文直接說兩段同人。不同柳毅、柳遠。238被斬明確，生年不詳；開局一月此官為同年回推。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 40,
+        "intellect": 66,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "柳甫",
+        "柳浦"
+      ],
+      "virtue_design": {
+        "person_id": "historical-liu-fu-liaodong",
+        "name": "柳甫",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷08",
+          "https://zh.wikisource.org/wiki/晉書/卷001"
+        ],
+        "notes": "公孫淵御史大夫。生年不詳；185年為可玩年齡估計，237年為本作出場起點，不冒稱首次任官年。238年卒有原典記錄。 SGZ8作參軍柳浦，晉書作御史大夫柳甫；依異文同人處理僅建1ID，須明示編者識別而非原文直接說兩段同人。不同柳毅、柳遠。238被斬明確，生年不詳；開局一月此官為同年回推。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "柳甫"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 40,
+          "intellect": 66,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-liu-fu-liaodong",
+          "name": "柳甫",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-wang-jian-liaodong": {
+      "person_id": "historical-wang-jian-liaodong",
+      "name": "王建",
+      "runtime_id": 1044,
+      "birth_year": 185,
+      "service_year": 238,
+      "death_year": 238,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；185年為可玩年齡估計，238年為本作出場起點，不冒稱首次任官年。238年卒有原典記錄。 與柳甫求降被殺，原文二人老耄，僅可知年長，不得虛構確切生年。238一月任職為同年回推。",
+      "chronology_design": {
+        "birth_year": 185,
+        "service_year": 238,
+        "death_year": 238,
+        "historical_birth_year": null,
+        "historical_death_year": 238,
+        "last_attested_year": 238,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "attested_year_month_not_used_by_annual_lifecycle"
+        },
+        "basis": "生年不詳；185年為可玩年齡估計，238年為本作出場起點，不冒稱首次任官年。238年卒有原典記錄。 與柳甫求降被殺，原文二人老耄，僅可知年長，不得虛構確切生年。238一月任職為同年回推。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 24,
+        "intellect": 75,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "reviewed_cnblogs_original_stat_row0229; not_SAN14",
+          "intellect": "reviewed_cnblogs_original_stat_row0229; not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "王建"
+      ],
+      "virtue_design": {
+        "person_id": "historical-wang-jian-liaodong",
+        "name": "王建",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "cnblogs_initial_health_with_remake_compatibility_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_career_with_reviewed_original_game_stats",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/晉書/卷001",
+          "https://www.cnblogs.com/strick/p/10171248.html"
+        ],
+        "notes": "遼東相國王建，與唐代同名人物分開。原版表0229及ROM記錄11提供武24、知75、初始體力42、原德41；本作體力上限80、德60、忠誠依陣營規則初始化。原表忠59的空城來源不套到公孫臣。生卒及一月官職留保見年代設計。",
+        "source_name": "王建",
+        "original_numeric_reference": {
+          "reference": "game/config/references/cnblogs-officer-stats.json",
+          "source_row_id": "cnblogs-line-0229",
+          "martial_strength": 24,
+          "intellect": 75,
+          "health": 42,
+          "loyalty": 59,
+          "original_virtue": 41
+        }
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_reviewed_original_game_reference",
+        "basis": "本次新建王建已核原版身份與數值；保留原德41，當前德依既定無SAN14來源預設60。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 24,
+          "intellect": 75,
+          "virtue": 41,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "reviewed_cnblogs_original_stat_row0229; not_SAN14",
+            "intellect": "reviewed_cnblogs_original_stat_row0229; not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "verified_original_ROM_evidence_retained_before_default60_policy"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-wang-jian-liaodong",
+          "name": "王建",
+          "status": "verified_original",
+          "virtue": 41,
+          "original_id": 11,
+          "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+          "rom_offset": 139416,
+          "record_sha256": "2b59ac3c66a5549c2f051f4ee6014417d77bc7048d3f36261447475f2f64f49b",
+          "is_historical_fact": false,
+          "dimensions": null,
+          "identity_basis": "reviewed ROM name glyph and original-stat Liaodong context identify this historical Wang Jian; not a lookalike match",
+          "design_rationale": "保留原版德41作來源證據；當前無SAN14魅力，按使用者規則德60。",
+          "sources": [
+            {
+              "work": "三國志2超級版 NES ROM",
+              "section": "武將記錄11，+4德欄位",
+              "reference": "game/config/references/original-officer-stats.json"
+            }
+          ]
+        },
+        "initialization": {
+          "schema": "tk2-officer-initialization-v1",
+          "health": 42,
+          "default_loyalty": 80,
+          "source_loyalty": {
+            "value": 59,
+            "display": "59",
+            "source_faction_label": "袁绍右侧空城",
+            "faction_ids": [],
+            "reference": "game/config/references/cnblogs-officer-stats.json",
+            "source_row_id": "cnblogs-line-0229"
+          }
+        }
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 42,
+        "default_loyalty": 80,
+        "source_loyalty": {
+          "value": 59,
+          "display": "59",
+          "source_faction_label": "袁绍右侧空城",
+          "faction_ids": [],
+          "reference": "game/config/references/cnblogs-officer-stats.json",
+          "source_row_id": "cnblogs-line-0229"
+        }
+      }
+    },
+    "historical-wei-yan-liaodong": {
+      "person_id": "historical-wei-yan-liaodong",
+      "name": "卫演",
+      "runtime_id": 1045,
+      "birth_year": 195,
+      "service_year": 238,
+      "death_year": 250,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；195年為可玩年齡估計，238年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 繼王建柳甫後求剋日送任。結局未載，不可把列傳城破千人被殺概括為他必死；開局一月任職回推。",
+      "chronology_design": {
+        "birth_year": 195,
+        "service_year": 238,
+        "death_year": 250,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 238,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；195年為可玩年齡估計，238年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 繼王建柳甫後求剋日送任。結局未載，不可把列傳城破千人被殺概括為他必死；開局一月任職回推。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 38,
+        "intellect": 65,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "卫演",
+        "衞演",
+        "衛演"
+      ],
+      "virtue_design": {
+        "person_id": "historical-wei-yan-liaodong",
+        "name": "卫演",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/晉書/卷001"
+        ],
+        "notes": "公孫淵侍中。生年不詳；195年為可玩年齡估計，238年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 繼王建柳甫後求剋日送任。結局未載，不可把列傳城破千人被殺概括為他必死；開局一月任職回推。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "衞演"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 38,
+          "intellect": 65,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-wei-yan-liaodong",
+          "name": "卫演",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-bi-sheng": {
+      "person_id": "historical-bi-sheng",
+      "name": "毕盛",
+      "runtime_id": 1046,
+      "birth_year": 185,
+      "service_year": 238,
+      "death_year": 238,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；185年為可玩年齡估計，238年為本作出場起點，不冒稱首次任官年。238年卒有原典記錄。 城破後列名被殺，確為直屬將軍。只有238年記錄，開局一月任職為同年回推。",
+      "chronology_design": {
+        "birth_year": 185,
+        "service_year": 238,
+        "death_year": 238,
+        "historical_birth_year": null,
+        "historical_death_year": 238,
+        "last_attested_year": 238,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "attested_year_month_not_used_by_annual_lifecycle"
+        },
+        "basis": "生年不詳；185年為可玩年齡估計，238年為本作出場起點，不冒稱首次任官年。238年卒有原典記錄。 城破後列名被殺，確為直屬將軍。只有238年記錄，開局一月任職為同年回推。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 69,
+        "intellect": 48,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "毕盛",
+        "畢盛"
+      ],
+      "virtue_design": {
+        "person_id": "historical-bi-sheng",
+        "name": "毕盛",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/晉書/卷001"
+        ],
+        "notes": "公孫淵將軍。生年不詳；185年為可玩年齡估計，238年為本作出場起點，不冒稱首次任官年。238年卒有原典記錄。 城破後列名被殺，確為直屬將軍。只有238年記錄，開局一月任職為同年回推。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "畢盛"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 69,
+          "intellect": 48,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-bi-sheng",
+          "name": "毕盛",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-gongsun-xiu": {
+      "person_id": "historical-gongsun-xiu",
+      "name": "公孙修",
+      "runtime_id": 1047,
+      "birth_year": 219,
+      "service_year": 238,
+      "death_year": 238,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；219年為可玩年齡估計，238年為本作出場起點，不冒稱首次任官年。238年卒有原典記錄。 233表稱脩別屬亡弟、238正文稱淵子，親生/過繼表述有別。只記家族年輕成員，不硬填親生父；238突圍被殺。生年未載；開局一月可作同年在場推定。",
+      "chronology_design": {
+        "birth_year": 219,
+        "service_year": 238,
+        "death_year": 238,
+        "historical_birth_year": null,
+        "historical_death_year": 238,
+        "last_attested_year": 238,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "attested_year_month_not_used_by_annual_lifecycle"
+        },
+        "basis": "生年不詳；219年為可玩年齡估計，238年為本作出場起點，不冒稱首次任官年。238年卒有原典記錄。 233表稱脩別屬亡弟、238正文稱淵子，親生/過繼表述有別。只記家族年輕成員，不硬填親生父；238突圍被殺。生年未載；開局一月可作同年在場推定。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 62,
+        "intellect": 46,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "公孙修",
+        "公孫脩",
+        "公孫修",
+        "公孙脩"
+      ],
+      "virtue_design": {
+        "person_id": "historical-gongsun-xiu",
+        "name": "公孙修",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷08"
+        ],
+        "notes": "公孫氏突圍騎將。生年不詳；219年為可玩年齡估計，238年為本作出場起點，不冒稱首次任官年。238年卒有原典記錄。 233表稱脩別屬亡弟、238正文稱淵子，親生/過繼表述有別。只記家族年輕成員，不硬填親生父；238突圍被殺。生年未載；開局一月可作同年在場推定。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "公孫脩"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 62,
+          "intellect": 46,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-gongsun-xiu",
+          "name": "公孙修",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-qu-jing-cangwu": {
+      "person_id": "historical-qu-jing-cangwu",
+      "name": "区景",
+      "runtime_id": 1048,
+      "birth_year": 170,
+      "service_year": 207,
+      "death_year": 211,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；170年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。211年卒有原典記錄。 水經注引交廣春秋繫建安16年(211)與吳巨同被斬；其他編年可用210，保留210/211差異。207/208歸巨為近年軍府回推。生年不詳，不強訂出生年。",
+      "chronology_design": {
+        "birth_year": 170,
+        "service_year": 207,
+        "death_year": 211,
+        "historical_birth_year": null,
+        "historical_death_year": 211,
+        "last_attested_year": 211,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "attested_year_month_not_used_by_annual_lifecycle"
+        },
+        "basis": "生年不詳；170年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。211年卒有原典記錄。 水經注引交廣春秋繫建安16年(211)與吳巨同被斬；其他編年可用210，保留210/211差異。207/208歸巨為近年軍府回推。生年不詳，不強訂出生年。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 63,
+        "intellect": 48,
+        "virtue": 60,
+        "terrain_affinity": 2,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "区景",
+        "區景"
+      ],
+      "virtue_design": {
+        "person_id": "historical-qu-jing-cangwu",
+        "name": "区景",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/水經注/37",
+          "https://zh.wikisource.org/wiki/三國志/卷49"
+        ],
+        "notes": "吳巨都督。生年不詳；170年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。211年卒有原典記錄。 水經注引交廣春秋繫建安16年(211)與吳巨同被斬；其他編年可用210，保留210/211差異。207/208歸巨為近年軍府回推。生年不詳，不強訂出生年。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "區景"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 63,
+          "intellect": 48,
+          "virtue": 60,
+          "terrain_affinity": 2,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-qu-jing-cangwu",
+          "name": "区景",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-heng-yi-cangwu": {
+      "person_id": "historical-heng-yi-cangwu",
+      "name": "衡毅",
+      "runtime_id": 1049,
+      "birth_year": 175,
+      "service_year": 207,
+      "death_year": 211,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。《水經注》引《交廣春秋》及《太平御覽》引《南越志》繫建安十六年(211)投水死，無確月；死亡年開局不強行視為仍存活。 原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。",
+      "chronology_design": {
+        "birth_year": 175,
+        "service_year": 207,
+        "death_year": 211,
+        "historical_birth_year": null,
+        "historical_death_year": 211,
+        "last_attested_year": 211,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "attested_year_without_attested_month"
+        },
+        "basis": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。《水經注》引《交廣春秋》及《太平御覽》引《南越志》繫建安十六年(211)投水死，無確月；死亡年開局不強行視為仍存活。 原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 58,
+        "intellect": 47,
+        "virtue": 60,
+        "terrain_affinity": 2,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "衡毅"
+      ],
+      "virtue_design": {
+        "person_id": "historical-heng-yi-cangwu",
+        "name": "衡毅",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/水經注/37",
+          "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+        ],
+        "notes": "吳巨部伍將領。生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。《水經注》引《交廣春秋》及《太平御覽》引《南越志》繫建安十六年(211)投水死，無確月；死亡年開局不強行視為仍存活。 原文以巨舊部伍述之，211與錢博抗步騭，毅投水死。207/208服務為舊部身份回推；不稱確證當月駐城。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "衡毅"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 58,
+          "intellect": 47,
+          "virtue": 60,
+          "terrain_affinity": 2,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-heng-yi-cangwu",
+          "name": "衡毅",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-qian-bo-cangwu": {
+      "person_id": "historical-qian-bo-cangwu",
+      "name": "钱博",
+      "runtime_id": 1050,
+      "birth_year": 175,
+      "service_year": 207,
+      "death_year": 230,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。卒年不詳；230年僅為本作壽命退出估界。 同衡毅屬巨舊部；另三國志53說錢博本為張津故將，改屬吳巨不可漏。水經注未明他與毅同死；不強填卒年，不因二手異寫另造第二人。",
+      "chronology_design": {
+        "birth_year": 175,
+        "service_year": 207,
+        "death_year": 230,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 220,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。卒年不詳；230年僅為本作壽命退出估界。 同衡毅屬巨舊部；另三國志53說錢博本為張津故將，改屬吳巨不可漏。水經注未明他與毅同死；不強填卒年，不因二手異寫另造第二人。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 55,
+        "intellect": 49,
+        "virtue": 60,
+        "terrain_affinity": 2,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "钱博",
+        "錢博"
+      ],
+      "virtue_design": {
+        "person_id": "historical-qian-bo-cangwu",
+        "name": "钱博",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/水經注/37",
+          "https://zh.wikisource.org/wiki/三國志/卷53",
+          "https://zh.wikisource.org/wiki/三國志/卷60#呂岱",
+          "https://zh.wikisource.org/wiki/太平御覽/0172#高州"
+        ],
+        "notes": "吳巨部伍將領。生年不詳；175年為可玩年齡估計，207年為本作出場起點，不冒稱首次任官年。卒年不詳；230年僅為本作壽命退出估界。 同衡毅屬巨舊部；另三國志53說錢博本為張津故將，改屬吳巨不可漏。水經注未明他與毅同死；不強填卒年，不因二手異寫另造第二人。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。 《三國志·呂岱傳》記220年降吳、拜高涼西部都尉；221及其後可玩年內沿用任職，高涼城為郡級地區代理，非每月駐地確證。",
+        "source_name": "錢博"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 55,
+          "intellect": 49,
+          "virtue": 60,
+          "terrain_affinity": 2,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-qian-bo-cangwu",
+          "name": "钱博",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-gongchou-cheng": {
+      "person_id": "historical-gongchou-cheng",
+      "name": "公仇称",
+      "runtime_id": 1051,
+      "birth_year": 160,
+      "service_year": 190,
+      "death_year": 210,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；160年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 魯陽送行督軍糧時確任長史；190一月提前呈現為同年任職回推，191延續亦屬推定。地圖無魯陽，可用長沙軍府代理，不改南陽所有權。生卒均無確年。",
+      "chronology_design": {
+        "birth_year": 160,
+        "service_year": 190,
+        "death_year": 210,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 190,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；160年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 魯陽送行督軍糧時確任長史；190一月提前呈現為同年任職回推，191延續亦屬推定。地圖無魯陽，可用長沙軍府代理，不改南陽所有權。生卒均無確年。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 43,
+        "intellect": 69,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "公仇称",
+        "公仇稱"
+      ],
+      "virtue_design": {
+        "person_id": "historical-gongchou-cheng",
+        "name": "公仇称",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷46"
+        ],
+        "notes": "孫堅軍長史、軍糧運輸。生年不詳；160年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；210年僅為本作壽命退出估界。 魯陽送行督軍糧時確任長史；190一月提前呈現為同年任職回推，191延續亦屬推定。地圖無魯陽，可用長沙軍府代理，不改南陽所有權。生卒均無確年。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "公仇稱"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 43,
+          "intellect": 69,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-gongchou-cheng",
+          "name": "公仇称",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-sun-xiang": {
+      "person_id": "historical-sun-xiang",
+      "name": "孙香",
+      "runtime_id": 1052,
+      "birth_year": 165,
+      "service_year": 190,
+      "death_year": 200,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；165年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；200年僅為本作壽命退出估界。 孫賁傳注稱孫香父孫孺為孫堅再從弟；孫香從孫堅征伐有功，後為袁術用，197袁術稱帝時未能東歸。不可把已入袁術的194/198仍掛孫堅。190/191起始服務為生涯回推，194/198應袁術；197皇帝呂布IF可隨接收袁軍但要標IF改編。死於壽春，無確切年，不冒稱197/199為史證卒年。",
+      "chronology_design": {
+        "birth_year": 165,
+        "service_year": 190,
+        "death_year": 200,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 197,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "生年不詳；165年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；200年僅為本作壽命退出估界。 孫賁傳注稱孫香父孫孺為孫堅再從弟；孫香從孫堅征伐有功，後為袁術用，197袁術稱帝時未能東歸。不可把已入袁術的194/198仍掛孫堅。190/191起始服務為生涯回推，194/198應袁術；197皇帝呂布IF可隨接收袁軍但要標IF改編。死於壽春，無確切年，不冒稱197/199為史證卒年。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 61,
+        "intellect": 54,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "孙香",
+        "孫香"
+      ],
+      "virtue_design": {
+        "person_id": "historical-sun-xiang",
+        "name": "孙香",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷51"
+        ],
+        "notes": "孫堅從征郎中、後袁術汝南太守。生年不詳；165年為可玩年齡估計，190年為本作出場起點，不冒稱首次任官年。卒年不詳；200年僅為本作壽命退出估界。 孫賁傳注稱孫香父孫孺為孫堅再從弟；孫香從孫堅征伐有功，後為袁術用，197袁術稱帝時未能東歸。不可把已入袁術的194/198仍掛孫堅。190/191起始服務為生涯回推，194/198應袁術；197皇帝呂布IF可隨接收袁軍但要標IF改編。死於壽春，無確切年，不冒稱197/199為史證卒年。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "source_name": "孫香"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 61,
+          "intellect": 54,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-sun-xiang",
+          "name": "孙香",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
     }
+  },
+  "retainer_additions": {
+    "revision": "2026-10-27",
+    "reference": "game/config/references/retainer-affiliation-review.json",
+    "people": [
+      "historical-zhao-chong",
+      "historical-sun-kang",
+      "historical-xu-xi",
+      "historical-mao-hui",
+      "historical-liu-yi-yuzhang",
+      "historical-yang-yi-liaodong",
+      "historical-su-shu-liaodong",
+      "historical-sun-zong-liaodong",
+      "historical-liu-yuan-liaodong",
+      "historical-gongsun-heng",
+      "historical-wang-zan-xuantu",
+      "historical-guo-xin-liaodong",
+      "historical-liu-fu-liaodong",
+      "historical-wang-jian-liaodong",
+      "historical-wei-yan-liaodong",
+      "historical-bi-sheng",
+      "historical-gongsun-xiu",
+      "historical-qu-jing-cangwu",
+      "historical-heng-yi-cangwu",
+      "historical-qian-bo-cangwu",
+      "historical-gongchou-cheng",
+      "historical-sun-xiang"
+    ],
+    "note": "新增姓名與仕履有史料；未知生卒、具體開局任職和本作能力分開標示。"
   }
 }

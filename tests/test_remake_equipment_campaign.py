@@ -75,6 +75,22 @@ class EquipmentCampaignTests(unittest.TestCase):
                 self.assertEqual(game.export_save(),before)
                 game.validate(game.state)
 
+    def test_liaodong_wang_jian_uses_reviewed_flying_sword_and_cloth_headgear(self):
+        game=self.new(Catalog(ROOT/'game/data/campaigns/238-01.json'),owner='gongsun')
+        pid='historical-wang-jian-liaodong';ident=game.catalog.ids[pid]
+        officer=game.state.officers[ident]
+        initial=game.catalog.data['equipment_initial'][pid]
+        self.assertEqual((officer.weapon_id,officer.armor_id),(1,0))
+        self.assertEqual((initial['source']['weapon_label'],initial['source']['armor_label']),('飞剣','纶巾'))
+        self.assertEqual(initial['source']['source_row_id'],'cnblogs-line-0229')
+        self.assertEqual((officer.health,officer.loyalty,officer.profile.virtue),(42,80,60))
+        before=game.export_save()
+        equipment.view(game,game.state);equipment.synchronize(game,game.state)
+        self.assertEqual(game.export_save(),before)
+        restored=self.restore(game)
+        self.assertEqual((restored.state.officers[ident].weapon_id,
+                          restored.state.officers[ident].armor_id),(1,0))
+
     def test_purchase_backup_change_effects_and_json_save_use_actual_city_and_profile(self):
         game=self.new();state=game.state;city=state.cities['nanjun']
         actor=next(i for i in city.roster.officer_ids if state.officers[i].weapon_id==0)
@@ -132,7 +148,7 @@ class EquipmentCampaignTests(unittest.TestCase):
         self.assertEqual((officer.weapon_id,officer.armor_id),(initial['weapon_id'],initial['armor_id']))
         self.assertIn(ident,game.state.extension['equipment']['initialized'])
         self.assertNotIn(ident,game.catalog.by_id)
-        self.assertEqual(len(game.catalog.definitions),1030)
+        self.assertEqual(len(game.catalog.definitions),1052)
         self.restore(game)
 
     def test_actual_ai_equipment_turn_uses_same_price_eligibility_and_reserve_service(self):

@@ -889,17 +889,17 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
  await page.locator('#city-jump').selectOption('changsha');
  const changsha=page.locator('.city-information[data-inspected-city=changsha]');
  await expect(changsha).toHaveAttribute('data-information-mode','preview');
- await expect(changsha.locator('.roster-table tbody tr')).toHaveCount(5);
- for(const name of ['孫堅','程普','黃蓋','韓當','朱治'])await expect(changsha.locator('.roster-table tbody tr').filter({hasText:name})).toHaveCount(1);
+ await expect(changsha.locator('.roster-table tbody tr')).toHaveCount(7);
+ for(const name of ['孫堅','程普','黃蓋','韓當','朱治','吳景','孫河'])await expect(changsha.locator('.roster-table tbody tr').filter({hasText:name})).toHaveCount(1);
  await closeDialog(page);await page.locator('#begin').click();
  await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});await waitIdle(page);await dismissHistoryOpening(page);
  await expect(page.locator('#map-date')).toHaveAttribute('datetime','0188-06-01');
  await expect(page.locator('#inspector .owner')).toContainText('孫堅');
- await expect(page.locator('#inspector [data-city-roster-officer]')).toHaveCount(5);
+ await expect(page.locator('#inspector [data-city-roster-officer]')).toHaveCount(7);
  const sunOpening=await exportSave();expect(sunOpening.state.player).toBe('sun_jian');
  expect(sunOpening.state.cities.changsha.owner).toBe('sun_jian');
  expect(sunOpening.state.cities.changsha.roster.officer_ids.map(id=>sunOpening.state.officers[id].person_id).sort()).toEqual(
-  [551,703,247,176,390].map(id=>'san14-candidate-'+String(id).padStart(4,'0')).sort());
+  ["san14-candidate-0551", "san14-candidate-0703", "san14-candidate-0247", "san14-candidate-0176", "san14-candidate-0390", "san14-candidate-0289", "san14-candidate-0543"].sort());
  expect(Object.values(sunOpening.state.officers).some(officer=>officer.person_id==='san14-candidate-0065')).toBe(false);
  await historyScreenshot(page,testInfo,'188-sun-jian-live-tc');
 
@@ -1188,7 +1188,8 @@ test('all 29 real Worker openings keep preview and live initial health and facti
   const addedRuler={
    'mainland188-06':['song_jian','historical-song-jian','longxi'],
    'mainland225-07':['nanman','san14-candidate-0845','jianning'],
-   'mainland263-05':['lu_xing','historical-lu-xing','jiaozhi']
+   'mainland263-05':['lu_xing','historical-lu-xing','jiaozhi'],
+   'mainland238-01':['gongsun','san14-candidate-0262','liaodong']
   }[scenario];
   for(const faction of catalog.factions.filter(row=>!row.available_from&&/[势勢]力/.test(row.name))){
    const label=page.locator(`.faction-choice:has(input[value="${faction.id}"]) .faction-choice-heading>span`).first();
@@ -1213,7 +1214,7 @@ test('all 29 real Worker openings keep preview and live initial health and facti
    await expect.poll(()=>portrait.locator('img').evaluate(image=>image.complete&&image.naturalWidth===128&&image.naturalHeight===160)).toBe(true);
    await page.locator('#utility-menu summary').click();await page.locator('#language').selectOption('ja');
    await expect(portrait).toHaveAttribute('data-portrait-person',personId);
-   const rulerName={song_jian:'宋建',nanman:'孟獲',lu_xing:'呂興'}[side];
+   const rulerName={song_jian:'宋建',nanman:'孟獲',lu_xing:'呂興',gongsun:'公孫淵'}[side];
    await expect(page.locator('#setup-summary .setup-summary-copy')).toContainText(rulerName);
    await page.locator('#utility-menu summary').click();
    await page.locator('#setup-summary').scrollIntoViewIfNeeded();
@@ -1256,6 +1257,31 @@ test('all 29 real Worker openings keep preview and live initial health and facti
    const live=saved.state.officers[officer.id];
    assert.equal(live.health,officer.health,`${scenario}/${officer.person_id} preview-live health`);
    assert.equal(live.loyalty,officer.loyalty,`${scenario}/${officer.person_id} preview-live loyalty`);
+  }
+  if(scenario==='mainland238-01'){
+   // New retainers must be commandable people, with their bound 128×160
+   // portrait in the actual detail dialog, not merely reference-file rows.
+   const roster=saved.state.cities.liaodong.roster.officer_ids;
+   expect(roster).toHaveLength(13);
+   expect(Object.values(saved.state.officers).filter(row=>row.faction_id==='gongsun')).toHaveLength(15);
+   for(const pid of ['historical-wang-jian-liaodong','historical-gongsun-xiu','historical-bi-sheng']){
+    const [officerId,officer]=Object.entries(saved.state.officers).find(([,row])=>row.person_id===pid);
+    expect(officer.faction_id).toBe('gongsun');expect(roster).toContain(Number(officerId));
+   }
+   const [wangId,wang]=Object.entries(saved.state.officers).find(([,row])=>row.person_id==='historical-wang-jian-liaodong');
+   expect([wang.health,wang.profile.martial_strength,wang.profile.intellect,wang.profile.virtue,wang.loyalty]).toEqual([42,24,75,60,80]);
+   const details=page.locator('#city-roster-'+wangId);
+   if(!await details.isVisible())await page.locator('details:has(#city-roster-'+wangId+') > summary').click();
+   await details.click();await expect(page.locator('#dialog-title')).toContainText('王建');
+   const portrait=page.locator('#dialog [data-portrait-person="historical-wang-jian-liaodong"] img');
+   await expect(portrait).toBeVisible();
+   await expect.poll(()=>portrait.evaluate(image=>image.complete&&image.naturalWidth===128&&image.naturalHeight===160)).toBe(true);
+   await historyScreenshot(page,testInfo,'238-new-retainer-original-wang-jian-tc');
+   await page.locator('#dialog-language').selectOption('ja');
+   await expect(portrait).toBeVisible();await historyScreenshot(page,testInfo,'238-new-retainer-original-wang-jian-ja');
+   await closeDialog(page);
+   const current=await page.evaluate(async()=>await(await fetch('/api/save')).json());
+   expect(current).toEqual(saved);
   }
   await page.locator('#main-menu').click();
   await expect(page.locator('#begin')).toBeEnabled();

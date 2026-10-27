@@ -65,7 +65,23 @@ REVIEWED_NAMES = {
     '费帏': ('san14-candidate-0787', '费祎', 'reviewed_context_identity',
              'Reviewed 帏/祎 spelling with 涪陵/刘璋 context identifies 費禕; '
              'not an ability-based join; prior ROM identity remains unchanged'),
+    '王建': ('historical-wang-jian-liaodong', '王建', 'reviewed_context_identity',
+             'Explicit 三國-era 遼東/196 free-person game context identifies the '
+             'Gongsun Yuan chancellor 王建 attested in 晉書卷一; not a Tang-era '
+             'namesake or an ability/portrait-based join. Source196 appearance '
+             'and249 lifespan are original game settings, not historical dates; '
+             '袁紹右側空城 is a location hint, not Yuan Shao allegiance.'),
 }
+
+WANG_JIAN_REVIEW = dict(
+    source_row_id='cnblogs-line-0229', person_id='historical-wang-jian-liaodong',
+    identity_status='reviewed_context_identity',
+    source_urls=[SOURCE_URL, 'https://zh.wikisource.org/wiki/晉書/卷001'],
+    note='原表以王建、196年、遼東在野定位三國人物；《晉書》卷一載公孫淵相國王建與柳甫於238年求降被殺。'
+         '本次僅閉合此一身份，不以武知、頭像或行序作匹配，也不混同唐代同名人物。'
+         '196出場和249壽命均為原遊戲設定，不能改寫史實年代；袁紹右側空城僅為位置說明，'
+         'faction_ids保持空，所以原表忠59不套用為公孫氏臣屬的忠誠。'
+         '原表體力42是初始值，恢復上限仍為本作80；原表德41留作來源欄，不覆蓋缺SAN14魅力時的德60。')
 
 # Deliberately exhaustive source labels.  Location hints mentioning a nearby
 # ruler are not that ruler's faction.  No substring matching or inherited Yuan
@@ -174,7 +190,7 @@ def bind_records(records, people):
         result.append(record)
     counts = Counter(r['identity_status'] for r in result)
     if counts != Counter(reviewed_exact_name=212, reviewed_spelling=9,
-                         reviewed_context_identity=2, unbound=14):
+                         reviewed_context_identity=3, unbound=13):
         raise ValueError('Identity coverage changed; requires a new review: ' + repr(counts))
     return result
 
@@ -193,10 +209,11 @@ def make_reference(records, people):
             lifespan_year='Original game setting only; does not replace canonical historical chronology',
             faction_label='Literal source faction/retinue/location label; location-only labels map to no faction',
             other_fields='Retained factual source columns only; not applied to martial/intellect/experience/equipment/chronology'),
-        identity_policy='Reviewed unique exact canonical names/aliases plus 11 explicit individual spelling/context decisions; '
+        identity_policy='Reviewed unique exact canonical names/aliases plus 12 explicit individual spelling/context decisions; '
                         'no approximate-name or ability-based identity joins',
-        source_records=237, bound_people=223, unbound_source_records=14,
+        source_records=237, bound_people=224, unbound_source_records=13,
         identity_counts=dict(Counter(r['identity_status'] for r in records)),
+        identity_reviews=[deepcopy(WANG_JIAN_REVIEW)],
         identity_disagreements=[
             dict(source_row_id='cnblogs-line-0215', source_name='费帏',
                 person_id='san14-candidate-0787', prior_rom_record_id=187,
@@ -224,6 +241,11 @@ def validate_reference(reference, people):
         raise ValueError('Offline source facts differ from the pinned attachment')
     if bind_records([{key: r[key] for key in FACTUAL_FIELDS} for r in records], people) != records:
         raise ValueError('Reviewed name bindings changed')
+    if (reference.get('source_records') != 237 or reference.get('bound_people') != 224
+            or reference.get('unbound_source_records') != 13
+            or reference.get('identity_counts') != dict(Counter(r['identity_status'] for r in records))
+            or reference.get('identity_reviews') != [WANG_JIAN_REVIEW]):
+        raise ValueError('Reviewed identity coverage/provenance metadata changed')
     ids, people_seen = set(), set()
     for record in records:
         rid, pid = record['source_row_id'], record['person_id']
@@ -245,7 +267,7 @@ def validate_reference(reference, people):
             if pid not in people or pid in people_seen:
                 raise ValueError('Invalid or repeated source person')
             people_seen.add(pid)
-    if len(ids) != 237 or len(people_seen) != 223:
+    if len(ids) != 237 or len(people_seen) != 224:
         raise ValueError('Unexpected source coverage')
 
 

@@ -98,9 +98,12 @@ def audit():
     sources = {row['person_id']: row for row in reference['records'] if row['person_id']}
     abilities = {row['person_id']: row['stats'] for row in read(abilities_path)['abilities']}
     check(len(index['catalogs']) == 29, 'Expected 29 current scenarios')
-    check(len(abilities) == 1000 and len(sources) == 223
+    check(len(people) == 1052 and len(abilities) == 1000 and len(sources) == 224
           and set(abilities) <= set(people) and set(sources) <= set(people),
           'Unexpected factual reference coverage')
+    check(len(set(people) - set(abilities)) == 52
+          and len(set(people) - set(sources)) == 828,
+          'Unexpected charisma/initial-health default coverage')
     session = CampaignSession([ROOT / 'game/data' / name for name in index['catalogs']])
     source_index = read(ROOT / 'game/config/campaigns/index.json')
     scenario_sources = {entry['id']: read(ROOT / 'game/config/campaigns' / entry['file'])
