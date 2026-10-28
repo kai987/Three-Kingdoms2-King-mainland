@@ -6,7 +6,7 @@
  // Canonical copies avoid recalculating the full batch when roster/resources,
  // turn phase or insertion order changes, while retaining active-city changes.
  const stateKey=view=>view?.game&&view.catalog?.travel_rules?JSON.stringify([
-  view.catalog.scenario_id,geometryKey(view),view.game.player,view.game.month,
+  view.catalog.scenario_id,geometryKey(view),view.game.player,view.game.year,view.game.month,
   Object.values(view.game.cities).map(({id,owner})=>[id,owner]).sort(([a],[b])=>a<b?-1:a>b?1:0),
   [...(view.game.extension?.travel?.discovered||[])].sort()
  ]):null;
@@ -69,12 +69,12 @@
    if(!next){engine=failed?'fallback':'idle';return Promise.resolve();}
    if(failed)return Promise.resolve();
    engine='loading';
-   const snapshot={scenario:view.catalog.scenario_id,geometry:geometryKey(view),cities:Object.values(view.game.cities).map(({id,owner})=>({id,owner})),month:view.game.month,discovered:[...(view.game.extension?.travel?.discovered||[])],player:view.game.player};
+   const snapshot={scenario:view.catalog.scenario_id,geometry:geometryKey(view),cities:Object.values(view.game.cities).map(({id,owner})=>({id,owner})),year:view.game.year,month:view.game.month,discovered:[...(view.game.extension?.travel?.discovered||[])],player:view.game.player};
    pendingUpdate=(async()=>{
     try{
      const contextId=await context(snapshot.scenario,snapshot.geometry);
      if(key!==next)return;
-     const result=await call({op:'batch',context:contextId,cities:snapshot.cities,month:snapshot.month,discovered:snapshot.discovered,player:snapshot.player});
+     const result=await call({op:'batch',context:contextId,cities:snapshot.cities,year:snapshot.year,month:snapshot.month,discovered:snapshot.discovered,player:snapshot.player});
      if(key!==next)return;
      quotes=result;engine='wasm';
      for(const notify of subscribers)notify();

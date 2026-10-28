@@ -26,6 +26,45 @@ def metric(part):
                 shape_ratio=round(ratio, 9)), ratio
 
 
+def compile_transit(route, sections, coords, rules):
+    """Calibrate each real city section; absent cities can share a bypass.
+
+    All contiguous alternatives have stable identities for in-flight save
+    validation, but the runtime exposes only consecutive active city stops.
+    The full parent remains the one painted road and is never an extra edge.
+    """
+    if len(sections) < 2 or route.get('special'):
+        return None
+    chain = [sections[0]['from']] + [part['to'] for part in sections]
+    if len(set(chain)) != len(chain) or chain[0] != route['from'] or chain[-1] != route['to']:
+        raise ValueError('Invalid ordered road city sections')
+    timed = []
+    for index, section in enumerate(sections):
+        if section['from'] != chain[index] or len(section['parts']) != 1:
+            raise ValueError('Disconnected road city sections')
+        entry, ratio = metric(section['parts'][0])
+        distance = round(kilometers(coords[section['from']], coords[section['to']])
+                         * ratio * rules['detours'][route['terrain']], 1)
+        timed.append((distance, entry))
+    children = []
+    for start in range(len(sections)):
+        for end in range(start+1, len(sections)+1):
+            distance = round(sum(row[0] for row in timed[start:end]), 1)
+            child = {key: deepcopy(value) for key, value in route.items()
+                     if key not in ('draw', 'timing_geometry', 'transit_variants')}
+            child.update(id=f'{route["id"]}@{start}-{end}',
+                         **{'from': chain[start], 'to': chain[end]},
+                         parent_route=route['id'], via=chain[start+1:end],
+                         distance_km=distance, land_km=distance, sea_km=0,
+                         days=max(1, ceil(distance/rules['speeds'][route['terrain']])),
+                         timing_geometry=dict(schema='tk2-route-timing-v1',
+                                              parts=[deepcopy(row[1]) for row in timed[start:end]]))
+            children.append(child)
+    route['transit_variants'] = children
+    return round(sum(row[0] for row in timed), 1), sum(
+        max(1, ceil(row[0]/rules['speeds'][route['terrain']])) for row in timed)
+
+
 def apply_route_timing(data, geometry, geometry_sha256):
     """Recompute every known/exploration leg; never reuse stored distances."""
     if geometry.get('schema') != 'tk2-route-geometry-v1':
@@ -51,6 +90,13 @@ def apply_route_timing(data, geometry, geometry_sha256):
                 land = round(kilometers(a, b) * ratios[0] * rules['detours'][route['terrain']], 1)
                 sea = 0
                 days = max(1, ceil(land/rules['speeds'][route['terrain']]))
+                hazardous_pairs = [{rule.get('from'), rule.get('to')} for key, rule in
+                                   data.get('travel_hazards', {}).items()
+                                   if key in ('yinping', 'ziwu') and isinstance(rule, dict)]
+                if {route['from'], route['to']} not in hazardous_pairs:
+                    transit = compile_transit(route, row.get('city_sections', []), coords, rules)
+                    if transit:
+                        land, days = transit
             elif route['mode'] == 'sea':
                 if len(parts) != 3 or [p['mode'] for p in parts] != ['land', 'sea', 'land']:
                     raise ValueError('Sea timing requires both harbour approaches')

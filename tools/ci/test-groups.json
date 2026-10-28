@@ -273,20 +273,6 @@
         "people"
       ]
     },
-    "tests/test_remake_hazard_json.py": {
-      "tier": "related",
-      "groups": [
-        "logistics",
-        "save"
-      ]
-    },
-    "tests/test_remake_hazard_marches.py": {
-      "tier": "related",
-      "groups": [
-        "logistics",
-        "save"
-      ]
-    },
     "tests/test_remake_han_sui_if.py": {
       "tier": "related",
       "groups": [
@@ -301,6 +287,20 @@
         "mainland209-06",
         "mainland210-11",
         "mainland212-06"
+      ]
+    },
+    "tests/test_remake_hazard_json.py": {
+      "tier": "related",
+      "groups": [
+        "logistics",
+        "save"
+      ]
+    },
+    "tests/test_remake_hazard_marches.py": {
+      "tier": "related",
+      "groups": [
+        "logistics",
+        "save"
       ]
     },
     "tests/test_remake_historical_scenarios.py": {
@@ -466,6 +466,20 @@
         "map"
       ]
     },
+    "tests/test_remake_road_history.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "logistics"
+      ]
+    },
+    "tests/test_remake_road_history_sources.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "logistics"
+      ]
+    },
     "tests/test_remake_route_corridors.py": {
       "tier": "related",
       "groups": [
@@ -486,6 +500,13 @@
       ]
     },
     "tests/test_remake_route_timing.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "logistics"
+      ]
+    },
+    "tests/test_remake_route_transit.py": {
       "tier": "related",
       "groups": [
         "map",

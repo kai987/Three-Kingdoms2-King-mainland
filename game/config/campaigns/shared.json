@@ -1965,6 +1965,10 @@
       [
         "kuaiji",
         "jiaozhi"
+      ],
+      [
+        "yingchuan",
+        "nanyang"
       ]
     ],
     "active_cities": [
@@ -50557,11 +50561,18 @@
         "from": "badong",
         "to": "yidu",
         "mode": "land",
-        "terrain": "plain",
+        "terrain": "mountain",
         "distance_km": 229.1,
         "land_km": 229.1,
         "sea_km": 0,
-        "days": 8
+        "days": 16,
+        "history": {
+          "classification": "historical_mountain_corridor",
+          "confidence": "high",
+          "basis": "《三國志·陸遜傳》記夷陵戰場沿山進軍、兵勢難展。巴東至夷陵陸路不能因兩端城池標為平地而全程採平原速度；以山地走廊概括峽谷岸路，水路另外計算。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷58",
+          "timing_policy": "coarse_land_corridor_terrain_not_city_terrain"
+        }
       },
       {
         "id": "bajun:baxi:land",
@@ -50733,11 +50744,18 @@
         "from": "changsha",
         "to": "luling",
         "mode": "land",
-        "terrain": "plain",
+        "terrain": "mountain",
         "distance_km": 277.6,
         "land_km": 277.6,
         "sea_km": 0,
-        "days": 10
+        "days": 19,
+        "history": {
+          "classification": "regional_watershed_corridor",
+          "confidence": "medium",
+          "basis": "湘贛之間需跨羅霄分水嶺，按山地通道計時；現有城標間具體漢代官道及山口尚未考定，本作曲線是區域交通抽象。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷60",
+          "timing_policy": "coarse_land_corridor_terrain_not_city_terrain"
+        }
       },
       {
         "id": "changsha:wuling:land",
@@ -50792,7 +50810,49 @@
         "distance_km": 143.8,
         "land_km": 143.8,
         "sea_km": 0,
-        "days": 5
+        "days": 5,
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                827,
+                340
+              ],
+              [
+                798,
+                329
+              ],
+              [
+                770,
+                320
+              ],
+              [
+                735,
+                313
+              ],
+              [
+                699,
+                311
+              ],
+              [
+                680,
+                307
+              ],
+              [
+                666,
+                301
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "regional_ferry_land_corridor",
+          "confidence": "regional_connection_not_exact_alignment",
+          "basis": "陳留至河內改為沿黃河走廊並經渡口的區域通道，不再為追隨原圖筆畫而強制經許縣、洛陽。漢末黃河渡河需船渡或臨時浮橋；《三國志·杜畿傳》的陝津、郖津記錄用以限定渡河性質，不是這條畫線每個轉折的直接證據。具體渡口選點與曲線為本作區域代理。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷16#杜畿",
+          "is_proven_exact_Han_alignment": false
+        }
       },
       {
         "id": "chenliu:jiyin:land",
@@ -51250,22 +51310,36 @@
         "from": "guiyang",
         "to": "linhe",
         "mode": "land",
-        "terrain": "plain",
+        "terrain": "mountain",
         "distance_km": 251.8,
         "land_km": 251.8,
         "sea_km": 0,
-        "days": 9
+        "days": 17,
+        "history": {
+          "classification": "regional_watershed_corridor",
+          "confidence": "medium",
+          "basis": "桂陽向臨賀跨南嶺山口，按山地通道處理；具體古道、渡口及逐段坡度待考，並非依今公路復原漢代官道。",
+          "source": "https://www.nopss.gov.cn/n1/2022/0420/c441751-32403669.html",
+          "timing_policy": "coarse_land_corridor_terrain_not_city_terrain"
+        }
       },
       {
         "id": "guiyang:luling:land",
         "from": "guiyang",
         "to": "luling",
         "mode": "land",
-        "terrain": "plain",
+        "terrain": "mountain",
         "distance_km": 271.7,
         "land_km": 271.7,
         "sea_km": 0,
-        "days": 10
+        "days": 19,
+        "history": {
+          "classification": "regional_watershed_corridor",
+          "confidence": "medium",
+          "basis": "桂陽至廬陵需越湘贛分水嶺，不能全程套平原速度。山地分類為地形層級的玩法抽象，未證實圖上曲線就是漢代直達官道。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷60",
+          "timing_policy": "coarse_land_corridor_terrain_not_city_terrain"
+        }
       },
       {
         "id": "hanjia:qianwei:land",
@@ -51661,7 +51735,41 @@
         "distance_km": 203.4,
         "land_km": 203.4,
         "sea_km": 0,
-        "days": 7
+        "days": 7,
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                945,
+                406
+              ],
+              [
+                931,
+                394
+              ],
+              [
+                922,
+                382
+              ],
+              [
+                911,
+                368
+              ],
+              [
+                892,
+                356
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "regional_plain_land_corridor",
+          "confidence": "regional_topology_not_exact_Han_alignment",
+          "basis": "以淮北、汝潁平原的區域陸路連接現有譙與壽春、汝南節點，避免為追隨原圖筆畫而北繞昌邑。圖上轉折是玩法線位，未宣稱史書逐點記載此路；219年前譙節點按使用者設定顯示小沛，是區域代理，非史實小沛、譙為同城。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷01",
+          "is_proven_exact_Han_alignment": false
+        }
       },
       {
         "id": "jiujiang:runan:land",
@@ -51778,11 +51886,18 @@
         "from": "lingling",
         "to": "linhe",
         "mode": "land",
-        "terrain": "plain",
+        "terrain": "mountain",
         "distance_km": 245.8,
         "land_km": 245.8,
         "sea_km": 0,
-        "days": 9
+        "days": 17,
+        "history": {
+          "classification": "historical_watershed_pass_corridor",
+          "confidence": "high",
+          "basis": "秦漢瀟賀通道由瀟水、嶺口新道、賀江組成，跨都龐與萌渚間山口。本陸路以山道概括其越嶺負擔，不宣稱全程都是高山，也不把唐代擴渠能力倒投三國。",
+          "source": "https://www.nopss.gov.cn/n1/2022/0420/c441751-32403669.html",
+          "timing_policy": "coarse_land_corridor_terrain_not_city_terrain"
+        }
       },
       {
         "id": "lingling:wuling:land",
@@ -52013,7 +52128,41 @@
         "distance_km": 172.3,
         "land_km": 172.3,
         "sea_km": 0,
-        "days": 6
+        "days": 6,
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                892,
+                356
+              ],
+              [
+                892,
+                375
+              ],
+              [
+                881,
+                391
+              ],
+              [
+                859,
+                401
+              ],
+              [
+                835,
+                410
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "regional_plain_land_corridor",
+          "confidence": "regional_topology_not_exact_Han_alignment",
+          "basis": "以淮北、汝潁平原的區域陸路連接現有譙與壽春、汝南節點，避免為追隨原圖筆畫而北繞昌邑。圖上轉折是玩法線位，未宣稱史書逐點記載此路；219年前譙節點按使用者設定顯示小沛，是區域代理，非史實小沛、譙為同城。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷01",
+          "is_proven_exact_Han_alignment": false
+        }
       },
       {
         "id": "qiao:shanyang:land",
@@ -54707,6 +54856,112 @@
         "land_km": 323.8,
         "sea_km": 0,
         "days": 11
+      },
+      {
+        "id": "yingchuan:nanyang:land",
+        "from": "yingchuan",
+        "to": "nanyang",
+        "mode": "land",
+        "terrain": "plain",
+        "distance_km": 206.7,
+        "land_km": 206.7,
+        "sea_km": 0,
+        "days": 7,
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                776,
+                351
+              ],
+              [
+                762,
+                367
+              ],
+              [
+                749,
+                384
+              ],
+              [
+                729,
+                397
+              ],
+              [
+                709,
+                400
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "historical_regional_land_corridor",
+          "confidence": "high_for_regional_connection_only",
+          "basis": "《三國志·武帝紀》建安二年有曹操還舞陰遂還許、屯葉及再至宛的軍事行程。據葉、舞陰通往南陽盆地的區域聯繫補連許縣／許昌與宛城；葉、舞陰不是新增可玩城，曲線並非精確古道測繪。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷01",
+          "date_policy": "evidence_in_197_does_not_mean_first_opened_in_197",
+          "is_proven_exact_Han_alignment": false
+        }
+      },
+      {
+        "id": "yuyang:liaoxi:lulong:land",
+        "from": "yuyang",
+        "to": "liaoxi",
+        "mode": "land",
+        "terrain": "mountain",
+        "distance_km": 282.3,
+        "land_km": 282.3,
+        "sea_km": 0,
+        "days": 19,
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                965,
+                66
+              ],
+              [
+                981,
+                49
+              ],
+              [
+                1001,
+                47
+              ],
+              [
+                1023,
+                59
+              ],
+              [
+                1045,
+                79
+              ],
+              [
+                1052,
+                102
+              ],
+              [
+                1061,
+                121
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "historical_reopened_mountain_corridor",
+          "confidence": "high_for_207_reopening_only",
+          "basis": "《三國志·武帝紀》建安十二年秋七月大水、傍海道不通，田疇引軍出盧龍塞，塹山堙谷而行；《田疇傳》說是沿已廢舊道修復。自207年7月提供山道選擇為本作的修道界點，不代表山路或區域交通至此才首次存在，也不把史實五百餘里當作本地圖精確距離。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷01",
+          "additional_source": "https://zh.wikisource.org/wiki/三國志/卷11#田疇",
+          "is_proven_exact_Han_alignment": false
+        },
+        "availability": {
+          "from": [
+            207,
+            7
+          ]
+        }
       }
     ],
     "city_count": 115,
@@ -55676,6 +55931,231 @@
             ]
           }
         ]
+      },
+      {
+        "from": "yingchuan",
+        "to": "nanyang",
+        "mode": "land",
+        "terrain": "plain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                776,
+                351
+              ],
+              [
+                762,
+                367
+              ],
+              [
+                749,
+                384
+              ],
+              [
+                729,
+                397
+              ],
+              [
+                709,
+                400
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "historical_regional_land_corridor",
+          "confidence": "high_for_regional_connection_only",
+          "basis": "《三國志·武帝紀》建安二年有曹操還舞陰遂還許、屯葉及再至宛的軍事行程。據葉、舞陰通往南陽盆地的區域聯繫補連許縣／許昌與宛城；葉、舞陰不是新增可玩城，曲線並非精確古道測繪。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷01",
+          "date_policy": "evidence_in_197_does_not_mean_first_opened_in_197",
+          "is_proven_exact_Han_alignment": false
+        }
+      },
+      {
+        "id": "yuyang:liaoxi:lulong:land",
+        "from": "yuyang",
+        "to": "liaoxi",
+        "mode": "land",
+        "terrain": "mountain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                965,
+                66
+              ],
+              [
+                981,
+                49
+              ],
+              [
+                1001,
+                47
+              ],
+              [
+                1023,
+                59
+              ],
+              [
+                1045,
+                79
+              ],
+              [
+                1052,
+                102
+              ],
+              [
+                1061,
+                121
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "historical_reopened_mountain_corridor",
+          "confidence": "high_for_207_reopening_only",
+          "basis": "《三國志·武帝紀》建安十二年秋七月大水、傍海道不通，田疇引軍出盧龍塞，塹山堙谷而行；《田疇傳》說是沿已廢舊道修復。自207年7月提供山道選擇為本作的修道界點，不代表山路或區域交通至此才首次存在，也不把史實五百餘里當作本地圖精確距離。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷01",
+          "additional_source": "https://zh.wikisource.org/wiki/三國志/卷11#田疇",
+          "is_proven_exact_Han_alignment": false
+        },
+        "availability": {
+          "from": [
+            207,
+            7
+          ]
+        }
+      },
+      {
+        "from": "chenliu",
+        "to": "henei",
+        "mode": "land",
+        "terrain": "plain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                827,
+                340
+              ],
+              [
+                798,
+                329
+              ],
+              [
+                770,
+                320
+              ],
+              [
+                735,
+                313
+              ],
+              [
+                699,
+                311
+              ],
+              [
+                680,
+                307
+              ],
+              [
+                666,
+                301
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "regional_ferry_land_corridor",
+          "confidence": "regional_connection_not_exact_alignment",
+          "basis": "陳留至河內改為沿黃河走廊並經渡口的區域通道，不再為追隨原圖筆畫而強制經許縣、洛陽。漢末黃河渡河需船渡或臨時浮橋；《三國志·杜畿傳》的陝津、郖津記錄用以限定渡河性質，不是這條畫線每個轉折的直接證據。具體渡口選點與曲線為本作區域代理。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷16#杜畿",
+          "is_proven_exact_Han_alignment": false
+        }
+      },
+      {
+        "from": "jiujiang",
+        "to": "qiao",
+        "mode": "land",
+        "terrain": "plain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                945,
+                406
+              ],
+              [
+                931,
+                394
+              ],
+              [
+                922,
+                382
+              ],
+              [
+                911,
+                368
+              ],
+              [
+                892,
+                356
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "regional_plain_land_corridor",
+          "confidence": "regional_topology_not_exact_Han_alignment",
+          "basis": "以淮北、汝潁平原的區域陸路連接現有譙與壽春、汝南節點，避免為追隨原圖筆畫而北繞昌邑。圖上轉折是玩法線位，未宣稱史書逐點記載此路；219年前譙節點按使用者設定顯示小沛，是區域代理，非史實小沛、譙為同城。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷01",
+          "is_proven_exact_Han_alignment": false
+        }
+      },
+      {
+        "from": "qiao",
+        "to": "runan",
+        "mode": "land",
+        "terrain": "plain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                892,
+                356
+              ],
+              [
+                892,
+                375
+              ],
+              [
+                881,
+                391
+              ],
+              [
+                859,
+                401
+              ],
+              [
+                835,
+                410
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "regional_plain_land_corridor",
+          "confidence": "regional_topology_not_exact_Han_alignment",
+          "basis": "以淮北、汝潁平原的區域陸路連接現有譙與壽春、汝南節點，避免為追隨原圖筆畫而北繞昌邑。圖上轉折是玩法線位，未宣稱史書逐點記載此路；219年前譙節點按使用者設定顯示小沛，是區域代理，非史實小沛、譙為同城。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷01",
+          "is_proven_exact_Han_alignment": false
+        }
       }
     ],
     "city_label_offsets": {

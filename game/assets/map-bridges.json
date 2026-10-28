@@ -11,40 +11,40 @@
     "compiler_sha256": "21aabf49c132a09c553ec5e0d046badf082bb8ce25ba8b6aee042990439db8d1",
     "ground": {
       "path": "game/map-source/hydrology-ground.png",
-      "sha256": "5d80752ee48778501d9652b968bbffad5fe72c7adb7d6e5dd5f617d5b3fcf093"
+      "sha256": "e07ac5ab6872b0f017b09a89de5d196b4d0511fcbd016013c3adce7a11793faf"
     },
-    "road_geometry_sha256": "f12a2e883533cfd5bb532fd0c12b68c174480e3fe892c142dde2f6b32db496ab",
+    "road_geometry_sha256": "a04ca9cef98a750cef41ce2ba0420b44253e95d0b5209f45e11abcbd4cd8d958",
     "land_path_sha256": "54d3ce279ff2650c1da9e768f9c91cd7601b2611bcca94ae2f372bc29dd9ea40",
     "catalogs": {
-      "game/data/campaigns/184-02.json": "c2532b5d52c33f025b7f9086e909bd837211e5c0b470c8467285b6ad1ef2f267",
-      "game/data/campaigns/188-06.json": "c3532abc41f8581673db68c5964051d0f6c6efb117813a02b98e2c6dbfb89748",
-      "game/data/campaigns/190-01.json": "1044b46ee9107e09d110ddece5df2df50b067528c8d4032344fc76a2be1c3d2d",
-      "game/data/campaigns/191-10.json": "b05d84356578515399eff8f557d8463ee2e9df169cc47be43fd26ab3664adb9a",
-      "game/data/campaigns/194-06.json": "678192430fbf7c452dcc8e40ba6948642a4ce752b23f1b3978f25f10a571ff83",
-      "game/data/campaigns/196-06.json": "b8a0b7c465b2cb3e401f8094f1bfa2eafb9e4768073c8914576ac92042adeb82",
-      "game/data/campaigns/197-07.json": "0867545724cd32f14ca57e317ea8bf70e46b7a5d40faf9ce1d3739be3d6f6fcf",
-      "game/data/campaigns/198-03.json": "9496c9fa91c6eb07db1b9463e88e431871cb1e57d7a46f6ebd58a431761625df",
-      "game/data/campaigns/200-01.json": "a6b27f91828be755c6bff7aecd63dad7324f58f839a2bb91d8e25d3c04541bb1",
-      "game/data/campaigns/201-05.json": "807092fff63f9fe514ba0c4eb3113c3c5776311f66ce4091343b340e265cfd44",
-      "game/data/campaigns/202-06.json": "4394f79e30aa86c6215f028e8af5fa9b6ba627566c0b3b3c996c71640ea09ee0",
-      "game/data/campaigns/207-09.json": "ef3bb2ccefba33ee78a7fd059e5ff0137cbb94cecb6e333fb5bd4a34b92f6fb4",
-      "game/data/campaigns/208-10.json": "2006263850d06d2231399a1243a6814e1e9f33768cc3bfe9e80b22fb222a7b92",
-      "game/data/campaigns/209-06.json": "4801206f4323b705b498cf7db13c892af77acd32fbbadd65cc7ed1f54fac9bf3",
-      "game/data/campaigns/210-11.json": "31f99b1dc9da8dcdfb26af548ec82d072bae7967aa6248fdfc4e03e31d61aba5",
-      "game/data/campaigns/211-07-tongguan.json": "17ce12e42845051c9b633d3631758064fe537b635261541766fe288695ab14c4",
-      "game/data/campaigns/212-06.json": "f445333d4cc326fb466819e5f5d54e79ad3e6ab16e02cb8c54171c8d6ef46109",
-      "game/data/campaigns/212-12.json": "42637649775187a856a0c3a659659ff6aaf48f7b77d8305b7adfb146eac1a861",
-      "game/data/campaigns/215-08.json": "50377959aee99c6762e26fc91dcbe555cb5c2a6a5c31330b44515f6ccd1ba613",
-      "game/data/campaigns/217-07.json": "066f2dfb4abbd415c0baa3a5c6a2ea2f5a60508a24a72ce3431ed1e20b7673d4",
-      "game/data/campaigns/219-07.json": "594bcba51742c9fc701b38812462758f1a160274ab11215e8da575aaa89e6dc1",
-      "game/data/campaigns/221-07.json": "1ebfef2a80888a742f26653a2d5592fa8ca621171dee59416920ca484e33c66c",
-      "game/data/campaigns/225-07.json": "bf490f89908599b10b7c0b80dc27bad6b64a1e6309ae1c28c2ba7e7cfc45d8fc",
-      "game/data/campaigns/227-02.json": "1ae2a5faf7428146c58a3be2ce7751b5e8b3c23d9133cb3de16f47243bfc8292",
-      "game/data/campaigns/234-02.json": "d470fa65bfb34104425df3da8406a45fb5c86613589dd6f5714af620dae80670",
-      "game/data/campaigns/235-01.json": "7317ceb0f821b75ed8b5e4f47c53c04916099127576ba273ca4ded8118b063d0",
-      "game/data/campaigns/238-01.json": "ee908e4b4d53fa19c54593c668ef3f4f5d8c8187e61042b881e9abde1c93be50",
-      "game/data/campaigns/249-01.json": "a3b44f70f5af87a319891fdf91e5e767b01a9ea162773da9e176955107aa84c8",
-      "game/data/campaigns/263-05.json": "f3997ffac55ff9bb3040ced2a07a68c7a00ceb9579c93c133932ddd07613244c"
+      "game/data/campaigns/184-02.json": "ad2e916eb6e09a39cd32cfbf5a08f2effa51f24a5f82106b2ca412e7d7a5a29c",
+      "game/data/campaigns/188-06.json": "9d2bb22f030eb39e1ba1b95ac120eaedb36a35cab12a5f65cb983c96a421ebf5",
+      "game/data/campaigns/190-01.json": "7c2c440a00b86a42e2089b3fd4bf793c5a8c675cf729c13069f069dbe37f32c6",
+      "game/data/campaigns/191-10.json": "bf4b13c247ab18e8a4650e8314debf91abb049388fa4a7273b170b737922aa7f",
+      "game/data/campaigns/194-06.json": "5bcf31540fde65c7d0594e32f2af160236faa26a1bb0d22a3722a0e467c33c67",
+      "game/data/campaigns/196-06.json": "3cb92a43482cb9ba951c6e3b9e8f80ee64c16a6cbbab036ad6dac008c9d522e0",
+      "game/data/campaigns/197-07.json": "8a4a647e6db943e98e55d7a685154769d8d57f9c46c00baa995a105447411490",
+      "game/data/campaigns/198-03.json": "827da81ce7cc069a42eaf0c260a485642f9b17ceb62097948ad5ae5af67a81d5",
+      "game/data/campaigns/200-01.json": "e679612eaf06a7fa9b3eaf66e7faeed232b05c6e3a2d949590aa8a70880ab3c4",
+      "game/data/campaigns/201-05.json": "637c45066b003c2e0ae550670248e63802586460ebd62cc7d17f32f60e7666c1",
+      "game/data/campaigns/202-06.json": "bb992c0c948418710b3114659b718178d842aa4bf9f5d62a37e7759782815381",
+      "game/data/campaigns/207-09.json": "0e0fefdf76d97f07994483f343c30aa5a99f64a73bf1c86edde388df4fa726a3",
+      "game/data/campaigns/208-10.json": "fb1909c9a6af513f64a975af6757ecc3be952cfe5fef5598086e6a660ec210ff",
+      "game/data/campaigns/209-06.json": "2f83c4c4cc052267317616ae431e9105ece6f5bcdb21b258698c8d8702c2e70f",
+      "game/data/campaigns/210-11.json": "70d75daf2cd5a32f1e90992886899d39ebe7dc46bb141c1f53d5bc12a3b4d65c",
+      "game/data/campaigns/211-07-tongguan.json": "5c8f03ccae968a99fdb3ebaf20323426eaf3b0dad70edb8e796952ad00119ee3",
+      "game/data/campaigns/212-06.json": "9d90e481f54df3af80ee8868a1aeab761a3d159dff1357c30f549e3e0c822509",
+      "game/data/campaigns/212-12.json": "78a0bd2105ec0fd274807ea0940443b4bfd9bed838414efccaef1a765cb5e038",
+      "game/data/campaigns/215-08.json": "730dbf85605470f6d812834b8ff804b9fe7618df025b7cad61e6629d928745b0",
+      "game/data/campaigns/217-07.json": "90b59247d7ceb4537f8e11e739beb628f75d7a9900d5e2efe7eff97156742736",
+      "game/data/campaigns/219-07.json": "7dc6d414f42b0758f87c5f656fb9d4758fc71eb926faedcb1ac5f76a71bf1b39",
+      "game/data/campaigns/221-07.json": "0aedaf4c6a659312c5941ed4bff209e1b97234273e91f17d7516378ee9227620",
+      "game/data/campaigns/225-07.json": "d39760ef34da2809f25244bb89bafc8d695ff6ad2ce8c8b2793877d2a731d89c",
+      "game/data/campaigns/227-02.json": "9e13dcb0a36cafd97f48d1fcc98378c4c0e8e8683e7100d5f2a95a2cf63ef351",
+      "game/data/campaigns/234-02.json": "df2d0aed2bdbd1ad3c73a2db49f8a3970b558300c466e299e8495ff315bd117a",
+      "game/data/campaigns/235-01.json": "b0170fe3affcc837c6d2ee0e3d497b8e7a716e1f26112393e61de581cd787332",
+      "game/data/campaigns/238-01.json": "6084855f05f7f2a7ec2a3d6d3aa96ddc5531c1dad46278d64f1346180c568d6f",
+      "game/data/campaigns/249-01.json": "e60f0c30108310f2084a3ae2916a68fb7a9d8ebfa14435e05de0b667ddd5b72c",
+      "game/data/campaigns/263-05.json": "0418e31d7c1cc0336d02e1d8fa192034f918c7062572a43d7359485fc32d41c9"
     }
   },
   "style": [
@@ -371,6 +371,18 @@
       "water_length": 4
     },
     "bridge-027": {
+      "d": "M635.29 329.11L635.59 328.7L635.88 328.3L636.19 327.9L636.49 327.51L636.8 327.11L637.11 326.73L637.43 326.34L637.75 325.96L638.08 325.58L638.4 325.2L638.73 324.82L639.05 324.44L639.71 323.68L640.03 323.3L640.36 322.92L640.68 322.54",
+      "center": [
+        637.75,
+        325.96
+      ],
+      "axis": [
+        0.634,
+        -0.773
+      ],
+      "water_length": 6
+    },
+    "bridge-028": {
       "d": "M700.72 428.96L701.21 428.83L701.69 428.69L702.16 428.52L702.62 428.33L703.08 428.13L703.52 427.9L703.96 427.65L704.37 427.38",
       "center": [
         702.62,
@@ -382,7 +394,7 @@
       ],
       "water_length": 1.5
     },
-    "bridge-028": {
+    "bridge-029": {
       "d": "M657.97 500.76L657.88 501.25L657.73 501.73L657.53 502.18L657.28 502.61L656.97 503.01L656.63 503.37L654.86 505.14L654.54 505.53L654.29 505.96L654.11 506.42L654.02 506.91L654 507.41L654 508.41L654.01 508.91L654.07 509.41L654.22 509.89L654.44 510.33L654.74 510.73L655.09 511.09L659.33 515.33L659.68 515.69L660.01 516.07L660.32 516.46L660.6 516.87L660.86 517.3L661.08 517.75L661.27 518.21L661.44 518.68L661.56 519.17L661.66 519.66L661.72 520.15L661.75 520.65L661.76 521.15",
       "center": [
         655.09,
@@ -394,7 +406,7 @@
       ],
       "water_length": 22
     },
-    "bridge-029": {
+    "bridge-030": {
       "d": "M659.18 564.98L658.92 571.48",
       "center": [
         659.06,
@@ -406,7 +418,7 @@
       ],
       "water_length": 4
     },
-    "bridge-030": {
+    "bridge-031": {
       "d": "M669.03 534.97L669.36 534.6L669.64 534.19L669.84 533.73L669.96 533.24L670 532.75L670 531.25L670.04 530.75L670.16 530.26L670.36 529.81L670.64 529.39L670.98 529.02L672.75 527.25",
       "center": [
         670.04,
@@ -418,7 +430,7 @@
       ],
       "water_length": 6.5
     },
-    "bridge-031": {
+    "bridge-032": {
       "d": "M689 553L692.89 556.89",
       "center": [
         690.76,
@@ -430,7 +442,7 @@
       ],
       "water_length": 3
     },
-    "bridge-032": {
+    "bridge-033": {
       "d": "M699.19 559.19L704.85 564.85",
       "center": [
         702.02,
@@ -442,7 +454,7 @@
       ],
       "water_length": 5.5
     },
-    "bridge-033": {
+    "bridge-034": {
       "d": "M684.71 648.2L685.19 648.09L685.68 647.97L686.17 647.86L686.65 647.74L687.14 647.63L687.63 647.51L688.11 647.39L688.6 647.28L689.08 647.16L689.57 647.05L690.06 646.93L690.54 646.82L691.03 646.7",
       "center": [
         687.63,
@@ -454,7 +466,7 @@
       ],
       "water_length": 4
     },
-    "bridge-034": {
+    "bridge-035": {
       "d": "M684.74 644.79L685.68 644.45L686.15 644.29L686.62 644.12L687.1 643.95L687.57 643.79L688.98 643.28L689.45 643.12L690.39 642.78L690.87 642.61L691.34 642.45",
       "center": [
         688.04,
@@ -466,7 +478,7 @@
       ],
       "water_length": 4.5
     },
-    "bridge-035": {
+    "bridge-036": {
       "d": "M694 780.65L694 787.15",
       "center": [
         694,
@@ -478,7 +490,7 @@
       ],
       "water_length": 4
     },
-    "bridge-036": {
+    "bridge-037": {
       "d": "M711.22 794.75L711.55 794.38L711.88 794L712.21 793.63L712.54 793.25L712.87 792.88L713.2 792.5L713.53 792.13L713.86 791.75L714.19 791.38L714.53 791L714.86 790.63L715.19 790.25L715.52 789.88L715.85 789.5L716.18 789.13",
       "center": [
         713.53,
@@ -490,7 +502,7 @@
       ],
       "water_length": 5
     },
-    "bridge-037": {
+    "bridge-038": {
       "d": "M733.98 423.06L735.09 424.08L735.45 424.42L736.56 425.44L736.92 425.77L737.66 426.45L738.02 426.79L739.13 427.81L739.49 428.15L740.6 429.17L740.96 429.51L741.33 429.84L742.07 430.52L742.43 430.86",
       "center": [
         738.02,
@@ -502,7 +514,7 @@
       ],
       "water_length": 9
     },
-    "bridge-038": {
+    "bridge-039": {
       "d": "M749.31 433.3L749.75 432.4L749.96 431.95L750.84 430.15L751.05 429.7L751.93 427.9L752.14 427.45L752.36 427",
       "center": [
         750.84,
@@ -514,7 +526,7 @@
       ],
       "water_length": 4.5
     },
-    "bridge-039": {
+    "bridge-040": {
       "d": "M798.75 426L811.25 426",
       "center": [
         804.75,
@@ -526,7 +538,7 @@
       ],
       "water_length": 10
     },
-    "bridge-040": {
+    "bridge-041": {
       "d": "M820.81 268.91L821.12 269.3L821.44 269.68L821.75 270.07L822.07 270.46L822.69 271.24L823.01 271.63L823.32 272.02L823.64 272.41L823.95 272.8L824.27 273.19L824.58 273.57L824.89 273.96L825.21 274.35L825.52 274.74L825.84 275.13",
       "center": [
         823.32,
@@ -538,7 +550,7 @@
       ],
       "water_length": 5.5
     },
-    "bridge-041": {
+    "bridge-042": {
       "d": "M842.97 497.27L843.47 497.29L843.97 497.32L844.97 497.36L845.47 497.39L845.97 497.41L846.46 497.44L846.96 497.46L847.46 497.49L848.46 497.53L848.96 497.56L849.46 497.58",
       "center": [
         845.97,
@@ -550,7 +562,7 @@
       ],
       "water_length": 4
     },
-    "bridge-042": {
+    "bridge-043": {
       "d": "M855.24 431.17L855.56 431.55L855.91 431.91L860.86 436.86",
       "center": [
         858.03,
@@ -562,7 +574,7 @@
       ],
       "water_length": 5.5
     },
-    "bridge-043": {
+    "bridge-044": {
       "d": "M870.87 416.77L871.85 416.95L872.34 417.05L873.32 417.23L873.82 417.32L874.31 417.42L875.78 417.69L876.27 417.79L877.25 417.97",
       "center": [
         873.82,
@@ -574,7 +586,7 @@
       ],
       "water_length": 4
     },
-    "bridge-044": {
+    "bridge-045": {
       "d": "M887.12 543.12L888.89 544.89L889.24 545.25L889.54 545.64L889.77 546.09L889.92 546.56L889.99 547.06L890 547.56L890 548.56L890.02 549.06L890.1 549.55L890.27 550.02L890.52 550.45L890.84 550.84L892.96 552.96",
       "center": [
         890,
@@ -586,7 +598,7 @@
       ],
       "water_length": 9.5
     },
-    "bridge-045": {
+    "bridge-046": {
       "d": "M893.93 543.01L894.16 543.45L894.64 544.33L894.87 544.77L895.59 546.09L895.82 546.53L896.3 547.41L896.53 547.85L897.01 548.73L897.24 549.17L897.96 550.49L898.19 550.93",
       "center": [
         896.06,
@@ -598,7 +610,7 @@
       ],
       "water_length": 6.5
     },
-    "bridge-046": {
+    "bridge-047": {
       "d": "M923 569.8L924 569.76L924.49 569.75L935.99 569.29L936.49 569.28L937.49 569.24L937.98 569.22L948.48 568.8L948.98 568.79L949.48 568.77",
       "center": [
         935.99,
@@ -610,7 +622,7 @@
       ],
       "water_length": 24
     },
-    "bridge-047": {
+    "bridge-048": {
       "d": "M942.47 216.98L942.34 216.5L942.11 216.06L941.79 215.68L941.39 215.37L940.53 214.87L940.09 214.62L939.66 214.38L939.22 214.13L938.36 213.63L937.92 213.38",
       "center": [
         940.53,
@@ -622,7 +634,7 @@
       ],
       "water_length": 3.5
     },
-    "bridge-048": {
+    "bridge-049": {
       "d": "M949.13 204.78L949.23 205.27L949.36 205.75L949.53 206.22L949.74 206.67L949.99 207.11L950.28 207.51L950.6 207.9L950.96 208.25L951.34 208.56L951.75 208.85L952.19 209.1L952.63 209.32L953.1 209.51",
       "center": [
         950.28,
@@ -634,7 +646,7 @@
       ],
       "water_length": 4
     },
-    "bridge-049": {
+    "bridge-050": {
       "d": "M1014.63 431.16L1015.63 431.04L1016.12 430.99L1017.12 430.87L1017.61 430.81L1018.61 430.69L1019.1 430.63L1019.6 430.58L1020.1 430.52L1020.59 430.46L1021.59 430.34L1022.08 430.28L1022.58 430.23L1023.08 430.17",
       "center": [
         1018.61,
@@ -646,7 +658,7 @@
       ],
       "water_length": 6
     },
-    "bridge-050": {
+    "bridge-051": {
       "d": "M949.5 385L949.5 376.5",
       "center": [
         949.5,
@@ -658,7 +670,7 @@
       ],
       "water_length": 6
     },
-    "bridge-051": {
+    "bridge-052": {
       "d": "M961.72 382.66L962.15 382.42L962.59 382.18L963.03 381.93L963.46 381.69L963.9 381.44L964.34 381.2L964.77 380.95L965.21 380.71",
       "center": [
         963.46,
@@ -670,7 +682,7 @@
       ],
       "water_length": 1.5
     },
-    "bridge-052": {
+    "bridge-053": {
       "d": "M965.21 380.71L965.64 380.47L966.08 380.22L966.52 379.98L966.95 379.73L967.83 379.25L968.26 379L968.7 378.76L969.14 378.51L969.57 378.27L970.01 378.03L970.44 377.78L970.88 377.54L971.32 377.29L971.75 377.05L972.19 376.8L972.63 376.56L973.06 376.32L973.5 376.07L973.94 375.83L974.37 375.58L974.81 375.34",
       "center": [
         970.01,
@@ -682,7 +694,7 @@
       ],
       "water_length": 8.5
     },
-    "bridge-053": {
+    "bridge-054": {
       "d": "M1105.16 494.84L1116.83 483.17",
       "center": [
         1110.82,
@@ -694,7 +706,7 @@
       ],
       "water_length": 14
     },
-    "bridge-054": {
+    "bridge-055": {
       "d": "M876.95 241.93L877.34 241.62L877.74 241.32L878.13 241.01L878.53 240.7L878.92 240.4L879.31 240.09L879.71 239.78L880.1 239.47L880.5 239.17",
       "center": [
         878.53,
@@ -706,7 +718,7 @@
       ],
       "water_length": 2
     },
-    "bridge-055": {
+    "bridge-056": {
       "d": "M846.77 491.15L846.46 491.55L846.13 491.93L845.78 492.28L845.41 492.61L845.01 492.92L844.6 493.2L844.17 493.46L843.73 493.7L843.28 493.92L842.83 494.12",
       "center": [
         845.01,
@@ -718,7 +730,7 @@
       ],
       "water_length": 2.5
     },
-    "bridge-056": {
+    "bridge-057": {
       "d": "M846.77 491.15L846.46 491.55L846.17 491.96L845.9 492.38L845.67 492.82L845.51 493.3L845.44 493.79L845.5 494.28L845.74 494.72L846.1 495.07L846.53 495.32L846.99 495.51L847.47 495.66L847.95 495.77L848.45 495.85L848.94 495.91L849.44 495.95",
       "center": [
         845.74,
@@ -730,7 +742,7 @@
       ],
       "water_length": 5.5
     },
-    "bridge-057": {
+    "bridge-058": {
       "d": "M926.97 610.08L926.64 609.7L926.32 609.32L925.99 608.94L925.35 608.18L925.02 607.8L924.7 607.42L924.38 607.03L924.06 606.65L923.74 606.26L923.42 605.88L923.11 605.49L922.79 605.11",
       "center": [
         925.02,
@@ -742,7 +754,7 @@
       ],
       "water_length": 4
     },
-    "bridge-058": {
+    "bridge-059": {
       "d": "M911.03 620.19L910.53 620.23L910.04 620.28L909.54 620.32L908.54 620.42L908.05 620.47L906.55 620.62L906.06 620.68L905.56 620.73L905.06 620.79L904.57 620.85L904.07 620.9L903.57 620.96L903.08 621.02L902.58 621.08L902.08 621.15L901.59 621.21L901.09 621.27L900.6 621.34",
       "center": [
         906.06,
@@ -754,7 +766,7 @@
       ],
       "water_length": 8
     },
-    "bridge-059": {
+    "bridge-060": {
       "d": "M353.36 416.21L352.88 416.37L351.94 416.69L351.47 416.86L350.99 417.03L350.53 417.2L349.59 417.56L349.13 417.74L348.66 417.93L348.2 418.12L347.74 418.32L347.28 418.51L346.83 418.72",
       "center": [
         350.06,
@@ -766,7 +778,55 @@
       ],
       "water_length": 4.5
     },
-    "bridge-060": {
+    "bridge-061": {
+      "d": "M771.24 320.8L770.28 320.54L769.79 320.42L769.31 320.3L768.82 320.17L768.34 320.05L767.85 319.93L767.37 319.81L766.88 319.69L766.4 319.57L765.91 319.45L765.42 319.34L764.94 319.22L764.45 319.1L763.96 318.99L763.48 318.87L762.5 318.65L762.02 318.54L761.53 318.43L761.04 318.31L760.55 318.21L760.07 318.1L758.6 317.77",
+      "center": [
+        764.94,
+        319.22
+      ],
+      "axis": [
+        -0.973,
+        -0.233
+      ],
+      "water_length": 10.5
+    },
+    "bridge-062": {
+      "d": "M753.22 316.64L752.73 316.55L751.26 316.25L750.77 316.16L750.27 316.07L749.78 315.97L748.8 315.79",
+      "center": [
+        751.26,
+        316.25
+      ],
+      "axis": [
+        -0.982,
+        -0.19
+      ],
+      "water_length": 2
+    },
+    "bridge-063": {
+      "d": "M924.31 385.11L923.41 383.91L923.1 383.51L922.8 383.12L922.49 382.72L922.19 382.32L921.89 381.93L921.58 381.53L921.28 381.14L920.66 380.34L920.36 379.95L920.05 379.55L919.75 379.16",
+      "center": [
+        922.19,
+        382.32
+      ],
+      "axis": [
+        -0.609,
+        -0.793
+      ],
+      "water_length": 5
+    },
+    "bridge-064": {
+      "d": "M892 362.5L892 366L891.98 366.5L891.97 367L891.94 367.5L891.86 368.5L891.81 368.99L891.75 369.49L891.68 369.98L891.61 370.48L891.43 371.46L891.33 371.95L891.22 372.44L891.1 372.93L890.98 373.41",
+      "center": [
+        891.9,
+        368
+      ],
+      "axis": [
+        -0.093,
+        0.996
+      ],
+      "water_length": 8.5
+    },
+    "bridge-065": {
       "d": "M422.53 585.2L422.24 584.8L421.95 584.39L421.41 583.55L421.15 583.12L420.91 582.68L420.68 582.24L420.46 581.79L420.28 581.32L420.13 580.85L420.03 580.36L420 579.86L419.99 579.36L419.96 578.86L419.91 578.36L419.83 577.87L419.74 577.38L419.62 576.89L419.47 576.41L419.29 575.95L419.08 575.49L418.83 575.06",
       "center": [
         420.03,
@@ -778,7 +838,7 @@
       ],
       "water_length": 8.5
     },
-    "bridge-061": {
+    "bridge-066": {
       "d": "M441.31 584.94L441.02 584.53L440.75 584.11L440.5 583.67L440.29 583.22L440.12 582.75L440.02 582.26L440.02 581.77L440.17 581.29L440.38 580.84L440.63 580.4L440.9 579.98L441.19 579.57L441.48 579.17",
       "center": [
         440.02,
@@ -790,7 +850,7 @@
       ],
       "water_length": 4
     },
-    "bridge-062": {
+    "bridge-067": {
       "d": "M816 520.92L816 525.92L816.01 526.42L816.01 527.92L816.02 528.42L816.02 528.92L816.03 529.42",
       "center": [
         816,
@@ -802,7 +862,7 @@
       ],
       "water_length": 6
     },
-    "bridge-063": {
+    "bridge-068": {
       "d": "M785.04 809.04L784.33 808.33L784.02 807.98L786.85 805.15",
       "center": [
         784.73,
@@ -814,7 +874,7 @@
       ],
       "water_length": 3
     },
-    "bridge-064": {
+    "bridge-069": {
       "d": "M1065 176L1060 176L1058.94 174.94",
       "center": [
         1062,
@@ -826,7 +886,7 @@
       ],
       "water_length": 4
     },
-    "bridge-065": {
+    "bridge-070": {
       "d": "M226.68 473.09L226.4 473.51L224.51 476.45L224.24 476.88L223.43 478.14",
       "center": [
         225.05,
@@ -892,60 +952,71 @@
     "bridge-050",
     "bridge-051",
     "bridge-052",
-    "bridge-053"
+    "bridge-053",
+    "bridge-054"
   ],
   "by_path": {
     "M873 245L882 238Q891 231 897.5 222Q904 213 911 207.5L918 202": [
-      "bridge-054"
-    ],
-    "M857 474L853.5 480.5Q850 487 846.5 491.5Q843 496 830 496L817 496": [
       "bridge-055"
     ],
-    "M857 474L853.5 480.5Q850 487 846.5 491.5Q843 496 851 496Q859 496 866.5 504L874 512": [
+    "M857 474L853.5 480.5Q850 487 846.5 491.5Q843 496 830 496L817 496": [
       "bridge-056"
     ],
-    "M935 619L930 613.5Q925 608 919.5 601Q914 594 909 586.5L904 579": [
+    "M857 474L853.5 480.5Q850 487 846.5 491.5Q843 496 851 496Q859 496 866.5 504L874 512": [
       "bridge-057"
     ],
-    "M935 619L922 619.5Q909 620 896 622Q883 624 870 626Q857 628 842.5 629L828 630": [
+    "M935 619L930 613.5Q925 608 919.5 601Q914 594 909 586.5L904 579": [
       "bridge-058"
     ],
-    "M360 414L352.5 416.5Q345 419 337 424Q329 429 322 431L315 433": [
+    "M935 619L922 619.5Q909 620 896 622Q883 624 870 626Q857 628 842.5 629L828 630": [
       "bridge-059"
     ],
-    "M448 612L434 598Q420 584 420 580Q420 576 418 574Q416 572 416 570Q416 568 414 568Q412 568 406 562Q400 556 399 554.5L398 553": [
+    "M360 414L352.5 416.5Q345 419 337 424Q329 429 322 431L315 433": [
       "bridge-060"
     ],
-    "M448 612L448 602Q448 592 444 588Q440 584 440 582Q440 580 448 572Q456 564 458 564Q460 564 466 558Q472 552 473 550.5L474 549": [
-      "bridge-061"
-    ],
-    "M817 496L816.5 498Q816 500 816 524Q816 548 818 550L820 552": [
+    "M827 340L812.5 334.5Q798 329 784 324.5Q770 320 752.5 316.5Q735 313 717 312Q699 311 689.5 309Q680 307 673 304L666 301": [
+      "bridge-061",
       "bridge-062"
     ],
-    "M796 824L796 820L784 808L788 804L784 800L772 800L768 796L760 796L744 780L741 775": [
+    "M945 406L938 400Q931 394 926.5 388Q922 382 916.5 375Q911 368 901.5 362L892 356": [
       "bridge-063"
+    ],
+    "M892 356L892 365.5Q892 375 886.5 383Q881 391 870 396Q859 401 847 405.5L835 410": [
+      "bridge-064"
+    ],
+    "M448 612L434 598Q420 584 420 580Q420 576 418 574Q416 572 416 570Q416 568 414 568Q412 568 406 562Q400 556 399 554.5L398 553": [
+      "bridge-065"
+    ],
+    "M448 612L448 602Q448 592 444 588Q440 584 440 582Q440 580 448 572Q456 564 458 564Q460 564 466 558Q472 552 473 550.5L474 549": [
+      "bridge-066"
+    ],
+    "M817 496L816.5 498Q816 500 816 524Q816 548 818 550L820 552": [
+      "bridge-067"
+    ],
+    "M796 824L796 820L784 808L788 804L784 800L772 800L768 796L760 796L744 780L741 775": [
+      "bridge-068"
     ],
     "M741 775L744 780L760 796L768 796L772 800L784 800L788 804L784 808L796 820L796 824": [
-      "bridge-063"
+      "bridge-068"
     ],
     "M1068 176L1060 176L1052 168L1048 168L1044 164L1040 164L1036 160L1032 160L1028 156L928 156L924 157": [
-      "bridge-064"
+      "bridge-069"
     ],
     "M924 157L928 156L1028 156L1032 160L1036 160L1040 164L1044 164L1048 168L1052 168L1060 176L1068 176": [
-      "bridge-064"
+      "bridge-069"
     ],
     "M244 448L241 452Q238 456 232 465Q226 474 221 482Q216 490 215 496L214 502": [
-      "bridge-065"
+      "bridge-070"
     ]
   },
   "audit": {
-    "land_strokes": 348,
-    "baked_strokes": 195,
-    "dynamic_strokes": 153,
-    "water_crossings": 67,
-    "unique_bridges": 65,
-    "baked_bridges": 53,
-    "dynamic_bridge_paths": 14,
+    "land_strokes": 354,
+    "baked_strokes": 200,
+    "dynamic_strokes": 154,
+    "water_crossings": 72,
+    "unique_bridges": 70,
+    "baked_bridges": 54,
+    "dynamic_bridge_paths": 17,
     "existing_bridge_marks": 50,
     "route_bridges": {
       "wei:zhao": [],
@@ -954,7 +1025,7 @@
       "anping:julu": [],
       "julu:qinghe": [],
       "pingyuan:qinghe": [
-        "bridge-054"
+        "bridge-055"
       ],
       "hejian:zhongshan": [],
       "bohai:hejian": [],
@@ -963,10 +1034,10 @@
       "xinxing:yanmen": [],
       "taiyuan:xinxing": [],
       "jiangxia:wuchang": [
-        "bridge-055"
+        "bridge-056"
       ],
       "qichun:wuchang": [
-        "bridge-056"
+        "bridge-057"
       ],
       "danyang:wuxing": [],
       "wujun:wuxing": [],
@@ -974,14 +1045,14 @@
       "jianan:linhai": [],
       "jianan:xindu": [],
       "linchuan:yuzhang": [
-        "bridge-057"
+        "bridge-058"
       ],
       "linchuan:luling": [
-        "bridge-058"
+        "bridge-059"
       ],
       "hanzhong:jiameng": [],
       "jiameng:zitong": [
-        "bridge-059"
+        "bridge-060"
       ],
       "fuxian:guanghan": [],
       "fuxian:zitong": [],
@@ -990,14 +1061,26 @@
       "nanguang:qianwei": [],
       "nanguang:zhuti": [],
       "hanzhong:jingzhao": [],
+      "nanyang:yingchuan": [],
+      "liaoxi:yuyang": [],
+      "chenliu:henei": [
+        "bridge-061",
+        "bridge-062"
+      ],
+      "jiujiang:qiao": [
+        "bridge-063"
+      ],
+      "qiao:runan": [
+        "bridge-064"
+      ],
       "bajun:zangke": [
-        "bridge-060"
+        "bridge-065"
       ],
       "fuling:zangke": [
-        "bridge-061"
+        "bridge-066"
       ],
       "changsha:jiangxia": [
-        "bridge-062"
+        "bridge-067"
       ],
       "bajun:jiangyang": [],
       "bajun:fuling": [],
@@ -1021,7 +1104,6 @@
       "dongjun:wei": [],
       "dongjun:qinghe": [],
       "jinan:pingyuan": [],
-      "shujun:wenshan": [],
       "qianwei:shujun": [],
       "jiangyang:nanguang": [],
       "baxi:jiameng": [],
@@ -1034,7 +1116,6 @@
       "jiujiang:runan": [],
       "cangwu:yulin": [],
       "cangwu:nanhai": [],
-      "fufeng:tianshui": [],
       "badong:nanjun": [],
       "jiangxia:qichun": [],
       "luling:yuzhang": [],
@@ -1042,12 +1123,12 @@
       "beihai:lelang": [],
       "beihai:daifang": [],
       "kuaiji:nanhai": [
-        "bridge-063"
+        "bridge-068"
       ],
       "jiaozhi:kuaiji": [],
       "kuaiji:yizhou": [],
       "gaoliang:nanhai": [
-        "bridge-063"
+        "bridge-068"
       ],
       "gaoliang:hepu": [],
       "hepu:jiaozhi": [],
@@ -1055,7 +1136,7 @@
       "jiaozhi:rinan": [],
       "liaodong:liaoxi": [],
       "bohai:liaodong": [
-        "bridge-064"
+        "bridge-069"
       ],
       "donghai:liaodong": [],
       "beihai:liaodong": [],
@@ -1064,7 +1145,7 @@
       "kuaiji:liaodong": [],
       "liaodong:linhai": [],
       "liaodong:nanhai": [
-        "bridge-063"
+        "bridge-068"
       ],
       "gaoliang:liaodong": [],
       "hepu:liaodong": [],
@@ -1074,7 +1155,7 @@
       "liaodong:zhuya": [],
       "liaodong:yizhou": [],
       "bohai:liaoxi": [
-        "bridge-064"
+        "bridge-069"
       ],
       "donghai:liaoxi": [],
       "beihai:liaoxi": [],
@@ -1084,7 +1165,7 @@
       "kuaiji:liaoxi": [],
       "liaoxi:linhai": [],
       "liaoxi:nanhai": [
-        "bridge-063"
+        "bridge-068"
       ],
       "gaoliang:liaoxi": [],
       "hepu:liaoxi": [],
@@ -1094,50 +1175,50 @@
       "liaoxi:zhuya": [],
       "liaoxi:yizhou": [],
       "bohai:donghai": [
-        "bridge-064"
+        "bridge-069"
       ],
       "beihai:bohai": [
-        "bridge-064"
+        "bridge-069"
       ],
       "bohai:lelang": [
-        "bridge-064"
+        "bridge-069"
       ],
       "bohai:daifang": [
-        "bridge-064"
+        "bridge-069"
       ],
       "bohai:wujun": [
-        "bridge-064"
+        "bridge-069"
       ],
       "bohai:kuaiji": [
-        "bridge-064"
+        "bridge-069"
       ],
       "bohai:linhai": [
-        "bridge-064"
+        "bridge-069"
       ],
       "bohai:nanhai": [
-        "bridge-064",
-        "bridge-063"
+        "bridge-069",
+        "bridge-068"
       ],
       "bohai:gaoliang": [
-        "bridge-064"
+        "bridge-069"
       ],
       "bohai:hepu": [
-        "bridge-064"
+        "bridge-069"
       ],
       "bohai:jiaozhi": [
-        "bridge-064"
+        "bridge-069"
       ],
       "bohai:jiuzhen": [
-        "bridge-064"
+        "bridge-069"
       ],
       "bohai:rinan": [
-        "bridge-064"
+        "bridge-069"
       ],
       "bohai:zhuya": [
-        "bridge-064"
+        "bridge-069"
       ],
       "bohai:yizhou": [
-        "bridge-064"
+        "bridge-069"
       ],
       "beihai:donghai": [],
       "donghai:lelang": [],
@@ -1146,7 +1227,7 @@
       "donghai:kuaiji": [],
       "donghai:linhai": [],
       "donghai:nanhai": [
-        "bridge-063"
+        "bridge-068"
       ],
       "donghai:gaoliang": [],
       "donghai:hepu": [],
@@ -1159,7 +1240,7 @@
       "beihai:kuaiji": [],
       "beihai:linhai": [],
       "beihai:nanhai": [
-        "bridge-063"
+        "bridge-068"
       ],
       "beihai:gaoliang": [],
       "beihai:hepu": [],
@@ -1173,7 +1254,7 @@
       "kuaiji:lelang": [],
       "lelang:linhai": [],
       "lelang:nanhai": [
-        "bridge-063"
+        "bridge-068"
       ],
       "gaoliang:lelang": [],
       "hepu:lelang": [],
@@ -1186,7 +1267,7 @@
       "daifang:kuaiji": [],
       "daifang:linhai": [],
       "daifang:nanhai": [
-        "bridge-063"
+        "bridge-068"
       ],
       "daifang:gaoliang": [],
       "daifang:hepu": [],
@@ -1198,7 +1279,7 @@
       "kuaiji:wujun": [],
       "linhai:wujun": [],
       "nanhai:wujun": [
-        "bridge-063"
+        "bridge-068"
       ],
       "gaoliang:wujun": [],
       "hepu:wujun": [],
@@ -1213,7 +1294,7 @@
       "kuaiji:rinan": [],
       "kuaiji:zhuya": [],
       "linhai:nanhai": [
-        "bridge-063"
+        "bridge-068"
       ],
       "gaoliang:linhai": [],
       "hepu:linhai": [],
@@ -1223,22 +1304,22 @@
       "linhai:zhuya": [],
       "linhai:yizhou": [],
       "hepu:nanhai": [
-        "bridge-063"
+        "bridge-068"
       ],
       "jiaozhi:nanhai": [
-        "bridge-063"
+        "bridge-068"
       ],
       "jiuzhen:nanhai": [
-        "bridge-063"
+        "bridge-068"
       ],
       "nanhai:rinan": [
-        "bridge-063"
+        "bridge-068"
       ],
       "nanhai:zhuya": [
-        "bridge-063"
+        "bridge-068"
       ],
       "nanhai:yizhou": [
-        "bridge-063"
+        "bridge-068"
       ],
       "gaoliang:jiaozhi": [],
       "gaoliang:jiuzhen": [],
@@ -1264,7 +1345,7 @@
       "wuwei:xiping": [],
       "jincheng:wuwei": [],
       "shujun:yinping": [
-        "bridge-065"
+        "bridge-070"
       ]
     },
     "long_crossings": []

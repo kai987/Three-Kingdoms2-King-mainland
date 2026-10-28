@@ -51,11 +51,81 @@ fn discovered(request: &Value) -> Result<BTreeSet<&str>> {
 }
 
 fn known_routes<'a>(data: &'a Value, request: &Value) -> Result<Vec<&'a Value>> {
-    let mut result: Vec<_> = rows(data, "travel_routes")?.iter().collect();
+    let mut declared: Vec<_> = rows(data, "travel_routes")?.iter().collect();
     let found = discovered(request)?;
     for row in rows(data, "exploration_routes")? {
         if found.contains(string(row, "id")?) {
-            result.push(row);
+            declared.push(row);
+        }
+    }
+    let active = Cities::read(request)?;
+    let year = request.get("year").and_then(Value::as_i64);
+    let month = request.get("month").and_then(Value::as_i64).unwrap_or(1);
+    let mut result = vec![];
+    for route in declared {
+        if let (Some(year), Some(Value::Array(closures))) = (year, route.get("closures")) {
+            let date = (year, month);
+            let mut closed = false;
+            for period in closures {
+                let bound = |key: &str| -> Result<(i64, i64)> {
+                    let parts = field(period, key)?
+                        .as_array()
+                        .ok_or("Invalid road closure")?;
+                    if parts.len() != 2 {
+                        return Err("Invalid road closure".into());
+                    }
+                    Ok((
+                        parts[0].as_i64().ok_or("Invalid closure year")?,
+                        parts[1].as_i64().ok_or("Invalid closure month")?,
+                    ))
+                };
+                closed |= bound("from")? <= date && date < bound("to")?;
+            }
+            if closed {
+                continue;
+            }
+        }
+        if let (Some(year), Some(window)) = (year, route.get("availability")) {
+            let date = (year, month);
+            let bound = |key: &str| -> Result<Option<(i64, i64)>> {
+                window
+                    .get(key)
+                    .map(|value| {
+                        let parts = value.as_array().ok_or("Invalid road availability")?;
+                        if parts.len() != 2 {
+                            return Err("Invalid road availability".into());
+                        }
+                        Ok((
+                            parts[0].as_i64().ok_or("Invalid road year")?,
+                            parts[1].as_i64().ok_or("Invalid road month")?,
+                        ))
+                    })
+                    .transpose()
+            };
+            if bound("from")?.is_some_and(|start| date < start)
+                || bound("to")?.is_some_and(|end| date >= end)
+            {
+                continue;
+            }
+        }
+        if let Some(Value::Array(variants)) = route.get("transit_variants") {
+            for section in variants {
+                let a = string(section, "from")?;
+                let b = string(section, "to")?;
+                let via = field(section, "via")?
+                    .as_array()
+                    .ok_or("Invalid road transit")?;
+                if active.owners.contains_key(a)
+                    && active.owners.contains_key(b)
+                    && !via
+                        .iter()
+                        .any(|id| id.as_str().is_some_and(|id| active.owners.contains_key(id)))
+                {
+                    result.push(section);
+                }
+            }
+        } else {
+            result.push(route);
         }
     }
     Ok(result)

@@ -82,11 +82,22 @@ def compile_network(spec, positions):
         if not segments or current != ports[b]['node']:
             raise ValueError('River connection must finish at the destination port')
         draw.append(dict(mode='land', access_id=b, points=deepcopy(list(reversed(ports[b]['access'])))))
+        history = dict(classification='historical_water_system_authorial_game_calibration',
+                       basis='共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。',
+                       sources=list(dict.fromkeys(references)))
+        if 'history' in row:
+            reviewed = row['history']
+            if (not isinstance(reviewed, dict) or not isinstance(reviewed.get('basis'), str)
+                    or not isinstance(reviewed.get('classification'), str)
+                    or not isinstance(reviewed.get('sources'), list)
+                    or not all(isinstance(url, str) and url.startswith('https://')
+                               for url in reviewed['sources'])):
+                raise ValueError('Invalid reviewed river history')
+            history.update(deepcopy(reviewed))
+            history['sources'] = list(dict.fromkeys(references + reviewed['sources']))
         routes.append(dict(id=identity, **{'from': a, 'to': b}, mode='river', terrain='river',
                            geo=geo, river_segments=segments, draw=draw,
-                           history=dict(classification='historical_water_system_authorial_game_calibration',
-                               basis='共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。',
-                               sources=list(dict.fromkeys(references)))))
+                           history=history))
     return routes
 
 

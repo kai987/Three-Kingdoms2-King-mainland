@@ -143,5 +143,47 @@
     "river_embark_days": 1
   },
   "river_routes": [],
-  "river_network_source": "game/config/river-network.json"
+  "river_network_source": "game/config/river-network.json",
+  "land_path_constraints": {
+    "hedong:shangdang:land": {
+      "waypoints": [
+        [
+          638,
+          363
+        ],
+        [
+          642,
+          321
+        ],
+        [
+          682,
+          322
+        ]
+      ],
+      "basis": "選擇河東向北的濝關方向及既有上黨通道，避免借洛陽城中心代表河東北行古道。折點為既有共用路網，不另畫重複道路。",
+      "source": "https://zh.wikisource.org/wiki/水經注/04"
+    },
+    "hedong:xihe:land": {
+      "waypoints": [
+        [
+          638,
+          363
+        ],
+        [
+          642,
+          321
+        ],
+        [
+          682,
+          322
+        ],
+        [
+          733,
+          266
+        ]
+      ],
+      "basis": "選擇河東向北的濝關方向及既有上黨通道，避免借洛陽城中心代表河東北行古道。折點為既有共用路網，不另畫重複道路。",
+      "source": "https://zh.wikisource.org/wiki/水經注/04"
+    }
+  }
 }

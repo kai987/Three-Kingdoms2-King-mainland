@@ -404,7 +404,8 @@ function renderMap(){
   const d=part.mode==='river'?smoothMapPath(part.points):landMapPath(part.points,{smooth:false,from:index===0?r.from:null,to:index===r.draw.length-1?r.to:null});
   return part.mode==='river'?`<path class="river-lane" d="${d}" data-river-route="${escapeHtml(r.id)}"${part.reach_id?' data-river-reach="'+escapeHtml(part.reach_id)+'"':''}/>`:`<g data-access-road="${r.from}-${r.to}-${index}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;
  })).join('');
- const regionalRoads=(preview?.regional_roads||view.catalog.regional_roads||[]).filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)).flatMap(r=>r.draw.map((part,index)=>{
+ const roadAvailable=r=>{const n=date.year*12+date.month,w=r.availability;return (!w||(!w.from||n>=w.from[0]*12+w.from[1])&&(!w.to||n<w.to[0]*12+w.to[1]))&&!(r.closures||[]).some(p=>n>=p.from[0]*12+p.from[1]&&n<p.to[0]*12+p.to[1]);};
+ const regionalRoads=(preview?.regional_roads||view.catalog.regional_roads||[]).filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)&&roadAvailable(r)).flatMap(r=>r.draw.map((part,index)=>{
   if(!firstAccess(part))return '';
   const d=landMapPath(part.points,{from:index===0?r.from:null,to:index===r.draw.length-1?r.to:null});
   return `<g data-regional-road="${r.from}-${r.to}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;

@@ -275,12 +275,38 @@ class FullCatalogRouteTimingTests(unittest.TestCase):
                         self.assertEqual(actual['shape_ratio'], round(max(1, part['length_px']/part['chord_px']) if part['chord_px'] else 1, 9))
                     coords, rules = compiled['city_coordinates'], compiled['travel_rules']
                     if route['mode'] == 'land':
-                        part = row['parts'][0]
-                        straight = geographic_distance(coords[route['from']], coords[route['to']])
-                        expected_land = round(straight * part['length_px']/part['chord_px'] * rules['detours'][route['terrain']], 1)
+                        if route.get('transit_variants'):
+                            # Independently calibrate each physical city section;
+                            # a full-parent endpoint ratio loses genuine bends
+                            # through geographically distinct intermediate cities.
+                            sections = row['city_sections']
+                            distances = []
+                            for section in sections:
+                                part = section['parts'][0]
+                                straight = geographic_distance(coords[section['from']], coords[section['to']])
+                                distances.append(round(straight * part['length_px']/part['chord_px']
+                                                       * rules['detours'][route['terrain']], 1))
+                            expected_land = round(sum(distances), 1)
+                            expected_days = sum(ceil(distance/rules['speeds'][route['terrain']]) for distance in distances)
+                            children = {(child['from'], child['to']): child for child in route['transit_variants']}
+                            chain = [sections[0]['from']] + [section['to'] for section in sections]
+                            self.assertEqual(len(children), len(sections)*(len(sections)+1)//2)
+                            for start in range(len(sections)):
+                                for end in range(start+1, len(sections)+1):
+                                    child = children[chain[start], chain[end]]
+                                    distance = round(sum(distances[start:end]), 1)
+                                    self.assertEqual(child['distance_km'], distance)
+                                    self.assertEqual(child['days'], ceil(distance/rules['speeds'][route['terrain']]))
+                                    self.assertEqual(child['via'], chain[start+1:end])
+                                    self.assertEqual(child['parent_route'], route['id'])
+                        else:
+                            part = row['parts'][0]
+                            straight = geographic_distance(coords[route['from']], coords[route['to']])
+                            expected_land = round(straight * part['length_px']/part['chord_px'] * rules['detours'][route['terrain']], 1)
+                            expected_days = ceil(expected_land/rules['speeds'][route['terrain']])
                         self.assertEqual(route['land_km'], expected_land)
                         self.assertEqual(route['sea_km'], 0)
-                        self.assertEqual(route['days'], ceil(expected_land/rules['speeds'][route['terrain']]))
+                        self.assertEqual(route['days'], expected_days)
                     elif route['mode'] == 'sea':
                         self.assertEqual([m['mode'] for m in metrics], ['land', 'sea', 'land'])
                         ratios = [max(1, p['length_px']/p['chord_px']) if p['chord_px'] else 1 for p in row['parts']]

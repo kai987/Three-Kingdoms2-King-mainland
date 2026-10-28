@@ -1170,11 +1170,12 @@ def validate(game, state):
                 if journey['arrival_turn']!=expected_eta and not (journey['supply']['clock_tick']==journey['supply']['start_tick']
                         and journey['arrival_turn']==journey['departure_turn']+quote['turns']):
                     raise ValueError('Logistics dynamic ETA')
-            routes = {r['id']: r for r in game.catalog.data['travel_routes'] + game.catalog.data.get('exploration_routes', [])}
+            from .route_network import variants, valid_departure
+            routes = {r['id']: r for r in variants(game.catalog.data['travel_routes'] + game.catalog.data.get('exploration_routes', []))}
             legs = []
             for a, b, leg in zip(quote['path'], quote['path'][1:], quote['routes']):
                 raw = routes.get(leg.get('id'))
-                if raw is None or not route_allowed(game.catalog.data, raw, a, b):
+                if raw is None or not route_allowed(game.catalog.data, raw, a, b) or not valid_departure(raw,game.catalog,journey['departure_year'],journey['departure_month']):
                     raise ValueError('Logistics route identity')
                 if journey['mode'] == 'land' and raw['mode'] != 'land':
                     raise ValueError('Logistics land route uses water')

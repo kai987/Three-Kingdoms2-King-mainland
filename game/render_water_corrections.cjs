@@ -22,7 +22,7 @@ async function main(){
    const svgUrl=svg=>'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(new XMLSerializer().serializeToString(svg));
    async function mask(select){const copy=doc.documentElement.cloneNode(true);for(const g of copy.querySelectorAll('[data-river],[data-lake]'))if(!select(g))g.remove();return pixels(svgUrl(copy));}
    const oldWei=await mask(g=>g.dataset.river==='wei'),otherWater=await mask(g=>g.dataset.river!=='wei');
-   const affected=new Uint8Array(N),stats={oldWeiPixelsRestored:0,newWeiPixels:0,clippedMouthPixels:{},seaShadowMaskPixels:0};
+   const affected=new Uint8Array(N),stats={oldWeiPixelsRestored:0,newWeiPixels:0,addedRiverPixels:0,clippedMouthPixels:{},seaShadowMaskPixels:0};
    function restore(i){const k=i*4;output.set(terrain.subarray(k,k+4),k);}
    for(let y=0;y<H;y++)for(let x=config.wei.replace_from_x;x<W;x++){const i=y*W+x;if(oldWei[i*4+3]&&!otherWater[i*4+3]){restore(i);stats.oldWeiPixelsRestored++;}}
    // Use the same 2px cells and narrow, single blue stroke as the source map.
@@ -37,6 +37,11 @@ async function main(){
    }
    const color=config.wei.color.match(/[a-f0-9]{2}/gi).map(v=>parseInt(v,16));
    for(const cell of cells){const[x,y]=cell.split(',').map(Number);for(let dy=0;dy<step;dy++)for(let dx=0;dx<step;dx++){const i=(y+dy)*W+x+dx;output.set([...color,255],i*4);stats.newWeiPixels++;}}
+   // Surveyed additions use the very same narrow, single-blue 2px cells.
+   // Paint these explicit source groups; the historical SVG otherwise only
+   // serves as a restoration mask because its rivers are baked in baseline.
+   const additions=await mask(g=>g.hasAttribute('data-authorial-addition'));
+   for(let i=0;i<N;i++)if(additions[i*4+3]){output.set(additions.subarray(i*4,i*4+4),i*4);stats.addedRiverPixels++;}
    for(const mouth of config.mouths){
     const river=await mask(g=>g.dataset.river===mouth.river);let count=0;
     for(let y=0;y<H;y++)for(let x=0;x<W;x++)if(river[(y*W+x)*4+3]&&(x+.5-mouth.shore[0])*mouth.outward[0]+(y+.5-mouth.shore[1])*mouth.outward[1]>0){restore(y*W+x);count++;}

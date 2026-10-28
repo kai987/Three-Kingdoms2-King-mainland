@@ -28,7 +28,7 @@ class SharedRiverNetwork(unittest.TestCase):
         before = deepcopy(spec)
         routes = compile_network(spec, self.positions)
         self.assertEqual(spec, before)
-        self.assertEqual(len(routes), 46)
+        self.assertEqual(len(routes), 44)
         self.assertEqual(len({row['id'] for row in routes}), len(routes))
         self.assertEqual(self.compiled['reach_count'], 47)
         for route in routes:
@@ -61,7 +61,7 @@ class SharedRiverNetwork(unittest.TestCase):
     def test_dated_optional_ports_do_not_cut_the_main_river_when_city_is_absent(self):
         bypasses = {row['optional_port_bypass']: row for row in self.spec['connections']
                     if 'optional_port_bypass' in row}
-        self.assertEqual(set(bypasses), {'yidu', 'wuchang', 'linchuan'})
+        self.assertEqual(set(bypasses), {'yidu', 'wuchang'})
         reached = Counter()
         for path in (ROOT / 'game/data/campaigns').glob('*.json'):
             if path.name == 'index.json':
@@ -78,6 +78,47 @@ class SharedRiverNetwork(unittest.TestCase):
         early = json.loads((ROOT / 'game/data/campaigns/207-09.json').read_text())
         self.assertNotIn('yidu', early['active_cities'])
         self.assertTrue({'badong', 'nanjun'} <= set(early['active_cities']))
+
+    def test_unverified_upper_navigation_is_removed_without_claiming_all_boats_impossible(self):
+        ids = {row['id'] for row in self.compiled['routes']}
+        self.assertNotIn('tianshui:fufeng:river', ids)
+        self.assertNotIn('wenshan:shujun:river', ids)
+        self.assertIn('fufeng:jingzhao:river', ids)
+        self.assertIn('shujun:qianwei:river', ids)
+        land = json.loads((ROOT / 'game/config/campaigns/shared.json').read_text())['catalog']['travel_routes']
+        land_pairs = {frozenset((r['from'], r['to'])) for r in land if r['mode'] == 'land'}
+        self.assertIn(frozenset(('tianshui', 'fufeng')), land_pairs)
+        self.assertIn(frozenset(('wenshan', 'shujun')), land_pairs)
+
+    def test_gan_mainstem_bypasses_linchuan_and_linchuan_is_an_explicit_land_transfer(self):
+        routes = {r['id']: r for r in self.compiled['routes']}
+        trunk = routes['luling:yuzhang:river']
+        self.assertEqual([p['reach_id'] for p in trunk['draw'][1:-1]],
+                         ['gan:luling:middle', 'gan:middle:yuzhang'])
+        self.assertNotIn('gan:linchuan', self.spec['nodes'])
+        self.assertNotIn('luling:linchuan:river', routes)
+        transfer = routes['linchuan:yuzhang:river']
+        self.assertEqual(transfer['history']['classification'], 'authorial_land_transfer_to_gan_landing')
+        self.assertEqual(self.spec['ports']['linchuan']['node'], 'gan:middle')
+        self.assertIn('旴水', transfer['history']['basis'])
+
+    def test_wo_branch_reuses_the_huai_trunk_and_documents_the_pre219_city_proxy(self):
+        routes = {r['id']: r for r in self.compiled['routes']}
+        wo = routes['qiao:jiujiang:river']
+        huai = routes['runan:jiujiang:river']
+        self.assertEqual(wo['draw'][-2], huai['draw'][-2])
+        self.assertEqual(wo['river_segments'][0]['river_id'], 'wo')
+        self.assertIn('小沛', wo['history']['basis'])
+        self.assertIn('非首通年代', wo['history']['basis'])
+        self.assertNotIn('availability', wo)
+        self.assertTrue(all(segment['downstream_from'] == 'qiao' for segment in wo['river_segments']))
+        water = ET.parse(ROOT / 'game/map-source/historic-water.svg').getroot()
+        ns = {'svg': 'http://www.w3.org/2000/svg'}
+        group = water.find('.//svg:g[@data-authorial-addition="wo-huai"]', ns)
+        self.assertIsNotNone(group)
+        self.assertTrue(group.findall('svg:rect', ns))
+        self.assertTrue(all(rect.attrib['fill'] == '#002af8' and rect.attrib['width'] == '2'
+                            for rect in group.findall('svg:rect', ns)))
 
     def test_named_river_polylines_stay_on_existing_water_and_never_invent_terrain(self):
         water = set()
@@ -145,6 +186,10 @@ class SharedRiverNetwork(unittest.TestCase):
         row = next(row for row in bad['connections'] if len(row['reaches']) > 1)
         row['reaches'].reverse()
         with self.assertRaisesRegex(ValueError, 'Disconnected'):
+            compile_network(bad, self.positions)
+        bad = deepcopy(self.spec)
+        bad['connections'][0]['history'] = {'classification': 'unsupported'}
+        with self.assertRaisesRegex(ValueError, 'Invalid reviewed river history'):
             compile_network(bad, self.positions)
 
 

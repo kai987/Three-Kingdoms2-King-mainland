@@ -134,9 +134,6 @@ class DelegationReplayTests(unittest.TestCase):
         home = next((c for c in state.cities.values() if ident in c.roster.officer_ids), None)
         if home is None or home.owner != state.player or home.action_used:
             return
-        if home.id == 'nanyang' and state.cities['xiangyang'].owner == state.player:
-            self.command('transfer', source=home.id, target='xiangyang', officers=[ident], route_mode='land')
-            return
         choices = []
         for target in game._neighbors(home.id, state):
             city = state.cities[target]
@@ -150,6 +147,25 @@ class DelegationReplayTests(unittest.TestCase):
             self.command('depart', source=home.id, target=target,
                          officers=[ident], route_mode='land')
             self.staff_attack_sent = True
+            return
+        # A real intervening city is now a stop, so Xiangyang need not itself
+        # border the enemy. Move the clerk to the nearest actual land front
+        # through public commands rather than assuming a visual bypass.
+        fronts = []
+        for city in state.cities.values():
+            if city.owner != state.player or city.id == home.id:
+                continue
+            if not any(state.cities[key].owner not in {state.player, 'neutral'}
+                       and state.cities[key].roster.officer_ids
+                       and game._travel_path(state, city.id, key, state.player, 'land', adjacent=True)
+                       for key in game._neighbors(city.id, state) if key in state.cities):
+                continue
+            quote = game._travel_path(state, home.id, city.id, state.player, 'land')
+            if quote and all(not leg.get('hazard') for leg in quote['routes']):
+                fronts.append((quote['days'], city.id))
+        if fronts:
+            self.command('transfer', source=home.id, target=min(fronts)[1],
+                         officers=[ident], route_mode='land')
 
     def reinforce_184_guards(self):
         """Use available reserves before defending the exposed one-city start."""

@@ -123,6 +123,7 @@ class ViewTransportTests(unittest.TestCase):
         known = first['catalog_token'] + ':' + first['quote_token']
         city_id = next(iter(baseline['game']['cities']))
         changes = {
+            'year': lambda view: view['game'].update(year=218),
             'month': lambda view: view['game'].update(month=7),
             'owner': lambda view: view['game']['cities'][city_id].update(owner='wu'),
             'new_city': lambda view: view['game']['cities'].update(newly_founded=dict(

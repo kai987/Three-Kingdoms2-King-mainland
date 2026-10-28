@@ -88,10 +88,14 @@ class StrategicAI:
         return (self.state.month - 1 + ticks//3) % 12 + 1
 
     def quote(self, source, target, mode, *, adjacent, departure=None):
-        month = self.month_at(self.state.turn if departure is None else departure)
-        key = source.id, target.id, source.owner, mode, adjacent, month
+        turn = self.state.turn if departure is None else departure
+        elapsed_months = ((self.state.day-1)//10 + turn-self.state.turn)//3
+        year = self.state.year + (self.state.month-1+elapsed_months)//12
+        month = self.month_at(turn)
+        key = source.id, target.id, source.owner, mode, adjacent, year, month
         if key not in self.quotes:
             snapshot = copy(self.state)
+            snapshot.year = year
             snapshot.month = month
             self.quotes[key] = self.game._travel_path(snapshot, source.id, target.id,
                                                       source.owner, mode, adjacent=adjacent)

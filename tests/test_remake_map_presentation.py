@@ -104,8 +104,8 @@ class MapPresentationTests(unittest.TestCase):
         self.assertEqual(meta['schema'],'tk2-road-center-corrections-v1')
         self.assertEqual(meta['backgrounds'],{'/assets/map-navigation.png':'/assets/map-road-centers.png'})
         self.assertEqual(len(meta['hubs']),58)
-        self.assertEqual(meta['summary'],dict(reviewed_hubs=58,visible_hubs=12,changed_segments=334,
-                                             deleted_spokes=165,protected_hubs=0))
+        self.assertEqual(meta['summary'],dict(reviewed_hubs=58,visible_hubs=12,changed_segments=337,
+                                             deleted_spokes=160,protected_hubs=0))
         for field in ('ground','provenance','protected_hubs','changes','removed_obsolete_paths','mask_d','paint_d','corridor_repairs'):
             self.assertNotIn(field,meta,'The compact center audit does not duplicate full source metadata')
         for hub in meta['hubs']:

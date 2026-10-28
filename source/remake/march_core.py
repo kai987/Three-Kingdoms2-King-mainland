@@ -149,6 +149,7 @@ def invoke(operation, *, data=None, **payload):
 
 def state_input(state):
     return dict(cities=[dict(id=city.id, owner=city.owner) for city in state.cities.values()],
+                year=getattr(state, 'year', None),
                 month=state.month,
                 discovered=state.extension.get('travel', {}).get('discovered', []))
 

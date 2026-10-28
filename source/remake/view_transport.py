@@ -37,9 +37,9 @@ class ViewTransport:
         known_static, _, known_quotes = known.partition(':')
         game = value['game']
         # Read-only route quotes depend on ownership, active cities, player,
-        # month and discovered routes. Troops, gold, phase, RNG and revision
+        # year/month and discovered routes. Troops, gold, phase, RNG and revision
         # never enter route search. Catalog bytes fix geometry and all rules.
-        route_key = [source_sha, None if game is None else [game['player'], game['month'],
+        route_key = [source_sha, None if game is None else [game['player'], game['year'], game['month'],
             [(key, city['owner']) for key, city in game['cities'].items()],
             game['extension']['travel']['discovered']]]
         quote_token = hashlib.sha256(json.dumps(route_key, sort_keys=True,

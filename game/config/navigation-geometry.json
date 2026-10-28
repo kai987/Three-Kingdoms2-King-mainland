@@ -3041,11 +3041,12 @@
         }
       ],
       "history": {
-        "classification": "historical_water_system_authorial_game_calibration",
-        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "classification": "attested_upper_han_downstream_plan_game_navigation",
+        "basis": "《三國志》卷44載蔣琬造舟擬循漢沔東下魏興上庸，議者以退還艱難反對。保留水陸接運的遊戲通道；不將此計畫當作全年大軍雙向通航能力或每日航速的證明。",
         "sources": [
           "https://zh.wikisource.org/wiki/三國志/卷40",
-          "https://zh.wikisource.org/wiki/水經注/27"
+          "https://zh.wikisource.org/wiki/水經注/27",
+          "https://zh.wikisource.org/wiki/三國志/卷44"
         ]
       }
     },
@@ -5449,135 +5450,6 @@
       }
     },
     {
-      "id": "wenshan:shujun:river",
-      "from": "wenshan",
-      "to": "shujun",
-      "mode": "river",
-      "terrain": "river",
-      "geo": [
-        [
-          103.6,
-          31.45
-        ],
-        [
-          104.08,
-          30.63
-        ]
-      ],
-      "river_segments": [
-        {
-          "reach_id": "min:wenshan:shujun",
-          "river_id": "min",
-          "name_tc": "岷水",
-          "name_ja": "岷水",
-          "speed_key": "yangtze",
-          "distance_km": 1,
-          "downstream_from": "wenshan"
-        }
-      ],
-      "draw": [
-        {
-          "mode": "land",
-          "access_id": "wenshan",
-          "points": [
-            [
-              173,
-              454
-            ],
-            [
-              212,
-              454
-            ]
-          ]
-        },
-        {
-          "mode": "river",
-          "reach_id": "min:wenshan:shujun",
-          "river_id": "min",
-          "points": [
-            [
-              212,
-              454
-            ],
-            [
-              212,
-              457
-            ],
-            [
-              212,
-              460
-            ],
-            [
-              212,
-              463
-            ],
-            [
-              215,
-              466
-            ],
-            [
-              218,
-              469
-            ],
-            [
-              221,
-              471
-            ],
-            [
-              224,
-              474
-            ],
-            [
-              225,
-              477
-            ],
-            [
-              228,
-              480
-            ],
-            [
-              230,
-              483
-            ],
-            [
-              231,
-              486
-            ],
-            [
-              233,
-              489
-            ],
-            [
-              233,
-              491
-            ]
-          ]
-        },
-        {
-          "mode": "land",
-          "access_id": "shujun",
-          "points": [
-            [
-              233,
-              491
-            ],
-            [
-              214,
-              502
-            ]
-          ]
-        }
-      ],
-      "history": {
-        "classification": "historical_water_system_authorial_game_calibration",
-        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
-        "sources": [
-          "https://zh.wikisource.org/zh-hant/三國志/卷36",
-          "https://zh.wikisource.org/wiki/水經注/33"
-        ]
-      }
-    },
-    {
       "id": "shujun:qianwei:river",
       "from": "shujun",
       "to": "qianwei",
@@ -7124,150 +6996,6 @@
       }
     },
     {
-      "id": "luling:linchuan:river",
-      "from": "luling",
-      "to": "linchuan",
-      "mode": "river",
-      "terrain": "river",
-      "geo": [
-        [
-          114.93,
-          26.98
-        ],
-        [
-          115.9,
-          27.9
-        ]
-      ],
-      "river_segments": [
-        {
-          "reach_id": "gan:luling:linchuan",
-          "river_id": "gan",
-          "name_tc": "贛水",
-          "name_ja": "贛水",
-          "speed_key": "yangtze",
-          "distance_km": 1,
-          "downstream_from": "luling"
-        }
-      ],
-      "draw": [
-        {
-          "mode": "land",
-          "access_id": "luling",
-          "points": [
-            [
-              828,
-              630
-            ],
-            [
-              878,
-              650
-            ]
-          ]
-        },
-        {
-          "mode": "river",
-          "reach_id": "gan:luling:linchuan",
-          "river_id": "gan",
-          "points": [
-            [
-              878,
-              650
-            ],
-            [
-              881,
-              648
-            ],
-            [
-              884,
-              645
-            ],
-            [
-              887,
-              642
-            ],
-            [
-              889,
-              639
-            ],
-            [
-              892,
-              636
-            ],
-            [
-              894,
-              633
-            ],
-            [
-              896,
-              630
-            ],
-            [
-              899,
-              627
-            ],
-            [
-              901,
-              624
-            ],
-            [
-              904,
-              621
-            ],
-            [
-              907,
-              620
-            ],
-            [
-              910,
-              617
-            ],
-            [
-              913,
-              615
-            ],
-            [
-              916,
-              612
-            ],
-            [
-              919,
-              611
-            ],
-            [
-              922,
-              610
-            ],
-            [
-              923,
-              611
-            ]
-          ]
-        },
-        {
-          "mode": "land",
-          "access_id": "linchuan",
-          "points": [
-            [
-              923,
-              611
-            ],
-            [
-              935,
-              619
-            ]
-          ]
-        }
-      ],
-      "history": {
-        "classification": "historical_water_system_authorial_game_calibration",
-        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
-        "sources": [
-          "https://ctext.org/text.pl?if=gb&node=570600"
-        ]
-      }
-    },
-    {
       "id": "linchuan:yuzhang:river",
       "from": "linchuan",
       "to": "yuzhang",
@@ -7275,8 +7003,8 @@
       "terrain": "river",
       "geo": [
         [
-          115.9,
-          27.9
+          115.7,
+          28.15
         ],
         [
           115.88,
@@ -7285,7 +7013,7 @@
       ],
       "river_segments": [
         {
-          "reach_id": "gan:linchuan:yuzhang",
+          "reach_id": "gan:middle:yuzhang",
           "river_id": "gan",
           "name_tc": "贛水",
           "name_ja": "贛水",
@@ -7311,7 +7039,7 @@
         },
         {
           "mode": "river",
-          "reach_id": "gan:linchuan:yuzhang",
+          "reach_id": "gan:middle:yuzhang",
           "river_id": "gan",
           "points": [
             [
@@ -7380,10 +7108,11 @@
         }
       ],
       "history": {
-        "classification": "historical_water_system_authorial_game_calibration",
-        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "classification": "authorial_land_transfer_to_gan_landing",
+        "basis": "臨川經陸路轉運至贛水接岸點，再循贛水抵南昌。旴水為另支，未把贛水幹流稱為旴水；在未考定古河口與軍航條件前不新畫旴水通航線。",
         "sources": [
-          "https://ctext.org/text.pl?if=gb&node=570600"
+          "https://ctext.org/text.pl?if=gb&node=570600",
+          "https://zh.wikisource.org/wiki/水經注/39"
         ]
       }
     },
@@ -7702,13 +7431,26 @@
           32.6
         ],
         [
+          116.55,
+          32.91
+        ],
+        [
           116.78,
           32.6
         ]
       ],
       "river_segments": [
         {
-          "reach_id": "huai:runan:jiujiang",
+          "reach_id": "huai:runan:wo",
+          "river_id": "huai",
+          "name_tc": "淮水",
+          "name_ja": "淮水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "runan"
+        },
+        {
+          "reach_id": "huai:wo:jiujiang",
           "river_id": "huai",
           "name_tc": "淮水",
           "name_ja": "淮水",
@@ -7734,7 +7476,7 @@
         },
         {
           "mode": "river",
-          "reach_id": "huai:runan:jiujiang",
+          "reach_id": "huai:runan:wo",
           "river_id": "huai",
           "points": [
             [
@@ -7869,6 +7611,17 @@
               901,
               388
             ],
+            [
+              904,
+              386
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "huai:wo:jiujiang",
+          "river_id": "huai",
+          "points": [
             [
               904,
               386
@@ -8367,154 +8120,6 @@
         "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
         "sources": [
           "https://zh.wikisource.org/wiki/水經注/37"
-        ]
-      }
-    },
-    {
-      "id": "tianshui:fufeng:river",
-      "from": "tianshui",
-      "to": "fufeng",
-      "mode": "river",
-      "terrain": "river",
-      "geo": [
-        [
-          105.39,
-          34.74
-        ],
-        [
-          108.5,
-          34.28
-        ]
-      ],
-      "river_segments": [
-        {
-          "reach_id": "wei:tianshui:fufeng",
-          "river_id": "wei",
-          "name_tc": "渭水",
-          "name_ja": "渭水",
-          "speed_key": "yangtze",
-          "distance_km": 1,
-          "downstream_from": "tianshui"
-        }
-      ],
-      "draw": [
-        {
-          "mode": "land",
-          "access_id": "tianshui",
-          "points": [
-            [
-              370,
-              362
-            ],
-            [
-              369,
-              339
-            ]
-          ]
-        },
-        {
-          "mode": "river",
-          "reach_id": "wei:tianshui:fufeng",
-          "river_id": "wei",
-          "points": [
-            [
-              369,
-              339
-            ],
-            [
-              370,
-              336
-            ],
-            [
-              373,
-              336
-            ],
-            [
-              376,
-              334
-            ],
-            [
-              379,
-              334
-            ],
-            [
-              382,
-              332
-            ],
-            [
-              385,
-              332
-            ],
-            [
-              388,
-              330
-            ],
-            [
-              391,
-              330
-            ],
-            [
-              394,
-              328
-            ],
-            [
-              397,
-              328
-            ],
-            [
-              400,
-              326
-            ],
-            [
-              403,
-              326
-            ],
-            [
-              406,
-              324
-            ],
-            [
-              409,
-              324
-            ],
-            [
-              412,
-              324
-            ],
-            [
-              415,
-              324
-            ],
-            [
-              418,
-              324
-            ],
-            [
-              420,
-              325
-            ]
-          ]
-        },
-        {
-          "mode": "land",
-          "access_id": "fufeng",
-          "points": [
-            [
-              420,
-              325
-            ],
-            [
-              420,
-              341
-            ]
-          ]
-        }
-      ],
-      "history": {
-        "classification": "historical_water_system_authorial_game_calibration",
-        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
-        "sources": [
-          "https://zh.wikisource.org/wiki/水經注/17"
         ]
       }
     },
@@ -9034,8 +8639,8 @@
           26.98
         ],
         [
-          115.9,
-          27.9
+          115.7,
+          28.15
         ],
         [
           115.88,
@@ -9044,7 +8649,7 @@
       ],
       "river_segments": [
         {
-          "reach_id": "gan:luling:linchuan",
+          "reach_id": "gan:luling:middle",
           "river_id": "gan",
           "name_tc": "贛水",
           "name_ja": "贛水",
@@ -9053,7 +8658,7 @@
           "downstream_from": "luling"
         },
         {
-          "reach_id": "gan:linchuan:yuzhang",
+          "reach_id": "gan:middle:yuzhang",
           "river_id": "gan",
           "name_tc": "贛水",
           "name_ja": "贛水",
@@ -9079,7 +8684,7 @@
         },
         {
           "mode": "river",
-          "reach_id": "gan:luling:linchuan",
+          "reach_id": "gan:luling:middle",
           "river_id": "gan",
           "points": [
             [
@@ -9158,7 +8763,7 @@
         },
         {
           "mode": "river",
-          "reach_id": "gan:linchuan:yuzhang",
+          "reach_id": "gan:middle:yuzhang",
           "river_id": "gan",
           "points": [
             [
@@ -9227,10 +8832,188 @@
         }
       ],
       "history": {
-        "classification": "historical_water_system_authorial_game_calibration",
-        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "classification": "historical_gan_mainstem_with_game_landing_calibration",
+        "basis": "《水經注》卷39記贛水經廬陵、南昌；幹流不以臨川為中途城。港點、像素及航速為本作概化，並非逐段通航能力的史料實測。",
         "sources": [
-          "https://ctext.org/text.pl?if=gb&node=570600"
+          "https://ctext.org/text.pl?if=gb&node=570600",
+          "https://zh.wikisource.org/wiki/水經注/39"
+        ]
+      }
+    },
+    {
+      "id": "qiao:jiujiang:river",
+      "from": "qiao",
+      "to": "jiujiang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          115.77,
+          33.87
+        ],
+        [
+          116.55,
+          32.91
+        ],
+        [
+          116.78,
+          32.6
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "wo:qiao:huai",
+          "river_id": "wo",
+          "name_tc": "渦水",
+          "name_ja": "渦水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "qiao"
+        },
+        {
+          "reach_id": "huai:wo:jiujiang",
+          "river_id": "huai",
+          "name_tc": "淮水",
+          "name_ja": "淮水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "qiao"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "qiao",
+          "points": [
+            [
+              892,
+              356
+            ],
+            [
+              892,
+              366
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "wo:qiao:huai",
+          "river_id": "wo",
+          "points": [
+            [
+              892,
+              366
+            ],
+            [
+              892,
+              370
+            ],
+            [
+              894,
+              374
+            ],
+            [
+              896,
+              378
+            ],
+            [
+              900,
+              382
+            ],
+            [
+              904,
+              386
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "huai:wo:jiujiang",
+          "river_id": "huai",
+          "points": [
+            [
+              904,
+              386
+            ],
+            [
+              907,
+              386
+            ],
+            [
+              910,
+              385
+            ],
+            [
+              913,
+              384
+            ],
+            [
+              916,
+              384
+            ],
+            [
+              919,
+              382
+            ],
+            [
+              922,
+              382
+            ],
+            [
+              925,
+              380
+            ],
+            [
+              928,
+              380
+            ],
+            [
+              931,
+              380
+            ],
+            [
+              934,
+              381
+            ],
+            [
+              937,
+              381
+            ],
+            [
+              940,
+              381
+            ],
+            [
+              943,
+              381
+            ],
+            [
+              945,
+              381
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "jiujiang",
+          "points": [
+            [
+              945,
+              381
+            ],
+            [
+              945,
+              406
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "attested_wo_huai_military_navigation_authorial_pixel_course",
+        "basis": "《三國志》卷1載209年曹操至譙作輕舟，自渦入淮出肥。採渦水—淮水共用河段與城池接岸陸路；209年是軍事通行記錄而非首通年代。現譙節點在219年前按既定設定顯示小沛，屬區域代理，並非歷史小沛位在渦水。像素河線與港點屬遊戲概化。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷01",
+          "https://zh.wikisource.org/wiki/水經注/30"
         ]
       }
     }
@@ -37776,7 +37559,7 @@
   "method": "4px ocean-connected sea mask and A-star; smooth display follows sea cells. Approximate game ports, not identified historical harbours. Distances use separate geographic marine waypoints, never art pixels.",
   "river_network": {
     "schema": "tk2-river-network-compiled-v1",
-    "source_sha256": "192ae35b8e2146bdf7355f00696de3df49855a79eb61f8db2ac48dc97697d632",
+    "source_sha256": "38e278f6093c5982c40aad5ef1b29ef4f59f42f034ea45b35094196327cb6248",
     "reach_count": 47
   }
 }

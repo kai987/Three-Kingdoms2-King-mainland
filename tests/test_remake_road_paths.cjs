@@ -44,12 +44,14 @@ const part=(points,mode='land',skip=false)=>({points,mode,skip}),draws={
  region:{from:'a',to:'b',draw:[part([[11,11],[50,50]],'land',true),part([[50,50],[91,91]])]}
 };
 function renderCalls(start,end,extra){
- const calls=[],ctx={preview:null,hazardous:true,activeIds:new Set(['a','b']),
+ const calls=[],ctx={preview:null,hazardous:true,activeIds:new Set(['a','b']),date:{year:217,month:7},
   view:{catalog:{world:{},map_presentation:{expansion_connections:[],added_land_roads:[]},sea_routes:[],regional_roads:[]}},
   firstAccess:p=>!p.skip,escapeHtml:String,smoothMapPath:()=> 'SEA',
   landMapPath:(points,options)=>{calls.push({points,options});return 'LAND';},...extra};
  const at=source.indexOf(start),until=source.indexOf(end,at);assert(at>=0&&until>at);
- vm.createContext(ctx);vm.runInContext(source.slice(at,until),ctx);return calls.map(row=>JSON.parse(JSON.stringify(row)));
+ vm.createContext(ctx);
+ if(start===' const regionalRoads=')vm.runInContext(source.slice(source.indexOf(' const roadAvailable='),at),ctx);
+ vm.runInContext(source.slice(at,until),ctx);return calls.map(row=>JSON.parse(JSON.stringify(row)));
 }
 let calls=renderCalls(' const expansionRoads=',' const seaRoutes=',{view:{catalog:{world:{},map_presentation:{expansion_connections:[draws.single,draws.sea]}}}});
 assert.equal(calls.length,2);assert.deepEqual(calls[0].options,{smooth:false,from:'a',to:'b'});assert.deepEqual(calls[1].options,{smooth:false,from:null,to:'b'});

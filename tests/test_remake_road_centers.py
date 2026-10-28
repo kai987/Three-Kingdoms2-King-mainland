@@ -179,7 +179,7 @@ class RoadCenterBuilderTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'corridor stroke|road corridor'):
                     builder.build(source, {'a': [9, 1]})
 
-    def test_current_three_corridors_share_single_trunks_without_local_cycles(self):
+    def test_current_corridors_share_single_trunks_and_only_documented_distinct_corridors(self):
         source = json.loads((ROOT / 'game/config/road-centers.json').read_text())
         catalog = json.loads((ROOT / 'game/config/campaigns/shared.json').read_text())['catalog']
         positions = {city['id']: city['position'] for city in catalog['cities']}
@@ -188,13 +188,13 @@ class RoadCenterBuilderTests(unittest.TestCase):
         rows = {row['index']: row for row in result['changes']}
         repairs = {repair['id']: repair for repair in result['corridor_repairs']}
         self.assertEqual(set(repairs), {'dongping-changyi', 'jinan-linzi', 'shanggu-ji',
-                                        'hongnong-luoyang'})
+                                        'hongnong-luoyang', 'jiyin-qiao-changyi'})
         centered = {tuple(node): positions[hub['city']] for hub in source['hubs']
                     for node in hub['nodes_to_collapse']}
         centered.update({tuple(point): positions[row['city']]
                          for row in source['native_city_connectors'] for point in row['points']})
         for identity, repair in repairs.items():
-            parents, edges = {}, set()
+            parents, edges, cycles = {}, set(), 0
 
             def root(node):
                 parents.setdefault(node, node)
@@ -214,8 +214,12 @@ class RoadCenterBuilderTests(unittest.TestCase):
                     self.assertNotIn(edge, edges, identity + ': shared sections are drawn once')
                     edges.add(edge)
                     left, right = root(a), root(b)
-                    self.assertNotEqual(left, right, identity + ': no local return loop')
-                    parents[left] = right
+                    if left == right:
+                        cycles += 1
+                    else:
+                        parents[left] = right
+            self.assertEqual(cycles, repair.get('distinct_corridor_cycles', 0),
+                             identity + ': only explicitly reviewed distinct route corridors may close a cycle')
         self.assertEqual([index for index in (213, 223, 229, 238, 184, 220)
                           if rows[index]['deleted']], [213, 223, 229, 238, 184, 220])
         # One Dongping–Changyi trunk meets the west branches precisely and
@@ -242,6 +246,18 @@ class RoadCenterBuilderTests(unittest.TestCase):
         self.assertTrue(rows[214]['deleted'])
         self.assertEqual(rows[204]['new_points'][-1], positions['yan'])
         self.assertEqual(rows[215]['new_points'][0], positions['yan'])
+        # The Xiaohan corridor meets a shared western fork without reaching
+        # Hedong; its northern branch also reaches Henei without Luoyang.
+        self.assertEqual(rows[91]['new_points'][0], positions['hongnong'])
+        self.assertEqual(rows[91]['new_points'][-1], [638, 363])
+        self.assertEqual(rows[85]['new_points'][0], [638, 363])
+        self.assertEqual(rows[85]['new_points'][-1], positions['henan'])
+        self.assertNotIn(positions['hedong'], rows[85]['new_points'])
+        self.assertEqual(rows[84]['new_points'][-1], positions['hedong'])
+        self.assertEqual(rows[86]['new_points'][0], [638, 363])
+        self.assertEqual(rows[86]['new_points'][-1], rows[90]['new_points'][0])
+        self.assertEqual(rows[90]['new_points'][-1], positions['henei'])
+        self.assertNotIn(positions['henan'], rows[86]['new_points'] + rows[90]['new_points'])
         self.assertEqual(source, before)
 
     def test_current_reviewed_source_reaches_anding_and_preserves_catalogs(self):
@@ -351,10 +367,10 @@ class RoadCenterBuilderTests(unittest.TestCase):
         rows = {row['index']:row for row in result['changes']}
         self.assertEqual(rows[133]['new_points'][0],positions['henan'])
         self.assertEqual(rows[133]['new_points'][-1],positions['yingchuan'])
-        for city,degree in [('yidu',3),('henan',4),('hongnong',3)]:
+        for city,degree in [('yidu',3),('henan',5),('hongnong',3)]:
             self.assertEqual(len(graph[tuple(positions[city])]),degree,city)
         self.assertEqual(source['protected_hubs'],[])
-        for index in (84,85,86,90,120,122,126,127,128):
+        for index in (122,126,127,128):
             self.assertTrue(rows[index]['deleted'],index)
         self.assertEqual(rows[119]['new_points'], [[682,322],[688,334],positions['henan']])
         secret_branch = json.loads((ROOT/'game/config/map-source.json').read_text())['presentation']['added_land_roads'][0]

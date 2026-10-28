@@ -1,0 +1,189 @@
+{
+  "schema": "tk2-road-history-v1",
+  "review_date": "2026-10-28",
+  "policy": {
+    "facts_vs_game": "史料證明的通道、工程或時間範圍與遊戲地理代理、速度及風險分開。未核實古港/航運能力不新增全年軍航捷徑。",
+    "dates": "from is inclusive, to is exclusive, both [year,month]. Attach metadata without removing opening-catalogue route records; runtime applies current campaign date.",
+    "protected_rules": [
+      "yinping_one_way_and_loss",
+      "ziwu_time_and_loss",
+      "ocean_monsoon_and_storm_loss"
+    ],
+    "natural_route_first_record_is_not_opening": true,
+    "closures": "Half-open [from,to) monthly game event windows based on an attested interruption, not proof of exact reopening dates or recurring annual flood probabilities."
+  },
+  "sources": {
+    "hanshu29": {
+      "title": "《漢書》卷29 溝洫志",
+      "url": "https://zh.wikisource.org/wiki/漢書/卷029",
+      "limits": "下渭漕運與成都行舟不證明上渭、上岷可全年軍航；褒斜水湍石不可漕。"
+    },
+    "sanguo1": {
+      "title": "《三國志》卷1 武帝紀",
+      "url": "https://zh.wikisource.org/wiki/三國志/卷01",
+      "limits": "204年白溝、206年北方運渠、207年盧龍修復及209年譙經渦淮軍行有記載；自然通道首見不等於首通。"
+    },
+    "sanguo11": {
+      "title": "《三國志》卷11 田疇傳",
+      "url": "https://zh.wikisource.org/wiki/三國志/卷11#田疇",
+      "limits": "濱海道夏秋常有積水，207年由廢棄盧龍舊道進軍；不提供固定災害機率、損失率或每日速度。"
+    },
+    "sanguo43": {
+      "title": "《三國志》卷43 張嶷傳",
+      "url": "https://zh.wikisource.org/wiki/三國志/卷43#張嶷",
+      "limits": "旄牛舊道斷百餘年，改由安上；張嶷越巂任內復通，精確年、月未定。"
+    },
+    "sanguo44": {
+      "title": "《三國志》卷44 蔣琬傳",
+      "url": "https://zh.wikisource.org/wiki/三國志/卷44",
+      "limits": "漢沔東下是造舟擬議的軍事計畫，回程艱難；不是全年雙向大軍運能與速度實測。"
+    },
+    "shuijing39": {
+      "title": "《水經注》卷39 贛水",
+      "url": "https://zh.wikisource.org/wiki/水經注/39",
+      "limits": "贛水經廬陵、南昌；旴水另支入贛，不能把臨川設定為贛水幹流必經停靠。"
+    }
+  },
+  "route_reviews": {
+    "luling:yuzhang:river": {
+      "source_ids": [
+        "shuijing39"
+      ],
+      "classification": "gan_mainstem_not_linchuan_transit",
+      "basis_tc": "贛水幹流由廬陵經南昌；中間接岸點不等同臨川城，無須先進入臨川補給或中轉。",
+      "basis_ja": "贛水本流は廬陵から南昌へ流れる。中間の接岸点を臨川城と同一視せず、臨川への立ち寄りを必須にしない。"
+    },
+    "linchuan:yuzhang:river": {
+      "source_ids": [
+        "shuijing39"
+      ],
+      "classification": "land_transfer_to_gan_not_fu_mainstem",
+      "basis_tc": "臨川先經陸路轉運到贛水接岸點再至南昌；此路不代表已考定的旴水古河口或可全年軍航的旴水全程。",
+      "basis_ja": "臨川から陸路で贛水の接岸点へ運び、南昌へ向かう。古代旴水の河口位置や通年軍事航行を確定した航路ではない。"
+    },
+    "hanzhong:xincheng:river": {
+      "source_ids": [
+        "sanguo44"
+      ],
+      "classification": "upper_han_plan_and_difficult_return",
+      "basis_tc": "蔣琬造舟擬循漢沔東下魏興、上庸，議者以退還艱難反對。保留水陸轉運概化，雙向精確航速仍屬本作參數。",
+      "basis_ja": "蔣琬は漢沔を東下する船団を計画したが、帰路の難しさから反対された。水陸輸送として残し、双方向の正確な航速は本作の設定とする。"
+    },
+    "shujun:yuexi:land": {
+      "source_ids": [
+        "sanguo43"
+      ],
+      "classification": "restoration_interval_not_precise_opening",
+      "basis_tc": "旄牛近道曾斷百餘年，當時改走安上險遠路；張嶷越巂任內復通，僅能約束在239—254年間，不捏造確切開通年月。早期應經犍為方向的安上通道。",
+      "basis_ja": "旄牛の近道は長く途絶え、安上への険しい迂回路が使われた。張嶷在任中の復旧は239—254年の範囲とし、正確な開通年月を創作しない。初期は犍為方面の安上ルートで扱う。",
+      "chronology": {
+        "restoration_interval_years": [
+          239,
+          254
+        ],
+        "exact_year_known": false,
+        "exact_month_known": false
+      }
+    },
+    "liaoxi:yuyang:land": {
+      "source_ids": [
+        "sanguo1",
+        "sanguo11"
+      ],
+      "classification": "coastal_road_seasonal_flood_record",
+      "basis_tc": "濱海道較平直，但原典記夏秋常有積水，207年七月大水不通。這不是所有年份固定封閉或固定減員的數值依據。本作僅將明載的207年七月設為停用濱海道的月級事件；八月解除是遊戲回合界點，並非史料明言八月已復通。",
+      "basis_ja": "海岸道は比較的平坦だが、史書には夏秋の冠水と207年7月の通行不能が記される。毎年の固定閉鎖・損耗率を示すものではない。本作では明記された207年7月のみを月単位の海岸道閉鎖とする。8月に解除するのはゲームの月境界であり、史料が8月の復旧を証明したものではない。",
+      "closures": [
+        {
+          "from": [
+            207,
+            7
+          ],
+          "to": [
+            207,
+            8
+          ]
+        }
+      ]
+    },
+    "yuyang:liaoxi:lulong:land": {
+      "source_ids": [
+        "sanguo1",
+        "sanguo11"
+      ],
+      "classification": "restored_lulong_alternative",
+      "basis_tc": "207年七月北征因濱海道大水，田疇引軍修復盧龍舊道。本作從該月啟用修復後山路，不聲稱古道此前從未存在。",
+      "basis_ja": "207年7月の北征では海岸道の冠水を避け、田疇の案内で盧龍旧道を修復した。本作では修復後の山道を同月から使用する。古道自体の初開通時期ではない。",
+      "availability": {
+        "from": [
+          207,
+          7
+        ]
+      }
+    },
+    "fufeng:jingzhao:river": {
+      "source_ids": [
+        "hanshu29"
+      ],
+      "classification": "lower_wei_navigation_game_calibration",
+      "basis_tc": "下渭有漢代漕運記載，但港點、兩岸接道、每日航速及公里是本作幾何校準，不推定天水上渭同等通航。",
+      "basis_ja": "下流の渭水には漢代漕運の記録がある。港・接岸路・毎日の航速・距離は本作の校正値であり、天水の上流に同等の航行能力を推定しない。"
+    },
+    "jingzhao:fengyi:river": {
+      "source_ids": [
+        "hanshu29"
+      ],
+      "classification": "lower_wei_navigation_game_calibration",
+      "basis_tc": "下渭有漢代漕運記載，但港點、兩岸接道、每日航速及公里是本作幾何校準，不推定天水上渭同等通航。",
+      "basis_ja": "下流の渭水には漢代漕運の記録がある。港・接岸路・毎日の航速・距離は本作の校正値であり、天水の上流に同等の航行能力を推定しない。"
+    },
+    "fengyi:hongnong:river": {
+      "source_ids": [
+        "hanshu29"
+      ],
+      "classification": "lower_wei_navigation_game_calibration",
+      "basis_tc": "下渭有漢代漕運記載，但港點、兩岸接道、每日航速及公里是本作幾何校準，不推定天水上渭同等通航。",
+      "basis_ja": "下流の渭水には漢代漕運の記録がある。港・接岸路・毎日の航速・距離は本作の校正値であり、天水の上流に同等の航行能力を推定しない。"
+    },
+    "qiao:jiujiang:river": {
+      "source_ids": [
+        "sanguo1"
+      ],
+      "classification": "attested_wo_huai_shared_river_with_named_proxy",
+      "basis_tc": "209年曹操自譙經渦水入淮、出肥。新線共用淮水下游河段，未設定首通年；219年前小沛是此譙節點的既定區域代理名稱，不能據此把歷史小沛移到渦水。",
+      "basis_ja": "209年に曹操が譙から渦水を経て淮水へ入った記録による。淮水下流を共有し、初開通年は設定しない。219年以前の「小沛」は譙の地域代理名であり、史実の小沛が渦水沿岸だったことを示さない。"
+    }
+  },
+  "excluded_military_navigation": [
+    {
+      "id": "tianshui:fufeng:river",
+      "reason_tc": "尚未取得上渭天水段全年大軍雙向軍航依據，刪除軍航捷徑，保留天水—扶風陸路；不是斷言古時無任何舟行。",
+      "source_ids": [
+        "hanshu29"
+      ]
+    },
+    {
+      "id": "wenshan:shujun:river",
+      "reason_tc": "成都二江與下岷行舟記載不證明汶山上岷可全年大軍雙向航行，刪除軍航捷徑而保留山地陸路。",
+      "source_ids": [
+        "hanshu29"
+      ]
+    }
+  ],
+  "deferred_until_surveyed": [
+    {
+      "id": "linchuan:fu:river",
+      "source_ids": [
+        "shuijing39"
+      ],
+      "needs": "旴水獨立支流、古河口與可用軍航區段，不把現贛水幹流直接換名。"
+    },
+    {
+      "id": "north_dated_canals",
+      "source_ids": [
+        "sanguo1"
+      ],
+      "needs": "204淇水—白溝及206平虜渠/泉州渠分期，共用支流幾何與土地接道；不能將既有黃河全線倒當作新開渠。"
+    }
+  ]
+}

@@ -10,7 +10,7 @@ class Worker{
  reply(index,value,ok=true){this.onmessage({data:{id:this.sent[index].id,ok,...(ok?{value}:{error:value})}});}
  terminate(){this.terminated=true;}
 }
-const makeView=revision=>({revision,catalog:{scenario_id:'same-catalog',travel_rules:{},travel_quotes:{server:{days:9}}},game:{month:7,player:'shu',cities:{a:{id:'a',owner:'shu'},b:{id:'b',owner:'wei'}},extension:{travel:{discovered:['seen-route']}},rng:{state:123,calls:7}}});
+const makeView=revision=>({revision,catalog:{scenario_id:'same-catalog',travel_rules:{},travel_quotes:{server:{days:9}}},game:{year:217,month:7,player:'shu',cities:{a:{id:'a',owner:'shu'},b:{id:'b',owner:'wei'}},extension:{travel:{discovered:['seen-route']}},rng:{state:123,calls:7}}});
 (async()=>{
  const memory=new WebAssembly.Memory({initial:1}),freed=[],encoder=new TextEncoder(),decoder=new TextDecoder();let resultLength=0,malformed=false;
  const json=createJsonClient({exports:{memory,march_version:()=>1,march_alloc:()=>16,march_call:(pointer,length)=>{
@@ -26,7 +26,7 @@ const makeView=revision=>({revision,catalog:{scenario_id:'same-catalog',travel_r
  const v1=makeView(1),v2=makeView(2),before=JSON.stringify(v1);v2.game.month=8;let notified=0;
  const unsubscribe=adapter.subscribe(()=>notified++);
  const old=adapter.update(v1);await tick();assert.equal(worker.sent[0].request.op,'register');worker.reply(0,7);await tick();
- assert.deepEqual(worker.sent[1].request,{op:'batch',context:7,cities:[{id:'a',owner:'shu'},{id:'b',owner:'wei'}],month:7,discovered:['seen-route'],player:'shu'});
+ assert.deepEqual(worker.sent[1].request,{op:'batch',context:7,cities:[{id:'a',owner:'shu'},{id:'b',owner:'wei'}],year:217,month:7,discovered:['seen-route'],player:'shu'});
  const newer=adapter.update(v2);await tick();assert.equal(worker.sent[2].request.context,7);
  worker.reply(2,{'a:b:fastest':{days:2}});await newer;
  assert.equal(adapter.quotesFor(v2)['a:b:fastest'].days,2);assert.equal(adapter.quotesFor(v1),null);
@@ -52,7 +52,7 @@ const makeView=revision=>({revision,catalog:{scenario_id:'same-catalog',travel_r
  const orderOnly=JSON.parse(JSON.stringify(routeBase));orderOnly.revision=2;orderOnly.game.cities={b:orderOnly.game.cities.b,a:orderOnly.game.cities.a};orderOnly.game.extension.travel.discovered.reverse();const orderBefore=JSON.stringify(orderOnly);
  await routeAdapter.update(orderOnly);assert.equal(routeWorker.sent.filter(row=>row.request.op==='batch').length,1,'Equivalent city/discovery ordering does not repeat a batch');assert.equal(JSON.stringify(orderOnly),orderBefore,'Canonical cache keys never reorder the supplied game state');
  const changes=[
-  ['month',view=>{view.game.month=8;}],['ownership',view=>{view.game.cities.b.owner='neutral';}],
+  ['year',view=>{view.game.year=218;}],['month',view=>{view.game.month=8;}],['ownership',view=>{view.game.cities.b.owner='neutral';}],
   ['city opening',view=>{view.game.cities.c={id:'c',owner:'shu'};}],['city removal',view=>{delete view.game.cities.b;}],
   ['discovered route',view=>{view.game.extension.travel.discovered.push('new-sea-route');}],
   ['player',view=>{view.game.player='wei';}],['geometry',view=>{view.catalog.travel_rules.geometry_sha256='new-geometry';}],

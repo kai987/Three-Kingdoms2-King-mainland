@@ -10640,34 +10640,121 @@
       "cities": [
         "hongnong",
         "henan",
-        "hedong"
+        "hedong",
+        "henei",
+        "shangdang"
       ],
-      "reason": "Center-bound shared roads replace decorative return loops around Hongnong and Luoyang. North, west, east and southwest approaches remain connected; paths are independent of castle visibility.",
+      "reason": "Restore the Xiaohan east-west corridor between Hongnong and Luoyang without detouring through Hedong. A shared western fork gives Hedong the northern Zhiguan direction toward Henei and Shangdang without traversing Luoyang. City coordinates and terrain remain unchanged; the two historically distinct corridors form one deliberate regional cycle, not duplicate local return strokes.",
       "strokes": [
         {
           "index": 84,
-          "points": [],
-          "radius": 0
+          "points": [
+            [
+              638,
+              363
+            ],
+            [
+              647,
+              373
+            ],
+            [
+              657,
+              385
+            ]
+          ],
+          "radius": 4
         },
         {
           "index": 85,
-          "points": [],
-          "radius": 0
+          "points": [
+            [
+              638,
+              363
+            ],
+            [
+              646,
+              360
+            ],
+            [
+              662,
+              360
+            ],
+            [
+              680,
+              354
+            ],
+            [
+              695,
+              346
+            ]
+          ],
+          "radius": 4
         },
         {
           "index": 86,
-          "points": [],
-          "radius": 0
+          "points": [
+            [
+              638,
+              363
+            ],
+            [
+              630,
+              351
+            ],
+            [
+              630,
+              337
+            ],
+            [
+              636,
+              328
+            ],
+            [
+              642,
+              321
+            ]
+          ],
+          "radius": 4
         },
         {
           "index": 90,
-          "points": [],
-          "radius": 0
+          "points": [
+            [
+              642,
+              321
+            ],
+            [
+              653,
+              311
+            ],
+            [
+              666,
+              301
+            ]
+          ],
+          "radius": 4
         },
         {
           "index": 120,
-          "points": [],
-          "radius": 0
+          "points": [
+            [
+              642,
+              321
+            ],
+            [
+              656,
+              317
+            ],
+            [
+              671,
+              318
+            ],
+            [
+              682,
+              322
+            ]
+          ],
+          "radius": 4
         },
         {
           "index": 122,
@@ -10706,6 +10793,123 @@
             ]
           ],
           "radius": 6
+        },
+        {
+          "index": 91,
+          "points": [
+            [
+              620,
+              346
+            ],
+            [
+              629,
+              353
+            ],
+            [
+              638,
+              363
+            ]
+          ],
+          "radius": 4
+        }
+      ],
+      "history": {
+        "classification": "source_backed_corridor_direction_with_authorial_map_alignment",
+        "basis": "《水經注·河水》記崤函南北路及自安邑東出濝關；《三國志·杜畿傳》記陝津、郖津渡。僅據古道方向修正本作抽象路網，不聲稱像素折點或現代距離為漢代實測。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/04",
+          "https://zh.wikisource.org/wiki/三國志/卷16#杜畿"
+        ]
+      },
+      "distinct_corridor_cycles": 1
+    },
+    {
+      "id": "jiyin-qiao-changyi",
+      "cities": [
+        "jiyin",
+        "qiao",
+        "shanyang",
+        "chenliu",
+        "runan",
+        "dongjun"
+      ],
+      "reason": "Simplify the southwest Jiyin fork and connect Qiao directly to the shared Changyi approach. Preserve distinct east, west and south branches while removing the small Jiyin hairpin and the northward return around the Qiao junction. Shared junction896,319 is painted once and does not create a city stop.",
+      "history": {
+        "classification": "authorial_cleanup_of_existing_regional_corridors",
+        "basis": "保留既有陳留、濟陰、昌邑、譙、汝南道路關係，只校正原圖枝線繞回導致的過大圖上里程；折點為本作地圖排布而非考古測得古道。"
+      },
+      "strokes": [
+        {
+          "index": 200,
+          "points": [
+            [
+              881,
+              308
+            ],
+            [
+              883,
+              318
+            ],
+            [
+              880,
+              330
+            ]
+          ],
+          "radius": 4
+        },
+        {
+          "index": 199,
+          "points": [
+            [
+              880,
+              330
+            ],
+            [
+              896.5,
+              319
+            ],
+            [
+              907,
+              313
+            ],
+            [
+              917,
+              306
+            ]
+          ],
+          "radius": 4
+        },
+        {
+          "index": 198,
+          "points": [
+            [
+              904.5,
+              289
+            ],
+            [
+              903,
+              304
+            ],
+            [
+              896.5,
+              319
+            ]
+          ],
+          "radius": 4
+        },
+        {
+          "index": 211,
+          "points": [
+            [
+              892,
+              356
+            ],
+            [
+              896.5,
+              319
+            ]
+          ],
+          "radius": 4
         }
       ]
     }

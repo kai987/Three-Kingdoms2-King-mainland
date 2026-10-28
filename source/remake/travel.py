@@ -64,12 +64,13 @@ class TravelCampaign:
         return ('fastest','land','river','sea','special','explore')
 
     def _known_routes(self, state):
+        from .route_network import effective
         routes = self.catalog.data['travel_routes']
         if state is None:
-            return routes
+            return effective(routes)
         discovered = set(state.extension['travel']['discovered'])
-        return routes + [row for row in self.catalog.data.get('exploration_routes', [])
-                         if row['id'] in discovered]
+        return effective(routes + [row for row in self.catalog.data.get('exploration_routes', [])
+                         if row['id'] in discovered], state.cities, getattr(state, 'year', None), state.month)
 
     def _exploration_route(self, source, target):
         coastal = set(self.catalog.data['travel_hazards']['coastal_cities'])
@@ -520,7 +521,8 @@ class TravelCampaign:
         from .route_hazards import evaluate_leg,route_allowed,allocate_survivors
         fields={'source','journey_source','target','officers','kind','mode','departure_turn','arrival_turn',
             'checked_turn','departure_year','departure_month','departure_day','departure_troops','quote','risks','supply'}
-        known={r['id']:r for r in self.catalog.data['travel_routes']+self.catalog.data.get('exploration_routes',[])}
+        from .route_network import variants, valid_departure
+        known={r['id']:r for r in variants(self.catalog.data['travel_routes']+self.catalog.data.get('exploration_routes',[]))}
         chain=[*row['history'],row]
         for index,old in enumerate(row['history']):
             if not isinstance(old,dict) or set(old)!=fields or old['source']!=row['source']:
@@ -535,7 +537,7 @@ class TravelCampaign:
             legs=[]
             for a,b,leg in zip(path,path[1:],quote['routes']):
                 raw=known.get(leg['id'])
-                if raw is None or {raw['from'],raw['to']}!={a,b} or not route_allowed(self.catalog.data,raw,a,b):
+                if raw is None or {raw['from'],raw['to']}!={a,b} or not route_allowed(self.catalog.data,raw,a,b) or not valid_departure(raw,self.catalog,old['departure_year'],old['departure_month']):
                     raise ValueError('March history route')
                 if old['mode']=='land' and raw['mode']!='land':
                     raise ValueError('March history land route uses water')
@@ -602,7 +604,8 @@ class TravelCampaign:
         if type(x['battle_arrival']) is not bool or x['battle_arrival'] and state.phase not in {'battle','result'}:
             raise ValueError('arrival continuation')
         exploration={row['id']:row for row in self.catalog.data.get('exploration_routes',[])}
-        raw_routes={row['id']:row for row in self.catalog.data['travel_routes']}
+        from .route_network import variants, valid_departure
+        raw_routes={row['id']:row for row in variants(self.catalog.data['travel_routes'])}
         if raw_routes.keys() & exploration.keys():
             raise ValueError('ambiguous discovery route identity')
         discovered=x['discovered']
@@ -685,7 +688,7 @@ class TravelCampaign:
                 if not isinstance(leg,dict) or leg.get('id') not in all_routes:
                     raise ValueError('unknown march leg')
                 raw=all_routes[leg['id']]
-                if {raw['from'],raw['to']}!={a,b} or not route_allowed(self.catalog.data,raw,a,b):
+                if {raw['from'],raw['to']}!={a,b} or not route_allowed(self.catalog.data,raw,a,b) or not valid_departure(raw,self.catalog,row['departure_year'],row['departure_month']):
                     raise ValueError('march direction')
                 if row['mode']=='land' and raw['mode']!='land':
                     raise ValueError('land march uses water')

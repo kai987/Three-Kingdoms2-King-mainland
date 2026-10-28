@@ -24,6 +24,7 @@ from remake.facilities import RULES as FACILITY_RULES
 from remake.equipment import RULES as EQUIPMENT_RULES, build_initials
 from route_timing import apply_route_timing
 from river_network import build as build_river_network
+from road_history import apply_history
 from route_render_source import validate_geometry_sources
 from officer_stat_sources import validate_original_virtue, validate_campaign_stats
 from import_campaign_stats import validate_reference as validate_public_reference
@@ -193,6 +194,7 @@ def load_sources(*, timing=True):
         data['equipment_initial']=build_initials(data['people'],equipment_reference['records'],equipment_appearances['profiles'])
         data['design_notes'].append(f"初始裝備按{len(equipment_reference['records'])}名原版對照及名將專屬覆蓋配置；隱藏武具按條件唯一取得，重量會影響單挑命中、回避、先手與退卻。未證的精確倍率為本作規則。")
         apply_navigation_sources(data, navigation)
+        apply_history(data)
         if timing:
             apply_route_timing(data, geometry, geometry_sha256)
         date = f'{data["start_year"]}-{data["start_month"]:02d}'

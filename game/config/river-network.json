@@ -1,6 +1,6 @@
 {
   "schema": "tk2-river-network-v1",
-  "policy": "Each upstream-to-downstream reach is authored once. City connections reference shared reaches; no all-pairs duplicate rivers. Land approaches join the city-icon center and one shared game port.",
+  "policy": "Each upstream-to-downstream reach is authored once. City connections reference shared reaches; no all-pairs duplicate rivers. Land approaches join the city-icon center and one shared game port. Unproven upper Wei (Tianshui) and upper Min (Wenshan) military navigation is excluded; their ordinary land corridors remain. Gan mainstem connections do not require a stop at Linchuan; Linchuan uses an explicitly calibrated land transfer.",
   "survey": {
     "water_source": "game/map-source/historic-water.svg",
     "wei_correction": "game/config/water-corrections.json",
@@ -107,6 +107,14 @@
       "speed_key": "yangtze",
       "sources": [
         "https://zh.wikisource.org/wiki/水經注/37"
+      ]
+    },
+    "wo": {
+      "name_tc": "渦水",
+      "name_ja": "渦水",
+      "speed_key": "yangtze",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷01"
       ]
     }
   },
@@ -421,16 +429,6 @@
         36.85
       ]
     },
-    "min:wenshan": {
-      "position": [
-        212,
-        454
-      ],
-      "geo": [
-        103.6,
-        31.45
-      ]
-    },
     "min:shujun": {
       "position": [
         233,
@@ -531,16 +529,6 @@
         26.98
       ]
     },
-    "gan:linchuan": {
-      "position": [
-        923,
-        611
-      ],
-      "geo": [
-        115.9,
-        27.9
-      ]
-    },
     "gan:yuzhang": {
       "position": [
         933,
@@ -611,14 +599,34 @@
         23.13
       ]
     },
-    "wei:tianshui": {
+    "gan:middle": {
       "position": [
-        369,
-        339
+        923,
+        611
       ],
       "geo": [
-        105.39,
-        34.74
+        115.7,
+        28.15
+      ]
+    },
+    "wo:qiao": {
+      "position": [
+        892,
+        366
+      ],
+      "geo": [
+        115.77,
+        33.87
+      ]
+    },
+    "huai:wo": {
+      "position": [
+        904,
+        386
+      ],
+      "geo": [
+        116.55,
+        32.91
       ]
     }
   },
@@ -1127,19 +1135,6 @@
         ]
       ]
     },
-    "wenshan": {
-      "node": "min:wenshan",
-      "access": [
-        [
-          173,
-          454
-        ],
-        [
-          212,
-          454
-        ]
-      ]
-    },
     "shujun": {
       "node": "min:shujun",
       "access": [
@@ -1245,7 +1240,7 @@
       ]
     },
     "linchuan": {
-      "node": "gan:linchuan",
+      "node": "gan:middle",
       "access": [
         [
           935,
@@ -1255,7 +1250,9 @@
           923,
           611
         ]
-      ]
+      ],
+      "classification": "authorial_land_transfer_to_gan_landing",
+      "basis_tc": "臨川城先經陸路轉運至贛水接岸點；此點不是旴水古河口，也不把臨川置於贛水幹流。"
     },
     "yuzhang": {
       "node": "gan:yuzhang",
@@ -1348,16 +1345,16 @@
         ]
       ]
     },
-    "tianshui": {
-      "node": "wei:tianshui",
+    "qiao": {
+      "node": "wo:qiao",
       "access": [
         [
-          370,
-          362
+          892,
+          356
         ],
         [
-          369,
-          339
+          892,
+          366
         ]
       ]
     }
@@ -4100,70 +4097,6 @@
       ]
     },
     {
-      "id": "min:wenshan:shujun",
-      "river": "min",
-      "from": "min:wenshan",
-      "to": "min:shujun",
-      "points": [
-        [
-          212,
-          454
-        ],
-        [
-          212,
-          457
-        ],
-        [
-          212,
-          460
-        ],
-        [
-          212,
-          463
-        ],
-        [
-          215,
-          466
-        ],
-        [
-          218,
-          469
-        ],
-        [
-          221,
-          471
-        ],
-        [
-          224,
-          474
-        ],
-        [
-          225,
-          477
-        ],
-        [
-          228,
-          480
-        ],
-        [
-          230,
-          483
-        ],
-        [
-          231,
-          486
-        ],
-        [
-          233,
-          489
-        ],
-        [
-          233,
-          491
-        ]
-      ]
-    },
-    {
       "id": "min:shujun:qianwei",
       "river": "min",
       "from": "min:shujun",
@@ -5140,10 +5073,10 @@
       ]
     },
     {
-      "id": "gan:luling:linchuan",
+      "id": "gan:luling:middle",
       "river": "gan",
       "from": "gan:luling",
-      "to": "gan:linchuan",
+      "to": "gan:middle",
       "points": [
         [
           878,
@@ -5220,9 +5153,9 @@
       ]
     },
     {
-      "id": "gan:linchuan:yuzhang",
+      "id": "gan:middle:yuzhang",
       "river": "gan",
-      "from": "gan:linchuan",
+      "from": "gan:middle",
       "to": "gan:yuzhang",
       "points": [
         [
@@ -5348,206 +5281,6 @@
         [
           927,
           543
-        ]
-      ]
-    },
-    {
-      "id": "huai:runan:jiujiang",
-      "river": "huai",
-      "from": "huai:runan",
-      "to": "huai:jiujiang",
-      "points": [
-        [
-          816,
-          432
-        ],
-        [
-          819,
-          435
-        ],
-        [
-          822,
-          437
-        ],
-        [
-          825,
-          437
-        ],
-        [
-          828,
-          439
-        ],
-        [
-          831,
-          440
-        ],
-        [
-          834,
-          441
-        ],
-        [
-          837,
-          441
-        ],
-        [
-          840,
-          442
-        ],
-        [
-          843,
-          443
-        ],
-        [
-          846,
-          443
-        ],
-        [
-          849,
-          442
-        ],
-        [
-          852,
-          440
-        ],
-        [
-          855,
-          437
-        ],
-        [
-          857,
-          434
-        ],
-        [
-          859,
-          431
-        ],
-        [
-          862,
-          428
-        ],
-        [
-          865,
-          425
-        ],
-        [
-          868,
-          424
-        ],
-        [
-          871,
-          421
-        ],
-        [
-          873,
-          418
-        ],
-        [
-          874,
-          415
-        ],
-        [
-          876,
-          412
-        ],
-        [
-          878,
-          409
-        ],
-        [
-          881,
-          406
-        ],
-        [
-          883,
-          403
-        ],
-        [
-          885,
-          400
-        ],
-        [
-          887,
-          397
-        ],
-        [
-          889,
-          394
-        ],
-        [
-          892,
-          391
-        ],
-        [
-          895,
-          389
-        ],
-        [
-          898,
-          388
-        ],
-        [
-          901,
-          388
-        ],
-        [
-          904,
-          386
-        ],
-        [
-          907,
-          386
-        ],
-        [
-          910,
-          385
-        ],
-        [
-          913,
-          384
-        ],
-        [
-          916,
-          384
-        ],
-        [
-          919,
-          382
-        ],
-        [
-          922,
-          382
-        ],
-        [
-          925,
-          380
-        ],
-        [
-          928,
-          380
-        ],
-        [
-          931,
-          380
-        ],
-        [
-          934,
-          381
-        ],
-        [
-          937,
-          381
-        ],
-        [
-          940,
-          381
-        ],
-        [
-          943,
-          381
-        ],
-        [
-          945,
-          381
         ]
       ]
     },
@@ -5840,86 +5573,246 @@
       ]
     },
     {
-      "id": "wei:tianshui:fufeng",
-      "river": "wei",
-      "from": "wei:tianshui",
-      "to": "wei:fufeng",
+      "id": "huai:runan:wo",
+      "river": "huai",
+      "from": "huai:runan",
+      "to": "huai:wo",
       "points": [
         [
-          369,
-          339
+          816,
+          432
         ],
         [
-          370,
-          336
+          819,
+          435
         ],
         [
-          373,
-          336
+          822,
+          437
         ],
         [
-          376,
-          334
+          825,
+          437
         ],
         [
-          379,
-          334
+          828,
+          439
         ],
         [
-          382,
-          332
+          831,
+          440
         ],
         [
-          385,
-          332
+          834,
+          441
         ],
         [
-          388,
-          330
+          837,
+          441
         ],
         [
-          391,
-          330
+          840,
+          442
         ],
         [
-          394,
-          328
+          843,
+          443
         ],
         [
-          397,
-          328
+          846,
+          443
         ],
         [
-          400,
-          326
+          849,
+          442
         ],
         [
-          403,
-          326
+          852,
+          440
         ],
         [
-          406,
-          324
+          855,
+          437
         ],
         [
-          409,
-          324
+          857,
+          434
         ],
         [
-          412,
-          324
+          859,
+          431
         ],
         [
-          415,
-          324
+          862,
+          428
         ],
         [
-          418,
-          324
+          865,
+          425
         ],
         [
-          420,
-          325
+          868,
+          424
+        ],
+        [
+          871,
+          421
+        ],
+        [
+          873,
+          418
+        ],
+        [
+          874,
+          415
+        ],
+        [
+          876,
+          412
+        ],
+        [
+          878,
+          409
+        ],
+        [
+          881,
+          406
+        ],
+        [
+          883,
+          403
+        ],
+        [
+          885,
+          400
+        ],
+        [
+          887,
+          397
+        ],
+        [
+          889,
+          394
+        ],
+        [
+          892,
+          391
+        ],
+        [
+          895,
+          389
+        ],
+        [
+          898,
+          388
+        ],
+        [
+          901,
+          388
+        ],
+        [
+          904,
+          386
+        ]
+      ]
+    },
+    {
+      "id": "huai:wo:jiujiang",
+      "river": "huai",
+      "from": "huai:wo",
+      "to": "huai:jiujiang",
+      "points": [
+        [
+          904,
+          386
+        ],
+        [
+          907,
+          386
+        ],
+        [
+          910,
+          385
+        ],
+        [
+          913,
+          384
+        ],
+        [
+          916,
+          384
+        ],
+        [
+          919,
+          382
+        ],
+        [
+          922,
+          382
+        ],
+        [
+          925,
+          380
+        ],
+        [
+          928,
+          380
+        ],
+        [
+          931,
+          380
+        ],
+        [
+          934,
+          381
+        ],
+        [
+          937,
+          381
+        ],
+        [
+          940,
+          381
+        ],
+        [
+          943,
+          381
+        ],
+        [
+          945,
+          381
+        ]
+      ]
+    },
+    {
+      "id": "wo:qiao:huai",
+      "river": "wo",
+      "from": "wo:qiao",
+      "to": "huai:wo",
+      "points": [
+        [
+          892,
+          366
+        ],
+        [
+          892,
+          370
+        ],
+        [
+          894,
+          374
+        ],
+        [
+          896,
+          378
+        ],
+        [
+          900,
+          382
+        ],
+        [
+          904,
+          386
         ]
       ]
     }
@@ -6019,7 +5912,14 @@
       "to": "xincheng",
       "reaches": [
         "han:hanzhong:xincheng"
-      ]
+      ],
+      "history": {
+        "classification": "attested_upper_han_downstream_plan_game_navigation",
+        "basis": "《三國志》卷44載蔣琬造舟擬循漢沔東下魏興上庸，議者以退還艱難反對。保留水陸接運的遊戲通道；不將此計畫當作全年大軍雙向通航能力或每日航速的證明。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷44"
+        ]
+      }
     },
     {
       "from": "xincheng",
@@ -6115,13 +6015,6 @@
       ]
     },
     {
-      "from": "wenshan",
-      "to": "shujun",
-      "reaches": [
-        "min:wenshan:shujun"
-      ]
-    },
-    {
       "from": "shujun",
       "to": "qianwei",
       "reaches": [
@@ -6181,18 +6074,18 @@
       ]
     },
     {
-      "from": "luling",
-      "to": "linchuan",
-      "reaches": [
-        "gan:luling:linchuan"
-      ]
-    },
-    {
       "from": "linchuan",
       "to": "yuzhang",
       "reaches": [
-        "gan:linchuan:yuzhang"
-      ]
+        "gan:middle:yuzhang"
+      ],
+      "history": {
+        "classification": "authorial_land_transfer_to_gan_landing",
+        "basis": "臨川經陸路轉運至贛水接岸點，再循贛水抵南昌。旴水為另支，未把贛水幹流稱為旴水；在未考定古河口與軍航條件前不新畫旴水通航線。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/39"
+        ]
+      }
     },
     {
       "from": "yuzhang",
@@ -6213,7 +6106,8 @@
       "from": "runan",
       "to": "jiujiang",
       "reaches": [
-        "huai:runan:jiujiang"
+        "huai:runan:wo",
+        "huai:wo:jiujiang"
       ]
     },
     {
@@ -6228,13 +6122,6 @@
       "to": "nanhai",
       "reaches": [
         "pearl:cangwu:nanhai"
-      ]
-    },
-    {
-      "from": "tianshui",
-      "to": "fufeng",
-      "reaches": [
-        "wei:tianshui:fufeng"
       ]
     },
     {
@@ -6260,10 +6147,31 @@
       "from": "luling",
       "to": "yuzhang",
       "reaches": [
-        "gan:luling:linchuan",
-        "gan:linchuan:yuzhang"
+        "gan:luling:middle",
+        "gan:middle:yuzhang"
       ],
-      "optional_port_bypass": "linchuan"
+      "history": {
+        "classification": "historical_gan_mainstem_with_game_landing_calibration",
+        "basis": "《水經注》卷39記贛水經廬陵、南昌；幹流不以臨川為中途城。港點、像素及航速為本作概化，並非逐段通航能力的史料實測。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/39"
+        ]
+      }
+    },
+    {
+      "from": "qiao",
+      "to": "jiujiang",
+      "reaches": [
+        "wo:qiao:huai",
+        "huai:wo:jiujiang"
+      ],
+      "history": {
+        "classification": "attested_wo_huai_military_navigation_authorial_pixel_course",
+        "basis": "《三國志》卷1載209年曹操至譙作輕舟，自渦入淮出肥。採渦水—淮水共用河段與城池接岸陸路；209年是軍事通行記錄而非首通年代。現譙節點在219年前按既定設定顯示小沛，屬區域代理，並非歷史小沛位在渦水。像素河線與港點屬遊戲概化。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷01"
+        ]
+      }
     }
   ]
 }

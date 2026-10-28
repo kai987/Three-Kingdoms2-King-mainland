@@ -138,6 +138,7 @@ def reference(request, data=None):
                 travel = TravelCampaign()
                 travel.catalog = SimpleNamespace(data=data, links={frozenset(p) for p in data.get('links', [])})
                 state = route_state(args['cities'], args['month'], args.get('discovered', []), args.get('player', 'friendly'))
+                state.year = args.get('year')
                 if op == 'path':
                     value = travel._travel_path(state, args['source'], args['target'], args['owner'],
                                                 args['mode'], adjacent=args.get('adjacent', False))
@@ -223,6 +224,21 @@ def vector_document():
 
 def vectors(configs):
     current, synthetic, neutral, river = configs
+    all_cities = [dict(id=key, owner='friendly') for key in current['city_coordinates']]
+    for year, month in ((190, 7), (207, 6), (207, 7), (207, 8), (208, 7)):
+        base = dict(config=0, cities=all_cities, year=year, month=month, discovered=[])
+        for source, target in (('yuyang', 'liaoxi'), ('liaoxi', 'yuyang')):
+            yield f'calendar-road:{year}:{month}:{source}', dict(base, op='path', source=source,
+                target=target, owner='friendly', mode='land', adjacent=True)
+    # A real painted land leg meets章陵. Check present, absent and hostile
+    # intermediate stops through the exact WASM worker ABI as well.
+    for active in (True, False):
+        for owner in ('friendly', 'neutral', 'enemy'):
+            cities = [dict(row, owner=owner if row['id']=='yiyang' else 'friendly')
+                      for row in all_cities if active or row['id']!='yiyang']
+            yield f'city-transit:{active}:{owner}', dict(op='path', config=0, cities=cities,
+                year=217, month=7, discovered=[], source='nanjun', target='xiangyang',
+                owner='friendly', mode='land', adjacent=False)
     for index, data in enumerate(configs):
         routes = data['travel_routes'] + data.get('exploration_routes', [])
         months = range(1, 13)

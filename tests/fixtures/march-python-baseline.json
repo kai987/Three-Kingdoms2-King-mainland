@@ -1,7 +1,7 @@
 {
   "plain": {
     "before": {
-      "save": "c4c01102954b949f82da6c8495191c9ef1ad3fba39e5838b5d106c8e8b9637b8",
+      "save": "a4099e8b2fcc52fdf66eb79c113ffc886d1606f5425c5bb5b9f6694cc0dfd29a",
       "state": "23472878261028c99e38133f8a6e6b21c698f2d92f5801f693c3c2202e92814d",
       "rng": {
         "state": 2026,
@@ -15,7 +15,7 @@
       "turn": 1
     },
     "preview": {
-      "save": "c4c01102954b949f82da6c8495191c9ef1ad3fba39e5838b5d106c8e8b9637b8",
+      "save": "a4099e8b2fcc52fdf66eb79c113ffc886d1606f5425c5bb5b9f6694cc0dfd29a",
       "state": "23472878261028c99e38133f8a6e6b21c698f2d92f5801f693c3c2202e92814d",
       "rng": {
         "state": 2026,
@@ -29,8 +29,8 @@
       "turn": 1
     },
     "queued": {
-      "save": "6f83aeac982e9bedcd900a2750e4453633bf43b2dddc3e65823990e2ebcb2d7d",
-      "state": "ae6236310ece4db468f79f8398b4b5e0c008fb1b7f156c0c53ef09d28bf719e8",
+      "save": "06a1dc1adc1c418d8f9f0d28c6b10bc7ee7563e1e9f8b997ceb7da2c16e096db",
+      "state": "c020c9482047e6e2a61bf3c722385fa2bc64b23c427414704e790703ad6ef9c8",
       "rng": {
         "state": 2026,
         "draws": 0
@@ -50,7 +50,7 @@
       ],
       "routes": [
         {
-          "id": "jiameng:zitong:land",
+          "id": "hanzhong:zitong:land@1-2",
           "from": "jiameng",
           "to": "zitong",
           "mode": "land",
@@ -59,6 +59,8 @@
           "land_km": 134.3,
           "sea_km": 0,
           "days": 9,
+          "parent_route": "hanzhong:zitong:land",
+          "via": [],
           "timing_geometry": {
             "schema": "tk2-route-timing-v1",
             "parts": [
@@ -74,7 +76,7 @@
           "hazard": null
         },
         {
-          "id": "fuxian:zitong:land",
+          "id": "guanghan:zitong:land@1-2",
           "from": "zitong",
           "to": "fuxian",
           "mode": "land",
@@ -83,6 +85,8 @@
           "land_km": 63.7,
           "sea_km": 0,
           "days": 5,
+          "parent_route": "guanghan:zitong:land",
+          "via": [],
           "timing_geometry": {
             "schema": "tk2-route-timing-v1",
             "parts": [
@@ -108,7 +112,7 @@
       ]
     },
     "arrived": {
-      "save": "ece13224aceae8ac2f4bcec66f233279fe69b0668a74e32e26b86bfd7da210e1",
+      "save": "2462996789bd2e7f46cabbc46d85c4d69c70095972ae0e6f58ebfd59310cdaec",
       "state": "a26fbf04c1090af17cb3b67567d807da2b8423b928af2675e6ffe23e3420430b",
       "rng": {
         "state": 2026,
@@ -129,7 +133,7 @@
   },
   "yinping": {
     "before": {
-      "save": "eb2b28e62473f57965f5c09d3bbd2291f5060821c7d886454fc8730556da1f6b",
+      "save": "6100142a2e6ebbb01ef9b863a12afba8dce08b056c0b23e163ab468ef4243a41",
       "state": "b6c3abeb1a8989885cc8a2735c242476d9a84a86806a15bc61b81102ca864e7a",
       "rng": {
         "state": 2026,
@@ -143,7 +147,7 @@
       "turn": 1
     },
     "preview": {
-      "save": "eb2b28e62473f57965f5c09d3bbd2291f5060821c7d886454fc8730556da1f6b",
+      "save": "6100142a2e6ebbb01ef9b863a12afba8dce08b056c0b23e163ab468ef4243a41",
       "state": "b6c3abeb1a8989885cc8a2735c242476d9a84a86806a15bc61b81102ca864e7a",
       "rng": {
         "state": 2026,
@@ -157,7 +161,7 @@
       "turn": 1
     },
     "queued": {
-      "save": "dde88ab11fa9b72d2915acfbd8f1283784d71c92028967e1b7234ffe993ae08b",
+      "save": "36bf8a7dc5f6fa8d097ca883d5eef80b9e1c7141966f9e669cabe9eb800e865d",
       "state": "465d0b8471a189af66c95ed55238c65aff5561debd889aa36a3eb6bfe0af9f8b",
       "rng": {
         "state": 2026,
@@ -223,7 +227,7 @@
       ]
     },
     "arrived": {
-      "save": "606d2806eca1f4a9cbbac0e07333c95af61fd31754ab7898ecc930fc2dcc2561",
+      "save": "03e3eb7ef47506dd42a4836787b5710dcbb6801b485117b6dcfd3dee08e85947",
       "state": "5c51688ad7bfd569758351602b2fc49cc8350d7fd2b85ac2e9089292ddaa881f",
       "rng": {
         "state": 2026,
@@ -244,7 +248,7 @@
   },
   "ziwu-rain": {
     "before": {
-      "save": "9f3319e1fa7653b379bd07313edd1189f01a64319874c9d3581176e0df3f6c52",
+      "save": "0622eb55dda314858594a21cb4678aafb4df51dd2bced3fa117c691bc0788e64",
       "state": "144210746cdb973521a51eb757983b9fa6123849f5b64d032f06170bf66a5176",
       "rng": {
         "state": 2026,
@@ -258,7 +262,7 @@
       "turn": 1
     },
     "preview": {
-      "save": "9f3319e1fa7653b379bd07313edd1189f01a64319874c9d3581176e0df3f6c52",
+      "save": "0622eb55dda314858594a21cb4678aafb4df51dd2bced3fa117c691bc0788e64",
       "state": "144210746cdb973521a51eb757983b9fa6123849f5b64d032f06170bf66a5176",
       "rng": {
         "state": 2026,
@@ -272,7 +276,7 @@
       "turn": 1
     },
     "queued": {
-      "save": "c482efc05fe4ce344803dbfa2c26ce21d14cadab5c77f0c4d01aac28dd0581f6",
+      "save": "17bc9edc6546408fcc366f420005c23ab3fe5154eac89d5569c19a2eb15cf285",
       "state": "5622a71878c1d941ed8b4855a27dc3499406730c90c961556c6a5bab52eeb2ec",
       "rng": {
         "state": 2026,
@@ -338,7 +342,7 @@
       ]
     },
     "arrived": {
-      "save": "1431b7da9ddd9fef3e7848b02a4aed18bd0e269e48c66c564784e9c793dc2c32",
+      "save": "6c361a083cb53cbda069f6a3d653ab2e2f772cbb0ba7da6adf3502f5ebba3069",
       "state": "c9ae7cd95e86b7648fb0c2a6f8fb50a15aed4963b6f166ac37a334759c214957",
       "rng": {
         "state": 2026,
@@ -359,7 +363,7 @@
   },
   "ziwu-dry": {
     "before": {
-      "save": "e5d816673a67eeacec42a28c48facbca7befc3e874123e10a88acd8a444f98db",
+      "save": "1c5b55753f4ac9dc5e852a8c35f4513750c5301c096847421b1008c89d35c916",
       "state": "47cebb3ba495b05bbe90af1b557d611a40e0dbb92d3d415d6c89546fab00861d",
       "rng": {
         "state": 2026,
@@ -373,7 +377,7 @@
       "turn": 28
     },
     "preview": {
-      "save": "e5d816673a67eeacec42a28c48facbca7befc3e874123e10a88acd8a444f98db",
+      "save": "1c5b55753f4ac9dc5e852a8c35f4513750c5301c096847421b1008c89d35c916",
       "state": "47cebb3ba495b05bbe90af1b557d611a40e0dbb92d3d415d6c89546fab00861d",
       "rng": {
         "state": 2026,
@@ -387,7 +391,7 @@
       "turn": 28
     },
     "queued": {
-      "save": "ace4aee9431d368994ec101e90d01f384f387f2ff8c75855f6db5296df84f179",
+      "save": "6e4405e8d61d12df5b9dc1b1e9f8f86ed29b5861743b741cf198922a3d016b62",
       "state": "5cee4641751f5f20d3702fa9ef20f988947c47106a6cd69329a8ebf7541e6a49",
       "rng": {
         "state": 2026,
@@ -453,7 +457,7 @@
       ]
     },
     "arrived": {
-      "save": "9559da1c6fe0f458fe133d3cd531d9ecfba874b23f813c60ea05fc07fda995be",
+      "save": "9646f3c898fbb84ac049be7110b478c28bb14d2b80ea715ea566bca9f6c7df6f",
       "state": "2f8902a783aca610dce6281b0467775e25250777bd418205acbfcdedddcc2ade",
       "rng": {
         "state": 2026,
@@ -474,7 +478,7 @@
   },
   "sea-tail": {
     "before": {
-      "save": "7d0ee2f62f4f6168e997ef604a6fbf31d776096b20416fa1f4f222601445b60e",
+      "save": "84b762b489f918ac9c03f4ee277c9fdec13292a907be6ecb720c722ae66cec24",
       "state": "975efac6f7f666279492cd8f8bcece7f2eff981de283ebb3565909c132201b20",
       "rng": {
         "state": 2026,
@@ -488,7 +492,7 @@
       "turn": 19
     },
     "preview": {
-      "save": "7d0ee2f62f4f6168e997ef604a6fbf31d776096b20416fa1f4f222601445b60e",
+      "save": "84b762b489f918ac9c03f4ee277c9fdec13292a907be6ecb720c722ae66cec24",
       "state": "975efac6f7f666279492cd8f8bcece7f2eff981de283ebb3565909c132201b20",
       "rng": {
         "state": 2026,
@@ -502,7 +506,7 @@
       "turn": 19
     },
     "queued": {
-      "save": "717d56a7427ca22712a7438d4fca0c89687f944e375da71d0797ec88f7938c7e",
+      "save": "fa09608899252c3d818196d8fba3d62d6f668b60d14fbf936e8927d05bcb963d",
       "state": "01eb8741bf90bc0d040469caab6d2fd49b51fda50cfdfc0ab94887e9382dd576",
       "rng": {
         "state": 525710612,
@@ -660,7 +664,7 @@
       ]
     },
     "arrived": {
-      "save": "c3a00063e8967889da65289ae1275ee164e22ddc9440296f1321e57196c70def",
+      "save": "08097ee1f4eb2731e6893092ee957b75d1218596a481390ee64d88f415acd68e",
       "state": "66574a148bb8f70cfc325e09e59b2ac25ba34bfa7c862094b03d15024df59893",
       "rng": {
         "state": 525710612,
@@ -681,7 +685,7 @@
   },
   "sea-head": {
     "before": {
-      "save": "2a6f0841f3fd2d08828a93edd2aa4a9cbb3b206a22c0554cf60a353a5c722fab",
+      "save": "056358a50b50f502c250605c30a1e59d594b1f0ae4b36af13f773ef7926dbf9e",
       "state": "8af5e335d7571c5423bdad2cd43f793225ee1e1741a1d57abac20cf404d0331a",
       "rng": {
         "state": 2026,
@@ -695,7 +699,7 @@
       "turn": 1
     },
     "preview": {
-      "save": "2a6f0841f3fd2d08828a93edd2aa4a9cbb3b206a22c0554cf60a353a5c722fab",
+      "save": "056358a50b50f502c250605c30a1e59d594b1f0ae4b36af13f773ef7926dbf9e",
       "state": "8af5e335d7571c5423bdad2cd43f793225ee1e1741a1d57abac20cf404d0331a",
       "rng": {
         "state": 2026,
@@ -709,7 +713,7 @@
       "turn": 1
     },
     "queued": {
-      "save": "2dfd390a306e8e18c92386da2f1efe34c1f81a0bb08f7d4824ecdd4f7d0dad9f",
+      "save": "b478c0ab01994549d452db18e8ee897d113545e609d647f1fc7efffc8271c047",
       "state": "ce2c59de2316967d70565f04539a37aa89a964d8cc7c4b0fed57a42929f8c0a5",
       "rng": {
         "state": 525710612,
@@ -867,7 +871,7 @@
       ]
     },
     "arrived": {
-      "save": "b5f83a22c03bc4b4463e31c685dc27addfec9ceb8aac74bd04de8d56fa7eeb2d",
+      "save": "02c15bac5f3540665fb9bf6727b69d7e7de2db7b2a318d2b49d7da36bb72d3a4",
       "state": "2ba9fd8ea910ce02b57b0cd331095b69b9815aef20e2f0f1b59ff3d0a9d11b29",
       "rng": {
         "state": 525710612,
@@ -888,7 +892,7 @@
   },
   "sea-calm": {
     "before": {
-      "save": "78ba48a3c1b2d7f30e0a52f1a2a72fc7be779fdbcc0ba64474ea7a20d5861967",
+      "save": "bc630dc2f74fbb34e9e8e278e3bfa62d09c8eb999f75282a7d28ca3b4e24f832",
       "state": "1e2ac54cbe6765d547dfcaa79ecf2ab9170177f9fdd3d3bd74ed55b7b51724b2",
       "rng": {
         "state": 2026,
@@ -902,7 +906,7 @@
       "turn": 28
     },
     "preview": {
-      "save": "78ba48a3c1b2d7f30e0a52f1a2a72fc7be779fdbcc0ba64474ea7a20d5861967",
+      "save": "bc630dc2f74fbb34e9e8e278e3bfa62d09c8eb999f75282a7d28ca3b4e24f832",
       "state": "1e2ac54cbe6765d547dfcaa79ecf2ab9170177f9fdd3d3bd74ed55b7b51724b2",
       "rng": {
         "state": 2026,
@@ -916,7 +920,7 @@
       "turn": 28
     },
     "queued": {
-      "save": "12f29bc17f305387649d9ec6f3d26475ea2bf78926fa136b3f8e0b9737d2f8ff",
+      "save": "00cf830ef984939b5f15288c073a8fd988117884efb32e98cc4ac2bbfcdea551",
       "state": "06c15cd75c5170d5b12c7afd32091fff8baf540ce0840e7e99b47d71dbc1041c",
       "rng": {
         "state": 2026,
@@ -1062,7 +1066,7 @@
       ]
     },
     "arrived": {
-      "save": "9759d752a4f9c9a2ec3308d1b2e9e05675ef295073cd1e6663ed7cdde56faf48",
+      "save": "dd0df703bf895145b9a5e90d4c0aab568e8ae5a4e4f322c88bf2c9f3811ac40c",
       "state": "4bc0e8559c03444aec80e7e7f5c37c9acf173deb74300c7bb6a86fb77c407fe5",
       "rng": {
         "state": 2026,
@@ -1083,7 +1087,7 @@
   },
   "explore": {
     "before": {
-      "save": "f86f4fefd90b7160692555e0b8bf185b85eb051fea477cf9083e016a394a9005",
+      "save": "0591bc70c4abc2bbb78980fa3fe5b141d9b36ebb54764bd2d63ce5d243430f53",
       "state": "60d62530e7501dfc913bf4c5f6438d54c0006137897a9ab40c7113b3ecb708bf",
       "rng": {
         "state": 2026,
@@ -1097,7 +1101,7 @@
       "turn": 1
     },
     "preview": {
-      "save": "f86f4fefd90b7160692555e0b8bf185b85eb051fea477cf9083e016a394a9005",
+      "save": "0591bc70c4abc2bbb78980fa3fe5b141d9b36ebb54764bd2d63ce5d243430f53",
       "state": "60d62530e7501dfc913bf4c5f6438d54c0006137897a9ab40c7113b3ecb708bf",
       "rng": {
         "state": 2026,
@@ -1111,7 +1115,7 @@
       "turn": 1
     },
     "queued": {
-      "save": "280c5f913acc1f892ebe7ff3fc03d9e5d1b4bbf43f8782850191350f14731b5f",
+      "save": "d529b53b0ac2cf06a94183cb6eff4e0b48e0e0febf49c8aa8fe84d152dd53e82",
       "state": "912c7f52bbfdeb21cd157b0303cfe82c5aa40cf5a30e1414e3057762d3056775",
       "rng": {
         "state": 525710612,
@@ -1413,7 +1417,7 @@
       ]
     },
     "arrived": {
-      "save": "1bab649e2b3e410da60b98404c6fbfd183081a03ef1c5cdefa6fb2e6d908b79a",
+      "save": "fa6a0b0e18633ec888f1003eb455eb6f3bbb54510626b00b91aa560cdda34f0e",
       "state": "d0497c7f9ab6d250dbe0e1c02eebb2823d348288bf3984318a22697575b0c92d",
       "rng": {
         "state": 525710612,
