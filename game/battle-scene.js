@@ -4,6 +4,7 @@
 'use strict';
 (function(root){
  const WIDTH=256,HEIGHT=240,RESOLUTION_SCALE=4,SCHEMA='tk2-battle-presentation-v1';
+ const FIELD_WIDTH=496,FIELD_HEIGHT=304,FIELD_HUD=80;
  const PAPER='#ffd4c8',INK='#000000',ASSET_ROOT='/assets/battle-original/',ENHANCED_ROOT='/assets/battle-enhanced/';
  const EFFECTS=new Set(['fire','trap','strike','water','confuse','supply','feint','rock','area','chain','crossbow','surrender','ambush','flood','inferno','guard']);
  const KINDS=new Set(['attack','tactic','ambush','duel_start','duel_action','retreat']);
@@ -117,7 +118,7 @@
   return Math.round(Math.sin(p*Math.PI)*(bow?3:move==='desperate'?34:26));
  }
  function create(options={}){
-  const doc=options.document||root.document,i18n=options.i18n||root.GameI18n,portraits=options.portraits||root.GamePortraits,officerChoices=options.officerChoices||root.GameOfficerChoices,duelAppearance=options.duelAppearance||root.GameDuelAppearance;
+  const doc=options.document||root.document,i18n=options.i18n||root.GameI18n,portraits=options.portraits||root.GamePortraits,officerChoices=options.officerChoices||root.GameOfficerChoices,duelAppearance=options.duelAppearance||root.GameDuelAppearance,battlefields=options.battlefields||root.GameBattlefields;
   const fetcher=options.fetch||root.fetch?.bind(root),ImageType=options.Image||root.Image;
   const raf=options.requestAnimationFrame||root.requestAnimationFrame?.bind(root),caf=options.cancelAnimationFrame||root.cancelAnimationFrame?.bind(root);
   const images=new Map(),terrainSlots=new Map(),duelRendering=new Map(),duelLoadouts=new Map();let manifest=null,enhanced=null,soldiers=null,assetStatus='idle',assetsPromise=null,loadoutSignature='';
@@ -166,7 +167,8 @@
       // fighters' artwork is fetched by draw()/preloadDuelArtwork().
       return eager.map(f=>f.path);
      }),
-     Promise.resolve().then(()=>duelAppearance?.load?.()).catch(()=>null)
+     Promise.resolve().then(()=>duelAppearance?.load?.()).catch(()=>null),
+     Promise.resolve().then(()=>battlefields?.load?.()).catch(()=>null)
     ]);
     manifest=native?.data||null;enhanced=hd?.data||null;
     // An optional bad soldier library must not disable retained backgrounds,
@@ -182,13 +184,25 @@
   async function preloadSoldierArtwork(){await Promise.all(soldierRows().map(row=>loadImage(row.path).promise));}
   function html(){
    const lang=locale();
-   return `<div class="nes-battle" data-battle-scene data-l10n-native="${lang}"><div class="nes-battle-toolbar"><span data-battle-scene-title>${text('戰場','戦場')}</span><button type="button" data-battle-skip hidden>${text('略過演出','演出をスキップ')}</button></div><div data-duel-loadouts hidden></div><div class="nes-battle-viewport"><canvas width="1024" height="960" data-battle-canvas role="img" aria-label="${text('原版像素戰場，請使用部隊按鈕選將','原作ドットの戦場。部隊ボタンで武将を選択できます')}"></canvas></div><p class="nes-battle-status" data-battle-caption aria-live="polite"></p><p class="visually-hidden" data-battle-description></p></div>`;
+   return `<div class="nes-battle" data-battle-scene data-l10n-native="${lang}"><div class="nes-battle-toolbar"><span data-battle-scene-title>${text('戰場','戦場')}</span><span data-battlefield-label></span><button type="button" data-battle-skip hidden>${text('略過演出','演出をスキップ')}</button></div><div data-duel-loadouts hidden></div><div class="nes-battle-viewport"><canvas width="1024" height="960" data-battle-canvas role="img" aria-label="${text('原版像素戰場，請使用部隊按鈕選將','原作ドットの戦場。部隊ボタンで武将を選択できます')}"></canvas></div><p class="nes-battle-status" data-battle-caption aria-live="polite"></p><p class="visually-hidden" data-battle-description></p></div>`;
   }
   function fit(){
    const box=host?.querySelector?.('.nes-battle-viewport');if(!box||!canvas)return;
-   const width=box.clientWidth||256,height=box.clientHeight||240;
-   let scale=Math.min(width/WIDTH,height/HEIGHT);if(scale>=2)scale=Math.floor(scale);
-   canvas.style.width=Math.max(1,Math.floor(WIDTH*scale))+'px';canvas.style.height=Math.max(1,Math.floor(HEIGHT*scale))+'px';
+   const logicalWidth=canvas.width/RESOLUTION_SCALE||WIDTH,logicalHeight=canvas.height/RESOLUTION_SCALE||HEIGHT;
+   const aspect=logicalWidth+'/'+logicalHeight;
+   if(host.style&&host.style.getPropertyValue('--battle-canvas-aspect')!==aspect)host.style.setProperty('--battle-canvas-aspect',aspect);
+   const layout=host?.closest?.('.battle-layout');
+   if(layout?.clientWidth>660&&layout.style){
+    // Size the right column from its usable height. The roster receives the
+    // remaining width instead of leaving two large empty map margins.
+    const desired=Math.min(logicalWidth*RESOLUTION_SCALE,Math.max(1,layout.clientWidth-248),(box.clientHeight||logicalHeight)*logicalWidth/logicalHeight);
+    const size=Math.max(1,Math.floor(desired))+'px';
+    if(layout.style.getPropertyValue('--battle-board-width')!==size)layout.style.setProperty('--battle-board-width',size);
+    const roster=layout.querySelector?.('.battle-army-menu');if(roster&&!roster.open)roster.open=true;
+   }else layout?.style?.removeProperty('--battle-board-width');
+   const width=box.clientWidth||logicalWidth,height=box.clientHeight||logicalHeight;
+   const scale=Math.min(RESOLUTION_SCALE,width/logicalWidth,height/logicalHeight);
+   canvas.style.width=Math.max(1,Math.floor(logicalWidth*scale))+'px';canvas.style.height=Math.max(1,Math.floor(logicalHeight*scale))+'px';
   }
   function mount(element,current,selected={}){
    resizeObserver?.disconnect();host=element;view=current;selection=selected;loadoutSignature='';
@@ -232,6 +246,30 @@
    if(image){blit(image,0,0,256,160);return image;}
    rectangle(0,0,256,160,kind==='water'?'#1850db':'#fff0b0');return null;
   }
+  function selectedField(){
+   const selected=battlefields?.resolve?.(view?.game?.battle?.target),field=selected?.field;
+   if(!field||field.width!==FIELD_WIDTH||field.height!==FIELD_HEIGHT||!/^\/assets\/battlefields\/original-[0-2][0-9]\.png$/.test(field.path||''))return null;
+   const image=imageFor(field.path);
+   if(!image||(image.naturalWidth||image.width)!==FIELD_WIDTH||(image.naturalHeight||image.height)!==FIELD_HEIGHT)return null;
+   return {...selected,image};
+  }
+  function fieldSlots(field){
+   const cache='field:'+field.id;if(terrainSlots.has(cache))return terrainSlots.get(cache);
+   const cells=[],camps=[];
+   for(let y=0;y<19;y++)for(let x=0;x<31;x++){
+    const terrain=field.classes?.[y]?.[x];if(terrain===5)camps.push({gx:x,gy:y,x:x*16+8,y:y*16+8});
+    if(Number.isInteger(terrain)&&terrain>=0&&terrain<=2)cells.push({gx:x,gy:y,x:x*16+8,y:y*16+8,terrain});
+   }
+   const camp=camps[0]||{gx:28,gy:9,x:456,y:152},left=camp.gx>=15;
+   const attackAnchor={gx:left?2:28,gy:Math.max(2,Math.min(16,camp.gy))},used=new Set(),result={camps};
+   const choose=anchor=>cells.filter(p=>!used.has(p.gx+':'+p.gy)).sort((a,b)=>{
+    const score=p=>Math.abs(p.gx-anchor.gx)+Math.abs(p.gy-anchor.gy)+(p.terrain===2?0:p.terrain===1?2:p.terrain===0?4:16);
+    return score(a)-score(b)||a.gy-b.gy||a.gx-b.gx;
+   }).slice(0,10).sort((a,b)=>a.gy-b.gy||a.gx-b.gx);
+   result.defenders=choose(camp);for(const p of result.defenders)used.add(p.gx+':'+p.gy);
+   result.attackers=choose(attackAnchor);
+   terrainSlots.set(cache,result);return result;
+  }
   function plainSlots(image,side){
    const cache=(image?.src||'fallback')+':'+side;if(terrainSlots.has(cache))return terrainSlots.get(cache);
    let pixels=null;
@@ -246,8 +284,8 @@
    candidates.sort((a,b)=>a.obstacles-b.obstacles||a.distance-b.distance||a.y-b.y||a.x-b.x);
    const result=candidates.slice(0,10).sort((a,b)=>a.y-b.y||a.x-b.x);terrainSlots.set(cache,result);return result;
   }
-  function positions(state,image){
-   const out=new Map();for(const side of ['attackers','defenders']){const points=plainSlots(image,side);state.units.filter(u=>u.side===side).forEach((u,i)=>out.set(u.id,points[i]));}return out;
+  function positions(state,image,field=null){
+   const out=new Map();for(const side of ['attackers','defenders']){const points=field?fieldSlots(field)[side]:plainSlots(image,side);state.units.filter(u=>u.side===side).forEach((u,i)=>out.set(u.id,points[i]));}return out;
   }
   function flag(u,p,selected,enemy,used,marker){
    const color=u.troops===0?'#888888':enemy?'#b61c16':'#ffffff';rectangle(p.x-6,p.y-6,12,12,INK);rectangle(p.x-5,p.y-5,10,10,color);
@@ -256,11 +294,22 @@
    if(used&&u.troops>0)rectangle(p.x+3,p.y+3,3,3,'#505050');
    if(selected){outline(p.x-8,p.y-8,16,16,'#ffffff');outline(p.x-7,p.y-7,14,14,INK);}
   }
-  function paintMap(state){
+  function paintMap(state,field=null){
    const b=view.game.battle,own=b.attacker===view.game.player?'attackers':'defenders';
-   const image=background('tactical'),points=positions(state,image),markers=markerLabels(state.units,canonicalName,person);
+   const image=field?.image||background('tactical');
+   if(field){
+    blit(image,0,0,FIELD_WIDTH,FIELD_HEIGHT);
+    // Position is extracted from the original map's class5 cell. The small
+    // castle is this remake's UI marker; it is not an extracted NES overlay.
+    for(const p of fieldSlots(field.field).camps){
+     rectangle(p.x-7,p.y-6,14,13,INK);rectangle(p.x-5,p.y-4,10,9,PAPER);
+     rectangle(p.x-6,p.y-7,3,5,PAPER);rectangle(p.x-1,p.y-8,3,6,PAPER);rectangle(p.x+4,p.y-7,3,5,PAPER);
+     rectangle(p.x-1,p.y+1,3,5,INK);
+    }
+   }
+   const points=positions(state,image,field?.field),markers=markerLabels(state.units,canonicalName,person);
    for(const u of state.units){const p=points.get(u.id);if(p)flag(u,p,u.id===selection.actor||u.id===selection.target,u.side!==own,b.used.includes(u.id),markers.get(u.id));}
-   if(state.outcome){rectangle(70,60,116,30,PAPER);outline(70,60,116,30);label(outcome(state.outcome),80,70,INK,12);}
+   if(state.outcome){const x=field?(FIELD_WIDTH-116)/2:70,y=field?(FIELD_HEIGHT-30)/2:60;rectangle(x,y,116,30,PAPER);outline(x,y,116,30);label(outcome(state.outcome),x+10,y+10,INK,12);}
   }
   function outcome(value){const own=view?.game?.battle?.attacker===view?.game?.player;return value==='victory'?(own?text('本方勝利','勝利'):text('城池失守','都市陥落')):value==='defeat'?(own?text('本方敗退','敗北'):text('守城成功','防衛成功')):text('攻方退卻','攻撃側撤退');}
   function selectedId(state,scene){return scene?.actor??(state.duel?.actor??selection.actor??state.units[0]?.id);}
@@ -277,6 +326,20 @@
    const target=scene?.target??selection.target,foe=state.units.find(u=>u.id===target);
    if(foe)label('→ '+person(target)+'  '+text('兵','兵')+' '+foe.troops,8,216);
    const caption=scene?sceneCaption(scene):text('選擇本方部隊與對手','味方部隊と相手を選択');label(caption.slice(0,31),8,229);
+  }
+  function fieldHud(state){
+   rectangle(0,FIELD_HEIGHT,FIELD_WIDTH,FIELD_HUD,PAPER);line(FIELD_WIDTH/2,FIELD_HEIGHT+4,FIELD_WIDTH/2,FIELD_HEIGHT+57,INK);
+   const b=view.game.battle,own=b.attacker===view.game.player?'attackers':'defenders';
+   const actor=state.units.find(u=>u.id===selection.actor&&u.side===own)||state.units.find(u=>u.side===own),target=state.units.find(u=>u.id===selection.target&&u.side!==own)||state.units.find(u=>u.side!==own);
+   for(const [unit,x]of [[actor,0],[target,FIELD_WIDTH/2]]){
+    if(!unit)continue;const o=view.game.officers[String(unit.id)];if(!o)continue;
+    portrait(unit.id,x+8,FIELD_HEIGHT+8);label(person(unit.id),x+48,FIELD_HEIGHT+6,INK,11);
+    const p=o.profile,loyalty=officerChoices?.loyalty?officerChoices.loyalty(o,{isRuler:officerChoices.isRuler?.(unit.id,view.game.extension?.leaders)===true}):o.loyalty;
+    const columns=[[[text('兵','兵'),unit.troops],[text('體','体'),unit.health],[text('經','経'),Math.floor(o.experience/50)]],[[text('武','武'),p.martial_strength],[text('德','徳'),p.virtue],[text('氣','気'),unit.energy]],[[text('知','知'),p.intellect],[text('忠','忠'),loyalty],[text('訓練度','練度'),b.extended.support[String(unit.id)]?.morale??70]]];
+    columns.forEach((col,i)=>col.forEach(([key,value],j)=>label(key+' '+value,x+48+i*68,FIELD_HEIGHT+20+j*11,INK,8)));
+    label(unit.troops===0?text('潰散','敗走'):b.used.includes(unit.id)?text('本輪已行動','行動済み'):unit.side===own?text('本方部隊','自軍部隊'):text('對方部隊','敵軍部隊'),x+8,FIELD_HEIGHT+54,INK,9);
+   }
+   label(text('點選旗標或部隊名單選將','旗か部隊一覧から武将を選択'),8,FIELD_HEIGHT+69,INK,9);
   }
   function army(unit,side,tick,progress,active){
    if(!unit)return;const amount=Math.min(12,Math.ceil(unit.troops/85)),left=side==='left',shift=active?Math.round(Math.sin(progress*Math.PI)*10)*(left?1:-1):0;
@@ -488,6 +551,10 @@
    updateLoadoutControls();
    const skipButton=host.querySelector('[data-battle-skip]');if(skipButton){skipButton.hidden=!playing;skipButton.textContent=text('略過演出','演出をスキップ');}
    const title=host.querySelector('[data-battle-scene-title]');if(title)title.textContent=frame?.scene?.kind==='attack'?text('部隊對陣','部隊同士の戦闘'):view?.game?.battle?.extended?.duel?text('陣前單挑','一騎討ち'):text('戰場','戦場');
+   const fieldLabel=host.querySelector('[data-battlefield-label]'),field=selectedField();
+   if(fieldLabel){fieldLabel.textContent=field?battlefields.label(view.game.battle.target,locale()):text('參考戰場','参考戦場');fieldLabel.title=field?(locale()==='ja'?field.description_ja:field.description_tc)||'':text('地圖素材載入後顯示對應城池戰場','地図素材の読み込み後に都市の戦場を表示');}
+   host.dataset.battlefieldId=field?.field?.id||'';
+   host.dataset.battlefieldSource=field?.binding?.kind||field?.binding?.type||'fallback';
    const caption=host.querySelector('[data-battle-caption]');if(caption)caption.textContent=frame?sceneCaption(frame.scene):assetStatus==='unavailable'?text('原版素材載入失敗，仍可使用部隊名單操作。','原作素材を読み込めません。部隊一覧から操作できます。'):text('點選戰場旗標或部隊名單選將；兵數以實際結算為準。','戦場の旗か部隊一覧から選択できます。兵数は実際の精算結果です。');
    const hidden=host.querySelector('[data-battle-description]');if(hidden)hidden.textContent=description();
   }
@@ -495,15 +562,20 @@
    if(!ctx||!view?.game?.battle||host?.isConnected===false)return;
    // Render directly into the4× backing store, retaining the original logical layout.
    // This also lets128×160 portraits and32px CJK text retain their actual detail.
-   duelRendering.clear();ctx.setTransform(RESOLUTION_SCALE,0,0,RESOLUTION_SCALE,0,0);ctx.imageSmoothingEnabled=false;rectangle(0,0,WIDTH,HEIGHT,INK);
+   const current=snapshot(view),field=!frame&&!current?.duel?selectedField():null;
+   const width=field?FIELD_WIDTH:WIDTH,height=field?FIELD_HEIGHT+FIELD_HUD:HEIGHT;
+   if(canvas.width!==width*RESOLUTION_SCALE||canvas.height!==height*RESOLUTION_SCALE){canvas.width=width*RESOLUTION_SCALE;canvas.height=height*RESOLUTION_SCALE;fit();}
+   host.dataset.battleSceneMode=frame?(frame.scene.kind.startsWith('duel')?'duel':'engagement'):current?.duel?'duel':'tactical';
+   duelRendering.clear();ctx.setTransform(RESOLUTION_SCALE,0,0,RESOLUTION_SCALE,0,0);ctx.imageSmoothingEnabled=false;rectangle(0,0,width,height,INK);
    if(frame){const {scene,progress}=frame,state=progress<.55?scene.before:scene.after;if(scene.kind.startsWith('duel'))paintDuel(state,scene,progress);else paintEngagement(scene,progress);}
-   else{const state=snapshot(view);if(state.duel)paintDuel(state);else{paintMap(state);hud(state);}}
+   else{if(current.duel)paintDuel(current);else{paintMap(current,field);if(field)fieldHud(current);else hud(current);}}
    updateText();
   }
   function clickMap(event){
    if(playing||!canvas||!view?.game?.battle||view.game.phase!=='battle'||view.game.battle.extended.duel)return;
-   const rect=canvas.getBoundingClientRect(),x=(event.clientX-rect.left)*256/rect.width,y=(event.clientY-rect.top)*240/rect.height;if(y>=160)return;
-   const state=snapshot(view),image=backgroundImage('tactical'),points=positions(state,image),own=view.game.battle.attacker===view.game.player?'attackers':'defenders';
+   const field=selectedField(),width=field?FIELD_WIDTH:WIDTH,height=field?FIELD_HEIGHT+FIELD_HUD:HEIGHT;
+   const rect=canvas.getBoundingClientRect(),x=(event.clientX-rect.left)*width/rect.width,y=(event.clientY-rect.top)*height/rect.height;if(y>=(field?FIELD_HEIGHT:160))return;
+   const state=snapshot(view),image=field?.image||backgroundImage('tactical'),points=positions(state,image,field?.field),own=view.game.battle.attacker===view.game.player?'attackers':'defenders';
    const found=state.units.map(u=>({u,p:points.get(u.id)})).filter(r=>r.p&&Math.abs(r.p.x-x)<=9&&Math.abs(r.p.y-y)<=9).sort((a,b)=>Math.hypot(a.p.x-x,a.p.y-y)-Math.hypot(b.p.x-x,b.p.y-y))[0];
    if(!found||found.u.troops<=0||found.u.side===own&&view.game.battle.used.includes(found.u.id))return;
    options.onSelect?.(found.u.side===own?'actor':'target',found.u.id);

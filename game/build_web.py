@@ -82,7 +82,7 @@ def static_allowlist():
     spec.loader.exec_module(module)
     for helper in ('portrait_static_assets', 'civil_portrait_static_assets',
                    'audio_effect_static_assets', 'original_ui_static_assets', 'equipment_icon_static_assets',
-                   'battle_static_assets', 'enhanced_battle_static_assets'):
+                   'battle_static_assets', 'battlefield_static_assets', 'enhanced_battle_static_assets'):
         assets.update(getattr(module, helper)())
     for name in EXTRA_ASSETS:
         assets['/' + name] = (name, 'text/javascript; charset=utf-8')

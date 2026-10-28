@@ -46,6 +46,19 @@
         "battle"
       ]
     },
+    "tests/test_remake_battlefield_bindings.py": {
+      "tier": "global",
+      "groups": [
+        "battle",
+        "map"
+      ]
+    },
+    "tests/test_remake_battlefields.py": {
+      "tier": "global",
+      "groups": [
+        "battle"
+      ]
+    },
     "tests/test_remake_browser_runtime.py": {
       "tier": "related",
       "groups": [

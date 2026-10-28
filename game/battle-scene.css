@@ -1,38 +1,66 @@
-/* Logical256×240 layout, direct1024×960 rendering, unchanged display footprint. */
-#stage.battle-stage{background:#000}
+/* Full tactical board and classic closeups share a responsive roster layout. */
+#stage.battle-stage{background:#000;container-type:size}
 .battle-stage .arena{padding:8px;gap:6px;overflow:hidden}
 .battle-stage .arena-heading{padding:0 2px 4px;flex:none;border-color:var(--paper);color:var(--paper)}
 .battle-stage .arena-heading h2{font-size:22px}
+.battle-layout{display:grid;grid-template-columns:minmax(240px,1fr) minmax(0,var(--battle-board-width,1.4fr));gap:8px;flex:1;min-width:0;min-height:0;grid-template-rows:minmax(0,1fr)}
+.battle-layout>.nes-battle,.battle-layout>.duel-fighters{grid-column:2;grid-row:1}
 .nes-battle{display:flex;flex:1;flex-direction:column;min-height:0;min-width:0;background:#000;color:var(--paper);overflow:hidden}
 .nes-battle-toolbar{display:flex;align-items:center;justify-content:space-between;min-height:28px;gap:8px;padding:0 4px;font-size:14px;flex:none}
-.nes-battle-toolbar button{min-height:26px;font-size:14px;padding:0 6px;border-color:var(--paper);background:#000;color:var(--paper)}
+.nes-battle-toolbar [data-battle-scene-title]{flex:none}
+.nes-battle-toolbar [data-battlefield-label]{flex:1;min-width:0;font-size:12px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nes-battle-toolbar button{flex:none;min-height:44px;font-size:14px;padding:0 8px;border-color:var(--paper);background:#000;color:var(--paper)}
 .busy [data-battle-skip]{pointer-events:auto}
 .nes-battle [data-duel-loadouts]{flex:none;padding:2px 6px;color:var(--paper);font-size:13px;max-height:190px;overflow:auto}
-.nes-battle [data-duel-loadouts] summary{cursor:pointer;min-height:24px;line-height:24px}
+.nes-battle [data-duel-loadouts] summary{cursor:pointer;min-height:44px;line-height:1.4;padding:8px 0}
 .duel-loadout-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px}
 .duel-loadout-grid fieldset{min-width:0;margin:0;padding:4px 6px;border:1px solid var(--paper)}
 .duel-loadout-grid label{display:block;margin:2px 0}
-.duel-loadout-grid select{width:100%;min-height:28px;font-size:13px;padding:2px;border-color:var(--paper);background:#000;color:var(--paper)}
+.duel-loadout-grid select{width:100%;min-height:44px;font-size:13px;padding:4px;border-color:var(--paper);background:#000;color:var(--paper)}
 .nes-battle-viewport{display:grid;place-items:center;flex:1;min-height:0;min-width:0;background:#000;overflow:hidden}
 .nes-battle canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;max-width:100%;touch-action:manipulation;cursor:crosshair}
 .nes-battle-status{flex:none;min-height:20px;font-size:13px;line-height:1.35;padding:2px 4px;overflow-wrap:anywhere}
-.battle-army-menu{flex:none;background:var(--paper);color:var(--ink);font-size:14px;padding:4px 8px;max-height:210px;overflow:auto}
-.battle-army-menu summary{cursor:pointer;min-height:28px;line-height:28px}
-.battle-army-menu .armies{gap:8px;padding-top:4px;overflow:visible}
-.battle-army-menu .unit{min-height:48px;padding:4px;font-size:14px}
+.battle-army-menu{position:relative;grid-column:1;grid-row:1;min-width:0;min-height:0;height:100%;background:var(--paper);color:var(--ink);font-size:14px;padding:0 8px;overflow:hidden}
+.battle-army-menu>summary{display:flex;align-items:center;gap:6px;cursor:default;height:44px;min-height:44px;line-height:1.25;padding:4px 0;overflow-wrap:anywhere;list-style:none}
+.battle-army-menu>summary::-webkit-details-marker{display:none}
+.battle-army-menu>summary::before{display:none;content:"▸";flex:none}
+.battle-army-menu>.armies{position:absolute;inset:44px 8px 0;height:auto;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr);gap:8px;padding:0 0 8px;overflow:hidden}
+.battle-army-menu .army{display:flex;flex-direction:column;min-width:0;min-height:0}
+.battle-army-menu .army h3{flex:none;font-size:15px;margin:0 0 4px;padding:2px 0;border-bottom:1px solid var(--ink)}
+.battle-army-menu .unit-list{display:flex;flex-direction:column;flex:1;gap:5px;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable}
+.battle-army-menu .unit{flex:none;min-height:58px;padding:5px;font-size:14px;gap:6px;overflow-wrap:anywhere}
+.battle-army-menu .unit[aria-pressed=true]{background:#000;color:var(--paper)}
 .battle-army-menu .unit small,.battle-army-menu .unit .troops{font-size:13px}
 .battle-army-menu .unit .portrait-frame{width:26px;height:34px}
 .battle-army-menu .unit .officer-portrait{width:26px;flex-basis:26px}
-.battle-army-menu .unit .officer-identity{gap:5px}
+.battle-army-menu .unit .officer-identity{gap:5px;min-width:0}
+.battle-army-menu .unit .officer-identity>span:last-child{min-width:0}
+.battle-unit-status{display:inline-block;margin-inline-start:6px;padding:0 3px;border:1px solid currentColor;font-size:11px;line-height:1.35;vertical-align:middle;white-space:nowrap}
+.battle-duel-record>.battle-log{position:absolute;inset:44px 8px 0;height:auto;overflow:auto;padding-bottom:8px;font-size:14px}
+.battle-layout:not(:has(.nes-battle,.duel-fighters))>.battle-army-menu{grid-column:1/-1}
+@container(max-width:660px){
+ .battle-layout{grid-template-columns:minmax(0,1fr);grid-template-rows:max-content max-content;overflow:auto}
+ .battle-layout>.nes-battle,.battle-layout>.duel-fighters{grid-column:1;grid-row:1}
+ .battle-army-menu{grid-column:1;grid-row:2;min-height:0;height:auto;max-height:370px;overflow:auto}
+ .battle-army-menu>summary{cursor:pointer}
+ .battle-army-menu>summary::before{display:block}
+ .battle-army-menu[open]>summary::before{content:"▾"}
+ .battle-army-menu>.armies{position:static;height:300px;padding-top:2px;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+ .nes-battle{min-height:0;flex:none}
+ .nes-battle-viewport{flex:none;height:auto;min-height:0;aspect-ratio:var(--battle-canvas-aspect,256/240);width:100%}
+ .battle-duel-record>.battle-log{position:static;height:auto;max-height:280px}
+}
 @media(max-width:760px){
- #stage.battle-stage{height:auto;min-height:420px;flex:none}
+ #stage.battle-stage{height:auto;min-height:420px;flex:none;container-type:inline-size}
  .battle-stage .arena{height:auto;min-height:412px;padding:4px;gap:4px}
+ .battle-layout{flex:none;grid-template-columns:minmax(0,1fr);grid-template-rows:max-content max-content;overflow:visible}
  .nes-battle{flex:none;overflow:visible}
- .nes-battle-viewport{flex:none;height:auto;min-height:0;aspect-ratio:256/240;width:100%}
+ .nes-battle-viewport{flex:none;height:auto;min-height:0;aspect-ratio:var(--battle-canvas-aspect,256/240);width:100%}
  .nes-battle-status{font-size:14px;padding:4px}
  .duel-loadout-grid{grid-template-columns:minmax(0,1fr)}
  .nes-battle [data-duel-loadouts]{max-height:220px}
- .battle-army-menu{max-height:260px}
+ .battle-army-menu{max-height:400px}
+ .battle-army-menu>.armies{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr);height:340px}
  .battle-army-menu .unit{flex-wrap:wrap}
  .battle-stage .arena-heading h2{font-size:20px}
 }

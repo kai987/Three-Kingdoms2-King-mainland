@@ -171,6 +171,29 @@ def battle_static_assets(here=None):
     return result
 
 
+def battlefield_static_assets(here=None):
+    """Only the thirty exported map PNGs and their metadata are public."""
+    here = Path(here) if here is not None else HERE
+    base = here / 'assets/battlefields'
+    if (here / 'assets').is_symlink() or base.is_symlink() or (base / 'index.json').is_symlink():
+        return {}
+    result = {'/assets/battlefields/index.json': ('assets/battlefields/index.json', 'application/json; charset=utf-8')}
+    try:
+        data = json.loads((base / 'index.json').read_text(encoding='utf-8'))
+        if data.get('schema') != 'tk2-original-battlefields-v1' or not isinstance(data.get('maps'), dict):
+            return result
+        for index in range(30):
+            identity = f'original-{index:02d}'
+            row = data['maps'].get(identity, {})
+            path = f'/assets/battlefields/{identity}.png'
+            target = here / path.lstrip('/')
+            if row.get('id') == identity and row.get('path') == path and not target.is_symlink() and target.is_file():
+                result[path] = (path.lstrip('/'), 'image/png')
+    except (OSError, ValueError, AttributeError):
+        pass
+    return result
+
+
 def enhanced_battle_static_assets(here=None):
     """Only the shipped4x battle manifest and its fixed PNG filenames are public."""
     here = Path(here) if here is not None else HERE
@@ -600,6 +623,8 @@ def main():
               '/facilities.js': ('facilities.js', 'text/javascript; charset=utf-8'),
               '/equipment.js': ('equipment.js', 'text/javascript; charset=utf-8'),
               '/battle-scene.js': ('battle-scene.js', 'text/javascript; charset=utf-8'),
+              '/battlefields.js': ('battlefields.js', 'text/javascript; charset=utf-8'),
+              '/config/battlefield-city-bindings.json': ('config/battlefield-city-bindings.json', 'application/json; charset=utf-8'),
               '/battle-scene.css': ('battle-scene.css', 'text/css; charset=utf-8'),
               '/duel-appearance.js': ('duel-appearance.js', 'text/javascript; charset=utf-8'),
               '/config/duel-appearances.json': ('config/duel-appearances.json', 'application/json; charset=utf-8'),
@@ -643,6 +668,7 @@ def main():
     static.update(original_ui_static_assets())
     static.update(equipment_icon_static_assets())
     static.update(battle_static_assets())
+    static.update(battlefield_static_assets())
     static.update(enhanced_battle_static_assets())
 
     Handler = make_handler(game, cloud_config, cloud_csp, static, audit)

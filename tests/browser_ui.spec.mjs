@@ -1776,3 +1776,69 @@ test('actual equipment appears in city intelligence and person details with serv
  const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);const restored=await read();expect(restored.save).toEqual(JSON.parse(raw));expect(restored.view.catalog.equipment.officers[String(selection.ident)].weapon.id).toBe(selection.item.id);
  expect(restored.view.catalog.equipment.officers[String(selection.ident)].attack_bonus).toBe(selection.quote.after.attack_bonus);expect(errors.get(page)).toEqual([]);
 });
+
+test('city-specific battlefield keeps both armies visible and supports real battle controls',async({page},testInfo)=>{
+ // Natural 208 campaign, shipped Worker and public commands only. Independent
+ // controlled-input acceptance also exercises Wuling and Chengdu locally.
+ const read=()=>page.evaluate(async()=>{const r=await fetch('/api/save');if(!r.ok)throw Error('Battle save inspection failed');return r.json();});
+ const dismiss=async()=>{
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  for(let count=0;count<20&&await page.locator('#event-dialog').isVisible();count++){
+   const modal=page.locator('#event-dialog'),skip=modal.locator('[data-event-skip]');
+   await(await skip.count()?skip:modal.locator('[data-event-next]')).click();
+  }
+  await expect(page.locator('#event-dialog')).toBeHidden();
+ };
+ const command=async id=>{
+  const button=page.locator('#'+id);
+  if(!await button.isVisible()&&await page.locator('#inspector-toggle').isVisible())await page.locator('#inspector-toggle').click();
+  await button.click();
+ };
+ const language=async value=>{
+  const menu=page.locator('#utility-menu');if(await menu.getAttribute('open')===null)await menu.locator('summary').click();
+  await page.locator('#language').selectOption(value);await menu.locator('summary').click();
+ };
+ const fields=[];page.on('response',response=>{if(/\/assets\/battlefields\/(?:index\.json|original-15\.png)$/.test(new URL(response.url()).pathname))fields.push({url:response.url(),status:response.status()});});
+ await opening(page);await page.locator('#scenario').selectOption('mainland208-10');await page.locator('input[name=faction][value=wei]').check();
+ const seed=page.locator('#seed');await seed.evaluate(node=>{for(let parent=node.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;});await seed.fill('2026');
+ await page.locator('#begin').click();await waitIdle(page);await dismiss();
+ await page.locator('#city-jump').selectOption('jiujiang');await clickCityCommand(page,'depart');await page.locator('#city-jump').selectOption('danyang');
+ await expect(page.locator('#departure-target')).toHaveValue('danyang');const officers=page.locator('input[name=depart-officer]:enabled');expect(await officers.count()).toBeGreaterThanOrEqual(10);
+ for(let i=0;i<10;i++)await officers.nth(i).check();await page.locator('#review-departure').click();await page.locator('#confirm-departure').click();await waitIdle(page);await dismiss();
+ for(const id of ['end-turn','run-ai','process-arrivals']){await page.locator('#'+id).click();await waitIdle(page);await dismiss();}
+ const scene=page.locator('[data-battle-scene]'),canvas=page.locator('[data-battle-canvas]'),roster=page.locator('.battle-army-menu');
+ await expect(scene).toHaveAttribute('data-battle-scene-mode','tactical');await expect(scene).toHaveAttribute('data-battlefield-id','original-15');
+ await expect(scene).toHaveAttribute('data-battlefield-source','same_label_association');await expect(canvas).toHaveJSProperty('width',1984);await expect(canvas).toHaveJSProperty('height',1536);
+ await expect(page.locator('[data-battlefield-label]')).toHaveAttribute('title',/ROM/);
+ expect((await read()).state.battle.target).toBe('danyang');expect(await page.evaluate(()=>GameBrowserEngine.ready)).toBe(true);
+ expect(fields.some(row=>row.url.includes('/Three-Kingdoms2-King-mainland/assets/battlefields/original-15.png')&&row.status===200)).toBe(true);
+ const geometry=await page.evaluate(()=>{
+  const rect=node=>{const r=node.getBoundingClientRect();return{x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height};};
+  return{roster:rect(document.querySelector('.battle-army-menu')),map:rect(document.querySelector('[data-battle-canvas]')),lists:[...document.querySelectorAll('[data-unit-list]')].map(n=>({...rect(n),content:n.scrollHeight})),overflow:document.documentElement.scrollWidth>innerWidth,wide:document.querySelector('.battle-layout').clientWidth>660};
+ });
+ expect(geometry.overflow).toBe(false);
+ if(geometry.wide)expect(geometry.roster.right).toBeLessThanOrEqual(geometry.map.x+1);
+ else expect(geometry.map.bottom).toBeLessThanOrEqual(geometry.roster.y+1);
+ for(const list of geometry.lists){
+  expect(list.y).toBeGreaterThanOrEqual(geometry.roster.y);expect(list.bottom).toBeLessThanOrEqual(geometry.roster.bottom+1);expect(list.height).toBeGreaterThan(80);expect(list.content).toBeGreaterThan(list.height);
+ }
+ const firstList=page.locator('[data-unit-list=friendly]'),otherList=page.locator('[data-unit-list=hostile]');
+ const unchanged=await read(),actor=firstList.locator('[data-actor]:enabled').last();await actor.scrollIntoViewIfNeeded();
+ const actorId=await actor.getAttribute('data-actor'),position=await page.evaluate(()=>({page:scrollY,list:document.querySelector('[data-unit-list=friendly]').scrollTop}));await actor.click();
+ await expect(page.locator(`[data-actor="${actorId}"]`)).toHaveAttribute('aria-pressed','true');await expect(page.locator(`[data-actor="${actorId}"]`)).toHaveCSS('background-color','rgb(0, 0, 0)');
+ expect(await page.evaluate(()=>({page:scrollY,list:document.querySelector('[data-unit-list=friendly]').scrollTop}))).toEqual(position);
+ await expect(page.locator(`[data-actor="${actorId}"]`)).toBeFocused();
+ const target=otherList.locator('[data-target]:enabled').last(),targetId=await target.getAttribute('data-target');await target.click();await expect(page.locator(`[data-target="${targetId}"]`)).toHaveAttribute('aria-pressed','true');
+ if(!geometry.wide){await roster.locator('summary').click();await expect(roster).not.toHaveAttribute('open','');await roster.locator('summary').click();await expect(roster).toHaveAttribute('open','');}
+ expect(await read()).toEqual(unchanged,'Roster controls never consume a game action or draw RNG');
+ await canvas.scrollIntoViewIfNeeded();await historyScreenshot(page,testInfo,'battle-full-map-and-roster');
+ await language('ja');await expect(scene).toHaveAttribute('data-l10n-native','ja');await expect(page.locator('[data-unit-list=friendly]')).toContainText('武');await historyScreenshot(page,testInfo,'battle-japanese');await language('zh-Hant');expect(await read()).toEqual(unchanged);
+ await command('attack');await expect(scene).toHaveAttribute('data-battle-scene-mode','engagement');await expect(canvas).toHaveJSProperty('width',1024);await expect(canvas).toHaveJSProperty('height',960);
+ const committed=await read();await page.locator('[data-battle-skip]').click();await waitIdle(page);await dismiss();expect(await read()).toEqual(committed,'Skipping animation cannot resolve the attack again or consume extra RNG');
+ await expect(canvas).toHaveJSProperty('width',1984);await expect(canvas).toHaveJSProperty('height',1536);await expect(page.locator(`[data-actor="${actorId}"]`)).toBeDisabled();
+ const snapshot=await read(),download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');expect(JSON.parse(raw)).toEqual(snapshot);
+ await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'battle-acceptance.json',mimeType:'application/json',buffer:Buffer.from(raw)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();expect(await read()).toEqual(snapshot);
+ await expect(canvas).toHaveJSProperty('width',1984);await expect(page.locator('[data-battle-skip]')).toBeHidden();
+ await testInfo.attach('battle-layout-and-assets',{body:Buffer.from(JSON.stringify({geometry,fields},null,2)),contentType:'application/json'});
+ expect(errors.get(page)).toEqual([]);
+});

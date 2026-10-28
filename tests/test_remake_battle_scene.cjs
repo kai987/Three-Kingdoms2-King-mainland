@@ -62,7 +62,7 @@ print(json.dumps(dict(rows=rows,tactics=[dict(id=i,effect=t[2]) for i,t in enume
 `],{cwd:ROOT,encoding:'utf8',maxBuffer:8*1024*1024,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}}));
 const clone=value=>JSON.parse(JSON.stringify(value));
 function freeze(value){if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;}
-function environment({manifest=null,enhancedManifest=null,duelAppearance=null,failedPaths=[],badDimensions=[],reduced=false,missingRAF=false,missingContext=false}={}){
+function environment({manifest=null,enhancedManifest=null,duelAppearance=null,battlefields=null,failedPaths=[],badDimensions=[],reduced=false,missingRAF=false,missingContext=false}={}){
  const rafs=new Map(),timers=new Map(),listeners=new Map(),requests=[],imageRequests=[],cancels=[],observers=[],texts=[],draws=[],rectangles=[],transforms=[],scales=[],matrixStack=[];let next=0,matrix=[1,0,0,1,0,0];
  const doc={hidden:false,addEventListener(type,fn){if(!listeners.has(type))listeners.set(type,new Set());listeners.get(type).add(fn);},removeEventListener(type,fn){listeners.get(type)?.delete(fn);},emit(type,event={}){for(const fn of [...listeners.get(type)||[]])fn(event);},createElement(){return canvas();}};
  const context={setTransform(...args){transforms.push(args);matrix=[...args];},fillRect(x,y,w,h){rectangles.push({x,y,w,h,color:this.fillStyle});},fillText(text,x,y){texts.push({text:String(text),x,y});},save(){matrixStack.push([...matrix]);},restore(){matrix=matrixStack.pop()||matrix;},drawImage(image,...args){draws.push({src:image?.src,args,matrix:[...matrix]});},translate(x,y){matrix[4]+=matrix[0]*x+matrix[2]*y;matrix[5]+=matrix[1]*x+matrix[3]*y;},scale(...args){scales.push(args);matrix[0]*=args[0];matrix[1]*=args[0];matrix[2]*=args[1];matrix[3]*=args[1];},getImageData(){return{data:new Uint8ClampedArray(256*160*4)};}};
@@ -72,12 +72,12 @@ function environment({manifest=null,enhancedManifest=null,duelAppearance=null,fa
  nodes['[data-duel-loadouts]']={hidden:true,innerHTML:'',querySelector:()=>null};
  const host={isConnected:true,dataset:{},querySelector:selector=>nodes[selector]||null};
  const i18n={locale:'zh-Hant',t:(value,lang)=>lang==='ja'?'日:'+value:value};
- const sandbox={module:{exports:{}},document:doc,console,AbortController,Uint8ClampedArray,Math:Object.assign(Object.create(Math),{random(){throw Error('Scene sampled randomness');}}),GameI18n:i18n,GameOfficerChoices:officerChoices,GameDuelAppearance:duelAppearance,
+ const sandbox={module:{exports:{}},document:doc,console,AbortController,Uint8ClampedArray,Math:Object.assign(Object.create(Math),{random(){throw Error('Scene sampled randomness');}}),GameI18n:i18n,GameOfficerChoices:officerChoices,GameDuelAppearance:duelAppearance,GameBattlefields:battlefields,
   matchMedia:()=>({matches:reduced}),setTimeout(fn){const id=++next;timers.set(id,fn);return id;},clearTimeout(id){timers.delete(id);},
   requestAnimationFrame:missingRAF?undefined:fn=>{const id=++next;rafs.set(id,fn);return id;},cancelAnimationFrame:id=>{cancels.push(id);rafs.delete(id);},
   fetch:async url=>{requests.push(url);assert(['/assets/battle-original/index.json','/assets/battle-enhanced/index.json'].includes(url),'Playback may fetch artwork, never gameplay');const data=url.includes('battle-enhanced')?enhancedManifest:manifest;return data?{ok:true,json:async()=>data}:{ok:false};},
   ResizeObserver:class{constructor(fn){this.fn=fn;this.disconnects=0;observers.push(this);}observe(){}disconnect(){this.disconnects++;}},
-  Image:class{constructor(){this.width=16;this.height=16;}set src(value){this._src=value;const atlas=Object.values(enhancedManifest?.soldiers?.types||{}).flatMap(type=>[type.friendly,type.enemy]).find(row=>row?.path===value);if(atlas){this.width=atlas.width;this.height=atlas.height;if(badDimensions.includes(value))this.width--;}imageRequests.push(value);queueMicrotask(()=>failedPaths.includes(value)?this.onerror?.():this.onload?.());}get src(){return this._src;}}};
+  Image:class{constructor(){this.width=16;this.height=16;}set src(value){this._src=value;if(value.startsWith('/assets/battlefields/')){this.width=496;this.height=304;if(badDimensions.includes(value))this.width--;}const atlas=Object.values(enhancedManifest?.soldiers?.types||{}).flatMap(type=>[type.friendly,type.enemy]).find(row=>row?.path===value);if(atlas){this.width=atlas.width;this.height=atlas.height;if(badDimensions.includes(value))this.width--;}imageRequests.push(value);queueMicrotask(()=>failedPaths.includes(value)?this.onerror?.():this.onload?.());}get src(){return this._src;}}};
  sandbox.window=sandbox;vm.runInNewContext(source,sandbox,{filename:'game/battle-scene.js'});
  return{api:sandbox.module.exports,doc,host,surface,nodes,i18n,requests,imageRequests,cancels,observers,texts,draws,rectangles,transforms,scales,rafs,timers,setReduced(value){reduced=value;},
   step(time){const entries=[...rafs];rafs.clear();for(const [,fn]of entries)fn(time);},
@@ -490,6 +490,36 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   const env=environment(),scene=env.api.create();scene.observe(first.kind,first.payload,first.before,first.after);scene.mount(env.host,first.after);await scene.load();const playback=scene.play();env.step(0);scene.reset();await playback;
   const baseline=clone(first.after);delete baseline.presentation;scene.observe('load',{},first.after,baseline);assert.equal(scene.state().queued,0,'Loading a baseline must not replay old receipt');scene.mount(env.host,baseline);assert(!scene.playing);
   scene.observe('new',{},baseline,{...baseline,game:{...baseline.game,seed:999}});assert.equal(scene.state().queued,0);scene.dispose();
+ }
+ // Full recovered city maps retain native coordinates while close-ups keep
+ // their original layout. Use shipped ROM-derived metadata, not a fake map.
+ {
+  const library=JSON.parse(fs.readFileSync(path.join(ROOT,'game/assets/battlefields/index.json'),'utf8')),
+   bindings=JSON.parse(fs.readFileSync(path.join(ROOT,'game/config/battlefield-city-bindings.json'),'utf8')),
+   selector=require('../game/battlefields.js'),selected=(city)=>selector.select(city,library,bindings),
+   fields={load:async()=>library,resolve:selected,label:(city,locale)=>{const row=selected(city);return locale==='ja'?row.label_ja:row.label_tc;}};
+  const row=actual.rows.find(r=>r.key==='attack'),original=JSON.stringify(row),chosen=selected(row.before.game.battle.target),
+   env=environment({manifest:nativeManifest,battlefields:fields}),calls=[],scene=env.api.create({onSelect:(...args)=>calls.push(args)});
+  scene.mount(env.host,row.before);await scene.load();for(let i=0;i<5;i++)await Promise.resolve();
+  assert.equal(env.surface.width,1984);assert.equal(env.surface.height,1536);
+  assert.deepEqual(env.imageRequests.filter(p=>p.startsWith('/assets/battlefields/')),[chosen.field.path],'Only the chosen city image is fetched');
+  env.rectangles.length=0;scene.mount(env.host,row.before);
+  const flags=env.rectangles.filter(r=>r.w===12&&r.h===12&&r.color==='#000000');
+  const units=[...row.before.game.battle.attackers,...row.before.game.battle.defenders];assert.equal(flags.length,units.length);
+  const cells=flags.map(r=>[Math.floor((r.x+6)/16),Math.floor((r.y+6)/16)]);
+  assert.equal(new Set(cells.map(p=>p.join(':'))).size,units.length,'Deployment does not overlap');
+  for(const[x,y]of cells){assert(x>=0&&x<31&&y>=0&&y<19);assert([0,1,2].includes(chosen.field.classes[y][x]),'Selectable flags do not cover water, mountain peaks or the camp');}
+  const own=row.before.game.battle.attacker===row.before.game.player?'attackers':'defenders',id=row.before.game.battle[own].find(u=>u.troops>0&&!row.before.game.battle.used.includes(u.id)).id,
+   index=units.findIndex(u=>u.id===id),flag=flags[index],rect=env.surface.getBoundingClientRect();
+  env.surface.onclick({clientX:(flag.x+6)*rect.width/496,clientY:(flag.y+6)*rect.height/384});assert.deepEqual(calls,[['actor',id]],'Full-map clicks use native map coordinates');
+  env.surface.onclick({clientX:rect.width/2,clientY:rect.height*330/384});assert.equal(calls.length,1,'HUD clicks never select a unit');
+  env.i18n.locale='ja';env.doc.emit('game-language-change');assert.equal(env.surface.width,1984);
+  scene.observe(row.kind,row.payload,row.before,row.after);scene.mount(env.host,row.after);const playback=scene.play();await Promise.resolve();env.step(0);
+  assert.equal(env.surface.width,1024);assert.equal(env.surface.height,960,'Attack cutscenes keep the native256x240 scene');
+  scene.skip();await playback;assert.equal(env.surface.width,1984);assert.equal(env.surface.height,1536,'Skipping returns to the full city map');
+  assert.equal(JSON.stringify(row),original,'Maps, deployment, selection, language and playback never change the save/RNG');scene.dispose();assert.equal(env.timers.size,0);
+  const missing=environment({manifest:nativeManifest,battlefields:fields,failedPaths:[chosen.field.path]}),fallback=missing.api.create();fallback.mount(missing.host,row.before);await fallback.load();for(let i=0;i<5;i++)await Promise.resolve();
+  assert.equal(missing.surface.width,1024);assert.equal(missing.surface.height,960,'A missing map keeps a usable retained reference battlefield');fallback.dispose();
  }
  for(const manifest of [null,{schema:'wrong',backgrounds:{},sprites:{}},{schema:'tk2-battle-original-v1',backgrounds:{plain:{path:'/assets/battle-original/../escape.png'}},sprites:{}}]){
   const env=environment({manifest}),scene=env.api.create();assert.equal(await scene.load(),false);assert.equal(scene.state().assetStatus,'unavailable');assert.equal(env.rafs.size,0);assert.equal(env.timers.size,0);scene.dispose();

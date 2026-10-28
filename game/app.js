@@ -916,8 +916,10 @@ function tactics(b){
 function renderDuel(b){
  const d=b.extended.duel,a=b.extended.support[d.actor],t=b.extended.support[d.target];
  const picture=typeof battleScene==='undefined'?'':battleScene?.html()||'';
- $('#stage').innerHTML=`<div class="arena"><div class="arena-heading"><h2>阵前单挑</h2><span>第${d.round}合</span></div>${picture||`<div class="duel-fighters"><div><div class="duel-fighter-head">${portraitHtml(d.actor,'duel')}<h3>${escapeHtml(name(d.actor))}</h3></div><p>${escapeHtml(officerAttributes(d.actor))} · 体${a.health}</p><progress aria-label="本方体力" max="99" value="${a.health}"></progress></div><div><div class="duel-fighter-head">${portraitHtml(d.target,'duel')}<h3>${escapeHtml(name(d.target))}</h3></div><p>${escapeHtml(officerAttributes(d.target))} · 体${t.health}</p><progress aria-label="对方体力" max="99" value="${t.health}"></progress></div></div>`}<details class="battle-army-menu"><summary>交锋记录</summary><ul class="battle-log">${d.log.map(l=>`<li>${escapeHtml(l)}</li>`).join('')}</ul></details></div>`;
+ const previousLog=$('#stage .battle-duel-record'),logOpen=previousLog?.open||false,logScroll=previousLog?.querySelector('.battle-log')?.scrollTop||0;
+ $('#stage').innerHTML=`<div class="arena battle-duel-arena"><div class="arena-heading"><h2>阵前单挑</h2><span>第${d.round}合</span></div><div class="battle-layout">${picture||`<div class="duel-fighters"><div><div class="duel-fighter-head">${portraitHtml(d.actor,'duel')}<h3>${escapeHtml(name(d.actor))}</h3></div><p>${escapeHtml(officerAttributes(d.actor))} · 体${a.health}</p><progress aria-label="本方体力" max="99" value="${a.health}"></progress></div><div><div class="duel-fighter-head">${portraitHtml(d.target,'duel')}<h3>${escapeHtml(name(d.target))}</h3></div><p>${escapeHtml(officerAttributes(d.target))} · 体${t.health}</p><progress aria-label="对方体力" max="99" value="${t.health}"></progress></div></div>`}<details class="battle-army-menu battle-duel-record" ${logOpen?'open':''}><summary>交锋记录</summary><ul class="battle-log">${d.log.map(l=>`<li>${escapeHtml(l)}</li>`).join('')}</ul></details></div></div>`;
  if(typeof battleScene!=='undefined')battleScene?.mount($('#stage [data-battle-scene]'),view,{actor:d.actor,target:d.target});
+ const duelLog=$('#stage .battle-duel-record .battle-log');if(duelLog)duelLog.scrollTop=logScroll;
  $('#inspector').innerHTML='<div class="inspector-heading"><h2>选择招式</h2></div><p>突击直攻；防守减伤；佯攻克制防守，但易受突击。舍命一击有30%机会造成双倍基础伤害，失败自损10～30体力。负伤者败退，二十合仍未分胜负则返回战场。</p><div class="actions"><button id="duel-strike" class="primary">突击</button><button id="duel-guard">防守</button><button id="duel-feint">佯攻</button><button id="duel-desperate">舍命一击</button><button id="duel-withdraw">退出单挑</button></div>';
  for(const move of ['strike','guard','feint','desperate','withdraw'])$('#duel-'+move).onclick=()=>command('duel_action',{battle_id:b.id,move});
 }
@@ -929,12 +931,32 @@ function renderBattle(){
  const usable=friendly.filter(u=>u.troops>0&&!b.used.includes(u.id)),enemies=hostile.filter(u=>u.troops>0);
  if(!usable.some(u=>u.id===actor))actor=usable[0]?.id??null;
  if(!enemies.some(u=>u.id===target))target=enemies[0]?.id??null;
- const unitList=(units,side)=>units.map(u=>`<button class="unit ${u.troops===0?'routed':''}" data-${side}="${u.id}" aria-pressed="${(side==='actor'?actor:target)===u.id}" ${game.phase!=='battle'||u.troops===0||(side==='actor'&&b.used.includes(u.id))?'disabled':''}><span class="officer-identity">${portraitHtml(u.id,'battle')}<span>${escapeHtml(name(u.id))}<small>${escapeHtml(officerAttributes(u.id))}</small></span></span><span class="troops">${u.troops}兵${b.extended?`<small>体${b.extended.support[u.id].health} 气${b.extended.support[u.id].energy}</small>`:''}</span></button>`).join('');
+ const unitStatus=(u,side)=>{const support=b.extended?.support?.[u.id],kind=u.troops===0?'routed':side==='actor'&&b.used.includes(u.id)?'used':support?.stunned?'stunned':support?.guard?'guard':side==='actor'?'ready':'enemy',labels={routed:['潰散','敗走'],used:['已行動','行動済み'],stunned:['受擾亂','混乱中'],guard:['防備中','防御中'],ready:['可行動','行動可能'],enemy:['敵方','敵軍']},locale=GameI18n.locale==='ja'?'ja':'zh-Hant';return `<span class="battle-unit-status" data-unit-status="${kind}" data-l10n-native="${locale}">${labels[kind][locale==='ja'?1:0]}</span>`;};
+ const unitList=(units,side)=>units.map(u=>`<button class="unit ${u.troops===0?'routed':''}" data-${side}="${u.id}" aria-pressed="${(side==='actor'?actor:target)===u.id}" ${game.phase!=='battle'||u.troops===0||(side==='actor'&&b.used.includes(u.id))?'disabled':''}><span class="officer-identity">${portraitHtml(u.id,'battle')}<span>${escapeHtml(name(u.id))}${unitStatus(u,side)}<small>${escapeHtml(officerAttributes(u.id))}</small></span></span><span class="troops">${u.troops}兵${b.extended?`<small>体${b.extended.support[u.id].health} 气${b.extended.support[u.id].energy}</small>`:''}</span></button>`).join('');
  const picture=typeof battleScene==='undefined'?'':battleScene?.html()||'';
- const listOpen=$('#stage .battle-army-menu')?.open||!picture;
- $('#stage').innerHTML=`<div class="arena"><div class="arena-heading"><h2>${escapeHtml(cityName(b.target))}之战</h2><span>第${b.round}轮</span></div>${picture}<details class="battle-army-menu" ${listOpen?'open':''}><summary>部队名单 · 本方${friendly.length}/10人 · 对方${hostile.length}/10人</summary><div class="armies"><section class="army"><h3>本方${own==='defenders'?'（守方）':'（攻方）'}</h3><div class="unit-list">${unitList(friendly,'actor')}</div></section><section class="army"><h3>对方${own==='defenders'?'（攻方）':'（守方）'}</h3><div class="unit-list">${unitList(hostile,'target')||'<p>无守军</p>'}</div></section></div></details></div>`;
+ const previousRoster=$('#stage .battle-army-menu');
+ const rosterScroll=[...document.querySelectorAll('#stage [data-unit-list]')].map(el=>[el.dataset.unitList,el.scrollTop]);
+ const rosterContainerScroll={layout:$('#stage .battle-layout')?.scrollTop||0,menu:previousRoster?.scrollTop||0,page:window.scrollY};
+ const focusedUnit=document.activeElement?.closest?.('#stage [data-actor],#stage [data-target]');
+ const focusedSide=focusedUnit?.hasAttribute('data-actor')?'actor':focusedUnit?'target':null;
+ const focusedId=focusedSide?focusedUnit.dataset[focusedSide]:null;
+ const listOpen=previousRoster?previousRoster.open:true;
+ $('#stage').innerHTML=`<div class="arena"><div class="arena-heading"><h2>${escapeHtml(cityName(b.target))}之战</h2><span>第${b.round}轮</span></div><div class="battle-layout">${picture}<details class="battle-army-menu" ${listOpen?'open':''}><summary>部队名单 · 本方${friendly.length}/10人 · 对方${hostile.length}/10人</summary><div class="armies"><section class="army"><h3>本方${own==='defenders'?'（守方）':'（攻方）'}</h3><div class="unit-list" data-unit-list="friendly">${unitList(friendly,'actor')}</div></section><section class="army"><h3>对方${own==='defenders'?'（攻方）':'（守方）'}</h3><div class="unit-list" data-unit-list="hostile">${unitList(hostile,'target')||'<p>无守军</p>'}</div></section></div></details></div></div>`;
  if(typeof battleScene!=='undefined')battleScene?.mount($('#stage [data-battle-scene]'),view,{actor,target});
  $('[data-actor]')&&document.querySelectorAll('[data-actor]').forEach(el=>el.onclick=()=>{actor=GameOfficerChoices.ref(el.dataset.actor);renderBattle();});document.querySelectorAll('[data-target]').forEach(el=>el.onclick=()=>{target=GameOfficerChoices.ref(el.dataset.target);renderBattle();});
+ const roster=$('#stage .battle-army-menu');
+ if(roster){
+  const wide=()=>roster.closest('.battle-layout')?.clientWidth>660;
+  if(wide())roster.open=true;
+  roster.querySelector('summary').onclick=event=>{if(wide())event.preventDefault();};
+  for(const [side,top]of rosterScroll){const list=roster.querySelector(`[data-unit-list="${side}"]`);if(list)list.scrollTop=top;}
+  roster.scrollTop=rosterContainerScroll.menu;
+  const layout=roster.closest('.battle-layout');if(layout)layout.scrollTop=rosterContainerScroll.layout;
+  if(focusedSide){
+   document.querySelectorAll(`#stage [data-${focusedSide}]`).forEach(el=>{if(el.dataset[focusedSide]===focusedId)el.focus({preventScroll:true});});
+   window.scrollTo({top:rosterContainerScroll.page,behavior:'instant'});
+  }
+ }
  const labels={victory:own==='attackers'?'本方胜利':'本方城池失守',defeat:own==='attackers'?'本方败退':'本方守城成功',retreat:'攻方退却'};
  $('#inspector').innerHTML=`<h2 class="battle-title">${game.phase==='result'?'战果':'本方行动'}</h2>${game.phase==='result'?`<p class="outcome">${labels[b.outcome]}</p><p>接收战果后，兵员、名册与城池资源一起结算。</p>`:`<p class="phase-description">本方${friendly.length}/10人，对方${hostile.length}/10人。</p><p>选择：${actor===null?'—':escapeHtml(name(actor))} 对 ${target===null?'—':escapeHtml(name(target))}</p>`}<ul class="battle-log">${b.log.slice(-8).map(t=>`<li>${escapeHtml(displayLog(t))}</li>`).join('')}</ul><div class="actions">${game.phase==='result'?'<button id="settle" class="primary">接收战果</button>':`<button id="attack" class="primary" ${actor===null||target===null?'disabled':''}>攻击</button>${b.extended?`<div class="action-pair"><button id="tactic" ${actor===null||target===null?'disabled':''}>计略</button><button id="duel" ${actor===null||target===null?'disabled':''}>单挑</button></div>`:''}<button id="retreat">退却</button>`}</div>`;
  if(game.phase==='result')$('#settle').onclick=async()=>{const next=own==='defenders'?b.target:b.outcome==='victory'?b.target:b.source;if(await command('settle',{battle_id:b.id})){selectedCity=next;render();}};

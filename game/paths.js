@@ -4,7 +4,7 @@
  const script=root.document?.currentScript?.src;
  const base=script?new URL('.',script):null;
  function asset(value){
-  if(!base||typeof value!=='string'||value!=='/config/duel-appearances.json'&&!/^\/(?:assets|locales|wasm|vendor)\//.test(value)&&!/^\/[A-Za-z0-9-]+\.js$/.test(value))return value;
+  if(!base||typeof value!=='string'||!['/config/duel-appearances.json','/config/battlefield-city-bindings.json'].includes(value)&&!/^\/(?:assets|locales|wasm|vendor)\//.test(value)&&!/^\/[A-Za-z0-9-]+\.js$/.test(value))return value;
   return new URL('.'+value,base).pathname;
  }
  const api={asset,base:base?.href||null};

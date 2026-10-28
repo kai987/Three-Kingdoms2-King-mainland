@@ -310,6 +310,19 @@
         "mainland217-07"
       ],
       "scenario_scope": "fixed"
+    },
+    {
+      "id": "battle-layout",
+      "title": "city-specific battlefield keeps both armies visible and supports real battle controls",
+      "groups": [
+        "battle",
+        "map",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland208-10"
+      ],
+      "scenario_scope": "fixed"
     }
   ]
 }

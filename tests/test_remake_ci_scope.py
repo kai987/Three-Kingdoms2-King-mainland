@@ -266,6 +266,37 @@ class ScopePlanTests(unittest.TestCase):
         self.assertTrue(result['resupply'])
         self.assertFalse(result['native'])
 
+    def test_battlefield_art_tools_bindings_and_loader_select_battle_and_map_only(self):
+        for path in ('game/assets/battlefields/index.json',
+                     'game/assets/battlefields/original-29.png',
+                     'tools/battlefields/build.py', 'tools/battlefields/evidence/city05.png',
+                     'game/config/battlefield-city-bindings.json', 'game/battlefields.js'):
+            with self.subTest(path=path):
+                head = self.changed(path, 'display-only battlefield input\n')
+                result = self.repo.plan()
+                self.assertEqual(result['mode'], 'scoped', result['reasons'])
+                self.assertEqual(set(result['groups']), PLAN.BASE_GROUPS | {'battle', 'map'})
+                self.assertTrue(result['web'])
+                self.assertEqual(result['python_groups'], ['global'])
+                self.assertFalse(any(result[field] for field in
+                                     ('full', 'native', 'rules', 'soak', 'resupply')))
+                # Do not let a previous path accidentally supply the scope for
+                # the next one: each case has its own exact published baseline.
+                self.repo.base = head
+
+    def test_battlefield_display_scope_cannot_hide_shared_combat_or_route_rule_changes(self):
+        self.changed('game/config/battlefield-city-bindings.json', 'display-only binding\n')
+        for path in ('source/remake/campaign.py', 'source/remake/session.py',
+                     'game/config/campaigns/shared.json', 'crates/march-core/src/lib.rs'):
+            with self.subTest(path=path):
+                head = self.changed(path, 'shared game rule\n')
+                result = self.repo.plan()
+                self.assertEqual(result['groups'], list(PLAN.GROUPS))
+                self.assertTrue(all(result[field] for field in
+                                    ('full', 'web', 'native', 'rules', 'soak', 'resupply')))
+                self.assertEqual(result['python_groups'], ['all'])
+                self.repo.base = head
+
     def test_accumulated_undeployed_changes_use_deployed_base_not_push_before(self):
         first = self.changed('game/audio.js')
         head = self.changed('game/domestic.js')

@@ -1,0 +1,926 @@
+{
+  "schema": "tk2-battlefield-city-bindings-v1",
+  "library_schema": "tk2-original-battlefields-v1",
+  "policy": {
+    "scope": "Explicit display-only bindings for the current 115-city map. No RNG, combat formula, city terrain, ownership, soldier or save mutation.",
+    "direct_original": "Reserved for reviewed ROM city-name/identity evidence, recorded as rom_name_verified with an explicit identity_evidence reference. The initial bindings make no such all-name certification.",
+    "regional_reuse": "Author-selected original regional template; never advertised as an additional original city-specific map.",
+    "unresolved_source_labels": "Keep source spellings 西安阳/予州/永晶 without guessing corrections. Their bindings are regional_reuse and their compact labels use original city numbers.",
+    "labels": "Original map indices and tile layouts are ROM-derived. City names below retain the existing guide transcription; province/region labels do not establish an exact historical city identity.",
+    "missing_city": "Unknown city or invalid data resolves to null; the scene keeps its bounded generic fallback instead of inventing an identity.",
+    "same_label_association": "The existing guide uses the same city/commandery label; the ROM city-name glyphs have not been independently joined to all indices. A same-label association is not certified original-to-modern city identity."
+  },
+  "references": [
+    {
+      "path": "game/config/references/original-facilities-v1.json",
+      "sha256": "2217e649d946fe82d781f43fbbd3820e92841b56592eda26ece61142187b63e9",
+      "role": "Literal source labels only; not a positional join."
+    }
+  ],
+  "city_count": 115,
+  "original_map_count": 30,
+  "templates": {
+    "original-00": {
+      "original_city_index": 0,
+      "source_city_label": "辽东",
+      "display_tc": "遼東",
+      "display_ja": "遼東",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-01": {
+      "original_city_index": 1,
+      "source_city_label": "幽州",
+      "display_tc": "幽州",
+      "display_ja": "幽州",
+      "identity_status": "regional_label"
+    },
+    "original-02": {
+      "original_city_index": 2,
+      "source_city_label": "并州",
+      "display_tc": "并州",
+      "display_ja": "并州",
+      "identity_status": "regional_label"
+    },
+    "original-03": {
+      "original_city_index": 3,
+      "source_city_label": "青州",
+      "display_tc": "青州",
+      "display_ja": "青州",
+      "identity_status": "regional_label"
+    },
+    "original-04": {
+      "original_city_index": 4,
+      "source_city_label": "冀州",
+      "display_tc": "冀州",
+      "display_ja": "冀州",
+      "identity_status": "regional_label"
+    },
+    "original-05": {
+      "original_city_index": 5,
+      "source_city_label": "西安阳",
+      "display_tc": "原版第6城",
+      "display_ja": "原作第6都市",
+      "identity_status": "unresolved_source_label"
+    },
+    "original-06": {
+      "original_city_index": 6,
+      "source_city_label": "凉州",
+      "display_tc": "涼州",
+      "display_ja": "涼州",
+      "identity_status": "regional_label"
+    },
+    "original-07": {
+      "original_city_index": 7,
+      "source_city_label": "安定",
+      "display_tc": "安定",
+      "display_ja": "安定",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-08": {
+      "original_city_index": 8,
+      "source_city_label": "长安",
+      "display_tc": "長安",
+      "display_ja": "長安",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-09": {
+      "original_city_index": 9,
+      "source_city_label": "西平关",
+      "display_tc": "西平關",
+      "display_ja": "西平關",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-10": {
+      "original_city_index": 10,
+      "source_city_label": "徐州",
+      "display_tc": "徐州",
+      "display_ja": "徐州",
+      "identity_status": "regional_label"
+    },
+    "original-11": {
+      "original_city_index": 11,
+      "source_city_label": "兖州",
+      "display_tc": "兗州",
+      "display_ja": "兗州",
+      "identity_status": "regional_label"
+    },
+    "original-12": {
+      "original_city_index": 12,
+      "source_city_label": "洛阳",
+      "display_tc": "洛陽",
+      "display_ja": "洛陽",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-13": {
+      "original_city_index": 13,
+      "source_city_label": "新野",
+      "display_tc": "新野",
+      "display_ja": "新野",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-14": {
+      "original_city_index": 14,
+      "source_city_label": "予州",
+      "display_tc": "原版第15城",
+      "display_ja": "原作第15都市",
+      "identity_status": "unresolved_source_label"
+    },
+    "original-15": {
+      "original_city_index": 15,
+      "source_city_label": "建业",
+      "display_tc": "建業",
+      "display_ja": "建業",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-16": {
+      "original_city_index": 16,
+      "source_city_label": "扬州",
+      "display_tc": "揚州",
+      "display_ja": "揚州",
+      "identity_status": "regional_label"
+    },
+    "original-17": {
+      "original_city_index": 17,
+      "source_city_label": "建安",
+      "display_tc": "建安",
+      "display_ja": "建安",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-18": {
+      "original_city_index": 18,
+      "source_city_label": "交州",
+      "display_tc": "交州",
+      "display_ja": "交州",
+      "identity_status": "regional_label"
+    },
+    "original-19": {
+      "original_city_index": 19,
+      "source_city_label": "郁林",
+      "display_tc": "鬱林",
+      "display_ja": "鬱林",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-20": {
+      "original_city_index": 20,
+      "source_city_label": "江夏",
+      "display_tc": "江夏",
+      "display_ja": "江夏",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-21": {
+      "original_city_index": 21,
+      "source_city_label": "荆州",
+      "display_tc": "荊州",
+      "display_ja": "荊州",
+      "identity_status": "regional_label"
+    },
+    "original-22": {
+      "original_city_index": 22,
+      "source_city_label": "衡阳",
+      "display_tc": "衡陽",
+      "display_ja": "衡陽",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-23": {
+      "original_city_index": 23,
+      "source_city_label": "长沙",
+      "display_tc": "長沙",
+      "display_ja": "長沙",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-24": {
+      "original_city_index": 24,
+      "source_city_label": "零陵",
+      "display_tc": "零陵",
+      "display_ja": "零陵",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-25": {
+      "original_city_index": 25,
+      "source_city_label": "汉中",
+      "display_tc": "漢中",
+      "display_ja": "漢中",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-26": {
+      "original_city_index": 26,
+      "source_city_label": "成都",
+      "display_tc": "成都",
+      "display_ja": "成都",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-27": {
+      "original_city_index": 27,
+      "source_city_label": "涪陵",
+      "display_tc": "涪陵",
+      "display_ja": "涪陵",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-28": {
+      "original_city_index": 28,
+      "source_city_label": "云南",
+      "display_tc": "雲南",
+      "display_ja": "雲南",
+      "identity_status": "city_or_commandery_label"
+    },
+    "original-29": {
+      "original_city_index": 29,
+      "source_city_label": "永晶",
+      "display_tc": "原版第30城",
+      "display_ja": "原作第30都市",
+      "identity_status": "unresolved_source_label"
+    }
+  },
+  "cities": {
+    "liaodong": {
+      "map_id": "original-00",
+      "kind": "same_label_association",
+      "reason_tc": "按既有攻略的同名城市／郡區標籤參照原版布局；尚未逐一核對ROM城名字形，不宣稱已證實現代節點與原城的精確身分或實測地形。",
+      "reason_ja": "既存攻略の同名都市・郡の表記を参照した配置です。ROMの都市名字形を全件照合した同定ではなく、現在の拠点との厳密な同一性や実測地形を証明するものではありません。"
+    },
+    "fanyang": {
+      "map_id": "original-01",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「幽州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「幽州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "taiyuan": {
+      "map_id": "original-02",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「并州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「并州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "qi": {
+      "map_id": "original-03",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「青州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「青州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "wei": {
+      "map_id": "original-04",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「冀州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「冀州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "xihe": {
+      "map_id": "original-05",
+      "kind": "regional_reuse",
+      "reason_tc": "本作選用原版第6城的區域模板。來源攻略表記為「西安阳」，身分仍待核對，未將其自動更名或認定為此城的原版專屬圖。",
+      "reason_ja": "原作第6都市の地域用テンプレートを共用します。出典の攻略表記は「西安阳」で、同定は未確定です。この都市の原作専用地図とは扱いません。"
+    },
+    "wuwei": {
+      "map_id": "original-06",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「涼州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「涼州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "anding": {
+      "map_id": "original-07",
+      "kind": "same_label_association",
+      "reason_tc": "按既有攻略的同名城市／郡區標籤參照原版布局；尚未逐一核對ROM城名字形，不宣稱已證實現代節點與原城的精確身分或實測地形。",
+      "reason_ja": "既存攻略の同名都市・郡の表記を参照した配置です。ROMの都市名字形を全件照合した同定ではなく、現在の拠点との厳密な同一性や実測地形を証明するものではありません。"
+    },
+    "jingzhao": {
+      "map_id": "original-08",
+      "kind": "same_label_association",
+      "reason_tc": "按既有攻略的同名城市／郡區標籤參照原版布局；尚未逐一核對ROM城名字形，不宣稱已證實現代節點與原城的精確身分或實測地形。",
+      "reason_ja": "既存攻略の同名都市・郡の表記を参照した配置です。ROMの都市名字形を全件照合した同定ではなく、現在の拠点との厳密な同一性や実測地形を証明するものではありません。"
+    },
+    "jincheng": {
+      "map_id": "original-09",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「西平關」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「西平關」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "donghai": {
+      "map_id": "original-10",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「徐州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「徐州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "shanyang": {
+      "map_id": "original-11",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「兗州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「兗州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "henan": {
+      "map_id": "original-12",
+      "kind": "same_label_association",
+      "reason_tc": "按既有攻略的同名城市／郡區標籤參照原版布局；尚未逐一核對ROM城名字形，不宣稱已證實現代節點與原城的精確身分或實測地形。",
+      "reason_ja": "既存攻略の同名都市・郡の表記を参照した配置です。ROMの都市名字形を全件照合した同定ではなく、現在の拠点との厳密な同一性や実測地形を証明するものではありません。"
+    },
+    "yiyang": {
+      "map_id": "original-13",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「新野」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。 此節點在本作按年代稱章陵／義陽，曾作新野區域代理；不把兩地認定為同一座史實城市。",
+      "reason_ja": "本作の地域に合わせて原作「新野」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。 本作では年代により章陵・義陽となる拠点で、新野の地域代理にも使用しますが、史実上の同一都市とは認定しません。"
+    },
+    "yingchuan": {
+      "map_id": "original-14",
+      "kind": "regional_reuse",
+      "reason_tc": "本作選用原版第15城的區域模板。來源攻略表記為「予州」，身分仍待核對，未將其自動更名或認定為此城的原版專屬圖。",
+      "reason_ja": "原作第15都市の地域用テンプレートを共用します。出典の攻略表記は「予州」で、同定は未確定です。この都市の原作専用地図とは扱いません。"
+    },
+    "danyang": {
+      "map_id": "original-15",
+      "kind": "same_label_association",
+      "reason_tc": "按既有攻略的同名城市／郡區標籤參照原版布局；尚未逐一核對ROM城名字形，不宣稱已證實現代節點與原城的精確身分或實測地形。",
+      "reason_ja": "既存攻略の同名都市・郡の表記を参照した配置です。ROMの都市名字形を全件照合した同定ではなく、現在の拠点との厳密な同一性や実測地形を証明するものではありません。"
+    },
+    "jiujiang": {
+      "map_id": "original-16",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「揚州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「揚州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "yuzhang": {
+      "map_id": "original-17",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「建安」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「建安」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "jiaozhi": {
+      "map_id": "original-18",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「交州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「交州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "yulin": {
+      "map_id": "original-19",
+      "kind": "same_label_association",
+      "reason_tc": "按既有攻略的同名城市／郡區標籤參照原版布局；尚未逐一核對ROM城名字形，不宣稱已證實現代節點與原城的精確身分或實測地形。",
+      "reason_ja": "既存攻略の同名都市・郡の表記を参照した配置です。ROMの都市名字形を全件照合した同定ではなく、現在の拠点との厳密な同一性や実測地形を証明するものではありません。"
+    },
+    "jiangxia": {
+      "map_id": "original-20",
+      "kind": "same_label_association",
+      "reason_tc": "按既有攻略的同名城市／郡區標籤參照原版布局；尚未逐一核對ROM城名字形，不宣稱已證實現代節點與原城的精確身分或實測地形。",
+      "reason_ja": "既存攻略の同名都市・郡の表記を参照した配置です。ROMの都市名字形を全件照合した同定ではなく、現在の拠点との厳密な同一性や実測地形を証明するものではありません。"
+    },
+    "nanjun": {
+      "map_id": "original-21",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「荊州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「荊州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "cangwu": {
+      "map_id": "original-19",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「鬱林」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「鬱林」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "changsha": {
+      "map_id": "original-23",
+      "kind": "same_label_association",
+      "reason_tc": "按既有攻略的同名城市／郡區標籤參照原版布局；尚未逐一核對ROM城名字形，不宣稱已證實現代節點與原城的精確身分或實測地形。",
+      "reason_ja": "既存攻略の同名都市・郡の表記を参照した配置です。ROMの都市名字形を全件照合した同定ではなく、現在の拠点との厳密な同一性や実測地形を証明するものではありません。"
+    },
+    "lingling": {
+      "map_id": "original-24",
+      "kind": "same_label_association",
+      "reason_tc": "按既有攻略的同名城市／郡區標籤參照原版布局；尚未逐一核對ROM城名字形，不宣稱已證實現代節點與原城的精確身分或實測地形。",
+      "reason_ja": "既存攻略の同名都市・郡の表記を参照した配置です。ROMの都市名字形を全件照合した同定ではなく、現在の拠点との厳密な同一性や実測地形を証明するものではありません。"
+    },
+    "hanzhong": {
+      "map_id": "original-25",
+      "kind": "same_label_association",
+      "reason_tc": "按既有攻略的同名城市／郡區標籤參照原版布局；尚未逐一核對ROM城名字形，不宣稱已證實現代節點與原城的精確身分或實測地形。",
+      "reason_ja": "既存攻略の同名都市・郡の表記を参照した配置です。ROMの都市名字形を全件照合した同定ではなく、現在の拠点との厳密な同一性や実測地形を証明するものではありません。"
+    },
+    "shujun": {
+      "map_id": "original-26",
+      "kind": "same_label_association",
+      "reason_tc": "按既有攻略的同名城市／郡區標籤參照原版布局；尚未逐一核對ROM城名字形，不宣稱已證實現代節點與原城的精確身分或實測地形。",
+      "reason_ja": "既存攻略の同名都市・郡の表記を参照した配置です。ROMの都市名字形を全件照合した同定ではなく、現在の拠点との厳密な同一性や実測地形を証明するものではありません。"
+    },
+    "bajun": {
+      "map_id": "original-27",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「涪陵」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「涪陵」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "yunnan": {
+      "map_id": "original-28",
+      "kind": "same_label_association",
+      "reason_tc": "按既有攻略的同名城市／郡區標籤參照原版布局；尚未逐一核對ROM城名字形，不宣稱已證實現代節點與原城的精確身分或實測地形。",
+      "reason_ja": "既存攻略の同名都市・郡の表記を参照した配置です。ROMの都市名字形を全件照合した同定ではなく、現在の拠点との厳密な同一性や実測地形を証明するものではありません。"
+    },
+    "yongchang": {
+      "map_id": "original-29",
+      "kind": "regional_reuse",
+      "reason_tc": "本作選用原版第30城的區域模板。來源攻略表記為「永晶」，身分仍待核對，未將其自動更名或認定為此城的原版專屬圖。",
+      "reason_ja": "原作第30都市の地域用テンプレートを共用します。出典の攻略表記は「永晶」で、同定は未確定です。この都市の原作専用地図とは扱いません。"
+    },
+    "xincheng": {
+      "map_id": "original-25",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「漢中」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「漢中」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "nanyang": {
+      "map_id": "original-13",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「新野」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「新野」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "bohai": {
+      "map_id": "original-04",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「冀州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「冀州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "tianshui": {
+      "map_id": "original-07",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「安定」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「安定」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "lujiang": {
+      "map_id": "original-16",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「揚州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「揚州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "guiyang": {
+      "map_id": "original-22",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「衡陽」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「衡陽」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "beihai": {
+      "map_id": "original-03",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「青州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「青州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "dongjun": {
+      "map_id": "original-11",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「兗州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「兗州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "chenliu": {
+      "map_id": "original-11",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「兗州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「兗州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "runan": {
+      "map_id": "original-14",
+      "kind": "regional_reuse",
+      "reason_tc": "本作選用原版第15城的區域模板。來源攻略表記為「予州」，身分仍待核對，未將其自動更名或認定為此城的原版專屬圖。",
+      "reason_ja": "原作第15都市の地域用テンプレートを共用します。出典の攻略表記は「予州」で、同定は未確定です。この都市の原作専用地図とは扱いません。"
+    },
+    "qiao": {
+      "map_id": "original-14",
+      "kind": "regional_reuse",
+      "reason_tc": "本作選用原版第15城的區域模板。來源攻略表記為「予州」，身分仍待核對，未將其自動更名或認定為此城的原版專屬圖。",
+      "reason_ja": "原作第15都市の地域用テンプレートを共用します。出典の攻略表記は「予州」で、同定は未確定です。この都市の原作専用地図とは扱いません。"
+    },
+    "xiapi": {
+      "map_id": "original-10",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「徐州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「徐州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "wudu": {
+      "map_id": "original-25",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「漢中」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「漢中」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "badong": {
+      "map_id": "original-27",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「涪陵」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「涪陵」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "wujun": {
+      "map_id": "original-15",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「建業」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「建業」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "wuling": {
+      "map_id": "original-21",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「荊州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「荊州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "kuaiji": {
+      "map_id": "original-15",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「建業」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「建業」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "yizhou": {
+      "map_id": "original-18",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「交州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。 海島使用南方水陸模板只是本作呈現，不推定原版已有此海島戰場或其歷史行政歸屬。",
+      "reason_ja": "本作の地域に合わせて原作「交州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。 島の戦場に南方の水陸テンプレートを使うのは本作の表示上の選択で、原作の島専用戦場や史実上の行政帰属を示しません。"
+    },
+    "lelang": {
+      "map_id": "original-00",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「遼東」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「遼東」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "daifang": {
+      "map_id": "original-00",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「遼東」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「遼東」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "zitong": {
+      "map_id": "original-26",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「成都」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「成都」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "guanghan": {
+      "map_id": "original-26",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「成都」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「成都」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "wenshan": {
+      "map_id": "original-26",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「成都」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「成都」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "baxi": {
+      "map_id": "original-26",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「成都」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「成都」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "qianwei": {
+      "map_id": "original-26",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「成都」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「成都」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "jiangyang": {
+      "map_id": "original-26",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「成都」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「成都」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "hanjia": {
+      "map_id": "original-26",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「成都」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「成都」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "zhuti": {
+      "map_id": "original-28",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「雲南」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「雲南」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "yuexi": {
+      "map_id": "original-28",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「雲南」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「雲南」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "zangke": {
+      "map_id": "original-27",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「涪陵」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「涪陵」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "jianning": {
+      "map_id": "original-28",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「雲南」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「雲南」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "xinggu": {
+      "map_id": "original-28",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「雲南」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「雲南」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "yinping": {
+      "map_id": "original-25",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「漢中」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「漢中」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "fuling": {
+      "map_id": "original-27",
+      "kind": "same_label_association",
+      "reason_tc": "按既有攻略的同名城市／郡區標籤參照原版布局；尚未逐一核對ROM城名字形，不宣稱已證實現代節點與原城的精確身分或實測地形。",
+      "reason_ja": "既存攻略の同名都市・郡の表記を参照した配置です。ROMの都市名字形を全件照合した同定ではなく、現在の拠点との厳密な同一性や実測地形を証明するものではありません。"
+    },
+    "xindu": {
+      "map_id": "original-17",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「建安」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「建安」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "poyang": {
+      "map_id": "original-17",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「建安」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「建安」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "luling": {
+      "map_id": "original-17",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「建安」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「建安」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "yidu": {
+      "map_id": "original-21",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「荊州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「荊州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "qichun": {
+      "map_id": "original-20",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「江夏」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「江夏」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "linhe": {
+      "map_id": "original-24",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「零陵」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「零陵」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "nanhai": {
+      "map_id": "original-19",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「鬱林」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「鬱林」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "gaoliang": {
+      "map_id": "original-19",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「鬱林」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「鬱林」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "hepu": {
+      "map_id": "original-19",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「鬱林」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「鬱林」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "jiuzhen": {
+      "map_id": "original-18",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「交州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「交州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "rinan": {
+      "map_id": "original-18",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「交州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「交州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "yan": {
+      "map_id": "original-01",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「幽州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「幽州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "yuyang": {
+      "map_id": "original-01",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「幽州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「幽州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "shanggu": {
+      "map_id": "original-01",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「幽州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「幽州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "dai": {
+      "map_id": "original-01",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「幽州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「幽州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "liaoxi": {
+      "map_id": "original-00",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「遼東」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「遼東」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "changshan": {
+      "map_id": "original-04",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「冀州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「冀州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "zhongshan": {
+      "map_id": "original-04",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「冀州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「冀州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "anping": {
+      "map_id": "original-04",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「冀州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「冀州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "pingyuan": {
+      "map_id": "original-03",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「青州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「青州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "jinan": {
+      "map_id": "original-03",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「青州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「青州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "jiyin": {
+      "map_id": "original-11",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「兗州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「兗州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "dongping": {
+      "map_id": "original-11",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「兗州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「兗州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "henei": {
+      "map_id": "original-12",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「洛陽」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「洛陽」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "hedong": {
+      "map_id": "original-12",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「洛陽」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「洛陽」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "hongnong": {
+      "map_id": "original-12",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「洛陽」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「洛陽」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "fengyi": {
+      "map_id": "original-08",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「長安」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「長安」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "fufeng": {
+      "map_id": "original-08",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「長安」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「長安」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "longxi": {
+      "map_id": "original-09",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「西平關」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「西平關」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "shangdang": {
+      "map_id": "original-02",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「并州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「并州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "xiangyang": {
+      "map_id": "original-21",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「荊州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「荊州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "zhuya": {
+      "map_id": "original-18",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「交州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。 海島使用南方水陸模板只是本作呈現，不推定原版已有此海島戰場或其歷史行政歸屬。",
+      "reason_ja": "本作の地域に合わせて原作「交州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。 島の戦場に南方の水陸テンプレートを使うのは本作の表示上の選択で、原作の島専用戦場や史実上の行政帰属を示しません。"
+    },
+    "xiping": {
+      "map_id": "original-09",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「西平關」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。 本作西平不等同原版攻略所稱的西平關。",
+      "reason_ja": "本作の地域に合わせて原作「西平關」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。 本作の西平を、原作攻略にいう西平関と同一視しません。"
+    },
+    "zhangye": {
+      "map_id": "original-06",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「涼州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「涼州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "jiuquan": {
+      "map_id": "original-06",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「涼州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「涼州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "dunhuang": {
+      "map_id": "original-06",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「涼州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「涼州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "zhao": {
+      "map_id": "original-04",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「冀州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「冀州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "julu": {
+      "map_id": "original-04",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「冀州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「冀州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "hejian": {
+      "map_id": "original-04",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「冀州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「冀州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "qinghe": {
+      "map_id": "original-04",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「冀州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「冀州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "yanmen": {
+      "map_id": "original-02",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「并州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「并州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "xinxing": {
+      "map_id": "original-02",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「并州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「并州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "wuchang": {
+      "map_id": "original-20",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「江夏」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「江夏」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "linhai": {
+      "map_id": "original-17",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「建安」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「建安」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "linchuan": {
+      "map_id": "original-17",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「建安」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「建安」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "jianan": {
+      "map_id": "original-17",
+      "kind": "same_label_association",
+      "reason_tc": "按既有攻略的同名城市／郡區標籤參照原版布局；尚未逐一核對ROM城名字形，不宣稱已證實現代節點與原城的精確身分或實測地形。",
+      "reason_ja": "既存攻略の同名都市・郡の表記を参照した配置です。ROMの都市名字形を全件照合した同定ではなく、現在の拠点との厳密な同一性や実測地形を証明するものではありません。"
+    },
+    "wuxing": {
+      "map_id": "original-15",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「建業」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「建業」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "jiameng": {
+      "map_id": "original-25",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「漢中」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「漢中」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "fuxian": {
+      "map_id": "original-26",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「成都」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「成都」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "dangqu": {
+      "map_id": "original-27",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「涪陵」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「涪陵」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "nanguang": {
+      "map_id": "original-26",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「成都」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「成都」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    }
+  }
+}

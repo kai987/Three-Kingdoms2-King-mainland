@@ -36,7 +36,7 @@ UI = {
     'facilities': {'people', 'economy', 'battle'}, 'facilities-ui': {'people', 'economy', 'battle'}, 'treasury': {'economy', 'logistics'},
     'domestic': {'economy', 'logistics'}, 'march-supply': {'logistics'},
     'route-options': {'map', 'logistics'}, 'events': {'scenarios', 'economy', 'battle'},
-    'calendar': {'scenarios', 'economy'}, 'battle-scene': {'battle'},
+    'calendar': {'scenarios', 'economy'}, 'battle-scene': {'battle'}, 'battlefields': {'battle', 'map'},
     'duel-appearance': {'battle', 'people'}, 'cloud-save': {'cloud'},
     'cloud-save-ui': {'cloud'}, 'cloud-recovery': {'cloud'}, 'autosave': {'save'},
     'save-transfer': {'save'}, 'view-cache': set(GROUPS),
@@ -304,6 +304,10 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
                 else:
                     groups.update(('map', 'scenarios'))
                     reasons.append('Shared map presentation changed: ' + path)
+            elif (path == 'game/config/battlefield-city-bindings.json'
+                  or path.startswith(('game/assets/battlefields/', 'tools/battlefields/'))):
+                groups.update(('battle', 'map'))
+                reasons.append('Original battlefield artwork or display-only city binding: ' + path)
             elif (path.startswith(('source/remake/', 'crates/', 'tools/ci/', '.github/'))
                   or path.startswith('game/config/') or path in ('game/build_campaigns.py', 'game/build_web.py', 'game/serve.py')
                   or path.endswith(('requirements.txt', 'pyproject.toml', 'Cargo.toml', 'Cargo.lock'))):

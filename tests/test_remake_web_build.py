@@ -4,6 +4,7 @@ import gzip
 from html.parser import HTMLParser
 import importlib.util
 import json
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -13,6 +14,88 @@ ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location('tk2_build_web', ROOT / 'game/build_web.py')
 WEB = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(WEB)
+SERVER_SPEC = importlib.util.spec_from_file_location('tk2_battlefield_asset_server', ROOT / 'game/serve.py')
+SERVER = importlib.util.module_from_spec(SERVER_SPEC)
+SERVER_SPEC.loader.exec_module(SERVER)
+
+
+class BattlefieldStaticBoundaries(unittest.TestCase):
+    def fixture(self, folder):
+        here = Path(folder) / 'game'
+        base = here / 'assets/battlefields'
+        base.mkdir(parents=True)
+        maps = {ident: dict(id=ident, path=f'/assets/battlefields/{ident}.png')
+                for ident in ('original-00', 'original-29')}
+        data = dict(schema='tk2-original-battlefields-v1', maps=maps)
+        (base / 'index.json').write_text(json.dumps(data))
+        for ident in maps:
+            (base / (ident + '.png')).write_bytes(b'public fixture')
+        return here, base, data
+
+    def test_battlefield_allowlist_is_exactly_the_shipped_index_and_thirty_pngs(self):
+        static = SERVER.battlefield_static_assets(ROOT / 'game')
+        expected = {'/assets/battlefields/index.json'} | {
+            f'/assets/battlefields/original-{index:02d}.png' for index in range(30)}
+        self.assertEqual(set(static), expected)
+        for path, (relative, mime) in static.items():
+            self.assertEqual(relative, path.lstrip('/'))
+            self.assertEqual(mime, 'image/png' if path.endswith('.png')
+                             else 'application/json; charset=utf-8')
+        published = WEB.static_allowlist()
+        self.assertEqual({path for path in published if path.startswith('assets/battlefields/')},
+                         {path.lstrip('/') for path in expected})
+        self.assertIn('battlefields.js', published)
+        self.assertIn('config/battlefield-city-bindings.json', published)
+
+    def test_unlisted_out_of_range_and_forged_manifest_paths_are_never_published(self):
+        invalid = ['/assets/battlefields/original-30.png', '/assets/battlefields/original-99.png',
+                   '/assets/battlefields/original-00.state', '/assets/battlefields/source.nes',
+                   '/assets/battlefields/../outside.png', '/assets/battlefields/sub/inside.png',
+                   '/assets/battlefields/%2e%2e/outside.png', '/assets/other.png',
+                   'https://example.invalid/source.png']
+        with tempfile.TemporaryDirectory() as folder:
+            here, base, data = self.fixture(folder)
+            for path in invalid:
+                # An attacker cannot replace a known row's exact fixed path.
+                data['maps']['original-00']['path'] = path
+                data['maps']['original-30'] = dict(id='original-30', path=path)
+                (base / 'index.json').write_text(json.dumps(data))
+                for name in ('original-30.png', 'original-99.png', 'source.nes', 'unlisted.png'):
+                    (base / name).write_bytes(b'private or unlisted')
+                with self.subTest(path=path):
+                    self.assertEqual(set(SERVER.battlefield_static_assets(here)), {
+                        '/assets/battlefields/index.json', '/assets/battlefields/original-29.png'})
+
+    def test_missing_or_malformed_metadata_and_missing_png_do_not_scan_the_folder(self):
+        with tempfile.TemporaryDirectory() as folder:
+            here, base, data = self.fixture(folder)
+            (base / 'original-00.png').unlink()
+            (base / 'unlisted.png').write_bytes(b'not public')
+            self.assertEqual(set(SERVER.battlefield_static_assets(here)), {
+                '/assets/battlefields/index.json', '/assets/battlefields/original-29.png'})
+            for raw in ('{', '[]', '{}', json.dumps(dict(schema='wrong', maps=data['maps'])),
+                        json.dumps(dict(schema='tk2-original-battlefields-v1', maps=[]))):
+                with self.subTest(raw=raw):
+                    (base / 'index.json').write_text(raw)
+                    self.assertEqual(set(SERVER.battlefield_static_assets(here)),
+                                     {'/assets/battlefields/index.json'})
+            (base / 'index.json').unlink()
+            self.assertEqual(set(SERVER.battlefield_static_assets(here)),
+                             {'/assets/battlefields/index.json'})
+
+    def test_symlinked_asset_parents_metadata_and_png_are_refused(self):
+        for entry in ('assets', 'battlefields', 'index.json', 'original-00.png'):
+            with self.subTest(entry=entry), tempfile.TemporaryDirectory() as folder:
+                here, base, data = self.fixture(folder)
+                path = here / 'assets' if entry == 'assets' else base if entry == 'battlefields' else base / entry
+                original = path.with_name(path.name + '.private')
+                path.rename(original)
+                path.symlink_to(original, target_is_directory=original.is_dir())
+                result = SERVER.battlefield_static_assets(here)
+                expected = {} if entry != 'original-00.png' else {
+                    '/assets/battlefields/index.json': ('assets/battlefields/index.json', 'application/json; charset=utf-8'),
+                    '/assets/battlefields/original-29.png': ('assets/battlefields/original-29.png', 'image/png')}
+                self.assertEqual(result, expected)
 
 
 class WebBuildBoundaries(unittest.TestCase):
@@ -181,6 +264,47 @@ class WebReleaseArtifact(unittest.TestCase):
             if address.path == 'browser-engine.js':
                 self.assertEqual(attrs['data-worker-sha256'],
                                  WEB.sha256((self.output / 'browser-engine-worker.js').read_bytes()))
+
+    def test_battlefield_art_module_and_bindings_work_under_a_pages_project_prefix(self):
+        expected = {'assets/battlefields/index.json'} | {
+            f'assets/battlefields/original-{index:02d}.png' for index in range(30)}
+        actual = {path.relative_to(self.output).as_posix()
+                  for path in (self.output / 'assets/battlefields').rglob('*') if path.is_file()}
+        self.assertEqual(actual, expected)
+        for name in expected | {'battlefields.js', 'config/battlefield-city-bindings.json'}:
+            self.assertEqual((self.output / name).read_bytes(), (ROOT / 'game' / name).read_bytes())
+        html = (self.output / 'index.html').read_text()
+        self.assertIn('src="battlefields.js?v=', html)
+        self.assertNotIn('src="/battlefields.js', html)
+        # Execute the actual published loader and path shim. The fake transport
+        # only serves files below the project prefix, just like a Pages project.
+        script = r'''
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
+const output=process.argv[1],prefix='/Three-Kingdoms2-King-mainland/',requests=[];
+const window={document:{currentScript:{src:'https://example.invalid'+prefix+'paths.js?v=release'}}};
+const context=vm.createContext({window,URL,console,setTimeout,clearTimeout,AbortController});
+vm.runInContext(fs.readFileSync(path.join(output,'paths.js'),'utf8'),context);
+window.fetch=async(address,options)=>{
+ assert.equal(options.credentials,'same-origin');assert.ok(address.startsWith(prefix),address);requests.push(address);
+ const relative=address.slice(prefix.length);assert.ok(!relative.includes('..'));
+ const file=path.join(output,relative);return{ok:fs.existsSync(file),text:async()=>fs.readFileSync(file,'utf8')};
+};
+vm.runInContext(fs.readFileSync(path.join(output,'battlefields.js'),'utf8'),context);
+(async()=>{
+ const client=window.GameBattlefields;assert.ok(await client.load());assert.equal(client.status,'ready');
+ assert.deepEqual(requests.sort(),[prefix+'assets/battlefields/index.json',prefix+'config/battlefield-city-bindings.json'].sort());
+ for(const [city,binding]of Object.entries(client.bindings.cities)){
+  const selected=client.resolve(city);assert.equal(selected.field.id,binding.map_id);
+  const target=window.GamePaths.asset(selected.field.path);assert.ok(target.startsWith(prefix));
+  assert.ok(fs.readFileSync(path.join(output,target.slice(prefix.length))).length>0);
+ }
+ console.log('published battlefield assets resolve below the Pages project prefix');
+})().catch(error=>{console.error(error);process.exitCode=1});
+'''
+        result = subprocess.run(['node', '-e', script, str(self.output)], cwd=ROOT,
+                                text=True, capture_output=True, timeout=30)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('published battlefield assets resolve below the Pages project prefix', result.stdout)
 
 
 if __name__ == '__main__':

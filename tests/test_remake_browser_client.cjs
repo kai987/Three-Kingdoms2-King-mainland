@@ -37,6 +37,7 @@ function fixture(prefix='/Three-Kingdoms2-King-mainland/',{paths=true,workerHash
  const e=fixture();assert.equal(e.worker.url,'https://game.example/Three-Kingdoms2-King-mainland/browser-engine-worker.js');assert.equal(e.worker.options.type,'module');
  assert.equal(e.window.GamePaths.asset('/assets/map.png'),'/Three-Kingdoms2-King-mainland/assets/map.png');
  assert.equal(e.window.GamePaths.asset('/config/duel-appearances.json'),'/Three-Kingdoms2-King-mainland/config/duel-appearances.json');
+ assert.equal(e.window.GamePaths.asset('/config/battlefield-city-bindings.json'),'/Three-Kingdoms2-King-mainland/config/battlefield-city-bindings.json');
  assert.equal(e.window.GamePaths.asset('/config/cloud-save-public.json'),'/config/cloud-save-public.json','Private configuration paths are never remapped');
  for(const path of ['https://auth.example/token','//other.example/file','#sprite','/another-project/file'])assert.equal(e.window.GamePaths.asset(path),path);
  await e.window.fetch('/assets/portraits/index.json');assert.equal(e.requests[0][0],'/Three-Kingdoms2-King-mainland/assets/portraits/index.json');
