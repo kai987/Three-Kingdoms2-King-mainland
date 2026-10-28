@@ -3,8 +3,8 @@
   "review_revision": "2026-10-27",
   "base_commit": "69a6e8f01239159b91e150637f888278af3b7a88",
   "review_sha256": "4359282d90629a68bcc4bb3f306db1b8454b85a2084f2713cb4691f512e513ff",
-  "presentation_sha256": "664729cc9442566a067d666cc343dc3fb6d68be001a14bcd261dd6593b92a5b8",
-  "locale_sha256": "5757ca469d05f274ddcc7a5785122eef75d7618db253ec91e0700cfca7c190a3",
+  "presentation_sha256": "b0a86b499c118cbb1d642acc8652975bdc91240a242bb588b573e93ea3579630",
+  "locale_sha256": "c9dbd4b6ebc3245636f8c10f0fdabed137fc9e22aa1e7c0d1929d356885777f6",
   "japanese_sha256": "7f2555686da498283aab80249c66195a2b46929cf6b416c5b22c77acdadab690",
   "baseline_serving_non_ruler_reviews": 283,
   "pool": [
@@ -1724,7 +1724,7 @@
         "bian_zhang",
         "song_jian"
       ],
-      "catalog_sha256": "ad2e916eb6e09a39cd32cfbf5a08f2effa51f24a5f82106b2ca412e7d7a5a29c"
+      "catalog_sha256": "503abbbe89afccfcacbfb55404cec8b733443c0a92e563df127105cb725d1706"
     },
     {
       "id": "mainland188-06",
@@ -3166,7 +3166,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "9d2bb22f030eb39e1ba1b95ac120eaedb36a35cab12a5f65cb983c96a421ebf5"
+      "catalog_sha256": "9a7b1880c54d9569c238b4a4582df186b22440a206d7e663ef822101837b0ca0"
     },
     {
       "id": "mainland190-01",
@@ -5062,7 +5062,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "7c2c440a00b86a42e2089b3fd4bf793c5a8c675cf729c13069f069dbe37f32c6"
+      "catalog_sha256": "a32945240c43ede5529099b2200e93cc0a7ca2ad6a76563e455095282b0f2c63"
     },
     {
       "id": "mainland191-10",
@@ -6509,7 +6509,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "bf4b13c247ab18e8a4650e8314debf91abb049388fa4a7273b170b737922aa7f"
+      "catalog_sha256": "ac2602ec1fbbbacc61c9ed5be13dbb90cf963e985bbeb977006d3077511ffa0e"
     },
     {
       "id": "mainland194-06",
@@ -8196,7 +8196,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "5bcf31540fde65c7d0594e32f2af160236faa26a1bb0d22a3722a0e467c33c67"
+      "catalog_sha256": "3dd4da96b790745ebf7b21f6a8c6250f3fb5fb486b25ce019ba4eb6164e5ac20"
     },
     {
       "id": "mainland196-06",
@@ -9782,7 +9782,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "3cb92a43482cb9ba951c6e3b9e8f80ee64c16a6cbbab036ad6dac008c9d522e0"
+      "catalog_sha256": "626d5e5840ce98a8524d4ab4234140fcacbc51b0cd1733de047cdcb4e816b5eb"
     },
     {
       "id": "mainland197-07",
@@ -11627,7 +11627,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "8a4a647e6db943e98e55d7a685154769d8d57f9c46c00baa995a105447411490"
+      "catalog_sha256": "72e5da279135a22f17227e661ff084f875ae09d325a340d4c32c68db42bd1ff7"
     },
     {
       "id": "mainland198-03",
@@ -13342,7 +13342,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "827da81ce7cc069a42eaf0c260a485642f9b17ceb62097948ad5ae5af67a81d5"
+      "catalog_sha256": "bbfbede9200dc3def253c84ae37423c1a2c76799087709e8eecab6965f457bdc"
     },
     {
       "id": "mainland200-01",
@@ -14756,7 +14756,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "e679612eaf06a7fa9b3eaf66e7faeed232b05c6e3a2d949590aa8a70880ab3c4"
+      "catalog_sha256": "6a3ae3f8394dfb824caeea20e94d97131719d732c0e7ee1d31ba291cf766b45a"
     },
     {
       "id": "mainland201-05",
@@ -16063,7 +16063,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "637c45066b003c2e0ae550670248e63802586460ebd62cc7d17f32f60e7666c1"
+      "catalog_sha256": "a665bb202c923d5656b9265ea737b94c2296a06a471ecc2c01ff0f7b39a44d63"
     },
     {
       "id": "mainland202-06",
@@ -17480,7 +17480,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "bb992c0c948418710b3114659b718178d842aa4bf9f5d62a37e7759782815381"
+      "catalog_sha256": "a67025d9ed879ab319d9eea54bc269350bf52a821723ed82c1a6ce508865c072"
     },
     {
       "id": "mainland207-09",
@@ -18963,7 +18963,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "0e0fefdf76d97f07994483f343c30aa5a99f64a73bf1c86edde388df4fa726a3"
+      "catalog_sha256": "f1ae3372a7846da713c051d3c25c8a456d054ba6190cc9d3e014ac92e28ca80f"
     },
     {
       "id": "mainland208-10",
@@ -20406,7 +20406,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "fb1909c9a6af513f64a975af6757ecc3be952cfe5fef5598086e6a660ec210ff"
+      "catalog_sha256": "6562e9bd09a4fbcca2665c89e2935b8c50ee0df5cc2e5c9e1d6ad4142b71d48e"
     },
     {
       "id": "mainland209-06",
@@ -21674,7 +21674,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "2f83c4c4cc052267317616ae431e9105ece6f5bcdb21b258698c8d8702c2e70f"
+      "catalog_sha256": "cfac7f8040f13086d01614df8e0252708022a2353e71d85a2d9bbeddd6553241"
     },
     {
       "id": "mainland210-11",
@@ -22993,7 +22993,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "70d75daf2cd5a32f1e90992886899d39ebe7dc46bb141c1f53d5bc12a3b4d65c"
+      "catalog_sha256": "9e87555fd18145da832e68f827b5cc96a8342af789ac3a62aeb8cbc49bff5a19"
     },
     {
       "id": "mainland211-07-tongguan",
@@ -24409,7 +24409,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "5c8f03ccae968a99fdb3ebaf20323426eaf3b0dad70edb8e796952ad00119ee3"
+      "catalog_sha256": "53e96f1b3fb24f94ed08ea20ee834764fcca818178ae4ffb2e7fc7917d8fd23b"
     },
     {
       "id": "mainland212-06",
@@ -25736,7 +25736,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "9d90e481f54df3af80ee8868a1aeab761a3d159dff1357c30f549e3e0c822509"
+      "catalog_sha256": "bb90bba170f6b5571b6a9dab784e6bfea59ca3d21da511806aaa4f496c94d798"
     },
     {
       "id": "mainland212-12",
@@ -27087,7 +27087,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "78a0bd2105ec0fd274807ea0940443b4bfd9bed838414efccaef1a765cb5e038"
+      "catalog_sha256": "b3721149fb0962d31d8455894d1ced56994121ee6a857157f455bb17f8df4f0c"
     },
     {
       "id": "mainland215-08",
@@ -28445,7 +28445,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "730dbf85605470f6d812834b8ff804b9fe7618df025b7cad61e6629d928745b0"
+      "catalog_sha256": "d37ca0b13bd03c0c65a05035f253713d516dfadb4ea2aba09317f47bbd62e4aa"
     },
     {
       "id": "mainland217-07",
@@ -29853,7 +29853,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "90b59247d7ceb4537f8e11e739beb628f75d7a9900d5e2efe7eff97156742736"
+      "catalog_sha256": "7f1bebaddc74559de4901ca094216e78bad0be2ebd94ee8f8fd598a2c14e6944"
     },
     {
       "id": "mainland219-07",
@@ -31200,7 +31200,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "7dc6d414f42b0758f87c5f656fb9d4758fc71eb926faedcb1ac5f76a71bf1b39"
+      "catalog_sha256": "9988a47eace8677ebc39d6f384a85041f2f42e428407d169c71fb54af2de3e2d"
     },
     {
       "id": "mainland221-07",
@@ -32566,7 +32566,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "0aedaf4c6a659312c5941ed4bff209e1b97234273e91f17d7516378ee9227620"
+      "catalog_sha256": "d88ee0afef84a2b7b00679c21378bfdb9db84fb0fda840b41d45158d021a0f55"
     },
     {
       "id": "mainland225-07",
@@ -33889,7 +33889,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "d39760ef34da2809f25244bb89bafc8d695ff6ad2ce8c8b2793877d2a731d89c"
+      "catalog_sha256": "c17ecead521b471d7a796a4514b6e484dbf41d004bb52b86fbe70366705f340b"
     },
     {
       "id": "mainland227-02",
@@ -35279,7 +35279,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "9e13dcb0a36cafd97f48d1fcc98378c4c0e8e8683e7100d5f2a95a2cf63ef351"
+      "catalog_sha256": "c95b368fe4cc4ad9c603310eca52a169099b7b49e182dae34885cdd6fab92f2e"
     },
     {
       "id": "mainland234-02",
@@ -36625,7 +36625,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "df2d0aed2bdbd1ad3c73a2db49f8a3970b558300c466e299e8495ff315bd117a"
+      "catalog_sha256": "15ddecde0bd7bc67d6c43d808c57095c5ba240bc396f2dbf7c7e7509e253e23e"
     },
     {
       "id": "mainland235-01",
@@ -37854,7 +37854,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "b0170fe3affcc837c6d2ee0e3d497b8e7a716e1f26112393e61de581cd787332"
+      "catalog_sha256": "fca01059962d93061d38f10253f598762fc9b7393f0c3de86fe9d052d81a34e3"
     },
     {
       "id": "mainland238-01",
@@ -39200,7 +39200,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "6084855f05f7f2a7ec2a3d6d3aa96ddc5531c1dad46278d64f1346180c568d6f"
+      "catalog_sha256": "57d35eb995e98326c208687d7f1bc6b5607c51d3e56f6c8e1264cc98f70b12da"
     },
     {
       "id": "mainland249-01",
@@ -40572,7 +40572,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "e60f0c30108310f2084a3ae2916a68fb7a9d8ebfa14435e05de0b667ddd5b72c"
+      "catalog_sha256": "7c0bf3cb484d7f380f60bdbd22a8067adca7b0d0cb988246ea6aca74fdb9576f"
     },
     {
       "id": "mainland263-05",
@@ -41865,7 +41865,7 @@
         "nanguang": "南广"
       },
       "dormant_factions": [],
-      "catalog_sha256": "0418e31d7c1cc0336d02e1d8fa192034f918c7062572a43d7359485fc32d41c9"
+      "catalog_sha256": "a02ce82b9104bcbcdb096c505e84ef6437c929711ace6a78ddb6f7e1325770e5"
     }
   ]
 }

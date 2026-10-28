@@ -7,7 +7,7 @@
   "sources": {
     "game/map-source/road-ground.png": "ea8cf8ecbb573205b9b3e9ea43c1c15ec61ff5bef3e3d1e699bea75b0d7c08c0",
     "game/map-source/terrain-under-water.png": "e0bdfc8406f8ddf6285fdc9cdf929ec2a3ee406600bc403c6d050d22ab0a555c",
-    "game/map-source/historic-water.svg": "1b6d3702ef74362ad1f74d022fed7129e44968e7e3990899773f5b6fb4a21cb2",
+    "game/map-source/historic-water.svg": "31b427aff0f4bd40c78a28ec868455e29fc61bebf67a897c5f03e0b224b521fd",
     "game/map-source/sea-shadow.svg": "207a066255705a6f080ed9196cd75911d7bc16f37dd3a455ad061a5740130f58"
   },
   "provenance": {
@@ -106,5 +106,161 @@
         12
       ]
     }
-  ]
+  ],
+  "yangtze_upper_source": {
+    "classification": "authorial_upper_jinsha_visual_extension",
+    "basis_tc": "長江正源在青藏高原；上游金沙江由西北轉南流，至滇西再折向東北。本圖僅沿既有西側山麓將水線向北延伸，末端代表畫幅外的高原上游，不把各拉丹冬定點塞入現有城池比例。",
+    "sources": [
+      "https://igsnrr.cas.cn/cbkx/kpyd/zgdl/cnszy/202009/t20200910_5692425.html",
+      "https://files.gzz.gov.cn/upload/file/17/zhengwen/fa36b09f0c744486993947b524ec27cc.pdf"
+    ],
+    "source": [
+      160,
+      480
+    ],
+    "join": [
+      160,
+      602
+    ],
+    "points": [
+      [
+        160,
+        480
+      ],
+      [
+        160,
+        498
+      ],
+      [
+        176,
+        514
+      ],
+      [
+        176,
+        516
+      ],
+      [
+        178,
+        518
+      ],
+      [
+        178,
+        520
+      ],
+      [
+        180,
+        522
+      ],
+      [
+        180,
+        526
+      ],
+      [
+        182,
+        528
+      ],
+      [
+        182,
+        530
+      ],
+      [
+        192,
+        540
+      ],
+      [
+        192,
+        544
+      ],
+      [
+        188,
+        548
+      ],
+      [
+        176,
+        548
+      ],
+      [
+        174,
+        550
+      ],
+      [
+        174,
+        554
+      ],
+      [
+        170,
+        558
+      ],
+      [
+        170,
+        568
+      ],
+      [
+        172,
+        570
+      ],
+      [
+        174,
+        570
+      ],
+      [
+        174,
+        572
+      ],
+      [
+        168,
+        578
+      ],
+      [
+        168,
+        584
+      ],
+      [
+        166,
+        586
+      ],
+      [
+        166,
+        590
+      ],
+      [
+        160,
+        596
+      ],
+      [
+        160,
+        602
+      ]
+    ],
+    "pixel": 2,
+    "width": 4,
+    "color": "#002af8",
+    "protection": {
+      "city_icon_size": [
+        32,
+        32
+      ],
+      "minimum_city_axis_distance_px": 18,
+      "mountains_tc": "沿現有山腳與谷地繞行，只在少量山腳陰影邊緣落筆；不改動山峰、城池及既有長江幹流。",
+      "navigation_tc": "展示水線，不新增上游金沙江的港點、通航河段、航速或行軍捷徑。"
+    },
+    "stroke_cell_offsets": [
+      [
+        -2,
+        -2
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  }
 }

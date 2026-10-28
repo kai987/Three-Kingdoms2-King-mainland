@@ -391,6 +391,13 @@
         "logistics"
       ]
     },
+    "tests/test_remake_northern_route_pairs.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "logistics"
+      ]
+    },
     "tests/test_remake_officers.py": {
       "tier": "related",
       "groups": [
@@ -584,6 +591,13 @@
         "mainland263-05"
       ]
     },
+    "tests/test_remake_southern_route_pairs.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "logistics"
+      ]
+    },
     "tests/test_remake_stat_policy.py": {
       "tier": "full",
       "groups": [
@@ -648,6 +662,13 @@
       "groups": [
         "boot",
         "save"
+      ]
+    },
+    "tests/test_remake_yangtze_headwaters.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "logistics"
       ]
     }
   }

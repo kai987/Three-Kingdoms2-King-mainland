@@ -13,10 +13,10 @@
     "game/build_navigation_geometry.cjs": "e5b9bee47b0302c4dfda585d241368058c21b993ad326b1aeea661958750953d",
     "game/config/river-network.json": "38e278f6093c5982c40aad5ef1b29ef4f59f42f034ea45b35094196327cb6248",
     "game/river_network.py": "9bfdfd40d34730dc5545742026113a7bce41b7caf2a03cdb73aa1966668e4552",
-    "game/config/map-source.json": "d8cacacaf135ee73bba54290114fc90498942d4a7b46bd7d5192986300e6e064",
+    "game/config/map-source.json": "cc98d8a8c430526f738c71484c1588d6cef6b80f599310cc64b528203229e54b",
     "game/app.js": "35d7ec8aa5056b75674f9dc16e343498a348041cc36112cbc32253ad35c59585",
     "game/config/route-render-source.json": "e6b1cfae6f86e1fed613bab17a24e5a75b8860f45f02ed3bb47d135bb27139ff",
-    "game/config/campaigns/shared.json": "453879149fc0f6a2fb044e03e6e6ce7b7db6b37cfd4a63bc4661ab81710be0de",
+    "game/config/campaigns/shared.json": "45bd1c3568ec9c86f5700311ba037705fb04605704d9b48ce278a19791c36be8",
     "game/config/campaigns/index.json": "0b5095ca8de43f8201f979d88d289015da7536e5b3795a2ca8cc519e555699d3",
     "game/config/campaigns/scenarios/184-02.json": "ac18e4179556e3651b54cbde2c64d1e70caf5b6ec44c75fb8e8daf6f4c8b8d3b",
     "game/config/campaigns/scenarios/188-06.json": "41e9f96a4bfbb0190542fe85d25d271834f3bc6797c82fccb925e491373ef7f3",
@@ -48,7 +48,7 @@
     "game/config/campaigns/scenarios/249-01.json": "64558bceaf1d7a46b379298cc1878fcd28c939cf4d43626b699fc752e0024eb5",
     "game/config/campaigns/scenarios/263-05.json": "55d7ae7e7df531d9fa71cffb1b85057b4203509efd6d1734201dc150a711b078"
   },
-  "input_geometry_sha256": "2f7602ada984ccc280eeb1181747f5716d31777c6177e4cf06298635a446b46a",
+  "input_geometry_sha256": "cc9507ea882f911440121a41124bd4fe6690c52504528bbeb6b55d1f8d08b095",
   "routes": {
     "anding:fufeng:land": {
       "from": "anding",
@@ -14130,6 +14130,226 @@
         }
       ]
     },
+    "yan:bohai:land": {
+      "from": "yan",
+      "to": "bohai",
+      "mode": "land",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            918,
+            98
+          ],
+          "end": [
+            924,
+            157
+          ],
+          "d": "M918 98L920.5 106Q923 114 922.5 123Q922 132 923 144.5L924 157",
+          "length_px": 59.65337,
+          "chord_px": 59.3043,
+          "pieces": [
+            {
+              "d": "M918 98L920.5 106Q923 114 922.5 123Q922 132 923 144.5L924 157",
+              "reverse": false
+            }
+          ]
+        }
+      ],
+      "city_sections": [
+        {
+          "from": "yan",
+          "to": "bohai",
+          "parts": [
+            {
+              "mode": "land",
+              "start": [
+                918,
+                98
+              ],
+              "end": [
+                924,
+                157
+              ],
+              "d": "M918 98L920.5 106Q923 114 922.5 123Q922 132 923 144.5L924 157",
+              "length_px": 59.65337,
+              "chord_px": 59.3043,
+              "pieces": [
+                {
+                  "d": "M918 98L920.5 106Q923 114 922.5 123Q922 132 923 144.5L924 157",
+                  "reverse": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fanyang:hejian:land": {
+      "from": "fanyang",
+      "to": "hejian",
+      "mode": "land",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            874,
+            112
+          ],
+          "end": [
+            878,
+            145
+          ],
+          "d": "M874 112L878.5 116Q883 120 884 125.5Q885 131 881.5 138L878 145",
+          "length_px": 38.008041,
+          "chord_px": 33.24154,
+          "pieces": [
+            {
+              "d": "M874 112L878.5 116Q883 120 884 125.5Q885 131 881.5 138L878 145",
+              "reverse": false
+            }
+          ]
+        }
+      ],
+      "city_sections": [
+        {
+          "from": "fanyang",
+          "to": "hejian",
+          "parts": [
+            {
+              "mode": "land",
+              "start": [
+                874,
+                112
+              ],
+              "end": [
+                878,
+                145
+              ],
+              "d": "M874 112L878.5 116Q883 120 884 125.5Q885 131 881.5 138L878 145",
+              "length_px": 38.008041,
+              "chord_px": 33.24154,
+              "pieces": [
+                {
+                  "d": "M874 112L878.5 116Q883 120 884 125.5Q885 131 881.5 138L878 145",
+                  "reverse": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "dongjun:chenliu:land": {
+      "from": "dongjun",
+      "to": "chenliu",
+      "mode": "land",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            833,
+            284
+          ],
+          "end": [
+            827,
+            340
+          ],
+          "d": "M833 284L827.5 291.5Q822 299 820.5 308.5Q819 318 823 329L827 340",
+          "length_px": 60.444828,
+          "chord_px": 56.320511,
+          "pieces": [
+            {
+              "d": "M833 284L827.5 291.5Q822 299 820.5 308.5Q819 318 823 329L827 340",
+              "reverse": false
+            }
+          ]
+        }
+      ],
+      "city_sections": [
+        {
+          "from": "dongjun",
+          "to": "chenliu",
+          "parts": [
+            {
+              "mode": "land",
+              "start": [
+                833,
+                284
+              ],
+              "end": [
+                827,
+                340
+              ],
+              "d": "M833 284L827.5 291.5Q822 299 820.5 308.5Q819 318 823 329L827 340",
+              "length_px": 60.444828,
+              "chord_px": 56.320511,
+              "pieces": [
+                {
+                  "d": "M833 284L827.5 291.5Q822 299 820.5 308.5Q819 318 823 329L827 340",
+                  "reverse": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "xinggu:jiaozhi:land": {
+      "from": "xinggu",
+      "to": "jiaozhi",
+      "mode": "land",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            298,
+            751
+          ],
+          "end": [
+            387,
+            853
+          ],
+          "d": "M298 751L302 758.5Q306 766 315.5 771.5Q325 777 335.5 782Q346 787 355.5 795Q365 803 375 811Q385 819 395 827.5Q405 836 396 844.5L387 853",
+          "length_px": 157.618744,
+          "chord_px": 135.369864,
+          "pieces": [
+            {
+              "d": "M298 751L302 758.5Q306 766 315.5 771.5Q325 777 335.5 782Q346 787 355.5 795Q365 803 375 811Q385 819 395 827.5Q405 836 396 844.5L387 853",
+              "reverse": false
+            }
+          ]
+        }
+      ],
+      "city_sections": [
+        {
+          "from": "xinggu",
+          "to": "jiaozhi",
+          "parts": [
+            {
+              "mode": "land",
+              "start": [
+                298,
+                751
+              ],
+              "end": [
+                387,
+                853
+              ],
+              "d": "M298 751L302 758.5Q306 766 315.5 771.5Q325 777 335.5 782Q346 787 355.5 795Q365 803 375 811Q385 819 395 827.5Q405 836 396 844.5L387 853",
+              "length_px": 157.618744,
+              "chord_px": 135.369864,
+              "pieces": [
+                {
+                  "d": "M298 751L302 758.5Q306 766 315.5 771.5Q325 777 335.5 782Q346 787 355.5 795Q365 803 375 811Q385 819 395 827.5Q405 836 396 844.5L387 853",
+                  "reverse": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "zangke:bajun:land": {
       "from": "zangke",
       "to": "bajun",
@@ -27124,10 +27344,10 @@
   },
   "audit": {
     "catalogs": 29,
-    "input_routes": 409,
-    "compiled_routes": 409,
+    "input_routes": 413,
+    "compiled_routes": 413,
     "graph_nodes": 166,
-    "graph_strokes": 248,
+    "graph_strokes": 252,
     "unmatched": [],
     "shared_city_pass_through": [
       {

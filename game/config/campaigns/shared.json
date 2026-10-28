@@ -1969,6 +1969,22 @@
       [
         "yingchuan",
         "nanyang"
+      ],
+      [
+        "yan",
+        "bohai"
+      ],
+      [
+        "fanyang",
+        "hejian"
+      ],
+      [
+        "dongjun",
+        "chenliu"
+      ],
+      [
+        "xinggu",
+        "jiaozhi"
       ]
     ],
     "active_cities": [
@@ -54962,6 +54978,194 @@
             7
           ]
         }
+      },
+      {
+        "id": "yan:bohai:land",
+        "from": "yan",
+        "to": "bohai",
+        "mode": "land",
+        "terrain": "plain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                918,
+                98
+              ],
+              [
+                923,
+                114
+              ],
+              [
+                922,
+                132
+              ],
+              [
+                924,
+                157
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "historical_regional_land_corridor",
+          "confidence": "regional_connection_not_exact_Han_alignment",
+          "basis": "《後漢書·公孫瓚傳》記張純與丘力居等寇漁陽、河間、勃海，入平原，亦記初平二年公孫瓚率步騎在東光南作戰，及軍敗還薊。據幽冀平原與渤海區域往來補連薊、南皮節點，免強制繞中山、河間；史料未逐點記載薊至南皮直達官道，圖線為本作獨立區域走廊，不是精確漢道復原。",
+          "source": "https://zh.wikisource.org/wiki/後漢書/卷73",
+          "date_policy": "attested_movement_is_not_a_first_opening_date",
+          "is_proven_exact_Han_alignment": false
+        },
+        "distance_km": 236.0,
+        "land_km": 236.0,
+        "sea_km": 0,
+        "days": 8
+      },
+      {
+        "id": "fanyang:hejian:land",
+        "from": "fanyang",
+        "to": "hejian",
+        "mode": "land",
+        "terrain": "plain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                874,
+                112
+              ],
+              [
+                883,
+                120
+              ],
+              [
+                885,
+                131
+              ],
+              [
+                878,
+                145
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "historical_regional_land_corridor",
+          "confidence": "regional_connection_not_exact_Han_alignment",
+          "basis": "《後漢書·馮異傳》記光武自薊東南馳至饒陽、經信都，並分收河間兵；《公孫瓚傳》記幽州兵與河間、勃海區域往來。據幽冀平原補連現有涿州一帶的范陽區域節點與樂成一帶的河間節點，免西繞中山；不是以《水經注》的范陽縣冒充現有范陽節點，亦未考定兩城間精確官道線位。",
+          "source": "https://zh.wikisource.org/wiki/後漢書/卷17",
+          "date_policy": "attested_movement_is_not_a_first_opening_date",
+          "is_proven_exact_Han_alignment": false,
+          "additional_source": "https://zh.wikisource.org/wiki/後漢書/卷73"
+        },
+        "distance_km": 138.6,
+        "land_km": 138.6,
+        "sea_km": 0,
+        "days": 5
+      },
+      {
+        "id": "dongjun:chenliu:land",
+        "from": "dongjun",
+        "to": "chenliu",
+        "mode": "land",
+        "terrain": "plain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                833,
+                284
+              ],
+              [
+                822,
+                299
+              ],
+              [
+                819,
+                318
+              ],
+              [
+                827,
+                340
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "historical_regional_land_corridor",
+          "confidence": "regional_connection_not_exact_Han_alignment",
+          "basis": "《三國志·武帝紀》記初平四年曹操由鄄城一帶作戰至陳留封丘、匡亭，及興平元年的濮陽戰事，支持兗州與陳留之間的區域軍行。據區域交通補連現有濮陽、陳留節點，免強制東繞濟陰；這些戰事未逐點證明濮陽至陳留的直達官道，圖線與河渠渡口均為本作區域抽象，未宣稱永久橋或精確漢道測繪。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷01",
+          "date_policy": "attested_movement_is_not_a_first_opening_date",
+          "is_proven_exact_Han_alignment": false
+        },
+        "distance_km": 146.2,
+        "land_km": 146.2,
+        "sea_km": 0,
+        "days": 5
+      },
+      {
+        "id": "xinggu:jiaozhi:land",
+        "from": "xinggu",
+        "to": "jiaozhi",
+        "mode": "land",
+        "terrain": "mountain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                298,
+                751
+              ],
+              [
+                306,
+                766
+              ],
+              [
+                325,
+                777
+              ],
+              [
+                346,
+                787
+              ],
+              [
+                365,
+                803
+              ],
+              [
+                385,
+                819
+              ],
+              [
+                405,
+                836
+              ],
+              [
+                387,
+                853
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "authorial_regional_mountain_corridor",
+          "confidence": "late_third_century_regional_communication_not_exact_Han_alignment",
+          "basis": "《晉書·陶璜傳》在吳亡歸晉後的上疏記寧州興古與交址郡相距千六百里，水陸並通、互相維衛；這是280年後的區域交通記載，不是全程純陸漢代官道或首次開通年月的證據。《華陽國志·南中志》記興古郡建興三年（225）置，本作較早劇本保留的興古節點只作同區域代理。據南中至交趾的區域聯繫補一條山地陸路，概括谷地、越嶺與過水轉運負擔；曲線繞圖上既有山峰，不改城市或地形，不另推造可供軍船全程通航的河道。",
+          "source": "https://zh.wikisource.org/wiki/晉書/卷057#陶璜",
+          "additional_source": "https://zh.wikisource.org/wiki/華陽國志/卷四#興古郡",
+          "date_policy": "post_280_attestation_is_not_a_first_opening_date",
+          "regional_proxy_before_225": true,
+          "is_proven_exact_Han_alignment": false,
+          "is_proven_all_land_Han_highway": false
+        },
+        "distance_km": 509.9,
+        "land_km": 509.9,
+        "sea_km": 0,
+        "days": 34
       }
     ],
     "city_count": 115,
@@ -56155,6 +56359,174 @@
           "basis": "以淮北、汝潁平原的區域陸路連接現有譙與壽春、汝南節點，避免為追隨原圖筆畫而北繞昌邑。圖上轉折是玩法線位，未宣稱史書逐點記載此路；219年前譙節點按使用者設定顯示小沛，是區域代理，非史實小沛、譙為同城。",
           "source": "https://zh.wikisource.org/wiki/三國志/卷01",
           "is_proven_exact_Han_alignment": false
+        }
+      },
+      {
+        "from": "yan",
+        "to": "bohai",
+        "mode": "land",
+        "terrain": "plain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                918,
+                98
+              ],
+              [
+                923,
+                114
+              ],
+              [
+                922,
+                132
+              ],
+              [
+                924,
+                157
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "historical_regional_land_corridor",
+          "confidence": "regional_connection_not_exact_Han_alignment",
+          "basis": "《後漢書·公孫瓚傳》記張純與丘力居等寇漁陽、河間、勃海，入平原，亦記初平二年公孫瓚率步騎在東光南作戰，及軍敗還薊。據幽冀平原與渤海區域往來補連薊、南皮節點，免強制繞中山、河間；史料未逐點記載薊至南皮直達官道，圖線為本作獨立區域走廊，不是精確漢道復原。",
+          "source": "https://zh.wikisource.org/wiki/後漢書/卷73",
+          "date_policy": "attested_movement_is_not_a_first_opening_date",
+          "is_proven_exact_Han_alignment": false
+        }
+      },
+      {
+        "from": "fanyang",
+        "to": "hejian",
+        "mode": "land",
+        "terrain": "plain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                874,
+                112
+              ],
+              [
+                883,
+                120
+              ],
+              [
+                885,
+                131
+              ],
+              [
+                878,
+                145
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "historical_regional_land_corridor",
+          "confidence": "regional_connection_not_exact_Han_alignment",
+          "basis": "《後漢書·馮異傳》記光武自薊東南馳至饒陽、經信都，並分收河間兵；《公孫瓚傳》記幽州兵與河間、勃海區域往來。據幽冀平原補連現有涿州一帶的范陽區域節點與樂成一帶的河間節點，免西繞中山；不是以《水經注》的范陽縣冒充現有范陽節點，亦未考定兩城間精確官道線位。",
+          "source": "https://zh.wikisource.org/wiki/後漢書/卷17",
+          "date_policy": "attested_movement_is_not_a_first_opening_date",
+          "is_proven_exact_Han_alignment": false,
+          "additional_source": "https://zh.wikisource.org/wiki/後漢書/卷73"
+        }
+      },
+      {
+        "from": "dongjun",
+        "to": "chenliu",
+        "mode": "land",
+        "terrain": "plain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                833,
+                284
+              ],
+              [
+                822,
+                299
+              ],
+              [
+                819,
+                318
+              ],
+              [
+                827,
+                340
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "historical_regional_land_corridor",
+          "confidence": "regional_connection_not_exact_Han_alignment",
+          "basis": "《三國志·武帝紀》記初平四年曹操由鄄城一帶作戰至陳留封丘、匡亭，及興平元年的濮陽戰事，支持兗州與陳留之間的區域軍行。據區域交通補連現有濮陽、陳留節點，免強制東繞濟陰；這些戰事未逐點證明濮陽至陳留的直達官道，圖線與河渠渡口均為本作區域抽象，未宣稱永久橋或精確漢道測繪。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷01",
+          "date_policy": "attested_movement_is_not_a_first_opening_date",
+          "is_proven_exact_Han_alignment": false
+        }
+      },
+      {
+        "from": "xinggu",
+        "to": "jiaozhi",
+        "mode": "land",
+        "terrain": "mountain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                298,
+                751
+              ],
+              [
+                306,
+                766
+              ],
+              [
+                325,
+                777
+              ],
+              [
+                346,
+                787
+              ],
+              [
+                365,
+                803
+              ],
+              [
+                385,
+                819
+              ],
+              [
+                405,
+                836
+              ],
+              [
+                387,
+                853
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "authorial_regional_mountain_corridor",
+          "confidence": "late_third_century_regional_communication_not_exact_Han_alignment",
+          "basis": "《晉書·陶璜傳》在吳亡歸晉後的上疏記寧州興古與交址郡相距千六百里，水陸並通、互相維衛；這是280年後的區域交通記載，不是全程純陸漢代官道或首次開通年月的證據。《華陽國志·南中志》記興古郡建興三年（225）置，本作較早劇本保留的興古節點只作同區域代理。據南中至交趾的區域聯繫補一條山地陸路，概括谷地、越嶺與過水轉運負擔；曲線繞圖上既有山峰，不改城市或地形，不另推造可供軍船全程通航的河道。",
+          "source": "https://zh.wikisource.org/wiki/晉書/卷057#陶璜",
+          "additional_source": "https://zh.wikisource.org/wiki/華陽國志/卷四#興古郡",
+          "date_policy": "post_280_attestation_is_not_a_first_opening_date",
+          "regional_proxy_before_225": true,
+          "is_proven_exact_Han_alignment": false,
+          "is_proven_all_land_Han_highway": false
         }
       }
     ],
