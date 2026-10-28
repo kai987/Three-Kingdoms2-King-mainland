@@ -261,6 +261,20 @@
         "map"
       ]
     },
+    "tests/test_remake_fu_corridor.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "logistics"
+      ]
+    },
+    "tests/test_remake_fu_river.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "logistics"
+      ]
+    },
     "tests/test_remake_garrison_postings.py": {
       "tier": "full",
       "groups": [
@@ -621,6 +635,12 @@
       "groups": [
         "save",
         "economy"
+      ]
+    },
+    "tests/test_remake_terrain_art.py": {
+      "tier": "related",
+      "groups": [
+        "map"
       ]
     },
     "tests/test_remake_training.py": {

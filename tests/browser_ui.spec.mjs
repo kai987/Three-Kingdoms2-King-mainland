@@ -228,6 +228,18 @@ test('city road beds survive hidden castles, shared inland reaches draw once and
  expect(aligned.height).toBe(40);expect(Math.abs(aligned.portrait-aligned.copy)).toBeLessThan(.6);
  await historyScreenshot(page,testInfo,'ruler-portrait-centered',{fullPage:false});
  const map=page.locator('#world-map');await expect(map.locator('[data-city-road-bed]')).toHaveCount(1);await expect(map.locator('.city-hit[data-city=yidu]')).toHaveCount(0);await expect(map.locator('[data-inactive-city=yidu]')).toHaveCount(1);
+ // Inspect the actual displayed background after the mountain-art replacement.
+ // A correct hydrology source alone does not prove that players can see it.
+ await expect.poll(()=>page.evaluate(async()=>await GameMapTerrain.controller.ready)).toBe(true);
+ const visibleWater=await map.evaluate(async svg=>{
+  const background=[...svg.children].find(node=>node.localName==='image');
+  const href=background.getAttribute('href'),image=new Image();image.src=href;await image.decode();
+  const canvas=document.createElement('canvas');canvas.width=image.naturalWidth;canvas.height=image.naturalHeight;
+  const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(image,0,0);
+  return {href,points:[[316,462],[328,486],[340,494],[352,506],[360,516],[362,526],[370,536],[160,480],[160,498]].map(([x,y])=>({x,y,rgba:[...ctx.getImageData(x,y,1,1).data]}))};
+ });
+ expect(visibleWater.href).toMatch(/\/assets\/map-western-range\.png(?:\?|$)/);
+ for(const point of visibleWater.points)expect(point.rgba,`Visible river at ${point.x},${point.y}`).toEqual([0,42,248,255]);
  await expect(map.locator('#city-road-bed-mask rect[x="647"][y="472"]')).toHaveCount(1);
  const paths=await map.locator('[data-city-road-bed] > g > path').last().getAttribute('d');expect(paths).toMatch(/(?:M|L)647 472/);expect(paths).toMatch(/(?:M|L)695 346/);expect(paths).toMatch(/(?:M|L)620 346/);
  const reachKeys=await map.locator('path.river-lane').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-river-reach')));expect(reachKeys.length).toBeGreaterThan(15);expect(reachKeys.every(Boolean)).toBe(true);expect(new Set(reachKeys).size).toBe(reachKeys.length);

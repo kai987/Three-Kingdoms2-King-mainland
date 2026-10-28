@@ -4,7 +4,9 @@
 
 成都西側山地改用完整連片重繪，見 `../../art/map-western-range-v1/`。imagegen 以原生地形裁片為參考，統一三座原綠色山峰及相鄰山脊、山谷的岩面紋理。`build.cjs` 在一個連續的不規則山區內合成，產生 `../assets/map-western-range.png`；22,006個原河道、道路及城標保護像素與1,318,250個區外像素逐一核對一致。新圖維持1352×1024，原始PNG全數保留。
 
-陰平附近與西南山腳兩處殘留的綠峰覆蓋，另以 `../../art/map-western-range-v2/` 的小範圍補繪移除，露出連續的紅棕山腳。v1 原始素材及其紀錄保留；重建目前成品請執行 v2 的 `build.cjs`。這次只合成兩處不規則範圍，原河道、道路與城標仍逐像素保護，其他像素保持 v1 成品。
+陰平附近與西南山腳兩處殘留的綠峰覆蓋，另以 `../../art/map-western-range-v2/` 的小範圍補繪移除，露出連續的紅棕山腳；`../../art/map-western-range-v3/` 保存之後批准的陰平棕色山腳與綠峰。v1、v2、v3 原始素材及紀錄全部保留，用於重現各歷史美術版本。
+
+目前可玩版本的 `map-western-range.png` 由 `python3 -B game/build_terrain_art.py` 重建。它以當前 `map-road-centers.png` 為底，只合成批准山地範圍內的透明美術裁片，保護當前河流、河岸、道路及城池；不再用舊的整幅美術圖覆蓋新路網。`python3 -B game/build_terrain_art.py --check` 只讀驗證輸入、成品與紀錄。CI及 `build_web.py` 發布前都執行此檢查，來源變動而未重建時會明確失敗。
 
 `../map-terrain.js` 預載並驗證新圖後，僅替換主地圖與事件插圖的直接底圖，並移除舊 `data-terrain-recolor="chengdu-west"` 色彩層；重繪後仍會套用同一完整山脈圖，下載或解碼失敗則保留完整舊地圖。`presentation.mountain_recolors` 的5,071像素歷史遮罩繼續留存作回退，正常新圖不再使用。這次美術替換未重建城池、道路、行軍時間或戰役資料，避免改變既有存檔的規則目錄身分。
 
@@ -18,5 +20,7 @@
 
 
 水系修正來源為 `../config/water-corrections.json`、`terrain-under-water.png`、`historic-water.svg` 與 `sea-shadow.svg`。這些已從原場景提取並固定雜湊，重建時無須歷史開發目錄。原始 `road-ground.png` 和五張底圖均保留。`node game/render_water_corrections.cjs` 在 2px 水系網格上將渭水下游接至黃河 `[639,326]` 拐彎，截去五處入海口海中延長線，並產生清除舊深藍海路的逐行遮罩；移山區與其餘水系不重畫。接著執行 `node game/render_road_centers.cjs`、更新 `map-source.json` 的輸出圖雜湊，最後執行 `python3 -B game/build_map_presentation.py`。
+
+新增的金沙江北延與涪江使用相同藍色的連續4px河線，邊緣維持2px網格。完整更新次序是水系渲染、道路渲染、批准道路圖雜湊、導航與道路幾何、29篇劇本、橋梁、地圖展示資料，最後重建 `build_terrain_art.py`，再建立Web版本。美術合成器也依賴當前道路幾何，因此應在幾何產生後執行。瀏覽器測試另讀取實際顯示底圖的像素，檢查涪江與金沙江北延確實可見，而非只檢查中間來源PNG。
 
 `node game/build_map_bridges.cjs` 依修正後的 `hydrology-ground.png` 及前端實際 SVG 陸路曲線，以 0.5px 間隔掃描跨水段，產生 `../assets/map-bridges.json`。橋段延伸至兩岸，沿岸港口的末端水段不算跨河橋；共用橋去重後，在陸路與海路上方、城標下方繪製原版深棕及淺棕雙層橋面。所有劇本使用相同幾何來源，編譯器、地形、道路及劇本雜湊由展示層建置器核對；未改變戰役路網、行軍計算或存檔資料。

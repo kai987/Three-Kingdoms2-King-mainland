@@ -124,8 +124,18 @@ def rewrite_html(raw, assets=None):
             address = urlunsplit(('', '', value.path, urlencode(query), value.fragment))
             return attribute + '=' + found[1] + escape(address, quote=True) + found[1]
 
-        return re.sub(r'\b' + attribute + r'\s*=\s*([\"\'])([^\"\']*)\1',
-                      version_url, tag, flags=re.IGNORECASE)
+        tag = re.sub(r'\b' + attribute + r'\s*=\s*([\"\'])([^\"\']*)\1',
+                     version_url, tag, flags=re.IGNORECASE)
+        terrain = (assets or {}).get('assets/map-western-range.png')
+        if (terrain is not None and match[1].lower() == 'script'
+                and re.search(r'\bsrc\s*=\s*([\"\'])map-terrain\.js(?:[?#][^\"\']*)?\1',
+                              tag, flags=re.IGNORECASE)):
+            # The runtime image is loaded after HTML parsing. Tie its cache key
+            # to this release's bitmap rather than the script's code version.
+            tag = re.sub(r'\sdata-art-sha256\s*=\s*([\"\'])[^\"\']*\1', '', tag,
+                         flags=re.IGNORECASE)
+            tag = tag[:-1] + ' data-art-sha256="' + sha256(terrain) + '">'
+        return tag
 
     html = re.sub(r'<(script|link)\b[^>]*>', version_tag, html, flags=re.IGNORECASE)
     return html.encode('utf-8')
@@ -243,6 +253,10 @@ def build(output):
     output.parent.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix='tk2-web-', dir=output.parent))
     try:
+        # The displayed mountain-art map must contain the current water/roads,
+        # rather than an older complete bitmap that hides source-map edits.
+        subprocess.run([sys.executable, '-B', str(HERE / 'build_terrain_art.py'), '--check'],
+                       cwd=ROOT, check=True, stdout=subprocess.PIPE)
         assets = {}
         for name, source in static_allowlist().items():
             raw = safe_read(HERE, source)

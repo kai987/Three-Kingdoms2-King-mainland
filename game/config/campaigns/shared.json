@@ -1985,6 +1985,10 @@
       [
         "xinggu",
         "jiaozhi"
+      ],
+      [
+        "fuxian",
+        "bajun"
       ]
     ],
     "active_cities": [
@@ -55166,6 +55170,69 @@
         "land_km": 509.9,
         "sea_km": 0,
         "days": 34
+      },
+      {
+        "id": "fuxian:bajun:land",
+        "from": "fuxian",
+        "to": "bajun",
+        "mode": "land",
+        "terrain": "mountain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                294,
+                462
+              ],
+              [
+                306,
+                477
+              ],
+              [
+                319,
+                494
+              ],
+              [
+                337,
+                510
+              ],
+              [
+                358,
+                525
+              ],
+              [
+                356,
+                540
+              ],
+              [
+                360,
+                546
+              ],
+              [
+                388,
+                546
+              ],
+              [
+                398,
+                553
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "historical_regional_mountain_land_corridor",
+          "confidence": "historical_regional_water_land_connection_not_exact_road_alignment",
+          "basis": "《後漢書·臧宮傳》記建武十一年臧宮自江州北上涪水、在平曲水陸進軍；《三國志·蔣琬傳》記涪為水陸四通之地。據涪水流域與江州之間的區域水陸聯繫補連現有涪縣、江州節點，陸路沿谷地與山麓繪製，概括越嶺及渡河負擔，不強制北繞梓潼、巴西。圖上道路、渡口和兩端城市接點是本作區域代理，未考定漢代官道逐點線位，也不將35年的軍事記載當作道路首次開通年月。",
+          "source": "https://zh.wikisource.org/wiki/後漢書/卷18#臧宮",
+          "additional_source": "https://zh.wikisource.org/wiki/三國志/卷44#蔣琬",
+          "date_policy": "attested_movement_in_35_is_not_a_first_opening_date",
+          "is_proven_exact_Han_alignment": false
+        },
+        "distance_km": 393.8,
+        "land_km": 393.8,
+        "sea_km": 0,
+        "days": 27
       }
     ],
     "city_count": 115,
@@ -56527,6 +56594,64 @@
           "regional_proxy_before_225": true,
           "is_proven_exact_Han_alignment": false,
           "is_proven_all_land_Han_highway": false
+        }
+      },
+      {
+        "from": "fuxian",
+        "to": "bajun",
+        "mode": "land",
+        "terrain": "mountain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                294,
+                462
+              ],
+              [
+                306,
+                477
+              ],
+              [
+                319,
+                494
+              ],
+              [
+                337,
+                510
+              ],
+              [
+                358,
+                525
+              ],
+              [
+                356,
+                540
+              ],
+              [
+                360,
+                546
+              ],
+              [
+                388,
+                546
+              ],
+              [
+                398,
+                553
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "historical_regional_mountain_land_corridor",
+          "confidence": "historical_regional_water_land_connection_not_exact_road_alignment",
+          "basis": "《後漢書·臧宮傳》記建武十一年臧宮自江州北上涪水、在平曲水陸進軍；《三國志·蔣琬傳》記涪為水陸四通之地。據涪水流域與江州之間的區域水陸聯繫補連現有涪縣、江州節點，陸路沿谷地與山麓繪製，概括越嶺及渡河負擔，不強制北繞梓潼、巴西。圖上道路、渡口和兩端城市接點是本作區域代理，未考定漢代官道逐點線位，也不將35年的軍事記載當作道路首次開通年月。",
+          "source": "https://zh.wikisource.org/wiki/後漢書/卷18#臧宮",
+          "additional_source": "https://zh.wikisource.org/wiki/三國志/卷44#蔣琬",
+          "date_policy": "attested_movement_in_35_is_not_a_first_opening_date",
+          "is_proven_exact_Han_alignment": false
         }
       }
     ],

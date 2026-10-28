@@ -28,9 +28,9 @@ class SharedRiverNetwork(unittest.TestCase):
         before = deepcopy(spec)
         routes = compile_network(spec, self.positions)
         self.assertEqual(spec, before)
-        self.assertEqual(len(routes), 44)
+        self.assertEqual(len(routes), 45)
         self.assertEqual(len({row['id'] for row in routes}), len(routes))
-        self.assertEqual(self.compiled['reach_count'], 47)
+        self.assertEqual(self.compiled['reach_count'], 49)
         for route in routes:
             self.assertEqual(route['draw'][0]['points'][0], self.positions[route['from']])
             self.assertEqual(route['draw'][-1]['points'][-1], self.positions[route['to']])

@@ -7,7 +7,7 @@
   "sources": {
     "game/map-source/road-ground.png": "ea8cf8ecbb573205b9b3e9ea43c1c15ec61ff5bef3e3d1e699bea75b0d7c08c0",
     "game/map-source/terrain-under-water.png": "e0bdfc8406f8ddf6285fdc9cdf929ec2a3ee406600bc403c6d050d22ab0a555c",
-    "game/map-source/historic-water.svg": "31b427aff0f4bd40c78a28ec868455e29fc61bebf67a897c5f03e0b224b521fd",
+    "game/map-source/historic-water.svg": "24cf80474725fbcf3b841c9af8bdcdd4fe2c673d5ff212ba9a218a8af358b723",
     "game/map-source/sea-shadow.svg": "207a066255705a6f080ed9196cd75911d7bc16f37dd3a455ad061a5740130f58"
   },
   "provenance": {
@@ -262,5 +262,79 @@
         0
       ]
     ]
+  },
+  "fu_corridor": {
+    "classification": "attested_fu_jialing_corridor_authorial_pixel_course",
+    "basis_tc": "《三國志》卷31記211年劉備自江州北由墊江水詣涪；《後漢書》卷18記臧宮從涪水上行、舟步騎並進。此線沿既有谷地將涪縣接至墊江（今合川）的嘉陵水匯流點。",
+    "sources": [
+      "https://zh.wikisource.org/wiki/三國志/卷31",
+      "https://zh.wikisource.org/wiki/後漢書/卷18",
+      "https://zh.wikisource.org/wiki/水經注/32",
+      "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_44679"
+    ],
+    "source": [
+      316,
+      462
+    ],
+    "confluence": [
+      370,
+      536
+    ],
+    "points": [
+      [
+        316,
+        462
+      ],
+      [
+        318,
+        474
+      ],
+      [
+        328,
+        486
+      ],
+      [
+        340,
+        494
+      ],
+      [
+        352,
+        506
+      ],
+      [
+        360,
+        516
+      ],
+      [
+        362,
+        526
+      ],
+      [
+        370,
+        536
+      ]
+    ],
+    "pixel": 2,
+    "width": 4,
+    "color": "#002af8",
+    "stroke_cell_offsets": [
+      [
+        -2,
+        -2
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "limits_tc": "211年是通行記錄而非首通年；像素河線、港點、地理坐標、航速與載運能力為遊戲概化，未以現代渠化河道推定漢晉全年大艦通航。既有城池、山峰與嘉陵水線不移動。"
   }
 }

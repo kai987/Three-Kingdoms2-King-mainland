@@ -9,7 +9,10 @@
   if(!document?.documentElement||typeof MutationObserver!=='function'||typeof Image!=='function')return null;
   if(installed.has(document))return installed.get(document);
   let active=false,destroyed=false;
-  const source=root?.GamePaths?.asset(SOURCE)||SOURCE,asset=root?.GamePaths?.asset(ASSET)||ASSET;
+  const source=root?.GamePaths?.asset(SOURCE)||SOURCE;
+  const artHash=document.currentScript?.getAttribute?.('data-art-sha256');
+  const revision=/^[a-f0-9]{64}$/i.test(artHash||'')?artHash:'current-map-v2';
+  const asset=(root?.GamePaths?.asset(ASSET)||ASSET)+'?v='+encodeURIComponent(revision);
   const href=node=>node.getAttribute('href')||node.getAttributeNS(XLINK,'href');
   function replace(svg){
    if(destroyed||!active||!svg?.matches?.(MAPS)||!svg.isConnected)return false;

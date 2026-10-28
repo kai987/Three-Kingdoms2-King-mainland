@@ -4,7 +4,7 @@
   "survey": {
     "water_source": "game/map-source/historic-water.svg",
     "wei_correction": "game/config/water-corrections.json",
-    "method": "Reviewed river centerline samples traced within the existing named blue-water masks, with the accepted corrected Wei confluence. No terrain or river pixels are changed. Pixel and geographic port coordinates are authorial game calibrations, not identified ancient harbours."
+    "method": "Legacy river centerline samples retain the existing named blue-water masks and accepted Wei correction. The attested Fu–Jialing corridor adds a narrow authored branch and a shared Dianjiang confluence; existing river trunks, city positions and mountains are unchanged. Pixel and geographic ports are game calibrations, not identified ancient harbours."
   },
   "rivers": {
     "yangtze": {
@@ -115,6 +115,16 @@
       "speed_key": "yangtze",
       "sources": [
         "https://zh.wikisource.org/wiki/三國志/卷01"
+      ]
+    },
+    "fu": {
+      "name_tc": "涪水",
+      "name_ja": "涪水",
+      "speed_key": "yangtze",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷31",
+        "https://zh.wikisource.org/wiki/後漢書/卷18",
+        "https://zh.wikisource.org/wiki/水經注/32"
       ]
     }
   },
@@ -627,6 +637,26 @@
       "geo": [
         116.55,
         32.91
+      ]
+    },
+    "fu:fuxian": {
+      "position": [
+        316,
+        462
+      ],
+      "geo": [
+        104.77,
+        31.45
+      ]
+    },
+    "jialing:dianjiang": {
+      "position": [
+        370,
+        536
+      ],
+      "geo": [
+        106.28,
+        29.97
       ]
     }
   },
@@ -1355,6 +1385,19 @@
         [
           892,
           366
+        ]
+      ]
+    },
+    "fuxian": {
+      "node": "fu:fuxian",
+      "access": [
+        [
+          294,
+          462
+        ],
+        [
+          316,
+          462
         ]
       ]
     }
@@ -4421,10 +4464,10 @@
       ]
     },
     {
-      "id": "jialing:baxi:bajun",
+      "id": "jialing:baxi:dianjiang",
       "river": "jialing",
       "from": "jialing:baxi",
-      "to": "yangtze:bajun",
+      "to": "jialing:dianjiang",
       "points": [
         [
           349,
@@ -4550,6 +4593,18 @@
           371,
           533
         ],
+        [
+          370,
+          536
+        ]
+      ]
+    },
+    {
+      "id": "jialing:dianjiang:bajun",
+      "river": "jialing",
+      "from": "jialing:dianjiang",
+      "to": "yangtze:bajun",
+      "points": [
         [
           370,
           536
@@ -5815,6 +5870,46 @@
           386
         ]
       ]
+    },
+    {
+      "id": "fu:fuxian:dianjiang",
+      "river": "fu",
+      "from": "fu:fuxian",
+      "to": "jialing:dianjiang",
+      "points": [
+        [
+          316,
+          462
+        ],
+        [
+          318,
+          474
+        ],
+        [
+          328,
+          486
+        ],
+        [
+          340,
+          494
+        ],
+        [
+          352,
+          506
+        ],
+        [
+          360,
+          516
+        ],
+        [
+          362,
+          526
+        ],
+        [
+          370,
+          536
+        ]
+      ]
     }
   ],
   "connections": [
@@ -6046,7 +6141,8 @@
       "from": "baxi",
       "to": "bajun",
       "reaches": [
-        "jialing:baxi:bajun"
+        "jialing:baxi:dianjiang",
+        "jialing:dianjiang:bajun"
       ]
     },
     {
@@ -6171,6 +6267,25 @@
         "sources": [
           "https://zh.wikisource.org/wiki/三國志/卷01"
         ]
+      }
+    },
+    {
+      "from": "fuxian",
+      "to": "bajun",
+      "reaches": [
+        "fu:fuxian:dianjiang",
+        "jialing:dianjiang:bajun"
+      ],
+      "history": {
+        "classification": "attested_fu_jialing_military_corridor_authorial_landing",
+        "basis": "《三國志》卷31記211年劉備自江州北由墊江水詣涪；《後漢書》卷18記臧宮從涪水上行、舟步騎並進。採涪水—墊江（今合川）—嘉陵水—江州的共享河段，接岸短陸路直接連城標。211年是通行記錄而非首通年代。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷31",
+          "https://zh.wikisource.org/wiki/後漢書/卷18",
+          "https://zh.wikisource.org/wiki/水經注/32",
+          "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_44679"
+        ],
+        "limits": "史料證明軍事水陸通道，未提供全年雙向大艦運能、古港精確位置或逐日航速。像素水線、港點與地理坐標屬本作概化；沿用既定長江順逆流航速，內河不適用海路季風或海上風暴減員。此墊江為今合川，不是今日墊江縣。"
       }
     }
   ]

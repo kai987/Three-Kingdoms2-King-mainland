@@ -1,7 +1,7 @@
 'use strict';
 const assert=require('node:assert/strict');
 const {install,SOURCE,ASSET}=require('../game/map-terrain.js');
-const MAPS='svg#world-map, svg.event-map';
+const MAPS='svg#world-map, svg.event-map',VERSIONED_ASSET=ASSET+'?v=current-map-v2';
 class Node{
  constructor(localName,attributes={}){this.localName=localName;this.attributes={...attributes};this.children=[];this.parentNode=null;this.nodeType=1;this.writes=0;}
  get isConnected(){return this.root===this.ownerDocument?.documentElement;}
@@ -50,18 +50,18 @@ async function decode(env,index=0){env.images[index].onload();await Promise.reso
  const names=Object.keys(world.background.attributes),before=JSON.stringify({viewBox:world.svg.attributes.viewBox,road:world.road.attributes,city:world.city.attributes});
  const controller=install(env);
  assert.equal(install(env),controller,'One observer and preload per document');assert.equal(env.observers.length,1);assert.equal(env.images.length,1);
- assert.deepEqual(env.observers[0].options,{childList:true,subtree:true});assert.equal(env.images[0].src,ASSET);
+ assert.deepEqual(env.observers[0].options,{childList:true,subtree:true});assert.equal(env.images[0].src,VERSIONED_ASSET);
  assert.equal(controller.active,false);assert.equal(world.background.getAttribute('href'),SOURCE);assert(world.svg.children.includes(world.filter),'Original art and recolor remain together until decoding');
  env.observers[0].fire([{target:env.document.documentElement,addedNodes:[world.svg]}]);assert.equal(world.background.getAttribute('href'),SOURCE);
  await decode(env);assert.equal(await controller.ready,true);assert.equal(controller.active,true);assert(env.images[0].decoded);
- for(const row of [world,event]){assert.equal(row.background.getAttribute('href'),ASSET);assert.equal(row.background.getAttribute('data-terrain-art'),'western-range-v1');assert(!row.svg.children.includes(row.filter));assert.deepEqual(row.svg.children,[row.defs,row.background,row.road,row.city],'Only old recolor is removed; remaining layer order stays intact');}
+ for(const row of [world,event]){assert.equal(row.background.getAttribute('href'),VERSIONED_ASSET);assert.equal(row.background.getAttribute('data-terrain-art'),'western-range-v1');assert(!row.svg.children.includes(row.filter));assert.deepEqual(row.svg.children,[row.defs,row.background,row.road,row.city],'Only old recolor is removed; remaining layer order stays intact');}
  assert.equal(nested.getAttribute('href'),SOURCE);assert.equal(offMap.getAttribute('href'),SOURCE);assert.equal(other.background.getAttribute('href'),'/assets/map-basin.png');assert(other.svg.children.includes(other.filter));
  assert.equal(JSON.stringify({viewBox:world.svg.attributes.viewBox,road:world.road.attributes,city:world.city.attributes}),before);
  for(const name of names.filter(name=>name!=='href'))assert.equal(world.background.getAttribute(name),{x:'0',y:'0',width:'1352',height:'1024'}[name]);
  const writes=world.background.writes;env.observers[0].fire([{target:world.svg,addedNodes:[]}]);assert.equal(controller.refresh(),0);assert.equal(world.background.writes,writes,'Observer callback after own removal is a no-op');
- const next=map(env);env.observers[0].fire([{target:env.document.documentElement,addedNodes:[next.svg]}]);assert.equal(next.background.getAttribute('href'),ASSET,'Fresh complete SVG render is replaced within its observer callback');
+ const next=map(env);env.observers[0].fire([{target:env.document.documentElement,addedNodes:[next.svg]}]);assert.equal(next.background.getAttribute('href'),VERSIONED_ASSET,'Fresh complete SVG render is replaced within its observer callback');
  const extra=next.svg.append(new Node('g',{'data-terrain-recolor':'chengdu-west'}));env.observers[0].fire([{target:next.svg,addedNodes:[extra]}]);assert(!next.svg.children.includes(extra),'Repeated render cannot reintroduce old tint');
- const xlink=map(env);delete xlink.background.attributes.href;xlink.background.attributes['xlink:href']=SOURCE;env.observers[0].fire([{target:env.document.documentElement,addedNodes:[xlink.svg]}]);assert.equal(xlink.background.getAttributeNS('', 'href'),ASSET);
+ const xlink=map(env);delete xlink.background.attributes.href;xlink.background.attributes['xlink:href']=SOURCE;env.observers[0].fire([{target:env.document.documentElement,addedNodes:[xlink.svg]}]);assert.equal(xlink.background.getAttributeNS('', 'href'),VERSIONED_ASSET);
  controller.destroy();assert(env.observers[0].disconnected);const detached=map(env);env.observers[0].fire([{target:env.document.documentElement,addedNodes:[detached.svg]}]);assert.equal(detached.background.getAttribute('href'),SOURCE);assert.equal(controller.refresh(),0);
  const retry=install(env);assert.notEqual(retry,controller);retry.destroy();assert.equal(await retry.ready,false);
  for(const failure of ['missing','size','decode']){
@@ -70,6 +70,10 @@ async function decode(env,index=0){env.images[index].onload();await Promise.reso
   else {if(failure==='size')e.images[0].naturalWidth=256;else e.images[0].decode=()=>Promise.reject(Error('Invalid image'));await decode(e);}
   assert.equal(await c.ready,false);assert.equal(c.active,false);assert.equal(m.background.getAttribute('href'),SOURCE);assert(m.svg.children.includes(m.filter),'Failed image leaves old art complete');c.destroy();
  }
+ const hashed=environment(),sha='a'.repeat(64);hashed.document.currentScript={getAttribute:()=>sha};
+ const hashedMap=map(hashed),hashedController=install(hashed);assert.equal(hashed.images[0].src,ASSET+'?v='+sha);
+ await decode(hashed);assert.equal(hashedMap.background.getAttribute('href'),ASSET+'?v='+sha);hashedController.destroy();
+ const invalid=environment();invalid.document.currentScript={getAttribute:()=>'<untrusted>&token'};const invalidController=install(invalid);assert.equal(invalid.images[0].src,VERSIONED_ASSET);invalidController.destroy();
  assert.equal(install({}),null,'Non-browser callers do not install listeners');
  console.log('map terrain: decoded atomic replacement, scoped main/event maps, stable geometry/layer order, idempotent rerenders, failed-asset fallback and cleanup passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

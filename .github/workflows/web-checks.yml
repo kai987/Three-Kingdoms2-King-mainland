@@ -217,6 +217,7 @@ jobs:
         run: |
           python tools/officer-placement/import_campaign_stats.py --check
           python game/build_campaigns.py --check
+          python game/build_terrain_art.py --check
           python tools/officer-placement/audit_campaign_stats.py --check
           python tools/scenario-history/audit.py --check
           python tools/scenario-history/ruler_audit.py --check

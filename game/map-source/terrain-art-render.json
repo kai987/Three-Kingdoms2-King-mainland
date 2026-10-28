@@ -1,0 +1,44 @@
+{
+  "schema": "tk2-current-map-terrain-art-render-v1",
+  "policy": "Current road/water background wins; apply only retained opaque art pixels outside protected corridors.",
+  "rebuild_command": "python3 -B game/build_terrain_art.py",
+  "sources": {
+    "art/map-western-range-v1/manifest.json": "f1f2a7816f7b996dcf4b06920c8f2e2062dce66b4b8e08337d05231d53f8ea6d",
+    "art/map-western-range-v2/manifest.json": "ac7d98decd6e80e9d5574aeb12a90ffc7f8deaa36203b31260dcca15b459ec34",
+    "art/map-western-range-v3/manifest.json": "e2ca03db95ea413efe1480af40de92bafe686d6aa1c670db33904b3f89e1bdc1",
+    "art/map-western-range-v3/source/road-centers-before-junctions.png": "a5de4d6f09d860a5d0f93479321e4365d5a13c048de38c97c7bbef45ef0336e7",
+    "game/assets/map-road-centers.png": "c3c1d50fb637831f4a1df47db0efec3d9f38e23f681853103b5feb3b065735b9",
+    "game/build_portrait_manifest.py": "2631e4fba751223de6777449e4bc319e72807374c4876f405e8ec40d991667e5",
+    "game/build_terrain_art.py": "7ad3ae0ab3d4432fe0d65307ae8e7a10e3c0bf77904f399c311ffd695a9d885b",
+    "game/config/campaigns/shared.json": "c68ac1f10d24eb9edc12927685fec0ed591471c6b7f9c79cae96874670e8a329",
+    "game/config/road-centers.json": "a04ca9cef98a750cef41ce2ba0420b44253e95d0b5209f45e11abcbd4cd8d958",
+    "game/config/route-geometry.json": "65cbe2f4e985234dae2425650f2efc18f647a792dc53cc7ac5611cd2f1512389",
+    "game/config/terrain-art.json": "4687cb65416c651f94722df5a79337cedff84484e4c3eb51920ada968d56c45b",
+    "game/config/water-corrections.json": "5af4c359db943d38bfae0f9b32de4e9fc751ae024a69a41334a2abe8506c3e2e",
+    "game/map-source/approved-western-range-art.png": "50f7a296a2b476591b9a4cefd371b7317290489628baa266444c4a4fce3d06b1",
+    "game/map-source/historic-water.svg": "24cf80474725fbcf3b841c9af8bdcdd4fe2c673d5ff212ba9a218a8af358b723",
+    "game/map-source/hydrology-ground.png": "11f8373fa8277b1c403c543463425a81d50438d22bb9c25e723f51829f70b9e4",
+    "game/map-source/road-centers-render.json": "3a53d0d4acc6ee1d82103d9e585e6ebdec6e6bb455fefe2b648e91e4a07e3d60",
+    "game/map-source/road-ground.png": "ea8cf8ecbb573205b9b3e9ea43c1c15ec61ff5bef3e3d1e699bea75b0d7c08c0",
+    "game/map-source/sea-shadow.svg": "207a066255705a6f080ed9196cd75911d7bc16f37dd3a455ad061a5740130f58",
+    "game/map-source/terrain-under-water.png": "e0bdfc8406f8ddf6285fdc9cdf929ec2a3ee406600bc403c6d050d22ab0a555c",
+    "game/map-source/water-render.json": "0c7a57f42c9a37de18bb01ee41cf18178fe3ebadb3a8f1d1ef07f2eb365c6852",
+    "game/road_centers.py": "199a2d197ed4ef3b10b3a58e212d367e661442aeaf9602128ca31c5651ae7c4a",
+    "game/route_render_source.py": "af454561a401c244d8ca9d86d6097e9ecc71e7621c64ad2dd9b85c3d44aa8f90"
+  },
+  "positions_sha256": "91a45ddd1005028f4f20779946104df3bab590aab30a0c63c1d17f24a810d38d",
+  "city_count": 115,
+  "approved_asset_rgba_sha256": "5bbd57a0a685f6aa7fea017c1647925487edc35be062f2410c7b82dff10a2617",
+  "output": {
+    "path": "game/assets/map-western-range.png",
+    "sha256": "99b71a4e44eaffe76f2724ec76fc56dfdcd41e8c6ff64f84821bce2024cc94eb",
+    "rgba_sha256": "742c223cf53fb20226324dfe61df9b0e25da2f4006fa58fd9eb5c59a918a29d4"
+  },
+  "stats": {
+    "art_pixels": 63868,
+    "applied_pixels": 62408,
+    "protected_art_pixels": 1460,
+    "protected_pixels": 522754,
+    "outside_art_pixels_unchanged": 1320580
+  }
+}

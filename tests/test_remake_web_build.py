@@ -6,6 +6,7 @@ import importlib.util
 import json
 import tempfile
 import unittest
+from unittest.mock import patch
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,6 +55,19 @@ class WebBuildBoundaries(unittest.TestCase):
                     WEB.safe_read(root, path)
             self.assertEqual(WEB.safe_read(root, 'target'), b'public')
 
+    def test_terrain_image_cache_key_tracks_the_published_bitmap(self):
+        assets = {'map-terrain.js': b'terrain-loader',
+                  'assets/map-western-range.png': b'current-map-image',
+                  'paths.js': b'paths', 'browser-engine.js': b'engine',
+                  'browser-engine-worker.js': b'worker'}
+        raw = b'  <script src="/map-terrain.js" data-art-sha256="stale" defer></script>'
+        first = WEB.rewrite_html(raw, assets)
+        assets['assets/map-western-range.png'] = b'updated-map-image'
+        second = WEB.rewrite_html(raw, assets)
+        self.assertNotEqual(first, second)
+        self.assertIn(('data-art-sha256="' + WEB.sha256(b'updated-map-image') + '"').encode(), second)
+        self.assertNotIn(b'data-art-sha256="stale"', second)
+
     def test_output_refuses_unrecognized_files(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
@@ -61,6 +75,21 @@ class WebBuildBoundaries(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'unrecognized'):
                 WEB.build(root)
             self.assertEqual((root / 'keep.txt').read_text(), 'unrelated')
+
+    def test_failed_terrain_preflight_preserves_the_previous_release(self):
+        with tempfile.TemporaryDirectory() as folder:
+            output = Path(folder) / 'release'
+            (output / 'runtime').mkdir(parents=True)
+            identity = json.dumps({'schema': WEB.BUILD_SCHEMA}).encode()
+            (output / 'runtime/build.json').write_bytes(identity)
+            (output / 'index.html').write_bytes(b'previous playable release')
+            failure = WEB.subprocess.CalledProcessError(1, ['terrain-art', '--check'])
+            with patch.object(WEB.subprocess, 'run', side_effect=failure):
+                with self.assertRaises(WEB.subprocess.CalledProcessError):
+                    WEB.build(output)
+            self.assertEqual((output / 'runtime/build.json').read_bytes(), identity)
+            self.assertEqual((output / 'index.html').read_bytes(), b'previous playable release')
+            self.assertEqual(sorted(path.name for path in Path(folder).iterdir()), ['release'])
 
     def test_server_allowlist_does_not_publish_private_config_or_history(self):
         assets = WEB.static_allowlist()

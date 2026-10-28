@@ -4,6 +4,7 @@ The reviewed b6d0c16 geometry is pinned here as data, so these checks also run
 in shallow CI checkouts without reading Git history or requiring Pillow.
 """
 from collections import deque
+from copy import deepcopy
 from hashlib import sha256
 import importlib.util
 import json
@@ -74,9 +75,9 @@ class YangtzeHeadwatersTests(unittest.TestCase):
 
     def test_legacy_rect_groups_and_outer_projection_remain_byte_exact(self):
         legacy, count = re.subn(
-            rb'<g\b[^>]*\bdata-authorial-addition="upper-jinsha-visual"[^>]*>.*?</g>',
+            rb'<g\b[^>]*\bdata-authorial-addition="(?:upper-jinsha-visual|fu-dianjiang)"[^>]*>.*?</g>',
             b'', self.svg_raw, flags=re.DOTALL)
-        self.assertEqual(count, 1)
+        self.assertEqual(count, 2)
         self.assertEqual(sha256(legacy).hexdigest(), LEGACY_WATER_SHA)
         self.assertEqual(self.svg.attrib['viewBox'], '0 0 1352 1024')
         outer = self.svg.find('svg:g', NS)
@@ -168,16 +169,42 @@ class YangtzeHeadwatersTests(unittest.TestCase):
                              for x, y in self.pixels
                              for left, top, right, bottom in peak_cores))
 
-    def test_visual_extension_does_not_change_44_playable_routes_or_47_reaches(self):
+    def test_only_the_reviewed_fu_branch_and_one_jialing_split_change_navigation(self):
         spec = json.loads((ROOT / 'game/config/river-network.json').read_bytes())
-        geometry = {key: spec[key] for key in ('connections', 'nodes', 'ports', 'reaches')}
+        geometry = {key: deepcopy(spec[key]) for key in ('connections', 'nodes', 'ports', 'reaches')}
+        # Recover the exact pre-Fu network, rather than replacing the old
+        # frozen hash with a new snapshot that could hide unrelated changes.
+        additions = [row for row in geometry['connections']
+                     if (row['from'], row['to']) == ('fuxian', 'bajun')]
+        self.assertEqual(len(additions), 1)
+        geometry['connections'].remove(additions[0])
+        for connection in geometry['connections']:
+            if connection['reaches'] == ['jialing:baxi:dianjiang', 'jialing:dianjiang:bajun']:
+                self.assertEqual((connection['from'], connection['to']), ('baxi', 'bajun'))
+                connection['reaches'] = ['jialing:baxi:bajun']
+        reaches = {row['id']: row for row in geometry['reaches']}
+        upstream, downstream = (reaches[key] for key in
+                                ('jialing:baxi:dianjiang', 'jialing:dianjiang:bajun'))
+        self.assertEqual(upstream['points'][-1], downstream['points'][0])
+        self.assertEqual((upstream['from'], upstream['to'], downstream['from'], downstream['to']),
+                         ('jialing:baxi', 'jialing:dianjiang', 'jialing:dianjiang', 'yangtze:bajun'))
+        original = dict(id='jialing:baxi:bajun', river='jialing',
+                        **{'from': upstream['from'], 'to': downstream['to']},
+                        points=upstream['points'] + downstream['points'][1:])
+        geometry['reaches'] = [original if row['id'] == upstream['id'] else row
+                               for row in geometry['reaches']
+                               if row['id'] not in (downstream['id'], 'fu:fuxian:dianjiang')]
+        geometry['nodes'].pop('fu:fuxian')
+        geometry['nodes'].pop('jialing:dianjiang')
+        geometry['ports'].pop('fuxian')
         self.assertEqual(canonical_sha(geometry), NETWORK_GEOMETRY_SHA)
-        self.assertEqual((len(spec['connections']), len(spec['reaches'])), (44, 47))
+        self.assertEqual((len(geometry['connections']), len(geometry['reaches'])), (44, 47))
+        self.assertEqual((len(spec['connections']), len(spec['reaches'])), (45, 49))
         expected_ids = {row.get('id', f"{row['from']}:{row['to']}:river")
                         for row in spec['connections']}
         result = network.build()
-        self.assertEqual(result['reach_count'], 47)
-        self.assertEqual(len(result['routes']), 44)
+        self.assertEqual(result['reach_count'], 49)
+        self.assertEqual(len(result['routes']), 45)
         self.assertEqual({row['id'] for row in result['routes']}, expected_ids)
         self.assertFalse(any(ADDITION in identity for identity in spec['nodes']))
         self.assertFalse(any(ADDITION in row['id'] for row in spec['reaches']))
