@@ -130,7 +130,7 @@ TK2_TEST_PLAN=build/ci/full-plan.json node tools/browser-tests/node_modules/@pla
   --config tools/browser-tests/playwright.config.mjs --list
 ```
 
-完整模式仍使用Python／Rust各3分片、6組跨年種子、Rust格式／lint／原生／WASM差分，以及全部現有素材與瀏覽器驗收。可在GitHub Actions的`Web campaign checks`手動選`force_full`；每天日本時間03:00另跑一次完整回歸，定期／手動驗證不取消main推送的發布CI，也不自動發布網站。
+完整模式使用Python／Rust各6分片、6組跨年種子、Rust格式／lint／原生／WASM差分，以及全部現有素材與瀏覽器驗收；桌面／觸控各拆2分片，啟動前驗證各裝置的用例並集無缺漏、無重複。可在GitHub Actions的`Web campaign checks`手動選`force_full`；每天日本時間03:00另跑一次完整回歸，定期／手動驗證不取消main推送的發布CI，也不自動發布網站。
 
 ## CI發布門檻
 

@@ -19,6 +19,7 @@ SOURCE = ROOT / 'source'
 REGISTRY = ROOT / 'tools/ci/test-groups.json'
 GROUPS = frozenset(('boot', 'audio', 'map', 'scenarios', 'people', 'economy', 'logistics', 'battle', 'cloud', 'save'))
 TIERS = frozenset(('global', 'related', 'compatibility', 'full'))
+SHARD_COUNT = 6
 
 
 def discover_files(directory=TESTS):
@@ -70,6 +71,20 @@ def select_shard(files, shard, shards):
     return list(files)[shard - 1::shards]
 
 
+def partition_files(files, shards=SHARD_COUNT):
+    """Validate the closed CI partition before any test module is imported."""
+    if shards != SHARD_COUNT:
+        raise ValueError(f'Full CI requires exactly {SHARD_COUNT} campaign shards per backend')
+    complete = list(files)
+    if len(complete) != len(set(complete)):
+        raise ValueError('Duplicate campaign test file in the shard inventory')
+    groups = [select_shard(complete, index, shards) for index in range(1, shards + 1)]
+    flattened = [filename for group in groups for filename in group]
+    if any(not group for group in groups) or len(flattened) != len(complete) or set(flattened) != set(complete):
+        raise ValueError('Campaign shards must be nonempty and cover every registered file exactly once')
+    return groups
+
+
 def load_suite(files, tests=TESTS, source=SOURCE):
     # Match unittest discovery's importable tests directory and retain the repo
     # root for test-time helpers. Individual existing modules may prepend source.
@@ -99,7 +114,9 @@ def main(argv=None):
     files = discover_files()
     try:
         _, registry_sha256 = load_registry(args.registry)
-        selected = select_shard(files, args.shard, args.shards)
+        groups = partition_files(files, args.shards)
+        select_shard([], args.shard, args.shards)
+        selected = groups[args.shard - 1]
     except ValueError as error:
         parser.error(str(error))
     if not selected:

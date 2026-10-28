@@ -4,7 +4,7 @@
 List mode reads inventories only. Scoped mode validates every current catalog's
 identity/references, then runs registered related modules and selected real
 three-turn campaigns. Full mode delegates unchanged discovery to the existing
-three-shard runner for both arithmetic backends, with no test-name filtering.
+six-shard runner for both arithmetic backends, with no test-name filtering.
 """
 from __future__ import annotations
 import argparse
@@ -112,20 +112,21 @@ def execution_plan(plan,registry,*,backend=None,shard=None,shards=None,root=ROOT
     require((shard is None)==(shards is None),'--shard and --shards must be provided together')
     require(shard is None or plan['full'],'Shard arguments are only accepted for full discovery')
     if shard is not None:
-        require(shards==3,'Full CI uses the existing three-shard contract')
+        require(shards==runner.SHARD_COUNT,f'Full CI requires exactly {runner.SHARD_COUNT} campaign shards per backend')
         runner.select_shard([],shard,shards)
     backends=resolve_backends(plan,backend)
     modules=selected_modules(plan,registry)
-    if plan['full']and shard is not None:modules=runner.select_shard(modules,shard,shards)
     if plan['full']:
-        shard_ids=[shard]if shard is not None else[1,2,3]
-        count=shards if shards is not None else 3
+        partitions=runner.partition_files(modules)
+        if shard is not None:modules=partitions[shard-1]
+        shard_ids=[shard]if shard is not None else range(1,runner.SHARD_COUNT+1)
+        count=runner.SHARD_COUNT
         invocations=[dict(backend=b,argv=[sys.executable,'-B',str(root/'tools/ci/run_campaign_tests.py'),'--shard',str(i),'--shards',str(count)])for b in backends for i in shard_ids]
     else:invocations=[]
     return dict(schema='tk2-ci-python-execution-v1',mode=plan['mode'],status='planned',groups=plan['groups'],python_groups=python_groups(plan),
         backends=[]if plan['mode']=='docs'else backends,files=modules,file_count=len(modules),
         global_catalog_count=len(identities),scenario_ids=sorted(identities)if plan['full']else plan['scenario_ids']if 'scenarios'in python_groups(plan)else[],
-        full_invocations=invocations,shard=shard,shards=3 if plan['full']else None,native_required=bool(plan['full']or plan['native']),
+        full_invocations=invocations,shard=shard,shards=runner.SHARD_COUNT if plan['full']else None,native_required=bool(plan['full']or plan['native']),
         removed_scenario_ids=plan.get('removed_scenario_ids',[]))
 
 def global_catalog_checks(root=ROOT):

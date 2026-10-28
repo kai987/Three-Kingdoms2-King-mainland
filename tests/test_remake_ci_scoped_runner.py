@@ -87,20 +87,31 @@ class ScopedRunnerTests(unittest.TestCase):
         broken=deepcopy(selected);broken['scenario_ids']=['mainland999-01']
         with self.assertRaisesRegex(ValueError,'Unknown current scenario'):scoped.execution_plan(broken,registry)
 
-    def test_full_plan_delegates_every_original_file_in_all_six_unfiltered_invocations(self):
+    def test_full_plan_delegates_every_original_file_in_all_twelve_unfiltered_invocations(self):
         registry,_=shards.load_registry()
         full=plan(mode='full',full=True,native=True,groups=sorted(shards.GROUPS),python_groups=['all'])
         execution=scoped.execution_plan(full,registry,backend='both')
         self.assertEqual(execution['files'],sorted(registry['modules']))
-        self.assertEqual(len(execution['full_invocations']),6)
+        self.assertEqual(execution['shards'],6)
+        self.assertEqual(len(execution['full_invocations']),12)
         for backend in('python','rust'):
             calls=[r for r in execution['full_invocations']if r['backend']==backend]
-            self.assertEqual([r['argv'][-3]for r in calls],['1','2','3'])
-            self.assertTrue(all(r['argv'][-2:]==['--shards','3']for r in calls))
+            self.assertEqual([r['argv'][-3]for r in calls],['1','2','3','4','5','6'])
+            self.assertTrue(all(r['argv'][-2:]==['--shards','6']for r in calls))
             self.assertTrue(all('--filter'not in r['argv']for r in calls))
-        single=scoped.execution_plan(full,registry,backend='rust',shard=2,shards=3)
+            selected=[]
+            for call in calls:
+                single=scoped.execution_plan(full,registry,backend=backend,shard=int(call['argv'][-3]),shards=6)
+                self.assertEqual(len(single['full_invocations']),1)
+                selected.extend(single['files'])
+            self.assertEqual(sorted(selected),sorted(registry['modules']))
+            self.assertEqual(len(selected),len(set(selected)))
+        single=scoped.execution_plan(full,registry,backend='rust',shard=2,shards=6)
         self.assertEqual(len(single['full_invocations']),1)
-        self.assertEqual(single['full_invocations'][0]['argv'][-4:],['--shard','2','--shards','3'])
+        self.assertEqual(single['full_invocations'][0]['argv'][-4:],['--shard','2','--shards','6'])
+        for count in(1,3,4,5,7):
+            with self.assertRaisesRegex(ValueError,'exactly 6'):
+                scoped.execution_plan(full,registry,backend='rust',shard=1,shards=count)
 
     def test_boot_list_only_cli_is_inventory_only_and_has_an_auditable_report(self):
         with tempfile.TemporaryDirectory()as folder:

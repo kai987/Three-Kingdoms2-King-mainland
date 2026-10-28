@@ -127,7 +127,7 @@ jobs:
       fail-fast: false
       matrix:
         backend: [python, rust]
-        shard: [1, 2, 3]
+        shard: [1, 2, 3, 4, 5, 6]
     env:
       MARCH_CORE_BACKEND: ${{ matrix.backend }}
     steps:
@@ -152,10 +152,10 @@ jobs:
           path: build
       - name: Restore this run's checked native reference
         run: tar -xf build/native-reference.tar -C build
-      - name: Campaign behavior with ${{ matrix.backend }} marching, shard ${{ matrix.shard }}/3
+      - name: Campaign behavior with ${{ matrix.backend }} marching, shard ${{ matrix.shard }}/6
         env:
           TEST_SHARD: ${{ matrix.shard }}
-        run: python -B tools/ci/run_campaign_tests.py --shard "$TEST_SHARD" --shards 3
+        run: python -B tools/ci/run_campaign_tests.py --shard "$TEST_SHARD" --shards 6
   campaign-soak:
     needs: [scope, native-rules]
     if: needs.scope.outputs.soak == 'true'
@@ -342,6 +342,7 @@ jobs:
       fail-fast: false
       matrix:
         project: [desktop-chromium, touch-chromium]
+        shard: [1, 2]
     env:
       TK2_TEST_PLAN: build/ci/test-plan.json
     steps:
@@ -367,13 +368,15 @@ jobs:
       - name: Show the selected scope and execute actual browser controls
         env:
           BROWSER_PROJECT: ${{ matrix.project }}
+          BROWSER_SHARD: ${{ matrix.shard }}
         run: |
           node tools/browser-tests/scope.cjs --plan "$TK2_TEST_PLAN"
-          node tools/browser-tests/node_modules/@playwright/test/cli.js test --config tools/browser-tests/playwright.config.mjs --project "$BROWSER_PROJECT"
+          node tools/browser-tests/verify-shards.mjs "$BROWSER_PROJECT"
+          node tools/browser-tests/node_modules/@playwright/test/cli.js test --config tools/browser-tests/playwright.config.mjs --project "$BROWSER_PROJECT" --fully-parallel --shard "$BROWSER_SHARD/2"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
-          name: browser-${{ matrix.project }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          name: browser-${{ matrix.project }}-shard-${{ matrix.shard }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: |
             build/browser-results
             build/browser-report
