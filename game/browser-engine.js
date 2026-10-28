@@ -7,7 +7,7 @@
  // language fetches from starting. Keep the same public-asset-only boundary
  // as paths.js; Auth, private configuration and other project URLs pass through.
  if(!root.GamePaths){
-  const asset=value=>typeof value==='string'&&(value==='/config/duel-appearances.json'||/^\/(?:assets|locales|wasm|vendor)\//.test(value)||/^\/[A-Za-z0-9-]+\.js$/.test(value))?new URL('.'+value,base).pathname:value;
+  const asset=value=>typeof value==='string'&&(['/config/duel-appearances.json','/config/battlefield-city-bindings.json'].includes(value)||/^\/(?:assets|locales|wasm|vendor)\//.test(value)||/^\/[A-Za-z0-9-]+\.js$/.test(value))?new URL('.'+value,base).pathname:value;
   root.GamePaths=Object.freeze({asset,base:base.href});
  }
 

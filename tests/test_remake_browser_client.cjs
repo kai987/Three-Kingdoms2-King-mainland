@@ -31,6 +31,8 @@ function fixture(prefix='/Three-Kingdoms2-King-mainland/',{paths=true,workerHash
   const fallback=fixture(prefix,{paths:false});
   await fallback.window.fetch('/locales/zh-hant.json');
   assert.equal(fallback.requests[0][0],prefix+'locales/zh-hant.json','Missing optional path helper still loads language data under the project prefix');
+  await fallback.window.fetch(fallback.window.GamePaths.asset('/config/battlefield-city-bindings.json'));
+  assert.equal(fallback.requests[1][0],prefix+'config/battlefield-city-bindings.json','The fallback resolves the city battlefield registry under the same prefix');
   assert(Object.isFrozen(fallback.window.GamePaths));
   for(const path of ['https://auth.example/token','/config/cloud-save-public.json','/another-project/file'])assert.equal(fallback.window.GamePaths.asset(path),path);
  }
