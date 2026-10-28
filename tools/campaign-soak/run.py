@@ -165,8 +165,27 @@ class Replay:
 
     def administer(self):
         game, state = self.game, self.game.state
+        # Use the same free garrison command as a human defender. An official
+        # can be wounded or busy during a battle; existing local reserves must
+        # not sit idle while healthy defenders are below their normal cap.
+        busy = game._march_ids(state)
+        for city in state.cities.values():
+            if city.owner != state.player:
+                continue
+            officers = sorted(city.roster.officer_ids,key=lambda i:
+                (-state.officers[i].profile.martial_strength,ref_sort_key(i)))
+            for ident in officers:
+                person = self.game.state.officers[ident]
+                current = self.game.state.cities[city.id]
+                if ident in busy or not person.alive or person.health < 1:
+                    continue
+                target = min(999,person.troops+current.reserves)
+                if target > person.troops:
+                    self.command('allocate',city=city.id,officer=ident,troops=target)
+        game, state = self.game, self.game.state
         home = next(c for c in state.cities.values() if c.owner == state.player)
-        ids = sorted((i for i in state.officers if domestic._present(game, state, home, i)), key=ref_sort_key)
+        # _present intentionally supports remote faction offices.
+        ids = sorted((i for i in state.officers if domestic._present(game,state,home,i)),key=ref_sort_key)
         if len(ids) < 2:
             return
         civil = min(ids, key=lambda i: (-state.officers[i].profile.intellect, ref_sort_key(i)))
@@ -297,7 +316,7 @@ def main(argv=None):
         parser.error('--turns must be between 1 and 360')
     if any(not 1 <= seed <= 0xffffffff for seed in args.seeds):
         parser.error('seeds must be between 1 and 2^32-1')
-    report = dict(schema='tk2-campaign-soak-v1', policy='defensive-administrator-v1', cases=[], failures=[])
+    report = dict(schema='tk2-campaign-soak-v1', policy='defensive-administrator-v2-reserve-defense', cases=[], failures=[])
     started = time.monotonic()
     for case in args.case:
         for seed in args.seeds:

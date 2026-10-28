@@ -49,7 +49,7 @@ class CampaignSoakTests(unittest.TestCase):
         left, right = [{k: v for k, v in r.items() if k != 'backend'} for r in results]
         self.assertEqual(left, right, 'Every committed state hash, save and RNG must agree')
 
-    def test_administration_only_uses_paid_ordinary_commands(self):
+    def test_administration_uses_public_commands_and_conserves_resources(self):
         with using_backend('python'):
             replay = soak.Replay(controlled_catalog(), 'shu', 3, 'python')
             before = replay.game.export_save()
@@ -58,8 +58,31 @@ class CampaignSoakTests(unittest.TestCase):
             self.assertEqual(replay.game.state.turn, 1)
             self.assertEqual(replay.game.state.rng.draws, before['state']['rng']['draws'])
             self.assertEqual(replay.game.state.soldiers, before['state']['soldiers'])
-            self.assertEqual(replay.game.state.cities['xiangyang'].reserves,
-                             before['state']['cities']['xiangyang']['reserves'])
+            city = replay.game.state.cities['xiangyang']
+            initial = before['state']['cities']['xiangyang']
+            ids = city.roster.officer_ids
+            self.assertEqual(city.reserves+sum(replay.game.state.officers[i].troops for i in ids),
+                initial['reserves']+sum(before['state']['officers'][str(i)]['troops'] for i in ids))
+            self.assertTrue(all(0 <= replay.game.state.officers[i].troops <= 999 for i in ids))
+
+    def test_faction_offices_choose_from_all_cities_in_the_real_184_opening(self):
+        catalog = soak.Catalog(ROOT/'game/data/campaigns/184-02.json')
+        with using_backend('python'):
+            replay = soak.Replay(catalog,'yellow_turban',2026,'python')
+            state = replay.game.state
+            cities = [c for c in state.cities.values() if c.owner==state.player]
+            present = [i for c in cities for i in c.roster.officer_ids
+                       if soak.domestic._present(replay.game,state,c,i)]
+            civil = min(present,key=lambda i:(-state.officers[i].profile.intellect,soak.ref_sort_key(i)))
+            military = min((i for i in present if i!=civil),
+                key=lambda i:(-state.officers[i].profile.martial_strength,soak.ref_sort_key(i)))
+            self.assertNotIn(civil,cities[0].roster.officer_ids,
+                             'This real opening exercises a capable official outside the first city')
+            rng = (state.rng.state,state.rng.draws)
+            replay.administer()
+            post = soak.domestic.appointments(replay.game.state,state.player)
+            self.assertEqual((post['civil'],post['military']),(civil,military))
+            self.assertEqual((replay.game.state.rng.state,replay.game.state.rng.draws),rng)
 
     def test_observations_do_not_treat_legitimate_waiting_as_corruption(self):
         with using_backend('python'):
