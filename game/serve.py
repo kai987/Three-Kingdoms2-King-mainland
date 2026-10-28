@@ -48,6 +48,21 @@ def document_entry_path(path):
         return False
 
 
+def versioned_asset_path(path):
+    """Resolve one bounded cache key; the static allowlist still gates the path."""
+    try:
+        url = urlsplit(path)
+        if url.scheme or url.netloc or url.fragment or not url.path.startswith('/assets/'):
+            return None
+        args = parse_qs(url.query, keep_blank_values=True, max_num_fields=1)
+        if (set(args) == {'v'} and len(args['v']) == 1
+                and re.fullmatch(r'(?:[a-fA-F0-9]{64}|current-map-v[1-9][0-9]{0,3})', args['v'][0])):
+            return url.path
+    except ValueError:
+        pass
+    return None
+
+
 class AuditLog:
     """Optional diagnostics have fixed storage bounds and retain dropped counts."""
     def __init__(self, limits=None):
@@ -450,7 +465,7 @@ def make_handler(game, cloud_config, cloud_csp, static, audit=None, here=HERE):
                     if set(query) != {'scenario', 'city'} or any(len(v) != 1 for v in query.values()):
                         raise GameError('城池查询参数无效。')
                     return self.send(200, game.preview_city(query['scenario'][0], query['city'][0]))
-                static_path = '/' if document_entry_path(self.path) else self.path
+                static_path = '/' if document_entry_path(self.path) else (versioned_asset_path(self.path) or self.path)
                 if static_path in static:
                     name, mime = static[static_path]
                     try:

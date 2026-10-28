@@ -187,6 +187,13 @@
         "battle"
       ]
     },
+    "tests/test_remake_east_jiang_corridor.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "logistics"
+      ]
+    },
     "tests/test_remake_effect_assets.py": {
       "tier": "global",
       "groups": [

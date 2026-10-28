@@ -62,6 +62,7 @@ def isolated_server(game=None, *, timeout=.3, workers=32, audit=None):
         (here / 'index.html').write_bytes(b'<!doctype html><title>Game shell</title>')
         handler = transport.make_handler(game, {'enabled': False}, "default-src 'self'",
                                          {'/asset': ('asset.txt', 'text/plain'),
+                                          '/assets/example.png': ('asset.txt', 'image/png'),
                                           '/': ('index.html', 'text/html')}, audit, here)
         server = transport.GameHTTPServer(('127.0.0.1', 0), handler,
                                           max_workers=workers, request_timeout=timeout)
@@ -274,6 +275,25 @@ class HTTPBoundaryTests(unittest.TestCase):
             (here / 'asset.txt').unlink()
             (here / 'asset.txt').symlink_to(ROOT / 'README.md')
             self.assertEqual(exchange(port, path='/asset')[0], 404)
+
+    def test_versioned_assets_keep_the_static_allowlist_and_etag_contract(self):
+        with isolated_server() as (server, game, _):
+            port = server.server_address[1]
+            for token in ('a' * 64, 'current-map-v2'):
+                path = '/assets/example.png?v=' + token
+                status, headers, body = exchange(port, path=path)
+                self.assertEqual((status, body), (200, b'static version one'))
+                status, _, body = exchange(port, path=path, headers={'If-None-Match': headers['ETag']})
+                self.assertEqual((status, body), (304, b''))
+            for path in ('/assets/private.png?v=' + 'a' * 64,
+                         '/assets/example.png?v=', '/assets/example.png?v=bad',
+                         '/assets/example.png?v=' + 'a' * 65,
+                         '/assets/example.png?v=' + 'a' * 64 + '&v=' + 'b' * 64,
+                         '/assets/example.png?v=' + 'a' * 64 + '&other=1',
+                         '/assets/../asset.txt?v=' + 'a' * 64,
+                         '/api/state?v=' + 'a' * 64, '/?v=' + 'a' * 64):
+                self.assertEqual(exchange(port, path=path)[0], 404, path)
+            self.assertEqual((game.reads, game.writes, game.loads), (0, 0, 0))
 
     def test_gzip_negotiation_and_save_bytes(self):
         with isolated_server() as (server, _, _):

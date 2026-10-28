@@ -16,7 +16,7 @@
     "game/config/map-source.json": "555ca277dda085d1188a9e467558997a4d25d17ffc04ce05083ffbe0ab9bf467",
     "game/app.js": "35d7ec8aa5056b75674f9dc16e343498a348041cc36112cbc32253ad35c59585",
     "game/config/route-render-source.json": "e6b1cfae6f86e1fed613bab17a24e5a75b8860f45f02ed3bb47d135bb27139ff",
-    "game/config/campaigns/shared.json": "c68ac1f10d24eb9edc12927685fec0ed591471c6b7f9c79cae96874670e8a329",
+    "game/config/campaigns/shared.json": "ea962b999d22f339a89e39c418b04aeae7b7d830c5f5b020b7d99aa1bc0a573e",
     "game/config/campaigns/index.json": "0b5095ca8de43f8201f979d88d289015da7536e5b3795a2ca8cc519e555699d3",
     "game/config/campaigns/scenarios/184-02.json": "ac18e4179556e3651b54cbde2c64d1e70caf5b6ec44c75fb8e8daf6f4c8b8d3b",
     "game/config/campaigns/scenarios/188-06.json": "41e9f96a4bfbb0190542fe85d25d271834f3bc6797c82fccb925e491373ef7f3",
@@ -48,7 +48,7 @@
     "game/config/campaigns/scenarios/249-01.json": "64558bceaf1d7a46b379298cc1878fcd28c939cf4d43626b699fc752e0024eb5",
     "game/config/campaigns/scenarios/263-05.json": "55d7ae7e7df531d9fa71cffb1b85057b4203509efd6d1734201dc150a711b078"
   },
-  "input_geometry_sha256": "ad4bbc4091f1cd02470dcc0250ce74c214199a6a713b7935d7045d2852a5b079",
+  "input_geometry_sha256": "de5831aae91d105713874a661c28bc266c060891abe274e397ed23bb971f4d41",
   "routes": {
     "anding:fufeng:land": {
       "from": "anding",
@@ -14405,6 +14405,61 @@
         }
       ]
     },
+    "xiapi:danyang:land": {
+      "from": "xiapi",
+      "to": "danyang",
+      "mode": "land",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            996,
+            351
+          ],
+          "end": [
+            1050,
+            427
+          ],
+          "d": "M996 351L1002 354Q1008 357 1015 357.5Q1022 358 1028 364.5Q1034 371 1036 379.5Q1038 388 1044 397.5Q1050 407 1050 417L1050 427",
+          "length_px": 103.057259,
+          "chord_px": 93.230896,
+          "pieces": [
+            {
+              "d": "M996 351L1002 354Q1008 357 1015 357.5Q1022 358 1028 364.5Q1034 371 1036 379.5Q1038 388 1044 397.5Q1050 407 1050 417L1050 427",
+              "reverse": false
+            }
+          ]
+        }
+      ],
+      "city_sections": [
+        {
+          "from": "xiapi",
+          "to": "danyang",
+          "parts": [
+            {
+              "mode": "land",
+              "start": [
+                996,
+                351
+              ],
+              "end": [
+                1050,
+                427
+              ],
+              "d": "M996 351L1002 354Q1008 357 1015 357.5Q1022 358 1028 364.5Q1034 371 1036 379.5Q1038 388 1044 397.5Q1050 407 1050 417L1050 427",
+              "length_px": 103.057259,
+              "chord_px": 93.230896,
+              "pieces": [
+                {
+                  "d": "M996 351L1002 354Q1008 357 1015 357.5Q1022 358 1028 364.5Q1034 371 1036 379.5Q1038 388 1044 397.5Q1050 407 1050 417L1050 427",
+                  "reverse": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "zangke:bajun:land": {
       "from": "zangke",
       "to": "bajun",
@@ -27506,10 +27561,10 @@
   },
   "audit": {
     "catalogs": 29,
-    "input_routes": 415,
-    "compiled_routes": 415,
+    "input_routes": 416,
+    "compiled_routes": 416,
     "graph_nodes": 166,
-    "graph_strokes": 253,
+    "graph_strokes": 254,
     "unmatched": [],
     "shared_city_pass_through": [
       {

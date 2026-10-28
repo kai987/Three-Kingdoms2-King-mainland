@@ -3,7 +3,7 @@
   "review_revision": "2026-10-27",
   "review_file": "game/config/references/scenario-history-review.json",
   "review_sha256": "26d5dec0f8fa9ea2ce7c3ec16a09c53d602c22b777af7eab2c6cab5027225dfb",
-  "presentation_sha256": "91dddc3599f721e90c073c3be3a45a3e19e1731785c4f744b0bb49c5e96276c7",
+  "presentation_sha256": "0d017c36eb95b354f20bf50f699ff8aa70d04a267fcd775b391109946a3d1796",
   "scope": "Regional review and current-data consistency, not a complete attested city/month prefect list or a SAN14 export.",
   "boundary_definition": "Different opening owners connected by links, sea_links or travel_routes; each unordered city pair is listed once. These are network borders, not geographic administrative boundary polygons.",
   "historical_count": 23,
@@ -21,7 +21,7 @@
     "future_factions": 2,
     "scheduled_faction_foundings": 2,
     "scheduled_faction_coups": 1,
-    "boundary_links": 1329,
+    "boundary_links": 1351,
     "opening_officers": 8847,
     "new_factions": 43,
     "city_changes": 107,
@@ -35,7 +35,7 @@
     "future_factions": 0,
     "scheduled_faction_foundings": 0,
     "scheduled_faction_coups": 0,
-    "boundary_links": 343,
+    "boundary_links": 347,
     "opening_officers": 2174,
     "new_factions": 13,
     "city_changes": 14,
@@ -171,7 +171,7 @@
       "title": "184年2月 · 黄巾之乱",
       "title_ja": "184年2月 · 黄巾之乱",
       "catalog_file": "game/data/campaigns/184-02.json",
-      "catalog_sha256": "1e02d51c0fb50787a65a3a9048c668c1e3e9a3389a6d9ca2d92253370dae5219",
+      "catalog_sha256": "e7fa11e0ae63057a819fc3ec747aa173a0920ce2c480df3059240fff91c697e2",
       "factions": [
         {
           "id": "ding_yuan",
@@ -1379,6 +1379,23 @@
           "owners": [
             "neutral",
             "liu_yan"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
+          ],
+          "owners": [
+            "neutral",
+            "wu"
           ],
           "modes": [
             "land"
@@ -5517,7 +5534,7 @@
       "title": "188年6月 · 漢朝搖搖欲墜",
       "title_ja": "揺らぐ漢朝",
       "catalog_file": "game/data/campaigns/188-06.json",
-      "catalog_sha256": "65e5c7acb45b955d0f5f9aaf682bd693312b603ea5bbbb2c8ff68b0cc701d2ee",
+      "catalog_sha256": "87754067e0b18e55bc5d511d60ec2c1f1daf1b5c26ef69e9975d064d2f93eb1a",
       "factions": [
         {
           "id": "ding_yuan",
@@ -11113,7 +11130,7 @@
       "title": "190年1月 · 反董卓联盟",
       "title_ja": "190年1月 · 反董卓联盟",
       "catalog_file": "game/data/campaigns/190-01.json",
-      "catalog_sha256": "3082c1c6b8cad51ee6f34ea93b4c488ecc69846e5eb8accc9322e8e385a8e47d",
+      "catalog_sha256": "23986c0d6aeb31744f65e8e2c66e68c46a816fdc35ea2edfb540e514aec340bc",
       "factions": [
         {
           "id": "bao_xin",
@@ -12476,6 +12493,23 @@
           "owners": [
             "liu_yu",
             "han_fu"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
+          ],
+          "owners": [
+            "neutral",
+            "tao_qian"
           ],
           "modes": [
             "land"
@@ -18778,7 +18812,7 @@
       "title": "191年10月 · 二袁的意图",
       "title_ja": "191年10月 · 二袁的意图",
       "catalog_file": "game/data/campaigns/191-10.json",
-      "catalog_sha256": "0771a75cf430bfa5a66c7902abf8f12e7c62d47b8f40d5ef5cafdd94640acb15",
+      "catalog_sha256": "11bac5bd48fbc8c72386ee2d05841b269b557bd7f29b95c25d620ae4dfd37674",
       "factions": [
         {
           "id": "bao_xin",
@@ -20071,6 +20105,23 @@
           "owners": [
             "liu_yu",
             "yuan_shao"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
+          ],
+          "owners": [
+            "neutral",
+            "tao_qian"
           ],
           "modes": [
             "land"
@@ -26484,7 +26535,7 @@
       "title": "194年6月 · 群雄割据",
       "title_ja": "194年6月 · 群雄割据",
       "catalog_file": "game/data/campaigns/194-06.json",
-      "catalog_sha256": "1a09d1a19665cba90d7dec7797c25caf2a1e5d41a964c0cd9814f4b0f11db955",
+      "catalog_sha256": "265f427dd1d56afd5e635625ea0e6c5d27a592bbbd767b810587d0be89aee69a",
       "factions": [
         {
           "id": "gongsun",
@@ -27781,6 +27832,23 @@
           "modes": [
             "land",
             "river"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
+          ],
+          "owners": [
+            "liu_you",
+            "tao_qian"
+          ],
+          "modes": [
+            "land"
           ],
           "link_sources": [
             "links",
@@ -34416,7 +34484,7 @@
       "title": "196年6月 · 曹操得勢",
       "title_ja": "曹操の台頭",
       "catalog_file": "game/data/campaigns/196-06.json",
-      "catalog_sha256": "67b10d908af8a477afec215099882014ed96f556e317fff4ebdd67bb74504881",
+      "catalog_sha256": "a85d45d7933466e93f647559198fb9bd35903f6102fe8983ce6478d86c8323ec",
       "factions": [
         {
           "id": "gongsun",
@@ -35652,6 +35720,23 @@
           "modes": [
             "land",
             "river"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
+          ],
+          "owners": [
+            "wu",
+            "shu"
+          ],
+          "modes": [
+            "land"
           ],
           "link_sources": [
             "links",
@@ -42285,7 +42370,7 @@
       "title": "198年3月 · 呂布討伐戰",
       "title_ja": "呂布討伐戦",
       "catalog_file": "game/data/campaigns/198-03.json",
-      "catalog_sha256": "a0af683dd5bdce1908353420a55dcea4bf5d0fb10eede67cad530ccbc0c386f9",
+      "catalog_sha256": "22132789aa615cfb25851c70a284b5d4faeec95a2a4df4fb7aa631def4e7d241",
       "factions": [
         {
           "id": "gongsun",
@@ -43486,6 +43571,23 @@
           "modes": [
             "land",
             "river"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
+          ],
+          "owners": [
+            "wu",
+            "lubu"
+          ],
+          "modes": [
+            "land"
           ],
           "link_sources": [
             "links",
@@ -49965,7 +50067,7 @@
       "title": "200年1月 · 官渡之战",
       "title_ja": "200年1月 · 官渡之战",
       "catalog_file": "game/data/campaigns/200-01.json",
-      "catalog_sha256": "34b0747245414ab6453982504e7c3dc7f0d0a1bd67a7d4f87728e706d3333229",
+      "catalog_sha256": "06968ca9193defd781533b76baeb7a47e8a883955354133e8cd52ca1b7f53bce",
       "factions": [
         {
           "id": "gongsun",
@@ -50989,6 +51091,23 @@
           "owners": [
             "wu",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
+          ],
+          "owners": [
+            "wu",
+            "shu"
           ],
           "modes": [
             "land"
@@ -57130,7 +57249,7 @@
       "title": "202年6月 · 河北爭亂",
       "title_ja": "河北争乱",
       "catalog_file": "game/data/campaigns/202-06.json",
-      "catalog_sha256": "be0c48430205dd9853d3059e5ecd083fafc08a386d9a70a5e9ef2322d83d2fc9",
+      "catalog_sha256": "4c02e66b39e4e3ac7ffa0221c2ca078fe541abba225a00d520c3b487506157cd",
       "factions": [
         {
           "id": "gao_gan",
@@ -58296,6 +58415,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -64501,7 +64637,7 @@
       "title": "207年9月 · 三顾茅庐",
       "title_ja": "207年9月 · 三顾茅庐",
       "catalog_file": "game/data/campaigns/207-09.json",
-      "catalog_sha256": "051df25b182c2a138458c1d85d52342c85ae36572b73baed17ddb0ee35921353",
+      "catalog_sha256": "bcf53378914c52f3e2deb9b30cc1ae5c108ce2f5cf9e4088117b309743e778f5",
       "factions": [
         {
           "id": "gongsun",
@@ -65522,6 +65658,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -72440,7 +72593,7 @@
       "title": "208年10月 · 赤壁之战",
       "title_ja": "208年10月 · 赤壁之战",
       "catalog_file": "game/data/campaigns/208-10.json",
-      "catalog_sha256": "f085b5916ace6055ee2d10a075316643700eb5c06ad16d8e05beb5d12b7c0017",
+      "catalog_sha256": "8cd70f7b4eb01e11693563603fc0324f308216451fe7015a552fb443c7b57e67",
       "factions": [
         {
           "id": "gongsun",
@@ -73583,6 +73736,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -80554,7 +80724,7 @@
       "title": "211年7月 · 潼關之戰",
       "title_ja": "潼関の戦い",
       "catalog_file": "game/data/campaigns/211-07-tongguan.json",
-      "catalog_sha256": "4d2349faaec01f2e562f772af11734120f2ac4e04d60c9c096f76a8a865a80e4",
+      "catalog_sha256": "6414324c84f4d9487553c08c3b2bb291846dfc7fd24bf675ebddfb212bad0bac",
       "factions": [
         {
           "id": "gongsun",
@@ -81529,6 +81699,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -87463,7 +87650,7 @@
       "title": "212年12月 · 入蜀爭奪戰",
       "title_ja": "入蜀争奪戦",
       "catalog_file": "game/data/campaigns/212-12.json",
-      "catalog_sha256": "a9527df7c8019df4c91c9e29e74c190bde1dba59f117baf1f0b9d54b95e20e0b",
+      "catalog_sha256": "bbfee78702113ad7f64196738b652d5a27990e45be5711b191b7d6e5a0674fb1",
       "factions": [
         {
           "id": "gongsun",
@@ -88429,6 +88616,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -95384,7 +95588,7 @@
       "title": "215年8月 · 合淝之戰",
       "title_ja": "合肥の戦い",
       "catalog_file": "game/data/campaigns/215-08.json",
-      "catalog_sha256": "cdbd32ae45b7751ce5960abf7a1e14879f4ba5aed246a6400c9e356a9fc6dbb7",
+      "catalog_sha256": "8d3e7ca19b56983d1d5e5dc69ef007bae06374c4d96f489a172b25f95c0a0236",
       "factions": [
         {
           "id": "gongsun",
@@ -96236,6 +96440,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -101057,7 +101278,7 @@
       "title": "217年7月 · 汉中争夺战",
       "title_ja": "217年7月 · 汉中争夺战",
       "catalog_file": "game/data/campaigns/217-07.json",
-      "catalog_sha256": "468e99b33cf6fdf89edadbffe2114d5b91568370bd63da98a851454ed4181e76",
+      "catalog_sha256": "6e8ab07ac702184f2fb688a96c0a7dfd9f6c49fd9c39fc55f1d07696096974d8",
       "factions": [
         {
           "id": "gongsun",
@@ -101909,6 +102130,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -106811,7 +107049,7 @@
       "title": "219年7月 · 关羽包围网",
       "title_ja": "219年7月 · 关羽包围网",
       "catalog_file": "game/data/campaigns/219-07.json",
-      "catalog_sha256": "17c886f286830577b31aed93cccccee5b7d7c323f1b9c89a7b0b60cce0d9ac4c",
+      "catalog_sha256": "832b6c1c3f121023ae3981ee54682d40f057698fa04a5b6d4d698b10fae8b68e",
       "factions": [
         {
           "id": "gongsun",
@@ -107629,6 +107867,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -112639,7 +112894,7 @@
       "title": "221年7月 · 夷陵前夕",
       "title_ja": "221年7月 · 夷陵前夕",
       "catalog_file": "game/data/campaigns/221-07.json",
-      "catalog_sha256": "dfdd76f6c77a0228d86e3d958e283a987a92a94124b6ac364b67e9fda4094dd0",
+      "catalog_sha256": "ef8cb4790c296c313ee3fe18159865f84e51ef5f3998fd3e8332ac6a41c33e7f",
       "factions": [
         {
           "id": "gongsun",
@@ -113478,6 +113733,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -118160,7 +118432,7 @@
       "title": "225年7月 · 征伐南蠻",
       "title_ja": "南蛮征伐",
       "catalog_file": "game/data/campaigns/225-07.json",
-      "catalog_sha256": "2673d5f2ee456b623c4dc4386b1fbfbfd69126f21db871c6e79241d9a688669b",
+      "catalog_sha256": "2ec13bfd1123040ba6789b52d6d73c69419ee67b7d92386591ea7cd69a96ecc9",
       "factions": [
         {
           "id": "gongsun",
@@ -119025,6 +119297,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -123786,7 +124075,7 @@
       "title": "227年2月 · 出师表",
       "title_ja": "227年2月 · 出师表",
       "catalog_file": "game/data/campaigns/227-02.json",
-      "catalog_sha256": "51e0c43b5ef3252bdbd2cdb1467c9b0eaee2622d6a96d9939eb77fdb618edf68",
+      "catalog_sha256": "8a3bd9884057c1e3a5ecc137b6ac9851cfa060cf1002fdab1e882230c50262fb",
       "factions": [
         {
           "id": "gongsun",
@@ -124616,6 +124905,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -128837,7 +129143,7 @@
       "title": "234年2月 · 秋風五丈原",
       "title_ja": "秋風五丈原",
       "catalog_file": "game/data/campaigns/234-02.json",
-      "catalog_sha256": "dc979bbe2b0793822d081364ac856b580b17aecaa5c02a5d0181285c66c01605",
+      "catalog_sha256": "40664c0067baa56bb1ed1a35851bfca6d7bfd4c873e4b02d4487af480b3ca812",
       "factions": [
         {
           "id": "gongsun",
@@ -129650,6 +129956,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -133406,7 +133729,7 @@
       "title": "238年1月 · 征讨辽东",
       "title_ja": "238年1月 · 征讨辽东",
       "catalog_file": "game/data/campaigns/238-01.json",
-      "catalog_sha256": "fca9abd9f40a2d8d4045780875b06e0bac3876c46f2b639e3eb17ce1b97166ad",
+      "catalog_sha256": "6cfd3376af0d596496ccf3c34239ea9a590c7aed07a43289b75fa4142c90b698",
       "factions": [
         {
           "id": "gongsun",
@@ -134219,6 +134542,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -137936,7 +138276,7 @@
       "title": "249年1月 · 正始之变",
       "title_ja": "249年1月 · 正始之变",
       "catalog_file": "game/data/campaigns/249-01.json",
-      "catalog_sha256": "6ccd3614ed26090987e21ce16b96dd3c47c3997f5c7d2b058868154cc3fa1b9c",
+      "catalog_sha256": "518faf379b87c66216c6d5ca0303b9fffd754bfee1ed80945d3e3eda15ab16b7",
       "factions": [
         {
           "id": "shu",
@@ -138698,6 +139038,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -142019,7 +142376,7 @@
       "title": "263年5月 · 蜀漢滅亡",
       "title_ja": "蜀漢の滅亡",
       "catalog_file": "game/data/campaigns/263-05.json",
-      "catalog_sha256": "9db87987c9d960f22bac5f717b05d75f3540358c0966e0bdc5edaaa3fee1c6d3",
+      "catalog_sha256": "b06a320f5a0cc6f4af520afbefd386ad88f7b4438dd91a5ab79dec8505650177",
       "factions": [
         {
           "id": "lu_xing",
@@ -142808,6 +143165,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -145340,7 +145714,7 @@
       "title": "197年7月 · 皇帝呂布",
       "title_ja": "皇帝呂布",
       "catalog_file": "game/data/campaigns/197-07.json",
-      "catalog_sha256": "a0b0175857defa4d747cfa0397fa6bbe07629a599335b624abf2fd464a8f3780",
+      "catalog_sha256": "39ec2158d3c092ec12e8dc8f152d2ac9fc4394404d72d13470585cc5ced5f917",
       "factions": [
         {
           "id": "gongsun",
@@ -146559,6 +146933,23 @@
           "modes": [
             "land",
             "river"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
+          ],
+          "owners": [
+            "wu",
+            "lubu"
+          ],
+          "modes": [
+            "land"
           ],
           "link_sources": [
             "links",
@@ -153180,7 +153571,7 @@
       "title": "201年5月 · 華北霸者・袁紹",
       "title_ja": "華北の覇者・袁紹",
       "catalog_file": "game/data/campaigns/201-05.json",
-      "catalog_sha256": "4f2ebe77997c7637d516b7cbfd563d49b567ad7302bd55593f39abfd6da79f92",
+      "catalog_sha256": "d4b3b847a52c325ef608054833b5aa8f3eee36ae4bc937f9f5878d7ccf8ffd19",
       "factions": [
         {
           "id": "gongsun",
@@ -154182,6 +154573,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "yuan_shao"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -159610,7 +160018,7 @@
       "title": "209年6月 · 志在千里",
       "title_ja": "志在千里",
       "catalog_file": "game/data/campaigns/209-06.json",
-      "catalog_sha256": "a3094b72bd29791d589db3a0c21204d08a11d6697f124ea939ca72d656ccbb49",
+      "catalog_sha256": "9b434f750cd526eb5f254e5a542bbe84a49c9eff510bc5cea5604d6853e0e105",
       "factions": [
         {
           "id": "gongsun",
@@ -166086,7 +166494,7 @@
       "title": "210年11月 · 二分天下之計",
       "title_ja": "天下二分計",
       "catalog_file": "game/data/campaigns/210-11.json",
-      "catalog_sha256": "0ccc119280a4d8e729c903b9e0fb840e7f2fabe031873b9c2738c43c4db1897a",
+      "catalog_sha256": "afa30b8895825181901a7eba451f263fba2753b37d46b894cdfe42f9fd2f8379",
       "factions": [
         {
           "id": "gongsun",
@@ -167009,6 +167417,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",
@@ -172511,7 +172936,7 @@
       "title": "212年6月 · 錦馬超展翅高飛",
       "title_ja": "錦馬超飛翔",
       "catalog_file": "game/data/campaigns/212-06.json",
-      "catalog_sha256": "e61350b8095e773f5c33437b649c5dfe97127e8f5b05dd4759aea2cc578a523a",
+      "catalog_sha256": "b84ba9c17eecc58dfddbd92f615f33854d4f22c4abaa251de59fe04433a7ca83",
       "factions": [
         {
           "id": "cao_zhang",
@@ -173494,6 +173919,23 @@
           "cities": [
             "danyang",
             "jiujiang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "danyang",
+            "xiapi"
           ],
           "owners": [
             "wu",

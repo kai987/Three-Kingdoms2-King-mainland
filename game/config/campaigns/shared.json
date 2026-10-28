@@ -1989,6 +1989,10 @@
       [
         "fuxian",
         "bajun"
+      ],
+      [
+        "xiapi",
+        "danyang"
       ]
     ],
     "active_cities": [
@@ -55233,6 +55237,62 @@
         "land_km": 393.8,
         "sea_km": 0,
         "days": 27
+      },
+      {
+        "id": "xiapi:danyang:land",
+        "from": "xiapi",
+        "to": "danyang",
+        "mode": "land",
+        "terrain": "plain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                996,
+                351
+              ],
+              [
+                1008,
+                357
+              ],
+              [
+                1022,
+                358
+              ],
+              [
+                1034,
+                371
+              ],
+              [
+                1038,
+                388
+              ],
+              [
+                1050,
+                407
+              ],
+              [
+                1050,
+                427
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "historical_regional_land_and_ferry_corridor",
+          "confidence": "regional_connection_not_exact_Han_alignment",
+          "basis": "《三國志·劉繇傳》記笮融督徐州運漕，徐州亂後走廣陵，繼而至屯秣陵的薛禮處。據徐州—廣陵—秣陵的區域往來補連現有下邳、建業（早期秣陵）節點，東海沿既有道路經下邳接入，免強制西繞壽春。圖線概括平原行軍、淮水渡涉與長江渡口，不宣稱精確漢代官道、京口渡點或永久橋；史料亦未證明邗溝在全部劇本年代均可供軍船常態通航，因此不新增邗溝軍航或開通年月。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷49#笮融",
+          "additional_source": "https://zh.wikisource.org/wiki/三國志/卷02",
+          "date_policy": "attested_movement_is_not_a_first_opening_date",
+          "is_proven_exact_Han_alignment": false,
+          "is_proven_permanent_bridge": false
+        },
+        "distance_km": 288.2,
+        "land_km": 288.2,
+        "sea_km": 0,
+        "days": 10
       }
     ],
     "city_count": 115,
@@ -56652,6 +56712,57 @@
           "additional_source": "https://zh.wikisource.org/wiki/三國志/卷44#蔣琬",
           "date_policy": "attested_movement_in_35_is_not_a_first_opening_date",
           "is_proven_exact_Han_alignment": false
+        }
+      },
+      {
+        "from": "xiapi",
+        "to": "danyang",
+        "mode": "land",
+        "terrain": "plain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                996,
+                351
+              ],
+              [
+                1008,
+                357
+              ],
+              [
+                1022,
+                358
+              ],
+              [
+                1034,
+                371
+              ],
+              [
+                1038,
+                388
+              ],
+              [
+                1050,
+                407
+              ],
+              [
+                1050,
+                427
+              ]
+            ]
+          }
+        ],
+        "history": {
+          "classification": "historical_regional_land_and_ferry_corridor",
+          "confidence": "regional_connection_not_exact_Han_alignment",
+          "basis": "《三國志·劉繇傳》記笮融督徐州運漕，徐州亂後走廣陵，繼而至屯秣陵的薛禮處。據徐州—廣陵—秣陵的區域往來補連現有下邳、建業（早期秣陵）節點，東海沿既有道路經下邳接入，免強制西繞壽春。圖線概括平原行軍、淮水渡涉與長江渡口，不宣稱精確漢代官道、京口渡點或永久橋；史料亦未證明邗溝在全部劇本年代均可供軍船常態通航，因此不新增邗溝軍航或開通年月。",
+          "source": "https://zh.wikisource.org/wiki/三國志/卷49#笮融",
+          "additional_source": "https://zh.wikisource.org/wiki/三國志/卷02",
+          "date_policy": "attested_movement_is_not_a_first_opening_date",
+          "is_proven_exact_Han_alignment": false,
+          "is_proven_permanent_bridge": false
         }
       }
     ],
