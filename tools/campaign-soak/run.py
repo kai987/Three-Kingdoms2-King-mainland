@@ -165,38 +165,50 @@ class Replay:
 
     def administer(self):
         game, state = self.game, self.game.state
-        # Use the same paid garrison command as a human defender. An official
-        # can be wounded or busy during a battle; existing local reserves must
-        # not sit idle while healthy defenders are below their normal cap.
-        busy = game._march_ids(state)
-        for city in state.cities.values():
-            if city.owner != state.player:
-                continue
-            officers = sorted(city.roster.officer_ids,key=lambda i:
-                (-state.officers[i].profile.martial_strength,ref_sort_key(i)))
-            for ident in officers:
-                person = self.game.state.officers[ident]
-                current = self.game.state.cities[city.id]
-                if ident in busy or not person.alive or person.health < 1:
-                    continue
-                target = min(999,person.troops+current.reserves)
-                if target > person.troops and command_books.can_spend(game.state, state.player, 'allocate'):
-                    self.command('allocate',city=city.id,officer=ident,troops=target)
-        game, state = self.game, self.game.state
         home = next(c for c in state.cities.values() if c.owner == state.player)
-        # _present intentionally supports remote faction offices.
+        # Appointments are free policy controls. Establish the faction's
+        # military office before spending books on individual assignments:
+        # its ordinary end-turn service distributes the same local reserves
+        # before hostile AI departures, without a second assignment fee.
         ids = sorted((i for i in state.officers if domestic._present(game,state,home,i)),key=ref_sort_key)
+        if len(ids) >= 2:
+            civil = min(ids, key=lambda i: (-state.officers[i].profile.intellect, ref_sort_key(i)))
+            military = min((i for i in ids if i != civil),
+                key=lambda i: (-state.officers[i].profile.martial_strength, ref_sort_key(i)))
+            post = domestic.appointments(state, state.player)
+            if post['civil'] != civil or post['military'] != military or not post['policy']['recruit_enabled']:
+                self.command('set_domestic', faction=state.player, civil=civil, military=military,
+                    policy=dict(auto_recruit=True, auto_persuade=True, min_chance=20,
+                        recruit_enabled=True, training_enabled=True, reserve_target=2000, recruit_budget=100,
+                        task_order=['transport', 'personnel', 'recruit']))
+        game, state = self.game, self.game.state
+        post = domestic.appointments(state, state.player)
+        if not domestic._present(game, state, home, post.get('military')):
+            # A wounded, absent or unavailable official cannot distribute
+            # reserves. Spend the shared pool on urgent/frontline defenders
+            # first, using public paid commands and the actual local stock.
+            busy = game._march_ids(state)
+            fronts = {c.id for c in logistics._fronts(game, state, state.player)}
+            incoming = {}
+            for march in state.extension['travel']['marches']:
+                if march['owner'] != state.player and march['kind'] == 'attack':
+                    target = march['target']
+                    incoming[target] = min(incoming.get(target, march['arrival_turn']), march['arrival_turn'])
+            cities = sorted((c for c in state.cities.values() if c.owner == state.player),
+                key=lambda c: (incoming.get(c.id, 10**9), c.id not in fronts, c.id))
+            for city in cities:
+                officers = sorted(city.roster.officer_ids,key=lambda i:
+                    (-state.officers[i].profile.martial_strength,ref_sort_key(i)))
+                for ident in officers:
+                    person = self.game.state.officers[ident]
+                    current = self.game.state.cities[city.id]
+                    if ident in busy or not person.alive or person.health < 1:
+                        continue
+                    target = min(999,person.troops+current.reserves)
+                    if target > person.troops and command_books.can_spend(game.state, state.player, 'allocate'):
+                        self.command('allocate',city=city.id,officer=ident,troops=target)
         if len(ids) < 2:
             return
-        civil = min(ids, key=lambda i: (-state.officers[i].profile.intellect, ref_sort_key(i)))
-        military = min((i for i in ids if i != civil),
-            key=lambda i: (-state.officers[i].profile.martial_strength, ref_sort_key(i)))
-        post = domestic.appointments(state, state.player)
-        if post['civil'] != civil or post['military'] != military or not post['policy']['recruit_enabled']:
-            self.command('set_domestic', faction=state.player, civil=civil, military=military,
-                policy=dict(auto_recruit=True, auto_persuade=True, min_chance=20,
-                    recruit_enabled=True, training_enabled=True, reserve_target=2000, recruit_budget=100,
-                    task_order=['transport', 'personnel', 'recruit']))
         # Configure one genuine friendly source-to-front route through public
         # policy controls as the player. Never inject cargo or shorten routes.
         game, state = self.game, self.game.state
@@ -316,7 +328,7 @@ def main(argv=None):
         parser.error('--turns must be between 1 and 360')
     if any(not 1 <= seed <= 0xffffffff for seed in args.seeds):
         parser.error('seeds must be between 1 and 2^32-1')
-    report = dict(schema='tk2-campaign-soak-v1', policy='defensive-administrator-v2-reserve-defense', cases=[], failures=[])
+    report = dict(schema='tk2-campaign-soak-v1', policy='defensive-administrator-v3-shared-order-defense', cases=[], failures=[])
     started = time.monotonic()
     for case in args.case:
         for seed in args.seeds:

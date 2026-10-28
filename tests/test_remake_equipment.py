@@ -33,6 +33,8 @@ def shop_city(game,state,name):
     row=state.extension['facilities']['cities'].pop('capital')
     state.extension['facilities']['cities'][name]=row
     game.catalog.map_cities[name]=game.catalog.map_cities.pop('capital')
+    # This helper builds a renamed opening, before any service is executed.
+    command_books.initialize(game,state)
     return city
 
 
