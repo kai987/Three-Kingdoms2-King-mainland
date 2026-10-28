@@ -2,7 +2,7 @@
  * Campaign changes use visible controls, never injected game state.
  */
 import {test,expect} from '../tools/browser-tests/node_modules/@playwright/test/index.mjs';
-import {readFile,mkdir} from 'node:fs/promises';
+import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import assert from 'node:assert/strict';
 import browserScopes from '../tools/browser-tests/scope.cjs';
@@ -1492,9 +1492,10 @@ test('treasury drafts, governor rewards, treasure sale and search use real saved
  expect(gain).toBeGreaterThan(0);expect(loyalty).toBeLessThanOrEqual(100);
  await page.locator('#treasury-reward').click();await waitIdle(page);
  await expect(page.locator('[data-treasury-dialog]')).toBeVisible();
- await expect(page.locator('#treasury-reward')).toBeDisabled();
  await expect(page.locator('#dialog [data-city-treasure]')).toHaveText('5');
  const rewarded=await save();
+ expect(rewarded.state.extension.command_books.factions.shu.used).toBe(appointed.state.extension.command_books.factions.shu.used+1);
+ if(loyalty<100)await expect(page.locator('#treasury-reward')).toBeEnabled();
  expect(rewarded.state.officers[target].loyalty).toBe(loyalty);
  expect(rewarded.state.officers[target].loyalty).toBe(initial.state.officers[target].loyalty+gain);
  expect(rewarded.state.officers[target].health).toBe(initial.state.officers[target].health);
@@ -1531,7 +1532,8 @@ test('treasury drafts, governor rewards, treasure sale and search use real saved
  expect([0,1]).toContain(found);
  expect(searched.state.cities[searchCity].gold).toBe(beforeSearch.state.cities[searchCity].gold-20);
  expect(searched.state.rng.draws).toBe(beforeSearch.state.rng.draws+1);
- await expect(page.locator('#treasury-search')).toBeDisabled();await events('search');
+ expect(searched.state.extension.command_books.factions.shu.used).toBe(beforeSearch.state.extension.command_books.factions.shu.used+1);
+ await expect(page.locator('#treasury-search')).toBeEnabled();await events('search');
  expect(errors.get(page)).toEqual([]);
 });
 
@@ -1629,7 +1631,7 @@ test('facility visits, trade, study, equipment, prevention and town development 
  expect(after.save.state.officers[patient].health).toBeGreaterThanOrEqual(clinicQuote.after_min);expect(after.save.state.officers[patient].health).toBeLessThanOrEqual(clinicQuote.after_max);
  expect(after.save.state.rng.draws).toBe(before.save.state.rng.draws+1);
  expect(after.save.state.cities[clinic[0]].action_used).toBe(true);expect(after.save.state.extension.officer_actions[actor]).toBe(after.save.state.turn);
- await expect(page.locator('#facility-treat')).toBeDisabled();await page.locator('#facility-civic-entry').click();await page.locator('#facility-civic-prevention').click();await expect(page.locator('#facility-prevent')).toBeDisabled();await page.locator('#facility-civic-policy').click();await expect(page.locator('#facility-policy-gold_budget')).toHaveValue('321');
+ expect(after.save.state.extension.command_books.factions.shu.used).toBe(before.save.state.extension.command_books.factions.shu.used+1);await page.locator('#facility-civic-entry').click();await page.locator('#facility-civic-prevention').click();await expect(page.locator('.facility-footer [data-command-book-cost]')).toHaveAttribute('data-command-book-cost','1');await page.locator('#facility-civic-policy').click();await expect(page.locator('#facility-policy-gold_budget')).toHaveValue('321');
  await page.locator('#facility-save-policy').click();await waitIdle(page);const configured=await read();
  expect(configured.save.state.extension.facilities.factions.shu).toMatchObject({enabled:false,gold_budget:321,grain_floor:5000,grain_target:5000});
  expect(configured.save.state.rng).toEqual(after.save.state.rng);await events('clinic-ja','officer_treated');
@@ -1645,7 +1647,7 @@ test('facility visits, trade, study, equipment, prevention and town development 
  await assertFacilityFooter(page,'facility-trade');await page.locator('#facility-trade').click();await waitIdle(page);after=await read();
  expect(after.save.state.cities[market[0]].gold).toBe(before.save.state.cities[market[0]].gold-batches*market[1].trade.buy.rate);
  expect(after.save.state.cities[market[0]].grain).toBe(before.save.state.cities[market[0]].grain+batches*market[1].trade.buy.batch_grain);expect(after.save.state.rng).toEqual(before.save.state.rng);
- await expect(page.locator('#facility-trade')).toBeDisabled();await events('market-tc','grain_traded');
+ expect(after.save.state.extension.command_books.factions.shu.used).toBe(before.save.state.extension.command_books.factions.shu.used+1);await events('market-tc','grain_traded');
  before=await read();const school=chooseCity(before,row=>row.services.includes('school')&&row.students.some(s=>s.can_study));expect(school).toBeTruthy();await open(school[0]);await page.locator('#facility-tab-school').click();
  const student=await page.locator('#facility-student').inputValue(),studyQuote=school[1].students.find(row=>String(row.id)===student);expect(studyQuote.can_study).toBe(true);
  await expect(page.locator('#facility-study-preview')).toContainText(String(studyQuote.gold));await assertFacilityFooter(page,'facility-study');await page.locator('#facility-study').click();await waitIdle(page);after=await read();
@@ -1653,7 +1655,7 @@ test('facility visits, trade, study, equipment, prevention and town development 
  expect(learned).toBeGreaterThanOrEqual(studyQuote.after_min);expect(learned).toBeLessThanOrEqual(studyQuote.after_max);
  expect(after.save.state.cities[school[0]].gold).toBe(before.save.state.cities[school[0]].gold-studyQuote.gold);expect(after.save.state.rng.draws).toBe(before.save.state.rng.draws+1);
  expect(after.save.state.extension.facilities.study[student]).toBe((before.save.state.extension.facilities.study[student]||0)+learned-studyQuote.before);
- await expect(page.locator('#facility-study')).toBeDisabled();await events('school-tc','officer_studied');
+ expect(after.save.state.extension.command_books.factions.shu.used).toBe(before.save.state.extension.command_books.factions.shu.used+1);await events('school-tc','officer_studied');
  before=await read();const armory=chooseCity(before,row=>row.services.includes('armory')&&row.stock.weapon.some(item=>item.can_buy&&item.eligible_targets.length));expect(armory).toBeTruthy();await open(armory[0]);await page.locator('#facility-tab-armory').click();
  await page.locator('#facility-tab-armory').focus();
  for(const [service,action]of [['hospital','facility-treat'],['school','facility-study'],['market','facility-trade'],['armory','facility-equipment-buy']]){
@@ -1665,7 +1667,7 @@ test('facility visits, trade, study, equipment, prevention and town development 
  await page.locator('#facility-equipment-officer').selectOption(recipient);await page.locator('#facility-equipment-item').selectOption(String(item.id));
  await expect(page.locator('#facility-equipment-buy')).toBeEnabled();await assertFacilityFooter(page,'facility-equipment-buy');await page.locator('#facility-equipment-buy').click();await waitIdle(page);after=await read();
  expect(after.save.state.officers[recipient].weapon_id).toBe(item.id);expect(after.save.state.cities[armory[0]].gold).toBe(before.save.state.cities[armory[0]].gold-item.price);expect(after.save.state.rng).toEqual(before.save.state.rng);
- await expect(page.locator('#facility-equipment-buy')).toBeDisabled();await events('equipment-tc','equipment_bought');
+ expect(after.save.state.extension.command_books.factions.shu.used).toBe(before.save.state.extension.command_books.factions.shu.used+1);await events('equipment-tc','equipment_bought');
  before=await read();const prevention=chooseCity(before,row=>Object.values(row.prevention_quotes).some(q=>q.can_prevent));expect(prevention).toBeTruthy();await open(prevention[0]);await page.locator('#facility-civic-entry').click();await page.locator('#facility-civic-prevention').click();
  const engineer=await page.locator('#facility-actor').inputValue(),preventionQuote=prevention[1].prevention_quotes[engineer];expect(preventionQuote.can_prevent).toBe(true);
  await expect(page.locator('#facility-prevention-preview')).toContainText(String(preventionQuote.gold_min));await page.locator('#dialog-language').selectOption('ja');expect((await read()).save).toEqual(before.save);
@@ -1674,11 +1676,11 @@ test('facility visits, trade, study, equipment, prevention and town development 
  expect(expense).toBeGreaterThanOrEqual(preventionQuote.gold_min);expect(expense).toBeLessThanOrEqual(preventionQuote.gold_max);
  expect(protectedCity.preparedness).toBeGreaterThanOrEqual(preventionQuote.preparedness_min);expect(protectedCity.preparedness).toBeLessThanOrEqual(preventionQuote.preparedness_max);
  expect(protectedCity.damage).toBeGreaterThanOrEqual(preventionQuote.damage_min);expect(protectedCity.damage).toBeLessThanOrEqual(preventionQuote.damage_max);expect(after.save.state.rng.draws).toBe(before.save.state.rng.draws+2);
- await expect(page.locator('#facility-prevent')).toBeDisabled();await events('prevention-ja','prevention_improved');
+ expect(after.save.state.extension.command_books.factions.shu.used).toBe(before.save.state.extension.command_books.factions.shu.used+1);await events('prevention-ja','prevention_improved');
  before=await read();const town=chooseCity(before,row=>row.develop.can_develop);expect(town).toBeTruthy();await open(town[0]);await page.locator('#facility-civic-entry').click();
  await page.locator('#facility-develop').click();await waitIdle(page);after=await read();
  expect(after.save.state.extension.facilities.cities[town[0]].town).toBe(town[1].develop.to_town);expect(after.save.state.cities[town[0]].gold).toBe(before.save.state.cities[town[0]].gold-town[1].develop.gold);expect(after.save.state.rng).toEqual(before.save.state.rng);
- await expect(page.locator('#facility-develop')).toBeDisabled();await expect(page.locator('#facility-tab-school')).toBeEnabled();await expect(page.locator('#facility-tab-armory')).toBeEnabled();await events('development-ja','town_developed');
+ expect(after.save.state.extension.command_books.factions.shu.used).toBe(before.save.state.extension.command_books.factions.shu.used+1);await expect(page.locator('#facility-tab-school')).toBeEnabled();await expect(page.locator('#facility-tab-armory')).toBeEnabled();await events('development-ja','town_developed');
  const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');
  await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
  const restored=page.waitForEvent('download');await page.locator('#save').click();expect(await readFile(await(await restored).path(),'utf8')).toBe(raw);
@@ -1840,5 +1842,51 @@ test('city-specific battlefield keeps both armies visible and supports real batt
  await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'battle-acceptance.json',mimeType:'application/json',buffer:Buffer.from(raw)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();expect(await read()).toEqual(snapshot);
  await expect(canvas).toHaveJSProperty('width',1984);await expect(page.locator('[data-battle-skip]')).toBeHidden();
  await testInfo.attach('battle-layout-and-assets',{body:Buffer.from(JSON.stringify({geometry,fields},null,2)),contentType:'application/json'});
+ expect(errors.get(page)).toEqual([]);
+});
+
+test('faction command books can all be spent in one city and survive save reload',async({page},testInfo)=>{
+ await opening(page);await page.locator('#scenario').selectOption('mainland217-07');await page.locator('input[name=faction][value=shu]').check();
+ await page.locator('#begin').click();await waitIdle(page);await dismissHistoryOpening(page);
+ const dismiss=async()=>{await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));const modal=page.locator('#event-dialog');if(await modal.isVisible()){const skip=modal.locator('[data-event-skip]');await(await skip.count()?skip:modal.locator('[data-event-next]')).click();await expect(modal).toBeHidden();}};
+ const read=()=>page.evaluate(async()=>{const response=await fetch('/api/save');if(!response.ok)throw Error('Command-book save inspection failed');return response.json();});
+ const budget=save=>save.state.extension.command_books.factions.shu;
+ const counter=page.locator('#inspector [data-command-books]');
+ await page.locator('#city-jump').selectOption('shujun');
+ const initial=await read(),total=budget(initial).total;
+ expect(total).toBeGreaterThan(1);expect(total).toBeLessThanOrEqual(13);expect(budget(initial).used).toBe(0);
+ await expect(counter).toHaveAttribute('data-command-books-remaining',String(total));await expect(counter).toHaveAttribute('data-command-books-total',String(total));
+ await clickCityCommand(page,'recruit');await expect(page.locator('#dialog [data-command-book-cost]')).toHaveAttribute('data-command-book-cost','1');
+ await page.locator('#dialog-language').selectOption('ja');await expect(page.locator('#dialog [data-command-books]')).toContainText('命令書',{useInnerText:true});
+ await expect(page.locator('#dialog [data-command-books]')).toContainText('今回消費 1枚',{useInnerText:true});await expect(counter).toContainText('残り',{useInnerText:true});
+ await closeDialog(page);expect(await read()).toEqual(initial,'Cancellation and language changes cannot spend books or RNG');
+ for(let index=0;index<total;index++){
+  await clickCityCommand(page,'recruit');await page.locator('#confirm-recruit').click();await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();
+  const current=await read(),row=budget(current);
+  expect(current.state.turn).toBe(initial.state.turn);expect(row.used).toBe(index+1);expect(row.total).toBe(total);
+  expect(row.orders).toHaveLength(index+1);expect(row.orders.every(order=>order.city==='shujun'&&order.kind==='recruit'&&order.cost===1)).toBe(true);
+  expect(current.state.cities.shujun.reserves).toBe(initial.state.cities.shujun.reserves+(index+1)*100);
+  expect(current.state.cities.shujun.gold).toBe(initial.state.cities.shujun.gold-(index+1)*20);expect(current.state.cities.shujun.grain).toBe(initial.state.cities.shujun.grain-(index+1)*30);
+  expect(current.state.rng).toEqual(initial.state.rng);await expect(counter).toHaveAttribute('data-command-books-remaining',String(total-index-1));
+  if(index+1<total)await expect(page.locator('#recruit')).toBeEnabled();
+ }
+ await expect(page.locator('#recruit')).toBeDisabled();await expect(page.locator('#allocate')).toBeDisabled();await expect(counter).toContainText('使い切りました',{useInnerText:true});
+ const spent=await read(),other=Object.values(spent.state.cities).find(city=>city.owner==='shu'&&city.id!=='shujun');expect(other).toBeTruthy();
+ await page.locator('#city-jump').selectOption(other.id);await page.locator('#city-command-tab-army').click();await expect(counter).toHaveAttribute('data-command-books-remaining','0');await expect(page.locator('#recruit')).toBeDisabled();
+ await clickCityCommand(page,'city-civic');await page.locator('#facility-civic-policy').click();await expect(page.locator('#facility-save-policy')).toBeEnabled();await expect(page.locator('.facility-footer [data-command-book-cost]')).toHaveAttribute('data-command-book-cost','0');
+ const beforePolicy=await read();await page.locator('#facility-save-policy').click();await waitIdle(page);const policy=await read();
+ expect(budget(policy)).toEqual(budget(beforePolicy));expect(policy.state.rng).toEqual(beforePolicy.state.rng);await closeDialog(page);
+ const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');
+ await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'spent-command-books.json',mimeType:'application/json',buffer:Buffer.from(raw)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();
+ expect(await read()).toEqual(JSON.parse(raw),'Reload never grants the already-spent command books a second time');await expect(counter).toHaveAttribute('data-command-books-remaining','0');
+ const noOverflow=await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth);expect(noOverflow).toBe(true);await historyScreenshot(page,testInfo,'command-books-one-city-exhausted');
+ await page.locator('#end-turn').click();await waitIdle(page);await dismiss();await page.locator('#run-ai').click();await waitIdle(page);await dismiss();
+ if(await page.locator('#process-arrivals').isVisible()){await page.locator('#process-arrivals').click();await waitIdle(page);await dismiss();}
+ const next=await read();expect(next.state.turn).toBe(initial.state.turn+1);expect(budget(next).used).toBe(0);expect(budget(next).orders).toEqual([]);
+ await expect(counter).toHaveAttribute('data-command-books-remaining',String(budget(next).total));await historyScreenshot(page,testInfo,'command-books-next-turn');
+ const identity=await page.evaluate(async()=>{const response=await fetch(new URL('runtime/build.json',location.href));const build=await response.json();return{worker:GameBrowserEngine.version,commit:build.commit,content_sha256:build.content_sha256,url:location.href};});
+ for(const [label,save]of [['initial',initial],['next-turn',next]]){const file=testInfo.outputPath('command-books-'+label+'-save.json');await writeFile(file,JSON.stringify(save));await testInfo.attach('command-books-'+label+'-save',{path:file,contentType:'application/json'});}
+ const spentFile=testInfo.outputPath('command-books-spent-raw-save.json');await writeFile(spentFile,raw);await testInfo.attach('command-books-spent-raw-save',{path:spentFile,contentType:'application/json'});
+ const proof=testInfo.outputPath('command-books-identity-and-ledgers.json');await writeFile(proof,JSON.stringify({identity,initial:budget(initial),spent:budget(JSON.parse(raw)),next:budget(next),rng_before:initial.state.rng,rng_after_spending:spent.state.rng},null,2));await testInfo.attach('command-books-identity-and-ledgers',{path:proof,contentType:'application/json'});
  expect(errors.get(page)).toEqual([]);
 });

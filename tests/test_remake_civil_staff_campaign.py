@@ -163,8 +163,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
         ident = self.hire(game)
         target = game.catalog.ids[FREE_PERSON]
         payload = dict(city='nanjun', actor=ident, officer=target)
-        self.fails_atomically(game, 'staff_recruit', payload)
-        self.step(game)
+        self.assertEqual(game.state.extension['command_books']['factions']['shu']['used'], 1)
         person = self.pool(game)['people'][ident]
         candidate = game.state.officers[target]
         chance = max(15, min(95, 35 + person['profile']['virtue']//2 +
@@ -259,6 +258,9 @@ class CivilStaffCampaignTests(unittest.TestCase):
         # A satisfied reserve target isolates the actual AI hiring/personnel
         # commands from that independent city-action competitor.
         domestic.appointments(game.state, 'shu')['policy']['reserve_target'] = 0
+        # Automatic rewards may now legitimately use a second order in the
+        # hiring city; isolate personnel fees from that independently tested policy.
+        game.state.extension['treasury']['factions']['shu']['enabled'] = False
         local_soldiers = game.state.cities['nanjun'].reserves
         self.step(game)
         people = self.pool(game)['people']

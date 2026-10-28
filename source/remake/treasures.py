@@ -6,6 +6,7 @@ commands change assets or sample RNG. Views, governors and quotes are pure.
 from copy import deepcopy
 
 from .errors import GameError
+from . import command_books
 from .officers import parse_officer_ref, ref_sort_key
 from .city_economy import tier_at
 
@@ -41,8 +42,7 @@ def _present(game, state, city, ident, *, unused=False):
     return bool(person is not None and ident in city.roster.officer_ids
         and city.owner != 'neutral' and person.faction_id == city.owner
         and person.alive and person.health > 0 and paid and ident not in game._march_ids(state)
-        and ident not in _battle_ids(state)
-        and (not unused or state.extension['officer_actions'].get(str(ident)) != state.turn))
+        and ident not in _battle_ids(state))
 
 
 def _governor(game, state, city, row=None):
@@ -160,13 +160,13 @@ def _ready(state, owner):
         and state.phase == ('city' if owner == state.player else 'ai'))
 
 
-def _city(game, state, key, owner, *, action=False):
+def _city(game, state, key, owner, *, action=False, kind=1):
     if (not _ready(state, owner) or not isinstance(key, str) or key not in state.cities
             or state.cities[key].owner != owner):
         raise GameError('目前不能操作這座城的寶庫。')
     city = state.cities[key]
-    if action and city.action_used:
-        raise GameError('本城本旬已行動。')
+    if action:
+        command_books.require(state, owner, kind)
     return city
 
 
@@ -179,14 +179,14 @@ def _actor(game, state, city, ident):
     try:
         ident = parse_officer_ref(ident, game.catalog.rules)
     except (ValueError, TypeError) as error:
-        raise GameError('請選擇本城尚未行動、健康且在場的武將。') from error
+        raise GameError('請選擇本城健康且在場的武將。') from error
     if not _present(game, state, city, ident, unused=True):
-        raise GameError('請選擇本城尚未行動、健康且在場的武將。')
+        raise GameError('請選擇本城健康且在場的武將。')
     return ident
 
 
-def _spend_action(state, city, actor):
-    city.action_used = True
+def _spend_action(state, city, actor, kind):
+    command_books.spend(state, city, kind)
     state.extension['officer_actions'][str(actor)] = state.turn
 
 
@@ -198,7 +198,7 @@ def _emit(game, state, kind, city, people, details):
 
 def search(game, state, payload, owner):
     _payload(payload, {'city', 'actor'}, {'city', 'actor'})
-    city = _city(game, state, payload['city'], owner, action=True)
+    city = _city(game, state, payload['city'], owner, action=True, kind='search_treasure')
     actor = _actor(game, state, city, payload['actor'])
     if count(state, city.id) >= 99:
         raise GameError('本城寶數已達上限，搜尋未執行。')
@@ -212,7 +212,7 @@ def search(game, state, payload, owner):
     city.gold -= RULES['search_gold']
     if success:
         credit(state, city.id, 1, reason='found')
-    _spend_action(state, city, actor)
+    _spend_action(state, city, actor, 'search_treasure')
     details = dict(actor=state.officers[actor].person_id, amount=int(success), chance=chance,
                    gold=RULES['search_gold'])
     _emit(game, state, 'treasure_found' if success else 'treasure_search_failed', city, [actor], details)
@@ -235,7 +235,7 @@ def _reward_target(game, state, city, ident):
 
 def reward(game, state, payload, owner):
     _payload(payload, {'city', 'officer', 'kind', 'amount'}, {'city', 'officer', 'kind', 'amount'})
-    city = _city(game, state, payload['city'], owner, action=True)
+    city = _city(game, state, payload['city'], owner, action=True, kind='reward_officer')
     governor = _governor(game, state, city, _pool(state)['cities'][city.id])
     actor = _actor(game, state, city, governor)
     target = _reward_target(game, state, city, payload['officer'])
@@ -258,7 +258,7 @@ def reward(game, state, payload, owner):
     else:
         debit(state, city.id, 1, reason='spent')
     state.officers[target].loyalty += gain
-    _spend_action(state, city, actor)
+    _spend_action(state, city, actor, 'reward_officer')
     details = dict(actor=state.officers[actor].person_id, target=state.officers[target].person_id,
         kind=kind, amount=amount, gain=gain, loyalty_before=before,
         loyalty_after=state.officers[target].loyalty)
@@ -268,7 +268,7 @@ def reward(game, state, payload, owner):
 
 def sell(game, state, payload, owner):
     _payload(payload, {'city', 'actor', 'amount'}, {'city', 'actor', 'amount'})
-    city = _city(game, state, payload['city'], owner, action=True)
+    city = _city(game, state, payload['city'], owner, action=True, kind='sell_treasure')
     actor = _actor(game, state, city, payload['actor'])
     amount = payload['amount']
     if not _int(amount, 1, 99) or amount > count(state, city.id):
@@ -278,7 +278,7 @@ def sell(game, state, payload, owner):
         raise GameError('本城金錢已達上限，賣寶未執行。')
     debit(state, city.id, amount, reason='sold')
     city.gold += gold
-    _spend_action(state, city, actor)
+    _spend_action(state, city, actor, 'sell_treasure')
     details = dict(actor=state.officers[actor].person_id, amount=amount, gold=gold)
     _emit(game, state, 'treasure_sold', city, [actor], details)
     return details
@@ -336,37 +336,43 @@ def auto_turn(game, state, owner):
     if not policy['enabled']:
         return []
     budget, results = policy['gold_budget'], []
-    for key, city in sorted(state.cities.items()):
-        if city.owner != owner or city.action_used:
-            continue
-        actor = _governor(game, state, city, pool['cities'][key])
-        if not _present(game, state, city, actor, unused=True):
-            continue
-        targets = [i for i in city.roster.officer_ids if _present(game, state, city, i)
-            and i not in state.extension['leaders'].values()
-            and state.officers[i].loyalty < policy['target_loyalty']]
-        if not targets:
-            continue
-        target = min(targets, key=lambda ident: (state.officers[ident].loyalty,
-            -state.officers[ident].profile.virtue, -state.officers[ident].profile.intellect,
-            ref_sort_key(ident)))
-        maximum = min(100, budget, max(0, city.gold - policy['gold_floor']))
-        kinds = ('gold', 'treasure') if policy['prefer'] == 'gold' else ('treasure', 'gold')
-        for kind in kinds:
-            if kind == 'gold':
-                if maximum < 1:
-                    continue
-                gap = policy['target_loyalty'] - state.officers[target].loyalty
-                amount = next((n for n in range(1, maximum + 1)
-                    if _gold_gain(state.officers[actor].profile.virtue, n, 100) >= gap), maximum)
-            else:
-                if count(state, key) <= policy['treasure_floor']:
-                    continue
-                amount = 1
-            results.append(reward(game, state,
-                dict(city=key, officer=target, kind=kind, amount=amount), owner))
-            if kind == 'gold':
-                budget -= amount
+    for _ in range(command_books.MAXIMUM):
+        completed = len(results)
+        for key, city in sorted(state.cities.items()):
+            if city.owner != owner or not command_books.can_spend(state, owner):
+                continue
+            actor = _governor(game, state, city, pool['cities'][key])
+            if not _present(game, state, city, actor, unused=True):
+                continue
+            targets = [i for i in city.roster.officer_ids if _present(game, state, city, i)
+                and i not in state.extension['leaders'].values()
+                and state.officers[i].loyalty < policy['target_loyalty']]
+            if not targets:
+                continue
+            target = min(targets, key=lambda ident: (state.officers[ident].loyalty,
+                -state.officers[ident].profile.virtue, -state.officers[ident].profile.intellect,
+                ref_sort_key(ident)))
+            maximum = min(100, budget, max(0, city.gold - policy['gold_floor']))
+            kinds = ('gold', 'treasure') if policy['prefer'] == 'gold' else ('treasure', 'gold')
+            for kind in kinds:
+                if not command_books.can_spend(state, owner, 'reward_officer'):
+                    break
+                if kind == 'gold':
+                    if maximum < 1:
+                        continue
+                    gap = policy['target_loyalty'] - state.officers[target].loyalty
+                    amount = next((n for n in range(1, maximum + 1)
+                        if _gold_gain(state.officers[actor].profile.virtue, n, 100) >= gap), maximum)
+                else:
+                    if count(state, key) <= policy['treasure_floor']:
+                        continue
+                    amount = 1
+                results.append(reward(game, state,
+                    dict(city=key, officer=target, kind=kind, amount=amount), owner))
+                if kind == 'gold':
+                    budget -= amount
+                break
+        if len(results) == completed:
             break
     return results
 
@@ -375,30 +381,34 @@ def ai_idle_turn(game, state, owner):
     """Choose idle work, then use exactly the same search/sale services.
 
     This is a caller-selected AI strategy, never an implicit player policy.
-    Successful commands spend the city action and prevent a second idle pass.
+    Every accepted order uses the same bounded faction pool.
     """
     pool = _pool(state)
     if owner not in pool['factions'] or not _ready(state, owner):
         return []
     policy, results = pool['factions'][owner], []
-    for key, city in sorted(state.cities.items()):
-        if city.owner != owner or city.action_used:
-            continue
-        actors = [ident for ident in city.roster.officer_ids
-                  if _present(game, state, city, ident, unused=True)]
-        if not actors:
-            continue
-        actor = min(actors, key=lambda ident: (-state.officers[ident].profile.intellect,
-            -state.officers[ident].profile.virtue, ref_sort_key(ident)))
-        stock = count(state, key)
-        if stock > policy['treasure_floor'] and city.gold < policy['gold_floor']:
-            amount = min((policy['gold_floor'] - city.gold + 99) // 100,
-                         stock - policy['treasure_floor'], (LIMIT - city.gold) // 100)
-            if amount:
-                results.append(sell(game, state, dict(city=key, actor=actor, amount=amount), owner))
-        elif (stock < 2 and city.gold >= policy['gold_floor'] + RULES['search_gold']
-              and pool['ledger']['found'] < LIMIT):
-            results.append(search(game, state, dict(city=key, actor=actor), owner))
+    for _ in range(command_books.MAXIMUM):
+        completed = len(results)
+        for key, city in sorted(state.cities.items()):
+            if city.owner != owner or not command_books.can_spend(state, owner):
+                continue
+            actors = [ident for ident in city.roster.officer_ids
+                      if _present(game, state, city, ident, unused=True)]
+            if not actors:
+                continue
+            actor = min(actors, key=lambda ident: (-state.officers[ident].profile.intellect,
+                -state.officers[ident].profile.virtue, ref_sort_key(ident)))
+            stock = count(state, key)
+            if stock > policy['treasure_floor'] and city.gold < policy['gold_floor']:
+                amount = min((policy['gold_floor'] - city.gold + 99) // 100,
+                             stock - policy['treasure_floor'], (LIMIT - city.gold) // 100)
+                if amount and command_books.can_spend(state, owner, 'sell_treasure'):
+                    results.append(sell(game, state, dict(city=key, actor=actor, amount=amount), owner))
+            elif (command_books.can_spend(state, owner, 'search_treasure') and stock < 2 and city.gold >= policy['gold_floor'] + RULES['search_gold']
+                  and pool['ledger']['found'] < LIMIT):
+                results.append(search(game, state, dict(city=key, actor=actor), owner))
+        if len(results) == completed:
+            break
     return results
 
 
@@ -414,7 +424,7 @@ def view(game, state):
         governor = _governor(game, state, city, saved)
         candidates = sorted((i for i in city.roster.officer_ids if _present(game, state, city, i)), key=ref_sort_key)
         actors = [i for i in candidates if _present(game, state, city, i, unused=True)]
-        ready = _ready(state, city.owner) and not city.action_used
+        ready = _ready(state, city.owner) and command_books.can_spend(state, city.owner)
         actor_ready = governor in actors
         amount = count(state, key)
         gold_max = min(100, city.gold)
@@ -445,9 +455,9 @@ def view(game, state):
         result['cities'][key] = dict(owner=city.owner, treasure=amount, governor=governor,
             governor_mode=saved['governor_mode'], governor_candidates=candidates, eligible_actors=actors,
             can_manage=_ready(state, city.owner), search_fee=RULES['search_gold'], search_chances=chances,
-            can_search=ready and bool(actors) and city.gold >= RULES['search_gold'] and amount < 99,
-            can_sell=ready and bool(actors) and maximum > 0, sell_max=maximum,
-            can_reward=ready and actor_ready and bool(targets) and bool(gold_max or amount),
+            can_search=ready and command_books.can_spend(state,city.owner,'search_treasure') and bool(actors) and city.gold >= RULES['search_gold'] and amount < 99,
+            can_sell=ready and command_books.can_spend(state,city.owner,'sell_treasure') and bool(actors) and maximum > 0, sell_max=maximum,
+            can_reward=ready and command_books.can_spend(state,city.owner,'reward_officer') and actor_ready and bool(targets) and bool(gold_max or amount),
             reward_targets=targets)
     return result
 

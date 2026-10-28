@@ -8,6 +8,7 @@ from hashlib import sha256
 import re
 
 from .errors import GameError
+from . import command_books
 from .officers import (OfficerProfile, PersonDefinition, initialize_officer,
                        is_generated_ref, year_state, YearState)
 
@@ -396,8 +397,8 @@ def _blocked_reason(campaign, state, city, owner):
         return 'wrong_phase'
     if _in_battle(state, city.id):
         return 'battle'
-    if city.action_used:
-        return 'action_used'
+    if not command_books.can_spend(state, owner, 'hire_staff'):
+        return 'command_books'
     if row['candidate'] is None or row['candidate']['expires_month'] <= month_index(state):
         return 'no_candidate'
     if city_occupancy(state, city) >= campaign.catalog.rules.city_officer_capacity:
@@ -412,7 +413,7 @@ def _blocked_reason(campaign, state, city, owner):
 
 
 _ERRORS = dict(not_owned='请选择本方城池。', wrong_phase='当前不能雇用地方文吏。',
-    battle='交战城池不能雇用地方文吏。', action_used='这座城本回合已行动。',
+    battle='交战城池不能雇用地方文吏。', command_books='本勢力命令書不足。',
     no_candidate='本城暂无有效的文吏候选。', city_full='本城人员已达容量上限。',
     staff_limit='本城地方文吏已达上限。', not_needed='本城编制已足，无需补充文吏。',
     insufficient_gold='雇用地方文吏需要60金钱。')
@@ -442,7 +443,16 @@ def hire(campaign, state, city_id, candidate_id, owner):
     row['cooldown_until_month'] = month_index(state) + RULES['cooldown_months']
     row['misses'] = 0
     city.gold -= RULES['hire_gold']
-    city.action_used = True
+    command_books.spend(state, city, 'hire_staff')
+    # Automatic faction work can visit the armory or treasury again before the
+    # enclosing command's final synchronization. Register the new person now,
+    # so that closing synchronization cannot overwrite a same-turn purchase.
+    if 'equipment' in state.extension:
+        from . import equipment
+        equipment.synchronize(campaign, state)
+    if 'treasury' in state.extension:
+        from . import treasures
+        treasures.synchronize(campaign, state)
     _emit(campaign, state, 'staff_hired', city, person=person, amount=RULES['hire_gold'], reason='hired')
     return person
 
@@ -481,7 +491,7 @@ def view(campaign, state):
         rejectable = (row['candidate'] is not None and row['candidate']['expires_month'] > month_index(state)
                       and city.owner == state.player and state.phase == 'city' and not _in_battle(state, key))
         free = campaign._free_candidates(state, city) if city.owner == state.player else []
-        available = any(p['working'] and p['health'] > 0 and p['action_turn'] != state.turn for p in employees)
+        available = any(p['working'] and p['health'] > 0 for p in employees)
         result['cities'][key] = dict(target=limit, minimum=limit, limit=limit, count=count,
             staff_count=count, officer_count=_historical_count(state, city),
             occupancy=city_occupancy(state, city), effective_count=effective,
@@ -490,7 +500,7 @@ def view(campaign, state):
             can_reject=rejectable, monthly_salary=count * RULES['monthly_salary'],
             cooldown_until_month=row['cooldown_until_month'],
             can_search=bool(available and free and city.owner == state.player and state.phase == 'city'
-                            and not city.action_used and not _in_battle(state, key)
+                            and command_books.can_spend(state, city.owner, 'staff_recruit') and not _in_battle(state, key)
                             and city.gold >= campaign.catalog.data['rules']['recruit_officer_gold']
                             and city_occupancy(state, city) < campaign.catalog.rules.city_officer_capacity),
             search_targets=list(free))

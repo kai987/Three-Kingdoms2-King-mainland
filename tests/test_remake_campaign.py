@@ -60,8 +60,10 @@ class CampaignTests(unittest.TestCase):
         self.cmd('allocate', dict(city='xiangyang', officer=999, troops=600))
         self.assertEqual(self.game.state.cities['xiangyang'].reserves, 680)
         self.assertEqual(self.game.state.rng.draws, 0)
-        self.assertFalse(self.game.state.cities['xiangyang'].action_used)
+        self.assertTrue(self.game.state.cities['xiangyang'].action_used)
+        self.assertEqual(self.game.state.extension['command_books']['factions']['shu']['used'], 1)
         self.cmd('depart', dict(source='xiangyang', target='nanjun', officers=[999]))
+        self.assertEqual(self.game.state.extension['command_books']['factions']['shu']['used'], 2)
         row=self.game.state.extension['travel']['marches'][0]
         self.assertEqual(self.game.state.cities['xiangyang'].grain,
                          3800-estimate(self.game.state,[999],row['quote']))

@@ -57,7 +57,7 @@
   if(typeof raw!=='string'||new TextEncoder().encode(raw).length>MAX_BYTES)fail('invalid');
   let save;try{save=JSON.parse(raw);}catch{fail('invalid');}
   const s=save?.state;
-  if(!save||save.format!=='three-kingdoms-remake-save'||save.version!==1||
+  if(!save||save.format!=='three-kingdoms-remake-save'||![1,2].includes(save.version)||
     typeof save.scenario!=='string'||!save.scenario.length||save.scenario.length>120||
     !HEX.test(save.checksum)||!HEX.test(save.catalog_sha256)||!s||typeof s!=='object'||Array.isArray(s)||
     !Number.isInteger(s.year)||s.year<1||s.year>400||!Number.isInteger(s.month)||s.month<1||s.month>12||

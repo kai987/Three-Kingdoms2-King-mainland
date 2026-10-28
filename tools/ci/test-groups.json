@@ -151,6 +151,28 @@
         "cloud"
       ]
     },
+    "tests/test_remake_command_books.py": {
+      "tier": "related",
+      "groups": [
+        "scenarios",
+        "people",
+        "economy",
+        "logistics",
+        "battle",
+        "save"
+      ]
+    },
+    "tests/test_remake_command_books_services.py": {
+      "tier": "related",
+      "groups": [
+        "scenarios",
+        "people",
+        "economy",
+        "logistics",
+        "battle",
+        "save"
+      ]
+    },
     "tests/test_remake_convoy_rescue.py": {
       "tier": "related",
       "groups": [

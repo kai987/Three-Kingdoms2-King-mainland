@@ -66,6 +66,8 @@
   const showing=()=>!!active&&dialog?.open!==false&&!!query('[data-treasury-dialog]');
   const matches=token=>!disposed&&active===token&&identity()===token.identity&&getView()?.game?.cities?.[token.city]?.owner===token.faction&&getView()?.game?.player===token.faction;
   const canWrite=()=>!!active&&matches(active)&&!isPreview()&&!isBusy()&&!pending&&getView()?.game?.phase==='city'&&row()?.can_manage===true;
+  const bookReady=kind=>root.GameCommandBooks?.can(getView(),kind)===true;
+  const bookHint=kind=>root.GameCommandBooks?.html(getView(),{kind,locale:locale()})||'';
   const officerLabel=id=>`${label(name(getView(),id))} · ${attributes(getView(),id,locale())}`;
   const select=(id,caption,value,choices)=>`<label class="field">${caption}<select id="${id}">${choices.map(([key,title])=>`<option value="${escape(key??'')}" ${String(value??'')===String(key??'')?'selected':''}>${escape(title)}</option>`).join('')||`<option value="">${text('沒有可選武將','選択できる武将がいません')}</option>`}</select></label>`;
   const number=(id,caption,value,max,min=0)=>`<label class="field">${caption}<input id="${id}" type="number" min="${min}" max="${max}" step="1" value="${bounded(value,max,min)}"></label>`;
@@ -80,7 +82,7 @@
   function reason(){
    if(!matches(active)||isPreview())return text('目前無法操作這座城池。','現在、この都市では操作できません。');
    if(getView()?.game?.phase!=='city')return text('請在戰略階段操作。','戦略段階で操作してください。');
-   if(getView()?.game?.cities?.[active.city]?.action_used)return text('本城本旬已行動；可查看庫存與調整太守、方針。','この都市は今旬、行動済みです。在庫の確認と太守・方針の変更はできます。');
+   if(!root.GameCommandBooks?.can(getView(),'search_treasure'))return root.GameCommandBooks?.reason(getView(),'search_treasure',locale())||text('命令書資料尚未就緒。','命令書の情報を読み込めません。');
    return '';
   }
   function update(){
@@ -91,10 +93,10 @@
    active.amounts[active.kind]=quote.amount;
    if(amount){amount.max=String(quote.max);amount.min=String(quote.max?1:0);amount.value=String(quote.amount);}
    const set=(id,disabled)=>{const button=query('#'+id);if(button)button.disabled=disabled;};
-   set('treasury-search',!writable||!source?.can_search||!eligible||stock>=99||(view?.game?.cities?.[active.city]?.gold??0)<(source?.search_fee??20));
-   set('treasury-sell',!writable||!source?.can_sell||!eligible||active.sale<1||saleMax<1);
+   set('treasury-search',!writable||!bookReady('search_treasure')||!source?.can_search||!eligible||stock>=99||(view?.game?.cities?.[active.city]?.gold??0)<(source?.search_fee??20));
+   set('treasury-sell',!writable||!bookReady('sell_treasure')||!source?.can_sell||!eligible||active.sale<1||saleMax<1);
    set('treasury-sell-max',pending||saleMax<1);
-   set('treasury-reward',!writable||!source?.can_reward||!quote.valid);
+   set('treasury-reward',!writable||!bookReady('reward_officer')||!source?.can_reward||!quote.valid);
    set('treasury-reward-max',pending||quote.max<1);
    set('treasury-set-governor',!writable);
    set('treasury-save-policy',!writable);
@@ -111,10 +113,10 @@
    if(!active||!matches(active)||!row()||typeof openDialog!=='function')return false;
    reconcile();const source=row(),view=getView(),p=active.policy,candidates=sortActors(source.governor_candidates,view),available=actors(),eligible=targets(),governor=source.governor;
    const maxSale=Math.min(count(view,active.city),bounded(source.sell_max??0,99));
-   const body=`<div class="treasury-panel" data-treasury-dialog data-treasury-city="${escape(active.city)}" data-l10n-native="${locale()}">${summary(view,active.city,{locale:locale(),bilingual:false})}<p class="small" id="treasury-boundary" role="status"></p>${feedback()}
+   const body=`<div class="treasury-panel" data-treasury-dialog data-treasury-city="${escape(active.city)}" data-l10n-native="${locale()}">${summary(view,active.city,{locale:locale(),bilingual:false})}${bookHint()}<p class="small" id="treasury-boundary" role="status"></p>${feedback()}
     <fieldset><legend>${text('太守任命','太守の任命')}</legend><p class="small" data-treasury-governor>${text('目前太守','現在の太守')}：${governor===null||governor===undefined?text('尚無適任者','該当者なし'):escape(officerLabel(governor))} · ${source.governor_mode==='manual'?text('指定','指定'):text('自動','自動')}</p>${select('treasury-governor',text('指定太守','太守を指定'),active.governor,[[null,text('自動：本城君主優先，其餘按德排序','自動：この都市の君主を優先、他は徳順')],...candidates.map(id=>[id,officerLabel(id)])])}<button id="treasury-set-governor" data-treasury-confirm>${text('確認太守任命','太守の任命を確定')}</button></fieldset>
-    <fieldset><legend>${text('尋寶與出售','宝の探索と売却')}</legend>${select('treasury-actor',text('執行武將','実行武将'),active.actor,available.map(id=>[id,officerLabel(id)]))}<p class="small" id="treasury-actor-summary"></p><p class="small" id="treasury-search-preview"></p><button id="treasury-search" data-treasury-confirm>${text('確認尋寶','宝の探索を確定')}</button><div class="treasury-amount">${number('treasury-sell-amount',text('出售寶物數量','売却する宝の数'),active.sale,maxSale,maxSale?1:0)}<button id="treasury-sell-max" data-treasury-max>${text('最大值','最大')}</button></div><p class="small" id="treasury-sell-preview"></p><button id="treasury-sell" data-treasury-confirm>${text('確認出售','売却を確定')}</button><p class="small">${text('尋寶與出售各消耗本城本旬行動及執行武將行動。每城最多99件寶。','探索・売却はそれぞれ都市と実行武将の今旬の行動を使います。各都市の宝は99個までです。')}</p></fieldset>
-    <fieldset><legend>${text('賞賜武將','武将に褒美を与える')}</legend><p class="small">${text('由已生效的太守經辦；勢力可賞賜太守本人，目前君主不列為賞賜目標。消耗本城與太守本旬行動。','保存済みの太守が担当します。勢力から太守自身への褒美も可能ですが、現在の君主は対象外です。都市と太守の今旬の行動を使います。')}</p>${select('treasury-reward-officer',text('賞賜對象（忠誠低者優先）','対象（忠誠の低い順）'),active.target,eligible.map(target=>[target.id,officerLabel(target.id)]))}${select('treasury-reward-kind',text('賞賜種類','褒美の種類'),active.kind,[['gold',text('金錢（每次最多100金）','資金（1回100まで）')],['treasure',text('寶物（每次1件）','宝（1回1個）')]])}<div class="treasury-amount">${number('treasury-reward-amount',text('賞賜數量','与える数'),active.amounts[active.kind],100)}<button id="treasury-reward-max" data-treasury-max>${text('最大值','最大')}</button></div><p id="treasury-reward-preview" role="status" aria-live="polite"></p><button id="treasury-reward" class="primary" data-treasury-confirm>${text('確認賞賜','褒美を確定')}</button><p class="small">${text('以下預覽依本作太守德值與賞賜規則計算，忠誠最高100；不是已還原的原版ROM公式。未確認不扣資源、不抽取事件。','予測は本作の太守の徳と褒美のルールで計算し、忠誠の上限は100です。原作ROMから復元した計算式ではありません。確定前に資源消費や抽選は起こりません。')}</p></fieldset>
+    <fieldset><legend>${text('尋寶與出售','宝の探索と売却')}</legend>${select('treasury-actor',text('執行武將','実行武将'),active.actor,available.map(id=>[id,officerLabel(id)]))}<p class="small" id="treasury-actor-summary"></p><p class="small" id="treasury-search-preview"></p>${bookHint('search_treasure')}<button id="treasury-search" data-treasury-confirm>${text('確認尋寶','宝の探索を確定')}</button><div class="treasury-amount">${number('treasury-sell-amount',text('出售寶物數量','売却する宝の数'),active.sale,maxSale,maxSale?1:0)}<button id="treasury-sell-max" data-treasury-max>${text('最大值','最大')}</button></div><p class="small" id="treasury-sell-preview"></p>${bookHint('sell_treasure')}<button id="treasury-sell" data-treasury-confirm>${text('確認出售','売却を確定')}</button><p class="small">${text('尋寶與出售使用全勢力共用命令書，可連續投入同一城。每城最多99件寶。','探索・売却は勢力共通の命令書を使い、同じ都市で続けて実行できます。各都市の宝は99個までです。')}</p></fieldset>
+    <fieldset><legend>${text('賞賜武將','武将に褒美を与える')}</legend><p class="small">${text('由已生效的太守經辦；勢力可賞賜太守本人，目前君主不列為賞賜目標。使用全勢力共用命令書。','保存済みの太守が担当します。勢力から太守自身への褒美も可能ですが、現在の君主は対象外です。勢力共通の命令書を使います。')}</p>${select('treasury-reward-officer',text('賞賜對象（忠誠低者優先）','対象（忠誠の低い順）'),active.target,eligible.map(target=>[target.id,officerLabel(target.id)]))}${select('treasury-reward-kind',text('賞賜種類','褒美の種類'),active.kind,[['gold',text('金錢（每次最多100金）','資金（1回100まで）')],['treasure',text('寶物（每次1件）','宝（1回1個）')]])}<div class="treasury-amount">${number('treasury-reward-amount',text('賞賜數量','与える数'),active.amounts[active.kind],100)}<button id="treasury-reward-max" data-treasury-max>${text('最大值','最大')}</button></div><p id="treasury-reward-preview" role="status" aria-live="polite"></p>${bookHint('reward_officer')}<button id="treasury-reward" class="primary" data-treasury-confirm>${text('確認賞賜','褒美を確定')}</button><p class="small">${text('以下預覽依本作太守德值與賞賜規則計算，忠誠最高100；不是已還原的原版ROM公式。未確認不扣資源、不抽取事件。','予測は本作の太守の徳と褒美のルールで計算し、忠誠の上限は100です。原作ROMから復元した計算式ではありません。確定前に資源消費や抽選は起こりません。')}</p></fieldset>
     <fieldset><legend>${text('全勢力自動賞賜方針','勢力全体の自動褒美方針')}</legend><label class="domestic-toggle"><input id="treasury-policy-enabled" type="checkbox" ${p.enabled?'checked':''}>${text('啟用自動賞賜','自動褒美を有効にする')}</label><div class="domestic-input-grid">${number('treasury-policy-target',text('目標忠誠','忠誠の目標'),p.target_loyalty,100,1)}${number('treasury-policy-budget',text('全勢力每旬金錢預算','勢力全体・1旬の資金予算'),p.gold_budget,1000000)}${number('treasury-policy-gold-floor',text('各城保留金錢','各都市に残す資金'),p.gold_floor,100000000)}${number('treasury-policy-treasure-floor',text('各城保留寶物','各都市に残す宝'),p.treasure_floor,99)}</div>${select('treasury-policy-prefer',text('優先賞賜種類','優先する褒美'),p.prefer,[['gold',text('優先金錢','資金を優先')],['treasure',text('優先寶物','宝を優先')]])}<p class="small">${text('儲存後由各城太守依行動與庫存條件執行。目標忠誠是自動方針，不限制手動賞賜；玩家與AI使用相同規則。','保存後、各都市の太守が行動・在庫の条件に従って実行します。忠誠目標は自動方針であり、手動の褒美の上限ではありません。プレイヤーとAIは同じルールです。')}</p><button id="treasury-save-policy" data-treasury-confirm>${text('儲存自動賞賜方針','自動褒美方針を保存')}</button></fieldset></div>`;
    if(openDialog(text(`寶物與賞賜 · ${label(cityName(active.city))}`,`宝と褒美・${label(cityName(active.city))}`),body,`<button data-cancel>${text('返回戰役','戦役へ戻る')}</button>`)===undefined)return false;
    query('#treasury-actor').onchange=()=>{if(!pending){active.actor=ref(query('#treasury-actor').value);update();}};
@@ -135,7 +137,7 @@
    update();return true;
   }
   async function submit(kind,payload,guard=()=>true){
-   if(!canWrite())return false;update();if(!canWrite()||!guard())return false;
+   if(!canWrite())return false;update();if(!canWrite()||!bookReady(kind)||!guard())return false;
    const token=active,request=payload();pending=true;
    for(const id of ['treasury-search','treasury-sell','treasury-reward','treasury-set-governor','treasury-save-policy']){const button=query('#'+id);if(button)button.disabled=true;}
    let success=false;try{success=await command(kind,request)!==false;}catch{success=false;}finally{pending=false;}

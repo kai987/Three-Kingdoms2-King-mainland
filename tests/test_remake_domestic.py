@@ -143,15 +143,18 @@ class DomesticTests(unittest.TestCase):
         chosen = domestic.faction_personnel_targets(game, game.state, 'shu')[0]
         gold = sum(c.gold for c in game.state.cities.values() if c.owner == 'shu')
         draws = game.state.rng.draws
-        domestic.finish_faction_turn(game, game.state, 'shu')
-        self.assertEqual(game.state.rng.draws, draws + 1)
-        self.assertEqual(sum(c.gold for c in game.state.cities.values() if c.owner == 'shu'), gold - 60)
+        game.command('end_turn', {}, game.revision)
+        self.assertEqual(game.state.rng.draws, draws + 2)
+        self.assertEqual(sum(c.gold for c in game.state.cities.values() if c.owner == 'shu'), gold - 180)
+        orders = game.state.extension['command_books']['factions']['shu']['orders']
+        self.assertEqual([row['kind'] for row in orders], ['recruit_officer', 'recruit_officer', 'hire_staff'])
+        self.assertEqual(game.state.extension['command_books']['factions']['shu']['used'], 3)
         self.assertEqual(game.state.extension['officer_actions'][str(civil)], game.state.turn)
         self.assertFalse(domestic.can_attempt(game.state, 'shu', chosen['id']))
         self.assertNotIn(chosen['id'], [r['id'] for r in domestic.personnel_targets(game, game.state, 'xiangyang')])
         game.validate(game.state)
 
-    def test_manual_city_action_is_not_duplicated_by_automatic_work(self):
+    def test_manual_order_leaves_only_the_remaining_shared_budget_for_automatic_work(self):
         game = self.game()
         self.appoint(game, dict(auto_recruit=True, recruit_enabled=True, training_enabled=False))
         city = game.state.cities['xiangyang']
@@ -165,8 +168,9 @@ class DomesticTests(unittest.TestCase):
                          before[2] + troops_before, 'Free passive allocation cannot duplicate a used city action')
         self.assertFalse(any(r['city'] == city.id and r['kind'] in {'recruit', 'personnel'}
             for r in game.state.extension['domestic']['reports']))
-        self.assertEqual(game.state.rng.draws, before[3] + 1,
-            'A used city does not block legal delegated work in another owned city')
+        self.assertEqual(game.state.rng.draws, before[3] + 2,
+            'The two remaining orders allow two target attempts in another owned city')
+        self.assertEqual(game.state.extension['command_books']['factions']['shu']['used'], 3)
 
     def test_appointments_pause_on_march_and_income_is_half_when_actor_busy(self):
         game = self.game()

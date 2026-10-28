@@ -1,0 +1,218 @@
+{
+  "schema": "tk2-original-command-books-v1",
+  "scope": "Read-only evidence from the user-provided Super-version ROM and a public scan of the Namco FC manual; not a claim that every fan version has identical numeric tables.",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "original_city_count": 30,
+  "original_table": {
+    "physical_bank": 25,
+    "cpu_address_hex": "0xA0E4",
+    "file_offset": 205044,
+    "file_offset_hex": "0x320F4",
+    "index": "Owned-city count, 0 through 30 inclusive",
+    "values": [
+      0,
+      3,
+      3,
+      3,
+      4,
+      5,
+      7,
+      7,
+      7,
+      8,
+      8,
+      8,
+      8,
+      9,
+      9,
+      9,
+      9,
+      10,
+      10,
+      10,
+      11,
+      11,
+      11,
+      11,
+      12,
+      12,
+      12,
+      12,
+      13,
+      13,
+      13
+    ],
+    "raw_hex": "00 03 03 03 04 05 07 07 07 08 08 08 08 09 09 09 09 0a 0a 0a 0b 0b 0b 0b 0c 0c 0c 0c 0d 0d 0d",
+    "sha256": "0ed8123678ebdb1029bca8878d0d0067b4f0e193c58632c58c6d64af9e8ee67f",
+    "highest_valid_value": 13,
+    "lookup_consumer": "25:A0AA calls A19F city count, A0AD reads index $0003, A0B0 loads A0E4,Y, A0B3 stores RAM $6F05"
+  },
+  "manual_index_url": "https://gamemanual.midnightmeattrain.com/entry/三国志Ⅱ_覇王の大陸",
+  "manual_scans": [
+    {
+      "pages": [
+        10,
+        11
+      ],
+      "url": "https://cdn-ak.f.st-hatena.com/images/fotolife/j/jackallsasaki/20260802/20260802002804.jpg",
+      "sha256": "e3a3a151631aa48b24928a39d33b352daa8ee2a317d88cfcdf09b67a4ccb45e4",
+      "facts_tc": [
+        "命令書為君主／勢力共用額度，額度內可對同一城反覆下令。",
+        "數量依領城數增減；用完輪到下一君主，全部君主行動一巡為一個月。"
+      ]
+    },
+    {
+      "pages": [
+        24,
+        25
+      ],
+      "url": "https://cdn-ak.f.st-hatena.com/images/fotolife/j/jackallsasaki/20260802/20260802002836.jpg",
+      "sha256": "47abfa5c6c817fbb322e392d9866151b8f490902406a045a337cb563dede8c82",
+      "facts_tc": [
+        "任命太守不消耗命令書。",
+        "原版僅分配現有預備兵，要從徵兵選擇僱用0人，再進入配兵流程；不是另外的免費編兵命令。"
+      ]
+    },
+    {
+      "pages": [
+        26,
+        27
+      ],
+      "url": "https://cdn-ak.f.st-hatena.com/images/fotolife/j/jackallsasaki/20260802/20260802002840.jpg",
+      "sha256": "1155e05ea722d33d55849051bc4828bf0f4e92238ba548a7c62ce9be5208c86b",
+      "facts_tc": [
+        "原版町有武器屋、學問所、病院、商店；醫療每次50金。"
+      ]
+    }
+  ],
+  "recovered_sources": [
+    {
+      "archive_relative_path": "source/recovered/city_panel_services.py",
+      "sha256": "2b1ce76616e083ef07c0b65660136465612a9cba2419c4c5491ae9950f277b2a",
+      "entries": [
+        {
+          "cpu_entry": "25:A041",
+          "lines": [
+            473,
+            551
+          ],
+          "proves": "Every selected ruler turn counts cities and replaces RAM6F05 from the indexed table; it does not add a carry-over balance."
+        },
+        {
+          "cpu_entry": "25:A19F",
+          "lines": [
+            658,
+            691
+          ],
+          "proves": "Counts the thirty original city owner records for the selected ruler."
+        }
+      ]
+    },
+    {
+      "archive_relative_path": "source/recovered/city_ui_controller.py",
+      "sha256": "8685e223907b1ecb9ffc1e46d14cd170fd0c362c69940f3e1f7fe0f82a6680fa",
+      "entries": [
+        {
+          "cpu_entry": "27:A1D0",
+          "lines": [
+            770,
+            864
+          ],
+          "proves": "Command-bar selection enters a child menu; entering the top-level city/army/warehouse/town category itself does not decrement6F05."
+        },
+        {
+          "cpu_entry": "28:D5BD",
+          "lines": [
+            9710,
+            9810
+          ],
+          "proves": "Shared concrete-command confirmation; cancellation has no decrement, acceptance sets046C=80 and subtracts one book when046C reaches40."
+        },
+        {
+          "cpu_entry": "28:D636",
+          "file_offset_hex": "0x39646",
+          "original_bytes_hex": "CE 05 6F",
+          "proves": "The single direct DEC $6F05 instruction in the pinned ROM."
+        },
+        {
+          "cpu_entry": "27:A570",
+          "lines": [
+            1302,
+            1450
+          ],
+          "proves": "Domestic development confirmation uses D5BD, reads chosen officer intellect and modifies city development/resources; the inspected path does not mark a once-per-ruler-turn officer lock."
+        },
+        {
+          "cpu_entry": "27:B36D / B40E / B431",
+          "lines": [
+            3870,
+            4014
+          ],
+          "proves": "Recruitment confirmation charges one through D5BD before recruitment and troop allocation. The subsequent allocation step does not add a second book charge."
+        },
+        {
+          "cpu_entry": "28:BFB7",
+          "lines": [
+            5945,
+            5980
+          ],
+          "proves": "The town entry dispatches its phases without a separate book debit."
+        },
+        {
+          "cpu_entry": "28:C339 / C414 / C4A8 / C58F / C9EF",
+          "lines": [
+            6415,
+            7515
+          ],
+          "proves": "Concrete rice trades, treasure sales, healing/study confirmation and equipment purchase each call D5BD; equipment purchase then writes officer equipment and pays city gold."
+        }
+      ]
+    },
+    {
+      "archive_relative_path": "analysis/phase14/runtime/README.md",
+      "sha256": "bf1fe85f1a6ae83efb6a63ecc962ec6f0dcb21c9b41a0af73bdfd550eb4ce394",
+      "entries": [
+        {
+          "lines": [
+            3,
+            9
+          ],
+          "proves": "Unmodified native-core cold-start replay: three confirmed recruit/allocation operations at the same Cao Cao city spend3→2→1→0; first request is capped to0 but accepted and assigns reserves; subsequent allocations give Yu Jin100 twice. Six AI turns then advance January toFebruary and refill3. This is not a dedicated repeated-domestic-executor replay."
+        }
+      ]
+    }
+  ],
+  "confirmed_rules": {
+    "shared_scope": "ruler/faction",
+    "same_city_repeats": true,
+    "accepted_concrete_command_cost": 1,
+    "cancel_cost": 0,
+    "governor_appointment_cost": 0,
+    "standalone_free_original_allocation": false,
+    "refresh_replaces_remaining": true,
+    "original_refresh_period": "one ruler turn per calendar month",
+    "same_officer_repeat_evidence": "Inspected domestic-development source does not write a strategic once-per-turn action lock; no new native emulator replay is claimed."
+  },
+  "remake_adaptations": [
+    {
+      "key": "ten_day_period",
+      "description_tc": "保留本作已確定的每旬10日回合；在旬界重新發放，並非把原版月制誤稱為旬制。"
+    },
+    {
+      "key": "expanded_map_cap",
+      "description_tc": "115城地圖超過原版30城時沿用原表上限13；不讀取原表以外的程式資料，也不虛構原版115城公式。"
+    },
+    {
+      "key": "standalone_allocation",
+      "description_tc": "本作把配兵獨立成彈窗，確認一項有效配兵命令扣1本；原版對應為僱用0人的徵兵及分配流程共1本。"
+    },
+    {
+      "key": "modern_free_controls",
+      "description_tc": "本作查看、預覽、政策設定與檔案／雲端存取維持免費操作；不能據此宣稱它們與原版所有同名選單逐項相同。"
+    },
+    {
+      "key": "automatic_work",
+      "description_tc": "現有擴充自動內政及運輸使用相同勢力額度；若配兵只是已支付徵兵命令中的一個步驟，不重複扣書。"
+    }
+  ]
+}

@@ -7,7 +7,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
-from remake import treasures
+from remake import treasures, command_books
 from remake.campaign import SeedRng
 from remake.errors import GameError
 from remake.officers import GameRules
@@ -51,9 +51,19 @@ def fixture(seed=2):
         soldiers=dict(initial=2900, recruited=0, lost=0), extension=dict(
             leaders=dict(one=1, two=6), officer_actions={}, ended_factions=[],
             pending_succession={}, travel=dict(marches=[]), logistics=dict(convoys=[])))
+    command_books.initialize(game, state)
+    game.catalog.map_cities = {key: {} for key in cities}
     state.extension['treasury'] = treasures.empty(game, state)
     treasures.validate(game, state)
     return game, state
+
+
+def exhaust_books(state,owner='one'):
+    # Model earlier accepted commands through the real ledger, without minting
+    # extra resources or relaxing the production service checks.
+    city=next(city for city in state.cities.values() if city.owner==owner)
+    for _ in range(command_books.remaining(state,owner)):
+        command_books.spend(state,city,'search_treasure')
 
 
 class TreasuresTests(unittest.TestCase):
@@ -127,8 +137,8 @@ class TreasuresTests(unittest.TestCase):
             (lambda g, s: treasures.credit(s, 'border', 97, reason='found'), dict(city='border', actor=4)),
             (lambda g, s: setattr(s.cities['border'], 'gold', 19), dict(city='border', actor=4)),
             (lambda g, s: setattr(s, 'phase', 'battle'), dict(city='border', actor=4)),
-            (lambda g, s: setattr(s.cities['border'], 'action_used', True), dict(city='border', actor=4)),
-            (lambda g, s: s.extension['officer_actions'].update({'4': 1}), dict(city='border', actor=4)),
+            (lambda g, s: exhaust_books(s), dict(city='border', actor=4)),
+            (lambda g, s: setattr(s.officers[4], 'health', 0), dict(city='border', actor=4)),
             (lambda g, s: s.extension['travel']['marches'].append(dict(officers=[4])), dict(city='border', actor=4)),
             (lambda g, s: None, dict(city='border', actor=True)),
             (lambda g, s: None, dict(city='border', actor=4, unknown=1)),
@@ -136,6 +146,35 @@ class TreasuresTests(unittest.TestCase):
             game, state = fixture()
             tweak(game, state)
             self.fails(game, state, treasures.search, payload)
+
+    def test_same_city_and_actor_can_use_all_three_books_with_atomic_exhaustion(self):
+        game,state=fixture();city=state.cities['capital']
+        city.action_used=True
+        state.extension['officer_actions']['2']=state.turn
+        initial=deepcopy(state)
+        for expected in (2,1,0):
+            treasures.search(game,state,dict(city=city.id,actor=2),'one')
+            self.assertEqual(command_books.remaining(state,'one'),expected)
+        self.assertEqual(city.gold,initial.cities['capital'].gold-60)
+        self.assertEqual(state.rng.draws,initial.rng.draws+3)
+        self.assertEqual([row['city'] for row in state.extension['command_books']['factions']['one']['orders']],['capital']*3)
+        self.fails(game,state,treasures.search,dict(city='border',actor=4))
+        self.assertFalse(treasures.view(game,state)['cities']['border']['can_search'])
+        command_books.validate(game,state)
+        treasures.validate(game,state)
+
+    def test_governor_and_policy_management_remain_free_after_pool_exhaustion(self):
+        game,state=fixture();exhaust_books(state)
+        before=deepcopy(state)
+        treasures.set_governor(game,state,dict(city='capital',officer=2),'one')
+        treasures.set_policy(game,state,dict(faction='one',policy=dict(enabled=True)),'one')
+        self.assertEqual(state.extension['command_books'],before.extension['command_books'])
+        self.assertEqual(state.cities,before.cities)
+        self.assertEqual(state.rng,before.rng)
+        self.assertEqual(state.extension['officer_actions'],before.extension['officer_actions'])
+        self.assertTrue(treasures.view(game,state)['cities']['capital']['can_manage'])
+        self.assertEqual(state.extension['treasury']['cities']['capital']['governor'],2)
+        command_books.validate(game,state)
 
     def test_reward_quote_intervals_match_exact_formula_and_cap_without_rng(self):
         game, state = fixture()
@@ -203,16 +242,17 @@ class TreasuresTests(unittest.TestCase):
         ):
             game, state = fixture()
             self.fails(game, state, treasures.reward, payload)
-        for key in ('full', 'actor_used', 'target_marching', 'city_used'):
+        for key in ('full', 'actor_exhausted', 'target_marching', 'books_used'):
             game, state = fixture()
             if key == 'full':
                 state.officers[2].loyalty = 100
-            elif key == 'actor_used':
-                state.extension['officer_actions']['1'] = 1
+            elif key == 'actor_exhausted':
+                for ident in state.cities['capital'].roster.officer_ids:
+                    state.officers[ident].health = 0
             elif key == 'target_marching':
                 state.extension['travel']['marches'].append(dict(officers=[2]))
             else:
-                state.cities['capital'].action_used = True
+                exhaust_books(state)
             self.fails(game, state, treasures.reward, dict(city='capital', officer=2, kind='gold', amount=10))
         game, state = fixture()
         state.extension['officer_actions']['2'] = 1
@@ -310,12 +350,12 @@ class TreasuresTests(unittest.TestCase):
         manual = deepcopy(state)
         # Highest intellect actor2 beats the capital's ruler1; tied border
         # intellect/virtue uses the stable reference, without a health tie-break.
-        treasures.sell(game, manual, dict(city='capital', actor=2, amount=1), 'one')
         treasures.search(game, manual, dict(city='border', actor=4), 'one')
+        treasures.sell(game, manual, dict(city='capital', actor=2, amount=1), 'one')
         result = treasures.ai_idle_turn(game, state, 'one')
         self.assertEqual(len(result), 2)
-        # Iteration order is lexical by city, so search precedes the no-RNG sale.
-        manual.events.reverse()
+        # The explicit manual replay uses the same lexical city order, so the
+        # command-book ledger and event sequence agree as well as the resources.
         self.assertEqual(state, manual)
         self.assertEqual(state.extension['officer_actions'], {'4': 1, '2': 1})
         self.assertEqual((state.cities['capital'].gold, treasures.count(state, 'capital')), (115, 5))
@@ -329,22 +369,24 @@ class TreasuresTests(unittest.TestCase):
         self.assertEqual(state.officers, before.officers)
         treasures.validate(game, state)
 
-    def test_idle_ai_respects_floors_actions_actor_availability_and_search_threshold(self):
-        for case in ('floor', 'funds', 'used', 'in_transit', 'phase'):
+    def test_idle_ai_respects_floors_books_actor_availability_and_search_threshold(self):
+        for case in ('floor', 'funds', 'books', 'in_transit', 'phase'):
             with self.subTest(case=case):
                 game, state = fixture()
                 state.player, state.phase = 'two', 'ai'
+                # Retain old activity markers deliberately; only the shared
+                # book balance and actual service conditions may block work.
                 for city in state.cities.values():
                     city.action_used = city.id != 'border'
-                if case in ('funds', 'in_transit'):
+                if case in ('funds', 'books', 'in_transit'):
                     treasures.debit(state, 'border', 1, reason='spent')
                 if case == 'floor':
                     state.cities['border'].gold = 0
                     state.extension['treasury']['factions']['one']['treasure_floor'] = 2
                 elif case == 'funds':
                     state.cities['border'].gold = 119
-                elif case == 'used':
-                    state.cities['border'].action_used = True
+                elif case == 'books':
+                    exhaust_books(state)
                 elif case == 'in_transit':
                     state.extension['travel']['marches'] = [dict(officers=[4, 5])]
                 else:

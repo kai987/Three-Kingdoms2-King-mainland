@@ -9,6 +9,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake import civil_staff as staff
+from remake import command_books
 from remake.errors import GameError
 from remake.officers import GameRules
 
@@ -46,11 +47,13 @@ def fixture():
         player='one', phase='city', battle=None, cities=cities, officers=officers,
         rng=SimpleNamespace(state=2026, draws=0), soldiers={'recruited': 0},
         extension={'ended_factions': [], 'travel': {'marches': []}}, events=[])
+    command_books.initialize(game, state)
+    game.catalog.map_cities = {key: {} for key in cities}
     state.extension['civil_staff'] = staff.empty(game, state)
     return game, state
 
 
-def advance_month(state, count=1):
+def advance_month(game, state, count=1):
     absolute = staff.month_index(state) + count
     state.year, month = divmod(absolute, 12)
     state.month = month + 1
@@ -58,6 +61,7 @@ def advance_month(state, count=1):
     state.turn += 3 * count
     for city in state.cities.values():
         city.action_used = False
+    command_books.initialize(game, state)
 
 
 def open_and_hire(game, state, key='empty'):
@@ -114,7 +118,7 @@ class CivilStaffTests(unittest.TestCase):
         staff.synchronize(game, state, opening=True)
         self.assertIsNotNone(staff.view(game, state)['cities']['empty']['candidate'])
 
-    def test_hire_without_officer_actor_is_atomic_and_uses_city_action_money_and_capacity(self):
+    def test_hire_without_officer_actor_is_atomic_and_uses_faction_book_money_and_capacity(self):
         game, state = fixture()
         staff.synchronize(game, state, opening=True)
         city = state.cities['empty']
@@ -151,26 +155,46 @@ class CivilStaffTests(unittest.TestCase):
         staff.synchronize(game, state)
         staff.validate(game, state)
 
+    def test_exhausted_faction_pool_blocks_hire_atomically_but_rejection_is_free(self):
+        game,state=fixture();staff.synchronize(game,state,opening=True)
+        candidate=state.extension['civil_staff']['cities']['empty']['candidate']['id']
+        for _ in range(command_books.remaining(state,'one')):
+            command_books.spend(state,state.cities['capital'],'hire_staff')
+        before=deepcopy(state)
+        with self.assertRaisesRegex(GameError,'命令書'):
+            staff.hire(game,state,'empty',candidate,'one')
+        self.assertEqual(state,before,'Budget rejection preserves the offer, money, identity counter and both RNG streams')
+        row=staff.view(game,state)['cities']['empty']
+        self.assertEqual(row['blocked_reason'],'command_books')
+        self.assertFalse(row['can_hire'])
+        self.assertTrue(row['can_reject'])
+        staff.reject(game,state,'empty',candidate,'one')
+        self.assertEqual(state.extension['command_books'],before.extension['command_books'])
+        self.assertEqual(state.rng,before.rng)
+        self.assertEqual(state.cities,before.cities)
+        self.assertIsNone(state.extension['civil_staff']['cities']['empty']['candidate'])
+        command_books.validate(game,state)
+
     def test_two_month_observation_different_probabilities_and_fourth_check_guarantee(self):
         game, state = fixture()
         staff.synchronize(game, state, opening=True)
         with patch.object(staff, '_draw', return_value=99) as draw:
-            advance_month(state)
+            advance_month(game, state)
             staff.synchronize(game, state, monthly=True)
             self.assertEqual(draw.call_count, 0)
             for _ in range(3):
-                advance_month(state)
+                advance_month(game, state)
                 staff.synchronize(game, state, monthly=True)
             self.assertEqual(draw.call_count, 6, 'Ordinary one-person and large two-person cities each get one monthly roll')
             self.assertIsNone(state.extension['civil_staff']['cities']['one']['candidate'])
-            advance_month(state)
+            advance_month(game, state)
             staff.synchronize(game, state, monthly=True)
             self.assertEqual(draw.call_count, 6, 'The fourth eligible check is guaranteed without another roll')
         for key in ('one', 'capital'):
             self.assertIsNotNone(state.extension['civil_staff']['cities'][key]['candidate'])
         game, state = fixture()
         staff.synchronize(game, state, opening=True)
-        advance_month(state, 2)
+        advance_month(game, state, 2)
         with patch.object(staff, '_draw', return_value=50):
             staff.synchronize(game, state, monthly=True)
         self.assertIsNotNone(state.extension['civil_staff']['cities']['one']['candidate'])
@@ -180,7 +204,7 @@ class CivilStaffTests(unittest.TestCase):
         game, state = fixture()
         staff.synchronize(game, state, opening=True)
         initial = state.extension['civil_staff']['cities']['empty']['candidate']['id']
-        advance_month(state, 3)
+        advance_month(game, state, 3)
         staff.synchronize(game, state, monthly=True)
         row = state.extension['civil_staff']['cities']['empty']
         self.assertIsNone(row['candidate'])
@@ -188,7 +212,7 @@ class CivilStaffTests(unittest.TestCase):
         frozen = deepcopy(state)
         staff.synchronize(game, state, monthly=True)
         self.assertEqual(state, frozen)
-        advance_month(state, 3)
+        advance_month(game, state, 3)
         staff.synchronize(game, state, monthly=True)
         self.assertNotEqual(row['candidate']['id'], initial)
         candidate = row['candidate']['id']
@@ -212,10 +236,10 @@ class CivilStaffTests(unittest.TestCase):
         state.cities['neutral'].owner = 'one'
         staff.synchronize(game, state)
         self.assertIsNone(state.extension['civil_staff']['cities']['neutral']['candidate'])
-        advance_month(state)
+        advance_month(game, state)
         staff.synchronize(game, state, monthly=True)
         self.assertIsNone(state.extension['civil_staff']['cities']['neutral']['candidate'])
-        advance_month(state)
+        advance_month(game, state)
         staff.synchronize(game, state, monthly=True)
         self.assertIsNotNone(state.extension['civil_staff']['cities']['neutral']['candidate'])
         game, state = fixture()
@@ -224,10 +248,10 @@ class CivilStaffTests(unittest.TestCase):
         state.officers[0].alive = False
         state.cities['one'].roster.officer_ids.clear()
         staff.synchronize(game, state)
-        advance_month(state)
+        advance_month(game, state)
         staff.synchronize(game, state, monthly=True)
         self.assertIsNone(state.extension['civil_staff']['cities']['one']['candidate'])
-        advance_month(state)
+        advance_month(game, state)
         staff.synchronize(game, state, monthly=True)
         self.assertIsNotNone(state.extension['civil_staff']['cities']['one']['candidate'])
 
@@ -235,7 +259,7 @@ class CivilStaffTests(unittest.TestCase):
         game, state = fixture()
         person = open_and_hire(game, state)
         city = state.cities['empty']
-        advance_month(state)
+        advance_month(game, state)
         before = (city.gold, city.grain, city.reserves, state.soldiers['recruited'])
         staff.synchronize(game, state, monthly=True)
         field = dict(commerce='gold', farming='grain', recruitment='reserves')[person['specialty']]
@@ -252,14 +276,14 @@ class CivilStaffTests(unittest.TestCase):
         frozen = deepcopy(state)
         staff.synchronize(game, state, monthly=True)
         self.assertEqual(state, frozen)
-        advance_month(state)
+        advance_month(game, state)
         city.gold = 0
         before = (city.gold, city.grain, city.reserves)
         staff.synchronize(game, state, monthly=True)
         self.assertFalse(person['working'])
         self.assertEqual(person['unpaid_months'], 1)
         self.assertEqual((city.gold, city.grain, city.reserves), before)
-        advance_month(state)
+        advance_month(game, state)
         city.gold = 5
         staff.synchronize(game, state, monthly=True)
         self.assertTrue(person['working'])
@@ -286,6 +310,7 @@ class CivilStaffTests(unittest.TestCase):
     def test_players_and_ai_use_same_hire_and_payroll_with_no_remote_event_flood(self):
         game, state = fixture()
         state.cities['empty'].owner = 'two'
+        command_books.initialize(game, state)
         state.extension['civil_staff'] = staff.empty(game, state)
         staff.synchronize(game, state, opening=True)
         row = state.extension['civil_staff']['cities']['empty']
@@ -298,7 +323,7 @@ class CivilStaffTests(unittest.TestCase):
         self.assertEqual(state.cities['empty'].gold, gold-60)
         self.assertEqual(person['owner'], 'two')
         self.assertFalse(state.events)
-        advance_month(state)
+        advance_month(game, state)
         staff.synchronize(game, state, monthly=True)
         self.assertEqual(state.cities['empty'].gold, gold-65 +
                          (4 if person['specialty'] == 'commerce' and person['profile']['intellect'] < 60 else
@@ -309,7 +334,7 @@ class CivilStaffTests(unittest.TestCase):
     def test_views_and_repeated_save_equivalent_state_do_not_consume_any_rng(self):
         game, state = fixture()
         staff.synchronize(game, state, opening=True)
-        advance_month(state, 2)
+        advance_month(game, state, 2)
         staff.synchronize(game, state, monthly=True)
         self.assertGreater(state.extension['civil_staff']['rng']['draws'], 0)
         self.assertEqual(vars(state.rng), dict(state=2026, draws=0))
@@ -327,7 +352,7 @@ class CivilStaffTests(unittest.TestCase):
     def test_arrival_phase_defers_candidate_roll_but_not_once_only_payroll(self):
         game, state = fixture()
         person = open_and_hire(game, state)
-        advance_month(state, 2)
+        advance_month(game, state, 2)
         state.phase = 'arrivals'
         with patch.object(staff, '_draw', return_value=0) as draw:
             staff.synchronize(game, state, monthly=True)
@@ -360,7 +385,7 @@ class CivilStaffTests(unittest.TestCase):
     def test_mid_command_ownership_sync_never_runs_monthly_checks_or_payroll(self):
         game, state = fixture()
         person = open_and_hire(game, state)
-        advance_month(state, 2)
+        advance_month(game, state, 2)
         state.cities['empty'].owner = 'two'
         # Explicit ordinary-person defection accompanies this controlled owner change.
         state.officers[person['id']].faction_id = 'two'

@@ -9,6 +9,7 @@ from itertools import combinations
 
 from .difficulty import attack_budget, get_settings
 from .errors import GameError
+from . import command_books
 from .officers import integer, recruitment_loyalty, ref_sort_key
 from . import civil_staff
 from .march_supply import DENOMINATOR, OFFICER_UNITS, estimate as march_grain, next_supply_days
@@ -48,8 +49,7 @@ class StrategicAI:
     def available(self, city):
         marching = self.game._march_ids(self.state)
         return sorted((i for i in city.roster.officer_ids if i not in marching
-                       and self.state.officers[i].alive and self.state.officers[i].health > 0
-                       and self.state.extension['officer_actions'].get(str(i)) != self.state.turn),
+                       and self.state.officers[i].alive and self.state.officers[i].health > 0),
                       key=lambda i: (-self.state.officers[i].troops, ref_sort_key(i)))
 
     def army(self, city, target=None, *, transfer=False):
@@ -197,13 +197,14 @@ class StrategicAI:
         targets = sorted({c.id for city in cities for c in self.neighbors(city) if c.owner != owner})
         if preferred in targets:
             targets = [preferred]
-        available_budget = max(0, self.budget-self.state.extension['ai_attacks'])
+        available_budget = min(max(0, self.budget-self.state.extension['ai_attacks']),
+                               command_books.remaining(self.state, owner)//max(1,command_books.cost('depart')))
         winners, potential = [], []
         for key in targets:
             target = self.state.cities[key]
             defend = self.strength(target)
             potential.append((defend, -target.grain, target.id))
-            options = [o for city in cities if not city.action_used
+            options = [o for city in cities if command_books.can_spend(self.state, owner, 'depart')
                        and (o := self.attack_option(city, target)) is not None]
             options.sort(key=lambda o: (-o['survivors'], o['quote']['days'], o['source']))
             # Limit enumeration to the six strongest approaches, then at most
@@ -362,7 +363,7 @@ class StrategicAI:
             ident = min(free,key=ref_sort_key)
             target = self.state.officers[ident]
             chance = max(15,min(95,35+actor.profile.virtue//2+actor.profile.intellect//5-target.profile.virtue//5))
-            city.gold -= r['recruit_officer_gold'];city.action_used = True
+            command_books.spend(self.state,city,'recruit_officer');city.gold -= r['recruit_officer_gold']
             x['officer_actions'][str(actor.runtime_id)] = self.state.turn
             if self.state.rng.next()%100 < chance:
                 target.faction_id = city.owner
@@ -373,8 +374,7 @@ class StrategicAI:
             self.game._report_ai(self.state,city,'recruit_officer',str(ident))
             return
         clerks = sorted((p for p in x['civil_staff']['people'].values()
-            if p['city'] == city.id and p['owner'] == city.owner and p['working'] and p['health'] > 0
-            and p['action_turn'] != self.state.turn),
+            if p['city'] == city.id and p['owner'] == city.owner and p['working'] and p['health'] > 0),
             key=lambda p:(-p['profile']['virtue'],-p['profile']['intellect'],p['id']))
         if clerks and free and self.game._city_occupancy(self.state,city)<self.game.catalog.rules.city_officer_capacity and city.gold>=r['recruit_officer_gold']:
             ident = min(free,key=ref_sort_key)
@@ -393,7 +393,7 @@ class StrategicAI:
                 return
         if (ids or clerks) and city.reserves<200 and city.gold>=r['recruit_gold_per_100'] and city.grain>=r['recruit_grain_per_100']:
             city.reserves += r['recruit_per_action'];self.state.soldiers['recruited'] += r['recruit_per_action']
-            city.gold -= r['recruit_gold_per_100'];city.grain -= r['recruit_grain_per_100'];city.action_used = True
+            command_books.spend(self.state,city,'recruit');city.gold -= r['recruit_gold_per_100'];city.grain -= r['recruit_grain_per_100']
             self.game._report_ai(self.state,city,'recruit_soldiers')
             return
         candidates = self.game._persuadable(self.state,city)
@@ -423,17 +423,21 @@ def run(campaign, state, payload):
     while x['ai_cursor'] < len(x['ai_queue']):
         key = x['ai_queue'][x['ai_cursor']];x['ai_cursor'] += 1
         city = state.cities.get(key)
-        if city is None or city.owner in (state.player,'neutral') or city.action_used:
+        if city is None or city.owner in (state.player,'neutral') or not command_books.can_spend(state,city.owner):
             continue
-        plan = ai.plan(city.owner)
-        ai.prepare(city)
-        if not ai.depart(city,plan) and not ai.reinforce(city,plan):
-            if 'domestic' not in x:
-                ai.personnel_or_recruit(city)
-        if 'domestic' not in x:
-            city.action_used = True
-        if state.phase != 'ai':
-            return
+        for _ in range(command_books.MAXIMUM):
+            remaining = command_books.remaining(state, city.owner)
+            if not command_books.can_spend(state, city.owner):
+                break
+            plan = ai.plan(city.owner)
+            ai.prepare(city)
+            if not ai.depart(city,plan) and not ai.reinforce(city,plan):
+                if 'domestic' not in x:
+                    ai.personnel_or_recruit(city)
+            if state.phase != 'ai':
+                return
+            if command_books.remaining(state, city.owner) == remaining:
+                break
     x['ai_queue'] = [];x['ai_cursor'] = 0;x['ai_attacks'] = 0
     if 'domestic' in x:
         from .domestic import finish_faction_turn

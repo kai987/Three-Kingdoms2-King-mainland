@@ -47,7 +47,8 @@ begin
     end;
     if pg_catalog.jsonb_typeof(document) is distinct from 'object'
        or document->>'format' is distinct from 'three-kingdoms-remake-save'
-       or document->'version' is distinct from '1'::jsonb
+       or (document->'version' is distinct from '1'::jsonb
+           and document->'version' is distinct from '2'::jsonb)
        or pg_catalog.jsonb_typeof(document->'state') is distinct from 'object'
        or pg_catalog.jsonb_typeof(document->'scenario') is distinct from 'string'
        or coalesce(pg_catalog.char_length(document->>'scenario'), 0) not between 1 and 128

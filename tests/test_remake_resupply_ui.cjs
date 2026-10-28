@@ -1,5 +1,6 @@
 /* Actual logistics forms: local rescue drafts never invent a remote delivery. */
 'use strict';
+const commandBookFixture=require('./fixtures/command-books.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 globalThis.GameOfficerChoices=require('../game/officer-choice.js');
 globalThis.GameMarchSupply=require('../game/march-supply.js');
@@ -23,6 +24,7 @@ const view={revision:1,game:{phase:'city',player:'wei',turn:2,officers:{1:{troop
   convoys:[{id:3,source:'home',target:'home',original_target:'front',owner:'wei',officers:[2],
    target_march:7,status:'returning',delivery_done:true,delivered:{gold:0,grain:30,reserves:0},cargo:{gold:0,grain:0,reserves:0},
    journeys:[{quote:route,supply:ration}]}],reports:[]}}};
+commandBookFixture.attach(view);
 const elements=new Map(),listeners=new Map(),submitted=[],i18n={locale:'zh-Hant',t:value=>value,apply(){}};
 let shown,busy=false,preview=false;
 const dialog={open:false,scrollTop:0,querySelector(selector){return selector==='[data-domestic-dialog]'?shown?{}:null:elements.get(selector)||null;},
@@ -88,7 +90,7 @@ const get=id=>elements.get('#'+id),refresh=()=>listeners.get('game-language-chan
  view.game.phase='city';preview=true;refresh();assert(get('dispatch-rescue').disabled);await get('dispatch-rescue').onclick();assert.equal(submitted.length,count);preview=false;
  view.game.extension.travel.marches[0].owner='shu';refresh();await get('dispatch-rescue').onclick();assert.equal(submitted.length,count,'A stale friendly target cannot become an enemy delivery');
  view.game.extension.travel.marches[0].owner='wei';target.max_grain=12;refresh();assert.equal(get('rescue-grain').value,'12','A changed authoritative supply limit clamps the retained draft');
- target.can_dispatch=false;target.blocked_reason='action_used';refresh();assert(get('dispatch-rescue').disabled);
+ target.can_dispatch=false;target.blocked_reason='command_books';refresh();assert(get('dispatch-rescue').disabled);
  target.can_dispatch=true;target.blocked_reason=null;view.catalog.logistics.cities.home.rescue_targets=[];refresh();assert(!get('dispatch-rescue'));assert(shown.body.includes('補給対象の自軍行軍部隊はいません'));
  busy=true;assert.equal(ui.open('home','logistics'),false);ui.dispose();
 

@@ -21,7 +21,7 @@ from remake.difficulty import get_settings
 from remake.march_core import using_backend
 from remake.officers import ref_sort_key
 from remake.tactical_ai import choose_action
-from remake import domestic, logistics
+from remake import domestic, logistics, command_books
 
 CASES = {
     'early': dict(scenario='184-02', faction='yellow_turban', turns=72),
@@ -165,7 +165,7 @@ class Replay:
 
     def administer(self):
         game, state = self.game, self.game.state
-        # Use the same free garrison command as a human defender. An official
+        # Use the same paid garrison command as a human defender. An official
         # can be wounded or busy during a battle; existing local reserves must
         # not sit idle while healthy defenders are below their normal cap.
         busy = game._march_ids(state)
@@ -180,7 +180,7 @@ class Replay:
                 if ident in busy or not person.alive or person.health < 1:
                     continue
                 target = min(999,person.troops+current.reserves)
-                if target > person.troops:
+                if target > person.troops and command_books.can_spend(game.state, state.player, 'allocate'):
                     self.command('allocate',city=city.id,officer=ident,troops=target)
         game, state = self.game, self.game.state
         home = next(c for c in state.cities.values() if c.owner == state.player)

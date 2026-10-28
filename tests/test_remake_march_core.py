@@ -71,7 +71,7 @@ def campaign_fixture(case):
     return game
 
 
-def campaign_result(case, alternate_backend=None):
+def campaign_result(case, alternate_backend=None, *, legacy_catalog_sha256=None):
     name, side, source, target, mode, month = case
     game = campaign_fixture(case)
     result = {}
@@ -80,8 +80,22 @@ def campaign_result(case, alternate_backend=None):
         game.validate(game.state)
         saved = game.export_save()
         result[label] = dict(save=digest(saved), state=digest(game.to_dict()),
+                             save_version=saved['version'],
                              rng=dict(state=game.state.rng.state, draws=game.state.rng.draws),
-                             soldiers=game.state.soldiers.copy(), turn=game.state.turn)
+                             soldiers=game.state.soldiers.copy(), turn=game.state.turn,
+                             march_projection=dict(
+                                 calendar={key:getattr(game.state,key) for key in ('year','month','day','turn')},
+                                 grain={key:city.grain for key,city in sorted(game.state.cities.items())},
+                                 travel=deepcopy(game.state.extension['travel'])))
+        if legacy_catalog_sha256 is not None:
+            # Additional migration evidence only. The primary full v2 state
+            # and save hashes above are never normalized during acceptance.
+            previous=deepcopy(saved)
+            previous['state']['extension'].pop('command_books')
+            previous['version']=1
+            previous['catalog_sha256']=legacy_catalog_sha256
+            previous['checksum']=digest({key:value for key,value in previous.items() if key!='checksum'})
+            result[label]['legacy_compatibility']=dict(state=digest(previous['state']),save=digest(previous))
 
     checkpoint('before')
     for _ in range(3):
@@ -106,6 +120,7 @@ def campaign_result(case, alternate_backend=None):
         game._spawn_eligible(game.state)
         game._reconcile_factions(game.state)
         game.validate(game.state)
+    result['march_before_arrival']=deepcopy(game.state.extension['travel']['marches'][0])
     game.command('arrivals', {}, game.revision)
     checkpoint('arrived')
     result['troops'] = [game.state.officers[i].troops for i in ids]

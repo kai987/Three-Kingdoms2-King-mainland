@@ -13,7 +13,7 @@ from remake.campaign import Campaign, Catalog, digest
 from remake.city_economy import tier_at
 from remake.errors import GameError
 from remake.session import CampaignSession
-from remake import treasures
+from remake import command_books, treasures
 from campaign_fixtures import controlled_catalog, reach_battle
 
 
@@ -104,6 +104,30 @@ class TreasuryCampaignTests(unittest.TestCase):
         self.assertEqual(event['details']['gain'], expected)
         self.assertEqual(event['person_ids'], [game.state.officers[governor].person_id,
                                                game.state.officers[target].person_id])
+        expected_books = deepcopy(before['extension']['command_books'])
+        faction_books = expected_books['factions']['shu']
+        faction_books['used'] += 1
+        faction_books['orders'].append(dict(city=city.id, kind='reward_officer', cost=1))
+        self.assertEqual(after['extension']['command_books'], expected_books)
+        self.assertEqual(command_books.remaining(game.state, 'shu'), 2)
+        # The same governor can reward the same resident again while the shared
+        # pool has books; city/officer activity markers do not impose a lock.
+        for remaining in (1, 0):
+            prior = game.to_dict()
+            self.cmd(game, 'reward_officer', city=city.id, officer=target, kind='gold', amount=1)
+            current = game.to_dict()
+            self.assertEqual(current['rng'], prior['rng'])
+            self.assertEqual(current['soldiers'], prior['soldiers'])
+            self.assertEqual(current['cities'][city.id]['gold'], prior['cities'][city.id]['gold'] - 1)
+            self.assertEqual(current['officers'][str(target)]['loyalty'],
+                             prior['officers'][str(target)]['loyalty'] + 1)
+            self.assertEqual(current['extension']['officer_actions'], {str(governor): game.state.turn})
+            self.assertEqual(command_books.remaining(game.state, 'shu'), remaining)
+            self.assertEqual(current['extension']['command_books']['factions']['shu']['orders'],
+                             [dict(city=city.id, kind='reward_officer', cost=1)] * (3 - remaining))
+        self.assertEqual(game.state.officers[target].loyalty, 20 + expected + 2)
+        # A fourth valid reward is rejected atomically because the faction has
+        # spent all three books, not because the city or actor already worked.
         self.fails(game, 'reward_officer', city=city.id, officer=target, kind='gold', amount=1)
         game.validate(game.state)
 
@@ -181,18 +205,70 @@ class TreasuryCampaignTests(unittest.TestCase):
         ai = Campaign(player.catalog)
         ai.load_save(player.export_save(), 0)
         ai.state.player, ai.state.phase = 'wu', 'ai'
+        before = player.to_dict()
+        available = command_books.remaining(player.state, 'shu')
+        self.assertEqual(available, 3)
         with patch.object(treasures, 'reward', wraps=treasures.reward) as service:
             player_result = treasures.auto_turn(player, player.state, 'shu')
             ai_result = treasures.auto_turn(ai, ai.state, 'shu')
-        self.assertEqual(service.call_count, 2)
+        self.assertEqual(len(player_result), available)
+        self.assertEqual(service.call_count, 2 * available)
         self.assertEqual(player_result, ai_result)
         self.assertEqual(player.state.officers, ai.state.officers)
         self.assertEqual(player.state.cities, ai.state.cities)
         self.assertEqual(player.state.extension['treasury'], ai.state.extension['treasury'])
+        self.assertEqual(player.state.extension['command_books'], ai.state.extension['command_books'])
         self.assertEqual(player.state.rng, ai.state.rng)
-        self.assertLessEqual(sum(r['amount'] for r in player_result if r['kind'] == 'gold'), 37)
-        player.validate(player.state)
-        ai.validate(ai.state)
+        self.assertEqual(player.to_dict()['rng'], before['rng'])
+        # With only 37 gold budget, the remaining two books use actual treasure
+        # stock. Every receipt must match its exact resource and loyalty change.
+        governor = before['extension']['treasury']['cities']['xiangyang']['governor']
+        virtue = player.state.officers[governor].profile.virtue
+        loyalty, gold, treasure = 20, 0, 0
+        self.assertEqual([r['kind'] for r in player_result], ['gold', 'treasure', 'treasure'])
+        self.assertEqual([r['amount'] for r in player_result], [37, 1, 1])
+        for receipt in player_result:
+            self.assertEqual(receipt['actor'], player.state.officers[governor].person_id)
+            self.assertEqual(receipt['target'], player.state.officers[target].person_id)
+            self.assertEqual(receipt['loyalty_before'], loyalty)
+            if receipt['kind'] == 'gold':
+                self.assertTrue(1 <= receipt['amount'] <= 100)
+                gold += receipt['amount']
+                gain = max(1, (receipt['amount'] * (50 + virtue) + 2999) // 3000)
+            else:
+                self.assertEqual(receipt['amount'], 1)
+                treasure += 1
+                gain = 5 + virtue // 20
+            gain = min(100 - loyalty, gain)
+            self.assertEqual(receipt['gain'], gain)
+            loyalty += gain
+            self.assertEqual(receipt['loyalty_after'], loyalty)
+            self.assertTrue(20 < loyalty <= 100)
+        self.assertEqual(gold, 37)
+        expected_people = deepcopy(before['officers'])
+        expected_people[str(target)]['loyalty'] = loyalty
+        self.assertEqual(player.to_dict()['officers'], expected_people)
+        expected_cities = deepcopy(before['cities'])
+        expected_cities['xiangyang']['gold'] -= gold
+        expected_cities['xiangyang']['action_used'] = True
+        self.assertEqual(player.to_dict()['cities'], expected_cities)
+        self.assertEqual(treasures.count(player.state, 'xiangyang'),
+                         before['extension']['treasury']['cities']['xiangyang']['treasure'] - treasure)
+        expected_ledger = deepcopy(before['extension']['treasury']['ledger'])
+        expected_ledger['spent'] += treasure
+        self.assertEqual(player.state.extension['treasury']['ledger'], expected_ledger)
+        self.assertEqual(command_books.remaining(player.state, 'shu'), 0)
+        self.assertEqual(player.state.extension['command_books']['factions']['shu']['orders'],
+                         [dict(city='xiangyang', kind='reward_officer', cost=1)] * available)
+        # Once-per-turn automation receipts preserve the entire saved state,
+        # including books, resources, loyalty, events, RNG and revision.
+        for current in (player, ai):
+            saved = current.export_save()
+            with patch.object(treasures, 'reward', wraps=treasures.reward) as service:
+                self.assertEqual(treasures.auto_turn(current, current.state, 'shu'), [])
+                service.assert_not_called()
+            self.assertEqual(current.export_save(), saved)
+            current.validate(current.state)
 
     def test_dated_city_inherits_a_quarter_once_without_initial_mint_or_rng(self):
         def setup(data):

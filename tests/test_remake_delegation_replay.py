@@ -21,7 +21,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, digest
-from remake import domestic, logistics
+from remake import command_books, domestic, logistics
 from remake.march_core import using_backend
 from remake.officers import ref_sort_key
 
@@ -129,10 +129,8 @@ class DelegationReplayTests(unittest.TestCase):
         ident = self.generated
         if ident in game._march_ids(state) or not state.officers[ident].alive:
             return
-        if state.extension['officer_actions'].get(str(ident)) == state.turn:
-            return
         home = next((c for c in state.cities.values() if ident in c.roster.officer_ids), None)
-        if home is None or home.owner != state.player or home.action_used:
+        if home is None or home.owner != state.player or not command_books.can_spend(state,state.player):
             return
         choices = []
         for target in game._neighbors(home.id, state):
@@ -195,7 +193,7 @@ class DelegationReplayTests(unittest.TestCase):
                 current = self.games[0].state
                 person, home = current.officers[ident], current.cities[city.id]
                 target = min(999, person.troops + home.reserves)
-                if target > person.troops:
+                if target > person.troops and command_books.can_spend(current,current.player,'allocate'):
                     self.command('allocate', city=city.id, officer=ident, troops=target)
 
     def resolve_phases(self):

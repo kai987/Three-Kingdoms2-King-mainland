@@ -1,5 +1,6 @@
 /* Officer comparisons, purpose-based ordering and resource-safe persistent allocation. */
 'use strict';
+const commandBookFixture=require('./fixtures/command-books.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 const source=fs.readFileSync(path.join(__dirname,'../game/app.js'),'utf8'),elements=new Map();
 const element=selector=>{
@@ -30,11 +31,13 @@ const context={GameOfficerChoices:require('../game/officer-choice.js'),GameOffic
 },async command(kind,payload){
  requests++;lastCommand={kind,payload};
  if(kind==='allocate'){
+  commandBookFixture.consume(context.view,'allocate');
   const officer=officers[payload.officer],delta=payload.troops-officer.troops;
   assert(delta<=city.reserves);city.reserves-=delta;officer.troops=payload.troops;
  }
  return true;
 }};
+context.GameCommandBooks=commandBookFixture.api;commandBookFixture.attach(context.view);
 vm.createContext(context);
 context.isRuler=id=>context.GameOfficerChoices.isRuler(id,context.view.game.extension?.leaders);
 vm.runInContext(source.slice(source.indexOf('function officerAttributes('),source.indexOf('// Classify actual runtime entry')),context);
@@ -72,5 +75,6 @@ const values=html=>[...html.matchAll(/<option value="(\d+)"/g)].map(m=>Number(m[
  assert.equal((source.match(/type="number"/g)||[]).length,2,'All current numeric controls are explicitly covered');
  assert(source.includes('bindNumberInput($(\'#seed\'))'));assert(source.includes('bindNumberInput(input,preview)'));
  assert(source.includes('<th>经</th>'));assert(source.includes('<th>德</th>'));assert(source.includes('<td>${o.virtue}</td>'));assert(source.includes('<td>${o.profile.virtue}</td>'));
+ assert.equal(commandBookFixture.api.row(context.view).used,3,'Each persistent confirmation uses one authoritative command book');commandBookFixture.exhaust(context.view);context.allocate(city,1);assert(element('#confirm-allocation').disabled);const beforeExhausted=requests;await element('#confirm-allocation').onclick();assert.equal(requests,beforeExhausted);
  assert(requests===3);console.log('officer controls: comparable attributes, deterministic purpose sort, numeric bounds, exact conservation and persistent allocation passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

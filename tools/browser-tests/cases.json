@@ -323,6 +323,20 @@
         "mainland208-10"
       ],
       "scenario_scope": "fixed"
+    },
+    {
+      "id": "command-books",
+      "title": "faction command books can all be spent in one city and survive save reload",
+      "groups": [
+        "economy",
+        "people",
+        "logistics",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland217-07"
+      ],
+      "scenario_scope": "fixed"
     }
   ]
 }

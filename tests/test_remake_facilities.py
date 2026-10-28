@@ -8,7 +8,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
-from remake import facilities, civil_staff, facility_equipment, equipment
+from remake import facilities, civil_staff, facility_equipment, equipment, command_books
 from remake.campaign import SeedRng
 from remake.errors import GameError
 from remake.officers import GameRules, OfficerProfile, RuntimeOfficer
@@ -52,6 +52,7 @@ def fixture(seed=2026):
         soldiers=dict(initial=6400,recruited=0,lost=0),extension=dict(
             civil_staff=dict(people={clerk['id']:clerk}),officer_actions={},leaders=dict(one=1,two=6),
             ended_factions=[],pending_succession={},travel=dict(marches=[])))
+    command_books.initialize(game,state)
     state.extension['facilities']=facilities.empty(game,state)
     # Keep these facility transactions focused on their original baseline.
     # Source-based equipment and signature acquisition have a separate suite.
@@ -70,9 +71,10 @@ class FacilityTests(unittest.TestCase):
             service(game,state,payload,owner)
         self.assertEqual(state,before,'Refused services cannot spend, draw RNG, mark actions or emit events')
 
-    def reset(self,state):
+    def reset(self,game,state):
         state.turn+=1
         for city in state.cities.values():city.action_used=False
+        command_books.initialize(game,state)
 
     def test_opening_towns_ownership_and_views_are_pure(self):
         game,state=fixture()
@@ -101,7 +103,7 @@ class FacilityTests(unittest.TestCase):
         game,state=fixture();city=state.cities['border'];actor='clerk-000001'
         before=deepcopy(state.rng)
         for expected in (2,3):
-            self.reset(state)
+            self.reset(game,state)
             old_gold=city.gold
             receipt=facilities.develop(game,state,dict(city=city.id,actor=actor),'one')
             self.assertEqual(receipt['to_town'],expected)
@@ -109,7 +111,7 @@ class FacilityTests(unittest.TestCase):
             self.assertTrue(city.action_used)
             self.assertEqual(state.extension['officer_actions'][actor],state.turn)
         self.assertEqual(state.rng,before)
-        self.reset(state)
+        self.reset(game,state)
         self.fails(game,state,facilities.develop,dict(city=city.id,actor=actor))
         facilities.validate(game,state)
 
@@ -121,10 +123,10 @@ class FacilityTests(unittest.TestCase):
         self.assertEqual(state.rng,expected)
         self.assertEqual(state.cities['capital'].gold,950)
         self.assertEqual(state.extension['officer_actions'],{'1':1,'2':1})
-        self.reset(state);state.officers[2].health=98
+        self.reset(game,state);state.officers[2].health=98
         facilities.treat(game,state,dict(city='capital',actor=1,officer=2),'one')
         self.assertEqual(state.officers[2].health,99)
-        self.reset(state)
+        self.reset(game,state)
         self.fails(game,state,facilities.treat,dict(city='capital',actor=1,officer=2))
         state.officers[2].health=50;state.cities['capital'].gold=49
         self.fails(game,state,facilities.treat,dict(city='capital',actor=1,officer=2))
@@ -161,7 +163,7 @@ class FacilityTests(unittest.TestCase):
         game,state=fixture()
         self.fails(game,state,facilities.study,dict(city='capital',actor=1,officer=5))
         for _ in range(20):
-            self.reset(state)
+            self.reset(game,state)
             if state.officers[2].profile.intellect>=80:break
             facilities.study(game,state,dict(city='capital',actor=1,officer=2),'one')
         self.assertLessEqual(state.officers[2].profile.intellect,89)
@@ -183,7 +185,7 @@ class FacilityTests(unittest.TestCase):
             game,state=fixture();pool=state.extension['facilities'];pool['cities']['capital']['town']=town
             before=deepcopy(state.rng);city=state.cities['capital'];initial=(city.gold,city.grain)
             bought=facilities.trade(game,state,dict(city='capital',actor=1,direction='buy',batches=5),'one')
-            self.reset(state)
+            self.reset(game,state)
             sold=facilities.trade(game,state,dict(city='capital',actor=1,direction='sell',batches=5),'one')
             self.assertEqual(city.grain,initial[1]);self.assertLessEqual(city.gold,initial[0])
             self.assertLessEqual(sold['gold'],bought['gold']);self.assertEqual(state.rng,before)
@@ -213,7 +215,7 @@ class FacilityTests(unittest.TestCase):
         self.assertEqual(state.officers[2].weapon_id,23)
         self.assertEqual(city.gold,1000-facility_equipment.item('weapon',23)['price'])
         self.assertEqual(receipt['previous'],0);self.assertEqual(state.rng,before)
-        self.reset(state)
+        self.reset(game,state)
         for item in (23,5,7,99,True):
             self.fails(game,state,facilities.buy,dict(city=city.id,actor=1,officer=2,slot='weapon',item=item))
         relocate('yongchang')
@@ -221,7 +223,7 @@ class FacilityTests(unittest.TestCase):
         facilities.buy(game,state,dict(city=city.id,actor=1,officer=2,slot='armor',item=6),'one')
         self.assertEqual(state.officers[2].armor_id,6)
         self.assertEqual(city.gold,1000-400-350)
-        self.reset(state);state.extension['facilities']['cities'][city.id]['town']=2
+        self.reset(game,state);state.extension['facilities']['cities'][city.id]['town']=2
         self.fails(game,state,facilities.buy,dict(city=city.id,actor=1,officer=3,slot='weapon',item=23))
         equipment.validate(game,state)
 
@@ -232,35 +234,51 @@ class FacilityTests(unittest.TestCase):
         receipt=facilities.prevent(game,state,dict(city='capital',actor=1),'one')
         self.assertEqual((receipt['gold'],receipt['gain'],receipt['repair']),(gold,raw,raw//2))
         self.assertEqual(row['preparedness'],before['preparedness']+raw);self.assertEqual(state.rng,expected)
-        self.reset(state);city.gold=18
+        self.reset(game,state);city.gold=18
         self.fails(game,state,facilities.prevent,dict(city='capital',actor=1))
         city.gold=1000;row.update(preparedness=99,damage=0)
         self.fails(game,state,facilities.prevent,dict(city='capital',actor=1))
         row['damage']=1;facilities.prevent(game,state,dict(city='capital',actor=1),'one')
         self.assertEqual(row['preparedness'],99);self.assertEqual(row['damage'],0)
-        self.reset(state);row.update(preparedness=40,damage=0)
+        self.reset(game,state);row.update(preparedness=40,damage=0)
         state.officers[2].profile=replace(state.officers[2].profile,intellect=1)
         before=deepcopy(row);receipt=facilities.prevent(game,state,dict(city='capital',actor=2),'one')
         self.assertEqual(receipt['gain'],0);self.assertEqual(row,before)
 
-    def test_actor_ownership_phase_marching_battle_and_shared_action_rejections(self):
+    def test_actor_ownership_phase_marching_battle_and_shared_book_rejections(self):
         game,state=fixture()
         for payload in (dict(city='enemy',actor=6),dict(city='neutral',actor=1),
                 dict(city='capital',actor=6),dict(city='capital',actor=True),
                 dict(city='capital',actor='1'),dict(city='capital',actor=1,unknown=True)):
             self.fails(game,state,facilities.prevent,payload)
-        for modifier in ('march','battle','health','action','pending','phase'):
+        for modifier in ('march','battle','health','orders','pending','phase'):
             game,state=fixture()
             if modifier=='march':state.extension['travel']['marches']=[dict(officers=[1])]
             elif modifier=='battle':state.battle=dict(attackers=[dict(id=1)],defenders=[])
             elif modifier=='health':state.officers[1].health=0
-            elif modifier=='action':state.extension['officer_actions']['1']=state.turn
+            elif modifier=='orders':
+                for _ in range(command_books.remaining(state,'one')):
+                    command_books.spend(state,state.cities['border'],'improve_prevention')
             elif modifier=='pending':state.extension['pending_succession']['one']={}
             else:state.phase='ai'
             if modifier=='pending':state.extension['pending_succession']['one']={'candidates':[1]}
             self.fails(game,state,facilities.prevent,dict(city='capital',actor=1))
-        game,state=fixture();facilities.prevent(game,state,dict(city='capital',actor=1),'one')
-        self.fails(game,state,facilities.trade,dict(city='capital',actor=2,direction='buy',batches=1))
+    def test_shared_books_allow_repeated_city_and_actor_until_the_faction_pool_is_empty(self):
+        game,state=fixture();city=state.cities['capital']
+        self.assertEqual(command_books.remaining(state,'one'),3)
+        facilities.prevent(game,state,dict(city=city.id,actor=1),'one')
+        self.assertTrue(city.action_used)
+        self.assertEqual(state.extension['officer_actions']['1'],state.turn)
+        facilities.trade(game,state,dict(city=city.id,actor=1,direction='buy',batches=1),'one')
+        facilities.prevent(game,state,dict(city=city.id,actor=1),'one')
+        self.assertEqual(command_books.remaining(state,'one'),0)
+        self.assertEqual([row['city'] for row in state.extension['command_books']['factions']['one']['orders']],['capital']*3)
+        self.assertEqual(state.rng.draws,4,'Two prevention commands each draw twice; a trade draws no RNG')
+        self.fails(game,state,facilities.trade,dict(city='border',actor='clerk-000001',direction='buy',batches=1))
+        command_books.validate(game,state)
+        self.reset(game,state)
+        self.assertEqual(command_books.remaining(state,'one'),3)
+        facilities.trade(game,state,dict(city=city.id,actor=1,direction='buy',batches=1),'one')
 
     def test_monthly_disasters_are_bounded_once_and_do_not_touch_officers_or_cargo(self):
         for kind,month in (('flood',5),('drought',8)):
@@ -329,10 +347,15 @@ class FacilityTests(unittest.TestCase):
                 receipts=facilities.auto_turn(game,state,'one')
                 self.assertTrue(receipts)
                 self.assertTrue(all(state.cities[row['city']].action_used for row in receipts))
+                self.assertEqual(state.extension['command_books']['factions']['one']['used'],len(receipts))
+                self.assertLessEqual(len(receipts),3)
                 if task=='treat':self.assertGreater(state.officers[2].health,0)
                 elif task=='trade':self.assertGreater(state.cities['capital'].grain,0)
                 elif task=='equip':self.assertNotEqual(state.officers[1].weapon_id,0)
-                elif task=='develop':self.assertEqual(state.extension['facilities']['cities']['border']['town'],2)
+                elif task=='develop':
+                    self.assertEqual(state.extension['facilities']['cities']['border']['town'],3)
+                    self.assertEqual(state.cities['border'].gold,500,'Both level upgrades pay their actual200 and300 cost')
+                    self.assertEqual([r['city'] for r in receipts],['border','border'])
                 else:self.assertGreater(state.officers[2].profile.intellect,20)
                 self.assertGreaterEqual(before.cities['capital'].gold,state.cities['capital'].gold)
                 facilities.validate(game,state)

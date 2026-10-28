@@ -26,3 +26,5 @@
 .city-roster-list .officer-identity { min-width: 0; overflow-wrap: anywhere; }
 .city-roster-list .portrait-frame { width: 28px; height: 35px; flex: 0 0 auto; }
 .city-roster-list button > span:last-child { flex: 0 0 auto; font-size: 14px; }
+
+.command-books{margin:6px 0;padding:5px 8px;border:1px solid currentColor;line-height:1.4;overflow-wrap:anywhere}

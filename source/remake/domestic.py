@@ -9,6 +9,7 @@ Only committed faction-turn and calendar hooks perform work. Views are pure.
 from copy import deepcopy
 
 from .errors import GameError
+from . import command_books
 from .officers import parse_officer_ref
 
 SCHEMA = 'tk2-domestic-v2'
@@ -100,8 +101,7 @@ def _present(game, state, city, ident, *, unused=False):
                 if state.battle else set())
     return bool(person is not None and ident in _owned_ids(state, city.owner) and person.alive
                 and person.faction_id == city.owner and person.health > 0 and paid
-                and ident not in _marching(game, state) and ident not in battling
-                and (not unused or state.extension['officer_actions'].get(str(ident)) != state.turn))
+                and ident not in _marching(game, state) and ident not in battling)
 
 
 def synchronize(game, state):
@@ -405,7 +405,7 @@ def _target_key(state, policy, choice, city_id):
 def personnel_targets(game, state, city_id):
     city = state.cities[city_id]
     row = appointments(state, city.owner)
-    if not row or city.action_used or game._city_occupancy(state, city) >= game.catalog.rules.city_officer_capacity:
+    if not row or not command_books.can_spend(state, city.owner) or game._city_occupancy(state, city) >= game.catalog.rules.city_officer_capacity:
         return []
     policy = row['policy']
     if row['civil'] is None or not _present(game, state, city, row['civil']):
@@ -416,7 +416,7 @@ def personnel_targets(game, state, city_id):
             ('recruit_officer', policy['auto_recruit'], game._free_candidates(state, city), row['civil'], game.catalog.data['rules']['recruit_officer_gold']),
             ('persuade_officer', policy['auto_persuade'], game._persuadable(state, city),
              row['civil'] if policy['envoy'] is None else policy['envoy'], game.catalog.data['rules']['persuade_officer_gold'])):
-        if not enabled or fee > policy['budget'] or city.gold - fee < policy['gold_floor']:
+        if not enabled or not command_books.can_spend(state, city.owner, method) or fee > policy['budget'] or city.gold - fee < policy['gold_floor']:
             continue
         if not _present(game, state, city, actor_id, unused=True):
             continue
@@ -525,7 +525,7 @@ def _hire_staff(game, state, owner, city_ids):
     candidates = []
     for key in city_ids:
         city = state.cities[key]
-        if (city.action_used or ident is None or not _present(game, state, city, ident, unused=True)
+        if (not command_books.can_spend(state, owner, 'hire_staff') or ident is None or not _present(game, state, city, ident, unused=True)
                 or game._city_occupancy(state, city) >= game.catalog.rules.city_officer_capacity):
             continue
         candidate = state.extension['civil_staff']['cities'][key]['candidate']
@@ -551,7 +551,7 @@ def _hire_staff(game, state, owner, city_ids):
 
 
 def run_automatic(game, state, owner):
-    """Spend each city's remaining action once using the one shared policy."""
+    """Spend the faction's remaining orders under the shared policy, once per turn."""
     synchronize(game, state)
     if owner not in game.catalog.factions or owner == 'neutral' or owner in state.extension.get('ended_factions', []):
         return
@@ -569,36 +569,43 @@ def run_automatic(game, state, owner):
         if row['last_auto_turn'] == state.turn:
             continue
         row['last_auto_turn'] = state.turn
-        if not city.action_used:
-            eligible.append(key)
+        eligible.append(key)
     for task in policy['task_order']:
         if task == 'personnel':
             # Rank across the entire faction before committing. Lexical city
             # order must not consume the only civil action on a weaker target.
-            while True:
+            for _ in range(command_books.MAXIMUM):
+                if not command_books.can_spend(state, owner):
+                    break
                 choices = faction_personnel_targets(game, state, owner, eligible)
                 if not choices:
                     break
                 choice = choices[0]
                 _personnel(game, state, state.cities[choice['city']], choice)
             if policy['auto_recruit'] and 'civil_staff' in state.extension:
-                _hire_staff(game, state, owner, eligible)
+                for _ in range(command_books.MAXIMUM):
+                    if not _hire_staff(game, state, owner, eligible):
+                        break
         elif task == 'recruit' and policy['recruit_enabled']:
-            for key in eligible:
-                city = state.cities[key]
-                if city.action_used:
-                    continue
-                quote = recruitment_preview(game, state, key)
-                if quote['soldiers']:
-                    city.gold -= quote['gold']
-                    city.grain -= quote['grain']
-                    add_reserves(game, state, city, quote['soldiers'], recruited=True)
-                    city.action_used = True
-                    _report(state, city, 'recruit', **quote)
+            for _ in range(command_books.MAXIMUM):
+                remaining = command_books.remaining(state, owner)
+                for key in eligible:
+                    city = state.cities[key]
+                    if not command_books.can_spend(state, owner, 'recruit'):
+                        break
+                    quote = recruitment_preview(game, state, key)
+                    if quote['soldiers']:
+                        city.gold -= quote['gold']
+                        city.grain -= quote['grain']
+                        add_reserves(game, state, city, quote['soldiers'], recruited=True)
+                        command_books.spend(state, city, 'recruit')
+                        _report(state, city, 'recruit', **quote)
+                if command_books.remaining(state, owner) == remaining:
+                    break
         elif task == 'transport' and 'logistics' in state.extension:
             from . import logistics
             for key in eligible:
-                if not state.cities[key].action_used:
+                if command_books.can_spend(state, owner, 'dispatch_transport'):
                     logistics.auto_dispatch_city(game, state, key)
 
 

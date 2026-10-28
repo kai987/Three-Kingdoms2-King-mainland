@@ -37,6 +37,7 @@ UI = {
     'domestic': {'economy', 'logistics'}, 'march-supply': {'logistics'},
     'route-options': {'map', 'logistics'}, 'events': {'scenarios', 'economy', 'battle'},
     'calendar': {'scenarios', 'economy'}, 'battle-scene': {'battle'}, 'battlefields': {'battle', 'map'},
+    'command-books': set(GROUPS),
     'duel-appearance': {'battle', 'people'}, 'cloud-save': {'cloud'},
     'cloud-save-ui': {'cloud'}, 'cloud-recovery': {'cloud'}, 'autosave': {'save'},
     'save-transfer': {'save'}, 'view-cache': set(GROUPS),

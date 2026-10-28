@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / 'source'), str(ROOT / 'tests')]
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import civil_staff, domestic, equipment, logistics, treasures
+from remake import command_books, civil_staff, domestic, equipment, logistics, treasures
 from remake.officers import YearState, initialize_officer, year_state
 from test_remake_domestic import domestic_catalog
 
@@ -47,7 +47,10 @@ class LogisticsTests(unittest.TestCase):
         while game.state.turn < target:
             game._complete_turn(game.state)
         game.state.phase = 'arrivals'
+        books = deepcopy(game.state.extension['command_books'])
         game.command('arrivals', {}, game.revision)
+        self.assertEqual(game.state.extension['command_books'], books,
+                         'Delivery and escort return never debit another strategic order')
 
     def sync(self, game):
         civil_staff.synchronize(game, game.state, checks=False)
@@ -83,7 +86,11 @@ class LogisticsTests(unittest.TestCase):
         source = game.state.cities['xiangyang']; target = game.state.cities['nanjun']
         before = dict(gold=source.gold, grain=source.grain, reserves=source.reserves)
         destination = dict(gold=target.gold, grain=target.grain, reserves=target.reserves)
+        available_books = command_books.remaining(game.state, 'shu')
         self.dispatch(game)
+        self.assertEqual(command_books.remaining(game.state, 'shu'), available_books - 1)
+        self.assertEqual(game.state.extension['command_books']['factions']['shu']['orders'][-1]['kind'],
+                         'dispatch_transport')
         row = game.state.extension['logistics']['convoys'][0]
         source, target = game.state.cities['xiangyang'], game.state.cities['nanjun']
         self.assertEqual(source.gold, before['gold'] - 100)
@@ -180,6 +187,22 @@ class LogisticsTests(unittest.TestCase):
         self.fails(game, valid)
         self.fails(game, dict(city='xiangyang', civil=999), kind='set_domestic')
         self.fails(game, dict(city='xiangyang', officer=999, troops=100), kind='allocate')
+
+    def test_shared_command_pool_exhaustion_blocks_dispatch_and_preview_atomically(self):
+        game = self.game()
+        for _ in range(3):
+            person = game.state.officers[999]
+            game.command('allocate', dict(city='xiangyang', officer=999, troops=person.troops), game.revision)
+        self.assertEqual(command_books.remaining(game.state, 'shu'), 0)
+        self.assertEqual([r['kind'] for r in game.state.extension['command_books']['factions']['shu']['orders']],
+                         ['allocate'] * 3)
+        before = game.export_save()
+        quote, reason = logistics.preview(game, game.state, 'xiangyang')
+        self.assertIsNone(quote)
+        self.assertEqual(reason, 'command_books')
+        self.fails(game, dict(source='xiangyang', target='nanjun', officers=[999],
+            cargo=dict(gold=100, grain=200, reserves=300), route_mode='land'))
+        self.assertEqual(game.export_save(), before)
 
     def test_safe_search_uses_longer_land_detour_without_mutating_catalog(self):
         game = Campaign(Catalog(ROOT / 'game/data/campaigns/217-07.json'))

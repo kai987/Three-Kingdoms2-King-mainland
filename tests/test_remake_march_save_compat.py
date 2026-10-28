@@ -1,22 +1,101 @@
 """Real eight-case save/RNG baselines and cross-backend campaign compatibility.
 
 The large arithmetic/vector ABI matrix stays in test_remake_march_core.py.
-No checksum fields or historical baseline hashes are normalized.
+The primary v2 goldens pin complete saves and states without normalization.
+A separate, declared migration comparison preserves the unchanged v1 evidence.
 """
 from copy import deepcopy
+from hashlib import sha256
 import json
 import unittest
 from test_remake_march_core import (ROOT, CASES, HeadlessCampaign as Campaign, Catalog, canonical,
     campaign_result, using_backend)
 import test_remake_march_core as matrix
 
+
+CHECKPOINTS = ('before', 'preview', 'queued', 'arrived')
+BASELINE_PATH = ROOT / 'tests/fixtures/march-python-baseline-v2-command-books.json'
+
+
+def baselines():
+    current = json.loads(BASELINE_PATH.read_text())
+    if current['schema'] != 'tk2-march-command-books-golden-v2':
+        raise AssertionError('Unexpected march baseline schema')
+    previous_bytes = (ROOT / current['previous']['path']).read_bytes()
+    if sha256(previous_bytes).hexdigest() != current['previous']['sha256']:
+        raise AssertionError('The retained pre-command-book reference was changed')
+    if set(current['cases']) != {case[0] for case in CASES}:
+        raise AssertionError('The reference must cover every real march case')
+    return current, json.loads(previous_bytes)
+
+
 class MarchReferenceBaselineTests(unittest.TestCase):
-    def test_current_python_campaign_save_and_rng_hashes(self):
-        expected = json.loads((ROOT / 'tests/fixtures/march-python-baseline.json').read_text())
+    @classmethod
+    def setUpClass(cls):
+        cls.baseline, cls.previous = baselines()
         with using_backend('python'):
-            for case in CASES:
-                with self.subTest(case=case[0]):
-                    self.assertEqual(canonical(campaign_result(case)), canonical(expected[case[0]]))
+            cls.actual = {case[0]: campaign_result(case,
+                legacy_catalog_sha256=cls.baseline['previous']['catalog_sha256'])
+                for case in CASES}
+
+    def test_current_python_campaign_save_and_rng_hashes(self):
+        for name, actual in self.actual.items():
+            with self.subTest(case=name):
+                self.assertEqual(canonical(actual), canonical(self.baseline['cases'][name]))
+                for stage in CHECKPOINTS:
+                    self.assertEqual(actual[stage]['save_version'], 2)
+
+    def test_migration_preserves_complete_legacy_state_march_rules_and_rng(self):
+        for name, actual in self.actual.items():
+            previous = self.previous[name]
+            with self.subTest(case=name):
+                self.assertEqual(actual['quote'], previous['quote'])
+                self.assertEqual(actual['troops'], previous['troops'])
+                for stage in CHECKPOINTS:
+                    # This supplemental copy removes only the added order pool
+                    # and restores the old envelope version/catalog identity.
+                    # Complete current hashes remain pinned in the test above.
+                    proof = actual[stage]['legacy_compatibility']
+                    self.assertEqual(proof, {key: previous[stage][key] for key in ('state', 'save')}, stage)
+                    for key in ('rng', 'soldiers', 'turn'):
+                        self.assertEqual(actual[stage][key], previous[stage][key], (stage, key))
+
+    def test_march_time_rations_refill_risk_and_preview_contracts(self):
+        physical = {
+            # days, departure grain, total consumed, risk survival fraction
+            'plain': (14, 11, 17, None),
+            'yinping': (32, 39, 39, (1, 3)),
+            'ziwu-rain': (48, 58, 58, (50, 100)),
+            'ziwu-dry': (24, 29, 29, (80, 100)),
+            'sea-tail': (8, 10, 10, (11, 100)),
+            'sea-head': (32, 39, 39, (11, 100)),
+            'sea-calm': (9, 11, 11, None),
+            'explore': (18, 22, 22, (11, 100)),
+        }
+        for name, actual in self.actual.items():
+            with self.subTest(case=name):
+                self.assertEqual(actual['before'], actual['preview'], 'Repeated previews must be read only')
+                queued = actual['queued']['march_projection']['travel']['marches'][0]
+                march = actual['march_before_arrival']
+                supply = march['supply']
+                days, loaded, consumed, risk = physical[name]
+                self.assertEqual(queued['quote'], actual['quote'])
+                self.assertEqual(actual['quote']['days'], days)
+                self.assertEqual(supply['route_days'], days)
+                self.assertEqual(supply['elapsed_days'], days)
+                self.assertEqual(supply['loaded'], loaded)
+                self.assertEqual(supply['consumed'], consumed)
+                source = queued['source']
+                before_grain = actual['before']['march_projection']['grain'][source]
+                queued_grain = actual['queued']['march_projection']['grain'][source]
+                self.assertEqual(before_grain - queued_grain, loaded)
+                self.assertEqual(supply['loaded'] + supply['received'], supply['consumed'] + supply['remaining'])
+                self.assertEqual(supply['received'], 6 if name == 'plain' else 0)
+                self.assertEqual((supply['shortage_days'], supply['lost']), (0, 0))
+                self.assertEqual([(item['survival_numerator'], item['survival_denominator'])
+                                  for item in march['risks']], [] if risk is None else [risk])
+                self.assertTrue(all(not item['applied'] for item in march['risks']))
+                self.assertFalse(actual['arrived']['march_projection']['travel']['marches'])
 
 
 class MarchCampaignNativeCompatibilityTests(unittest.TestCase):
@@ -74,12 +153,14 @@ class MarchCampaignNativeCompatibilityTests(unittest.TestCase):
         self.assertGreater(reference_game.state.rng.draws, 0)
 
     def test_full_campaigns_and_cross_backend_pending_save_loads_match_reference(self):
-        expected = json.loads((ROOT / 'tests/fixtures/march-python-baseline.json').read_text())
+        baseline, _ = baselines()
         for backend, alternate in (('rust', 'python'), ('python', 'rust')):
             with using_backend(backend):
                 for case in CASES:
                     with self.subTest(backend=backend, case=case[0]):
-                        self.assertEqual(canonical(campaign_result(case, alternate)), canonical(expected[case[0]]))
+                        actual = campaign_result(case, alternate,
+                            legacy_catalog_sha256=baseline['previous']['catalog_sha256'])
+                        self.assertEqual(canonical(actual), canonical(baseline['cases'][case[0]]))
 
 
 if __name__ == '__main__':

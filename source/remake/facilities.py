@@ -8,6 +8,7 @@ from copy import deepcopy
 from dataclasses import replace
 
 from .errors import GameError
+from . import command_books
 from .officers import parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref
 from .city_economy import tier_at
 
@@ -157,8 +158,7 @@ def _resident(game, state, city, ident, *, working=False, unused=False, healthy=
         and officer.alive and city.owner != 'neutral' and officer.faction_id == city.owner
         and (not healthy or officer.health > 0) and ident not in game._march_ids(state)
         and ident not in _battle_ids(state)
-        and (not working or state.extension.get('civil_staff', {}).get('people', {}).get(ident, {}).get('working', True))
-        and (not unused or state.extension['officer_actions'].get(str(ident)) != state.turn))
+        and (not working or state.extension.get('civil_staff', {}).get('people', {}).get(ident, {}).get('working', True)))
 
 
 def _ready(state, owner):
@@ -167,13 +167,13 @@ def _ready(state, owner):
         and state.phase == ('city' if owner == state.player else 'ai'))
 
 
-def _city(game, state, key, owner, *, action=True, service=None):
+def _city(game, state, key, owner, *, action=True, service=None, kind=1):
     if (not _ready(state, owner) or not isinstance(key, str) or key not in state.cities
             or state.cities[key].owner != owner):
         raise GameError('目前不能操作這座城的設施。')
     city = state.cities[key]
-    if action and city.action_used:
-        raise GameError('本城本旬已行動。')
+    if action:
+        command_books.require(state, owner, kind)
     if service in ('school', 'armory') and _pool(state)['cities'][key]['town'] < 2:
         raise GameError('本城尚未開放這項設施，請先開發町。')
     return city
@@ -194,7 +194,7 @@ def _ref(game, value):
 def _actor(game, state, city, value):
     ident = _ref(game, value)
     if not _resident(game, state, city, ident, working=True, unused=True, healthy=True):
-        raise GameError('請選擇本城健康、在場且尚未行動的執行武將。')
+        raise GameError('請選擇本城健康、在場且可任職的執行武將。')
     return ident
 
 
@@ -205,11 +205,11 @@ def _target(game, state, city, value, *, study=False):
     return ident
 
 
-def _charge(state, city, actor, gold, target=None):
+def _charge(state, city, actor, gold, target=None, *, kind):
     if not _int(gold, 0, LIMIT) or city.gold < gold:
         raise GameError('本城金錢不足，操作未執行。')
+    command_books.spend(state, city, kind)
     city.gold -= gold
-    city.action_used = True
     for ident in (actor, target):
         if ident is not None:
             state.extension['officer_actions'][str(ident)] = state.turn
@@ -222,14 +222,14 @@ def _emit(game, state, kind, city, people, details):
 
 def develop(game, state, payload, owner):
     _payload(payload, {'city', 'actor'})
-    city = _city(game, state, payload['city'], owner)
+    city = _city(game, state, payload['city'], owner, kind='develop_town')
     actor = _actor(game, state, city, payload['actor'])
     row = _pool(state)['cities'][city.id]
     before = row['town']
     if before >= 3:
         raise GameError('本城町等級已達上限。')
     gold = _rule(game, 'development_per_level_gold') * (before + 1)
-    _charge(state, city, actor, gold)
+    _charge(state, city, actor, gold, kind='develop_town')
     row['town'] += 1
     details = dict(actor=state.officers[actor].person_id, from_town=before, to_town=row['town'], gold=gold)
     _emit(game, state, 'town_developed', city, [actor], details)
@@ -238,7 +238,7 @@ def develop(game, state, payload, owner):
 
 def treat(game, state, payload, owner):
     _payload(payload, {'city', 'actor', 'officer'})
-    city = _city(game, state, payload['city'], owner, service='hospital')
+    city = _city(game, state, payload['city'], owner, service='hospital', kind='treat_officer')
     actor = _actor(game, state, city, payload['actor'])
     target = _target(game, state, city, payload['officer'])
     officer = state.officers[target]
@@ -250,7 +250,7 @@ def treat(game, state, payload, owner):
     before = officer.health
     healing = _rule(game, 'medical_heal_min') + state.rng.next() % (
         _rule(game, 'medical_heal_max') - _rule(game, 'medical_heal_min') + 1)
-    _charge(state, city, actor, gold, target)
+    _charge(state, city, actor, gold, target, kind='treat_officer')
     officer.health = min(officer.profile.health_max, before + healing)
     details = dict(actor=state.officers[actor].person_id, target=officer.person_id,
         gold=gold, before=before, after=officer.health)
@@ -272,7 +272,7 @@ def _study_quote(game, state, officer):
 
 def study(game, state, payload, owner):
     _payload(payload, {'city', 'actor', 'officer'})
-    city = _city(game, state, payload['city'], owner, service='school')
+    city = _city(game, state, payload['city'], owner, service='school', kind='study_officer')
     actor = _actor(game, state, city, payload['actor'])
     target = _target(game, state, city, payload['officer'], study=True)
     officer, quote = state.officers[target], _study_quote(game, state, state.officers[target])
@@ -282,7 +282,7 @@ def study(game, state, payload, owner):
         raise GameError('本城金錢不足，操作未執行。')
     after = min(_rule(game,'study_cap'), quote['before'] + quote['gain_min'] + state.rng.next() % (
         quote['gain_max'] - quote['gain_min'] + 1))
-    _charge(state, city, actor, quote['gold'], target)
+    _charge(state, city, actor, quote['gold'], target, kind='study_officer')
     bonus = quote['bonus'] + after - quote['before']
     _pool(state)['study'][str(target)] = bonus
     officer.profile = learned_profile(state,target,_base_profile(game,state,target))
@@ -302,7 +302,7 @@ def _trade_quote(game, city, town, direction):
 
 def trade(game, state, payload, owner):
     _payload(payload, {'city', 'actor', 'direction', 'batches'})
-    city = _city(game, state, payload['city'], owner, service='market')
+    city = _city(game, state, payload['city'], owner, service='market', kind='trade_grain')
     actor = _actor(game, state, city, payload['actor'])
     direction, batches = payload['direction'], payload['batches']
     if direction not in ('buy', 'sell'):
@@ -312,10 +312,10 @@ def trade(game, state, payload, owner):
         raise GameError('兵糧交易數量超出可用庫存或上限。')
     gold, grain = batches * quote['rate'], batches * quote['batch_grain']
     if direction == 'buy':
-        _charge(state, city, actor, gold)
+        _charge(state, city, actor, gold, kind='trade_grain')
         city.grain += grain
     else:
-        _charge(state, city, actor, 0)
+        _charge(state, city, actor, 0, kind='trade_grain')
         city.gold += gold
         city.grain -= grain
     details = dict(actor=state.officers[actor].person_id, direction=direction,
@@ -331,7 +331,7 @@ def _equipment():
 
 def buy(game, state, payload, owner):
     _payload(payload, {'city', 'actor', 'officer', 'slot', 'item'})
-    city = _city(game, state, payload['city'], owner, service='armory')
+    city = _city(game, state, payload['city'], owner, service='armory', kind='buy_equipment')
     actor = _actor(game, state, city, payload['actor'])
     target = _target(game, state, city, payload['officer'])
     slot, ident = payload['slot'], payload['item']
@@ -342,7 +342,7 @@ def buy(game, state, payload, owner):
     previous = getattr(officer, field)
     if previous == ident:
         raise GameError('這名武將已持有這件裝備。')
-    _charge(state, city, actor, merchandise['price'], target)
+    _charge(state, city, actor, merchandise['price'], target, kind='buy_equipment')
     _equipment().claim_purchase(game,state,city,target,slot,ident)
     details = dict(actor=state.officers[actor].person_id, target=officer.person_id,
         slot=slot, item=ident, previous=previous, gold=merchandise['price'])
@@ -367,7 +367,7 @@ def _prevention_quote(game, city, row, officer):
 
 def prevent(game, state, payload, owner):
     _payload(payload, {'city', 'actor'})
-    city = _city(game, state, payload['city'], owner)
+    city = _city(game, state, payload['city'], owner, kind='improve_prevention')
     actor = _actor(game, state, city, payload['actor'])
     row = _pool(state)['cities'][city.id]
     quote = _prevention_quote(game, city, row, state.officers[actor])
@@ -381,7 +381,7 @@ def prevent(game, state, payload, owner):
     raw_gain = ((gold * state.officers[actor].profile.intellect // 100) * effect) // 10
     before_p, before_d = row['preparedness'], row['damage']
     gain, repair = min(99-before_p, raw_gain), min(before_d, max(1, raw_gain//2))
-    _charge(state, city, actor, gold)
+    _charge(state, city, actor, gold, kind='improve_prevention')
     row.update(preparedness=before_p+gain, damage=before_d-repair)
     details = dict(actor=state.officers[actor].person_id, gold=gold, gain=gain, repair=repair,
         preparedness_before=before_p, preparedness_after=row['preparedness'],
@@ -488,82 +488,86 @@ def auto_turn(game, state, owner):
     if not policy['enabled']:
         return []
     budget, results = policy['gold_budget'], []
-    for key, city in sorted(state.cities.items()):
-        if city.owner != owner or city.action_used:
-            continue
-        actors = [i for i in city.roster.officer_ids
-            if _resident(game, state, city, i, working=True, unused=True, healthy=True)]
-        if not actors:
-            continue
-        actor = min(actors, key=lambda i: (-state.officers[i].profile.intellect,
-            -state.officers[i].profile.virtue, ref_sort_key(i)))
-        row, available = pool['cities'][key], min(budget, max(0, city.gold-policy['gold_floor']))
-        choice = None
-        prevention = _prevention_quote(game, city, row, state.officers[actor])
-        if (policy['auto_prevent'] and (row['damage'] or row['preparedness'] < policy['target_preparedness'])
-                and prevention['gold_max'] <= available
-                and (prevention['gain_max'] > 0 or row['damage'])):
-            choice = (prevent, dict(city=key, actor=actor))
-        patients = [i for i in city.roster.officer_ids if _resident(game, state, city, i)
-            and state.officers[i].health < min(policy['heal_below'], state.officers[i].profile.health_max)]
-        if choice is None and policy['auto_treat'] and patients and _rule(game, 'medical_gold') <= available:
-            patient = min(patients, key=lambda i: (state.officers[i].health, ref_sort_key(i)))
-            choice = (treat, dict(city=key, actor=actor, officer=patient))
-        if choice is None and policy['auto_trade']:
-            buy_quote, sell_quote = (_trade_quote(game, city, row['town'], direction) for direction in ('buy','sell'))
-            batches = min(buy_quote['max_batches'], available // buy_quote['rate'],
-                max(0, policy['grain_target']-city.grain+buy_quote['batch_grain']-1)//buy_quote['batch_grain'])
-            if city.grain < policy['grain_target'] and batches > 0:
-                choice = (trade, dict(city=key, actor=actor, direction='buy', batches=batches))
-            elif city.gold < policy['gold_floor'] and city.grain > policy['grain_target']:
-                batches = min(sell_quote['max_batches'], (city.grain-policy['grain_target'])//sell_quote['batch_grain'],
-                    (policy['gold_floor']-city.gold+sell_quote['rate']-1)//sell_quote['rate'])
-                if batches:
-                    choice = (trade, dict(city=key, actor=actor, direction='sell', batches=batches))
-        if choice is None and policy['auto_equip'] and row['town'] >= 2:
-            people = sorted((i for i in city.roster.officer_ids if _resident(game,state,city,i)),
-                key=lambda i: (-state.officers[i].profile.martial_strength, ref_sort_key(i)))
-            for target in people:
-                for slot in ('weapon','armor'):
-                    current = _equipment().item(slot, getattr(state.officers[target], slot+'_id'))
-                    officer = state.officers[target]
-                    field = 'attack' if slot == 'weapon' else 'defense'
-                    old_effect = _equipment().duel_adjustment(officer.weapon_id,officer.armor_id,
-                        officer.profile.martial_strength)[field]
-                    def effect(item):
-                        return _equipment().duel_adjustment(
-                            item['id'] if slot == 'weapon' else officer.weapon_id,
-                            item['id'] if slot == 'armor' else officer.armor_id,
+    for _ in range(command_books.MAXIMUM):
+        completed = len(results)
+        for key, city in sorted(state.cities.items()):
+            if city.owner != owner or not command_books.can_spend(state, owner):
+                continue
+            actors = [i for i in city.roster.officer_ids
+                if _resident(game, state, city, i, working=True, unused=True, healthy=True)]
+            if not actors:
+                continue
+            actor = min(actors, key=lambda i: (-state.officers[i].profile.intellect,
+                -state.officers[i].profile.virtue, ref_sort_key(i)))
+            row, available = pool['cities'][key], min(budget, max(0, city.gold-policy['gold_floor']))
+            choice = None
+            prevention = _prevention_quote(game, city, row, state.officers[actor])
+            if (command_books.can_spend(state, owner, 'improve_prevention') and policy['auto_prevent'] and (row['damage'] or row['preparedness'] < policy['target_preparedness'])
+                    and prevention['gold_max'] <= available
+                    and (prevention['gain_max'] > 0 or row['damage'])):
+                choice = (prevent, dict(city=key, actor=actor))
+            patients = [i for i in city.roster.officer_ids if _resident(game, state, city, i)
+                and state.officers[i].health < min(policy['heal_below'], state.officers[i].profile.health_max)]
+            if choice is None and command_books.can_spend(state, owner, 'treat_officer') and policy['auto_treat'] and patients and _rule(game, 'medical_gold') <= available:
+                patient = min(patients, key=lambda i: (state.officers[i].health, ref_sort_key(i)))
+                choice = (treat, dict(city=key, actor=actor, officer=patient))
+            if choice is None and command_books.can_spend(state, owner, 'trade_grain') and policy['auto_trade']:
+                buy_quote, sell_quote = (_trade_quote(game, city, row['town'], direction) for direction in ('buy','sell'))
+                batches = min(buy_quote['max_batches'], available // buy_quote['rate'],
+                    max(0, policy['grain_target']-city.grain+buy_quote['batch_grain']-1)//buy_quote['batch_grain'])
+                if city.grain < policy['grain_target'] and batches > 0:
+                    choice = (trade, dict(city=key, actor=actor, direction='buy', batches=batches))
+                elif city.gold < policy['gold_floor'] and city.grain > policy['grain_target']:
+                    batches = min(sell_quote['max_batches'], (city.grain-policy['grain_target'])//sell_quote['batch_grain'],
+                        (policy['gold_floor']-city.gold+sell_quote['rate']-1)//sell_quote['rate'])
+                    if batches:
+                        choice = (trade, dict(city=key, actor=actor, direction='sell', batches=batches))
+            if choice is None and policy['auto_equip'] and row['town'] >= 2:
+                people = sorted((i for i in city.roster.officer_ids if _resident(game,state,city,i)),
+                    key=lambda i: (-state.officers[i].profile.martial_strength, ref_sort_key(i)))
+                for target in people:
+                    for slot in ('weapon','armor'):
+                        current = _equipment().item(slot, getattr(state.officers[target], slot+'_id'))
+                        officer = state.officers[target]
+                        field = 'attack' if slot == 'weapon' else 'defense'
+                        old_effect = _equipment().duel_adjustment(officer.weapon_id,officer.armor_id,
                             officer.profile.martial_strength)[field]
-                    owned=[item for item in _equipment().owned_for(game,state,target)
-                        if item['slot']==slot and effect(item)>old_effect]
-                    if owned:
-                        item=min(owned,key=lambda item:(-effect(item),item['id']))
-                        choice=(_equipment().equip_owned,dict(city=key,actor=actor,officer=target,slot=slot,item=item['id']))
+                        def effect(item):
+                            return _equipment().duel_adjustment(
+                                item['id'] if slot == 'weapon' else officer.weapon_id,
+                                item['id'] if slot == 'armor' else officer.armor_id,
+                                officer.profile.martial_strength)[field]
+                        owned=[item for item in _equipment().owned_for(game,state,target)
+                            if item['slot']==slot and effect(item)>old_effect]
+                        if owned and command_books.can_spend(state, owner, 'equip_owned'):
+                            item=min(owned,key=lambda item:(-effect(item),item['id']))
+                            choice=(_equipment().equip_owned,dict(city=key,actor=actor,officer=target,slot=slot,item=item['id']))
+                            break
+                        offers = [item for item in _equipment().shop_stock(game,state,city,slot)
+                            if 0 <= item['price'] <= available and item['id'] != current['id']
+                            and target in item['eligible_targets'] and effect(item) > old_effect]
+                        if offers and command_books.can_spend(state, owner, 'buy_equipment'):
+                            item = min(offers,key=lambda item: (-effect(item),item['price'],item['id']))
+                            choice = (buy, dict(city=key, actor=actor, officer=target, slot=slot, item=item['id']))
+                            break
+                    if choice:
                         break
-                    offers = [item for item in _equipment().shop_stock(game,state,city,slot)
-                        if 0 <= item['price'] <= available and item['id'] != current['id']
-                        and target in item['eligible_targets'] and effect(item) > old_effect]
-                    if offers:
-                        item = min(offers,key=lambda item: (-effect(item),item['price'],item['id']))
-                        choice = (buy, dict(city=key, actor=actor, officer=target, slot=slot, item=item['id']))
-                        break
-                if choice:
-                    break
-        if choice is None and policy['auto_develop'] and row['town'] < 3:
-            if _rule(game,'development_per_level_gold')*(row['town']+1) <= available:
-                choice = (develop, dict(city=key,actor=actor))
-        if choice is None and policy['auto_study'] and row['town'] >= 2:
-            students = [i for i in actors if (quote := _study_quote(game,state,state.officers[i])) is not None
-                and quote['gold'] <= available]
-            if students:
-                target = min(students,key=lambda i:(state.officers[i].profile.intellect,ref_sort_key(i)))
-                choice = (study,dict(city=key,actor=actor,officer=target))
-        if choice is not None:
-            before = city.gold
-            receipt = choice[0](game,state,choice[1],owner)
-            budget -= max(0,before-city.gold)
-            results.append(dict(city=key,**receipt))
+            if choice is None and command_books.can_spend(state, owner, 'develop_town') and policy['auto_develop'] and row['town'] < 3:
+                if _rule(game,'development_per_level_gold')*(row['town']+1) <= available:
+                    choice = (develop, dict(city=key,actor=actor))
+            if choice is None and command_books.can_spend(state, owner, 'study_officer') and policy['auto_study'] and row['town'] >= 2:
+                students = [i for i in actors if (quote := _study_quote(game,state,state.officers[i])) is not None
+                    and quote['gold'] <= available]
+                if students:
+                    target = min(students,key=lambda i:(state.officers[i].profile.intellect,ref_sort_key(i)))
+                    choice = (study,dict(city=key,actor=actor,officer=target))
+            if choice is not None:
+                before = city.gold
+                receipt = choice[0](game,state,choice[1],owner)
+                budget -= max(0,before-city.gold)
+                results.append(dict(city=key,**receipt))
+        if len(results) == completed:
+            break
     return results
 
 
@@ -580,35 +584,35 @@ def view(game, state):
         row = pool['cities'][key]
         residents = sorted((i for i in city.roster.officer_ids if _resident(game,state,city,i)),key=ref_sort_key)
         actors = [i for i in residents if _resident(game,state,city,i,working=True,unused=True,healthy=True)]
-        ready = _ready(state,city.owner) and not city.action_used and bool(actors)
+        ready = _ready(state,city.owner) and command_books.can_spend(state,city.owner) and bool(actors)
         patients = [dict(id=i,before=state.officers[i].health,
             heal_min=_rule(game,'medical_heal_min'),heal_max=_rule(game,'medical_heal_max'),
             after_min=min(state.officers[i].profile.health_max,state.officers[i].health+_rule(game,'medical_heal_min')),
             after_max=min(state.officers[i].profile.health_max,state.officers[i].health+_rule(game,'medical_heal_max')),
-            gold=_rule(game,'medical_gold'),can_treat=ready and city.gold>=_rule(game,'medical_gold'))
+            gold=_rule(game,'medical_gold'),can_treat=ready and command_books.can_spend(state,city.owner,'treat_officer') and city.gold>=_rule(game,'medical_gold'))
             for i in residents if state.officers[i].health<state.officers[i].profile.health_max]
         students = []
         if row['town']>=2:
             for i in actors:
                 quote=_study_quote(game,state,state.officers[i])
                 if quote is not None:
-                    students.append(dict(quote,can_study=ready and city.gold>=quote['gold']))
+                    students.append(dict(quote,can_study=ready and command_books.can_spend(state,city.owner,'study_officer') and city.gold>=quote['gold']))
         stock = {slot:[] for slot in ('weapon','armor')}
         if row['town']>=2 and city.owner==state.player:
             for slot in stock:
                 for item in _equipment().shop_stock(game,state,city,slot):
                     targets=item['eligible_targets']
                     stock[slot].append(dict(item,eligible_targets=targets,
-                        can_buy=ready and bool(targets) and city.gold>=item['price']))
+                        can_buy=ready and command_books.can_spend(state,city.owner,'buy_equipment') and bool(targets) and city.gold>=item['price']))
         development_gold=_rule(game,'development_per_level_gold')*(row['town']+1) if row['town']<3 else 0
         prevention={str(i):dict(_prevention_quote(game,city,row,state.officers[i]),
-            can_prevent=ready and _prevention_quote(game,city,row,state.officers[i])['can_prevent']) for i in actors}
+            can_prevent=ready and command_books.can_spend(state,city.owner,'improve_prevention') and _prevention_quote(game,city,row,state.officers[i])['can_prevent']) for i in actors}
         result['cities'][key]=dict(owner=city.owner,town=row['town'],preparedness=row['preparedness'],damage=row['damage'],
             services=['hospital','market']+(['school','armory'] if row['town']>=2 else []),
             can_manage=_ready(state,city.owner),can_act=ready,eligible_actors=actors,
             patients=patients,students=students,equipment_targets=residents,stock=stock,
             develop=dict(from_town=row['town'],to_town=min(3,row['town']+1),gold=development_gold,
-                can_develop=ready and row['town']<3 and city.gold>=development_gold),
+                can_develop=ready and command_books.can_spend(state,city.owner,'develop_town') and row['town']<3 and city.gold>=development_gold),
             trade={direction:_trade_quote(game,city,row['town'],direction) for direction in ('buy','sell')},
             prevention_quotes=prevention)
     return result

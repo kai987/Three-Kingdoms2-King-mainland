@@ -89,6 +89,10 @@ async function ready(api=fake()){const core=create(config,{createClient:api.crea
   const disabled=create(value,{createClient(){throw Error('must not initialize');}});await disabled.init();assert.equal(disabled.state.configured,false);assert.equal(disabled.state.ready,true);await code('unavailable',()=>disabled.list());
  }
  const {core,api}=await ready();
+ const current=await ready(),currentRaw=raw.replace('"version":1','"version":2');
+ const currentSlot=await current.core.write(1,'命令書帳本',currentRaw,0);
+ assert.equal((await current.core.read(1)).save_text,currentRaw,'The current save format is stored and read as exact raw bytes');
+ await current.core.remove(1,currentSlot.revision,currentSlot.save_id);
  assert.deepEqual(core.state.user,{id:A,email:'a@example.test'});
  assert.equal(api.options.auth.storageKey,'tk2-cloud-auth-test-cloud');
  assert.deepEqual([api.options.auth.persistSession,api.options.auth.autoRefreshToken,api.options.auth.detectSessionInUrl],[true,true,false]);
@@ -123,7 +127,7 @@ async function ready(api=fake()){const core=create(config,{createClient:api.crea
  await code('conflict',()=>core.write(1,'ABA overwrite',raw,1,first.save_id));
  await code('conflict',()=>core.remove(1,1,first.save_id));
  assert.equal(api.db.get(A+':1').label,'重建');
- for(const value of [null,'[]','null','{','{}',raw.replace('"month":7','"month":13'),raw+' '.repeat(MAX_BYTES)])await code('invalid',()=>core.write(2,'invalid',value,0));
+ for(const value of [null,'[]','null','{','{}',raw.replace('"version":1','"version":999'),raw.replace('"month":7','"month":13'),raw+' '.repeat(MAX_BYTES)])await code('invalid',()=>core.write(2,'invalid',value,0));
  await code('invalid',()=>core.write(6,'slot',raw,0));
  await code('invalid',()=>core.write(2,'\nlabel',raw,0));
  await code('invalid',()=>core.write(2,'a'.repeat(81),raw,0));

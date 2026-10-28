@@ -1,5 +1,6 @@
 /* The manual treasure form is bounded, bilingual and submits physical cargo. */
 'use strict';
+const commandBookFixture=require('./fixtures/command-books.cjs');
 const assert=require('node:assert/strict');
 globalThis.GameOfficerChoices=require('../game/officer-choice.js');
 const domestic=require('../game/domestic.js');
@@ -13,6 +14,7 @@ const state={owner:'wei',policy,inbound:{},preview:null,can_dispatch:false,block
 const view={revision:1,game:{phase:'city',player:'wei',seed:2026,turn:1,cities:{home:{id:'home',owner:'wei'},front:{id:'front',owner:'wei'}},
  officers:{2:{troops:300}},extension:{travel:{marches:[]}}},
  catalog:{scenario_id:'mainland217-07',names:{2:'押運官'},factions:[{id:'wei',name:'魏'}],logistics:{cities:{home:state},convoys:[],reports:[]}}};
+commandBookFixture.attach(view);
 const nodes=new Map(),listeners=new Map(),submitted=[],i18n={locale:'zh-Hant',t:value=>value,apply(){}};
 let shown,busy=false,preview=false,requestBarrier=null,renders=0;
 const dialog={open:false,scrollTop:0,querySelector(selector){return selector==='[data-domestic-dialog]'?shown?{}:null:nodes.get(selector)||null;},

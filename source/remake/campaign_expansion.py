@@ -5,7 +5,7 @@ remake designs. No original engine, ROM tables or control IR are loaded.
 """
 from dataclasses import replace
 from .errors import GameError
-from . import presentation, equipment
+from . import presentation, equipment, command_books
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
                        parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref, appearance_values)
@@ -85,8 +85,6 @@ class ExpandedCampaign:
         if ident in self._march_ids(state): raise GameError('这名武将正在行军。')
         if ident not in city.roster.officer_ids or not state.officers[ident].alive or state.officers[ident].health < 1:
             raise GameError('请选择本城健康的武将。')
-        if state.extension['officer_actions'].get(str(ident)) == state.turn:
-            raise GameError('这名武将本回合已处理人事或调动。')
         return state.officers[ident]
 
     def _free_candidates(self, state, city):
@@ -105,17 +103,19 @@ class ExpandedCampaign:
         self._staff_recruit_for_owner(state, city, payload.get('actor'), payload.get('officer'), state.player)
 
     def _staff_recruit_for_owner(self, state, city, actor_id, target_id, owner):
-        if state.phase not in {'city', 'ai'} or city.owner != owner or owner == 'neutral' or city.action_used:
+        if state.phase not in {'city', 'ai'} or city.owner != owner or owner == 'neutral':
             raise GameError('当前不能由地方文吏执行寻访。')
+        command_books.require(state, owner, 'staff_recruit')
         person = state.extension['civil_staff']['people'].get(actor_id) if isinstance(actor_id, str) else None
         if (not person or person['city'] != city.id or person['owner'] != owner
-                or not person['working'] or person['health'] < 1 or person['action_turn'] == state.turn):
-            raise GameError('请选择本城尚未行动且正常任职的文吏。')
+                or not person['working'] or person['health'] < 1):
+            raise GameError('请选择本城健康且正常任职的文吏。')
         actor = self._personnel_actor(state, city, actor_id)
         self._attempt_recruitment(state, city, actor, target_id)
 
     def _attempt_recruitment(self, state, city, actor, target_id):
         """Historical officers and hired clerks use the same personnel formula."""
+        command_books.require(state, city.owner, 'recruit_officer')
         ident = parse_officer_ref(target_id,self.catalog.rules)
         if ident not in self._free_candidates(state, city):
             raise GameError('目标尚未登场、已仕官，或不在本城及可访问的邻城。')
@@ -129,7 +129,7 @@ class ExpandedCampaign:
         chance = max(15,min(95,35 + actor.profile.virtue//2 + actor.profile.intellect//5 - candidate.profile.virtue//5))
         success = state.rng.next()%100 < chance
         record_attempt(state,city.owner,ident,success)
-        city.gold -= fee; city.action_used = True
+        city.gold -= fee; command_books.spend(state, city, 'recruit_officer')
         state.extension['officer_actions'][str(actor.runtime_id)] = state.turn
         if success:
             candidate.faction_id=city.owner
@@ -165,6 +165,7 @@ class ExpandedCampaign:
         self._reconcile_factions(state)
 
     def _attempt_defection(self,state,city,actor,ident):
+        command_books.require(state, city.owner, 'persuade_officer')
         fee=self.catalog.data['rules']['persuade_officer_gold']
         if city.gold<fee:raise GameError('劝降金钱不足。')
         from .domestic import can_attempt,record_attempt
@@ -173,7 +174,7 @@ class ExpandedCampaign:
         chance=max(5,min(75,50+(actor.profile.virtue-target.loyalty)//2+(actor.profile.intellect-target.profile.intellect)//4))
         success=state.rng.next()%100<chance
         record_attempt(state,city.owner,ident,success)
-        city.gold-=fee;city.action_used=True
+        city.gold-=fee;command_books.spend(state, city, 'persuade_officer')
         state.extension['officer_actions'][str(actor.runtime_id)]=state.turn
         if success:
             origin=next(c for c in state.cities.values() if ident in c.roster.officer_ids)
@@ -194,6 +195,7 @@ class ExpandedCampaign:
         self._queue_march(state,source,destination,ids,'transfer',payload.get('route_mode','fastest'))
 
     def _start_expanded_battle(self,state,source,target,ids,*,paid=False):
+        if not paid: command_books.require(state, source.owner, 'depart')
         selected=select_deployment(source.roster,ids,state.officers)
         cost=0 if paid else max(1,sum(state.officers[i].troops for i in selected)//25)
         if not paid and source.grain<cost: raise GameError('出征粮食不足。')
@@ -209,7 +211,9 @@ class ExpandedCampaign:
                       'attackers':units(selected),'defenders':units(defenders),'used':[],'round':1,'outcome':None,'supply_cost':cost,
                       'log':[f'{self.catalog.map_cities[source.id]["name"]}向{self.catalog.map_cities[target.id]["name"]}出征。'],
                       'extended':{'support':support,'duel':None,'duel_history':[],'ambush':None,'surrenders':{},'withdrawn':None}}
-        if not paid: source.grain-=cost;source.action_used=True
+        if not paid:
+            source.grain-=cost
+            command_books.spend(state, source, 'depart')
         state.phase='battle'
         state.extension['officer_actions'].update({str(i):state.turn for i in selected})
         self._note(state,state.battle['log'][0])
@@ -694,7 +698,7 @@ class ExpandedCampaign:
 
     def _validate_expansion(self,state):
         x=state.extension
-        fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events','civil_staff','pending_succession','domestic','logistics','treasury','facilities','equipment'}
+        fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events','civil_staff','pending_succession','domestic','logistics','treasury','facilities','equipment','command_books'}
         from . import dated_events
         if dated_events.enabled(self.catalog):fields.add('dated_events')
         if not isinstance(x,dict) or set(x)!=fields:raise ValueError('expanded state fields')

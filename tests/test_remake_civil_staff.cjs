@@ -1,11 +1,13 @@
 /* Independent civil identity, effective city capacity and read-only bilingual UI. */
 'use strict';
+const commandBookFixture=require('./fixtures/command-books.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const staff=require('../game/civil-staff.js');
 globalThis.GameOfficerChoices=require('../game/officer-choice.js');
 const person={id:'clerk-000001',name:'陳文',portrait:'clerk-1',specialty:'commerce',profile:{martial_strength:20,intellect:56,virtue:60,health_max:70},health:70,troops:0,experience:0,offered_month:2280,expires_month:2283};
 const row={target:2,minimum:2,limit:2,count:0,staff_count:0,officer_count:0,occupancy:0,effective_count:0,need:2,candidate:person,employees:[],can_hire:true,can_reject:true,blocked_reason:'',monthly_salary:0,cooldown_until_month:2280};
 const view={game:{player:'shu',phase:'city',rng:{state:2026,draws:0},officers:{},cities:{home:{id:'home',owner:'shu',roster:{officer_ids:[]}},away:{id:'away',owner:'shu',roster:{officer_ids:[1,2]}}}},catalog:{rules:{city_officer_capacity:99},civil_staff:{current_month:2280,rules:{hire_gold:60,monthly_salary:5},cities:{home:row},people:[],faction_counts:{shu:0}}}};
+commandBookFixture.attach(view);
 const original=JSON.stringify(view);
 assert.equal(staff.month(2280),'190年1月');assert.equal(staff.month(2291,'ja'),'190年12月');assert.equal(staff.month(2292),'191年1月');assert.equal(staff.month(-1),'—');
 assert.equal(staff.count(view,'home'),0);assert.equal(staff.occupancy(view,'home'),0);assert.equal(staff.occupancy(view,view.game.cities.away),2);

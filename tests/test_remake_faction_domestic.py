@@ -343,12 +343,15 @@ class FactionDomesticTests(unittest.TestCase):
                            state.officers[lower].profile.martial_strength)
         self.assertNotIn(expected, game._free_candidates(state, state.cities['nanjun']))
         before = state.rng.draws
-        domestic.run_automatic(game, state, 'shu')
+        game.command('end_turn', {}, game.revision)
+        state = game.state
         personnel = [r for r in state.extension['domestic']['reports'] if r['kind'] == 'personnel']
-        self.assertEqual(len(personnel), 1)
+        self.assertEqual(len(personnel), 2)
         self.assertEqual((personnel[0]['city'], personnel[0]['details']['id']), ('xiangyang', expected))
+        self.assertEqual({r['details']['id'] for r in personnel}, {expected, lower})
         self.assertEqual(state.extension['officer_actions'][str(civil)], state.turn)
-        self.assertEqual(state.rng.draws, before + 1)
+        self.assertEqual(state.rng.draws, before + 2)
+        self.assertEqual(state.extension['command_books']['factions']['shu']['used'], 2)
         saved = game.export_save()
         domestic.run_automatic(game, state, 'shu')
         self.assertEqual(game.export_save(), saved)

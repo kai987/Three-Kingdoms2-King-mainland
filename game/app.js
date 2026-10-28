@@ -529,6 +529,9 @@ function officerAttributes(id){
  const o=view.game.officers[id],p=o.profile;
  return `武${p.martial_strength} · 知${p.intellect} · 德${p.virtue} · 经验${GameOfficerChoices.experience(o.experience)}`;
 }
+function hasCommandBook(kind){return typeof GameCommandBooks!=='undefined'&&GameCommandBooks.can(view,kind);}
+function commandBookHint(kind){return typeof GameCommandBooks!=='undefined'?GameCommandBooks.html(view,{kind,locale:GameI18n.locale}):'';}
+function commandBookReason(kind){return typeof GameCommandBooks!=='undefined'?GameCommandBooks.reason(view,kind,GameI18n.locale):'命令書資料尚未就緒。';}
 function cityOccupancy(city){return view.catalog.civil_staff?.cities?.[city?.id]?.occupancy??(city?.roster?.officer_ids?.length??capacity());}
 function officerChoiceText(id,{loyalty=true}={}){
  const o=view.game.officers[id],b=view.game.battle,unit=[...(b?.attackers||[]),...(b?.defenders||[])].find(u=>u.id===GameOfficerChoices.ref(id));
@@ -539,7 +542,8 @@ function sortedOfficers(ids,attribute='martial_strength'){
 }
 function officerUnavailable(id,{troops=false}={}){
  const o=view.game.officers[id];
- return !o||o.alive===false||o.health<=0||marching().has(GameOfficerChoices.ref(id))||view.game.extension?.officer_actions?.[id]===view.game.turn||troops&&o.troops<=0;
+ const staff=view.catalog.civil_staff?.people?.find(p=>String(p.id)===String(id));
+ return !o||o.alive===false||o.health<=0||marching().has(GameOfficerChoices.ref(id))||staff&&(staff.working===false||staff.unpaid_months>0)||troops&&o.troops<=0;
 }
 function selectionStatus(id,count,limit,reason=''){
  $('#'+id+'-count').textContent=`已选择 ${count}/${limit}人。`;
@@ -599,15 +603,15 @@ function renderCity(){
  const scale=view.catalog.city_profiles[city.id],income=view.catalog.city_income[city.id],naming=view.catalog.map_presentation.city_names[city.id],training=view.catalog.domestic?.cities?.[city.id]?.morale;
  const unavailable=`<p class="small city-command-unavailable">${cityCommandText('非本方城池，無法執行都市命令。','自勢力の都市ではないため、都市の命令は実行できません。')}</p>`;
  const panels={
-  city:owned?`${view.catalog.facilities?`<button id="city-civic">${cityCommandText('發展與防災','発展・防災')}</button>`:''}${view.catalog.domestic?`<button id="city-domestic">${cityCommandText('勢力內政委任','勢力の内政担当')}</button>`:''}<button id="recruit-officer" ${city.action_used||!available.length||cityOccupancy(city)>=capacity()||city.gold<60?'disabled':''}>招募 / 劝降</button>${view.catalog.civil_staff?'<button id="civil-staff">地方文吏</button>':''}`:unavailable,
-  army:owned?`<div class="action-pair"><button id="allocate" class="primary" ${!city.roster.officer_ids.some(i=>!marching().has(i))?'disabled':''}>编兵</button><button id="depart" class="primary" ${city.action_used||!fighters.length||noDepartureFood?'disabled':''}>出征</button></div><div class="action-pair"><button id="transfer" ${city.action_used||!available.length?'disabled':''}>调动武将</button><button id="recruit" ${city.action_used||city.gold<20||city.grain<30?'disabled':''}>征募预备兵</button></div>`:unavailable,
+  city:owned?`${view.catalog.facilities?`<button id="city-civic">${cityCommandText('發展與防災','発展・防災')}</button>`:''}${view.catalog.domestic?`<button id="city-domestic">${cityCommandText('勢力內政委任','勢力の内政担当')}</button>`:''}<button id="recruit-officer" ${(!hasCommandBook('recruit_officer')&&!hasCommandBook('persuade_officer'))||!available.length||cityOccupancy(city)>=capacity()||city.gold<60?'disabled':''}>招募 / 劝降</button>${view.catalog.civil_staff?'<button id="civil-staff">地方文吏</button>':''}`:unavailable,
+  army:owned?`<div class="action-pair"><button id="allocate" class="primary" ${!hasCommandBook('allocate')||!city.roster.officer_ids.some(i=>!marching().has(i))?'disabled':''}>编兵</button><button id="depart" class="primary" ${!hasCommandBook('depart')||!fighters.length||noDepartureFood?'disabled':''}>出征</button></div><div class="action-pair"><button id="transfer" ${!hasCommandBook('transfer')||!available.length?'disabled':''}>调动武将</button><button id="recruit" ${!hasCommandBook('recruit')||city.gold<20||city.grain<30?'disabled':''}>征募预备兵</button></div>`:unavailable,
   warehouse:owned?`${view.catalog.treasury?`<button id="city-treasury">${cityCommandText('寶庫與賞賜','宝庫・褒美')}</button>`:''}${view.catalog.domestic?'<button id="city-logistics">前線支援</button>':''}`:unavailable,
   town:owned?view.catalog.facilities?`<button id="city-facilities">${cityCommandText('進入城內設施','町の施設へ')}</button>`:`<p class="small">${cityCommandText('本城的設施資料尚未提供。','この都市の施設情報は未登録です。')}</p>`:unavailable
  };
  $('#inspector').innerHTML=`<div class="inspector-heading"><h2>${escapeHtml(cityName(city.id))}</h2><span class="owner">${faction(city.owner)}</span></div>
  <p class="small city-command-overview">${scale?escapeHtml(scale.label):''}${Number.isFinite(training)?` · ${cityCommandText('訓練度','練度')} ${training}/100`:''}</p>
  <dl class="resources"><div class="resource-pair"><dt>資金</dt><dd>${city.gold}</dd></div><div class="resource-pair"><dt>兵糧</dt><dd>${city.grain}</dd></div><div class="resource-pair"><dt>預備兵</dt><dd>${city.reserves}</dd></div></dl>
- <div class="city-information-entry"><p class="small" data-city-occupancy="${cityOccupancy(city)}" data-city-capacity="${capacity()}">驻城 ${cityOccupancy(city)}/${capacity()}；每方出战上限10人。${city.action_used?'本城本回合已行动。':''}</p><button id="city-information">${cityCommandText('都市情報','都市情報')}</button></div>
+ ${commandBookHint()}<div class="city-information-entry"><p class="small" data-city-occupancy="${cityOccupancy(city)}" data-city-capacity="${capacity()}">驻城 ${cityOccupancy(city)}/${capacity()}；每方出战上限10人。</p><button id="city-information">${cityCommandText('都市情報','都市情報')}</button></div>
  ${cityCommandTabs(city)}${cityCommandOrder.map(key=>cityCommandPanel(city,key,panels[key]||`<p class="small">${cityCommandText('目前沒有可用命令。','現在、利用できる命令はありません。')}</p>`)).join('')}
  <details class="city-roster-summary"><summary>${cityCommandText(`武將名冊（${city.roster.officer_ids.length}人）`,`武将一覧（${city.roster.officer_ids.length}人）`)}</summary><ul class="city-roster-list">${city.roster.officer_ids.map(id=>`<li><button type="button" id="city-roster-${escapeHtml(id)}" data-city-roster-officer="${escapeHtml(id)}"><span class="officer-identity">${portraitHtml(id)}<span>${escapeHtml(name(id))}${marching().has(id)?'（在途）':''}</span></span><span>${view.game.officers[id].troops}${cityCommandText('兵','兵')}</span></button></li>`).join('')||`<li>${cityCommandText('暫無駐軍','駐屯する武将はいません')}</li>`}</ul></details>
  <details class="city-background"><summary><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">城池背景與收入</span><span data-locale-only="ja" data-l10n-native="ja">都市の背景・収入</span></summary>
@@ -619,7 +623,7 @@ function renderCity(){
  bindCityCommandGroups(city);
  $('#city-information').onclick=()=>showCityInformation(city.id);
  for(const id of city.roster.officer_ids){const button=$('#city-roster-'+id);if(button)button.onclick=()=>{const person=view.catalog.library?.find(p=>String(p.id)===String(id));if(person)showPerson(person.id);else showCityInformation(city.id);};}
- if(owned){$('#allocate').onclick=()=>allocate(city);$('#depart').onclick=()=>beginMapAction('depart',city);$('#recruit').onclick=()=>{openDialog('征募预备兵','<p>花费20金钱、30粮食，征募100名预备兵。确认后消耗本城本回合行动。</p>','<button data-cancel>取消</button><button id="confirm-recruit" class="primary">确认征募</button>');$('#confirm-recruit').onclick=async()=>{if(await command('recruit',{city:city.id}))dialog.close();};};}
+ if(owned){$('#allocate').onclick=()=>allocate(city);$('#depart').onclick=()=>beginMapAction('depart',city);$('#recruit').onclick=()=>{openDialog('征募预备兵',`<p>花费20金钱、30粮食，征募100名预备兵。</p>${commandBookHint('recruit')}`,'<button data-cancel>取消</button><button id="confirm-recruit" class="primary">确认征募</button>');$('#confirm-recruit').disabled=!hasCommandBook('recruit');$('#confirm-recruit').onclick=async()=>{if(!hasCommandBook('recruit'))return notice(commandBookReason('recruit'),true);if(await command('recruit',{city:city.id}))dialog.close();};};}
  else $('#home').onclick=()=>{selectedCity=Object.values(game.cities).find(c=>c.owner===game.player)?.id||selectedCity;render();};
  if($('#recruit-officer'))$('#recruit-officer').onclick=()=>beginMapAction('recruit',city);
  if($('#transfer'))$('#transfer').onclick=()=>transferCity(city);
@@ -635,17 +639,19 @@ function allocate(city,preferred=null){
  const ids=sortedOfficers(city.roster.officer_ids.filter(i=>!marching().has(i)));
  if(!ids.length)return notice('本城武将均在行军。');
  const selected=ids.includes(preferred)?preferred:ids[0],officer=view.game.officers[selected],maximum=Math.min(999,officer.troops+city.reserves);
- openDialog('编兵',`<p>本城预备兵 ${city.reserves}。调整兵力不消耗城池行动。</p><label class="field" for="allocation-officer">武将<select id="allocation-officer">${ids.map(i=>`<option value="${i}" ${i===selected?'selected':''}>${escapeHtml(officerChoiceText(i))}</option>`).join('')}</select></label><p class="small officer-choice-summary" id="allocation-officer-summary"></p><div class="allocation-value"><label class="field" for="allocation-troops">目标兵力<input id="allocation-troops" type="number" min="0" max="${maximum}" step="1" value="${officer.troops}"></label><button type="button" id="allocation-max">最大值</button></div><p class="small" id="allocation-preview"></p>`, '<button data-cancel>取消</button><button id="confirm-allocation" class="primary">确认编兵</button>');
+ openDialog('编兵',`<p>本城预备兵 ${city.reserves}。每次确认编兵使用命令书。</p>${commandBookHint('allocate')}<label class="field" for="allocation-officer">武将<select id="allocation-officer">${ids.map(i=>`<option value="${i}" ${i===selected?'selected':''}>${escapeHtml(officerChoiceText(i))}</option>`).join('')}</select></label><p class="small officer-choice-summary" id="allocation-officer-summary"></p><div class="allocation-value"><label class="field" for="allocation-troops">目标兵力<input id="allocation-troops" type="number" min="0" max="${maximum}" step="1" value="${officer.troops}"></label><button type="button" id="allocation-max">最大值</button></div><p class="small" id="allocation-preview"></p>`, '<button data-cancel>取消</button><button id="confirm-allocation" class="primary">确认编兵</button>');
  const input=$('#allocation-troops'),preview=(fillMaximum=false)=>{
   const current=view.game.cities[city.id],o=view.game.officers[$('#allocation-officer').value];
   input.max=String(Math.min(999,o.troops+current.reserves));
   if(fillMaximum===true)input.value=input.max;
   $('#allocation-officer-summary').textContent=officerChoiceText($('#allocation-officer').value);
+  $('#confirm-allocation').disabled=!hasCommandBook('allocate');
   const n=clampNumberInput(input);$('#allocation-preview').textContent=n===null?'':`确认后本城预备兵 ${Math.max(0,current.reserves+o.troops-n)}。`;
  };
  $('#allocation-officer').onchange=()=>{input.value=String(view.game.officers[$('#allocation-officer').value].troops);preview();};bindNumberInput(input,preview);preview();
  $('#allocation-max').onclick=()=>preview(true);
  $('#confirm-allocation').onclick=async()=>{
+  if(!hasCommandBook('allocate'))return notice(commandBookReason('allocate'),true);
   preview();const id=GameOfficerChoices.ref($('#allocation-officer').value),troops=clampNumberInput(input,true);
   if(await command('allocate',{city:city.id,officer:id,troops}))allocate(view.game.cities[city.id],id);
  };
@@ -658,7 +664,9 @@ function actionTargetCities(kind,city){
  return Object.values(view.game.cities).filter(c=>free.has(c.id)||c.roster.officer_ids.some(i=>enemy.has(i))).map(c=>c.id);
 }
 function beginMapAction(kind,city){
- if(busy||view.game?.phase!=='city'||city.owner!==view.game.player||city.action_used)return;
+ if(busy||view.game?.phase!=='city'||city.owner!==view.game.player)return;
+ const commandKind=kind==='depart'?'depart':hasCommandBook('recruit_officer')?'recruit_officer':'persuade_officer';
+ if(!hasCommandBook(commandKind))return notice(commandBookReason(commandKind),true);
  const targets=actionTargetCities(kind,city);
  if(!targets.length)return notice(kind==='depart'?'没有可出征的陆路或沿海城池。':'附近暂无可招募的在野武将或可劝降的敌将。可在“人物库”查看年代与配置。');
  if(kind==='recruit'&&targets.length===1&&targets[0]===city.id){mapAction=null;notice();recruitOfficer(city,city.id);GameI18n.apply();return;}
@@ -708,29 +716,31 @@ function departure(city,targetCity=null){
  const draft={source:city.id,target:targets[0].id,officers:[],route_mode:'fastest'};
  const pick=()=>{
   const limit=view.catalog.rules.battle_officers_per_side;
-  openDialog('选择出征名单',`<label class="field" for="departure-target">目标城池<select id="departure-target">${targets.map(c=>`<option value="${c.id}" ${draft.target===c.id?'selected':''}>${escapeHtml(cityName(c.id))} · ${faction(c.owner)}</option>`).join('')}</select></label><p>选择1—10名武将，第一位为主将。</p><div class="selection-status"><p id="departure-count" role="status" aria-live="polite"></p><p class="small" id="departure-reason"></p></div><div class="officer-picker">${sortedOfficers(city.roster.officer_ids).map(i=>`<label><input type="checkbox" name="depart-officer" value="${i}" ${draft.officers.includes(i)?'checked':''} ${officerUnavailable(i,{troops:true})?'disabled':''}>${escapeHtml(officerChoiceText(i))}</label>`).join('')}</div>`, '<button data-cancel>取消出征</button><button id="review-departure" class="primary">下一步</button>');
+  openDialog('选择出征名单',`<label class="field" for="departure-target">目标城池<select id="departure-target">${targets.map(c=>`<option value="${c.id}" ${draft.target===c.id?'selected':''}>${escapeHtml(cityName(c.id))} · ${faction(c.owner)}</option>`).join('')}</select></label><p>选择1—10名武将，第一位为主将。</p>${commandBookHint('depart')}<div class="selection-status"><p id="departure-count" role="status" aria-live="polite"></p><p class="small" id="departure-reason"></p></div><div class="officer-picker">${sortedOfficers(city.roster.officer_ids).map(i=>`<label><input type="checkbox" name="depart-officer" value="${i}" ${draft.officers.includes(i)?'checked':''} ${officerUnavailable(i,{troops:true})?'disabled':''}>${escapeHtml(officerChoiceText(i))}</label>`).join('')}</div>`, '<button data-cancel>取消出征</button><button id="review-departure" class="primary">下一步</button>');
   GameOfficerSelection.bind(dialog.querySelectorAll('input[name=depart-officer]'),{limit,onChange:({ids,count,limit})=>{
    const cost=departureBudget(city,$('#departure-target').value,ids),poor=city.grain<cost;
-   selectionStatus('departure',count,limit,poor?'当前兵粮不足，请减少出阵兵数。':'');$('#review-departure').disabled=count===0||poor;
+   selectionStatus('departure',count,limit,poor?'当前兵粮不足，请减少出阵兵数。':'');$('#review-departure').disabled=!hasCommandBook('depart')||count===0||poor;
   }});
-  $('#departure-target').onchange=()=>{const ids=[...dialog.querySelectorAll('input[name=depart-officer]:checked')].map(x=>GameOfficerChoices.ref(x.value));const poor=city.grain<departureBudget(city,$('#departure-target').value,ids);selectionStatus('departure',ids.length,limit,poor?'当前兵粮不足，请减少出阵兵数。':'');$('#review-departure').disabled=!ids.length||poor;};
-  $('#review-departure').onclick=()=>{const nextTarget=$('#departure-target').value;if(draft.target!==nextTarget)draft.route_mode='fastest';draft.target=nextTarget;draft.officers=[...dialog.querySelectorAll('input[name=depart-officer]:checked')].map(x=>GameOfficerChoices.ref(x.value));if(!draft.officers.length||draft.officers.length>limit)return notice('请选择1到10名有兵力的武将。',true);if(draft.officers.some(i=>officerUnavailable(i,{troops:true})))return notice('请选择本城健康的武将。',true);if(city.grain<departureBudget(city,draft.target,draft.officers))return notice('行军粮食不足。',true);confirm();};
+  $('#departure-target').onchange=()=>{const ids=[...dialog.querySelectorAll('input[name=depart-officer]:checked')].map(x=>GameOfficerChoices.ref(x.value));const poor=city.grain<departureBudget(city,$('#departure-target').value,ids);selectionStatus('departure',ids.length,limit,poor?'当前兵粮不足，请减少出阵兵数。':'');$('#review-departure').disabled=!hasCommandBook('depart')||!ids.length||poor;};
+  $('#review-departure').onclick=()=>{if(!hasCommandBook('depart'))return notice(commandBookReason('depart'),true);const nextTarget=$('#departure-target').value;if(draft.target!==nextTarget)draft.route_mode='fastest';draft.target=nextTarget;draft.officers=[...dialog.querySelectorAll('input[name=depart-officer]:checked')].map(x=>GameOfficerChoices.ref(x.value));if(!draft.officers.length||draft.officers.length>limit)return notice('请选择1到10名有兵力的武将。',true);if(draft.officers.some(i=>officerUnavailable(i,{troops:true})))return notice('请选择本城健康的武将。',true);if(city.grain<departureBudget(city,draft.target,draft.officers))return notice('行军粮食不足。',true);confirm();};
  };
  const confirm=()=>{
   const troops=draft.officers.reduce((n,i)=>n+view.game.officers[i].troops,0),cost=Math.max(1,Math.floor(troops/25));
-  openDialog('出征确认',`<p>${escapeHtml(cityName(city.id))}出发，目标${escapeHtml(cityName(draft.target))}。</p><p>${draft.officers.map(i=>escapeHtml(officerChoiceText(i))).join('<br>')}，共${troops}兵${view.catalog.travel_rules?'':`，耗粮${cost}`}。</p>${view.catalog.travel_rules?routeModeSelect(draft.route_mode)+'<div id="departure-estimate"></div><p id="departure-supply"></p>'+marchSupplyRuleHtml():''}<p class="small">${view.catalog.travel_rules?'确认后部队进入行军，到达后才战斗。':'确认后才出征。'}现在取消不会扣粮或消耗行动。</p>`,'<button data-cancel>取消出征</button><button id="back-to-pick">返回名单</button><button id="confirm-departure" class="primary">确认出征</button>');
+  openDialog('出征确认',`<p>${escapeHtml(cityName(city.id))}出发，目标${escapeHtml(cityName(draft.target))}。</p>${commandBookHint('depart')}<p>${draft.officers.map(i=>escapeHtml(officerChoiceText(i))).join('<br>')}，共${troops}兵${view.catalog.travel_rules?'':`，耗粮${cost}`}。</p>${view.catalog.travel_rules?routeModeSelect(draft.route_mode)+'<div id="departure-estimate"></div><p id="departure-supply"></p>'+marchSupplyRuleHtml():''}<p class="small">${view.catalog.travel_rules?'确认后部队进入行军，到达后才战斗。':'确认后才出征。'}现在取消不会扣粮或消耗行动。</p>`,'<button data-cancel>取消出征</button><button id="back-to-pick">返回名单</button><button id="confirm-departure" class="primary">确认出征</button>');
   const refresh=()=>{
    draft.route_mode=syncRouteModes(city.id,draft.target,draft.route_mode);
    const estimate=$('#departure-estimate'),quote=travelQuote(city.id,draft.target,draft.route_mode);
    estimate.innerHTML=travelEstimate(city.id,draft.target,draft.route_mode);previewSurvivors(estimate,quote,draft.officers);
    const loaded=quote?marchGrain(draft.officers,quote):0;
    $('#departure-supply').innerHTML=quote?marchSupplyHtml({loaded,consumed:0,remaining:loaded,elapsed_days:0}):'';
-   $('#confirm-departure').disabled=!quote||city.grain<loaded;
+   $('#confirm-departure').disabled=!hasCommandBook('depart')||!quote||city.grain<loaded;
    GameI18n.apply();
   };
   if($('#route-mode')){$('#route-mode').onchange=()=>{draft.route_mode=$('#route-mode').value;refresh();};watchRouteDialog(refresh);refresh();}
   $('#back-to-pick').onclick=pick;
+  $('#confirm-departure').disabled=$('#confirm-departure').disabled||!hasCommandBook('depart');
   $('#confirm-departure').onclick=async()=>{
+   if(!hasCommandBook('depart'))return notice(commandBookReason('depart'),true);
    if(view.catalog.travel_rules){refresh();const quote=travelQuote(city.id,draft.target,draft.route_mode);if(!quote)return notice('没有符合条件的路线。',true);if(city.grain<marchGrain(draft.officers,quote))return notice('行军粮食不足。',true);}
    actor=target=null;if(await command('depart',draft))dialog.close();
   };
@@ -741,21 +751,23 @@ function departure(city,targetCity=null){
 function recruitOfficer(city,targetCity=null){
  const free=(view.catalog.recruitable?.[city.id]||[]).filter(i=>!targetCity||view.game.extension.free_locations[i]===targetCity),enemy=(view.catalog.persuadable?.[city.id]||[]).filter(i=>!targetCity||view.game.cities[targetCity].roster.officer_ids.includes(i));
  if(!free.length&&!enemy.length)return notice('附近暂无可招募的在野武将或可劝降的敌将。可在“人物库”查看年代与配置。');
- openDialog('招募与劝降',`${targetCity?`<p data-recruit-city="${targetCity}">寻访城池：${escapeHtml(cityName(targetCity))}</p>`:''}<label class="field">人事方式<select id="recruit-mode"><option value="recruit_officer" ${!free.length?'disabled':''}>在野招募 · 60金</option><option value="persuade_officer" ${!enemy.length?'disabled':''} ${!free.length?'selected':''}>邻城劝降 · 100金</option></select></label><p>一次寻访消耗本城行动，对方可能拒绝。取消不扣资源；君主不能直接劝降。</p><label class="field">执行武将<select id="recruit-actor">${sortedOfficers(city.roster.officer_ids,'virtue').map(i=>`<option value="${i}" ${officerUnavailable(i)?'disabled':''}>${escapeHtml(officerChoiceText(i,{loyalty:true}))}</option>`).join('')}</select></label><p class="small officer-choice-summary" id="recruit-actor-summary"></p><label class="field">目标武将<select id="recruit-person"></select></label><p class="small officer-choice-summary" id="recruit-person-summary"></p><p class="small" id="personnel-boundary" role="status"></p><p class="small">最多${capacity()}人。转属成功后保留体力、带兵、装备和经验；忠诚按本作招募规则重新结算。</p>`,'<button data-cancel>取消</button><button id="confirm-officer" class="primary">确认寻访</button>');
+ openDialog('招募与劝降',`${targetCity?`<p data-recruit-city="${targetCity}">寻访城池：${escapeHtml(cityName(targetCity))}</p>`:''}<label class="field">人事方式<select id="recruit-mode"><option value="recruit_officer" ${!free.length?'disabled':''}>在野招募 · 60金</option><option value="persuade_officer" ${!enemy.length?'disabled':''} ${!free.length?'selected':''}>邻城劝降 · 100金</option></select></label><p>对方可能拒绝。取消不扣资源或命令书；君主不能直接劝降。</p><label class="field">执行武将<select id="recruit-actor">${sortedOfficers(city.roster.officer_ids,'virtue').map(i=>`<option value="${i}" ${officerUnavailable(i)?'disabled':''}>${escapeHtml(officerChoiceText(i,{loyalty:true}))}</option>`).join('')}</select></label><p class="small officer-choice-summary" id="recruit-actor-summary"></p><label class="field">目标武将<select id="recruit-person"></select></label><p class="small officer-choice-summary" id="recruit-person-summary"></p><div id="personnel-command-books"></div><p class="small" id="personnel-boundary" role="status"></p><p class="small">最多${capacity()}人。转属成功后保留体力、带兵、装备和经验；忠诚按本作招募规则重新结算。</p>`,'<button data-cancel>取消</button><button id="confirm-officer" class="primary">确认寻访</button>');
  const summary=()=>{for(const kind of ['actor','person']){const id=$('#recruit-'+kind).value;$('#recruit-'+kind+'-summary').textContent=view.game.officers[id]?officerChoiceText(id,{loyalty:true}):'';}
   const actorId=$('#recruit-actor').value,targetId=$('#recruit-person').value,full=cityOccupancy(city)>=capacity(),poor=city.gold<($('#recruit-mode').value==='recruit_officer'?60:100),unavailable=actorId===''||officerUnavailable(actorId);
-  $('#confirm-officer').disabled=full||poor||unavailable||!targetId;
-  $('#personnel-boundary').textContent=full?'本城已满，无法招募或劝降。':poor?'金钱不足，无法执行本次寻访。':unavailable?'本城没有可行动的武将。':'';GameI18n.apply();
+  const kind=$('#recruit-mode').value,books=!hasCommandBook(kind);
+  $('#confirm-officer').disabled=books||full||poor||unavailable||!targetId;
+  $('#personnel-command-books').innerHTML=commandBookHint(kind);
+  $('#personnel-boundary').textContent=books?commandBookReason(kind):full?'本城已满，无法招募或劝降。':poor?'金钱不足，无法执行本次寻访。':unavailable?'本城没有可行动的武将。':'';GameI18n.apply();
  };
  const draw=()=>{$('#recruit-person').innerHTML=sortedOfficers($('#recruit-mode').value==='recruit_officer'?free:enemy,'virtue').map(i=>`<option value="${i}">${escapeHtml(officerChoiceText(i,{loyalty:true}))}</option>`).join('');summary();};
  $('#recruit-mode').onchange=draw;$('#recruit-actor').onchange=summary;$('#recruit-person').onchange=summary;draw();
- $('#confirm-officer').onclick=async()=>{if(await command($('#recruit-mode').value,{city:city.id,actor:GameOfficerChoices.ref($('#recruit-actor').value),officer:GameOfficerChoices.ref($('#recruit-person').value)}))dialog.close();};
+ $('#confirm-officer').onclick=async()=>{if(!hasCommandBook($('#recruit-mode').value))return notice(commandBookReason($('#recruit-mode').value),true);if(await command($('#recruit-mode').value,{city:city.id,actor:GameOfficerChoices.ref($('#recruit-actor').value),officer:GameOfficerChoices.ref($('#recruit-person').value)}))dialog.close();};
 }
 function transferCity(city){
  const destinations=Object.values(view.game.cities).filter(c=>c.id!==city.id&&c.owner===view.game.player);
  if(!destinations.length)return notice('没有其他本方城池可接收武将。');
- const introduction=view.catalog.travel_rules?`<p><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">可經相通的本方城池及無主城調任，不能穿越敵城。目的城須屬本方，上限${capacity()}人；消耗出發城本旬行動。</span><span data-locale-only="ja" data-l10n-native="ja" hidden>自勢力の都市と空白都市を経由して移動できます。敵都市は通過できません。目的都市は自勢力、定員${capacity()}人まで。出発都市の今旬の行動を消費します。</span></p>${marchSupplyRuleHtml()}`:`<p>可经过相通的本方城池及无主城，不能穿过敌城；目的城必须属本方。费用为每人每段道路5粮。消耗出发城行动，目的城仍最多${capacity()}人。</p>`;
- openDialog('调动武将',`${introduction}${view.catalog.travel_rules?routeModeSelect()+'<div id="transfer-estimate"></div><p id="transfer-supply"></p>':''}<label class="field">目的城<select id="transfer-city">${destinations.map(c=>`<option value="${c.id}">${escapeHtml(cityName(c.id))} · ${cityOccupancy(c)}/${capacity()}人</option>`).join('')}</select></label><div class="selection-status"><p id="transfer-count" role="status" aria-live="polite"></p><p class="small" id="transfer-reason"></p></div><div class="officer-picker">${sortedOfficers(city.roster.officer_ids).map(i=>`<label><input type="checkbox" name="transfer-officer" value="${i}" ${officerUnavailable(i)?'disabled':''}>${escapeHtml(officerChoiceText(i,{loyalty:true}))}</label>`).join('')}</div>`,'<button data-cancel>取消</button><button id="confirm-transfer" class="primary">确认调动</button>');
+ const introduction=view.catalog.travel_rules?`<p><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">可經相通的本方城池及無主城調任，不能穿越敵城。目的城須屬本方，上限${capacity()}人；使用全勢力共用命令書。</span><span data-locale-only="ja" data-l10n-native="ja" hidden>自勢力の都市と空白都市を経由して移動できます。敵都市は通過できません。目的都市は自勢力、定員${capacity()}人まで。勢力全体で共有する命令書を使います。</span></p>${marchSupplyRuleHtml()}`:`<p>可经过相通的本方城池及无主城，不能穿过敌城；目的城必须属本方。费用为每人每段道路5粮。使用全势力共用命令书，目的城仍最多${capacity()}人。</p>`;
+ openDialog('调动武将',`${introduction}${commandBookHint('transfer')}${view.catalog.travel_rules?routeModeSelect()+'<div id="transfer-estimate"></div><p id="transfer-supply"></p>':''}<label class="field">目的城<select id="transfer-city">${destinations.map(c=>`<option value="${c.id}">${escapeHtml(cityName(c.id))} · ${cityOccupancy(c)}/${capacity()}人</option>`).join('')}</select></label><div class="selection-status"><p id="transfer-count" role="status" aria-live="polite"></p><p class="small" id="transfer-reason"></p></div><div class="officer-picker">${sortedOfficers(city.roster.officer_ids).map(i=>`<label><input type="checkbox" name="transfer-officer" value="${i}" ${officerUnavailable(i)?'disabled':''}>${escapeHtml(officerChoiceText(i,{loyalty:true}))}</label>`).join('')}</div>`,'<button data-cancel>取消</button><button id="confirm-transfer" class="primary">确认调动</button>');
  let selection,updating=false,limit=0,quote=null;
  const updateEstimate=()=>{
   if(updating)return;updating=true;
@@ -771,13 +783,13 @@ function transferCity(city){
    selectionStatus('transfer',ids.length,limit,slots===0?'目的城已满，无法再调入武将。':eligible===0?'本城没有可行动的武将。':view.catalog.travel_rules&&!quote?'没有符合条件的路线。':unarmed?'探索航行至少需要一名带兵武将。':poor?'行军粮食不足。':'');
    const estimate=$('#transfer-estimate');if(estimate){estimate.innerHTML=travelEstimate(city.id,destination,mode);previewSurvivors(estimate,quote,ids);}
    if($('#transfer-supply')){const loaded=quote?marchGrain(ids,quote):0;$('#transfer-supply').innerHTML=quote?marchSupplyHtml({loaded,consumed:0,remaining:loaded,elapsed_days:0}):'';}
-   $('#confirm-transfer').disabled=ids.length===0||ids.length>limit||unarmed||view.catalog.travel_rules&&(!quote||marchGrain(ids,quote)>city.grain);
+   $('#confirm-transfer').disabled=!hasCommandBook('transfer')||ids.length===0||ids.length>limit||unarmed||view.catalog.travel_rules&&(!quote||marchGrain(ids,quote)>city.grain);
    GameI18n.apply();
   }finally{updating=false;}
  };
  selection=GameOfficerSelection.bind(dialog.querySelectorAll('input[name=transfer-officer]'),{limit:capacity(),isEligible:input=>{if(!view.catalog.travel_rules)return true;if(!quote)return false;if(input.checked)return true;const selected=[...dialog.querySelectorAll('input[name=transfer-officer]:checked')].map(e=>GameOfficerChoices.ref(e.value));return marchGrain([...selected,GameOfficerChoices.ref(input.value)],quote)<=city.grain;},onChange:()=>{if(selection)updateEstimate();}});
  $('#transfer-city').onchange=updateEstimate;if($('#route-mode'))$('#route-mode').onchange=updateEstimate;watchRouteDialog(updateEstimate);updateEstimate();
- $('#confirm-transfer').onclick=async()=>{updateEstimate();const ids=[...dialog.querySelectorAll('input[name=transfer-officer]:checked')].map(e=>GameOfficerChoices.ref(e.value));if(!ids.length||ids.length>limit||ids.some(i=>officerUnavailable(i))||view.catalog.travel_rules&&!quote)return notice('请选择不同的目的城和不重复的调动名单。',true);if($('#route-mode')?.value==='explore'&&!ids.some(id=>view.game.officers[id].troops>0))return notice('探索航行至少需要一名带兵武将。',true);if(await command('transfer',{source:city.id,target:$('#transfer-city').value,officers:ids,route_mode:$('#route-mode')?.value||'fastest'}))dialog.close();};
+ $('#confirm-transfer').onclick=async()=>{if(!hasCommandBook('transfer'))return notice(commandBookReason('transfer'),true);updateEstimate();const ids=[...dialog.querySelectorAll('input[name=transfer-officer]:checked')].map(e=>GameOfficerChoices.ref(e.value));if(!ids.length||ids.length>limit||ids.some(i=>officerUnavailable(i))||view.catalog.travel_rules&&!quote)return notice('请选择不同的目的城和不重复的调动名单。',true);if($('#route-mode')?.value==='explore'&&!ids.some(id=>view.game.officers[id].troops>0))return notice('探索航行至少需要一名带兵武将。',true);if(await command('transfer',{source:city.id,target:$('#transfer-city').value,officers:ids,route_mode:$('#route-mode')?.value||'fastest'}))dialog.close();};
 }
 // Classify actual runtime entry before consulting immutable opening plans.
 function libraryEntryStatus(p){
@@ -1005,7 +1017,7 @@ function render(){
  if(game.extension)appendInspector(factionLedger());
  $('#journal').innerHTML=game.log.slice(-5).map(t=>`<li>${escapeHtml(displayLog(t))}</li>`).join('');
 }
-$('#rules').onclick=()=>openDialog('规则说明',`<div class="rules-body"><p>每回合为1旬，固定10日；每月上旬、中旬、下旬，各势力每旬行动。月结只在进入下月上旬时执行。</p><p>每城${capacity()}人；每方出战最多10人，包含主将。</p><ul>${view.catalog.notes.map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul><p>总人物库${view.catalog.library_count}人。仅已登场且配置齐全的人物进入本局。随机种子决定招募、战斗等判定的随机序列；相同种子与操作可重现战局，保存会保留随机序列进度。</p></div>`,'<button data-cancel>返回战役</button>');
+$('#rules').onclick=()=>openDialog('规则说明',`<div class="rules-body"><p>每回合为1旬，固定10日；每月上旬、中旬、下旬，各势力每旬行动。月结只在进入下月上旬时执行。</p><p>每城${capacity()}人；每方出战最多10人，包含主将。</p>${commandBookHint()}<p><span data-l10n-native="zh-Hant" data-locale-only="zh-Hant">命令書由全勢力共用，可全部投入同一城。每旬開始重置，未用完不累積。確定執行才消耗；取消、查看及任命不消耗；手動編兵每次確認亦使用命令書。</span><span data-l10n-native="ja" data-locale-only="ja" hidden>命令書は勢力全体で共有し、同じ都市へ集中できます。毎旬の開始時に更新し、余りは持ち越しません。実行確定時に消費し、取消・閲覧・任命では消費しません。手動の兵編成は確定ごとに命令書を使います。</span></p><ul>${view.catalog.notes.map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul><p>总人物库${view.catalog.library_count}人。仅已登场且配置齐全的人物进入本局。随机种子决定招募、战斗等判定的随机序列；相同种子与操作可重现战局，保存会保留随机序列进度。</p></div>`,'<button data-cancel>返回战役</button>');
 $('#library').onclick=showLibrary;
 $('#event-history').onclick=()=>gameEvents?.history();
 $('#audio-settings').onclick=()=>{

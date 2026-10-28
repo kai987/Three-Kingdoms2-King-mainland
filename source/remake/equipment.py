@@ -10,6 +10,7 @@ from types import SimpleNamespace
 
 from . import facility_equipment
 from .errors import GameError
+from . import command_books
 
 SCHEMA = 'tk2-equipment-v1'
 WEAPONS, ARMORS = facility_equipment.WEAPONS, facility_equipment.ARMORS
@@ -265,7 +266,7 @@ def owned_for(game,state,ident):
 def equip_owned(game,state,payload,owner):
     from . import facilities
     facilities._payload(payload,{'city','actor','officer','slot','item'})
-    city=facilities._city(game,state,payload['city'],owner)
+    city=facilities._city(game,state,payload['city'],owner,kind='equip_owned')
     actor=facilities._actor(game,state,city,payload['actor'])
     target=state.officers[facilities._target(game,state,city,payload['officer'])]
     slot,ident=payload['slot'],payload['item'];item(slot,ident)
@@ -273,7 +274,7 @@ def equip_owned(game,state,payload,owner):
         raise GameError('這名武將沒有保管這件備用裝備。')
     if (slot,ident) in UNIQUE and _pool(state)['uniques'].get(_key(slot,ident),{}).get('holder')!=target.person_id:
         raise GameError('唯一裝備持有人不符。')
-    facilities._charge(state,city,actor,0,target.runtime_id)
+    facilities._charge(state,city,actor,0,target.runtime_id,kind='equip_owned')
     previous=_give(state,target,slot,ident,'owned')
     details=dict(actor=state.officers[actor].person_id,target=target.person_id,
         from_person=target.person_id,slot=slot,item=ident,previous=previous,

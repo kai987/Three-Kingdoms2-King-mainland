@@ -6,7 +6,7 @@
  function envelope(raw){
   if(typeof raw!=='string'||new TextEncoder().encode(raw).length>MAX_BYTES)throw Error('invalid');
   const value=JSON.parse(raw);
-  if(!value||value.format!=='three-kingdoms-remake-save'||value.version!==1||typeof value.scenario!=='string'||!value.scenario||value.scenario.length>160||!value.state||typeof value.state!=='object'||Array.isArray(value.state)||!['catalog_sha256','checksum'].every(key=>typeof value[key]==='string'&&/^[a-f0-9]{64}$/.test(value[key])))throw Error('invalid');
+  if(!value||value.format!=='three-kingdoms-remake-save'||![1,2].includes(value.version)||typeof value.scenario!=='string'||!value.scenario||value.scenario.length>160||!value.state||typeof value.state!=='object'||Array.isArray(value.state)||!['catalog_sha256','checksum'].every(key=>typeof value[key]==='string'&&/^[a-f0-9]{64}$/.test(value[key])))throw Error('invalid');
   return value;
  }
  function fingerprint(view){

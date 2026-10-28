@@ -7,7 +7,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / 'source'), str(ROOT / 'tests')]
-from remake import domestic, logistics, treasures
+from remake import command_books, domestic, logistics, treasures
 from remake.campaign import Campaign, digest
 from remake.errors import GameError
 from test_remake_faction_domestic import faction_catalog
@@ -38,6 +38,7 @@ class AutoAllocationTests(unittest.TestCase):
         self.assertEqual(game.export_save(), before, 'Preview must not mutate saves or RNG')
         resources = {key: (c.gold, c.grain, c.action_used) for key, c in state.cities.items()}
         actions, totals = deepcopy(state.extension['officer_actions']), deepcopy(state.soldiers)
+        books = deepcopy(state.extension['command_books'])
         domestic.finish_faction_turn(game, state, 'shu', automatic=False)
         self.assertEqual((state.officers[146].troops, state.officers[951].troops), (999, 561))
         self.assertEqual((state.officers[255].troops, state.cities['nanjun'].reserves), (999, 321))
@@ -45,6 +46,8 @@ class AutoAllocationTests(unittest.TestCase):
                          'Existing lower-ranked troops must never be recalled')
         self.assertEqual({key: (c.gold, c.grain, c.action_used) for key, c in state.cities.items()}, resources)
         self.assertEqual(state.extension['officer_actions'], actions)
+        self.assertEqual(state.extension['command_books'], books,
+                         'Automatic allocation is embedded work and must not spend another book')
         self.assertEqual(state.soldiers, totals)
         self.assertEqual(state.rng.draws, 0)
         self.assertEqual(state.cities['nanyang'].reserves, 1200, 'No foreign reserve pool is touched')
@@ -166,6 +169,9 @@ class AutoAllocationTests(unittest.TestCase):
             allocation = next(r for r in reports if r['city'] == key and r['kind'] == 'allocation')
             self.assertLess(reports.index(recruit), reports.index(allocation))
             self.assertEqual((city.gold, city.grain), (before[key][0] - quote['gold'], before[key][1] - quote['grain']))
+        orders = state.extension['command_books']['factions']['shu']['orders']
+        self.assertEqual([r['kind'] for r in orders], ['recruit', 'recruit'])
+        self.assertEqual(command_books.remaining(state, 'shu'), 1)
         self.assertEqual(state.cities['xiangyang'].reserves, 0)
         self.assertEqual(state.officers[951].troops, 661)
         game.validate(state)

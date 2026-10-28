@@ -197,7 +197,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "07c04e2ec94231834b3a4ae8f2ba698f2435f1c0679c1ad5df6c76f7a934e03f",
+      "opening_save_sha256": "5226b9b34243e65841325ab33a6a6d3e89c65d303709d0a9c952303df8d53669",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -1360,7 +1360,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "15826961da487f1acffcb455a78109ce64ab1e00a09025d383d0f8d25242533c",
+      "opening_save_sha256": "77c48a881bc6d4e6b05347cad4c727902920bf888aca252800af15871737fe14",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -2923,7 +2923,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "a1e887d302265579e26c20ea23975e6b07546218db1e320c29def2090bb59b97",
+      "opening_save_sha256": "555ec3a53a30d9ead29cf773cd8195738260cc68b1f5fcf24ca8dbced640fdbd",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -4838,7 +4838,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "6663e0b471249de07b2b8775a37046fc0cbb6a6225db539e6165581d44c50e5b",
+      "opening_save_sha256": "7da93725abdf28261ef4c21272d3be84b23f54040adf39d08be8a009a5557d0c",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -6801,7 +6801,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "6285e0fa75dc770545c91877390bac72e5603c9305040ef59657c7e73b2695f5",
+      "opening_save_sha256": "9adb4aef63499669b3612b02c8369632c33e22989902370ffe5fe07257ad6b7c",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -8890,7 +8890,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "f47f7b11bfe13ade5f6f67e839a2ad90eb8ee4d0fd9cbfdb839cf4031a905c4d",
+      "opening_save_sha256": "7f4420a29ccce2936da64b255677ee309ef8f9747e8ea053f87b3fa22db28a76",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -11089,7 +11089,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "3e75d925b845628f6a54e9c246546a97ac83c05b8780dd9c5d7a1e8f8b1fefe0",
+      "opening_save_sha256": "7c6d9e65d9597676d4af51229ef81c5006286c9a8f6d35e7902f05dcb3c6c579",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -13450,7 +13450,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "32289456a5321c78044351d55b5f07e8b983aaea61cd87434ad245b0031ee681",
+      "opening_save_sha256": "751769d5a412db90073325d1ab7537f23fff3d88efdceb1219428d99d11dd8bd",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -15797,7 +15797,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "6886aa5c212cb85e85e780c2031941f7e0e3493e538f36300d02cf5b9cd2e8c6",
+      "opening_save_sha256": "f769f33421b3d0f7548763ac76cba397127abdb26218f79217de923afc6b8572",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -18094,7 +18094,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "349938f2e31952b255ace4614ec6744681cb95297919cee648340a81c64c70db",
+      "opening_save_sha256": "d3cc8e15a9f73d45a173fdd3659cde5877a0ae191e3a369b021a590ffa8c290f",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -20425,7 +20425,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "030819a4a6106180fa81fe3dc3eef7f4db98ed305caa9e03a2ceea91c302ad31",
+      "opening_save_sha256": "05b5fedeb4d9297f90c261bf7c94572fb857f2f87287ee4c88e207b9c534d6a3",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -22740,7 +22740,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "13b0d4ab13eb1aac53ad0df9c2ab93330d074d3ae6bc03f966b96ca64608b144",
+      "opening_save_sha256": "c2dc6f216c16fa125a3a437f0c983ad369fd562c556edb2aa44f8cf23b24d11d",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -25143,7 +25143,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "8fbbfcda282e3f59a618d87b0278cb72bce322caa35c1af1ebd716d551d60b1f",
+      "opening_save_sha256": "bf70297cb2321178296e9dc36ff2dfe23971027679fb41e3b16e3100360b9694",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -27376,7 +27376,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "bb54807fb0990931bd6dc71690c9306131d7c73685bb289c305056ec7098ab42",
+      "opening_save_sha256": "224e84ef550ed4fe3b9e0330da1d0af5ea00e95c0569b5da4e4f08bc5d2b64f6",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -29653,7 +29653,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "f160a7038e3b75cb9f83b37f605c9480ae8d1d21990f73d7d3481aa4b6d3e152",
+      "opening_save_sha256": "200f5e91445eb74aa62d36cf72cc2ca9a616f73ba5a3a93cf0a1eda1f3d75f24",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -32042,7 +32042,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "347ab39e4c35b51aa54979151fc411ff80ddd70c02e74d8fe822d9d1dadf7478",
+      "opening_save_sha256": "57b23484af0e88a8ca539b9ee0b3b0893c2d7b82ed7d197fc3d7067289f83c11",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -34305,7 +34305,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "76e9eaca91988205097a463eeb20670bfa24ae7c69f064a5c32a23f9edbda2d0",
+      "opening_save_sha256": "6aad242bbdff34f142300851773f3ce5f922b6f6a900bb5381ad678880516c3e",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -36612,7 +36612,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "2a4d690a8c4e72b33d8a5c163005b88fa27ecda1e1f2837ef484315d7da3b120",
+      "opening_save_sha256": "b6b0c2807756ccfbcab4b745ca2ddbe7271c91a0e955ff050cfa342fcf2684e3",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -38815,7 +38815,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "23cee40aa9ea7763e5bd3b163c92909548b14b04b19a68e2ce5ea23dacfda8e6",
+      "opening_save_sha256": "327ca3e1e98ee61475042f0524a064177f77f186488051e9ad081204a3303821",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -41002,7 +41002,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "e303f56f45bfbc57f294e2f03ade33bf8cca087d263dc66629a115024c52b98e",
+      "opening_save_sha256": "6a95503cdbc90d0f551a11484d469119529091263de45cdd39fe74d7650b6342",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -43109,7 +43109,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "79d7fc21ac1bf618435bd63ce92bc9623b7ef2829ef1582c2fc83cde3ce0f1d6",
+      "opening_save_sha256": "ad4a0093ae9b2d1747e88352e5046c871be92a53552c523321b955e8767fecb9",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -45216,7 +45216,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "853c185ff5092addb8547b91e9fa7746429d0a808d7ad04273a0afc7a5358ad6",
+      "opening_save_sha256": "1806ff0c20ae5e21945d75ce28bd39bda9f83d3ae3cd607220a72ee4ac66d8b5",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -47003,7 +47003,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "1d97ec528aa50f8733b32366615e9816fc4be61a924c4d61ecde792cd73ae306",
+      "opening_save_sha256": "55fb7e6f6597306b1b3e33747ba68b79cf0c1d10395e916aea7a5e6ef63db412",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -48566,7 +48566,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "090e75ffabe6b3877d6e4d572d476052e715dd5b920a04c4cd969dc38f34dd39",
+      "opening_save_sha256": "f95db5a9ba45927a4d7f65b8e9ce64095042ec2fda44837301184574d9e6cd41",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -49969,7 +49969,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "9daa063e7050917560eb5e3091a745711e7174d17018e0cd2271553142811627",
+      "opening_save_sha256": "42de44227e3a0570bd484a80adf4d850e3aa9baebc2986965fbedaaa98950d54",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -50966,7 +50966,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "fe68a50dce3640b2cb1dc12969ee700d8626aed9afd15e73265e106ec00444a4",
+      "opening_save_sha256": "aa5407dd476f3b4ec3d76c3bde76fceb9137213112b574b15b6cb599422b9c8a",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -52017,7 +52017,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "c812588b28e34d09c9a3dad940820e19fd70d8e297feabdc17ad654560e3143d",
+      "opening_save_sha256": "3af4a10effda6a1849055834557156df5971efb3be28653185df783be03af060",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -52924,7 +52924,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "644a1b37157f799a22dbeded03716145d11428380a45778e43457a2eda7aa16d",
+      "opening_save_sha256": "399d7fab46df5580da65cf96ff0d1bcb002c67629c8c502bdcc9c7054e8ff6bd",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -53511,7 +53511,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "990990ca4f99bdc48c8c4471f1879263a8cf66a4bb5661225a48aab7b8807221",
+      "opening_save_sha256": "c1e3de621c4a30cfbf656f19815a9495f46686a87df7952c03cd4d89b3e928ce",
       "changed_people": [
         {
           "person_id": "san14-candidate-0348",

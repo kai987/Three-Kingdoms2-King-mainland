@@ -9,7 +9,7 @@ import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
-from remake import equipment,facilities,civil_staff
+from remake import command_books,equipment,facilities,civil_staff
 from remake.campaign import Campaign,Catalog,SeedRng,canonical
 from remake.errors import GameError
 from remake.march_core import using_backend
@@ -159,14 +159,30 @@ class EquipmentCampaignTests(unittest.TestCase):
         policy.update(enabled=True,gold_budget=500,gold_floor=0,auto_prevent=False,
             auto_treat=False,auto_trade=False,auto_equip=True,auto_develop=False,auto_study=False)
         before_gold=city.gold;before_rng=deepcopy(state.rng)
+        available_books=command_books.remaining(state,owner)
+        offers={(slot,row['id']):row for slot in ('weapon','armor')
+            for row in equipment.shop_stock(game,state,city,slot)}
         receipts=facilities.auto_turn(game,state,owner)
         bought=[row for row in receipts if row['city']==city.id]
-        self.assertEqual(len(bought),1)
-        receipt=bought[0];officer=next(o for o in state.officers.values() if o.person_id==receipt['target'])
-        self.assertEqual(city.gold,before_gold-receipt['gold'])
-        self.assertEqual(getattr(officer,receipt['slot']+'_id'),receipt['item'])
-        self.assertIn(receipt['previous'],state.extension['equipment']['reserves'][officer.person_id][receipt['slot']])
+        # One city and one officer may buy both slots using two faction orders.
+        self.assertEqual(len(bought),2)
+        self.assertEqual({row['slot'] for row in bought},{'weapon','armor'})
+        self.assertEqual(city.gold,before_gold-sum(row['gold'] for row in bought))
+        self.assertLessEqual(sum(row['gold'] for row in bought),policy['gold_budget'])
+        for receipt in bought:
+            officer=next(o for o in state.officers.values() if o.person_id==receipt['target'])
+            offer=offers[(receipt['slot'],receipt['item'])]
+            self.assertEqual(receipt['gold'],offer['price'])
+            self.assertIn(officer.runtime_id,offer['eligible_targets'])
+            self.assertEqual(getattr(officer,receipt['slot']+'_id'),receipt['item'])
+            self.assertIn(receipt['previous'],state.extension['equipment']['reserves'][officer.person_id][receipt['slot']])
+        self.assertEqual(command_books.remaining(state,owner),available_books-2)
+        self.assertEqual([r['kind'] for r in state.extension['command_books']['factions'][owner]['orders']],
+                         ['buy_equipment','buy_equipment'])
         self.assertEqual(state.rng,before_rng)
+        settled=deepcopy(game.to_dict())
+        self.assertEqual(facilities.auto_turn(game,state,owner),[])
+        self.assertEqual(game.to_dict(),settled,'Repeating automatic settlement never buys or charges twice')
         game.validate(state)
 
     def test_real_weighted_duel_commands_save_and_change_order_miss_damage_without_base_mutation(self):

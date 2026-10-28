@@ -6,6 +6,7 @@ into one friendly destination only after an actual arrival. No ROM inputs.
 from copy import copy, deepcopy
 
 from .errors import GameError
+from . import command_books
 from .officers import parse_officer_ref
 from .route_hazards import allocate_survivors, evaluate_leg, route_allowed, _python_route_allowed
 
@@ -288,7 +289,6 @@ def _eligible(game, state, source):
     return [i for i in source.roster.officer_ids if i not in busy and i not in assigned
             and state.officers[i].alive and state.officers[i].faction_id == source.owner
             and state.officers[i].health > 0
-            and state.extension['officer_actions'].get(str(i)) != state.turn
             and _pool(state)['receipts'].get(str(i), 0) <= state.turn]
 
 
@@ -363,7 +363,7 @@ def rescue_targets(game, state, city_id):
         if state.phase not in {'city','ai'}:reason='wrong_phase'
         elif source.owner not in game.catalog.factions:reason='not_owned'
         elif _army(state,army['id'],source.owner) is None:reason='army_changed'
-        elif source.action_used:reason='action_used'
+        elif not command_books.can_spend(state,source.owner,'dispatch_transport'):reason='command_books'
         elif any(r['source']==source.id for r in _pool(state)['convoys']):reason='in_transit'
         elif not ids:reason='no_spare_officer'
         selected=None if reason else _meeting_quote(game,state,source,army,policy)
@@ -387,8 +387,8 @@ def preview(game, state, city_id):
         return None, 'not_owned'
     if state.phase not in {'city', 'ai'}:
         return None, 'wrong_phase'
-    if source.action_used:
-        return None, 'action_used'
+    if not command_books.can_spend(state, source.owner, 'dispatch_transport'):
+        return None, 'command_books'
     if row['last_dispatch_turn'] == state.turn:
         return None, 'already_dispatched'
     if any(c['source'] == city_id for c in _pool(state)['convoys']):
@@ -451,7 +451,7 @@ def treasure_transport(game, state, city_id, *, quote_cache=None):
     ids = eligible[:min(1, policy['max_officers'], spare)]
     common = None
     if state.phase not in {'city', 'ai'}: common = 'wrong_phase'
-    elif source.action_used: common = 'action_used'
+    elif not command_books.can_spend(state,source.owner,'dispatch_transport'): common = 'command_books'
     elif _pool(state)['cities'][city_id]['last_dispatch_turn'] == state.turn: common = 'already_dispatched'
     elif any(row['source'] == city_id for row in _pool(state)['convoys']): common = 'in_transit'
     elif not ids: common = 'no_spare_officer'
@@ -532,8 +532,9 @@ def dispatch(game, state, payload, owner):
         raise GameError('请选择仍在本方行军队列中的部队。')
     if owner == 'neutral' or source.owner != owner or target.owner != owner or source.id == target.id and army is None:
         raise GameError('运输起点与目的地必须是不同的本方城池。')
-    if state.phase not in {'city', 'ai'} or source.action_used:
+    if state.phase not in {'city', 'ai'}:
         raise GameError('本城当前不能派出运输队。')
+    command_books.require(state, owner, 'dispatch_transport')
     pool = _pool(state)
     policy = pool['cities'][source.id]['policy']
     if pool['cities'][source.id]['last_dispatch_turn'] == state.turn or any(r['source'] == source.id for r in pool['convoys']):
@@ -542,11 +543,11 @@ def dispatch(game, state, payload, owner):
     if (not isinstance(ids, list) or not ids or len(ids) > 99
             or any(type(i) not in (int, str) for i in ids) or len(ids) != len(set(ids))
             or any(i not in _eligible(game, state, source) for i in ids)):
-        raise GameError('请选择本城未行动、未出征且未担任内政官的押运武将。')
+        raise GameError('请选择本城未出征且未担任内政官的押运武将。')
     try:
         ids = [parse_officer_ref(i, game.catalog.rules) for i in ids]
     except (ValueError, TypeError) as error:
-        raise GameError('请选择本城未行动、未出征且未担任内政官的押运武将。') from error
+        raise GameError('请选择本城未出征且未担任内政官的押运武将。') from error
     if (not isinstance(cargo, dict) or set(cargo) not in (_CITY_FIELDS,_CARGO_FIELDS)
             or any(not _int(value, 0, 99 if key=='treasure' else LIMIT) for key,value in cargo.items())):
         raise GameError('运输物资数量无效。')
@@ -582,8 +583,8 @@ def dispatch(game, state, payload, owner):
     if cargo['treasure']:
         from . import treasures
         treasures.debit(state,source.id,cargo['treasure'])
+    command_books.spend(state, source, 'dispatch_transport')
     source.grain -= grain
-    source.action_used = True
     state.extension['officer_actions'].update({str(i): state.turn for i in ids})
     from . import domestic
     domestic.on_departure(game, state, ids, source.id)
@@ -636,7 +637,7 @@ def auto_dispatch_city(game, state, city_id):
 def _auto_transfer_city(game,state,city_id):
     """Permanent front personnel use the ordinary movement service, not cargo."""
     source=state.cities[city_id];policy=_pool(state)['cities'][city_id]['policy']
-    if source.action_used or state.phase not in {'city','ai'}:
+    if not command_books.can_spend(state, source.owner, 'transfer') or state.phase not in {'city','ai'}:
         return False
     target=_target(game,state,source,policy)
     if target is None or target.owner!=source.owner or target.id==source.id:

@@ -13,7 +13,7 @@ from threading import RLock
 from types import SimpleNamespace
 
 from .errors import GameError
-from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment
+from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from .city_economy import income_at
@@ -213,8 +213,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             return result
         for key, row in result['cities'].items():
             city = state.cities[key]
-            available = [person for person in row['employees'] if person['working'] and person['health'] > 0
-                         and person['action_turn'] != state.turn]
+            available = [person for person in row['employees'] if person['working'] and person['health'] > 0]
             candidates = self._free_candidates(state, city) if city.owner == state.player else []
             row['searchable_staff'] = available
             row['search_targets'] = [dict(id=i, name=self.person_name(state, i),
@@ -225,7 +224,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 for i in candidates]
             reason = ('not_owned' if city.owner != state.player else
                       'wrong_phase' if state.phase != 'city' else
-                      'action_used' if city.action_used else
+                      'command_books' if not command_books.can_spend(state, city.owner, 'staff_recruit') else
                       'no_available_staff' if not available else
                       'no_historical_candidate' if not candidates else
                       'city_full' if self._city_occupancy(state, city) >= self.catalog.rules.city_officer_capacity else
@@ -272,6 +271,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             policy['enabled'] = owner != faction
         state.extension['facilities'] = facilities.empty(self,state)
         state.extension['equipment'] = equipment.empty(self,state)
+        command_books.initialize(self, state)
         equipment.synchronize(self,state)
         for owner, policy in state.extension['facilities']['factions'].items():
             if owner != faction and d.get('facility_ai_default',True):
@@ -312,6 +312,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'treasury':treasures.view(self,state),
                                 'facilities':facilities.view(self,state),
                                 'equipment':equipment.view(self,state),
+                                'command_books':command_books.view(self,state),
                                 'names': {str(i): self.person_name(state, i) for i in state.officers} if state else {}}}
 
     def command(self, kind, payload, revision):
@@ -376,8 +377,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         city = state.cities[key]
         if city.owner != state.player:
             raise GameError('请选择本方城池。')
-        if action and city.action_used:
-            raise GameError('这座城本回合已行动。')
+        if action:
+            command_books.require(state, city.owner)
         return city
 
     def _treasury_command(self, kind):
@@ -394,7 +395,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         return lambda state,payload: service(self,state,payload,state.player)
 
     def _allocate(self, state, payload):
-        city = self._owned_city(state, payload.get('city'))
+        city = self._owned_city(state, payload.get('city'), action=True)
         ident = parse_officer_ref(payload.get('officer'), self.catalog.rules)
         troops = integer(payload.get('troops'), 0, 999, 'troops')
         if ident not in city.roster.officer_ids:
@@ -405,6 +406,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         change = troops - officer.troops
         if change > city.reserves:
             raise GameError('本城预备兵不足。')
+        command_books.spend(state, city, 'allocate')
         officer.troops = troops
         city.reserves -= change
         self._note(state, f'{self.person_name(state, ident)}编兵为{troops}，本城预备兵{city.reserves}。')
@@ -417,7 +419,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         city.gold -= r['recruit_gold_per_100']
         city.grain -= r['recruit_grain_per_100']
         domestic.add_reserves(self,state,city,r['recruit_per_action'],recruited=True)
-        city.action_used = True
+        command_books.spend(state, city, 'recruit')
         self._note(state, f'{self.catalog.map_cities[city.id]["name"]}征募{r["recruit_per_action"]}名预备兵。')
 
     def _depart(self, state, payload):
@@ -553,6 +555,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         logistics.resolve_supply_retreats(self,state)
         for city in state.cities.values():
             city.action_used = False
+        command_books.initialize(self, state)
         state.phase = 'city'
         self._prune_marches(state)
         logistics.synchronize(self,state)
@@ -574,7 +577,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         with self.lock:
             if self.state is None:
                 raise GameError('请先开始演练。')
-            value = {'format': 'three-kingdoms-remake-save', 'version': 1,
+            value = {'format': 'three-kingdoms-remake-save', 'version': 2,
                      'catalog_sha256': self.catalog.sha256, 'scenario': self.catalog.data['id'],
                      'state': self.to_dict()}
             return {**value, 'checksum': digest(value)}
@@ -587,13 +590,16 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 if not isinstance(payload, dict) or set(payload) != {'format', 'version', 'catalog_sha256', 'scenario', 'state', 'checksum'}:
                     raise ValueError('save envelope')
                 content = {k: v for k, v in payload.items() if k != 'checksum'}
-                if content['format'] != 'three-kingdoms-remake-save' or content['version'] != 1 or content['catalog_sha256'] != self.catalog.sha256 or content['scenario'] != self.catalog.data['id'] or digest(content) != payload['checksum']:
+                if content['format'] != 'three-kingdoms-remake-save' or type(content['version']) is not int or content['version'] not in (1, 2) or content['catalog_sha256'] != self.catalog.sha256 or content['scenario'] != self.catalog.data['id'] or digest(content) != payload['checksum']:
                     raise ValueError('save identity/checksum')
                 raw = deepcopy(content['state'])
                 # The current catalog's existing campaigns acquire the three
                 # new presentation/AI preferences without replaying past events.
                 # Historical catalog IDs/checksums remain unsupported.
                 extension = raw['extension']
+                legacy = content['version'] == 1
+                if ('command_books' in extension) == legacy:
+                    raise ValueError('Save format does not match its strategic-order ledger')
                 extension.setdefault('difficulty', 'normal')
                 extension.setdefault('ai_strategy', {})
                 extension.setdefault('events', empty_events())
@@ -617,6 +623,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     cities[key] = City(**row)
                 raw['cities'] = cities
                 candidate = CampaignState(**raw)
+                if legacy:
+                    command_books.initialize(self, candidate, legacy=True)
                 self.validate(candidate)
             except (ValueError, TypeError, KeyError, AttributeError, OverflowError) as exc:
                 raise GameError('存档无效，当前进度未改变。') from exc
@@ -627,6 +635,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
 
     def validate(self, state):
         get_settings(state)
+        command_books.validate(self, state)
         civil_staff.validate(self, state)
         domestic.validate(self,state)
         logistics.validate(self,state)

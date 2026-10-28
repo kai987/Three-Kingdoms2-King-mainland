@@ -29,6 +29,11 @@ function integration({pending=false,rejected=false,nextGame=game(),phase='city'}
  return {context,captured,requests,errors,invalidations,restored,before,next};
 }
 (async()=>{
+ const current=fixture(),currentRaw=raw().replace('"version":1','"version":2');current.raw=currentRaw;
+ assert.equal((await current.autosave.checkpoint('new')).ok,true);
+ assert.equal(JSON.parse(current.data.get(STORAGE_KEY)).items[0].raw,currentRaw);
+ assert.equal((await current.autosave.restore(current.autosave.list()[0].id,{confirm:()=>true})).ok,true);
+ assert.equal(current.loads[0],currentRaw,'Current-format recovery must preserve the exact order ledger bytes');
  // The autosave wrapper must not normalize floats, large integers or whitespace.
  const exact=fixture(),original=raw();
  assert.equal((await exact.autosave.checkpoint('new')).ok,true);

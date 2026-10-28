@@ -1,14 +1,17 @@
 /* Choosing a highlighted destination is a read-only UI step, never an order. */
 'use strict';
+const commandBookFixture=require('./fixtures/command-books.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const source=fs.readFileSync(require.resolve('../game/app.js'),'utf8');
 const home={id:'home',owner:'wei',roster:{officer_ids:[1]}},ally={id:'ally',owner:'wei',roster:{officer_ids:[]}},enemy={id:'enemy',owner:'wu',roster:{officer_ids:[4]}},blocked={id:'blocked',owner:'shu',roster:{officer_ids:[5]}},empty={id:'empty',owner:'neutral',roster:{officer_ids:[]}};
 const view={revision:7,catalog:{travel_hazards:true,recruitable:{home:[2,3]},persuadable:{home:[4]}},game:{phase:'city',player:'wei',cities:{home,ally,enemy,blocked,empty},extension:{free_locations:{2:'home',3:'empty'},rng:123},officers:{}}};
+commandBookFixture.attach(view);
 let scrolls=0,focuses=0,renders=0,opened=[],notices=[];
 const context={view,mapAction:null,busy:false,availableRouteModes:(from,to)=>['enemy','empty'].includes(to)?['land']:[],
  notice:(text='',error=false)=>notices.push({text,error}),renderMap:()=>renders++,GameI18n:{apply(){}},cityName:String,
  $:()=>({getBoundingClientRect:()=>({top:-600,bottom:-240}),scrollIntoView:()=>scrolls++}),window:{innerHeight:844},document:{querySelector:()=>({focus:()=>focuses++})},
  departure:(city,id)=>opened.push(['depart',city.id,id]),recruitOfficer:(city,id)=>opened.push(['recruit',city.id,id])};
+context.hasCommandBook=kind=>commandBookFixture.api.can(view,kind);context.commandBookReason=kind=>commandBookFixture.api.reason(view,kind);
 vm.createContext(context);vm.runInContext(source.slice(source.indexOf('function actionTargetCities('),source.indexOf('function departure(')),context);
 const same=value=>JSON.parse(JSON.stringify(value)),snapshot=JSON.stringify(view);
 assert.deepEqual(same(context.actionTargetCities('depart',home)),['enemy','empty']);
@@ -30,7 +33,9 @@ view.catalog.recruitable.home=[3];context.beginMapAction('recruit',home);assert.
 view.catalog.recruitable.home=[];const openedBefore=opened.length;context.beginMapAction('recruit',home);assert.equal(opened.length,openedBefore);assert.equal(context.mapAction,null);assert(notices.at(-1).text.includes('暂无'));
 view.catalog.recruitable.home=oldFree;view.catalog.persuadable.home=oldEnemy;
 assert.equal(JSON.stringify(view),snapshot,'The direct local shortcut also leaves state and RNG untouched');
-home.action_used=true;context.beginMapAction('depart',home);assert.equal(context.mapAction,null);delete home.action_used;
+home.action_used=true;context.beginMapAction('depart',home);assert(context.mapAction,'An earlier order in the same city does not block the shared pool');context.cancelMapAction();delete home.action_used;
+commandBookFixture.exhaust(view);context.beginMapAction('depart',home);assert.equal(context.mapAction,null);assert(notices.at(-1).text.includes('命令書'));
+commandBookFixture.attach(view);
 context.busy=true;context.beginMapAction('depart',home);assert.equal(context.mapAction,null);
 assert(renders>=5);
 console.log('map actions: legal enemy/free-city highlights, target-bound dialogs, invalid click/cancel guards, mobile map scroll/focus and immutable state passed');

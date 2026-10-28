@@ -9,6 +9,7 @@ from heapq import heappop, heappush
 from itertools import count
 from math import asin, ceil, cos, radians, sin, sqrt
 from .errors import GameError
+from . import command_books
 from .officers import (integer, select_deployment, transfer_officers,
                        ref_sort_key, deserialize_officer_ref)
 
@@ -218,6 +219,8 @@ class TravelCampaign:
                 factions=[row['owner']],details={'from':row['source'],'to':row['target']},audience='world')
 
     def _queue_march(self, state, source, target, ids, kind, mode='fastest'):
+        order = 'depart' if kind == 'attack' else 'transfer'
+        command_books.require(state, source.owner, order)
         quote = self._travel_path(state, source.id, target.id, source.owner, mode, adjacent=kind == 'attack')
         if not quote: raise GameError('没有满足海陆选择及本方连通条件的路线。')
         if not ids or len(ids) != len(set(ids)) or any(i in self._march_ids(state) for i in ids):
@@ -230,8 +233,8 @@ class TravelCampaign:
         from .march_supply import create, estimate
         grain = estimate(state, ids, quote)
         if source.grain < grain: raise GameError('行军粮食不足。')
+        command_books.spend(state, source, order)
         source.grain -= grain
-        source.action_used = True
         state.extension['officer_actions'].update({str(i): state.turn for i in ids})
         travel = state.extension['travel']
         travel['counter'] += 1

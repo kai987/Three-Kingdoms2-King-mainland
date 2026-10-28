@@ -11,7 +11,7 @@ import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
-from remake import equipment,facilities
+from remake import equipment,facilities,command_books
 from remake.campaign import SeedRng
 from remake.errors import GameError
 from test_remake_facilities import fixture as facility_fixture
@@ -43,9 +43,10 @@ class EquipmentTests(unittest.TestCase):
             call(game,state,*args)
         self.assertEqual(state,before)
 
-    def reset(self,state):
+    def reset(self,game,state):
         state.turn+=1
         for city in state.cities.values():city.action_used=False
+        command_books.initialize(game,state)
 
     def test_original_224_identity_mapping_and_signature_overrides_preserve_profiles(self):
         data=json.loads((ROOT/'game/data/campaigns/217-07.json').read_text())
@@ -186,6 +187,18 @@ class EquipmentTests(unittest.TestCase):
         equipment.validate(game,state)
         self.fails(game,state,equipment.equip_owned,
             dict(city=city.id,actor=1,officer=3,slot='weapon',item=22),'one')
+        self.assertEqual(command_books.remaining(state,'one'),2)
+        for item in (2,22):
+            equipment.equip_owned(game,state,
+                dict(city=city.id,actor=1,officer=2,slot='weapon',item=item),'one')
+        self.assertEqual(command_books.remaining(state,'one'),0)
+        self.assertEqual(target.weapon_id,22)
+        self.assertEqual(city.gold,before_gold)
+        self.assertEqual(state.rng,before_rng)
+        self.fails(game,state,equipment.equip_owned,
+            dict(city=city.id,actor=1,officer=2,slot='weapon',item=2),'one')
+        equipment.validate(game,state)
+        command_books.validate(game,state)
 
     def test_gear_projections_match_shop_preview_and_do_not_change_base_attributes(self):
         game,state=fixture();city=state.cities['capital'];person=state.officers[2]

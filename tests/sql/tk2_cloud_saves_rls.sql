@@ -20,10 +20,30 @@ begin
        or r.scenario <> 'qa-rollback-only' or r.game_month <> 7 then
         raise exception 'Raw text or derived metadata mismatch';
     end if;
-    update public.tk2_cloud_saves set label='QA version2', revision=2 where slot=1 and revision=1 and save_id=r.save_id;
+    -- New format must keep fractional values and raw original bytes as well.
+    perform set_config('tk2.qa_raw_v2', replace(current_setting('tk2.qa_raw'), '"version":1', '"version":2'), true);
+    insert into public.tk2_cloud_saves (slot,label,save_text)
+        values (3,'QA save format 2',current_setting('tk2.qa_raw_v2')) returning * into r;
+    if r.save_text <> current_setting('tk2.qa_raw_v2')
+       or r.save_sha256 <> encode(sha256(convert_to(r.save_text, 'UTF8')), 'hex')
+       or r.game_year <> 217 or r.game_month <> 7 or r.game_turn <> 1 then
+        raise exception 'Format 2 raw text or metadata mismatch';
+    end if;
+    begin
+        insert into public.tk2_cloud_saves (slot,label,save_text)
+            values (4,'unknown format',replace(current_setting('tk2.qa_raw'), '"version":1', '"version":999'));
+        raise exception 'Unknown save format accepted';
+    exception when invalid_parameter_value then null; end;
+    begin
+        insert into public.tk2_cloud_saves (slot,label,save_text)
+            values (4,'string format',replace(current_setting('tk2.qa_raw'), '"version":1', '"version":"2"'));
+        raise exception 'String save version accepted';
+    exception when invalid_parameter_value then null; end;
+    update public.tk2_cloud_saves set label='QA revision 2', revision=2
+        where slot=1 and revision=1 and save_id=current_setting('tk2.qa_old_id')::uuid;
     get diagnostics n = row_count;
     if n <> 1 then raise exception 'Valid CAS update failed'; end if;
-    update public.tk2_cloud_saves set label='stale', revision=2 where slot=1 and revision=1 and save_id=r.save_id;
+    update public.tk2_cloud_saves set label='stale', revision=2 where slot=1 and revision=1 and save_id=current_setting('tk2.qa_old_id')::uuid;
     get diagnostics n = row_count;
     if n <> 0 then raise exception 'Stale CAS matched'; end if;
     begin
@@ -94,4 +114,4 @@ end;
 $qa$;
 reset role;
 rollback;
-select 'RLS, raw text, metadata, CAS and ABA assertions passed; rolled back' as result;
+select 'RLS, save formats 1/2, raw text, metadata, CAS and ABA assertions passed; rolled back' as result;

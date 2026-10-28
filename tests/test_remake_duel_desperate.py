@@ -180,7 +180,10 @@ class DesperateDuelTests(unittest.TestCase):
 
                 with patch.object(tactical_fixture, 'controlled_catalog', side_effect=original_stat_catalog):
                     game = active_duel(row['seed'])
+                orders_before = deepcopy(game.state.extension['command_books'])
                 scene = self.perform(game, row['move'])
+                self.assertEqual(game.state.extension['command_books'], orders_before,
+                                 'Tactical moves never consume strategic orders')
                 state = game.to_dict()
                 self.assertEqual(state['extension']['logistics']['schema'], 'tk2-logistics-v3')
                 self.assertFalse(state['extension']['logistics']['convoys'])
@@ -189,6 +192,7 @@ class DesperateDuelTests(unittest.TestCase):
                 state['extension'].pop('treasury')
                 state['extension'].pop('facilities')
                 state['extension'].pop('equipment')
+                state['extension'].pop('command_books')
                 state['extension']['logistics']['schema'] = 'tk2-logistics-v1'
                 self.assertEqual(digest(state), row['state_sha256'])
                 self.assertEqual(vars(game.state.rng), row['rng'])
