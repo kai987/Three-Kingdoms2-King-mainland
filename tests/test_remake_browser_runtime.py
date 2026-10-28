@@ -112,6 +112,26 @@ class BrowserRuntimeTests(unittest.TestCase):
         self.assertEqual(result['engine'], 'python')
         self.assertEqual(self.snapshot(), before)
 
+    def test_paid_city_allocation_and_precise_close_reach_the_real_worker_api(self):
+        view=self.start()
+        def command(kind, **payload):
+            status,result=self.request('/api/command',dict(kind=kind,payload=payload,
+                revision=self.runtime.session.revision))
+            self.assertEqual(status,200,result)
+            return result
+        city=view['game']['cities']['xiangyang'];first,second=city['roster']['officer_ids'][:2]
+        view=command('allocate',city='xiangyang',officer=first,troops=200,flow=None)
+        active=view['catalog']['command_books']['factions']['shu']['allocation_flow']
+        view=command('allocate',city='xiangyang',officer=second,troops=220,flow=active['id'])
+        self.assertEqual(view['catalog']['command_books']['factions']['shu']['used'],1)
+        saved=self.runtime.dispatch_json('/api/save')['body']
+        status,_=self.request('/api/load',dict(save=json.loads(saved),revision=self.runtime.session.revision))
+        self.assertEqual(status,200)
+        self.assertEqual(self.runtime.dispatch_json('/api/save')['body'],saved)
+        view=command('allocation_close',city='xiangyang',flow=active['id'])
+        self.assertNotIn('allocation_flow',view['catalog']['command_books']['factions']['shu'])
+        self.assertEqual(view['catalog']['command_books']['factions']['shu']['used'],1)
+
     def test_tactical_move_and_side_end_reach_the_domain_through_the_fixed_worker_api(self):
         view=self.start()
         def command(kind, **payload):

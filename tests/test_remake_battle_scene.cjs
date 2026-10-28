@@ -95,6 +95,15 @@ for key in ('attack','attack_guard','attack_defeat','ambush','stunned','failure'
 # Ending the whole side lets the real enemy move/attack with the same rules.
 game=scene_battle(three_enemies=False);arrange(game);successful_rng(game.state)
 action(game,'battle_wait',dict(battle_id=game.state.battle['id']),'side_handoff')
+# Two real public movement commands provide authoritative paths and saves;
+# they are also combined below only as an isolated renderer sequence fixture.
+game=scene_battle(three_enemies=False);arrange(game)
+b,a,*_=actors(game)
+options=game.view()['catalog']['battle_tactical']['actors'][str(a['id'])]['reachable']
+choice=next(p for p in options if 3<=p['cost']<=12 and len(battle_grid.move_quote(game,game.state,b,a,p['x'],p['y'])['path'])>=3)
+origin=dict(b['extended']['tactical']['positions'][str(a['id'])])
+action(game,'battle_move',dict(battle_id=b['id'],actor=a['id'],x=choice['x'],y=choice['y']),'move_first')
+action(game,'battle_move',dict(battle_id=b['id'],actor=a['id'],**origin),'move_second')
 # Real committed desperate attacks, separately covering success, self-injury,
 # and a low-health opponent choosing the same move from its ordinary AI pool.
 for key,wanted,reply_only in [('duel_desperate_success',True,False),('duel_desperate_failure',False,False),('duel_desperate_reply',None,True)]:
@@ -155,7 +164,8 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
  const accepted=new Map(actual.rows.map(row=>[row.key,scenesFor(row)]));
  for(const tactic of actual.tactics){const row=actual.rows.find(r=>r.key==='tactic:'+tactic.effect),scenes=accepted.get(row.key);assert(scenes.length,`Actual tactic ${tactic.id}/${tactic.effect} must not be discarded`);assert.equal(scenes[0].tactic,tactic.id);assert.equal(scenes[0].effect,tactic.effect);}
  assert.equal(actual.tactics.length,16);assert(accepted.get('tactic:strike').length,'要撃 uses strike');
- const attack=accepted.get('attack');assert.equal(attack[0].kind,'attack');assert(!attack.some(s=>s.counter),'A normal attack retains its own authoritative scene; enemy actions now happen at whole-side handoff');
+ const attack=accepted.get('attack');assert.equal(attack[0].kind,'attack');assert.equal(attack.length,2,'A surviving ordinary target immediately returns a blow in the same exchange');
+ assert.equal(attack[1].kind,'attack');assert.equal(attack[1].counter,true);assert.equal(attack[1].actor,attack[0].target);assert.equal(attack[1].target,attack[0].actor);assert.deepEqual(normalize(attack[1].before),normalize(attack[0].after));
  assert(accepted.get('side_handoff').some(s=>s.counter),'A real whole-side handoff retains authoritative enemy action scenes');
  const chain=accepted.get('ambush');assert.equal(chain[0].kind,'ambush');assert.equal(chain[1].kind,'attack');assert.deepEqual(normalize(chain[0].after),normalize(chain[1].before),'Ambush damage must not be replayed as attack damage');
  assert(accepted.get('retreat').length,'Actual retreat permits null actor/target');
@@ -217,6 +227,60 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   assert.equal(standalone.attackStage(1).phase,'result');assert.equal(standalone.attackStage(1).shift,0);
   assert.equal(standalone.attackStage(.4,true).phase,'result');assert.equal(standalone.attackStage(.4,true).shift,0);
  }
+ // Movement receipts contain the server's full legal path, not an invented
+ // straight line between two final coordinates. A unit visibly leaves its
+ // source before reaching the committed destination; cancelling the replay
+ // restores the same final state without another API command or RNG draw.
+ {
+  const row=actual.rows.find(r=>r.key==='move_first'),movement=accepted.get('move_first')[0],path=movement.move.path;
+  assert.equal(movement.kind,'move');assert.equal(movement.target,null);assert(path.length>=3);assert(standalone.validMovement(movement.move));
+  assert.deepEqual(normalize(path[0]),row.before.game.battle.extended.tactical.positions[String(movement.actor)]);
+  assert.deepEqual(normalize(path.at(-1)),row.after.game.battle.extended.tactical.positions[String(movement.actor)]);
+  assert.deepEqual(normalize(movement.before),normalize(movement.after),'Moving flags alone does not alter soldier snapshots');
+  assert.equal(row.before.game.rng.draws,row.after.game.rng.draws);
+  const initial=standalone.movementStage(movement,0),last=standalone.movementStage(movement,1);
+  assert.equal(initial.x,path[0].x*16+8);assert.equal(last.x,path.at(-1).x*16+8);assert.equal(last.index,path.length-1);
+  for(const mutate of [m=>m.path[1].x=31,m=>m.path[1].y=.5,m=>m.path[1]={...m.path[0]},m=>m.path[1]={x:30,y:18},m=>m.cost=0,m=>m.cost=61,m=>m.map_id='other',m=>m.path[0].run='execute']){
+   const bad=clone(row.after.presentation);mutate(bad.scenes[0].move);assert.equal(standalone.receiptScenes(bad,row.after.game.battle.id,row.after.revision).length,0);
+  }
+  const original=JSON.stringify(row),env=environment(),navigated=[],scene=env.api.create({onNavigate:(...p)=>navigated.push(p)});
+  scene.observe(row.kind,row.payload,row.before,row.after);scene.mount(env.host,row.after,{actor:movement.actor});const play=scene.play();env.step(0);
+  assert.equal(env.host.dataset.battleSceneMode,'movement');assert.equal(env.surface.width,1984);assert.equal(env.surface.height,1536);
+  assert.equal(Number(env.host.dataset.battleMoveX),initial.x);assert.equal(Number(env.host.dataset.battleMoveY),initial.y);
+  env.step(standalone.duration(movement)*.37);const middle=[env.host.dataset.battleMoveX,env.host.dataset.battleMoveY];
+  assert.notDeepEqual(middle,[String(initial.x),String(initial.y)]);assert.notDeepEqual(middle,[String(last.x),String(last.y)]);
+  env.doc.emit('game-language-change');assert.deepEqual([env.host.dataset.battleMoveX,env.host.dataset.battleMoveY],middle,'Changing language does not restart movement');
+  env.surface.onkeydown({key:'ArrowRight',preventDefault(){throw Error('Active movement cannot accept a second command');}});assert.equal(navigated.length,0);
+  scene.skip();await play;assert.equal(env.host.dataset.battleSceneMode,'tactical');assert.equal(env.host.dataset.battleMoveActor,'');assert.equal(scene.playing,false);assert.equal(env.rafs.size,0);
+  assert.equal(JSON.stringify(row),original);scene.observe(row.kind,row.payload,row.before,row.after);assert.equal(scene.state().queued,0);scene.dispose();
+  // A single AI action may move the same officer several times. Concatenate
+  // these two independently genuine command receipts as a renderer-only
+  // sequence fixture and verify that the second starts at the first endpoint.
+  const second=actual.rows.find(r=>r.key==='move_second'),combined=clone(second.after);
+  combined.presentation.scenes=[...clone(row.after.presentation.scenes),...clone(second.after.presentation.scenes)];
+  const env2=environment(),sequence=env2.api.create(),frozen=JSON.stringify(combined);
+  sequence.observe('battle_wait',{},row.before,combined);sequence.mount(env2.host,combined,{actor:movement.actor});const twice=sequence.play();env2.step(0);
+  assert.equal(Number(env2.host.dataset.battleMoveX),initial.x,'Rewind uses both authoritative moves rather than the final coordinate');
+  const firstDuration=standalone.duration(movement);env2.step(firstDuration+1);env2.step(firstDuration+2);
+  assert.equal(Number(env2.host.dataset.battleMoveX),last.x);assert.equal(Number(env2.host.dataset.battleMoveY),last.y);
+  env2.drain();await twice;assert.equal(env2.host.dataset.battleSceneMode,'tactical');assert.equal(JSON.stringify(combined),frozen);sequence.dispose();
+  for(const mode of ['hidden','reduced','missingRAF','reset','leave','dispose']){
+   const e=environment({reduced:mode==='reduced',missingRAF:mode==='missingRAF'}),s=e.api.create();if(mode==='hidden')e.doc.hidden=true;
+   s.observe(row.kind,row.payload,row.before,row.after);s.mount(e.host,row.after);const p=s.play();
+   if(['reset','leave','dispose'].includes(mode)){e.step(0);s[mode]();}await p;assert.equal(s.playing,false);assert.equal(e.rafs.size,0);s.dispose();
+  }
+  const malformedView=clone(row.after);malformedView.game.battle.extended.tactical.positions[String(movement.actor)]={...path[0]};
+  const failed=environment(),invalid=failed.api.create();invalid.observe(row.kind,row.payload,row.before,malformedView);invalid.mount(failed.host,malformedView);assert.equal(invalid.state().queued,0,'A path whose endpoint disagrees with the committed position cannot animate');invalid.dispose();
+ }
+ // A congested AI command can legitimately contain many movements and
+ // exchanges. This renderer-only overload sequence repeats real scene
+ // records to exercise its hard wall-clock bound, without replaying any of
+ // their combat results or claiming another actual gameplay command.
+ {
+  const overloaded=clone(first.after);overloaded.presentation.scenes=Array.from({length:40},()=>clone(accepted.get('attack'))).flat();
+  const frozen=JSON.stringify(overloaded),env=environment(),scene=env.api.create();scene.observe('battle_wait',{},first.before,overloaded);scene.mount(env.host,overloaded);await scene.load();const play=scene.play();env.step(0);assert(scene.playing);env.step(16000);await play;
+  assert.equal(scene.playing,false);assert.equal(scene.state().queued,0);assert.equal(env.rafs.size,0);assert.equal(env.host.dataset.battleSceneMode,'tactical');assert.equal(JSON.stringify(overloaded),frozen,'The replay budget drops only visual frames, never gameplay');scene.dispose();
+ }
 
  //4× means4× each backing dimension, with the logical/CSS footprint unchanged.
  {const env=environment(),selected=[],scene=env.api.create({onSelect:(side,id)=>selected.push({side,id})}),row=clone(first.before),id=first.payload.actor;
@@ -266,7 +330,7 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   view.game.extension.leaders.current=foe;env.texts.length=0;scene.mount(env.host,view,selected);
   assert(env.texts.some(t=>t.x===184&&t.y===335&&t.text==='忠 100'),key+' ordinary officer with100 loyalty is not masked');scene.dispose();
  }
- for(const mutate of [r=>r.schema='unknown',r=>r.revision++,r=>r.scenes.push(...Array(25).fill(r.scenes[0])),r=>r.scenes[0].battle_id='another-battle',r=>r.scenes[0].kind='execute-command',r=>r.scenes[0].actor=true,r=>r.scenes[0].counter=1,r=>r.scenes[0].effect='invented',r=>r.scenes[0].before.units[0]=null,r=>r.scenes[0].before.units[0].troops=-1,r=>r.scenes[0].after.units[0].health=100,r=>r.scenes[0].after.units[0].energy=19,r=>r.scenes[0].after.units[1].id=r.scenes[0].after.units[0].id]){
+ for(const mutate of [r=>r.schema='unknown',r=>r.revision++,r=>r.scenes.push(...Array(193).fill(r.scenes[0])),r=>r.scenes[0].battle_id='another-battle',r=>r.scenes[0].kind='execute-command',r=>r.scenes[0].actor=true,r=>r.scenes[0].counter=1,r=>r.scenes[0].effect='invented',r=>r.scenes[0].before.units[0]=null,r=>r.scenes[0].before.units[0].troops=-1,r=>r.scenes[0].after.units[0].health=100,r=>r.scenes[0].after.units[0].energy=19,r=>r.scenes[0].after.units[1].id=r.scenes[0].after.units[0].id]){
   const malformed=clone(first.after.presentation);mutate(malformed);assert.equal(standalone.receiptScenes(malformed,bid,revision).length,0,'Malformed receipt must be ignored');
  }
  // Identity and shape failures must also be rejected before reaching drawing.

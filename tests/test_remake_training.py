@@ -15,7 +15,7 @@ from test_remake_tactical_ai import battle, actors
 
 
 class TrainingDegreeTests(unittest.TestCase):
-    def test_real_attack_training_levels_change_damage_without_extra_rng(self):
+    def test_contact_training_changes_damage_without_extra_training_rng(self):
         losses, rngs, estimates = [], [], []
         for degree in (0, 70, 100):
             game = battle(three_enemies=False)
@@ -27,14 +27,15 @@ class TrainingDegreeTests(unittest.TestCase):
                              game.catalog.data['rules']['battle_damage_percent']))
             self.assertEqual(game.export_save(), saved, 'AI evaluation cannot draw or alter training')
             before, draws = target['troops'], game.state.rng.draws
-            # Isolate this one real player command from a separate AI response.
+            # The surviving contact opponent answers inside this same paid
+            # command. Training itself adds no third random check.
             with patch('remake.tactical_ai.choose_action', return_value=None):
                 game.command('attack', dict(battle_id=b['id'], actor=actor['id'],
                                            target=target['id']), game.revision)
             current = next(u for u in game.state.battle['defenders'] if u['id'] == target['id'])
             losses.append(before - current['troops'])
             rngs.append(deepcopy(game.state.rng))
-            self.assertEqual(game.state.rng.draws - draws, 1)
+            self.assertEqual(game.state.rng.draws - draws, 2)
             game.validate(game.state)
         self.assertLess(losses[0], losses[1])
         self.assertLess(losses[1], losses[2])

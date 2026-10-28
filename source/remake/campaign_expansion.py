@@ -384,8 +384,12 @@ class ExpandedCampaign:
         b=state.battle
         if b['extended']['tactical']['side']!=own:
             raise GameError('目前不是本方的戰術行動階段。')
+        before=presentation.snapshot(self,state)
         quote=battle_grid.move(self,state,b,actor,x,y)
         b['log'].append(f'{self.person_name(state,actor["id"])}移動至（{x+1},{y+1}），消耗機動力{quote["cost"]}。')
+        presentation.record(self,state,before,kind='move',actor=actor['id'],own=own,
+            counter=own!=self._player_sides(state)[0],
+            move=dict(path=quote['path'],cost=quote['cost'],map_id=b['extended']['tactical']['map_id']))
         self._trigger_ambush(state,actor,own)
         if finish:self._finish_action(state,actor,own,foe)
         else:self._battle_result(state)
@@ -407,18 +411,29 @@ class ExpandedCampaign:
 
     def _execute_attack(self,state,actor,target,own,foe,*,finish=True,counter=False):
         b=state.battle
-        if 'tactical' in b['extended']:
+        modern='tactical' in b['extended']
+        if modern:
             reason=battle_grid.attack_reason(b,actor,target,own)
             if reason:raise GameError(reason)
             battle_grid.spend(b,own,battle_grid.ATTACK_COST)
         self._trigger_ambush(state,actor,own,counter=counter)
+        attacked=self._attack_hit(state,actor,target,own,counter=counter)
+        if modern and attacked:
+            # Contact enters the two-sided soldier encounter. The surviving
+            # defending unit may answer within that same paid encounter; this
+            # is not a free whole-side AI action or a recursively paid attack.
+            self._contact_retaliation(state,target,actor,foe)
+        if finish:self._finish_action(state,actor,own,foe)
+        else:self._battle_result(state)
+
+    def _attack_hit(self,state,actor,target,own,*,counter=False):
+        """One authoritative blow using the same damage/status kernel either way."""
+        b=state.battle
         before=presentation.snapshot(self,state)
         if actor['troops']<=0:
             presentation.record(self,state,before,kind='attack',actor=actor['id'],
                 target=target['id'],own=own,counter=counter,success=False,skipped=True)
-            if finish:self._finish_action(state,actor,own,foe)
-            else:self._battle_result(state)
-            return
+            return False
         s=b['extended']['support'][str(actor['id'])]
         skipped=bool(s['stunned'])
         if skipped:
@@ -430,8 +445,17 @@ class ExpandedCampaign:
             target['troops']-=loss;b['log'].append(f'{self.person_name(state, actor["id"])}{"反击" if counter else "攻击"}{self.person_name(state, target["id"])}，损兵{loss}。')
         presentation.record(self,state,before,kind='attack',actor=actor['id'],
             target=target['id'],own=own,counter=counter,success=not skipped,skipped=skipped)
-        if finish:self._finish_action(state,actor,own,foe)
-        else:self._battle_result(state)
+        return not skipped
+
+    def _contact_retaliation(self,state,defender,attacker,side):
+        """Only this surviving contact opponent replies; no AP, policy or ambush."""
+        b=state.battle;support=b['extended']['support']
+        if (defender['troops']<=0 or attacker['troops']<=0
+                or support[str(defender['id'])]['health']<=0
+                or support[str(attacker['id'])]['health']<=0
+                or str(defender['id']) in b['extended']['surrenders']):
+            return False
+        return self._attack_hit(state,defender,attacker,side,counter=True)
 
     def _tactic(self,state,payload):
         b,actor,target,own,foe=self._battle_selection(state,payload)

@@ -625,6 +625,7 @@ def main():
               '/battle-scene.js': ('battle-scene.js', 'text/javascript; charset=utf-8'),
               '/battlefields.js': ('battlefields.js', 'text/javascript; charset=utf-8'),
               '/command-books.js': ('command-books.js', 'text/javascript; charset=utf-8'),
+              '/order-confirm.js': ('order-confirm.js', 'text/javascript; charset=utf-8'),
               '/config/battlefield-city-bindings.json': ('config/battlefield-city-bindings.json', 'application/json; charset=utf-8'),
               '/battle-scene.css': ('battle-scene.css', 'text/css; charset=utf-8'),
               '/duel-appearance.js': ('duel-appearance.js', 'text/javascript; charset=utf-8'),

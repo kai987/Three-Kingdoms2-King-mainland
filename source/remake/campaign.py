@@ -339,7 +339,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     self._supply_event_floor=candidate.extension['events']['next_id']
                     methods = {'persuade_officer': self._persuade_officer, 'recruit_officer': self._recruit_officer, 'transfer': self._transfer,
                                'tactic': self._tactic, 'duel_start': self._duel_start, 'duel_action': self._duel_action,
-                               'allocate': self._allocate, 'recruit': self._recruit, 'depart': self._depart,
+                               'allocate': self._allocate, 'allocation_close':self._allocation_close,
+                               'recruit': self._recruit, 'depart': self._depart,
                                'attack': self._attack, 'retreat': self._retreat, 'settle': self._settle,
                                'battle_move':self._battle_move, 'battle_wait':self._battle_wait,
                                'end_turn': self._end_turn, 'ai': self._ai, 'arrivals': self._arrivals,
@@ -355,6 +356,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                'equip_owned':lambda state,payload:equipment.equip_owned(self,state,payload,state.player)}
                     if kind not in methods:
                         raise GameError('未提供这项操作。')
+                    if kind not in ('allocate', 'allocation_close'):
+                        command_books.close_allocation(candidate, candidate.player)
                     methods[kind](candidate, payload)
                 record_events(self, self.state, candidate, kind, payload)
                 civil_staff.synchronize(self, candidate, opening=kind == 'new', monthly=candidate.day == 1)
@@ -397,7 +400,11 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         return lambda state,payload: service(self,state,payload,state.player)
 
     def _allocate(self, state, payload):
-        city = self._owned_city(state, payload.get('city'), action=True)
+        city = self._owned_city(state, payload.get('city'))
+        batch = 'flow' in payload
+        identity = payload.get('flow')
+        if batch and identity is not None:
+            command_books.require_allocation(state, city, identity)
         ident = parse_officer_ref(payload.get('officer'), self.catalog.rules)
         troops = integer(payload.get('troops'), 0, 999, 'troops')
         if ident not in city.roster.officer_ids:
@@ -408,13 +415,25 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         change = troops - officer.troops
         if change > city.reserves:
             raise GameError('本城预备兵不足。')
-        command_books.spend(state, city, 'allocate')
+        if not change:
+            return
+        if not batch or identity is None:
+            command_books.spend(state, city, 'allocate')
+            if batch:
+                command_books.open_allocation(state, city)
         officer.troops = troops
         city.reserves -= change
         self._note(state, f'{self.person_name(state, ident)}编兵为{troops}，本城预备兵{city.reserves}。')
 
+    def _allocation_close(self, state, payload):
+        if not isinstance(payload.get('city'), str) or not isinstance(payload.get('flow'), str):
+            raise GameError('配兵流程已結束，請重新開啟編兵。')
+        command_books.close_allocation(state, state.player, city=payload['city'], identity=payload['flow'])
+
     def _recruit(self, state, payload):
         city = self._owned_city(state, payload.get('city'), action=True)
+        if 'allocation_flow' in payload and type(payload['allocation_flow']) is not bool:
+            raise GameError('操作参数无效。')
         r = self.catalog.data['rules']
         if city.gold < r['recruit_gold_per_100'] or city.grain < r['recruit_grain_per_100']:
             raise GameError('金钱或粮食不足。')
@@ -422,6 +441,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         city.grain -= r['recruit_grain_per_100']
         domestic.add_reserves(self,state,city,r['recruit_per_action'],recruited=True)
         command_books.spend(state, city, 'recruit')
+        if payload.get('allocation_flow'):
+            command_books.open_allocation(state, city)
         self._note(state, f'{self.catalog.map_cities[city.id]["name"]}征募{r["recruit_per_action"]}名预备兵。')
 
     def _depart(self, state, payload):

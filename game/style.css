@@ -1075,6 +1075,12 @@ stroke-dasharray:7 3
 
 .dialog-heading{display:flex;align-items:start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
 .dialog-heading h2{margin:0}
+#order-confirm-dialog{width:min(36rem,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:20px}
+#order-confirm-dialog .dialog-heading{align-items:center;gap:12px;margin-bottom:16px}
+#order-confirm-dialog h2{font-size:clamp(22px,3vw,30px)}
+#order-confirm-dialog p{line-height:1.6;overflow-wrap:anywhere}
+#order-confirm-dialog .dialog-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+#order-confirm-dialog button,#order-confirm-dialog select{min-height:44px}
 
 /* Compact two-officer administration keeps all controls in the original panels. */
 .roster-table{min-width:620px}

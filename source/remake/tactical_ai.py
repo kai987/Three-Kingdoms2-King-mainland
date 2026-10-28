@@ -110,6 +110,23 @@ def expected_attack(battle, actor, target, damage_percent=32):
     return sum(values) / len(values)
 
 
+def expected_contact_exchange(battle, actor, target, damage_percent=32):
+    """Score the encounter and its surviving reply, without sampling either.
+
+    AI evaluation uses mean outgoing loss, then conservatively rounds the
+    surviving defender upward. Actual damage still draws each real blow in
+    order; this estimate never resolves or pre-rolls that command.
+    """
+    if _support(battle, actor)['stunned']:
+        return 0, 0
+    outgoing = expected_attack(battle, actor, target, damage_percent)
+    remaining = target['troops'] - int(outgoing)
+    if remaining <= 0 or _support(battle, target)['stunned']:
+        return outgoing, 0
+    replying = dict(target, troops=remaining)
+    return outgoing, expected_attack(battle, replying, actor, damage_percent)
+
+
 def _chance(state, actor, target, effect):
     profile, opponent = state.officers[actor['id']].profile, state.officers[target['id']]
     if effect in {'ambush', 'guard'}:
@@ -277,9 +294,10 @@ def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percen
         support = _support(battle, actor)
         for target in enemies:
             if not grid.attack_reason(battle, actor, target, own):
-                damage = 0 if support['stunned'] else attack(actor, target)
+                damage, reply = expected_contact_exchange(battle, actor, target, damage_percent)
                 rows.append(dict(kind='attack', actor=actor['id'], target=target['id'],
-                    tactic=None, score=_loss_value(target, damage) if damage else 0))
+                    tactic=None, score=(_loss_value(target, damage)-_loss_value(actor, reply)
+                                       if damage else 0)))
             if depth > 0:
                 for tid in legal_tactics(state, battle, actor, target, own, foe, terrain, tactics):
                     value = _tactic_value(state, battle, actor, target, own, foe, terrain, tactics[tid], attack)

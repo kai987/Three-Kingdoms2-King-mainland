@@ -60,7 +60,7 @@ class BattlePresentationTests(unittest.TestCase):
     def unit(self, scene, when, ident):
         return next(row for row in scene[when]['units'] if row['id'] == ident)
 
-    def test_actual_attack_then_explicit_wait_records_the_real_enemy_target(self):
+    def test_contact_reply_then_explicit_wait_records_the_real_enemy_target(self):
         game = Campaign(controlled_catalog())
         game.state = game._new('shu', 2026)
         state = game.state
@@ -77,7 +77,9 @@ class BattlePresentationTests(unittest.TestCase):
         positions[str(other['id'])] = dict(x=x,y=y)
         scenes = self.perform(game, 'attack', battle_id=b['id'], actor=actor['id'], target=target['id'])
         self.assertEqual([(r['kind'],r['actor'],r['target'],r['counter']) for r in scenes],
-                         [('attack',actor['id'],target['id'],False)])
+                         [('attack',actor['id'],target['id'],False),
+                          ('attack',target['id'],actor['id'],True)])
+        self.assertEqual(scenes[0]['after'], scenes[1]['before'])
         initial_points = game.state.battle['extended']['tactical']['points']['defenders']
         choice = dict(kind='attack', actor=target['id'], target=other['id'])
         def one_enemy_action(state,battle,*args,**kwargs):
@@ -85,7 +87,9 @@ class BattlePresentationTests(unittest.TestCase):
         with patch('remake.tactical_ai.choose_action', side_effect=one_enemy_action):
             replies = self.perform(game, 'battle_wait', battle_id=b['id'])
         self.assertEqual([(r['kind'],r['actor'],r['target'],r['counter']) for r in replies],
-                         [('attack',target['id'],other['id'],True)])
+                         [('attack',target['id'],other['id'],True),
+                          ('attack',other['id'],target['id'],True)])
+        self.assertEqual(replies[0]['after'], replies[1]['before'])
         for scene in [*scenes,*replies]:
             self.assertGreater(self.unit(scene,'before',scene['target'])['troops'],
                                self.unit(scene,'after',scene['target'])['troops'])

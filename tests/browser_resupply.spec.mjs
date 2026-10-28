@@ -1,9 +1,11 @@
 /* Actual controls and HTTP domain services, with a controlled scenario input. */
 import {test,expect} from '../tools/browser-tests/node_modules/@playwright/test/index.mjs';
 import {readFile} from 'node:fs/promises';
+import {approveVisibleOrders} from './browser_order_confirm.mjs';
 
 const errors=new WeakMap();
 test.beforeEach(async({page})=>{
+ await approveVisibleOrders(page);
  const messages=[];errors.set(page,messages);
  page.on('pageerror',error=>messages.push(error.message));
  page.on('console',message=>{if(['error','warning'].includes(message.type()))messages.push(message.text());});

@@ -4,6 +4,7 @@
   "scope": "Display-only text, never applied to state or save data. Japanese officer spellings reuse the existing supplied identity crosswalk; they do not verify historical biographies. Long original source quotations remain explicitly identified as original-language documents.",
   "official_japanese_scenario_source": "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html",
   "exact": {
+    "配兵流程已結束，請重新開啟編兵。": "編制の手続きは終了しました。兵の編制を開き直してください。",
     "戰術AI超出三十日的合法行動上限。": "戦術AIが三十日間の合法行動の上限を超えました。",
     "戰術AI沒有可執行的行動。": "戦術AIに実行可能な行動がありません。",
     "亂水的目標必須位於河流。": "乱水は河川にいる敵が対象です。",

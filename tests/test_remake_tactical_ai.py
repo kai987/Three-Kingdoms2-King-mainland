@@ -224,10 +224,14 @@ class TacticalAiTests(unittest.TestCase):
         states=[]
         for _ in range(2):
             game=battle('mountain',three_enemies=False,player='wu',seed=seed);state=game.state
-            with patch.object(game,'_perform_battle_action',wraps=game._perform_battle_action) as execute:
+            with patch.object(game,'_perform_battle_action',wraps=game._perform_battle_action) as execute, \
+                    patch.object(game,'_attack_hit',wraps=game._attack_hit) as hit:
                 game._resolve_ai_battle(state)
                 self.assertLessEqual(execute.call_count,3700)
-                self.assertEqual({call.args[2] for call in execute.call_args_list},{'attackers','defenders'})
+                # A contact reply can decide the fight before the defender's
+                # whole-side policy phase. Observe the actual two-sided hit
+                # service without requiring an extra free policy action.
+                self.assertEqual({call.args[3] for call in hit.call_args_list},{'attackers','defenders'})
                 self.assertTrue(any(call.args[1]['kind']=='tactic'for call in execute.call_args_list))
             self.assertIsNone(state.battle);self.assertEqual(len(state.settled_battles),1)
             game.validate(state)

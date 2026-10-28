@@ -7,7 +7,7 @@
  const FIELD_WIDTH=496,FIELD_HEIGHT=304,FIELD_HUD=80;
  const PAPER='#ffd4c8',INK='#000000',ASSET_ROOT='/assets/battle-original/',ENHANCED_ROOT='/assets/battle-enhanced/';
  const EFFECTS=new Set(['fire','trap','strike','water','confuse','supply','feint','rock','area','chain','crossbow','surrender','ambush','flood','inferno','guard']);
- const KINDS=new Set(['attack','tactic','ambush','duel_start','duel_action','retreat']);
+ const KINDS=new Set(['move','attack','tactic','ambush','duel_start','duel_action','retreat']);
  const DUEL_ACTIONS=Object.freeze(['idle','strike','guard','feint','withdraw','desperate','hit','defeat']);
  const SOLDIER_ACTIONS=Object.freeze(['idle','march','ready','attack','guard','hit','retreat','defeat']);
  const SOLDIER_TYPES=Object.freeze({infantry:16,archer:16,cavalry:24});
@@ -73,15 +73,32 @@
   if(!s.duel||Object.keys(s.duel).sort().join(',')!=='actor,round,target'||!reference(s.duel.actor)||!reference(s.duel.target)||!bounded(s.duel.round,21)||s.duel.round<1)return false;
   const a=s.units.find(u=>u.id===s.duel.actor),t=s.units.find(u=>u.id===s.duel.target);return !!a&&!!t&&a.side!==t.side;
  }
+ function validMovement(move){
+  if(!move||Array.isArray(move)||Object.keys(move).sort().join(',')!=='cost,map_id,path'||!bounded(move.cost,60)||move.cost<1||!/^original-[0-2][0-9]$/.test(move.map_id||'')||!Array.isArray(move.path)||move.path.length<2||move.path.length>61||move.cost<move.path.length-1)return false;
+  const seen=new Set();
+  return move.path.every((point,index)=>{
+   if(!cell(point)||Object.keys(point).sort().join(',')!=='x,y')return false;
+   const key=point.x+','+point.y,previous=move.path[index-1];
+   if(seen.has(key)||previous&&Math.abs(previous.x-point.x)+Math.abs(previous.y-point.y)!==1)return false;
+   seen.add(key);return true;
+  });
+ }
+ function movementStage(scene,progress){
+  if(scene?.kind!=='move'||!validMovement(scene.move))return null;
+  const path=scene.move.path,p=Math.max(0,Math.min(1,Number.isFinite(progress)?progress:0)),steps=path.length-1,travel=p*steps,index=Math.min(steps,Math.floor(travel)),from=path[index],to=path[Math.min(steps,index+1)],fraction=index===steps?0:Math.min(1,(travel-index)/.72);
+  return {index,steps,gx:from.x,gy:from.y,x:Math.round((from.x+(to.x-from.x)*fraction)*16+8),y:Math.round((from.y+(to.y-from.y)*fraction)*16+8)};
+ }
  function receiptScenes(receipt,battleId,revision){
-  if(!receipt||Object.keys(receipt).sort().join(',')!=='revision,scenes,schema'||receipt.schema!==SCHEMA||receipt.revision!==revision||!Array.isArray(receipt.scenes)||receipt.scenes.length>24)return [];
+  if(!receipt||Object.keys(receipt).sort().join(',')!=='revision,scenes,schema'||receipt.schema!==SCHEMA||receipt.revision!==revision||!Array.isArray(receipt.scenes)||receipt.scenes.length>192)return [];
   if(!receipt.scenes.every(s=>{
    if(!s||Object.keys(s).sort().join(',')!=='actor,after,battle_id,before,counter,effect,kind,move,own,reply,skipped,success,tactic,target'||!KINDS.has(s.kind)||s.battle_id!==battleId||!['attackers','defenders'].includes(s.own)||typeof s.counter!=='boolean'||typeof s.success!=='boolean'||typeof s.skipped!=='boolean'||!validSnapshot(s.before)||!validSnapshot(s.after))return false;
    if(s.before.units.length!==s.after.units.length||s.before.units.some(u=>!s.after.units.some(v=>v.id===u.id&&v.side===u.side)))return false;
-   if(s.kind==='retreat'){if(s.actor!==null||s.target!==null)return false;}
+   if(s.kind==='move'){const a=s.before.units.find(u=>u.id===s.actor);if(!reference(s.actor)||!a||a.side!==s.own||a.troops<=0||a.health<=0||s.target!==null||!validMovement(s.move)||s.success!==true||s.skipped!==false)return false;}
+   else if(s.kind==='retreat'){if(s.actor!==null||s.target!==null)return false;}
    else{const a=s.before.units.find(u=>u.id===s.actor),t=s.before.units.find(u=>u.id===s.target);if(!reference(s.actor)||!reference(s.target)||!a||!t||a.side!==s.own||t.side===s.own)return false;}
    if(['tactic','ambush'].includes(s.kind)){if(!bounded(s.tactic,15)||!EFFECTS.has(s.effect))return false;}else if(s.tactic!==null||s.effect!==null)return false;
    if(s.kind==='duel_action'){if(!['strike','guard','feint','withdraw','desperate'].includes(s.move)||(s.move==='withdraw'?s.reply!==null:!['strike','guard','feint','desperate'].includes(s.reply)))return false;}
+   else if(s.kind==='move'){if(s.reply!==null)return false;}
    else if(s.move!==null||s.reply!==null)return false;
    return true;
   }))return [];
@@ -94,7 +111,7 @@
  }
  function changes(scene){return scene.after.units.map(u=>{const old=scene.before.units.find(a=>a.id===u.id);return old?{id:u.id,side:u.side,troops:u.troops-old.troops,health:u.health-old.health,energy:u.energy-old.energy,guard:u.guard-old.guard,stunned:u.stunned-old.stunned}:null;}).filter(x=>x&&Object.entries(x).some(([key,value])=>!['id','side'].includes(key)&&value!==0));}
  function campaignKey(view){return [view?.catalog?.scenario_id,view?.game?.player,view?.game?.seed].join(':');}
- function duration(scene){return scene.kind==='attack'&&!scene.skipped?2200:scene.kind==='duel_action'?1000:scene.kind==='tactic'?1000:scene.kind==='duel_start'?700:scene.kind==='ambush'?850:700;}
+ function duration(scene){return scene.kind==='move'&&validMovement(scene.move)?Math.max(220,(scene.move.path.length-1)*140):scene.kind==='attack'&&!scene.skipped?2200:scene.kind==='duel_action'?1000:scene.kind==='tactic'?1000:scene.kind==='duel_start'?700:scene.kind==='ambush'?850:700;}
  function validAssetPath(path){return typeof path==='string'&&/^\/assets\/battle-original\/[a-zA-Z0-9_/-]+\.png$/.test(path);}
  function validEnhancedAssetPath(path){return typeof path==='string'&&/^\/assets\/battle-enhanced\/[a-z0-9_-]+\.png$/.test(path);}
  function validActionAtlas(row){
@@ -128,7 +145,7 @@
   const fetcher=options.fetch||root.fetch?.bind(root),ImageType=options.Image||root.Image;
   const raf=options.requestAnimationFrame||root.requestAnimationFrame?.bind(root),caf=options.cancelAnimationFrame||root.cancelAnimationFrame?.bind(root);
   const images=new Map(),duelRendering=new Map(),duelLoadouts=new Map();let manifest=null,enhanced=null,soldiers=null,assetStatus='idle',assetsPromise=null,loadoutSignature='';
-  let host=null,canvas=null,ctx=null,view=null,selection={},queue=[],key='',observed=null,playing=false,frame=null,handle=null,resolvePlay=null,resizeObserver=null,disposed=false,outcomeCue=null;
+  let host=null,canvas=null,ctx=null,view=null,selection={},queue=[],key='',observed=null,playing=false,frame=null,handle=null,resolvePlay=null,resizeObserver=null,disposed=false,outcomeCue=null,animationPositions=null;
   const locale=()=>i18n?.locale==='ja'?'ja':'zh-Hant';
   const text=(tc,ja)=>locale()==='ja'?ja:tc;
   const translate=value=>i18n?.t?i18n.t(value,locale()):String(value??'');
@@ -224,7 +241,20 @@
    if(kind==='new'||key&&key!==nextKey){reset();}key=nextKey;
    if(!battle)return;
    const token=nextKey+':'+after.revision;if(observed===token)return;observed=token;
-   queue=receiptScenes(after.presentation,battle.id,after.revision);
+   queue=receiptScenes(after.presentation,battle.id,after.revision);animationPositions=null;
+   if(queue.some(scene=>scene.kind==='move')){
+    const tactical=after?.game?.battle?.extended?.tactical,points=new Map(Object.entries(tactical?.positions||{}).map(([id,p])=>[id,{...p}]));
+    // Start from the committed final coordinates and rewind the authoritative
+    // move records. This retains every earlier AI step, even if the same unit
+    // moved several times during a whole-side action before attacking.
+    for(const scene of [...queue].reverse())if(scene.kind==='move'){
+     const path=scene.move.path,end=path.at(-1),actual=points.get(String(scene.actor));
+     if(scene.move.map_id!==tactical?.map_id||!actual||actual.x!==end.x||actual.y!==end.y){queue=[];return;}
+     points.set(String(scene.actor),{...path[0]});
+    }
+    animationPositions=points;
+    if(queue[0]?.kind==='move')frame={scene:queue[0],progress:0};
+   }
   }
   function rectangle(x,y,w,h,color){ctx.fillStyle=color;ctx.fillRect(Math.round(x),Math.round(y),Math.max(1,Math.round(w)),Math.max(1,Math.round(h)));}
   function line(x1,y1,x2,y2,color,width=1){
@@ -267,7 +297,8 @@
    return cells.filter(cell).map(p=>({x:p.x*16+8,y:p.y*16+8}));
   }
   function positions(state){
-   const out=new Map();for(const unit of state.units){const p=unitPosition(view,unit.id);if(p)out.set(unit.id,{gx:p.x,gy:p.y,x:p.x*16+8,y:p.y*16+8});}return out;
+   const out=new Map();for(const unit of state.units){const p=animationPositions?.get(String(unit.id))||unitPosition(view,unit.id);if(p)out.set(unit.id,{gx:p.x,gy:p.y,x:p.x*16+8,y:p.y*16+8});}
+   if(frame?.scene.kind==='move'){const point=movementStage(frame.scene,frame.progress);if(point)out.set(frame.scene.actor,point);}return out;
   }
   function paintReachable(){
    const quote=tacticalView(view)?.actors?.[String(selection.actor)];
@@ -294,10 +325,14 @@
      rectangle(p.x-1,p.y+1,3,5,INK);
     }
    }
-   if(field)paintReachable();
-   const points=positions(state),markers=markerLabels(state.units,canonicalName,person),allowed=tacticalView(view)?.actors?.[String(selection.actor)]?.attack_targets||[];
+   if(field&&!playing&&!frame&&!queue.length)paintReachable();
+   if(field&&frame?.scene.kind==='move'){
+    const point=movementStage(frame.scene,frame.progress);
+    if(point){outline(point.x-8,point.y-8,16,16,'#ffe149');outline(point.x-7,point.y-7,14,14,INK);}
+   }
+   const points=positions(state),markers=markerLabels(state.units,canonicalName,person),allowed=playing||frame||queue.length?[]:tacticalView(view)?.actors?.[String(selection.actor)]?.attack_targets||[],moving=frame?.scene.kind==='move'?frame.scene.actor:null;
    const live=u=>u.troops>0&&u.health>0;
-   for(const u of [...state.units].sort((a,b)=>Number(live(a))-Number(live(b)))){const p=points.get(u.id);if(p)flag(u,p,u.id===selection.actor||u.id===selection.target,u.side!==own,allowed.some(id=>String(id)===String(u.id)),markers.get(u.id));}
+   for(const u of [...state.units].sort((a,b)=>Number(live(a))-Number(live(b)))){const p=points.get(u.id);if(p)flag(u,p,moving!==null?u.id===moving:u.id===selection.actor||u.id===selection.target,u.side!==own,allowed.some(id=>String(id)===String(u.id)),markers.get(u.id));}
    if(state.outcome){const x=field?(FIELD_WIDTH-116)/2:70,y=field?(FIELD_HEIGHT-30)/2:60;rectangle(x,y,116,30,PAPER);outline(x,y,116,30);label(outcome(state.outcome),x+10,y+10,INK,12);}
   }
   function outcome(value){const own=view?.game?.battle?.attacker===view?.game?.player;return value==='victory'?(own?text('本方勝利','勝利'):text('城池失守','都市陥落')):value==='defeat'?(own?text('本方敗退','敗北'):text('守城成功','防衛成功')):text('攻方退卻','攻撃側撤退');}
@@ -316,10 +351,11 @@
    if(foe)label('→ '+person(target)+'  '+text('兵','兵')+' '+foe.troops,8,216);
    const caption=scene?sceneCaption(scene):text('選擇本方部隊與對手','味方部隊と相手を選択');label(caption.slice(0,31),8,229);
   }
-  function fieldHud(state){
+  function fieldHud(state,scene=null){
    rectangle(0,FIELD_HEIGHT,FIELD_WIDTH,FIELD_HUD,PAPER);line(FIELD_WIDTH/2,FIELD_HEIGHT+4,FIELD_WIDTH/2,FIELD_HEIGHT+57,INK);
    const b=view.game.battle,own=b.attacker===view.game.player?'attackers':'defenders';
-   const actor=state.units.find(u=>u.id===selection.actor&&u.side===own)||state.units.find(u=>u.side===own),target=state.units.find(u=>u.id===selection.target&&u.side!==own)||state.units.find(u=>u.side!==own);
+   const moving=scene?.kind==='move'?state.units.find(u=>u.id===scene.actor):null;
+   const actor=moving?.side===own?moving:state.units.find(u=>u.id===selection.actor&&u.side===own)||state.units.find(u=>u.side===own),target=moving&&moving.side!==own?moving:state.units.find(u=>u.id===selection.target&&u.side!==own)||state.units.find(u=>u.side!==own);
    for(const [unit,x]of [[actor,0],[target,FIELD_WIDTH/2]]){
     if(!unit)continue;const o=view.game.officers[String(unit.id)];if(!o)continue;
     portrait(unit.id,x+8,FIELD_HEIGHT+8);label(person(unit.id),x+48,FIELD_HEIGHT+6,INK,11);
@@ -522,6 +558,7 @@
    if(scene?.kind==='duel_action')label(changes(scene).filter(c=>c.health<0).map(c=>`${person(c.id)} ${c.health}`).join(' / ').slice(0,31),16,224);
   }
   function sceneCaption(scene){
+   if(scene.kind==='move'){const point=movementStage(scene,frame?.scene===scene?frame.progress:0);return `${person(scene.actor)} · ${text('移動','移動')} ${point?.index??0}/${point?.steps??0} · ${text('機動','機動力')}${scene.move.cost}`;}
    if(scene.kind==='retreat')return text('部隊退卻','部隊撤退');
    const action=scene.kind==='tactic'?translate(view?.catalog?.tactics?.[scene.tactic]?.name||text('計略','計略')):
     scene.kind==='ambush'?text('十面埋伏觸發','十面埋伏が発動'):scene.kind==='duel_start'?text('單挑挑戰','一騎討ちの挑戦'):scene.kind==='duel_action'?({strike:text('突擊','突撃'),guard:text('防守','防御'),feint:text('佯攻','牽制'),desperate:text('捨命一擊','捨て身の攻撃'),withdraw:text('退出單挑','一騎討ちから退く')}[scene.move]||text('交鋒','打ち合い')):
@@ -540,13 +577,16 @@
    if(!host)return;host.dataset.l10nNative=locale();host.dataset.sceneAssets=assetStatus;
    updateLoadoutControls();
    const skipButton=host.querySelector('[data-battle-skip]');if(skipButton){skipButton.hidden=!playing;skipButton.textContent=text('略過演出','演出をスキップ');}
-   const title=host.querySelector('[data-battle-scene-title]');if(title)title.textContent=frame?.scene?.kind==='attack'?text('部隊對陣','部隊同士の戦闘'):view?.game?.battle?.extended?.duel?text('陣前單挑','一騎討ち'):text('戰場','戦場');
+   const title=host.querySelector('[data-battle-scene-title]');if(title)title.textContent=frame?.scene?.kind==='move'?text('部隊移動','部隊の移動'):frame?.scene?.kind==='attack'?text('部隊對陣','部隊同士の戦闘'):view?.game?.battle?.extended?.duel?text('陣前單挑','一騎討ち'):text('戰場','戦場');
    const fieldLabel=host.querySelector('[data-battlefield-label]'),field=selectedField();
    if(fieldLabel){fieldLabel.textContent=field?(locale()==='ja'?field.label_ja:field.label_tc)||field.field.id:text('參考戰場','参考戦場');fieldLabel.title=field?(locale()==='ja'?field.description_ja:field.description_tc)||'':text('地圖素材載入後顯示對應城池戰場','地図素材の読み込み後に都市の戦場を表示');}
    host.dataset.battlefieldId=field?.field?.id||'';
    host.dataset.battlefieldSource=field?.binding?.kind||field?.binding?.type||'fallback';
    const quote=tacticalView(view)?.actors?.[String(selection.actor)];host.dataset.battleReachableCount=String(quote?.reachable?.length??0);host.dataset.battleSelectedActor=String(selection.actor??'');
    host.dataset.battleDestination=cell(selection.destination)?selection.destination.x+','+selection.destination.y:'';
+   const movement=frame?.scene?.kind==='move'?movementStage(frame.scene,frame.progress):null;
+   host.dataset.battleMoveActor=movement?String(frame.scene.actor):'';host.dataset.battleMoveStep=movement?String(movement.index):'';
+   host.dataset.battleMoveX=movement?String(movement.x):'';host.dataset.battleMoveY=movement?String(movement.y):'';
    const caption=host.querySelector('[data-battle-caption]');if(caption)caption.textContent=frame?sceneCaption(frame.scene):field&&!field.image?text('戰場圖片載入中或無法載入；格位與移動規則保持不變。','戦場画像を読み込めません。座標と移動のルールは変わりません。'):text('點選本方旗標，再點可達空格預覽移動；方向鍵調整、Enter確認。','自軍の旗と移動可能な空きマスを選択。矢印キーで調整し、Enterで移動します。');
    const hidden=host.querySelector('[data-battle-description]');if(hidden)hidden.textContent=description();
   }
@@ -554,17 +594,17 @@
    if(!ctx||!view?.game?.battle||host?.isConnected===false)return;
    // Render directly into the4× backing store, retaining the original logical layout.
    // This also lets128×160 portraits and32px CJK text retain their actual detail.
-   const current=snapshot(view),field=!frame&&!current?.duel?selectedField():null;
+   const current=snapshot(view),moving=frame?.scene?.kind==='move',field=(!frame||moving)&&!current?.duel?selectedField():null;
    const width=field?FIELD_WIDTH:WIDTH,height=field?FIELD_HEIGHT+FIELD_HUD:HEIGHT;
    if(canvas.width!==width*RESOLUTION_SCALE||canvas.height!==height*RESOLUTION_SCALE){canvas.width=width*RESOLUTION_SCALE;canvas.height=height*RESOLUTION_SCALE;fit();}
-   host.dataset.battleSceneMode=frame?(frame.scene.kind.startsWith('duel')?'duel':'engagement'):current?.duel?'duel':'tactical';
+   host.dataset.battleSceneMode=moving?'movement':frame?(frame.scene.kind.startsWith('duel')?'duel':'engagement'):current?.duel?'duel':'tactical';
    duelRendering.clear();ctx.setTransform(RESOLUTION_SCALE,0,0,RESOLUTION_SCALE,0,0);ctx.imageSmoothingEnabled=false;rectangle(0,0,width,height,INK);
-   if(frame){const {scene,progress}=frame,state=progress<.55?scene.before:scene.after;if(scene.kind.startsWith('duel'))paintDuel(state,scene,progress);else paintEngagement(scene,progress);}
+   if(frame){const {scene,progress}=frame,state=progress<.55?scene.before:scene.after;if(scene.kind==='move'){paintMap(state,field);if(field)fieldHud(state,scene);else hud(state,scene);}else if(scene.kind.startsWith('duel'))paintDuel(state,scene,progress);else paintEngagement(scene,progress);}
    else{if(current.duel)paintDuel(current);else{paintMap(current,field);if(field)fieldHud(current);else hud(current);}}
    updateText();
   }
   function clickMap(event){
-   if(playing||!canvas||!view?.game?.battle||view.game.phase!=='battle'||view.game.battle.extended.duel)return;
+   if(playing||options.canInteract?.()===false||!canvas||!view?.game?.battle||view.game.phase!=='battle'||view.game.battle.extended.duel)return;
    const field=selectedField(),width=field?FIELD_WIDTH:WIDTH,height=field?FIELD_HEIGHT+FIELD_HUD:HEIGHT;
    const rect=canvas.getBoundingClientRect(),x=(event.clientX-rect.left)*width/rect.width,y=(event.clientY-rect.top)*height/rect.height;if(y>=(field?FIELD_HEIGHT:160))return;
    if(x<0||y<0||x>=width)return;
@@ -573,32 +613,36 @@
    if(found)options.onSelect?.(found.side===own?'actor':'target',found.id);else options.onCell?.(selected);
   }
   function mapKeydown(event){
-   if(playing||view?.game?.phase!=='battle'||view.game.battle?.extended?.duel)return;
+   if(event.defaultPrevented||event.isComposing||event.ctrlKey||event.metaKey||event.altKey||playing||options.canInteract?.()===false||view?.game?.phase!=='battle'||view.game.battle?.extended?.duel||!tacticalView(view)?.actors?.[String(selection.actor)]?.can_act)return;
    const direction={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[event.key];
    if(direction){event.preventDefault();options.onNavigate?.(...direction);}
    else if(event.key==='Enter'){event.preventDefault();options.onConfirmMove?.();}
    else if(event.key==='Escape'){event.preventDefault();options.onCancelMove?.();}
   }
-  function finish(playOutcome=true){if(handle!==null)caf?.(handle);handle=null;const wasPlaying=playing;playing=false;frame=null;queue=[];updateText();draw();if(wasPlaying)options.onSettled?.();if(playOutcome&&outcomeCue)options.onOutcome?.(outcomeCue);outcomeCue=null;const resolve=resolvePlay;resolvePlay=null;resolve?.();}
+  function finish(playOutcome=true){if(handle!==null)caf?.(handle);handle=null;const wasPlaying=playing;playing=false;frame=null;queue=[];animationPositions=null;updateText();draw();if(wasPlaying)options.onSettled?.();if(playOutcome&&outcomeCue)options.onOutcome?.(outcomeCue);outcomeCue=null;const resolve=resolvePlay;resolvePlay=null;resolve?.();}
   function skip(){finish();}
   async function play(){
    if(disposed){finish(false);return;}
    if(!queue.length||!ctx){finish();return;}
    if(reduced()||doc?.hidden||!raf){if(!doc?.hidden){options.onSound?.(queue[0]);options.onSettled?.();}finish();return;}
    // A fast first attack must not finish before its original artwork arrives.
-   if(assetStatus==='idle'||assetStatus==='loading'){await load();if(disposed||!queue.length||!ctx||host?.isConnected===false){finish(false);return;}}
+   if(queue.some(scene=>scene.kind!=='move')&&(assetStatus==='idle'||assetStatus==='loading')){await load();if(disposed||!queue.length||!ctx||host?.isConnected===false){finish(false);return;}}
    if(queue.some(scene=>scene.kind.startsWith('duel'))&&duelArtworkNeedsLoad()){await preloadDuelArtwork();if(disposed||!queue.length||!ctx||host?.isConnected===false){finish(false);return;}}
-   if(queue.some(scene=>!scene.kind.startsWith('duel'))&&soldierArtworkNeedsLoad()){await preloadSoldierArtwork();if(disposed||!queue.length||!ctx||host?.isConnected===false){finish(false);return;}}
+   if(queue.some(scene=>scene.kind!=='move'&&!scene.kind.startsWith('duel'))&&soldierArtworkNeedsLoad()){await preloadSoldierArtwork();if(disposed||!queue.length||!ctx||host?.isConnected===false){finish(false);return;}}
    // Loading may span a visibility or accessibility change. Do not start a
    // background RAF that can leave the already committed command waiting.
    if(reduced()||doc?.hidden||!raf){if(!doc?.hidden){options.onSound?.(queue[0]);options.onSettled?.();}finish();return;}
    host?.querySelector?.('[data-battle-canvas]')?.scrollIntoView?.({block:'nearest',behavior:'instant'});
-   const scenes=queue.splice(0);playing=true;updateText();
-   await new Promise(resolve=>{resolvePlay=resolve;let index=0,start=null;const tick=now=>{
+   const scenes=queue.splice(0),timeScale=Math.min(1,16000/scenes.reduce((sum,scene)=>sum+duration(scene),0));playing=true;updateText();
+   await new Promise(resolve=>{resolvePlay=resolve;let index=0,start=null,began=null;const tick=now=>{
     if(disposed||!playing||host?.isConnected===false||doc?.hidden){finish();return;}
+    if(began===null)began=now;
+    // A complete AI turn can contain many already committed moves and
+    // exchanges. Keep the visible replay finite without changing its result.
+    if(now-began>=16000){finish();return;}
     if(start===null){start=now;options.onSound?.(scenes[index]);}
-    const scene=scenes[index],progress=Math.min(1,(now-start)/duration(scene));frame={scene,progress};draw();
-    if(progress>=1){index++;start=null;if(index>=scenes.length){finish();return;}}
+    const scene=scenes[index],progress=Math.min(1,(now-start)/(duration(scene)*timeScale));frame={scene,progress};draw();
+    if(progress>=1){if(scene.kind==='move')animationPositions?.set(String(scene.actor),{...scene.move.path.at(-1)});index++;start=null;if(index>=scenes.length){finish();return;}}
     handle=raf(tick);
    };frame={scene:scenes[0],progress:0};draw();handle=raf(tick);});
   }
@@ -611,6 +655,6 @@
   function dispose(){disposed=true;reset();doc?.removeEventListener?.('game-language-change',changeLanguage);doc?.removeEventListener?.('visibilitychange',visibility);doc?.removeEventListener?.('keydown',keydown);}
   return {html,mount,observe,play,skip,reset,leave,load,dispose,chooseDuelAppearance,deferOutcome:cue=>{outcomeCue=cue;},get playing(){return playing;},state:()=>({playing,queued:queue.length,assetStatus,battleId:view?.game?.battle?.id??null,scene:frame?.scene?.kind??null})};
  }
- const api={WIDTH,HEIGHT,RESOLUTION_SCALE,create,tacticalView,unitPosition,receiptScenes,validSnapshot,snapshot,changes,duration,validAssetPath,validEnhancedAssetPath,validActionAtlas,validSoldierAtlas,validSoldierLibrary,SOLDIER_ACTIONS,soldierActionPose,DUEL_ACTIONS,duelActionPose,duelMotion,familyName,markerLabels,attackStage};
+ const api={WIDTH,HEIGHT,RESOLUTION_SCALE,create,tacticalView,unitPosition,receiptScenes,validSnapshot,validMovement,movementStage,snapshot,changes,duration,validAssetPath,validEnhancedAssetPath,validActionAtlas,validSoldierAtlas,validSoldierLibrary,SOLDIER_ACTIONS,soldierActionPose,DUEL_ACTIONS,duelActionPose,duelMotion,familyName,markerLabels,attackStage};
  if(typeof module==='object'&&module.exports)module.exports=api;else root.GameBattleScene=api;
 })(typeof window==='object'?window:globalThis);

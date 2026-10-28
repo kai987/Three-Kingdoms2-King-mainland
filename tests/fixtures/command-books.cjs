@@ -1,7 +1,7 @@
 'use strict';
 const api=require('../../game/command-books.js');
 const paid=['recruit','recruit_officer','persuade_officer','staff_recruit','hire_staff','depart','transfer','dispatch_transport','search_treasure','reward_officer','sell_treasure','develop_town','treat_officer','study_officer','trade_grain','buy_equipment','improve_prevention','equip_owned','allocate','resupply_march','transport_treasure'];
-const free=['set_domestic','set_logistics','set_governor','set_treasury_policy','set_facility_policy','reject_staff','choose_successor'];
+const free=['set_domestic','set_logistics','set_governor','set_treasury_policy','set_facility_policy','reject_staff','choose_successor','allocation_close'];
 function attach(view,total=13){
  view.game.turn??=1;view.catalog??={};
  const owners=new Set([view.game.player,...Object.values(view.game.cities||{}).map(city=>city.owner)].filter(owner=>owner&&owner!=='neutral'));

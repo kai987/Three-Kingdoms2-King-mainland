@@ -6,14 +6,16 @@ import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import assert from 'node:assert/strict';
 import browserScopes from '../tools/browser-tests/scope.cjs';
+import {approveVisibleOrders} from './browser_order_confirm.mjs';
 
 const browserScope=browserScopes.loadBrowserScope();
 
 const errors=new WeakMap();
-test.beforeEach(async({page})=>{
+test.beforeEach(async({page},testInfo)=>{
  const observed=[];errors.set(page,observed);
  page.on('pageerror',error=>observed.push(error.message));
  page.on('console',message=>{if(message.type()==='error')observed.push(message.text());});
+ if(testInfo.title!=='command-book confirmations and one paid city allocation flow preserve cancellation and save recovery')await approveVisibleOrders(page);
 });
 async function opening(page){
  await page.goto('./');
@@ -84,7 +86,12 @@ async function tacticalControl(page,id){
 }
 async function tacticalSettle(page){
  await expect.poll(()=>page.evaluate(()=>!document.body.classList.contains('busy')||!!document.querySelector('[data-battle-skip]:not([hidden])')),{timeout:90_000}).toBe(true);
- const skip=page.locator('[data-battle-skip]');if(await skip.isVisible())await skip.click();await waitIdle(page);await tacticalDismiss(page);
+ const skip=page.locator('[data-battle-skip]');
+ if(await skip.isVisible())try{await skip.click({timeout:1000});}catch(error){if(await skip.isVisible()||!await page.evaluate(()=>!document.body.classList.contains('busy')))throw error;}
+ // A one-cell transition can naturally finish between the visibility probe
+ // and Playwright's stable click. Its disappearance is a completed replay,
+ // while a still-visible but unclickable Skip control remains a real failure.
+ await waitIdle(page);await tacticalDismiss(page);
 }
 async function tacticalCell(page,point,touch=false){
  const canvas=page.locator('[data-battle-canvas]');await canvas.scrollIntoViewIfNeeded();const box=await canvas.boundingBox();expect(box).toBeTruthy();
@@ -1903,13 +1910,22 @@ test('authoritative tactical movement, shared points and contact attacks persist
  const occupied=new Set(Object.values(b.extended.tactical.positions).map(p=>p.x+','+p.y)),reachable=new Set(row.reachable.map(p=>p.x+','+p.y));let invalid;
  for(let y=0;y<19&&!invalid;y++)for(let x=0;x<31;x++)if(!occupied.has(x+','+y)&&!reachable.has(x+','+y)){invalid={x,y};break;}
  expect(invalid).toBeTruthy();await tacticalCell(page,invalid,touch);await expect(page.locator('#battle-move')).toBeDisabled();expect(await tacticalSave(page)).toEqual(selected.save,'Unreachable destination inspection cannot submit a move or draw RNG');
- const first=[...row.reachable].sort((a,b)=>a.cost-b.cost||a.y-b.y||a.x-b.x).find(p=>p.cost<board.points[own]-2);expect(first).toBeTruthy();await tacticalCell(page,first,touch);await expect(page.locator('#battle-move-preview')).toHaveAttribute('data-battle-move-cost',String(first.cost));await expect(page.locator('#battle-move')).toBeEnabled();
+ const origin=b.extended.tactical.positions[id],first=[...row.reachable].sort((a,b)=>a.cost-b.cost||a.y-b.y||a.x-b.x).find(p=>Math.abs(p.x-origin.x)+Math.abs(p.y-origin.y)>=4&&p.cost<board.points[own]-4);expect(first).toBeTruthy();await tacticalCell(page,first,touch);await expect(page.locator('#battle-move-preview')).toHaveAttribute('data-battle-move-cost',String(first.cost));await expect(page.locator('#battle-move')).toBeEnabled();
  for(const button of await page.locator('[data-battle-nav],#battle-move').all()){const rect=await button.boundingBox();expect(rect.height).toBeGreaterThanOrEqual(44);expect(rect.width).toBeGreaterThanOrEqual(44);}
  const right=page.locator('[data-battle-nav=right]');if(touch)await right.tap();else await right.click();await expect(page.locator('#battle-move-preview')).toHaveAttribute('data-battle-move-x',String(Math.min(30,first.x+1)));expect(await tacticalSave(page)).toEqual(selected.save,'Directional adjustment previews only');
  await tacticalControl(page,'battle-cancel-move');await expect(page.locator('#battle-move')).toBeDisabled();expect(await tacticalSave(page)).toEqual(selected.save,'Cancelling the destination never spends points');
- if(!touch){await canvas.focus();await page.keyboard.press('ArrowRight');await expect(canvas).toBeFocused();await page.keyboard.press('Escape');await expect(page.locator('#battle-move')).toBeDisabled();expect(await tacticalSave(page)).toEqual(selected.save,'Keyboard movement previews and Escape do not consume state');}
+ if(!touch){
+  await page.locator(`[data-actor="${id}"]`).click();
+  for(const key of ['ArrowRight','ArrowDown','ArrowLeft','ArrowUp'])await page.keyboard.press(key);
+  await expect(scene).toHaveAttribute('data-battle-destination',origin.x+','+origin.y);
+  await page.keyboard.press('Escape');await expect(page.locator('#battle-move')).toBeDisabled();expect(await tacticalSave(page)).toEqual(selected.save,'Roster-focused four-key movement previews and Escape do not consume state');
+ }
  const menu=page.locator('#utility-menu');await menu.locator('summary').click();await page.locator('#language').selectOption('ja');await menu.locator('summary').click();await expect(page.locator('.battle-ap')).toContainText('共有機動力');expect(await tacticalSave(page)).toEqual(selected.save,'Language and selection preserve all state/RNG');
- await tacticalCell(page,first,touch);await historyScreenshot(page,testInfo,'tactical-reachable-preview-ja');await tacticalControl(page,'battle-move');await tacticalSettle(page);
+ await tacticalCell(page,first,touch);await historyScreenshot(page,testInfo,'tactical-reachable-preview-ja');
+ await page.evaluate(()=>{window.__tacticalMotion=[];window.__tacticalMotionObserver=new MutationObserver(()=>{const node=document.querySelector('[data-battle-scene]');if(node?.dataset.battleSceneMode==='movement'&&window.__tacticalMotion.length<120){const point={actor:node.dataset.battleMoveActor,x:Number(node.dataset.battleMoveX),y:Number(node.dataset.battleMoveY),step:Number(node.dataset.battleMoveStep)},last=window.__tacticalMotion.at(-1);if(!last||Object.keys(point).some(key=>point[key]!==last[key]))window.__tacticalMotion.push(point);}});window.__tacticalMotionObserver.observe(document.querySelector('#stage'),{childList:true,subtree:true,attributes:true,attributeFilter:['data-battle-scene-mode','data-battle-move-actor','data-battle-move-step','data-battle-move-x','data-battle-move-y']});});
+ if(touch)await tacticalControl(page,'battle-move');else{await page.locator(`[data-actor="${id}"]`).focus();await page.keyboard.press('Enter');}
+ await expect.poll(()=>page.evaluate(({id,origin,first})=>window.__tacticalMotion.some(p=>p.actor===String(id)&&(p.x!==origin.x*16+8||p.y!==origin.y*16+8)&&(p.x!==first.x*16+8||p.y!==first.y*16+8)),{id,origin,first})).toBe(true);
+ const firstMotion=await page.evaluate(()=>{window.__tacticalMotionObserver.disconnect();return window.__tacticalMotion;});await tacticalSettle(page);
  const moved=await tacticalRead(page);expect(moved.save.state.battle.extended.tactical.positions[id]).toEqual({x:first.x,y:first.y});expect(moved.save.state.battle.extended.tactical.points[own]).toBe(selected.save.state.battle.extended.tactical.points[own]-first.cost);expect(moved.save.state.rng).toEqual(selected.save.state.rng);await expect(page.locator(`[data-actor="${id}"]`)).toBeEnabled();
  const another=[...moved.view.catalog.battle_tactical.actors[id].reachable].sort((a,b)=>a.cost-b.cost||a.y-b.y||a.x-b.x).find(p=>p.cost<moved.view.catalog.battle_tactical.points[own]-2);expect(another).toBeTruthy();
  await tacticalCell(page,another,touch);await tacticalControl(page,'battle-move');await tacticalSettle(page);const twice={save:await tacticalSave(page)};
@@ -1918,19 +1934,24 @@ test('authoritative tactical movement, shared points and contact attacks persist
  expect(enemyTurn.save.state.battle.round).toBe(twice.save.state.battle.round+1);expect(b[foe].some(unit=>JSON.stringify(enemyTurn.save.state.battle.extended.tactical.positions[unit.id])!==JSON.stringify(beforeEnemy[unit.id]))).toBe(true,'The enemy actually moves on its whole-side turn');
  let contact=await tacticalApproach(page,{touch,preferred:id});
  await expect(page.locator('#attack')).toBeEnabled();const beforeAttack=contact.state,actorId=contact.actor;await historyScreenshot(page,testInfo,'tactical-contact-ja');
- await tacticalControl(page,'attack');await expect(scene).toHaveAttribute('data-battle-scene-mode','engagement');const [committedSave]=await Promise.all([tacticalSave(page),page.locator('[data-battle-skip]').click()]);await waitIdle(page);await tacticalDismiss(page);const committed=await tacticalRead(page);expect(committed.save).toEqual(committedSave,'Skipping cannot replay damage or draw RNG');
+ await tacticalControl(page,'attack');await expect(scene).toHaveAttribute('data-battle-scene-mode','engagement');const committedSave=await tacticalSave(page);
+ await expect(page.locator('[data-battle-caption]')).toContainText('反撃');await historyScreenshot(page,testInfo,'tactical-retaliation-ja');await page.locator('[data-battle-skip]').click();await waitIdle(page);await tacticalDismiss(page);const committed=await tacticalRead(page);expect(committed.save).toEqual(committedSave,'Skipping both engagement scenes cannot replay damage or draw RNG');
  expect(committed.save.state.battle.extended.tactical.points[own]).toBe(beforeAttack.save.state.battle.extended.tactical.points[own]-beforeAttack.view.catalog.battle_tactical.attack_cost);
- expect(committed.save.state.battle.defenders.reduce((sum,u)=>sum+u.troops,0)).toBeLessThan(beforeAttack.save.state.battle.defenders.reduce((sum,u)=>sum+u.troops,0));await expect(page.locator(`[data-actor="${actorId}"]`)).toBeEnabled();
+ expect(committed.save.state.battle[foe].reduce((sum,u)=>sum+u.troops,0)).toBeLessThan(beforeAttack.save.state.battle[foe].reduce((sum,u)=>sum+u.troops,0));
+ expect(committed.save.state.battle[own].reduce((sum,u)=>sum+u.troops,0)).toBeLessThan(beforeAttack.save.state.battle[own].reduce((sum,u)=>sum+u.troops,0),'The surviving defender immediately retaliates within the same engagement');
+ const survivor=committed.save.state.battle[own].find(unit=>String(unit.id)===String(actorId)),alive=survivor.troops>0&&committed.save.state.battle.extended.support[actorId].health>0;
+ await expect(page.locator(`[data-actor="${actorId}"]`))[alive?'toBeEnabled':'toBeDisabled']();
+ const inspectActorId=alive?actorId:committed.save.state.battle[own].find(unit=>unit.troops>0&&committed.save.state.battle.extended.support[unit.id].health>0).id;
  let attackCount=1;const more=committed.view.catalog.battle_tactical.actors[actorId];if(more.attack_targets.length){await page.locator(`[data-target="${more.attack_targets[0]}"]`).click();await tacticalControl(page,'attack');await tacticalSettle(page);attackCount++;}else await expect(page.locator('#attack')).toBeDisabled();
  const saved={save:await tacticalSave(page)},download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');expect(JSON.parse(raw)).toEqual(saved.save);
  await page.route('**/assets/battlefields/original-15.png*',route=>route.fulfill({status:200,contentType:'image/png',body:Buffer.from('deliberately undecodable test image')}));
  await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'tactical-grid-acceptance.json',mimeType:'application/json',buffer:Buffer.from(raw)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();
  const restored={save:await tacticalSave(page)};expect(restored.save).toEqual(saved.save,'Raw save reload retains every coordinate, AP balance, commander and RNG value');await expect(scene).toHaveAttribute('data-battlefield-id','original-15');await expect(canvas).toHaveJSProperty('width',1984);await expect(canvas).toHaveJSProperty('height',1536);await expect(page.locator('[data-battle-caption]')).toContainText('座標と移動のルールは変わりません');
- const position=restored.save.state.battle.extended.tactical.positions[actorId];await tacticalCell(page,position,touch);await expect(page.locator(`[data-actor="${actorId}"]`)).toHaveAttribute('aria-pressed','true');expect(await tacticalSave(page)).toEqual(saved.save,'The neutral-grid fallback keeps exact click coordinates');
+ const position=restored.save.state.battle.extended.tactical.positions[inspectActorId];await tacticalCell(page,position,touch);await expect(page.locator(`[data-actor="${inspectActorId}"]`)).toHaveAttribute('aria-pressed','true');expect(await tacticalSave(page)).toEqual(saved.save,'The neutral-grid fallback keeps exact click coordinates');
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await historyScreenshot(page,testInfo,'tactical-image-failure-same-grid');
  const identity=await page.evaluate(async()=>{const build=await(await fetch(new URL('runtime/build.json',location.href))).json();return{worker:GameBrowserEngine.version,commit:build.commit,content_sha256:build.content_sha256,url:location.href};});
  for(const[label,value]of [['initial',initial.save],['first-move',moved.save],['two-moves',twice.save],['enemy-turn',enemyTurn.save],['restored',restored.save]]){const file=testInfo.outputPath('tactical-'+label+'.json');await writeFile(file,JSON.stringify(value));await testInfo.attach('tactical-'+label,{path:file,contentType:'application/json'});}
- const proof=testInfo.outputPath('tactical-identity-and-actions.json');await writeFile(proof,JSON.stringify({identity,actor:id,attack_actor:actorId,attack_count:attackCount,first_move:first,second_move:another,contact_trace:contact.trace,points_before:initial.save.state.battle.extended.tactical.points,points_after:saved.save.state.battle.extended.tactical.points,positions_after:saved.save.state.battle.extended.tactical.positions},null,2));await testInfo.attach('tactical-identity-and-actions',{path:proof,contentType:'application/json'});
+ const proof=testInfo.outputPath('tactical-identity-and-actions.json');await writeFile(proof,JSON.stringify({identity,actor:id,attack_actor:actorId,attack_count:attackCount,inspected_survivor:inspectActorId,movement_frames:firstMotion,first_move:first,second_move:another,contact_trace:contact.trace,points_before:initial.save.state.battle.extended.tactical.points,points_after:saved.save.state.battle.extended.tactical.points,positions_after:saved.save.state.battle.extended.tactical.positions},null,2));await testInfo.attach('tactical-identity-and-actions',{path:proof,contentType:'application/json'});
  expect(errors.get(page)).toEqual([]);
 });
 
@@ -1950,7 +1971,7 @@ test('faction command books can all be spent in one city and survive save reload
  await expect(page.locator('#dialog [data-command-books]')).toContainText('今回消費 1枚',{useInnerText:true});await expect(counter).toContainText('残り',{useInnerText:true});
  await closeDialog(page);expect(await read()).toEqual(initial,'Cancellation and language changes cannot spend books or RNG');
  for(let index=0;index<total;index++){
-  await clickCityCommand(page,'recruit');await page.locator('#confirm-recruit').click();await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();
+  await clickCityCommand(page,'recruit');await page.locator('#confirm-recruit').click();await waitIdle(page);await expect(page.locator('#allocation-officer')).toBeVisible();await closeDialog(page);await waitIdle(page);
   const current=await read(),row=budget(current);
   expect(current.state.turn).toBe(initial.state.turn);expect(row.used).toBe(index+1);expect(row.total).toBe(total);
   expect(row.orders).toHaveLength(index+1);expect(row.orders.every(order=>order.city==='shujun'&&order.kind==='recruit'&&order.cost===1)).toBe(true);
@@ -1978,4 +1999,45 @@ test('faction command books can all be spent in one city and survive save reload
  const spentFile=testInfo.outputPath('command-books-spent-raw-save.json');await writeFile(spentFile,raw);await testInfo.attach('command-books-spent-raw-save',{path:spentFile,contentType:'application/json'});
  const proof=testInfo.outputPath('command-books-identity-and-ledgers.json');await writeFile(proof,JSON.stringify({identity,initial:budget(initial),spent:budget(JSON.parse(raw)),next:budget(next),rng_before:initial.state.rng,rng_after_spending:spent.state.rng},null,2));await testInfo.attach('command-books-identity-and-ledgers',{path:proof,contentType:'application/json'});
  expect(errors.get(page)).toEqual([]);
+});
+
+test('command-book confirmations and one paid city allocation flow preserve cancellation and save recovery',async({page},testInfo)=>{
+ await opening(page);await page.locator('#scenario').selectOption('mainland217-07');await page.locator('input[name=faction][value=shu]').check();await page.locator('#begin').click();await waitIdle(page);await tacticalDismiss(page);await page.locator('#city-jump').selectOption('shujun');
+ const read=()=>page.evaluate(async()=>{const response=await fetch('/api/save');if(!response.ok)throw Error('Save inspection failed');return response.json();});
+ const budget=save=>save.state.extension.command_books.factions.shu,active=save=>budget(save).allocation?.active??null;
+ const modal=page.locator('#order-confirm-dialog'),initial=await read();
+ const closeFlow=async()=>{await closeDialog(page);await expect.poll(async()=>active(await read())).toBeNull();await waitIdle(page);};
+ const accept=async(kind)=>{await expect(modal).toBeVisible();await expect(modal).toHaveAttribute('data-command-book-kind',kind);await expect(modal).toHaveAttribute('data-command-book-cost','1');await modal.locator('#order-confirm-accept').click();await waitIdle(page);await expect(modal).toBeHidden();};
+ await clickCityCommand(page,'recruit');await page.locator('#confirm-recruit').click();await expect(modal).toBeVisible();await expect(modal.locator('#order-confirm-message')).toContainText('成都');
+ expect(await read()).toEqual(initial,'A payment prompt cannot spend resources, books or RNG before approval');
+ await page.locator('#order-confirm-language').selectOption('ja');await expect(modal.locator('#order-confirm-message')).toContainText('命令書1枚',{useInnerText:true});await historyScreenshot(page,testInfo,'command-book-confirmation-ja');
+ for(const button of await modal.locator('button').all()){const rect=await button.boundingBox();expect(rect.width).toBeGreaterThanOrEqual(44);expect(rect.height).toBeGreaterThanOrEqual(44);}
+ await page.keyboard.press('Escape');await expect(modal).toBeHidden();await expect(page.locator('#confirm-recruit')).toBeVisible();expect(await read()).toEqual(initial,'Escape returns to the original form without committing its command');
+ await page.locator('#confirm-recruit').click();await accept('recruit');await expect(page.locator('#allocation-officer')).toBeVisible();
+ let current=await read();expect(budget(current).used).toBe(1);expect(active(current)).toBeTruthy();expect(budget(current).orders[0].kind).toBe('recruit');expect(current.state.cities.shujun.reserves).toBe(initial.state.cities.shujun.reserves+100);
+ await expect(page.locator('#dialog [data-command-book-cost]')).toHaveAttribute('data-command-book-cost','0');
+ const ids=(await page.locator('#allocation-officer option').evaluateAll(nodes=>nodes.map(node=>node.value))).slice(0,2);expect(ids).toHaveLength(2);
+ const distribute=async(ident)=>{
+  const before=await read(),troops=before.state.officers[ident].troops,next=troops===0?1:0;
+  await page.locator('#allocation-officer').selectOption(ident);await page.locator('#allocation-troops').fill(String(next));await page.locator('#confirm-allocation').click();await waitIdle(page);await expect(page.locator('#allocation-officer')).toBeVisible();await expect(modal).toBeHidden();
+  const after=await read();expect(after.state.officers[ident].troops).toBe(next);expect(budget(after).used).toBe(budget(before).used);expect(after.state.rng).toEqual(before.state.rng);expect(after.state.cities.shujun.reserves+after.state.cities.shujun.roster.officer_ids.reduce((sum,id)=>sum+after.state.officers[id].troops,0)).toBe(before.state.cities.shujun.reserves+before.state.cities.shujun.roster.officer_ids.reduce((sum,id)=>sum+before.state.officers[id].troops,0));return after;
+ };
+ for(const ident of ids)current=await distribute(ident);expect(budget(current).used).toBe(1);await closeFlow();
+ await openAllocation(page);const chosen=await page.locator('#allocation-officer').inputValue(),beforeNew=await read(),next=beforeNew.state.officers[chosen].troops===0?1:0;await page.locator('#allocation-troops').fill(String(next));await page.locator('#confirm-allocation').click();await expect(modal).toBeVisible();
+ expect(await read()).toEqual(beforeNew);await modal.locator('#order-confirm-cancel').click();expect(await read()).toEqual(beforeNew);await expect(page.locator('#allocation-troops')).toHaveValue(String(next));
+ await page.locator('#confirm-allocation').click();await accept('allocate');await expect(page.locator('#allocation-officer')).toBeVisible();current=await read();expect(budget(current).used).toBe(2);await closeFlow();
+ const remaining=budget(await read()).remaining??(budget(await read()).total-budget(await read()).used);
+ for(let i=0;i<remaining;i++){
+  await clickCityCommand(page,'recruit');await page.locator('#confirm-recruit').click();await accept('recruit');await expect(page.locator('#allocation-officer')).toBeVisible();
+  if(i+1<remaining)await closeFlow();
+ }
+ current=await read();expect(budget(current).used).toBe(budget(current).total);expect(active(current)).toBeTruthy();
+ for(const ident of ids)current=await distribute(ident);
+ await historyScreenshot(page,testInfo,'allocation-last-book-paid-flow');
+ const raw=await page.evaluate(async()=>{const response=await fetch('/api/save');if(!response.ok)throw Error('Raw save export failed');return response.text();});expect(JSON.parse(raw)).toEqual(current);
+ await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'paid-city-allocation.json',mimeType:'application/json',buffer:Buffer.from(raw)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();await page.locator('#city-jump').selectOption('shujun');
+ expect(await read()).toEqual(JSON.parse(raw));await expect(page.locator('#continue-allocation')).toBeEnabled();await page.locator('#continue-allocation').click();await expect(page.locator('#dialog [data-command-book-cost]')).toHaveAttribute('data-command-book-cost','0');await distribute(ids[0]);await closeFlow();
+ await expect(page.locator('#allocate')).toBeDisabled();await expect(page.locator('#recruit')).toBeDisabled();await expect(page.locator('#continue-allocation')).toHaveCount(0);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(errors.get(page)).toEqual([]);
+ const file=testInfo.outputPath('paid-allocation-raw-save.json');await writeFile(file,raw);await testInfo.attach('paid-allocation-raw-save',{path:file,contentType:'application/json'});
 });

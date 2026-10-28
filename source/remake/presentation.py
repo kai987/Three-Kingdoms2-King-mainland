@@ -7,7 +7,9 @@ from contextlib import contextmanager
 from copy import deepcopy
 
 SCHEMA = 'tk2-battle-presentation-v1'
-MAX_SCENES = 24
+# A complete 60-point enemy phase can contain many one-cell moves. Preserve
+# the finite authoritative sequence; the client separately bounds playback.
+MAX_SCENES = 192
 
 
 @contextmanager

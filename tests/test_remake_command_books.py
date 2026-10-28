@@ -70,6 +70,140 @@ class CommandBooks(unittest.TestCase):
             self.cmd('allocate', dict(city='xiangyang', officer=999, troops=1000))
         self.assertEqual(self.game.export_save(), before)
 
+    def test_city_wide_distribution_pays_once_across_multiple_officers(self):
+        city = self.game.state.cities['xiangyang']
+        first, second = city.roster.officer_ids[:2]
+        before = deepcopy(self.game.state)
+        self.cmd('allocate', dict(city=city.id, officer=first,
+            troops=before.officers[first].troops + 20, flow=None))
+        active = books.active_allocation(self.game.state, 'shu', city.id)
+        self.assertIsNotNone(active)
+        self.cmd('allocate', dict(city=city.id, officer=second,
+            troops=before.officers[second].troops + 30, flow=active['id']))
+        self.assertEqual(books.remaining(self.game.state, 'shu'), books.remaining(before, 'shu') - 1)
+        self.assertEqual(self.game.state.cities[city.id].reserves, before.cities[city.id].reserves - 50)
+        self.assertEqual(self.game.state.rng, before.rng)
+        row = self.game.state.extension['command_books']['factions']['shu']
+        self.assertEqual(len(row['orders']), 1)
+        self.assertEqual(row['orders'][0]['allocation_flow'], active['id'])
+        self.game.validate(self.game.state)
+
+    def test_no_change_invalid_and_duplicate_requests_never_buy_a_new_flow(self):
+        city = self.game.state.cities['xiangyang'];ident = city.roster.officer_ids[0]
+        before = self.game.export_save()
+        self.cmd('allocate', dict(city=city.id, officer=ident,
+            troops=self.game.state.officers[ident].troops, flow=None))
+        self.assertEqual(self.game.export_save(), before)
+        self.assertIsNone(books.active_allocation(self.game.state, 'shu'))
+        for troops in (-1, 1000, True):
+            with self.assertRaises((GameError, ValueError)):
+                self.cmd('allocate', dict(city=city.id, officer=ident, troops=troops, flow=None))
+            self.assertEqual(self.game.export_save(), before)
+        revision = self.game.revision
+        payload = dict(city=city.id, officer=ident, troops=200, flow=None)
+        self.game.command('allocate', payload, revision)
+        paid = self.game.export_save()
+        with self.assertRaises(GameError):self.game.command('allocate', payload, revision)
+        self.assertEqual(self.game.export_save(), paid)
+
+    def test_last_book_covers_remaining_city_distribution_but_not_a_new_flow(self):
+        for _ in range(2):self.cmd('recruit', dict(city='xiangyang'))
+        first, second = self.game.state.cities['xiangyang'].roster.officer_ids[:2]
+        self.cmd('allocate', dict(city='xiangyang', officer=first, troops=200, flow=None))
+        active = books.active_allocation(self.game.state, 'shu')
+        self.assertEqual(books.remaining(self.game.state, 'shu'), 0)
+        self.cmd('allocate', dict(city='xiangyang', officer=second, troops=250, flow=active['id']))
+        paid = self.game.export_save()
+        for flow in (None, 'invented-credit'):
+            with self.assertRaises(GameError):
+                self.cmd('allocate', dict(city='xiangyang', officer=second, troops=251, flow=flow))
+            self.assertEqual(self.game.export_save(), paid)
+        self.game.validate(self.game.state)
+
+    def test_paid_recruitment_opens_the_same_distribution_without_second_charge(self):
+        city = self.game.state.cities['xiangyang'];ident = city.roster.officer_ids[0]
+        before = deepcopy(self.game.state)
+        self.cmd('recruit', dict(city=city.id, allocation_flow=True))
+        active = books.active_allocation(self.game.state, 'shu')
+        self.assertEqual(active['source'], 'recruit')
+        self.cmd('allocate', dict(city=city.id, officer=ident,
+            troops=before.officers[ident].troops + 100, flow=active['id']))
+        self.assertEqual(books.remaining(self.game.state, 'shu'), books.remaining(before, 'shu') - 1)
+        self.assertEqual(self.game.state.cities[city.id].reserves, before.cities[city.id].reserves)
+        self.assertEqual(self.game.state.cities[city.id].gold, before.cities[city.id].gold - 20)
+        self.assertEqual(self.game.state.cities[city.id].grain, before.cities[city.id].grain - 30)
+
+    def test_close_and_reopen_are_scoped_and_delayed_close_cannot_end_new_flow(self):
+        ident = self.game.state.cities['xiangyang'].roster.officer_ids[0]
+        self.cmd('allocate', dict(city='xiangyang', officer=ident, troops=200, flow=None))
+        previous = books.active_allocation(self.game.state, 'shu')
+        self.cmd('allocation_close', dict(city='xiangyang', flow=previous['id']))
+        self.assertIsNone(books.active_allocation(self.game.state, 'shu'))
+        before = self.game.export_save()
+        with self.assertRaises(GameError):
+            self.cmd('allocate', dict(city='xiangyang', officer=ident, troops=201, flow=previous['id']))
+        self.assertEqual(self.game.export_save(), before)
+        self.cmd('allocate', dict(city='xiangyang', officer=ident, troops=201, flow=None))
+        current = books.active_allocation(self.game.state, 'shu')
+        self.assertNotEqual(current['id'], previous['id'])
+        before = self.game.export_save()
+        self.cmd('allocation_close', dict(city='xiangyang', flow=previous['id']))
+        self.assertEqual(self.game.export_save(), before)
+        self.assertEqual(books.remaining(self.game.state, 'shu'), 1)
+
+    def test_flow_survives_raw_save_and_expires_on_real_commands_and_turn(self):
+        ident = self.game.state.cities['xiangyang'].roster.officer_ids[0]
+        self.cmd('allocate', dict(city='xiangyang', officer=ident, troops=200, flow=None))
+        active = books.active_allocation(self.game.state, 'shu')
+        saved = json.loads(json.dumps(self.game.export_save()))
+        clone = Campaign(self.game.catalog);clone.load_save(saved, 0)
+        self.assertEqual(clone.export_save(), saved)
+        clone.command('allocate', dict(city='xiangyang', officer=ident, troops=201, flow=active['id']), clone.revision)
+        self.assertEqual(books.remaining(clone.state, 'shu'), 2)
+        self.cmd('set_domestic', dict(faction='shu', policy={'auto_recruit': False}))
+        self.assertIsNone(books.active_allocation(self.game.state, 'shu'))
+        self.assertEqual(books.remaining(self.game.state, 'shu'), 2)
+        self.cmd('allocate', dict(city='xiangyang', officer=ident, troops=201, flow=None))
+        self.game._complete_turn(self.game.state)
+        self.assertIsNone(books.active_allocation(self.game.state, 'shu'))
+        self.assertNotIn('allocation', self.game.state.extension['command_books']['factions']['shu'])
+
+    def test_flow_cannot_move_payment_to_another_city_or_faction(self):
+        from test_remake_facility_campaign import facility_catalog
+        game = Campaign(facility_catalog());game.command('new', dict(faction='shu', seed=2026), 0)
+        city = game.state.cities['xiangyang'];other = game.state.cities['nanjun']
+        ident = city.roster.officer_ids[0]
+        game.command('allocate', dict(city=city.id, officer=ident, troops=200, flow=None), game.revision)
+        active = books.active_allocation(game.state, 'shu')
+        before = game.export_save()
+        with self.assertRaises(GameError):
+            game.command('allocate', dict(city=other.id, officer=other.roster.officer_ids[0],
+                troops=200, flow=active['id']), game.revision)
+        self.assertEqual(game.export_save(), before)
+        enemy = game.state.cities['nanyang']
+        with self.assertRaises(GameError):
+            game.command('allocate', dict(city=enemy.id, officer=enemy.roster.officer_ids[0],
+                troops=200, flow=active['id']), game.revision)
+        self.assertEqual(game.export_save(), before)
+
+    def test_forged_or_broken_flow_receipts_are_rejected_atomically(self):
+        ident = self.game.state.cities['xiangyang'].roster.officer_ids[0]
+        self.cmd('allocate', dict(city='xiangyang', officer=ident, troops=200, flow=None))
+        saved = self.game.export_save()
+        for edit in (
+                lambda r:r['allocation'].update(serial=2),
+                lambda r:r['allocation']['active'].update(receipt=True),
+                lambda r:r['allocation']['active'].update(id='invented'),
+                lambda r:r['allocation']['active'].update(city='nanyang'),
+                lambda r:r['orders'][0].update(kind='transfer'),
+                lambda r:r['orders'][0].pop('allocation_flow'),
+                lambda r:r.pop('allocation')):
+            changed = deepcopy(saved)
+            edit(changed['state']['extension']['command_books']['factions']['shu'])
+            changed['checksum'] = digest({k:v for k,v in changed.items() if k!='checksum'})
+            with self.assertRaises(GameError):self.game.load_save(changed, self.game.revision)
+            self.assertEqual(self.game.export_save(), saved)
+
     def test_new_turn_replaces_remaining_orders_instead_of_accumulating(self):
         self.cmd('recruit', dict(city='xiangyang'))
         rng = deepcopy(self.game.state.rng)
@@ -114,6 +248,7 @@ class CommandBooks(unittest.TestCase):
                 lambda pool: pool['factions']['shu'].update(total=99),
                 lambda pool: pool['factions']['shu'].update(city_count=28, total=13),
                 lambda pool: pool['factions']['shu']['orders'][0].update(cost=True),
+                lambda pool: pool['factions']['shu'].update(allocation=None),
                 lambda pool: pool['factions'].pop('wei')):
             raw = deepcopy(original)
             edit(raw['state']['extension']['command_books'])

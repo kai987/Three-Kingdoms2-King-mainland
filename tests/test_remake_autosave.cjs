@@ -19,7 +19,7 @@ const loadSource=app.slice(app.indexOf('async function loadSave('),app.indexOf('
 function integration({pending=false,rejected=false,nextGame=game(),phase='city'}={}){
  const captured=[],requests=[],errors=[],invalidations=[],restored=[];
  const before={revision:8,catalog:{scenario_id:'test',title:'入蜀爭奪戰'},game:{...game(),phase}},next={...before,revision:9,game:nextGame};
- const context={busy:false,view:before,audioOutcome:null,battleScene:null,gameEvents:null,setupPreview:{},selectedCity:'old',actor:1,target:2,
+ const context={busy:false,view:before,audioOutcome:null,battleScene:null,gameEvents:null,setupPreview:{},selectedCity:'old',actor:1,target:2,confirmOrderCommand:async()=>true,
   SaveTransfer:require('../game/save-transfer.js'),gameAudio:{play(){}},render(){},notice(message,error){if(error)errors.push(message);},
   setBusy(value){context.busy=value;},setTimeout(fn){fn();return 1;},dialog:{close(){restored.push('close');}},
   request:async(path,body,settings)=>{requests.push({path,body,settings});if(rejected)throw Error('Rejected');return next;},

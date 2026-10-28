@@ -4,6 +4,7 @@ let mapNavigation=null,mapCamera=null,mapCameraKey='',refreshRouteDialog=null,ma
 let cloudSave=null,cloudSaveUI=null;
 let civilStaffUI=null,domesticUI=null,treasuryUI=null,facilitiesUI=null;
 let campaignDifficulty='normal';
+let allocationDialogContext=null,allocationCloseEpoch=0;
 let battleDestination=null,battleViewKey='';
 const viewCache=typeof GameViewCache==='undefined'?null:GameViewCache.create();
 const localAutosave=typeof GameAutosave==='undefined'?null:GameAutosave.create({getRawSave:()=>request('/api/save',undefined,{text:true}),getView:()=>view,isBusy:()=>busy,loadRawSave:loadSave,locale:()=>GameI18n.locale,onStatus:state=>{if(state.state==='error')notice(localAutosave.statusText(),true);}});
@@ -11,10 +12,11 @@ document.addEventListener('game-language-change',()=>{localAutosave?.refresh();i
 const difficultyName=id=>({easy:'简单',normal:'普通',hard:'困难'}[id]||'普通');
 const $=s=>document.querySelector(s), dialog=$('#dialog'),survivorPreviews=new WeakMap();
 const gameAudio=GameAudio.page();
-const battleScene=typeof GameBattleScene==='undefined'?null:GameBattleScene.create({i18n:GameI18n,portraits:GamePortraits,name:id=>name(id),onSelect:selectBattleUnit,onCell:selectBattleCell,onNavigate:navigateBattleCell,onConfirmMove:confirmBattleMove,onCancelMove:()=>{if(!busy){battleDestination=null;renderBattle();}},onSound:scene=>{
+const orderConfirmation=typeof GameOrderConfirmation==='undefined'?null:GameOrderConfirmation.create({document,books:GameCommandBooks,getView:()=>view,cityName:id=>cityName(id),i18n:GameI18n,onSound:cue=>gameAudio.play(cue)});
+const battleScene=typeof GameBattleScene==='undefined'?null:GameBattleScene.create({i18n:GameI18n,portraits:GamePortraits,name:id=>name(id),canInteract:()=>!busy&&!document.querySelector('dialog[open]'),onSelect:selectBattleUnit,onCell:selectBattleCell,onNavigate:navigateBattleCell,onConfirmMove:confirmBattleMove,onCancelMove:()=>{if(!busy){battleDestination=null;renderBattle();}},onSound:scene=>{
  gameAudio.setScene(scene.kind.startsWith('duel')?'duel':'battle');
  const families=['88','95','8d','8d','88','88','88','8d','91','95','8d','8d','88','88','88','95'];
- const cue=scene.skipped||!scene.success?'error':scene.kind==='tactic'?'tactic_'+(families[scene.tactic]||'88'):scene.kind==='ambush'?'tactic_8d':scene.kind==='duel_start'?'duel_start':scene.kind==='duel_action'?'duel_'+(scene.move==='desperate'?'strike':scene.move):scene.kind==='retreat'?'cancel':'attack';
+ const cue=scene.skipped||!scene.success?'error':scene.kind==='move'?'march':scene.kind==='tactic'?'tactic_'+(families[scene.tactic]||'88'):scene.kind==='ambush'?'tactic_8d':scene.kind==='duel_start'?'duel_start':scene.kind==='duel_action'?'duel_'+(scene.move==='desperate'?'strike':scene.move):scene.kind==='retreat'?'cancel':'attack';
  gameAudio.play(scene.kind==='duel_start'&&!scene.success?'duel_refused':cue);
 },onSettled:()=>gameAudio.setScene(view?.game?.battle?.extended?.duel?'duel':['battle','result'].includes(view?.game?.phase)?'battle':'strategy'),onOutcome:cue=>gameAudio.play(cue)});
 const gameEvents=typeof GameEvents==='undefined'?null:GameEvents.create({getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview,parentDialog:dialog});
@@ -22,8 +24,10 @@ let audioOutcome=null;
 // Browsers require a real gesture before creating/resuming the audio context.
 for(const type of ['pointerdown','keydown'])document.addEventListener(type,event=>{if(event.isTrusted)void gameAudio.unlock();},{capture:true});
 dialog.addEventListener('cancel',()=>gameAudio.play('cancel'));
+dialog.addEventListener('close',()=>{const context=allocationDialogContext;allocationDialogContext=null;queueAllocationClose(context);});
 $('#event-dialog')?.addEventListener('cancel',()=>gameAudio.play('cancel'));
-document.addEventListener('keydown',event=>{if(event.key==='Escape'&&mapAction&&!dialog.open&&!$('#event-dialog')?.open){event.preventDefault();gameAudio.play('cancel');cancelMapAction();}});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&mapAction&&!dialog.open&&!$('#event-dialog')?.open&&!$('#order-confirm-dialog')?.open){event.preventDefault();gameAudio.play('cancel');cancelMapAction();}});
+document.addEventListener('keydown',battleKeyboard);
 document.addEventListener('click',event=>{
  if(!event.isTrusted)return;
  const button=event.target.closest('button');
@@ -187,14 +191,24 @@ async function request(path,body,{raw=false,text=false}={}){
  if(!response.ok){if(response.status===409){if(typeof battleScene!=='undefined')battleScene?.reset();view=await request('/api/state');gameEvents?.observe(view,{baseline:true});render();}throw new Error(value.error||'操作未完成。');}
  return value;
 }
+function resetAllocationDialogs(){allocationCloseEpoch++;allocationDialogContext=null;}
+async function confirmOrderCommand(kind,payload){
+ const price=typeof GameCommandBooks==='undefined'?null:GameCommandBooks.cost(view,kind,payload);
+ if(price===0||price===null&&!(typeof GameOrderConfirmation!=='undefined'&&GameOrderConfirmation.ACTIONS[kind]))return true;
+ if(!orderConfirmation){notice(GameI18n.locale==='ja'?'命令書の確認を開けません。ゲームを再読込してください。':'無法開啟命令書確認，請重新載入遊戲。',true);return false;}
+ return orderConfirmation.ask(kind,payload);
+}
 async function command(kind,payload={}){
- if(busy)return false;
+ if(busy||(typeof orderConfirmation!=='undefined'&&orderConfirmation?.pending))return false;
+ try{payload=JSON.parse(JSON.stringify(payload));if(!await confirmOrderCommand(kind,payload)||busy)return false;}
+ catch(error){notice(error.message,true);return false;}
  const resumeAutosave=localAutosave?.status().state==='saving';
  localAutosave?.invalidate();let checkpoint=null;
  setBusy(true);notice();
  try{
   const previousView=view,previousTurn=view.game?.turn,previousOutcome=audioOutcome,previousBattleLog=view.game?.battle?.log||[];
   view=await request('/api/command',{kind,payload,revision:view.revision});
+  if(kind==='new'&&typeof resetAllocationDialogs==='function')resetAllocationDialogs();
   const scene=typeof battleScene==='undefined'?null:battleScene;
   scene?.observe(kind,payload,previousView,view);
   if(['tactic','duel_start','retreat'].includes(kind)&&typeof dialog!=='undefined'&&dialog.open)dialog.close();
@@ -226,9 +240,23 @@ async function command(kind,payload={}){
  catch(e){notice(e.message,true);return false;}
  finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);if(checkpoint||resumeAutosave)void localAutosave?.checkpoint(checkpoint||'progress');}
 }
-function openDialog(title,body,actions){
+function queueAllocationClose(context){
+ if(!context?.flow)return;
+ const epoch=allocationCloseEpoch;
+ const close=()=>{
+  if(epoch!==allocationCloseEpoch)return;
+  const active=typeof GameCommandBooks==='undefined'?null:GameCommandBooks.activeAllocation(view,context.city);
+  if(!active||active.id!==context.flow)return;
+  if(busy||(typeof orderConfirmation!=='undefined'&&orderConfirmation?.pending)){setTimeout(close,50);return;}
+  void command('allocation_close',{city:context.city,flow:context.flow});
+ };
+ setTimeout(close,0);
+}
+function openDialog(title,body,actions,{allocation=null}={}){
  if(busy)return;
  const generation=++dialogGeneration;refreshRouteDialog=null;
+ const previous=allocationDialogContext;allocationDialogContext=allocation?{...allocation,generation}:null;
+ if(previous&&(previous.flow!==allocation?.flow||previous.city!==allocation?.city))queueAllocationClose(previous);
  dialog.innerHTML=`<div class="dialog-heading"><h2 id="dialog-title">${escapeHtml(title)}</h2><label class="language-picker">語言<select id="dialog-language" data-language-picker aria-label="切換語言"><option value="zh-Hant" ${GameI18n.locale==='zh-Hant'?'selected':''}>繁體中文</option><option value="ja" ${GameI18n.locale==='ja'?'selected':''}>日本語</option></select></label></div>${body}<div class="dialog-actions">${actions}</div>`;
  if(!dialog.open)dialog.showModal();
  dialog.querySelectorAll('[data-cancel]').forEach(b=>b.onclick=()=>dialog.close());
@@ -605,7 +633,7 @@ function renderCity(){
  const unavailable=`<p class="small city-command-unavailable">${cityCommandText('非本方城池，無法執行都市命令。','自勢力の都市ではないため、都市の命令は実行できません。')}</p>`;
  const panels={
   city:owned?`${view.catalog.facilities?`<button id="city-civic">${cityCommandText('發展與防災','発展・防災')}</button>`:''}${view.catalog.domestic?`<button id="city-domestic">${cityCommandText('勢力內政委任','勢力の内政担当')}</button>`:''}<button id="recruit-officer" ${(!hasCommandBook('recruit_officer')&&!hasCommandBook('persuade_officer'))||!available.length||cityOccupancy(city)>=capacity()||city.gold<60?'disabled':''}>招募 / 劝降</button>${view.catalog.civil_staff?'<button id="civil-staff">地方文吏</button>':''}`:unavailable,
-  army:owned?`<div class="action-pair"><button id="allocate" class="primary" ${!hasCommandBook('allocate')||!city.roster.officer_ids.some(i=>!marching().has(i))?'disabled':''}>编兵</button><button id="depart" class="primary" ${!hasCommandBook('depart')||!fighters.length||noDepartureFood?'disabled':''}>出征</button></div><div class="action-pair"><button id="transfer" ${!hasCommandBook('transfer')||!available.length?'disabled':''}>调动武将</button><button id="recruit" ${!hasCommandBook('recruit')||city.gold<20||city.grain<30?'disabled':''}>征募预备兵</button></div>`:unavailable,
+  army:owned?`<div class="action-pair"><button id="allocate" class="primary" ${!hasCommandBook('allocate')||!city.roster.officer_ids.some(i=>!marching().has(i))?'disabled':''}>编兵</button><button id="depart" class="primary" ${!hasCommandBook('depart')||!fighters.length||noDepartureFood?'disabled':''}>出征</button></div>${GameCommandBooks.activeAllocation(view,city.id)?`<button id="continue-allocation">${cityCommandText('繼續上次配兵','前回の編制を続ける')}</button>`:''}<div class="action-pair"><button id="transfer" ${!hasCommandBook('transfer')||!available.length?'disabled':''}>调动武将</button><button id="recruit" ${!hasCommandBook('recruit')||city.gold<20||city.grain<30?'disabled':''}>征募预备兵</button></div>`:unavailable,
   warehouse:owned?`${view.catalog.treasury?`<button id="city-treasury">${cityCommandText('寶庫與賞賜','宝庫・褒美')}</button>`:''}${view.catalog.domestic?'<button id="city-logistics">前線支援</button>':''}`:unavailable,
   town:owned?view.catalog.facilities?`<button id="city-facilities">${cityCommandText('進入城內設施','町の施設へ')}</button>`:`<p class="small">${cityCommandText('本城的設施資料尚未提供。','この都市の施設情報は未登録です。')}</p>`:unavailable
  };
@@ -624,7 +652,7 @@ function renderCity(){
  bindCityCommandGroups(city);
  $('#city-information').onclick=()=>showCityInformation(city.id);
  for(const id of city.roster.officer_ids){const button=$('#city-roster-'+id);if(button)button.onclick=()=>{const person=view.catalog.library?.find(p=>String(p.id)===String(id));if(person)showPerson(person.id);else showCityInformation(city.id);};}
- if(owned){$('#allocate').onclick=()=>allocate(city);$('#depart').onclick=()=>beginMapAction('depart',city);$('#recruit').onclick=()=>{openDialog('征募预备兵',`<p>花费20金钱、30粮食，征募100名预备兵。</p>${commandBookHint('recruit')}`,'<button data-cancel>取消</button><button id="confirm-recruit" class="primary">确认征募</button>');$('#confirm-recruit').disabled=!hasCommandBook('recruit');$('#confirm-recruit').onclick=async()=>{if(!hasCommandBook('recruit'))return notice(commandBookReason('recruit'),true);if(await command('recruit',{city:city.id}))dialog.close();};};}
+ if(owned){$('#allocate').onclick=()=>allocate(city);if($('#continue-allocation'))$('#continue-allocation').onclick=()=>{const flow=GameCommandBooks.activeAllocation(view,city.id);if(flow)allocate(city,null,flow.id);};$('#depart').onclick=()=>beginMapAction('depart',city);$('#recruit').onclick=()=>{openDialog('征募预备兵',`<p>花费20金钱、30粮食，征募100名预备兵。</p>${commandBookHint('recruit')}`,'<button data-cancel>取消</button><button id="confirm-recruit" class="primary">确认征募</button>');$('#confirm-recruit').disabled=!hasCommandBook('recruit');$('#confirm-recruit').onclick=async()=>{if(!hasCommandBook('recruit'))return notice(commandBookReason('recruit'),true);if(await command('recruit',{city:city.id,allocation_flow:true})){const flow=GameCommandBooks.activeAllocation(view,city.id);allocate(view.game.cities[city.id],null,flow?.id??null);}};};}
  else $('#home').onclick=()=>{selectedCity=Object.values(game.cities).find(c=>c.owner===game.player)?.id||selectedCity;render();};
  if($('#recruit-officer'))$('#recruit-officer').onclick=()=>beginMapAction('recruit',city);
  if($('#transfer'))$('#transfer').onclick=()=>transferCity(city);
@@ -636,25 +664,31 @@ function renderCity(){
  if($('#city-civic'))$('#city-civic').onclick=()=>facilitiesInterface()?.open(city.id,{section:'civic'});
  $('#end-turn').onclick=()=>command('end_turn');
 }
-function allocate(city,preferred=null){
+function allocate(city,preferred=null,flow=null){
  const ids=sortedOfficers(city.roster.officer_ids.filter(i=>!marching().has(i)));
  if(!ids.length)return notice('本城武将均在行军。');
  const selected=ids.includes(preferred)?preferred:ids[0],officer=view.game.officers[selected],maximum=Math.min(999,officer.troops+city.reserves);
- openDialog('编兵',`<p>本城预备兵 ${city.reserves}。每次确认编兵使用命令书。</p>${commandBookHint('allocate')}<label class="field" for="allocation-officer">武将<select id="allocation-officer">${ids.map(i=>`<option value="${i}" ${i===selected?'selected':''}>${escapeHtml(officerChoiceText(i))}</option>`).join('')}</select></label><p class="small officer-choice-summary" id="allocation-officer-summary"></p><div class="allocation-value"><label class="field" for="allocation-troops">目标兵力<input id="allocation-troops" type="number" min="0" max="${maximum}" step="1" value="${officer.troops}"></label><button type="button" id="allocation-max">最大值</button></div><p class="small" id="allocation-preview"></p>`, '<button data-cancel>取消</button><button id="confirm-allocation" class="primary">确认编兵</button>');
+ const options={kind:'allocate',locale:GameI18n.locale,city:city.id,flow};
+ const generation=openDialog('编兵',`<p>${cityCommandText('本城預備兵 '+city.reserves,'都市の予備兵 '+city.reserves)}</p><p class="small">${flow?cityCommandText('本次流程已付費，可連續調整本城多名武將，不再扣命令書。','この編制は支払済みです。同じ都市の複数武将へ追加の命令書なしで配分できます。'):cityCommandText('整次配兵首次有效確認只使用1本命令書，可連續調整本城多名武將。關閉後重新開始另計1本。','一連の編制は最初の有効な確定で命令書1枚です。同じ都市の複数武将へ続けて配分でき、終了後の新規編制は再び1枚です。')}</p>${GameCommandBooks.html(view,options)}<label class="field" for="allocation-officer">武将<select id="allocation-officer">${ids.map(i=>`<option value="${i}" ${i===selected?'selected':''}>${escapeHtml(officerChoiceText(i))}</option>`).join('')}</select></label><p class="small officer-choice-summary" id="allocation-officer-summary"></p><div class="allocation-value"><label class="field" for="allocation-troops">目标兵力<input id="allocation-troops" type="number" min="0" max="${maximum}" step="1" value="${officer.troops}"></label><button type="button" id="allocation-max">最大值</button></div><p class="small" id="allocation-preview"></p>`, `<button data-cancel>${flow?cityCommandText('完成配兵','編制を終了'):'取消'}</button><button id="confirm-allocation" class="primary">确认编兵</button>`,{allocation:{city:city.id,flow}});
  const input=$('#allocation-troops'),preview=(fillMaximum=false)=>{
   const current=view.game.cities[city.id],o=view.game.officers[$('#allocation-officer').value];
   input.max=String(Math.min(999,o.troops+current.reserves));
   if(fillMaximum===true)input.value=input.max;
   $('#allocation-officer-summary').textContent=officerChoiceText($('#allocation-officer').value);
-  $('#confirm-allocation').disabled=!hasCommandBook('allocate');
-  const n=clampNumberInput(input);$('#allocation-preview').textContent=n===null?'':`确认后本城预备兵 ${Math.max(0,current.reserves+o.troops-n)}。`;
+  const n=clampNumberInput(input);
+  $('#confirm-allocation').disabled=n===null||n===o.troops||!GameCommandBooks.can(view,'allocate',options);
+  $('#allocation-preview').textContent=n===null?'':`确认后本城预备兵 ${Math.max(0,current.reserves+o.troops-n)}。`;
  };
  $('#allocation-officer').onchange=()=>{input.value=String(view.game.officers[$('#allocation-officer').value].troops);preview();};bindNumberInput(input,preview);preview();
  $('#allocation-max').onclick=()=>preview(true);
  $('#confirm-allocation').onclick=async()=>{
-  if(!hasCommandBook('allocate'))return notice(commandBookReason('allocate'),true);
+  if(!GameCommandBooks.can(view,'allocate',options))return notice(GameCommandBooks.reason(view,'allocate',GameI18n.locale,options),true);
   preview();const id=GameOfficerChoices.ref($('#allocation-officer').value),troops=clampNumberInput(input,true);
-  if(await command('allocate',{city:city.id,officer:id,troops}))allocate(view.game.cities[city.id],id);
+  if(await command('allocate',{city:city.id,officer:id,troops,flow})){
+   const current=GameCommandBooks.activeAllocation(view,city.id);
+   if(!dialog.open||generation!==dialogGeneration){queueAllocationClose(current?{city:city.id,flow:current.id}:null);return;}
+   allocate(view.game.cities[city.id],id,current?.id??null);
+  }
  };
 }
 
@@ -929,6 +963,20 @@ function navigateBattleCell(dx,dy){
  const point=battleDestination||battlePosition(actor);if(!point)return;
  selectBattleCell({x:Math.max(0,Math.min(30,point.x+dx)),y:Math.max(0,Math.min(18,point.y+dy))});
 }
+function battleKeyboard(event){
+ if(event.defaultPrevented||event.isComposing||event.ctrlKey||event.metaKey||event.altKey||busy||(typeof battleScene!=='undefined'&&battleScene?.playing)||view?.game?.phase!=='battle'||view.game.battle?.extended?.duel||!battleActor()?.can_act)return;
+ if(dialog.open||$('#event-dialog')?.open||document.querySelector('dialog[open]'))return;
+ const focus=event.target||document.activeElement;
+ if(focus?.isContentEditable||focus?.closest?.('input,select,textarea,[contenteditable]:not([contenteditable="false"]),[role="textbox"],[data-language-picker]'))return;
+ // A selected roster row or direction button retains focus after redraws.
+ // Arrow navigation must work there as well as on the canvas, without taking
+ // over the language picker, main menu or unrelated native button activation.
+ if(focus?.closest?.('button,a,summary,[role="button"]')&&!focus.closest?.('#stage,#inspector'))return;
+ const direction={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[event.key];
+ if(direction){event.preventDefault();navigateBattleCell(...direction);}
+ else if(event.key==='Enter'&&!event.repeat&&battleMoveQuote()&&(!focus?.closest?.('button,a,summary,[role="button"]')||focus.closest?.('[data-battle-nav],#battle-move,[data-actor],[data-target]'))){event.preventDefault();void confirmBattleMove();}
+ else if(event.key==='Escape'&&battleDestination){event.preventDefault();battleDestination=null;renderBattle();}
+}
 async function confirmBattleMove(){
  if(busy||view.game?.phase!=='battle'||!battleMoveQuote()||!battleActor()?.can_act)return false;
  const b=view.game.battle,point={...battleDestination};return command('battle_move',{battle_id:b.id,actor,x:point.x,y:point.y});
@@ -1083,7 +1131,7 @@ async function loadSave(save,guard=()=>true){
  if(busy||!guard())return false;
  const resumeAutosave=localAutosave?.status().state==='saving';
  localAutosave?.invalidate();let loaded=false;setBusy(true);
- try{view=await request('/api/load',SaveTransfer.loadBody(save,view.revision),{raw:true});battleScene?.reset();gameEvents?.observe(view,{baseline:true});setupPreview=null;selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');loaded=true;return true;}
+ try{view=await request('/api/load',SaveTransfer.loadBody(save,view.revision),{raw:true});if(typeof resetAllocationDialogs==='function')resetAllocationDialogs();battleScene?.reset();gameEvents?.observe(view,{baseline:true});setupPreview=null;selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');loaded=true;return true;}
  catch(e){notice(e.message,true);return false;}
  finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);if(loaded||resumeAutosave)void localAutosave?.checkpoint(loaded?'load':'progress');}
 }

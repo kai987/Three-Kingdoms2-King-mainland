@@ -192,7 +192,10 @@ class LogisticsTests(unittest.TestCase):
         game = self.game()
         for _ in range(3):
             person = game.state.officers[999]
-            game.command('allocate', dict(city='xiangyang', officer=999, troops=person.troops), game.revision)
+            # Spend three genuine standalone distributions; unchanged troop
+            # counts are a no-op and never consume a command book.
+            troops = person.troops - 1 if person.troops else 1
+            game.command('allocate', dict(city='xiangyang', officer=999, troops=troops), game.revision)
         self.assertEqual(command_books.remaining(game.state, 'shu'), 0)
         self.assertEqual([r['kind'] for r in game.state.extension['command_books']['factions']['shu']['orders']],
                          ['allocate'] * 3)

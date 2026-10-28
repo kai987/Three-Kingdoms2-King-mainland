@@ -849,6 +849,15 @@
       "player_special_minimum_intellect": null,
       "ai_difference": "The original AI special selector adds intellect>=92 plus level/whitelist predicates; this is not a player menu threshold. The remake applies one shared player-style learnability rule to player and AI.",
       "identity_source": "game/config/portrait-identity-map.json"
+    },
+    "soldier_exchange": {
+      "manual_pages": [
+        38,
+        39,
+        40,
+        41
+      ],
+      "rule": "Contact starts soldier combat. Infantry, archers, cavalry and officers act in order, alternating attacking and attacked sides. This does not establish the remake damage formula or a complete inner-combat simulation."
     }
   },
   "unknown_or_adaptation_required": [
@@ -902,6 +911,8 @@
     "duel_shortcut": "Adjacent shortcut consumes normal contact-attack2 AP. Original duels began inside soldier-combat mode; no original separate tactical-map duel AP formula is claimed. Individual duel moves do not charge shared AP again.",
     "damage_and_chance": "Retain established remake single-target damage and success probability models; learnability, target eligibility and affected spatial sets are independently checked against recovered original rules.",
     "legacy_energy": "Preserve old energy fields for existing-save structure; do not use the previous18/+4 as an additional eligibility lock or payer.",
-    "existing_effect_scope": "Existing damage, success rates, single stored ambush and self-guard support effects are retained remake models. Exact original learnability, spatial eligibility and affected sets do not prove all effect formulas or original separate-side ambush caches have been reimplemented."
+    "existing_effect_scope": "Existing damage, success rates, single stored ambush and self-guard support effects are retained remake models. Exact original learnability, spatial eligibility and affected sets do not prove all effect formulas or original separate-side ambush caches have been reimplemented.",
+    "contact_exchange": "A tactical ordinary attack resolves one initiating hit and, if the target survives with health, one immediate return hit using the established remake damage kernel. Only the initiating side pays2 AP. No additional tactical AI turn or recursive reply is granted; confusion skips one return hit. Each real damage hit draws once; playback is read-only.",
+    "movement_playback": "The server supplies the exact committed path and cost. Pixel flags replay each step before ambush effects, with a16-second total presentation bound and reduced-motion/skip/background cancellation. Animation timing is a remake UI choice, not an extracted original timing table."
   }
 }

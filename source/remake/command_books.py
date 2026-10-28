@@ -18,7 +18,7 @@ COSTS = dict(recruit=1, recruit_officer=1, persuade_officer=1, staff_recruit=1,
              allocate=1, resupply_march=1, transport_treasure=1,
              set_domestic=0, set_logistics=0, set_governor=0,
              set_treasury_policy=0, set_facility_policy=0, reject_staff=0,
-             choose_successor=0)
+             choose_successor=0, allocation_close=0)
 
 
 def total(cities):
@@ -76,11 +76,57 @@ def spend(state, city, kind):
     require(state, city.owner, amount)
     if amount:
         row = state.extension['command_books']['factions'][city.owner]
+        close_allocation(state, city.owner)
         row['used'] += amount
         row['orders'].append(dict(city=city.id, kind=kind, cost=amount))
         # Retained as a historical activity marker, never as an eligibility lock.
         city.action_used = True
     return amount
+
+
+def active_allocation(state, owner, city=None):
+    """The current paid city-wide distribution, never a client-created credit."""
+    row = state.extension['command_books']['factions'].get(owner, {})
+    active = row.get('allocation', {}).get('active')
+    if active is None or city is not None and active['city'] != city:
+        return None
+    receipt = row['orders'][active['receipt']]
+    return dict(id=active['id'], city=active['city'], source=receipt['kind'])
+
+
+def open_allocation(state, city):
+    """Attach a flow only to the just-paid recruit/allocation receipt.
+
+    Optional ledger metadata preserves the exact representation of existing
+    current-format saves that have never used the city-wide interface.
+    """
+    row = state.extension['command_books']['factions'][city.owner]
+    receipt = row['orders'][-1]
+    if receipt['city'] != city.id or receipt['kind'] not in ('allocate', 'recruit'):
+        raise ValueError('Allocation flow requires a paid city recruitment/allocation receipt')
+    allocation = row.setdefault('allocation', dict(serial=0, active=None))
+    serial = allocation['serial'] + 1
+    identity = f'{state.turn}:{city.owner}:{city.id}:{serial}'
+    receipt['allocation_flow'] = identity
+    allocation.update(serial=serial, active=dict(id=identity, city=city.id, receipt=len(row['orders']) - 1))
+    return identity
+
+
+def require_allocation(state, city, identity):
+    active = active_allocation(state, city.owner, city.id)
+    if not isinstance(identity, str) or active is None or identity != active['id']:
+        raise GameError('配兵流程已結束，請重新開啟編兵。')
+
+
+def close_allocation(state, owner, *, city=None, identity=None):
+    """An old dialog's close callback cannot close a newer distribution."""
+    row = state.extension['command_books']['factions'].get(owner, {})
+    allocation = row.get('allocation')
+    active = allocation.get('active') if allocation else None
+    if active is None or city is not None and active['city'] != city or identity is not None and active['id'] != identity:
+        return False
+    allocation['active'] = None
+    return True
 
 
 def view(game, state):
@@ -89,6 +135,9 @@ def view(game, state):
         for owner, row in state.extension['command_books']['factions'].items():
             factions[owner] = {key: row[key] for key in ('city_count', 'total', 'used')}
             factions[owner]['remaining'] = remaining(state, owner)
+            active = active_allocation(state, owner)
+            if active is not None:
+                factions[owner]['allocation_flow'] = active
     return dict(schema=SCHEMA, turn=state.turn if state else None,
                 maximum=MAXIMUM, refresh_days=10, costs=dict(COSTS), factions=factions)
 
@@ -101,8 +150,9 @@ def validate(game, state):
             or set(pool['factions']) != set(game.catalog.factions) - {'neutral'}):
         raise ValueError('Invalid faction command-book pool')
     snapshot = set()
-    for row in pool['factions'].values():
-        if (not isinstance(row, dict) or set(row) != {'city_count', 'city_ids', 'total', 'legacy_used', 'used', 'orders'}
+    for owner, row in pool['factions'].items():
+        fields = {'city_count', 'city_ids', 'total', 'legacy_used', 'used', 'orders'}
+        if (not isinstance(row, dict) or set(row) not in (fields, fields | {'allocation'})
                 or type(row['city_count']) is not int or not 0 <= row['city_count'] <= len(game.catalog.map_cities)
                 or not isinstance(row['city_ids'], list) or len(row['city_ids']) != row['city_count']
                 or any(type(key) is not str or key not in state.cities for key in row['city_ids'])
@@ -115,13 +165,40 @@ def validate(game, state):
             raise ValueError('Invalid faction command-book balance')
         snapshot.update(row['city_ids'])
         used = row['legacy_used']
+        tagged = []
         for order in row['orders']:
-            if (not isinstance(order, dict) or set(order) != {'city', 'kind', 'cost'}
+            order_fields = {'city', 'kind', 'cost'}
+            if (not isinstance(order, dict) or set(order) not in (order_fields, order_fields | {'allocation_flow'})
                     or not isinstance(order['city'], str) or order['city'] not in state.cities
                     or not isinstance(order['kind'], str) or order['kind'] not in COSTS
                     or type(order['cost']) is not int or order['cost'] <= 0
                     or order['cost'] != cost(order['kind'])):
                 raise ValueError('Invalid strategic order receipt')
             used += order['cost']
+            if 'allocation_flow' in order:
+                if order['kind'] not in ('allocate', 'recruit'):
+                    raise ValueError('Invalid allocation receipt kind')
+                tagged.append(order)
         if used != row['used']:
             raise ValueError('Strategic order ledger does not balance')
+        if 'allocation' not in row:
+            if tagged:
+                raise ValueError('Allocation receipt has no flow ledger')
+            continue
+        allocation = row['allocation']
+        if (not isinstance(allocation, dict) or set(allocation) != {'serial', 'active'}
+                or type(allocation['serial']) is not int or not 1 <= allocation['serial'] <= MAXIMUM
+                or allocation['serial'] != len(tagged)):
+            raise ValueError('Invalid allocation flow ledger')
+        for serial, order in enumerate(tagged, 1):
+            expected = f'{state.turn}:{owner}:{order["city"]}:{serial}'
+            if order['allocation_flow'] != expected:
+                raise ValueError('Invalid allocation flow identity')
+        active = allocation['active']
+        if active is not None:
+            if (not isinstance(active, dict) or set(active) != {'id', 'city', 'receipt'}
+                    or type(active['receipt']) is not int or active['receipt'] != len(row['orders']) - 1
+                    or not row['orders'] or row['orders'][-1] is not tagged[-1]
+                    or active['id'] != tagged[-1]['allocation_flow'] or active['city'] != tagged[-1]['city']
+                    or state.cities[active['city']].owner != owner):
+                raise ValueError('Invalid active allocation flow')

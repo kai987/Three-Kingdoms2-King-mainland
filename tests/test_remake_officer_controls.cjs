@@ -19,8 +19,8 @@ const officers={
 };
 const city={id:'home',owner:'wei',reserves:20,roster:{officer_ids:[1,2,3]}},away={id:'away',owner:'wei',roster:{officer_ids:[]}},enemy={id:'enemy',owner:'wu',roster:{officer_ids:[]}};
 let closed=0,lastDialog,lastCommand,picked=[],requests=0;
-const context={GameOfficerChoices:require('../game/officer-choice.js'),GameOfficerSelection:require('../game/officer-selection.js'),GameI18n:{apply(){}},view:{catalog:{rules:{city_officer_capacity:99,battle_officers_per_side:10},links:[['home','enemy']],recruitable:{home:[5,6,4]},persuadable:{home:[2]}},game:{player:'wei',turn:1,cities:{home:city,away,enemy},officers,extension:{officer_actions:{}}}},$:element,name:id=>'武将'+id,escapeHtml:String,marching:()=>new Set(),capacity:()=>99,notice(){},faction:String,cityName:String,actor:null,target:null,watchRouteDialog(){},dialog:{querySelectorAll:()=>picked.map(input=>Object.assign(input,{addEventListener(){}})),close(){closed++;}},openDialog(title,body){
- lastDialog={title,body};
+const context={dialogGeneration:0,queueAllocationClose(){},GameOfficerChoices:require('../game/officer-choice.js'),GameOfficerSelection:require('../game/officer-selection.js'),GameI18n:{apply(){}},view:{catalog:{rules:{city_officer_capacity:99,battle_officers_per_side:10},links:[['home','enemy']],recruitable:{home:[5,6,4]},persuadable:{home:[2]}},game:{player:'wei',turn:1,cities:{home:city,away,enemy},officers,extension:{officer_actions:{}}}},$:element,name:id=>'武将'+id,escapeHtml:String,marching:()=>new Set(),capacity:()=>99,notice(){},faction:String,cityName:String,actor:null,target:null,watchRouteDialog(){},dialog:{open:true,querySelectorAll:()=>picked.map(input=>Object.assign(input,{addEventListener(){}})),close(){closed++;}},openDialog(title,body,actions,options){
+ context.dialogGeneration++;lastDialog={title,body,actions,options};
  for(const match of body.matchAll(/<select id="([^"]+)"[^>]*>(.*?)<\/select>/g)){
   const options=[...match[2].matchAll(/<option value="([^"]+)"([^>]*)>/g)];
   element('#'+match[1]).value=(options.find(row=>row[2].includes('selected'))||options.find(row=>!row[2].includes('disabled')))?.[1]||'';
@@ -28,10 +28,13 @@ const context={GameOfficerChoices:require('../game/officer-choice.js'),GameOffic
  for(const match of body.matchAll(/<input id="([^"]+)"([^>]+)>/g)){
   const input=element('#'+match[1]);for(const attr of ['value','min','max'])input[attr]=match[2].match(new RegExp(attr+'="([^"]*)"'))?.[1]||'';
  }
+ return context.dialogGeneration;
 },async command(kind,payload){
  requests++;lastCommand={kind,payload};
  if(kind==='allocate'){
-  commandBookFixture.consume(context.view,'allocate');
+  const row=commandBookFixture.api.row(context.view);
+  if(payload.flow===null){commandBookFixture.consume(context.view,'allocate');row.allocation_flow={id:'1:wei:home:1',city:'home',source:'allocate'};}
+  else assert.equal(payload.flow,row.allocation_flow.id,'The paid server flow is included on every later distribution');
   const officer=officers[payload.officer],delta=payload.troops-officer.troops;
   assert(delta<=city.reserves);city.reserves-=delta;officer.troops=payload.troops;
  }
@@ -75,6 +78,11 @@ const values=html=>[...html.matchAll(/<option value="(\d+)"/g)].map(m=>Number(m[
  assert.equal((source.match(/type="number"/g)||[]).length,2,'All current numeric controls are explicitly covered');
  assert(source.includes('bindNumberInput($(\'#seed\'))'));assert(source.includes('bindNumberInput(input,preview)'));
  assert(source.includes('<th>经</th>'));assert(source.includes('<th>德</th>'));assert(source.includes('<td>${o.virtue}</td>'));assert(source.includes('<td>${o.profile.virtue}</td>'));
- assert.equal(commandBookFixture.api.row(context.view).used,3,'Each persistent confirmation uses one authoritative command book');commandBookFixture.exhaust(context.view);context.allocate(city,1);assert(element('#confirm-allocation').disabled);const beforeExhausted=requests;await element('#confirm-allocation').onclick();assert.equal(requests,beforeExhausted);
- assert(requests===3);console.log('officer controls: comparable attributes, deterministic purpose sort, numeric bounds, exact conservation and persistent allocation passed');
+ assert.equal(commandBookFixture.api.row(context.view).used,1,'One city-wide distribution pays once across multiple officers');commandBookFixture.exhaust(context.view);context.allocate(city,1);assert(element('#confirm-allocation').disabled);const beforeExhausted=requests;await element('#confirm-allocation').onclick();assert.equal(requests,beforeExhausted);
+ assert(requests===3);
+ const flow=commandBookFixture.api.activeAllocation(context.view,'home');context.allocate(city,1,flow.id);
+ element('#allocation-troops').value=String(officers[1].troops+1);element('#allocation-troops').oninput();assert(!element('#confirm-allocation').disabled,'An already-paid distribution remains usable after the last book is spent');
+ await element('#confirm-allocation').onclick();assert.equal(requests,4);assert.equal(commandBookFixture.api.row(context.view).used,commandBookFixture.api.row(context.view).total);
+ assert(lastDialog.body.includes('data-command-book-cost="0"'));assert(lastDialog.actions.includes('完成配兵'));
+ console.log('officer controls: comparable attributes, deterministic purpose sort, numeric bounds, exact conservation and persistent allocation passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

@@ -350,6 +350,19 @@
         "mainland208-10"
       ],
       "scenario_scope": "fixed"
+    },
+    {
+      "id": "order-confirmation-allocation",
+      "title": "command-book confirmations and one paid city allocation flow preserve cancellation and save recovery",
+      "groups": [
+        "economy",
+        "people",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland217-07"
+      ],
+      "scenario_scope": "fixed"
     }
   ]
 }

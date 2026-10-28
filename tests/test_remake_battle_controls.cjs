@@ -6,7 +6,7 @@ const points={attackers:10,defenders:16};
 const battle={id:'battle-9',round:2,used:[7],extended:{tactical:{schema:'tk2-battle-tactical-v1',map_id:'original-15',side:'attackers',points,positions:{7:{x:0,y:0},8:{x:30,y:18}}}}};
 const row={can_act:true,reason:'',reachable:[{x:1,y:0,cost:3},{x:0,y:1,cost:2}],attack_targets:[8],duel_targets:[],tactic_targets:{0:[8]},attack_reasons:{},duel_reasons:{8:'尚未接觸'},tactic_reasons:{0:{}}};
 const view={revision:8,game:{phase:'battle',player:'wei',battle,rng:{state:98,draws:4}},catalog:{battle_tactical:{schema:'tk2-battle-tactical-view-v1',battle_id:battle.id,map_id:'original-15',round:2,grid:{columns:31,rows:19,tile_size:16},side:'attackers',points,caps:{attackers:20,defenders:26},can_end:true,attack_cost:2,duel_cost:2,tactic_costs:Array(16).fill(6),actors:{7:row}}}};
-const commands=[],context={view,actor:7,target:8,busy:false,battleDestination:null,GameBattleScene:scene,GameI18n:{locale:'zh-Hant'},escapeHtml:v=>String(v),gameAudio:{play(){}},renderBattle(){context.renders++;},renders:0,command:async(kind,payload)=>{commands.push({kind,payload});return true;}};
+const commands=[],context={view,actor:7,target:8,busy:false,battleDestination:null,battleScene:{playing:false},dialog:{open:false},orderOpen:false,eventDialog:{open:false},document:{querySelector:()=>context.orderOpen?{}:null},$:()=>context.eventDialog,GameBattleScene:scene,GameI18n:{locale:'zh-Hant'},escapeHtml:v=>String(v),gameAudio:{play(){}},renderBattle(){context.renders++;},renders:0,command:async(kind,payload)=>{commands.push({kind,payload});return true;}};
 vm.createContext(context);vm.runInContext(source.slice(source.indexOf('function battleText('),source.indexOf('function tactics(')),context);
 const snapshot=JSON.stringify(view);
 assert.equal(context.battleTactical(),view.catalog.battle_tactical);assert.equal(context.battlePosition(7),battle.extended.tactical.positions[7]);
@@ -26,8 +26,35 @@ assert.equal(commands.length,0,'Selecting a destination previews only');
  context.busy=true;const renders=context.renders;context.selectBattleCell({x:0,y:1});assert.equal(context.renders,renders);assert.equal(await context.confirmBattleMove(),false);context.busy=false;
  row.can_act=false;assert.equal(await context.confirmBattleMove(),false);row.can_act=true;
  view.game.phase='result';assert(!context.battleTargetAllowed('attack'));assert.equal(await context.confirmBattleMove(),false);view.game.phase='battle';
+ const key=(value,target={closest:()=>null},extra={})=>{const event={key:value,target,prevented:0,preventDefault(){this.prevented++;this.defaultPrevented=true;},...extra};context.battleKeyboard(event);return event;};
+ // Selecting a roster row keeps its native button focused. Arrow keys must
+ // still move the preview without stealing inputs, menus or modal controls.
+ const button={closest:selector=>selector==='button,a,summary,[role="button"]'||selector==='#stage,#inspector'||selector==='[data-battle-nav],#battle-move,[data-actor],[data-target]'?button:null};
+ context.battleDestination=null;assert.equal(key('ArrowDown',button).prevented,1);assert.deepEqual(JSON.parse(JSON.stringify(context.battleDestination)),{x:0,y:1});
+ assert.equal(key('ArrowRight',button).prevented,1);assert.deepEqual(JSON.parse(JSON.stringify(context.battleDestination)),{x:1,y:1});
+ assert.equal(key('ArrowUp',button).prevented,1);assert.deepEqual(JSON.parse(JSON.stringify(context.battleDestination)),{x:1,y:0});
+ assert.equal(key('ArrowLeft',button).prevented,1);assert.deepEqual(JSON.parse(JSON.stringify(context.battleDestination)),{x:0,y:0});
+ context.selectBattleCell({x:1,y:0});const count=commands.length;assert.equal(key('Enter',button).prevented,1);await Promise.resolve();assert.equal(commands.length,count+1);assert.equal(commands.at(-1).kind,'battle_move');
+ assert.equal(key('Escape',button).prevented,1);assert.equal(context.battleDestination,null);
+ const input={closest:selector=>selector.startsWith('input,select,textarea')?input:null},menu={closest:selector=>selector==='button,a,summary,[role="button"]'?menu:null};
+ const held=JSON.stringify(context.battleDestination),sent=commands.length;
+ for(const [label,setup,restore,event]of [
+  ['input',()=>{},()=>{},()=>key('ArrowDown',input)],
+  ['editable',()=>{},()=>{},()=>key('ArrowDown',{isContentEditable:true})],
+  ['menu',()=>{},()=>{},()=>key('ArrowDown',menu)],
+  ['dialog',()=>context.dialog.open=true,()=>context.dialog.open=false,()=>key('ArrowDown',button)],
+  ['event modal',()=>context.eventDialog.open=true,()=>context.eventDialog.open=false,()=>key('ArrowDown',button)],
+  ['order confirmation',()=>context.orderOpen=true,()=>context.orderOpen=false,()=>key('ArrowDown',button)],
+  ['busy',()=>context.busy=true,()=>context.busy=false,()=>key('ArrowDown',button)],
+  ['playing',()=>context.battleScene.playing=true,()=>context.battleScene.playing=false,()=>key('ArrowDown',button)],
+  ['enemy turn',()=>row.can_act=false,()=>row.can_act=true,()=>key('ArrowDown',button)],
+  ['result',()=>view.game.phase='result',()=>view.game.phase='battle',()=>key('ArrowDown',button)],
+  ['prevented canvas event',()=>{},()=>{},()=>key('ArrowDown',button,{defaultPrevented:true})],
+  ['IME',()=>{},()=>{},()=>key('ArrowDown',button,{isComposing:true})],
+  ['browser shortcut',()=>{},()=>{},()=>key('ArrowDown',button,{metaKey:true})]
+ ]){setup();assert.equal(event().prevented,0,label+' must keep its native keyboard behavior');assert.equal(JSON.stringify(context.battleDestination),held,label);assert.equal(commands.length,sent,label+' cannot submit');restore();}
  assert.equal(JSON.stringify(view),snapshot,'Selections, navigation, confirmations and labels never mutate the supplied game/RNG; only the command callback owns execution');
  for(const change of [v=>{v.catalog.battle_tactical.battle_id='other';},v=>{v.catalog.battle_tactical.map_id='original-01';},v=>{v.catalog.battle_tactical.round++;},v=>{v.catalog.battle_tactical.side='defenders';},v=>{v.catalog.battle_tactical.grid.rows=20;},v=>{v.game.battle.extended.tactical.schema='wrong';}]){const bad=JSON.parse(snapshot);change(bad);assert.equal(scene.tacticalView(bad),null);}
  for(const value of [{x:-1,y:0},{x:31,y:0},{x:0,y:19},{x:0,y:.5},null]){const bad=JSON.parse(snapshot);bad.game.battle.extended.tactical.positions[7]=value;assert.equal(scene.unitPosition(bad,7),null);}
- console.log('battle controls: authoritative positions/targets/costs, repeated same-officer commands, preview-only selection, invalid/busy/phase boundaries, bounded directional cursor and zero local state/RNG writes passed');
+ console.log('battle controls: authoritative positions/targets/costs, repeated same-officer commands, preview-only selection, roster-focused four-key navigation/Enter, modal/editable/busy/native-control guards, bounded cursor and zero local state/RNG writes passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});
