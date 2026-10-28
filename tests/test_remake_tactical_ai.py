@@ -11,14 +11,17 @@ from remake.campaign import Campaign, SeedRng
 from remake.campaign_expansion import TACTICS
 from remake.difficulty import get_settings
 from remake.tactical_ai import candidates, choose_action, legal_tactics, expected_attack
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import arrange_contact, arrange_tactic, controlled_catalog
 
 
-def battle(terrain='plain', *, three_enemies=True, player='shu', seed=2026):
+def battle(terrain='plain', *, three_enemies=True, player='shu', seed=2026, tactical=True, spell=None):
     """Controlled identities/rosters; not a claim about historical deployment."""
     game=Campaign(controlled_catalog());game.state=game._new(player,seed)
     state=game.state;source=state.cities['xiangyang'];target=state.cities['nanyang']
-    actor=146
+    actor=439 if spell is not None else 146
+    if spell is not None:
+        state.officers[actor].experience=10000  # Real Zhuge Liang, original menu tier6.
+        state.officers[actor].tier=6
     if three_enemies:
         # Move two non-rulers within this fixture to exercise area/chain limits.
         ids=[i for i in source.roster.officer_ids if i not in (actor,state.extension['leaders']['shu'])]
@@ -27,7 +30,19 @@ def battle(terrain='plain', *, three_enemies=True, player='shu', seed=2026):
             state.officers[ident].faction_id=target.owner
     game.catalog.map_cities[target.id]['terrain']=terrain
     game._start_expanded_battle(state,source,target,[actor])
+    if tactical:
+        if spell is None:arrange_contact(game)
+        else:arrange_tactic(game,spell)
+    else:
+        # Frozen arithmetic/old-effect oracle only. This is never used by
+        # playable command integration or the spatial battle release gates.
+        state.battle['extended'].pop('tactical')
     return game
+
+
+def kernel_battle(*args, **kwargs):
+    """Explicit legacy numerical kernel, not a playable battle fixture."""
+    return battle(*args, **kwargs, tactical=False)
 
 
 def actors(game,own='attackers'):
@@ -44,7 +59,7 @@ def successful_rng(state):
 
 class TacticalAiTests(unittest.TestCase):
     def test_morale_prediction_matches_actual_all_damage_spreads(self):
-        game=battle(three_enemies=False)
+        game=kernel_battle(three_enemies=False)
         state=game.state;b,a,t,_,_=actors(game)
         for troops in (1,25,999):
             t['troops']=troops
@@ -62,7 +77,7 @@ class TacticalAiTests(unittest.TestCase):
     def test_every_tactic_is_a_legal_scored_candidate_on_its_terrain(self):
         found=set()
         for terrain in ('plain','mountain','water'):
-            game=battle(terrain);state=game.state;b,a,t,own,foe=actors(game)
+            game=kernel_battle(terrain);state=game.state;b,a,t,own,foe=actors(game)
             before=game.to_dict()
             rows=candidates(state,b,own,foe,terrain,TACTICS,depth=2)
             tids={r['tactic'] for r in rows if r['kind']=='tactic'};found|=tids
@@ -78,7 +93,7 @@ class TacticalAiTests(unittest.TestCase):
             terrain='water' if effect in {'water','chain','flood'} else 'mountain' if effect=='rock' else 'plain'
             for own in ('attackers','defenders'):
                 with self.subTest(tactic=tid,side=own):
-                    game=battle(terrain);state=game.state;b,a,t,own,foe=actors(game,own)
+                    game=kernel_battle(terrain);state=game.state;b,a,t,own,foe=actors(game,own)
                     # Every actor has at least 100 troops in the controlled
                     # roster. Low health isolates trap/rock's routed-HP effect.
                     if effect in {'trap','rock'}:b['extended']['support'][str(t['id'])]['health']=2
@@ -104,7 +119,7 @@ class TacticalAiTests(unittest.TestCase):
                     self.assertEqual(state.rng.draws,0 if effect in {'ambush','guard'} else 1+(0 if effect in {'confuse','chain','supply','surrender'} else min(len(b[foe]),3 if effect=='area' else 2 if effect=='crossbow' else 20 if effect in {'flood','inferno'} else 1)))
 
     def test_candidate_evaluation_never_calls_rng_or_changes_inputs(self):
-        game=battle('water');state=game.state;b=state.battle;before=game.to_dict()
+        game=kernel_battle('water');state=game.state;b=state.battle;before=game.to_dict()
         with patch.object(SeedRng,'next',side_effect=AssertionError('RNG lookahead')):
             for own,foe in (('attackers','defenders'),('defenders','attackers')):
                 for level in ('easy','normal','hard'):
@@ -115,7 +130,7 @@ class TacticalAiTests(unittest.TestCase):
         self.assertEqual(game.to_dict(),before)
 
     def test_terrain_energy_stun_used_and_zero_troops_are_hard_bounds(self):
-        game=battle('plain');state=game.state;b,a,t,own,foe=actors(game)
+        game=kernel_battle('plain');state=game.state;b,a,t,own,foe=actors(game)
         self.assertFalse({4,9,10,12}&set(legal_tactics(state,b,a,t,own,foe,'plain',TACTICS)))
         support=b['extended']['support'][str(a['id'])];support['energy']=0
         self.assertEqual(legal_tactics(state,b,a,t,own,foe,'plain',TACTICS),[])
@@ -133,7 +148,7 @@ class TacticalAiTests(unittest.TestCase):
 
     def test_ambush_minimum_single_slot_and_side_ownership(self):
         for owner in ('attackers','defenders'):
-            game=battle();state=game.state;b,a,t,own,foe=actors(game,owner)
+            game=kernel_battle();state=game.state;b,a,t,own,foe=actors(game,owner)
             a['troops']=99;self.assertNotIn(11,legal_tactics(state,b,a,t,own,foe,'plain',TACTICS));a['troops']=100
             game._execute_tactic(state,a,t,own,foe,11,finish=False)
             self.assertNotIn(11,legal_tactics(state,b,a,t,own,foe,'plain',TACTICS))
@@ -145,7 +160,7 @@ class TacticalAiTests(unittest.TestCase):
             game._trigger_ambush(state,t,foe);self.assertEqual(t['troops'],before-expected,'One ambush never fires twice')
 
     def test_guard_supply_and_surrender_scoring_uses_current_state(self):
-        game=battle();state=game.state;b,a,t,own,foe=actors(game)
+        game=kernel_battle();state=game.state;b,a,t,own,foe=actors(game)
         def score(tid):return next(r['score'] for r in candidates(state,b,own,foe,'plain',TACTICS,depth=2) if r['actor']==a['id'] and r['target']==t['id'] and r['tactic']==tid)
         normal=score(15);b['extended']['support'][str(a['id'])]['guard']=2
         self.assertLess(score(15),normal)
@@ -154,7 +169,7 @@ class TacticalAiTests(unittest.TestCase):
         self.assertGreater(expected_attack(b,a,b[foe][1]),0)
 
     def test_counter_is_one_shared_action_and_seeded_execution_repeats(self):
-        left=battle('mountain');right=battle('mountain')
+        left=kernel_battle('mountain');right=kernel_battle('mountain')
         for game in (left,right):
             state=game.state;b,a,_,_,_=actors(game);draws=state.rng.draws
             choice=choose_action(state,b,'defenders','attackers','mountain',TACTICS,settings=get_settings(state),responding=True)
@@ -168,11 +183,13 @@ class TacticalAiTests(unittest.TestCase):
 
     def test_failed_tactic_costs_one_roll_and_emits_stable_person_ids(self):
         game=battle();state=game.state;b,a,t,own,foe=actors(game)
+        points=b['extended']['tactical']['points'][own]
         state.rng=SeedRng(next(i for i in range(1,10000) if SeedRng(i).next()%100>=95))
         troops=[u['troops']for u in b[foe]]
         game._execute_tactic(state,a,t,own,foe,0,finish=False)
         self.assertEqual(state.rng.draws,1);self.assertEqual([u['troops']for u in b[foe]],troops)
-        self.assertEqual(b['extended']['support'][str(a['id'])]['energy'],12)
+        self.assertEqual(b['extended']['support'][str(a['id'])]['energy'],18)
+        self.assertEqual(b['extended']['tactical']['points'][own],points-TACTICS[0][1])
         event=state.extension['events']['items'][-1]
         self.assertEqual(event['details'],{'tactic':0,'success':False})
         self.assertEqual(event['person_ids'],[state.officers[a['id']].person_id,state.officers[t['id']].person_id])
@@ -180,7 +197,7 @@ class TacticalAiTests(unittest.TestCase):
         game.validate(state)
 
     def test_stunned_counter_spends_only_one_skip_without_drawing_rng(self):
-        game=battle();state=game.state;b,a,_,_,_=actors(game)
+        game=kernel_battle();state=game.state;b,a,_,_,_=actors(game)
         for enemy in b['defenders']:b['extended']['support'][str(enemy['id'])]['stunned']=1
         before=deepcopy(b);draws=state.rng.draws
         game._counter(state,'defenders',a)
@@ -209,7 +226,7 @@ class TacticalAiTests(unittest.TestCase):
             game=battle('mountain',three_enemies=False,player='wu',seed=seed);state=game.state
             with patch.object(game,'_perform_battle_action',wraps=game._perform_battle_action) as execute:
                 game._resolve_ai_battle(state)
-                self.assertLessEqual(execute.call_count,200)
+                self.assertLessEqual(execute.call_count,3700)
                 self.assertEqual({call.args[2] for call in execute.call_args_list},{'attackers','defenders'})
                 self.assertTrue(any(call.args[1]['kind']=='tactic'for call in execute.call_args_list))
             self.assertIsNone(state.battle);self.assertEqual(len(state.settled_battles),1)
@@ -220,17 +237,21 @@ class TacticalAiTests(unittest.TestCase):
         self.assertEqual(states[0],states[1])
 
     def test_easy_policy_remains_ordinary_without_stat_or_resource_bonuses(self):
-        game=battle('water');state=game.state;b=state.battle;state.extension['difficulty']='easy';before=game.to_dict()
+        game=kernel_battle('water');state=game.state;b=state.battle;state.extension['difficulty']='easy';before=game.to_dict()
         self.assertEqual(choose_action(state,b,'defenders','attackers','water',TACTICS,settings=get_settings(state),responding=True)['kind'],'attack')
         self.assertEqual(game.to_dict(),before)
 
-    def test_autoresolve_nonprogress_stops_at200_without_invented_losses(self):
-        game=battle(three_enemies=False,player='wu');state=game.state;initial=state.soldiers.copy()
-        with patch.object(game,'_perform_battle_action',return_value=True)as execute:
-            game._resolve_ai_battle(state)
-            self.assertEqual(execute.call_count,200)
-        self.assertIsNone(state.battle);self.assertEqual(state.soldiers,initial)
-        self.assertEqual(state.settled_battles,['battle-1']);game.validate(state)
+    def test_autoresolve_nonprogress_rejects_at_bound_without_invented_losses(self):
+        game=battle(three_enemies=False,player='wu');state=game.state
+        before=game.to_dict()
+        from remake.errors import GameError
+        with patch.object(game,'_perform_battle_action',return_value=True) as execute:
+            with self.assertRaisesRegex(GameError,'合法行動上限'):
+                game._resolve_ai_battle(state)
+            self.assertEqual(execute.call_count,3700)
+        self.assertEqual(game.to_dict(),before)
+        self.assertEqual(state.settled_battles,[])
+        game.validate(state)
 
 
 if __name__=='__main__':unittest.main()

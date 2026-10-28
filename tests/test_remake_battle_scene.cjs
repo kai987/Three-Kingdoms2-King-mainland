@@ -9,27 +9,78 @@ import json,sys
 sys.path[:0]=['source','tests']
 from remake.campaign import Campaign,SeedRng
 from remake.campaign_expansion import TACTICS
+from remake import battle_grid
+from remake.tactical_ai import tactic_reason
 from test_remake_tactical_ai import battle,actors,successful_rng
 from test_remake_generated_officers import GeneratedOfficerTests
 
 def thin(value):
  c=value['catalog'];g=value['game']
- return dict(revision=value['revision'],presentation=value.get('presentation'),game={k:g[k] for k in ('battle','officers','player','seed','phase','rng')},catalog=dict(scenario_id=c.get('scenario_id',c.get('id','controlled-scene')),**{k:c[k] for k in ('names','cities','tactics')}))
+ return dict(revision=value['revision'],presentation=value.get('presentation'),game={k:g[k] for k in ('battle','officers','player','seed','phase','rng')},catalog=dict(scenario_id=c.get('scenario_id',c.get('id','controlled-scene')),**{k:c[k] for k in ('names','cities','tactics','battle_tactical')}))
 rows=[]
+def scene_battle(terrain='plain',three_enemies=True):
+ # An explicitly experienced historical strategist exercises every original
+ # learned tactic. This is an isolated renderer fixture, not an opening claim.
+ game=battle(terrain,three_enemies=three_enemies);b=game.state.battle
+ old=b['attackers'][0];ident=game.catalog.ids['san14-candidate-0440'];officer=game.state.officers[ident]
+ officer.experience=10000
+ from remake.officers import experience_tier
+ officer.tier=experience_tier(officer.experience)
+ replacement=next((u for u in b['defenders'] if u['id']==ident),None)
+ old_point=b['extended']['tactical']['positions'][str(old['id'])]
+ if replacement:
+  source,target=game.state.cities[b['source']],game.state.cities[b['target']]
+  source.roster.officer_ids.remove(old['id']);source.roster.officer_ids.append(ident)
+  target.roster.officer_ids.remove(ident);target.roster.officer_ids.append(old['id'])
+  game.state.officers[old['id']].faction_id=target.owner;officer.faction_id=source.owner
+  b['defenders'][b['defenders'].index(replacement)]=old
+  b['extended']['tactical']['positions'][str(old['id'])]=b['extended']['tactical']['positions'][str(ident)]
+ else:
+  replacement=dict(id=ident,troops=officer.troops,start=officer.troops,martial=officer.profile.martial_strength)
+  del b['extended']['support'][str(old['id'])]
+  b['extended']['support'][str(ident)]=dict(health=officer.health,energy=18,stunned=0,guard=0,morale=70)
+  del b['extended']['tactical']['positions'][str(old['id'])]
+ b['attackers'][0]=replacement;b['extended']['tactical']['positions'][str(ident)]=old_point
+ return game
+def arrange(game,tid=None):
+ # Isolated presentation fixtures use explicit legal contact cells. They do
+ # not claim that armies naturally marched to these cells in campaign play.
+ b=game.state.battle;a=b['attackers'][0];t=b['defenders'][0]
+ tactical=b['extended']['tactical'];field=battle_grid._field(b)
+ tactical['points']={'attackers':20,'defenders':20}
+ cells=[(x,y) for y in range(19) for x in range(31)]
+ for tx,ty in cells:
+  for ax,ay in ((tx-1,ty),(tx,ty-1),(tx+1,ty),(tx,ty+1)):
+   if not (0<=ax<31 and 0<=ay<19):continue
+   placed={str(a['id']):dict(x=ax,y=ay),str(t['id']):dict(x=tx,y=ty)}
+   occupied={(ax,ay),(tx,ty)}
+   nearby=[p for p in ((tx-1,ty),(tx,ty-1),(tx+1,ty),(tx,ty+1))
+           if 0<=p[0]<31 and 0<=p[1]<19 and p not in occupied]
+   for unit in b['defenders'][1:]:
+    candidates=nearby+[p for p in cells if p not in occupied]
+    point=next(p for p in candidates if p not in occupied)
+    placed[str(unit['id'])]=dict(x=point[0],y=point[1]);occupied.add(point)
+   for unit in b['attackers'][1:]:
+    point=next(p for p in cells if p not in occupied)
+    placed[str(unit['id'])]=dict(x=point[0],y=point[1]);occupied.add(point)
+   tactical['positions']=placed
+   if tid is None or not tactic_reason(game.state,b,a,t,'attackers','defenders','plain',TACTICS[tid]):return
+ raise AssertionError('No legal isolated presentation placement for tactic '+str(tid))
 def action(game,kind,payload,key):
  before=thin(game.view());response=game.command(kind,payload,game.revision)
  rows.append(dict(key=key,kind=kind,payload=payload,before=before,after=thin(response)))
 for tid,(_,cost,effect,_) in enumerate(TACTICS):
  terrain='water' if effect in {'water','chain','flood'} else 'mountain' if effect=='rock' else 'plain'
- game=battle(terrain);b,a,t,*_=actors(game);successful_rng(game.state)
+ game=scene_battle(terrain);arrange(game,tid);b,a,t,*_=actors(game);successful_rng(game.state)
  action(game,'tactic',dict(battle_id=b['id'],actor=a['id'],target=t['id'],tactic=tid),'tactic:'+effect)
 for key in ('attack','attack_guard','attack_defeat','ambush','stunned','failure','retreat','duel'):
- game=battle(three_enemies=False);b,a,t,*_=actors(game)
+ game=scene_battle(three_enemies=False);arrange(game);b,a,t,*_=actors(game)
  if key=='attack_guard':b['extended']['support'][str(t['id'])]['guard']=2
  if key=='attack_defeat':t['troops']=1
  if key=='ambush':b['extended']['ambush']=dict(actor=t['id'])
  if key=='stunned':b['extended']['support'][str(a['id'])]['stunned']=1
  if key=='failure':
+  arrange(game,0)
   game.state.rng=SeedRng(next(i for i in range(1,10000) if SeedRng(i).next()%100>=95))
   action(game,'tactic',dict(battle_id=b['id'],actor=a['id'],target=t['id'],tactic=0),'failure');continue
  if key=='retreat':action(game,'retreat',dict(battle_id=b['id']),'retreat');continue
@@ -41,10 +92,13 @@ for key in ('attack','attack_guard','attack_defeat','ambush','stunned','failure'
   action(game,'duel_action',dict(battle_id=b['id'],move='feint'),'duel_feint')
   action(game,'duel_action',dict(battle_id=b['id'],move='withdraw'),'duel_withdraw');continue
  action(game,'attack',dict(battle_id=b['id'],actor=a['id'],target=t['id']),key)
+# Ending the whole side lets the real enemy move/attack with the same rules.
+game=scene_battle(three_enemies=False);arrange(game);successful_rng(game.state)
+action(game,'battle_wait',dict(battle_id=game.state.battle['id']),'side_handoff')
 # Real committed desperate attacks, separately covering success, self-injury,
 # and a low-health opponent choosing the same move from its ordinary AI pool.
 for key,wanted,reply_only in [('duel_desperate_success',True,False),('duel_desperate_failure',False,False),('duel_desperate_reply',None,True)]:
- game=battle(three_enemies=False);b,a,t,*_=actors(game);successful_rng(game.state)
+ game=scene_battle(three_enemies=False);arrange(game);b,a,t,*_=actors(game);successful_rng(game.state)
  game.command('duel_start',dict(battle_id=b['id'],actor=a['id'],target=t['id']),game.revision)
  b=game.state.battle
  for seed in range(1,1000):
@@ -57,6 +111,7 @@ game,ident=GeneratedOfficerTests().new()
 game.command('allocate',dict(city='nanjun',officer=ident,troops=999),game.revision)
 game._complete_turn(game.state);game._reconcile_factions(game.state)
 game._start_expanded_battle(game.state,game.state.cities['nanjun'],game.state.cities['jiangxia'],[ident])
+arrange(game)
 action(game,'attack',dict(battle_id=game.state.battle['id'],actor=ident,target=game.state.battle['defenders'][0]['id']),'mixed')
 print(json.dumps(dict(rows=rows,tactics=[dict(id=i,effect=t[2]) for i,t in enumerate(TACTICS)]),ensure_ascii=False,separators=(',',':')))
 `],{cwd:ROOT,encoding:'utf8',maxBuffer:8*1024*1024,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}}));
@@ -100,7 +155,8 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
  const accepted=new Map(actual.rows.map(row=>[row.key,scenesFor(row)]));
  for(const tactic of actual.tactics){const row=actual.rows.find(r=>r.key==='tactic:'+tactic.effect),scenes=accepted.get(row.key);assert(scenes.length,`Actual tactic ${tactic.id}/${tactic.effect} must not be discarded`);assert.equal(scenes[0].tactic,tactic.id);assert.equal(scenes[0].effect,tactic.effect);}
  assert.equal(actual.tactics.length,16);assert(accepted.get('tactic:strike').length,'要撃 uses strike');
- const attack=accepted.get('attack');assert.equal(attack[0].kind,'attack');assert(attack.some(s=>s.counter),'Actual AI response is part of the receipt');
+ const attack=accepted.get('attack');assert.equal(attack[0].kind,'attack');assert(!attack.some(s=>s.counter),'A normal attack retains its own authoritative scene; enemy actions now happen at whole-side handoff');
+ assert(accepted.get('side_handoff').some(s=>s.counter),'A real whole-side handoff retains authoritative enemy action scenes');
  const chain=accepted.get('ambush');assert.equal(chain[0].kind,'ambush');assert.equal(chain[1].kind,'attack');assert.deepEqual(normalize(chain[0].after),normalize(chain[1].before),'Ambush damage must not be replayed as attack damage');
  assert(accepted.get('retreat').length,'Actual retreat permits null actor/target');
  assert.equal(accepted.get('stunned')[0].skipped,true);assert.equal(accepted.get('failure')[0].success,false);
@@ -166,14 +222,14 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
  {const env=environment(),selected=[],scene=env.api.create({onSelect:(side,id)=>selected.push({side,id})}),row=clone(first.before),id=first.payload.actor;
   row.catalog.names[String(id)]='𠮷野';
   scene.mount(env.host,row,{actor:id});
-  assert.equal(env.surface.width,1024);assert.equal(env.surface.height,960);
-  assert.equal(env.surface.style.width,'512px');assert.equal(env.surface.style.height,'480px');
+  assert.equal(env.surface.width,1984);assert.equal(env.surface.height,1536);
+  assert.equal(env.surface.style.width,'512px');assert.equal(env.surface.style.height,'396px');
   assert(env.transforms.some(t=>t.join(',')==='4,0,0,4,0,0'));
-  const flags=env.texts.filter(t=>t.y<160);
+  const flags=env.texts.filter(t=>t.y<304);
   assert(flags.some(t=>t.text==='𠮷'),'Flag retains the first full Unicode character');
   assert(flags.every(t=>Array.from(t.text).length===1),'Every tactical flag contains one character only');
   assert(scene.html().includes('width="1024" height="960"'));
-  const flag=flags.find(t=>t.text==='𠮷');env.surface.onclick({clientX:(flag.x+4)*2,clientY:(flag.y+4)*2});
+  const flag=flags.find(t=>t.text==='𠮷'),rect=env.surface.getBoundingClientRect();env.surface.onclick({clientX:(flag.x+4)*rect.width/496,clientY:(flag.y+4)*rect.height/384});
   assert.deepEqual(selected,[{side:'actor',id}],'Pointer hit testing stays inCSS/logical coordinates after4× rendering');
   scene.dispose();
  }
@@ -189,9 +245,9 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   for(const player of [b.attacker,b.defender]){
    const view=clone(row);view.game.player=player;freeze(view);const original=JSON.stringify(view);
    const env=environment(),scene=env.api.create();scene.mount(env.host,view);
-   const flags=env.texts.filter(t=>t.y<160),left=flags.filter(t=>t.x<128).map(t=>t.text),right=flags.filter(t=>t.x>=128).map(t=>t.text);
-   assert.deepEqual(left,['张'],'A lone attacking surname keeps its first character despite enemy duplicates');
-   assert(right.includes('遼')&&right.includes('郃')&&!right.includes('張'),'Defending teammates use final characters, including the routed flag');
+   const flagText=id=>{const p=standalone.unitPosition(view,id);return env.texts.find(t=>t.x===p.x*16+4&&t.y===p.y*16+4)?.text;};
+   assert.equal(flagText(b.attackers[0].id),'张','A lone attacking surname keeps its first character despite enemy duplicates');
+   assert.equal(flagText(b.defenders[0].id),'遼');assert.equal(flagText(b.defenders[1].id),'郃','Routed teammates retain their authoritative flag');
    assert.equal(JSON.stringify(view),original,'Drawing flags preserves the entire campaign view and RNG');scene.dispose();
   }
  }
@@ -202,13 +258,13 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   const env=environment(),scene=env.api.create(),selected={actor:id,target:foe};
   for(const locale of ['zh-Hant','ja']){
    env.i18n.locale=locale;const before=JSON.stringify(view);env.texts.length=0;scene.mount(env.host,view,selected);
-   assert(env.texts.some(t=>t.x===184&&t.y===191&&t.text==='忠 --'),key+' current ruler HUD must display the literal --');
+   assert(env.texts.some(t=>t.x===184&&t.y===335&&t.text==='忠 --'),key+' current ruler HUD must display the literal --');
    const trainingLabel=(locale==='ja'?'練度':'訓練度')+' '+(view.game.battle.extended.support[String(id)].morale??70);
-   assert(env.texts.some(t=>t.x===184&&t.y===202&&t.text===trainingLabel),key+' HUD labels the actual training value');
+   assert(env.texts.some(t=>t.x===184&&t.y===346&&t.text===trainingLabel),key+' HUD labels the actual training value');
    assert.equal(JSON.stringify(view),before,'Battle HUD preserves current-ruler loyalty sentinel and RNG');
   }
   view.game.extension.leaders.current=foe;env.texts.length=0;scene.mount(env.host,view,selected);
-  assert(env.texts.some(t=>t.x===184&&t.y===191&&t.text==='忠 100'),key+' ordinary officer with100 loyalty is not masked');scene.dispose();
+  assert(env.texts.some(t=>t.x===184&&t.y===335&&t.text==='忠 100'),key+' ordinary officer with100 loyalty is not masked');scene.dispose();
  }
  for(const mutate of [r=>r.schema='unknown',r=>r.revision++,r=>r.scenes.push(...Array(25).fill(r.scenes[0])),r=>r.scenes[0].battle_id='another-battle',r=>r.scenes[0].kind='execute-command',r=>r.scenes[0].actor=true,r=>r.scenes[0].counter=1,r=>r.scenes[0].effect='invented',r=>r.scenes[0].before.units[0]=null,r=>r.scenes[0].before.units[0].troops=-1,r=>r.scenes[0].after.units[0].health=100,r=>r.scenes[0].after.units[0].energy=19,r=>r.scenes[0].after.units[1].id=r.scenes[0].after.units[0].id]){
   const malformed=clone(first.after.presentation);mutate(malformed);assert.equal(standalone.receiptScenes(malformed,bid,revision).length,0,'Malformed receipt must be ignored');
@@ -508,8 +564,8 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   const units=[...row.before.game.battle.attackers,...row.before.game.battle.defenders];assert.equal(flags.length,units.length);
   const cells=flags.map(r=>[Math.floor((r.x+6)/16),Math.floor((r.y+6)/16)]);
   assert.equal(new Set(cells.map(p=>p.join(':'))).size,units.length,'Deployment does not overlap');
-  for(const[x,y]of cells){assert(x>=0&&x<31&&y>=0&&y<19);assert([0,1,2].includes(chosen.field.classes[y][x]),'Selectable flags do not cover water, mountain peaks or the camp');}
-  const own=row.before.game.battle.attacker===row.before.game.player?'attackers':'defenders',id=row.before.game.battle[own].find(u=>u.troops>0&&!row.before.game.battle.used.includes(u.id)).id,
+  for(const[index,[x,y]]of cells.entries()){assert(x>=0&&x<31&&y>=0&&y<19);assert.deepEqual([x,y],Object.values(standalone.unitPosition(row.before,units[index].id)),'Flag cells come only from the authoritative saved positions');}
+  const own=row.before.game.battle.attacker===row.before.game.player?'attackers':'defenders',id=row.before.game.battle[own].find(u=>u.troops>0).id,
    index=units.findIndex(u=>u.id===id),flag=flags[index],rect=env.surface.getBoundingClientRect();
   env.surface.onclick({clientX:(flag.x+6)*rect.width/496,clientY:(flag.y+6)*rect.height/384});assert.deepEqual(calls,[['actor',id]],'Full-map clicks use native map coordinates');
   env.surface.onclick({clientX:rect.width/2,clientY:rect.height*330/384});assert.equal(calls.length,1,'HUD clicks never select a unit');
@@ -519,7 +575,19 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   scene.skip();await playback;assert.equal(env.surface.width,1984);assert.equal(env.surface.height,1536,'Skipping returns to the full city map');
   assert.equal(JSON.stringify(row),original,'Maps, deployment, selection, language and playback never change the save/RNG');scene.dispose();assert.equal(env.timers.size,0);
   const missing=environment({manifest:nativeManifest,battlefields:fields,failedPaths:[chosen.field.path]}),fallback=missing.api.create();fallback.mount(missing.host,row.before);await fallback.load();for(let i=0;i<5;i++)await Promise.resolve();
-  assert.equal(missing.surface.width,1024);assert.equal(missing.surface.height,960,'A missing map keeps a usable retained reference battlefield');fallback.dispose();
+  assert.equal(missing.surface.width,1984);assert.equal(missing.surface.height,1536,'A missing bitmap retains the authoritative31x19 coordinate system');fallback.dispose();
+ }
+ // A routed flag releases its cell and cannot cover or intercept a live unit.
+ {
+  const value=clone(first.before),b=value.game.battle,actor=b.attackers[0].id,dead=b.defenders[0].id,p=b.extended.tactical.positions[actor];
+  b.defenders[0].troops=0;b.extended.support[dead].health=0;b.extended.tactical.positions[dead]={...p};
+  const env=environment(),selections=[],cells=[],directions=[],confirmed=[],scene=env.api.create({onSelect:(...args)=>selections.push(args),onCell:p=>cells.push(p),onNavigate:(...args)=>directions.push(args),onConfirmMove:()=>confirmed.push(true)}),before=JSON.stringify(value);
+  scene.mount(env.host,value,{actor});const bodies=env.rectangles.filter(r=>r.w===10&&r.h===10&&r.x===p.x*16+3&&r.y===p.y*16+3);
+  assert.deepEqual(bodies.map(r=>r.color),['#888888','#ffffff'],'Routed flags paint before live flags at the same saved cell');
+  const rect=env.surface.getBoundingClientRect();env.surface.onclick({clientX:(p.x*16+8)*rect.width/496,clientY:(p.y*16+8)*rect.height/384});assert.deepEqual(selections,[['actor',actor]]);
+  env.surface.onclick({clientX:30.5*16*rect.width/496,clientY:18.5*16*rect.height/384});assert.equal(cells.length,1,'An empty whole cell sends only a preview intent');
+  env.surface.onkeydown({key:'ArrowRight',preventDefault(){}});env.surface.onkeydown({key:'Enter',preventDefault(){}});assert.deepEqual(directions,[[1,0]]);assert.equal(confirmed.length,1);
+  assert.equal(JSON.stringify(value),before,'Grid selection and keyboard intents cannot mutate the campaign or sample RNG');scene.dispose();
  }
  for(const manifest of [null,{schema:'wrong',backgrounds:{},sprites:{}},{schema:'tk2-battle-original-v1',backgrounds:{plain:{path:'/assets/battle-original/../escape.png'}},sprites:{}}]){
   const env=environment({manifest}),scene=env.api.create();assert.equal(await scene.load(),false);assert.equal(scene.state().assetStatus,'unavailable');assert.equal(env.rafs.size,0);assert.equal(env.timers.size,0);scene.dispose();

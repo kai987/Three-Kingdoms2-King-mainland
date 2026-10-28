@@ -21,7 +21,7 @@ from remake.errors import GameError
 from remake.march_core import using_backend,invoke,CoreUnavailable
 from remake.session import CampaignSession
 from remake.view_transport import ViewTransport
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import controlled_catalog, arrange_contact
 from test_remake_civil_staff_campaign import staff_catalog
 from test_remake_tactical_ai import successful_rng
 
@@ -251,6 +251,7 @@ class FacilityCampaignTests(unittest.TestCase):
             self.advance(game)
             state=game.state
             game._start_expanded_battle(state,state.cities['xiangyang'],state.cities['nanyang'],[146])
+            arrange_contact(game)
             successful_rng(state)
             battle=state.battle;target=battle['defenders'][0]['id']
             self.cmd(game,'duel_start',battle_id=battle['id'],actor=146,target=target)

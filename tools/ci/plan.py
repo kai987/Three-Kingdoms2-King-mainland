@@ -305,10 +305,15 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
                 else:
                     groups.update(('map', 'scenarios'))
                     reasons.append('Shared map presentation changed: ' + path)
-            elif (path == 'game/config/battlefield-city-bindings.json'
-                  or path.startswith(('game/assets/battlefields/', 'tools/battlefields/'))):
+            elif (path in ('game/config/battlefield-city-bindings.json',
+                           'game/assets/battlefields/index.json')
+                  or path.startswith('tools/battlefields/')
+                     and not path.startswith('tools/battlefields/evidence/')):
+                full = True
+                reasons.append('Authoritative tactical map, terrain or extraction input: ' + path)
+            elif path.startswith(('game/assets/battlefields/', 'tools/battlefields/evidence/')):
                 groups.update(('battle', 'map'))
-                reasons.append('Original battlefield artwork or display-only city binding: ' + path)
+                reasons.append('Battlefield pixels or native screenshot evidence: ' + path)
             elif (path.startswith(('source/remake/', 'crates/', 'tools/ci/', '.github/'))
                   or path.startswith('game/config/') or path in ('game/build_campaigns.py', 'game/build_web.py', 'game/serve.py')
                   or path.endswith(('requirements.txt', 'pyproject.toml', 'Cargo.toml', 'Cargo.lock'))):

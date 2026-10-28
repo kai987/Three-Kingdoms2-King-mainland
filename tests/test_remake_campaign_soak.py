@@ -4,6 +4,7 @@ The multi-year real-catalog matrix is a separate CI job, not repeated by every
 unittest discovery. These small controlled cases verify the harness itself.
 """
 import importlib.util
+from copy import deepcopy
 from pathlib import Path
 import sys
 import unittest
@@ -20,6 +21,71 @@ spec.loader.exec_module(soak)
 
 
 class CampaignSoakTests(unittest.TestCase):
+    def early_legs(self):
+        # These small values test coverage gates; real campaign execution and
+        # physical/save/RNG parity have their own tests below and in release CI.
+        def leg(name, faction, completed, succession):
+            return dict(name=name, faction=faction, backends=['python', 'rust'], parity=True,
+                result=dict(completed_turns=completed, requested_turns=72,
+                    coverage=dict(crossed_year=True, player_successions=int(succession)),
+                    succession=[dict(turn=34, previous=1, successor=2)] if succession else [],
+                    final=dict(phase='finished' if completed < 72 else 'city',
+                               outcome='defeat' if completed < 72 else None)))
+        return [leg('huangjin_succession', 'yellow_turban', 35, True),
+                leg('han_continuity', 'han', 72, False)]
+
+    def test_early_terminal_rebellion_cannot_replace_the_complete_independent_han_leg(self):
+        legs = self.early_legs()
+        coverage = soak.require_early_coverage(legs, 72)
+        self.assertEqual(coverage['continuity_completed_turns'], 72)
+        self.assertEqual(coverage['rebellion_completed_turns'], 35)
+        self.assertEqual(coverage['rebellion_player_successions'], 1)
+        with self.assertRaisesRegex(AssertionError, 'both independent campaigns'):
+            soak.require_early_coverage(legs[:1], 72)
+        incomplete = deepcopy(legs)
+        incomplete[1]['result']['completed_turns'] = 71
+        with self.assertRaisesRegex(AssertionError, 'complete every requested turn'):
+            soak.require_early_coverage(incomplete, 72)
+        incomplete = deepcopy(legs)
+        incomplete[0]['result']['final']['phase'] = 'city'
+        with self.assertRaisesRegex(AssertionError, 'validated terminal result'):
+            soak.require_early_coverage(incomplete, 72)
+        incomplete = deepcopy(legs)
+        incomplete[0]['result']['succession'] = []
+        with self.assertRaisesRegex(AssertionError, 'real ruler succession'):
+            soak.require_early_coverage(incomplete, 72)
+
+    def test_early_either_leg_without_backend_parity_blocks_release(self):
+        for index in range(2):
+            legs = self.early_legs()
+            legs[index]['parity'] = False
+            with self.assertRaisesRegex(AssertionError, 'exact Python/Rust parity'):
+                soak.require_early_coverage(legs, 72)
+
+    def test_early_does_not_swallow_either_legs_soldier_conservation_failure(self):
+        for index in range(2):
+            first = self.early_legs()[0]
+            first.pop('name')
+            results = [first] if index else []
+            with patch.object(soak, 'run_leg', side_effect=[*results, AssertionError('Soldier conservation failed')]):
+                with self.assertRaisesRegex(AssertionError, 'Soldier conservation failed'):
+                    soak.run_case('early', 3)
+
+    def test_independent_leg_compares_full_rng_state_and_transcript_before_reporting_parity(self):
+        catalog = controlled_catalog()
+        with using_backend('python'):
+            result = soak.Replay(catalog, 'shu', 3, 'python').run(1)
+        for field in ('rng', 'command_sha256', 'final_save_sha256'):
+            left, right = deepcopy(result), deepcopy(result)
+            right['backend'] = 'rust'
+            if field == 'rng':
+                right['final']['rng']['draws'] += 1
+            else:
+                right[field] = 'altered'
+            with patch.object(soak.Replay, 'run', side_effect=[left, right]):
+                with self.assertRaisesRegex(AssertionError, 'state/save/RNG/transcript divergence'):
+                    soak.run_leg(catalog, 'shu', 3, ('python', 'rust'), 1)
+
     def test_no_battle_choice_fails_instead_of_forcing_a_retreat(self):
         with using_backend('python'):
             replay = soak.Replay(controlled_catalog(), 'shu', 3, 'python')

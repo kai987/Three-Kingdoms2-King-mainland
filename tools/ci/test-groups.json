@@ -40,6 +40,15 @@
         "battle"
       ]
     },
+    "tests/test_remake_battle_grid.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ]
+    },
     "tests/test_remake_battle_presentation.py": {
       "tier": "related",
       "groups": [
@@ -670,6 +679,15 @@
       "tier": "related",
       "groups": [
         "battle"
+      ]
+    },
+    "tests/test_remake_tactical_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
       ]
     },
     "tests/test_remake_ten_day_calendar.py": {

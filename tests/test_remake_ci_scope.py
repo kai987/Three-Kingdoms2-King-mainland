@@ -266,11 +266,9 @@ class ScopePlanTests(unittest.TestCase):
         self.assertTrue(result['resupply'])
         self.assertFalse(result['native'])
 
-    def test_battlefield_art_tools_bindings_and_loader_select_battle_and_map_only(self):
-        for path in ('game/assets/battlefields/index.json',
-                     'game/assets/battlefields/original-29.png',
-                     'tools/battlefields/build.py', 'tools/battlefields/evidence/city05.png',
-                     'game/config/battlefield-city-bindings.json', 'game/battlefields.js'):
+    def test_battlefield_pixels_evidence_and_loader_select_battle_and_map_only(self):
+        for path in ('game/assets/battlefields/original-29.png',
+                     'tools/battlefields/evidence/city05.png', 'game/battlefields.js'):
             with self.subTest(path=path):
                 head = self.changed(path, 'display-only battlefield input\n')
                 result = self.repo.plan()
@@ -283,6 +281,18 @@ class ScopePlanTests(unittest.TestCase):
                 # Do not let a previous path accidentally supply the scope for
                 # the next one: each case has its own exact published baseline.
                 self.repo.base = head
+
+    def test_tactical_grid_bindings_generator_and_learning_tables_require_full_rules(self):
+        for path in ('game/assets/battlefields/index.json',
+                     'game/config/battlefield-city-bindings.json',
+                     'tools/battlefields/build.py',
+                     'game/config/references/original-battle-tactics-v1.json'):
+            with self.subTest(path=path):
+                head=self.changed(path,'authoritative tactical input\n')
+                result=self.repo.plan()
+                self.assertEqual(result['mode'],'full',result['reasons'])
+                self.assertTrue(all(result[field] for field in ('full','native','rules','soak')))
+                self.repo.base=head
 
     def test_battlefield_display_scope_cannot_hide_shared_combat_or_route_rule_changes(self):
         self.changed('game/config/battlefield-city-bindings.json', 'display-only binding\n')

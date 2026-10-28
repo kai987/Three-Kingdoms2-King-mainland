@@ -1,0 +1,907 @@
+{
+  "schema": "tk2-original-battle-tactics-v1",
+  "scope": "Read-only Namco FC manual/ROM evidence for movement, shared action points and spatial target qualification. Data tables are not ROM executable code; no emulator or player-save changes.",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "manual_scans": [
+    {
+      "pages": [
+        30,
+        31
+      ],
+      "url": "https://cdn-ak.f.st-hatena.com/images/fotolife/j/jackallsasaki/20260802/20260802002850.jpg",
+      "sha256": "3ec9d4aad7de2f35998ed20000179fe4746a8c5d8f0b75c4c87fb90308605792"
+    },
+    {
+      "pages": [
+        32,
+        33
+      ],
+      "url": "https://cdn-ak.f.st-hatena.com/images/fotolife/j/jackallsasaki/20260802/20260802002854.jpg",
+      "sha256": "bc502fbfc927aeb81b85427809f48225b9cabf3185fd201354113ffceb9967a5"
+    },
+    {
+      "pages": [
+        34,
+        35
+      ],
+      "url": "https://cdn-ak.f.st-hatena.com/images/fotolife/j/jackallsasaki/20260802/20260802002858.jpg",
+      "sha256": "7b0bfd3b82755453a7d9e0e95b93ea7bc4ec2dbd830860ee9a41038d581dc86b"
+    },
+    {
+      "pages": [
+        36,
+        37
+      ],
+      "url": "https://cdn-ak.f.st-hatena.com/images/fotolife/j/jackallsasaki/20260802/20260802002901.jpg",
+      "sha256": "850234cfa9eddfeb5850b2854dd59c53020f7c3486bc9eb3b71ebaafe6eb2b67"
+    },
+    {
+      "pages": [
+        38,
+        39
+      ],
+      "url": "https://cdn-ak.f.st-hatena.com/images/fotolife/j/jackallsasaki/20260802/20260802002905.jpg",
+      "sha256": "4be74330f799491ad9014bb1e5fe162977e4528a0f6dc22ab4957c4895079172"
+    },
+    {
+      "pages": [
+        40,
+        41
+      ],
+      "url": "https://cdn-ak.f.st-hatena.com/images/fotolife/j/jackallsasaki/20260802/20260802002911.jpg",
+      "sha256": "188dfd1aca878f53064eba86d1e9015c208020aceb3f2370d0d2a1587756f6cd"
+    },
+    {
+      "pages": [
+        64,
+        65
+      ],
+      "url": "https://cdn-ak.f.st-hatena.com/images/fotolife/j/jackallsasaki/20260802/20260802003010.jpg",
+      "sha256": "c2c358661f6d4c5716a1b9a2b71af807f0ae1eab7777301190261c66dbae81a1"
+    }
+  ],
+  "confirmed": {
+    "same_side_repeated_actions": {
+      "rule": "Shared faction AP, no once-per-unit cap. Move then attack, attack then move and repeated legal actions are possible while AP suffices.",
+      "manual_pages": [
+        32,
+        33,
+        36,
+        37
+      ],
+      "rom_entries": [
+        "12:A05E",
+        "12:A31B",
+        "12:A31E",
+        "12:A6B2",
+        "12:A634"
+      ]
+    },
+    "side_turn_and_day": {
+      "rule": "Attacker first. Passing/zero AP yields to the opponent; after both sides one battlefield day passes. Unspent AP carries to the next day up to a troop-dependent cap.",
+      "manual_pages": [
+        32,
+        33,
+        37
+      ],
+      "rom_entries": [
+        "12:BDC0-BE7D",
+        "13:C5A0-C605"
+      ]
+    },
+    "daily_ap": {
+      "index": "floor(sum(current participating troops of this side)/1000)",
+      "legitimate_index_range": [
+        0,
+        9
+      ],
+      "daily_increment": [
+        10,
+        16,
+        20,
+        24,
+        28,
+        32,
+        35,
+        37,
+        40,
+        42
+      ],
+      "balance_cap": [
+        20,
+        26,
+        32,
+        36,
+        42,
+        46,
+        51,
+        53,
+        58,
+        60
+      ],
+      "physical_bank": 13,
+      "increment_cpu": "C606",
+      "increment_file_offset_hex": "0x1A616",
+      "cap_cpu": "C613",
+      "cap_file_offset_hex": "0x1A623",
+      "formula": "new_balance=min(previous_balance+daily_increment[index],balance_cap[index])",
+      "sources": [
+        "13:DA83",
+        "13:DAC3",
+        "13:C5A0-C605"
+      ],
+      "daily_increment_first10_hex": "0a 10 14 18 1c 20 23 25 28 2a",
+      "daily_increment_first10_sha256": "7c852babbe6d246bc4d3b8dc3917c816c006d80e19881e9059837ffdffe7b3c8",
+      "balance_cap_first10_hex": "14 1a 20 24 2a 2e 33 35 3a 3c",
+      "balance_cap_first10_sha256": "9d471ea96e40fa31e0aae84ec6a59fe62cc5882d3760bc00e8659cf2b61741df"
+    },
+    "normal_attack": {
+      "range": "orthogonal adjacent only",
+      "ap_cost": 2,
+      "diagonal": false,
+      "manual_pages": [
+        30,
+        36,
+        64
+      ],
+      "rom_entries": [
+        "12:A368-A3D1",
+        "12:A31B-A31E"
+      ]
+    },
+    "movement": {
+      "steps": "orthogonal one-cell steps; every traversed cell consumes terrain/affinity AP",
+      "occupied_cell": "cannot step onto another unit (player original checks the coordinate occupancy helper)",
+      "cancel": "before confirmation, B can undo individual preview steps and refund their recorded AP",
+      "ordinary_impassable_terrain": [],
+      "manual_pages": [
+        34,
+        35,
+        36,
+        64
+      ],
+      "rom_entries": [
+        "12:A64A-A7E6",
+        "12:A7E7-A822",
+        "13:DB03"
+      ]
+    },
+    "movement_tables": {
+      "terrain_order": [
+        "forest(0)",
+        "sand/special(1)",
+        "plain(2)",
+        "water(3)",
+        "mountain(4)",
+        "castle(5)",
+        "raw6(6)"
+      ],
+      "affinity_order": [
+        "plain(0)",
+        "mountain(1)",
+        "water(2)"
+      ],
+      "troops_0_to_599": [
+        [
+          2,
+          3,
+          3
+        ],
+        [
+          3,
+          3,
+          3
+        ],
+        [
+          1,
+          2,
+          2
+        ],
+        [
+          3,
+          5,
+          2
+        ],
+        [
+          3,
+          2,
+          4
+        ],
+        [
+          4,
+          4,
+          4
+        ],
+        [
+          4,
+          4,
+          4
+        ]
+      ],
+      "troops_600_or_more": [
+        [
+          3,
+          5,
+          5
+        ],
+        [
+          4,
+          4,
+          4
+        ],
+        [
+          2,
+          3,
+          3
+        ],
+        [
+          5,
+          6,
+          3
+        ],
+        [
+          5,
+          3,
+          6
+        ],
+        [
+          6,
+          6,
+          6
+        ],
+        [
+          6,
+          6,
+          6
+        ]
+      ],
+      "source_note": "Manual p64 prints parenthesized prices for 500 troops or fewer. ROM selects by floor(troops/100)>=6, giving the actual machine boundary600. Raw map event classes6/7/8 normalize to2 before ordinary movement; a unit affinity code3 is not a named legitimate affinity.",
+      "file_offsets_hex": [
+        "0x18833",
+        "0x1884F"
+      ]
+    },
+    "tactic_targeting": {
+      "general_range": "Chebyshev distance <=5 after removing the raw metadata row15",
+      "orthogonal_adjacent_tactics": [
+        6,
+        9,
+        13
+      ],
+      "self_target_tactics": [
+        11
+      ],
+      "costs": [
+        6,
+        5,
+        4,
+        6,
+        7,
+        8,
+        8,
+        8,
+        10,
+        9,
+        9,
+        10,
+        10,
+        8,
+        12,
+        10
+      ],
+      "source": "source/recovered/player_tactic_targeting.py",
+      "source_entries": [
+        "12:AA03",
+        "12:AD80-B01D",
+        "12:B860"
+      ],
+      "player_qualifiers": [
+        {
+          "id": 0,
+          "name": "火計",
+          "ap_cost": 6,
+          "condition": "Target forest or plain."
+        },
+        {
+          "id": 1,
+          "name": "陥穽",
+          "ap_cost": 5,
+          "condition": "Target forest or mountain."
+        },
+        {
+          "id": 2,
+          "name": "虚兵",
+          "ap_cost": 4,
+          "condition": "Target forest or mountain."
+        },
+        {
+          "id": 3,
+          "name": "要撃",
+          "ap_cost": 6,
+          "condition": "Target forest or mountain."
+        },
+        {
+          "id": 4,
+          "name": "乱水",
+          "ap_cost": 7,
+          "condition": "Target water."
+        },
+        {
+          "id": 5,
+          "name": "火箭",
+          "ap_cost": 8,
+          "condition": "Target is army commander slot0 or10."
+        },
+        {
+          "id": 6,
+          "name": "偽撃転殺",
+          "ap_cost": 8,
+          "condition": "Target castle; actor orthogonally adjacent."
+        },
+        {
+          "id": 7,
+          "name": "共殺",
+          "ap_cost": 8,
+          "condition": "Target forest/mountain and target has an orthogonally adjacent enemy of caster side."
+        },
+        {
+          "id": 8,
+          "name": "籠絡",
+          "ap_cost": 10,
+          "condition": "Target is not castle; the player eligibility gate has no AI loyalty threshold."
+        },
+        {
+          "id": 9,
+          "name": "落石",
+          "ap_cost": 9,
+          "condition": "Actor on mountain/castle, orthogonally adjacent target, target not castle."
+        },
+        {
+          "id": 10,
+          "name": "連環",
+          "ap_cost": 9,
+          "condition": "Target water and an orthogonally adjacent enemy is also on water."
+        },
+        {
+          "id": 11,
+          "name": "十面埋伏",
+          "ap_cost": 10,
+          "condition": "Self target; caster on forest with>=100troops and no existing own ambush slot."
+        },
+        {
+          "id": 12,
+          "name": "水攻",
+          "ap_cost": 10,
+          "condition": "Target water and an orthogonally adjacent enemy is also on water."
+        },
+        {
+          "id": 13,
+          "name": "連弩",
+          "ap_cost": 8,
+          "condition": "Actor on castle, orthogonally adjacent target."
+        },
+        {
+          "id": 14,
+          "name": "劫火",
+          "ap_cost": 12,
+          "condition": "Target not castle and an orthogonally adjacent enemy is also not on castle."
+        },
+        {
+          "id": 15,
+          "name": "奇門遁甲",
+          "ap_cost": 10,
+          "condition": "Target neither water nor castle; player eligibility gate has no AI martial/intellect threshold."
+        }
+      ]
+    },
+    "bow_scope": {
+      "rule": "No separate general bow command on the tactical map. Ordinary tactical-map attack first requires adjacency. Bow troop pieces can fire remotely inside the subsequent soldier-combat mode; precise inner-mode range is not established here.",
+      "manual_pages": [
+        36,
+        40,
+        41
+      ]
+    },
+    "battle_limits": {
+      "max_days": 30,
+      "timeout": "attacker withdraws",
+      "zero_grain": "side withdraws",
+      "manual_pages": [
+        30,
+        31,
+        33
+      ]
+    },
+    "tactic_payment": {
+      "rule": "The complete player tactical-map cast confirmation reads ABC9[tactic] and subtracts it from shared RAM0505. No per-officer18-energy payment or +4 daily restoration exists in the inspected payment chain; those values belonged to the former remake rules.",
+      "entries": [
+        "12:AA8A-AA98"
+      ],
+      "private_energy_charged": false
+    },
+    "initial_deployment": {
+      "manual": "Deployment is restricted to legal starting areas; attacker acts first.",
+      "manual_pages": [
+        32,
+        33
+      ],
+      "rom_entries": [
+        "13:DC99-DD71",
+        "13:C3CB-C444",
+        "13:C447-C4AE",
+        "13:DE9E-DEE8"
+      ],
+      "scope": "DC99 initializes empty positions. C3CB/C447 use attack arrival direction and city-specific pointer/area tables; C41C/C48E use the defender direction tables. Exact30-city deployment tables were not re-extracted in this change."
+    },
+    "multi_target_effects": {
+      "common_kill_7": {
+        "targets": "Selected enemy plus enemies on its orthogonal adjacent cells; not the first N roster entries.",
+        "hit_order": [
+          "selected",
+          "left",
+          "right",
+          "up",
+          "down"
+        ],
+        "maximum": 5,
+        "entry": "12:B2CD"
+      },
+      "connected_graph": {
+        "entry": "12:B8A1",
+        "algorithm": "BFS over orthogonally adjacent enemy units, beginning with the selected target. Castle-class5 units are not added/expanded. Empty cells break the unit graph.",
+        "expansion_order": [
+          "right",
+          "left",
+          "down",
+          "up"
+        ],
+        "water_filter_after_traversal": true,
+        "note": "Nonwater enemy units can connect two water occupants. This is a unit-contact graph, not a flood-fill of all river tiles."
+      },
+      "chain_10": {
+        "candidate_source": "connected_graph",
+        "affected": "Only candidates standing on water(class3).",
+        "entry": "12:B3D0"
+      },
+      "flood_12": {
+        "candidate_source": "connected_graph",
+        "affected": "Only candidates standing on water(class3).",
+        "entry": "12:B466"
+      },
+      "inferno_14": {
+        "candidate_source": "connected_graph",
+        "affected": "Candidates not standing on castle(class5).",
+        "entry": "12:B50C"
+      },
+      "crossbow_13": {
+        "affected": "Selected target only; no second target scan.",
+        "maximum": 1,
+        "entries": [
+          "12:B4B8",
+          "12:B4C6",
+          "12:B4FC-B505"
+        ]
+      }
+    },
+    "learnability": {
+      "scope": "Original PLAYER tactic menu generator; not the AI selector or effect success formula.",
+      "physical_bank": 9,
+      "cpu_entry_hex": "0xD3EE",
+      "file_offset_hex": "0x133FE",
+      "function_end_inclusive_hex": "0xD508",
+      "function_sha256": "4c9072cc5152b79a7548048bc30651c1e8cea20a93b35a18097b1401bbbeaf45",
+      "menu_pointer_cpu_hex": "0xD509",
+      "menu_pointer_file_offset_hex": "0x13519",
+      "menus": [
+        {
+          "menu_tier": 0,
+          "pointer_cpu_hex": "0xd51b",
+          "tactic_ids": [
+            0,
+            1
+          ]
+        },
+        {
+          "menu_tier": 1,
+          "pointer_cpu_hex": "0xd51e",
+          "tactic_ids": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "menu_tier": 2,
+          "pointer_cpu_hex": "0xd523",
+          "tactic_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "menu_tier": 3,
+          "pointer_cpu_hex": "0xd52a",
+          "tactic_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "menu_tier": 4,
+          "pointer_cpu_hex": "0xd533",
+          "tactic_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "menu_tier": 5,
+          "pointer_cpu_hex": "0xd53e",
+          "tactic_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "menu_tier": 6,
+          "pointer_cpu_hex": "0xd54b",
+          "tactic_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        },
+        {
+          "menu_tier": 7,
+          "pointer_cpu_hex": "0xd55a",
+          "tactic_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "menu_tier": 8,
+          "pointer_cpu_hex": "0xd56a",
+          "tactic_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ],
+      "ordinary_intellect_bands": [
+        {
+          "minimum_intellect": 0,
+          "maximum_tactic_id": 1
+        },
+        {
+          "minimum_intellect": 40,
+          "maximum_tactic_id": 3
+        },
+        {
+          "minimum_intellect": 60,
+          "maximum_tactic_id": 5
+        },
+        {
+          "minimum_intellect": 75,
+          "maximum_tactic_id": 7
+        },
+        {
+          "minimum_intellect": 85,
+          "maximum_tactic_id": 9
+        }
+      ],
+      "level_index": {
+        "original_field": "officer packed byte11 high nibble; zero-based code, not a displayed-level assertion",
+        "raw_experience_thresholds": [
+          1000,
+          2000,
+          3500,
+          5000,
+          7500,
+          10000,
+          15000
+        ],
+        "runtime_equivalent": "source/remake/officers.py:experience_tier"
+      },
+      "special_groups": [
+        {
+          "group": "A",
+          "minimum_tiers": [
+            {
+              "minimum_tier": 3,
+              "maximum_tactic_id": 11
+            }
+          ],
+          "people": [
+            {
+              "original_id": 161,
+              "original_transcribed_name": "程昱",
+              "person_id": "san14-candidate-0689"
+            },
+            {
+              "original_id": 99,
+              "original_transcribed_name": "荀彧",
+              "person_id": "san14-candidate-0393"
+            },
+            {
+              "original_id": 167,
+              "original_transcribed_name": "田豊",
+              "person_id": "san14-candidate-0713"
+            },
+            {
+              "original_id": 22,
+              "original_transcribed_name": "賈詡",
+              "person_id": "san14-candidate-0092"
+            },
+            {
+              "original_id": 196,
+              "original_transcribed_name": "法正",
+              "person_id": "san14-candidate-0827"
+            },
+            {
+              "original_id": 219,
+              "original_transcribed_name": "李儒",
+              "person_id": "san14-candidate-0907"
+            },
+            {
+              "original_id": 234,
+              "original_transcribed_name": "呂範",
+              "person_id": "san14-candidate-0986"
+            },
+            {
+              "original_id": 107,
+              "original_transcribed_name": "諸葛瑾",
+              "person_id": "san14-candidate-0432"
+            },
+            {
+              "original_id": 206,
+              "original_transcribed_name": "楊修",
+              "person_id": "san14-candidate-0866"
+            },
+            {
+              "original_id": 235,
+              "original_transcribed_name": "魯粛",
+              "person_id": "san14-candidate-0997"
+            },
+            {
+              "original_id": 183,
+              "original_transcribed_name": "馬良",
+              "person_id": "san14-candidate-0774"
+            }
+          ]
+        },
+        {
+          "group": "B",
+          "minimum_tiers": [
+            {
+              "minimum_tier": 3,
+              "maximum_tactic_id": 11
+            },
+            {
+              "minimum_tier": 4,
+              "maximum_tactic_id": 13
+            }
+          ],
+          "people": [
+            {
+              "original_id": 24,
+              "original_transcribed_name": "郭嘉",
+              "person_id": "san14-candidate-0095"
+            },
+            {
+              "original_id": 55,
+              "original_transcribed_name": "姜維",
+              "person_id": "san14-candidate-0203"
+            },
+            {
+              "original_id": 112,
+              "original_transcribed_name": "徐庶",
+              "person_id": "san14-candidate-0446"
+            },
+            {
+              "original_id": 213,
+              "original_transcribed_name": "陸遜",
+              "person_id": "san14-candidate-0902"
+            },
+            {
+              "original_id": 110,
+              "original_transcribed_name": "諸葛恪",
+              "person_id": "san14-candidate-0430"
+            },
+            {
+              "original_id": 103,
+              "original_transcribed_name": "鍾会",
+              "person_id": "san14-candidate-0406"
+            }
+          ]
+        },
+        {
+          "group": "C",
+          "minimum_tiers": [
+            {
+              "minimum_tier": 3,
+              "maximum_tactic_id": 11
+            },
+            {
+              "minimum_tier": 4,
+              "maximum_tactic_id": 13
+            },
+            {
+              "minimum_tier": 5,
+              "maximum_tactic_id": 14
+            }
+          ],
+          "people": [
+            {
+              "original_id": 197,
+              "original_transcribed_name": "龐統",
+              "person_id": "san14-candidate-0828"
+            },
+            {
+              "original_id": 86,
+              "original_transcribed_name": "司馬懿",
+              "person_id": "san14-candidate-0344"
+            },
+            {
+              "original_id": 93,
+              "original_transcribed_name": "周瑜",
+              "person_id": "san14-candidate-0379"
+            }
+          ]
+        },
+        {
+          "group": "D",
+          "minimum_tiers": [
+            {
+              "minimum_tier": 3,
+              "maximum_tactic_id": 11
+            },
+            {
+              "minimum_tier": 4,
+              "maximum_tactic_id": 13
+            },
+            {
+              "minimum_tier": 5,
+              "maximum_tactic_id": 14
+            },
+            {
+              "minimum_tier": 6,
+              "maximum_tactic_id": 15
+            }
+          ],
+          "people": [
+            {
+              "original_id": 109,
+              "original_transcribed_name": "諸葛亮",
+              "person_id": "san14-candidate-0440"
+            }
+          ]
+        }
+      ],
+      "selection_policy": "Try the matching original-ID special group. If its level threshold is met, that menu tier directly overrides the ordinary intellect tier. Otherwise use ordinary intellect bands. Eligible IDs are the complete prefix0..maximum, not only the extra spell. Do not add other officers to special lists by intellect, surname, reputation or runtime-ID proximity.",
+      "player_special_minimum_intellect": null,
+      "ai_difference": "The original AI special selector adds intellect>=92 plus level/whitelist predicates; this is not a player menu threshold. The remake applies one shared player-style learnability rule to player and AI.",
+      "identity_source": "game/config/portrait-identity-map.json"
+    }
+  },
+  "unknown_or_adaptation_required": [
+    "No complete LOS/cover rule for inner soldier-mode bow pieces verified; do not invent a tactical-map bow radius.",
+    "Current game displays a31x19 raster grid. Original player raw movement checks x<32,y<20 while original AI movement checks x<31,y<20 and both skip metadata row15; visible boundary policy must be explicit rather than claiming these two guards are identical.",
+    "Original player and AI tactic eligibility differ for some tactics (notably falling rocks). The remake player/AI common-rule requirement should deliberately use one shared predicate, with the choice labeled as adaptation.",
+    "No complete recreation of original inner soldier microbattle movement, formations, ranges, contact timing or animation is asserted by this reference."
+  ],
+  "source_files": [
+    {
+      "path": "source/recovered/battle_scene_controller.py",
+      "sha256": "6af446393521e0cd04d4129d79e3218e27e687e0d8d77d66c2dbf346832a4781"
+    },
+    {
+      "path": "source/recovered/player_tactic_targeting.py",
+      "sha256": "384b62ac62a8aebbdba2f9169b66cafc5525c21d949fb12267c910cd681e6009"
+    },
+    {
+      "path": "source/recovered/game_enums.py",
+      "sha256": "70c34d99d442ea40269507c306de680e1e1511baf5db1469764a63961c56963d"
+    },
+    {
+      "path": "source/recovered/battle.py",
+      "sha256": "e5f7da08d5b318676f319720bb54af147b6e589ce8c31ed4bc47d4b0ab0f5434"
+    },
+    {
+      "path": "source/recovered/tactical_decisions.py",
+      "sha256": "ea8ff96eac5544c212095e0a9a9287095ada12b5f6ded01fe3f70b3f0a850f6a"
+    },
+    {
+      "path": "analysis/phase11/battle/original-instructions.asm",
+      "sha256": "e165ec813304dc236f2259eb9546b6807bae38d389fd407a1b1d1c27066612b8"
+    },
+    {
+      "path": "source/recovered/tactic_area_conversion.py",
+      "sha256": "9be1b452b77e4f69e64cc819deffd6c4e329ffc5e6f5fab3cf6586afcedd0d28"
+    },
+    {
+      "path": "source/recovered/tactical_effects.py",
+      "sha256": "c01f7771608cf926c52c44d5b7b9d29b63b3472ee96e7d76e6742d28245486ed"
+    },
+    {
+      "path": "analysis/rea/pairs/pair-08/functions/0xd3ee.asm",
+      "sha256": "08735205c2392ba0978e1be501ae9e8e02dbec7df147486c441d52673d36c220"
+    }
+  ],
+  "remake_adaptations": {
+    "deployment": "Deterministic legal empty cells around native camps; not all original arrival-direction deployment menus.",
+    "visible_boundary": "31x19 visible grid shared by player and AI.",
+    "shared_target_predicates": "Use one shared spatial legality predicate; do not grant original AI asymmetric qualification loopholes.",
+    "duel_shortcut": "Adjacent shortcut consumes normal contact-attack2 AP. Original duels began inside soldier-combat mode; no original separate tactical-map duel AP formula is claimed. Individual duel moves do not charge shared AP again.",
+    "damage_and_chance": "Retain established remake single-target damage and success probability models; learnability, target eligibility and affected spatial sets are independently checked against recovered original rules.",
+    "legacy_energy": "Preserve old energy fields for existing-save structure; do not use the previous18/+4 as an additional eligibility lock or payer.",
+    "existing_effect_scope": "Existing damage, success rates, single stored ambush and self-guard support effects are retained remake models. Exact original learnability, spatial eligibility and affected sets do not prove all effect formulas or original separate-side ambush caches have been reimplemented."
+  }
+}

@@ -79,3 +79,105 @@ def advance_month(game):
     month = game.state.year, game.state.month
     while (game.state.year, game.state.month) == month:
         game._complete_turn(game.state)
+
+
+def arrange_contact(game, battle=None, actor=None, target=None):
+    """Stage a legal native-grid contact for isolated effect/receipt fixtures.
+
+    This is explicit test setup, not a playable movement shortcut. Real march
+    and battle-flow tests must issue battle_move/battle_wait. Positions remain
+    authoritative and all tactical rules stay enabled; no RNG/resources change.
+    """
+    from remake import battle_grid
+    battle = battle or game.state.battle
+    actor = battle['attackers'][0] if actor is None else actor
+    target = battle['defenders'][0] if target is None else target
+    actor = actor['id'] if isinstance(actor, dict) else actor
+    target = target['id'] if isinstance(target, dict) else target
+    field = battle_grid._field(battle)
+    pairs = [((x, y), (nx, ny)) for y in range(battle_grid.ROWS)
+             for x in range(battle_grid.COLUMNS) if field['classes'][y][x] == 2
+             for nx, ny in ((x+1, y), (x, y+1))
+             if 0 <= nx < battle_grid.COLUMNS and 0 <= ny < battle_grid.ROWS
+             and field['classes'][ny][nx] == 2]
+    if not pairs:
+        raise AssertionError('Native field has no plain contact pair for this fixture')
+    first, second = pairs[0]
+    positions = battle['extended']['tactical']['positions']
+    positions[str(actor)] = dict(x=first[0], y=first[1])
+    positions[str(target)] = dict(x=second[0], y=second[1])
+    occupied = {first, second}
+    for side in battle_grid.SIDES:
+        for unit in battle[side]:
+            if unit['id'] in (actor, target):
+                continue
+            key = str(unit['id'])
+            point = positions[key]
+            original = (point['x'], point['y'])
+            if original in occupied:
+                candidates = [(x, y) for y in range(battle_grid.ROWS)
+                    for x in range(battle_grid.COLUMNS) if (x, y) not in occupied]
+                original = min(candidates, key=lambda p: (abs(p[0]-point['x'])+abs(p[1]-point['y']), p[1], p[0]))
+                positions[key] = dict(x=original[0], y=original[1])
+            occupied.add(original)
+    return actor, target
+
+
+def arrange_tactic(game, tactic, actor=None, target=None):
+    """Explicit legal native cells for one isolated, already-unlocked effect.
+
+    Selects actual terrain cells and neighboring enemy units; it never edits
+    the field, removes tactical state or bypasses command validation.
+    """
+    from remake import battle_grid
+    battle = game.state.battle
+    actor = battle['attackers'][0] if actor is None else actor
+    target = battle['defenders'][0] if target is None else target
+    own, actor = battle_grid._unit(battle, actor)
+    foe, target = battle_grid._unit(battle, target)
+    field = battle_grid._field(battle)
+    ac = 4 if tactic == 9 else 5 if tactic == 13 else 0 if tactic == 11 else 2
+    tc = 0 if tactic in (1, 2, 3, 7) else 3 if tactic in (4, 10, 12) else 5 if tactic == 6 else 2
+    others = [u for u in battle[foe] if u['id'] != target['id']]
+    neighbor_class = 3 if tactic in (10, 12) else None
+    layout = None
+    for y in range(battle_grid.ROWS):
+        for x in range(battle_grid.COLUMNS):
+            if field['classes'][y][x] != tc:
+                continue
+            neighbors = [(nx, ny) for nx, ny in ((x-1, y), (x+1, y), (x, y-1), (x, y+1))
+                if 0 <= nx < battle_grid.COLUMNS and 0 <= ny < battle_grid.ROWS]
+            for source in neighbors:
+                if field['classes'][source[1]][source[0]] != ac:
+                    continue
+                free = [p for p in neighbors if p != source and (neighbor_class is None
+                    or field['classes'][p[1]][p[0]] == neighbor_class)
+                    and (tactic != 14 or field['classes'][p[1]][p[0]] != 5)]
+                if len(free) >= len(others):
+                    layout = source, (x, y), free
+                    break
+            if layout:
+                break
+        if layout:
+            break
+    if layout is None:
+        raise AssertionError(f'No native legal layout for tactic{tactic} on {battle["target"]}')
+    source, center, extra = layout
+    positions = battle['extended']['tactical']['positions']
+    occupied = set()
+    for unit, point in [(actor, source), (target, center), *zip(others, extra)]:
+        positions[str(unit['id'])] = dict(x=point[0], y=point[1])
+        occupied.add(point)
+    assigned = {actor['id'], target['id'], *(u['id'] for u in others)}
+    for side in battle_grid.SIDES:
+        for unit in battle[side]:
+            if unit['id'] in assigned:
+                continue
+            point = next((x, y) for y in range(battle_grid.ROWS)
+                         for x in range(battle_grid.COLUMNS) if (x, y) not in occupied)
+            positions[str(unit['id'])] = dict(x=point[0], y=point[1])
+            occupied.add(point)
+    tactical = battle['extended']['tactical']
+    tactical['side'] = own
+    tactical['passed'] = {side: False for side in battle_grid.SIDES}
+    tactical['points'][own] = battle_grid.point_cap(battle_grid._troops(battle, own))

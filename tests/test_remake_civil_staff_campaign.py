@@ -17,7 +17,7 @@ from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
 from remake import domestic, equipment, treasures
 from remake.officers import YearState, initialize_officer, year_state
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import controlled_catalog, arrange_contact
 
 
 FREE_PERSON = 'san14-candidate-0001'
@@ -359,6 +359,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
         # reaches the escape boundary, without altering its reserved start ledger.
         battle = game.state.battle
         battle['defenders'][0]['troops'] = 1
+        arrange_contact(game)
         game.validate(game.state)
         defender = battle['defenders'][0]['id']
         self.cmd(game, 'attack', battle_id=battle['id'], actor=146, target=defender)

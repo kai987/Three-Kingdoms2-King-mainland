@@ -93,13 +93,18 @@
    if(!cityId(city)||status!=='ready'||!Object.hasOwn(bindings.cities,city))return null;
    if(!resolved.has(city))resolved.set(city,selected(city,library,bindings));return resolved.get(city);
   }
-  const client={load,resolve,label(city,locale='zh-Hant'){const row=resolve(city);return row?(locale==='ja'?row.label_ja:row.label_tc):'';},
+  function resolveMap(id){
+   if(!mapId(id)||status!=='ready')return null;
+   const field=library.maps[id],template=bindings.templates[id];
+   return Object.freeze({field,grid:library.grid,label_tc:'原版'+template.display_tc.replace(/^原版/,'')+'戰場',label_ja:'原作'+template.display_ja.replace(/^原作/,'')+'の戦場'});
+  }
+  const client={load,resolve,resolveMap,label(city,locale='zh-Hant'){const row=resolve(city);return row?(locale==='ja'?row.label_ja:row.label_tc):'';},
    description(city,locale='zh-Hant'){const row=resolve(city);return row?(locale==='ja'?row.description_ja:row.description_tc):'';},
    get status(){return status;},get library(){return library;},get bindings(){return bindings;}};
   return Object.freeze(client);
  }
  const client=create(),api={LIBRARY_SCHEMA,BINDINGS_SCHEMA,INDEX,BINDINGS,WIDTH,HEIGHT,COLUMNS,ROWS,TILE,
-  validateLibrary,validateBindings,select,create,load:client.load,resolve:client.resolve,label:client.label,description:client.description,
+  validateLibrary,validateBindings,select,create,load:client.load,resolve:client.resolve,resolveMap:client.resolveMap,label:client.label,description:client.description,
   get status(){return client.status;},get library(){return client.library;},get bindings(){return client.bindings;}};
  if(typeof module==='object'&&module.exports)module.exports=api;
  if(root)root.GameBattlefields=Object.freeze(api);

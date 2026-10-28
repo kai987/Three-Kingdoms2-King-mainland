@@ -10,7 +10,10 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, GameError, digest
 from remake.officers import initialize_officer, PersonDefinition, OfficerProfile
 from remake.march_supply import estimate
-from campaign_fixtures import controlled_catalog, reach_battle
+from campaign_fixtures import arrange_contact, controlled_catalog, reach_battle
+from remake import battle_grid
+from remake.tactical_ai import choose_action
+from remake.campaign_expansion import TACTICS
 
 
 class CampaignTests(unittest.TestCase):
@@ -27,13 +30,22 @@ class CampaignTests(unittest.TestCase):
         return reach_battle(self.game)
 
     def fight(self):
-        for _ in range(500):
-            b = self.game.state.battle
-            if self.game.state.phase == 'result':
+        for _ in range(2000):
+            state = self.game.state
+            b = state.battle
+            if state.phase == 'result':
                 return b['outcome']
-            actor = next(u['id'] for u in b['attackers'] if u['troops'] > 0 and u['id'] not in b['used'])
-            target = next(u['id'] for u in b['defenders'] if u['troops'] > 0)
-            self.cmd('attack', dict(battle_id=b['id'], actor=actor, target=target))
+            own, foe = self.game._player_sides(state)
+            choice = choose_action(state, b, own, foe,
+                self.game.catalog.map_cities[b['target']]['terrain'], TACTICS,
+                settings={'tactic_depth': 0})
+            if choice is None or choice['kind'] == 'wait':
+                self.cmd('battle_wait', dict(battle_id=b['id']))
+            elif choice['kind'] == 'move':
+                self.cmd('battle_move', dict(battle_id=b['id'], actor=choice['actor'],
+                                            x=choice['x'], y=choice['y']))
+            else:
+                self.cmd(choice['kind'], dict(battle_id=b['id'], actor=choice['actor'], target=choice['target']))
         self.fail('Battle did not finish')
 
     def test_real_high_ids_and_current_roster_rules(self):
@@ -110,6 +122,7 @@ class CampaignTests(unittest.TestCase):
         self.game.command('new', dict(faction='wei', seed=2026), self.game.revision)
         battle_id = self.start(123, 480, 'xiangyang', 'nanyang')
         target = self.game.state.battle['defenders'][0]['id']
+        arrange_contact(self.game)
         self.cmd('attack', dict(battle_id=battle_id, actor=123, target=target))
         remaining = self.game.state.battle['attackers'][0]['troops']
         paid_grain = self.game.state.cities['nanyang'].grain
@@ -134,6 +147,7 @@ class CampaignTests(unittest.TestCase):
 
     def test_midbattle_save_restores_exact_next_action_and_rng(self):
         battle_id = self.start(146, 180, 'nanyang')
+        arrange_contact(self.game)
         self.cmd('attack', dict(battle_id=battle_id, actor=146, target=123))
         twin = Campaign(self.game.catalog)
         twin.load_save(self.game.export_save(), 0)
@@ -158,12 +172,15 @@ class CampaignTests(unittest.TestCase):
             self.assertEqual(self.game.to_dict(), original)
             self.assertEqual(self.game.revision, revision)
 
-    def test_tactic_consumes_energy_action_and_roundtrips(self):
+    def test_tactic_consumes_shared_points_preserves_legacy_energy_and_roundtrips(self):
         battle_id = self.start(146, 400, 'nanyang')
+        arrange_contact(self.game)
         support = self.game.state.battle['extended']['support']['146']
         before = support['energy']
+        points = self.game.state.battle['extended']['tactical']['points']['attackers']
         self.cmd('tactic', dict(battle_id=battle_id, actor=146, target=123, tactic=0))
-        self.assertLess(self.game.state.battle['extended']['support']['146']['energy'], before)
+        self.assertEqual(self.game.state.battle['extended']['support']['146']['energy'], before)
+        self.assertEqual(self.game.state.battle['extended']['tactical']['points']['attackers'], points - battle_grid.TACTIC_COSTS[0])
         self.game.validate(self.game.state)
         restored = Campaign(self.game.catalog)
         restored.load_save(self.game.export_save(), 0)

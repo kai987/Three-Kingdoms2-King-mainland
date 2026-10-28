@@ -11,9 +11,9 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, SeedRng, canonical
 from remake.campaign_expansion import TACTICS
 from remake.errors import GameError
-from remake import presentation
+from remake import battle_grid, presentation
 from remake.session import CampaignSession
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import arrange_contact, controlled_catalog
 from test_remake_tactical_ai import battle, actors, successful_rng
 from test_remake_civil_staff_campaign import staff_catalog
 
@@ -60,54 +60,73 @@ class BattlePresentationTests(unittest.TestCase):
     def unit(self, scene, when, ident):
         return next(row for row in scene[when]['units'] if row['id'] == ident)
 
-    def test_actual_attack_and_ai_response_identify_a_different_counter_target(self):
+    def test_actual_attack_then_explicit_wait_records_the_real_enemy_target(self):
         game = Campaign(controlled_catalog())
         game.state = game._new('shu', 2026)
         state = game.state
         selected = state.cities['xiangyang'].roster.officer_ids[:2]
         game._start_expanded_battle(state, state.cities['xiangyang'], state.cities['nanyang'], selected)
         b = state.battle; actor, other = b['attackers']; target = b['defenders'][0]
+        arrange_contact(game, actor=actor, target=target)
+        positions = b['extended']['tactical']['positions']
+        point = positions[str(target['id'])]
+        occupied = {(p['x'], p['y']) for key, p in positions.items() if key != str(other['id'])}
+        x,y = next((x,y) for x,y in ((point['x']+1,point['y']), (point['x'],point['y']+1),
+                    (point['x']-1,point['y']), (point['x'],point['y']-1))
+                   if 0<=x<31 and 0<=y<19 and (x,y) not in occupied)
+        positions[str(other['id'])] = dict(x=x,y=y)
+        scenes = self.perform(game, 'attack', battle_id=b['id'], actor=actor['id'], target=target['id'])
+        self.assertEqual([(r['kind'],r['actor'],r['target'],r['counter']) for r in scenes],
+                         [('attack',actor['id'],target['id'],False)])
+        initial_points = game.state.battle['extended']['tactical']['points']['defenders']
         choice = dict(kind='attack', actor=target['id'], target=other['id'])
-        with patch('remake.tactical_ai.choose_action', return_value=choice):
-            scenes = self.perform(game, 'attack', battle_id=b['id'], actor=actor['id'], target=target['id'])
-        self.assertEqual([(s['kind'], s['actor'], s['target'], s['counter']) for s in scenes],
-            [('attack', actor['id'], target['id'], False),
-             ('attack', target['id'], other['id'], True)])
-        for scene in scenes:
-            self.assertGreater(self.unit(scene, 'before', scene['target'])['troops'],
-                               self.unit(scene, 'after', scene['target'])['troops'])
-        self.assertEqual(self.unit(scenes[1], 'before', actor['id'])['troops'],
-                         self.unit(scenes[1], 'after', actor['id'])['troops'])
+        def one_enemy_action(state,battle,*args,**kwargs):
+            return choice if battle['extended']['tactical']['points']['defenders']==initial_points else None
+        with patch('remake.tactical_ai.choose_action', side_effect=one_enemy_action):
+            replies = self.perform(game, 'battle_wait', battle_id=b['id'])
+        self.assertEqual([(r['kind'],r['actor'],r['target'],r['counter']) for r in replies],
+                         [('attack',target['id'],other['id'],True)])
+        for scene in [*scenes,*replies]:
+            self.assertGreater(self.unit(scene,'before',scene['target'])['troops'],
+                               self.unit(scene,'after',scene['target'])['troops'])
+        self.assertEqual(self.unit(replies[0],'before',actor['id'])['troops'],
+                         self.unit(replies[0],'after',actor['id'])['troops'])
 
     def test_all_sixteen_tactics_record_the_actual_success_cost_and_affected_units(self):
         for tid, (_, cost, effect, _) in enumerate(TACTICS):
             terrain = 'water' if effect in {'water', 'chain', 'flood'} else 'mountain' if effect == 'rock' else 'plain'
             with self.subTest(tactic=tid):
-                game = battle(terrain)
+                game = battle(terrain, spell=tid)
                 b, actor, target, _, _ = actors(game)
                 successful_rng(game.state)
                 if effect in {'trap', 'rock'}:
                     b['extended']['support'][str(target['id'])]['health'] = 2
+                points=b['extended']['tactical']['points']['attackers']
+                affected=len(battle_grid.affected_units(b,target,tid,'defenders'))
                 scenes = self.perform(game, 'tactic', battle_id=b['id'], actor=actor['id'],
                                       target=target['id'], tactic=tid)
                 scene = scenes[0]
                 self.assertEqual((scene['kind'], scene['tactic'], scene['effect']), ('tactic', tid, effect))
                 self.assertTrue(scene['success']); self.assertFalse(scene['skipped'])
                 self.assertEqual(self.unit(scene, 'after', actor['id'])['energy'],
-                                 self.unit(scene, 'before', actor['id'])['energy'] - cost)
+                                 self.unit(scene, 'before', actor['id'])['energy'])
+                self.assertEqual(game.state.battle['extended']['tactical']['points']['attackers'],points-cost)
                 if effect in {'area', 'crossbow', 'flood', 'inferno'}:
-                    expected = min(len(b['defenders']), 3 if effect == 'area' else 2 if effect == 'crossbow' else 20)
+                    expected = affected
                     changed = sum(u['troops'] != self.unit(scene, 'after', u['id'])['troops']
                                   for u in scene['before']['units'] if u['side'] == 'defenders')
                     self.assertEqual(changed, expected)
 
-    def test_counter_tactic_is_flagged_and_failure_is_not_guessed_from_log_text(self):
+    def test_enemy_tactic_after_wait_is_flagged_and_failure_is_not_guessed_from_log_text(self):
         game = battle(three_enemies=False)
         b, actor, target, _, _ = actors(game)
-        with patch('remake.tactical_ai.choose_action', return_value=dict(kind='tactic',
-                actor=target['id'], target=actor['id'], tactic=15)):
-            scenes = self.perform(game, 'attack', battle_id=b['id'], actor=actor['id'], target=target['id'])
-        self.assertEqual((scenes[-1]['kind'], scenes[-1]['counter'], scenes[-1]['tactic']), ('tactic', True, 15))
+        initial_points=b['extended']['tactical']['points']['defenders']
+        choice=dict(kind='tactic',actor=target['id'],target=actor['id'],tactic=0)
+        def one_enemy_action(state,battle,*args,**kwargs):
+            return choice if battle['extended']['tactical']['points']['defenders']==initial_points else None
+        with patch('remake.tactical_ai.choose_action',side_effect=one_enemy_action):
+            scenes = self.perform(game,'battle_wait',battle_id=b['id'])
+        self.assertEqual((scenes[-1]['kind'],scenes[-1]['counter'],scenes[-1]['tactic']),('tactic',True,0))
         game = battle(three_enemies=False); b, actor, target, _, _ = actors(game)
         seed = next(i for i in range(1, 10000) if SeedRng(i).next() % 100 >= 95)
         game.state.rng = SeedRng(seed)
@@ -230,6 +249,7 @@ class BattlePresentationTests(unittest.TestCase):
         game._start_expanded_battle(game.state, game.state.cities['nanjun'],
                                    game.state.cities['jiangxia'], [ident])
         b = game.state.battle
+        arrange_contact(game)
         scenes = self.perform(game, 'attack', battle_id=b['id'], actor=ident, target=b['defenders'][0]['id'])
         self.assertEqual(scenes[0]['actor'], ident)
         self.assertEqual(self.unit(scenes[0], 'before', ident)['id'], ident)

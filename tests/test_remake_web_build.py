@@ -218,7 +218,14 @@ class WebReleaseArtifact(unittest.TestCase):
             self.assertIn('source/remake/session.py', names)
             self.assertIn('source/remake/browser_runtime.py', names)
             self.assertIn('game/assets/map-presentation.json', names)
-            self.assertFalse(any(name.endswith(('.pyc', '.nes')) or '/config/' in name for name in names))
+            for name in ('game/assets/battlefields/index.json',
+                         'game/config/battlefield-city-bindings.json',
+                         'game/config/references/original-battle-tactics-v1.json'):
+                self.assertIn(name,names,'The actual WASM rules need the original tactical data')
+            public_rules={'game/config/battlefield-city-bindings.json',
+                          'game/config/references/original-battle-tactics-v1.json'}
+            self.assertFalse(any(name.endswith(('.pyc', '.nes'))
+                or '/config/' in name and name not in public_rules for name in names))
         previews = json.loads((self.output / self.manifest['previews']['url']).read_text())
         self.assertEqual([row['id'] for row in previews], [row['id'] for row in self.manifest['catalogs']])
         self.assertTrue(all(row['initial_owners'] and row['faction_resources'] for row in previews))

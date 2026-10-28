@@ -197,7 +197,9 @@ class DelegationReplayTests(unittest.TestCase):
                     self.command('allocate', city=city.id, officer=ident, troops=target)
 
     def resolve_phases(self):
-        for _ in range(80):
+        # A real battle now includes travel over the original grid and up to30
+        # tactical days. Keep a finite bound without assuming remote attacks.
+        for _ in range(2000):
             game, state = self.games[0], self.games[0].state
             pending = state.extension['pending_succession'].get(state.player)
             if pending:
@@ -217,13 +219,24 @@ class DelegationReplayTests(unittest.TestCase):
                     continue
                 own, foe = game._player_sides(state)
                 actors = [u for u in battle[own] if u['troops'] > 0
-                          and isinstance(u['id'], str) and u['id'].startswith('clerk-')
-                          and u['id'] not in battle['used']]
+                          and isinstance(u['id'], str) and u['id'].startswith('clerk-')]
                 targets = [u for u in battle[foe] if u['troops'] > 0]
                 if actors and targets and battle['id'] not in self.staff_battles:
-                    self.staff_battles.add(battle['id'])
-                    self.command('attack', battle_id=battle['id'],
-                                 actor=actors[0]['id'], target=targets[0]['id'])
+                    from remake.campaign_expansion import TACTICS
+                    from remake.tactical_ai import candidates
+                    choices = candidates(state, battle, own, foe,
+                        game.catalog.map_cities[battle['target']]['terrain'], TACTICS,
+                        damage_percent=game.catalog.data['rules']['battle_damage_percent'], depth=0)
+                    staff_choices = [row for row in choices if row['actor'] == actors[0]['id']]
+                    choice = next((row for row in staff_choices if row['kind'] == 'attack'),
+                        next((row for row in staff_choices if row['kind'] == 'move'),
+                             dict(kind='wait')))
+                    self.tactical_command(battle, choice)
+                    if choice['kind'] in {'move', 'attack'}:
+                        # Movement now spends real shared AP and participates
+                        # in the same battle/save ledger. A weak civil clerk
+                        # can legitimately be routed before reaching melee.
+                        self.staff_battles.add(battle['id'])
                 elif own == 'defenders' and targets:
                     # Defend the historical single-city 184 start instead of
                     # surrendering its only city just to advance the clock.
@@ -235,18 +248,27 @@ class DelegationReplayTests(unittest.TestCase):
                     choice = choose_action(state, battle, own, foe,
                         game.catalog.map_cities[battle['target']]['terrain'], TACTICS,
                         settings=get_settings(state),
-                        damage_percent=game.catalog.data['rules']['battle_damage_percent'],
-                        used=set(battle['used']))
+                        damage_percent=game.catalog.data['rules']['battle_damage_percent'])
                     self.assertIsNotNone(choice)
-                    payload = dict(battle_id=battle['id'], actor=choice['actor'], target=choice['target'])
-                    if choice['kind'] == 'tactic':
-                        payload['tactic'] = choice['tactic']
-                    self.command(choice['kind'], **payload)
+                    self.tactical_command(battle, choice)
                 else:
                     self.command('retreat', battle_id=battle['id'])
             else:
                 self.fail(f'Unhandled natural phase: {state.phase}')
         self.fail('Natural phase flow exceeded the bounded command budget')
+
+    def tactical_command(self, battle, choice):
+        kind = choice['kind']
+        payload = dict(battle_id=battle['id'])
+        if kind == 'wait':
+            return self.command('battle_wait', **payload)
+        payload['actor'] = choice['actor']
+        if kind == 'move':
+            return self.command('battle_move', **payload, x=choice['x'], y=choice['y'])
+        payload['target'] = choice['target']
+        if kind == 'tactic':
+            payload['tactic'] = choice['tactic']
+        return self.command(kind, **payload)
 
     def replay(self, filename, faction, turns, *, backends=('rust',), staff=False, seed=2026):
         self.backends, self.games = backends, []

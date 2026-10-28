@@ -58,6 +58,7 @@ def snapshot(game):
         overdue_marches=sum(c['arrival_turn'] < state.turn for c in state.extension['travel']['marches']),
         max_march_delay=max(0, max((state.turn-c['arrival_turn'] for c in state.extension['travel']['marches']), default=0)),
         battles=len(state.settled_battles), ended=sorted(state.extension['ended_factions']),
+        outcome=state.extension['outcome'],
         leaders=dict(state.extension['leaders']), rng=dict(state=state.rng.state, draws=state.rng.draws))
 
 
@@ -119,7 +120,8 @@ class Replay:
     def resolve(self):
         # A command budget detects a stuck phase rather than silently forcing
         # retreat, deleting a convoy, skipping combat or editing the clock.
-        for _ in range(2000):
+        limit=4000*(1+len(self.game.state.extension['travel']['marches']))
+        for _ in range(limit):
             game, state = self.game, self.game.state
             if state.phase == 'finished':
                 return
@@ -156,12 +158,15 @@ class Replay:
                         f'used={battle["used"]}, own={battle[own]}, foe={battle[foe]}')
                 else:
                     payload = dict(battle_id=battle['id'], actor=choice['actor'], target=choice['target'])
+                    kind={'move':'battle_move','wait':'battle_wait'}.get(choice['kind'],choice['kind'])
+                    if choice['kind']=='move':
+                        payload.update(x=choice['x'],y=choice['y'])
                     if choice['kind'] == 'tactic':
                         payload['tactic'] = choice['tactic']
-                    self.command(choice['kind'], **payload)
+                    self.command(kind, **payload)
             else:
                 raise AssertionError(f'Unhandled phase {state.phase}')
-        raise AssertionError(f'Phase resolution exceeded 2000 ordinary commands; recent={self.recent_commands}')
+        raise AssertionError(f'Phase resolution exceeded {limit} ordinary commands; recent={self.recent_commands}')
 
     def administer(self):
         game, state = self.game, self.game.state
@@ -248,7 +253,7 @@ class Replay:
                 self.restore()
                 self.samples.append(snapshot(self.game))
             if self.progress and (index+1) % 12 == 0:
-                print(f'{self.game.catalog.data["id"]} {self.backend}: {index+1}/{turns} turns', file=sys.stderr, flush=True)
+                print(f'{self.game.catalog.data["id"]} {state.player}/{self.backend}: {index+1}/{turns} turns', file=sys.stderr, flush=True)
         self.resolve()
         assert_invariants(self.game)
         self.restore()
@@ -284,35 +289,85 @@ def observations(result):
     return items
 
 
-def run_case(case, seed, backends=('python', 'rust'), *, turns=None, progress=False):
-    spec = CASES[case]
-    catalog = Catalog(ROOT / 'game/data/campaigns' / (spec['scenario']+'.json'))
+def run_leg(catalog, faction, seed, backends, turns, *, progress=False):
+    """One independent new campaign, compared in full across both backends."""
     results = []
     for backend in backends:
         with using_backend(backend):
-            replay = Replay(catalog, spec['faction'], seed, backend, progress=progress)
+            replay = Replay(catalog, faction, seed, backend, progress=progress)
             try:
-                results.append(replay.run(turns or spec['turns']))
+                results.append(replay.run(turns))
             except Exception as error:
-                error.soak_context = dict(backend=backend, phase=replay.game.state.phase,
+                error.soak_context = dict(faction=faction, backend=backend, phase=replay.game.state.phase,
                     recent_commands=replay.recent_commands, save=replay.game.export_save())
                 raise
     reference = {k: v for k, v in results[0].items() if k != 'backend'}
     for result in results[1:]:
         if {k: v for k, v in result.items() if k != 'backend'} != reference:
-            error = AssertionError(f'Backend state/save/RNG/transcript divergence: {case} seed {seed}')
+            error = AssertionError(f'Backend state/save/RNG/transcript divergence: {faction} seed {seed}')
             error.soak_context = dict(results=results, last_save=replay.game.export_save())
             raise error
+    return dict(faction=faction, backends=list(backends), parity=set(backends)=={'python','rust'},
+        result=reference, observations=observations(results[0]))
+
+
+def require_early_coverage(legs, turns):
+    """A real succession and an independently complete long run are both required."""
+    if (not isinstance(legs, list) or len(legs) != 2
+            or {leg.get('name') for leg in legs} != {'huangjin_succession', 'han_continuity'}):
+        raise AssertionError('Early coverage requires both independent campaigns')
+    indexed = {leg['name']: leg for leg in legs}
+    for name, faction in (('huangjin_succession', 'yellow_turban'), ('han_continuity', 'han')):
+        leg = indexed[name]
+        if leg['faction'] != faction or not leg['parity'] or set(leg['backends']) != {'python', 'rust'}:
+            raise AssertionError(f'Early campaign lacks exact Python/Rust parity: {name}')
+        if leg['result']['requested_turns'] != turns:
+            raise AssertionError(f'Early campaign has an altered duration: {name}')
+    rebellion = indexed['huangjin_succession']['result']
+    continuity = indexed['han_continuity']['result']
+    if (not rebellion['succession'] or rebellion['coverage']['player_successions'] != len(rebellion['succession'])
+            or not 0 <= rebellion['completed_turns'] <= turns):
+        raise AssertionError('Early rebellion must exercise a real ruler succession')
+    if rebellion['completed_turns'] < turns and (rebellion['final']['phase'] != 'finished'
+            or rebellion['final']['outcome'] not in {'victory', 'defeat'}):
+        raise AssertionError('An incomplete rebellion must have a validated terminal result')
+    if continuity['completed_turns'] != turns or not continuity['coverage']['crossed_year']:
+        raise AssertionError('Early Han continuity must complete every requested turn and cross a year')
+    return dict(independent_campaigns=2, required_turns=turns,
+        continuity_completed_turns=continuity['completed_turns'],
+        continuity_crossed_year=continuity['coverage']['crossed_year'],
+        rebellion_completed_turns=rebellion['completed_turns'],
+        rebellion_player_successions=len(rebellion['succession']))
+
+
+def run_case(case, seed, backends=('python', 'rust'), *, turns=None, progress=False):
+    spec = CASES[case]
+    catalog = Catalog(ROOT / 'game/data/campaigns' / (spec['scenario']+'.json'))
+    duration = turns or spec['turns']
+    if case == 'early':
+        legs = []
+        for name, faction in (('huangjin_succession', 'yellow_turban'), ('han_continuity', 'han')):
+            leg = run_leg(catalog, faction, seed, backends, duration, progress=progress)
+            legs.append(dict(name=name, **leg))
+        try:
+            coverage = require_early_coverage(legs, duration) if turns is None else dict(
+                independent_campaigns=2, smoke_only=True, requested_turns=duration)
+        except AssertionError as error:
+            error.soak_context = dict(legs=legs)
+            raise
+        return dict(case=case, scenario=spec['scenario'], seed=seed, catalog_sha256=catalog.sha256,
+            backends=list(backends), parity=all(leg['parity'] for leg in legs),
+            legs=legs, coverage=coverage)
+    leg = run_leg(catalog, spec['faction'], seed, backends, duration, progress=progress)
+    reference = leg['result']
     # An ordinary early victory/defeat is valid gameplay, but cannot count as
     # having exercised the requested multi-year release gate.
     if turns is None and (reference['completed_turns'] != spec['turns']
             or not reference['coverage']['crossed_year'] or not reference['succession']):
         error = AssertionError(f'Insufficient long-run coverage: {case} seed {seed}')
-        error.soak_context = dict(result=reference, observations=observations(results[0]))
+        error.soak_context = dict(result=reference, observations=leg['observations'])
         raise error
-    return dict(case=case, scenario=spec['scenario'], faction=spec['faction'], seed=seed,
-        catalog_sha256=catalog.sha256, backends=list(backends), parity=len(set(backends)) > 1,
-        result=reference, observations=observations(results[0]))
+    return dict(case=case, scenario=spec['scenario'], seed=seed, catalog_sha256=catalog.sha256, **leg)
 
 
 def main(argv=None):
@@ -328,7 +383,7 @@ def main(argv=None):
         parser.error('--turns must be between 1 and 360')
     if any(not 1 <= seed <= 0xffffffff for seed in args.seeds):
         parser.error('seeds must be between 1 and 2^32-1')
-    report = dict(schema='tk2-campaign-soak-v1', policy='defensive-administrator-v3-shared-order-defense', cases=[], failures=[])
+    report = dict(schema='tk2-campaign-soak-v2', policy='defensive-administrator-v3-shared-order-defense', cases=[], failures=[])
     started = time.monotonic()
     for case in args.case:
         for seed in args.seeds:

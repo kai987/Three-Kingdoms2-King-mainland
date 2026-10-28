@@ -11,7 +11,7 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, GameError, digest
 from remake.difficulty import attack_budget, get_settings
 from remake.events import LIMIT, STAFF_KINDS, SUPPLY_KINDS, empty, emit, transition, validate as validate_events
-from campaign_fixtures import controlled_catalog, reach_battle
+from campaign_fixtures import controlled_catalog, reach_battle, arrange_contact
 
 
 def new_game(seed=2026, difficulty='normal'):
@@ -91,6 +91,8 @@ class CampaignEventsTests(unittest.TestCase):
         game.command('allocate', dict(city='xiangyang', officer=146, troops=999), game.revision)
         game.command('depart', dict(source='xiangyang', target='nanjun', officers=[146]), game.revision)
         battle_id = reach_battle(game)
+        # Isolate event/receipt semantics on actual native adjacent cells.
+        arrange_contact(game)
         self.assertIn('battle_started', [e['kind'] for e in game.state.extension['events']['items']])
         for _ in range(50):
             if game.state.phase == 'result':

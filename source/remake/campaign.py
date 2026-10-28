@@ -13,7 +13,7 @@ from threading import RLock
 from types import SimpleNamespace
 
 from .errors import GameError
-from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books
+from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from .city_economy import income_at
@@ -313,6 +313,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'facilities':facilities.view(self,state),
                                 'equipment':equipment.view(self,state),
                                 'command_books':command_books.view(self,state),
+                                'battle_tactical':battle_grid.view(self,state,state.battle) if state else None,
                                 'names': {str(i): self.person_name(state, i) for i in state.officers} if state else {}}}
 
     def command(self, kind, payload, revision):
@@ -340,6 +341,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                'tactic': self._tactic, 'duel_start': self._duel_start, 'duel_action': self._duel_action,
                                'allocate': self._allocate, 'recruit': self._recruit, 'depart': self._depart,
                                'attack': self._attack, 'retreat': self._retreat, 'settle': self._settle,
+                               'battle_move':self._battle_move, 'battle_wait':self._battle_wait,
                                'end_turn': self._end_turn, 'ai': self._ai, 'arrivals': self._arrivals,
                                'hire_staff': self._hire_staff, 'reject_staff': self._reject_staff,
                                'staff_recruit': self._staff_recruit, 'choose_successor': self._choose_successor,
@@ -625,6 +627,16 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 candidate = CampaignState(**raw)
                 if legacy:
                     command_books.initialize(self, candidate, legacy=True)
+                # Existing current-catalog battles had presentation-only flags.
+                # Assign their first real cells once, preserving troops and RNG.
+                if candidate.battle and 'tactical' not in candidate.battle['extended']:
+                    tactical=battle_grid.initialize(self, candidate, candidate.battle)
+                    # The former counter-based UI always saved on the player's
+                    # decision. Do not strand an old defender behind an enemy
+                    # turn that no command has been scheduled to execute.
+                    own,_=self._player_sides(candidate)
+                    tactical['side']=own
+                    if own=='defenders':tactical['passed']['attackers']=True
                 self.validate(candidate)
             except (ValueError, TypeError, KeyError, AttributeError, OverflowError) as exc:
                 raise GameError('存档无效，当前进度未改变。') from exc

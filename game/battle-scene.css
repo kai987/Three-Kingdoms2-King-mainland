@@ -36,6 +36,16 @@
 .battle-army-menu .unit .officer-identity{gap:5px;min-width:0}
 .battle-army-menu .unit .officer-identity>span:last-child{min-width:0}
 .battle-unit-status{display:inline-block;margin-inline-start:6px;padding:0 3px;border:1px solid currentColor;font-size:11px;line-height:1.35;vertical-align:middle;white-space:nowrap}
+.battle-ap{padding:4px 6px;border:1px solid currentColor;font-size:14px;line-height:1.4}
+.battle-selection{font-size:14px;line-height:1.4}
+.battle-movement{padding:5px 0;border-block:1px solid currentColor}
+.battle-movement p{margin:0 0 5px;font-size:13px;line-height:1.4}
+.battle-move-controls{display:grid;grid-template-columns:repeat(4,minmax(44px,1fr)) minmax(52px,1.4fr) minmax(44px,1fr);gap:4px}
+.battle-move-controls button{min-width:0;min-height:44px;padding:3px;font-size:14px;line-height:1.2}
+.battle-move-controls [data-battle-nav]{font-size:22px}
+.battle-move-reason:empty{display:none}
+.battle-action-reason{margin:0;font-size:13px;line-height:1.4}
+.nes-battle canvas:focus-visible{outline:2px solid #ffe149;outline-offset:-2px}
 .battle-duel-record>.battle-log{position:absolute;inset:44px 8px 0;height:auto;overflow:auto;padding-bottom:8px;font-size:14px}
 .battle-layout:not(:has(.nes-battle,.duel-fighters))>.battle-army-menu{grid-column:1/-1}
 @container(max-width:660px){
@@ -65,3 +75,4 @@
  .battle-stage .arena-heading h2{font-size:20px}
 }
 @media(prefers-reduced-motion:reduce){.nes-battle canvas{scroll-behavior:auto}}
+@media(max-width:360px){.battle-move-controls{grid-template-columns:repeat(4,minmax(44px,1fr))}.battle-move-controls #battle-move,.battle-move-controls #battle-cancel-move{grid-column:span 2}}

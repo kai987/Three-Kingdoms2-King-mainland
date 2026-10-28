@@ -112,6 +112,37 @@ class BrowserRuntimeTests(unittest.TestCase):
         self.assertEqual(result['engine'], 'python')
         self.assertEqual(self.snapshot(), before)
 
+    def test_tactical_move_and_side_end_reach_the_domain_through_the_fixed_worker_api(self):
+        view=self.start()
+        def command(kind, **payload):
+            status,value=self.request('/api/command',dict(kind=kind,payload=payload,
+                revision=self.runtime.session.revision))
+            self.assertEqual(status,200,value)
+            return value
+        view=command('depart',source='xiangyang',target='nanyang',officers=[146])
+        for _ in range(20):
+            phase=view['game']['phase']
+            if phase=='battle':break
+            if phase=='city':view=command('end_turn')
+            elif phase=='ai':view=command('ai',turn=view['game']['turn'])
+            elif phase=='arrivals':view=command('arrivals')
+            else:self.fail('Unexpected phase before the real arrival: '+phase)
+        self.assertEqual(view['game']['phase'],'battle')
+        battle=view['game']['battle']
+        reachable=view['catalog']['battle_tactical']['actors']['146']['reachable']
+        destination=min(reachable,key=lambda p:(p['cost'],p['y'],p['x']))
+        before=deepcopy(view['game'])
+        view=command('battle_move',battle_id=battle['id'],actor=146,
+            x=destination['x'],y=destination['y'])
+        tactical=view['game']['battle']['extended']['tactical']
+        self.assertEqual(tactical['positions']['146'],{key:destination[key] for key in ('x','y')})
+        self.assertEqual(tactical['points']['attackers'],
+            before['battle']['extended']['tactical']['points']['attackers']-destination['cost'])
+        self.assertEqual(view['game']['rng'],before['rng'])
+        view=command('battle_wait',battle_id=battle['id'])
+        self.assertEqual(view['game']['battle']['extended']['tactical']['side'],'attackers')
+        self.assertGreater(view['game']['battle']['round'],before['battle']['round'])
+
     def test_cache_never_evicts_active_game_and_is_bounded_at_two(self):
         self.start()
         cache = self.runtime.session.catalogs

@@ -5,21 +5,28 @@ remake designs. No original engine, ROM tables or control IR are loaded.
 """
 from dataclasses import replace
 from .errors import GameError
-from . import presentation, equipment, command_books
+from . import presentation, equipment, command_books, battle_grid
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
                        parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref, appearance_values)
 
 TACTICS = (
-    ('火計',6,'fire','单体兵损，水地形不可用'), ('陥穽',5,'trap','单体体力损伤，平地或山地'),
-    ('虚兵',4,'confuse','目标下一次反击失效'), ('要撃',6,'strike','单体兵损'),
-    ('乱水',7,'water','水地形单体兵损'), ('火箭',8,'supply','烧毁敌军出发城部分粮食'),
-    ('偽撃転殺',8,'feint','单体兵损并扰乱反击'), ('共殺',8,'area','攻击最多三支敌军'),
-    ('籠絡',10,'surrender','劝降一支敌军；兵员缴入该城预备兵，武将战后在野'),
-    ('落石',9,'rock','山地兵损及体力损伤'), ('連環',9,'chain','水地形最多三队反击失效'),
-    ('十面埋伏',10,'ambush','兵数至少100，设伏后下一次反击触发，一次有效'),
-    ('水攻',10,'flood','水地形敌军全体兵损'), ('連弩',8,'crossbow','攻击最多两支敌军'),
-    ('劫火',12,'inferno','非水地形敌军全体兵损'), ('奇門遁甲',10,'guard','自身获得两次减伤保护'))
+    ('火計', 6, 'fire', '目標須在森林或平地；五格內單隊兵損'),
+    ('陥穽', 5, 'trap', '目標須在森林或山地；五格內單隊體力損傷'),
+    ('虚兵', 4, 'confuse', '目標須在森林或山地；下次普通攻擊失效'),
+    ('要撃', 6, 'strike', '目標須在森林或山地；五格內單隊兵損'),
+    ('乱水', 7, 'water', '目標須在河流；五格內單隊兵損'),
+    ('火箭', 8, 'supply', '五格內敵方主將；燒毀其城池部分兵糧'),
+    ('偽撃転殺', 8, 'feint', '須四鄰接敵，目標在城砦；兵損並擾亂'),
+    ('共殺', 8, 'area', '目標在森林或山地且鄰接敵隊；命中目標與四鄰敵軍'),
+    ('籠絡', 10, 'surrender', '五格內非城砦敵隊；勸降後兵員入城、武將轉在野'),
+    ('落石', 9, 'rock', '由山地或城砦向四鄰非城砦敵隊施放'),
+    ('連環', 9, 'chain', '目標及四鄰另一敵隊在河流；擾亂接觸連通的水上敵隊'),
+    ('十面埋伏', 10, 'ambush', '本隊在森林且至少100兵；設置一支伏兵'),
+    ('水攻', 10, 'flood', '目標及四鄰另一敵隊在河流；攻擊接觸連通的水上敵隊'),
+    ('連弩', 8, 'crossbow', '本隊在城砦並四鄰接敵；攻擊所選單隊'),
+    ('劫火', 12, 'inferno', '非城砦敵隊四鄰相接；攻擊該接觸連通集合'),
+    ('奇門遁甲', 10, 'guard', '五格內非河流、非城砦目標；本隊獲兩次減傷'))
 
 
 class ExpandedCampaign:
@@ -211,6 +218,7 @@ class ExpandedCampaign:
                       'attackers':units(selected),'defenders':units(defenders),'used':[],'round':1,'outcome':None,'supply_cost':cost,
                       'log':[f'{self.catalog.map_cities[source.id]["name"]}向{self.catalog.map_cities[target.id]["name"]}出征。'],
                       'extended':{'support':support,'duel':None,'duel_history':[],'ambush':None,'surrenders':{},'withdrawn':None}}
+        battle_grid.initialize(self,state,state.battle)
         if not paid:
             source.grain-=cost
             command_books.spend(state, source, 'depart')
@@ -225,6 +233,8 @@ class ExpandedCampaign:
         # Deployment makes participants unavailable for local civil duties.
         from . import treasures
         treasures.synchronize(self,state)
+        if state.phase=='battle' and state.player==target.owner:
+            self._run_tactical_ai_turn(state)
 
     def _player_sides(self,state):
         return ('attackers','defenders') if state.battle['attacker']==state.player else ('defenders','attackers')
@@ -239,8 +249,11 @@ class ExpandedCampaign:
         t_id=parse_officer_ref(payload.get('target'),self.catalog.rules)
         actor=next((u for u in b[own] if u['id']==a_id and u['troops']>0),None)
         target=next((u for u in b[foe] if u['id']==t_id and u['troops']>0),None)
-        if actor is None or target is None or actor['id'] in b['used']:
-            raise GameError('请选择未行动的本方部队与有效敌军。')
+        modern='tactical' in b['extended']
+        if actor is None or target is None or (not modern and actor['id'] in b['used']):
+            raise GameError('请选择可行动的本方部队与有效敌军。')
+        if modern and b['extended']['tactical']['side']!=own:
+            raise GameError('目前不是本方的戰術行動階段。')
         return b,actor,target,own,foe
 
     def _battle_result(self,state):
@@ -258,6 +271,7 @@ class ExpandedCampaign:
         from .difficulty import get_settings
         from .tactical_ai import choose_action
         b=state.battle
+        if 'tactical' in b['extended']:return
         if actor['troops']<=0:return
         own='defenders' if foe=='attackers' else 'attackers'
         choice=choose_action(state,b,foe,own,self.catalog.map_cities[b['target']]['terrain'],TACTICS,
@@ -272,6 +286,10 @@ class ExpandedCampaign:
         ambusher=next((u for key in ('attackers','defenders') for u in b[key] if u['id']==trap['actor']),None)
         if ambusher is None or ambusher['troops']<=0:x['ambush']=None;return
         if side==own:return
+        if 'tactical' in x:
+            points=x['tactical']['positions']
+            a,t=points[str(ambusher['id'])],points[str(actor['id'])]
+            if max(abs(a['x']-t['x']),abs(a['y']-t['y']))>5:return
         before=presentation.snapshot(self,state)
         loss=min(actor['troops'],max(1,state.officers[trap['actor']].profile.intellect*2))
         actor['troops']-=loss;x['ambush']=None
@@ -281,16 +299,68 @@ class ExpandedCampaign:
 
     def _perform_battle_action(self,state,choice,own,foe,*,finish=False,counter=False):
         b=state.battle
+        if choice['kind']=='wait':
+            self._end_tactical_side(state)
+            return True
         actor=next((u for u in b[own] if u['id']==choice['actor'] and u['troops']>0),None)
+        if actor is None:return False
+        if choice['kind']=='move':
+            self._execute_battle_move(state,actor,choice['x'],choice['y'],own,foe,finish=finish)
+            return True
         target=next((u for u in b[foe] if u['id']==choice['target'] and u['troops']>0),None)
-        if actor is None or target is None:return False
+        if target is None:return False
         if choice['kind']=='tactic':
             self._execute_tactic(state,actor,target,own,foe,choice['tactic'],finish=finish,counter=counter)
         else:self._execute_attack(state,actor,target,own,foe,finish=finish,counter=counter)
         return True
 
+    def _end_tactical_side(self,state):
+        b=state.battle
+        change=battle_grid.end_side(state,b)
+        b['used']=[]
+        if change['timed_out']:
+            b['extended']['withdrawn']='attackers'
+            b['outcome']='retreat';state.phase='result'
+            b['log'].append('三十日戰期已滿，攻方撤退。')
+        b['log'][:]=b['log'][-80:]
+        return change
+
+    def _run_tactical_ai_turn(self,state):
+        """Run one actual enemy side; every move/attack shares its finite AP."""
+        from .difficulty import get_settings
+        from .tactical_ai import choose_action
+        b=state.battle
+        if not b or 'tactical' not in b['extended']:return
+        player_side,_=self._player_sides(state)
+        for _ in range(64):  # maximum60 AP plus the voluntary pass
+            if state.phase!='battle' or b['extended']['duel']:return
+            side=b['extended']['tactical']['side']
+            if side==player_side:return
+            foe='defenders' if side=='attackers' else 'attackers'
+            if b['extended']['tactical']['points'][side]<=0:
+                self._end_tactical_side(state);continue
+            choice=choose_action(state,b,side,foe,self.catalog.map_cities[b['target']]['terrain'],TACTICS,
+                settings=get_settings(state),damage_percent=self.catalog.data['rules']['battle_damage_percent'])
+            if choice is None or choice['kind']=='wait':
+                self._end_tactical_side(state)
+            elif not self._perform_battle_action(state,choice,side,foe,finish=False,counter=True):
+                raise GameError('敵方沒有可執行的戰術行動。')
+            self._battle_result(state)
+        raise GameError('敵方戰術行動未能在機動力範圍內結束。')
+
     def _finish_action(self,state,actor,own,foe,*,respond=True):
         b=state.battle
+        if 'tactical' in b['extended']:
+            # used is an activity record, never a per-unit action cap.
+            if own==self._player_sides(state)[0] and actor['id'] not in b['used']:
+                b['used'].append(actor['id'])
+            self._battle_result(state)
+            if state.phase=='battle' and not b['extended']['duel']:
+                if b['extended']['tactical']['points'][own]<=0:
+                    self._end_tactical_side(state)
+                if state.phase=='battle':self._run_tactical_ai_turn(state)
+            b['log'][:]=b['log'][-80:]
+            return
         if actor['id'] not in b['used']: b['used'].append(actor['id'])
         self._battle_result(state)
         if state.phase=='battle' and respond:self._counter(state,foe,actor)
@@ -300,12 +370,47 @@ class ExpandedCampaign:
             for s in b['extended']['support'].values():s['energy']=min(18,s['energy']+4)
         b['log'][:]=b['log'][-80:]
 
+    def _battle_move(self,state,payload):
+        b=state.battle
+        if state.phase!='battle' or not b or payload.get('battle_id')!=b['id'] or b['extended']['duel']:
+            raise GameError('目前沒有可移動的戰鬥。')
+        own,foe=self._player_sides(state)
+        ident=parse_officer_ref(payload.get('actor'),self.catalog.rules)
+        actor=next((u for u in b[own] if u['id']==ident and u['troops']>0),None)
+        if actor is None:raise GameError('請選擇仍可作戰的本方部隊。')
+        self._execute_battle_move(state,actor,payload.get('x'),payload.get('y'),own,foe,finish=True)
+
+    def _execute_battle_move(self,state,actor,x,y,own,foe,*,finish=False):
+        b=state.battle
+        if b['extended']['tactical']['side']!=own:
+            raise GameError('目前不是本方的戰術行動階段。')
+        quote=battle_grid.move(self,state,b,actor,x,y)
+        b['log'].append(f'{self.person_name(state,actor["id"])}移動至（{x+1},{y+1}），消耗機動力{quote["cost"]}。')
+        self._trigger_ambush(state,actor,own)
+        if finish:self._finish_action(state,actor,own,foe)
+        else:self._battle_result(state)
+        return quote
+
+    def _battle_wait(self,state,payload):
+        b=state.battle
+        if state.phase!='battle' or not b or payload.get('battle_id')!=b['id'] or b['extended']['duel']:
+            raise GameError('目前不能結束戰術行動。')
+        own,_=self._player_sides(state)
+        if b['extended']['tactical']['side']!=own:
+            raise GameError('目前不是本方的戰術行動階段。')
+        self._end_tactical_side(state)
+        if state.phase=='battle':self._run_tactical_ai_turn(state)
+
     def _expanded_attack(self,state,payload):
         b,actor,target,own,foe=self._battle_selection(state,payload)
         self._execute_attack(state,actor,target,own,foe)
 
     def _execute_attack(self,state,actor,target,own,foe,*,finish=True,counter=False):
         b=state.battle
+        if 'tactical' in b['extended']:
+            reason=battle_grid.attack_reason(b,actor,target,own)
+            if reason:raise GameError(reason)
+            battle_grid.spend(b,own,battle_grid.ATTACK_COST)
         self._trigger_ambush(state,actor,own,counter=counter)
         before=presentation.snapshot(self,state)
         if actor['troops']<=0:
@@ -340,6 +445,8 @@ class ExpandedCampaign:
         terrain=self.catalog.map_cities[b['target']]['terrain']
         reason=tactic_reason(state,b,actor,target,own,foe,terrain,TACTICS[tid])
         if reason:raise GameError(reason)
+        if 'tactical' in x:
+            battle_grid.spend(b,own,battle_grid.TACTIC_COSTS[tid])
         self._trigger_ambush(state,actor,own,counter=counter)
         before=presentation.snapshot(self,state)
         if actor['troops']<=0:
@@ -350,17 +457,18 @@ class ExpandedCampaign:
             else:self._battle_result(state)
             return
         enemies=[u for u in b[foe] if u['troops']>0];p=state.officers[actor['id']].profile;t=state.officers[target['id']]
-        a['energy']-=cost
+        if 'tactical' not in x:a['energy']-=cost
         chance=max(10,min(95,60+(p.intellect-t.profile.intellect)//2))
         if effect=='surrender':chance=max(5,min(80,40+(p.virtue-t.loyalty)//2))
         success=effect in {'ambush','guard'} or state.rng.next()%100<chance
         if not success:b['log'].append(f'{self.person_name(state, actor["id"])}施放{title}，未能奏效。')
-        elif effect=='ambush':x['ambush']={'actor':actor['id']};b['log'].append('十面埋伏已设置，等待下一次敌方反击。')
+        elif effect=='ambush':x['ambush']={'actor':actor['id']};b['log'].append('十面埋伏已設置，等待接近的敵軍行動。')
         elif effect=='guard':a['guard']=2;b['log'].append(f'{title}使本队获得两次减伤。')
         elif effect in {'confuse','chain'}:
-            victims=[target] if effect=='confuse' else [target]+[u for u in enemies if u is not target][:2]
+            victims=(battle_grid.affected_units(b,target,tid,foe) if 'tactical' in b['extended']
+                else [target] if effect=='confuse' else [target]+[u for u in enemies if u is not target][:2])
             for u in victims:support[str(u['id'])]['stunned']=1
-            b['log'].append(f'{title}扰乱{len(victims)}队，下次反击失效。')
+            b['log'].append(f'{title}扰乱{len(victims)}隊，下次普通攻擊失效。')
         elif effect=='surrender':
             x['surrenders'][str(target['id'])]=target['troops'];target['troops']=0
             b['log'].append(f'{self.person_name(state, target["id"])}接受劝降；战后转在野，兵员入城。')
@@ -369,7 +477,8 @@ class ExpandedCampaign:
             loss=min(receiver.grain,max(1,receiver.grain//8+p.intellect))
             receiver.grain-=loss;b['log'].append(f'火箭烧毁敌军城内粮食{loss}。')
         else:
-            victims=([target]+[u for u in enemies if u is not target])[:3 if effect=='area' else 2 if effect=='crossbow' else 20 if effect in {'flood','inferno'} else 1]
+            victims=(battle_grid.affected_units(b,target,tid,foe) if 'tactical' in b['extended'] else
+                ([target]+[u for u in enemies if u is not target])[:3 if effect=='area' else 2 if effect=='crossbow' else 20 if effect in {'flood','inferno'} else 1])
             for u in victims:
                 loss=min(u['troops'],max(1,p.intellect*(1 if effect=='trap' else 2)+(state.rng.next()%31)))
                 if effect=='trap':loss=0
@@ -392,6 +501,10 @@ class ExpandedCampaign:
         b,actor,target,own,foe=self._battle_selection(state,payload)
         a=state.officers[actor['id']].profile.martial_strength;t=state.officers[target['id']].profile.martial_strength
         if b['extended']['support'][str(actor['id'])]['stunned']:raise GameError('受扰乱部队不能挑战单挑。')
+        if 'tactical' in b['extended']:
+            reason=battle_grid.attack_reason(b,actor,target,own)
+            if reason:raise GameError(reason)
+            battle_grid.spend(b,own,battle_grid.DUEL_COST)
         before=presentation.snapshot(self,state)
         # An opponent is free to refuse; refusal consumes the challenger's action.
         if state.rng.next()%100>=max(15,min(90,70+(t-a))):
@@ -758,7 +871,8 @@ class ExpandedCampaign:
         b=state.battle
         if not b:return
         e=b['extended']
-        if set(e)!={'support','duel','duel_history','ambush','surrenders','withdrawn'}:raise ValueError('battle extended fields')
+        if set(e)!={'support','duel','duel_history','ambush','surrenders','withdrawn','tactical'}:raise ValueError('battle extended fields')
+        battle_grid.validate(self,state,b)
         units={u['id']:u for u in b['attackers']+b['defenders']}
         if set(e['support'])!={str(i) for i in units}:raise ValueError('battle support identities')
         for key,s in e['support'].items():

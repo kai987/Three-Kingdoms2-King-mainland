@@ -10,7 +10,7 @@ sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign, GameError, digest
 from remake.session import CampaignSession
 import remake.session as session_module
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import controlled_catalog, arrange_contact
 
 
 class SessionPreviewCacheTests(unittest.TestCase):
@@ -146,6 +146,7 @@ class SessionResponseReuseTests(unittest.TestCase):
         self.start()
         game=session.game;state=game.state
         game._start_expanded_battle(state,state.cities['xiangyang'],state.cities['nanyang'],[146])
+        arrange_contact(game)
         battle=state.battle;payload=dict(battle_id=battle['id'],actor=146,target=battle['defenders'][0]['id'])
         reference=Campaign(game.catalog)
         reference.load_save(session.export_save(),0)

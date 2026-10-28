@@ -39,6 +39,10 @@ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'game/i
  const rows=index.catalogs.map(file=>{const data=JSON.parse(fs.readFileSync(path.join(root,'game/data',file)));return{title:data.title,year:data.start_year,month:data.start_month,main_scenario:data.main_scenario};});
  const before=JSON.stringify(rows);i18n.registerScenarios(rows);
  const cases=[
+  ['关羽移動至（3,4），消耗機動力2。','関羽が（3,4）へ移動し、機動力2を消費しました。'],
+  ['217年7月上旬　关羽移動至（3,4），消耗機動力2。','217年7月上旬　関羽が（3,4）へ移動し、機動力2を消費しました。'],
+  ['甘宁反击曹休，损兵296。','甘寧が曹休に反撃し、296の兵力損耗を与えました。'],
+  ['連環扰乱2隊，下次普通攻擊失效。','連環で2部隊を混乱させ、次の通常攻撃を無効にします。'],
   ['史实','史実'],['假想','仮想'],
   ['河北爭亂','河北争乱'],['合淝之戰','合肥の戦い'],
   ['呂布討伐戰','呂布討伐戦'],['潼關之戰','潼関の戦い'],

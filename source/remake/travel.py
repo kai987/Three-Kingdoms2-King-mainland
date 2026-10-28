@@ -414,27 +414,24 @@ class TravelCampaign:
         from .difficulty import get_settings
         from .tactical_ai import choose_action
         battle = state.battle
-        used={'attackers':set(),'defenders':set()};side='attackers'
+        from . import battle_grid
         terrain=self.catalog.map_cities[battle['target']]['terrain']
         settings=get_settings(state)
-        for _ in range(200):
-            if state.phase == 'result': break
+        # 30 days * 2 sides * (at most60 unit-cost actions + one pass).
+        for _ in range(3700):
             self._battle_result(state)
             if state.phase=='result':break
-            live={key:{u['id'] for u in battle[key] if u['troops']>0} for key in used}
-            if all(not live[key]-used[key] for key in used):
-                used={key:set() for key in used};battle['round']+=1
-                for support in battle['extended']['support'].values():support['energy']=min(18,support['energy']+4)
+            side=battle['extended']['tactical']['side']
             foe='defenders' if side=='attackers' else 'attackers'
-            if not live[side]-used[side]:side,foe=foe,side
+            if battle['extended']['tactical']['points'][side]<=0:
+                self._end_tactical_side(state);continue
             choice=choose_action(state,battle,side,foe,terrain,TACTICS,settings=settings,
-                damage_percent=self.catalog.data['rules']['battle_damage_percent'],used=used[side])
-            if choice is None:break
-            self._perform_battle_action(state,choice,side,foe,finish=False)
-            used[side].add(choice['actor'])
-            side=foe
-            self._battle_result(state)
-        if state.phase=='battle': battle['outcome']='retreat';state.phase='result'
+                damage_percent=self.catalog.data['rules']['battle_damage_percent'])
+            if choice is None or choice['kind']=='wait':self._end_tactical_side(state)
+            elif not self._perform_battle_action(state,choice,side,foe,finish=False):
+                raise GameError('戰術AI沒有可執行的行動。')
+        if state.phase=='battle':
+            raise GameError('戰術AI超出三十日的合法行動上限。')
         self._expanded_settle(state,{'battle_id':battle['id']})
 
     def _travel_view(self, state):

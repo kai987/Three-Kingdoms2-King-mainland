@@ -58,6 +58,8 @@ const response=value=>({ok:true,text:async()=>JSON.stringify(value)});
  assert.equal(client.status,'idle');assert.equal(client.resolve('wuling'),null);
  const first=client.load(),again=client.load();assert.strictEqual(first,again);assert.equal(calls.length,2,'Both metadata reads start together');
  await first;assert.equal(client.status,'ready');assert.equal(calls.length,2);
+ for(let i=0;i<30;i++){const id='original-'+String(i).padStart(2,'0'),field=client.resolveMap(id);assert.equal(field.field.id,id);assert(Object.isFrozen(field));assert.equal(field.grid.columns,31);}
+ assert.equal(client.resolveMap('original-30'),null);assert.equal(client.resolveMap('../original-01'),null);
  assert.deepEqual(calls.map(row=>row.url).sort(),['/project'+api.INDEX,'/project'+api.BINDINGS].sort());
  assert(calls.every(row=>row.options.credentials==='same-origin'&&row.options.cache==='no-cache'));
  assert(!calls.some(row=>row.url.endsWith('.png')),'Loading the registry must not preload 30 maps');

@@ -193,6 +193,14 @@ class DesperateDuelTests(unittest.TestCase):
                 state['extension'].pop('facilities')
                 state['extension'].pop('equipment')
                 state['extension'].pop('command_books')
+                # Compare the frozen exchange oracle after projecting out the
+                # new spatial/AP state. The old single-actor action scheduler
+                # advanced one round after a completed nonterminal duel; the
+                # shared-AP scheduler correctly remains on the same day.
+                state['battle']['extended'].pop('tactical')
+                if state['phase']=='battle' and state['battle']['extended']['duel'] is None:
+                    state['battle']['round'] += 1
+                    state['battle']['used'] = []
                 state['extension']['logistics']['schema'] = 'tk2-logistics-v1'
                 self.assertEqual(digest(state), row['state_sha256'])
                 self.assertEqual(vars(game.state.rng), row['rng'])

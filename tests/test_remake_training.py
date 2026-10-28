@@ -10,7 +10,7 @@ sys.path[:0] = [str(ROOT / 'source'), str(ROOT / 'tests')]
 from remake.campaign import Campaign
 from remake import domestic, treasures
 from remake.tactical_ai import expected_attack
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import controlled_catalog, arrange_contact
 from test_remake_tactical_ai import battle, actors
 
 
@@ -19,6 +19,7 @@ class TrainingDegreeTests(unittest.TestCase):
         losses, rngs, estimates = [], [], []
         for degree in (0, 70, 100):
             game = battle(three_enemies=False)
+            arrange_contact(game)
             b, actor, target, _, _ = actors(game)
             b['extended']['support'][str(actor['id'])]['morale'] = degree
             saved = game.export_save()

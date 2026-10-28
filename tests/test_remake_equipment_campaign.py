@@ -13,7 +13,7 @@ from remake import command_books,equipment,facilities,civil_staff
 from remake.campaign import Campaign,Catalog,SeedRng,canonical
 from remake.errors import GameError
 from remake.march_core import using_backend
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import controlled_catalog, arrange_contact
 from test_remake_facility_campaign import facility_catalog
 from test_remake_tactical_ai import successful_rng
 
@@ -190,6 +190,7 @@ class EquipmentCampaignTests(unittest.TestCase):
         actor=game.catalog.ids['san14-candidate-0952']
         profile=deepcopy(state.officers[actor].profile)
         game._start_expanded_battle(state,state.cities['xiangyang'],state.cities['nanyang'],[actor])
+        arrange_contact(game)
         successful_rng(state)
         battle=state.battle;target=battle['defenders'][0]['id']
         self.command(game,'duel_start',battle_id=battle['id'],actor=actor,target=target)
@@ -213,6 +214,7 @@ class EquipmentCampaignTests(unittest.TestCase):
                 game=self.new(facility_catalog(),backend=backend);state=game.state;actor=146
                 self.assertEqual(state.officers[actor].weapon_id,15)
                 game._start_expanded_battle(state,state.cities['xiangyang'],state.cities['nanyang'],[actor])
+                arrange_contact(game)
                 successful_rng(state)
                 battle=state.battle;target=battle['defenders'][0]['id']
                 self.command(game,'duel_start',battle_id=battle['id'],actor=actor,target=target)

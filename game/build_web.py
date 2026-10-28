@@ -162,6 +162,9 @@ def python_bundle(output):
     files = [(path.relative_to(ROOT).as_posix(), safe_read(ROOT, path.relative_to(ROOT).as_posix()))
              for path in sorted((ROOT / 'source/remake').rglob('*.py'))]
     files.append(('game/assets/map-presentation.json', safe_read(HERE, 'assets/map-presentation.json')))
+    for name in ('assets/battlefields/index.json','config/battlefield-city-bindings.json',
+                 'config/references/original-battle-tactics-v1.json'):
+        files.append(('game/'+name,safe_read(HERE,name)))
     archive = output / 'runtime/python.zip'
     archive.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:

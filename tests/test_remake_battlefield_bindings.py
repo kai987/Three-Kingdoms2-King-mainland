@@ -74,7 +74,7 @@ class BattlefieldCityBindings(unittest.TestCase):
             with self.subTest(catalog=path.name):
                 self.assertLessEqual(set(catalog['active_cities']), set(self.bindings['cities']))
                 self.assertEqual({city['id'] for city in catalog['cities']}, set(self.bindings['cities']))
-                # Bindings are display metadata, not a per-campaign rule fork.
+                # One shared authoritative grid binding, never a per-campaign fork.
                 self.assertNotIn('battlefield_city_bindings', catalog)
                 self.assertEqual(catalog['rules']['battle_officers_per_side'], 10)
             count += 1

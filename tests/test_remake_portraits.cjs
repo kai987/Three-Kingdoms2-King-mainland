@@ -13,7 +13,7 @@ const catalog={library,names:{0:'曹操',255:'趙雲',999:'陸抗'}};
 const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js'),'utf8');
 (async()=>{
  const events=new Map(),frames=[],doc={querySelectorAll:()=>frames,addEventListener:(name,fn)=>events.set(name,fn)};
- let requests=0;const i18n={locale:'zh-Hant',t:value=>value};
+ let requests=0;const i18n={locale:'zh-Hant',t:value=>value,apply(){}};
  const portraits=create({document:doc,i18n,fetch:async url=>{requests++;assert.equal(url,'/assets/portraits/index.json');return{ok:true,json:async()=>manifest};}});
  assert(portraits.html('san14-person-a','曹操',{source:true}).includes('肖像準備中'));
  const pending=portraits.load();assert.strictEqual(portraits.load(),pending);assert(await pending);assert.equal(requests,1);assert.equal(portraits.status,'ready');
@@ -116,7 +116,7 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
  const healthy=create({i18n,fetch:async()=>({ok:true,json:async()=>manifest})});await healthy.load();
  const elements=new Map(),element=selector=>{if(selector.startsWith('[data-')||selector==='#tactic'||selector==='#duel'||selector.startsWith('#stage '))return null;if(!elements.has(selector))elements.set(selector,{innerHTML:'',onclick:null});return elements.get(selector);};
  const officers={0:{health:90,loyalty:100,experience:0,troops:300,profile:{martial_strength:80,intellect:90,virtue:70}},255:{health:80,loyalty:80,experience:0,troops:300,profile:{martial_strength:95,intellect:80,virtue:85}},999:{health:70,loyalty:80,experience:0,troops:300,profile:{martial_strength:70,intellect:95,virtue:85}}};
- const context={GameOfficerChoices:require('../game/officer-choice.js'),view:{catalog,game:{player:'shu',officers,cities:{home:{id:'home',roster:{officer_ids:[0,255,999]}}},phase:'battle',rng:{state:123,draws:0}}},GamePortraits:healthy,GameI18n:i18n,escapeHtml:String,name:id=>catalog.names[id],marching:()=>new Set(),mapNavigation:null,actor:null,target:null,window:{scrollY:0,scrollTo(){}},document:{querySelectorAll:()=>[]},$:element,cityName:String,command(){throw new Error('Rendering must not issue commands');},sourceEvidence:()=>'',virtueDescription:()=>'',showLibrary(){},openDialog(title,body){context.lastDialog={title,body};}};
+ const context={battleViewKey:'',battleDestination:null,GameOfficerChoices:require('../game/officer-choice.js'),view:{catalog,game:{player:'shu',officers,cities:{home:{id:'home',roster:{officer_ids:[0,255,999]}}},phase:'battle',rng:{state:123,draws:0}}},GamePortraits:healthy,GameI18n:i18n,escapeHtml:String,name:id=>catalog.names[id],marching:()=>new Set(),mapNavigation:null,actor:null,target:null,window:{scrollY:0,scrollTo(){}},document:{querySelectorAll:()=>[]},$:element,cityName:String,command(){throw new Error('Rendering must not issue commands');},sourceEvidence:()=>'',virtueDescription:()=>'',showLibrary(){},openDialog(title,body){context.lastDialog={title,body};}};
  vm.createContext(context);
  vm.runInContext(source.slice(source.indexOf('const portraitHtml='),source.indexOf('\nconst faction=')),context);
  vm.runInContext(source.slice(source.indexOf('function officerAttributes('),source.indexOf('function renderCity(')),context);

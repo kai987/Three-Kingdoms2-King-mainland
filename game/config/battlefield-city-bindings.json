@@ -2,7 +2,7 @@
   "schema": "tk2-battlefield-city-bindings-v1",
   "library_schema": "tk2-original-battlefields-v1",
   "policy": {
-    "scope": "Explicit display-only bindings for the current 115-city map. No RNG, combat formula, city terrain, ownership, soldier or save mutation.",
+    "scope": "Explicit original-map associations for the current 115-city map. The same immutable native grid now supplies both the image and authoritative tactical movement classes; regional reuse does not establish an original city identity. Selection never draws RNG or changes strategic geography or city ownership.",
     "direct_original": "Reserved for reviewed ROM city-name/identity evidence, recorded as rom_name_verified with an explicit identity_evidence reference. The initial bindings make no such all-name certification.",
     "regional_reuse": "Author-selected original regional template; never advertised as an additional original city-specific map.",
     "unresolved_source_labels": "Keep source spellings 西安阳/予州/永晶 without guessing corrections. Their bindings are regional_reuse and their compact labels use original city numbers.",

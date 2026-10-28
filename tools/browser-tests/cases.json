@@ -337,6 +337,19 @@
         "mainland217-07"
       ],
       "scenario_scope": "fixed"
+    },
+    {
+      "id": "battle-movement",
+      "title": "authoritative tactical movement, shared points and contact attacks persist with a missing battlefield image",
+      "groups": [
+        "battle",
+        "map",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland208-10"
+      ],
+      "scenario_scope": "fixed"
     }
   ]
 }
