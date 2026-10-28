@@ -64,6 +64,11 @@ const values=html=>[...html.matchAll(/<option value="(\d+)"/g)].map(m=>Number(m[
  const input=element('#allocation-troops');input.value='9999';input.oninput();assert.equal(input.value,'100');assert.equal(element('#allocation-preview').textContent,'确认后本城预备兵 0。');
  await element('#confirm-allocation').onclick();
  assert.equal(lastCommand.payload.troops,100);assert.equal(city.reserves,0);assert.equal(officers[1].troops,100);assert.equal(closed,0,'Successful allocation remains open');assert.equal(lastDialog.title,'编兵');assert.equal(element('#allocation-officer').value,'1','Selected officer survives refresh');assert.equal(element('#allocation-troops').value,'100');
+ const paidBooks=commandBookFixture.api.row(context.view).used,paidFlow=commandBookFixture.api.activeAllocation(context.view,'home').id,paidRequests=requests;
+ assert(lastDialog.actions.includes('id="allocation-next"'));
+ element('#allocation-next').onclick();assert.equal(element('#allocation-officer').value,'2');assert.equal(element('#allocation-troops').value,'30');
+ assert.equal(commandBookFixture.api.row(context.view).used,paidBooks);assert.equal(commandBookFixture.api.activeAllocation(context.view,'home').id,paidFlow);assert.equal(requests,paidRequests,'Next officer changes only the form, not the paid flow, books or game');
+ element('#allocation-officer').value='1';element('#allocation-officer').onchange();
  // The next operation reads new resources; reducing troops returns them to reserves.
  element('#allocation-troops').value='40';element('#allocation-troops').oninput();assert.equal(element('#allocation-preview').textContent,'确认后本城预备兵 60。');
  await element('#confirm-allocation').onclick();assert.equal(city.reserves,60);assert.equal(closed,0);
@@ -84,5 +89,11 @@ const values=html=>[...html.matchAll(/<option value="(\d+)"/g)].map(m=>Number(m[
  element('#allocation-troops').value=String(officers[1].troops+1);element('#allocation-troops').oninput();assert(!element('#confirm-allocation').disabled,'An already-paid distribution remains usable after the last book is spent');
  await element('#confirm-allocation').onclick();assert.equal(requests,4);assert.equal(commandBookFixture.api.row(context.view).used,commandBookFixture.api.row(context.view).total);
  assert(lastDialog.body.includes('data-command-book-cost="0"'));assert(lastDialog.actions.includes('完成配兵'));
+ const oldFactions=context.view.catalog.factions;
+ context.view.catalog.factions=[{id:'wei',captain:'关羽',name:'关羽',display_name:'关羽',ruler_person_id:'san14-candidate-0147'}];
+ context.GamePortraits={html:(id,name)=>`<span data-portrait-person="${id}" data-portrait-name="${name}"></span>`};
+ const leaderView=JSON.stringify(context.view),identity=context.factionIdentityHtml('wei');
+ assert(identity.includes('data-current-faction="wei"'));assert(identity.includes('data-portrait-person="san14-candidate-0147"'));assert(identity.includes('data-portrait-name="关羽"'));assert(identity.includes('data-current-faction-label'));
+ assert.equal(JSON.stringify(context.view),leaderView,'Current ruler portrait and label are read-only');context.view.catalog.factions=oldFactions;delete context.GamePortraits;
  console.log('officer controls: comparable attributes, deterministic purpose sort, numeric bounds, exact conservation and persistent allocation passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

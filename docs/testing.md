@@ -114,7 +114,7 @@ python3 -B tools/campaign-soak/run.py \
 
 所有非純文檔改動都保留來源資料一致性、全部29劇本的基本身份／引用／容量／資源檢查、JS語法與現有Node夾具、固定SDK及素材校驗。單個劇本也可能更新全局來源指紋；這類生成物或存檔標識變化仍要檢查，不會以刪除SHA或RNG斷言來縮短測試。
 
-Python與瀏覽器分別使用[`test-groups.json`](../tools/ci/test-groups.json)和[`cases.json`](../tools/browser-tests/cases.json)登記依賴。Python模組新增而未登記、瀏覽器用例未登記、計畫含未知組／未知ID，或篩選後沒有任何用例，都會失敗。`python_groups`與瀏覽器`groups`分開，避免全局UI測試意外拉入全部後端規則。瀏覽器仍保留現有24用例各兩個視口的完整48項模式；歷史專題按明列ID選入，其必要跨劇本比較保留，一般深度開局循環只使用指定ID。
+Python與瀏覽器分別使用[`test-groups.json`](../tools/ci/test-groups.json)和[`cases.json`](../tools/browser-tests/cases.json)登記依賴。Python模組新增而未登記、瀏覽器用例未登記、計畫含未知組／未知ID，或篩選後沒有任何用例，都會失敗。`python_groups`與瀏覽器`groups`分開，避免全局UI測試意外拉入全部後端規則。瀏覽器包含30用例各兩個視口的完整60項模式；歷史專題按明列ID選入，其必要跨劇本比較保留，一般深度開局循環只使用指定ID。
 
 行軍測試另拆成純向量／ABI矩陣與[真實存檔相容性](../tests/test_remake_march_save_compat.py)。局部劇本仍檢查8條原始存檔／RNG基線與雙向後端讀檔；大向量矩陣留在完整模式。只省略未被這些基線使用的昂貴UI視圖，生產規則、原金標、完整狀態與存檔摘要不變；實際視圖由WASM回放和瀏覽器檢查。
 
@@ -149,3 +149,5 @@ TK2_TEST_PLAN=build/ci/full-plan.json node tools/browser-tests/node_modules/@pla
 正式站使用獨立測試頁檢查啟動、劇本／勢力選擇、一次可見操作、存檔讀回與console／網路錯誤，並核對`runtime/build.json`的commit和實際資源。驗收過程保留玩家原本的分頁與戰役；若需雲端或郵件測試，另行取得對應操作授權，不以本機夾具結果宣稱已完成真實投遞。
 
 [規則CI](../.github/workflows/remake.yml)與[Pages發布流程](../.github/workflows/pages.yml)記錄目前的自動檢查及發布門檻；每次發布應分別報告本機檢查、該commit的遠端CI、正式站檔案與實際操作結果。遊戲容量、旬期、素材數量的核對來源見[目前戰役規則](remake-campaign-rules.md)。
+
+攻城另使用明示的[合法接敵存檔夾具](../tests/browser_siege_fixture.py)，由目前208年目錄、正式編兵命令與戰場初始化產生，僅安排攻方鄰接城格的位置，並先驗證原載入器可完整讀回；不宣稱是自然AI駐城結果。瀏覽器透過可見檔案選擇器匯入，再實際點旗標／攻擊，確認不提前結算兵損，四陣預覽不寫狀態，確認陣形與四組命令、實際逐巡移動與兵損、僅入口扣攻方2機動、原版背景、途中存讀、暫停改令與撤回保留狀態。編兵用例在徵兵接續、獨立付費、最後一本及讀檔流程連續實際配兵，檢查預備兵守恆、流程ID及亂數不變，並點選「下一位武將」。繼承用例另以明示的217年待繼位存檔，經可見介面實際選繼承人，檢查地圖、都市、資源台帳、雙語、現任肖像及開局預覽分別正確。

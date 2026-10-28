@@ -1,0 +1,319 @@
+{
+  "schema": "tk2-controlled-original-siege-capture-v1",
+  "controlled_fixture": true,
+  "natural_gameplay": false,
+  "rom_path": "source:pinned-original-rom",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "rom_modified": false,
+  "core": {
+    "name": "Nestopia",
+    "version": "2.0.0 135dfa6",
+    "core_sha256": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a"
+  },
+  "source_state": "source:research-archive/analysis/runtime/phase3/injected-adjacent-attack/scene/attack-scene-enter.state",
+  "source_state_sha256": "78412e7701de9ced5b266eabcb8ce3f48a649b3ededc53dd7a68922f0d538a29",
+  "changes": [
+    {
+      "memory": "RAM",
+      "cpu_address": "0x600",
+      "before": 3,
+      "after": 20,
+      "meaning": "controlled actual native castle/adjacent combatant coordinates; overlapping bystander moved to vacated cell"
+    },
+    {
+      "memory": "RAM",
+      "cpu_address": "0x614",
+      "before": 16,
+      "after": 14,
+      "meaning": "controlled actual native castle/adjacent combatant coordinates; overlapping bystander moved to vacated cell"
+    },
+    {
+      "memory": "RAM",
+      "cpu_address": "0x60a",
+      "before": 2,
+      "after": 19,
+      "meaning": "controlled actual native castle/adjacent combatant coordinates; overlapping bystander moved to vacated cell"
+    },
+    {
+      "memory": "RAM",
+      "cpu_address": "0x61e",
+      "before": 16,
+      "after": 14,
+      "meaning": "controlled actual native castle/adjacent combatant coordinates; overlapping bystander moved to vacated cell"
+    },
+    {
+      "memory": "RAM",
+      "cpu_address": "0x602",
+      "before": 19,
+      "after": 3,
+      "meaning": "controlled actual native castle/adjacent combatant coordinates; overlapping bystander moved to vacated cell"
+    },
+    {
+      "memory": "RAM",
+      "cpu_address": "0x616",
+      "before": 14,
+      "after": 16,
+      "meaning": "controlled actual native castle/adjacent combatant coordinates; overlapping bystander moved to vacated cell"
+    }
+  ],
+  "limits": [
+    "Controlled selector fixture, not natural campaign traversal. No original attack damage or wall bonus inferred.",
+    "Runtime core initializes, renders and advances all scenes. No readiness/PPU/result injection."
+  ],
+  "steps": [
+    {
+      "frames": 180,
+      "buttons": [],
+      "label": "initialization",
+      "global_state": 4,
+      "nmi": 3,
+      "attack_main": 255,
+      "attack_sub": 255,
+      "background": 255
+    },
+    {
+      "frames": 2,
+      "buttons": [
+        "a"
+      ],
+      "label": "confirm1",
+      "global_state": 4,
+      "nmi": 3,
+      "attack_main": 255,
+      "attack_sub": 255,
+      "background": 0
+    },
+    {
+      "frames": 240,
+      "buttons": [],
+      "label": "prelude1",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 6,
+      "attack_sub": 1,
+      "background": 5
+    },
+    {
+      "frames": 2,
+      "buttons": [
+        "a"
+      ],
+      "label": "confirm2",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 6,
+      "attack_sub": 2,
+      "background": 5
+    },
+    {
+      "frames": 180,
+      "buttons": [],
+      "label": "prelude2",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 6,
+      "attack_sub": 2,
+      "background": 5
+    },
+    {
+      "frames": 2,
+      "buttons": [
+        "a"
+      ],
+      "label": "confirm3",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 3,
+      "attack_sub": 1,
+      "background": 5
+    },
+    {
+      "frames": 180,
+      "buttons": [],
+      "label": "prelude3",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 3,
+      "attack_sub": 2,
+      "background": 5
+    }
+  ],
+  "outputs": {
+    "confirm1-ram.bin": {
+      "bytes": 2048,
+      "sha256": "46791c124ff8303ede35fe4021fed3b955c017c49e37c6f82c5ea5de7e678390"
+    },
+    "confirm1-sram.bin": {
+      "bytes": 8192,
+      "sha256": "0aeadcb8f5d581ef3f612c00ba42d29a849c8daf8a71e1561799f41e3e6c504b"
+    },
+    "confirm1-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "confirm1.json": {
+      "bytes": 2497,
+      "sha256": "8e4c566db5c1f6dd504bbec4ee388cc6bfb9e22558a149f5d5d698617b33bd19"
+    },
+    "confirm1.png": {
+      "bytes": 9251,
+      "sha256": "20007aad95a423b439fe45154f05d4408f6dde169b96bb5fb94cab56c401a42d"
+    },
+    "confirm1.state": {
+      "bytes": 13783,
+      "sha256": "5eb54b59a600eb5a4e75860430f0a543ab31431e521d26a6fff03dacfcd5a65b"
+    },
+    "confirm2-ram.bin": {
+      "bytes": 2048,
+      "sha256": "e03b0f269733dc386f21ddc2a0117eab9702654a9963534e922503edf416ba85"
+    },
+    "confirm2-sram.bin": {
+      "bytes": 8192,
+      "sha256": "0aeadcb8f5d581ef3f612c00ba42d29a849c8daf8a71e1561799f41e3e6c504b"
+    },
+    "confirm2-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "confirm2.json": {
+      "bytes": 2674,
+      "sha256": "6613968d60941c69e9484e7be4425abf39c0083b9d863f58a3ce820e030a77be"
+    },
+    "confirm2.png": {
+      "bytes": 4903,
+      "sha256": "0c282b486d89851afc2ebe9e628a503158c7b19237a6ea733d4b9b5c5c791ba1"
+    },
+    "confirm2.state": {
+      "bytes": 13783,
+      "sha256": "847ae2a40578e839872cd4cb935ac417c1edefa3b0f8758916d21feed7f2be30"
+    },
+    "confirm3-ram.bin": {
+      "bytes": 2048,
+      "sha256": "ff77c02e1cbf1c170b21c1ff428a6eaf0c3f6dffc208ee12011dd87607181fe8"
+    },
+    "confirm3-sram.bin": {
+      "bytes": 8192,
+      "sha256": "0aeadcb8f5d581ef3f612c00ba42d29a849c8daf8a71e1561799f41e3e6c504b"
+    },
+    "confirm3-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "confirm3.json": {
+      "bytes": 2851,
+      "sha256": "5f24db02b51cf9c838d77c16efaeeeb745214ff255bb25e64f7d71fd57be56f3"
+    },
+    "confirm3.png": {
+      "bytes": 4878,
+      "sha256": "d86f282690dce5f9e88ceaaf1ec54d75282fa2b705070f33fdd2c119367215b3"
+    },
+    "confirm3.state": {
+      "bytes": 13783,
+      "sha256": "4362bd85899f0c7afb8c3af36b0c8bce2570038e80bb0b6b224b948ed1a7d299"
+    },
+    "controlled-castle-input-ram.bin": {
+      "bytes": 2048,
+      "sha256": "b484bbf31eb11a966cdb4952b3a1aff2f95d408cf0a7e344dfcd329508bd4023"
+    },
+    "controlled-castle-input.state": {
+      "bytes": 13783,
+      "sha256": "00fcb761a7276abc218fd1f217bd31e9f494066782e2d57e7634b9e2ca719a0e"
+    },
+    "initialization-ram.bin": {
+      "bytes": 2048,
+      "sha256": "f156047fde47f0b4ed6a5c681876b923fe2ecb1cd03a85a04dfe46585ca5d390"
+    },
+    "initialization-sram.bin": {
+      "bytes": 8192,
+      "sha256": "0aeadcb8f5d581ef3f612c00ba42d29a849c8daf8a71e1561799f41e3e6c504b"
+    },
+    "initialization-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "initialization.json": {
+      "bytes": 2406,
+      "sha256": "21988f8c33b526e0121f383823a743cc0d0cd72aab838255f0a9d3b985c5f712"
+    },
+    "initialization.png": {
+      "bytes": 9251,
+      "sha256": "20007aad95a423b439fe45154f05d4408f6dde169b96bb5fb94cab56c401a42d"
+    },
+    "initialization.state": {
+      "bytes": 13783,
+      "sha256": "4d40c196b06f66004b9331cd4446dbc8db57f89df81b34dd3a853ffac90e0964"
+    },
+    "prelude1-ram.bin": {
+      "bytes": 2048,
+      "sha256": "ce6ca1d6cb93772795f237cea66d0d530ded762ff1a9ca54ca1e4238fb975c7a"
+    },
+    "prelude1-sram.bin": {
+      "bytes": 8192,
+      "sha256": "0aeadcb8f5d581ef3f612c00ba42d29a849c8daf8a71e1561799f41e3e6c504b"
+    },
+    "prelude1-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "prelude1.json": {
+      "bytes": 2577,
+      "sha256": "df389d7cfa7671b4904a6b1efde1324dc5ec534be4150a14b0acbf90db0c4803"
+    },
+    "prelude1.png": {
+      "bytes": 4918,
+      "sha256": "81098e6cbb9bd985e2239d1362ed80d00524687404b61490a434525d721a0016"
+    },
+    "prelude1.state": {
+      "bytes": 13783,
+      "sha256": "2da8446f015fc801b31d46fb68f43d5997b652cc372b0734c79bae614466dbb9"
+    },
+    "prelude2-ram.bin": {
+      "bytes": 2048,
+      "sha256": "ee7e96722fd7b84565a8915d15dbff8a305db2d8bc1e18d7ffb746f3d9aa87f2"
+    },
+    "prelude2-sram.bin": {
+      "bytes": 8192,
+      "sha256": "0aeadcb8f5d581ef3f612c00ba42d29a849c8daf8a71e1561799f41e3e6c504b"
+    },
+    "prelude2-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "prelude2.json": {
+      "bytes": 2754,
+      "sha256": "973afbdfc8e14dc4a37fd692ca39d4f90ce793a7fd07e2ccf58571d54161b70b"
+    },
+    "prelude2.png": {
+      "bytes": 4878,
+      "sha256": "d86f282690dce5f9e88ceaaf1ec54d75282fa2b705070f33fdd2c119367215b3"
+    },
+    "prelude2.state": {
+      "bytes": 13783,
+      "sha256": "9d8600c981fc04b9e0db5df51eac6ef19918b2666f35571475d5581256194956"
+    },
+    "prelude3-ram.bin": {
+      "bytes": 2048,
+      "sha256": "ee6a928767ecb6915c9d9a74a2c4e77bca999c0b89279c0ac932c06fb6b57810"
+    },
+    "prelude3-sram.bin": {
+      "bytes": 8192,
+      "sha256": "0aeadcb8f5d581ef3f612c00ba42d29a849c8daf8a71e1561799f41e3e6c504b"
+    },
+    "prelude3-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "prelude3.json": {
+      "bytes": 2931,
+      "sha256": "e7cd18ba2c72b3918a9e0e45efd764aae44b63911414652020371fb7dd1bb244"
+    },
+    "prelude3.png": {
+      "bytes": 5308,
+      "sha256": "ea3bbea49c76972f4536d58d317e6106de424d45272011aa0bf1b5473070d21b"
+    },
+    "prelude3.state": {
+      "bytes": 13783,
+      "sha256": "8dc4fc46e0cb7e682000d25e779d0ed342cd2f94622ae86cc3bcf5df69008ca5"
+    }
+  }
+}

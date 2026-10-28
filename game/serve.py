@@ -194,6 +194,38 @@ def battlefield_static_assets(here=None):
     return result
 
 
+def siege_static_assets(here=None):
+    """Only reviewed native siege PNG/data listed by its shipped manifest."""
+    here = Path(here) if here is not None else HERE
+    base = here / 'assets/siege-original'
+    index = base / 'index.json'
+    if (here / 'assets').is_symlink() or base.is_symlink() or index.is_symlink():
+        return {}
+    result = {'/assets/siege-original/index.json':
+              ('assets/siege-original/index.json', 'application/json; charset=utf-8')}
+    try:
+        data = json.loads(index.read_text(encoding='utf-8'))
+        if data.get('schema') != 'tk2-original-siege-assets-v1':
+            return {}
+        def visit(value):
+            if isinstance(value, dict):
+                path = value.get('path')
+                if isinstance(path, str) and re.fullmatch(r'/assets/siege-original/[a-z0-9_-]+\.(?:png|json)', path):
+                    target = here / path.lstrip('/')
+                    if not target.is_symlink() and target.is_file() and len(result) < 128:
+                        mime = 'image/png' if path.endswith('.png') else 'application/json; charset=utf-8'
+                        result[path] = (path.lstrip('/'), mime)
+                for row in value.values():
+                    visit(row)
+            elif isinstance(value, list):
+                for row in value:
+                    visit(row)
+        visit(data)
+    except (OSError, ValueError, AttributeError):
+        return {}
+    return result
+
+
 def enhanced_battle_static_assets(here=None):
     """Only the shipped4x battle manifest and its fixed PNG filenames are public."""
     here = Path(here) if here is not None else HERE
@@ -623,6 +655,7 @@ def main():
               '/facilities.js': ('facilities.js', 'text/javascript; charset=utf-8'),
               '/equipment.js': ('equipment.js', 'text/javascript; charset=utf-8'),
               '/battle-scene.js': ('battle-scene.js', 'text/javascript; charset=utf-8'),
+              '/siege-ui.js': ('siege-ui.js', 'text/javascript; charset=utf-8'),
               '/battlefields.js': ('battlefields.js', 'text/javascript; charset=utf-8'),
               '/command-books.js': ('command-books.js', 'text/javascript; charset=utf-8'),
               '/order-confirm.js': ('order-confirm.js', 'text/javascript; charset=utf-8'),
@@ -670,6 +703,7 @@ def main():
     static.update(original_ui_static_assets())
     static.update(equipment_icon_static_assets())
     static.update(battle_static_assets())
+    static.update(siege_static_assets())
     static.update(battlefield_static_assets())
     static.update(enhanced_battle_static_assets())
 

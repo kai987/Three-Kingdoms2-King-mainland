@@ -18,6 +18,19 @@ for(const change of [v=>{v.catalog.command_books.turn++;},v=>{v.catalog.command_
 assert.equal(api.cost(view,'unknown'),null);assert(!api.can(view,'unknown'));
 const malformed=JSON.parse(snapshot);malformed.catalog.command_books.costs.recruit='<script>';assert.equal(api.cost(malformed,'recruit'),null);assert(!api.html(malformed,{kind:'recruit'}).includes('<script>'));
 assert.equal(api.summary({}), '');
+assert(api.allocationSupported(view));
+const opening={catalog:{command_books:{schema:api.SCHEMA,turn:null,maximum:13,costs:{allocate:1,allocation_close:0},factions:{}}},game:null};
+assert(api.allocationSupported(opening),'A current engine with no started campaign still advertises paid-flow support');
+for(const stale of [
+ {},
+ {catalog:{},game:{player:'wei',turn:3}},
+ (()=>{const old=JSON.parse(snapshot);delete old.catalog.command_books.costs.allocation_close;return old;})(),
+ (()=>{const old=JSON.parse(snapshot);old.catalog.command_books.costs.allocation_close=1;return old;})(),
+]){
+ assert(!api.allocationSupported(stale));
+ assert.equal(api.cost(stale,'allocate',{city:'first',flow:null}),null,'A new web shell must not silently send paid city flows to an older per-officer engine');
+ assert(!api.can(stale,'allocate'));
+}
 const paid=JSON.parse(snapshot);exhaust(paid);
 paid.catalog.command_books.factions.wei.allocation_flow={id:'3:wei:first:1',city:'first',source:'recruit'};
 const continuation={city:'first',flow:'3:wei:first:1'};
@@ -39,6 +52,26 @@ const timers=[],closed=[],dialogContext={view:paid,GameCommandBooks:api,busy:fal
  orderConfirmation:{pending:false},setTimeout(callback){timers.push(callback);},
  command:async(kind,payload)=>{closed.push({kind,payload});return true;}};
 vm.createContext(dialogContext);
+vm.runInContext(source.slice(source.indexOf('function allocationCompatibilityNotice('),source.indexOf('function cityOccupancy(')),dialogContext);
+assert.equal(dialogContext.allocationCompatibilityNotice(),'','A current paid-flow engine receives no version warning');
+const savedView=dialogContext.view;dialogContext.view={catalog:{},game:{player:'wei',turn:3}};
+const warning=dialogContext.allocationCompatibilityNotice();
+assert(warning.includes('尚不支援一次命令書連續配兵'));
+assert(warning.includes('命令書1枚による連続編制に未対応'));
+assert(warning.includes('下載舊進度備份'));assert(warning.includes('保留舊服務'));assert(warning.includes('重新開始相符的新戰役'));assert(warning.includes('ページの再読み込みだけでは'));
+const compatibilityNodes=new Map(),compatibilityNotice=[];
+dialogContext.$=key=>{if(!compatibilityNodes.has(key))compatibilityNodes.set(key,{});return compatibilityNodes.get(key);};
+dialogContext.notice=(...args)=>compatibilityNotice.push(args);dialogContext.GameI18n={locale:'ja',apply(){}};
+assert(dialogContext.showAllocationCompatibility());
+assert(compatibilityNodes.get('#inspector').innerHTML.includes('オンライン最新版を別に開く'));
+assert.equal(compatibilityNodes.get('#save').disabled,false,'Old progress can still be downloaded before any service update');
+for(const key of ['#load','#main-menu','#restart'])assert.equal(compatibilityNodes.get(key).disabled,true);
+assert(compatibilityNotice[0][0].includes('旧版のローカルサーバー'));
+const booksModule=dialogContext.GameCommandBooks;delete dialogContext.GameCommandBooks;
+assert(dialogContext.showAllocationCompatibility(),'A missing command-books script must show the old-server notice instead of throwing');
+dialogContext.GameCommandBooks=booksModule;
+dialogContext.view=opening;assert.equal(dialogContext.showAllocationCompatibility(),false,'A fresh current Worker must continue to scenario selection');
+dialogContext.view=savedView;
 vm.runInContext(source.slice(source.indexOf('function resetAllocationDialogs('),source.indexOf('async function confirmOrderCommand('))+
  source.slice(source.indexOf('function queueAllocationClose('),source.indexOf('function openDialog(')),dialogContext);
 dialogContext.queueAllocationClose({city:'first',flow:null});assert.equal(timers.length,0);

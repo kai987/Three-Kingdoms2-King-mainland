@@ -217,6 +217,18 @@ class DelegationReplayTests(unittest.TestCase):
                 if battle['extended']['duel']:
                     self.command('duel_action', battle_id=battle['id'], move='withdraw')
                     continue
+                encounter=battle['extended'].get('siege')
+                if encounter:
+                    # Advance the real saved soldier encounter before asking
+                    # the outer tactical planner for another legal action.
+                    # Every command still checkpoints both complete saves/RNG.
+                    if encounter['stage']=='formation':
+                        self.command('siege_form',battle_id=battle['id'],formation=3)
+                    elif encounter['stage']=='orders':
+                        self.command('siege_orders',battle_id=battle['id'],orders={
+                            kind:'advance'for kind in ('infantry','archer','cavalry','general')})
+                    else:self.command('siege_step',battle_id=battle['id'])
+                    continue
                 own, foe = game._player_sides(state)
                 actors = [u for u in battle[own] if u['troops'] > 0
                           and isinstance(u['id'], str) and u['id'].startswith('clerk-')]

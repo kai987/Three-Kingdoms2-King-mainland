@@ -306,5 +306,13 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  const observations=[],ctx={busy:false,view:view([]),audioOutcome:null,localAutosave:null,confirmOrderCommand:async()=>true,gameEvents:{observe:(v,o)=>observations.push([v,o])},notice(){},setBusy(v){ctx.busy=v;},render(){},setTimeout:fn=>{fn();return 1},gameAudio:{play(){}},request:async()=>view([row(1)])};vm.createContext(ctx);vm.runInContext(commandBody,ctx);assert(await ctx.command('new'));assert.equal(observations.length,1);assert.equal(observations[0][1].newGame,true);ctx.request=async()=>{throw Error('rejected')};assert.equal(await ctx.command('recruit_officer'),false);assert.equal(observations.length,1);
  assert(app.includes('gameEvents?.observe(view,{baseline:true})'));assert(app.includes('getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview'));
  const html=fs.readFileSync(require('node:path').join(__dirname,'../game/index.html'),'utf8');assert(html.indexOf('/events.js')<html.indexOf('/app.js'));assert(html.includes('id="event-dialog" aria-labelledby="event-title" aria-describedby="event-description"'));
+ const inheritedView=view([]);inheritedView.catalog={...catalog,factions:[{id:'shu',name:'劉備勢力',display_name:'劉禪',captain:'劉禪',city:'home'}]};
+ const inherited=fixture();inherited.setView(inheritedView);inherited.events.observe(inheritedView,{baseline:true});
+ const captured=row(1,'city_captured',{person_ids:[],audience:'world'}),inheritedBefore=JSON.stringify(inheritedView);
+ for(const locale of ['zh-Hant','ja']){
+  inherited.i18n.locale=locale;const line=inherited.events.description(captured);
+  assert(line.includes('劉禪'));assert(!line.includes('劉備'),'Event faction labels follow the live ruler, not the opening name');
+ }
+ assert.equal(JSON.stringify(inheritedView),inheritedBefore,'Bilingual event display never changes faction identity or state');inherited.events.dispose();
  console.log('events: 56 bilingual scenes, strict coup/founding/supply/city-name snapshots, dated historical context, local batching, read-only playback, locale continuity and immutable RNG/state passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

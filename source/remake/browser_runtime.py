@@ -27,6 +27,7 @@ POST_PATHS = frozenset(('/api/command', '/api/load'))
 COMMANDS = frozenset(('new', 'persuade_officer', 'recruit_officer', 'transfer',
                      'tactic', 'duel_start', 'duel_action', 'allocate', 'allocation_close', 'recruit',
                      'depart', 'attack', 'battle_move', 'battle_wait', 'retreat', 'settle', 'end_turn', 'ai',
+                     'siege_form','siege_orders','siege_step','siege_withdraw',
                      'arrivals', 'hire_staff', 'reject_staff', 'staff_recruit',
                      'choose_successor', 'set_domestic', 'set_logistics',
                      'dispatch_transport', 'search_treasure', 'reward_officer',

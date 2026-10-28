@@ -174,6 +174,8 @@ def _action_reason(battle, actor, side=None):
         return '請選擇本方部隊。'
     if battle['outcome'] or battle['extended']['duel']:
         return '請先完成目前的戰鬥操作。'
+    if battle['extended'].get('siege'):
+        return '請先完成目前的攻城戰。'
     if own != row['side'] or row['passed'][own]:
         return '目前不是本方的戰術行動階段。'
     return ''
@@ -231,6 +233,25 @@ def tile_class(battle, actor):
         raise ValueError('Unknown tactical unit')
     point = battle['extended']['tactical']['positions'][str(unit['id'])]
     return _field(battle)['classes'][point['y']][point['x']]
+
+
+def siege_context(battle, actor, target):
+    """Freeze the actual occupied castle cell for this one contact encounter.
+
+    A commander identity or the target city's strategic terrain does not make
+    a siege: a combatant must stand on the recovered native class5 cell. The
+    receipt is presentation-only and is captured before any later AI movement.
+    Old arithmetic-only battles have no grid and keep their existing payload.
+    """
+    row = battle['extended'].get('tactical')
+    if row is None:
+        return None
+    for value in (target, actor):
+        _, unit = _unit(battle, value)
+        if unit is not None and tile_class(battle, unit) == 5:
+            return dict(fort=unit['id'], map_id=row['map_id'],
+                        cell=deepcopy(row['positions'][str(unit['id'])]))
+    return None
 
 
 def tactic_terrain_reason(battle, actor, target, tid):

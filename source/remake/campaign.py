@@ -152,6 +152,11 @@ class Campaign(TravelCampaign, ExpandedCampaign):
     def person_name(self, state, ident):
         return state.extension['civil_staff']['people'][ident]['name'] if is_generated_ref(ident) else self.catalog.name(ident)
 
+    def faction_name(self, state, owner):
+        from .dated_events import visible_factions
+        return next((row['name'] for row in visible_factions(self.catalog,state) if row['id']==owner),
+                    self.catalog.factions.get(owner,{}).get('name',owner))
+
     def person_definition(self, state, ident):
         return civil_staff.definition(state.extension['civil_staff']['people'][ident]) if is_generated_ref(ident) else self.catalog.definitions[self.catalog.by_id[ident]['person_id']]
 
@@ -343,6 +348,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                'recruit': self._recruit, 'depart': self._depart,
                                'attack': self._attack, 'retreat': self._retreat, 'settle': self._settle,
                                'battle_move':self._battle_move, 'battle_wait':self._battle_wait,
+                               **{action:self._siege_command(action) for action in
+                                  ('siege_form','siege_orders','siege_step','siege_withdraw')},
                                'end_turn': self._end_turn, 'ai': self._ai, 'arrivals': self._arrivals,
                                'hire_staff': self._hire_staff, 'reject_staff': self._reject_staff,
                                'staff_recruit': self._staff_recruit, 'choose_successor': self._choose_successor,
@@ -359,6 +366,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     if kind not in ('allocate', 'allocation_close'):
                         command_books.close_allocation(candidate, candidate.player)
                     methods[kind](candidate, payload)
+                    self._synchronize_siege(candidate)
                 record_events(self, self.state, candidate, kind, payload)
                 civil_staff.synchronize(self, candidate, opening=kind == 'new', monthly=candidate.day == 1)
                 logistics.synchronize(self,candidate)

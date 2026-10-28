@@ -12,7 +12,7 @@ function load(value,options={}){
 }
 try{
  const full=scopes.loadBrowserScope({planPath:''});
- assert.equal(full.full,true);assert.equal(full.selectedCases.length,28);
+ assert.equal(full.full,true);assert.equal(full.selectedCases.length,30);
  assert.deepEqual(new Set(scopes.readCaseTitles(source)),new Set(scopes.CASE_REGISTRY.cases.map(row=>row.title)));
  const union=new Set();
  for(const group of scopes.CANONICAL_GROUPS){
@@ -31,6 +31,7 @@ try{
  assert(battle.has('battle-layout'),'Battle changes exercise the real battlefield controls');
  for(const group of ['map','save'])assert(load(plan([group],['mainland208-10'])).selectedCases.some(row=>row.id==='battle-layout'));
  assert(!load(plan(['battle'],['mainland217-07'])).selectedCases.some(row=>row.id==='battle-layout'),'The fixed natural battle does not broaden unrelated scenario-local checks');
+ for(const group of ['people','map','save'])assert(load(plan([group],['mainland217-07'])).selectedCases.some(row=>row.id==='ruler-succession-display'));
  for(const row of full.selectedCases){
   assert(full.grep.test('desktop-chromium browser_ui.spec.mjs '+row.title));
   assert.equal(boot.grep.test('touch-chromium browser_ui.spec.mjs '+row.title),expected.includes(row.id));
@@ -59,5 +60,5 @@ try{
  assert.throws(()=>scopes.loadBrowserScope({planPath:broken}),/cannot read plan JSON/);
  const cli=spawnSync(process.execPath,[path.join(__dirname,'../tools/browser-tests/scope.cjs'),'--plan',broken],{encoding:'utf8'});
  assert.notEqual(cli.status,0);assert(cli.stderr.includes('Browser test scope:'));
- console.log('browser scopes: all 28 cases registered before grep, full/group union, bounded boot/audio, scenario-local deep openings, opaque plan provenance and fail-closed unknown/empty/invalid plans passed');
+ console.log('browser scopes: all 30 cases registered before grep, full/group union, bounded boot/audio, scenario-local deep openings, opaque plan provenance and fail-closed unknown/empty/invalid plans passed');
 }finally{fs.rmSync(directory,{recursive:true,force:true});}

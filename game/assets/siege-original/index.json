@@ -1,0 +1,2953 @@
+{
+  "schema": "tk2-original-siege-assets-v1",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "core_sha256": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a",
+  "controlled_fixture": true,
+  "natural_gameplay": false,
+  "source_provenance": [
+    {
+      "source_id": "controlled-capture-run3",
+      "original_sha256": "91e8e7949626f9e94b4f5e33e63d31e33e89f746d5a6638c34b24c3b9b11708b",
+      "path": "/assets/siege-original/capture-run3-provenance.json",
+      "sha256": "9306281ada15102fcac5d00ea0a3854eb5ed5083885bcbf0e519f4ceaa1e175e"
+    },
+    {
+      "source_id": "controlled-capture-actions",
+      "original_sha256": "95f7d7a1b28f70a159b70547b97a5286fc8ff110d209427bf61295b516bafe18",
+      "path": "/assets/siege-original/capture-actions-provenance.json",
+      "sha256": "bfc42fdbcd5e64c0799e7d01a5657aa0249a99239d91887b237652d4a3d39d3d"
+    },
+    {
+      "source_id": "retained-original-field",
+      "original_sha256": "2c4fe4c2c21f52aa8a0b5b2801454724dbc691e6ccb5c31eb6fc23d4e532e60c",
+      "path": "/assets/siege-original/capture-field-provenance.json",
+      "sha256": "377d14b38e3ca27ae68a81b6bd65a5e8c3dabdbf8440f29a3220c4266a891ca4"
+    }
+  ],
+  "assets": {
+    "siege-background": {
+      "path": "/assets/siege-original/siege-background.png",
+      "width": 256,
+      "height": 160,
+      "sha256": "cf4c5945ea0a01005ae679f9461b78722378877fd5135d2932378e4c1ed4fbc1",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-prelude1.png",
+        "screenshot_sha256": "81098e6cbb9bd985e2239d1362ed80d00524687404b61490a434525d721a0016",
+        "source_rect": [
+          0,
+          0,
+          256,
+          160
+        ],
+        "operations": []
+      },
+      "runtime_eligible": true
+    },
+    "siege-background-4x": {
+      "path": "/assets/siege-original/siege-background-4x.png",
+      "width": 1024,
+      "height": 640,
+      "sha256": "83daa92be51151ad89b4d4cd469d7e6d13a668aea38b84cfcb8fa8417bf70143",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-prelude1.png",
+        "screenshot_sha256": "81098e6cbb9bd985e2239d1362ed80d00524687404b61490a434525d721a0016",
+        "source_rect": [
+          0,
+          0,
+          256,
+          160
+        ],
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true
+    },
+    "witness-siege-formation": {
+      "path": "/assets/siege-original/witness-siege-formation.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "81c116b923f0a52cc9bf17aee4887f3692b7fdc8b269ba61cb49ee1f0cb69b9c",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-prelude1.png",
+        "screenshot_sha256": "81098e6cbb9bd985e2239d1362ed80d00524687404b61490a434525d721a0016",
+        "source_rect": [
+          0,
+          0,
+          256,
+          240
+        ],
+        "operations": []
+      },
+      "runtime_eligible": false,
+      "classification": "complete-native-capture-witness"
+    },
+    "formation-0": {
+      "path": "/assets/siege-original/formation-0.png",
+      "width": 33,
+      "height": 33,
+      "sha256": "b974855a3375b8684502efc903398ad3b15ea989942d82b179156b5067a1a33e",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-prelude1.png",
+        "screenshot_sha256": "81098e6cbb9bd985e2239d1362ed80d00524687404b61490a434525d721a0016",
+        "source_rect": [
+          64,
+          190,
+          97,
+          223
+        ],
+        "operations": []
+      },
+      "runtime_eligible": true
+    },
+    "formation-1": {
+      "path": "/assets/siege-original/formation-1.png",
+      "width": 33,
+      "height": 33,
+      "sha256": "5f5493e258d190bdcd108a1455b8012b4eb484dd06617f853e514cd92283b2ca",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-prelude1.png",
+        "screenshot_sha256": "81098e6cbb9bd985e2239d1362ed80d00524687404b61490a434525d721a0016",
+        "source_rect": [
+          104,
+          190,
+          137,
+          223
+        ],
+        "operations": []
+      },
+      "runtime_eligible": true
+    },
+    "formation-2": {
+      "path": "/assets/siege-original/formation-2.png",
+      "width": 33,
+      "height": 33,
+      "sha256": "b42bcccdb20b39495d8c131a645fcf953f984b902c0e3cba7dcbf6c7197408f9",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-prelude1.png",
+        "screenshot_sha256": "81098e6cbb9bd985e2239d1362ed80d00524687404b61490a434525d721a0016",
+        "source_rect": [
+          144,
+          190,
+          177,
+          223
+        ],
+        "operations": []
+      },
+      "runtime_eligible": true
+    },
+    "formation-3": {
+      "path": "/assets/siege-original/formation-3.png",
+      "width": 33,
+      "height": 33,
+      "sha256": "aeb5d03f90e0efab072d0c59cecc97438aeed4ba39dd56cdd595f79a9405771a",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-prelude1.png",
+        "screenshot_sha256": "81098e6cbb9bd985e2239d1362ed80d00524687404b61490a434525d721a0016",
+        "source_rect": [
+          184,
+          190,
+          217,
+          223
+        ],
+        "operations": []
+      },
+      "runtime_eligible": true
+    },
+    "siege-formation-friendly-0": {
+      "path": "/assets/siege-original/siege-formation-friendly-0.png",
+      "width": 128,
+      "height": 160,
+      "sha256": "4d060bc4b41e233d9b5f2d22b0c0760a7ccfa753d5c6aba5db4ca21be5e80819",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          0,
+          0,
+          128,
+          160
+        ],
+        "operations": [
+          {
+            "kind": "pixel_exact_native_background_difference",
+            "background": "/assets/siege-original/capture-prelude1.png",
+            "background_sha256": "81098e6cbb9bd985e2239d1362ed80d00524687404b61490a434525d721a0016"
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "classification": "retained-background-difference-candidate",
+      "clean_sprite_verified": false
+    },
+    "siege-formation-enemy-0": {
+      "path": "/assets/siege-original/siege-formation-enemy-0.png",
+      "width": 128,
+      "height": 160,
+      "sha256": "587f5b1c643b2b1b50f63a912f91c635d28a1bd62a7cede6196bedbfb81ed942",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          128,
+          0,
+          256,
+          160
+        ],
+        "operations": [
+          {
+            "kind": "pixel_exact_native_background_difference",
+            "background": "/assets/siege-original/capture-prelude1.png",
+            "background_sha256": "81098e6cbb9bd985e2239d1362ed80d00524687404b61490a434525d721a0016"
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "classification": "retained-background-difference-candidate",
+      "clean_sprite_verified": false
+    },
+    "witness-siege-0": {
+      "path": "/assets/siege-original/witness-siege-0.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "32de2d770225e2987a57be2bfddcf485d63c98d010f12357d1bf47f8f411d6b1",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          0,
+          0,
+          256,
+          240
+        ],
+        "operations": []
+      },
+      "runtime_eligible": false,
+      "classification": "complete-native-capture-witness"
+    },
+    "siege-formation-friendly-1": {
+      "path": "/assets/siege-original/siege-formation-friendly-1.png",
+      "width": 128,
+      "height": 160,
+      "sha256": "2e6c186db7e05e504cf095fda273dd254bc37c08cfbdd64d7f12d2a6b35ae903",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-4.png",
+        "screenshot_sha256": "9b47c40c54e989c9249091d9ce0c0d3a3547062037c801992a90f27f1663a8be",
+        "source_rect": [
+          0,
+          0,
+          128,
+          160
+        ],
+        "operations": [
+          {
+            "kind": "pixel_exact_native_background_difference",
+            "background": "/assets/siege-original/capture-prelude1.png",
+            "background_sha256": "81098e6cbb9bd985e2239d1362ed80d00524687404b61490a434525d721a0016"
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "classification": "retained-background-difference-candidate",
+      "clean_sprite_verified": false
+    },
+    "siege-formation-enemy-1": {
+      "path": "/assets/siege-original/siege-formation-enemy-1.png",
+      "width": 128,
+      "height": 160,
+      "sha256": "11cf2cc3d2659e907b73eb4d4c11cdc46aa84f09720c14218a4007a7ba1be89a",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-4.png",
+        "screenshot_sha256": "9b47c40c54e989c9249091d9ce0c0d3a3547062037c801992a90f27f1663a8be",
+        "source_rect": [
+          128,
+          0,
+          256,
+          160
+        ],
+        "operations": [
+          {
+            "kind": "pixel_exact_native_background_difference",
+            "background": "/assets/siege-original/capture-prelude1.png",
+            "background_sha256": "81098e6cbb9bd985e2239d1362ed80d00524687404b61490a434525d721a0016"
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "classification": "retained-background-difference-candidate",
+      "clean_sprite_verified": false
+    },
+    "witness-siege-1": {
+      "path": "/assets/siege-original/witness-siege-1.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "26f2608f91fbd9909fdaea65a00168cba02d4a14116c0009dc22a65247d88d4b",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-4.png",
+        "screenshot_sha256": "9b47c40c54e989c9249091d9ce0c0d3a3547062037c801992a90f27f1663a8be",
+        "source_rect": [
+          0,
+          0,
+          256,
+          240
+        ],
+        "operations": []
+      },
+      "runtime_eligible": false,
+      "classification": "complete-native-capture-witness"
+    },
+    "siege-formation-friendly-2": {
+      "path": "/assets/siege-original/siege-formation-friendly-2.png",
+      "width": 128,
+      "height": 160,
+      "sha256": "e6740015a988280b308a793e0b809691385974ba9783e40e87f24b2012b67f39",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-8.png",
+        "screenshot_sha256": "b6659cd14ace33edd781ea459a0a1ed02f397b23adfdd64d2e646bae03c00f62",
+        "source_rect": [
+          0,
+          0,
+          128,
+          160
+        ],
+        "operations": [
+          {
+            "kind": "pixel_exact_native_background_difference",
+            "background": "/assets/siege-original/capture-prelude1.png",
+            "background_sha256": "81098e6cbb9bd985e2239d1362ed80d00524687404b61490a434525d721a0016"
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "classification": "retained-background-difference-candidate",
+      "clean_sprite_verified": false
+    },
+    "siege-formation-enemy-2": {
+      "path": "/assets/siege-original/siege-formation-enemy-2.png",
+      "width": 128,
+      "height": 160,
+      "sha256": "587f5b1c643b2b1b50f63a912f91c635d28a1bd62a7cede6196bedbfb81ed942",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-8.png",
+        "screenshot_sha256": "b6659cd14ace33edd781ea459a0a1ed02f397b23adfdd64d2e646bae03c00f62",
+        "source_rect": [
+          128,
+          0,
+          256,
+          160
+        ],
+        "operations": [
+          {
+            "kind": "pixel_exact_native_background_difference",
+            "background": "/assets/siege-original/capture-prelude1.png",
+            "background_sha256": "81098e6cbb9bd985e2239d1362ed80d00524687404b61490a434525d721a0016"
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "classification": "retained-background-difference-candidate",
+      "clean_sprite_verified": false
+    },
+    "witness-siege-2": {
+      "path": "/assets/siege-original/witness-siege-2.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "e81c280b87e344dd2eafc5a450c42bbcaf5d4af77a9bc1f6dce5ddc5fe3a8a58",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-8.png",
+        "screenshot_sha256": "b6659cd14ace33edd781ea459a0a1ed02f397b23adfdd64d2e646bae03c00f62",
+        "source_rect": [
+          0,
+          0,
+          256,
+          240
+        ],
+        "operations": []
+      },
+      "runtime_eligible": false,
+      "classification": "complete-native-capture-witness"
+    },
+    "siege-piece-friendly-general": {
+      "path": "/assets/siege-original/siege-piece-friendly-general.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "a1732e379156b6ccab92bb85a933a0fc9c95c6500ab1c1565b484f0ca8d7863d",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          16,
+          80,
+          32,
+          96
+        ],
+        "slot": 0,
+        "encoding": 48,
+        "operations": [
+          {
+            "kind": "pixel_exact_native_background_difference",
+            "background": "/assets/siege-original/siege-background.png",
+            "background_sha256": "cf4c5945ea0a01005ae679f9461b78722378877fd5135d2932378e4c1ed4fbc1"
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "classification": "retained-background-difference-candidate",
+      "clean_sprite_verified": false
+    },
+    "siege-piece-friendly-infantry": {
+      "path": "/assets/siege-original/siege-piece-friendly-infantry.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "1f325100828217347991e4996f64867b3958bbf0e11e753e5a7994a74e7a51d0",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          48,
+          16,
+          64,
+          32
+        ],
+        "slot": 1,
+        "encoding": 51,
+        "operations": [
+          {
+            "kind": "pixel_exact_native_background_difference",
+            "background": "/assets/siege-original/siege-background.png",
+            "background_sha256": "cf4c5945ea0a01005ae679f9461b78722378877fd5135d2932378e4c1ed4fbc1"
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "classification": "retained-background-difference-candidate",
+      "clean_sprite_verified": false
+    },
+    "siege-piece-friendly-archer": {
+      "path": "/assets/siege-original/siege-piece-friendly-archer.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "46713dbc4d2c1db5b26c1d9877a7624e191ab2c7bc982ea457baa63ef40f11af",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          64,
+          80,
+          80,
+          96
+        ],
+        "slot": 5,
+        "encoding": 50,
+        "operations": [
+          {
+            "kind": "pixel_exact_native_background_difference",
+            "background": "/assets/siege-original/siege-background.png",
+            "background_sha256": "cf4c5945ea0a01005ae679f9461b78722378877fd5135d2932378e4c1ed4fbc1"
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "classification": "retained-background-difference-candidate",
+      "clean_sprite_verified": false
+    },
+    "siege-piece-friendly-cavalry": {
+      "path": "/assets/siege-original/siege-piece-friendly-cavalry.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "7cc380af13c98c2770f990778b911716f945f30c9a5f658898601973139922b5",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          80,
+          144,
+          96,
+          160
+        ],
+        "slot": 9,
+        "encoding": 49,
+        "operations": [
+          {
+            "kind": "pixel_exact_native_background_difference",
+            "background": "/assets/siege-original/siege-background.png",
+            "background_sha256": "cf4c5945ea0a01005ae679f9461b78722378877fd5135d2932378e4c1ed4fbc1"
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "classification": "retained-background-difference-candidate",
+      "clean_sprite_verified": false
+    },
+    "siege-piece-enemy-general": {
+      "path": "/assets/siege-original/siege-piece-enemy-general.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "391a33402dd92b7d43cd8caa716fe324370060f57269c20db1c32a81c9711767",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          224,
+          80,
+          240,
+          96
+        ],
+        "slot": 11,
+        "encoding": 32,
+        "operations": [
+          {
+            "kind": "pixel_exact_native_background_difference",
+            "background": "/assets/siege-original/siege-background.png",
+            "background_sha256": "cf4c5945ea0a01005ae679f9461b78722378877fd5135d2932378e4c1ed4fbc1"
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "classification": "retained-background-difference-candidate",
+      "clean_sprite_verified": false
+    },
+    "siege-piece-enemy-archer": {
+      "path": "/assets/siege-original/siege-piece-enemy-archer.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "db39ee50b96b93138cdf060710843af9f56e4ee346ef9c11f739421a0dc9c19e",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          192,
+          64,
+          208,
+          80
+        ],
+        "slot": 12,
+        "encoding": 34,
+        "operations": [
+          {
+            "kind": "pixel_exact_native_background_difference",
+            "background": "/assets/siege-original/siege-background.png",
+            "background_sha256": "cf4c5945ea0a01005ae679f9461b78722378877fd5135d2932378e4c1ed4fbc1"
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "classification": "retained-background-difference-candidate",
+      "clean_sprite_verified": false
+    },
+    "siege-piece-enemy-cavalry": {
+      "path": "/assets/siege-original/siege-piece-enemy-cavalry.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "0913040a5ca12f3eb91185b71907d9e185ae9cdf0895345425b2360bab9c25e7",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          208,
+          16,
+          224,
+          32
+        ],
+        "slot": 20,
+        "encoding": 33,
+        "operations": [
+          {
+            "kind": "pixel_exact_native_background_difference",
+            "background": "/assets/siege-original/siege-background.png",
+            "background_sha256": "cf4c5945ea0a01005ae679f9461b78722378877fd5135d2932378e4c1ed4fbc1"
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "classification": "retained-background-difference-candidate",
+      "clean_sprite_verified": false
+    },
+    "formation-0-4x": {
+      "path": "/assets/siege-original/formation-0-4x.png",
+      "width": 132,
+      "height": 132,
+      "sha256": "4708a64b10e50def0bcbd2333df03ec7493508a4125fa93aef20905e8f014707",
+      "runtime_eligible": true,
+      "source": {
+        "asset": "/assets/siege-original/formation-0.png",
+        "asset_sha256": "b974855a3375b8684502efc903398ad3b15ea989942d82b179156b5067a1a33e",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "formation-1-4x": {
+      "path": "/assets/siege-original/formation-1-4x.png",
+      "width": 132,
+      "height": 132,
+      "sha256": "0ec042b44bba08e6f79fb3f3c80b11081d588c39a49a4fec0e16576de8695c92",
+      "runtime_eligible": true,
+      "source": {
+        "asset": "/assets/siege-original/formation-1.png",
+        "asset_sha256": "5f5493e258d190bdcd108a1455b8012b4eb484dd06617f853e514cd92283b2ca",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "formation-2-4x": {
+      "path": "/assets/siege-original/formation-2-4x.png",
+      "width": 132,
+      "height": 132,
+      "sha256": "f1491be4896b6b4caa32b0e9933d4da70eb8f985852d01702e4d3233e36b4e17",
+      "runtime_eligible": true,
+      "source": {
+        "asset": "/assets/siege-original/formation-2.png",
+        "asset_sha256": "b42bcccdb20b39495d8c131a645fcf953f984b902c0e3cba7dcbf6c7197408f9",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "formation-3-4x": {
+      "path": "/assets/siege-original/formation-3-4x.png",
+      "width": 132,
+      "height": 132,
+      "sha256": "f04b18859f669d50576725509345813b8eaccdceb93b7c08b5b9c64ee9999621",
+      "runtime_eligible": true,
+      "source": {
+        "asset": "/assets/siege-original/formation-3.png",
+        "asset_sha256": "aeb5d03f90e0efab072d0c59cecc97438aeed4ba39dd56cdd595f79a9405771a",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-general-friendly": {
+      "path": "/assets/siege-original/native-sprite-general-friendly.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "2604b00b9336d635ef724fc4ffa3ab11a074385d7c0d34e62c46da0fe010db1e",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          16,
+          80,
+          32,
+          96
+        ],
+        "operations": [
+          {
+            "kind": "native_chr_background_index_transparency",
+            "tiles": [
+              {
+                "tile_id": 86,
+                "chr_page_1k": 120,
+                "rom_offset": 385392,
+                "hex": "0e6dabab6904e4c2006123236105050a",
+                "sha256": "3ae26da566be4bf479a946b40dcd71f5c167d1a9b5029b8e7cec4fd5e305d3a6",
+                "dx": 0,
+                "dy": 0
+              },
+              {
+                "tile_id": 87,
+                "chr_page_1k": 120,
+                "rom_offset": 385408,
+                "hex": "7fbf3f3703c100000080808008dcb43e",
+                "sha256": "acc92b350b5e0338d3d4d19b33a350467568e023b75b7d07239a28cc5bb1e192",
+                "dx": 8,
+                "dy": 0
+              },
+              {
+                "tile_id": 102,
+                "chr_page_1k": 120,
+                "rom_offset": 385648,
+                "hex": "81000101e0e1e1f12d5e5d0d08040400",
+                "sha256": "aa7c9bf3decc68d4f3b3ff21f568629cbd0080d01e7f68c38a4aabbfebc0ee66",
+                "dx": 0,
+                "dy": 8
+              },
+              {
+                "tile_id": 103,
+                "chr_page_1k": 120,
+                "rom_offset": 385664,
+                "hex": "c0c087c701c1818bd6d0b0d018142400",
+                "sha256": "094952941063439d8f66fdb5d16ee8c44d540c19caea953a995ffe258123defe",
+                "dx": 8,
+                "dy": 8
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                167,
+                181,
+                188
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "transparent_index": 1,
+            "chr_composite_sha256": "a701b957984320c5b3e9999c755f235806cbac4331ad373f46aaf61378b65b15",
+            "note": "Each original CHR pixel is first verified against the full opaque native video crop. Only its verified background pattern index is made transparent; equally colored armor indices remain opaque."
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite"
+    },
+    "sprite-general-friendly-0": {
+      "path": "/assets/siege-original/sprite-general-friendly-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "984310641e59a74339a5d200b911c54b610cd8cd8abccd1db49732ae03a0dbbc",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-general-friendly.png",
+        "asset_sha256": "2604b00b9336d635ef724fc4ffa3ab11a074385d7c0d34e62c46da0fe010db1e",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 0,
+      "single_native_pose_reused": true
+    },
+    "sprite-general-friendly-1": {
+      "path": "/assets/siege-original/sprite-general-friendly-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "984310641e59a74339a5d200b911c54b610cd8cd8abccd1db49732ae03a0dbbc",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-general-friendly.png",
+        "asset_sha256": "2604b00b9336d635ef724fc4ffa3ab11a074385d7c0d34e62c46da0fe010db1e",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 1,
+      "single_native_pose_reused": true
+    },
+    "native-sprite-infantry-friendly": {
+      "path": "/assets/siege-original/native-sprite-infantry-friendly.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "556015a573e97b015839feef8638acfaf5347cb4b1d14c2fc75b1aa7f4f8dd56",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          48,
+          16,
+          64,
+          32
+        ],
+        "operations": [
+          {
+            "kind": "native_chr_background_index_transparency",
+            "tiles": [
+              {
+                "tile_id": 104,
+                "chr_page_1k": 120,
+                "rom_offset": 385680,
+                "hex": "fcfbf6f6f2edece700030707020f0c07",
+                "sha256": "80212ddaacccda0915aef91e273cddc69ef91c88a54df297e5f9ca9c24876522",
+                "dx": 0,
+                "dy": 0
+              },
+              {
+                "tile_id": 105,
+                "chr_page_1k": 120,
+                "rom_offset": 385696,
+                "hex": "ff7f7f73c307cf3f000000000830c000",
+                "sha256": "d6aeb675ae9d8ad5b183e0fdb3e4ff46c2e390fbf129065d984c51b1ed53b009",
+                "dx": 8,
+                "dy": 0
+              },
+              {
+                "tile_id": 106,
+                "chr_page_1k": 120,
+                "rom_offset": 385712,
+                "hex": "cc32402eeddbddc10c324e0e0c181c00",
+                "sha256": "b06d2b5b03780baa4c6ea0b0e098110c4e7e0562b9e7d5c1ec4587fe030a774c",
+                "dx": 0,
+                "dy": 8
+              },
+              {
+                "tile_id": 107,
+                "chr_page_1k": 120,
+                "rom_offset": 385728,
+                "hex": "7fffffffffffffff0000000000000000",
+                "sha256": "8647c26b204d8d8f4803a6904362691afc7e2322cde63f7b0baf3b00a025fa65",
+                "dx": 8,
+                "dy": 8
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                167,
+                181,
+                188
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "transparent_index": 1,
+            "chr_composite_sha256": "9020d20e27c08b89e7d2385ccf4ee5ce3475a1e9ccc94d99e85c07f3f3b1c6e9",
+            "note": "Each original CHR pixel is first verified against the full opaque native video crop. Only its verified background pattern index is made transparent; equally colored armor indices remain opaque."
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite"
+    },
+    "sprite-infantry-friendly-0": {
+      "path": "/assets/siege-original/sprite-infantry-friendly-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "58a35106d55a3daf5456c379de630d4b14a1d6f75659443e62af51fe89478836",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-infantry-friendly.png",
+        "asset_sha256": "556015a573e97b015839feef8638acfaf5347cb4b1d14c2fc75b1aa7f4f8dd56",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 0,
+      "single_native_pose_reused": true
+    },
+    "sprite-infantry-friendly-1": {
+      "path": "/assets/siege-original/sprite-infantry-friendly-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "58a35106d55a3daf5456c379de630d4b14a1d6f75659443e62af51fe89478836",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-infantry-friendly.png",
+        "asset_sha256": "556015a573e97b015839feef8638acfaf5347cb4b1d14c2fc75b1aa7f4f8dd56",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 1,
+      "single_native_pose_reused": true
+    },
+    "native-sprite-archer-friendly": {
+      "path": "/assets/siege-original/native-sprite-archer-friendly.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "2a949770394321dc2a9e3189eab4abddde5694eea23b08222037f266754cf3b2",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          64,
+          80,
+          80,
+          96
+        ],
+        "operations": [
+          {
+            "kind": "native_chr_background_index_transparency",
+            "tiles": [
+              {
+                "tile_id": 108,
+                "chr_page_1k": 120,
+                "rom_offset": 385744,
+                "hex": "fcfbe69652ada4d300030717522f271b",
+                "sha256": "7c5a1fbe127d53d36f71a38de0ae93eca37809d149a16a14810d18017b9f8d92",
+                "dx": 0,
+                "dy": 0
+              },
+              {
+                "tile_id": 109,
+                "chr_page_1k": 120,
+                "rom_offset": 385760,
+                "hex": "ff6f47030331817e000010284804847e",
+                "sha256": "79d3b1d2a527edba6c099337f9c571459e74f0a2fcf240a67f02cbd2dafbe7f3",
+                "dx": 8,
+                "dy": 0
+              },
+              {
+                "tile_id": 110,
+                "chr_page_1k": 120,
+                "rom_offset": 385776,
+                "hex": "dcdec0eeeddbddc11c1e0e0e0c181c00",
+                "sha256": "909ea420057d542c21567fad9ed8bf25dba94627eab77dbc62bbc9cc4e9a8b6b",
+                "dx": 0,
+                "dy": 8
+              },
+              {
+                "tile_id": 111,
+                "chr_page_1k": 120,
+                "rom_offset": 385792,
+                "hex": "01310383c7efffff0084482810000000",
+                "sha256": "414864b807f6dd90d3955f6c282fa71d3c4f94054d5ad40a4e1e165ea0bab1df",
+                "dx": 8,
+                "dy": 8
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                167,
+                181,
+                188
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "transparent_index": 1,
+            "chr_composite_sha256": "4dd1d4b9f6a7c815eebdd643c9a289b28e8e588af3d25d627df579b071358000",
+            "note": "Each original CHR pixel is first verified against the full opaque native video crop. Only its verified background pattern index is made transparent; equally colored armor indices remain opaque."
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite"
+    },
+    "sprite-archer-friendly-0": {
+      "path": "/assets/siege-original/sprite-archer-friendly-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "3c3062b191e57bfd9e3e7d90511a017bd08fa47d16ed30d7ce732e9672be69c3",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-archer-friendly.png",
+        "asset_sha256": "2a949770394321dc2a9e3189eab4abddde5694eea23b08222037f266754cf3b2",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 0,
+      "single_native_pose_reused": true
+    },
+    "sprite-archer-friendly-1": {
+      "path": "/assets/siege-original/sprite-archer-friendly-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "3c3062b191e57bfd9e3e7d90511a017bd08fa47d16ed30d7ce732e9672be69c3",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-archer-friendly.png",
+        "asset_sha256": "2a949770394321dc2a9e3189eab4abddde5694eea23b08222037f266754cf3b2",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 1,
+      "single_native_pose_reused": true
+    },
+    "native-sprite-cavalry-friendly": {
+      "path": "/assets/siege-original/native-sprite-cavalry-friendly.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "60d6b3c91b942d81b63a1e5248175ed1ac3cb6310f70f09910f912be2bd37144",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          80,
+          144,
+          96,
+          160
+        ],
+        "operations": [
+          {
+            "kind": "native_chr_background_index_transparency",
+            "tiles": [
+              {
+                "tile_id": 100,
+                "chr_page_1k": 120,
+                "rom_offset": 385616,
+                "hex": "fefdfbfbf9f6f6c3000103030107070b",
+                "sha256": "68e69dffeeef786c1035f2f69fc12956ae7ed3d749f73b9bbdf86000905c4d3d",
+                "dx": 0,
+                "dy": 0
+              },
+              {
+                "tile_id": 101,
+                "chr_page_1k": 120,
+                "rom_offset": 385632,
+                "hex": "7cb0093303c1008000828cb008dcb4be",
+                "sha256": "3d70e58292a6ddab3bb0828600876f1b02559ac3b45dee3fe604926cf21c0bc8",
+                "dx": 8,
+                "dy": 0
+              },
+              {
+                "tile_id": 102,
+                "chr_page_1k": 120,
+                "rom_offset": 385648,
+                "hex": "81000101e0e1e1f12d5e5d0d08040400",
+                "sha256": "aa7c9bf3decc68d4f3b3ff21f568629cbd0080d01e7f68c38a4aabbfebc0ee66",
+                "dx": 0,
+                "dy": 8
+              },
+              {
+                "tile_id": 103,
+                "chr_page_1k": 120,
+                "rom_offset": 385664,
+                "hex": "c0c087c701c1818bd6d0b0d018142400",
+                "sha256": "094952941063439d8f66fdb5d16ee8c44d540c19caea953a995ffe258123defe",
+                "dx": 8,
+                "dy": 8
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                167,
+                181,
+                188
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "transparent_index": 1,
+            "chr_composite_sha256": "bf90930c2687904c47008f727e79051ebf6f3003fcc4cb779277d786bbac56dd",
+            "note": "Each original CHR pixel is first verified against the full opaque native video crop. Only its verified background pattern index is made transparent; equally colored armor indices remain opaque."
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite"
+    },
+    "sprite-cavalry-friendly-0": {
+      "path": "/assets/siege-original/sprite-cavalry-friendly-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "cb776739d03cadfbee0598933651f020fd4c9aae30aa48ef46d3161e3b46243d",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-cavalry-friendly.png",
+        "asset_sha256": "60d6b3c91b942d81b63a1e5248175ed1ac3cb6310f70f09910f912be2bd37144",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 0,
+      "single_native_pose_reused": true
+    },
+    "sprite-cavalry-friendly-1": {
+      "path": "/assets/siege-original/sprite-cavalry-friendly-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "cb776739d03cadfbee0598933651f020fd4c9aae30aa48ef46d3161e3b46243d",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-cavalry-friendly.png",
+        "asset_sha256": "60d6b3c91b942d81b63a1e5248175ed1ac3cb6310f70f09910f912be2bd37144",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 1,
+      "single_native_pose_reused": true
+    },
+    "native-sprite-general-enemy": {
+      "path": "/assets/siege-original/native-sprite-general-enemy.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "86bad836df65b1b4caf4fa401f1e9cf69fb3c4f93e6639ffc0be3dc9aaf2ce6c",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          224,
+          80,
+          240,
+          96
+        ],
+        "operations": [
+          {
+            "kind": "native_chr_background_index_transparency",
+            "tiles": [
+              {
+                "tile_id": 70,
+                "chr_page_1k": 124,
+                "rom_offset": 389232,
+                "hex": "010302122f47d28300010101103b2d7c",
+                "sha256": "75126edeca95addcbeed779e02b4da01c5b979f00f8220d3a9bc5359c89740c1",
+                "dx": 0,
+                "dy": 0
+              },
+              {
+                "tile_id": 71,
+                "chr_page_1k": 124,
+                "rom_offset": 389248,
+                "hex": "8fcfeeeeef7f78ec0086c4c486a0a050",
+                "sha256": "8a9d489ca9aea44b28fcbb5c58d14882c91ad27fb15db7f6dbd2e703054dacf2",
+                "dx": 8,
+                "dy": 0
+              },
+              {
+                "tile_id": 84,
+                "chr_page_1k": 124,
+                "rom_offset": 389456,
+                "hex": "97f7131767545a2e6b0b0d0b18282400",
+                "sha256": "3af13d67311d15db2fcf40d5a5b1000969a3840a120a400072cabc77481f8e37",
+                "dx": 0,
+                "dy": 8
+              },
+              {
+                "tile_id": 85,
+                "chr_page_1k": 124,
+                "rom_offset": 389472,
+                "hex": "ca85c5cfe8585870b47abab010202000",
+                "sha256": "5ef7a18f49852003eaa047c3a96efcc66acfe465ee9d4793e125f51b2b6ae1b5",
+                "dx": 8,
+                "dy": 8
+              }
+            ],
+            "palette_rgb": [
+              [
+                167,
+                181,
+                188
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "transparent_index": 0,
+            "chr_composite_sha256": "e7a3e384d238a8cd5c9a7bed742758cf56c84ff379b1fa1d7c02ce6633316998",
+            "note": "Each original CHR pixel is first verified against the full opaque native video crop. Only its verified background pattern index is made transparent; equally colored armor indices remain opaque."
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite"
+    },
+    "sprite-general-enemy-0": {
+      "path": "/assets/siege-original/sprite-general-enemy-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "d6577609fb48a1840c30002529744d71df669d7b0dfc73b0d0435b7d2ead645b",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-general-enemy.png",
+        "asset_sha256": "86bad836df65b1b4caf4fa401f1e9cf69fb3c4f93e6639ffc0be3dc9aaf2ce6c",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 0,
+      "single_native_pose_reused": true
+    },
+    "sprite-general-enemy-1": {
+      "path": "/assets/siege-original/sprite-general-enemy-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "d6577609fb48a1840c30002529744d71df669d7b0dfc73b0d0435b7d2ead645b",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-general-enemy.png",
+        "asset_sha256": "86bad836df65b1b4caf4fa401f1e9cf69fb3c4f93e6639ffc0be3dc9aaf2ce6c",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 1,
+      "single_native_pose_reused": true
+    },
+    "native-sprite-archer-enemy": {
+      "path": "/assets/siege-original/native-sprite-archer-enemy.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "fb1137e85e9c3e06af745eb39132f65efd4d01bdb1323633273efaa5d103dcb5",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          192,
+          64,
+          208,
+          80
+        ],
+        "operations": [
+          {
+            "kind": "native_chr_background_index_transparency",
+            "tiles": [
+              {
+                "tile_id": 64,
+                "chr_page_1k": 124,
+                "rom_offset": 389136,
+                "hex": "0009152b2d535fff000008141220217e",
+                "sha256": "d6523433d2e6f2467328462ad4d125e5dfdf4f520cb1fa98f490dd800514284c",
+                "dx": 0,
+                "dy": 0
+              },
+              {
+                "tile_id": 65,
+                "chr_page_1k": 124,
+                "rom_offset": 389152,
+                "hex": "c0e0787effbe3eec00c0e0e84af4e4d8",
+                "sha256": "ef021d71b1b421ef0cd1a8c6daed27eee6024cfae651c46e2187fb3b96e0dd69",
+                "dx": 8,
+                "dy": 0
+              },
+              {
+                "tile_id": 80,
+                "chr_page_1k": 124,
+                "rom_offset": 389392,
+                "hex": "7f522d2a140800000021121408000000",
+                "sha256": "526005533ecb46f236001b004fcde012384c29ab8444506a6111edac1ad228ac",
+                "dx": 0,
+                "dy": 8
+              },
+              {
+                "tile_id": 81,
+                "chr_page_1k": 124,
+                "rom_offset": 389408,
+                "hex": "fcfc8cf8783c7c7c3878707030183800",
+                "sha256": "bcc6dac9f623fa42605b8cb9e4a7c2ac70777c20aceab8698fb0e0622b2f3c60",
+                "dx": 8,
+                "dy": 8
+              }
+            ],
+            "palette_rgb": [
+              [
+                167,
+                181,
+                188
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "transparent_index": 0,
+            "chr_composite_sha256": "afe7db3ffa1e31d80e4a2dbd04992fc38b97e73e0185aa5edbe7a5520acd9f76",
+            "note": "Each original CHR pixel is first verified against the full opaque native video crop. Only its verified background pattern index is made transparent; equally colored armor indices remain opaque."
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite"
+    },
+    "sprite-archer-enemy-0": {
+      "path": "/assets/siege-original/sprite-archer-enemy-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "db6a5fc15e056660b807e13f49432582ed4499ddb5bf5b7cf1072fb802d162dd",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-archer-enemy.png",
+        "asset_sha256": "fb1137e85e9c3e06af745eb39132f65efd4d01bdb1323633273efaa5d103dcb5",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 0,
+      "single_native_pose_reused": true
+    },
+    "sprite-archer-enemy-1": {
+      "path": "/assets/siege-original/sprite-archer-enemy-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "db6a5fc15e056660b807e13f49432582ed4499ddb5bf5b7cf1072fb802d162dd",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-archer-enemy.png",
+        "asset_sha256": "fb1137e85e9c3e06af745eb39132f65efd4d01bdb1323633273efaa5d103dcb5",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 1,
+      "single_native_pose_reused": true
+    },
+    "native-sprite-cavalry-enemy": {
+      "path": "/assets/siege-original/native-sprite-cavalry-enemy.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "5124822df230583bfab231f70708d1c9c53a98313ed0365680be6027db50f31a",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-wait-1.png",
+        "screenshot_sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+        "source_rect": [
+          208,
+          16,
+          224,
+          32
+        ],
+        "operations": [
+          {
+            "kind": "native_chr_background_index_transparency",
+            "tiles": [
+              {
+                "tile_id": 68,
+                "chr_page_1k": 124,
+                "rom_offset": 389200,
+                "hex": "c1b35e3e2f47d2830041310d103b2d7d",
+                "sha256": "9886d086bf3e8f8b9e52b371c30818f124e8c6b6ad2ba91c7d0d03af088cb294",
+                "dx": 0,
+                "dy": 0
+              },
+              {
+                "tile_id": 69,
+                "chr_page_1k": 124,
+                "rom_offset": 389216,
+                "hex": "80c0e0e0e07070ec0080c0c080e0e0d0",
+                "sha256": "2ae47d1a361a509f11b7e6b2d49f2fcd4b3c2172e7b326121a1e0f271d370dc0",
+                "dx": 8,
+                "dy": 0
+              },
+              {
+                "tile_id": 84,
+                "chr_page_1k": 124,
+                "rom_offset": 389456,
+                "hex": "97f7131767545a2e6b0b0d0b18282400",
+                "sha256": "3af13d67311d15db2fcf40d5a5b1000969a3840a120a400072cabc77481f8e37",
+                "dx": 0,
+                "dy": 8
+              },
+              {
+                "tile_id": 85,
+                "chr_page_1k": 124,
+                "rom_offset": 389472,
+                "hex": "ca85c5cfe8585870b47abab010202000",
+                "sha256": "5ef7a18f49852003eaa047c3a96efcc66acfe465ee9d4793e125f51b2b6ae1b5",
+                "dx": 8,
+                "dy": 8
+              }
+            ],
+            "palette_rgb": [
+              [
+                167,
+                181,
+                188
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "transparent_index": 0,
+            "chr_composite_sha256": "b99dcfc18e7e691868e7b20b32a747ccbda6cd2ec4bbdf876e38ddf5c193e19d",
+            "note": "Each original CHR pixel is first verified against the full opaque native video crop. Only its verified background pattern index is made transparent; equally colored armor indices remain opaque."
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite"
+    },
+    "sprite-cavalry-enemy-0": {
+      "path": "/assets/siege-original/sprite-cavalry-enemy-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "bed6dcb8b64f9225d25e0115512f96c92c9e5f548aa3f3843bb880b8b2ca960c",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-cavalry-enemy.png",
+        "asset_sha256": "5124822df230583bfab231f70708d1c9c53a98313ed0365680be6027db50f31a",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 0,
+      "single_native_pose_reused": true
+    },
+    "sprite-cavalry-enemy-1": {
+      "path": "/assets/siege-original/sprite-cavalry-enemy-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "bed6dcb8b64f9225d25e0115512f96c92c9e5f548aa3f3843bb880b8b2ca960c",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-cavalry-enemy.png",
+        "asset_sha256": "5124822df230583bfab231f70708d1c9c53a98313ed0365680be6027db50f31a",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 1,
+      "single_native_pose_reused": true
+    },
+    "native-sprite-infantry-enemy": {
+      "path": "/assets/siege-original/native-sprite-infantry-enemy.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "8874ccb2c453a18fb4d74c17b817cdf3df1d49bc66c14b2f163bad484e7d0d5c",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-original-field.png",
+        "screenshot_sha256": "2e4eaebc9fc513e67e8f845ab3c9ab67e71a02084ba1b7e4af5f71549cd6bbaa",
+        "source_rect": [
+          208,
+          32,
+          224,
+          48
+        ],
+        "operations": [
+          {
+            "kind": "native_chr_background_index_transparency",
+            "tiles": [
+              {
+                "tile_id": 66,
+                "chr_page_1k": 124,
+                "rom_offset": 389168,
+                "dx": 0,
+                "dy": 0,
+                "hex": "000101312c130f0300000000100c0300",
+                "sha256": "3da0abebb412955a44409198ca615422fabbceefb2d69843467228d2e8088bcb"
+              },
+              {
+                "tile_id": 67,
+                "chr_page_1k": 124,
+                "rom_offset": 389184,
+                "dx": 8,
+                "dy": 0,
+                "hex": "c0e07070f0b8f8f800c0e0e040f030e0",
+                "sha256": "9dcd852012c2ec6fe002f47aeafb26c95a3f683d480dc99214433d2615988c57"
+              },
+              {
+                "tile_id": 82,
+                "chr_page_1k": 124,
+                "rom_offset": 389424,
+                "dx": 0,
+                "dy": 8,
+                "hex": "01000000000000000000000000000000",
+                "sha256": "4cbbd8ca5215b8d161aec181a74b694f4e24b001d5b081dc0030ed797a8973e0"
+              },
+              {
+                "tile_id": 83,
+                "chr_page_1k": 124,
+                "rom_offset": 389440,
+                "dx": 8,
+                "dy": 8,
+                "hex": "fcff8ffb783c7c7c304c727030183800",
+                "sha256": "bf40374d08d486718c26d3428693fb99265c3f2120d3129307b27faa8273ab09"
+              }
+            ],
+            "palette_rgb": [
+              [
+                255,
+                222,
+                185
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "transparent_index": 0,
+            "chr_composite_sha256": "bbc9ce7bd75dad4bb6ba7f53df178c96b23d341c016fa5d0d45679ff51fce2e9",
+            "note": "Each original CHR pixel is first verified against the full opaque native video crop. Only its verified background pattern index is made transparent; equally colored armor indices remain opaque."
+          }
+        ]
+      },
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite"
+    },
+    "sprite-infantry-enemy-0": {
+      "path": "/assets/siege-original/sprite-infantry-enemy-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "1a841081dc8d9f2fe4346350baad27182e88ed9282e36120c46693339a0d279f",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-infantry-enemy.png",
+        "asset_sha256": "8874ccb2c453a18fb4d74c17b817cdf3df1d49bc66c14b2f163bad484e7d0d5c",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 0,
+      "single_native_pose_reused": true
+    },
+    "sprite-infantry-enemy-1": {
+      "path": "/assets/siege-original/sprite-infantry-enemy-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "1a841081dc8d9f2fe4346350baad27182e88ed9282e36120c46693339a0d279f",
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-infantry-enemy.png",
+        "asset_sha256": "8874ccb2c453a18fb4d74c17b817cdf3df1d49bc66c14b2f163bad484e7d0d5c",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      },
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "verified-native-chr-sprite-4x",
+      "pose_variant": 0,
+      "requested_frame": 1,
+      "single_native_pose_reused": true
+    }
+  },
+  "native_piece_slots": [
+    {
+      "slot": 0,
+      "x": 1,
+      "y": 5,
+      "kind": "general",
+      "side": "friendly",
+      "value": 82,
+      "encoding": 48,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 1,
+      "x": 3,
+      "y": 1,
+      "kind": "infantry",
+      "side": "friendly",
+      "value": 100,
+      "encoding": 51,
+      "bbox": [
+        0,
+        0,
+        14,
+        16
+      ]
+    },
+    {
+      "slot": 2,
+      "x": 3,
+      "y": 2,
+      "kind": "infantry",
+      "side": "friendly",
+      "value": 100,
+      "encoding": 51,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 3,
+      "x": 3,
+      "y": 3,
+      "kind": "infantry",
+      "side": "friendly",
+      "value": 100,
+      "encoding": 51,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 4,
+      "x": 4,
+      "y": 4,
+      "kind": "infantry",
+      "side": "friendly",
+      "value": 100,
+      "encoding": 51,
+      "bbox": [
+        0,
+        0,
+        14,
+        16
+      ]
+    },
+    {
+      "slot": 5,
+      "x": 4,
+      "y": 5,
+      "kind": "archer",
+      "side": "friendly",
+      "value": 100,
+      "encoding": 50,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 6,
+      "x": 4,
+      "y": 6,
+      "kind": "archer",
+      "side": "friendly",
+      "value": 100,
+      "encoding": 50,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 7,
+      "x": 5,
+      "y": 7,
+      "kind": "archer",
+      "side": "friendly",
+      "value": 100,
+      "encoding": 50,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 8,
+      "x": 4,
+      "y": 8,
+      "kind": "archer",
+      "side": "friendly",
+      "value": 100,
+      "encoding": 50,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 9,
+      "x": 5,
+      "y": 9,
+      "kind": "cavalry",
+      "side": "friendly",
+      "value": 100,
+      "encoding": 49,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 10,
+      "x": 3,
+      "y": 9,
+      "kind": "cavalry",
+      "side": "friendly",
+      "value": 100,
+      "encoding": 49,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 11,
+      "x": 14,
+      "y": 5,
+      "kind": "general",
+      "side": "enemy",
+      "value": 75,
+      "encoding": 32,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 12,
+      "x": 12,
+      "y": 4,
+      "kind": "archer",
+      "side": "enemy",
+      "value": 100,
+      "encoding": 34,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 13,
+      "x": 12,
+      "y": 6,
+      "kind": "archer",
+      "side": "enemy",
+      "value": 100,
+      "encoding": 34,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 14,
+      "x": 7,
+      "y": 2,
+      "kind": "archer",
+      "side": "enemy",
+      "value": 100,
+      "encoding": 34,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 15,
+      "x": 7,
+      "y": 8,
+      "kind": "archer",
+      "side": "enemy",
+      "value": 100,
+      "encoding": 34,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 16,
+      "x": 9,
+      "y": 2,
+      "kind": "archer",
+      "side": "enemy",
+      "value": 100,
+      "encoding": 34,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 17,
+      "x": 9,
+      "y": 8,
+      "kind": "archer",
+      "side": "enemy",
+      "value": 100,
+      "encoding": 34,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 18,
+      "x": 8,
+      "y": 1,
+      "kind": "archer",
+      "side": "enemy",
+      "value": 100,
+      "encoding": 34,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 19,
+      "x": 8,
+      "y": 9,
+      "kind": "archer",
+      "side": "enemy",
+      "value": 100,
+      "encoding": 34,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 20,
+      "x": 13,
+      "y": 1,
+      "kind": "cavalry",
+      "side": "enemy",
+      "value": 100,
+      "encoding": 33,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "slot": 21,
+      "x": 13,
+      "y": 9,
+      "kind": "cavalry",
+      "side": "enemy",
+      "value": 100,
+      "encoding": 33,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ]
+    }
+  ],
+  "runtime_requires_rom": false,
+  "runtime_requires_archive": false,
+  "runtime_requires_emulator": false,
+  "pixel_origin": "Original Nestopia video callback; captured controlled fixture, not natural campaign traversal.",
+  "limitations": [
+    "Transparent background-difference candidate layers retain flat background pixels where native BG unit tiles replace brick texture; they are not certified clean unit sprites.",
+    "No combat damage, castle defense bonus, or free-placement mechanics inferred from artwork."
+  ],
+  "captures": {
+    "capture-prelude1.png": {
+      "path": "/assets/siege-original/capture-prelude1.png",
+      "sha256": "81098e6cbb9bd985e2239d1362ed80d00524687404b61490a434525d721a0016",
+      "width": 256,
+      "height": 240,
+      "source_id": "controlled-capture-run3",
+      "capture_label": "prelude1"
+    },
+    "capture-wait-1.png": {
+      "path": "/assets/siege-original/capture-wait-1.png",
+      "sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76",
+      "width": 256,
+      "height": 240,
+      "source_id": "controlled-capture-actions",
+      "capture_label": "wait-1"
+    },
+    "capture-wait-4.png": {
+      "path": "/assets/siege-original/capture-wait-4.png",
+      "sha256": "9b47c40c54e989c9249091d9ce0c0d3a3547062037c801992a90f27f1663a8be",
+      "width": 256,
+      "height": 240,
+      "source_id": "controlled-capture-actions",
+      "capture_label": "wait-4"
+    },
+    "capture-wait-8.png": {
+      "path": "/assets/siege-original/capture-wait-8.png",
+      "sha256": "b6659cd14ace33edd781ea459a0a1ed02f397b23adfdd64d2e646bae03c00f62",
+      "width": 256,
+      "height": 240,
+      "source_id": "controlled-capture-actions",
+      "capture_label": "wait-8"
+    },
+    "capture-original-field.png": {
+      "path": "/assets/siege-original/capture-original-field.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "2e4eaebc9fc513e67e8f845ab3c9ab67e71a02084ba1b7e4af5f71549cd6bbaa",
+      "source_id": "retained-original-field",
+      "capture_label": "first-attack-main-01"
+    }
+  },
+  "tables": {
+    "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+    "physical_bank": 14,
+    "formations": [
+      {
+        "index": 0,
+        "xptr": "0xb7ec",
+        "yptr": "0xb82e",
+        "x": [
+          1,
+          2,
+          2,
+          2,
+          3,
+          3,
+          3,
+          4,
+          4,
+          5,
+          3
+        ],
+        "y": [
+          5,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          9
+        ],
+        "name_ja": "長蛇の陣"
+      },
+      {
+        "index": 1,
+        "xptr": "0xb7f7",
+        "yptr": "0xb839",
+        "x": [
+          1,
+          4,
+          4,
+          2,
+          2,
+          3,
+          3,
+          4,
+          4,
+          5,
+          5
+        ],
+        "y": [
+          5,
+          4,
+          6,
+          4,
+          6,
+          3,
+          7,
+          2,
+          8,
+          1,
+          9
+        ],
+        "name_ja": "雁行の陣"
+      },
+      {
+        "index": 2,
+        "xptr": "0xb802",
+        "yptr": "0xb844",
+        "x": [
+          1,
+          3,
+          2,
+          2,
+          2,
+          2,
+          3,
+          3,
+          4,
+          4,
+          5
+        ],
+        "y": [
+          5,
+          5,
+          4,
+          6,
+          2,
+          8,
+          3,
+          7,
+          4,
+          6,
+          5
+        ],
+        "name_ja": "錐行の陣"
+      },
+      {
+        "index": 3,
+        "xptr": "0xb80d",
+        "yptr": "0xb84f",
+        "x": [
+          1,
+          2,
+          2,
+          3,
+          3,
+          3,
+          4,
+          4,
+          5,
+          5,
+          5
+        ],
+        "y": [
+          5,
+          4,
+          6,
+          3,
+          5,
+          7,
+          4,
+          6,
+          3,
+          5,
+          7
+        ],
+        "name_ja": "魚鱗の陣"
+      },
+      {
+        "index": 4,
+        "xptr": "0xb818",
+        "yptr": "0xb85a",
+        "x": [
+          1,
+          3,
+          3,
+          8,
+          8,
+          6,
+          6,
+          7,
+          7,
+          7,
+          7
+        ],
+        "y": [
+          5,
+          4,
+          6,
+          2,
+          8,
+          2,
+          8,
+          1,
+          9,
+          2,
+          8
+        ],
+        "name_ja": "城内弓隊配置"
+      },
+      {
+        "index": 5,
+        "xptr": "0xb823",
+        "yptr": "0xb865",
+        "x": [
+          1,
+          3,
+          3,
+          8,
+          8,
+          1,
+          1,
+          3,
+          3,
+          2,
+          2
+        ],
+        "y": [
+          5,
+          4,
+          6,
+          2,
+          8,
+          3,
+          7,
+          2,
+          8,
+          1,
+          9
+        ],
+        "name_ja": "城内将騎配置"
+      }
+    ],
+    "ratios_B7AC": [
+      6,
+      9,
+      8,
+      10,
+      8,
+      11,
+      0,
+      0,
+      5,
+      9,
+      7,
+      10,
+      7,
+      11,
+      0,
+      0,
+      5,
+      8,
+      6,
+      9,
+      6,
+      10,
+      0,
+      0,
+      4,
+      7,
+      5,
+      8,
+      6,
+      9,
+      0,
+      0,
+      3,
+      6,
+      4,
+      8,
+      5,
+      9,
+      0,
+      0,
+      2,
+      6,
+      4,
+      7,
+      4,
+      8,
+      0,
+      0,
+      2,
+      5,
+      3,
+      6,
+      4,
+      7,
+      0,
+      0,
+      1,
+      5,
+      2,
+      6,
+      3,
+      7,
+      0,
+      0
+    ],
+    "castle_layout": {
+      "background": 5,
+      "physical_bank": 1,
+      "cpu": "8A30",
+      "raw": [
+        77,
+        77,
+        77,
+        77,
+        77,
+        77,
+        96,
+        1,
+        1,
+        1,
+        1,
+        89,
+        77,
+        77,
+        77,
+        86,
+        77,
+        77,
+        86,
+        87,
+        77,
+        77,
+        92,
+        1,
+        1,
+        1,
+        1,
+        89,
+        77,
+        77,
+        87,
+        77,
+        77,
+        80,
+        77,
+        77,
+        1,
+        77,
+        99,
+        1,
+        1,
+        1,
+        1,
+        89,
+        77,
+        77,
+        77,
+        77,
+        77,
+        77,
+        77,
+        80,
+        77,
+        77,
+        91,
+        98,
+        98,
+        98,
+        90,
+        97,
+        77,
+        77,
+        1,
+        1,
+        1,
+        77,
+        77,
+        77,
+        1,
+        77,
+        77,
+        77,
+        77,
+        77,
+        77,
+        77,
+        77,
+        80,
+        77,
+        77,
+        77,
+        77,
+        77,
+        77,
+        77,
+        77,
+        86,
+        78,
+        77,
+        77,
+        1,
+        77,
+        77,
+        77,
+        77,
+        80,
+        77,
+        77,
+        80,
+        77,
+        77,
+        77,
+        77,
+        77,
+        77,
+        77,
+        77,
+        77,
+        86,
+        77,
+        77,
+        1,
+        77,
+        77,
+        77,
+        80,
+        77,
+        77,
+        88,
+        95,
+        95,
+        95,
+        101,
+        94,
+        77,
+        77,
+        80,
+        77,
+        80,
+        77,
+        77,
+        77,
+        1,
+        77,
+        96,
+        1,
+        1,
+        1,
+        1,
+        89,
+        77,
+        77,
+        77,
+        77,
+        77,
+        80,
+        77,
+        1,
+        77,
+        77,
+        92,
+        1,
+        1,
+        1,
+        1,
+        89,
+        77,
+        1,
+        77,
+        80
+      ],
+      "terrain_class_lut": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        5,
+        0,
+        5,
+        0,
+        0,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        4,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "classes": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          0,
+          0,
+          0,
+          0,
+          5,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          0,
+          0,
+          0,
+          0,
+          5,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          5,
+          5,
+          5,
+          0,
+          5,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          5,
+          5,
+          5,
+          0,
+          5,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          0,
+          0,
+          0,
+          0,
+          5,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "schema": "tk2-native-siege-tables-v1",
+    "scope": "Small immutable original data tables, no executable ROM bytes.",
+    "source_chunks": {
+      "formation_x_pointers": {
+        "physical_bank": 14,
+        "cpu": "B794",
+        "file_offset": 120740,
+        "bytes": 12,
+        "hex": "ecb7f7b702b80db818b823b8",
+        "sha256": "707fc98744d2c523e5a22405c3892ed562f1673ccb605177d30c27078ad0dff9"
+      },
+      "formation_y_pointers": {
+        "physical_bank": 14,
+        "cpu": "B7A0",
+        "file_offset": 120752,
+        "bytes": 12,
+        "hex": "2eb839b844b84fb85ab865b8",
+        "sha256": "392cef3116444723d5d985f7e47105eec38d398654a7371ea9995bfaa48d057c"
+      },
+      "formation_x": {
+        "physical_bank": 14,
+        "cpu": "B7EC",
+        "file_offset": 120828,
+        "bytes": 66,
+        "hex": "010202020303030404050301040402020303040405050103020202020303040405010202030303040405050501030308080606070707070103030808010103030202",
+        "sha256": "b1def7cf4f9eaceaa4bf7a4fc269b007b43473784fde8d7d02fff3ecbf769b91"
+      },
+      "formation_y": {
+        "physical_bank": 14,
+        "cpu": "B82E",
+        "file_offset": 120894,
+        "bytes": 66,
+        "hex": "050102030405060708090905040604060307020801090505040602080307040605050406030507040603050705040602080208010902080504060208030702080109",
+        "sha256": "0d82cfe44b6d8fcfbf02b63a414fbe763e32c2285cbe4110c5e08ecac65dbf87"
+      },
+      "troop_type_thresholds": {
+        "physical_bank": 14,
+        "cpu": "B7AC",
+        "file_offset": 120764,
+        "bytes": 64,
+        "hex": "0609080a080b00000509070a070b000005080609060a000004070508060900000306040805090000020604070408000002050306040700000105020603070000",
+        "sha256": "a5c970c66d02eefdfabd03d001b27710589e853d7ff8ff482d39f139fc438411"
+      },
+      "action_type_order": {
+        "physical_bank": 14,
+        "cpu": "A231",
+        "file_offset": 115265,
+        "bytes": 4,
+        "hex": "03020100",
+        "sha256": "0714146c8fe6ae04f23d44476c0658ed157c4f65d8920a8c11a009b4daace2c6"
+      },
+      "background_pointers": {
+        "physical_bank": 14,
+        "cpu": "BB1E",
+        "file_offset": 121646,
+        "bytes": 14,
+        "hex": "40847085a086d0870089308a608b",
+        "sha256": "98fa8c4ab3836f80a256c26fc71bb073bd299f02e5fe55a55fb791a27c68492f"
+      },
+      "background_banks": {
+        "physical_bank": 14,
+        "cpu": "BB48",
+        "file_offset": 121688,
+        "bytes": 7,
+        "hex": "21212121212121",
+        "sha256": "e642f1cb19f1acf4b484d0545b5c50e45bc5b93471cd8c80e5b436311c5779a8"
+      },
+      "terrain_classes": {
+        "physical_bank": 15,
+        "cpu": "CB59",
+        "file_offset": 125801,
+        "bytes": 144,
+        "hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000505000500000505050505050500000000000000000000000000000000030402000000000000000101010101010101000000000000000000",
+        "sha256": "9c38767186ba2d9985b7b7513a2a3b5a65e714feff84b0ab38c7f230b8428856"
+      },
+      "castle_layout": {
+        "physical_bank": 1,
+        "cpu": "8A30",
+        "file_offset": 10816,
+        "bytes": 160,
+        "hex": "4d4d4d4d4d4d6001010101594d4d4d564d4d56574d4d5c01010101594d4d574d4d504d4d014d6301010101594d4d4d4d4d4d4d504d4d5b6262625a614d4d0101014d4d4d014d4d4d4d4d4d4d4d504d4d4d4d4d4d4d4d564e4d4d014d4d4d4d504d4d504d4d4d4d4d4d4d4d4d564d4d014d4d4d504d4d585f5f5f655e4d4d504d504d4d4d014d6001010101594d4d4d4d4d504d014d4d5c01010101594d014d50",
+        "sha256": "771d02493dfbc9b3a3d95acb799aeec2becdc58b12dcbd40c1ed30089b909b7e"
+      }
+    },
+    "commands": [
+      "advance",
+      "retreat",
+      "wait",
+      "surround"
+    ],
+    "action_type_order": [
+      3,
+      2,
+      1,
+      0
+    ],
+    "manual_scans": [
+      {
+        "pages": [
+          38,
+          39
+        ],
+        "url": "https://cdn-ak.f.st-hatena.com/images/fotolife/j/jackallsasaki/20260802/20260802002905.jpg",
+        "sha256": "4be74330f799491ad9014bb1e5fe162977e4528a0f6dc22ab4957c4895079172"
+      },
+      {
+        "pages": [
+          40,
+          41
+        ],
+        "url": "https://cdn-ak.f.st-hatena.com/images/fotolife/j/jackallsasaki/20260802/20260802002911.jpg",
+        "sha256": "188dfd1aca878f53064eba86d1e9015c208020aceb3f2370d0d2a1587756f6cd"
+      },
+      {
+        "pages": [
+          42,
+          43
+        ],
+        "url": "https://cdn-ak.f.st-hatena.com/images/fotolife/j/jackallsasaki/20260802/20260802002915.jpg",
+        "sha256": "17bbfbce81d12310637484287f2e3f437011e9f237f39cc89968611cc28565cc"
+      }
+    ]
+  },
+  "data": {
+    "native_tables": {
+      "path": "/assets/siege-original/native-tables.json",
+      "sha256": "019bde09daa855d75b15f518329002ce57795252c463219df1ad76b186f42806"
+    }
+  },
+  "sprite_scope": {
+    "kinds": [
+      "general",
+      "infantry",
+      "archer",
+      "cavalry"
+    ],
+    "sides": [
+      "friendly",
+      "enemy"
+    ],
+    "verified_native_poses_per_kind": 1,
+    "requested_frames": [
+      0,
+      1
+    ],
+    "additional_frame_policy": "The second requested frame reuses the same verified native pose; motion comes from actual game positions. No uncaptured attack/defend pose is claimed.",
+    "transparency": "Original CHR background pattern index, not RGB keying or a difference against brick texture."
+  }
+}

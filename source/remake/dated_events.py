@@ -86,19 +86,22 @@ def dormant(catalog, state, faction):
 
 def visible_factions(catalog, state=None):
     rows=[]
-    for row in catalog.factions.values():
+    for source in catalog.factions.values():
+        row=dict(source)
         if dormant(catalog,state,row['id']):continue
         if state is not None:
-            executed=next((r for r in coups(catalog) if r['faction']==row['id'] and
-                state.extension.get('dated_events',{}).get('coups',{}).get(r['id'],{}).get('status')=='executed'),None)
-            if executed:
-                leader=state.extension['leaders'].get(row['id'])
-                if leader in catalog.by_id:
-                    name=catalog.name(leader)
-                else:
-                    name=state.extension.get('civil_staff',{}).get('people',{}).get(
-                        leader,{}).get('name',catalog.name(catalog.ids[executed['successor']]))
-                row=dict(row,captain=name,name=name+'势力')
+            leader=state.extension['leaders'].get(row['id'])
+            person=catalog.by_id.get(leader) or state.extension.get('civil_staff',{}).get('people',{}).get(leader)
+            if person is not None:
+                name=person['name']
+                row.update(captain=name,ruler_id=leader,
+                    ruler_person_id=state.officers[leader].person_id)
+                # Polity/scenario labels remain the opening's source data.
+                # A real succession changes only this live display row;
+                # faction identity, colors, ownership and save data stay fixed.
+                if leader!=catalog.data['faction_rulers'].get(row['id']):
+                    row['name']=name
+            row['display_name']=row['captain'] if '势力' in row['name'] or '勢力' in row['name'] else row['name']
         rows.append(row)
     return rows
 

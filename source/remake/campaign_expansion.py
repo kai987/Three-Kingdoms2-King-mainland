@@ -5,7 +5,7 @@ remake designs. No original engine, ROM tables or control IR are loaded.
 """
 from dataclasses import replace
 from .errors import GameError
-from . import presentation, equipment, command_books, battle_grid
+from . import presentation, equipment, command_books, battle_grid, siege
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
                        parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref, appearance_values)
@@ -244,6 +244,7 @@ class ExpandedCampaign:
         if state.phase!='battle' or not b or payload.get('battle_id')!=b['id']:
             raise GameError('当前没有待操作的战斗。')
         if b['extended']['duel'] and not allow_duel: raise GameError('请先完成或退出当前单挑。')
+        if b['extended'].get('siege'):raise GameError('請先完成目前的攻城戰。')
         own,foe=self._player_sides(state)
         a_id=parse_officer_ref(payload.get('actor'),self.catalog.rules)
         t_id=parse_officer_ref(payload.get('target'),self.catalog.rules)
@@ -333,7 +334,7 @@ class ExpandedCampaign:
         if not b or 'tactical' not in b['extended']:return
         player_side,_=self._player_sides(state)
         for _ in range(64):  # maximum60 AP plus the voluntary pass
-            if state.phase!='battle' or b['extended']['duel']:return
+            if state.phase!='battle' or b['extended']['duel'] or b['extended'].get('siege'):return
             side=b['extended']['tactical']['side']
             if side==player_side:return
             foe='defenders' if side=='attackers' else 'attackers'
@@ -350,6 +351,9 @@ class ExpandedCampaign:
 
     def _finish_action(self,state,actor,own,foe,*,respond=True):
         b=state.battle
+        if b['extended'].get('siege'):
+            if not b['extended']['duel']:siege.finish_duel(self,state)
+            return
         if 'tactical' in b['extended']:
             # used is an activity record, never a per-unit action cap.
             if own==self._player_sides(state)[0] and actor['id'] not in b['used']:
@@ -372,7 +376,7 @@ class ExpandedCampaign:
 
     def _battle_move(self,state,payload):
         b=state.battle
-        if state.phase!='battle' or not b or payload.get('battle_id')!=b['id'] or b['extended']['duel']:
+        if state.phase!='battle' or not b or payload.get('battle_id')!=b['id'] or b['extended']['duel'] or b['extended'].get('siege'):
             raise GameError('目前沒有可移動的戰鬥。')
         own,foe=self._player_sides(state)
         ident=parse_officer_ref(payload.get('actor'),self.catalog.rules)
@@ -397,7 +401,7 @@ class ExpandedCampaign:
 
     def _battle_wait(self,state,payload):
         b=state.battle
-        if state.phase!='battle' or not b or payload.get('battle_id')!=b['id'] or b['extended']['duel']:
+        if state.phase!='battle' or not b or payload.get('battle_id')!=b['id'] or b['extended']['duel'] or b['extended'].get('siege'):
             raise GameError('目前不能結束戰術行動。')
         own,_=self._player_sides(state)
         if b['extended']['tactical']['side']!=own:
@@ -409,6 +413,14 @@ class ExpandedCampaign:
         b,actor,target,own,foe=self._battle_selection(state,payload)
         self._execute_attack(state,actor,target,own,foe)
 
+    def _siege_command(self,kind):
+        handlers={'siege_form':siege.form,'siege_orders':siege.orders,
+                  'siege_step':siege.step,'siege_withdraw':siege.withdraw}
+        return lambda state,payload:handlers[kind](self,state,payload)
+
+    def _synchronize_siege(self,state):
+        siege.synchronize_duel(state)
+
     def _execute_attack(self,state,actor,target,own,foe,*,finish=True,counter=False):
         b=state.battle
         modern='tactical' in b['extended']
@@ -416,23 +428,29 @@ class ExpandedCampaign:
             reason=battle_grid.attack_reason(b,actor,target,own)
             if reason:raise GameError(reason)
             battle_grid.spend(b,own,battle_grid.ATTACK_COST)
+        context=battle_grid.siege_context(b,actor,target)
         self._trigger_ambush(state,actor,own,counter=counter)
-        attacked=self._attack_hit(state,actor,target,own,counter=counter)
+        if modern and context and actor['troops']>0 and not b['extended']['support'][str(actor['id'])]['stunned']:
+            siege.begin(self,state,actor,target,context)
+            if state.player not in (b['attacker'],b['defender']):siege.auto(self,state)
+            return
+        attacked=self._attack_hit(state,actor,target,own,counter=counter,siege=context)
         if modern and attacked:
             # Contact enters the two-sided soldier encounter. The surviving
             # defending unit may answer within that same paid encounter; this
             # is not a free whole-side AI action or a recursively paid attack.
-            self._contact_retaliation(state,target,actor,foe)
+            self._contact_retaliation(state,target,actor,foe,siege=context)
         if finish:self._finish_action(state,actor,own,foe)
         else:self._battle_result(state)
 
-    def _attack_hit(self,state,actor,target,own,*,counter=False):
+    def _attack_hit(self,state,actor,target,own,*,counter=False,siege=None):
         """One authoritative blow using the same damage/status kernel either way."""
         b=state.battle
         before=presentation.snapshot(self,state)
         if actor['troops']<=0:
             presentation.record(self,state,before,kind='attack',actor=actor['id'],
-                target=target['id'],own=own,counter=counter,success=False,skipped=True)
+                target=target['id'],own=own,counter=counter,success=False,skipped=True,
+                effect='siege' if siege else None,siege=siege)
             return False
         s=b['extended']['support'][str(actor['id'])]
         skipped=bool(s['stunned'])
@@ -444,10 +462,11 @@ class ExpandedCampaign:
             if defense['guard']:loss=max(1,loss//2);defense['guard']-=1
             target['troops']-=loss;b['log'].append(f'{self.person_name(state, actor["id"])}{"反击" if counter else "攻击"}{self.person_name(state, target["id"])}，损兵{loss}。')
         presentation.record(self,state,before,kind='attack',actor=actor['id'],
-            target=target['id'],own=own,counter=counter,success=not skipped,skipped=skipped)
+            target=target['id'],own=own,counter=counter,success=not skipped,skipped=skipped,
+            effect='siege' if siege else None,siege=siege)
         return not skipped
 
-    def _contact_retaliation(self,state,defender,attacker,side):
+    def _contact_retaliation(self,state,defender,attacker,side,*,siege=None):
         """Only this surviving contact opponent replies; no AP, policy or ambush."""
         b=state.battle;support=b['extended']['support']
         if (defender['troops']<=0 or attacker['troops']<=0
@@ -455,7 +474,7 @@ class ExpandedCampaign:
                 or support[str(attacker['id'])]['health']<=0
                 or str(defender['id']) in b['extended']['surrenders']):
             return False
-        return self._attack_hit(state,defender,attacker,side,counter=True)
+        return self._attack_hit(state,defender,attacker,side,counter=True,siege=siege)
 
     def _tactic(self,state,payload):
         b,actor,target,own,foe=self._battle_selection(state,payload)
@@ -666,6 +685,7 @@ class ExpandedCampaign:
     def _expanded_retreat(self,state,payload):
         b=state.battle
         if state.phase!='battle' or not b or payload.get('battle_id')!=b['id']:raise GameError('当前不能退却。')
+        if b['extended'].get('siege'):raise GameError('請先退出目前的攻城交鋒。')
         own,_=self._player_sides(state)
         before=presentation.snapshot(self,state)
         b['extended']['duel']=None;b['extended']['withdrawn']=own
@@ -712,7 +732,7 @@ class ExpandedCampaign:
             target.roster.officer_ids[:]=selected
             source.roster.officer_ids[:]=[i for i in source.roster.officer_ids if i not in selected]
             target.owner=b['attacker'];target.action_used=True
-            self._note(state,f'{self.catalog.factions[b["attacker"]]["name"]}攻占{self.catalog.map_cities[target.id]["name"]}。')
+            self._note(state,f'{self.faction_name(state,b["attacker"])}攻占{self.catalog.map_cities[target.id]["name"]}。')
             self._emit_event(state,'city_captured',person_ids=[state.officers[i].person_id for i in selected[:1]],
                 city_ids=[target.id],factions=[b['attacker'],b['defender']],
                 details=dict(previous_owner=b['defender']),audience='world')
@@ -740,11 +760,12 @@ class ExpandedCampaign:
             alive=[i for i,o in state.officers.items() if o.alive and o.faction_id==faction]
             cities=[c for c in state.cities.values() if c.owner==faction]
             if not alive or not cities:
+                ended_name=self.faction_name(state,faction)
                 for c in cities:c.owner='neutral'
                 x['leaders'][faction]=None
                 x['pending_succession'].pop(faction,None)
                 if faction not in x['ended_factions']:
-                    x['ended_factions'].append(faction);self._note(state,f'{self.catalog.factions[faction]["name"]}退出战役。')
+                    x['ended_factions'].append(faction);self._note(state,f'{ended_name}退出战役。')
             elif x['leaders'].get(faction) not in alive:
                 candidates=sorted(alive,key=lambda i:(-state.officers[i].profile.virtue,
                     -state.officers[i].profile.intellect,-state.officers[i].experience,ref_sort_key(i)))
@@ -895,8 +916,10 @@ class ExpandedCampaign:
         b=state.battle
         if not b:return
         e=b['extended']
-        if set(e)!={'support','duel','duel_history','ambush','surrenders','withdrawn','tactical'}:raise ValueError('battle extended fields')
+        expected={'support','duel','duel_history','ambush','surrenders','withdrawn','tactical'}
+        if set(e) not in (expected,expected|{'siege'}):raise ValueError('battle extended fields')
         battle_grid.validate(self,state,b)
+        siege.validate(self,state,b)
         units={u['id']:u for u in b['attackers']+b['defenders']}
         if set(e['support'])!={str(i) for i in units}:raise ValueError('battle support identities')
         for key,s in e['support'].items():

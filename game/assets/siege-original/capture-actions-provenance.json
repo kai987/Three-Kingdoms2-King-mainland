@@ -1,0 +1,581 @@
+{
+  "schema": "tk2-controlled-original-siege-capture-v1",
+  "controlled_fixture": true,
+  "natural_gameplay": false,
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "rom_modified": false,
+  "core": {
+    "name": "Nestopia",
+    "version": "2.0.0 135dfa6",
+    "core_sha256": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a"
+  },
+  "source_state": "source:controlled-capture-run3/prelude3.state",
+  "source_state_sha256": "8dc4fc46e0cb7e682000d25e779d0ed342cd2f94622ae86cc3bcf5df69008ca5",
+  "source_provenance": "source:controlled-capture-run3/provenance.json",
+  "source_provenance_sha256": "91e8e7949626f9e94b4f5e33e63d31e33e89f746d5a6638c34b24c3b9b11708b",
+  "changes": [],
+  "steps": [
+    {
+      "frames": 2,
+      "buttons": [
+        "a"
+      ],
+      "label": "confirm-1",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 7,
+      "attack_sub": 0,
+      "background": 5
+    },
+    {
+      "frames": 180,
+      "buttons": [],
+      "label": "wait-1",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 2,
+      "attack_sub": 0,
+      "background": 5
+    },
+    {
+      "frames": 2,
+      "buttons": [
+        "a"
+      ],
+      "label": "confirm-2",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 2,
+      "attack_sub": 2,
+      "background": 5
+    },
+    {
+      "frames": 180,
+      "buttons": [],
+      "label": "wait-2",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 3,
+      "attack_sub": 2,
+      "background": 5
+    },
+    {
+      "frames": 2,
+      "buttons": [
+        "a"
+      ],
+      "label": "confirm-3",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 3,
+      "attack_sub": 3,
+      "background": 5
+    },
+    {
+      "frames": 180,
+      "buttons": [],
+      "label": "wait-3",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 2,
+      "attack_sub": 2,
+      "background": 5
+    },
+    {
+      "frames": 2,
+      "buttons": [
+        "a"
+      ],
+      "label": "confirm-4",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 1,
+      "attack_sub": 2,
+      "background": 5
+    },
+    {
+      "frames": 180,
+      "buttons": [],
+      "label": "wait-4",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 3,
+      "attack_sub": 2,
+      "background": 5
+    },
+    {
+      "frames": 2,
+      "buttons": [
+        "a"
+      ],
+      "label": "confirm-5",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 3,
+      "attack_sub": 3,
+      "background": 5
+    },
+    {
+      "frames": 180,
+      "buttons": [],
+      "label": "wait-5",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 2,
+      "attack_sub": 2,
+      "background": 5
+    },
+    {
+      "frames": 2,
+      "buttons": [
+        "a"
+      ],
+      "label": "confirm-6",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 2,
+      "attack_sub": 2,
+      "background": 5
+    },
+    {
+      "frames": 180,
+      "buttons": [],
+      "label": "wait-6",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 3,
+      "attack_sub": 2,
+      "background": 5
+    },
+    {
+      "frames": 2,
+      "buttons": [
+        "a"
+      ],
+      "label": "confirm-7",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 3,
+      "attack_sub": 3,
+      "background": 5
+    },
+    {
+      "frames": 180,
+      "buttons": [],
+      "label": "wait-7",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 2,
+      "attack_sub": 4,
+      "background": 5
+    },
+    {
+      "frames": 2,
+      "buttons": [
+        "a"
+      ],
+      "label": "confirm-8",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 2,
+      "attack_sub": 4,
+      "background": 5
+    },
+    {
+      "frames": 180,
+      "buttons": [],
+      "label": "wait-8",
+      "global_state": 6,
+      "nmi": 4,
+      "attack_main": 3,
+      "attack_sub": 2,
+      "background": 5
+    }
+  ],
+  "outputs": {
+    "confirm-1-ram.bin": {
+      "bytes": 2048,
+      "sha256": "6bd56f8e805e76ce4b99c787c82428ed4d10968cd2cb009908672f771347dc11"
+    },
+    "confirm-1-sram.bin": {
+      "bytes": 8192,
+      "sha256": "0aeadcb8f5d581ef3f612c00ba42d29a849c8daf8a71e1561799f41e3e6c504b"
+    },
+    "confirm-1-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "confirm-1.json": {
+      "bytes": 2297,
+      "sha256": "0c87e0767d4e0747f918b939b118b390a053fe18fcbb08d4f279baf6c98be7ee"
+    },
+    "confirm-1.png": {
+      "bytes": 5292,
+      "sha256": "097d39bd0c8f7662eac6716bddf042392118fe689a2ef7a44283dfec0746400a"
+    },
+    "confirm-1.state": {
+      "bytes": 13783,
+      "sha256": "74d369151ba62e93db8fc09c9477127f11130f50caca6c24520446072f7707cf"
+    },
+    "confirm-2-ram.bin": {
+      "bytes": 2048,
+      "sha256": "f11be038422534ee253c33a7a8c8d133f762574e96bd2d2176664313f8700759"
+    },
+    "confirm-2-sram.bin": {
+      "bytes": 8192,
+      "sha256": "0aeadcb8f5d581ef3f612c00ba42d29a849c8daf8a71e1561799f41e3e6c504b"
+    },
+    "confirm-2-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "confirm-2.json": {
+      "bytes": 2474,
+      "sha256": "d0b40225362654b1af721e88a39b2a8e8185ebf070fa28c606c05c61731e32bf"
+    },
+    "confirm-2.png": {
+      "bytes": 7401,
+      "sha256": "587021532e53e81ab5b50d7929468f9d9a7f1a4c1441e14105def7facaa9f375"
+    },
+    "confirm-2.state": {
+      "bytes": 13783,
+      "sha256": "5d3f4d0f47acf430c6ad73fb0b2373d5a91273d77cbdf3d9a44101a28dbb86f9"
+    },
+    "confirm-3-ram.bin": {
+      "bytes": 2048,
+      "sha256": "8cfa15d792748cc0969ec222d1c73d4bebc9f21c0660d55b0d57790fa8ebed80"
+    },
+    "confirm-3-sram.bin": {
+      "bytes": 8192,
+      "sha256": "0aeadcb8f5d581ef3f612c00ba42d29a849c8daf8a71e1561799f41e3e6c504b"
+    },
+    "confirm-3-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "confirm-3.json": {
+      "bytes": 2651,
+      "sha256": "329562cf17103752e7970d143b2b2c53c97b8884334b7927a7b1bb8cce21c7c2"
+    },
+    "confirm-3.png": {
+      "bytes": 6968,
+      "sha256": "d42096926694ea0bbe6466385618a45f43168b1dd178de13ffa3f83635a4afd3"
+    },
+    "confirm-3.state": {
+      "bytes": 13783,
+      "sha256": "94a3e855df8ce18f826d0a73c495010baeb6bd1bbbb14e69d7e4bf5110f48691"
+    },
+    "confirm-4-ram.bin": {
+      "bytes": 2048,
+      "sha256": "5e9754c5a182b001a06a8017c362ff743aeae51ded4aee3dad72b0d96e3a4828"
+    },
+    "confirm-4-sram.bin": {
+      "bytes": 8192,
+      "sha256": "056b70ba91eca0c2e35d45820a3a9871fff439900ae85ef298d94164d1eb21b5"
+    },
+    "confirm-4-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "confirm-4.json": {
+      "bytes": 2828,
+      "sha256": "e876eeb3568de8d4915abd6dc8a99bb7a48cbeae76be70e6ca67a319cf897b99"
+    },
+    "confirm-4.png": {
+      "bytes": 7665,
+      "sha256": "02e22c79429c3c64457d504a96bb4df818b516ebaa47c25363a5dbfe41e1891c"
+    },
+    "confirm-4.state": {
+      "bytes": 13783,
+      "sha256": "3b20b7427e50789d346661e834c3268d5f4ba9c6fabdaa71c627243450c1769a"
+    },
+    "confirm-5-ram.bin": {
+      "bytes": 2048,
+      "sha256": "5b58ab3eb5ba33514e46fafcd5179cda700f2596c5f02b1907d352d1e28d086b"
+    },
+    "confirm-5-sram.bin": {
+      "bytes": 8192,
+      "sha256": "056b70ba91eca0c2e35d45820a3a9871fff439900ae85ef298d94164d1eb21b5"
+    },
+    "confirm-5-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "confirm-5.json": {
+      "bytes": 3005,
+      "sha256": "3e8ebb488fd86f9482062493b45f90335a135ef87931655a58bdda8f1bb6954d"
+    },
+    "confirm-5.png": {
+      "bytes": 6897,
+      "sha256": "0d5305cc04abbc0c56f98542e14df2c952ee7081d2ac811433c0794db09bdc6f"
+    },
+    "confirm-5.state": {
+      "bytes": 13783,
+      "sha256": "c5e3dc2bafd3d2d2df555c55fee0b0483e3656c6cb0a69b631902bbe0e8519b1"
+    },
+    "confirm-6-ram.bin": {
+      "bytes": 2048,
+      "sha256": "33b87a1668b236d264ed958e72a1bfde75deff26bd9c1cd7e8b06386081c17e2"
+    },
+    "confirm-6-sram.bin": {
+      "bytes": 8192,
+      "sha256": "056b70ba91eca0c2e35d45820a3a9871fff439900ae85ef298d94164d1eb21b5"
+    },
+    "confirm-6-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "confirm-6.json": {
+      "bytes": 3182,
+      "sha256": "c4e33a8137d01ec77fd2118c246ed4e355fff8dba37ef224bdc9816d1de6109a"
+    },
+    "confirm-6.png": {
+      "bytes": 7641,
+      "sha256": "2aa19f650ab79da60d74c3772b3b274733f9a08dd69d1ec3f5dd103cb34b7708"
+    },
+    "confirm-6.state": {
+      "bytes": 13783,
+      "sha256": "361c042a26dcbdd2f9cc660dd61deb8ce0eed339a4667afcf730db9650da14d7"
+    },
+    "confirm-7-ram.bin": {
+      "bytes": 2048,
+      "sha256": "ecf25685609449770f23f9bf49d3266a296778044ef7376bebd725cf9c946e9f"
+    },
+    "confirm-7-sram.bin": {
+      "bytes": 8192,
+      "sha256": "056b70ba91eca0c2e35d45820a3a9871fff439900ae85ef298d94164d1eb21b5"
+    },
+    "confirm-7-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "confirm-7.json": {
+      "bytes": 3361,
+      "sha256": "02921ad7c656b78d7901f84f7a1d66ba83841ab7bd664028f9d97aeb1c78099e"
+    },
+    "confirm-7.png": {
+      "bytes": 7029,
+      "sha256": "d708b6fd5e47805c6c4422feefcc4c5a1c152d8f6cc26b63bf37437f0027b39a"
+    },
+    "confirm-7.state": {
+      "bytes": 13783,
+      "sha256": "38870eee855458278a8cda63c8fb33c05ee34c8ef58b8d3c6608d069a2f83721"
+    },
+    "confirm-8-ram.bin": {
+      "bytes": 2048,
+      "sha256": "f79de448d713e442ffbc0184093772a7b6adf4c199f3d937aff6b457d52cbd96"
+    },
+    "confirm-8-sram.bin": {
+      "bytes": 8192,
+      "sha256": "9e55170f5ed164beb2841571d541943127fbc0f6b8551925a025e4161874855c"
+    },
+    "confirm-8-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "confirm-8.json": {
+      "bytes": 3540,
+      "sha256": "d82113453c223cc39fbfcda1c6c9fde107f1904f329196eda894b308450b4777"
+    },
+    "confirm-8.png": {
+      "bytes": 7761,
+      "sha256": "70b9c942f113ea23a38e16937271a028c6e600d836d36256052b0ae1bad433e0"
+    },
+    "confirm-8.state": {
+      "bytes": 13783,
+      "sha256": "6d9ed335ce00cc8ed897502cc39f68ff9ce9257641dc01259bd6acfa411e2b66"
+    },
+    "wait-1-ram.bin": {
+      "bytes": 2048,
+      "sha256": "356f36fd4654603c35f92080271c9a14c9dc59f24ecacdabb2fa3eeb496d7789"
+    },
+    "wait-1-sram.bin": {
+      "bytes": 8192,
+      "sha256": "0aeadcb8f5d581ef3f612c00ba42d29a849c8daf8a71e1561799f41e3e6c504b"
+    },
+    "wait-1-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wait-1.json": {
+      "bytes": 2374,
+      "sha256": "5958b244ed587cee40d505264c2f6f9430d0b69c33bf32f9b6d307566df99eba"
+    },
+    "wait-1.png": {
+      "bytes": 7502,
+      "sha256": "a4cb751bef90a5284962ce86b3d73e093093652772dadee7ad609f351b0e3d76"
+    },
+    "wait-1.state": {
+      "bytes": 13783,
+      "sha256": "1b73cd97d29bb1683de449ef83739a35b8370dec3ebcf81ecea49964a3d8381f"
+    },
+    "wait-2-ram.bin": {
+      "bytes": 2048,
+      "sha256": "0266821a37728e979010bfcf83fa8a923c9ed09f2df4110c6d8fc6dfe0c64577"
+    },
+    "wait-2-sram.bin": {
+      "bytes": 8192,
+      "sha256": "0aeadcb8f5d581ef3f612c00ba42d29a849c8daf8a71e1561799f41e3e6c504b"
+    },
+    "wait-2-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wait-2.json": {
+      "bytes": 2551,
+      "sha256": "a2b3adcd34cfc4d43a82cc90e0a1cd11679a217a874a177382bda73273975950"
+    },
+    "wait-2.png": {
+      "bytes": 7258,
+      "sha256": "9493921e18b8f4f467c645ddd71d8ea4b8a60ca66b89c4d521b680725fce64ea"
+    },
+    "wait-2.state": {
+      "bytes": 13783,
+      "sha256": "6e459e359a012c4010385fb7de6166a95a4cc06516a2645885ca9addbb19dd5e"
+    },
+    "wait-3-ram.bin": {
+      "bytes": 2048,
+      "sha256": "68a4fe02d67ceac85c9b4902950bd8c0aa9e04602f8b8fffe64c81aa55e7ebfd"
+    },
+    "wait-3-sram.bin": {
+      "bytes": 8192,
+      "sha256": "056b70ba91eca0c2e35d45820a3a9871fff439900ae85ef298d94164d1eb21b5"
+    },
+    "wait-3-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wait-3.json": {
+      "bytes": 2728,
+      "sha256": "b241bf9510adba3da2b13168490612c9126db3b1ba703990243494e56e1968a2"
+    },
+    "wait-3.png": {
+      "bytes": 7634,
+      "sha256": "0fb902f64759e8eb046d6123623ba3d388994740b3627ac1594454873a2fe5d1"
+    },
+    "wait-3.state": {
+      "bytes": 13783,
+      "sha256": "4a84e92b1c81219f708c1ac40c0e0ceab088a110fc8b402e1ec1f2960634fe3b"
+    },
+    "wait-4-ram.bin": {
+      "bytes": 2048,
+      "sha256": "b9f334bd840c385088e2fec70662c0d09b1ff7e494bbdf6e58a8faed4c646561"
+    },
+    "wait-4-sram.bin": {
+      "bytes": 8192,
+      "sha256": "056b70ba91eca0c2e35d45820a3a9871fff439900ae85ef298d94164d1eb21b5"
+    },
+    "wait-4-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wait-4.json": {
+      "bytes": 2905,
+      "sha256": "6be0b68655c4fa4456dbcc86f1fa0a13fcb184a22aa141c5f3acb1302e871789"
+    },
+    "wait-4.png": {
+      "bytes": 7188,
+      "sha256": "9b47c40c54e989c9249091d9ce0c0d3a3547062037c801992a90f27f1663a8be"
+    },
+    "wait-4.state": {
+      "bytes": 13783,
+      "sha256": "1b661b6ce47a7e7e5bf52e3c440af04b179e3a0496dd00ab9e658fe517f7f718"
+    },
+    "wait-5-ram.bin": {
+      "bytes": 2048,
+      "sha256": "5db3f534de5e067e8fe2fa3cce8219f75c8b4271a9d98ab079d53b5d4507f7ea"
+    },
+    "wait-5-sram.bin": {
+      "bytes": 8192,
+      "sha256": "056b70ba91eca0c2e35d45820a3a9871fff439900ae85ef298d94164d1eb21b5"
+    },
+    "wait-5-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wait-5.json": {
+      "bytes": 3082,
+      "sha256": "faff386d3bb21ff498b38c3082edc296defdaadf2ea8567fc2d37dceef462a7c"
+    },
+    "wait-5.png": {
+      "bytes": 7536,
+      "sha256": "0d4eb456a3b2e8f4528e635ba788bf255f479944d4808a2c28a27d26aa00a572"
+    },
+    "wait-5.state": {
+      "bytes": 13783,
+      "sha256": "fb1867605d6ec645c4fc1483f37510a7c9578366b478749ef28108a2b48bbc6d"
+    },
+    "wait-6-ram.bin": {
+      "bytes": 2048,
+      "sha256": "823c65288ce52b8ee2d9ac93539ef5fbcbdbcbf0ce284ce4a7cb0ffcc10d0300"
+    },
+    "wait-6-sram.bin": {
+      "bytes": 8192,
+      "sha256": "056b70ba91eca0c2e35d45820a3a9871fff439900ae85ef298d94164d1eb21b5"
+    },
+    "wait-6-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wait-6.json": {
+      "bytes": 3260,
+      "sha256": "88183381a2d9257b6b09e6e8009a129aaf98625e71015fbfdf53c73229b44427"
+    },
+    "wait-6.png": {
+      "bytes": 7323,
+      "sha256": "bccf442c9eb3cc041e2a5bffbfe48de3ab0af36d19667f714a22437db64df1b1"
+    },
+    "wait-6.state": {
+      "bytes": 13783,
+      "sha256": "47cb4177f154a417d12e0dca0b80e8c32734e52e6a7aee418462aab0da09ab78"
+    },
+    "wait-7-ram.bin": {
+      "bytes": 2048,
+      "sha256": "08f4d0b76a5f213c982c5e864c743f4ad3eb6408d09dc3fb6b773e1bce03980d"
+    },
+    "wait-7-sram.bin": {
+      "bytes": 8192,
+      "sha256": "9e55170f5ed164beb2841571d541943127fbc0f6b8551925a025e4161874855c"
+    },
+    "wait-7-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wait-7.json": {
+      "bytes": 3439,
+      "sha256": "82d17e15e1834aff8a334045ea631d77a86585677d720a221d182ee4abdbe901"
+    },
+    "wait-7.png": {
+      "bytes": 7761,
+      "sha256": "70b9c942f113ea23a38e16937271a028c6e600d836d36256052b0ae1bad433e0"
+    },
+    "wait-7.state": {
+      "bytes": 13783,
+      "sha256": "e7e18415e89968c702ddf4646b6cf3cb7ba84f8107e96c02b6e2799641e4d6ca"
+    },
+    "wait-8-ram.bin": {
+      "bytes": 2048,
+      "sha256": "266166eaa81c25f8d681dde762c18a17dbf9d3b4a191808e05c7f8a7bdbfb05e"
+    },
+    "wait-8-sram.bin": {
+      "bytes": 8192,
+      "sha256": "76d844dd0d0a9569bdb2419e650b4d4fdadffd64506675b1f0e861d0f2e1c2fd"
+    },
+    "wait-8-vram.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wait-8.json": {
+      "bytes": 3618,
+      "sha256": "c5bc835eebc3ebc7a5ba3e0f1e1c90af2605aa07161c13dcf3c9a47b94e38562"
+    },
+    "wait-8.png": {
+      "bytes": 7345,
+      "sha256": "b6659cd14ace33edd781ea459a0a1ed02f397b23adfdd64d2e646bae03c00f62"
+    },
+    "wait-8.state": {
+      "bytes": 13783,
+      "sha256": "17d537570bb7889abb862cf2be03e534babd809005faac5960fc226e588c64c0"
+    }
+  }
+}

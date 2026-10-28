@@ -55,6 +55,13 @@
         "battle"
       ]
     },
+    "tests/test_remake_battle_siege.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "save"
+      ]
+    },
     "tests/test_remake_battlefield_bindings.py": {
       "tier": "global",
       "groups": [
@@ -621,6 +628,12 @@
       "groups": [
         "save",
         "cloud"
+      ]
+    },
+    "tests/test_remake_siege_assets.py": {
+      "tier": "global",
+      "groups": [
+        "battle"
       ]
     },
     "tests/test_remake_site_icon.py": {

@@ -105,6 +105,12 @@ for(const name of ['南中勢力','南中势力','士燮势力']){
 }
 assert.equal(context.factionDisplayName({name:'曹魏',captain:'曹奂'}),'曹魏');
 assert.equal(context.factionDisplayName(null),'');
+const inherited={id:'shu',name:'刘备势力',captain:'刘禅',display_name:'刘禅',ruler_person_id:'san14-candidate-0945'};
+assert.equal(context.factionDisplayName(inherited),'刘禅','Live leader display takes priority over a cached opening label');
+const inheritedPortrait=context.previewRulerPortrait({faction_rulers:{shu:0}},inherited);
+assert(inheritedPortrait.includes('data-portrait-person="san14-candidate-0945"'));
+assert(inheritedPortrait.includes('data-portrait-name="刘禅"'),'The current ruler portrait follows its explicit person identity');
+assert.equal(context.factionDisplayName({id:'shu',name:'刘备势力',captain:'刘备'}),'刘备','A separately selected historical opening never borrows the live successor');
 // Exercise the shipped succession snapshots rather than a fixed faction-name
 // portrait table: Wei changes Cao Cao -> Cao Fang -> Cao Huan, and late Wu is
 // Sun Xiu. Each portrait uses that catalog's source person identity.

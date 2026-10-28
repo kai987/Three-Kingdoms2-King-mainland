@@ -68,6 +68,51 @@ class SessionPreviewCacheTests(unittest.TestCase):
         previews[0]['factions'][0]['ruler_person_id']='corrupt'
         self.assertEqual(session._scenario_previews(),expected)
 
+    def test_real_succession_renames_live_faction_and_portrait_without_rewriting_preview_or_identity(self):
+        session=CampaignSession(self.paths)
+        session.command('new',dict(scenario='mainland217-07',faction='shu',seed=2026),0)
+        game=session.game;state=game.state
+        original_catalog=deepcopy(game.catalog.data)
+        previews=deepcopy(session._scenario_previews())
+        from remake.view_transport import ViewTransport
+        transport=ViewTransport();opening_wire=transport.pack(session.view(),game.catalog.sha256)
+        colors=deepcopy(session.view()['catalog']['faction_colors'])
+        owners={key:city.owner for key,city in state.cities.items()}
+        previous=state.extension['leaders']['shu'];officer=state.officers[previous]
+        city=next(c for c in state.cities.values() if previous in c.roster.officer_ids)
+        city.roster.officer_ids.remove(previous);city.reserves+=officer.troops
+        officer.troops=0;officer.alive=False;officer.faction_id=None;officer.loyalty=0
+        game._reconcile_factions(state)
+        provisional=state.extension['leaders']['shu']
+        current=next(row for row in session.view()['catalog']['factions'] if row['id']=='shu')
+        self.assertEqual((current['name'],current['captain']), (game.person_name(state,provisional),)*2)
+        self.assertEqual(current['ruler_person_id'],state.officers[provisional].person_id)
+        choices=state.extension['pending_succession']['shu']['candidates']
+        selected=next(ident for ident in choices if ident!=provisional)
+        session.command('choose_successor',dict(officer=selected),session.revision)
+        current=next(row for row in session.view()['catalog']['factions'] if row['id']=='shu')
+        state=game.state;expected=game.person_name(state,selected)
+        self.assertEqual((current['name'],current['captain'],current['display_name']),(expected,)*3)
+        self.assertEqual(current['ruler_id'],selected)
+        self.assertEqual(current['ruler_person_id'],state.officers[selected].person_id)
+        self.assertEqual(game.faction_name(state,'shu'),expected)
+        changed_wire=transport.pack(session.view(),game.catalog.sha256,opening_wire['catalog_token'])
+        self.assertNotIn('static_catalog',changed_wire)
+        transmitted=next(row for row in changed_wire['view']['catalog']['factions'] if row['id']=='shu')
+        self.assertEqual(transmitted,current,'Worker view-cache deltas must carry the live name and portrait identity')
+        self.assertEqual({key:city.owner for key,city in state.cities.items()},owners)
+        self.assertEqual(session.view()['catalog']['faction_colors'],colors)
+        self.assertEqual(session._scenario_previews(),previews)
+        self.assertEqual(game.catalog.data,original_catalog)
+        preview=session.preview_city('mainland217-07',city.id)['city']
+        self.assertEqual(preview['owner_name'],game.catalog.factions['shu']['name'])
+        saved=session.export_save();rng=deepcopy(state.rng)
+        returned=session.view();returned['catalog']['factions'][0]['name']='poisoned'
+        self.assertEqual(session.export_save(),saved);self.assertEqual(game.state.rng,rng)
+        clone=CampaignSession(self.paths);clone.load_save(saved,clone.revision)
+        restored=next(row for row in clone.view()['catalog']['factions'] if row['id']=='shu')
+        self.assertEqual(restored,current);self.assertEqual(clone.export_save(),saved)
+
     def test_preview_city_tiers_use_each_catalog_without_copying_economy_metadata(self):
         session=CampaignSession(self.paths)
         for row in session.view()['catalog']['scenarios']:

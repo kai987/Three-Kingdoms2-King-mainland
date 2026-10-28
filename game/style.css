@@ -275,6 +275,9 @@ overflow-wrap:anywhere;
 padding:4px 8px;
 border:2px solid #000
 }
+.faction-ruler-identity{display:inline-flex;align-items:center;gap:6px;vertical-align:middle}
+.faction-ruler-identity .portrait-frame{width:24px;height:30px;border-width:1px}
+.faction-ruler-identity [data-current-faction-label]{min-width:0;overflow-wrap:anywhere}
 .resources{
 margin:0;
 display:flex;
@@ -1129,6 +1132,9 @@ dialog:has([data-domestic-dialog]) .dialog-actions{position:sticky;bottom:-24px;
 #scenario-version-warning{padding:10px 12px;margin:8px 0 12px;border:2px solid currentColor;line-height:1.5;background:#ffe8b8}
 #scenario-version-warning p{font-size:13px;margin:0 0 8px}
 #scenario-version-warning a{display:inline-block;min-height:32px;padding:4px 8px;border:1px solid currentColor}
+.command-book-version-warning{padding:8px 10px;margin:8px 0;border:2px solid currentColor;line-height:1.5;background:#ffe8b8}
+.command-book-version-warning p{font-size:13px;margin:0}
+.command-book-version-warning a{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;padding:4px 8px;border:1px solid currentColor}
 .city-island-status{font-size:14px;line-height:1.6}
 
 /* Treasury uses the same compact, keyboard-friendly campaign dialog. */

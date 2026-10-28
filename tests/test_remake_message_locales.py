@@ -31,6 +31,11 @@ class MessageLocaleTests(unittest.TestCase):
         cls.catalog = json.loads((ROOT / 'game/data/campaigns/217-07.json').read_text())
         if cls.catalog['schema']!='tk2-campaign-v1':raise AssertionError('Expected current campaign schema')
 
+    def test_persistent_siege_messages_keep_stage_round_and_japanese_prose(self):
+        for text, expected in [('接觸城砦守軍，進入攻城戰；請先選擇陣形。','城砦の守備隊'),('雙方主將接觸，進入單挑。','一騎討ち'),('請先完成目前的攻城戰。','攻城戦')]:
+            self.assertIn(expected,translate(text,self.data))
+        self.assertEqual(translate('217年7月上旬 攻城戰第23巡結束。',self.data),'217年7月上旬 攻城戦の第23巡が終了しました。')
+
     def test_all_runtime_game_errors_have_a_japanese_translation(self):
         checked = set()
         for path in (ROOT / 'source/remake').glob('*.py'):

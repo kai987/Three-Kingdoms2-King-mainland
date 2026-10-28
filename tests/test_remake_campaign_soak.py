@@ -21,6 +21,20 @@ spec.loader.exec_module(soak)
 
 
 class CampaignSoakTests(unittest.TestCase):
+    def test_pending_castle_encounter_uses_public_form_orders_steps_and_exact_restore(self):
+        from test_remake_tactical_ai import battle
+        from test_remake_battle_siege import castle_contact
+        replay=soak.Replay(controlled_catalog(),'shu',2026,'python')
+        replay.game=battle(three_enemies=False)
+        b,actor,target,_=castle_contact(replay.game)
+        replay.command('attack',battle_id=b['id'],actor=actor['id'],target=target['id'])
+        replay.restore()
+        replay.resolve()
+        for kind in ('siege_form','siege_orders','siege_step'):
+            self.assertGreater(replay.commands[kind],0)
+        self.assertNotEqual(replay.game.state.phase,'battle')
+        replay.restore()
+
     def early_legs(self):
         # These small values test coverage gates; real campaign execution and
         # physical/save/RNG parity have their own tests below and in release CI.

@@ -44,16 +44,19 @@ def snapshot(campaign, state):
 
 def record(campaign, state, before, *, kind, actor=None, target=None, own=None,
            counter=False, tactic=None, effect=None, success=True, skipped=False,
-           move=None, reply=None):
+           move=None, reply=None, siege=None):
     if before is None:
         return
     after = snapshot(campaign, state)
     if after is None:
         return
-    campaign._presentation_capture.append(dict(kind=kind, battle_id=state.battle['id'],
+    scene = dict(kind=kind, battle_id=state.battle['id'],
         actor=actor, target=target, own=own, counter=counter, tactic=tactic,
         effect=effect, success=success, skipped=skipped, move=move, reply=reply,
-        before=before, after=after))
+        before=before, after=after)
+    if siege is not None:
+        scene['siege'] = deepcopy(siege)
+    campaign._presentation_capture.append(scene)
 
 
 def response(view, revision, scenes):

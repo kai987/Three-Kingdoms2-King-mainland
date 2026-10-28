@@ -396,6 +396,13 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.assertEqual(self.pool(game)['people'][clerk]['owner'], 'shu')
         self.assertIn(clerk, game.state.officers)
         self.assertNotIn(clerk, game.catalog.by_id)
+        from remake.dated_events import visible_factions
+        displayed=next(row for row in visible_factions(game.catalog,game.state) if row['id']=='shu')
+        self.assertEqual(displayed['name'],self.pool(game)['people'][clerk]['name'])
+        self.assertEqual(displayed['captain'],displayed['name'])
+        self.assertEqual(displayed['display_name'],displayed['name'])
+        self.assertEqual(displayed['ruler_id'],clerk)
+        self.assertEqual(displayed['ruler_person_id'],game.state.officers[clerk].person_id)
         game.validate(game.state)
 
 

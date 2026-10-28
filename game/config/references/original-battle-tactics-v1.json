@@ -858,13 +858,33 @@
         41
       ],
       "rule": "Contact starts soldier combat. Infantry, archers, cavalry and officers act in order, alternating attacking and attacked sides. This does not establish the remake damage formula or a complete inner-combat simulation."
+    },
+    "siege_native_capture": {
+      "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+      "core_sha256": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a",
+      "assets": "game/assets/siege-original/index.json",
+      "controlled_fixture": true,
+      "natural_gameplay": false,
+      "preparation": "Independent original-core state copy arranged a combatant on original04 castle20,14 and the opponent at19,14. Original launch/terrain selection and scene initialization render the castle background and formation choices. No ROM, emulator UI or player-save changes.",
+      "native_entries": [
+        "12:A325-A367",
+        "13:DB46-DB9E",
+        "14:B548-B7B0",
+        "14:B794-B870",
+        "14:CE25-CF67",
+        "15:C1CD-C20E",
+        "15:C30F-C826",
+        "15:CAF9-CB59"
+      ],
+      "scope": "Pixel provenance and copied bounded data do not establish all original soldier damage, strategy or surrounding probabilities."
     }
   },
   "unknown_or_adaptation_required": [
     "No complete LOS/cover rule for inner soldier-mode bow pieces verified; do not invent a tactical-map bow radius.",
     "Current game displays a31x19 raster grid. Original player raw movement checks x<32,y<20 while original AI movement checks x<31,y<20 and both skip metadata row15; visible boundary policy must be explicit rather than claiming these two guards are identical.",
     "Original player and AI tactic eligibility differ for some tactics (notably falling rocks). The remake player/AI common-rule requirement should deliberately use one shared predicate, with the choice labeled as adaptation.",
-    "No complete recreation of original inner soldier microbattle movement, formations, ranges, contact timing or animation is asserted by this reference."
+    "No complete recreation of original inner soldier microbattle movement, formations, ranges, contact timing or animation is asserted by this reference.",
+    "Persistent castle soldier mode uses the existing remake damage kernel and deterministic one-axis movement priority. Surround surrender requires3 active adjacent pieces commanded to surround and commander HP<=30; exact native probability and combat strategies are not claimed. The200-cycle inner encounter limit is a remake guard separate from the30-day tactical battle limit."
   ],
   "source_files": [
     {
@@ -913,6 +933,7 @@
     "legacy_energy": "Preserve old energy fields for existing-save structure; do not use the previous18/+4 as an additional eligibility lock or payer.",
     "existing_effect_scope": "Existing damage, success rates, single stored ambush and self-guard support effects are retained remake models. Exact original learnability, spatial eligibility and affected sets do not prove all effect formulas or original separate-side ambush caches have been reimplemented.",
     "contact_exchange": "A tactical ordinary attack resolves one initiating hit and, if the target survives with health, one immediate return hit using the established remake damage kernel. Only the initiating side pays2 AP. No additional tactical AI turn or recursive reply is granted; confusion skips one return hit. Each real damage hit draws once; playback is read-only.",
-    "movement_playback": "The server supplies the exact committed path and cost. Pixel flags replay each step before ambush effects, with a16-second total presentation bound and reduced-motion/skip/background cancellation. Animation timing is a remake UI choice, not an extracted original timing table."
+    "movement_playback": "The server supplies the exact committed path and cost. Pixel flags replay each step before ambush effects, with a16-second total presentation bound and reduced-motion/skip/background cancellation. Animation timing is a remake UI choice, not an extracted original timing table.",
+    "siege_encounter": "Castle contact now pays2 tactical AP and opens an optional persistent battle.extended.siege substate before damage. The player confirms one of four native formations and issues infantry/archer/cavalry/general advance, retreat, wait or surround orders; steps execute actual16x10 cell moves and damage. The original11-slot coordinate tables, hundred-soldier split, martial/level type thresholds and castle collision map are declarative copied data. General contact opens the existing duel without a second AP charge. Damage/training use the existing remake kernel, deterministic movement tie-breaking and three adjacent surround orders against a commander with HP<=30 are explicit adaptations; no original castle defense multiplier is invented. AI-only sieges use the same deployment and step services."
   }
 }

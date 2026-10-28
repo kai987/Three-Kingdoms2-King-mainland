@@ -1,0 +1,22 @@
+{
+  "schema": "tk2-retained-original-capture-reference-v1",
+  "controlled_fixture": true,
+  "natural_gameplay": false,
+  "rom_modified": false,
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "core": {
+    "name": "Nestopia",
+    "version": "2.0.0 135dfa6",
+    "core_sha256": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a"
+  },
+  "source_capture_id": "source:research-archive/analysis/phase11/runtime/ordinary-attack-return/first-attack-main-01",
+  "source_capture_sha256": "2c4fe4c2c21f52aa8a0b5b2801454724dbc691e6ccb5c31eb6fc23d4e532e60c",
+  "captured_frame": 1155,
+  "changes": "Previously documented controlled adjacency fixture; no original state modified during this export.",
+  "outputs": {
+    "first-attack-main-01.png": {
+      "bytes": 5505,
+      "sha256": "2e4eaebc9fc513e67e8f845ab3c9ab67e71a02084ba1b7e4af5f71549cd6bbaa"
+    }
+  }
+}

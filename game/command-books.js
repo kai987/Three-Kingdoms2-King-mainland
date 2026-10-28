@@ -15,8 +15,15 @@
   const value=row(view,owner),flow=value?.allocation_flow;
   return flow&&typeof flow.id==='string'&&typeof flow.city==='string'&&flow.city===city&&['allocate','recruit'].includes(flow.source)?flow:null;
  }
+ function allocationSupported(view){
+  // Long-lived local servers may serve new JS while retaining old imported
+  // Python rules. The free close command was introduced with paid city flows.
+  const source=view?.catalog?.command_books;
+  return source?.schema===SCHEMA&&source.costs?.allocate===1&&source.costs.allocation_close===0&&(!view?.game||!!row(view));
+ }
  function cost(view,kind,options={}){
   const value=data(view)?.costs?.[kind];if(!integer(value))return null;
+  if(kind==='allocate'&&!allocationSupported(view))return null;
   const flow=kind==='allocate'?activeAllocation(view,options.city,options.owner):null;
   return flow&&typeof options.flow==='string'&&options.flow===flow.id?0:value;
  }
@@ -44,7 +51,7 @@
   };
   return '<p class="command-books small" data-command-books data-command-books-remaining="'+(value?.remaining??'')+'" data-command-books-total="'+(value?.total??'')+'"'+(amount===null?'':' data-command-book-cost="'+amount+'"')+' role="status">'+variant('zh-Hant')+variant('ja')+'</p>';
  }
- const api=Object.freeze({SCHEMA,data,row,activeAllocation,cost,can,reason,summary,html});
+ const api=Object.freeze({SCHEMA,data,row,activeAllocation,allocationSupported,cost,can,reason,summary,html});
  if(typeof module==='object'&&module.exports)module.exports=api;
  if(root)root.GameCommandBooks=api;
 })(typeof window==='object'?window:globalThis);

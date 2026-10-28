@@ -29,7 +29,7 @@
   const treasureIdentity=()=>{const view=getView();return JSON.stringify([view?.catalog?.scenario_id,view?.game?.player,view?.game?.seed,view?.game?.turn]);};
   const contextCity=()=>ownedCities().find(c=>c.id===active?.city)?.id||ownedCities()[0]?.id;
   const canWrite=()=>!isPreview()&&!isBusy()&&!pending&&getView()?.game?.phase==='city'&&(active?.kind==='domestic'?active.faction===getView()?.game?.player&&!!row('domestic')&&ownedCities().length>0:getView()?.game?.cities?.[active?.city]?.owner===getView()?.game?.player);
-  const factionName=id=>{const factions=getView()?.catalog?.factions;return Array.isArray(factions)?factions.find(f=>f.id===id)?.name||id:factions?.[id]?.name||id;};
+  const factionName=id=>{const factions=getView()?.catalog?.factions,row=Array.isArray(factions)?factions.find(f=>f.id===id):factions?.[id];return row?.display_name||row?.name||id;};
   const showing=()=>!!active&&dialog?.open!==false&&!!query('[data-domestic-dialog]');
   function name(id){return getView()?.catalog?.names?.[String(id)]||String(id);}
   function officerLabel(id){const view=getView(),officer=view?.game?.officers?.[id];return root.GameOfficerChoices?.label?root.GameOfficerChoices.label(label(name(id)),officer,{loyalty:true,isRuler:root.GameOfficerChoices.isRuler?.(id,view?.game?.extension?.leaders)===true}):label(name(id));}

@@ -78,6 +78,7 @@ invalidates('month',()=>context.view.game.month++);
 invalidates('period/day',()=>context.view.game.day=11);
 invalidates('ownership',()=>context.view.game.cities.b.owner='wu');assert(env.markup().includes('data-owner="wu"'));
 invalidates('owner name',()=>context.view.catalog.factions[1].name='孫堅');assert(env.markup().includes('孫堅'));
+invalidates('successor display with stable owner ID',()=>context.view.catalog.factions[1].display_name='孫策');assert(env.markup().includes('孫策'));assert(env.markup().includes('data-owner="wu"'));
 invalidates('faction color',()=>context.view.catalog.map_presentation.colors.wu='#f0f');assert(env.markup().includes('fill="#f0f"'));
 invalidates('historical name',()=>context.view.catalog.cities[1].name='新乙');assert(env.markup().includes('新乙'));
 invalidates('city positions',()=>context.view.catalog.cities[1].position=[210,220]);

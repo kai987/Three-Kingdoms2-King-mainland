@@ -363,6 +363,32 @@
         "mainland217-07"
       ],
       "scenario_scope": "fixed"
+    },
+    {
+      "id": "battle-siege",
+      "title": "castle contact opens a siege page for attack and retaliation without replaying saved damage",
+      "groups": [
+        "battle",
+        "map",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland208-10"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "ruler-succession-display",
+      "title": "succession updates live faction names and ruler portraits while historical previews and saves stay intact",
+      "groups": [
+        "people",
+        "map",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland217-07"
+      ],
+      "scenario_scope": "fixed"
     }
   ]
 }

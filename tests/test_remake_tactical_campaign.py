@@ -85,6 +85,20 @@ class TacticalCampaignTests(unittest.TestCase):
         self.assertEqual(self.game.state.soldiers, before.soldiers)
 
     def test_repeated_attacks_include_contact_replies_without_free_enemy_turn(self):
+        # This regression is specifically an ordinary field exchange. Move
+        # the original castle occupant out using a real enemy-side move first;
+        # castle contact now has its own persistent formation/command suite.
+        b,_,target=self.actors()
+        source,distances,_=grid._paths(self.game.state,b,target)
+        terrain=grid._field(b)['classes']
+        _,y,x=min((cost,y,x)for (x,y),cost in distances.items()
+                  if (x,y)!=source and terrain[y][x]==2
+                  and cost<=b['extended']['tactical']['points']['defenders'])
+        def enemy_leaves_castle(state,battle,*args,**kwargs):
+            point=battle['extended']['tactical']['positions'][str(target['id'])]
+            return dict(kind='move',actor=target['id'],x=x,y=y)if point!=dict(x=x,y=y)else WAIT
+        with patch('remake.tactical_ai.choose_action',side_effect=enemy_leaves_castle):
+            self.command('battle_wait',battle_id=b['id'])
         self.approach()
         battle, actor, target = self.actors()
         before = deepcopy(self.game.state)

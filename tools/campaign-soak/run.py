@@ -148,6 +148,15 @@ class Replay:
                 if battle['extended']['duel']:
                     self.command('duel_action', battle_id=battle['id'], move='withdraw')
                     continue
+                encounter=battle['extended'].get('siege')
+                if encounter:
+                    if encounter['stage']=='formation':
+                        self.command('siege_form',battle_id=battle['id'],formation=3)
+                    elif encounter['stage']=='orders':
+                        self.command('siege_orders',battle_id=battle['id'],orders={
+                            kind:'advance' for kind in ('infantry','archer','cavalry','general')})
+                    else:self.command('siege_step',battle_id=battle['id'])
+                    continue
                 own, foe = game._player_sides(state)
                 choice = choose_action(state, battle, own, foe,
                     game.catalog.map_cities[battle['target']]['terrain'], TACTICS,

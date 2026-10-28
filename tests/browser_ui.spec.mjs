@@ -4,6 +4,7 @@
 import {test,expect} from '../tools/browser-tests/node_modules/@playwright/test/index.mjs';
 import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
+import {execFileSync} from 'node:child_process';
 import assert from 'node:assert/strict';
 import browserScopes from '../tools/browser-tests/scope.cjs';
 import {approveVisibleOrders} from './browser_order_confirm.mjs';
@@ -1836,6 +1837,49 @@ test('actual equipment appears in city intelligence and person details with serv
  expect(restored.view.catalog.equipment.officers[String(selection.ident)].attack_bonus).toBe(selection.quote.after.attack_bonus);expect(errors.get(page)).toEqual([]);
 });
 
+test('castle contact opens a siege page for attack and retaliation without replaying saved damage',async({page},testInfo)=>{
+ // Explicit legal contact fixture imported through the visible loader. The
+ // real Worker owns formation, group orders, movement, casualties and saves.
+ const fixture=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_siege_fixture.py',import.meta.url).pathname],{encoding:'utf8',maxBuffer:4*1024*1024}));
+ const raw=JSON.stringify(fixture.save),touch=testInfo.project.name==='touch-chromium';await opening(page);
+ const imported=async(value)=>{await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'controlled-castle-contact.json',mimeType:'application/json',buffer:Buffer.from(value)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();};
+ const scene=page.locator('[data-battle-scene]'),canvas=page.locator('[data-battle-canvas]'),proof=[];
+ for(const language of ['zh-Hant','ja']){
+  if(language==='ja'){const menu=page.locator('#utility-menu');await menu.locator('summary').click();await page.locator('#language').selectOption('ja');await menu.locator('summary').click();}
+  await imported(raw);await expect(scene).toHaveAttribute('data-battle-scene-mode','tactical');
+  const before=await tacticalRead(page);expect(before.save).toEqual(fixture.save);const b=before.save.state.battle;
+  await tacticalCell(page,b.extended.tactical.positions[fixture.actor],touch);await tacticalCell(page,fixture.cell,touch);await tacticalControl(page,'attack');await waitIdle(page);
+  await expect(scene).toHaveAttribute('data-battle-scene-mode','siege-formation');await expect(scene).toHaveAttribute('data-battle-siege-fort',String(fixture.fort));
+  await expect(scene).toHaveAttribute('data-siege-asset-source','original-native-capture');await expect(canvas).toHaveJSProperty('width',1024);await expect(canvas).toHaveJSProperty('height',960);
+  const pending=await tacticalSave(page),initial=pending.state.battle.extended.siege;
+  expect(pending.state.rng).toEqual(before.save.state.rng);for(const side of ['attackers','defenders'])expect(pending.state.battle[side]).toEqual(b[side]);
+  expect(pending.state.battle.extended.tactical.points.attackers).toBe(b.extended.tactical.points.attackers-2);expect(pending.state.battle.extended.tactical.points.defenders).toBe(b.extended.tactical.points.defenders);
+  await expect(page.locator('[data-siege-formation]')).toHaveCount(4);await page.locator('[data-siege-formation="3"]').click();expect(await tacticalSave(page)).toEqual(pending,'Formation preview is not a paid game command');
+  await historyScreenshot(page,testInfo,'original-siege-formations-'+language);await tacticalControl(page,'siege-form');await waitIdle(page);
+  const formed=await tacticalSave(page);expect(formed.state.battle.extended.siege.formations.attackers).toBe(3);expect(formed.state.battle.extended.siege.stage).toBe('orders');expect(formed.state.rng).toEqual(pending.state.rng);
+  for(const kind of ['infantry','archer','cavalry','general'])await expect(page.locator('#siege-order-'+kind)).toBeVisible();
+  await page.locator('#siege-order-general').selectOption('wait');await page.locator('#siege-order-archer').selectOption('wait');expect(await tacticalSave(page)).toEqual(formed);
+  await tacticalControl(page,'siege-step');await waitIdle(page);let progressed=await tacticalSave(page);expect(progressed.state.battle.extended.siege.round).toBe(2);
+  expect(progressed.state.battle.extended.siege.units.map(u=>[u.id,u.x,u.y])).not.toEqual(formed.state.battle.extended.siege.units.map(u=>[u.id,u.x,u.y]));
+  expect(progressed.state.battle.extended.tactical.points).toEqual(pending.state.battle.extended.tactical.points);await historyScreenshot(page,testInfo,'original-siege-orders-'+language);
+  const mid=JSON.stringify(progressed);await imported(mid);expect(await tacticalSave(page)).toEqual(progressed,'Loading restores the exact pending piece positions, orders and RNG');
+  const roundBeforeAuto=progressed.state.battle.extended.siege.round;await tacticalControl(page,'siege-run');await expect.poll(async()=>{const saved=await tacticalSave(page);return saved.state.battle.extended.siege?.round??999;}).toBeGreaterThan(roundBeforeAuto);await tacticalControl(page,'siege-run');await waitIdle(page);
+  await expect(page.locator('#siege-run')).toHaveText(language==='ja'?'交戦を進める':'開始交戰');const paused=await tacticalSave(page);await page.waitForTimeout(700);expect(await tacticalSave(page)).toEqual(paused,'Pausing stops the automatic command loop');
+  await page.locator('#siege-order-infantry').selectOption('retreat');await tacticalControl(page,'siege-step');await waitIdle(page);progressed=await tacticalSave(page);expect(progressed.state.battle.extended.siege.orders.attackers.infantry).toBe('retreat','Edited orders after pausing are actually submitted');
+  for(let step=0;step<16&&progressed.state.battle.extended.siege&&progressed.state.rng.draws===pending.state.rng.draws;step++){
+   await tacticalControl(page,'siege-step');await waitIdle(page);progressed=await tacticalSave(page);
+  }
+  expect(progressed.state.rng.draws).toBeGreaterThan(pending.state.rng.draws);expect(progressed.state.battle.extended.tactical.points).toEqual(pending.state.battle.extended.tactical.points);
+  if(progressed.state.battle.extended.siege){
+   await historyScreenshot(page,testInfo,'original-siege-contact-'+language);await tacticalControl(page,'siege-withdraw');await waitIdle(page);
+  }
+  const completed=await tacticalSave(page);expect(completed.state.battle.extended.siege).toBeUndefined();
+  await imported(JSON.stringify(completed));expect(await tacticalSave(page)).toEqual(completed);await expect(page.locator('[data-battle-skip]')).toBeHidden();
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);proof.push({language,initial,formed:formed.state.battle.extended.siege,progressed:progressed.state.battle.extended.siege,points:completed.state.battle.extended.tactical.points,before_rng:pending.state.rng,after_rng:completed.state.rng});
+ }
+ await testInfo.attach('siege-authoritative-proof',{body:Buffer.from(JSON.stringify(proof,null,2)),contentType:'application/json'});expect(errors.get(page)).toEqual([]);
+});
+
 test('city-specific battlefield keeps both armies visible and supports real battle controls',async({page},testInfo)=>{
  // Natural 208 campaign, shipped Worker and public commands only. Independent
  // controlled-input acceptance also exercises Wuling and Chengdu locally.
@@ -2005,7 +2049,7 @@ test('command-book confirmations and one paid city allocation flow preserve canc
  await opening(page);await page.locator('#scenario').selectOption('mainland217-07');await page.locator('input[name=faction][value=shu]').check();await page.locator('#begin').click();await waitIdle(page);await tacticalDismiss(page);await page.locator('#city-jump').selectOption('shujun');
  const read=()=>page.evaluate(async()=>{const response=await fetch('/api/save');if(!response.ok)throw Error('Save inspection failed');return response.json();});
  const budget=save=>save.state.extension.command_books.factions.shu,active=save=>budget(save).allocation?.active??null;
- const modal=page.locator('#order-confirm-dialog'),initial=await read();
+ const modal=page.locator('#order-confirm-dialog'),initial=await read(),allocations=[];
  const closeFlow=async()=>{await closeDialog(page);await expect.poll(async()=>active(await read())).toBeNull();await waitIdle(page);};
  const accept=async(kind)=>{await expect(modal).toBeVisible();await expect(modal).toHaveAttribute('data-command-book-kind',kind);await expect(modal).toHaveAttribute('data-command-book-cost','1');await modal.locator('#order-confirm-accept').click();await waitIdle(page);await expect(modal).toBeHidden();};
  await clickCityCommand(page,'recruit');await page.locator('#confirm-recruit').click();await expect(modal).toBeVisible();await expect(modal.locator('#order-confirm-message')).toContainText('成都');
@@ -2016,28 +2060,71 @@ test('command-book confirmations and one paid city allocation flow preserve canc
  await page.locator('#confirm-recruit').click();await accept('recruit');await expect(page.locator('#allocation-officer')).toBeVisible();
  let current=await read();expect(budget(current).used).toBe(1);expect(active(current)).toBeTruthy();expect(budget(current).orders[0].kind).toBe('recruit');expect(current.state.cities.shujun.reserves).toBe(initial.state.cities.shujun.reserves+100);
  await expect(page.locator('#dialog [data-command-book-cost]')).toHaveAttribute('data-command-book-cost','0');
- const ids=(await page.locator('#allocation-officer option').evaluateAll(nodes=>nodes.map(node=>node.value))).slice(0,2);expect(ids).toHaveLength(2);
- const distribute=async(ident)=>{
-  const before=await read(),troops=before.state.officers[ident].troops,next=troops===0?1:0;
+ const ids=(await page.locator('#allocation-officer option').evaluateAll(nodes=>nodes.map(node=>node.value))).slice(0,3);expect(ids).toHaveLength(3);
+ const distribute=async(ident,source)=>{
+  const before=await read(),troops=before.state.officers[ident].troops,next=troops+1;
+  expect(next).toBeLessThanOrEqual(999);expect(before.state.cities.shujun.reserves).toBeGreaterThan(0);
   await page.locator('#allocation-officer').selectOption(ident);await page.locator('#allocation-troops').fill(String(next));await page.locator('#confirm-allocation').click();await waitIdle(page);await expect(page.locator('#allocation-officer')).toBeVisible();await expect(modal).toBeHidden();
-  const after=await read();expect(after.state.officers[ident].troops).toBe(next);expect(budget(after).used).toBe(budget(before).used);expect(after.state.rng).toEqual(before.state.rng);expect(after.state.cities.shujun.reserves+after.state.cities.shujun.roster.officer_ids.reduce((sum,id)=>sum+after.state.officers[id].troops,0)).toBe(before.state.cities.shujun.reserves+before.state.cities.shujun.roster.officer_ids.reduce((sum,id)=>sum+before.state.officers[id].troops,0));return after;
+  const after=await read();expect(after.state.officers[ident].troops).toBe(next);expect(after.state.cities.shujun.reserves).toBe(before.state.cities.shujun.reserves-1);expect(budget(after).used).toBe(budget(before).used);expect(active(after)).toEqual(active(before));expect(after.state.rng).toEqual(before.state.rng);expect(after.state.cities.shujun.reserves+after.state.cities.shujun.roster.officer_ids.reduce((sum,id)=>sum+after.state.officers[id].troops,0)).toBe(before.state.cities.shujun.reserves+before.state.cities.shujun.roster.officer_ids.reduce((sum,id)=>sum+before.state.officers[id].troops,0));allocations.push({source,officer:ident,troops_before:troops,troops_after:next,books_used:budget(after).used,flow:active(after).id,reserves:after.state.cities.shujun.reserves});return after;
  };
- for(const ident of ids)current=await distribute(ident);expect(budget(current).used).toBe(1);await closeFlow();
+ for(const ident of ids)current=await distribute(ident,'recruit-continuation');expect(budget(current).used).toBe(1);await closeFlow();
  await openAllocation(page);const chosen=await page.locator('#allocation-officer').inputValue(),beforeNew=await read(),next=beforeNew.state.officers[chosen].troops===0?1:0;await page.locator('#allocation-troops').fill(String(next));await page.locator('#confirm-allocation').click();await expect(modal).toBeVisible();
  expect(await read()).toEqual(beforeNew);await modal.locator('#order-confirm-cancel').click();expect(await read()).toEqual(beforeNew);await expect(page.locator('#allocation-troops')).toHaveValue(String(next));
- await page.locator('#confirm-allocation').click();await accept('allocate');await expect(page.locator('#allocation-officer')).toBeVisible();current=await read();expect(budget(current).used).toBe(2);await closeFlow();
+ await page.locator('#confirm-allocation').click();await accept('allocate');await expect(page.locator('#allocation-officer')).toBeVisible();current=await read();expect(budget(current).used).toBe(2);
+ const selected=await page.locator('#allocation-officer').inputValue(),sequence=await page.locator('#allocation-officer option').evaluateAll(nodes=>nodes.map(node=>node.value)),nextOfficer=sequence[(sequence.indexOf(selected)+1)%sequence.length];
+ await page.locator('#allocation-next').click();await expect(page.locator('#allocation-officer')).toHaveValue(nextOfficer);await expect(page.locator('#allocation-troops')).toHaveValue(String(current.state.officers[nextOfficer].troops));expect(await read()).toEqual(current,'Next officer only changes the displayed form, preserving the paid flow, books and troops');await expect(modal).toBeHidden();
+ // The first allocation used to be the only fresh-flow action exercised.
+ // Re-select three officers and actually add reserve troops to each of them,
+ // keeping the same modal and receipt, rather than merely releasing troops.
+ for(const ident of ids)current=await distribute(ident,'standalone-continuation');expect(budget(current).used).toBe(2);await historyScreenshot(page,testInfo,'allocation-three-officers-one-book');await closeFlow();
  const remaining=budget(await read()).remaining??(budget(await read()).total-budget(await read()).used);
  for(let i=0;i<remaining;i++){
   await clickCityCommand(page,'recruit');await page.locator('#confirm-recruit').click();await accept('recruit');await expect(page.locator('#allocation-officer')).toBeVisible();
   if(i+1<remaining)await closeFlow();
  }
  current=await read();expect(budget(current).used).toBe(budget(current).total);expect(active(current)).toBeTruthy();
- for(const ident of ids)current=await distribute(ident);
+ for(const ident of ids)current=await distribute(ident,'last-book-continuation');
  await historyScreenshot(page,testInfo,'allocation-last-book-paid-flow');
  const raw=await page.evaluate(async()=>{const response=await fetch('/api/save');if(!response.ok)throw Error('Raw save export failed');return response.text();});expect(JSON.parse(raw)).toEqual(current);
  await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'paid-city-allocation.json',mimeType:'application/json',buffer:Buffer.from(raw)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();await page.locator('#city-jump').selectOption('shujun');
- expect(await read()).toEqual(JSON.parse(raw));await expect(page.locator('#continue-allocation')).toBeEnabled();await page.locator('#continue-allocation').click();await expect(page.locator('#dialog [data-command-book-cost]')).toHaveAttribute('data-command-book-cost','0');await distribute(ids[0]);await closeFlow();
+ expect(await read()).toEqual(JSON.parse(raw));await expect(page.locator('#continue-allocation')).toBeEnabled();await page.locator('#continue-allocation').click();await expect(page.locator('#dialog [data-command-book-cost]')).toHaveAttribute('data-command-book-cost','0');await distribute(ids[0],'loaded-continuation');await closeFlow();
  await expect(page.locator('#allocate')).toBeDisabled();await expect(page.locator('#recruit')).toBeDisabled();await expect(page.locator('#continue-allocation')).toHaveCount(0);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(errors.get(page)).toEqual([]);
  const file=testInfo.outputPath('paid-allocation-raw-save.json');await writeFile(file,raw);await testInfo.attach('paid-allocation-raw-save',{path:file,contentType:'application/json'});
+ const evidence=testInfo.outputPath('paid-allocation-three-officer-ledgers.json');await writeFile(evidence,JSON.stringify(allocations,null,2));await testInfo.attach('paid-allocation-three-officer-ledgers',{path:evidence,contentType:'application/json'});
+});
+
+test('succession updates live faction names and ruler portraits while historical previews and saves stay intact',async({page},testInfo)=>{
+ const fixture=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_ruler_fixture.py',import.meta.url).pathname],{encoding:'utf8',maxBuffer:4*1024*1024}));
+ await opening(page);
+ const load=async(raw,name)=>{await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name,mimeType:'application/json',buffer:Buffer.from(raw)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();};
+ const inspect=async selector=>{const control=page.locator(selector);if(!await control.isVisible()&&await page.locator('#inspector-toggle').isVisible())await page.locator('#inspector-toggle').click();await expect(control).toBeVisible();return control;};
+ const currentLabel=name=>page.evaluate(value=>GameI18n.t(value),name);
+ const language=async locale=>{const menu=page.locator('#utility-menu');if(await menu.getAttribute('open')===null)await menu.locator('summary').click();await page.locator('#language').selectOption(locale);await menu.locator('summary').click();};
+ await load(JSON.stringify(fixture.save),'controlled-current-succession.json');await tacticalDismiss(page);
+ const choice=await inspect('#successor-officer');await choice.selectOption(String(fixture.selected.id));await page.locator('#choose-successor').click();await waitIdle(page);
+ const after=await tacticalSave(page);expect(after.state.extension.leaders[fixture.owner]).toBe(fixture.selected.id);expect(after.state.extension.pending_succession[fixture.owner]).toBeUndefined();expect(after.state.rng).toEqual(fixture.save.state.rng);expect(after.state.cities).toEqual(fixture.save.state.cities);expect(after.scenario).toBe(fixture.save.scenario);expect(after.catalog_sha256).toBe(fixture.save.catalog_sha256);
+ await expect(page.locator('#event-dialog')).toBeVisible();await expect(page.locator('#event-description')).toContainText(await currentLabel(fixture.selected.name));await tacticalDismiss(page);
+ await page.locator('#city-jump').selectOption(fixture.city);
+ const identity=page.locator(`[data-current-faction="${fixture.owner}"]`),portrait=identity.locator(`[data-portrait-person="${fixture.selected.person_id}"]`);
+ const verifyLive=async()=>{
+  const label=await currentLabel(fixture.selected.name);await expect(identity.locator('[data-current-faction-label]')).toContainText(label);await expect(portrait).toBeVisible();await expect(portrait).toHaveAttribute('data-portrait-name',fixture.selected.name);await expect.poll(()=>portrait.locator('img').evaluate(node=>node.complete&&node.naturalWidth>0)).toBe(true);
+  await expect(page.locator(`#city-jump option[value="${fixture.city}"]`)).toContainText(label);
+  await expect(page.locator(`#world-map [data-city="${fixture.city}"]`)).toHaveAttribute('aria-label',new RegExp(label));
+  const ledger=page.locator('.faction-ledger');if(await ledger.getAttribute('open')===null)await ledger.locator('summary').click();await expect(ledger.locator(`[data-faction-resources="${fixture.owner}"] th`)).toContainText(label);
+  await(await inspect('#city-information')).click();await expect(page.locator('.city-information-owner')).toContainText(label);await closeDialog(page);
+  expect(await tacticalSave(page)).toEqual(after,'Names, portraits, map ownership, city information and bilingual viewing do not modify the save or RNG');
+  return label;
+ };
+ for(const locale of ['zh-Hant','ja']){
+  await language(locale);await inspect('[data-current-faction-label]');await verifyLive();await historyScreenshot(page,testInfo,'successor-owner-'+locale);
+  const face=await portrait.boundingBox(),text=await identity.locator('[data-current-faction-label]').boundingBox();expect(Math.abs(face.y+face.height/2-text.y-text.height/2)).toBeLessThanOrEqual(2);
+  await page.locator('#main-menu').click();await page.locator('#scenario').selectOption(fixture.save.scenario);await page.locator(`input[name=faction][value="${fixture.owner}"]`).check();
+  const historical=page.locator('#setup-summary');await expect(historical.locator(`[data-portrait-person="${fixture.previous.person_id}"]`)).toBeVisible();await expect(historical).toContainText(await currentLabel(fixture.previous.name));await expect(historical.locator(`[data-portrait-person="${fixture.selected.person_id}"]`)).toHaveCount(0);expect(await tacticalSave(page)).toEqual(after,'A historical preview never rewrites the running ruler or faction');
+  await page.locator('#cancel-setup').click();await inspect('[data-current-faction-label]');await verifyLive();
+ }
+ const raw=await page.evaluate(async()=>{const response=await fetch('/api/save');if(!response.ok)throw Error('Successor raw save failed');return response.text();});expect(JSON.parse(raw)).toEqual(after);
+ await page.reload();await enterScenarioMenu(page);await load(raw,'actual-successor-roundtrip.json');await page.locator('#city-jump').selectOption(fixture.city);await inspect('[data-current-faction-label]');await verifyLive();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(errors.get(page)).toEqual([]);
+ const file=testInfo.outputPath('actual-successor-raw-save.json');await writeFile(file,raw);await testInfo.attach('actual-successor-raw-save',{path:file,contentType:'application/json'});
 });
