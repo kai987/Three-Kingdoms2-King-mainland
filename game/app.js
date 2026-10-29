@@ -190,7 +190,19 @@ function refreshDialogueFeedback(){
  if(!lines.length)return;
  const inDialog=error&&dialog.open;
  const panel=document.createElement(inDialog?'section':'li');panel.dataset.commandFeedback=kind;panel.className='command-dialogue';panel.setAttribute('aria-live','polite');
- panel.innerHTML=GameDialogue.html(lines,{language:GameI18n.locale,portraits:GamePortraits,compact:true});
+ if(inDialog)panel.innerHTML=GameDialogue.html(lines,{language:GameI18n.locale,portraits:GamePortraits,compact:true});
+ else{
+  const label=GameI18n.locale==='ja'?'対話を詳しく読む':'展開完整對白';
+  panel.innerHTML=`<button type="button" class="dialogue-preview" data-dialogue-open aria-label="${label}" data-l10n-native="${GameI18n.locale}"><span data-dialogue-exchange>${lines.map(line=>`<span class="dialogue-turn"><strong>${escapeHtml(line.name)}</strong><span>${escapeHtml(line.text)}</span></span>`).join('')}</span></button>`;
+  panel.querySelector('[data-dialogue-open]').onclick=()=>{
+   if(busy||dialog.open||$('#event-dialog')?.open)return;
+   openDialog(GameI18n.locale==='ja'?'軍中の対話':'軍情對白',
+    ['zh-Hant','ja'].map(language=>`<div data-locale-only="${language}" data-l10n-native="${language}"${GameI18n.locale===language?'':' hidden'}>${GameDialogue.html(GameDialogue.command(kind,payload,before,after,{language,i18n:GameI18n,error}),{language,portraits:GamePortraits})}</div>`).join(''),
+    '<button data-cancel>返回戰役</button>');
+   $('#dialog-title').innerHTML=cityCommandText('軍情對白','軍中の対話');
+   GameI18n.apply();
+  };
+ }
  if(inDialog)dialog.querySelector('.dialog-actions')?.before(panel);else $('#journal')?.prepend(panel);
 }
 function showDialogueFeedback(kind,payload,before,after,error=null){dialogueFeedback={kind,payload,before,after,error};refreshDialogueFeedback();if($('#journal [data-command-feedback]'))$('#journal').scrollTop=0;}

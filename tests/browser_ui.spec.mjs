@@ -2256,5 +2256,14 @@ test('dialogue exchanges and dated family loyalty remain bilingual without repla
  await expect(page.locator('#journal [data-command-feedback="allocate"] .dialogue-turn')).toHaveCount(2);
  const after=await read();expect(after.state.officers[id].troops).toBe(amount);expect(after.state.rng).toEqual(current.state.rng);
  await historyScreenshot(page,testInfo,'dialogue-command-feedback',{fullPage:false});
+ const preview=page.locator('#journal [data-dialogue-open]');
+ const bounds=await preview.evaluate(node=>({height:node.getBoundingClientRect().height,available:document.querySelector('#journal').clientHeight}));
+ expect(bounds.height).toBeLessThanOrEqual(bounds.available);
+ await preview.click();await expect(page.locator('#dialog [data-locale-only="ja"] .dialogue-turn')).toHaveCount(2);
+ await expect(page.locator('#dialog [data-locale-only="ja"] .dialogue-words').last()).toContainText('編制');
+ await page.locator('#dialog-language').selectOption('zh-Hant');await expect(page.locator('#dialog-title')).toHaveText('軍情對白',{useInnerText:true});
+ await expect(page.locator('#dialog [data-locale-only="zh-Hant"] .dialogue-words').last()).toContainText('編兵');
+ await historyScreenshot(page,testInfo,'dialogue-command-expanded',{fullPage:false});
+ expect(await read()).toEqual(after);await closeDialog(page);
  expect(errors.get(page)).toEqual([]);
 });
