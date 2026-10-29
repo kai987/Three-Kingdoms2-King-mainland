@@ -607,14 +607,16 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         if month_changed:
             from . import dated_events
             dated_events.process(self,state)
+        # Annual deaths release their troops to the home city. Remove those
+        # officers before a hungry column freezes its next departure manifest.
+        self._prune_marches(state)
         self._resolve_supply_retreats(state)
+        logistics.synchronize(self,state)
         logistics.resolve_supply_retreats(self,state)
         for city in state.cities.values():
             city.action_used = False
         command_books.initialize(self, state)
         state.phase = 'city'
-        self._prune_marches(state)
-        logistics.synchronize(self,state)
         domestic.synchronize(self,state)
         treasures.synchronize(self,state)
         facilities.synchronize(self,state)

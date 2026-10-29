@@ -215,4 +215,117 @@ class SegmentSupplyTests(unittest.TestCase):
                 self.assertEqual(game.export_save(),original)
 
 
+class YearEndSupplyRetreatTests(unittest.TestCase):
+    def game(self, *, all_dead=False):
+        data=deepcopy(segment_catalog(days=(15,20),checkpoint_grain=0).data)
+        data.update(id='controlled-year-end-retreat',start_month=12)
+        party=[row['person_id'] for row in data['initial_officers']
+               if row['city']=='xiangyang' and not row.get('ruler')][:2]
+        dead=set(party if all_dead else party[:1])
+        initial={row['person_id'] for row in data['initial_officers']}
+        for row in data['initial_officers']:
+            if row['person_id'] in dead:
+                row['resolve_death_year']=True
+        for person in data['people']:
+            if person['person_id'] in initial:
+                person['death_year']=data['start_year'] if person['person_id'] in dead else data['start_year']+10
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'year-end-retreat.json'
+            path.write_text(json.dumps(data,ensure_ascii=False))
+            game=Campaign(Catalog(path))
+        game.command('new',dict(faction='shu',seed=2026),0)
+        ids=[game.catalog.ids[person] for person in party]
+        return game,ids,[ident for ident in ids if game.state.officers[ident].person_id in dead]
+
+    def advance(self,game):
+        game._complete_turn(game.state)
+        game.validate(game.state)
+
+    def assert_conserved_and_restorable(self,game,initial,rng):
+        from remake import logistics
+        state=game.state
+        current=(sum(c.reserves for c in state.cities.values())
+                 +sum(o.troops for o in state.officers.values())+logistics.in_transit_reserves(state))
+        self.assertEqual(current+state.soldiers['lost'],initial+state.soldiers['recruited'])
+        self.assertEqual(state.rng,rng)
+        saved=game.export_save();restored=Campaign(game.catalog)
+        restored.load_save(json.loads(json.dumps(saved)),0)
+        self.assertEqual(restored.export_save(),saved)
+        return saved
+
+    def reject_manifest_forgery(self,game,saved,select,dead):
+        revision=game.revision
+        bad=deepcopy(saved)
+        # A dead officer cannot be inserted into a new leg as a zero-strength
+        # traveller. The previous leg still proves their nonzero final force.
+        manifest=select(bad['state'])['departure_troops']
+        manifest[str(dead)]=0
+        bad['checksum']=digest({k:v for k,v in bad.items() if k!='checksum'})
+        with self.assertRaises(GameError):game.load_save(bad,revision)
+        self.assertEqual(game.export_save(),saved)
+        self.assertEqual(game.revision,revision)
+
+    def test_year_end_death_precedes_army_retreat_manifest_without_erasing_old_receipts(self):
+        for backend in ('python','rust'):
+            for all_dead in (False,True):
+                with self.subTest(backend=backend,all_dead=all_dead),using_backend(backend):
+                    game,ids,dead=self.game(all_dead=all_dead)
+                    initial=game.state.soldiers['initial'];rng=deepcopy(game.state.rng)
+                    game.command('transfer',dict(source='xiangyang',target='jiangxia',
+                        officers=ids,route_mode='land'),game.revision)
+                    self.advance(game);self.advance(game)
+                    before=game.state.extension['travel']['marches'][0]
+                    self.assertFalse(before['history'])
+                    self.assertLess(before['supply']['shortage_streak'],10)
+                    self.assertEqual((game.state.month,game.state.day),(12,21))
+                    self.advance(game)
+                    self.assertEqual((game.state.year,game.state.month,game.state.day),(218,1,1))
+                    self.assertTrue(all(not game.state.officers[i].alive and game.state.officers[i].troops==0 for i in dead))
+                    rows=game.state.extension['travel']['marches']
+                    if all_dead:
+                        self.assertFalse(rows,'A column with no surviving officers cannot start another leg')
+                        self.assertGreater(game.state.cities['xiangyang'].reserves,0)
+                    else:
+                        row=rows[0];old=row['history'][0]
+                        final=old['supply']['starvation'][-1]['after']
+                        self.assertEqual(row['officers'],[i for i in ids if i not in dead])
+                        self.assertEqual(row['departure_troops'],{str(i):final[str(i)] for i in row['officers']})
+                        self.assertGreater(final[str(dead[0])],0)
+                        self.assertEqual(game.state.cities['xiangyang'].reserves,final[str(dead[0])])
+                        self.assertEqual(old['officers'],row['officers'])
+                        self.assertEqual(set(old['departure_troops']),{str(i) for i in ids})
+                    saved=self.assert_conserved_and_restorable(game,initial,rng)
+                    if not all_dead:
+                        self.reject_manifest_forgery(game,saved,
+                            lambda state:state['extension']['travel']['marches'][0],dead[0])
+
+    def test_year_end_death_precedes_convoy_return_manifest_and_preserves_cargo(self):
+        for backend in ('python','rust'):
+            for all_dead in (False,True):
+                with self.subTest(backend=backend,all_dead=all_dead),using_backend(backend):
+                    game,ids,dead=self.game(all_dead=all_dead)
+                    initial=game.state.soldiers['initial'];rng=deepcopy(game.state.rng)
+                    game.command('set_logistics',dict(city='xiangyang',policy=dict(
+                        reserve_gold=0,reserve_grain=0,reserve_reserves=0,reserve_officers=0)),game.revision)
+                    game.command('dispatch_transport',dict(source='xiangyang',target='jiangxia',officers=ids,
+                        cargo=dict(gold=0,grain=0,reserves=0),route_mode='land'),game.revision)
+                    self.advance(game);self.advance(game)
+                    row=game.state.extension['logistics']['convoys'][0]
+                    self.assertEqual(len(row['journeys']),1)
+                    self.assertLess(row['journeys'][0]['supply']['shortage_streak'],10)
+                    self.advance(game)
+                    row=game.state.extension['logistics']['convoys'][0]
+                    old,current=row['journeys']
+                    final=old['supply']['starvation'][-1]['after']
+                    self.assertEqual(row['original_officers'],ids)
+                    self.assertEqual(row['officers'],[i for i in ids if i not in dead])
+                    self.assertEqual(current['departure_troops'],{str(i):final[str(i)] for i in row['officers']})
+                    self.assertEqual(row['cargo'],row['initial_cargo'])
+                    self.assertTrue(all(not game.state.officers[i].alive and game.state.officers[i].troops==0 for i in dead))
+                    self.assertEqual(game.state.cities['xiangyang'].reserves,sum(final[str(i)] for i in dead))
+                    saved=self.assert_conserved_and_restorable(game,initial,rng)
+                    self.reject_manifest_forgery(game,saved,
+                        lambda state:state['extension']['logistics']['convoys'][0]['journeys'][-1],dead[0])
+
+
 if __name__=='__main__':unittest.main()
