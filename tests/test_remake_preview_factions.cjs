@@ -11,7 +11,7 @@ const scenario=(year,owners)=>({id:'scenario'+year,year,month:7,factions,initial
 const game={player:'han',phase:'city',turn:3,year:184,month:2,day:21,rng:{state:2026,draws:7},cities:{occupied:{owner:'han'},empty:{owner:'wu'}}};
 let renders=0,cityRenders=0,suppressed=false;const information=[],cameraCalls=[],sounds=[];
 const i18n={locale:'zh-Hant'},languageHandlers=[];
-const context={setupPreview:scenario(200,{livehome:'han',capital:'wei',occupied:'wei',empty:'neutral',unplayable:'other'}),
+const context={refreshDialogueFeedback(){},refreshPersonnelDialogue(){},setupPreview:scenario(200,{livehome:'han',capital:'wei',occupied:'wei',empty:'neutral',unplayable:'other'}),
  game,view:{revision:11,game,catalog:{library:[{id:7,person_id:'san14-candidate-0004'}]}},busy:false,mapAction:null,selectedCity:'livehome',mapMode:'custom',
  GamePortraits:require('../game/portraits.js').create({document:null,i18n}),GameI18n:i18n,
  escapeHtml:value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),

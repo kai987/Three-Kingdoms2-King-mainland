@@ -1,0 +1,1231 @@
+{
+  "schema": "tk2-officer-relations-v1",
+  "rules_version": "officer-relations-v1",
+  "policy_note": {
+    "zh": "忠誠下限為本作平衡設計，不是歷史測量。只按明確穩定人物ID收錄關係，不按同姓推斷、不傳遞擴展。年份上下界均含當年；未記年份不表示已證實起訖。只在新開局、實際投效或正式繼位等實際轉變時，核對當前君主本人、實際同勢力、人物可用且存活，取最高適用下限而不疊加，不降低已有高值；不在查閱、讀檔或年度推進時被動修復忠誠，不遷移舊存檔。例外只抑制關係加成，不強制背叛、降忠、死亡或轉屬。史料與現有遊戲生卒、登場配置不同之處保持分開，關係檔案不修訂傳記。",
+    "ja": "忠誠の下限は本作のバランス設計であり、歴史的な測定値ではない。明示した安定人物IDだけを扱い、同姓からの推定や関係の推移的な拡張は行わない。開始年と終了年は当年を含み、年の省略は起終年の確定を意味しない。新規開始、実際の加入、正式な継位などの実際の転換時に、現君主本人、実際の同勢力、利用可能かつ生存という条件を確認し、適用可能な最大下限を採る。加算や既存高値の引下げは行わず、閲覧、読込、年の進行時に忠誠を受動的に補正せず、旧セーブも移行しない。例外は関係の加算を抑えるだけで、離反、忠誠低下、死亡、所属変更を強制しない。史料と既存の生没年・登場設定を区別し、人物伝は変更しない。"
+  },
+  "floor_policy": {
+    "parent_child": 95,
+    "sibling": 92,
+    "uncle_nephew": 90,
+    "cousin": 88,
+    "adopted": 90,
+    "affinal": 90,
+    "trust": 95
+  },
+  "records": [
+    {
+      "id": "relation-cao-cao-cao-pi",
+      "ruler_id": "san14-candidate-0521",
+      "person_id": "san14-candidate-0526",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "《三國志》卷二十列曹丕為曹操與卞氏之子；僅說明父子及本作親屬忠誠下限，不把繼承地位視作絕對忠誠。",
+        "ja": "『三国志』巻二十は曹丕を曹操と卞氏の子と記す。父子関係に基づく本作の忠誠の下限であり、継承資格を絶対的忠誠と同一視しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷20"
+      ]
+    },
+    {
+      "id": "relation-cao-cao-cao-zhang",
+      "ruler_id": "san14-candidate-0521",
+      "person_id": "san14-candidate-0515",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷十九、二十確認父子，並記曹彰受命北征及曹操嘉許；不自動沿用為曹丕對曹彰的關係。",
+        "ja": "巻十九・二十は父子関係と曹彰の北征、曹操の評価を記す。曹丕と曹彰の関係へ自動的には引き継がない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷19",
+        "https://zh.wikisource.org/wiki/三國志/卷20"
+      ]
+    },
+    {
+      "id": "relation-cao-cao-cao-zhi",
+      "ruler_id": "san14-candidate-0521",
+      "person_id": "san14-candidate-0516",
+      "kind": "parent_child",
+      "floor": 95,
+      "end_year": 216,
+      "reason": {
+        "zh": "卷十九、二十確認父子及早期寵信；217年違禁後寵信衰落，本條保守截止216年，後續另列例外。",
+        "ja": "巻十九・二十は父子関係と早期の寵愛を記す。217年の禁令違反後に信任が衰えたため、本条は保守的に216年までとし、以後を例外に記録する。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷19",
+        "https://zh.wikisource.org/wiki/三國志/卷20"
+      ]
+    },
+    {
+      "id": "relation-cao-pi-cao-rui",
+      "ruler_id": "san14-candidate-0526",
+      "person_id": "san14-candidate-0501",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷三確認曹叡為曹丕之子；生母遭誅、儲位遲定亦見本傳，本條僅採用普通父子設計值。",
+        "ja": "巻三は曹叡を曹丕の子と記す。生母の処刑と立太子の遅れもあるため、本条は通常の父子関係の設計値に限る。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷03"
+      ]
+    },
+    {
+      "id": "relation-cao-cao-cao-ren",
+      "ruler_id": "san14-candidate-0521",
+      "person_id": "san14-candidate-0518",
+      "kind": "cousin",
+      "floor": 88,
+      "reason": {
+        "zh": "卷九明確曹仁為曹操從弟，並記長期隨軍及獨當方面；不細化為史料未明言的親等。",
+        "ja": "巻九は曹仁を曹操の従弟とし、長年の従軍と独立した軍の指揮を記す。本文以上に細かな親等は断定しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷09"
+      ]
+    },
+    {
+      "id": "relation-cao-cao-cao-hong",
+      "ruler_id": "san14-candidate-0521",
+      "person_id": "san14-candidate-0511",
+      "kind": "trust",
+      "floor": 95,
+      "reason": {
+        "zh": "卷九明確從弟關係，並記滎陽敗退時曹洪讓馬救曹操；採用有具體事件支持的信任類。",
+        "ja": "巻九は従弟関係に加え、滎陽での敗走時に曹洪が馬を譲って曹操を救ったことを記す。具体的な行動に基づく信任類とする。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷09"
+      ]
+    },
+    {
+      "id": "relation-cao-cao-cao-xiu",
+      "ruler_id": "san14-candidate-0521",
+      "person_id": "san14-candidate-0505",
+      "kind": "trust",
+      "floor": 95,
+      "reason": {
+        "zh": "卷九稱曹休為曹操族子，記其北歸及被視如己子、與曹丕共居；不將視如子誤寫成已證實的正式收養。",
+        "ja": "巻九は曹休を曹操の族子とし、北帰後に実子同様に扱われ曹丕と共に暮らしたことを記す。正式な養子縁組が確定したとは記さない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷09"
+      ]
+    },
+    {
+      "id": "relation-cao-cao-cao-zhen",
+      "ruler_id": "san14-candidate-0521",
+      "person_id": "san14-candidate-0517",
+      "kind": "adopted",
+      "floor": 90,
+      "reason": {
+        "zh": "卷九正文記曹真少孤，曹操收養並與諸子同育；裴注關於原姓、父親的異說保留為異說。",
+        "ja": "巻九本文は幼くして父を失った曹真を曹操が引き取り、実子と共に養育したと記す。裴注にある本姓や父の異説は確定しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷09"
+      ]
+    },
+    {
+      "id": "relation-cao-cao-xiahou-dun",
+      "ruler_id": "san14-candidate-0521",
+      "person_id": "san14-candidate-0124",
+      "kind": "trust",
+      "floor": 95,
+      "reason": {
+        "zh": "卷九記夏侯惇自曹操起兵時追隨，後受特別親任；總評稱夏侯、曹氏通婚親舊，不據此杜撰具體血緣。",
+        "ja": "巻九は挙兵当初からの従軍と特別な信任を記す。総評の夏侯・曹両氏の姻戚関係から、特定の血縁を創作しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷09"
+      ]
+    },
+    {
+      "id": "relation-cao-cao-xiahou-yuan",
+      "ruler_id": "san14-candidate-0521",
+      "person_id": "san14-candidate-0114",
+      "kind": "trust",
+      "floor": 95,
+      "end_year": 219,
+      "reason": {
+        "zh": "卷九記夏侯淵曾代曹操承擔重罪，並長期從軍；親舊關係不細化為未經證明的曹操堂弟。",
+        "ja": "巻九は夏侯淵が曹操に代わって重罪を引き受け、長年従軍したと記す。曹操の従弟など、未確認の血縁には置き換えない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷09"
+      ]
+    },
+    {
+      "id": "relation-sun-jian-sun-ce",
+      "ruler_id": "san14-candidate-0551",
+      "person_id": "san14-candidate-0557",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷四十六、五十確認孫堅與孫策的父子關係；不越過人物登場與存活約束。",
+        "ja": "巻四十六・五十は孫堅と孫策の父子関係を記す。人物の登場時期と生存条件を越えて適用しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷46",
+        "https://zh.wikisource.org/wiki/三國志/卷50"
+      ]
+    },
+    {
+      "id": "relation-sun-jian-sun-quan",
+      "ruler_id": "san14-candidate-0551",
+      "person_id": "san14-candidate-0553",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷四十七裴注及卷五十確認孫權為孫堅、吳夫人之子；只記錄關係，不提前孫權的登場。",
+        "ja": "巻四十七裴注と巻五十は孫権を孫堅と呉夫人の子とする。関係のみを記録し、孫権の登場を早めない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷47",
+        "https://zh.wikisource.org/wiki/三國志/卷50"
+      ]
+    },
+    {
+      "id": "relation-sun-ce-sun-quan",
+      "ruler_id": "san14-candidate-0557",
+      "person_id": "san14-candidate-0553",
+      "kind": "sibling",
+      "floor": 92,
+      "end_year": 200,
+      "reason": {
+        "zh": "卷四十六、四十七記孫權隨兄及孫策臨終授印綬；本條只對應孫策仍為當前君主的局面。",
+        "ja": "巻四十六・四十七は孫権が兄に従ったことと、孫策が臨終に印綬を託したことを記す。孫策が現君主である場合に限る。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷46",
+        "https://zh.wikisource.org/wiki/三國志/卷47"
+      ]
+    },
+    {
+      "id": "relation-sun-ce-sun-jing",
+      "ruler_id": "san14-candidate-0557",
+      "person_id": "san14-candidate-0567",
+      "kind": "uncle_nephew",
+      "floor": 90,
+      "reason": {
+        "zh": "卷五十一記孫靜為孫堅之弟，曾助孫策定會稽；其後求留鄉裡，不據親屬關係虛設仕職。",
+        "ja": "巻五十一は孫静を孫堅の弟とし、会稽攻略で孫策を助けたと記す。後に郷里への滞在を望んだため、親族であることから官職は創作しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷51"
+      ]
+    },
+    {
+      "id": "relation-sun-ce-sun-ben",
+      "ruler_id": "san14-candidate-0557",
+      "person_id": "san14-candidate-0572",
+      "kind": "cousin",
+      "floor": 88,
+      "reason": {
+        "zh": "卷五十一記孫賁之父羌為孫堅兄，孫賁參與孫策徵戰並棄袁術歸江東。",
+        "ja": "巻五十一は孫賁の父羌を孫堅の兄とし、孫賁が孫策の戦いに参加し、袁術を離れて江東へ帰ったと記す。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷51"
+      ]
+    },
+    {
+      "id": "relation-sun-ce-wu-jing",
+      "ruler_id": "san14-candidate-0557",
+      "person_id": "san14-candidate-0289",
+      "kind": "uncle_nephew",
+      "floor": 90,
+      "reason": {
+        "zh": "卷五十記吳景為吳夫人弟，孫策依其合眾，後召歸併委任；屬於舅甥而非同姓推斷。",
+        "ja": "巻五十は呉景を呉夫人の弟とし、孫策が頼って兵を集め、後に呼び戻して任用したと記す。母方の叔父と甥の関係である。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷50"
+      ]
+    },
+    {
+      "id": "relation-sun-ce-zhou-yu",
+      "ruler_id": "san14-candidate-0557",
+      "person_id": "san14-candidate-0379",
+      "kind": "trust",
+      "floor": 95,
+      "reason": {
+        "zh": "卷五十四記少年友善、共居相助及兵船兵糧資助；後來分別娶橋氏姐妹，史載親近不依賴小說結拜。",
+        "ja": "巻五十四は少年時代からの親交、住居の提供、兵船と食糧の援助を記す。後に橋氏の姉妹をそれぞれ迎えており、小説の義兄弟設定には依存しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷54"
+      ]
+    },
+    {
+      "id": "relation-sun-quan-sun-jiao",
+      "ruler_id": "san14-candidate-0553",
+      "person_id": "san14-candidate-0555",
+      "kind": "cousin",
+      "floor": 88,
+      "end_year": 219,
+      "reason": {
+        "zh": "卷五十一記孫皎為孫靜之子，孫權授其重兵與軍職；保留親屬與軍中爭執的區別。",
+        "ja": "巻五十一は孫皎を孫静の子とし、孫権による兵と軍職の委任を記す。親族関係と軍中の意見対立は区別する。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷51"
+      ]
+    },
+    {
+      "id": "relation-liu-bei-liu-shan",
+      "ruler_id": "san14-candidate-0952",
+      "person_id": "san14-candidate-0945",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷三十三確認父子，並記219年立王太子、221年立皇太子；不改變本作出場配置。",
+        "ja": "巻三十三は父子関係と219年の王太子、221年の皇太子冊立を記す。本作の登場設定は変更しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷33"
+      ]
+    },
+    {
+      "id": "relation-liu-yan-liu-zhang",
+      "ruler_id": "san14-candidate-0925",
+      "person_id": "san14-candidate-0938",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷三十一記劉璋為劉焉之子，入蜀留父側，194年父死後繼位；僅實際同勢力時生效。",
+        "ja": "巻三十一は劉璋を劉焉の子とし、蜀に留まり194年に父の後を継いだと記す。実際に同じ勢力である場合だけ適用する。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷31"
+      ]
+    },
+    {
+      "id": "relation-liu-biao-liu-qi",
+      "ruler_id": "san14-candidate-0953",
+      "person_id": "san14-candidate-0929",
+      "kind": "parent_child",
+      "floor": 95,
+      "end_year": 207,
+      "reason": {
+        "zh": "卷六、三十五確認父子；208年已見疏遠及探病被阻，本條保守截止207年，後續不作強親信。",
+        "ja": "巻六・三十五は父子関係を記す。208年には疎遠と見舞いの妨害が確認できるため、本条は207年までとし、以後を強い信任と扱わない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06",
+        "https://zh.wikisource.org/wiki/三國志/卷35"
+      ]
+    },
+    {
+      "id": "relation-liu-biao-liu-cong",
+      "ruler_id": "san14-candidate-0953",
+      "person_id": "san14-candidate-0946",
+      "kind": "parent_child",
+      "floor": 95,
+      "end_year": 208,
+      "reason": {
+        "zh": "卷六記劉表與後妻偏愛少子劉琮，欲立為後；不自動給劉琮、劉琦之間添加高忠。",
+        "ja": "巻六は劉表と後妻が末子劉琮を寵愛し、後継に望んだと記す。劉琮と劉琦の間へ高い忠誠を自動付与しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06"
+      ]
+    },
+    {
+      "id": "relation-liu-bei-guan-yu",
+      "ruler_id": "san14-candidate-0952",
+      "person_id": "san14-candidate-0147",
+      "kind": "trust",
+      "floor": 99,
+      "end_year": 219,
+      "reason": {
+        "zh": "卷三十六正文記長期追隨、特別恩義及200年關羽辭曹歸劉；保留現有高忠，依據不是小說桃園儀式。",
+        "ja": "巻三十六本文は長年の随従、特別な恩義、200年の曹操から劉備への帰還を記す。既存の高忠誠を保ち、小説の桃園の儀式を根拠としない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷36"
+      ]
+    },
+    {
+      "id": "relation-liu-bei-zhang-fei",
+      "ruler_id": "san14-candidate-0952",
+      "person_id": "san14-candidate-0656",
+      "kind": "trust",
+      "floor": 98,
+      "end_year": 221,
+      "reason": {
+        "zh": "卷三十六正文記張飛與關羽早年共同追隨劉備、親密如兄弟；保留現有高忠。",
+        "ja": "巻三十六本文は張飛と関羽が早くから劉備に従い、兄弟のように親しかったと記す。既存の高忠誠を維持する。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷36"
+      ]
+    },
+    {
+      "id": "relation-liu-bei-zhuge-liang",
+      "ruler_id": "san14-candidate-0952",
+      "person_id": "san14-candidate-0440",
+      "kind": "trust",
+      "floor": 95,
+      "start_year": 208,
+      "reason": {
+        "zh": "卷三十五記三顧後情好日密及魚水之喻；208年赤壁後正式軍師任職已有明文，採用保守起點。",
+        "ja": "巻三十五は三顧後に親交を深め、魚と水にたとえたと記す。208年の赤壁後には軍師としての任用が明記されるため、保守的な開始年とする。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷35"
+      ]
+    },
+    {
+      "id": "relation-liu-bei-mi-zhu",
+      "ruler_id": "san14-candidate-0952",
+      "person_id": "san14-candidate-0793",
+      "kind": "affinal",
+      "floor": 90,
+      "start_year": 196,
+      "reason": {
+        "zh": "卷三十八記196年糜竺進妹為夫人並資助劉備；219年弟糜芳叛降後仍獲劉備如舊優待，兄弟事蹟不混同。",
+        "ja": "巻三十八は196年に糜竺が妹を劉備に嫁がせ資財を援助したと記す。219年に弟糜芳が離反しても劉備の厚遇は続き、兄弟の行為を混同しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷38"
+      ]
+    },
+    {
+      "id": "relation-liu-bei-zhao-yun",
+      "ruler_id": "san14-candidate-0952",
+      "person_id": "san14-candidate-0596",
+      "kind": "trust",
+      "floor": 95,
+      "start_year": 200,
+      "reason": {
+        "zh": "卷三十六正文及《雲別傳》記親任與長坂護主；以200年在鄴回歸劉備作為長期直接從屬的保守起點。",
+        "ja": "巻三十六本文と「雲別伝」は信任と長坂での救援を記す。鄴で劉備に再会した200年を継続的な直接従属の保守的な起点とする。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷36"
+      ]
+    },
+    {
+      "id": "relation-yuan-shao-yuan-tan",
+      "ruler_id": "san14-candidate-0035",
+      "person_id": "san14-candidate-0037",
+      "kind": "parent_child",
+      "floor": 95,
+      "end_year": 202,
+      "reason": {
+        "zh": "卷六確認父子，並載出繼兄長家的情節；本條只對在世的袁紹，不傳播到兄弟爭位後的其他君主。",
+        "ja": "巻六は父子関係と兄の家を継がせた経緯を記す。生存中の袁紹だけを対象とし、後の兄弟間の継承争いには引き継がない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06"
+      ]
+    },
+    {
+      "id": "relation-yuan-shao-yuan-xi",
+      "ruler_id": "san14-candidate-0035",
+      "person_id": "san14-candidate-0029",
+      "kind": "parent_child",
+      "floor": 95,
+      "end_year": 202,
+      "reason": {
+        "zh": "卷六記袁紹諸子及袁熙事蹟；親子關係不等於袁熙對袁尚的忠誠。",
+        "ja": "巻六は袁紹の諸子と袁熙の事跡を記す。父子関係を袁熙から袁尚への忠誠に読み替えない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06"
+      ]
+    },
+    {
+      "id": "relation-yuan-shao-yuan-shang",
+      "ruler_id": "san14-candidate-0035",
+      "person_id": "san14-candidate-0034",
+      "kind": "parent_child",
+      "floor": 95,
+      "end_year": 202,
+      "reason": {
+        "zh": "卷六記袁紹偏愛少子袁尚及傳後傾向；202年父死後的兄弟爭位另列例外。",
+        "ja": "巻六は袁紹による末子袁尚への寵愛と後継への意向を記す。202年の父の死後に起きた兄弟の争いは別に記録する。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06"
+      ]
+    },
+    {
+      "id": "relation-ma-teng-ma-chao",
+      "ruler_id": "san14-candidate-0771",
+      "person_id": "san14-candidate-0769",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷三十六明確父子與馬超領馬騰部曲；馬騰入朝後不據血緣虛設共同陣營，仍須實際君主與勢力匹配。",
+        "ja": "巻三十六は父子関係と馬超による馬騰の部曲の継承を記す。馬騰の入朝後も血縁だけで同じ陣営とはせず、実際の君主と所属を確認する。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷36"
+      ]
+    },
+    {
+      "id": "relation-ma-chao-ma-dai",
+      "ruler_id": "san14-candidate-0769",
+      "person_id": "san14-candidate-0766",
+      "kind": "cousin",
+      "floor": 88,
+      "end_year": 222,
+      "reason": {
+        "zh": "卷三十六記馬超臨終託付從弟馬岱承續宗族；正文卒於章武二年即222，本條不延續到其後。",
+        "ja": "巻三十六は馬超が臨終に従弟馬岱を宗族の後継として託したと記す。本文の没年である章武二年、222年までとする。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷36"
+      ]
+    },
+    {
+      "id": "relation-gongsun-du-gongsun-kang",
+      "ruler_id": "san14-candidate-0268",
+      "person_id": "san14-candidate-0264",
+      "kind": "parent_child",
+      "floor": 95,
+      "end_year": 204,
+      "reason": {
+        "zh": "卷八記公孫度之子公孫康於204年繼位；只記錄父子關係。",
+        "ja": "巻八は公孫度の子公孫康が204年に後を継いだと記す。父子関係のみを記録する。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷08"
+      ]
+    },
+    {
+      "id": "relation-gongsun-du-gongsun-gong",
+      "ruler_id": "san14-candidate-0268",
+      "person_id": "san14-candidate-0263",
+      "kind": "parent_child",
+      "floor": 95,
+      "end_year": 204,
+      "reason": {
+        "zh": "卷八記公孫康繼父公孫度位後以父爵封弟公孫恭，支持父子關係；不推定後來叔侄和睦。",
+        "ja": "巻八は公孫康が父公孫度の後を継ぎ、弟公孫恭へ父の爵位を与えたと記す。後の叔父と甥の協調までは推定しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷08"
+      ]
+    },
+    {
+      "id": "relation-gongsun-kang-gongsun-gong",
+      "ruler_id": "san14-candidate-0264",
+      "person_id": "san14-candidate-0263",
+      "kind": "sibling",
+      "floor": 92,
+      "reason": {
+        "zh": "卷八確認兄弟，公孫康封弟公孫恭，康死後眾立恭；不沿用到公孫淵奪位事件。",
+        "ja": "巻八は兄弟関係と公孫康による弟公孫恭の封爵、康の死後の恭擁立を記す。公孫淵の簒奪へは引き継がない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷08"
+      ]
+    },
+    {
+      "id": "relation-sima-yi-sima-shi",
+      "ruler_id": "san14-candidate-0344",
+      "person_id": "san14-candidate-0346",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "《晉書》卷二記司馬師為司馬懿長子，249年共同謀劃；只對實際擔任當前君主的司馬懿。",
+        "ja": "『晋書』巻二は司馬師を司馬懿の長子とし、249年の共同計画を記す。司馬懿が実際に現君主である場合に限る。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/晉書/卷002"
+      ]
+    },
+    {
+      "id": "relation-sima-yi-sima-zhao",
+      "ruler_id": "san14-candidate-0344",
+      "person_id": "san14-candidate-0348",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "《晉書》卷二記司馬昭為司馬師同母弟及參與249年行動；不轉化為其對曹氏君主的高忠。",
+        "ja": "『晋書』巻二は司馬昭を司馬師の同母弟とし、249年の行動への参加を記す。曹氏君主への高忠誠へは転用しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/晉書/卷002"
+      ]
+    },
+    {
+      "id": "relation-sima-zhao-sima-yan",
+      "ruler_id": "san14-candidate-0348",
+      "person_id": "san14-candidate-0345",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "《晉書》卷三確認司馬炎為司馬昭長子及世子；同傳亦有司馬攸繼承考慮，不杜撰無條件家族團結。",
+        "ja": "『晋書』巻三は司馬炎を司馬昭の長子・世子とする。同伝の司馬攸をめぐる後継検討も踏まえ、無条件の一族結束は創作しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/晉書/卷003"
+      ]
+    },
+    {
+      "id": "relation-zhang-ji-zhang-xiu",
+      "ruler_id": "san14-candidate-0638",
+      "person_id": "san14-candidate-0625",
+      "kind": "uncle_nephew",
+      "floor": 90,
+      "reason": {
+        "zh": "卷八稱張繡為張濟族子，記隨軍及繼領其眾；本作歸入叔侄類，但史據稱謂保留為族子。",
+        "ja": "巻八は張繡を張済の族子とし、従軍と部衆の継承を記す。本作では叔父・甥の類に含めるが、史料の族子という表現を保持する。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷08"
+      ]
+    },
+    {
+      "id": "relation-zhang-lu-zhang-wei",
+      "ruler_id": "san14-candidate-0666",
+      "person_id": "san14-candidate-0597",
+      "kind": "sibling",
+      "floor": 92,
+      "end_year": 215,
+      "reason": {
+        "zh": "卷八明確張衛為張魯之弟，215年守陽平關；反對投降屬於戰略意見分歧，不據此認定此前不忠。",
+        "ja": "巻八は張衛を張魯の弟とし、215年の陽平関防衛を記す。降伏への反対は戦略上の意見差であり、従来の不忠と断定しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷08"
+      ]
+    },
+    {
+      "id": "relation-sun-quan-sun-deng",
+      "ruler_id": "san14-candidate-0553",
+      "person_id": "san14-candidate-0570",
+      "kind": "parent_child",
+      "floor": 95,
+      "end_year": 241,
+      "reason": {
+        "zh": "卷五十九確認孫登為孫權長子，記太子任職、勸諫及臨終上疏；241年卒。",
+        "ja": "巻五十九は孫登を孫権の長子とし、太子としての務め、諫言、臨終の上疏を記す。241年没。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷59"
+      ]
+    },
+    {
+      "id": "relation-sun-quan-sun-he",
+      "ruler_id": "san14-candidate-0553",
+      "person_id": "san14-candidate-0542",
+      "kind": "parent_child",
+      "floor": 95,
+      "end_year": 249,
+      "reason": {
+        "zh": "卷五十九記孫和為孫權之子、早年受寵；250年被廢為太子後不繼續親屬高忠下限，故保守截止249年。",
+        "ja": "巻五十九は孫和を孫権の子とし、早期の寵愛を記す。250年の太子廃位後まで高い下限を継続しないよう、249年を終年とする。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷59",
+        "https://zh.wikisource.org/wiki/三國志/卷48"
+      ]
+    },
+    {
+      "id": "relation-sun-quan-sun-liang",
+      "ruler_id": "san14-candidate-0553",
+      "person_id": "san14-candidate-0578",
+      "kind": "parent_child",
+      "floor": 95,
+      "end_year": 252,
+      "reason": {
+        "zh": "卷四十八確認孫亮為孫權少子及250年立太子；只記錄父子關係，不提前當前資料中的登場年。",
+        "ja": "巻四十八は孫亮を孫権の末子とし、250年の立太子を記す。父子関係のみを記録し、現在の登場年は早めない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷48"
+      ]
+    },
+    {
+      "id": "relation-zhang-jiao-zhang-bao",
+      "ruler_id": "san14-candidate-0607",
+      "person_id": "san14-candidate-0659",
+      "kind": "sibling",
+      "floor": 92,
+      "start_year": 184,
+      "end_year": 184,
+      "reason": {
+        "zh": "《後漢書》卷七十一明確張寶為張角之弟，並記184年戰死；不擴展為同姓關係。",
+        "ja": "『後漢書』巻七十一は張宝を張角の弟とし、184年の戦死を記す。同姓全体への関係には拡張しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/後漢書/卷71"
+      ]
+    },
+    {
+      "id": "relation-zhang-jiao-zhang-liang",
+      "ruler_id": "san14-candidate-0607",
+      "person_id": "san14-candidate-0664",
+      "kind": "sibling",
+      "floor": 92,
+      "start_year": 184,
+      "end_year": 184,
+      "reason": {
+        "zh": "《後漢書》卷七十一明確張梁為張角之弟，並記184年廣宗作戰；僅用於當年仍可用且同勢力的武將。",
+        "ja": "『後漢書』巻七十一は張梁を張角の弟とし、184年の広宗での戦いを記す。同年に利用可能で同勢力の武将だけを対象とする。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/後漢書/卷71"
+      ]
+    },
+    {
+      "id": "relation-cao-cao-cao-ang",
+      "ruler_id": "san14-candidate-0521",
+      "person_id": "san14-candidate-0510",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷二十列曹昂為曹操之子，記其隨父南征而遇害；父子下限不改寫既有登場與死亡配置。",
+        "ja": "巻二十は曹昂を曹操の子とし、父の南征に従って死亡したと記す。父子関係の下限は既存の登場・死亡設定を変更しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷20"
+      ]
+    },
+    {
+      "id": "relation-cao-cao-cao-xiong",
+      "ruler_id": "san14-candidate-0521",
+      "person_id": "san14-candidate-0531",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷二十列曹熊為曹操與卞氏之子；卷十九只稱早薨，不把小說中自縊情節或未證實死年加入規則。",
+        "ja": "巻二十は曹熊を曹操と卞氏の子とする。巻十九は早世とだけ記すため、小説の自死の場面や未確認の没年は規則に加えない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷19",
+        "https://zh.wikisource.org/wiki/三國志/卷20"
+      ]
+    },
+    {
+      "id": "relation-cao-rui-cao-fang",
+      "ruler_id": "san14-candidate-0501",
+      "person_id": "san14-candidate-0529",
+      "kind": "adopted",
+      "floor": 90,
+      "reason": {
+        "zh": "卷四明記曹叡養曹芳及曹詢；宮中出身未詳，裴注生父異說不作確定血緣，本條只採收養類。",
+        "ja": "巻四は曹叡が曹芳と曹詢を養ったと明記する。出自は宮中の秘密であり、裴注の実父に関する異説は確定せず、養育の類だけを用いる。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷04"
+      ]
+    },
+    {
+      "id": "relation-yuan-shu-yuan-yao",
+      "ruler_id": "san14-candidate-0032",
+      "person_id": "san14-candidate-0039",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷六記袁術之子燿，後任孫氏郎中；倉庫規範名為袁燿，與通行寫法袁耀按此明文身分核對，不按同姓猜配。",
+        "ja": "巻六は袁術の子燿が後に孫氏の郎中となったと記す。登録名の袁燿を一般的な表記の袁耀と本文の身分で照合し、同姓からは推定しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06"
+      ]
+    },
+    {
+      "id": "relation-liu-zhang-liu-xun",
+      "ruler_id": "san14-candidate-0938",
+      "person_id": "san14-candidate-0937",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷三十一明記劉循為劉璋長子；蜀定後循留蜀、璋遷公安，父子關係不強制改變其陣營或駐地。",
+        "ja": "巻三十一は劉循を劉璋の長子と明記する。蜀の平定後は循が蜀に残り璋は公安へ移ったため、父子関係から所属や所在地を強制変更しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷31"
+      ]
+    },
+    {
+      "id": "relation-liu-bei-liu-yong",
+      "ruler_id": "san14-candidate-0952",
+      "person_id": "san14-candidate-0924",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷三十四明記劉永為先主之子，221年封魯王；關係資料不提前本作既定登場年，也不擬造與父同時仕官的場景。",
+        "ja": "巻三十四は劉永を先主の子とし、221年の魯王封爵を記す。関係データによって既存の登場年を早めたり、父との同時仕官を作り出したりしない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷34"
+      ]
+    },
+    {
+      "id": "relation-liu-bei-liu-li",
+      "ruler_id": "san14-candidate-0952",
+      "person_id": "san14-candidate-0964",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷三十四於先主諸子記劉理，為劉禪庶弟、與劉永異母，221年封梁王；只採明文父子關係。",
+        "ja": "巻三十四は先主の諸子として劉理を記し、劉禅の庶弟で劉永とは異母、221年に梁王としたと述べる。明記された父子関係だけを用いる。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷34"
+      ]
+    },
+    {
+      "id": "relation-liu-shan-liu-chen",
+      "ruler_id": "san14-candidate-0945",
+      "person_id": "san14-candidate-0941",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷三十四裴注《蜀世譜》列劉諶為太子劉璿之弟、後主之子；蜀亡自殺只作史料背景，不觸發強制事件。",
+        "ja": "巻三十四裴注「蜀世譜」は劉諶を太子劉璿の弟、後主の子として列挙する。蜀滅亡時の自死は史料上の背景とし、強制イベントは起こさない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷34"
+      ]
+    },
+    {
+      "id": "relation-liu-shan-liu-xuan",
+      "ruler_id": "san14-candidate-0945",
+      "person_id": "san14-candidate-0943",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷三十四明記後主太子劉璿，238年立太子；倉庫規範名劉璇及別名劉璿對應此人，不改姓名資料。",
+        "ja": "巻三十四は後主の太子劉璿と238年の立太子を明記する。登録名劉璇と別名劉璿を同一人物として照合し、人物名データは変更しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷34"
+      ]
+    },
+    {
+      "id": "relation-liu-yu-liu-he",
+      "ruler_id": "san14-candidate-0932",
+      "person_id": "san14-candidate-0927",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷八明記劉和為劉虞之子，並載其奉使及先後受袁術、袁紹留置；血緣不代表其始終在父親勢力。",
+        "ja": "巻八は劉和を劉虞の子とし、使者としての行動と袁術・袁紹による留置を記す。血縁から常に父の勢力に所属したとは扱わない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷08"
+      ]
+    },
+    {
+      "id": "relation-dong-zhuo-niu-fu",
+      "ruler_id": "san14-candidate-0736",
+      "person_id": "san14-candidate-0199",
+      "kind": "affinal",
+      "floor": 90,
+      "reason": {
+        "zh": "卷六明記牛輔為董卓女婿、中郎將，典兵別屯陝；採姻親類，不推定其部下全為董氏親屬。",
+        "ja": "巻六は牛輔を董卓の娘婿・中郎将とし、陝で別軍を率いたと記す。姻戚の類とし、その配下全体を董氏の親族とはみなさない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06"
+      ]
+    },
+    {
+      "id": "relation-sun-quan-sun-yi",
+      "ruler_id": "san14-candidate-0553",
+      "person_id": "san14-candidate-0576",
+      "kind": "sibling",
+      "floor": 92,
+      "reason": {
+        "zh": "卷五十一明記孫翊為孫權之弟，孫權時領丹楊；不把孫策臨終擇弟的裴注異說視為現實叛意。",
+        "ja": "巻五十一は孫翊を孫権の弟とし、孫権の時代に丹楊を治めたと記す。孫策の後継選びに関する裴注の異説を実際の反意とは扱わない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷51"
+      ]
+    },
+    {
+      "id": "relation-sun-quan-sun-kuang",
+      "ruler_id": "san14-candidate-0553",
+      "person_id": "san14-candidate-0549",
+      "kind": "sibling",
+      "floor": 92,
+      "reason": {
+        "zh": "卷五十一記孫匡為孫翊之弟，與卷五十孫堅諸子相合；裴注已指出洞口失火記載誤把孫朗作孫匡，不據誤記排除本條。",
+        "ja": "巻五十一は孫匡を孫翊の弟とし、巻五十の孫堅の諸子の記述と一致する。裴注が洞口の失火を孫朗との誤記と指摘するため、その誤記で本条を除外しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷50",
+        "https://zh.wikisource.org/wiki/三國志/卷51"
+      ]
+    },
+    {
+      "id": "relation-sun-quan-sun-ba",
+      "ruler_id": "san14-candidate-0553",
+      "person_id": "san14-candidate-0571",
+      "kind": "parent_child",
+      "floor": 95,
+      "end_year": 249,
+      "reason": {
+        "zh": "卷四十七、五十九確認孫霸為孫權之子及早年受寵；250年賜死為明確破裂界線，本條保守截止249年。",
+        "ja": "巻四十七・五十九は孫霸を孫権の子とし、早期の寵愛を記す。250年に死を命じられたことを明確な断絶の境界とし、本条は249年までとする。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷47",
+        "https://zh.wikisource.org/wiki/三國志/卷59"
+      ]
+    },
+    {
+      "id": "relation-sun-quan-sun-xiu",
+      "ruler_id": "san14-candidate-0553",
+      "person_id": "san14-candidate-0548",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "卷四十八明記孫休為孫權第六子，252年封琅邪王；本條不替其日後繼位或與其他宗室建立額外關係。",
+        "ja": "巻四十八は孫休を孫権の第六子とし、252年の琅邪王封爵を記す。本条から後の継位や他の宗室との追加関係は作らない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷48"
+      ]
+    },
+    {
+      "id": "relation-sima-shi-sima-you",
+      "ruler_id": "san14-candidate-0346",
+      "person_id": "san14-candidate-0352",
+      "kind": "adopted",
+      "floor": 90,
+      "reason": {
+        "zh": "《晉書》卷三十八記司馬師無子、命司馬攸為嗣；收養與出繼年份未明，不虛構年度起點。",
+        "ja": "『晋書』巻三十八は司馬師に子がなく司馬攸を後継としたと記す。養育・出継の年は確定せず、開始年を創作しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/晉書/卷038"
+      ]
+    },
+    {
+      "id": "relation-sima-zhao-sima-you",
+      "ruler_id": "san14-candidate-0348",
+      "person_id": "san14-candidate-0352",
+      "kind": "parent_child",
+      "floor": 95,
+      "reason": {
+        "zh": "《晉書》卷三十八列司馬攸為司馬昭與王氏所生，亦記出繼司馬師；保留生父與嗣父兩種身分，不推斷所有政治立場。",
+        "ja": "『晋書』巻三十八は司馬攸を司馬昭と王氏の子とし、司馬師の後継となったことも記す。実父と嗣父を区別して保持し、政治姿勢全般は推定しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/晉書/卷038"
+      ]
+    },
+    {
+      "id": "relation-sun-quan-sun-jing",
+      "ruler_id": "san14-candidate-0553",
+      "person_id": "san14-candidate-0567",
+      "kind": "uncle_nephew",
+      "floor": 90,
+      "reason": {
+        "zh": "卷五十一記孫靜為孫堅弟，孫權統事後授昭義中郎將；此為新君主本人的叔侄關係，並非沿用孫策名下關係。",
+        "ja": "巻五十一は孫静を孫堅の弟とし、孫権継承後の昭義中郎将任命を記す。新君主本人の叔父・甥の関係であり、孫策の関係を流用しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷51"
+      ]
+    },
+    {
+      "id": "relation-sun-quan-sun-ben",
+      "ruler_id": "san14-candidate-0553",
+      "person_id": "san14-candidate-0572",
+      "kind": "cousin",
+      "floor": 88,
+      "reason": {
+        "zh": "卷五十一記孫賁之父為孫堅兄，孫賁於孫權時仍領豫章；採明確從兄關係，不給其他孫姓人物通用加成。",
+        "ja": "巻五十一は孫賁の父を孫堅の兄とし、孫権の時代にも豫章を治めたと記す。確認できる従兄関係だけを用い、他の孫姓人物へ広げない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷51"
+      ]
+    },
+    {
+      "id": "relation-sima-shi-sima-zhao",
+      "ruler_id": "san14-candidate-0346",
+      "person_id": "san14-candidate-0348",
+      "kind": "sibling",
+      "floor": 92,
+      "reason": {
+        "zh": "《晉書》卷二明記司馬昭為司馬師同母弟，並記司馬師病篤時命其統軍；只對實際君主司馬師匹配。",
+        "ja": "『晋書』巻二は司馬昭を司馬師の同母弟とし、司馬師が重病の際に軍を委ねたと記す。司馬師が実際の君主である場合だけ適用する。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/晉書/卷002"
+      ]
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "exception-liu-bei-liu-feng",
+      "ruler_id": "san14-candidate-0952",
+      "person_id": "san14-candidate-0959",
+      "kind": "adopted",
+      "start_year": 219,
+      "reason": {
+        "zh": "卷四十確認收養，但219年未救關羽後劉備怨恨，繼而賜死；不設置穩定養子高忠規則，也不觸發強制歷史事件。",
+        "ja": "巻四十は養育を記すが、219年に関羽を救援しなかった後、劉備との関係が悪化し、後に自死を命じられた。恒常的な養子の高忠誠や強制イベントは設定しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷40"
+      ]
+    },
+    {
+      "id": "exception-cao-pi-cao-zhi",
+      "ruler_id": "san14-candidate-0526",
+      "person_id": "san14-candidate-0516",
+      "kind": "sibling",
+      "start_year": 220,
+      "reason": {
+        "zh": "卷十九記儲位競爭及曹丕繼位後的限制；不以同母兄弟身份給予穩定高忠下限。",
+        "ja": "巻十九は後継争いと曹丕即位後の制約を記す。同母兄弟であることから恒常的な高い下限は与えない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷19"
+      ]
+    },
+    {
+      "id": "exception-cao-pi-cao-zhang",
+      "ruler_id": "san14-candidate-0526",
+      "person_id": "san14-candidate-0515",
+      "kind": "sibling",
+      "start_year": 220,
+      "reason": {
+        "zh": "卷十九正文及裴註記曹丕繼位後的就國與不悅；不把曹操對曹彰的親任傳播為新君主的兄弟高忠。",
+        "ja": "巻十九本文と裴注は曹丕継位後の封国への移動と不満を記す。曹操から曹彰への信任を新君主の兄弟関係へ引き継がない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷19"
+      ]
+    },
+    {
+      "id": "exception-yuan-tan-yuan-shang",
+      "ruler_id": "san14-candidate-0037",
+      "person_id": "san14-candidate-0034",
+      "kind": "sibling",
+      "start_year": 202,
+      "reason": {
+        "zh": "卷六記202年袁紹死後繼承爭議及兄弟交兵；親屬身份不構成對袁譚的高忠依據。",
+        "ja": "巻六は202年の袁紹の死後の継承争いと兄弟間の戦闘を記す。親族であることは袁譚への高忠誠の根拠にならない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06"
+      ]
+    },
+    {
+      "id": "exception-yuan-shang-yuan-tan",
+      "ruler_id": "san14-candidate-0034",
+      "person_id": "san14-candidate-0037",
+      "kind": "sibling",
+      "start_year": 202,
+      "reason": {
+        "zh": "卷六記202年袁紹死後的爭位及袁譚求助曹操；不添加對袁尚的兄弟高忠。",
+        "ja": "巻六は202年の袁紹の死後の争いと袁譚による曹操への援助要請を記す。袁尚への兄弟としての高忠誠は加えない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06"
+      ]
+    },
+    {
+      "id": "exception-dong-zhuo-lu-bu",
+      "ruler_id": "san14-candidate-0736",
+      "person_id": "san14-candidate-0987",
+      "kind": "adopted",
+      "reason": {
+        "zh": "卷七記父子誓約，也記投戟、怨懼和192年呂布殺董卓；此義親關係不進入穩定正向名單。",
+        "ja": "巻七は父子の誓約とともに、手戟を投げた事件、怨恨と恐れ、192年の呂布による董卓殺害を記す。恒常的な正の関係には含めない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷07"
+      ]
+    },
+    {
+      "id": "exception-ding-yuan-lu-bu",
+      "ruler_id": "san14-candidate-0694",
+      "person_id": "san14-candidate-0987",
+      "kind": "trust",
+      "reason": {
+        "zh": "卷七只記丁原親待呂布，未明言收養；189年呂布殺丁原，不能據小說養父稱謂建立高忠。",
+        "ja": "巻七は丁原による呂布の厚遇を記すが、養子とは明記しない。189年に呂布が丁原を殺しており、小説の養父設定から高忠誠を作らない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷07"
+      ]
+    },
+    {
+      "id": "exception-gongsun-gong-gongsun-yuan",
+      "ruler_id": "san14-candidate-0263",
+      "person_id": "san14-candidate-0262",
+      "kind": "uncle_nephew",
+      "start_year": 228,
+      "reason": {
+        "zh": "卷八記228年公孫淵脅奪叔父公孫恭之位；不能以叔侄身份賦予穩定高忠。",
+        "ja": "巻八は228年に公孫淵が叔父公孫恭の地位を奪ったと記す。叔父・甥の関係から恒常的な高忠誠は与えない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷08"
+      ]
+    },
+    {
+      "id": "exception-gongsun-yuan-gongsun-gong",
+      "ruler_id": "san14-candidate-0262",
+      "person_id": "san14-candidate-0263",
+      "kind": "uncle_nephew",
+      "start_year": 228,
+      "reason": {
+        "zh": "卷八記公孫淵奪取公孫恭之位；逆向也不能視為新君主獲得叔父忠誠。",
+        "ja": "巻八は公孫淵による公孫恭の地位の簒奪を記す。逆方向にも、新君主が叔父の忠誠を得たとは扱わない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷08"
+      ]
+    },
+    {
+      "id": "exception-ma-chao-han-sui",
+      "ruler_id": "san14-candidate-0769",
+      "person_id": "san14-candidate-0166",
+      "kind": "trust",
+      "start_year": 211,
+      "reason": {
+        "zh": "卷三十六記211年軍事聯合及被離間後互疑，二人並非血親；不按同盟或父輩義親建立親屬下限。",
+        "ja": "巻三十六は211年の軍事同盟と離間後の相互不信を記す。両者は血族ではなく、同盟や父世代の義兄弟関係から親族の下限は与えない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷36"
+      ]
+    },
+    {
+      "id": "exception-ma-teng-han-sui",
+      "ruler_id": "san14-candidate-0771",
+      "person_id": "san14-candidate-0166",
+      "kind": "trust",
+      "reason": {
+        "zh": "卷三十六裴註記早年結異姓兄弟後轉為仇敵、互相攻擊；破裂年月未確證，故不偽造年度界線或穩定義親高忠。",
+        "ja": "巻三十六裴注は義兄弟となった後に敵対し相攻めたと記す。決裂の年を確定できないため、年境界や恒常的な高忠誠は創作しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷36"
+      ]
+    },
+    {
+      "id": "exception-sun-quan-sun-fu",
+      "ruler_id": "san14-candidate-0553",
+      "person_id": "san14-candidate-0574",
+      "kind": "cousin",
+      "reason": {
+        "zh": "卷五十一記孫輔暗通曹操後遭孫權幽禁；未據正文確定事件年份，不虛構年度界線，也不按宗親自動加成。",
+        "ja": "巻五十一は孫輔が曹操と密通し孫権に幽閉されたと記す。本文だけで年を確定せず、一族であることから自動加算しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷51"
+      ]
+    },
+    {
+      "id": "exception-liu-bei-mi-fang",
+      "ruler_id": "san14-candidate-0952",
+      "person_id": "san14-candidate-0795",
+      "kind": "affinal",
+      "start_year": 219,
+      "reason": {
+        "zh": "卷三十八記糜芳219年叛迎孫權；不得繼承糜竺的姻親與長期追隨依據。",
+        "ja": "巻三十八は糜芳が219年に離反し孫権を迎えたと記す。糜竺の姻戚関係と長年の随従の根拠を転用しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷38"
+      ]
+    },
+    {
+      "id": "exception-cao-pi-cao-hong",
+      "ruler_id": "san14-candidate-0526",
+      "person_id": "san14-candidate-0511",
+      "kind": "cousin",
+      "start_year": 220,
+      "reason": {
+        "zh": "卷九記曹丕對曹洪舊怨、下獄及免官削爵；不能沿用曹操與曹洪的救主信任關係。",
+        "ja": "巻九は曹丕の曹洪への遺恨、投獄、免官と爵位剥奪を記す。曹操と曹洪の救援に基づく信任関係を引き継がない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷09"
+      ]
+    },
+    {
+      "id": "exception-liu-biao-liu-qi",
+      "ruler_id": "san14-candidate-0953",
+      "person_id": "san14-candidate-0929",
+      "kind": "parent_child",
+      "start_year": 208,
+      "reason": {
+        "zh": "卷六、三十五記208年劉表疏遠長子劉琦及探病被阻；保留父子事實，但不繼續高忠下限。",
+        "ja": "巻六・三十五は208年に劉表が長子劉琦を疎んじ、見舞いも妨げられたと記す。父子関係は保持するが、高い下限は継続しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06",
+        "https://zh.wikisource.org/wiki/三國志/卷35"
+      ]
+    },
+    {
+      "id": "exception-cao-cao-cao-zhi",
+      "ruler_id": "san14-candidate-0521",
+      "person_id": "san14-candidate-0516",
+      "kind": "parent_child",
+      "start_year": 217,
+      "reason": {
+        "zh": "卷十九記217年曹植違禁後寵信衰落，219年又因醉不能受命；不將父子關係持續等同為親信。",
+        "ja": "巻十九は217年の禁令違反後の信任低下と219年の飲酒による任務不能を記す。父子関係を継続的な強い信任と同一視しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷19"
+      ]
+    },
+    {
+      "id": "exception-sun-quan-sun-he",
+      "ruler_id": "san14-candidate-0553",
+      "person_id": "san14-candidate-0542",
+      "kind": "parent_child",
+      "start_year": 250,
+      "reason": {
+        "zh": "卷四十八、五十九記250年廢孫和太子，後徙居；記錄關係破裂背景，不強制廢立或改變武將所屬。",
+        "ja": "巻四十八・五十九は250年の孫和の太子廃位と転居を記す。関係悪化の背景のみを記録し、廃立や所属変更を強制しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷48",
+        "https://zh.wikisource.org/wiki/三國志/卷59"
+      ]
+    },
+    {
+      "id": "exception-liu-bei-sun-shangxiang",
+      "ruler_id": "san14-candidate-0952",
+      "person_id": "san14-candidate-0565",
+      "kind": "affinal",
+      "reason": {
+        "zh": "卷三十六作孫夫人，記政治婚姻與返吳攜後主爭議；本作姓名孫尚香不作為史名證據，不設永久配偶高忠。",
+        "ja": "巻三十六は孫夫人と記し、政治的婚姻と呉への帰還時の後主をめぐる争いを伝える。本作名の孫尚香を史実の名の証拠とはせず、恒久的な配偶者の高忠誠は設けない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷36"
+      ]
+    },
+    {
+      "id": "exception-sun-quan-sun-ba",
+      "ruler_id": "san14-candidate-0553",
+      "person_id": "san14-candidate-0571",
+      "kind": "parent_child",
+      "start_year": 250,
+      "reason": {
+        "zh": "卷四十七記250年魯王孫霸賜死，卷五十九詳述二宮之爭；自此抑制父子加成，不強制死亡、降忠或改屬。",
+        "ja": "巻四十七は250年に魯王孫霸へ死を命じたと記し、巻五十九は二宮の争いを詳述する。以後は父子の加算を抑えるだけで、死亡、忠誠低下、所属変更は強制しない。"
+      },
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷47",
+        "https://zh.wikisource.org/wiki/三國志/卷59"
+      ]
+    }
+  ]
+}

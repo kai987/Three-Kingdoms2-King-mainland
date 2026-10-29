@@ -4,6 +4,7 @@ The calendar changes existing state only: no new people, resources or RNG.
 Player recruitment and city ownership take precedence over a historical script.
 """
 from .officers import YearState, year_state
+from . import officer_relations
 
 FOUNDING_FIELDS = {'id','faction','date','city','cities','ruler','members','required_owner',
                    'require_unaligned','scope','basis','source_urls'}
@@ -169,6 +170,7 @@ def process(game, state):
                 state.extension['free_locations'].pop(str(ident), None)
                 city.roster.officer_ids.append(ident)
             state.extension['leaders'][rule['faction']] = game.catalog.ids[rule['ruler']]
+            officer_relations.apply_faction(game,state,rule['faction'])
             for ident in sorted(city.roster.officer_ids, key=lambda i: (
                     -state.officers[i].profile.martial_strength, -state.officers[i].profile.intellect,
                     -state.officers[i].profile.virtue, i)):
@@ -198,6 +200,7 @@ def process(game, state):
             state.extension['leaders'][rule['faction']]=leader
             state.officers[leader].loyalty=100
             state.extension['pending_succession'].pop(rule['faction'],None)
+            officer_relations.apply_faction(game,state,rule['faction'])
         reason='executed' if possible else 'conditions_changed'
         pool['coups'][rule['id']]=dict(status=reason,date=list(now),turn=state.turn,released_troops=released,reason=reason)
         game._emit_event(state,'faction_coup' if possible else 'faction_coup_skipped',

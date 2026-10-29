@@ -15,6 +15,7 @@ import officer_stat_sources
 from remake.campaign import Campaign, Catalog
 from remake.officers import appearance_values, recruitment_loyalty
 from remake.session import CampaignSession
+from remake import officer_relations
 from campaign_fixtures import controlled_catalog, advance_month
 
 
@@ -242,6 +243,12 @@ class CampaignStatPolicyTests(unittest.TestCase):
                         source = policy['source_loyalty'] or {}
                         expected = (100 if row.get('ruler') else source['value']
                             if source.get('value') is not None and officer.faction_id in source['faction_ids'] else 80)
+                        if not row.get('ruler'):
+                            leader = game.state.extension['leaders'].get(officer.faction_id)
+                            tie = officer_relations.relation(game.state.officers[leader].person_id,
+                                officer.person_id, game.state.year) if leader in game.state.officers else None
+                            if tie and not tie['blocked']:
+                                expected = max(expected, tie['floor'])
                         self.assertEqual(officer.loyalty, expected)
                         if not row.get('ruler') and source.get('value') is not None:
                             if officer.faction_id in source['faction_ids']:

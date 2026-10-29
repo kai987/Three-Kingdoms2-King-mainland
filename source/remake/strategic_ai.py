@@ -9,7 +9,7 @@ from itertools import combinations
 
 from .difficulty import attack_budget, get_settings
 from .errors import GameError
-from . import command_books
+from . import command_books, officer_relations
 from .officers import integer, recruitment_loyalty, ref_sort_key
 from . import civil_staff
 from .march_supply import DENOMINATOR, OFFICER_UNITS, estimate as march_grain, next_supply_days
@@ -369,6 +369,7 @@ class StrategicAI:
                 target.faction_id = city.owner
                 leader = self.state.officers[x['leaders'][city.owner]]
                 target.loyalty = recruitment_loyalty(leader.profile.virtue,target.loyalty)
+                officer_relations.apply(self.game,self.state,ident)
                 city.roster.officer_ids.append(ident);x['free_locations'].pop(str(ident),None)
                 x['officer_actions'][str(ident)] = self.state.turn
             self.game._report_ai(self.state,city,'recruit_officer',str(ident))

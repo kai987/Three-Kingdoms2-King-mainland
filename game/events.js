@@ -141,7 +141,7 @@
  }
  function campaignKey(view){return view?.game?JSON.stringify([view.catalog?.scenario_id||view.catalog?.title||'',view.game.seed,view.game.player]):null;}
  function eventRows(view){const rows=view?.game?.extension?.events?.items;return Array.isArray(rows)?rows.filter(validEvent).sort((a,b)=>a.id-b.id):[];}
- function automatic(row,player){return STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)||TREASURY.has(row.kind)||FACILITIES.has(row.kind)||EQUIPMENT.has(row.kind)?row.factions.includes(player):row.audience==='player'||WORLD.has(row.kind)||row.factions.includes(player);}
+ function automatic(row,player,inlineBattle=false){if(row.kind==='tactic'&&inlineBattle)return false;return STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)||TREASURY.has(row.kind)||FACILITIES.has(row.kind)||EQUIPMENT.has(row.kind)?row.factions.includes(player):row.audience==='player'||WORLD.has(row.kind)||row.factions.includes(player);}
  function groupRows(rows){
   const groups=[],staffGroups=new Map();
   for(const row of rows){
@@ -261,8 +261,8 @@
     }
     case 'staff_allegiance':return text(`${c}的行政歸屬改變，文吏${label(d.name||'文吏')}留在本城，現隨${f}管理地方事務。`,`${c}の行政上の所属が変わり、文官${label(d.name||'文官')}は都市に留任し、現在は${f}のもとで地方行政に従事します。`);
     case 'domestic_report':return d.reason==='month'?text(`${f}本月${d.cities}城的商農增收已入庫：金${d.gold}、糧${d.grain}。按實際任職旬數結算，不重複領取。`,`${f}の${d.cities}都市で、今月の商農加算を入庫しました。資金${d.gold}・兵糧${d.grain}。実際の勤務旬数で一度だけ精算しています。`):text(`${f}本旬${d.cities}城完成委任工作，花費金${d.gold}、糧${d.grain}；募得預備兵${d.reserves}，訓練度成果${d.morale}。`,`${f}の${d.cities}都市で今旬の担当業務を実行しました。支出は資金${d.gold}・兵糧${d.grain}、募兵は予備兵${d.reserves}、練度の成果は${d.morale}です。`);
-    case 'transport_departed':return text(`${c}的運輸隊已出發，攜帶金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}。貨物已從出發城扣除，正在途中，抵達後才入庫。`,`${c}への輸送隊が出発しました。資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}を運びます。出発都市から差し引き、到着時に入庫します。`);
-    case 'transport_arrived':return text(`${c}的運輸隊已抵達，金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}已按實際狀態入庫，人員與兵員帳本已核對。`,`${c}への輸送隊が到着しました。資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}を実際の状況に従って入庫し、人員と兵力の集計を確認しました。`);
+    case 'transport_departed':return text(`${c}的運輸隊已出發，攜帶金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}。貨物已從出發城扣除，正在途中，抵達或會合後才交付。`,`${c}への輸送隊が出発しました。資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}を運びます。出発都市から差し引き、到着または合流時に引き渡します。`);
+    case 'transport_arrived':return text(`${c}的運輸隊已抵達，金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}已按實際狀態交付，人員與兵員帳本已核對。`,`${c}への輸送隊が到着しました。資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}を実際の状況に従って引き渡し、人員と兵力の集計を確認しました。`);
     case 'transport_returned':{
      const reason={army_missing:text('受補給部隊已不在途中','補給先の部隊がすでに行軍中ではないため'),army_changed:text('受補給部隊的任務或歸屬改變','補給先部隊の任務・所属が変わったため'),rendezvous_wait:text('在會合點等待受補給部隊','会合地点で補給先の部隊を待つため'),rendezvous_missed:text('未能在會合點接上部隊','会合地点で部隊と合流できなかったため'),delivered:text('途中補給交付完成','途中補給の引き渡しを終えたため'),escort_return:text('押運武將沿實際道路返程','護送武将が実際の経路で帰還するため'),retreat:text('運輸隊改向友城撤退','輸送隊が友軍都市への撤退に移ったため')}[d.reason];
      return reason?text(`${c}：${reason}。現有金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}仍按實際位置及返程處理，不會立即送回原城。`,`${c}：${reason}、資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}を実際の位置と帰路に従って処理します。出発都市へ瞬時に戻しません。`):text(`${c}的原運輸任務已中止或折返，現有金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}按實際返程結算。`,`${c}への元の輸送任務は中止または帰還となりました。残る資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}は実際の帰路に従って精算します。`);
@@ -270,7 +270,7 @@
     case 'transport_weather':return text(`${c}的運輸隊途中遇險，預備兵損失${d.lost}。現有貨物：金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}；不重複結算同次災害。`,`${c}への輸送中に災害が発生し、予備兵${d.lost}を失いました。現在の貨物は資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}です。同じ災害を重複精算しません。`);
     case 'campaign_victory':return text(`${f}完成天下統一。本次戰役已結算，可保存進度。`,`${f}が天下を統一しました。戦役の精算を終え、進行状況を保存できます。`);
     case 'campaign_defeat':return text(`${f}已無法繼續作戰。可保存結果或重新選擇劇本。`,`${f}は戦いを続けられなくなりました。結果を保存するか、シナリオを選び直せます。`);
-    default:{const attacker=n.factions[0]||f;return text(`${attacker}的${d.coordinated?'多路部隊正協同':'部隊正'}朝${c}推進。`,`${attacker}の${d.coordinated?'複数部隊が連携して':'部隊が'}${c}へ進軍しています。`);}
+    default:{const attacker=n.factions[0]||f;return text(`${attacker}正規劃以${c}為目標的${d.coordinated?'多路協同':'進軍'}作戰。計畫可能包含尚未出發的部隊，實際行軍請核對在途名冊。`,`${attacker}が${c}を目標とする${d.coordinated?'複数部隊の連携':'進軍'}作戦を計画しています。未出発の部隊を含む場合があるため、実際の行軍は行軍中の名簿で確認してください。`);}
    }
   }
   function historicalIntroduction(row){
@@ -333,7 +333,8 @@
   function render(){
    if(!active||!modal||disposed)return;
    const row=active[0],period={1:'上旬',11:'中旬',21:'下旬'}[row.day],count=active.length>1?text(` · 共${active.length}項`,` · ${active.length}件`):'',cities=[...new Set(active.flatMap(e=>names(e).cities))].join(text('、','・'));
-   modal.innerHTML=`<div data-event-root data-l10n-native="${locale()}"><div class="event-heading"><div><p class="event-kicker">${escape(historyMode?text('事件回顧','出来事の記録'):text('戰役事件','戦役の出来事'))} · ${shown}/${total}</p><h2 id="event-title">${escape(KINDS[row.kind][locale()==='ja'?1:0])}${escape(count)}</h2></div><label class="language-picker">${text('語言','言語')}<select data-language-picker aria-label="${text('切換語言','言語切替')}"><option value="zh-Hant" ${locale()==='zh-Hant'?'selected':''}>繁體中文</option><option value="ja" ${locale()==='ja'?'selected':''}>日本語</option></select></label></div><p class="event-date">${row.year}年${row.month}月${period}${cities?`<span class="event-location"> · ${escape(cities)}</span>`:''}</p>${illustration(active)}<div id="event-description" class="event-description">${active.map(e=>`<p>${escape(description(e))}</p>${historicalIntroduction(e)}`).join('')}</div><div class="dialog-actions event-actions">${queue.length?`<button data-event-skip>${text('略過本批','この一括表示を終了')}</button>`:''}<button class="primary" data-event-next autofocus>${queue.length?text('下一則','次へ'):text('返回戰役','戦役に戻る')}</button></div></div>`;
+   const dialogue=options.dialogue||root.GameDialogue;
+   modal.innerHTML=`<div data-event-root data-l10n-native="${locale()}"><div class="event-heading"><div><p class="event-kicker">${escape(historyMode?text('事件回顧','出来事の記録'):text('戰役事件','戦役の出来事'))} · ${shown}/${total}</p><h2 id="event-title">${escape(KINDS[row.kind][locale()==='ja'?1:0])}${escape(count)}</h2></div><label class="language-picker">${text('語言','言語')}<select data-language-picker aria-label="${text('切換語言','言語切替')}"><option value="zh-Hant" ${locale()==='zh-Hant'?'selected':''}>繁體中文</option><option value="ja" ${locale()==='ja'?'selected':''}>日本語</option></select></label></div><p class="event-date">${row.year}年${row.month}月${period}${cities?`<span class="event-location"> · ${escape(cities)}</span>`:''}</p>${illustration(active)}<div id="event-description" class="event-description">${active.map(e=>`${dialogue?.html&&dialogue?.event?dialogue.html(dialogue.event(e,view,locale(),i18n),{language:locale(),portraits}):''}<p class="event-facts">${escape(description(e))}</p>${historicalIntroduction(e)}`).join('')}</div><div class="dialog-actions event-actions">${queue.length?`<button data-event-skip>${text('略過本批','この一括表示を終了')}</button>`:''}<button class="primary" data-event-next autofocus>${queue.length?text('下一則','次へ'):text('返回戰役','戦役に戻る')}</button></div></div>`;
    modal.querySelector('[data-event-next]').onclick=advance;
    const skip=modal.querySelector('[data-event-skip]');if(skip)skip.onclick=clear;
    if(!modal.open)modal.showModal();
@@ -354,7 +355,7 @@
    if(baseline||!nextKey||key!==nextKey||latest<cursor||newGame){clear();key=nextKey;cursor=newGame?0:latest;shown=0;total=0;}
    if(!nextKey||baseline)return;
    const fresh=rows.filter(row=>row.id>cursor);cursor=Math.max(cursor,latest);
-   const visible=fresh.filter(row=>automatic(row,next.game.player));
+   const visible=fresh.filter(row=>automatic(row,next.game.player,!!(options.dialogue||root.GameDialogue)));
    if(visible.length){const batches=groupRows(clone(visible));queue.push(...batches);if(!active&&shown===total){shown=0;total=0;}total+=batches.length;}
    requestPump();
   }

@@ -5,7 +5,7 @@ remake designs. No original engine, ROM tables or control IR are loaded.
 """
 from dataclasses import replace
 from .errors import GameError
-from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services
+from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services, officer_relations
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
                        parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref, appearance_values)
@@ -143,6 +143,7 @@ class ExpandedCampaign:
             leader = state.extension['leaders'].get(city.owner)
             virtue = state.officers[leader].profile.virtue if leader in state.officers else actor.profile.virtue
             candidate.loyalty=recruitment_loyalty(virtue,candidate.loyalty)
+            officer_relations.apply(self,state,ident)
             city.roster.officer_ids.append(ident)
             state.extension['free_locations'].pop(str(ident),None)
             state.extension['officer_actions'][str(ident)] = state.turn
@@ -189,6 +190,7 @@ class ExpandedCampaign:
             target.faction_id=city.owner
             leader=state.extension['leaders'][city.owner]
             target.loyalty=recruitment_loyalty(state.officers[leader].profile.virtue,target.loyalty)
+            officer_relations.apply(self,state,ident)
             state.extension['officer_actions'][str(ident)]=state.turn
         self._note(state,f'{self.person_name(state, actor.runtime_id)}劝说{self.person_name(state, ident)}，{"转属成功" if success else "遭到拒绝"}，花费{fee}金。')
 
@@ -794,6 +796,7 @@ class ExpandedCampaign:
                         provisional=leader,previous_loyalty=old_loyalty)
                     self._note(state,'请为本方选择继承君主。')
                 else:
+                    officer_relations.apply_faction(self,state,faction)
                     self._note(state,f'{self.person_name(state, leader)}接任势力主将。')
         for faction,pending in list(x['pending_succession'].items()):
             pending['candidates']=[i for i in pending['candidates'] if i in state.officers and state.officers[i].alive and state.officers[i].faction_id==faction]
@@ -831,6 +834,7 @@ class ExpandedCampaign:
         state.extension['leaders'][state.player]=ident
         state.officers[ident].loyalty=100
         state.extension['pending_succession'].pop(state.player)
+        officer_relations.apply_faction(self,state,state.player)
         previous=pending['previous']
         self._emit_event(state,'succession',person_ids=[state.officers[ident].person_id],factions=[state.player],
             details=dict(previous=state.officers[previous].person_id if previous in state.officers else None),audience='world')

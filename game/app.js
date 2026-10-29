@@ -6,9 +6,10 @@ let civilStaffUI=null,domesticUI=null,treasuryUI=null,facilitiesUI=null;
 let campaignDifficulty='normal';
 let allocationDialogContext=null,allocationCloseEpoch=0;
 let battleDestination=null,battleViewKey='';
+let dialogueFeedback=null;
 const viewCache=typeof GameViewCache==='undefined'?null:GameViewCache.create();
 const localAutosave=typeof GameAutosave==='undefined'?null:GameAutosave.create({getRawSave:()=>request('/api/save',undefined,{text:true}),getView:()=>view,isBusy:()=>busy,loadRawSave:loadSave,locale:()=>GameI18n.locale,onStatus:state=>{if(state.state==='error')notice(localAutosave.statusText(),true);}});
-document.addEventListener('game-language-change',()=>{localAutosave?.refresh();if(setupPreview)setPreviewFaction(setupPreview.faction,setupPreview.focus);else if(view?.game?.battle&&!busy&&!dialog.open)renderBattle();});
+document.addEventListener('game-language-change',()=>{localAutosave?.refresh();refreshDialogueFeedback();refreshPersonnelDialogue();if(setupPreview)setPreviewFaction(setupPreview.faction,setupPreview.focus);else if(view?.game?.battle&&!busy&&!dialog.open)renderBattle();});
 const difficultyName=id=>({easy:'简单',normal:'普通',hard:'困难'}[id]||'普通');
 const $=s=>document.querySelector(s), dialog=$('#dialog'),survivorPreviews=new WeakMap();
 const gameAudio=GameAudio.page();
@@ -180,6 +181,27 @@ function mapBridgeLayer(layers){
 const mapAccessKey=points=>[points[0].join(','),points.at(-1).join(',')].sort().join(':');
 const displayLog=text=>view.catalog.cities.filter(c=>c.administrative_name!==cityName(c.id)).reduce((s,c)=>s.replaceAll(c.administrative_name,cityName(c.id)),text);
 function notice(text='',error=false){$('#notice').textContent=text;$('#notice').classList.toggle('error',error);if(error)gameAudio.play('error');}
+function clearDialogueFeedback(){dialogueFeedback=null;document.querySelectorAll('[data-command-feedback]').forEach(node=>node.remove());}
+function refreshDialogueFeedback(){
+ if(!dialogueFeedback||typeof GameDialogue==='undefined')return;
+ const {kind,payload,before,after,error}=dialogueFeedback;
+ const lines=GameDialogue.command(kind,payload,before,after,{language:GameI18n.locale,i18n:GameI18n,error});
+ document.querySelectorAll('[data-command-feedback]').forEach(node=>node.remove());
+ if(!lines.length)return;
+ const inDialog=error&&dialog.open;
+ const panel=document.createElement(inDialog?'section':'li');panel.dataset.commandFeedback=kind;panel.className='command-dialogue';panel.setAttribute('aria-live','polite');
+ panel.innerHTML=GameDialogue.html(lines,{language:GameI18n.locale,portraits:GamePortraits,compact:true});
+ if(inDialog)dialog.querySelector('.dialog-actions')?.before(panel);else $('#journal')?.prepend(panel);
+}
+function showDialogueFeedback(kind,payload,before,after,error=null){dialogueFeedback={kind,payload,before,after,error};refreshDialogueFeedback();if($('#journal [data-command-feedback]'))$('#journal').scrollTop=0;}
+function refreshPersonnelDialogue(){
+ if(typeof GameDialogue==='undefined'||!dialog.open||!$('#personnel-dialogue-guidance'))return;
+ const mode=$('#recruit-mode')?.value,person=$('#recruit-person')?.value,executor=$('#recruit-actor')?.value;
+ if(!mode||!person||!executor){$('#personnel-dialogue-guidance').innerHTML='';return;}
+ const lines=GameDialogue.guidance(mode,{actor:executor,officer:person},view,GameI18n.locale,GameI18n);
+ const basis=GameDialogue.relation(view,person,GameI18n.locale);
+ $('#personnel-dialogue-guidance').innerHTML=`<p class="small" data-l10n-native="${GameI18n.locale}">${GameI18n.locale==='ja'?'操作の事前案内':'操作預覽'}</p>`+GameDialogue.html(lines,{language:GameI18n.locale,portraits:GamePortraits,compact:true})+(basis?`<p class="dialogue-relation" data-l10n-native="${GameI18n.locale}">${escapeHtml(basis)}</p>`:'');
+}
 function refreshDomesticButton(){
  const button=$('#faction-domestic');if(button)button.disabled=busy||!!setupPreview||view?.game?.phase!=='city'||!view?.catalog?.domestic?.factions?.[view?.game?.player]||!Object.values(view?.game?.cities||{}).some(c=>c.owner===view.game.player);
 }
@@ -202,8 +224,11 @@ async function confirmOrderCommand(kind,payload){
 }
 async function command(kind,payload={}){
  if(busy||(typeof orderConfirmation!=='undefined'&&orderConfirmation?.pending))return false;
+ const silentDialogue=typeof GameDialogue!=='undefined'&&GameDialogue.COMMANDS[kind]==='silent';
  try{payload=JSON.parse(JSON.stringify(payload));if(!await confirmOrderCommand(kind,payload)||busy)return false;}
- catch(error){notice(error.message,true);return false;}
+ catch(error){notice(error.message,true);if(!silentDialogue&&typeof showDialogueFeedback==='function')showDialogueFeedback(kind,payload,view,view,error.message);return false;}
+ const dialogueBefore=view;
+ if(!silentDialogue&&typeof clearDialogueFeedback==='function')clearDialogueFeedback();
  const resumeAutosave=localAutosave?.status().state==='saving';
  localAutosave?.invalidate();let checkpoint=null;
  setBusy(true);notice();
@@ -238,9 +263,10 @@ async function command(kind,payload={}){
   else if(kind==='settle'||['result','finished'].includes(view.game?.phase))checkpoint='battle';
   else if(kind==='end_turn'||previousTurn!==view.game?.turn)checkpoint='turn';
   await scene?.play();
+  if(!silentDialogue&&typeof showDialogueFeedback==='function')showDialogueFeedback(kind,payload,dialogueBefore,view);
   return true;
  }
- catch(e){notice(e.message,true);return false;}
+ catch(e){notice(e.message,true);if(!silentDialogue&&typeof showDialogueFeedback==='function')showDialogueFeedback(kind,payload,dialogueBefore,view,e.message);return false;}
  finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);if(checkpoint||resumeAutosave)void localAutosave?.checkpoint(checkpoint||'progress');}
 }
 function queueAllocationClose(context){
@@ -257,6 +283,7 @@ function queueAllocationClose(context){
 }
 function openDialog(title,body,actions,{allocation=null}={}){
  if(busy)return;
+ if(dialogueFeedback?.error)clearDialogueFeedback();
  const generation=++dialogGeneration;refreshRouteDialog=null;
  const previous=allocationDialogContext;allocationDialogContext=allocation?{...allocation,generation}:null;
  if(previous&&(previous.flow!==allocation?.flow||previous.city!==allocation?.city))queueAllocationClose(previous);
@@ -266,6 +293,7 @@ function openDialog(title,body,actions,{allocation=null}={}){
  return generation;
 }
 function selectFaction(){
+ clearDialogueFeedback();
  if(typeof siegeUI!=='undefined')siegeUI?.stop();
  mapAction=null;
  if($('#event-history'))$('#event-history').disabled=true;
@@ -829,13 +857,13 @@ function departure(city,targetCity=null){
 function recruitOfficer(city,targetCity=null){
  const free=(view.catalog.recruitable?.[city.id]||[]).filter(i=>!targetCity||view.game.extension.free_locations[i]===targetCity),enemy=(view.catalog.persuadable?.[city.id]||[]).filter(i=>!targetCity||view.game.cities[targetCity].roster.officer_ids.includes(i));
  if(!free.length&&!enemy.length)return notice('附近暂无可招募的在野武将或可劝降的敌将。可在“人物库”查看年代与配置。');
- openDialog('招募与劝降',`${targetCity?`<p data-recruit-city="${targetCity}">寻访城池：${escapeHtml(cityName(targetCity))}</p>`:''}<label class="field">人事方式<select id="recruit-mode"><option value="recruit_officer" ${!free.length?'disabled':''}>在野招募 · 60金</option><option value="persuade_officer" ${!enemy.length?'disabled':''} ${!free.length?'selected':''}>邻城劝降 · 100金</option></select></label><p>对方可能拒绝。取消不扣资源或命令书；君主不能直接劝降。</p><label class="field">执行武将<select id="recruit-actor">${sortedOfficers(city.roster.officer_ids,'virtue').map(i=>`<option value="${i}" ${officerUnavailable(i)?'disabled':''}>${escapeHtml(officerChoiceText(i,{loyalty:true}))}</option>`).join('')}</select></label><p class="small officer-choice-summary" id="recruit-actor-summary"></p><label class="field">目标武将<select id="recruit-person"></select></label><p class="small officer-choice-summary" id="recruit-person-summary"></p><div id="personnel-command-books"></div><p class="small" id="personnel-boundary" role="status"></p><p class="small">最多${capacity()}人。转属成功后保留体力、带兵、装备和经验；忠诚按本作招募规则重新结算。</p>`,'<button data-cancel>取消</button><button id="confirm-officer" class="primary">确认寻访</button>');
+ openDialog('招募与劝降',`${targetCity?`<p data-recruit-city="${targetCity}">寻访城池：${escapeHtml(cityName(targetCity))}</p>`:''}<label class="field">人事方式<select id="recruit-mode"><option value="recruit_officer" ${!free.length?'disabled':''}>在野招募 · 60金</option><option value="persuade_officer" ${!enemy.length?'disabled':''} ${!free.length?'selected':''}>邻城劝降 · 100金</option></select></label><p>对方可能拒绝。取消不扣资源或命令书；君主不能直接劝降。</p><label class="field">执行武将<select id="recruit-actor">${sortedOfficers(city.roster.officer_ids,'virtue').map(i=>`<option value="${i}" ${officerUnavailable(i)?'disabled':''}>${escapeHtml(officerChoiceText(i,{loyalty:true}))}</option>`).join('')}</select></label><p class="small officer-choice-summary" id="recruit-actor-summary"></p><label class="field">目标武将<select id="recruit-person"></select></label><p class="small officer-choice-summary" id="recruit-person-summary"></p><div id="personnel-dialogue-guidance"></div><div id="personnel-command-books"></div><p class="small" id="personnel-boundary" role="status"></p><p class="small">最多${capacity()}人。转属成功后保留体力、带兵、装备和经验；忠诚按本作招募规则重新结算。</p>`,'<button data-cancel>取消</button><button id="confirm-officer" class="primary">确认寻访</button>');
  const summary=()=>{for(const kind of ['actor','person']){const id=$('#recruit-'+kind).value;$('#recruit-'+kind+'-summary').textContent=view.game.officers[id]?officerChoiceText(id,{loyalty:true}):'';}
   const actorId=$('#recruit-actor').value,targetId=$('#recruit-person').value,full=cityOccupancy(city)>=capacity(),poor=city.gold<($('#recruit-mode').value==='recruit_officer'?60:100),unavailable=actorId===''||officerUnavailable(actorId);
   const kind=$('#recruit-mode').value,books=!hasCommandBook(kind);
   $('#confirm-officer').disabled=books||full||poor||unavailable||!targetId;
   $('#personnel-command-books').innerHTML=commandBookHint(kind);
-  $('#personnel-boundary').textContent=books?commandBookReason(kind):full?'本城已满，无法招募或劝降。':poor?'金钱不足，无法执行本次寻访。':unavailable?'本城没有可行动的武将。':'';GameI18n.apply();
+  $('#personnel-boundary').textContent=books?commandBookReason(kind):full?'本城已满，无法招募或劝降。':poor?'金钱不足，无法执行本次寻访。':unavailable?'本城没有可行动的武将。':'';refreshPersonnelDialogue();GameI18n.apply();
  };
  const draw=()=>{$('#recruit-person').innerHTML=sortedOfficers($('#recruit-mode').value==='recruit_officer'?free:enemy,'virtue').map(i=>`<option value="${i}">${escapeHtml(officerChoiceText(i,{loyalty:true}))}</option>`).join('');summary();};
  $('#recruit-mode').onchange=draw;$('#recruit-actor').onchange=summary;$('#recruit-person').onchange=summary;draw();
@@ -975,7 +1003,7 @@ function initialStatDescription(p,runtime){
  return ['zh-Hant','ja'].map((language,index)=>{
   const ja=index===1,sourceFaction=source?.source_faction_label;
   const armyLine=`<p class="small" data-officer-affinity-source="${escapeHtml(armySource)}" data-officer-affinity-code="${p.affinity??''}" data-person-id="${escapeHtml(p.person_id)}">軍種：${armyName[index]} · ${armyEvidence[index]}。</p>`;
-  return `<section class="person-initial-stats" data-initial-stat-source="${escapeHtml(p.person_id)}" data-locale-only="${language}" data-l10n-native="${language}">${armyLine}<p>${ja?'初期体力':'初始體力'} <strong data-initial-health="${health}">${health}</strong> · ${ja?'体力上限':'體力上限'} <strong data-health-maximum="${maximum}">${maximum}</strong> · ${ja?'適性':'適性'} ${affinity[index]}。</p>${runtime?`<p>${ja?'現在の体力':'目前體力'} <span data-current-health>${runtime.health}</span> · ${ja?'現在の忠誠':'目前忠誠'} <span data-current-loyalty>${currentLoyalty}</span>。</p>`:''}<p class="small">${source?(ja?'初期体力は原作の公開能力表を転記した値です。':'初始體力採公開原版能力表的轉寫值。'):(ja?'体力の資料が未対応のため、本作の初期値80を使います。':'體力資料尚未對應，採本作初始值80。')}${ja?'上限は従来の設定と初期体力の大きい方を使う本作の設定で、原作の最大体力を表す値ではありません。':'上限採原有上限與初始體力的較大值，是本作設定，不代表原版最大體力。'}</p>${source?`<p>${ja?'原作資料の忠誠':'原版來源表的忠'} <strong data-source-loyalty>${escapeHtml(sourceLoyalty)}</strong>${sourceFaction?` · ${ja?'資料の所属':'來源勢力'} ${escapeHtml(GameI18n.t(sourceFaction,language))}`:''}。</p>`:''}<p class="small">${ja?'初登場時の忠誠は、原作資料で数値と対応勢力が確認でき、同じ勢力に属する場合だけその値を使います。他勢力や資料の「--」は80、在野は0、現在の君主は「--」です。登用・勧誘・捕虜の所属変更は既存の人事ルールで忠誠を計算します。同勢力内の移動とロードでは体力・忠誠を初期化しません。':'首次登場時，只有來源表的忠為數值且明確對應本局同一勢力時才採該值。其他勢力或來源表「--」採80，在野為0；目前君主顯示「--」。登用、勸誘與俘虜轉屬依既有人事規則計算忠誠；同勢力移動及讀檔不會重置體力與忠誠。'}</p></section>`;
+  return `<section class="person-initial-stats" data-initial-stat-source="${escapeHtml(p.person_id)}" data-locale-only="${language}" data-l10n-native="${language}">${armyLine}<p>${ja?'初期体力':'初始體力'} <strong data-initial-health="${health}">${health}</strong> · ${ja?'体力上限':'體力上限'} <strong data-health-maximum="${maximum}">${maximum}</strong> · ${ja?'適性':'適性'} ${affinity[index]}。</p>${runtime?`<p>${ja?'現在の体力':'目前體力'} <span data-current-health>${runtime.health}</span> · ${ja?'現在の忠誠':'目前忠誠'} <span data-current-loyalty>${currentLoyalty}</span>。</p>`:''}<p class="small">${source?(ja?'初期体力は原作の公開能力表を転記した値です。':'初始體力採公開原版能力表的轉寫值。'):(ja?'体力の資料が未対応のため、本作の初期値80を使います。':'體力資料尚未對應，採本作初始值80。')}${ja?'上限は従来の設定と初期体力の大きい方を使う本作の設定で、原作の最大体力を表す値ではありません。':'上限採原有上限與初始體力的較大值，是本作設定，不代表原版最大體力。'}</p>${source?`<p>${ja?'原作資料の忠誠':'原版來源表的忠'} <strong data-source-loyalty>${escapeHtml(sourceLoyalty)}</strong>${sourceFaction?` · ${ja?'資料の所属':'來源勢力'} ${escapeHtml(GameI18n.t(sourceFaction,language))}`:''}。</p>`:''}<p class="small">${ja?'初登場時の忠誠は、原作資料で数値と対応勢力が確認でき、同じ勢力に属する場合だけその値を使います。他勢力や資料の「--」の基準値は80、在野は0、現在の君主は「--」です。確認済みの親族・信頼関係があれば、本作の任用時の忠誠基準を別途適用します。登用・勧誘・捕虜の所属変更は人事ルールで計算し、同勢力内の移動とロードでは体力・忠誠を初期化しません。':'首次登場時，只有來源表的忠為數值且明確對應本局同一勢力時才採該值。其他勢力或來源表「--」的基準值採80，在野為0；目前君主顯示「--」。如有已核實的親緣或信任關係，再依本作任用忠誠基準處理。登用、勸誘與俘虜轉屬依人事規則計算；同勢力移動及讀檔不會重置體力與忠誠。'}</p></section>`;
  }).join('');
 }
 function showPerson(id){
@@ -987,6 +1015,16 @@ function showPerson(id){
  const abilityEvidence=p.ability_source?.kind==='historical_authorial_game_design'?sourceEvidence(`<p>${escapeHtml(p.ability_source.notes||'事迹参考与本作能力设计。')}</p>${sourceLinks?`<p>${sourceLinks}</p>`:''}`,'能力は事績を参考にした独自設定です。年代の一部はゲーム用の推定です。採用根拠と出典は原資料で確認できます。'):'';
  const pendingNote=p.alive==null?{pending_capacity:'本剧本所属势力的城内容量不足，本人尚未加入战局，不计入在籍人数。',scenario_excluded:'本剧本明确设为不登场，不会在后续月份自动加入。',pending_history:'本剧本的所属或驻城尚待考证，未自动加入战局。',pending_faction:'本剧本尚未接入所属势力，未自动加入战局。'}[a?.status]:null;
  openDialog(`${p.name} · 人物配置`,`<div class="person-profile-head">${portraitHtml(id,'detail',true,p.person_id,p.name)}<div class="person-profile-summary"><p>武 ${p.martial??'待填'} / 知 ${p.intellect??'待填'} / 德 ${p.virtue??'待考'} / <span>经</span> ${experience}。</p></div></div>${typeof GameEquipment!=='undefined'?(runtime?GameEquipment.summary(view,id,{locale:GameI18n.locale,bilingual:true}):GameEquipment.render(p.equipment,{id:p.id,locale:GameI18n.locale,bilingual:true})):''}${initialStatDescription(p,runtime)}${p.study_gain?`<p class="small" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">目前知 ${p.intellect}＝開局來源知 ${p.base_intellect}＋本局學問所成長 ${p.study_gain}；學習不會改寫人物來源資料。</p><p class="small" data-locale-only="ja" data-l10n-native="ja">現在の知 ${p.intellect}＝開始時の知 ${p.base_intellect}＋この戦役の学問所の成長 ${p.study_gain}。人物の出典データは書き換えません。</p>`:''}${runtime?sourceEvidence(`<p>经 ${experience} · 原始经验 ${runtime.experience} · 经验等级 ${runtime.tier}。经沿用原版显示规则：原始经验每50点显示1；战斗等级单独按经验门槛判定。</p>`,`経 ${experience}・累積経験値 ${runtime.experience}・経験段階 ${runtime.tier}。原作と同じく累積経験値50点を「経」1として表示し、戦闘の段階は別の経験値境界で判定します。`):''}<p>${abilityNote}</p>${abilityEvidence}${pendingNote?`<p class="person-entry-status">${pendingNote}</p>`:''}${virtueDescription(p)}${a?.placement_review||a?.appearance_plan?personPlacementEvidence(a):''}${p.alive?`<p>当前战局：${escapeHtml(p.faction?faction(p.faction):'在野')} · ${escapeHtml(cityName(current||p.location||'待归城'))}</p>`:''}`,'<button id="back-library">返回武将库</button><button data-cancel>返回战役</button>');
+ if(typeof GameDialogue!=='undefined'){
+  const notes=['zh-Hant','ja'].map(language=>{
+   const basis=GameDialogue.relation(view,id,language);
+   if(!basis)return '';
+   const metadata=view.catalog.officer_relations?.officers?.[String(id)];
+   const sources=(metadata?.sources||[]).filter(url=>typeof url==='string'&&/^https?:\/\//.test(url)).map((url,index)=>`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">史料 ${index+1}</a>`).join(' · ');
+   return `<aside class="dialogue-identity-note" data-officer-relation="${id}" data-locale-only="${language}" data-l10n-native="${language}"${GameI18n.locale===language?'':' hidden'}><p>${escapeHtml(basis)}</p>${sources?`<p>${sources}</p>`:''}</aside>`;
+  }).join('');
+  if(notes){dialog.querySelector('.person-profile-head')?.insertAdjacentHTML('afterend',notes);GameI18n.apply();}
+ }
  $('#back-library').onclick=showLibrary;
 }
 function battleText(tc,ja){return `<span data-locale-only="zh-Hant" data-l10n-native="zh-Hant" ${GameI18n.locale==='ja'?'hidden':''}>${escapeHtml(tc)}</span><span data-locale-only="ja" data-l10n-native="ja" ${GameI18n.locale==='ja'?'':'hidden'}>${escapeHtml(ja)}</span>`;}
@@ -1203,6 +1241,7 @@ function render(){
  if(game.extension?.logistics)appendInspector(delegationInterface()?.convoyList()||'');
  if(game.extension&&!$('#inspector .faction-ledger'))appendInspector(factionLedger());
  $('#journal').innerHTML=game.log.slice(-5).map(t=>`<li>${escapeHtml(displayLog(t))}</li>`).join('');
+ refreshDialogueFeedback();
 }
 $('#rules').onclick=()=>openDialog('规则说明',`<div class="rules-body"><p>每回合为1旬，固定10日；每月上旬、中旬、下旬，各势力每旬行动。月结只在进入下月上旬时执行。</p><p>每城${capacity()}人；每方出战最多10人，包含主将。</p>${commandBookHint()}<p><span data-l10n-native="zh-Hant" data-locale-only="zh-Hant">命令書由全勢力共用，可全部投入同一城。每旬開始重置，未用完不累積。確定執行才消耗；取消、查看及任命不消耗；手動編兵整次流程僅用1本，可連續切換本城多名武將配兵，直到選擇「完成配兵」。</span><span data-l10n-native="ja" data-locale-only="ja" hidden>命令書は勢力全体で共有し、同じ都市へ集中できます。毎旬の開始時に更新し、余りは持ち越しません。実行確定時に消費し、取消・閲覧・任命では消費しません。手動編制は一連の手続き全体で1枚です。同じ都市の複数武将へ切り替えて配分でき、「編制を終了」で終了します。</span></p><ul>${view.catalog.notes.map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul><p>总人物库${view.catalog.library_count}人。仅已登场且配置齐全的人物进入本局。随机种子决定招募、战斗等判定的随机序列；相同种子与操作可重现战局，保存会保留随机序列进度。</p></div>`,'<button data-cancel>返回战役</button>');
 $('#library').onclick=showLibrary;
@@ -1227,6 +1266,7 @@ $('#save').onclick=async()=>{
 };
 async function loadSave(save,guard=()=>true){
  if(busy||!guard())return false;
+ clearDialogueFeedback();
  if(typeof siegeUI!=='undefined')siegeUI?.stop();
  const resumeAutosave=localAutosave?.status().state==='saving';
  localAutosave?.invalidate();let loaded=false;setBusy(true);

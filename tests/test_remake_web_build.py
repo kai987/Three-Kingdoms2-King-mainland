@@ -320,18 +320,24 @@ class WebReleaseArtifact(unittest.TestCase):
             self.assertIn('source/remake/session.py', names)
             self.assertIn('source/remake/browser_runtime.py', names)
             self.assertIn('source/remake/troop_types.py', names)
+            self.assertIn('source/remake/officer_relations.py', names)
             self.assertIn('game/assets/map-presentation.json', names)
             for name in ('game/assets/battlefields/index.json',
                          'game/config/battlefield-city-bindings.json',
                          'game/config/references/original-battle-tactics-v1.json',
-                         'game/config/references/officer-troop-types-v1.json'):
+                         'game/config/references/officer-troop-types-v1.json',
+                         'game/config/references/officer-relations-v1.json'):
                 self.assertIn(name,names,'The actual WASM rules need the original tactical data')
             public_rules={'game/config/battlefield-city-bindings.json',
                           'game/config/references/original-battle-tactics-v1.json',
-                          'game/config/references/officer-troop-types-v1.json'}
+                          'game/config/references/officer-troop-types-v1.json',
+                          'game/config/references/officer-relations-v1.json'}
             troop_policy='game/config/references/officer-troop-types-v1.json'
             self.assertEqual(bundle.read(troop_policy),(ROOT/troop_policy).read_bytes(),
                              'WASM must receive the same reviewed troop-type policy as Python')
+            relation_policy='game/config/references/officer-relations-v1.json'
+            self.assertEqual(bundle.read(relation_policy),(ROOT/relation_policy).read_bytes(),
+                             'WASM and Python must share the dated loyalty relationship policy')
             self.assertFalse(any(name.endswith(('.pyc', '.nes'))
                 or '/config/' in name and name not in public_rules for name in names))
         previews = json.loads((self.output / self.manifest['previews']['url']).read_text())

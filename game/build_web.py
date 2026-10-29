@@ -165,7 +165,8 @@ def python_bundle(output):
     files.append(('game/assets/map-presentation.json', safe_read(HERE, 'assets/map-presentation.json')))
     for name in ('assets/battlefields/index.json','config/battlefield-city-bindings.json',
                  'config/references/original-battle-tactics-v1.json',
-                 'config/references/officer-troop-types-v1.json'):
+                 'config/references/officer-troop-types-v1.json',
+                 'config/references/officer-relations-v1.json'):
         files.append(('game/'+name,safe_read(HERE,name)))
     archive = output / 'runtime/python.zip'
     archive.parent.mkdir(parents=True, exist_ok=True)

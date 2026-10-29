@@ -6,7 +6,7 @@ import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
-from remake import battle_grid, battle_services, battle_allegiance
+from remake import battle_grid, battle_services, battle_allegiance, officer_relations
 from remake.campaign import Campaign, digest
 from remake.errors import GameError
 from remake.officers import recruitment_loyalty, year_state, YearState
@@ -88,6 +88,10 @@ class BattleObjectiveTests(unittest.TestCase):
         point=deepcopy(b['extended']['tactical']['positions'][str(t['id'])])
         leader=before.extension['leaders'][b['attacker']]
         expected=recruitment_loyalty(before.officers[leader].profile.virtue,30)
+        relation=officer_relations.relation(before.officers[leader].person_id,
+            before.officers[t['id']].person_id,before.year)
+        if relation and not relation['blocked']:
+            expected=max(expected,relation['floor'])
         command(game,'tactic',battle_id=b['id'],actor=a['id'],target=t['id'],tactic=8)
         state=game.state;b=state.battle
         converted=next(unit for unit in b[own]if unit['id']==t['id'])

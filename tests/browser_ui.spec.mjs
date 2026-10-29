@@ -1272,8 +1272,15 @@ test('all 29 real Worker openings keep preview and live initial health and facti
   expect(people[pid].initialization.health).toBe(health);
   expect(people[pid].profile.virtue).toBe(virtue);
  }
- const loyalty=(person,owner,ruler)=>ruler?100:!owner?0:
-  Number.isInteger(person.initialization.source_loyalty?.value)&&person.initialization.source_loyalty.faction_ids.includes(owner)?person.initialization.source_loyalty.value:80;
+ const relations=JSON.parse(await readFile(new URL('../game/config/references/officer-relations-v1.json',import.meta.url),'utf8'));
+ const loyalty=(person,owner,ruler,catalog,pid)=>{
+  if(ruler)return 100;if(!owner)return 0;
+  const baseline=Number.isInteger(person.initialization.source_loyalty?.value)&&person.initialization.source_loyalty.faction_ids.includes(owner)?person.initialization.source_loyalty.value:80;
+  const leader=catalog.people.find(row=>row.runtime_id===catalog.faction_rulers[owner])?.person_id;
+  const active=row=>row.ruler_id===leader&&row.person_id===pid&&(row.start_year??0)<=catalog.start_year&&(row.end_year??9999)>=catalog.start_year;
+  const floors=relations.exceptions.some(active)?[]:relations.records.filter(active).map(row=>row.floor);
+  return Math.max(baseline,...floors);
+ };
  await opening(page);
  const availableScenarios=await page.locator('#scenario option').evaluateAll(rows=>rows.map(row=>row.value));
  expect(availableScenarios).toHaveLength(29);
@@ -1301,7 +1308,7 @@ test('all 29 real Worker openings keep preview and live initial health and facti
   for(const city of previews)for(const officer of city.officers){
    const person=people[officer.person_id];
    assert.equal(officer.health,person.initialization.health,`${scenario}/${officer.person_id} preview health`);
-   assert.equal(officer.loyalty,loyalty(person,city.owner,officer.is_ruler),`${scenario}/${officer.person_id} preview loyalty`);
+   assert.equal(officer.loyalty,loyalty(person,city.owner,officer.is_ruler,catalog,officer.person_id),`${scenario}/${officer.person_id} preview loyalty`);
    assert.equal(officer.virtue,person.profile.virtue,`${scenario}/${officer.person_id} preview virtue`);
   }
   const addedRuler={
@@ -1368,7 +1375,7 @@ test('all 29 real Worker openings keep preview and live initial health and facti
    assert.ok(person,`${scenario}/${officer.person_id} historical identity`);
    assert.equal(officer.health,person.initialization.health,`${scenario}/${officer.person_id} live health`);
    assert.ok(officer.profile.health_max>=officer.health,`${scenario}/${officer.person_id} live health cap`);
-   assert.equal(officer.loyalty,loyalty(person,officer.faction_id,leaders.has(ident)),`${scenario}/${officer.person_id} live loyalty`);
+   assert.equal(officer.loyalty,loyalty(person,officer.faction_id,leaders.has(ident),catalog,officer.person_id),`${scenario}/${officer.person_id} live loyalty`);
    assert.equal(officer.profile.virtue,person.profile.virtue,`${scenario}/${officer.person_id} live virtue`);
    if(officer.faction_id)checkedServing++;else checkedFree++;
   }
@@ -2208,4 +2215,46 @@ test('succession updates live faction names and ruler portraits while historical
  await page.reload();await enterScenarioMenu(page);await load(raw,'actual-successor-roundtrip.json');await page.locator('#city-jump').selectOption(fixture.city);await inspect('[data-current-faction-label]');await verifyLive();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(errors.get(page)).toEqual([]);
  const file=testInfo.outputPath('actual-successor-raw-save.json');await writeFile(file,raw);await testInfo.attach('actual-successor-raw-save',{path:file,contentType:'application/json'});
+});
+
+test('dialogue exchanges and dated family loyalty remain bilingual without replaying or changing saved state',async({page},testInfo)=>{
+ await opening(page);
+ await page.locator('#scenario').selectOption('mainland217-07');
+ await page.locator('input[name=faction][value=wei]').check();
+ await page.locator('#begin').click();await waitIdle(page);
+ const read=()=>page.evaluate(async()=>await(await fetch('/api/save')).json());
+ const original=await read(),event=page.locator('#event-dialog');
+ await expect(event).toBeVisible();await expect(event.locator('[data-dialogue-exchange] .dialogue-turn')).toHaveCount(2);
+ await expect(event.locator('[data-dialogue-person="san14-candidate-0521"]')).toBeVisible();
+ await expect(event.locator('.event-facts')).not.toBeEmpty();
+ await event.locator('[data-language-picker]').selectOption('ja');
+ await expect(event.locator('[data-dialogue-exchange]')).toHaveAttribute('data-l10n-native','ja');
+ await expect(event.locator('.dialogue-words').last()).toContainText('諸将');
+ expect(await read()).toEqual(original);
+ await historyScreenshot(page,testInfo,'dialogue-opening-ja',{fullPage:false});
+ await event.locator('[data-language-picker]').selectOption('zh-Hant');await tacticalDismiss(page);
+ const [id,officer]=Object.entries(original.state.officers).find(([,row])=>row.person_id==='san14-candidate-0526');
+ expect(officer.loyalty).toBeGreaterThanOrEqual(95);
+ const city=Object.values(original.state.cities).find(row=>row.roster.officer_ids.includes(Number(id))).id;
+ await page.locator('#city-jump').selectOption(city);
+ if(await page.locator('#dialog').isVisible())await closeDialog(page);
+ const details=page.locator('#city-roster-'+id);
+ if(!await details.isVisible())await page.locator('details:has(#city-roster-'+id+') > summary').click();
+ await details.click();
+ const basis=page.locator(`#dialog [data-officer-relation="${id}"]:not([hidden])`);
+ await expect(basis).toContainText('任用忠誠基準95');await expect(basis.locator('a')).not.toHaveCount(0);
+ await page.locator('#dialog-language').selectOption('ja');await expect(basis).toContainText('任用時の忠誠基準95');
+ await historyScreenshot(page,testInfo,'family-loyalty-basis-ja',{fullPage:false});
+ expect(await read()).toEqual(original);
+ await closeDialog(page);await openAllocation(page);
+ await page.locator('#allocation-officer').selectOption(id);
+ const current=await read(),maximum=Number(await page.locator('#allocation-troops').getAttribute('max'));
+ const amount=Math.min(maximum,officer.troops+1);expect(amount).toBeGreaterThan(officer.troops);
+ await page.locator('#allocation-troops').fill(String(amount));await page.locator('#confirm-allocation').click();await waitIdle(page);
+ await expect(page.locator('#dialog')).toBeVisible();
+ await closeDialog(page);
+ await expect(page.locator('#journal [data-command-feedback="allocate"] .dialogue-turn')).toHaveCount(2);
+ const after=await read();expect(after.state.officers[id].troops).toBe(amount);expect(after.state.rng).toEqual(current.state.rng);
+ await historyScreenshot(page,testInfo,'dialogue-command-feedback',{fullPage:false});
+ expect(errors.get(page)).toEqual([]);
 });

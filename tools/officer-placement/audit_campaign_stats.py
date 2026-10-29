@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Deterministically audit all current scenario openings, previews and saves.
 
-Expected values are derived independently from the retained factual references,
-not from the runtime appearance_values helper.  Only the report is written;
+Expected values are derived independently from the retained factual references
+and reviewed exact-person relationship rules, not the runtime loyalty helpers.
+Only the report is written;
 no server, player session, campaign source or save file is modified.
 """
 from __future__ import annotations
@@ -87,12 +88,33 @@ def loyalty_expectation(source, faction, ruler):
     return 80, 'source_context_mismatch_default'
 
 
+def relationship_expectation(policy, ruler_id, person_id, year, baseline):
+    """Independent data oracle: dated exceptions win, positive floors do not stack."""
+    eligible = lambda item: (item['ruler_id'] == ruler_id and item['person_id'] == person_id
+                            and item.get('start_year', 1) <= year <= item.get('end_year', 400))
+    blocked = [item for item in policy['exceptions'] if eligible(item)]
+    if blocked:
+        item = sorted(blocked, key=lambda entry: entry['id'])[0]
+        return baseline, dict(id=item['id'], ruler_id=ruler_id, kind=item['kind'], blocked=True)
+    candidates = [item for item in policy['records'] if eligible(item)]
+    if not candidates:
+        return baseline, None
+    item = sorted(candidates, key=lambda entry: (-entry['floor'], entry['id']))[0]
+    check(type(item['floor']) is int and 1 <= item['floor'] <= 99, 'Invalid relationship floor')
+    return max(baseline, item['floor']), dict(id=item['id'], ruler_id=ruler_id,
+        kind=item['kind'], blocked=False, floor=item['floor'])
+
+
 def audit():
     index_path = ROOT / 'game/data/campaigns/index.json'
     index = read(index_path)
     people_path = ROOT / 'game/config/campaigns/people.json'
     source_path = ROOT / 'game/config/references/cnblogs-officer-stats.json'
     abilities_path = ROOT / 'game/config/references/san14-abilities.json'
+    relationship_path = ROOT / 'game/config/references/officer-relations-v1.json'
+    relationship_policy = read(relationship_path)
+    check(relationship_policy['schema'] == 'tk2-officer-relations-v1'
+          and relationship_policy['rules_version'] == 'officer-relations-v1', 'Unknown relationship policy')
     people = read(people_path)['people']
     reference = read(source_path)
     sources = {row['person_id']: row for row in reference['records'] if row['person_id']}
@@ -188,6 +210,16 @@ def audit():
             faction = data['initial_owners'][city] if row else None
             expected_health = source['health'] if source else 80
             expected_loyalty, reason = loyalty_expectation(source, faction, ruler)
+            relationship = None
+            if faction is not None and not ruler:
+                leader = data['faction_rulers'].get(faction)
+                leader_pid = catalog.by_id[leader]['person_id'] if leader in catalog.by_id else None
+                baseline = expected_loyalty
+                expected_loyalty, relationship = relationship_expectation(relationship_policy,
+                    leader_pid, pid, data['start_year'], baseline)
+                counts['relationship_matches'] += relationship is not None
+                counts['relationship_exceptions'] += bool(relationship and relationship['blocked'])
+                counts['relationship_loyalty_increased'] += expected_loyalty > baseline
             prior_health = person['pre_campaign_stat_policy_v1']['profile']['health_max']
             prior_loyalty = 100 if ruler else 80 if row else 0
             check((officer.runtime_id, ident) == (person['runtime_id'], person['runtime_id']),
@@ -207,11 +239,14 @@ def audit():
             counts['health_cap_increased'] += officer.profile.health_max > prior_health
             counts['ordinary_loyalty_changed'] += role == 'serving' and officer.loyalty != 80
             if officer.health != prior_health or officer.loyalty != prior_loyalty:
-                changes.append(dict(person_id=pid, runtime_id=ident, name=person['name'], role=role,
+                changed = dict(person_id=pid, runtime_id=ident, name=person['name'], role=role,
                     city=city, faction=faction, source_row_id=source['source_row_id'] if source else None,
                     previous_initial_health=prior_health, initial_health=officer.health,
                     previous_health_max=prior_health, health_max=officer.profile.health_max,
-                    previous_loyalty=prior_loyalty, loyalty=officer.loyalty, loyalty_reason=reason))
+                    previous_loyalty=prior_loyalty, loyalty=officer.loyalty, loyalty_reason=reason)
+                if relationship:
+                    changed['relationship'] = relationship
+                changes.append(changed)
         saved = session.export_save()
         saved_bytes = canonical(saved)
         rng_before = (state.rng.state, state.rng.draws)
@@ -249,6 +284,9 @@ def audit():
             source_context_mismatch_defaults=counts['source_context_mismatch_default'],
             source_ruler_marker_nonruler_defaults=counts['source_ruler_marker_default'],
             no_source_loyalty_defaults=counts['no_source_default'],
+            relationship_matches=counts['relationship_matches'],
+            relationship_exceptions=counts['relationship_exceptions'],
+            relationship_loyalty_increased=counts['relationship_loyalty_increased'],
             virtue_coverage=dict(san14_charisma=charisma_count, missing_charisma_default60=fallback_count),
             city_capacity=99, battle_capacity=10,
             preview_cities_checked=len(state.cities), preview_officers_checked=len(starts),
@@ -262,13 +300,15 @@ def audit():
                       'initial_health_changed', 'health_cap_increased', 'ordinary_loyalty_changed',
                       'source_context_applied', 'source_context_mismatch_defaults',
                       'source_ruler_marker_nonruler_defaults', 'no_source_loyalty_defaults',
+                      'relationship_matches', 'relationship_exceptions', 'relationship_loyalty_increased',
                       'preview_cities_checked', 'preview_officers_checked'):
             totals[field] += result[field]
         scenarios.append(result)
     return dict(schema='tk2-officer-stat-scenario-audit-v1', policy_id='campaign-officer-stats-v1',
         seed=SEED, scenario_count=len(scenarios),
         methodology='Fresh normal-difficulty game in every catalog. Expected health/loyalty are independently '
-                    'derived from the pinned cnblogs reference and explicit faction context; virtue is checked '
+                    'derived from the pinned cnblogs reference, explicit faction context and a separate exact-person '
+                    'dated relationship-policy oracle with exception precedence and non-stacking floors; virtue is checked '
                     'against retained SAN14 numerical facts. Every city preview is compared with runtime state '
                     'without RNG/save mutation, then the complete save is loaded into a fresh same-version campaign.',
         scope='Opening verification only, not historical certification of existing placements or a migration of older saves. '
@@ -277,7 +317,9 @@ def audit():
             cnblogs='game/config/references/cnblogs-officer-stats.json',
             cnblogs_archive_sha256=reference['source']['archive_sha256'],
             cnblogs_factual_records_sha256=reference['source']['factual_records_sha256'],
-            san14='game/config/references/san14-abilities.json'),
+            san14='game/config/references/san14-abilities.json',
+            officer_relations='game/config/references/officer-relations-v1.json',
+            officer_relations_sha256=hashlib.sha256(relationship_path.read_bytes()).hexdigest()),
         summary=dict(totals), scenarios=scenarios)
 
 

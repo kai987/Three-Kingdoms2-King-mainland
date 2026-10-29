@@ -430,6 +430,20 @@
         "mainland208-10"
       ],
       "scenario_scope": "fixed"
+    },
+    {
+      "id": "dialogue-relations",
+      "title": "dialogue exchanges and dated family loyalty remain bilingual without replaying or changing saved state",
+      "groups": [
+        "people",
+        "economy",
+        "battle",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland217-07"
+      ],
+      "scenario_scope": "fixed"
     }
   ]
 }

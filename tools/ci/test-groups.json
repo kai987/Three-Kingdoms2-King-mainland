@@ -477,6 +477,15 @@
         "logistics"
       ]
     },
+    "tests/test_remake_officer_relations.py": {
+      "tier": "related",
+      "groups": [
+        "people",
+        "scenarios",
+        "battle",
+        "save"
+      ]
+    },
     "tests/test_remake_officers.py": {
       "tier": "related",
       "groups": [

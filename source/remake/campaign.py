@@ -13,7 +13,7 @@ from threading import RLock
 from types import SimpleNamespace
 
 from .errors import GameError
-from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid
+from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from .city_economy import income_at
@@ -107,6 +107,7 @@ class Catalog:
             appearance_values(self.profiles[ident], row.get('initialization'))
         self.ids = {row['person_id']: ident for ident, row in self.by_id.items()}
         self.factions = {f['id']: f for f in self.data['factions']}
+        officer_relations.validate_catalog(self)
         self.map_cities = {c['id']: c for c in self.data['cities']}
         self.links = {frozenset(e) for e in self.data['links']}
         from . import dated_events
@@ -257,7 +258,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             officer = initialize_officer(self.catalog.definitions[row['person_id']], ident,
                          self.catalog.profiles[ident], year=state.year, faction_id=city.owner,
                          is_ruler=row.get('ruler', False),
-                         **appearance_values(self.catalog.profiles[ident], self.catalog.by_id[ident].get('initialization'),
+                         **officer_relations.opening_values(self.catalog, ident,
                                              faction_id=city.owner, is_ruler=row.get('ruler', False)),
                          troops=row['troops'], rules=self.catalog.rules,
                          resolve_death_year=row.get('resolve_death_year', False))
@@ -321,6 +322,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'command_books':command_books.view(self,state),
                                 'battle_tactical':battle_grid.view(self,state,state.battle) if state else None,
                                 'officer_troop_types':troop_types.view(self,state),
+                                'officer_relations':officer_relations.view(self,state),
                                 'names': {str(i): self.person_name(state, i) for i in state.officers} if state else {}}}
 
     def command(self, kind, payload, revision):

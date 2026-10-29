@@ -7,6 +7,7 @@ capacity.  The twenty initially deployed identities remain the entire battle.
 """
 from .errors import GameError
 from .officers import recruitment_loyalty
+from . import officer_relations
 
 FIELDS = {'original_side', 'original_city', 'home', 'side'}
 
@@ -51,6 +52,7 @@ def convert(game, state, battle, actor, target, own, foe):
     leader = state.extension['leaders'].get(destination.owner)
     virtue = state.officers[leader].profile.virtue if leader in state.officers else state.officers[actor['id']].profile.virtue
     officer.loyalty = recruitment_loyalty(virtue, officer.loyalty)
+    officer_relations.apply(game,state,target['id'])
     battle[foe].remove(target)
     battle[own].append(target)
     # used is the player's activity receipt, not a prohibition on acting again.

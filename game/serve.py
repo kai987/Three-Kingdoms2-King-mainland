@@ -740,6 +740,7 @@ def main():
               '/i18n.js': ('i18n.js', 'text/javascript; charset=utf-8'),
               '/calendar.js': ('calendar.js', 'text/javascript; charset=utf-8'),
               '/audio.js': ('audio.js', 'text/javascript; charset=utf-8'),
+              '/dialogue.js': ('dialogue.js', 'text/javascript; charset=utf-8'),
               '/events.js': ('events.js', 'text/javascript; charset=utf-8'),
               '/events.css': ('events.css', 'text/css; charset=utf-8'),
               '/original-ui.js': ('original-ui.js', 'text/javascript; charset=utf-8'),

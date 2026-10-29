@@ -3,7 +3,7 @@ from threading import RLock
 from .campaign import Campaign, Catalog, GameError
 from .map_presentation import city_names,presentation,faction_colors
 from .city_economy import profiles_at,incomes_at
-from .officers import appearance_values
+from .officer_relations import opening_values
 from .dated_events import visible_factions
 
 
@@ -188,7 +188,7 @@ class CampaignSession:
                 officers.append(dict(id=ident,person_id=row['person_id'],name=c.name(ident),martial_strength=profile.martial_strength,
                                      intellect=profile.intellect,virtue=profile.virtue,troops=row['troops'],
                                      experience=0,tier=0,
-                                     **appearance_values(profile,c.by_id[ident].get('initialization'),
+                                     **opening_values(c,ident,
                                                          faction_id=d['initial_owners'][city],is_ruler=row.get('ruler',False)),
                                      is_ruler=bool(row.get('ruler')),equipment=initial_view(preview_game,row['person_id'])))
             owner=d['initial_owners'][city]

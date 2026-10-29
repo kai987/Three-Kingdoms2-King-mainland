@@ -52,3 +52,30 @@
 .event-treasure{position:absolute;bottom:10px;left:12px;width:96px;height:84px;image-rendering:pixelated;filter:drop-shadow(2px 2px 0 #000)}
 
 .event-facility{position:absolute;bottom:10px;left:12px;width:120px;height:96px;image-rendering:pixelated;filter:drop-shadow(2px 2px 0 #000)}
+
+/* Spoken exchanges use existing pixel portraits and leave the factual receipt below. */
+.dialogue-exchange{display:grid;gap:12px;margin:0 0 16px}
+.dialogue-turn{display:grid;grid-template-columns:48px minmax(0,1fr);align-items:start;gap:12px}
+.dialogue-face{width:48px;min-width:0}
+.dialogue-face .portrait-frame{display:block;width:48px!important;height:60px!important}
+.dialogue-face .portrait-frame img{width:100%;height:100%;object-fit:contain}
+.dialogue-face .civil-staff-portrait{display:block;width:48px;height:60px;object-fit:contain;image-rendering:pixelated}
+.dialogue-role{display:grid;place-items:center;width:48px;height:60px;border:2px solid #000;background:var(--paper);font-size:24px;box-sizing:border-box}
+.dialogue-words{border:2px solid #000;background:var(--paper);padding:8px 12px;min-height:60px;box-sizing:border-box;overflow-wrap:anywhere}
+.dialogue-words p{margin:0!important;font-size:18px;line-height:1.55}
+.dialogue-words .dialogue-speaker{font-size:14px;font-weight:700;margin-bottom:3px!important}
+.event-description .event-facts{font-size:16px;line-height:1.65;border-top:1px solid #000;padding-top:12px}
+.command-dialogue{margin:0 0 8px;max-width:960px;list-style:none}
+dialog .command-dialogue{margin:16px 0}
+.dialogue-compact{gap:8px;margin-bottom:0;grid-template-columns:repeat(2,minmax(0,1fr))}
+.dialogue-compact .dialogue-turn{grid-template-columns:32px minmax(0,1fr);gap:8px}
+.dialogue-compact .dialogue-face,.dialogue-compact .dialogue-role{width:32px}
+.dialogue-compact .dialogue-face .portrait-frame,.dialogue-compact .dialogue-role{width:32px!important;height:40px!important}
+.dialogue-compact .dialogue-face .civil-staff-portrait{width:32px;height:40px}
+.dialogue-compact .dialogue-role{font-size:18px}
+.dialogue-compact .dialogue-words{min-height:40px;padding:6px 9px}
+.dialogue-compact .dialogue-words p{font-size:15px}
+.dialogue-compact .dialogue-words .dialogue-speaker{font-size:12px}
+.dialogue-relation{font-size:14px;line-height:1.6;margin:8px 0 0}
+.dialogue-identity-note{font-size:14px;line-height:1.6;border-left:3px solid #000;padding-left:10px}
+@media(max-width:600px){.dialogue-compact{grid-template-columns:1fr}.dialogue-words p{font-size:16px}.dialogue-turn{gap:8px}}
