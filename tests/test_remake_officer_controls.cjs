@@ -35,8 +35,9 @@ const context={dialogGeneration:0,queueAllocationClose(){},GameOfficerChoices:re
   const row=commandBookFixture.api.row(context.view);
   if(payload.flow===null){commandBookFixture.consume(context.view,'allocate');row.allocation_flow={id:'1:wei:home:1',city:'home',source:'allocate'};}
   else assert.equal(payload.flow,row.allocation_flow.id,'The paid server flow is included on every later distribution');
-  const officer=officers[payload.officer],delta=payload.troops-officer.troops;
-  assert(delta<=city.reserves);city.reserves-=delta;officer.troops=payload.troops;
+  assert(Array.isArray(payload.allocations));assert(!Object.hasOwn(payload,'officer'));
+  const delta=payload.allocations.reduce((sum,item)=>sum+item.troops-officers[item.officer].troops,0);
+  assert(delta<=city.reserves);city.reserves-=delta;for(const item of payload.allocations)officers[item.officer].troops=item.troops;
  }
  return true;
 }};
@@ -58,60 +59,53 @@ const values=html=>[...html.matchAll(/<option value="(\d+)"/g)].map(m=>Number(m[
  context.departure(city);assert(lastDialog.body.includes('武98 · 知65 · 德66'));assert(lastDialog.body.indexOf('value="2"')<lastDialog.body.indexOf('value="1"'));
  context.transferCity(city);assert(lastDialog.body.includes('武98 · 知65 · 德66'));assert(lastDialog.body.includes('忠誠90'));
  assert.equal(JSON.stringify(context.view.game),before,'Reviewing and sorting choices has no game or RNG mutation');
- // A low-reserve city can use exactly its own troops plus reserves, never a negative preview.
+ // Navigation saves draft values only: no command, book, reserve or RNG mutation.
  context.allocate(city,1);
  assert.equal(element('#allocation-officer').value,'1');assert.equal(element('#allocation-troops').max,'100');assert(element('#allocation-officer-summary').textContent.includes('武60 · 知70 · 德88'));
- const input=element('#allocation-troops');input.value='9999';input.oninput();assert.equal(input.value,'100');assert.equal(element('#allocation-preview').textContent,'确认后本城预备兵 0。');
+ const initial=JSON.stringify(context.view),input=element('#allocation-troops');
+ input.value='9999';input.oninput();assert.equal(input.value,'100');assert.equal(element('#allocation-preview').textContent,'确认后本城预备兵 0。');
+ await element('#allocation-next').onclick();assert.equal(element('#allocation-officer').value,'2');assert.equal(input.value,'30');assert.equal(input.max,'30','One shared reserve budget includes all officer drafts');
+ input.value='0';input.oninput();await element('#allocation-next').onclick();assert.equal(element('#allocation-officer').value,'3');assert.equal(input.max,'40');
+ element('#allocation-officer').value='1';element('#allocation-officer').onchange();assert.equal(input.value,'100','Dropdown revisits preserve earlier drafts');
+ assert.equal(JSON.stringify(context.view),initial);assert.equal(requests,0,'Next and dropdown never call the server');
  await element('#confirm-allocation').onclick();
- assert.equal(lastCommand.payload.troops,100);assert.equal(city.reserves,0);assert.equal(officers[1].troops,100);assert.equal(closed,0,'Successful allocation remains open');assert.equal(lastDialog.title,'编兵');assert.equal(element('#allocation-officer').value,'1','Selected officer survives refresh');assert.equal(element('#allocation-troops').value,'100');
- const paidBooks=commandBookFixture.api.row(context.view).used,paidFlow=commandBookFixture.api.activeAllocation(context.view,'home').id,paidRequests=requests;
- assert(lastDialog.actions.includes('id="allocation-next"'));
- await element('#allocation-next').onclick();assert.equal(element('#allocation-officer').value,'2');assert.equal(element('#allocation-troops').value,'30');
- assert.equal(commandBookFixture.api.row(context.view).used,paidBooks);assert.equal(commandBookFixture.api.activeAllocation(context.view,'home').id,paidFlow);assert.equal(requests,paidRequests,'Next officer changes only the form, not the paid flow, books or game');
- element('#allocation-officer').value='1';element('#allocation-officer').onchange();
- // The next operation reads new resources; reducing troops returns them to reserves.
- element('#allocation-troops').value='40';element('#allocation-troops').oninput();assert.equal(element('#allocation-preview').textContent,'确认后本城预备兵 60。');
- await element('#allocation-next').onclick();assert.equal(city.reserves,60);assert.equal(officers[1].troops,40,'Next officer commits the edited troop target before switching');assert.equal(closed,0);
- assert.equal(element('#allocation-officer').value,'2');assert.equal(element('#allocation-troops').value,'30');assert.equal(element('#allocation-troops').max,'90');
- assert.equal(lastCommand.payload.flow,paidFlow);assert.equal(commandBookFixture.api.row(context.view).used,paidBooks,'Saving through Next officer reuses the same paid city flow');
- element('#allocation-troops').value='999';await element('#confirm-allocation').onclick();assert.equal(lastCommand.payload.troops,90,'Confirmation clamps pasted values even with no input event');assert.equal(city.reserves,0);
- element('#allocation-troops').value='-5';element('#allocation-troops').oninput();assert.equal(element('#allocation-troops').value,'0');
- element('#allocation-troops').value='3.9';element('#allocation-troops').oninput();assert.equal(element('#allocation-troops').value,'3');
- element('#allocation-troops').value='';element('#allocation-troops').oninput();assert.equal(element('#allocation-troops').value,'');element('#allocation-troops').onblur();assert.equal(element('#allocation-troops').value,'0');
- city.reserves=5000;context.allocate(city,1);assert.equal(element('#allocation-troops').max,'1000','Game troop cap still applies with ample reserves');
- // The same normalization is used by every numeric input, including the random seed.
+ assert.equal(requests,1);assert.equal(lastCommand.payload.flow,null);assert.equal(lastCommand.payload.allocations.length,2);
+ assert.equal(city.reserves,30);assert.equal(officers[1].troops,100);assert.equal(officers[2].troops,0);assert.equal(closed,0,'Final success keeps allocation open');
+ assert.equal(element('#allocation-officer').value,'1');assert.equal(input.value,'100');assert(element('#confirm-allocation').disabled,'No changed draft cannot be resubmitted');
+ const paidFlow=commandBookFixture.api.activeAllocation(context.view,'home').id;
+ assert.equal(commandBookFixture.api.row(context.view).used,1);
+ input.value='40';input.oninput();await element('#allocation-next').onclick();input.value='999';await element('#confirm-allocation').onclick();
+ assert.equal(officers[1].troops,40);assert.equal(officers[2].troops,90);assert.equal(city.reserves,0);assert.equal(lastCommand.payload.flow,paidFlow);assert.equal(commandBookFixture.api.row(context.view).used,1,'Later batches reuse the exact paid city flow');
+ // Bounds clamp before a switch even when paste does not fire an input event.
+ input.value='-5';input.oninput();assert.equal(input.value,'0');input.value='3.9';input.oninput();assert.equal(input.value,'3');input.value='';input.oninput();assert.equal(input.value,'');input.onblur();assert.equal(input.value,'0');
+ city.reserves=5000;context.allocate(city,1);assert.equal(input.max,'1000');input.value='99999';await element('#allocation-next').onclick();element('#allocation-officer').value='1';element('#allocation-officer').onchange();assert.equal(input.value,'1000');assert.equal(officers[1].troops,40,'Next stores a capped draft without allocating soldiers');
+ // Closing and opening anew discards unconfirmed drafts.
+ context.allocate(city,1);assert.equal(input.value,'40');assert(element('#confirm-allocation').disabled);
  const seed={min:'1',max:'4294967295',value:'999999999999'};context.bindNumberInput(seed);seed.oninput();assert.equal(seed.value,'4294967295');seed.value='-2';seed.onchange();assert.equal(seed.value,'1');seed.value='';seed.onblur();assert.equal(seed.value,'1');seed.value='Infinity';seed.onblur();assert.equal(seed.value,'1');
  assert.equal((source.match(/type="number"/g)||[]).length,3,'All current numeric controls are explicitly covered');
  assert(source.includes('id="battle-facility-batches" type="number" min="1" max="${trade.max_batches}"'));
- assert(source.includes('Math.min(trade.max_batches,Math.max(1,Math.trunc(Number(input.value)||1)))'),'Battlefield trade also clamps pasted values at input and confirmation');
+ assert(source.includes('Math.min(trade.max_batches,Math.max(1,Math.trunc(Number(input.value)||1)))'));
  assert(source.includes('bindNumberInput($(\'#seed\'))'));assert(source.includes('bindNumberInput(input,preview)'));
  assert(source.includes('<th>经</th>'));assert(source.includes('<th>德</th>'));assert(source.includes('<td>${o.virtue}</td>'));assert(source.includes('<td>${o.profile.virtue}</td>'));
- assert.equal(commandBookFixture.api.row(context.view).used,1,'One city-wide distribution pays once across multiple officers');commandBookFixture.exhaust(context.view);context.allocate(city,1);assert(element('#confirm-allocation').disabled);const beforeExhausted=requests;await element('#confirm-allocation').onclick();assert.equal(requests,beforeExhausted);
- assert(requests===3);
- const flow=commandBookFixture.api.activeAllocation(context.view,'home');context.allocate(city,1,flow.id);
- element('#allocation-troops').value=String(officers[1].troops+1);element('#allocation-troops').oninput();assert(!element('#confirm-allocation').disabled,'An already-paid distribution remains usable after the last book is spent');
- await element('#confirm-allocation').onclick();assert.equal(requests,4);assert.equal(commandBookFixture.api.row(context.view).used,commandBookFixture.api.row(context.view).total);
- assert(lastDialog.body.includes('data-command-book-cost="0"'));assert(lastDialog.actions.includes('完成配兵'));
- // A new workflow submits the first edited value through the regular paid
- // command path. Refusing its confirmation or failing the command must keep
- // that officer and input, and rapid repeated presses must not submit twice.
+ commandBookFixture.exhaust(context.view);context.allocate(city,1);input.value='45';input.oninput();assert(element('#confirm-allocation').disabled);const exhaustedRequests=requests;await element('#allocation-next').onclick();assert.equal(requests,exhaustedRequests,'Navigation remains free with no books');
+ context.allocate(city,1,paidFlow);input.value='45';input.oninput();assert(!element('#confirm-allocation').disabled);await element('#confirm-allocation').onclick();assert.equal(officers[1].troops,45);assert.equal(commandBookFixture.api.row(context.view).remaining,0);assert(lastDialog.body.includes('data-command-book-cost="0"'));
+ // Declining payment or failing submission preserves the complete draft;
+ // rapid confirmations submit at most one immutable batch.
  commandBookFixture.attach(context.view,3);context.allocate(city,1);
- const beforeNext=JSON.stringify(context.view),originalCommand=context.command,nextValue=officers[1].troops+5;
- element('#allocation-troops').value=String(nextValue);element('#allocation-troops').oninput();
- let attempts=0,resolveNext;
- context.command=async()=>{attempts++;return false;};
- await element('#allocation-next').onclick();
- assert.equal(attempts,1);assert.equal(element('#allocation-officer').value,'1');assert.equal(element('#allocation-troops').value,String(nextValue));assert.equal(JSON.stringify(context.view),beforeNext,'Declined or failed saves cannot spend books, troops or reserves');assert.equal(element('#allocation-next').disabled,false);
- context.command=()=>{attempts++;return new Promise(resolve=>{resolveNext=resolve;});};
- const pendingNext=element('#allocation-next').onclick();
- assert.equal(element('#allocation-next').disabled,true);await element('#allocation-next').onclick();
- assert.equal(attempts,2,'A pending Next officer save is submitted at most once');assert.equal(element('#allocation-officer').value,'1');
- resolveNext(false);await pendingNext;assert.equal(element('#allocation-troops').value,String(nextValue));assert.equal(element('#allocation-next').disabled,false);assert.equal(JSON.stringify(context.view),beforeNext);
- context.command=originalCommand;await element('#allocation-next').onclick();
- assert.equal(officers[1].troops,nextValue);assert.equal(element('#allocation-officer').value,'2');assert.equal(commandBookFixture.api.row(context.view).used,1,'The first changed Next officer saves and pays exactly once');assert.equal(lastCommand.payload.flow,null);
- const nextFlow=commandBookFixture.api.activeAllocation(context.view,'home').id;
- element('#allocation-troops').value='99999';await element('#allocation-next').onclick();
- assert.equal(officers[2].troops,1000,'Next officer uses the same server-backed numeric cap as Confirm');assert.equal(lastCommand.payload.flow,nextFlow);assert.equal(commandBookFixture.api.row(context.view).used,1);
+ input.value='50';await element('#allocation-next').onclick();input.value='95';input.oninput();
+ const beforeConfirm=JSON.stringify(context.view),originalCommand=context.command;
+ let attempts=0,resolveConfirm;
+ context.command=async()=>{attempts++;return false;};await element('#confirm-allocation').onclick();assert.equal(attempts,1);assert.equal(input.value,'95');assert.equal(JSON.stringify(context.view),beforeConfirm);
+ element('#allocation-officer').value='1';element('#allocation-officer').onchange();assert.equal(input.value,'50');
+ context.command=()=>{attempts++;return new Promise(resolve=>{resolveConfirm=resolve;});};
+ const pending=element('#confirm-allocation').onclick();assert(element('#allocation-next').disabled);assert(element('#allocation-officer').disabled);await element('#confirm-allocation').onclick();assert.equal(attempts,2);
+ resolveConfirm(false);await pending;assert.equal(input.value,'50');assert(!element('#allocation-next').disabled);assert.equal(JSON.stringify(context.view),beforeConfirm);
+ context.command=originalCommand;await element('#confirm-allocation').onclick();assert.equal(officers[1].troops,50);assert.equal(officers[2].troops,95);assert.equal(commandBookFixture.api.row(context.view).used,1);
+ const staleClosures=[];context.queueAllocationClose=value=>staleClosures.push(value);
+ const staleFlow=commandBookFixture.api.activeAllocation(context.view,'home').id;context.allocate(city,1,staleFlow);input.value='51';input.oninput();
+ let finishStale;context.command=(kind,payload)=>new Promise(resolve=>{finishStale=async()=>resolve(await originalCommand(kind,payload));});
+ const staleSubmission=element('#confirm-allocation').onclick();context.allocate(city,3);await finishStale();await staleSubmission;
+ assert.equal(element('#allocation-officer').value,'3','A completed older dialog cannot replace a newer officer selection');assert.equal(staleClosures.length,1);assert.equal(staleClosures[0].flow,staleFlow,'Only the completed exact paid flow is queued for safe closure');context.command=originalCommand;
  const oldFactions=context.view.catalog.factions;
  context.view.catalog.factions=[{id:'wei',captain:'关羽',name:'关羽',display_name:'关羽',ruler_person_id:'san14-candidate-0147'}];
  context.GamePortraits={html:(id,name)=>`<span data-portrait-person="${id}" data-portrait-name="${name}"></span>`};

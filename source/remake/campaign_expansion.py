@@ -845,6 +845,7 @@ class ExpandedCampaign:
         return run(self,state,payload)
 
     def _expanded_catalog_view(self,state):
+        from . import troop_types
         library=[]
         for ident,row in self.catalog.by_id.items():
             person=self.catalog.definitions[row['person_id']];profile=self.catalog.profiles[ident]
@@ -857,7 +858,8 @@ class ExpandedCampaign:
                             'martial':profile.martial_strength,'intellect':officer.profile.intellect if officer else profile.intellect,'virtue':profile.virtue,
                             'base_intellect':profile.intellect,
                             'study_gain':officer.profile.intellect-profile.intellect if officer else 0,
-                            'health_max':profile.health_max,'affinity':profile.terrain_affinity,
+                            'health_max':profile.health_max,'affinity':troop_types.effective_affinity(person.person_id,profile.terrain_affinity),
+                            'affinity_source':troop_types.metadata(person.person_id,profile.terrain_affinity),
                             'equipment':equipment.initial_view(self,person.person_id),
                             'aliases':sorted(set(row.get('aliases',[])+self.catalog.data.get(
                                 'additional_person_aliases',{}).get(person.person_id,[]))),

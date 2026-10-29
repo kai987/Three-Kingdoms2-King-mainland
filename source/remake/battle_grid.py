@@ -360,7 +360,9 @@ def affected_units(battle, target, tid, foe):
 
 
 def movement_cost(state, unit, terrain):
-    affinity = state.officers[unit['id']].profile.terrain_affinity
+    from .troop_types import effective_affinity
+    officer=state.officers[unit['id']]
+    affinity = effective_affinity(officer.person_id,officer.profile.terrain_affinity)
     if not _int(affinity, 0, 2) or not _int(terrain, 0, 5):
         raise ValueError('Invalid movement affinity or terrain')
     return MOVEMENT_COSTS[affinity][int(unit['troops'] >= 600)][terrain]

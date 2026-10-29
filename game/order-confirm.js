@@ -26,8 +26,14 @@
   if(amount>0&&!labels)throw Error('Unknown command-book confirmation action');
   const cities=view?.game?.cities||{},id=[payload.city,payload.source].find(value=>typeof value==='string'&&Object.hasOwn(cities,value))||null;
   const raw=id?(options.cityName?.(id)||id):choose(locale,'本勢力','自勢力');
-  const city=options.translate?.(raw,locale)||raw,action=labels?.[locale==='ja'?1:0]||kind;
-  return{kind,amount,city_id:id,city,action,message:choose(locale,
+  const city=options.translate?.(raw,locale)||raw;
+  let action=labels?.[locale==='ja'?1:0]||kind,allocation_count=null,allocation_delta=null;
+  if(kind==='allocate'&&Array.isArray(payload.allocations)){
+   allocation_count=payload.allocations.length;
+   allocation_delta=payload.allocations.reduce((sum,row)=>sum+row.troops-(view.game.officers?.[row.officer]?.troops??0),0);
+   action=choose(locale,`整批編兵${allocation_count}名（兵力淨增減${allocation_delta}）`,`武将${allocation_count}人を一括編制（兵力の増減${allocation_delta}）`);
+  }
+  return{kind,amount,city_id:id,city,action,allocation_count,allocation_delta,message:choose(locale,
    `將消耗${amount}張命令書，在「${city}」執行「${action}」。是否確定？`,
    `命令書${amount}枚を使い、「${city}」で「${action}」を実行します。よろしいですか？`)};
  }

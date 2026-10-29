@@ -49,6 +49,13 @@
         "save"
       ]
     },
+    "tests/test_remake_battle_markers.py": {
+      "tier": "global",
+      "groups": [
+        "battle",
+        "map"
+      ]
+    },
     "tests/test_remake_battle_presentation.py": {
       "tier": "related",
       "groups": [
@@ -741,6 +748,15 @@
       "groups": [
         "economy",
         "battle"
+      ]
+    },
+    "tests/test_remake_troop_types.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
       ]
     },
     "tests/test_remake_view_transport.py": {

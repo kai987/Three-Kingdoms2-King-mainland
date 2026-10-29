@@ -2132,23 +2132,30 @@ test('command-book confirmations and one paid city allocation flow preserve canc
   const after=await read();expect(after.state.officers[ident].troops).toBe(next);expect(after.state.cities.shujun.reserves).toBe(before.state.cities.shujun.reserves-1);expect(budget(after).used).toBe(budget(before).used);expect(active(after)).toEqual(active(before));expect(after.state.rng).toEqual(before.state.rng);expect(after.state.cities.shujun.reserves+after.state.cities.shujun.roster.officer_ids.reduce((sum,id)=>sum+after.state.officers[id].troops,0)).toBe(before.state.cities.shujun.reserves+before.state.cities.shujun.roster.officer_ids.reduce((sum,id)=>sum+before.state.officers[id].troops,0));allocations.push({source,officer:ident,troops_before:troops,troops_after:next,books_used:budget(after).used,flow:active(after).id,reserves:after.state.cities.shujun.reserves});return after;
  };
  for(const ident of ids)current=await distribute(ident,'recruit-continuation');expect(budget(current).used).toBe(1);await closeFlow();
- await openAllocation(page);const chosen=await page.locator('#allocation-officer').inputValue(),beforeNew=await read(),next=beforeNew.state.officers[chosen].troops===0?1:0;await page.locator('#allocation-troops').fill(String(next));await page.locator('#confirm-allocation').click();await expect(modal).toBeVisible();
- expect(await read()).toEqual(beforeNew);await modal.locator('#order-confirm-cancel').click();expect(await read()).toEqual(beforeNew);await expect(page.locator('#allocation-troops')).toHaveValue(String(next));
- await page.locator('#confirm-allocation').click();await accept('allocate');await expect(page.locator('#allocation-officer')).toBeVisible();current=await read();expect(budget(current).used).toBe(2);
- const selected=await page.locator('#allocation-officer').inputValue(),sequence=await page.locator('#allocation-officer option').evaluateAll(nodes=>nodes.map(node=>node.value)),nextOfficer=sequence[(sequence.indexOf(selected)+1)%sequence.length];
- const beforeNext=current,nextTroops=beforeNext.state.officers[selected].troops+1;
- expect(nextTroops).toBeLessThanOrEqual(1000);expect(beforeNext.state.cities.shujun.reserves).toBeGreaterThan(0);
- await page.locator('#allocation-troops').fill(String(nextTroops));await page.locator('#allocation-next').click();await waitIdle(page);
- current=await read();expect(current.state.officers[selected].troops).toBe(nextTroops);expect(current.state.cities.shujun.reserves).toBe(beforeNext.state.cities.shujun.reserves-1);expect(budget(current).used).toBe(budget(beforeNext).used);expect(active(current)).toEqual(active(beforeNext));expect(current.state.rng).toEqual(beforeNext.state.rng);
- const expectedNext=JSON.parse(JSON.stringify(beforeNext));expectedNext.state.officers[selected].troops=nextTroops;expectedNext.state.cities.shujun.reserves--;
- const note=current.state.log.at(-1);expect(note).toContain(`编兵为${nextTroops}，本城预备兵${current.state.cities.shujun.reserves}。`);expect(current.state.log).toEqual([...beforeNext.state.log,note].slice(-200));expectedNext.state.log=current.state.log;
- const nextContent=JSON.parse(JSON.stringify(current));delete expectedNext.checksum;delete nextContent.checksum;
- expect(nextContent).toEqual(expectedNext,'Next officer saves the troop target, reserve transfer and normal log entry before switching; every other save field, the paid flow and RNG remain unchanged');expect(current.checksum).not.toBe(beforeNext.checksum);
- await expect(page.locator('#allocation-officer')).toHaveValue(nextOfficer);await expect(page.locator('#allocation-troops')).toHaveValue(String(current.state.officers[nextOfficer].troops));await expect(modal).toBeHidden();
- allocations.push({source:'next-officer-saves-current',officer:selected,troops_before:beforeNext.state.officers[selected].troops,troops_after:nextTroops,books_used:budget(current).used,flow:active(current).id,reserves:current.state.cities.shujun.reserves});
- // The first allocation used to be the only fresh-flow action exercised.
- // Re-select three officers and actually add reserve troops to each of them,
- // keeping the same modal and receipt, rather than merely releasing troops.
+ // A new unpaid draft can be browsed and discarded without even closing a
+ // server flow. The current selection and every officer input stay local.
+ const revision=()=>page.evaluate(async()=>{const response=await fetch('/api/state');if(!response.ok)throw Error('Revision inspection failed');const body=await response.json();return(body.view||body).revision;});
+ await openAllocation(page);const untouched=await read(),unpaidRevision=await revision(),discarded=await page.locator('#allocation-officer').inputValue();
+ await expect(page.locator('#confirm-allocation')).toBeDisabled();await page.locator('#allocation-troops').fill(String(untouched.state.officers[discarded].troops+1));await page.locator('#allocation-next').click();
+ expect(await read()).toEqual(untouched);expect(await revision()).toBe(unpaidRevision);await expect(modal).toBeHidden();await closeDialog(page);await waitIdle(page);
+ expect(await read()).toEqual(untouched);expect(await revision()).toBe(unpaidRevision,'Closing an unpaid draft sends no allocation_close command');
+ await openAllocation(page);await page.locator('#allocation-officer').selectOption(discarded);await expect(page.locator('#allocation-troops')).toHaveValue(String(untouched.state.officers[discarded].troops));
+ const beforeNew=await read(),beforeRevision=await revision(),batch=[];
+ for(const ident of ids){
+  const next=beforeNew.state.officers[ident].troops+1;expect(next).toBeLessThanOrEqual(1000);
+  await page.locator('#allocation-officer').selectOption(ident);await page.locator('#allocation-troops').fill(String(next));await page.locator('#allocation-next').click();
+  expect(await read()).toEqual(beforeNew,'Next stores only a draft; troops, reserves, books and RNG remain untouched');await expect(modal).toBeHidden();batch.push({officer:ident,troops:next});
+ }
+ expect(await revision()).toBe(beforeRevision,'Multiple Next/select actions never issue a state-changing request');
+ for(const item of batch){await page.locator('#allocation-officer').selectOption(item.officer);await expect(page.locator('#allocation-troops')).toHaveValue(String(item.troops));}
+ await page.locator('#confirm-allocation').click();await expect(modal).toBeVisible();await expect(modal.locator('#order-confirm-message')).toContainText('3');
+ expect(await read()).toEqual(beforeNew);await modal.locator('#order-confirm-cancel').click();expect(await read()).toEqual(beforeNew);expect(await revision()).toBe(beforeRevision);
+ for(const item of batch){await page.locator('#allocation-officer').selectOption(item.officer);await expect(page.locator('#allocation-troops')).toHaveValue(String(item.troops));}
+ await page.locator('#confirm-allocation').click();await accept('allocate');await expect(page.locator('#allocation-officer')).toBeVisible();current=await read();
+ expect(budget(current).used).toBe(2);expect(current.state.cities.shujun.reserves).toBe(beforeNew.state.cities.shujun.reserves-3);expect(current.state.rng).toEqual(beforeNew.state.rng);
+ for(const item of batch)expect(current.state.officers[item.officer].troops).toBe(item.troops);
+ expect(await revision()).toBe(beforeRevision+1,'The entire three-officer batch is one atomic command');await expect(page.locator('#confirm-allocation')).toBeDisabled();
+ allocations.push({source:'three-local-drafts-final-atomic-confirmation',batch,revision_before:beforeRevision,revision_after:await revision(),books_before:budget(beforeNew).used,books_after:budget(current).used,reserves_before:beforeNew.state.cities.shujun.reserves,reserves_after:current.state.cities.shujun.reserves});
  for(const ident of ids)current=await distribute(ident,'standalone-continuation');expect(budget(current).used).toBe(2);await historyScreenshot(page,testInfo,'allocation-three-officers-one-book');await closeFlow();
  const remaining=budget(await read()).remaining??(budget(await read()).total-budget(await read()).used);
  for(let i=0;i<remaining;i++){

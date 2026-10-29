@@ -155,3 +155,15 @@ TK2_TEST_PLAN=build/ci/full-plan.json node tools/browser-tests/node_modules/@pla
 兵士戰驗收使用兩份明列來源 `browser_ui.spec.mjs` 與 `browser_soldier_ui.spec.mjs`，完整登記後才允許分組或分片。新增實際Worker驗收涵蓋1000兵10隊、逐隊命令與動畫、11人歸降即用、占空城、三類戰場設施、途中存讀與兩種語言。獨立受控fixture的格位、種子與傷勢明記；透過正式存檔載入，不注入頁面戰役狀態。
 
 自然行軍／缺圖驗收允許強弱懸殊造成單邊兵損，仍須有真實傷害、唯一機動費、正確格位、鍵盤操作、存讀與略過不重打。雙方互傷由明列的受控兵士接敵案例驗證，包含兩軍宏觀兵數均下降、實際步／弓／騎事件及同一攻基亂數；不以300兵對AI實際補滿1000兵也必定互傷作為遊戲規則。
+
+
+## 原旗標與軍種來源驗證
+
+```sh
+python3 -B tools/battle-markers-original/check.py
+python3 -B tools/officer-placement/build_troop_types.py --check
+python3 -B -m unittest discover -s tests -p 'test_remake_battle_markers.py' -v
+python3 -B -m unittest discover -s tests -p 'test_remake_troop_types.py' -v
+```
+
+`test_remake_battle_markers.py`登記為global靜態素材檢查（battle／map），驗132原CPU瓦片樣本、原256像素、全4倍像素與反偽造／路徑邊界，無需ROM或模擬器。`test_remake_troop_types.py`登記為related的battle／map／people／save，驗221個ROM綁定、9個轉錄、不確定來源標籤、轉錄衝突、本作有效查表、29開局與完整存讀，不能以重寫基線profile通過測試。相關組才執行這個玩法模組；完整模式仍包含全部模組。原旗標的畫布像素驗收使用實際遊戲畫布，對照圖集裁片，不替換繪圖函式或注入頁面戰役狀態。

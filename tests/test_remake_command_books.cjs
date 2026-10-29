@@ -19,11 +19,13 @@ assert.equal(api.cost(view,'unknown'),null);assert(!api.can(view,'unknown'));
 const malformed=JSON.parse(snapshot);malformed.catalog.command_books.costs.recruit='<script>';assert.equal(api.cost(malformed,'recruit'),null);assert(!api.html(malformed,{kind:'recruit'}).includes('<script>'));
 assert.equal(api.summary({}), '');
 assert(api.allocationSupported(view));
-const opening={catalog:{command_books:{schema:api.SCHEMA,turn:null,maximum:13,costs:{allocate:1,allocation_close:0},factions:{}}},game:null};
+const opening={catalog:{command_books:{schema:api.SCHEMA,allocation_batch:'confirm-v1',turn:null,maximum:13,costs:{allocate:1,allocation_close:0},factions:{}}},game:null};
 assert(api.allocationSupported(opening),'A current engine with no started campaign still advertises paid-flow support');
 for(const stale of [
  {},
  {catalog:{},game:{player:'wei',turn:3}},
+ (()=>{const old=JSON.parse(snapshot);delete old.catalog.command_books.allocation_batch;return old;})(),
+ (()=>{const old=JSON.parse(snapshot);old.catalog.command_books.allocation_batch='per-officer';return old;})(),
  (()=>{const old=JSON.parse(snapshot);delete old.catalog.command_books.costs.allocation_close;return old;})(),
  (()=>{const old=JSON.parse(snapshot);old.catalog.command_books.costs.allocation_close=1;return old;})(),
 ]){
@@ -56,8 +58,8 @@ vm.runInContext(source.slice(source.indexOf('function allocationCompatibilityNot
 assert.equal(dialogContext.allocationCompatibilityNotice(),'','A current paid-flow engine receives no version warning');
 const savedView=dialogContext.view;dialogContext.view={catalog:{},game:{player:'wei',turn:3}};
 const warning=dialogContext.allocationCompatibilityNotice();
-assert(warning.includes('尚不支援一次命令書連續配兵'));
-assert(warning.includes('命令書1枚による連続編制に未対応'));
+assert(warning.includes('尚不支援最後確認整批配兵'));
+assert(warning.includes('最後の確定による一括編制に未対応'));
 assert(warning.includes('下載舊進度備份'));assert(warning.includes('保留舊服務'));assert(warning.includes('重新開始相符的新戰役'));assert(warning.includes('ページの再読み込みだけでは'));
 const compatibilityNodes=new Map(),compatibilityNotice=[];
 dialogContext.$=key=>{if(!compatibilityNodes.has(key))compatibilityNodes.set(key,{});return compatibilityNodes.get(key);};

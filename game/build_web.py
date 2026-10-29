@@ -82,7 +82,7 @@ def static_allowlist():
     spec.loader.exec_module(module)
     for helper in ('portrait_static_assets', 'civil_portrait_static_assets',
                    'audio_effect_static_assets', 'original_ui_static_assets', 'equipment_icon_static_assets',
-                   'battle_static_assets', 'battlefield_static_assets', 'siege_static_assets', 'enhanced_battle_static_assets'):
+                   'battle_static_assets', 'battlefield_static_assets', 'siege_static_assets', 'battle_marker_static_assets', 'enhanced_battle_static_assets'):
         assets.update(getattr(module, helper)())
     for name in EXTRA_ASSETS:
         assets['/' + name] = (name, 'text/javascript; charset=utf-8')
@@ -163,7 +163,8 @@ def python_bundle(output):
              for path in sorted((ROOT / 'source/remake').rglob('*.py'))]
     files.append(('game/assets/map-presentation.json', safe_read(HERE, 'assets/map-presentation.json')))
     for name in ('assets/battlefields/index.json','config/battlefield-city-bindings.json',
-                 'config/references/original-battle-tactics-v1.json'):
+                 'config/references/original-battle-tactics-v1.json',
+                 'config/references/officer-troop-types-v1.json'):
         files.append(('game/'+name,safe_read(HERE,name)))
     archive = output / 'runtime/python.zip'
     archive.parent.mkdir(parents=True, exist_ok=True)

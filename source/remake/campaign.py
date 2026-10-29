@@ -295,6 +295,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
     def view(self):
         with self.lock:
             from . import dated_events
+            from . import troop_types
             state = self.state
             available = sum(year_state(p, state.year) == YearState.AVAILABLE for p in self.catalog.definitions.values()) if state else None
             travel = self._travel_view(state)
@@ -319,6 +320,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'equipment':equipment.view(self,state),
                                 'command_books':command_books.view(self,state),
                                 'battle_tactical':battle_grid.view(self,state,state.battle) if state else None,
+                                'officer_troop_types':troop_types.view(self,state),
                                 'names': {str(i): self.person_name(state, i) for i in state.officers} if state else {}}}
 
     def command(self, kind, payload, revision):
@@ -410,29 +412,51 @@ class Campaign(TravelCampaign, ExpandedCampaign):
 
     def _allocate(self, state, payload):
         city = self._owned_city(state, payload.get('city'))
-        batch = 'flow' in payload
+        confirmed_batch = 'allocations' in payload
+        batch = confirmed_batch or 'flow' in payload
         identity = payload.get('flow')
         if batch and identity is not None:
             command_books.require_allocation(state, city, identity)
-        ident = parse_officer_ref(payload.get('officer'), self.catalog.rules)
-        troops = integer(payload.get('troops'), 0, 1000, 'troops')
-        if ident not in city.roster.officer_ids:
-            raise GameError('武将不在本城。')
-        if ident in self._march_ids(state):
-            raise GameError('武将正在行军，不能编兵。')
-        officer = state.officers[ident]
-        change = troops - officer.troops
+        if confirmed_batch:
+            allocations = payload['allocations']
+            if (not isinstance(allocations, list) or not 1 <= len(allocations) <= 99
+                    or 'officer' in payload or 'troops' in payload
+                    or any(not isinstance(row, dict) or set(row) != {'officer', 'troops'}
+                           for row in allocations)):
+                raise GameError('操作参数无效。')
+        else:
+            allocations = [dict(officer=payload.get('officer'), troops=payload.get('troops'))]
+        planned, seen, marching = [], set(), self._march_ids(state)
+        for row in allocations:
+            ident = parse_officer_ref(row['officer'], self.catalog.rules)
+            troops = integer(row['troops'], 0, 1000, 'troops')
+            if ident in seen:
+                raise GameError('操作参数无效。')
+            seen.add(ident)
+            if ident not in city.roster.officer_ids:
+                raise GameError('武将不在本城。')
+            if ident in marching:
+                raise GameError('武将正在行军，不能编兵。')
+            officer = state.officers[ident]
+            planned.append((ident, officer, troops, troops - officer.troops))
+        change = sum(row[3] for row in planned)
         if change > city.reserves:
             raise GameError('本城预备兵不足。')
-        if not change:
+        # A zero-sum reassignment still changes the garrison and costs one
+        # order. All entries and their final reserve balance are checked before
+        # either paying or applying any part of the confirmation.
+        if not any(row[3] for row in planned):
             return
         if not batch or identity is None:
             command_books.spend(state, city, 'allocate')
             if batch:
                 command_books.open_allocation(state, city)
-        officer.troops = troops
+        for ident, officer, troops, _ in planned:
+            officer.troops = troops
         city.reserves -= change
-        self._note(state, f'{self.person_name(state, ident)}编兵为{troops}，本城预备兵{city.reserves}。')
+        for ident, _, troops, changed in planned:
+            if changed:
+                self._note(state, f'{self.person_name(state, ident)}编兵为{troops}，本城预备兵{city.reserves}。')
 
     def _allocation_close(self, state, payload):
         if not isinstance(payload.get('city'), str) or not isinstance(payload.get('flow'), str):

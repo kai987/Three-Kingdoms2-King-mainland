@@ -73,16 +73,83 @@ async function evidence(page,testInfo,name){
  await page.screenshot({path:testInfo.outputPath(name+'.png'),fullPage:true});
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 }
-async function attach(testInfo,name,value){await testInfo.attach(name,{body:Buffer.from(JSON.stringify(value,null,2)),contentType:'application/json'});}
+async function attach(testInfo,name,value){const body=Buffer.from(JSON.stringify(value,null,2));await writeFile(testInfo.outputPath(name+'.json'),body);await testInfo.attach(name,{body,contentType:'application/json'});}
+async function nativeMarkerPixels(page,marker,position){
+ // Read the live backing buffer and the shipped atlas independently. The
+ // detached reference canvas never replaces or writes into the game canvas.
+ return page.evaluate(async({marker,position})=>{
+  const asset=path=>GamePaths.asset(path),response=await fetch(asset('/assets/battle-markers-original/index.json'));
+  if(!response.ok)throw Error('Native marker manifest could not be inspected');
+  const manifest=await response.json(),key=`enemy:${['平','山','水'].indexOf(marker.type)}:${marker.teams}${marker.commander?':commander':''}`;
+  const frame=manifest.frames[key];if(!frame)throw Error('No native marker frame for '+key);
+  const image=new Image();image.src=asset(manifest.atlas.path);await image.decode();
+  const reference=document.createElement('canvas');reference.width=reference.height=64;
+  const context=reference.getContext('2d',{willReadFrequently:true});context.imageSmoothingEnabled=false;
+  context.drawImage(image,...frame.source_rect,0,0,64,64);
+  const expected=context.getImageData(0,0,64,64).data,canvas=document.querySelector('[data-battle-canvas]');
+  const actual=canvas.getContext('2d').getImageData(position.x*64,position.y*64,64,64).data;
+  let differences=0;for(let i=0;i<actual.length;i+=4)if(actual[i]!==expected[i]||actual[i+1]!==expected[i+1]||actual[i+2]!==expected[i+2]||actual[i+3]!==expected[i+3])differences++;
+  const hash=async bytes=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))).map(byte=>byte.toString(16).padStart(2,'0')).join('');
+  return {schema:manifest.schema,key,source:manifest.source,atlas:manifest.atlas,source_rect:frame.source_rect,
+   canvas_backing:[canvas.width,canvas.height],pixels_compared:64*64,different_pixels:differences,
+   actual_sha256:await hash(actual),atlas_frame_sha256:await hash(expected)};
+ },{marker,position});
+}
+async function troopSourceEvidence(page,testInfo,library){
+ const examples=['verified_original_rom','original_table_transcription','design_trait_inference','design_region_inference','retained_design','fallback_design'].map(kind=>library.find(person=>person.affinity_source?.source_kind===kind));
+ expect(examples.every(Boolean)).toBe(true,'Original ROM, transcribed and explicitly designed troop assignments all disclose their provenance');
+ const menu=page.locator('#utility-menu');if(await menu.getAttribute('open')===null)await menu.locator('summary').click();
+ await page.locator('#library').click();const proof=[];
+ for(const person of examples){
+  await page.locator('#library-search').fill(person.person_id);await expect(page.locator('.person-detail')).toHaveCount(1);await page.locator('.person-detail').click();
+  for(const language of ['zh-Hant','ja']){
+   await page.locator('#dialog-language').selectOption(language);
+   const source=page.locator(`#dialog [data-officer-affinity-source][data-person-id="${person.person_id}"]:visible`);
+   await expect(source).toHaveAttribute('data-officer-affinity-source',person.affinity_source.source_kind);await expect(source).toHaveAttribute('data-officer-affinity-code',String(person.affinity));
+   await expect(source).toContainText(['平軍','山軍','水軍'][person.affinity]);
+   const descriptions={verified_original_rom:['原版ROM資料','原作ROMの資料'],original_table_transcription:['原版公開表轉錄','原作公開表の転記'],design_trait_inference:['生涯特性推定（本作配置）','経歴・特性からの推定（本作設定）'],design_region_inference:['出場地域推定（本作配置）','登場地域からの推定（本作設定）'],retained_design:['沿用本作配置','既存の本作設定を継続'],fallback_design:['本作預設（資料不足）','本作の初期設定（資料不足）']};
+   const description=descriptions[person.affinity_source.source_kind][language==='ja'?1:0];
+   await expect(source).toContainText(description);proof.push({person_id:person.person_id,language,code:person.affinity,source_kind:person.affinity_source.source_kind,visible_text:await source.innerText()});
+   if(person===examples[0])await evidence(page,testInfo,'original-troop-source-'+language);
+  }
+  await page.locator('#back-library').click();
+ }
+ await page.locator('#dialog [data-cancel]').click();await expect(page.locator('#dialog')).toBeHidden();return proof;
+}
 
 test('field soldier formations expose ten hundred-person teams and replay actual individual orders without extra damage',async({page},testInfo)=>{
  const macro=fixture('field'),contact=fixture('contact'),touch=testInfo.project.name==='touch-chromium',proof=[];
  await opening(page);await load(page,macro.save);
  const scene=page.locator('[data-battle-scene]');await expect(scene).toHaveAttribute('data-battle-scene-mode','tactical');
- const before=await read(page,false),markers=JSON.parse(await scene.getAttribute('data-battle-markers'));
+ await expect(scene).toHaveAttribute('data-tactical-marker-style','original-native-atlas');
+ const before=await read(page),markers=JSON.parse(await scene.getAttribute('data-battle-markers'));
+ const types=before.view.catalog.officer_troop_types,battle=before.save.state.battle;
+ expect(types.schema).toBe('tk2-officer-troop-types-view-v1');expect(types.rules_version).toBe('officer-troop-types-v1');
  expect(markers.length).toBe(before.save.state.battle.attackers.length+before.save.state.battle.defenders.length);
- for(const marker of markers){expect(['平','山','水']).toContain(marker.type);expect(marker.teams).toBe(Math.ceil(marker.troops/100));expect(marker.teams).toBeGreaterThanOrEqual(1);expect(marker.teams).toBeLessThanOrEqual(10);}
+ for(const marker of markers){
+  const metadata=types.officers[String(marker.id)],unit=battle[marker.side].find(unit=>String(unit.id)===String(marker.id));
+  expect(metadata).toBeTruthy();expect([0,1,2]).toContain(metadata.code);expect(marker.type).toBe(['平','山','水'][metadata.code]);
+  expect(metadata.base_code).toBe(before.save.state.officers[String(marker.id)].profile.terrain_affinity);
+  expect(['verified_original_rom','original_table_transcription','design_trait_inference','design_region_inference','retained_design','fallback_design','generated_design']).toContain(metadata.source_kind);
+  expect(marker.troops).toBe(unit.troops);expect(marker.teams).toBe(Math.ceil(marker.troops/100));expect(marker.teams).toBeGreaterThanOrEqual(1);expect(marker.teams).toBeLessThanOrEqual(10);
+  expect(marker.commander).toBe(String(marker.id)===String(battle[marker.side][0].id));
+ }
  const actorMarker=markers.find(row=>String(row.id)===String(macro.actor));expect(actorMarker.troops).toBe(1000);expect(actorMarker.teams).toBe(10);
+ // The second defender is neither selected nor attackable from the selected
+ // actor, so its entire64×64 native frame is free of selection overlays.
+ const inspected=markers.find(row=>String(row.id)===String(battle.defenders[1].id));
+ expect(String(inspected.id)).not.toBe(String(macro.target));
+ const selected=await scene.getAttribute('data-battle-selected-actor');
+ expect(before.view.catalog.battle_tactical.actors[selected].attack_targets.map(String)).not.toContain(String(inspected.id));
+ const native=await nativeMarkerPixels(page,inspected,battle.extended.tactical.positions[String(inspected.id)]);
+ expect(native.schema).toBe('tk2-battle-markers-original-v1');expect(native.source).toBe('original-chr-and-native-tactical-marker-routine');
+ expect(native.pixels_compared).toBe(4096);expect(native.different_pixels).toBe(0);expect(native.actual_sha256).toBe(native.atlas_frame_sha256);
+ expect(native.canvas_backing).toEqual([496*4,384*4]);
+ expect(await save(page)).toEqual(before.save,'Native atlas loading, inspection and screenshots never migrate saved profiles or draw game RNG');
+ await evidence(page,testInfo,'original-native-tactical-flags');
+ proof.push({stage:'native-marker-atlas',native,types,markers});
+ proof.push({stage:'troop-assignment-source-ui',sources:await troopSourceEvidence(page,testInfo,before.view.catalog.library)});
+ expect(await save(page)).toEqual(before.save,'Viewing troop-type provenance in either language leaves baseline profiles and campaign RNG unchanged');
  await cell(page,macro.actor_cell,touch);await cell(page,macro.target_cell,touch);await control(page,'attack');await idle(page);
  await expect(scene).toHaveAttribute('data-battle-scene-mode','field-formation');
  let current=await read(page,false),row=current.save.state.battle.extended.siege;

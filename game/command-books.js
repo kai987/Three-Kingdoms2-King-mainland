@@ -17,9 +17,9 @@
  }
  function allocationSupported(view){
   // Long-lived local servers may serve new JS while retaining old imported
-  // Python rules. The free close command was introduced with paid city flows.
+  // Python rules. Draft navigation requires atomic final batch confirmation.
   const source=view?.catalog?.command_books;
-  return source?.schema===SCHEMA&&source.costs?.allocate===1&&source.costs.allocation_close===0&&(!view?.game||!!row(view));
+  return source?.schema===SCHEMA&&source.allocation_batch==='confirm-v1'&&source.costs?.allocate===1&&source.costs.allocation_close===0&&(!view?.game||!!row(view));
  }
  function cost(view,kind,options={}){
   const value=data(view)?.costs?.[kind];if(!integer(value))return null;

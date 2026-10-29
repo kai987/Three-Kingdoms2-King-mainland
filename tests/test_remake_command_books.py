@@ -88,6 +88,151 @@ class CommandBooks(unittest.TestCase):
         self.assertEqual(row['orders'][0]['allocation_flow'], active['id'])
         self.game.validate(self.game.state)
 
+    def test_confirmed_batch_commits_all_officers_and_pays_only_one_book(self):
+        before = deepcopy(self.game.state)
+        city = before.cities['xiangyang']
+        first, second, unchanged = city.roster.officer_ids[:3]
+        self.cmd('allocate', dict(city=city.id, allocations=[
+            dict(officer=first, troops=1000), dict(officer=second, troops=0),
+            dict(officer=unchanged, troops=before.officers[unchanged].troops)], flow=None))
+        state = self.game.state
+        self.assertEqual((state.officers[first].troops, state.officers[second].troops), (1000, 0))
+        delta = 1000 - before.officers[first].troops - before.officers[second].troops
+        self.assertEqual(state.cities[city.id].reserves, city.reserves - delta)
+        self.assertEqual(state.soldiers, before.soldiers)
+        self.assertEqual(state.rng, before.rng)
+        row = state.extension['command_books']['factions']['shu']
+        self.assertEqual((row['used'], len(row['orders'])), (1, 1))
+        active = books.active_allocation(state, 'shu', city.id)
+        self.assertEqual(row['orders'][0], dict(city=city.id, kind='allocate', cost=1,
+                                              allocation_flow=active['id']))
+        self.game.validate(state)
+
+    def test_zero_sum_batch_reassigns_without_temporary_negative_reserves(self):
+        state = self.game.state
+        city = state.cities['xiangyang']
+        state.soldiers['initial'] -= city.reserves
+        city.reserves = 0
+        first, second = city.roster.officer_ids[:2]
+        total = state.officers[first].troops + state.officers[second].troops
+        before = deepcopy(state)
+        # The increase comes first, but the whole confirmation is one exchange.
+        self.cmd('allocate', dict(city=city.id, allocations=[
+            dict(officer=first, troops=total), dict(officer=second, troops=0)]))
+        self.assertEqual(self.game.state.cities[city.id].reserves, 0)
+        self.assertEqual((self.game.state.officers[first].troops,
+                          self.game.state.officers[second].troops), (total, 0))
+        self.assertEqual(books.remaining(self.game.state, 'shu'), books.remaining(before, 'shu') - 1)
+        self.assertEqual(self.game.state.soldiers, before.soldiers)
+        self.assertEqual(self.game.state.rng, before.rng)
+        self.game.validate(self.game.state)
+
+    def test_unchanged_batch_and_capability_views_do_not_charge_or_open_a_flow(self):
+        city = self.game.state.cities['xiangyang']
+        before = self.game.export_save()
+        for _ in range(2):
+            self.cmd('allocate', dict(city=city.id, allocations=[
+                dict(officer=i, troops=self.game.state.officers[i].troops)
+                for i in city.roster.officer_ids], flow=None))
+            self.assertEqual(self.game.view()['catalog']['command_books']['allocation_batch'], 'confirm-v1')
+            self.assertEqual(self.game.export_save(), before)
+            self.assertIsNone(books.active_allocation(self.game.state, 'shu'))
+        for _ in range(3):
+            self.cmd('recruit', dict(city=city.id))
+        before = self.game.export_save()
+        self.cmd('allocate', dict(city=city.id, allocations=[
+            dict(officer=city.roster.officer_ids[0],
+                 troops=self.game.state.officers[city.roster.officer_ids[0]].troops)]))
+        self.assertEqual(self.game.export_save(), before, 'No-op confirmation also needs no available book')
+
+    def test_invalid_batches_reject_every_entry_before_payment_or_mutation(self):
+        city = self.game.state.cities['xiangyang']
+        first, second = city.roster.officer_ids[:2]
+        valid = dict(officer=first, troops=200)
+        payloads = [dict(city=city.id, allocations=rows) for rows in (
+            None, {}, [], [valid] * 100, [valid, valid], [valid, None],
+            [valid, dict(officer=second)], [valid, dict(officer=second, troops=200, extra=True)],
+            [valid, dict(officer=second, troops=True)], [valid, dict(officer=True, troops=200)],
+            [valid, dict(officer=second, troops=-1)], [valid, dict(officer=second, troops=1001)],
+            [valid, dict(officer=1200, troops=200)],
+            [valid, dict(officer=self.game.state.cities['nanyang'].roster.officer_ids[0], troops=200)]
+        )]
+        payloads.extend([dict(city=city.id, allocations=[valid], officer=first),
+                         dict(city=city.id, allocations=[valid], troops=200),
+                         dict(city=city.id, allocations=[valid], flow='forged')])
+        before, revision = self.game.export_save(), self.game.revision
+        for payload in payloads:
+            with self.subTest(payload=payload):
+                with self.assertRaises((GameError, ValueError)):
+                    self.cmd('allocate', payload)
+                self.assertEqual(self.game.export_save(), before)
+                self.assertEqual(self.game.revision, revision)
+
+    def test_batch_checks_combined_reserves_and_rejects_marching_members(self):
+        city = self.game.state.cities['xiangyang']
+        first, second = city.roster.officer_ids[:2]
+        before, revision = self.game.export_save(), self.game.revision
+        with self.assertRaises(GameError):
+            self.cmd('allocate', dict(city=city.id, allocations=[
+                dict(officer=first, troops=1000), dict(officer=second, troops=1000)]))
+        self.assertEqual(self.game.export_save(), before)
+        self.assertEqual(self.game.revision, revision)
+        self.cmd('depart', dict(source=city.id, target='nanyang', officers=[second]))
+        before, revision = self.game.export_save(), self.game.revision
+        with self.assertRaises(GameError):
+            self.cmd('allocate', dict(city=city.id, allocations=[
+                dict(officer=first, troops=200), dict(officer=second, troops=0)]))
+        self.assertEqual(self.game.export_save(), before)
+        self.assertEqual(self.game.revision, revision)
+
+    def test_paid_recruitment_batch_survives_save_and_uses_existing_flow_once(self):
+        self.cmd('recruit', dict(city='xiangyang', allocation_flow=True))
+        state = self.game.state
+        first, second = state.cities['xiangyang'].roster.officer_ids[:2]
+        active = books.active_allocation(state, 'shu')
+        before = deepcopy(state)
+        payload = dict(city='xiangyang', allocations=[
+            dict(officer=first, troops=state.officers[first].troops + 20),
+            dict(officer=second, troops=state.officers[second].troops + 30)], flow=active['id'])
+        revision = self.game.revision
+        self.cmd('allocate', payload)
+        self.assertEqual(books.remaining(self.game.state, 'shu'), books.remaining(before, 'shu'))
+        self.assertEqual(self.game.state.cities['xiangyang'].reserves, before.cities['xiangyang'].reserves - 50)
+        self.assertEqual(self.game.state.rng, before.rng)
+        saved = self.game.export_save()
+        clone = Campaign(self.game.catalog)
+        clone.load_save(json.loads(json.dumps(saved)), 0)
+        self.assertEqual(clone.export_save(), saved)
+        self.assertEqual(books.active_allocation(clone.state, 'shu'), active)
+        with self.assertRaises(GameError):
+            self.game.command('allocate', payload, revision)
+        self.assertEqual(self.game.export_save(), saved)
+        self.cmd('allocation_close', dict(city='xiangyang', flow=active['id']))
+        closed, revision = self.game.export_save(), self.game.revision
+        with self.assertRaises(GameError):
+            self.cmd('allocate', payload)
+        self.assertEqual(self.game.export_save(), closed)
+        self.assertEqual(self.game.revision, revision)
+
+    def test_last_book_pays_one_whole_batch_and_paid_flow_covers_later_confirmation(self):
+        for _ in range(2):
+            self.cmd('recruit', dict(city='xiangyang'))
+        first, second = self.game.state.cities['xiangyang'].roster.officer_ids[:2]
+        self.cmd('allocate', dict(city='xiangyang', allocations=[
+            dict(officer=first, troops=200), dict(officer=second, troops=220)], flow=None))
+        self.assertEqual(books.remaining(self.game.state, 'shu'), 0)
+        active = books.active_allocation(self.game.state, 'shu')
+        before, revision = self.game.export_save(), self.game.revision
+        changed = dict(city='xiangyang', allocations=[dict(officer=first, troops=201)])
+        with self.assertRaises(GameError):
+            self.cmd('allocate', changed)
+        self.assertEqual(self.game.export_save(), before)
+        self.assertEqual(self.game.revision, revision)
+        self.cmd('allocate', dict(changed, flow=active['id']))
+        self.assertEqual(books.remaining(self.game.state, 'shu'), 0)
+        self.assertEqual(len(self.game.state.extension['command_books']['factions']['shu']['orders']), 3)
+        self.game.validate(self.game.state)
+
     def test_no_change_invalid_and_duplicate_requests_never_buy_a_new_flow(self):
         city = self.game.state.cities['xiangyang'];ident = city.roster.officer_ids[0]
         before = self.game.export_save()

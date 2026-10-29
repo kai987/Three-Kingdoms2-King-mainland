@@ -66,6 +66,9 @@ class BattleGridTests(unittest.TestCase):
     def test_all_affinities_use_native_599_600_boundary_and_positive_costs(self):
         _, state, battle = fixture()
         actor = battle['attackers'][0]
+        # Isolate all three raw cost rows from the fixture's historical
+        # Zhuge Liang identity, whose verified original type now wins.
+        state.officers[actor['id']].person_id='controlled-cost-table'
         expected = [((2, 3, 1, 3, 3, 4), (3, 4, 2, 5, 5, 6)),
                     ((3, 3, 2, 5, 2, 4), (5, 4, 3, 6, 3, 6)),
                     ((3, 3, 2, 2, 4, 4), (5, 4, 3, 3, 6, 6))]
@@ -90,6 +93,7 @@ class BattleGridTests(unittest.TestCase):
 
     def test_dijkstra_uses_cheaper_real_terrain_not_screen_or_manhattan_cost(self):
         game, state, battle = fixture()
+        state.officers[1].person_id='controlled-plain-path'
         position(battle, 1, 1, 1)
         position(battle, 101, 20, 10)
         position(battle, 102, 21, 10)
@@ -123,6 +127,7 @@ class BattleGridTests(unittest.TestCase):
 
     def test_same_unit_moves_repeatedly_then_attacks_using_shared_points(self):
         game, state, battle = fixture()
+        state.officers[1].person_id='controlled-plain-repeat'
         position(battle, 1, 1, 1)
         position(battle, 101, 4, 1)
         with patch.object(grid, '_field', return_value=plain()):
@@ -255,6 +260,7 @@ class BattleGridTests(unittest.TestCase):
 
     def test_modern_ai_moves_to_contact_then_reuses_actor_and_waits_when_exhausted(self):
         game, state, battle = fixture(defenders=1)
+        state.officers[1].person_id='controlled-plain-ai-path'
         position(battle, 1, 1, 1)
         position(battle, 101, 8, 1)
         battle['extended']['tactical']['points']['attackers'] = 8

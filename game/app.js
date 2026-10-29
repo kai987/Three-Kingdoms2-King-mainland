@@ -572,7 +572,7 @@ function factionIdentityHtml(owner){
 }
 function allocationCompatibilityNotice(){
  if(typeof GameCommandBooks!=='undefined'&&GameCommandBooks.allocationSupported(view))return '';
- return `<aside class="command-book-version-warning" role="status"><p data-l10n-native="zh-Hant" data-locale-only="zh-Hant">目前的遊戲引擎仍是舊版，尚不支援一次命令書連續配兵。已暫停手動編兵，以免逐將重複扣書。請先下載舊進度備份，保留舊服務。新功能請另開正式站或新版服務，並重新開始相符的新戰役；只重新整理網頁不會更新舊引擎。</p><p data-l10n-native="ja" data-locale-only="ja" hidden>現在のゲームエンジンは旧版で、命令書1枚による連続編制に未対応です。武将ごとの重複消費を防ぐため、手動編制を停止しています。旧進行状況のバックアップをダウンロードし、この旧サーバーを残してください。新機能はオンライン最新版または新版サーバーで、新しい戦役として開始してください。ページの再読み込みだけでは旧エンジンは更新されません。</p><a href="https://kai987.github.io/Three-Kingdoms2-King-mainland/" target="_blank" rel="noopener noreferrer"><span data-l10n-native="zh-Hant" data-locale-only="zh-Hant">另開線上最新版</span><span data-l10n-native="ja" data-locale-only="ja" hidden>オンライン最新版を別に開く</span></a></aside>`;
+ return `<aside class="command-book-version-warning" role="status"><p data-l10n-native="zh-Hant" data-locale-only="zh-Hant">目前的遊戲引擎仍是舊版，尚不支援最後確認整批配兵。已暫停手動編兵，以免切換武將時逐將扣書。請先下載舊進度備份，保留舊服務。新功能請另開正式站或新版服務，並重新開始相符的新戰役；只重新整理網頁不會更新舊引擎。</p><p data-l10n-native="ja" data-locale-only="ja" hidden>現在のゲームエンジンは旧版で、最後の確定による一括編制に未対応です。武将の切替時に命令書が消費されるのを防ぐため、手動編制を停止しています。旧進行状況のバックアップをダウンロードし、この旧サーバーを残してください。新機能はオンライン最新版または新版サーバーで、新しい戦役として開始してください。ページの再読み込みだけでは旧エンジンは更新されません。</p><a href="https://kai987.github.io/Three-Kingdoms2-King-mainland/" target="_blank" rel="noopener noreferrer"><span data-l10n-native="zh-Hant" data-locale-only="zh-Hant">另開線上最新版</span><span data-l10n-native="ja" data-locale-only="ja" hidden>オンライン最新版を別に開く</span></a></aside>`;
 }
 function showAllocationCompatibility(){
  const warning=allocationCompatibilityNotice();if(!warning)return false;
@@ -693,47 +693,46 @@ function allocate(city,preferred=null,flow=null){
  if(typeof GameCommandBooks==='undefined'||!GameCommandBooks.allocationSupported(view))return openDialog('编兵',allocationCompatibilityNotice(),'<button data-cancel>返回战役</button>');
  const ids=sortedOfficers(city.roster.officer_ids.filter(i=>!marching().has(i)));
  if(!ids.length)return notice('本城武将均在行军。');
- const selected=ids.includes(preferred)?preferred:ids[0],officer=view.game.officers[selected],maximum=Math.min(1000,officer.troops+city.reserves);
+ let selected=ids.includes(preferred)?preferred:ids[0],submitting=false;
+ const original=new Map(ids.map(id=>[id,view.game.officers[id].troops])),draft=new Map(original),reserve=city.reserves;
  const options={kind:'allocate',locale:GameI18n.locale,city:city.id,flow};
- const generation=openDialog('编兵',`<p>${cityCommandText('本城預備兵 '+city.reserves,'都市の予備兵 '+city.reserves)}</p><p class="small">${flow?cityCommandText('本次流程已付費，可連續調整本城多名武將，不再扣命令書。','この編制は支払済みです。同じ都市の複数武将へ追加の命令書なしで配分できます。'):cityCommandText('整次配兵首次有效確認只使用1本命令書，可連續調整本城多名武將。關閉後重新開始另計1本。','一連の編制は最初の有効な確定で命令書1枚です。同じ都市の複数武将へ続けて配分でき、終了後の新規編制は再び1枚です。')}</p>${GameCommandBooks.html(view,options)}<label class="field" for="allocation-officer">武将<select id="allocation-officer">${ids.map(i=>`<option value="${i}" ${i===selected?'selected':''}>${escapeHtml(officerChoiceText(i))}</option>`).join('')}</select></label><p class="small officer-choice-summary" id="allocation-officer-summary"></p><div class="allocation-value"><label class="field" for="allocation-troops">目标兵力<input id="allocation-troops" type="number" min="0" max="${maximum}" step="1" value="${officer.troops}"></label><button type="button" id="allocation-max">最大值</button></div><p class="small" id="allocation-preview"></p>`, `<button data-cancel>${flow?cityCommandText('完成配兵','編制を終了'):'取消'}</button><button type="button" id="allocation-next" ${ids.length<2?'disabled':''}>${cityCommandText('下一位武將','次の武将')}</button><button id="confirm-allocation" class="primary">确认编兵</button>`,{allocation:{city:city.id,flow}});
- let submitting=false;
- const input=$('#allocation-troops'),preview=(fillMaximum=false)=>{
-  const current=view.game.cities[city.id],o=view.game.officers[$('#allocation-officer').value];
-  input.max=String(Math.min(1000,o.troops+current.reserves));
-  if(fillMaximum===true)input.value=input.max;
-  $('#allocation-officer-summary').textContent=officerChoiceText($('#allocation-officer').value);
-  const n=clampNumberInput(input);
-  const available=GameCommandBooks.can(view,'allocate',options);
-  $('#confirm-allocation').disabled=submitting||n===null||n===o.troops||!available;
-  $('#allocation-next').disabled=submitting||ids.length<2||n===null||n!==o.troops&&!available;
-  $('#allocation-preview').textContent=n===null?'':`确认后本城预备兵 ${Math.max(0,current.reserves+o.troops-n)}。`;
+ const balance=()=>reserve+ids.reduce((sum,id)=>sum+original.get(id)-draft.get(id),0);
+ const maximum=()=>Math.min(1000,draft.get(selected)+balance());
+ const changes=()=>ids.filter(id=>draft.get(id)!==original.get(id)).map(officer=>({officer,troops:draft.get(officer)}));
+ const generation=openDialog('编兵',`<p>${cityCommandText('本城預備兵 '+reserve,'都市の予備兵 '+reserve)}</p><p class="small">${cityCommandText('下一位與切換武將只保存本頁草稿，不消耗命令書。最後確認才整批提交；取消關閉會捨棄未提交的草稿。','次の武将・武将の切替は画面内の下書きのみ保存し、命令書を消費しません。最後の確定で一括反映し、閉じると未確定の下書きは破棄されます。')}</p><p class="small">${flow?cityCommandText('本次流程已付費，整批確認不再扣命令書。','この編制は支払済みです。一括確定に追加の命令書は不要です。'):cityCommandText('整批有效確認只使用1本命令書。關閉後重新開始另計1本。','有効な一括確定で命令書1枚を使用します。終了後の新規編制は再び1枚です。')}</p>${GameCommandBooks.html(view,options)}<label class="field" for="allocation-officer">武将<select id="allocation-officer">${ids.map(i=>`<option value="${i}" ${i===selected?'selected':''}>${escapeHtml(officerChoiceText(i))}</option>`).join('')}</select></label><p class="small officer-choice-summary" id="allocation-officer-summary"></p><div class="allocation-value"><label class="field" for="allocation-troops">目标兵力<input id="allocation-troops" type="number" min="0" max="${maximum()}" step="1" value="${draft.get(selected)}"></label><button type="button" id="allocation-max">最大值</button></div><p class="small" id="allocation-preview"></p><p class="small" id="allocation-draft-status" role="status"></p>`, `<button data-cancel>${flow?cityCommandText('完成配兵','編制を終了'):'取消'}</button><button type="button" id="allocation-next" ${ids.length<2?'disabled':''}>${cityCommandText('下一位武將','次の武将')}</button><button id="confirm-allocation" class="primary">确认编兵</button>`,{allocation:{city:city.id,flow}});
+ const input=$('#allocation-troops'),select=$('#allocation-officer');
+ const preview=(fillMaximum=false)=>{
+  input.max=String(maximum());if(fillMaximum===true)input.value=input.max;
+  const n=clampNumberInput(input);if(n!==null)draft.set(selected,n);
+  $('#allocation-officer-summary').textContent=officerChoiceText(selected);
+  const pending=changes();
+  $('#confirm-allocation').disabled=submitting||n===null||!pending.length||!GameCommandBooks.can(view,'allocate',options);
+  $('#allocation-next').disabled=submitting||ids.length<2;select.disabled=submitting;input.disabled=submitting;$('#allocation-max').disabled=submitting;
+  $('#allocation-preview').textContent=n===null?'':`确认后本城预备兵 ${balance()}。`;
+  $('#allocation-draft-status').textContent=cityCommandText('草稿已調整 '+pending.length+'名；尚未提交。','変更した下書き '+pending.length+'人・未確定。');
  };
- $('#allocation-officer').onchange=()=>{input.value=String(view.game.officers[$('#allocation-officer').value].troops);preview();};bindNumberInput(input,preview);preview();
- $('#allocation-max').onclick=()=>preview(true);
- const submitAllocation=async(next=false)=>{
-  if(submitting||next&&ids.length<2)return;
-  preview();const id=GameOfficerChoices.ref($('#allocation-officer').value),troops=clampNumberInput(input,true);
-  const selected=next?ids[(ids.indexOf(id)+1)%ids.length]:id;
-  if(troops===view.game.officers[id].troops){
-   if(next){const select=$('#allocation-officer');select.value=String(selected);select.onchange();input.focus?.();input.select?.();}
-   return;
-  }
+ const remember=()=>{input.max=String(maximum());draft.set(selected,clampNumberInput(input,true));};
+ const switchOfficer=id=>{
+  if(submitting){select.value=String(selected);return;}
+  remember();selected=id;select.value=String(id);input.value=String(draft.get(id));preview();input.focus?.();input.select?.();
+ };
+ select.onchange=()=>switchOfficer(GameOfficerChoices.ref(select.value));bindNumberInput(input,preview);preview();
+ $('#allocation-max').onclick=()=>{if(!submitting)preview(true);};
+ $('#allocation-next').onclick=()=>{if(ids.length>1)switchOfficer(ids[(ids.indexOf(selected)+1)%ids.length]);};
+ $('#confirm-allocation').onclick=async()=>{
+  if(submitting)return;remember();preview();const allocations=changes();if(!allocations.length)return;
   if(!GameCommandBooks.can(view,'allocate',options))return notice(GameCommandBooks.reason(view,'allocate',GameI18n.locale,options),true);
   submitting=true;preview();
   try{
-   if(await command('allocate',{city:city.id,officer:id,troops,flow})){
+   if(await command('allocate',{city:city.id,allocations,flow})){
     const current=GameCommandBooks.activeAllocation(view,city.id);
     if(!dialog.open||generation!==dialogGeneration){queueAllocationClose(current?{city:city.id,flow:current.id}:null);return;}
     allocate(view.game.cities[city.id],selected,current?.id??null);
-    if(next){$('#allocation-troops').focus?.();$('#allocation-troops').select?.();}
    }
   }finally{
-   submitting=false;
-   if(dialog.open&&generation===dialogGeneration)preview();
+   submitting=false;if(dialog.open&&generation===dialogGeneration)preview();
   }
  };
- $('#allocation-next').onclick=()=>submitAllocation(true);
- $('#confirm-allocation').onclick=()=>submitAllocation();
 }
 
 function actionTargetCities(kind,city){
@@ -970,9 +969,13 @@ function initialStatDescription(p,runtime){
  const sourceLoyalty=source?String(source.display??source.value??'—'):'—';
  const currentLoyalty=runtime?GameOfficerChoices.loyalty(runtime,{isRuler:isRuler(p.id)}):null;
  const affinity={0:['平地','平地'],1:['山地','山地'],2:['水地','水地']}[p.affinity]||['待配置','未設定'];
+ const armySource=p.affinity_source?.source_kind||'fallback_design';
+ const armyName={0:['平軍','平軍'],1:['山軍','山軍'],2:['水軍','水軍']}[p.affinity]||['待配置','未設定'];
+ const armyEvidence={verified_original_rom:['原版ROM資料','原作ROMの資料'],original_table_transcription:['原版公開表轉錄','原作公開表の転記'],design_trait_inference:['生涯特性推定（本作配置）','経歴・特性からの推定（本作設定）'],design_region_inference:['出場地域推定（本作配置）','登場地域からの推定（本作設定）'],retained_design:['沿用本作配置','既存の本作設定を継続'],fallback_design:['本作預設（資料不足）','本作の初期設定（資料不足）'],generated_design:['地方文吏生成配置','地方文吏の生成時設定']}[armySource]||['本作配置','本作設定'];
  return ['zh-Hant','ja'].map((language,index)=>{
   const ja=index===1,sourceFaction=source?.source_faction_label;
-  return `<section class="person-initial-stats" data-initial-stat-source="${escapeHtml(p.person_id)}" data-locale-only="${language}" data-l10n-native="${language}"><p>${ja?'初期体力':'初始體力'} <strong data-initial-health="${health}">${health}</strong> · ${ja?'体力上限':'體力上限'} <strong data-health-maximum="${maximum}">${maximum}</strong> · ${ja?'適性':'適性'} ${affinity[index]}。</p>${runtime?`<p>${ja?'現在の体力':'目前體力'} <span data-current-health>${runtime.health}</span> · ${ja?'現在の忠誠':'目前忠誠'} <span data-current-loyalty>${currentLoyalty}</span>。</p>`:''}<p class="small">${source?(ja?'初期体力は原作の公開能力表を転記した値です。':'初始體力採公開原版能力表的轉寫值。'):(ja?'体力の資料が未対応のため、本作の初期値80を使います。':'體力資料尚未對應，採本作初始值80。')}${ja?'上限は従来の設定と初期体力の大きい方を使う本作の設定で、原作の最大体力を表す値ではありません。':'上限採原有上限與初始體力的較大值，是本作設定，不代表原版最大體力。'}</p>${source?`<p>${ja?'原作資料の忠誠':'原版來源表的忠'} <strong data-source-loyalty>${escapeHtml(sourceLoyalty)}</strong>${sourceFaction?` · ${ja?'資料の所属':'來源勢力'} ${escapeHtml(GameI18n.t(sourceFaction,language))}`:''}。</p>`:''}<p class="small">${ja?'初登場時の忠誠は、原作資料で数値と対応勢力が確認でき、同じ勢力に属する場合だけその値を使います。他勢力や資料の「--」は80、在野は0、現在の君主は「--」です。登用・勧誘・捕虜の所属変更は既存の人事ルールで忠誠を計算します。同勢力内の移動とロードでは体力・忠誠を初期化しません。':'首次登場時，只有來源表的忠為數值且明確對應本局同一勢力時才採該值。其他勢力或來源表「--」採80，在野為0；目前君主顯示「--」。登用、勸誘與俘虜轉屬依既有人事規則計算忠誠；同勢力移動及讀檔不會重置體力與忠誠。'}</p></section>`;
+  const armyLine=`<p class="small" data-officer-affinity-source="${escapeHtml(armySource)}" data-officer-affinity-code="${p.affinity??''}" data-person-id="${escapeHtml(p.person_id)}">軍種：${armyName[index]} · ${armyEvidence[index]}。</p>`;
+  return `<section class="person-initial-stats" data-initial-stat-source="${escapeHtml(p.person_id)}" data-locale-only="${language}" data-l10n-native="${language}">${armyLine}<p>${ja?'初期体力':'初始體力'} <strong data-initial-health="${health}">${health}</strong> · ${ja?'体力上限':'體力上限'} <strong data-health-maximum="${maximum}">${maximum}</strong> · ${ja?'適性':'適性'} ${affinity[index]}。</p>${runtime?`<p>${ja?'現在の体力':'目前體力'} <span data-current-health>${runtime.health}</span> · ${ja?'現在の忠誠':'目前忠誠'} <span data-current-loyalty>${currentLoyalty}</span>。</p>`:''}<p class="small">${source?(ja?'初期体力は原作の公開能力表を転記した値です。':'初始體力採公開原版能力表的轉寫值。'):(ja?'体力の資料が未対応のため、本作の初期値80を使います。':'體力資料尚未對應，採本作初始值80。')}${ja?'上限は従来の設定と初期体力の大きい方を使う本作の設定で、原作の最大体力を表す値ではありません。':'上限採原有上限與初始體力的較大值，是本作設定，不代表原版最大體力。'}</p>${source?`<p>${ja?'原作資料の忠誠':'原版來源表的忠'} <strong data-source-loyalty>${escapeHtml(sourceLoyalty)}</strong>${sourceFaction?` · ${ja?'資料の所属':'來源勢力'} ${escapeHtml(GameI18n.t(sourceFaction,language))}`:''}。</p>`:''}<p class="small">${ja?'初登場時の忠誠は、原作資料で数値と対応勢力が確認でき、同じ勢力に属する場合だけその値を使います。他勢力や資料の「--」は80、在野は0、現在の君主は「--」です。登用・勧誘・捕虜の所属変更は既存の人事ルールで忠誠を計算します。同勢力内の移動とロードでは体力・忠誠を初期化しません。':'首次登場時，只有來源表的忠為數值且明確對應本局同一勢力時才採該值。其他勢力或來源表「--」採80，在野為0；目前君主顯示「--」。登用、勸誘與俘虜轉屬依既有人事規則計算忠誠；同勢力移動及讀檔不會重置體力與忠誠。'}</p></section>`;
  }).join('');
 }
 function showPerson(id){

@@ -34,8 +34,15 @@
   for(const unit of units){const family=familyName(nameFor(unit.id));names.set(unit.id,family);if(!family)continue;let side=families.get(unit.side);if(!side){side=new Map();families.set(unit.side,side);}side.set(family,(side.get(family)||0)+1);}
   return new Map(units.map(unit=>{const chars=Array.from(String(displayName(unit.id)??'').trim());return [unit.id,(families.get(unit.side)?.get(names.get(unit.id))>1?chars.at(-1):chars[0])||''];}));
  }
- function troopMarkers(units,officers){
-  return units.map(unit=>({id:unit.id,side:unit.side,type:['平','山','水'][officers?.[String(unit.id)]?.profile?.terrain_affinity]||'平',teams:Math.min(10,Math.ceil(Math.max(0,unit.troops)/100)),troops:unit.troops}));
+ function troopMarkers(units,officers,types=null,commanders=null){
+  return units.map(unit=>{const code=types?.officers?.[String(unit.id)]?.code??officers?.[String(unit.id)]?.profile?.terrain_affinity;return {id:unit.id,side:unit.side,type:['平','山','水'][code]||'平',teams:Math.min(10,Math.ceil(Math.max(0,unit.troops)/100)),troops:unit.troops,...(commanders?{commander:String(commanders[unit.side])===String(unit.id)}:{})};});
+ }
+ function validMarkerLibrary(data){
+  if(data?.schema!=='tk2-battle-markers-original-v1'||data.pixel_scale!==4||data.native_size?.join(',')!=='16,16'||data.atlas?.path!=='/assets/battle-markers-original/markers-4x.png'||data.atlas.width!==704||data.atlas.height!==768||!data.frames||Array.isArray(data.frames)||Object.keys(data.frames).length!==132)return false;
+  for(const [palette,offset]of [['friendly',0],['enemy',3]])for(let type=0;type<3;type++)for(let teams=0;teams<=10;teams++)for(const commander of [false,true]){
+   const frame=data.frames[`${palette}:${type}:${teams}${commander?':commander':''}`],expected=[teams*64,(offset+type+(commander?6:0))*64,64,64];
+   if(!frame||frame.palette!==palette||frame.type!==type||frame.teams!==teams||frame.commander!==commander||!Array.isArray(frame.source_rect)||frame.source_rect.length!==4||!frame.source_rect.every((n,i)=>n===expected[i]))return false;
+  }return true;
  }
  function attackStage(progress,skipped=false){
   const p=Math.max(0,Math.min(1,progress)),tick=Math.floor(p*20);
@@ -160,7 +167,7 @@
   const doc=options.document||root.document,i18n=options.i18n||root.GameI18n,portraits=options.portraits||root.GamePortraits,officerChoices=options.officerChoices||root.GameOfficerChoices,duelAppearance=options.duelAppearance||root.GameDuelAppearance,battlefields=options.battlefields||root.GameBattlefields;
   const fetcher=options.fetch||root.fetch?.bind(root),ImageType=options.Image||root.Image;
   const raf=options.requestAnimationFrame||root.requestAnimationFrame?.bind(root),caf=options.cancelAnimationFrame||root.cancelAnimationFrame?.bind(root);
-  const images=new Map(),duelRendering=new Map(),duelLoadouts=new Map();let manifest=null,enhanced=null,soldiers=null,assetStatus='idle',assetsPromise=null,loadoutSignature='',siegeAssets=null,siegePromise=null;
+  const images=new Map(),duelRendering=new Map(),duelLoadouts=new Map();let manifest=null,enhanced=null,soldiers=null,assetStatus='idle',assetsPromise=null,loadoutSignature='',siegeAssets=null,siegePromise=null,markerAssets=null,markerPromise=null;
   let host=null,canvas=null,ctx=null,view=null,selection={},queue=[],key='',observed=null,playing=false,frame=null,handle=null,resolvePlay=null,resizeObserver=null,disposed=false,outcomeCue=null,animationPositions=null;
   const locale=()=>i18n?.locale==='ja'?'ja':'zh-Hant';
   const text=(tc,ja)=>locale()==='ja'?ja:tc;
@@ -228,6 +235,11 @@
     });siegeAssets=result?.data||null;draw();return !!siegeAssets;
    })();return siegePromise;
   }
+  async function loadMarkers(){
+   if(markerPromise)return markerPromise;
+   markerPromise=(async()=>{const result=await readManifest(root.GamePaths?.asset('/assets/battle-markers-original/index.json')||'/assets/battle-markers-original/index.json',data=>validMarkerLibrary(data)?[data.atlas.path]:null);markerAssets=result?.data||null;draw();return !!markerAssets;})();return markerPromise;
+  }
+  function markerImage(){const image=imageFor(markerAssets?.atlas?.path);return image&&(image.naturalWidth||image.width)===markerAssets.atlas.width&&(image.naturalHeight||image.height)===markerAssets.atlas.height?image:null;}
   const soldierRows=()=>soldiers?Object.values(soldiers.types).flatMap(type=>[type.friendly,type.enemy]):[];
   function soldierArtworkNeedsLoad(){return soldierRows().some(row=>!images.has(row.path)||images.get(row.path).status==='loading');}
   async function preloadSoldierArtwork(){await Promise.all(soldierRows().map(row=>loadImage(row.path).promise));}
@@ -260,7 +272,7 @@
    if(root.ResizeObserver&&host){resizeObserver=new root.ResizeObserver(fit);resizeObserver.observe(host.querySelector('.nes-battle-viewport')||host);}
    host?.querySelector?.('[data-battle-skip]')?.addEventListener('click',skip);
    if(host)host.dataset.sceneAssets=assetStatus;
-   fit();updateText();draw();void load();if(current?.game?.battle?.extended?.siege||queue.some(scene=>validSiege(scene)||validSoldierScene(scene)))void loadSiege();return !!ctx;
+   fit();updateText();draw();void load();void loadMarkers();if(current?.game?.battle?.extended?.siege||queue.some(scene=>validSiege(scene)||validSoldierScene(scene)))void loadSiege();return !!ctx;
   }
   function observe(kind,payload,before,after){
    const nextKey=campaignKey(after),battle=after?.game?.battle||before?.game?.battle;
@@ -333,8 +345,9 @@
    const cursor=selection.destination;if(cell(cursor)){outline(cursor.x*16,cursor.y*16,16,16,'#ffe149');outline(cursor.x*16+1,cursor.y*16+1,14,14,INK);}
   }
   function flag(u,p,selected,enemy,attackable,marker){
-   const routed=u.troops<=0||u.health<=0,color=routed?'#888888':enemy?'#b61c16':'#ffffff';rectangle(p.x-6,p.y-6,12,12,INK);rectangle(p.x-5,p.y-5,10,10,color);
-   if(marker&&typeof marker==='object'){label(marker.type,p.x-4,p.y-5,enemy?'#ffffff':INK,6);label(String(marker.teams),p.x-4,p.y+1,enemy?'#ffffff':INK,6);}else label(marker,p.x-4,p.y-4,enemy?'#ffffff':INK,8);
+   const routed=u.troops<=0||u.health<=0,color=routed?'#888888':enemy?'#b61c16':'#ffffff',code=['平','山','水'].indexOf(marker?.type),palette=enemy?'enemy':'friendly',image=markerImage(),native=markerAssets?.frames?.[`${palette}:${code}:${marker?.teams}${marker?.commander?':commander':''}`];
+   if(image&&native){const [sx,sy,sw,sh]=native.source_rect;ctx.drawImage(image,sx,sy,sw,sh,Math.round(p.x-8),Math.round(p.y-8),16,16);}
+   else{rectangle(p.x-6,p.y-6,12,12,INK);rectangle(p.x-5,p.y-5,10,10,color);if(marker&&typeof marker==='object'){label(marker.type,p.x-4,p.y-5,enemy?'#ffffff':INK,6);label(String(marker.teams),p.x-4,p.y+1,enemy?'#ffffff':INK,6);}else label(marker,p.x-4,p.y-4,enemy?'#ffffff':INK,8);}
    if(routed){line(p.x-6,p.y-6,p.x+5,p.y+5,'#ffffff');line(p.x+5,p.y-6,p.x-6,p.y+5,'#ffffff');}
    if(attackable&&u.troops>0)outline(p.x-8,p.y-8,16,16,'#ffdf58');
    if(selected){outline(p.x-8,p.y-8,16,16,'#ffffff');outline(p.x-7,p.y-7,14,14,INK);}
@@ -362,7 +375,7 @@
     const point=movementStage(frame.scene,frame.progress);
     if(point){outline(point.x-8,point.y-8,16,16,'#ffe149');outline(point.x-7,point.y-7,14,14,INK);}
    }
-   const points=positions(state),markers=new Map(troopMarkers(state.units,view.game.officers).map(row=>[row.id,row])),allowed=playing||frame||queue.length?[]:tacticalView(view)?.actors?.[String(selection.actor)]?.attack_targets||[],moving=frame?.scene.kind==='move'?frame.scene.actor:null;
+   const points=positions(state),commanders=Object.fromEntries(['attackers','defenders'].map(side=>[side,b[side][0]?.id])),markers=new Map(troopMarkers(state.units,view.game.officers,view.catalog.officer_troop_types,commanders).map(row=>[row.id,row])),allowed=playing||frame||queue.length?[]:tacticalView(view)?.actors?.[String(selection.actor)]?.attack_targets||[],moving=frame?.scene.kind==='move'?frame.scene.actor:null;
    const live=u=>u.troops>0&&u.health>0;
    for(const u of [...state.units].sort((a,b)=>Number(live(a))-Number(live(b)))){const p=points.get(u.id);if(p)flag(u,p,moving!==null?u.id===moving:u.id===selection.actor||u.id===selection.target,u.side!==own,allowed.some(id=>String(id)===String(u.id)),markers.get(u.id));}
    if(state.outcome){const x=field?(FIELD_WIDTH-116)/2:70,y=field?(FIELD_HEIGHT-30)/2:60;rectangle(x,y,116,30,PAPER);outline(x,y,116,30);label(outcome(state.outcome),x+10,y+10,INK,12);}
@@ -691,7 +704,9 @@
    host.dataset.battlefieldId=field?.field?.id||'';
    host.dataset.battlefieldSource=field?.binding?.kind||field?.binding?.type||'fallback';
    const quote=tacticalView(view)?.actors?.[String(selection.actor)];host.dataset.battleReachableCount=String(quote?.reachable?.length??0);host.dataset.battleSelectedActor=String(selection.actor??'');
-   host.dataset.battleMarkers=JSON.stringify(troopMarkers(snapshot(view)?.units||[],view.game.officers));
+   const commanders=Object.fromEntries(['attackers','defenders'].map(side=>[side,view.game.battle[side][0]?.id]));
+   host.dataset.battleMarkers=JSON.stringify(troopMarkers(snapshot(view)?.units||[],view.game.officers,view.catalog.officer_troop_types,commanders));
+   host.dataset.tacticalMarkerStyle=markerImage()?'original-native-atlas':'loading-fallback';
    host.dataset.battleFacilities=JSON.stringify(tacticalView(view)?.facilities||[]);
    host.dataset.soldierMode=soldiers?.mode||'';
    if(frame?.scene?.kind!=='soldier_step'){host.dataset.soldierAnimation='';host.dataset.soldierAnimationActor='';host.dataset.soldierAnimationEvent='';}
@@ -772,6 +787,6 @@
   function dispose(){disposed=true;reset();doc?.removeEventListener?.('game-language-change',changeLanguage);doc?.removeEventListener?.('visibilitychange',visibility);doc?.removeEventListener?.('keydown',keydown);}
   return {html,mount,observe,play,skip,reset,leave,load,dispose,chooseDuelAppearance,deferOutcome:cue=>{outcomeCue=cue;},get playing(){return playing;},state:()=>({playing,queued:queue.length,assetStatus,battleId:view?.game?.battle?.id??null,scene:frame?.scene?.kind??null})};
  }
- const api={WIDTH,HEIGHT,RESOLUTION_SCALE,create,tacticalView,unitPosition,receiptScenes,validSnapshot,validMovement,validSiege,validSoldiers,validSoldierScene,movementStage,snapshot,changes,duration,validAssetPath,validEnhancedAssetPath,validActionAtlas,validSoldierAtlas,validSoldierLibrary,SOLDIER_ACTIONS,soldierActionPose,DUEL_ACTIONS,duelActionPose,duelMotion,familyName,markerLabels,troopMarkers,attackStage};
+ const api={WIDTH,HEIGHT,RESOLUTION_SCALE,create,tacticalView,unitPosition,receiptScenes,validSnapshot,validMovement,validSiege,validSoldiers,validSoldierScene,movementStage,snapshot,changes,duration,validAssetPath,validEnhancedAssetPath,validActionAtlas,validSoldierAtlas,validSoldierLibrary,validMarkerLibrary,SOLDIER_ACTIONS,soldierActionPose,DUEL_ACTIONS,duelActionPose,duelMotion,familyName,markerLabels,troopMarkers,attackStage};
  if(typeof module==='object'&&module.exports)module.exports=api;else root.GameBattleScene=api;
 })(typeof window==='object'?window:globalThis);

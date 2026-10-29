@@ -139,7 +139,8 @@ def view(game, state):
             if active is not None:
                 factions[owner]['allocation_flow'] = active
     return dict(schema=SCHEMA, turn=state.turn if state else None,
-                maximum=MAXIMUM, refresh_days=10, costs=dict(COSTS), factions=factions)
+                maximum=MAXIMUM, refresh_days=10, allocation_batch='confirm-v1',
+                costs=dict(COSTS), factions=factions)
 
 
 def validate(game, state):

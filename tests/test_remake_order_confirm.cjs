@@ -2,7 +2,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const confirmation=require('../game/order-confirm.js'),{api:books,attach}=require('./fixtures/command-books.cjs');
 function fixture(){
- let view=attach({revision:7,catalog:{scenario_id:'test'},game:{turn:2,player:'shu',rng:{state:99,draws:3},cities:{chengdu:{owner:'shu'},other:{owner:'shu'}}}},3);
+ let view=attach({revision:7,catalog:{scenario_id:'test'},game:{turn:2,player:'shu',rng:{state:99,draws:3},officers:{1:{troops:80},2:{troops:30}},cities:{chengdu:{owner:'shu'},other:{owner:'shu'}}}},3);
  const listeners=new Map(),buttons=new Map(),sounds=[];
  const original={isConnected:true,focus(){this.focused=true;}};
  const dialog={open:false,dataset:{},innerHTML:'',addEventListener(k,f){listeners.set('dialog:'+k,f);},removeEventListener(k){listeners.delete('dialog:'+k);},
@@ -29,6 +29,12 @@ function fixture(){
  assert.equal(await h.ui.ask('recruit',{city:'chengdu'}),false,'A second pending action cannot replace the first confirmation');
  h.click('#order-confirm-cancel');assert.equal(await pending,false);assert(!h.ui.pending);assert(!h.dialog.open);assert(h.original.focused);
  assert.equal(JSON.stringify(h.view),before,'Opening and cancelling never mutate the campaign or RNG');
+ for(const locale of ['zh-Hant','ja']){
+  const batch={city:'chengdu',allocations:[{officer:1,troops:100},{officer:2,troops:25}],flow:null};
+  const quote=confirmation.quote(h.view,'allocate',batch,{books,locale,cityName:()=> '成都'});
+  assert.equal(quote.allocation_count,2);assert.equal(quote.allocation_delta,15);assert.equal(quote.amount,1);
+  assert(quote.message.includes(locale==='ja'?'2人を一括編制':'整批編兵2名'));assert(quote.message.includes('15'));assert(quote.message.includes('成都'));
+ }
  pending=h.ui.ask('recruit',{city:'chengdu'});let prevented=false;h.listeners.get('dialog:cancel')({preventDefault(){prevented=true;}});assert(prevented);assert.equal(await pending,false);
  pending=h.ui.ask('depart',{source:'chengdu',target:'other'});h.click('#order-confirm-accept');assert.equal(await pending,true);assert.equal(JSON.stringify(h.view),before,'Approval alone is read-only; the application sends the command afterwards');
  pending=h.ui.ask('recruit',{city:'chengdu'});h.view={...h.view,revision:h.view.revision+1};h.click('#order-confirm-accept');assert.equal(await pending,false,'A stale confirmation cannot execute a later campaign revision');

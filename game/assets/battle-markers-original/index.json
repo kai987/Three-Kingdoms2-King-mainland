@@ -1,0 +1,2405 @@
+{
+  "schema": "tk2-battle-markers-original-v1",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "source": "original-chr-and-native-tactical-marker-routine",
+  "native_size": [
+    16,
+    16
+  ],
+  "pixel_scale": 4,
+  "source_rect_format": "x,y,width,height",
+  "native_atlas": {
+    "path": "/assets/battle-markers-original/markers-native.png",
+    "width": 176,
+    "height": 192,
+    "sha256": "2d12d807fcfa6f1e8affdebc9477b2fd2df87174695ce04517ec78d4720ab181"
+  },
+  "atlas": {
+    "path": "/assets/battle-markers-original/markers-4x.png",
+    "width": 704,
+    "height": 768,
+    "sha256": "f1beab084d8c57adbcb4e7f7bad927e1b7cbafd131ad9e6d5074bcb8e2158494"
+  },
+  "provenance": {
+    "path": "/assets/battle-markers-original/provenance.json",
+    "sha256": "87bd9d5418c0967134a973c7233cc453a162754c97a42303df0ed91ddda817c3"
+  },
+  "frames": {
+    "friendly:0:0": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 0,
+      "commander": false,
+      "source_rect": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        160,
+        189,
+        190
+      ]
+    },
+    "friendly:0:1": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 1,
+      "commander": false,
+      "source_rect": [
+        64,
+        0,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        161,
+        189,
+        190
+      ]
+    },
+    "friendly:0:2": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 2,
+      "commander": false,
+      "source_rect": [
+        128,
+        0,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        162,
+        189,
+        190
+      ]
+    },
+    "friendly:0:3": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 3,
+      "commander": false,
+      "source_rect": [
+        192,
+        0,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        163,
+        189,
+        190
+      ]
+    },
+    "friendly:0:4": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 4,
+      "commander": false,
+      "source_rect": [
+        256,
+        0,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        164,
+        189,
+        190
+      ]
+    },
+    "friendly:0:5": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 5,
+      "commander": false,
+      "source_rect": [
+        320,
+        0,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        165,
+        189,
+        190
+      ]
+    },
+    "friendly:0:6": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 6,
+      "commander": false,
+      "source_rect": [
+        384,
+        0,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        166,
+        189,
+        190
+      ]
+    },
+    "friendly:0:7": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 7,
+      "commander": false,
+      "source_rect": [
+        448,
+        0,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        167,
+        189,
+        190
+      ]
+    },
+    "friendly:0:8": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 8,
+      "commander": false,
+      "source_rect": [
+        512,
+        0,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        168,
+        189,
+        190
+      ]
+    },
+    "friendly:0:9": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 9,
+      "commander": false,
+      "source_rect": [
+        576,
+        0,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        169,
+        189,
+        190
+      ]
+    },
+    "friendly:0:10": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 10,
+      "commander": false,
+      "source_rect": [
+        640,
+        0,
+        64,
+        64
+      ],
+      "tiles": [
+        170,
+        171,
+        189,
+        190
+      ]
+    },
+    "friendly:1:0": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 0,
+      "commander": false,
+      "source_rect": [
+        0,
+        64,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        160,
+        172,
+        173
+      ]
+    },
+    "friendly:1:1": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 1,
+      "commander": false,
+      "source_rect": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        161,
+        172,
+        173
+      ]
+    },
+    "friendly:1:2": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 2,
+      "commander": false,
+      "source_rect": [
+        128,
+        64,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        162,
+        172,
+        173
+      ]
+    },
+    "friendly:1:3": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 3,
+      "commander": false,
+      "source_rect": [
+        192,
+        64,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        163,
+        172,
+        173
+      ]
+    },
+    "friendly:1:4": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 4,
+      "commander": false,
+      "source_rect": [
+        256,
+        64,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        164,
+        172,
+        173
+      ]
+    },
+    "friendly:1:5": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 5,
+      "commander": false,
+      "source_rect": [
+        320,
+        64,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        165,
+        172,
+        173
+      ]
+    },
+    "friendly:1:6": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 6,
+      "commander": false,
+      "source_rect": [
+        384,
+        64,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        166,
+        172,
+        173
+      ]
+    },
+    "friendly:1:7": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 7,
+      "commander": false,
+      "source_rect": [
+        448,
+        64,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        167,
+        172,
+        173
+      ]
+    },
+    "friendly:1:8": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 8,
+      "commander": false,
+      "source_rect": [
+        512,
+        64,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        168,
+        172,
+        173
+      ]
+    },
+    "friendly:1:9": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 9,
+      "commander": false,
+      "source_rect": [
+        576,
+        64,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        169,
+        172,
+        173
+      ]
+    },
+    "friendly:1:10": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 10,
+      "commander": false,
+      "source_rect": [
+        640,
+        64,
+        64,
+        64
+      ],
+      "tiles": [
+        170,
+        171,
+        172,
+        173
+      ]
+    },
+    "friendly:2:0": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 0,
+      "commander": false,
+      "source_rect": [
+        0,
+        128,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        160,
+        174,
+        175
+      ]
+    },
+    "friendly:2:1": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 1,
+      "commander": false,
+      "source_rect": [
+        64,
+        128,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        161,
+        174,
+        175
+      ]
+    },
+    "friendly:2:2": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 2,
+      "commander": false,
+      "source_rect": [
+        128,
+        128,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        162,
+        174,
+        175
+      ]
+    },
+    "friendly:2:3": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 3,
+      "commander": false,
+      "source_rect": [
+        192,
+        128,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        163,
+        174,
+        175
+      ]
+    },
+    "friendly:2:4": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 4,
+      "commander": false,
+      "source_rect": [
+        256,
+        128,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        164,
+        174,
+        175
+      ]
+    },
+    "friendly:2:5": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 5,
+      "commander": false,
+      "source_rect": [
+        320,
+        128,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        165,
+        174,
+        175
+      ]
+    },
+    "friendly:2:6": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 6,
+      "commander": false,
+      "source_rect": [
+        384,
+        128,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        166,
+        174,
+        175
+      ]
+    },
+    "friendly:2:7": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 7,
+      "commander": false,
+      "source_rect": [
+        448,
+        128,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        167,
+        174,
+        175
+      ]
+    },
+    "friendly:2:8": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 8,
+      "commander": false,
+      "source_rect": [
+        512,
+        128,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        168,
+        174,
+        175
+      ]
+    },
+    "friendly:2:9": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 9,
+      "commander": false,
+      "source_rect": [
+        576,
+        128,
+        64,
+        64
+      ],
+      "tiles": [
+        188,
+        169,
+        174,
+        175
+      ]
+    },
+    "friendly:2:10": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 10,
+      "commander": false,
+      "source_rect": [
+        640,
+        128,
+        64,
+        64
+      ],
+      "tiles": [
+        170,
+        171,
+        174,
+        175
+      ]
+    },
+    "enemy:0:0": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 0,
+      "commander": false,
+      "source_rect": [
+        0,
+        192,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        144,
+        184,
+        185
+      ]
+    },
+    "enemy:0:1": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 1,
+      "commander": false,
+      "source_rect": [
+        64,
+        192,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        145,
+        184,
+        185
+      ]
+    },
+    "enemy:0:2": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 2,
+      "commander": false,
+      "source_rect": [
+        128,
+        192,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        146,
+        184,
+        185
+      ]
+    },
+    "enemy:0:3": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 3,
+      "commander": false,
+      "source_rect": [
+        192,
+        192,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        147,
+        184,
+        185
+      ]
+    },
+    "enemy:0:4": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 4,
+      "commander": false,
+      "source_rect": [
+        256,
+        192,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        148,
+        184,
+        185
+      ]
+    },
+    "enemy:0:5": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 5,
+      "commander": false,
+      "source_rect": [
+        320,
+        192,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        149,
+        184,
+        185
+      ]
+    },
+    "enemy:0:6": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 6,
+      "commander": false,
+      "source_rect": [
+        384,
+        192,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        150,
+        184,
+        185
+      ]
+    },
+    "enemy:0:7": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 7,
+      "commander": false,
+      "source_rect": [
+        448,
+        192,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        151,
+        184,
+        185
+      ]
+    },
+    "enemy:0:8": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 8,
+      "commander": false,
+      "source_rect": [
+        512,
+        192,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        152,
+        184,
+        185
+      ]
+    },
+    "enemy:0:9": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 9,
+      "commander": false,
+      "source_rect": [
+        576,
+        192,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        153,
+        184,
+        185
+      ]
+    },
+    "enemy:0:10": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 10,
+      "commander": false,
+      "source_rect": [
+        640,
+        192,
+        64,
+        64
+      ],
+      "tiles": [
+        154,
+        155,
+        184,
+        185
+      ]
+    },
+    "enemy:1:0": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 0,
+      "commander": false,
+      "source_rect": [
+        0,
+        256,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        144,
+        156,
+        157
+      ]
+    },
+    "enemy:1:1": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 1,
+      "commander": false,
+      "source_rect": [
+        64,
+        256,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        145,
+        156,
+        157
+      ]
+    },
+    "enemy:1:2": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 2,
+      "commander": false,
+      "source_rect": [
+        128,
+        256,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        146,
+        156,
+        157
+      ]
+    },
+    "enemy:1:3": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 3,
+      "commander": false,
+      "source_rect": [
+        192,
+        256,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        147,
+        156,
+        157
+      ]
+    },
+    "enemy:1:4": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 4,
+      "commander": false,
+      "source_rect": [
+        256,
+        256,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        148,
+        156,
+        157
+      ]
+    },
+    "enemy:1:5": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 5,
+      "commander": false,
+      "source_rect": [
+        320,
+        256,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        149,
+        156,
+        157
+      ]
+    },
+    "enemy:1:6": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 6,
+      "commander": false,
+      "source_rect": [
+        384,
+        256,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        150,
+        156,
+        157
+      ]
+    },
+    "enemy:1:7": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 7,
+      "commander": false,
+      "source_rect": [
+        448,
+        256,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        151,
+        156,
+        157
+      ]
+    },
+    "enemy:1:8": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 8,
+      "commander": false,
+      "source_rect": [
+        512,
+        256,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        152,
+        156,
+        157
+      ]
+    },
+    "enemy:1:9": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 9,
+      "commander": false,
+      "source_rect": [
+        576,
+        256,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        153,
+        156,
+        157
+      ]
+    },
+    "enemy:1:10": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 10,
+      "commander": false,
+      "source_rect": [
+        640,
+        256,
+        64,
+        64
+      ],
+      "tiles": [
+        154,
+        155,
+        156,
+        157
+      ]
+    },
+    "enemy:2:0": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 0,
+      "commander": false,
+      "source_rect": [
+        0,
+        320,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        144,
+        158,
+        159
+      ]
+    },
+    "enemy:2:1": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 1,
+      "commander": false,
+      "source_rect": [
+        64,
+        320,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        145,
+        158,
+        159
+      ]
+    },
+    "enemy:2:2": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 2,
+      "commander": false,
+      "source_rect": [
+        128,
+        320,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        146,
+        158,
+        159
+      ]
+    },
+    "enemy:2:3": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 3,
+      "commander": false,
+      "source_rect": [
+        192,
+        320,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        147,
+        158,
+        159
+      ]
+    },
+    "enemy:2:4": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 4,
+      "commander": false,
+      "source_rect": [
+        256,
+        320,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        148,
+        158,
+        159
+      ]
+    },
+    "enemy:2:5": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 5,
+      "commander": false,
+      "source_rect": [
+        320,
+        320,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        149,
+        158,
+        159
+      ]
+    },
+    "enemy:2:6": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 6,
+      "commander": false,
+      "source_rect": [
+        384,
+        320,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        150,
+        158,
+        159
+      ]
+    },
+    "enemy:2:7": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 7,
+      "commander": false,
+      "source_rect": [
+        448,
+        320,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        151,
+        158,
+        159
+      ]
+    },
+    "enemy:2:8": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 8,
+      "commander": false,
+      "source_rect": [
+        512,
+        320,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        152,
+        158,
+        159
+      ]
+    },
+    "enemy:2:9": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 9,
+      "commander": false,
+      "source_rect": [
+        576,
+        320,
+        64,
+        64
+      ],
+      "tiles": [
+        183,
+        153,
+        158,
+        159
+      ]
+    },
+    "enemy:2:10": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 10,
+      "commander": false,
+      "source_rect": [
+        640,
+        320,
+        64,
+        64
+      ],
+      "tiles": [
+        154,
+        155,
+        158,
+        159
+      ]
+    },
+    "friendly:0:0:commander": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 0,
+      "commander": true,
+      "source_rect": [
+        0,
+        384,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        160,
+        189,
+        190
+      ]
+    },
+    "friendly:0:1:commander": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 1,
+      "commander": true,
+      "source_rect": [
+        64,
+        384,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        161,
+        189,
+        190
+      ]
+    },
+    "friendly:0:2:commander": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 2,
+      "commander": true,
+      "source_rect": [
+        128,
+        384,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        162,
+        189,
+        190
+      ]
+    },
+    "friendly:0:3:commander": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 3,
+      "commander": true,
+      "source_rect": [
+        192,
+        384,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        163,
+        189,
+        190
+      ]
+    },
+    "friendly:0:4:commander": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 4,
+      "commander": true,
+      "source_rect": [
+        256,
+        384,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        164,
+        189,
+        190
+      ]
+    },
+    "friendly:0:5:commander": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 5,
+      "commander": true,
+      "source_rect": [
+        320,
+        384,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        165,
+        189,
+        190
+      ]
+    },
+    "friendly:0:6:commander": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 6,
+      "commander": true,
+      "source_rect": [
+        384,
+        384,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        166,
+        189,
+        190
+      ]
+    },
+    "friendly:0:7:commander": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 7,
+      "commander": true,
+      "source_rect": [
+        448,
+        384,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        167,
+        189,
+        190
+      ]
+    },
+    "friendly:0:8:commander": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 8,
+      "commander": true,
+      "source_rect": [
+        512,
+        384,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        168,
+        189,
+        190
+      ]
+    },
+    "friendly:0:9:commander": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 9,
+      "commander": true,
+      "source_rect": [
+        576,
+        384,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        169,
+        189,
+        190
+      ]
+    },
+    "friendly:0:10:commander": {
+      "palette": "friendly",
+      "type": 0,
+      "teams": 10,
+      "commander": true,
+      "source_rect": [
+        640,
+        384,
+        64,
+        64
+      ],
+      "tiles": [
+        186,
+        171,
+        189,
+        190
+      ]
+    },
+    "friendly:1:0:commander": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 0,
+      "commander": true,
+      "source_rect": [
+        0,
+        448,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        160,
+        172,
+        173
+      ]
+    },
+    "friendly:1:1:commander": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 1,
+      "commander": true,
+      "source_rect": [
+        64,
+        448,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        161,
+        172,
+        173
+      ]
+    },
+    "friendly:1:2:commander": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 2,
+      "commander": true,
+      "source_rect": [
+        128,
+        448,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        162,
+        172,
+        173
+      ]
+    },
+    "friendly:1:3:commander": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 3,
+      "commander": true,
+      "source_rect": [
+        192,
+        448,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        163,
+        172,
+        173
+      ]
+    },
+    "friendly:1:4:commander": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 4,
+      "commander": true,
+      "source_rect": [
+        256,
+        448,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        164,
+        172,
+        173
+      ]
+    },
+    "friendly:1:5:commander": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 5,
+      "commander": true,
+      "source_rect": [
+        320,
+        448,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        165,
+        172,
+        173
+      ]
+    },
+    "friendly:1:6:commander": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 6,
+      "commander": true,
+      "source_rect": [
+        384,
+        448,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        166,
+        172,
+        173
+      ]
+    },
+    "friendly:1:7:commander": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 7,
+      "commander": true,
+      "source_rect": [
+        448,
+        448,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        167,
+        172,
+        173
+      ]
+    },
+    "friendly:1:8:commander": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 8,
+      "commander": true,
+      "source_rect": [
+        512,
+        448,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        168,
+        172,
+        173
+      ]
+    },
+    "friendly:1:9:commander": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 9,
+      "commander": true,
+      "source_rect": [
+        576,
+        448,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        169,
+        172,
+        173
+      ]
+    },
+    "friendly:1:10:commander": {
+      "palette": "friendly",
+      "type": 1,
+      "teams": 10,
+      "commander": true,
+      "source_rect": [
+        640,
+        448,
+        64,
+        64
+      ],
+      "tiles": [
+        186,
+        171,
+        172,
+        173
+      ]
+    },
+    "friendly:2:0:commander": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 0,
+      "commander": true,
+      "source_rect": [
+        0,
+        512,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        160,
+        174,
+        175
+      ]
+    },
+    "friendly:2:1:commander": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 1,
+      "commander": true,
+      "source_rect": [
+        64,
+        512,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        161,
+        174,
+        175
+      ]
+    },
+    "friendly:2:2:commander": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 2,
+      "commander": true,
+      "source_rect": [
+        128,
+        512,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        162,
+        174,
+        175
+      ]
+    },
+    "friendly:2:3:commander": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 3,
+      "commander": true,
+      "source_rect": [
+        192,
+        512,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        163,
+        174,
+        175
+      ]
+    },
+    "friendly:2:4:commander": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 4,
+      "commander": true,
+      "source_rect": [
+        256,
+        512,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        164,
+        174,
+        175
+      ]
+    },
+    "friendly:2:5:commander": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 5,
+      "commander": true,
+      "source_rect": [
+        320,
+        512,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        165,
+        174,
+        175
+      ]
+    },
+    "friendly:2:6:commander": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 6,
+      "commander": true,
+      "source_rect": [
+        384,
+        512,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        166,
+        174,
+        175
+      ]
+    },
+    "friendly:2:7:commander": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 7,
+      "commander": true,
+      "source_rect": [
+        448,
+        512,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        167,
+        174,
+        175
+      ]
+    },
+    "friendly:2:8:commander": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 8,
+      "commander": true,
+      "source_rect": [
+        512,
+        512,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        168,
+        174,
+        175
+      ]
+    },
+    "friendly:2:9:commander": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 9,
+      "commander": true,
+      "source_rect": [
+        576,
+        512,
+        64,
+        64
+      ],
+      "tiles": [
+        187,
+        169,
+        174,
+        175
+      ]
+    },
+    "friendly:2:10:commander": {
+      "palette": "friendly",
+      "type": 2,
+      "teams": 10,
+      "commander": true,
+      "source_rect": [
+        640,
+        512,
+        64,
+        64
+      ],
+      "tiles": [
+        186,
+        171,
+        174,
+        175
+      ]
+    },
+    "enemy:0:0:commander": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 0,
+      "commander": true,
+      "source_rect": [
+        0,
+        576,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        144,
+        184,
+        185
+      ]
+    },
+    "enemy:0:1:commander": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 1,
+      "commander": true,
+      "source_rect": [
+        64,
+        576,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        145,
+        184,
+        185
+      ]
+    },
+    "enemy:0:2:commander": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 2,
+      "commander": true,
+      "source_rect": [
+        128,
+        576,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        146,
+        184,
+        185
+      ]
+    },
+    "enemy:0:3:commander": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 3,
+      "commander": true,
+      "source_rect": [
+        192,
+        576,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        147,
+        184,
+        185
+      ]
+    },
+    "enemy:0:4:commander": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 4,
+      "commander": true,
+      "source_rect": [
+        256,
+        576,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        148,
+        184,
+        185
+      ]
+    },
+    "enemy:0:5:commander": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 5,
+      "commander": true,
+      "source_rect": [
+        320,
+        576,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        149,
+        184,
+        185
+      ]
+    },
+    "enemy:0:6:commander": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 6,
+      "commander": true,
+      "source_rect": [
+        384,
+        576,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        150,
+        184,
+        185
+      ]
+    },
+    "enemy:0:7:commander": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 7,
+      "commander": true,
+      "source_rect": [
+        448,
+        576,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        151,
+        184,
+        185
+      ]
+    },
+    "enemy:0:8:commander": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 8,
+      "commander": true,
+      "source_rect": [
+        512,
+        576,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        152,
+        184,
+        185
+      ]
+    },
+    "enemy:0:9:commander": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 9,
+      "commander": true,
+      "source_rect": [
+        576,
+        576,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        153,
+        184,
+        185
+      ]
+    },
+    "enemy:0:10:commander": {
+      "palette": "enemy",
+      "type": 0,
+      "teams": 10,
+      "commander": true,
+      "source_rect": [
+        640,
+        576,
+        64,
+        64
+      ],
+      "tiles": [
+        181,
+        155,
+        184,
+        185
+      ]
+    },
+    "enemy:1:0:commander": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 0,
+      "commander": true,
+      "source_rect": [
+        0,
+        640,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        144,
+        156,
+        157
+      ]
+    },
+    "enemy:1:1:commander": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 1,
+      "commander": true,
+      "source_rect": [
+        64,
+        640,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        145,
+        156,
+        157
+      ]
+    },
+    "enemy:1:2:commander": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 2,
+      "commander": true,
+      "source_rect": [
+        128,
+        640,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        146,
+        156,
+        157
+      ]
+    },
+    "enemy:1:3:commander": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 3,
+      "commander": true,
+      "source_rect": [
+        192,
+        640,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        147,
+        156,
+        157
+      ]
+    },
+    "enemy:1:4:commander": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 4,
+      "commander": true,
+      "source_rect": [
+        256,
+        640,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        148,
+        156,
+        157
+      ]
+    },
+    "enemy:1:5:commander": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 5,
+      "commander": true,
+      "source_rect": [
+        320,
+        640,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        149,
+        156,
+        157
+      ]
+    },
+    "enemy:1:6:commander": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 6,
+      "commander": true,
+      "source_rect": [
+        384,
+        640,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        150,
+        156,
+        157
+      ]
+    },
+    "enemy:1:7:commander": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 7,
+      "commander": true,
+      "source_rect": [
+        448,
+        640,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        151,
+        156,
+        157
+      ]
+    },
+    "enemy:1:8:commander": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 8,
+      "commander": true,
+      "source_rect": [
+        512,
+        640,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        152,
+        156,
+        157
+      ]
+    },
+    "enemy:1:9:commander": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 9,
+      "commander": true,
+      "source_rect": [
+        576,
+        640,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        153,
+        156,
+        157
+      ]
+    },
+    "enemy:1:10:commander": {
+      "palette": "enemy",
+      "type": 1,
+      "teams": 10,
+      "commander": true,
+      "source_rect": [
+        640,
+        640,
+        64,
+        64
+      ],
+      "tiles": [
+        181,
+        155,
+        156,
+        157
+      ]
+    },
+    "enemy:2:0:commander": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 0,
+      "commander": true,
+      "source_rect": [
+        0,
+        704,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        144,
+        158,
+        159
+      ]
+    },
+    "enemy:2:1:commander": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 1,
+      "commander": true,
+      "source_rect": [
+        64,
+        704,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        145,
+        158,
+        159
+      ]
+    },
+    "enemy:2:2:commander": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 2,
+      "commander": true,
+      "source_rect": [
+        128,
+        704,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        146,
+        158,
+        159
+      ]
+    },
+    "enemy:2:3:commander": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 3,
+      "commander": true,
+      "source_rect": [
+        192,
+        704,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        147,
+        158,
+        159
+      ]
+    },
+    "enemy:2:4:commander": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 4,
+      "commander": true,
+      "source_rect": [
+        256,
+        704,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        148,
+        158,
+        159
+      ]
+    },
+    "enemy:2:5:commander": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 5,
+      "commander": true,
+      "source_rect": [
+        320,
+        704,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        149,
+        158,
+        159
+      ]
+    },
+    "enemy:2:6:commander": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 6,
+      "commander": true,
+      "source_rect": [
+        384,
+        704,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        150,
+        158,
+        159
+      ]
+    },
+    "enemy:2:7:commander": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 7,
+      "commander": true,
+      "source_rect": [
+        448,
+        704,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        151,
+        158,
+        159
+      ]
+    },
+    "enemy:2:8:commander": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 8,
+      "commander": true,
+      "source_rect": [
+        512,
+        704,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        152,
+        158,
+        159
+      ]
+    },
+    "enemy:2:9:commander": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 9,
+      "commander": true,
+      "source_rect": [
+        576,
+        704,
+        64,
+        64
+      ],
+      "tiles": [
+        182,
+        153,
+        158,
+        159
+      ]
+    },
+    "enemy:2:10:commander": {
+      "palette": "enemy",
+      "type": 2,
+      "teams": 10,
+      "commander": true,
+      "source_rect": [
+        640,
+        704,
+        64,
+        64
+      ],
+      "tiles": [
+        181,
+        155,
+        158,
+        159
+      ]
+    }
+  }
+}
