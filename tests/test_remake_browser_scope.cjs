@@ -26,6 +26,19 @@ try{
  assert.deepEqual(boot.selectedCases.map(row=>row.id),expected);assert.deepEqual(audio.selectedCases.map(row=>row.id),expected);
  const battle=new Set(load(plan(['battle'])).selectedCases.map(row=>row.id));
  assert(boot.selectedCases.every(row=>!battle.has(row.id)),'Boot and audio changes never pull unrelated battle acceptance');
+ const soldierMedia=load(plan(['boot','battle','cloud']));
+ const soldierIds=new Set(soldierMedia.selectedCases.map(row=>row.id));
+ for(const id of [...expected,'battle-layout','battle-movement','soldier-orders','battle-siege']){
+  assert(soldierIds.has(id),'Soldier animation media retains real boot, field and castle coverage: '+id);
+ }
+ for(const id of ['opening-catalog','person-encyclopedia','recruitment','ruler-succession-display']){
+  assert(!soldierIds.has(id),'Soldier animation media excludes unrelated opening and people loops: '+id);
+ }
+ for(const id of ['soldier-orders','battle-siege']){
+  const row=full.selectedCases.find(row=>row.id===id);
+  assert(soldierMedia.grep.test('desktop-chromium browser_ui.spec.mjs '+row.title));
+  assert(soldierMedia.grep.test('touch-chromium browser_ui.spec.mjs '+row.title));
+ }
  for(const group of ['economy','people','logistics','save'])assert(load(plan([group],['mainland217-07'])).selectedCases.some(row=>row.id==='command-books'));
  for(const group of ['battle','map','save'])assert(load(plan([group],['mainland208-10'])).selectedCases.some(row=>row.id==='battle-movement'));
  assert(battle.has('battle-layout'),'Battle changes exercise the real battlefield controls');
@@ -60,5 +73,5 @@ try{
  assert.throws(()=>scopes.loadBrowserScope({planPath:broken}),/cannot read plan JSON/);
  const cli=spawnSync(process.execPath,[path.join(__dirname,'../tools/browser-tests/scope.cjs'),'--plan',broken],{encoding:'utf8'});
  assert.notEqual(cli.status,0);assert(cli.stderr.includes('Browser test scope:'));
- console.log('browser scopes: all 33 cases registered before grep, full/group union, bounded boot/audio, scenario-local deep openings, opaque plan provenance and fail-closed unknown/empty/invalid plans passed');
+ console.log('browser scopes: all 33 cases registered before grep, full/group union, bounded boot/audio, soldier media field/castle coverage, scenario-local deep openings, opaque plan provenance and fail-closed unknown/empty/invalid plans passed');
 }finally{fs.rmSync(directory,{recursive:true,force:true});}

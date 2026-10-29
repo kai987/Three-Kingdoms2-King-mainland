@@ -282,6 +282,194 @@ class ScopePlanTests(unittest.TestCase):
                 # the next one: each case has its own exact published baseline.
                 self.repo.base = head
 
+    def assert_soldier_action_scope(self, result, *, publish=False):
+        self.assertEqual(result['mode'], 'scoped', result['reasons'])
+        self.assertEqual(set(result['groups']), PLAN.BASE_GROUPS | {'battle'})
+        self.assertEqual(result['python_groups'], ['global'])
+        self.assertEqual(result['scenario_ids'], [])
+        self.assertTrue(result['web'])
+        self.assertFalse(any(result[field] for field in
+                             ('full', 'docs_only', 'native', 'rules', 'soak', 'resupply')))
+        self.assertEqual(result['publish'], publish)
+
+    def assert_full_scope(self, result, *, publish=False):
+        self.assertEqual(result['mode'], 'full', result['reasons'])
+        self.assertEqual(result['groups'], list(PLAN.GROUPS))
+        self.assertEqual(result['python_groups'], ['all'])
+        self.assertEqual(result['scenario_ids'], [])
+        self.assertTrue(all(result[field] for field in
+                            ('full', 'web', 'native', 'rules', 'soak', 'resupply')))
+        self.assertEqual(result['publish'], publish)
+
+    def test_soldier_action_sources_keep_battle_and_global_checks_without_publishing(self):
+        for path in ('art/soldier-combat-actions-v1/prompts/infantry.txt',
+                     'art/soldier-combat-actions-v1/prompts/infantry-v2.txt',
+                     'art/soldier-combat-actions-v1/references/archer-native-gray.png',
+                     'art/soldier-combat-actions-v1/studies/general.png',
+                     'art/soldier-combat-actions-v1/studies/0-safe_name-v2.png'):
+            with self.subTest(path=path):
+                head = self.changed(path, 'soldier animation source\n')
+                result = self.repo.plan(event_name='push', ref='refs/heads/main')
+                self.assertEqual(result['changed_files'], [path])
+                # Active media sources still run the canonical artifact build
+                # and real battle UI checks instead of becoming docs-only.
+                self.assert_soldier_action_scope(result)
+                self.repo.base = head
+
+    def test_all_twelve_soldier_action_outputs_use_battle_scope_and_publish(self):
+        outputs = ['index.json', 'provenance.json'] + [
+            action + '-' + side + '.png'
+            for action in ('infantry-melee', 'archer-melee', 'archer-ranged',
+                           'cavalry-melee', 'general-melee')
+            for side in ('friendly', 'enemy')]
+        for name in outputs:
+            path = 'game/assets/soldier-combat-actions-v1/' + name
+            with self.subTest(path=path):
+                head = self.changed(path, 'published soldier animation\n')
+                result = self.repo.plan(event_name='push', ref='refs/heads/main')
+                self.assertEqual(result['changed_files'], [path])
+                self.assert_soldier_action_scope(result, publish=True)
+                self.repo.base = head
+
+    def test_soldier_action_builder_is_scoped_and_its_exact_readme_is_documentation(self):
+        self.changed('tools/soldier-combat-actions/README.md', 'Animation build instructions\n')
+        docs = self.repo.plan(event_name='push', ref='refs/heads/main')
+        self.assertEqual(docs['mode'], 'docs')
+        self.assertFalse(docs['web'])
+        self.assertFalse(docs['publish'])
+        self.repo.base = self.repo.git('rev-parse', 'HEAD')
+        self.changed('tools/soldier-combat-actions/build.cjs', 'generator change\n')
+        self.assert_soldier_action_scope(
+            self.repo.plan(event_name='push', ref='refs/heads/main'), publish=True)
+
+    def test_soldier_action_source_mixed_with_markdown_keeps_checks_without_publishing(self):
+        for path in ('art/soldier-combat-actions-v1/prompts/cavalry.txt',
+                     'art/soldier-combat-actions-v1/references/cavalry-native-gray.png',
+                     'art/soldier-combat-actions-v1/studies/cavalry.png',
+                     'README.zh-TW.md', 'docs/animation/review.md',
+                     'tools/soldier-combat-actions/README.md'):
+            self.repo.write(path, 'source and reviewed documentation\n')
+        self.repo.save()
+        self.assert_soldier_action_scope(
+            self.repo.plan(event_name='push', ref='refs/heads/main'))
+
+    def test_soldier_action_source_mixed_with_runtime_output_publishes(self):
+        for path in ('art/soldier-combat-actions-v1/studies/infantry-v2.png',
+                     'game/assets/soldier-combat-actions-v1/infantry-melee-friendly.png',
+                     'docs/animation/review.md'):
+            self.repo.write(path, 'reviewed source and runtime animation\n')
+        self.repo.save()
+        self.assert_soldier_action_scope(
+            self.repo.plan(event_name='push', ref='refs/heads/main'), publish=True)
+
+    def test_soldier_action_sources_cannot_hide_shared_rules_or_ci_policy_changes(self):
+        source = 'art/soldier-combat-actions-v1/prompts/infantry.txt'
+        for path in ('source/remake/session.py', 'game/config/campaigns/shared.json',
+                     'tools/ci/plan.py', '.github/workflows/remake.yml',
+                     'tests/test_remake_ci_scope.py', 'tests/test_remake_browser_scope.cjs'):
+            with self.subTest(path=path):
+                self.repo.write(source, 'media change mixed with ' + path + '\n')
+                head = self.changed(path, 'shared rules or verification policy\n')
+                result = self.repo.plan(event_name='push', ref='refs/heads/main')
+                self.assertEqual(set(result['changed_files']), {source, path})
+                self.assert_full_scope(result, publish=True)
+                self.repo.base = head
+
+    def test_soldier_action_allowlists_fail_closed_for_unknown_paths(self):
+        unknown = (
+            'art/soldier-combat-actions-v1/prompts/infantry.png',
+            'art/soldier-combat-actions-v1/references/infantry.txt',
+            'art/soldier-combat-actions-v1/studies/infantry.webp',
+            'art/soldier-combat-actions-v1/studies/Infantry.png',
+            'art/soldier-combat-actions-v1/studies/_infantry.png',
+            'art/soldier-combat-actions-v1/studies/.infantry.png',
+            'art/soldier-combat-actions-v1/studies/infantry.v2.png',
+            'art/soldier-combat-actions-v1/studies/infantry name.png',
+            'art/soldier-combat-actions-v1/studies/步兵.png',
+            'art/soldier-combat-actions-v1/studies/nested/infantry.png',
+            'art/soldier-combat-actions-v1/exports/infantry.png',
+            'art/soldier-combat-actions-v1/README.md',
+            'art/soldier-combat-actions-v2/studies/infantry.png',
+            'art/soldier-combat-actions-v10/studies/infantry.png',
+            'game/assets/soldier-combat-actions-v1/infantry-melee-neutral.png',
+            'game/assets/soldier-combat-actions-v1/general-ranged-friendly.png',
+            'game/assets/soldier-combat-actions-v1/infantry-melee-friendly.webp',
+            'game/assets/soldier-combat-actions-v1/Infantry-melee-friendly.png',
+            'game/assets/soldier-combat-actions-v1/extra.json',
+            'game/assets/soldier-combat-actions-v1/README.md',
+            'game/assets/soldier-combat-actions-v1/nested/index.json',
+            'game/assets/soldier-combat-actions-v2/index.json',
+            'game/assets/soldier-combat-actions-v10/index.json',
+            'tools/soldier-combat-actions/build.js',
+            'tools/soldier-combat-actions/check.cjs',
+            'tools/soldier-combat-actions/readme.md',
+            'tools/soldier-combat-actions/nested/README.md',
+            'tools/soldier-combat-actions-v1/build.cjs',
+        )
+        for path in unknown:
+            with self.subTest(path=path):
+                head = self.changed(path, 'unregistered animation input\n')
+                self.assert_full_scope(self.repo.plan(event_name='push', ref='refs/heads/main'),
+                                       publish=True)
+                self.repo.base = head
+
+    def test_deleted_known_soldier_action_inputs_and_outputs_keep_their_scopes(self):
+        for path, publish in (
+                ('art/soldier-combat-actions-v1/prompts/infantry.txt', False),
+                ('art/soldier-combat-actions-v1/references/infantry-native-gray.png', False),
+                ('art/soldier-combat-actions-v1/studies/infantry.png', False),
+                ('game/assets/soldier-combat-actions-v1/index.json', True),
+                ('game/assets/soldier-combat-actions-v1/infantry-melee-friendly.png', True),
+                ('tools/soldier-combat-actions/build.cjs', True)):
+            with self.subTest(path=path):
+                self.repo.write(path, 'tracked animation input\n')
+                self.repo.base = self.repo.save('Published animation fixture')
+                (self.repo.path / path).unlink()
+                head = self.repo.save('Delete animation input')
+                result = self.repo.plan(event_name='push', ref='refs/heads/main')
+                self.assertEqual(result['changed_files'], [path])
+                # This tests path planning. The retained canonical build is
+                # responsible for rejecting any resulting broken artifact.
+                self.assert_soldier_action_scope(result, publish=publish)
+                self.repo.base = head
+
+    def test_soldier_action_renames_classify_both_endpoints(self):
+        pairs = (
+            ('art/soldier-combat-actions-v1/studies/infantry.png',
+             'art/soldier-combat-actions-v1/studies/infantry-v2.png', False, False),
+            ('game/assets/soldier-combat-actions-v1/archer-melee-friendly.png',
+             'game/assets/soldier-combat-actions-v1/archer-melee-enemy.png', False, True),
+            ('art/soldier-combat-actions-v1/prompts/general.txt',
+             'art/soldier-combat-actions-v1/prompts/general.json', True, True),
+            ('art/soldier-combat-actions-v1/studies/cavalry.webp',
+             'art/soldier-combat-actions-v1/studies/cavalry.png', True, True),
+            ('game/assets/soldier-combat-actions-v1/general-melee-friendly.png',
+             'game/assets/soldier-combat-actions-v2/general-melee-friendly.png', True, True),
+        )
+        for old, new, full, publish in pairs:
+            with self.subTest(old=old, new=new):
+                self.repo.write(old, 'unchanged bytes for rename detection\n')
+                self.repo.base = self.repo.save('Published rename source')
+                target = self.repo.path / new
+                target.parent.mkdir(parents=True, exist_ok=True)
+                (self.repo.path / old).rename(target)
+                head = self.repo.save('Rename animation input')
+                self.assertEqual(PLAN.changes(self.repo.path, self.repo.base, head),
+                                 [('R100', [old, new])])
+                result = self.repo.plan(event_name='push', ref='refs/heads/main')
+                self.assertEqual(set(result['changed_files']), {old, new})
+                if full:
+                    self.assert_full_scope(result, publish=publish)
+                else:
+                    self.assert_soldier_action_scope(result, publish=publish)
+                self.repo.base = head
+
+    def test_soldier_action_sources_do_not_override_forced_or_scheduled_full_checks(self):
+        self.changed('art/soldier-combat-actions-v1/prompts/infantry.txt')
+        self.assert_full_scope(self.repo.plan(event_name='workflow_dispatch', ref='refs/heads/main',
+                                             force_full=True, publish=True), publish=True)
+        self.assert_full_scope(self.repo.plan(event_name='schedule', ref='refs/heads/main'))
+
     def test_tactical_grid_bindings_generator_and_learning_tables_require_full_rules(self):
         for path in ('game/assets/battlefields/index.json',
                      'game/config/battlefield-city-bindings.json',

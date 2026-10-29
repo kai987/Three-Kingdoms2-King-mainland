@@ -56,6 +56,15 @@ SMALL_UI_TESTS = {
     'tests/test_remake_audio_commands.cjs', 'tests/test_remake_browser_boot.cjs',
     'tests/test_remake_browser_client.cjs',
 }
+SOLDIER_COMBAT_SOURCE = re.compile(
+    r'art/soldier-combat-actions-v1/(?:prompts/[a-z0-9][a-z0-9_-]*\.txt'
+    r'|(?:references|studies)/[a-z0-9][a-z0-9_-]*\.png)\Z')
+SOLDIER_COMBAT_ASSET = re.compile(
+    r'game/assets/soldier-combat-actions-v1/(?:index\.json|provenance\.json'
+    r'|(?:infantry-melee|archer-(?:melee|ranged)|cavalry-melee|general-melee)'
+    r'-(?:friendly|enemy)\.png)\Z')
+SOLDIER_COMBAT_BUILDER = 'tools/soldier-combat-actions/build.cjs'
+SOLDIER_COMBAT_README = 'tools/soldier-combat-actions/README.md'
 SHARED_SCENARIO_FIELDS = {
     'rules', 'cities', 'links', 'world', 'city_coordinates', 'added_city_ids',
     'travel_rules', 'travel_routes', 'travel_hazards', 'sea_routes', 'sea_links',
@@ -144,7 +153,8 @@ def changes(repo, base, head):
 
 def docs_path(path):
     return bool(re.fullmatch(r'README(?:[A-Za-z0-9_.-]*)\.md', path)
-                or re.fullmatch(r'docs/(?:[^/]+/)*[^/]+\.md', path))
+                or re.fullmatch(r'docs/(?:[^/]+/)*[^/]+\.md', path)
+                or path == SOLDIER_COMBAT_README)
 
 
 def stripped(data, *paths):
@@ -314,6 +324,12 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
             elif path.startswith(('game/assets/battlefields/', 'tools/battlefields/evidence/')):
                 groups.update(('battle', 'map'))
                 reasons.append('Battlefield pixels or native screenshot evidence: ' + path)
+            elif SOLDIER_COMBAT_SOURCE.fullmatch(path):
+                groups.add('battle')
+                reasons.append('Soldier attack artwork source; retain canonical provenance checks: ' + path)
+            elif SOLDIER_COMBAT_ASSET.fullmatch(path) or path == SOLDIER_COMBAT_BUILDER:
+                groups.add('battle')
+                reasons.append('Soldier attack atlas, provenance or packing tool: ' + path)
             elif (path.startswith(('source/remake/', 'crates/', 'tools/ci/', '.github/'))
                   or path.startswith('game/config/') or path in ('game/build_campaigns.py', 'game/build_web.py', 'game/serve.py')
                   or path.endswith(('requirements.txt', 'pyproject.toml', 'Cargo.toml', 'Cargo.lock'))):
@@ -421,6 +437,15 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
                            and reference == 'refs/heads/main')
     if publish and not (force_full and event_name == 'workflow_dispatch' and reference == 'refs/heads/main'):
         reasons.append('Explicit publish ignored outside manual full verification on main')
+    # Raw studies and prompts do not change the served game. Keep their
+    # canonical rebuild checks (including source hashes), but publish only
+    # when the resulting runtime atlases/provenance are also updated. Both
+    # sides of renames are present in changed, so unknown destinations still
+    # fail closed above and mixed runtime/rule changes retain normal gates.
+    if (not full and any(SOLDIER_COMBAT_SOURCE.fullmatch(path) for path in changed)
+            and all(docs_path(path) or SOLDIER_COMBAT_SOURCE.fullmatch(path) for path in changed)):
+        should_publish = False
+        reasons.append('Only soldier artwork sources/documentation changed; no runtime publication')
     return dict(schema=SCHEMA, head=resolved_head, base=resolved_base,
                 mode='full' if full else 'scoped', full=full, docs_only=False,
                 web=True, native=native, rules=full, soak=full, resupply=resupply,
