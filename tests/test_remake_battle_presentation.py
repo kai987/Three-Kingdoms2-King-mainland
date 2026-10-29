@@ -11,9 +11,9 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, SeedRng, canonical
 from remake.campaign_expansion import TACTICS
 from remake.errors import GameError
-from remake import battle_grid, presentation
+from remake import battle_grid, presentation, siege
 from remake.session import CampaignSession
-from campaign_fixtures import arrange_contact, controlled_catalog
+from campaign_fixtures import arrange_contact, arrange_tactic, controlled_catalog
 from test_remake_tactical_ai import battle, actors, successful_rng
 from test_remake_civil_staff_campaign import staff_catalog
 
@@ -39,13 +39,28 @@ class BattlePresentationTests(unittest.TestCase):
         self.assertFalse(hasattr(game, '_presentation_capture'))
         self.assertNotIn('presentation', game.view())
         self.assertNotIn('presentation', game.export_save())
+        if 'presentation'not in result:
+            self.assertIn(kind,{'attack','battle_wait','siege_form','siege_orders','siege_withdraw'})
+            self.assertEqual(game.state.rng.draws,before['state']['rng']['draws'])
+            if kind in {'attack','battle_wait'}:
+                self.assertIn('siege',game.state.battle['extended'])
+            return []
         receipt = result['presentation']
         self.assertEqual(set(receipt), {'schema', 'revision', 'scenes'})
         self.assertEqual(receipt['schema'], presentation.SCHEMA)
         self.assertEqual(receipt['revision'], game.revision)
         self.assertTrue(0 < len(receipt['scenes']) <= presentation.MAX_SCENES)
         for scene in receipt['scenes']:
-            self.assertEqual(set(scene), SCENE_FIELDS)
+            self.assertEqual(set(scene)-{'soldiers','siege'},SCENE_FIELDS)
+            if scene['kind']=='soldier_step':
+                self.assertEqual(set(scene['soldiers']),{'before','after'})
+                for moment in scene['soldiers'].values():
+                    self.assertIn(moment.get('mode','siege'),{'field','siege'})
+                    self.assertLessEqual(len(moment['units']),22)
+                    self.assertLessEqual(len(moment.get('events',[])),44)
+                    for piece in moment['units']:
+                        self.assertTrue(0<=piece['troops']<=100)
+            else:self.assertNotIn('soldiers',scene)
             self.assertIn(scene['own'], {'attackers', 'defenders'})
             for key in ('counter', 'success', 'skipped'):
                 self.assertIs(type(scene[key]), bool)
@@ -60,41 +75,58 @@ class BattlePresentationTests(unittest.TestCase):
     def unit(self, scene, when, ident):
         return next(row for row in scene[when]['units'] if row['id'] == ident)
 
+    def place_contact_squads(self,game):
+        """Explicit original-size contact fixture after real deployment.
+
+        Only positions and legal orders are controlled. Native damage, AP,
+        health, troops, random samples and recording execute unchanged.
+        """
+        row=game.state.battle['extended']['siege']
+        for side in siege.SIDES:
+            row['orders'][side]={kind:'wait'for kind in siege.KINDS}
+            row['piece_orders'][side]={piece['id']:'wait'for piece in row['units']if piece['side']==side}
+        next(p for p in row['units']if p['id']=='a1').update(x=6,y=4)
+        next(p for p in row['units']if p['id']=='d1').update(x=7,y=4)
+        game.validate(game.state)
+
+    def contact_step(self,game,*,arrange=True):
+        b=game.state.battle
+        self.assertEqual(self.perform(game,'siege_form',battle_id=b['id'],formation=3),[])
+        if arrange:self.place_contact_squads(game)
+        self.assertEqual(self.perform(game,'siege_orders',battle_id=b['id'],orders={k:'wait'if arrange else'advance'for k in siege.KINDS}),[])
+        return self.perform(game,'siege_step',battle_id=b['id'])
+
     def test_contact_reply_then_explicit_wait_records_the_real_enemy_target(self):
-        game = Campaign(controlled_catalog())
-        game.state = game._new('shu', 2026)
-        state = game.state
-        selected = state.cities['xiangyang'].roster.officer_ids[:2]
-        game._start_expanded_battle(state, state.cities['xiangyang'], state.cities['nanyang'], selected)
-        b = state.battle; actor, other = b['attackers']; target = b['defenders'][0]
-        arrange_contact(game, actor=actor, target=target)
-        positions = b['extended']['tactical']['positions']
-        point = positions[str(target['id'])]
-        occupied = {(p['x'], p['y']) for key, p in positions.items() if key != str(other['id'])}
-        x,y = next((x,y) for x,y in ((point['x']+1,point['y']), (point['x'],point['y']+1),
-                    (point['x']-1,point['y']), (point['x'],point['y']-1))
-                   if 0<=x<31 and 0<=y<19 and (x,y) not in occupied)
-        positions[str(other['id'])] = dict(x=x,y=y)
-        scenes = self.perform(game, 'attack', battle_id=b['id'], actor=actor['id'], target=target['id'])
-        self.assertEqual([(r['kind'],r['actor'],r['target'],r['counter']) for r in scenes],
-                         [('attack',actor['id'],target['id'],False),
-                          ('attack',target['id'],actor['id'],True)])
-        self.assertEqual(scenes[0]['after'], scenes[1]['before'])
-        initial_points = game.state.battle['extended']['tactical']['points']['defenders']
-        choice = dict(kind='attack', actor=target['id'], target=other['id'])
+        game=Campaign(controlled_catalog());game.state=game._new('shu',2026);state=game.state
+        selected=state.cities['xiangyang'].roster.officer_ids[:2]
+        game._start_expanded_battle(state,state.cities['xiangyang'],state.cities['nanyang'],selected)
+        b=state.battle;actor,other=b['attackers'];target=b['defenders'][0]
+        arrange_contact(game,actor=actor,target=target)
+        positions=b['extended']['tactical']['positions'];point=positions[str(target['id'])]
+        occupied={(p['x'],p['y'])for key,p in positions.items()if key!=str(other['id'])}
+        x,y=next((x,y)for x,y in ((point['x']+1,point['y']),(point['x'],point['y']+1),(point['x']-1,point['y']),(point['x'],point['y']-1))if 0<=x<31 and 0<=y<19 and (x,y)not in occupied)
+        positions[str(other['id'])]=dict(x=x,y=y)
+        self.assertEqual(self.perform(game,'attack',battle_id=b['id'],actor=actor['id'],target=target['id']),[])
+        scenes=self.contact_step(game);first=scenes[0]
+        self.assertEqual((first['kind'],first['actor'],first['target']),('soldier_step',actor['id'],target['id']))
+        self.assertEqual([e['actor']for e in first['soldiers']['after']['events']],['a1','d1'])
+        self.assertLess(self.unit(first,'after',actor['id'])['troops'],self.unit(first,'before',actor['id'])['troops'])
+        self.assertLess(self.unit(first,'after',target['id'])['troops'],self.unit(first,'before',target['id'])['troops'])
+        self.assertEqual(self.perform(game,'siege_withdraw',battle_id=b['id']),[])
+        initial_points=game.state.battle['extended']['tactical']['points']['defenders']
+        choice=dict(kind='attack',actor=target['id'],target=other['id'])
         def one_enemy_action(state,battle,*args,**kwargs):
             return choice if battle['extended']['tactical']['points']['defenders']==initial_points else None
-        with patch('remake.tactical_ai.choose_action', side_effect=one_enemy_action):
-            replies = self.perform(game, 'battle_wait', battle_id=b['id'])
-        self.assertEqual([(r['kind'],r['actor'],r['target'],r['counter']) for r in replies],
-                         [('attack',target['id'],other['id'],True),
-                          ('attack',other['id'],target['id'],True)])
-        self.assertEqual(replies[0]['after'], replies[1]['before'])
-        for scene in [*scenes,*replies]:
-            self.assertGreater(self.unit(scene,'before',scene['target'])['troops'],
-                               self.unit(scene,'after',scene['target'])['troops'])
-        self.assertEqual(self.unit(replies[0],'before',actor['id'])['troops'],
-                         self.unit(replies[0],'after',actor['id'])['troops'])
+        with patch('remake.tactical_ai.choose_action',side_effect=one_enemy_action):
+            self.assertEqual(self.perform(game,'battle_wait',battle_id=b['id']),[])
+        pending=game.state.battle['extended']['siege']
+        self.assertEqual((pending['actor'],pending['target']),(target['id'],other['id']))
+        replies=self.contact_step(game);reply=replies[0]
+        self.assertEqual((reply['kind'],reply['actor'],reply['target'],reply['own']),('soldier_step',target['id'],other['id'],'defenders'))
+        self.assertEqual([e['actor']for e in reply['soldiers']['after']['events']],['d1','a1'])
+        for ident in (other['id'],target['id']):
+            self.assertGreater(self.unit(reply,'before',ident)['troops'],self.unit(reply,'after',ident)['troops'])
+        self.assertEqual(self.unit(reply,'before',actor['id'])['troops'],self.unit(reply,'after',actor['id'])['troops'])
 
     def test_all_sixteen_tactics_record_the_actual_success_cost_and_affected_units(self):
         for tid, (_, cost, effect, _) in enumerate(TACTICS):
@@ -102,6 +134,9 @@ class BattlePresentationTests(unittest.TestCase):
             with self.subTest(tactic=tid):
                 game = battle(terrain, spell=tid)
                 b, actor, target, _, _ = actors(game)
+                if tid==8:
+                    target=next(u for u in b['defenders']if u['id']!=game.state.extension['leaders'][b['defender']])
+                    arrange_tactic(game,tid,actor=actor,target=target)
                 successful_rng(game.state)
                 if effect in {'trap', 'rock'}:
                     b['extended']['support'][str(target['id'])]['health'] = 2
@@ -142,19 +177,24 @@ class BattlePresentationTests(unittest.TestCase):
                          self.unit(scene, 'after', target['id'])['troops'])
 
     def test_ambush_precedes_action_and_its_losses_are_not_counted_twice(self):
-        for routed in (False, True):
+        for routed in (False,True):
             with self.subTest(routed=routed):
-                game = battle(three_enemies=False); b, actor, target, _, _ = actors(game)
-                b['extended']['ambush'] = dict(actor=target['id'])
-                if routed: actor['troops'] = 1
-                scenes = self.perform(game, 'attack', battle_id=b['id'], actor=actor['id'], target=target['id'])
-                trap, action = scenes[:2]
-                self.assertEqual((trap['kind'], trap['actor'], trap['target']), ('ambush', target['id'], actor['id']))
-                self.assertEqual(trap['after'], action['before'])
-                self.assertEqual(action['skipped'], routed)
+                game=battle(three_enemies=False);b,actor,target,_,_=actors(game)
+                b['extended']['ambush']=dict(actor=target['id'])
+                if routed:actor['troops']=1
+                scenes=self.perform(game,'attack',battle_id=b['id'],actor=actor['id'],target=target['id'])
+                trap=scenes[0]
+                self.assertEqual((trap['kind'],trap['actor'],trap['target']),('ambush',target['id'],actor['id']))
                 if routed:
-                    self.assertFalse(action['success'])
-                    self.assertEqual(action['before'], action['after'])
+                    action=scenes[1];self.assertEqual(trap['after'],action['before'])
+                    self.assertTrue(action['skipped']);self.assertFalse(action['success']);self.assertEqual(action['before'],action['after'])
+                else:
+                    self.assertEqual(len(scenes),1,'Formation opening does not replay the ambush as a second attack')
+                    before_step=self.unit(trap,'after',actor['id'])['troops']
+                    self.assertEqual(game.state.battle['attackers'][0]['troops'],before_step)
+                    step=self.contact_step(game)[0]
+                    self.assertEqual(self.unit(step,'before',actor['id'])['troops'],before_step)
+                    self.assertIsNone(game.state.battle['extended']['ambush'])
 
     def test_stunned_attack_is_a_precise_skipped_action(self):
         game = battle(three_enemies=False); b, actor, target, _, _ = actors(game)
@@ -230,17 +270,21 @@ class BattlePresentationTests(unittest.TestCase):
         self.assertFalse(hasattr(game, '_presentation_capture'))
 
     def test_session_forwards_only_the_current_successful_command_receipt(self):
-        game = battle(three_enemies=False); b, actor, target, _, _ = actors(game)
-        with patch('remake.session.Catalog', return_value=game.catalog):
-            session = CampaignSession([ROOT / 'controlled.json'])
-        session.game = game
-        result = session.command('attack', dict(battle_id=b['id'], actor=actor['id'], target=target['id']), session.revision)
-        self.assertEqual(result['presentation']['revision'], session.revision)
-        self.assertEqual(result['presentation']['scenes'][0]['kind'], 'attack')
-        self.assertNotIn('presentation', session.view())
-        saved = session.export_save()
-        self.assertNotIn('presentation', session.load_save(saved, session.revision))
-        self.assertEqual(canonical(session.export_save()), canonical(saved))
+        game=battle(three_enemies=False);b,actor,target,_,_=actors(game)
+        with patch('remake.session.Catalog',return_value=game.catalog):session=CampaignSession([ROOT/'controlled.json'])
+        session.game=game;rng=deepcopy(game.state.rng)
+        result=session.command('attack',dict(battle_id=b['id'],actor=actor['id'],target=target['id']),session.revision)
+        self.assertNotIn('presentation',result);self.assertEqual(game.state.rng,rng)
+        self.assertNotIn('presentation',session.command('siege_form',dict(battle_id=b['id'],formation=3),session.revision))
+        self.place_contact_squads(game)
+        self.assertNotIn('presentation',session.command('siege_orders',dict(battle_id=b['id'],orders={k:'wait'for k in siege.KINDS}),session.revision))
+        result=session.command('siege_step',dict(battle_id=b['id']),session.revision)
+        self.assertEqual(result['presentation']['revision'],session.revision)
+        self.assertEqual(result['presentation']['scenes'][0]['kind'],'soldier_step')
+        self.assertEqual(len(result['presentation']['scenes']),1)
+        self.assertNotIn('presentation',session.view());saved=session.export_save()
+        self.assertNotIn('presentation',session.load_save(saved,session.revision))
+        self.assertEqual(canonical(session.export_save()),canonical(saved))
 
     def test_generated_actor_keeps_its_string_identity_through_real_effects(self):
         game = Campaign(staff_catalog())
@@ -254,7 +298,8 @@ class BattlePresentationTests(unittest.TestCase):
                                    game.state.cities['jiangxia'], [ident])
         b = game.state.battle
         arrange_contact(game)
-        scenes = self.perform(game, 'attack', battle_id=b['id'], actor=ident, target=b['defenders'][0]['id'])
+        self.assertEqual(self.perform(game,'attack',battle_id=b['id'],actor=ident,target=b['defenders'][0]['id']),[])
+        scenes=self.contact_step(game,arrange=False)
         self.assertEqual(scenes[0]['actor'], ident)
         self.assertEqual(self.unit(scenes[0], 'before', ident)['id'], ident)
         self.assertNotIn(ident, game.catalog.by_id)
@@ -262,7 +307,8 @@ class BattlePresentationTests(unittest.TestCase):
     def test_completed_ai_turn_and_stale_attack_do_not_replay_receipts(self):
         game = battle(three_enemies=False); b, actor, target, _, _ = actors(game)
         stale = game.revision
-        self.perform(game, 'attack', battle_id=b['id'], actor=actor['id'], target=target['id'])
+        self.assertEqual(self.perform(game,'attack',battle_id=b['id'],actor=actor['id'],target=target['id']),[])
+        self.contact_step(game)
         saved = game.export_save()
         with self.assertRaises(GameError):
             game.command('attack', dict(battle_id=b['id'], actor=actor['id'], target=target['id']), stale)

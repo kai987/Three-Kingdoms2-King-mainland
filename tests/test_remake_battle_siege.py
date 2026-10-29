@@ -110,7 +110,7 @@ class SiegePresentationTests(unittest.TestCase):
             ours=[p for p in row['units']if p['side']=='attackers'and p['kind']!='general']
             self.assertEqual(len(ours),(total+99)//100)
             self.assertEqual(sum(p['troops']for p in ours),total)
-            self.assertLessEqual(max(p['troops']for p in ours)-min(p['troops']for p in ours),1)
+            self.assertEqual([p['troops']for p in ours],[min(100,total-i*100)for i in range((total+99)//100)])
             self.assertTrue(all(p['kind']!='infantry'for p in row['units']if p['side']=='defenders'))
 
     def test_steps_move_and_exchange_real_losses_then_return_without_extra_ap(self):
@@ -133,6 +133,7 @@ class SiegePresentationTests(unittest.TestCase):
         game.command('siege_form',dict(battle_id=ident,formation=0),game.revision)
         b=game.state.battle;row=b['extended']['siege']
         row['orders']['defenders']={k:'wait'for k in ('infantry','archer','cavalry','general')}
+        row['piece_orders']['defenders']={p['id']:'wait'for p in row['units']if p['side']=='defenders'}
         before=game.export_save();self.cycle(game,ident,'wait')
         current=game.state.battle['extended']['siege']
         self.assertEqual(current['units'],before['state']['battle']['extended']['siege']['units'])
@@ -218,13 +219,16 @@ class SiegePresentationTests(unittest.TestCase):
             self.cycle(game,b['id'])
             self.assertTrue('siege'in game.state.battle['extended'])
 
-    def test_plain_contact_and_legacy_kernel_do_not_gain_siege_state(self):
+    def test_plain_contact_opens_field_soldiers_while_legacy_arithmetic_stays_frozen(self):
         for tactical in (True,False):
             game=battle(three_enemies=False,tactical=tactical);b,a,t,_,_=actors(game)
             self.assertIsNone(battle_grid.siege_context(b,a,t))
             if tactical:result=game.command('attack',dict(battle_id=b['id'],actor=a['id'],target=t['id']),game.revision)
             else:game._execute_attack(game.state,a,t,'attackers','defenders',finish=False)
-            self.assertNotIn('siege',game.state.battle['extended'])
+            if tactical:
+                self.assertEqual(game.state.battle['extended']['siege']['mode'],'field')
+                self.assertIsNone(game.state.battle['extended']['siege']['fort'])
+            else:self.assertNotIn('siege',game.state.battle['extended'])
 
     def test_general_contact_enters_existing_duel_and_resumes_without_extra_ap(self):
         game,ident,_,_,_=self.start();game.command('siege_form',dict(battle_id=ident,formation=0),game.revision)

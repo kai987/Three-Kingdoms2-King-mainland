@@ -348,6 +348,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                'recruit': self._recruit, 'depart': self._depart,
                                'attack': self._attack, 'retreat': self._retreat, 'settle': self._settle,
                                'battle_move':self._battle_move, 'battle_wait':self._battle_wait,
+                               'battle_facility':self._battle_facility,
                                **{action:self._siege_command(action) for action in
                                   ('siege_form','siege_orders','siege_step','siege_withdraw')},
                                'end_turn': self._end_turn, 'ai': self._ai, 'arrivals': self._arrivals,
@@ -414,7 +415,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         if batch and identity is not None:
             command_books.require_allocation(state, city, identity)
         ident = parse_officer_ref(payload.get('officer'), self.catalog.rules)
-        troops = integer(payload.get('troops'), 0, 999, 'troops')
+        troops = integer(payload.get('troops'), 0, 1000, 'troops')
         if ident not in city.roster.officer_ids:
             raise GameError('武将不在本城。')
         if ident in self._march_ids(state):
@@ -724,7 +725,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 raise ValueError('officer identity/profile')
             people.add(officer.person_id)
             for value, low, high in ((officer.health, 0, officer.profile.health_max), (officer.loyalty, 0, 100),
-                                     (officer.troops, 0, 999), (officer.weapon_id, 0, len(equipment.WEAPONS)-1), (officer.armor_id, 0, len(equipment.ARMORS)-1),
+                                     (officer.troops, 0, 1000), (officer.weapon_id, 0, len(equipment.WEAPONS)-1), (officer.armor_id, 0, len(equipment.ARMORS)-1),
                                      (officer.experience, 0, 49999), (officer.tier, 0, 7)):
                 integer(value, low, high, 'officer state')
             if officer.tier != experience_tier(officer.experience) or type(officer.alive) is not bool:
@@ -786,26 +787,41 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             all_ids = []
             for key, city_key in (('attackers', 'source'), ('defenders', 'target')):
                 units = battle[key]
-                if len(units) > self.catalog.rules.battle_officers_per_side or (key == 'attackers' and not units):
+                if len(units) > 2*self.catalog.rules.battle_officers_per_side:
                     raise ValueError('battle side capacity')
                 for unit in units:
                     if set(unit) != {'id', 'troops', 'start', 'martial'}:
                         raise ValueError('battle unit fields')
                     self.catalog.rules.officer_id(unit['id'])
-                    integer(unit['start'], 1, 999, 'starting battle troops')
+                    integer(unit['start'], 1, 1000, 'starting battle troops')
                     officer = state.officers[unit['id']]
-                    if unit['id'] not in state.cities[battle[city_key]].roster.officer_ids or unit['start'] != officer.troops or unit['martial'] != officer.profile.martial_strength:
+                    from .battle_allegiance import home_for
+                    home=home_for(battle,unit,key)
+                    if unit['id'] not in state.cities[home].roster.officer_ids or unit['start'] != officer.troops or unit['martial'] != officer.profile.martial_strength:
                         raise ValueError('deployed/reserved membership')
                     integer(unit['troops'], 0, unit['start'], 'battle troops')
                     all_ids.append(unit['id'])
             if len(all_ids) != len(set(all_ids)) or len(battle['used']) != len(set(battle['used'])) or not set(battle['used']) <= {u['id'] for u in battle[self._player_sides(state)[0]]}:
                 raise ValueError('battle duplicate/turn ownership')
+            if len(all_ids)>2*self.catalog.rules.battle_officers_per_side:
+                raise ValueError('battle total deployment capacity')
             attacking = any(u['troops'] > 0 for u in battle['attackers'])
             defending = any(u['troops'] > 0 for u in battle['defenders'])
             if state.phase == 'battle' and not (attacking and defending):
                 raise ValueError('battle without active sides')
             withdrew = battle['extended']['withdrawn'] == 'defenders'
-            if battle['outcome'] == 'victory' and ((defending and not withdrew) or not attacking):
+            occupation=battle['extended'].get('occupation')
+            occupied=False
+            if occupation is not None:
+                camp=battle_grid._field(battle)['camp']
+                if (not isinstance(occupation,dict) or set(occupation)!={'actor','side','x','y'}
+                        or occupation['side']!='attackers' or (occupation['x'],occupation['y'])!=camp
+                        or occupation['actor'] not in {u['id'] for u in battle['attackers'] if u['troops']>0}
+                        or battle['extended']['tactical']['positions'][str(occupation['actor'])]!=dict(x=camp[0],y=camp[1])
+                        or battle['outcome']!='victory'):
+                    raise ValueError('invalid enemy castle occupation')
+                occupied=True
+            if battle['outcome'] == 'victory' and ((defending and not withdrew and not occupied) or not attacking):
                 raise ValueError('victory before defenders rout')
             if battle['outcome'] == 'defeat' and (attacking or not defending):
                 raise ValueError('defeat before attackers rout')

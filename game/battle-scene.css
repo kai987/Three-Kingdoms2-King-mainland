@@ -90,3 +90,21 @@
 .siege-army-summary dl{margin:0;display:grid;gap:4px}
 .siege-army-summary dl div{display:flex;justify-content:space-between;gap:8px}
 .siege-army-summary dd{margin:0;font-variant-numeric:tabular-nums}
+.siege-piece-counts{grid-column:1/-1;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 10px}
+.siege-piece-counts li{display:flex;justify-content:space-between;gap:4px;font-size:13px;border-block-start:1px dotted currentColor;padding:4px 0;font-variant-numeric:tabular-nums}
+.siege-group-orders{margin:8px 0;border-block:1px solid currentColor}
+.siege-group-orders summary{padding:10px 0;min-height:44px;cursor:pointer}
+.siege-piece-orders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:8px 0}
+.siege-piece-order{display:grid;grid-template-columns:48px minmax(0,1fr);align-items:center;gap:4px;min-width:0;padding:4px;border:1px solid currentColor}
+.siege-piece-order>span{font-size:14px;font-variant-numeric:tabular-nums}
+.siege-piece-order small{display:block;font-size:12px}
+.siege-piece-order select{min-width:0;width:100%;min-height:44px;padding:2px;font-size:14px}
+.battle-facility-entry{padding:6px 0;border-block-end:1px solid currentColor}
+.battle-facility-entry button{display:flex;gap:8px;align-items:center;justify-content:center;width:100%;min-height:44px}
+.battle-facility-entry img{width:32px;height:32px;object-fit:contain;image-rendering:pixelated}
+.battle-facility-art{display:flex;align-items:center;justify-content:center;gap:12px;margin:8px 0}
+.battle-facility-art .original-ui-scene{width:min(100%,320px);height:auto;image-rendering:pixelated}
+.battle-facility-art .original-ui-icon{width:64px;height:64px;image-rendering:pixelated}
+.battle-facility-resources{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0;font-variant-numeric:tabular-nums}
+@media(min-width:761px){.siege-piece-orders{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:360px){.siege-piece-orders{grid-template-columns:minmax(0,1fr)}}

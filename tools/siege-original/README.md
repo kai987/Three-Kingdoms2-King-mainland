@@ -18,3 +18,17 @@ python3 -B -m unittest discover -s tests -p 'test_remake_siege_assets.py' -v
 ```
 
 以上驗證不讀ROM、研究檔案庫或模擬器。它驗證素材的來源與衍生操作；遊戲傷害、AI及兵士模式仍須另行驗證。
+
+
+## 兵士算式與動作
+
+新增`animation-provenance.json`記錄獨立核心中4個敵方前進命令位元組的受控改動，十張完整截圖、原OAM、調色板及像素證據。新增`native-sprite-*-move-*`以原CHR與OAM優先序重建兩個不同走格姿勢；灰／紅原調色板各有4倍衍生圖。`effect-melee`是原版命中閃光，`effect-arrow`是原箭矢；不將走格兩幀冒稱另有揮砍姿勢。舊靜止圖與來源截圖全部保留。checker逐opaque像素對照原影片，核對原CHR固定雜湊、透明索引、OAM翻轉及精確4倍像素。
+
+`extract_soldier_rules.py`是可選離線研究工具，需`py65`與本人合法ROM，將原區段映射到NMOS6502並執行；只在E87A亂數邊界提供明示的0–8測試值，算術指令未改。以下可重建凍結數值：
+
+```sh
+python3 tools/siege-original/extract_soldier_rules.py /path/to/original.nes
+python3 -B -m unittest discover -s tests -p 'test_remake_soldier_rules.py' -v
+```
+
+遊戲、Web包和CI不需要ROM、核心或`py65`，僅離線回歸讀取`soldier-rules-reference.json`裡的126組攻基與2080組傷害輸入輸出；沒有保存原機器碼。來源區段及runner雜湊可供獨立複核。完整公式、訓練度等本作後置規則與來源界線見[兵士戰說明](../../docs/soldier-combat.md)。

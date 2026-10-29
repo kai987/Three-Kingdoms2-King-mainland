@@ -172,7 +172,7 @@ def process(game, state):
             for ident in sorted(city.roster.officer_ids, key=lambda i: (
                     -state.officers[i].profile.martial_strength, -state.officers[i].profile.intellect,
                     -state.officers[i].profile.virtue, i)):
-                amount = min(999-state.officers[ident].troops, city.reserves)
+                amount = min(1000-state.officers[ident].troops, city.reserves)
                 state.officers[ident].troops += amount; city.reserves -= amount; assigned += amount
         pool['foundings'][rule['id']] = dict(status='formed' if reason == 'formed' else 'skipped',
             date=list(now), turn=state.turn, members=members, reserves=assigned, reason=reason)
@@ -227,7 +227,7 @@ def validate_state(game, state):
                 or not isinstance(row['members'], list) or any(not isinstance(p, str) for p in row['members'])
                 or len(set(row['members'])) != len(row['members'])
                 or not set(row['members']) <= set(rule['members'])
-                or type(row['reserves']) is not int or not 0 <= row['reserves'] <= 999*len(row['members'])
+                or type(row['reserves']) is not int or not 0 <= row['reserves'] <= 1000*len(row['members'])
                 or (row['status']=='formed' and (row['reason']!='formed' or rule['ruler'] not in row['members']))
                 or (row['status']=='skipped' and (row['reason'] not in ('city_occupied','leader_unavailable')
                     or row['members'] or row['reserves']))):
@@ -241,7 +241,7 @@ def validate_state(game, state):
         if (not isinstance(row,dict) or set(row) != {'date','turn','released'} or row['date'] != exits[pid]
                 or type(row['turn']) is not int or row['turn'] != _event_turn(game.catalog, exits[pid])
                 or not 1 <= row['turn'] <= state.turn
-                or type(row['released']) is not int or not 0 <= row['released'] <= 999
+                or type(row['released']) is not int or not 0 <= row['released'] <= 1000
                 or officer is not None and (officer.alive or officer.faction_id is not None or officer.troops)):
             raise ValueError('Invalid monthly retirement receipt')
     coup_rules={r['id']:r for r in coups(game.catalog)}
@@ -253,7 +253,7 @@ def validate_state(game, state):
                 or row['status'] not in ('executed','conditions_changed') or row['reason']!=row['status']
                 or row['date']!=rule['date'] or type(row['turn']) is not int
                 or row['turn']!=_event_turn(game.catalog,rule['date']) or row['turn']>state.turn
-                or type(row['released_troops']) is not int or not 0<=row['released_troops']<=999*len(rule['victims'])
+                or type(row['released_troops']) is not int or not 0<=row['released_troops']<=1000*len(rule['victims'])
                 or row['status']=='conditions_changed' and row['released_troops']
                 or row['status']=='executed' and any(state.officers.get(game.catalog.ids[p]) is not None
                     and state.officers[game.catalog.ids[p]].alive for p in rule['victims'])):

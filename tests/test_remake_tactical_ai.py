@@ -81,7 +81,7 @@ class TacticalAiTests(unittest.TestCase):
             before=game.to_dict()
             rows=candidates(state,b,own,foe,terrain,TACTICS,depth=2)
             tids={r['tactic'] for r in rows if r['kind']=='tactic'};found|=tids
-            self.assertEqual(tids,set(legal_tactics(state,b,a,t,own,foe,terrain,TACTICS)))
+            self.assertEqual(tids,{tid for enemy in b[foe] for tid in legal_tactics(state,b,a,enemy,own,foe,terrain,TACTICS)})
             self.assertEqual(game.to_dict(),before)
             for row in rows:
                 self.assertIn(row['actor'],{u['id'] for u in b[own]})
@@ -94,6 +94,8 @@ class TacticalAiTests(unittest.TestCase):
             for own in ('attackers','defenders'):
                 with self.subTest(tactic=tid,side=own):
                     game=kernel_battle(terrain);state=game.state;b,a,t,own,foe=actors(game,own)
+                    if effect=='surrender':
+                        t=next(unit for unit in b[foe] if unit['id'] not in state.extension['leaders'].values())
                     # Every actor has at least 100 troops in the controlled
                     # roster. Low health isolates trap/rock's routed-HP effect.
                     if effect in {'trap','rock'}:b['extended']['support'][str(t['id'])]['health']=2
@@ -113,7 +115,10 @@ class TacticalAiTests(unittest.TestCase):
                         city=b['target'] if foe=='defenders' else b['source']
                         self.assertLess(state.cities[city].grain,grain[city])
                         self.assertEqual(state.cities[b['source'] if city==b['target'] else b['target']].grain,grain[b['source'] if city==b['target'] else b['target']])
-                    elif effect=='surrender':self.assertEqual(b['extended']['surrenders'][str(t['id'])],before[foe][0]['troops']);self.assertEqual(t['troops'],0)
+                    elif effect=='surrender':
+                        self.assertIn(t,b[own]);self.assertNotIn(t,b[foe])
+                        self.assertEqual(t['troops'],next(unit['troops'] for unit in before[foe] if unit['id']==t['id']))
+                        self.assertIn(str(t['id']),b['extended']['defections'])
                     else:self.assertLess(sum(u['troops'] for u in b[foe]),sum(u['troops'] for u in before[foe]))
                     if effect in {'trap','rock'}:self.assertEqual(t['troops'],0)
                     self.assertEqual(state.rng.draws,0 if effect in {'ambush','guard'} else 1+(0 if effect in {'confuse','chain','supply','surrender'} else min(len(b[foe]),3 if effect=='area' else 2 if effect=='crossbow' else 20 if effect in {'flood','inferno'} else 1)))
@@ -224,14 +229,22 @@ class TacticalAiTests(unittest.TestCase):
         states=[]
         for _ in range(2):
             game=battle('mountain',three_enemies=False,player='wu',seed=seed);state=game.state
+            # A balanced full-strength controlled deployment exercises both
+            # soldier sides before a small early force can be wiped out.
+            for side in ('attackers','defenders'):
+                for unit in state.battle[side]:
+                    extra=1000-unit['troops'];unit['troops']=unit['start']=1000
+                    state.officers[unit['id']].troops=1000
+                    state.soldiers['recruited']+=extra
+            from remake import siege
             with patch.object(game,'_perform_battle_action',wraps=game._perform_battle_action) as execute, \
-                    patch.object(game,'_attack_hit',wraps=game._attack_hit) as hit:
+                    patch.object(siege,'_hit',wraps=siege._hit) as hit:
                 game._resolve_ai_battle(state)
-                self.assertLessEqual(execute.call_count,3700)
+                self.assertLessEqual(execute.call_count,8000)
                 # A contact reply can decide the fight before the defender's
                 # whole-side policy phase. Observe the actual two-sided hit
                 # service without requiring an extra free policy action.
-                self.assertEqual({call.args[3] for call in hit.call_args_list},{'attackers','defenders'})
+                self.assertEqual({call.args[3]['side'] for call in hit.call_args_list},{'attackers','defenders'})
                 self.assertTrue(any(call.args[1]['kind']=='tactic'for call in execute.call_args_list))
             self.assertIsNone(state.battle);self.assertEqual(len(state.settled_battles),1)
             game.validate(state)
@@ -252,7 +265,7 @@ class TacticalAiTests(unittest.TestCase):
         with patch.object(game,'_perform_battle_action',return_value=True) as execute:
             with self.assertRaisesRegex(GameError,'合法行動上限'):
                 game._resolve_ai_battle(state)
-            self.assertEqual(execute.call_count,3700)
+            self.assertEqual(execute.call_count,8000)
         self.assertEqual(game.to_dict(),before)
         self.assertEqual(state.settled_battles,[])
         game.validate(state)

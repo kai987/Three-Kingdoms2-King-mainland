@@ -28,6 +28,8 @@ CAPTURE_HASHES = {
  'capture-wait-8.png':'b6659cd14ace33edd781ea459a0a1ed02f397b23adfdd64d2e646bae03c00f62',
  'capture-original-field.png':'2e4eaebc9fc513e67e8f845ab3c9ab67e71a02084ba1b7e4af5f71549cd6bbaa',
 }
+CAPTURE_HASHES.update({'capture-action-move-general-0.png': '73a0b97b844a92ec635a57e0d24751a962bf9d69cb54c44a2d667eba04bc9822', 'capture-action-move-general-1.png': '656fd2aee13ee2f98b3d54e088a40b8a0ffee8ad1f8a267b3309b78bc976cc9c', 'capture-action-move-infantry-0.png': '10deac157a4b381f1b3f8f6bfdec322fcc02e4b3b6f9480b6f350ab1312f2068', 'capture-action-move-infantry-1.png': '622dd230fbf898e804233a2acefa3c9fd48a917b5bfc371b78d9fa0a98df8678', 'capture-action-move-archer-0.png': '6b910644219058b42cb816d945fb841b2296db2f2e5ffbf706e912bb13f279c3', 'capture-action-move-archer-1.png': 'c7ad2eb1fe6a31f7f73dcca2d39359ca0f54307a999ae64f134da3e88e4bd9fd', 'capture-action-move-cavalry-0.png': 'eefb26839bca1441033ff8eeb6ffaf402e871a75cbca46ebd3a167185b95bce0', 'capture-action-move-cavalry-1.png': '31e6bbe55adfa5da3c6d27114311d248289ef2926563a125396d89a7ec37bf09', 'capture-action-effect-melee.png': '3a9349b102053fe39068a316af9dfa7fa57175409d3e655786d6331f850892ae', 'capture-action-effect-arrow.png': 'a83ceac57a2cd74c361934c96bc5ba47369813dff47e9f0e638b68635f01a937'})
+ANIMATION_CHR_HASHES = {'native-sprite-general-friendly-move-0': 'e7a3e384d238a8cd5c9a7bed742758cf56c84ff379b1fa1d7c02ce6633316998', 'native-sprite-general-enemy-move-0': 'e7a3e384d238a8cd5c9a7bed742758cf56c84ff379b1fa1d7c02ce6633316998', 'native-sprite-general-friendly-move-1': 'a520b75732837f3d0ebe781fa683d6dc69c5cc50a1ba6da443e053e8cea31065', 'native-sprite-general-enemy-move-1': 'a520b75732837f3d0ebe781fa683d6dc69c5cc50a1ba6da443e053e8cea31065', 'native-sprite-infantry-friendly-move-0': 'bbc9ce7bd75dad4bb6ba7f53df178c96b23d341c016fa5d0d45679ff51fce2e9', 'native-sprite-infantry-enemy-move-0': 'bbc9ce7bd75dad4bb6ba7f53df178c96b23d341c016fa5d0d45679ff51fce2e9', 'native-sprite-infantry-friendly-move-1': '159240a168e55d65c68e999e1b46fc8973260f51e24f865d3eb34901e63934ad', 'native-sprite-infantry-enemy-move-1': '159240a168e55d65c68e999e1b46fc8973260f51e24f865d3eb34901e63934ad', 'native-sprite-archer-friendly-move-0': 'afe7db3ffa1e31d80e4a2dbd04992fc38b97e73e0185aa5edbe7a5520acd9f76', 'native-sprite-archer-enemy-move-0': 'afe7db3ffa1e31d80e4a2dbd04992fc38b97e73e0185aa5edbe7a5520acd9f76', 'native-sprite-archer-friendly-move-1': '4abe8f45764e2eab3bdef5ffb91830d01c17a71dc6a62f22ee71b2a8f2a3ea7a', 'native-sprite-archer-enemy-move-1': '4abe8f45764e2eab3bdef5ffb91830d01c17a71dc6a62f22ee71b2a8f2a3ea7a', 'native-sprite-cavalry-friendly-move-0': 'b99dcfc18e7e691868e7b20b32a747ccbda6cd2ec4bbdf876e38ddf5c193e19d', 'native-sprite-cavalry-enemy-move-0': 'b99dcfc18e7e691868e7b20b32a747ccbda6cd2ec4bbdf876e38ddf5c193e19d', 'native-sprite-cavalry-friendly-move-1': '79fe310aa286cf3905fdf25002bf87ceb29753559553a5b060322228e2a043ea', 'native-sprite-cavalry-enemy-move-1': '79fe310aa286cf3905fdf25002bf87ceb29753559553a5b060322228e2a043ea', 'native-effect-melee': '2733fbcb886ac67025605ddd713d2a93753f2e57dd9a1754631c0f6944deb89c', 'native-effect-arrow': '6c65352607907471e12bd2192b53bafcc9f10114065a506808504d2cec31f776'}
 CHR_HASHES = {
  'native-sprite-general-friendly':'a701b957984320c5b3e9999c755f235806cbac4331ad373f46aaf61378b65b15',
  'native-sprite-infantry-friendly':'9020d20e27c08b89e7d2385ccf4ee5ce3475a1e9ccc94d99e85c07f3f3b1c6e9',
@@ -125,6 +127,35 @@ def native_sprite(key, operation, opaque):
     return bytes(transparent)
 
 
+def animation_sprite(key,operation,opaque,size):
+    """Original OAM priority, CHR masks and verified native palette variants."""
+    tiles=operation.get('tiles',[]);palette=operation.get('palette_rgb',[])
+    verification=operation.get('verification_palette_rgb',[])
+    require(key in ANIMATION_CHR_HASHES and len(tiles)in (1,4)and operation.get('transparent_index')==0,'Invalid original OAM animation')
+    allowed=[[[0,0,0],[0,0,0],[255,213,203],[167,181,188]],[[0,0,0],[0,0,0],[255,213,203],[187,45,9]],[[0,0,0],[0,0,0],[255,255,255],[187,45,9]]]
+    require(palette in allowed and verification in allowed,'Unverified original animation palette')
+    rendered=bytearray(size[0]*size[1]*4);confirmed=bytearray(len(rendered));combined=bytearray()
+    for tile in tiles:
+        raw=bytes.fromhex(tile['hex']);combined.extend(raw)
+        require(len(raw)==16 and sha(raw)==tile['sha256'],'OAM CHR tile changed')
+        require(tile['rom_offset']==0x40010+tile['chr_page_1k']*1024+(tile['tile_id']%64)*16,'OAM CHR offset mismatch')
+        require(type(tile['flip_x'])is bool and type(tile['flip_y'])is bool,'Invalid native OAM flip')
+        dx,dy=tile['dx'],tile['dy']
+        require(type(dx)is int and type(dy)is int and 0<=dx<=size[0]-8 and 0<=dy<=size[1]-8,'Invalid native OAM placement')
+        for y in range(8):
+            for x in range(8):
+                tx=7-x if tile['flip_x']else x;ty=7-y if tile['flip_y']else y
+                index=(raw[ty]>>(7-tx)&1)|(raw[ty+8]>>(7-tx)&1)<<1
+                at=((dy+y)*size[0]+dx+x)*4
+                if index and not rendered[at+3]:
+                    rendered[at:at+4]=bytes([*palette[index],255])
+                    confirmed[at:at+4]=bytes([*verification[index],255])
+    require(sha(combined)==operation.get('chr_composite_sha256')==ANIMATION_CHR_HASHES[key],'Unverified native animation CHR')
+    require(all(not confirmed[i+3]or confirmed[i:i+3]==opaque[i:i+3]for i in range(0,len(confirmed),4)),'OAM reconstruction differs from original video')
+    require(any(rendered[3::4]),'Empty native animation')
+    return bytes(rendered)
+
+
 def validate_tables(tables):
     require(tables.get('schema')=='tk2-native-siege-tables-v1' and tables.get('rom_sha256')==ROM_SHA,'Invalid native siege tables')
     chunks=tables.get('source_chunks',{})
@@ -192,7 +223,8 @@ def validate(data, read):
         else:
             require(any(step.get('background')==5 for step in value.get('steps',[])),'No native castle execution evidence')
         provenances[row['source_id']]=value
-    require(len(provenances)==3,'Two native castle captures and one retained field capture required')
+    require(len(provenances)==4,'Native castle, field and animation provenance required')
+    require(len(provenances['native-soldier-animation']['changes'])==4,'Native animation order fixture must be disclosed')
     require(len(provenances['controlled-capture-run3']['changes'])==6 and provenances['controlled-capture-actions']['changes']==[],'Native RAM fixture modifications must remain disclosed')
     for key,row in captures.items():
         provenance=provenances.get(row.get('source_id'),{})
@@ -210,6 +242,9 @@ def validate(data, read):
         for operation in operations:
             kind=operation.get('kind')
             if kind=='nearest_exact_4x':expected=nearest4(expected,size);size=(size[0]*4,size[1]*4);four+=1
+            elif kind=='native_oam_animation_reconstruction':
+                require(row.get('classification')=='native-oam-animation-sprite'and row.get('clean_sprite_verified')is True,'Original OAM art must be explicitly verified')
+                expected=animation_sprite(key,operation,expected,size)
             elif kind=='native_chr_background_index_transparency':
                 require(size==(16,16) and row.get('clean_sprite_verified')is True and row.get('classification')=='verified-native-chr-sprite','Native sprite verification must be explicit')
                 expected=native_sprite(key,operation,expected)
@@ -232,7 +267,7 @@ def validate(data, read):
         for frame in range(2):
             row=assets.get(f'sprite-{kind}-{side}-{frame}',{})
             require(row.get('clean_sprite_verified')is True and row.get('single_native_pose_reused')is True and row.get('pose_variant')==0 and row.get('requested_frame')==frame,'Reused native pose must not be claimed as a separately captured action')
-    return {**counts,'pngs':len(records),'exact4x':four,'clean_native_sprites':8,'difference_candidates_not_sprites':candidates,'pixels_checked':verified,'checker_requires_rom':False}
+    return {**counts,'pngs':len(records),'exact4x':four,'clean_native_sprites':8,'native_walking_frames':16,'native_attack_effects':2,'difference_candidates_not_sprites':candidates,'pixels_checked':verified,'checker_requires_rom':False}
 
 
 def check(root=OUT):

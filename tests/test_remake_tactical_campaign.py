@@ -8,9 +8,9 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, SeedRng, digest
-from remake import battle_grid as grid
+from remake import battle_grid as grid, siege
 from remake.errors import GameError
-from campaign_fixtures import controlled_catalog, reach_battle
+from campaign_fixtures import controlled_catalog, reach_battle, soldier_encounter_step
 from test_remake_tactical_ai import battle as contact_battle
 
 
@@ -85,9 +85,8 @@ class TacticalCampaignTests(unittest.TestCase):
         self.assertEqual(self.game.state.soldiers, before.soldiers)
 
     def test_repeated_attacks_include_contact_replies_without_free_enemy_turn(self):
-        # This regression is specifically an ordinary field exchange. Move
-        # the original castle occupant out using a real enemy-side move first;
-        # castle contact now has its own persistent formation/command suite.
+        # Reach an ordinary field contact through actual arrival, enemy-side
+        # movement, player path quotes and real AP payments.
         b,_,target=self.actors()
         source,distances,_=grid._paths(self.game.state,b,target)
         terrain=grid._field(b)['classes']
@@ -99,22 +98,41 @@ class TacticalCampaignTests(unittest.TestCase):
             return dict(kind='move',actor=target['id'],x=x,y=y)if point!=dict(x=x,y=y)else WAIT
         with patch('remake.tactical_ai.choose_action',side_effect=enemy_leaves_castle):
             self.command('battle_wait',battle_id=b['id'])
-        self.approach()
-        battle, actor, target = self.actors()
-        before = deepcopy(self.game.state)
-        points = battle['extended']['tactical']['points']['attackers']
-        own_troops = actor['troops']
-        initial_target = target['troops']
-        with patch.object(self.game, '_counter', side_effect=AssertionError('No free whole-side AI response')):
+        self.approach(reserve=6)
+        battle,actor,target=self.actors();before=deepcopy(self.game.state)
+        points=battle['extended']['tactical']['points']['attackers'];contacts=0
+        with patch.object(self.game,'_counter',side_effect=AssertionError('No free whole-side AI response')), \
+                patch('remake.tactical_ai.choose_action',side_effect=AssertionError('No free enemy policy command')):
             for _ in range(2):
-                battle, actor, target = self.actors()
-                self.command('attack', battle_id=battle['id'], actor=actor['id'], target=target['id'])
-        battle, actor, target = self.actors()
-        self.assertLess(actor['troops'], own_troops)
-        self.assertLess(target['troops'], initial_target)
-        self.assertEqual(battle['extended']['tactical']['points']['attackers'], points-4)
-        self.assertEqual(self.game.state.rng.draws, before.rng.draws+4)
-        self.assertEqual(self.game.state.extension['command_books'], before.extension['command_books'])
+                battle,actor,target=self.actors()
+                if self.game.state.phase!='battle' or not actor['troops'] or not target['troops']:break
+                start=(actor['troops'],target['troops']);seed=self.game.state.rng.draws
+                self.command('attack',battle_id=battle['id'],actor=actor['id'],target=target['id']);contacts+=1
+                self.assertEqual(self.game.state.rng.draws,seed,'Opening formation has no damage draw')
+                self.assertEqual(self.game.state.battle['extended']['siege']['mode'],'field')
+                # The native pieces walk to contact. Both generals wait so
+                # this assertion exercises soldier return fire, not a duel.
+                orders={k:'wait'if k=='general'else'advance'for k in siege.KINDS}
+                for _ in range(100):
+                    row=self.game.state.battle['extended'].get('siege')
+                    if row is None:break
+                    row['orders']['defenders']['general']='wait'
+                    row['piece_orders']['defenders']['d0']='wait'
+                    soldier_encounter_step(self.game,orders=orders)
+                    current=self.game.state.battle
+                    if all(current[side][0]['troops']<start[i]for i,side in enumerate(grid.SIDES)):break
+                battle,actor,target=self.actors()
+                self.assertLess(actor['troops'],start[0]);self.assertLess(target['troops'],start[1])
+                if battle['extended'].get('siege'):
+                    self.command('siege_withdraw',battle_id=battle['id'])
+                self.assertEqual(self.game.state.rng.draws,seed+2,'One encounter seeds both sides once')
+        battle,actor,target=self.actors()
+        self.assertGreaterEqual(contacts,1)
+        self.assertLess(actor['troops'],before.battle['attackers'][0]['troops'])
+        self.assertLess(target['troops'],before.battle['defenders'][0]['troops'])
+        self.assertEqual(battle['extended']['tactical']['points']['attackers'],points-2*contacts)
+        self.assertEqual(self.game.state.rng.draws,before.rng.draws+2*contacts)
+        self.assertEqual(self.game.state.extension['command_books'],before.extension['command_books'])
 
     def test_wait_drives_real_enemy_movement_and_returns_control_to_player(self):
         battle, _, _ = self.actors()
@@ -247,189 +265,170 @@ class TacticalCampaignTests(unittest.TestCase):
 
 
 class ContactRetaliationTests(unittest.TestCase):
-    """A contact encounter is bilateral; it is not a free enemy policy turn."""
+    """Real field formation/steps are bilateral, with one macro AP payment."""
     def setUp(self):
-        self.game = contact_battle(three_enemies=False)
+        self.game=contact_battle(three_enemies=False)
 
     def units(self):
-        b = self.game.state.battle
-        return b, b['attackers'][0], b['defenders'][0]
+        b=self.game.state.battle
+        return b,b['attackers'][0],b['defenders'][0]
 
     def attack(self):
-        b, actor, target = self.units()
-        return self.game.command('attack', dict(battle_id=b['id'], actor=actor['id'],
-                                  target=target['id']), self.game.revision)
+        b,actor,target=self.units()
+        return self.game.command('attack',dict(battle_id=b['id'],actor=actor['id'],target=target['id']),self.game.revision)
+
+    def prepare_contact(self,*,opened=False):
+        """Explicit valid soldier-cell fixture; no HP/damage/RNG is set.
+
+        The visible contact/formation commands run first. Two surviving front
+        squads are then placed side by side to isolate native turn ordering
+        from the separate movement tests. Every other original piece waits.
+        """
+        if not opened:self.attack()
+        b,_,_=self.units()
+        self.game.command('siege_form',dict(battle_id=b['id'],formation=3),self.game.revision)
+        row=self.game.state.battle['extended']['siege']
+        for side in siege.SIDES:
+            row['orders'][side]={kind:'wait'for kind in siege.KINDS}
+            row['piece_orders'][side]={p['id']:'wait'for p in row['units']if p['side']==side}
+        next(p for p in row['units']if p['id']=='a1').update(x=6,y=4)
+        next(p for p in row['units']if p['id']=='d1').update(x=7,y=4)
+        self.game.validate(self.game.state)
+
+    def cycle(self):
+        b,_,_=self.units();row=b['extended']['siege']
+        self.game.command('siege_orders',dict(battle_id=b['id'],piece_orders=dict(row['piece_orders']['attackers'])),self.game.revision)
+        return self.game.command('siege_step',dict(battle_id=b['id']),self.game.revision)
+
+    def scene(self,result):
+        return next(scene for scene in result['presentation']['scenes']if scene['kind']=='soldier_step')
 
     def test_contact_attack_has_one_reply_two_real_draws_and_one_ap_payment(self):
-        b, actor, target = self.units()
-        before = deepcopy(self.game.state)
-        with patch('remake.tactical_ai.choose_action', side_effect=AssertionError('No free enemy turn')), \
-                patch.object(self.game, '_counter', side_effect=AssertionError('No legacy response')):
-            result = self.attack()
-        after, actor, target = self.units()
-        self.assertLess(actor['troops'], before.battle['attackers'][0]['troops'])
-        self.assertLess(target['troops'], before.battle['defenders'][0]['troops'])
-        points = after['extended']['tactical']['points']
-        self.assertEqual(points['attackers'], before.battle['extended']['tactical']['points']['attackers']-2)
-        self.assertEqual(points['defenders'], before.battle['extended']['tactical']['points']['defenders'])
-        self.assertEqual(after['extended']['tactical']['side'], 'attackers')
-        self.assertEqual(self.game.state.rng.draws, before.rng.draws+2)
-        self.assertEqual(self.game.state.extension['command_books'], before.extension['command_books'])
-        first, reply = result['presentation']['scenes']
-        self.assertEqual((first['actor'], first['target'], first['counter']), (actor['id'], target['id'], False))
-        self.assertEqual((reply['actor'], reply['target'], reply['counter'], reply['own']),
-                         (target['id'], actor['id'], True, 'defenders'))
-        self.assertEqual(first['after'], reply['before'])
-        self.assertTrue(reply['success']); self.assertFalse(reply['skipped'])
+        b,actor,target=self.units();before=deepcopy(self.game.state)
+        with patch('remake.tactical_ai.choose_action',side_effect=AssertionError('No free enemy turn')), \
+                patch.object(self.game,'_counter',side_effect=AssertionError('No legacy response')):
+            self.prepare_contact();self.assertEqual(self.game.state.rng,before.rng)
+            result=self.cycle()
+        after,actor,target=self.units()
+        self.assertLess(actor['troops'],before.battle['attackers'][0]['troops'])
+        self.assertLess(target['troops'],before.battle['defenders'][0]['troops'])
+        points=after['extended']['tactical']['points']
+        self.assertEqual(points['attackers'],before.battle['extended']['tactical']['points']['attackers']-2)
+        self.assertEqual(points['defenders'],before.battle['extended']['tactical']['points']['defenders'])
+        self.assertEqual(after['extended']['tactical']['side'],'attackers')
+        self.assertEqual(self.game.state.rng.draws,before.rng.draws+2)
+        self.assertEqual(self.game.state.extension['command_books'],before.extension['command_books'])
+        scene=self.scene(result);events=scene['soldiers']['after']['events']
+        self.assertEqual([(e['actor'],e['target'],e['kind'])for e in events],[('a1','d1','melee'),('d1','a1','melee')])
+        self.assertTrue(all(e['loss']>0 for e in events));self.assertEqual(scene['own'],'attackers')
 
     def test_reply_uses_surviving_troops_and_both_existing_guard_counters(self):
-        b, actor, target = self.units()
-        support = b['extended']['support']
-        support[str(actor['id'])]['guard'] = 2
-        support[str(target['id'])]['guard'] = 2
-        support[str(actor['id'])]['morale'] = 100
-        support[str(target['id'])]['morale'] = 25
-        seen = []
-        damage = self.game._damage
-        def observe(state, first, second):
-            seen.append((first['id'], second['id'], first['troops'], second['troops'],
-                         state.battle['extended']['support'][str(first['id'])]['morale']))
-            return damage(state, first, second)
-        with patch.object(self.game, '_damage', side_effect=observe):
-            result = self.attack()
-        b, actor, target = self.units()
-        first, reply = result['presentation']['scenes']
-        target_after_hit = next(u['troops'] for u in first['after']['units'] if u['id']==target['id'])
-        self.assertEqual([(r[0], r[1], r[4]) for r in seen],
-                         [(actor['id'], target['id'], 100), (target['id'], actor['id'], 25)])
-        self.assertEqual(seen[1][2], target_after_hit, 'The defeated soldiers do not attack again')
-        self.assertEqual(b['extended']['support'][str(actor['id'])]['guard'], 1)
-        self.assertEqual(b['extended']['support'][str(target['id'])]['guard'], 1)
-        self.assertEqual(reply['before'], first['after'])
+        b,actor,target=self.units();support=b['extended']['support']
+        support[str(actor['id'])].update(guard=2,morale=100)
+        support[str(target['id'])].update(guard=2,morale=25)
+        self.prepare_contact();seen=[];original=siege._hit
+        def observe(game,state,row,piece,victim,**kwargs):
+            seen.append((piece['side'],piece['troops'],victim['troops'],state.battle['extended']['support'][str(siege._main(state.battle,row,piece['side'])['id'])]['morale']))
+            return original(game,state,row,piece,victim,**kwargs)
+        with patch('remake.siege._hit',side_effect=observe):result=self.cycle()
+        b,actor,target=self.units();scene=self.scene(result);events=scene['soldiers']['after']['events']
+        self.assertEqual([(r[0],r[3])for r in seen],[('attackers',100),('defenders',25)])
+        self.assertEqual(seen[1][1],100-events[0]['loss'],'Killed soldiers never take part in the reply')
+        self.assertEqual(b['extended']['support'][str(actor['id'])]['guard'],1)
+        self.assertEqual(b['extended']['support'][str(target['id'])]['guard'],1)
+        self.assertLess(next(p['troops']for p in scene['soldiers']['after']['units']if p['id']=='a1'),100)
 
     def test_routed_defender_cannot_reply_or_draw_a_second_damage_roll(self):
-        b, actor, target = self.units(); target['troops'] = 1
-        troops, draws = actor['troops'], self.game.state.rng.draws
-        result = self.attack()
-        b, actor, target = self.units()
-        self.assertEqual(target['troops'], 0)
-        self.assertEqual(actor['troops'], troops)
-        self.assertEqual(self.game.state.rng.draws, draws+1)
-        self.assertEqual(len(result['presentation']['scenes']), 1)
-        self.assertEqual((self.game.state.phase, b['outcome']), ('result', 'victory'))
+        b,actor,target=self.units();target['troops']=1
+        troops,draws=actor['troops'],self.game.state.rng.draws
+        self.prepare_contact();result=self.cycle();b,actor,target=self.units()
+        self.assertEqual(target['troops'],0);self.assertEqual(actor['troops'],troops)
+        self.assertEqual(self.game.state.rng.draws,draws+2,'Both attack bases seed once, no per-hit draws')
+        self.assertEqual([e['actor']for e in self.scene(result)['soldiers']['after']['events']],['a1'])
+        self.assertEqual((self.game.state.phase,b['outcome']),('result','victory'))
 
     def test_zero_defender_ap_does_not_disable_its_in_encounter_reply(self):
-        b, actor, target = self.units()
-        b['extended']['tactical']['points']['defenders'] = 0
-        troops = actor['troops']
-        result = self.attack()
-        b, actor, target = self.units()
-        self.assertLess(actor['troops'], troops)
-        self.assertEqual(b['extended']['tactical']['points']['defenders'], 0)
-        self.assertTrue(result['presentation']['scenes'][1]['counter'])
+        b,actor,target=self.units();b['extended']['tactical']['points']['defenders']=0;troops=actor['troops']
+        self.prepare_contact();result=self.cycle();b,actor,target=self.units()
+        self.assertLess(actor['troops'],troops);self.assertEqual(b['extended']['tactical']['points']['defenders'],0)
+        self.assertIn('d1',[e['actor']for e in self.scene(result)['soldiers']['after']['events']])
 
     def test_reply_does_not_activate_a_second_tactical_ambush_command(self):
-        b, actor, target = self.units()
-        b['extended']['ambush'] = dict(actor=actor['id'])
-        draws = self.game.state.rng.draws
-        result = self.attack()
-        b, actor, target = self.units()
-        self.assertEqual([scene['kind'] for scene in result['presentation']['scenes']], ['attack', 'attack'])
-        self.assertEqual(b['extended']['ambush'], dict(actor=actor['id']))
-        self.assertEqual(self.game.state.rng.draws, draws+2)
+        b,actor,target=self.units();b['extended']['ambush']=dict(actor=actor['id']);draws=self.game.state.rng.draws
+        self.prepare_contact();result=self.cycle();b,actor,target=self.units()
+        self.assertEqual([scene['kind']for scene in result['presentation']['scenes']],['soldier_step'])
+        self.assertEqual(b['extended']['ambush'],dict(actor=actor['id']))
+        self.assertEqual(self.game.state.rng.draws,draws+2)
+        self.assertEqual(len(self.scene(result)['soldiers']['after']['events']),2)
 
     def test_reply_can_route_the_initiator_and_resolve_defeat(self):
-        b, actor, target = self.units(); actor['troops'] = 1
-        draws = self.game.state.rng.draws
-        result = self.attack()
-        b, actor, target = self.units()
-        self.assertEqual(actor['troops'], 0)
-        self.assertGreater(target['troops'], 0)
-        self.assertEqual(self.game.state.rng.draws, draws+2)
-        self.assertEqual(len(result['presentation']['scenes']), 2)
-        self.assertEqual((self.game.state.phase, b['outcome']), ('result', 'defeat'))
+        b,actor,target=self.units();actor['troops']=1;draws=self.game.state.rng.draws
+        self.prepare_contact();result=self.cycle();b,actor,target=self.units()
+        self.assertEqual(actor['troops'],0);self.assertGreater(target['troops'],0)
+        self.assertEqual(self.game.state.rng.draws,draws+2)
+        self.assertEqual([e['actor']for e in self.scene(result)['soldiers']['after']['events']],['a1','d1'])
+        self.assertEqual((self.game.state.phase,b['outcome']),('result','defeat'))
 
     def test_stunned_defender_uses_its_one_skip_without_a_damage_draw(self):
-        b, actor, target = self.units()
-        b['extended']['support'][str(target['id'])]['stunned'] = 1
-        troops, draws = actor['troops'], self.game.state.rng.draws
-        result = self.attack()
-        b, actor, target = self.units(); reply = result['presentation']['scenes'][1]
-        self.assertTrue(reply['counter']); self.assertTrue(reply['skipped']); self.assertFalse(reply['success'])
-        self.assertEqual(actor['troops'], troops)
-        self.assertEqual(self.game.state.rng.draws, draws+1)
-        self.assertEqual(b['extended']['support'][str(target['id'])]['stunned'], 0)
+        b,actor,target=self.units();b['extended']['support'][str(target['id'])]['stunned']=1
+        troops,draws=actor['troops'],self.game.state.rng.draws
+        self.prepare_contact();result=self.cycle();b,actor,target=self.units()
+        self.assertEqual([e['actor']for e in self.scene(result)['soldiers']['after']['events']],['a1'])
+        self.assertEqual(actor['troops'],troops)
+        self.assertEqual(self.game.state.rng.draws,draws+2,'Seeds for both sides are independent of the skip')
+        self.assertEqual(b['extended']['support'][str(target['id'])]['stunned'],0)
 
     def test_stunned_initiator_does_not_create_an_unprovoked_reply(self):
-        b, actor, target = self.units()
-        b['extended']['support'][str(actor['id'])]['stunned'] = 1
-        before = deepcopy(b); draws = self.game.state.rng.draws
-        result = self.attack()
-        b, actor, target = self.units()
-        self.assertEqual([u['troops'] for side in grid.SIDES for u in b[side]],
-                         [u['troops'] for side in grid.SIDES for u in before[side]])
-        self.assertEqual(self.game.state.rng.draws, draws)
-        self.assertEqual(len(result['presentation']['scenes']), 1)
-        self.assertTrue(result['presentation']['scenes'][0]['skipped'])
+        b,actor,target=self.units();b['extended']['support'][str(actor['id'])]['stunned']=1
+        before=deepcopy(b);draws=self.game.state.rng.draws;result=self.attack();b,actor,target=self.units()
+        self.assertEqual([u['troops']for side in grid.SIDES for u in b[side]],[u['troops']for side in grid.SIDES for u in before[side]])
+        self.assertEqual(self.game.state.rng.draws,draws);self.assertNotIn('siege',b['extended'])
+        self.assertEqual(len(result['presentation']['scenes']),1);self.assertTrue(result['presentation']['scenes'][0]['skipped'])
 
     def test_ai_initiated_contact_uses_the_same_two_way_kernel(self):
-        b, attacker, defender = self.units()
-        row = b['extended']['tactical']; row['side'] = 'defenders'
-        before = deepcopy(self.game.state)
-        with patch.object(self.game, '_damage', wraps=self.game._damage) as damage:
-            self.game._perform_battle_action(self.game.state,
-                dict(kind='attack', actor=defender['id'], target=attacker['id']),
-                'defenders', 'attackers', finish=False, counter=True)
-        b, attacker, defender = self.units()
-        self.assertEqual(damage.call_count, 2)
-        self.assertLess(attacker['troops'], before.battle['attackers'][0]['troops'])
-        self.assertLess(defender['troops'], before.battle['defenders'][0]['troops'])
-        self.assertEqual(row['points']['defenders'], before.battle['extended']['tactical']['points']['defenders']-2)
-        self.assertEqual(row['points']['attackers'], before.battle['extended']['tactical']['points']['attackers'])
-        self.assertEqual(self.game.state.rng.draws, before.rng.draws+2)
+        b,attacker,defender=self.units();b['extended']['tactical']['side']='defenders';before=deepcopy(self.game.state)
+        self.game._perform_battle_action(self.game.state,dict(kind='attack',actor=defender['id'],target=attacker['id']),'defenders','attackers',finish=False,counter=True)
+        self.assertEqual(self.game.state.rng,before.rng);self.prepare_contact(opened=True)
+        with patch('remake.siege._hit',wraps=siege._hit)as damage:result=self.cycle()
+        b,attacker,defender=self.units();events=self.scene(result)['soldiers']['after']['events']
+        self.assertEqual(damage.call_count,2);self.assertEqual([e['actor']for e in events],['d1','a1'])
+        self.assertLess(attacker['troops'],before.battle['attackers'][0]['troops']);self.assertLess(defender['troops'],before.battle['defenders'][0]['troops'])
+        self.assertEqual(b['extended']['tactical']['points']['defenders'],before.battle['extended']['tactical']['points']['defenders']-2)
+        self.assertEqual(b['extended']['tactical']['points']['attackers'],before.battle['extended']['tactical']['points']['attackers'])
+        self.assertEqual(self.game.state.rng.draws,before.rng.draws+2)
 
     def test_tactics_do_not_receive_an_ordinary_contact_reply(self):
         from remake.campaign_expansion import TACTICS
-        b, actor, target = self.units()
-        troops = actor['troops']; points = deepcopy(b['extended']['tactical']['points'])
-        with patch.object(self.game, '_contact_retaliation', side_effect=AssertionError('Not a melee encounter')):
-            result = self.game.command('tactic', dict(battle_id=b['id'], actor=actor['id'],
-                target=target['id'], tactic=0), self.game.revision)
-        b, actor, target = self.units()
-        self.assertEqual(actor['troops'], troops)
-        self.assertTrue(all(scene['kind']=='tactic' for scene in result['presentation']['scenes']))
-        self.assertEqual(b['extended']['tactical']['points']['attackers'], points['attackers']-TACTICS[0][1])
-        self.assertEqual(b['extended']['tactical']['points']['defenders'], points['defenders'])
+        b,actor,target=self.units();troops=actor['troops'];points=deepcopy(b['extended']['tactical']['points'])
+        with patch.object(self.game,'_contact_retaliation',side_effect=AssertionError('Not a melee encounter')):
+            result=self.game.command('tactic',dict(battle_id=b['id'],actor=actor['id'],target=target['id'],tactic=0),self.game.revision)
+        b,actor,target=self.units();self.assertEqual(actor['troops'],troops);self.assertNotIn('siege',b['extended'])
+        self.assertTrue(all(scene['kind']=='tactic'for scene in result['presentation']['scenes']))
+        self.assertEqual(b['extended']['tactical']['points']['attackers'],points['attackers']-TACTICS[0][1]);self.assertEqual(b['extended']['tactical']['points']['defenders'],points['defenders'])
 
     def test_contact_exchange_estimates_reply_risk_without_sampling_or_mutation(self):
         from remake.campaign_expansion import TACTICS
-        from remake.tactical_ai import candidates, expected_contact_exchange
-        b, actor, target = self.units()
-        before = deepcopy(self.game.state)
-        with patch.object(SeedRng, 'next', side_effect=AssertionError('No RNG lookahead')):
-            outgoing, reply = expected_contact_exchange(b, actor, target)
-            row = next(row for row in candidates(self.game.state, b, 'attackers', 'defenders',
-                'plain', TACTICS, depth=0) if row['kind']=='attack')
-        self.assertGreater(outgoing, 0); self.assertGreater(reply, 0)
-        self.assertLess(row['score'], outgoing, 'AI accounts for the contact opponent replying')
-        self.assertEqual(self.game.state, before)
-        b['extended']['support'][str(target['id'])]['stunned'] = 1
-        self.assertEqual(expected_contact_exchange(b, actor, target), (outgoing, 0))
+        from remake.tactical_ai import candidates,expected_contact_exchange
+        b,actor,target=self.units();before=deepcopy(self.game.state)
+        with patch.object(SeedRng,'next',side_effect=AssertionError('No RNG lookahead')):
+            outgoing,reply=expected_contact_exchange(b,actor,target)
+            row=next(row for row in candidates(self.game.state,b,'attackers','defenders','plain',TACTICS,depth=0)if row['kind']=='attack')
+        self.assertGreater(outgoing,0);self.assertGreater(reply,0)
+        self.assertLess(row['score'],outgoing,'AI accounts for the contact opponent replying');self.assertEqual(self.game.state,before)
+        b['extended']['support'][str(target['id'])]['stunned']=1
+        self.assertEqual(expected_contact_exchange(b,actor,target),(outgoing,0))
 
     def test_contact_save_and_stale_retry_never_repeat_retaliation(self):
-        self.attack()
-        saved = self.game.export_save(); revision = self.game.revision
-        restored = Campaign(self.game.catalog); restored.load_save(saved, 0)
-        self.assertEqual(restored.export_save(), saved)
-        b, actor, target = self.units()
-        with self.assertRaises(GameError):
-            self.game.command('attack', dict(battle_id=b['id'], actor=actor['id'], target=target['id']), revision-1)
-        self.assertEqual(self.game.export_save(), saved)
-        for game in (self.game, restored):
-            battle = game.state.battle
-            game.command('attack', dict(battle_id=battle['id'], actor=battle['attackers'][0]['id'],
-                target=battle['defenders'][0]['id']), game.revision)
-        self.assertEqual(restored.export_save(), self.game.export_save())
+        self.prepare_contact();self.cycle();saved=self.game.export_save();revision=self.game.revision
+        restored=Campaign(self.game.catalog);restored.load_save(saved,0);self.assertEqual(restored.export_save(),saved)
+        b,actor,target=self.units()
+        with self.assertRaises(GameError):self.game.command('siege_step',dict(battle_id=b['id']),revision-1)
+        self.assertEqual(self.game.export_save(),saved)
+        for game in (self.game,restored):
+            battle=game.state.battle;row=battle['extended']['siege']
+            game.command('siege_orders',dict(battle_id=battle['id'],piece_orders=dict(row['piece_orders']['attackers'])),game.revision)
+            game.command('siege_step',dict(battle_id=battle['id']),game.revision)
+        self.assertEqual(restored.export_save(),self.game.export_save())
 
 
 if __name__ == '__main__':

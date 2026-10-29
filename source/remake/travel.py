@@ -417,15 +417,15 @@ class TravelCampaign:
         from . import battle_grid
         terrain=self.catalog.map_cities[battle['target']]['terrain']
         settings=get_settings(state)
-        # 30 days * 2 sides * (at most60 unit-cost actions + one pass).
-        for _ in range(3700):
+        # 30 days * 2 sides * 128 bounded movement/service choices.
+        for _ in range(8000):
             self._battle_result(state)
             if state.phase=='result':break
             side=battle['extended']['tactical']['side']
             foe='defenders' if side=='attackers' else 'attackers'
             if battle['extended']['tactical']['points'][side]<=0:
                 self._end_tactical_side(state);continue
-            choice=choose_action(state,battle,side,foe,terrain,TACTICS,settings=settings,
+            choice=choose_action(state,battle,side,foe,terrain,TACTICS,game=self,settings=settings,
                 damage_percent=self.catalog.data['rules']['battle_damage_percent'])
             if choice is None or choice['kind']=='wait':self._end_tactical_side(state)
             elif not self._perform_battle_action(state,choice,side,foe,finish=False):
@@ -724,7 +724,7 @@ class TravelCampaign:
                 ident=deserialize_officer_ref(text,self.catalog.rules)
                 if ident not in state.officers:
                     raise ValueError('unknown manifest officer')
-                integer(amount,0,999,'departure troops')
+                integer(amount,0,1000,'departure troops')
                 if ident not in ids and state.officers[ident].alive:
                     raise ValueError('live manifest officer omitted')
             from .march_supply import validate as validate_supply,validate_departures
@@ -781,7 +781,7 @@ class TravelCampaign:
                 if not isinstance(before,dict) or not isinstance(after,dict) or set(before)!=set(after) or not {str(i) for i in ids}<=before.keys() or not before.keys()<=manifest.keys():
                     raise ValueError('march loss manifest')
                 for text,amount in before.items():
-                    integer(amount,0,999,'before attrition')
+                    integer(amount,0,1000,'before attrition')
                     if amount!=prior[text]:
                         raise ValueError('march before troop receipt')
                 ordered=sorted(before,key=lambda key:ref_sort_key(deserialize_officer_ref(key,self.catalog.rules)))
@@ -789,7 +789,7 @@ class TravelCampaign:
                 if after!={key:n for key,n in zip(ordered,expected_after)}:
                     raise ValueError('march casualty receipt')
                 for amount in after.values():
-                    integer(amount,0,999,'after attrition')
+                    integer(amount,0,1000,'after attrition')
                 integer(actual['lost'],0,1000000,'march lost troops')
                 if actual['lost']!=sum(before.values())-sum(after.values()):
                     raise ValueError('march lost troop receipt')

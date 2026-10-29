@@ -297,7 +297,7 @@ def initialize_officer(person: PersonDefinition, runtime_id: int, profile: Offic
         loyalty = 100
     else:
         integer(loyalty, 0, 99, 'scenario loyalty')
-    integer(troops, 0, 999, 'initial troops')
+    integer(troops, 0, 1000, 'initial troops')
     from .facility_equipment import WEAPONS, ARMORS
     integer(weapon_id, 0, len(WEAPONS)-1, 'weapon')
     integer(armor_id, 0, len(ARMORS)-1, 'armor')

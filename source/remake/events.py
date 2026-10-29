@@ -408,7 +408,7 @@ def validate(campaign, state):
                     or row['day']!=1 or [row['year'],row['month']]!=rule['date']
                     or row['city_ids']!=rule['cities'] or row['factions']!=[rule['faction']]
                     or not row['person_ids'] or not set(row['person_ids'])<=set(rule['members'])
-                    or type(d['reserves']) is not int or not 0<=d['reserves']<=999*len(row['person_ids'])
+                    or type(d['reserves']) is not int or not 0<=d['reserves']<=1000*len(row['person_ids'])
                     or (row['kind']=='faction_founded' and
                         (d['reason']!='formed' or rule['ruler'] not in row['person_ids']))
                     or (row['kind']=='faction_founding_skipped' and
@@ -420,7 +420,7 @@ def validate(campaign, state):
             if (set(d)!=DETAILS[row['kind']] or rule is None or row['audience']!='world'
                     or row['day']!=1 or [row['year'],row['month']]!=rule['date']
                     or row['factions']!=[rule['faction']] or row['person_ids']!=[*rule['victims'],rule['successor']]
-                    or type(d['released_troops']) is not int or not 0<=d['released_troops']<=999*len(rule['victims'])
+                    or type(d['released_troops']) is not int or not 0<=d['released_troops']<=1000*len(rule['victims'])
                     or (row['kind']=='faction_coup' and (d['reason']!='executed' or not row['city_ids']))
                     or (row['kind']=='faction_coup_skipped' and
                         (d['reason']!='conditions_changed' or d['released_troops']))):

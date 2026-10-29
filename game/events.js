@@ -53,7 +53,7 @@
    Object.keys(d).sort().join(',')!=='coup_id,reason,released_troops'||
    typeof d.coup_id!=='string'||!/^[a-z][a-z0-9_-]{0,79}$/.test(d.coup_id)||
    !Number.isSafeInteger(d.released_troops)||d.released_troops<0)return false;
-  return row.kind==='faction_coup'?row.city_ids.length>0&&d.reason==='executed'&&d.released_troops<=2997:
+  return row.kind==='faction_coup'?row.city_ids.length>0&&d.reason==='executed'&&d.released_troops<=3000:
    d.reason==='conditions_changed'&&d.released_troops===0;
  }
  function validFoundingEvent(row){
@@ -64,7 +64,7 @@
    Object.keys(d).sort().join(',')!=='founding_id,reason,reserves'||
    typeof d.founding_id!=='string'||!/^[a-z][a-z0-9_-]{0,79}$/.test(d.founding_id)||
    !Number.isSafeInteger(d.reserves)||d.reserves<0)return false;
-  return row.kind==='faction_founded'?d.reason==='formed'&&d.reserves<=999*row.person_ids.length:
+  return row.kind==='faction_founded'?d.reason==='formed'&&d.reserves<=1000*row.person_ids.length:
    ['city_occupied','leader_unavailable'].includes(d.reason)&&d.reserves===0;
  }
  function validFacilityEvent(row){
@@ -197,7 +197,7 @@
     case 'officer_death':return text(`${p}離世。兵員與主將繼任依當前戰局結算。`,`${p}が死去しました。兵力と君主の継承は現在の戦況に従い処理されます。`);
     case 'succession':return text(`${p}接任${f}主將，勢力繼續行動。`,`${p}が${f}の君主を継承し、勢力の活動を続けます。`);
     case 'faction_ended':return text(`${f}失去繼續作戰的條件，退出戰役。`,`${f}は戦いを続けられなくなり、戦役から退場しました。`);
-    case 'faction_founded':{const faction=/(?:勢力|势力)$/.test(f)?f:f+'勢力',cities=n.cities.join(text('、','・'))||c;return text(`${p}在${cities}起兵，成立${faction}。從${n.cities.length>1?'上述城池':'該城'}原有預備兵編入${d.reserves}兵，按武優先分配，每人至多999兵；沒有額外產生兵員或錢糧。`,`${p}が${cities}で挙兵し、${faction}が成立しました。都市の既存の予備兵から${d.reserves}を編成し、武の高い順に1人最大999兵を配分しました。兵員・資金・兵糧を新たに発生させる処理はありません。`);}
+    case 'faction_founded':{const faction=/(?:勢力|势力)$/.test(f)?f:f+'勢力',cities=n.cities.join(text('、','・'))||c;return text(`${p}在${cities}起兵，成立${faction}。從${n.cities.length>1?'上述城池':'該城'}原有預備兵編入${d.reserves}兵，按武優先分配，每人至多1000兵；沒有額外產生兵員或錢糧。`,`${p}が${cities}で挙兵し、${faction}が成立しました。都市の既存の予備兵から${d.reserves}を編成し、武の高い順に1人最大1000兵を配分しました。兵員・資金・兵糧を新たに発生させる処理はありません。`);}
     case 'faction_founding_skipped':{const cities=n.cities.join(text('、','・'))||c;return text(`${n.people[0]||f}原定於${cities}起兵；${d.reason==='city_occupied'?'城池已易主':'起兵領袖已被登用、離世或不在本地待訪'}，本次未成立。保留現有的人事與城池歸屬，此起兵判定不會重複。`,`${n.people[0]||f}は${cities}で挙兵する予定でしたが、${d.reason==='city_occupied'?'都市が既に他勢力の支配下にある':'挙兵の指導者が登用済み・死去・現地不在のいずれかである'}ため成立しませんでした。現在の人事と都市の所属を維持し、この挙兵判定は繰り返しません。`);}
     case 'faction_coup':{const victims=n.people.slice(0,3).join(text('、','・')),successor=n.people[3]||text('繼任者','後継者');return text(`${victims}遇害，${successor}奪取原勢力主導權並自立。釋放兵員${d.released_troops}，各自歸入原所在城池的預備兵；沒有額外產生兵員或錢糧，其他城池與未涉事件武將沿用當前戰局。`,`${victims}が殺害され、${successor}が元の勢力の主導権を奪って自立しました。配下兵${d.released_troops}を、それぞれ元の所在都市の予備兵へ戻しました。兵員・資金・兵糧を新たに発生させず、その他の都市と事件に関与しない武将は現在の戦況を引き継ぎます。`);}
     case 'faction_coup_skipped':return text(`原定的內部奪權條件已改變：原主將或四名相關人物的歸屬、生死、行軍情況不符，本次不執行殺害或強制轉屬。尊重當前戰局，此判定不會重複。`,'予定していた政変の条件が変わりました。元の君主、または関係者4人の所属・生死・行軍状況が条件を満たさないため、殺害や強制的な所属変更を行いません。現在の戦況を尊重し、この判定は繰り返しません。');

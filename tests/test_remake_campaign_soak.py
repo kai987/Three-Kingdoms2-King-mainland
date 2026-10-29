@@ -143,7 +143,7 @@ class CampaignSoakTests(unittest.TestCase):
             ids = city.roster.officer_ids
             self.assertEqual(city.reserves+sum(replay.game.state.officers[i].troops for i in ids),
                 initial['reserves']+sum(before['state']['officers'][str(i)]['troops'] for i in ids))
-            self.assertTrue(all(0 <= replay.game.state.officers[i].troops <= 999 for i in ids))
+            self.assertTrue(all(0 <= replay.game.state.officers[i].troops <= 1000 for i in ids))
 
     def test_faction_offices_choose_from_all_cities_in_the_real_184_opening(self):
         catalog = soak.Catalog(ROOT/'game/data/campaigns/184-02.json')

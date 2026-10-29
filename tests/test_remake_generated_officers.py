@@ -13,7 +13,7 @@ from remake.errors import GameError
 from remake.officers import (parse_officer_ref, deserialize_officer_ref,
     ref_sort_key, select_deployment, year_state, YearState, advance_year, CityRoster)
 from test_remake_civil_staff_campaign import staff_catalog
-from campaign_fixtures import arrange_contact
+from campaign_fixtures import arrange_contact,soldier_encounter_step
 
 
 class GeneratedOfficerTests(unittest.TestCase):
@@ -83,15 +83,31 @@ class GeneratedOfficerTests(unittest.TestCase):
         self.assertEqual(loaded.export_save(), saved)
         battle = game.state.battle
         target = battle['defenders'][0]['id']
-        # A generated officer uses the same real contact attack, AP payment and
-        # damage kernel before the separately tested challenge/duel path.
+        # A generated officer opens the same native formation and takes
+        # part in real soldier steps before the separate challenge/duel path.
         target_troops = battle['defenders'][0]['troops']
         points = battle['extended']['tactical']['points']['attackers']
         strategic_orders = deepcopy(game.state.extension['command_books'])
-        self.cmd(game, 'attack', battle_id=battle['id'], actor=ident, target=target)
+        before_rng=deepcopy(game.state.rng)
+        self.cmd(game,'attack',battle_id=battle['id'],actor=ident,target=target)
+        self.assertEqual(game.state.rng,before_rng,'Opening formation does not invent an attack')
+        orders={kind:'wait'if kind=='general'else'advance'for kind in ('infantry','archer','cavalry','general')}
+        receipts=[]
+        for _ in range(100):
+            row=game.state.battle['extended'].get('siege')
+            if row is None or game.state.battle['defenders'][0]['troops']<target_troops:break
+            result=soldier_encounter_step(game,orders=orders)
+            if result and 'presentation'in result:receipts.extend(result['presentation']['scenes'])
+        self.assertTrue(any(s['kind']=='soldier_step'and s['actor']==ident for s in receipts))
+        self.assertTrue(any(e['loss']>0 for s in receipts if s['kind']=='soldier_step'for e in s['soldiers']['after']['events']))
         self.assertLess(game.state.battle['defenders'][0]['troops'], target_troops)
         self.assertEqual(game.state.battle['extended']['tactical']['points']['attackers'], points-2)
-        self.assertEqual(game.state.extension['command_books'], strategic_orders)
+        self.assertEqual(game.state.extension['command_books'],strategic_orders)
+        if game.state.battle['extended']['duel']:
+            self.cmd(game,'duel_action',battle_id=battle['id'],move='withdraw')
+        if game.state.battle['extended'].get('siege'):
+            self.cmd(game,'siege_withdraw',battle_id=battle['id'])
+        self.assertEqual(game.state.battle['extended']['tactical']['points']['attackers'],points-2)
         self.cmd(game, 'duel_start', battle_id=battle['id'], actor=ident, target=target)
         if game.state.battle['extended']['duel']:
             self.cmd(game, 'duel_action', battle_id=battle['id'], move='withdraw')

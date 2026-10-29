@@ -389,6 +389,47 @@
         "mainland217-07"
       ],
       "scenario_scope": "fixed"
+    },
+    {
+      "id": "soldier-orders",
+      "title": "field soldier formations expose ten hundred-person teams and replay actual individual orders without extra damage",
+      "groups": [
+        "battle",
+        "map",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland208-10"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "battlefield-conversion-occupation",
+      "title": "successful battlefield conversion immediately enables an eleventh friendly officer and empty-castle occupation wins",
+      "groups": [
+        "battle",
+        "people",
+        "map",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland208-10"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "battlefield-services",
+      "title": "native battlefield hospital rice shop and weapon shop use the current cell and real army resources",
+      "groups": [
+        "battle",
+        "economy",
+        "people",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland208-10"
+      ],
+      "scenario_scope": "fixed"
     }
   ]
 }

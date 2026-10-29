@@ -10,7 +10,8 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, GameError, digest
 from remake.officers import initialize_officer, PersonDefinition, OfficerProfile
 from remake.march_supply import estimate
-from campaign_fixtures import arrange_contact, controlled_catalog, reach_battle
+from campaign_fixtures import (arrange_contact, controlled_catalog, reach_battle,
+                               finish_soldier_encounter,soldier_encounter_step)
 from remake import battle_grid
 from remake.tactical_ai import choose_action
 from remake.campaign_expansion import TACTICS
@@ -35,6 +36,12 @@ class CampaignTests(unittest.TestCase):
             b = state.battle
             if state.phase == 'result':
                 return b['outcome']
+            if b['extended'].get('siege'):
+                finish_soldier_encounter(self.game)
+                continue
+            if b['extended']['duel']:
+                self.cmd('duel_action',dict(battle_id=b['id'],move='strike'))
+                continue
             own, foe = self.game._player_sides(state)
             choice = choose_action(state, b, own, foe,
                 self.game.catalog.map_cities[b['target']]['terrain'], TACTICS,
@@ -58,7 +65,7 @@ class CampaignTests(unittest.TestCase):
 
     def test_invalid_commands_preserve_state_rng_and_revision(self):
         original, revision = self.game.to_dict(), self.game.revision
-        for kind, payload in [('allocate', dict(city='xiangyang', officer=999, troops=1000)),
+        for kind, payload in [('allocate', dict(city='xiangyang', officer=999, troops=1001)),
                 ('depart', dict(source='xiangyang', target='jiangxia', officers=[999])),
                 ('depart', dict(source='xiangyang', target='nanjun', officers=[999, 999])),
                 ('allocate', dict(city='nanjun', officer=255, troops=30))]:
@@ -112,6 +119,16 @@ class CampaignTests(unittest.TestCase):
     def test_defeat_is_rout_and_preserves_identity(self):
         self.game.command('new', dict(faction='wu', seed=2026), self.game.revision)
         battle_id = self.start(178, 1, 'nanjun', 'jiangxia')
+        # Isolate the rout boundary at an occupied fort. A one-soldier army
+        # walking across an empty enemy castle is now a legitimate victory,
+        # so soldier count alone no longer proves this test reaches defeat.
+        battle=self.game.state.battle
+        camp=battle_grid._field(battle)['camp']
+        target=battle['defenders'][0]
+        battle['extended']['tactical']['positions'][str(target['id'])]=dict(x=camp[0],y=camp[1])
+        neighbor=next((x,y)for x,y in ((camp[0]-1,camp[1]),(camp[0]+1,camp[1]),(camp[0],camp[1]-1),(camp[0],camp[1]+1))if 0<=x<31 and 0<=y<19)
+        battle['extended']['tactical']['positions']['178']=dict(x=neighbor[0],y=neighbor[1])
+        self.game.validate(self.game.state)
         self.assertEqual(self.fight(), 'defeat')
         self.cmd('settle', dict(battle_id=battle_id))
         self.assertEqual(self.game.state.officers[178].troops, 0)
@@ -124,6 +141,18 @@ class CampaignTests(unittest.TestCase):
         target = self.game.state.battle['defenders'][0]['id']
         arrange_contact(self.game)
         self.cmd('attack', dict(battle_id=battle_id, actor=123, target=target))
+        opening=sum(u['troops']for key in ('attackers','defenders')for u in self.game.state.battle[key])
+        for _ in range(100):
+            b=self.game.state.battle
+            if sum(u['troops']for key in ('attackers','defenders')for u in b[key])<opening:
+                break
+            soldier_encounter_step(self.game)
+        self.assertEqual(self.game.state.phase,'battle')
+        self.assertLess(sum(u['troops']for key in ('attackers','defenders')for u in self.game.state.battle[key]),opening)
+        if self.game.state.battle['extended']['duel']:
+            self.cmd('duel_action',dict(battle_id=battle_id,move='withdraw'))
+        if self.game.state.battle['extended'].get('siege'):
+            self.cmd('siege_withdraw',dict(battle_id=battle_id))
         remaining = self.game.state.battle['attackers'][0]['troops']
         paid_grain = self.game.state.cities['nanyang'].grain
         self.cmd('retreat', dict(battle_id=battle_id))
@@ -152,10 +181,15 @@ class CampaignTests(unittest.TestCase):
         twin = Campaign(self.game.catalog)
         twin.load_save(self.game.export_save(), 0)
         self.assertEqual(self.game.to_dict(), twin.to_dict())
-        payload = dict(battle_id=battle_id, actor=146, target=123)
-        self.cmd('attack', payload)
-        twin.command('attack', payload, twin.revision)
-        self.assertEqual(self.game.to_dict(), twin.to_dict())
+        before=self.game.state.rng.draws
+        for _ in range(30):
+            if not self.game.state.battle['extended'].get('siege'):
+                break
+            soldier_encounter_step(self.game)
+            soldier_encounter_step(twin)
+            self.assertEqual(self.game.to_dict(), twin.to_dict())
+            if self.game.state.rng.draws>before:break
+        self.assertGreater(self.game.state.rng.draws,before,'Restored and original run the same actual soldier damage draws')
 
     def test_bad_checksum_and_semantic_mutations_are_atomic(self):
         self.start()

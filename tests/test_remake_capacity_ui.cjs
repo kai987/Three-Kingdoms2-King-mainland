@@ -120,7 +120,7 @@ async function weightedTransferChecks(){
  // Transferring an entire roster is independent of the battle deployment limit.
  picked=Array.from({length:99},(_,value)=>({value:String(value)}));await element('#confirm-transfer').onclick();
  assert.equal(lastCommand.kind,'transfer');assert.equal(lastCommand.payload.officers.length,99);
- element('#allocation-officer').value='0';element('#allocation-troops').value='300';context.allocate(home);assert(lastDialog.body.includes('max="999"'),'Troop input uses troop limits, not city membership capacity');
+ element('#allocation-officer').value='0';element('#allocation-troops').value='300';context.allocate(home);assert(lastDialog.body.includes('max="1000"'),'Troop input uses troop limits, not city membership capacity');
  assert.equal((lastDialog.body.match(/<option value=/g)||[]).length,99);
  context.departure(home);assert(lastDialog.body.includes('选择1—10名武将'));assert.equal((lastDialog.body.match(/name="depart-officer"/g)||[]).length,99);
  picked=Array.from({length:11},(_,value)=>({value:String(value)}));element('#review-departure').onclick();

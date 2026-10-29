@@ -67,7 +67,7 @@ class CommandBooks(unittest.TestCase):
         self.assertEqual(books.remaining(self.game.state, 'shu'), total - 1)
         before = self.game.export_save()
         with self.assertRaises((ValueError, GameError)):
-            self.cmd('allocate', dict(city='xiangyang', officer=999, troops=1000))
+            self.cmd('allocate', dict(city='xiangyang', officer=999, troops=1001))
         self.assertEqual(self.game.export_save(), before)
 
     def test_city_wide_distribution_pays_once_across_multiple_officers(self):
@@ -95,7 +95,7 @@ class CommandBooks(unittest.TestCase):
             troops=self.game.state.officers[ident].troops, flow=None))
         self.assertEqual(self.game.export_save(), before)
         self.assertIsNone(books.active_allocation(self.game.state, 'shu'))
-        for troops in (-1, 1000, True):
+        for troops in (-1, 1001, True):
             with self.assertRaises((GameError, ValueError)):
                 self.cmd('allocate', dict(city=city.id, officer=ident, troops=troops, flow=None))
             self.assertEqual(self.game.export_save(), before)

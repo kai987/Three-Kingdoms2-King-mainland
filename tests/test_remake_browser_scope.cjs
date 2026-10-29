@@ -2,7 +2,7 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),os=require('node:os'),path=require('node:path'),{spawnSync}=require('node:child_process');
 const scopes=require('../tools/browser-tests/scope.cjs');
-const source=fs.readFileSync(path.join(__dirname,'browser_ui.spec.mjs'),'utf8'),known=scopes.knownScenarioIds();
+const source=scopes.acceptanceSource(),known=scopes.knownScenarioIds();
 const directory=fs.mkdtempSync(path.join(os.tmpdir(),'tk2-browser-scope-'));
 const plan=(groups,scenario_ids=[],extra={})=>({full:false,mode:'scoped',groups,scenario_ids,...extra});
 let count=0;
@@ -12,7 +12,7 @@ function load(value,options={}){
 }
 try{
  const full=scopes.loadBrowserScope({planPath:''});
- assert.equal(full.full,true);assert.equal(full.selectedCases.length,30);
+ assert.equal(full.full,true);assert.equal(full.selectedCases.length,33);
  assert.deepEqual(new Set(scopes.readCaseTitles(source)),new Set(scopes.CASE_REGISTRY.cases.map(row=>row.title)));
  const union=new Set();
  for(const group of scopes.CANONICAL_GROUPS){
@@ -60,5 +60,5 @@ try{
  assert.throws(()=>scopes.loadBrowserScope({planPath:broken}),/cannot read plan JSON/);
  const cli=spawnSync(process.execPath,[path.join(__dirname,'../tools/browser-tests/scope.cjs'),'--plan',broken],{encoding:'utf8'});
  assert.notEqual(cli.status,0);assert(cli.stderr.includes('Browser test scope:'));
- console.log('browser scopes: all 30 cases registered before grep, full/group union, bounded boot/audio, scenario-local deep openings, opaque plan provenance and fail-closed unknown/empty/invalid plans passed');
+ console.log('browser scopes: all 33 cases registered before grep, full/group union, bounded boot/audio, scenario-local deep openings, opaque plan provenance and fail-closed unknown/empty/invalid plans passed');
 }finally{fs.rmSync(directory,{recursive:true,force:true});}

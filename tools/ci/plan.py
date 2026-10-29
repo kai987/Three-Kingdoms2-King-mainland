@@ -356,6 +356,8 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
             elif path == 'tests/browser_resupply.spec.mjs' or path == 'tests/browser_resupply_fixture.py':
                 groups.add('logistics')
                 resupply = True
+            elif path in ('tests/browser_soldier_ui.spec.mjs', 'tests/browser_soldier_fixture.py'):
+                groups.update(('battle', 'people', 'economy', 'save'))
             elif path == 'tests/browser_ui.spec.mjs':
                 groups.update(GROUPS)
                 resupply = True

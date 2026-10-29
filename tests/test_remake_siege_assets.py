@@ -40,8 +40,8 @@ class OriginalSiegeAssetTests(unittest.TestCase):
         self.assertEqual(report['formations'],6)
         self.assertEqual(report['castle_wall_cells'],18)
         self.assertEqual(report['table_bytes'],549)
-        self.assertEqual(report['pngs'],56)
-        self.assertEqual(report['exact4x'],21)
+        self.assertEqual(report['pngs'],102)
+        self.assertEqual(report['exact4x'],39)
         self.assertEqual(report['clean_native_sprites'],8)
         self.assertEqual(report['difference_candidates_not_sprites'],13)
         self.assertFalse(report['checker_requires_rom'])
@@ -118,6 +118,30 @@ class OriginalSiegeAssetTests(unittest.TestCase):
         operation['chr_composite_sha256']=checker.sha(b''.join(bytes.fromhex(tile['hex'])for tile in operation['tiles']))
         with self.assertRaisesRegex(ValueError,'Unverified native CHR composite'):
             self.validate(data)
+
+    def test_walk_frames_are_distinct_original_poses_and_attack_effects_keep_native_size(self):
+        for kind in ('general','infantry','archer','cavalry'):
+            for side in ('friendly','enemy'):
+                rows=[self.data['assets'][f'sprite-{kind}-{side}-move-{i}']for i in range(2)]
+                self.assertNotEqual(rows[0]['sha256'],rows[1]['sha256'])
+                for row in rows:
+                    self.assertEqual((row['width'],row['height']),(64,64))
+                    self.assertTrue(row['clean_sprite_verified']);self.assertTrue(row['runtime_eligible'])
+        for key,size in [('effect-melee',(64,64)),('effect-arrow',(32,32))]:
+            row=self.data['assets'][key];self.assertEqual((row['width'],row['height']),size)
+            self.assertEqual(row['anchor'],[size[0]//2,size[1]//2])
+
+    def test_oam_transparency_palette_and_source_patterns_cannot_be_forged(self):
+        key='native-sprite-infantry-friendly-move-0'
+        for edit in ('mask','palette','chr'):
+            data=deepcopy(self.data);operation=data['assets'][key]['source']['operations'][0]
+            if edit=='mask':operation['transparent_index']=1
+            elif edit=='palette':operation['palette_rgb'][3]=[0,255,0]
+            else:
+                tile=operation['tiles'][0];raw=bytearray.fromhex(tile['hex']);raw[0]^=1
+                tile['hex']=raw.hex();tile['sha256']=checker.sha(raw)
+                operation['chr_composite_sha256']=checker.sha(b''.join(bytes.fromhex(t['hex'])for t in operation['tiles']))
+            with self.subTest(edit=edit),self.assertRaises(ValueError):self.validate(data)
 
     def test_native_tables_reject_a_formation_edit_even_if_file_is_rehashed(self):
         data=deepcopy(self.data);data['tables']['formations'][0]['x'][0]=2

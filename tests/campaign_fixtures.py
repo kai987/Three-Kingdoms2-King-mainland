@@ -181,3 +181,42 @@ def arrange_tactic(game, tactic, actor=None, target=None):
     tactical['side'] = own
     tactical['passed'] = {side: False for side in battle_grid.SIDES}
     tactical['points'][own] = battle_grid.point_cap(battle_grid._troops(battle, own))
+
+
+def soldier_encounter_step(game, *, formation=3, orders=None):
+    """Submit one real public command for a pending controlled soldier scene."""
+    battle=game.state.battle
+    row=(battle or {}).get('extended',{}).get('siege')
+    if game.state.phase!='battle' or row is None:
+        return None
+    if battle['extended']['duel']:
+        kind,payload='duel_action',dict(move='strike')
+    elif row['stage']=='formation':
+        kind,payload='siege_form',dict(formation=formation)
+    elif row['stage']=='orders':
+        kind,payload='siege_orders',dict(orders=orders or {key:'advance'for key in ('infantry','archer','cavalry','general')})
+    else:
+        kind,payload='siege_step',{}
+    return game.command(kind,dict(battle_id=battle['id'],**payload),game.revision)
+
+
+def finish_soldier_encounter(game, *, formation=3, orders=None, limit=260):
+    """Run formation/orders/steps/duel through the real bounded public API.
+
+    No HP, troops, damage, RNG, side or AP is injected by this driver. Any next
+    AI encounter opened as the old one returns is another real pending scene.
+    The caller can use this helper again; a natural200-round bound is retained.
+    """
+    receipts=[]
+    for _ in range(limit):
+        before=game.state.battle
+        old=(before or {}).get('extended',{}).get('siege')
+        if game.state.phase!='battle' or old is None:
+            return receipts
+        fingerprint=(old['actor'],old['target'],old.get('mode','siege'))
+        old_round=old['round']
+        receipts.append(soldier_encounter_step(game,formation=formation,orders=orders))
+        new=(game.state.battle or {}).get('extended',{}).get('siege')
+        if new is not None and ((new['actor'],new['target'],new.get('mode','siege'))!=fingerprint or new['round']<old_round):
+            return receipts
+    raise AssertionError('Real soldier encounter did not finish inside its public command bound')

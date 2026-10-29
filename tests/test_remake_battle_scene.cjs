@@ -1,4 +1,6 @@
-/* Real server receipts drive a pure scene consumer; playback never executes gameplay. */
+/* Current command receipts and explicit legacy display-schema examples drive
+ * a pure consumer. Aggregate display examples are not current damage rules;
+ * persistent soldier contact is covered by test_remake_soldier_scene.cjs. */
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const {execFileSync}=require('node:child_process');
@@ -6,6 +8,7 @@ const officerChoices=require('../game/officer-choice.js');
 const ROOT=path.resolve(__dirname,'..'),source=fs.readFileSync(path.join(ROOT,'game/battle-scene.js'),'utf8');
 const actual=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B','-c',String.raw`
 import json,sys
+from copy import deepcopy
 sys.path[:0]=['source','tests']
 from remake.campaign import Campaign,SeedRng
 from remake.campaign_expansion import TACTICS
@@ -45,7 +48,12 @@ def scene_battle(terrain='plain',three_enemies=True):
 def arrange(game,tid=None):
  # Isolated presentation fixtures use explicit legal contact cells. They do
  # not claim that armies naturally marched to these cells in campaign play.
- b=game.state.battle;a=b['attackers'][0];t=b['defenders'][0]
+ b=game.state.battle
+ if tid==8:
+  # The current command correctly rejects rulers. A non-ruler opponent is the
+  # legal target for this isolated renderer's real conversion receipt.
+  b['defenders'].sort(key=lambda unit:unit['id']in game.state.extension['leaders'].values())
+ a=b['attackers'][0];t=b['defenders'][0]
  tactical=b['extended']['tactical'];field=battle_grid._field(b)
  tactical['points']={'attackers':20,'defenders':20}
  cells=[(x,y) for y in range(19) for x in range(31)]
@@ -69,6 +77,40 @@ def arrange(game,tid=None):
 def action(game,kind,payload,key):
  before=thin(game.view());response=game.command(kind,payload,game.revision)
  rows.append(dict(key=key,kind=kind,payload=payload,before=before,after=thin(response)))
+def legacy_contact_display(game,payload,key):
+ # Pure presentation-schema compatibility samples: explicit small deltas are
+ # unrelated to the current soldier damage kernel. No command or campaign RNG
+ # is run to manufacture an obsolete instantaneous contact in playable rules.
+ before=thin(game.view());after=deepcopy(before);after['revision']+=1
+ b=after['game']['battle'];own='attackers';foe='defenders'
+ actor=next(unit for unit in b[own]if unit['id']==payload['actor'])
+ target=next(unit for unit in b[foe]if unit['id']==payload['target'])
+ def snapshot():
+  return dict(round=b['round'],outcome=b['outcome'],duel=None,
+   units=[dict(id=unit['id'],side=side,troops=unit['troops'],
+    **{field:b['extended']['support'][str(unit['id'])][field]for field in ('health','energy','guard','stunned')})
+    for side in ('attackers','defenders')for unit in b[side]])
+ scenes=[]
+ def receipt(kind,who,other,side,change,*,counter=False,skipped=False,tactic=None,effect=None):
+  start=snapshot();change();end=snapshot()
+  scenes.append(dict(kind=kind,battle_id=b['id'],actor=who['id'],target=other['id'],own=side,
+   counter=counter,tactic=tactic,effect=effect,success=not skipped,skipped=skipped,
+   move=None,reply=None,before=start,after=end))
+ if key=='ambush':
+  receipt('ambush',target,actor,foe,lambda:actor.update(troops=max(1,actor['troops']-7)),
+   counter=True,tactic=11,effect='ambush')
+ if key=='stunned':
+  receipt('attack',actor,target,own,lambda:b['extended']['support'][str(actor['id'])].update(stunned=0),skipped=True)
+ else:
+  def hit():
+   target['troops']=max(0,target['troops']-(5 if key=='attack_guard'else 11))
+   if key=='attack_guard':b['extended']['support'][str(target['id'])]['guard']-=1
+  receipt('attack',actor,target,own,hit)
+  if target['troops']:
+   receipt('attack',target,actor,foe,lambda:actor.update(troops=max(0,actor['troops']-7)),counter=True)
+ after['presentation']=dict(schema='tk2-battle-presentation-v1',revision=after['revision'],scenes=scenes)
+ rows.append(dict(key=key,kind='attack',payload=payload,before=before,after=after,
+  source='explicit-aggregate-renderer-schema-example; not current gameplay or damage arithmetic'))
 for tid,(_,cost,effect,_) in enumerate(TACTICS):
  terrain='water' if effect in {'water','chain','flood'} else 'mountain' if effect=='rock' else 'plain'
  game=scene_battle(terrain);arrange(game,tid);b,a,t,*_=actors(game);successful_rng(game.state)
@@ -91,9 +133,15 @@ for key in ('attack','attack_guard','attack_defeat','ambush','stunned','failure'
   action(game,'duel_action',dict(battle_id=b['id'],move='guard'),'duel_guard')
   action(game,'duel_action',dict(battle_id=b['id'],move='feint'),'duel_feint')
   action(game,'duel_action',dict(battle_id=b['id'],move='withdraw'),'duel_withdraw');continue
- action(game,'attack',dict(battle_id=b['id'],actor=a['id'],target=t['id']),key)
+ legacy_contact_display(game,dict(battle_id=b['id'],actor=a['id'],target=t['id']),key)
 # Ending the whole side lets the real enemy move/attack with the same rules.
 game=scene_battle(three_enemies=False);arrange(game);successful_rng(game.state)
+# Start separated so the handoff includes an actual move/tactic receipt before
+# the new persistent-contact page. Adjacent contact itself is not an aggregate
+# damage receipt and is covered by the soldier scene regression.
+b,a,t,*_=actors(game)
+b['extended']['tactical']['positions'][str(a['id'])]=dict(x=10,y=10)
+b['extended']['tactical']['positions'][str(t['id'])]=dict(x=12,y=10)
 action(game,'battle_wait',dict(battle_id=game.state.battle['id']),'side_handoff')
 # Two real public movement commands provide authoritative paths and saves;
 # they are also combined below only as an isolated renderer sequence fixture.
@@ -117,11 +165,11 @@ for key,wanted,reply_only in [('duel_desperate_success',True,False),('duel_despe
  if reply_only:b['extended']['support'][str(t['id'])]['health']=30
  action(game,'duel_action',dict(battle_id=b['id'],move='guard' if reply_only else 'desperate'),key)
 game,ident=GeneratedOfficerTests().new()
-game.command('allocate',dict(city='nanjun',officer=ident,troops=999),game.revision)
+game.command('allocate',dict(city='nanjun',officer=ident,troops=1000),game.revision)
 game._complete_turn(game.state);game._reconcile_factions(game.state)
 game._start_expanded_battle(game.state,game.state.cities['nanjun'],game.state.cities['jiangxia'],[ident])
 arrange(game)
-action(game,'attack',dict(battle_id=game.state.battle['id'],actor=ident,target=game.state.battle['defenders'][0]['id']),'mixed')
+legacy_contact_display(game,dict(battle_id=game.state.battle['id'],actor=ident,target=game.state.battle['defenders'][0]['id']),'mixed')
 print(json.dumps(dict(rows=rows,tactics=[dict(id=i,effect=t[2]) for i,t in enumerate(TACTICS)]),ensure_ascii=False,separators=(',',':')))
 `],{cwd:ROOT,encoding:'utf8',maxBuffer:8*1024*1024,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}}));
 const clone=value=>JSON.parse(JSON.stringify(value));
@@ -139,7 +187,7 @@ function environment({manifest=null,enhancedManifest=null,duelAppearance=null,ba
  const sandbox={module:{exports:{}},document:doc,console,AbortController,Uint8ClampedArray,Math:Object.assign(Object.create(Math),{random(){throw Error('Scene sampled randomness');}}),GameI18n:i18n,GameOfficerChoices:officerChoices,GameDuelAppearance:duelAppearance,GameBattlefields:battlefields,
   matchMedia:()=>({matches:reduced}),setTimeout(fn){const id=++next;timers.set(id,fn);return id;},clearTimeout(id){timers.delete(id);},
   requestAnimationFrame:missingRAF?undefined:fn=>{const id=++next;rafs.set(id,fn);return id;},cancelAnimationFrame:id=>{cancels.push(id);rafs.delete(id);},
-  fetch:async url=>{requests.push(url);assert(['/assets/battle-original/index.json','/assets/battle-enhanced/index.json'].includes(url),'Playback may fetch artwork, never gameplay');const data=url.includes('battle-enhanced')?enhancedManifest:manifest;return data?{ok:true,json:async()=>data}:{ok:false};},
+  fetch:async url=>{requests.push(url);assert(['/assets/battle-original/index.json','/assets/battle-enhanced/index.json','/assets/siege-original/index.json'].includes(url),'Playback may fetch artwork, never gameplay');const data=url.includes('siege-original')?null:url.includes('battle-enhanced')?enhancedManifest:manifest;return data?{ok:true,json:async()=>data}:{ok:false};},
   ResizeObserver:class{constructor(fn){this.fn=fn;this.disconnects=0;observers.push(this);}observe(){}disconnect(){this.disconnects++;}},
   Image:class{constructor(){this.width=16;this.height=16;}set src(value){this._src=value;if(value.startsWith('/assets/battlefields/')){this.width=496;this.height=304;if(badDimensions.includes(value))this.width--;}const atlas=Object.values(enhancedManifest?.soldiers?.types||{}).flatMap(type=>[type.friendly,type.enemy]).find(row=>row?.path===value);if(atlas){this.width=atlas.width;this.height=atlas.height;if(badDimensions.includes(value))this.width--;}imageRequests.push(value);queueMicrotask(()=>failedPaths.includes(value)?this.onerror?.():this.onload?.());}get src(){return this._src;}}};
  sandbox.window=sandbox;vm.runInNewContext(source,sandbox,{filename:'game/battle-scene.js'});
@@ -290,16 +338,20 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   assert.equal(env.surface.style.width,'512px');assert.equal(env.surface.style.height,'396px');
   assert(env.transforms.some(t=>t.join(',')==='4,0,0,4,0,0'));
   const flags=env.texts.filter(t=>t.y<304);
-  assert(flags.some(t=>t.text==='𠮷'),'Flag retains the first full Unicode character');
-  assert(flags.every(t=>Array.from(t.text).length===1),'Every tactical flag contains one character only');
+  const markers=JSON.parse(env.host.dataset.battleMarkers),marker=markers.find(unit=>unit.id===id),point=standalone.unitPosition(row,id);
+  assert(markers.every(unit=>['平','山','水'].includes(unit.type)&&unit.teams===Math.ceil(unit.troops/100)&&unit.teams<=10));
+  assert(flags.some(t=>t.x===point.x*16+4&&t.y===point.y*16+3&&t.text===marker.type),'The flag shows the original affinity type in its top half');
+  assert(flags.some(t=>t.x===point.x*16+4&&t.y===point.y*16+9&&t.text===String(marker.teams)),'The flag shows its actual number of hundred-person teams below the type');
+  assert(!flags.some(t=>t.text==='𠮷'),'Names remain in the HUD rather than replacing tactical type/team markers');
   assert(scene.html().includes('width="1024" height="960"'));
-  const flag=flags.find(t=>t.text==='𠮷'),rect=env.surface.getBoundingClientRect();env.surface.onclick({clientX:(flag.x+4)*rect.width/496,clientY:(flag.y+4)*rect.height/384});
+  const rect=env.surface.getBoundingClientRect();env.surface.onclick({clientX:(point.x*16+8)*rect.width/496,clientY:(point.y*16+8)*rect.height/384});
   assert.deepEqual(selected,[{side:'actor',id}],'Pointer hit testing stays inCSS/logical coordinates after4× rendering');
   scene.dispose();
  }
 
- // A real tactical view draws same-side duplicates without changing the view,
- // including campaign RNG; changing the player never changes family grouping.
+ // Real tactical flags depend on affinity and current soldiers, never names
+ // or which army the human controls. Keep routed zero-team flags and verify
+ // the original saved positions, frozen view and campaign RNG are untouched.
  {
   const row=clone(actual.rows.find(r=>r.key==='tactic:fire').before),b=row.game.battle;
   assert(b.attackers.length===1&&b.defenders.length>=3,'Fixture must contain one attacker and several defenders');
@@ -309,9 +361,11 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   for(const player of [b.attacker,b.defender]){
    const view=clone(row);view.game.player=player;freeze(view);const original=JSON.stringify(view);
    const env=environment(),scene=env.api.create();scene.mount(env.host,view);
-   const flagText=id=>{const p=standalone.unitPosition(view,id);return env.texts.find(t=>t.x===p.x*16+4&&t.y===p.y*16+4)?.text;};
-   assert.equal(flagText(b.attackers[0].id),'张','A lone attacking surname keeps its first character despite enemy duplicates');
-   assert.equal(flagText(b.defenders[0].id),'遼');assert.equal(flagText(b.defenders[1].id),'郃','Routed teammates retain their authoritative flag');
+   const flagText=(id,offset)=>{const p=standalone.unitPosition(view,id);return env.texts.find(t=>t.x===p.x*16+4&&t.y===p.y*16+offset)?.text;};
+   for(const marker of JSON.parse(env.host.dataset.battleMarkers)){
+    assert.equal(flagText(marker.id,3),marker.type);assert.equal(flagText(marker.id,9),String(marker.teams));
+   }
+   assert.equal(flagText(b.defenders[1].id,9),'0','A routed unit retains its location with an accurate zero-team flag');
    assert.equal(JSON.stringify(view),original,'Drawing flags preserves the entire campaign view and RNG');scene.dispose();
   }
  }
@@ -347,7 +401,8 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   env.doc.emit('game-language-change');env.i18n.locale='ja';env.doc.emit('game-language-change');assert(scene.playing,'Language change must not cancel/restart an action');
   env.drain();await playback;assert(!scene.playing);assert.equal(scene.state().queued,0);assert(env.nodes['[data-battle-skip]'].hidden);assert.equal(env.rafs.size,0);
   assert.deepEqual(normalize(sounds),normalize(accepted.get(row.key)),row.key+' must play each authoritative scene once and in order');assert.equal(settled.length,1);
-  assert.equal(JSON.stringify(row),original,'Drawing and language changes cannot alter campaign, RNG or receipt');assert.deepEqual(env.requests,['/assets/battle-original/index.json','/assets/battle-enhanced/index.json'],'Only the two cached artwork manifest requests are permitted');
+  const manifests=['/assets/battle-original/index.json','/assets/battle-enhanced/index.json',...(row.after.game.battle.extended.siege?['/assets/siege-original/index.json']:[])];
+  assert.equal(JSON.stringify(row),original,'Drawing and language changes cannot alter campaign, RNG or receipt');assert.deepEqual(env.requests,manifests,'Only the cached artwork manifests needed by the actual pending scene are permitted');
   scene.observe(row.kind,row.payload,row.before,row.after);assert.equal(scene.state().queued,0,'Same revision must not replay');
   scene.dispose();assert.equal(env.listenerCount(),0);assert.equal(env.rafs.size,0);assert(env.observers.every(o=>o.disconnects>0));assert.equal(env.timers.size,0);
  }
@@ -656,5 +711,5 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
  for(const manifest of [null,{schema:'wrong',backgrounds:{},sprites:{}},{schema:'tk2-battle-original-v1',backgrounds:{plain:{path:'/assets/battle-original/../escape.png'}},sprites:{}}]){
   const env=environment({manifest}),scene=env.api.create();assert.equal(await scene.load(),false);assert.equal(scene.state().assetStatus,'unavailable');assert.equal(env.rafs.size,0);assert.equal(env.timers.size,0);scene.dispose();
  }
- console.log(`battle scenes: ${actual.rows.length} real command receipts, all16effects, authoritative damage/counters/mixed IDs, strict schema/assets, read-only playback, revision/baseline lifecycle, skip/cancel/hidden/reduced-motion and RAF cleanup passed`);
+ console.log(`battle scenes: ${actual.rows.filter(row=>!row.source).length} real current command receipts plus ${actual.rows.filter(row=>row.source).length} explicit aggregate display-schema compatibility samples; all16effects, troop/team flags, strict schema/assets, read-only playback, revision/baseline lifecycle, skip/cancel/hidden/reduced-motion and RAF cleanup passed`);
 })().catch(error=>{console.error(error);process.exitCode=1;}).finally(()=>clearTimeout(watchdog));

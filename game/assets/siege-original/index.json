@@ -22,6 +22,12 @@
       "original_sha256": "2c4fe4c2c21f52aa8a0b5b2801454724dbc691e6ccb5c31eb6fc23d4e532e60c",
       "path": "/assets/siege-original/capture-field-provenance.json",
       "sha256": "377d14b38e3ca27ae68a81b6bd65a5e8c3dabdbf8440f29a3220c4266a891ca4"
+    },
+    {
+      "source_id": "native-soldier-animation",
+      "path": "/assets/siege-original/animation-provenance.json",
+      "sha256": "03b6cc6c0b8ab005e9578f5477d1cd11da40a919a2ab2b25b6af69da12b42b68",
+      "original_sha256": "86af98def5e8a7a79b9adeb3cc60f6ac7b9a97885b79df559aef594c08ec34fa"
     }
   ],
   "assets": {
@@ -1660,6 +1666,2655 @@
       "pose_variant": 0,
       "requested_frame": 1,
       "single_native_pose_reused": true
+    },
+    "native-sprite-general-friendly-move-0": {
+      "path": "/assets/siege-original/native-sprite-general-friendly-move-0.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "190b024343a9cd5ae4e64cd8ca21f2d129c2630f8d569c3f858611809b801aaf",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-general-0.png",
+        "screenshot_sha256": "73a0b97b844a92ec635a57e0d24751a962bf9d69cb54c44a2d667eba04bc9822",
+        "source_rect": [
+          16,
+          80,
+          32,
+          96
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 6,
+                "chr_page_1k": 124,
+                "rom_offset": 389232,
+                "hex": "010302122f47d28300010101103b2d7c",
+                "sha256": "75126edeca95addcbeed779e02b4da01c5b979f00f8220d3a9bc5359c89740c1",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 7,
+                "chr_page_1k": 124,
+                "rom_offset": 389248,
+                "hex": "8fcfeeeeef7f78ec0086c4c486a0a050",
+                "sha256": "8a9d489ca9aea44b28fcbb5c58d14882c91ad27fb15db7f6dbd2e703054dacf2",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 20,
+                "chr_page_1k": 124,
+                "rom_offset": 389456,
+                "hex": "97f7131767545a2e6b0b0d0b18282400",
+                "sha256": "3af13d67311d15db2fcf40d5a5b1000969a3840a120a400072cabc77481f8e37",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 21,
+                "chr_page_1k": 124,
+                "rom_offset": 389472,
+                "hex": "ca85c5cfe8585870b47abab010202000",
+                "sha256": "5ef7a18f49852003eaa047c3a96efcc66acfe465ee9d4793e125f51b2b6ae1b5",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "e7a3e384d238a8cd5c9a7bed742758cf56c84ff379b1fa1d7c02ce6633316998",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              16,
+              80
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-general-friendly-move-0": {
+      "path": "/assets/siege-original/sprite-general-friendly-move-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "163fa42bb3ceecd98ac2aa6508107e75a8f6eba7bf55abc3258ebe7865adf8d3",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-general-friendly-move-0.png",
+        "asset_sha256": "190b024343a9cd5ae4e64cd8ca21f2d129c2630f8d569c3f858611809b801aaf",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-general-enemy-move-0": {
+      "path": "/assets/siege-original/native-sprite-general-enemy-move-0.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "0ba0fec5c8d1eac1eba6a44f239235d59189d70213b48a826718b94635d771b1",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-general-0.png",
+        "screenshot_sha256": "73a0b97b844a92ec635a57e0d24751a962bf9d69cb54c44a2d667eba04bc9822",
+        "source_rect": [
+          16,
+          80,
+          32,
+          96
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 6,
+                "chr_page_1k": 124,
+                "rom_offset": 389232,
+                "hex": "010302122f47d28300010101103b2d7c",
+                "sha256": "75126edeca95addcbeed779e02b4da01c5b979f00f8220d3a9bc5359c89740c1",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 7,
+                "chr_page_1k": 124,
+                "rom_offset": 389248,
+                "hex": "8fcfeeeeef7f78ec0086c4c486a0a050",
+                "sha256": "8a9d489ca9aea44b28fcbb5c58d14882c91ad27fb15db7f6dbd2e703054dacf2",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 20,
+                "chr_page_1k": 124,
+                "rom_offset": 389456,
+                "hex": "97f7131767545a2e6b0b0d0b18282400",
+                "sha256": "3af13d67311d15db2fcf40d5a5b1000969a3840a120a400072cabc77481f8e37",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 21,
+                "chr_page_1k": 124,
+                "rom_offset": 389472,
+                "hex": "ca85c5cfe8585870b47abab010202000",
+                "sha256": "5ef7a18f49852003eaa047c3a96efcc66acfe465ee9d4793e125f51b2b6ae1b5",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "e7a3e384d238a8cd5c9a7bed742758cf56c84ff379b1fa1d7c02ce6633316998",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              16,
+              80
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-general-enemy-move-0": {
+      "path": "/assets/siege-original/sprite-general-enemy-move-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "5dfeb915ced84f529c578b3080b63a2e2a80fa78525239c6311e742d3333486a",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-general-enemy-move-0.png",
+        "asset_sha256": "0ba0fec5c8d1eac1eba6a44f239235d59189d70213b48a826718b94635d771b1",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-general-friendly-move-1": {
+      "path": "/assets/siege-original/native-sprite-general-friendly-move-1.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "9b98ee9f49be020d35b520c88cfbfd37295241d474cb0c0fe95cca7b69f9292e",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-general-1.png",
+        "screenshot_sha256": "656fd2aee13ee2f98b3d54e088a40b8a0ffee8ad1f8a267b3309b78bc976cc9c",
+        "source_rect": [
+          20,
+          80,
+          36,
+          96
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 38,
+                "chr_page_1k": 124,
+                "rom_offset": 389744,
+                "hex": "0103122a2757829300010111182b7d6c",
+                "sha256": "7ed08dfe6db6abbd0da1c7cb985b7a0259d1e2dd5a5cd5f5148eef44871f6e1d",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 39,
+                "chr_page_1k": 124,
+                "rom_offset": 389760,
+                "hex": "8ecfefefef7e78ec0084c6c684a0a050",
+                "sha256": "67b30e44befec6fa7303d3b4259adbbb6cd786bb1ccde899ef7458950adf4e4b",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 52,
+                "chr_page_1k": 124,
+                "rom_offset": 389968,
+                "hex": "f31713272f282c3c0f0b0d1b10101000",
+                "sha256": "e845ad725f39e647750c039ae1662b0aa9b66ba8407c39bfeb670cb9c0e8a255",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 53,
+                "chr_page_1k": 124,
+                "rom_offset": 389984,
+                "hex": "ca85c5cbd4b4b45cb47abab028484800",
+                "sha256": "5e909fa7a3c53e4ac607e262fed11fff4307dc62d7210ca7c1735e0a2555fe59",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "a520b75732837f3d0ebe781fa683d6dc69c5cc50a1ba6da443e053e8cea31065",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              20,
+              80
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-general-friendly-move-1": {
+      "path": "/assets/siege-original/sprite-general-friendly-move-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "441d326d78483309ba8863b0b2983c19a363d30a2ff7926d0ebb88f6562c54fa",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-general-friendly-move-1.png",
+        "asset_sha256": "9b98ee9f49be020d35b520c88cfbfd37295241d474cb0c0fe95cca7b69f9292e",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-general-enemy-move-1": {
+      "path": "/assets/siege-original/native-sprite-general-enemy-move-1.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "4bdcab9766ec07be911abff5ffeb754eab545bf163f3fe1416b7e01463b9cbd1",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-general-1.png",
+        "screenshot_sha256": "656fd2aee13ee2f98b3d54e088a40b8a0ffee8ad1f8a267b3309b78bc976cc9c",
+        "source_rect": [
+          20,
+          80,
+          36,
+          96
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 38,
+                "chr_page_1k": 124,
+                "rom_offset": 389744,
+                "hex": "0103122a2757829300010111182b7d6c",
+                "sha256": "7ed08dfe6db6abbd0da1c7cb985b7a0259d1e2dd5a5cd5f5148eef44871f6e1d",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 39,
+                "chr_page_1k": 124,
+                "rom_offset": 389760,
+                "hex": "8ecfefefef7e78ec0084c6c684a0a050",
+                "sha256": "67b30e44befec6fa7303d3b4259adbbb6cd786bb1ccde899ef7458950adf4e4b",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 52,
+                "chr_page_1k": 124,
+                "rom_offset": 389968,
+                "hex": "f31713272f282c3c0f0b0d1b10101000",
+                "sha256": "e845ad725f39e647750c039ae1662b0aa9b66ba8407c39bfeb670cb9c0e8a255",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 53,
+                "chr_page_1k": 124,
+                "rom_offset": 389984,
+                "hex": "ca85c5cbd4b4b45cb47abab028484800",
+                "sha256": "5e909fa7a3c53e4ac607e262fed11fff4307dc62d7210ca7c1735e0a2555fe59",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "a520b75732837f3d0ebe781fa683d6dc69c5cc50a1ba6da443e053e8cea31065",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              20,
+              80
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-general-enemy-move-1": {
+      "path": "/assets/siege-original/sprite-general-enemy-move-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "5549b46361a5383147ed780efd43fcef5cda439db2d63fc8b463cc5d51c3eeb3",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-general-enemy-move-1.png",
+        "asset_sha256": "4bdcab9766ec07be911abff5ffeb754eab545bf163f3fe1416b7e01463b9cbd1",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-infantry-friendly-move-0": {
+      "path": "/assets/siege-original/native-sprite-infantry-friendly-move-0.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "831ce84b8f831ef53ed26d5b0bd75b750e83d7418bf4d0c87b27bd3bb7b36a27",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-infantry-0.png",
+        "screenshot_sha256": "10deac157a4b381f1b3f8f6bfdec322fcc02e4b3b6f9480b6f350ab1312f2068",
+        "source_rect": [
+          48,
+          16,
+          64,
+          32
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 2,
+                "chr_page_1k": 124,
+                "rom_offset": 389168,
+                "hex": "000101312c130f0300000000100c0300",
+                "sha256": "3da0abebb412955a44409198ca615422fabbceefb2d69843467228d2e8088bcb",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 3,
+                "chr_page_1k": 124,
+                "rom_offset": 389184,
+                "hex": "c0e07070f0b8f8f800c0e0e040f030e0",
+                "sha256": "9dcd852012c2ec6fe002f47aeafb26c95a3f683d480dc99214433d2615988c57",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 18,
+                "chr_page_1k": 124,
+                "rom_offset": 389424,
+                "hex": "01000000000000000000000000000000",
+                "sha256": "4cbbd8ca5215b8d161aec181a74b694f4e24b001d5b081dc0030ed797a8973e0",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 19,
+                "chr_page_1k": 124,
+                "rom_offset": 389440,
+                "hex": "fcff8ffb783c7c7c304c727030183800",
+                "sha256": "bf40374d08d486718c26d3428693fb99265c3f2120d3129307b27faa8273ab09",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "bbc9ce7bd75dad4bb6ba7f53df178c96b23d341c016fa5d0d45679ff51fce2e9",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              48,
+              16
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-infantry-friendly-move-0": {
+      "path": "/assets/siege-original/sprite-infantry-friendly-move-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "d2733c4618aa1b420aeb16bf0e7fa7a7964dd014b0ccb56dec256bcab33aa7d2",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-infantry-friendly-move-0.png",
+        "asset_sha256": "831ce84b8f831ef53ed26d5b0bd75b750e83d7418bf4d0c87b27bd3bb7b36a27",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-infantry-enemy-move-0": {
+      "path": "/assets/siege-original/native-sprite-infantry-enemy-move-0.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "e9d75eece6d08bd0e4e6187416dc494925d29cb98ca06ccde084a0bf87111b2d",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-infantry-0.png",
+        "screenshot_sha256": "10deac157a4b381f1b3f8f6bfdec322fcc02e4b3b6f9480b6f350ab1312f2068",
+        "source_rect": [
+          48,
+          16,
+          64,
+          32
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 2,
+                "chr_page_1k": 124,
+                "rom_offset": 389168,
+                "hex": "000101312c130f0300000000100c0300",
+                "sha256": "3da0abebb412955a44409198ca615422fabbceefb2d69843467228d2e8088bcb",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 3,
+                "chr_page_1k": 124,
+                "rom_offset": 389184,
+                "hex": "c0e07070f0b8f8f800c0e0e040f030e0",
+                "sha256": "9dcd852012c2ec6fe002f47aeafb26c95a3f683d480dc99214433d2615988c57",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 18,
+                "chr_page_1k": 124,
+                "rom_offset": 389424,
+                "hex": "01000000000000000000000000000000",
+                "sha256": "4cbbd8ca5215b8d161aec181a74b694f4e24b001d5b081dc0030ed797a8973e0",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 19,
+                "chr_page_1k": 124,
+                "rom_offset": 389440,
+                "hex": "fcff8ffb783c7c7c304c727030183800",
+                "sha256": "bf40374d08d486718c26d3428693fb99265c3f2120d3129307b27faa8273ab09",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "bbc9ce7bd75dad4bb6ba7f53df178c96b23d341c016fa5d0d45679ff51fce2e9",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              48,
+              16
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-infantry-enemy-move-0": {
+      "path": "/assets/siege-original/sprite-infantry-enemy-move-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "7d0d293c1ece28368da10b7db75bb310dd87bb3d1b74234562d1d175f516c204",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-infantry-enemy-move-0.png",
+        "asset_sha256": "e9d75eece6d08bd0e4e6187416dc494925d29cb98ca06ccde084a0bf87111b2d",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-infantry-friendly-move-1": {
+      "path": "/assets/siege-original/native-sprite-infantry-friendly-move-1.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "7ff5a27aaac8a0cf0e2384fe98fdf4ff8fddf1947b45548fc612d75fab22a419",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-infantry-1.png",
+        "screenshot_sha256": "622dd230fbf898e804233a2acefa3c9fd48a917b5bfc371b78d9fa0a98df8678",
+        "source_rect": [
+          50,
+          16,
+          66,
+          32
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 34,
+                "chr_page_1k": 124,
+                "rom_offset": 389680,
+                "hex": "0001c1b14c3f0f0300000040300c0300",
+                "sha256": "3ca14365babd392163c7681efe39d82e615375a92e7916dbe33330bd158dbbc2",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 35,
+                "chr_page_1k": 124,
+                "rom_offset": 389696,
+                "hex": "c0e07070f0f8e8f800c0e0e040f0b0c0",
+                "sha256": "e3829c50a2d0d3d922f18eb47734edbcd9f895ca4fe648cc754b7e803dd2a496",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 50,
+                "chr_page_1k": 124,
+                "rom_offset": 389936,
+                "hex": "01000101010103030000000000000100",
+                "sha256": "1798ee8600ed09f74334eeadeffafc1338303605d304e1e6e78bfacdfb6c82b8",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 51,
+                "chr_page_1k": 124,
+                "rom_offset": 389952,
+                "hex": "fcfc2cfcfeefffff3048d0d8ccc6ce00",
+                "sha256": "9a060826ffb92c202903b30819533351f5831351976c9a384ab3c0c151377b85",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "159240a168e55d65c68e999e1b46fc8973260f51e24f865d3eb34901e63934ad",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              50,
+              16
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-infantry-friendly-move-1": {
+      "path": "/assets/siege-original/sprite-infantry-friendly-move-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "4509cfc55d308019720d1021dfec9f3551e7b560fde7c273f7770298411ecd49",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-infantry-friendly-move-1.png",
+        "asset_sha256": "7ff5a27aaac8a0cf0e2384fe98fdf4ff8fddf1947b45548fc612d75fab22a419",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-infantry-enemy-move-1": {
+      "path": "/assets/siege-original/native-sprite-infantry-enemy-move-1.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "3d38b8781388f3bf20148247e075a81ab3edc7979c8cbe535d54bd0186fcd8d9",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-infantry-1.png",
+        "screenshot_sha256": "622dd230fbf898e804233a2acefa3c9fd48a917b5bfc371b78d9fa0a98df8678",
+        "source_rect": [
+          50,
+          16,
+          66,
+          32
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 34,
+                "chr_page_1k": 124,
+                "rom_offset": 389680,
+                "hex": "0001c1b14c3f0f0300000040300c0300",
+                "sha256": "3ca14365babd392163c7681efe39d82e615375a92e7916dbe33330bd158dbbc2",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 35,
+                "chr_page_1k": 124,
+                "rom_offset": 389696,
+                "hex": "c0e07070f0f8e8f800c0e0e040f0b0c0",
+                "sha256": "e3829c50a2d0d3d922f18eb47734edbcd9f895ca4fe648cc754b7e803dd2a496",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 50,
+                "chr_page_1k": 124,
+                "rom_offset": 389936,
+                "hex": "01000101010103030000000000000100",
+                "sha256": "1798ee8600ed09f74334eeadeffafc1338303605d304e1e6e78bfacdfb6c82b8",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 51,
+                "chr_page_1k": 124,
+                "rom_offset": 389952,
+                "hex": "fcfc2cfcfeefffff3048d0d8ccc6ce00",
+                "sha256": "9a060826ffb92c202903b30819533351f5831351976c9a384ab3c0c151377b85",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "159240a168e55d65c68e999e1b46fc8973260f51e24f865d3eb34901e63934ad",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              50,
+              16
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-infantry-enemy-move-1": {
+      "path": "/assets/siege-original/sprite-infantry-enemy-move-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "92db13e2bec46da4ea4722f97fe3acf12c421f895cee039a7d59c947d764f768",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-infantry-enemy-move-1.png",
+        "asset_sha256": "3d38b8781388f3bf20148247e075a81ab3edc7979c8cbe535d54bd0186fcd8d9",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-archer-friendly-move-0": {
+      "path": "/assets/siege-original/native-sprite-archer-friendly-move-0.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "b8ffe478fa70a3f6f196d3a08c08a58cecea38d91ffadedfa3257bafe03fa031",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-archer-0.png",
+        "screenshot_sha256": "6b910644219058b42cb816d945fb841b2296db2f2e5ffbf706e912bb13f279c3",
+        "source_rect": [
+          64,
+          80,
+          80,
+          96
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 0,
+                "chr_page_1k": 124,
+                "rom_offset": 389136,
+                "hex": "0009152b2d535fff000008141220217e",
+                "sha256": "d6523433d2e6f2467328462ad4d125e5dfdf4f520cb1fa98f490dd800514284c",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 1,
+                "chr_page_1k": 124,
+                "rom_offset": 389152,
+                "hex": "c0e0787effbe3eec00c0e0e84af4e4d8",
+                "sha256": "ef021d71b1b421ef0cd1a8c6daed27eee6024cfae651c46e2187fb3b96e0dd69",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 16,
+                "chr_page_1k": 124,
+                "rom_offset": 389392,
+                "hex": "7f522d2a140800000021121408000000",
+                "sha256": "526005533ecb46f236001b004fcde012384c29ab8444506a6111edac1ad228ac",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 17,
+                "chr_page_1k": 124,
+                "rom_offset": 389408,
+                "hex": "fcfc8cf8783c7c7c3878707030183800",
+                "sha256": "bcc6dac9f623fa42605b8cb9e4a7c2ac70777c20aceab8698fb0e0622b2f3c60",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "afe7db3ffa1e31d80e4a2dbd04992fc38b97e73e0185aa5edbe7a5520acd9f76",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              64,
+              80
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-archer-friendly-move-0": {
+      "path": "/assets/siege-original/sprite-archer-friendly-move-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "0d875b9f61b74737838d70d17f21f82029cecd9d8b116a7ad31e590acaad32b6",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-archer-friendly-move-0.png",
+        "asset_sha256": "b8ffe478fa70a3f6f196d3a08c08a58cecea38d91ffadedfa3257bafe03fa031",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-archer-enemy-move-0": {
+      "path": "/assets/siege-original/native-sprite-archer-enemy-move-0.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "6596fd33e7540402321e6748bd70ba634c9917028b976ec97e9e2f7de9708328",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-archer-0.png",
+        "screenshot_sha256": "6b910644219058b42cb816d945fb841b2296db2f2e5ffbf706e912bb13f279c3",
+        "source_rect": [
+          64,
+          80,
+          80,
+          96
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 0,
+                "chr_page_1k": 124,
+                "rom_offset": 389136,
+                "hex": "0009152b2d535fff000008141220217e",
+                "sha256": "d6523433d2e6f2467328462ad4d125e5dfdf4f520cb1fa98f490dd800514284c",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 1,
+                "chr_page_1k": 124,
+                "rom_offset": 389152,
+                "hex": "c0e0787effbe3eec00c0e0e84af4e4d8",
+                "sha256": "ef021d71b1b421ef0cd1a8c6daed27eee6024cfae651c46e2187fb3b96e0dd69",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 16,
+                "chr_page_1k": 124,
+                "rom_offset": 389392,
+                "hex": "7f522d2a140800000021121408000000",
+                "sha256": "526005533ecb46f236001b004fcde012384c29ab8444506a6111edac1ad228ac",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 17,
+                "chr_page_1k": 124,
+                "rom_offset": 389408,
+                "hex": "fcfc8cf8783c7c7c3878707030183800",
+                "sha256": "bcc6dac9f623fa42605b8cb9e4a7c2ac70777c20aceab8698fb0e0622b2f3c60",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "afe7db3ffa1e31d80e4a2dbd04992fc38b97e73e0185aa5edbe7a5520acd9f76",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              64,
+              80
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-archer-enemy-move-0": {
+      "path": "/assets/siege-original/sprite-archer-enemy-move-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "dc72dd9bfb4641a5a28f9780ba660f13c22a99a95e7535a9ffd1e52e3aaadcdc",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-archer-enemy-move-0.png",
+        "asset_sha256": "6596fd33e7540402321e6748bd70ba634c9917028b976ec97e9e2f7de9708328",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-archer-friendly-move-1": {
+      "path": "/assets/siege-original/native-sprite-archer-friendly-move-1.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "aafeae9c0f2cdf727ee7e08b2729d3137c296b1cb5ae77e17e5294380ba72a17",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-archer-1.png",
+        "screenshot_sha256": "c7ad2eb1fe6a31f7f73dcca2d39359ca0f54307a999ae64f134da3e88e4bd9fd",
+        "source_rect": [
+          66,
+          80,
+          82,
+          96
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 32,
+                "chr_page_1k": 124,
+                "rom_offset": 389648,
+                "hex": "0009152b2d535fff000008141220217e",
+                "sha256": "d6523433d2e6f2467328462ad4d125e5dfdf4f520cb1fa98f490dd800514284c",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 33,
+                "chr_page_1k": 124,
+                "rom_offset": 389664,
+                "hex": "c0e0787effbe3eec00c0e0e84af4e4d0",
+                "sha256": "6f4a04f831ff31285b89a9b4d9b85e45ccd1c3cabf3f7cd8ecd5d4c7497e734b",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 48,
+                "chr_page_1k": 124,
+                "rom_offset": 389904,
+                "hex": "7f522d2b150903030021121408000100",
+                "sha256": "47a799fdcba03dbd3c183b4cad11f797beb738e4702a3f07c543d4192511d7a3",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 49,
+                "chr_page_1k": 124,
+                "rom_offset": 389920,
+                "hex": "fcfc24fcfeefffff3878d8d8ccc6ce00",
+                "sha256": "0f9ecef34bd6b2ec442943fb0c4428010a75034966287f6c7bc091efe10f4ac2",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "4abe8f45764e2eab3bdef5ffb91830d01c17a71dc6a62f22ee71b2a8f2a3ea7a",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              66,
+              80
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-archer-friendly-move-1": {
+      "path": "/assets/siege-original/sprite-archer-friendly-move-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "bb784a20f0a10c0c5cb4625906c1728de273602e13d09aed379d5119f341e312",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-archer-friendly-move-1.png",
+        "asset_sha256": "aafeae9c0f2cdf727ee7e08b2729d3137c296b1cb5ae77e17e5294380ba72a17",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-archer-enemy-move-1": {
+      "path": "/assets/siege-original/native-sprite-archer-enemy-move-1.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "3cc61cdc09b6caafe2e6fe16157b34b1102872b959af1be35659f52816295e20",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-archer-1.png",
+        "screenshot_sha256": "c7ad2eb1fe6a31f7f73dcca2d39359ca0f54307a999ae64f134da3e88e4bd9fd",
+        "source_rect": [
+          66,
+          80,
+          82,
+          96
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 32,
+                "chr_page_1k": 124,
+                "rom_offset": 389648,
+                "hex": "0009152b2d535fff000008141220217e",
+                "sha256": "d6523433d2e6f2467328462ad4d125e5dfdf4f520cb1fa98f490dd800514284c",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 33,
+                "chr_page_1k": 124,
+                "rom_offset": 389664,
+                "hex": "c0e0787effbe3eec00c0e0e84af4e4d0",
+                "sha256": "6f4a04f831ff31285b89a9b4d9b85e45ccd1c3cabf3f7cd8ecd5d4c7497e734b",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 48,
+                "chr_page_1k": 124,
+                "rom_offset": 389904,
+                "hex": "7f522d2b150903030021121408000100",
+                "sha256": "47a799fdcba03dbd3c183b4cad11f797beb738e4702a3f07c543d4192511d7a3",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 49,
+                "chr_page_1k": 124,
+                "rom_offset": 389920,
+                "hex": "fcfc24fcfeefffff3878d8d8ccc6ce00",
+                "sha256": "0f9ecef34bd6b2ec442943fb0c4428010a75034966287f6c7bc091efe10f4ac2",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "4abe8f45764e2eab3bdef5ffb91830d01c17a71dc6a62f22ee71b2a8f2a3ea7a",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              66,
+              80
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-archer-enemy-move-1": {
+      "path": "/assets/siege-original/sprite-archer-enemy-move-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "d8ddc11ab2ff35dedce45199c2932088885fed90e8c4eb17bd7c79f6293a1be3",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-archer-enemy-move-1.png",
+        "asset_sha256": "3cc61cdc09b6caafe2e6fe16157b34b1102872b959af1be35659f52816295e20",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-cavalry-friendly-move-0": {
+      "path": "/assets/siege-original/native-sprite-cavalry-friendly-move-0.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "3a289f378d6222aff17bf12c79a175f9a6d5d2176b3fe58e495292afef312249",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-cavalry-0.png",
+        "screenshot_sha256": "eefb26839bca1441033ff8eeb6ffaf402e871a75cbca46ebd3a167185b95bce0",
+        "source_rect": [
+          80,
+          144,
+          96,
+          160
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 4,
+                "chr_page_1k": 124,
+                "rom_offset": 389200,
+                "hex": "c1b35e3e2f47d2830041310d103b2d7d",
+                "sha256": "9886d086bf3e8f8b9e52b371c30818f124e8c6b6ad2ba91c7d0d03af088cb294",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 5,
+                "chr_page_1k": 124,
+                "rom_offset": 389216,
+                "hex": "80c0e0e0e07070ec0080c0c080e0e0d0",
+                "sha256": "2ae47d1a361a509f11b7e6b2d49f2fcd4b3c2172e7b326121a1e0f271d370dc0",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 20,
+                "chr_page_1k": 124,
+                "rom_offset": 389456,
+                "hex": "97f7131767545a2e6b0b0d0b18282400",
+                "sha256": "3af13d67311d15db2fcf40d5a5b1000969a3840a120a400072cabc77481f8e37",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 21,
+                "chr_page_1k": 124,
+                "rom_offset": 389472,
+                "hex": "ca85c5cfe8585870b47abab010202000",
+                "sha256": "5ef7a18f49852003eaa047c3a96efcc66acfe465ee9d4793e125f51b2b6ae1b5",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "b99dcfc18e7e691868e7b20b32a747ccbda6cd2ec4bbdf876e38ddf5c193e19d",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              80,
+              144
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-cavalry-friendly-move-0": {
+      "path": "/assets/siege-original/sprite-cavalry-friendly-move-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "60ab86ec31222de71a66db34293dfec9c2e564913f9549993cc1e639552fa07f",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-cavalry-friendly-move-0.png",
+        "asset_sha256": "3a289f378d6222aff17bf12c79a175f9a6d5d2176b3fe58e495292afef312249",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-cavalry-enemy-move-0": {
+      "path": "/assets/siege-original/native-sprite-cavalry-enemy-move-0.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "ed2989ceb3111d7881cba3c917785c2941ce227252036526054ffb4dea5723ec",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-cavalry-0.png",
+        "screenshot_sha256": "eefb26839bca1441033ff8eeb6ffaf402e871a75cbca46ebd3a167185b95bce0",
+        "source_rect": [
+          80,
+          144,
+          96,
+          160
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 4,
+                "chr_page_1k": 124,
+                "rom_offset": 389200,
+                "hex": "c1b35e3e2f47d2830041310d103b2d7d",
+                "sha256": "9886d086bf3e8f8b9e52b371c30818f124e8c6b6ad2ba91c7d0d03af088cb294",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 5,
+                "chr_page_1k": 124,
+                "rom_offset": 389216,
+                "hex": "80c0e0e0e07070ec0080c0c080e0e0d0",
+                "sha256": "2ae47d1a361a509f11b7e6b2d49f2fcd4b3c2172e7b326121a1e0f271d370dc0",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 20,
+                "chr_page_1k": 124,
+                "rom_offset": 389456,
+                "hex": "97f7131767545a2e6b0b0d0b18282400",
+                "sha256": "3af13d67311d15db2fcf40d5a5b1000969a3840a120a400072cabc77481f8e37",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 21,
+                "chr_page_1k": 124,
+                "rom_offset": 389472,
+                "hex": "ca85c5cfe8585870b47abab010202000",
+                "sha256": "5ef7a18f49852003eaa047c3a96efcc66acfe465ee9d4793e125f51b2b6ae1b5",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "b99dcfc18e7e691868e7b20b32a747ccbda6cd2ec4bbdf876e38ddf5c193e19d",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              80,
+              144
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-cavalry-enemy-move-0": {
+      "path": "/assets/siege-original/sprite-cavalry-enemy-move-0.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "fdead284c7c341244d3687f49635edb65a05340fb2983a1f9d8130c7a9588c15",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-cavalry-enemy-move-0.png",
+        "asset_sha256": "ed2989ceb3111d7881cba3c917785c2941ce227252036526054ffb4dea5723ec",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-cavalry-friendly-move-1": {
+      "path": "/assets/siege-original/native-sprite-cavalry-friendly-move-1.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "60eca18bca902b5813bb8bbb1a15672f057ef90c1bd2d18bde49a700ea9f2b03",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-cavalry-1.png",
+        "screenshot_sha256": "31e6bbe55adfa5da3c6d27114311d248289ef2926563a125396d89a7ec37bf09",
+        "source_rect": [
+          84,
+          144,
+          100,
+          160
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 36,
+                "chr_page_1k": 124,
+                "rom_offset": 389712,
+                "hex": "01334a76275782930001310d182b7d6d",
+                "sha256": "843bcfb99ea7db92192150f9db2fc167ed0004189503bc6ea7a56e0212bf2dd2",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 5,
+                "chr_page_1k": 124,
+                "rom_offset": 389216,
+                "hex": "80c0e0e0e07070ec0080c0c080e0e0d0",
+                "sha256": "2ae47d1a361a509f11b7e6b2d49f2fcd4b3c2172e7b326121a1e0f271d370dc0",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 52,
+                "chr_page_1k": 124,
+                "rom_offset": 389968,
+                "hex": "f31713272f282c3c0f0b0d1b10101000",
+                "sha256": "e845ad725f39e647750c039ae1662b0aa9b66ba8407c39bfeb670cb9c0e8a255",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 53,
+                "chr_page_1k": 124,
+                "rom_offset": 389984,
+                "hex": "ca85c5cbd4b4b45cb47abab028484800",
+                "sha256": "5e909fa7a3c53e4ac607e262fed11fff4307dc62d7210ca7c1735e0a2555fe59",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "79fe310aa286cf3905fdf25002bf87ceb29753559553a5b060322228e2a043ea",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              84,
+              144
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-cavalry-friendly-move-1": {
+      "path": "/assets/siege-original/sprite-cavalry-friendly-move-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "5d07c2a53d50844befbba5a117721a4a537b8c77213a810a235f8d1f55b42874",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-cavalry-friendly-move-1.png",
+        "asset_sha256": "60eca18bca902b5813bb8bbb1a15672f057ef90c1bd2d18bde49a700ea9f2b03",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-sprite-cavalry-enemy-move-1": {
+      "path": "/assets/siege-original/native-sprite-cavalry-enemy-move-1.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "06913edde22821c975250fe3793c719f85501502a8672bed4eaa5fbec2feea25",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "right",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-move-cavalry-1.png",
+        "screenshot_sha256": "31e6bbe55adfa5da3c6d27114311d248289ef2926563a125396d89a7ec37bf09",
+        "source_rect": [
+          84,
+          144,
+          100,
+          160
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 36,
+                "chr_page_1k": 124,
+                "rom_offset": 389712,
+                "hex": "01334a76275782930001310d182b7d6d",
+                "sha256": "843bcfb99ea7db92192150f9db2fc167ed0004189503bc6ea7a56e0212bf2dd2",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 5,
+                "chr_page_1k": 124,
+                "rom_offset": 389216,
+                "hex": "80c0e0e0e07070ec0080c0c080e0e0d0",
+                "sha256": "2ae47d1a361a509f11b7e6b2d49f2fcd4b3c2172e7b326121a1e0f271d370dc0",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 52,
+                "chr_page_1k": 124,
+                "rom_offset": 389968,
+                "hex": "f31713272f282c3c0f0b0d1b10101000",
+                "sha256": "e845ad725f39e647750c039ae1662b0aa9b66ba8407c39bfeb670cb9c0e8a255",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              },
+              {
+                "tile_id": 53,
+                "chr_page_1k": 124,
+                "rom_offset": 389984,
+                "hex": "ca85c5cbd4b4b45cb47abab028484800",
+                "sha256": "5e909fa7a3c53e4ac607e262fed11fff4307dc62d7210ca7c1735e0a2555fe59",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                213,
+                203
+              ],
+              [
+                167,
+                181,
+                188
+              ]
+            ],
+            "chr_composite_sha256": "79fe310aa286cf3905fdf25002bf87ceb29753559553a5b060322228e2a043ea",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              84,
+              144
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "sprite-cavalry-enemy-move-1": {
+      "path": "/assets/siege-original/sprite-cavalry-enemy-move-1.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "2996b2edcb536877e984da07054cebb10eb426ca6e6f0fe5cef83913a9ba5442",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "right",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-sprite-cavalry-enemy-move-1.png",
+        "asset_sha256": "06913edde22821c975250fe3793c719f85501502a8672bed4eaa5fbec2feea25",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-effect-melee": {
+      "path": "/assets/siege-original/native-effect-melee.png",
+      "width": 16,
+      "height": 16,
+      "sha256": "86054277a1b312ceb93117e47715a6dc3d27d4a1008eca2e7e504d16cf76495f",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "center",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-effect-melee.png",
+        "screenshot_sha256": "3a9349b102053fe39068a316af9dfa7fa57175409d3e655786d6331f850892ae",
+        "source_rect": [
+          112,
+          136,
+          128,
+          152
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 134,
+                "chr_page_1k": 125,
+                "rom_offset": 390256,
+                "hex": "00000001080d060800000011080d070f",
+                "sha256": "5f4f8b84b2eb007e1e83e6dc202770c9fca666d67971904032f5fc0b9a2a6d95",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": false,
+                "flip_y": false
+              },
+              {
+                "tile_id": 135,
+                "chr_page_1k": 125,
+                "rom_offset": 390272,
+                "hex": "0000001030608038000000103060c0f8",
+                "sha256": "fadc3ce598f959ddcaaee23ae56d9d12311cc7eb81dcafdd3615ea9f1ef5bfba",
+                "dx": 8,
+                "dy": 0,
+                "flip_x": false,
+                "flip_y": false
+              },
+              {
+                "tile_id": 150,
+                "chr_page_1k": 125,
+                "rom_offset": 390512,
+                "hex": "3c040a4d182000003f070f4d18200000",
+                "sha256": "87c93f17c8592819f2218524b910213f0fee1935decb251f32b5ebabba10f6a4",
+                "dx": 0,
+                "dy": 8,
+                "flip_x": false,
+                "flip_y": false
+              },
+              {
+                "tile_id": 151,
+                "chr_page_1k": 125,
+                "rom_offset": 390528,
+                "hex": "20301c4ac0c05000e0f0fccac0c05000",
+                "sha256": "7234de31d25ade31043702fb51df77fd8440b5363dc6efa022900c055ca9fe7d",
+                "dx": 8,
+                "dy": 8,
+                "flip_x": false,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                255,
+                255
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                255,
+                255
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "chr_composite_sha256": "2733fbcb886ac67025605ddd713d2a93753f2e57dd9a1754631c0f6944deb89c",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              112,
+              136
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "effect-melee": {
+      "path": "/assets/siege-original/effect-melee.png",
+      "width": 64,
+      "height": 64,
+      "sha256": "15c244aa156dd67ee1992466246e4e850e69acecc80d814b975f299d93a3b3c5",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "center",
+      "native_size": [
+        16,
+        16
+      ],
+      "anchor": [
+        32,
+        32
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-effect-melee.png",
+        "asset_sha256": "86054277a1b312ceb93117e47715a6dc3d27d4a1008eca2e7e504d16cf76495f",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
+    },
+    "native-effect-arrow": {
+      "path": "/assets/siege-original/native-effect-arrow.png",
+      "width": 8,
+      "height": 8,
+      "sha256": "c669f8ede0042f6660c4fb377096223f6a19437d1972425b4cf7a99c6c13a034",
+      "runtime_eligible": false,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite",
+      "base_direction": "left",
+      "source": {
+        "screenshot": "/assets/siege-original/capture-action-effect-arrow.png",
+        "screenshot_sha256": "a83ceac57a2cd74c361934c96bc5ba47369813dff47e9f0e638b68635f01a937",
+        "source_rect": [
+          108,
+          36,
+          116,
+          44
+        ],
+        "operations": [
+          {
+            "kind": "native_oam_animation_reconstruction",
+            "tiles": [
+              {
+                "tile_id": 164,
+                "chr_page_1k": 125,
+                "rom_offset": 390736,
+                "hex": "000000000006ff000000000000000000",
+                "sha256": "6c65352607907471e12bd2192b53bafcc9f10114065a506808504d2cec31f776",
+                "dx": 0,
+                "dy": 0,
+                "flip_x": true,
+                "flip_y": false
+              }
+            ],
+            "palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                255,
+                255
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "verification_palette_rgb": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                255,
+                255
+              ],
+              [
+                187,
+                45,
+                9
+              ]
+            ],
+            "chr_composite_sha256": "6c65352607907471e12bd2192b53bafcc9f10114065a506808504d2cec31f776",
+            "transparent_index": 0,
+            "native_oam_origin": [
+              108,
+              36
+            ],
+            "note": "Original OAM first-sprite priority and CHR transparency. A red/gray variant uses the exact other original slot palette, not an invented recoloring."
+          }
+        ]
+      }
+    },
+    "effect-arrow": {
+      "path": "/assets/siege-original/effect-arrow.png",
+      "width": 32,
+      "height": 32,
+      "sha256": "eb3c066eccd1014a60bb393029f97e7dc06e29253b88150eea4f52e5f574250f",
+      "runtime_eligible": true,
+      "clean_sprite_verified": true,
+      "classification": "native-oam-animation-sprite-4x",
+      "base_direction": "left",
+      "native_size": [
+        8,
+        8
+      ],
+      "anchor": [
+        16,
+        16
+      ],
+      "source": {
+        "asset": "/assets/siege-original/native-effect-arrow.png",
+        "asset_sha256": "c669f8ede0042f6660c4fb377096223f6a19437d1972425b4cf7a99c6c13a034",
+        "operations": [
+          {
+            "kind": "nearest_exact_4x"
+          }
+        ]
+      }
     }
   },
   "native_piece_slots": [
@@ -2042,6 +4697,86 @@
       "sha256": "2e4eaebc9fc513e67e8f845ab3c9ab67e71a02084ba1b7e4af5f71549cd6bbaa",
       "source_id": "retained-original-field",
       "capture_label": "first-attack-main-01"
+    },
+    "capture-action-move-general-0.png": {
+      "path": "/assets/siege-original/capture-action-move-general-0.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "73a0b97b844a92ec635a57e0d24751a962bf9d69cb54c44a2d667eba04bc9822",
+      "source_id": "native-soldier-animation",
+      "capture_label": "capture-action-move-general-0"
+    },
+    "capture-action-move-general-1.png": {
+      "path": "/assets/siege-original/capture-action-move-general-1.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "656fd2aee13ee2f98b3d54e088a40b8a0ffee8ad1f8a267b3309b78bc976cc9c",
+      "source_id": "native-soldier-animation",
+      "capture_label": "capture-action-move-general-1"
+    },
+    "capture-action-move-infantry-0.png": {
+      "path": "/assets/siege-original/capture-action-move-infantry-0.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "10deac157a4b381f1b3f8f6bfdec322fcc02e4b3b6f9480b6f350ab1312f2068",
+      "source_id": "native-soldier-animation",
+      "capture_label": "capture-action-move-infantry-0"
+    },
+    "capture-action-move-infantry-1.png": {
+      "path": "/assets/siege-original/capture-action-move-infantry-1.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "622dd230fbf898e804233a2acefa3c9fd48a917b5bfc371b78d9fa0a98df8678",
+      "source_id": "native-soldier-animation",
+      "capture_label": "capture-action-move-infantry-1"
+    },
+    "capture-action-move-archer-0.png": {
+      "path": "/assets/siege-original/capture-action-move-archer-0.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "6b910644219058b42cb816d945fb841b2296db2f2e5ffbf706e912bb13f279c3",
+      "source_id": "native-soldier-animation",
+      "capture_label": "capture-action-move-archer-0"
+    },
+    "capture-action-move-archer-1.png": {
+      "path": "/assets/siege-original/capture-action-move-archer-1.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "c7ad2eb1fe6a31f7f73dcca2d39359ca0f54307a999ae64f134da3e88e4bd9fd",
+      "source_id": "native-soldier-animation",
+      "capture_label": "capture-action-move-archer-1"
+    },
+    "capture-action-move-cavalry-0.png": {
+      "path": "/assets/siege-original/capture-action-move-cavalry-0.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "eefb26839bca1441033ff8eeb6ffaf402e871a75cbca46ebd3a167185b95bce0",
+      "source_id": "native-soldier-animation",
+      "capture_label": "capture-action-move-cavalry-0"
+    },
+    "capture-action-move-cavalry-1.png": {
+      "path": "/assets/siege-original/capture-action-move-cavalry-1.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "31e6bbe55adfa5da3c6d27114311d248289ef2926563a125396d89a7ec37bf09",
+      "source_id": "native-soldier-animation",
+      "capture_label": "capture-action-move-cavalry-1"
+    },
+    "capture-action-effect-melee.png": {
+      "path": "/assets/siege-original/capture-action-effect-melee.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "3a9349b102053fe39068a316af9dfa7fa57175409d3e655786d6331f850892ae",
+      "source_id": "native-soldier-animation",
+      "capture_label": "capture-action-effect-melee"
+    },
+    "capture-action-effect-arrow.png": {
+      "path": "/assets/siege-original/capture-action-effect-arrow.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "a83ceac57a2cd74c361934c96bc5ba47369813dff47e9f0e638b68635f01a937",
+      "source_id": "native-soldier-animation",
+      "capture_label": "capture-action-effect-arrow"
     }
   },
   "tables": {
@@ -2948,6 +5683,9 @@
       1
     ],
     "additional_frame_policy": "The second requested frame reuses the same verified native pose; motion comes from actual game positions. No uncaptured attack/defend pose is claimed.",
-    "transparency": "Original CHR background pattern index, not RGB keying or a difference against brick texture."
+    "transparency": "Original CHR background pattern index, not RGB keying or a difference against brick texture.",
+    "walking_poses_per_kind": 2,
+    "melee_animation": "Original stationary unit, BE15 four-tile hit flash and A6D0 target blinking. Walking poses are not described as weapon swings.",
+    "projectile_animation": "Original BE76 arrow, scaled exactly4x and oriented by actual shot direction."
   }
 }

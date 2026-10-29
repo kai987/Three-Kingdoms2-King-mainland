@@ -8,7 +8,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / 'source'), str(ROOT / 'tests')]
 from remake.campaign import Campaign
-from remake import domestic, treasures
+from remake import domestic, treasures, siege
 from remake.tactical_ai import expected_attack
 from campaign_fixtures import controlled_catalog, arrange_contact
 from test_remake_tactical_ai import battle, actors
@@ -16,7 +16,7 @@ from test_remake_tactical_ai import battle, actors
 
 class TrainingDegreeTests(unittest.TestCase):
     def test_contact_training_changes_damage_without_extra_training_rng(self):
-        losses, rngs, estimates = [], [], []
+        losses,rngs,estimates,layouts,bases=[],[],[],[],[]
         for degree in (0, 70, 100):
             game = battle(three_enemies=False)
             arrange_contact(game)
@@ -27,11 +27,28 @@ class TrainingDegreeTests(unittest.TestCase):
                              game.catalog.data['rules']['battle_damage_percent']))
             self.assertEqual(game.export_save(), saved, 'AI evaluation cannot draw or alter training')
             before, draws = target['troops'], game.state.rng.draws
-            # The surviving contact opponent answers inside this same paid
-            # command. Training itself adds no third random check.
-            with patch('remake.tactical_ai.choose_action', return_value=None):
-                game.command('attack', dict(battle_id=b['id'], actor=actor['id'],
-                                           target=target['id']), game.revision)
+            # Opening contact and selecting the native formation are not
+            # attacks yet. Compare the same legal front-squad contact for all
+            # three training degrees; no HP, troops or RNG values are edited.
+            with patch('remake.tactical_ai.choose_action',return_value=None):
+                game.command('attack',dict(battle_id=b['id'],actor=actor['id'],target=target['id']),game.revision)
+                self.assertEqual(game.state.rng.draws,draws)
+                game.command('siege_form',dict(battle_id=b['id'],formation=3),game.revision)
+                row=game.state.battle['extended']['siege']
+                for side in siege.SIDES:
+                    row['orders'][side]={kind:'wait'for kind in siege.KINDS}
+                    row['piece_orders'][side]={p['id']:'wait'for p in row['units']if p['side']==side}
+                next(p for p in row['units']if p['id']=='a1').update(x=6,y=4)
+                next(p for p in row['units']if p['id']=='d1').update(x=7,y=4)
+                layouts.append(deepcopy(row['units']))
+                game.validate(game.state)
+                game.command('siege_orders',dict(battle_id=b['id'],piece_orders=dict(row['piece_orders']['attackers'])),game.revision)
+                self.assertEqual(game.state.rng.draws,draws)
+                result=game.command('siege_step',dict(battle_id=b['id']),game.revision)
+                row=game.state.battle['extended']['siege'];bases.append(deepcopy(row['attack_bases']))
+                self.assertEqual([(e['actor'],e['target'])for e in row['events']],[('a1','d1'),('d1','a1')])
+                self.assertTrue(all(e['loss']>0 for e in row['events']))
+                self.assertEqual(result['presentation']['scenes'][0]['kind'],'soldier_step')
             current = next(u for u in game.state.battle['defenders'] if u['id'] == target['id'])
             losses.append(before - current['troops'])
             rngs.append(deepcopy(game.state.rng))
@@ -41,7 +58,9 @@ class TrainingDegreeTests(unittest.TestCase):
         self.assertLess(losses[1], losses[2])
         self.assertLess(estimates[0], estimates[1])
         self.assertLess(estimates[1], estimates[2])
-        self.assertEqual(rngs, [rngs[0]] * 3, 'Training does not create extra random checks')
+        self.assertEqual(rngs,[rngs[0]]*3,'Training does not create extra random checks')
+        self.assertEqual(layouts,[layouts[0]]*3,'The compared native squads and cells are identical')
+        self.assertEqual(bases,[bases[0]]*3,'Training does not change the original sampled attack bases')
 
     def game(self):
         game = Campaign(controlled_catalog())

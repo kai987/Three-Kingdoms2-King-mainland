@@ -14,7 +14,7 @@ from remake.city_economy import tier_at
 from remake.errors import GameError
 from remake.session import CampaignSession
 from remake import command_books, treasures
-from campaign_fixtures import controlled_catalog, reach_battle, arrange_contact
+from campaign_fixtures import controlled_catalog, reach_battle, arrange_contact, finish_soldier_encounter
 
 
 def altered_catalog(change):
@@ -313,6 +313,9 @@ class TreasuryCampaignTests(unittest.TestCase):
             battle = game.state.battle
             if game.state.phase == 'result':
                 break
+            if battle['extended'].get('siege'):
+                finish_soldier_encounter(game)
+                continue
             actor = next(row['id'] for row in battle['attackers'] if row['troops'] > 0)
             target = next(row['id'] for row in battle['defenders'] if row['troops'] > 0)
             self.cmd(game, 'attack', battle_id=battle_id, actor=actor, target=target)

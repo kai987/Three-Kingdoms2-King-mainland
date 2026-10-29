@@ -85,7 +85,7 @@ async function tacticalDismiss(page){
 async function tacticalControl(page,id){
  const button=page.locator('#'+id);if(!await button.isVisible()&&await page.locator('#inspector-toggle').isVisible())await page.locator('#inspector-toggle').click();await button.click();
 }
-async function tacticalSettle(page){
+async function tacticalSettle(page,{returnToMacro=false}={}){
  await expect.poll(()=>page.evaluate(()=>!document.body.classList.contains('busy')||!!document.querySelector('[data-battle-skip]:not([hidden])')),{timeout:90_000}).toBe(true);
  const skip=page.locator('[data-battle-skip]');
  if(await skip.isVisible())try{await skip.click({timeout:1000});}catch(error){if(await skip.isVisible()||!await page.evaluate(()=>!document.body.classList.contains('busy')))throw error;}
@@ -93,6 +93,53 @@ async function tacticalSettle(page){
  // and Playwright's stable click. Its disappearance is a completed replay,
  // while a still-visible but unclickable Skip control remains a real failure.
  await waitIdle(page);await tacticalDismiss(page);
+ if(returnToMacro){
+  // An AI contact is now a pending soldier battle rather than an instant
+  // aggregate reply. Close only through its ordinary visible Withdraw action
+  // so the finite enemy AP phase can resume and finish honestly.
+  for(let count=0;count<32;count++){
+   const pending=await page.evaluate(async()=>{const r=await fetch('/api/save');const s=(await r.json()).state;return !!s.battle?.extended?.siege;});
+   if(!pending)return;
+   await tacticalControl(page,'siege-withdraw');await tacticalSettle(page);
+  }
+  throw Error('Enemy contact did not return to the tactical map within its AP bound');
+ }
+}
+async function tacticalSoldierRound(page){
+ const before=await tacticalSave(page),round=before.state.battle.extended.siege.round;
+ await tacticalControl(page,'siege-step');
+ await expect.poll(()=>page.evaluate(async previous=>{const r=await fetch('/api/save'),s=(await r.json()).state,b=s.battle;return !b?.extended?.siege||!!b.extended.duel||b.extended.siege.round>previous;},round)).toBe(true);
+ const committed=await tacticalSave(page);await tacticalSettle(page);
+ expect(await tacticalSave(page)).toEqual(committed,'Playing or skipping a committed soldier round cannot apply its damage or RNG twice');
+ return {save:await tacticalSave(page)};
+}
+async function tacticalSoldierExchange(page,{bothSides=false,anySide=false,testInfo=null,label='soldier-contact'}={}){
+ const opened={save:await tacticalSave(page)},battle=opened.save.state.battle,pending=battle.extended.siege;
+ expect(pending).toBeTruthy();const own=battle.attacker===opened.save.state.player?'attackers':'defenders',foe=own==='attackers'?'defenders':'attackers';
+ await expect(page.locator('[data-battle-scene]')).toHaveAttribute('data-battle-scene-mode',pending.mode==='field'?'field-formation':'siege-formation');
+ const formation=page.locator('[data-siege-formation="3"]');if(await formation.count())await formation.click();
+ await tacticalControl(page,'siege-form');await waitIdle(page);
+ for(const input of await page.locator('[data-siege-piece-order]').all())await input.selectOption(['a0','d0'].includes(await input.getAttribute('data-siege-piece-order'))?'wait':'advance');
+ let current={save:await tacticalSave(page)},rounds=0;
+ const troops=(save,side)=>save.state.battle[side].reduce((sum,u)=>sum+u.troops,0);
+ const total=save=>troops(save,own)+troops(save,foe);
+ while(rounds<12&&current.save.state.battle.extended.siege&&
+   (anySide?total(current.save)===total(opened.save):troops(current.save,foe)===troops(opened.save,foe)||bothSides&&troops(current.save,own)===troops(opened.save,own))){
+  if(current.save.state.battle.extended.duel){await tacticalControl(page,'duel-withdraw');await tacticalSettle(page);current={save:await tacticalSave(page)};continue;}
+  current=await tacticalSoldierRound(page);rounds++;
+ }
+ if(anySide)expect(total(current.save)).toBeLessThan(total(opened.save),'The natural contact commits actual soldier casualties; stronger ranged armies may inflict one-sided losses');
+ else expect(troops(current.save,foe)).toBeLessThan(troops(opened.save,foe),'Actual opposing hundred-person squads take committed contact damage');
+ if(bothSides)expect(troops(current.save,own)).toBeLessThan(troops(opened.save,own),'The surviving enemy squads also attack during the same soldier encounter');
+ expect(current.save.state.battle.extended.tactical.points).toEqual(battle.extended.tactical.points,'Soldier rounds do not charge a second tactical attack');
+ if(current.save.state.battle.extended.siege){
+  if(testInfo)await historyScreenshot(page,testInfo,label);
+  const raw=JSON.stringify(current.save);await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'pending-soldier-contact.json',mimeType:'application/json',buffer:Buffer.from(raw)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();
+  expect(await tacticalSave(page)).toEqual(current.save,'The pending encounter, piece positions, casualties and RNG survive the production raw-save loader');
+  await tacticalControl(page,'siege-withdraw');await tacticalSettle(page,{returnToMacro:true});
+ }
+ await expect(page.locator('[data-battle-scene]')).toHaveAttribute('data-battle-scene-mode','tactical');
+ return tacticalRead(page);
 }
 async function tacticalCell(page,point,touch=false){
  const canvas=page.locator('[data-battle-canvas]');await canvas.scrollIntoViewIfNeeded();const box=await canvas.boundingBox();expect(box).toBeTruthy();
@@ -113,20 +160,22 @@ async function tacticalApproach(page,{touch=false,preferred=null,max=18}={}){
  const trace=[];
  for(let step=0;step<max;step++){
   const state=await tacticalRead(page),b=state.view.game.battle,board=state.view.catalog.battle_tactical;expect(state.view.game.phase).toBe('battle');
-  const rows=Object.entries(board.actors).filter(([,row])=>row.can_act),direct=rows.find(([id,row])=>(preferred===null||String(preferred)===id)&&row.attack_targets.length)||rows.find(([,row])=>row.attack_targets.length);
+  const own=b.attacker===state.view.game.player?'attackers':'defenders';
+  const rows=Object.entries(board.actors).filter(([,row])=>row.can_act),canContact=row=>row.attack_targets.length&&board.points[own]>board.attack_cost,
+   direct=rows.find(([id,row])=>(preferred===null||String(preferred)===id)&&canContact(row))||rows.find(([,row])=>canContact(row));
   if(direct){const[id,row]=direct;console.log('tactical contact',page.viewportSize().width,{round:b.round,actor:id,target:row.attack_targets[0],points:board.points});await tacticalCell(page,b.extended.tactical.positions[id],touch);await page.locator(`[data-target="${row.attack_targets[0]}"]`).click();return{state,actor:Number.isNaN(Number(id))?id:Number(id),target:row.attack_targets[0],trace};}
-  const own=b.attacker===state.view.game.player?'attackers':'defenders',foe=own==='attackers'?'defenders':'attackers',enemies=b[foe].filter(unit=>unit.troops>0&&b.extended.support[unit.id].health>0);
+  const foe=own==='attackers'?'defenders':'attackers',enemies=b[foe].filter(unit=>unit.troops>0&&b.extended.support[unit.id].health>0);
   const choices=[];
   for(const[id,row]of rows){
    const source=b.extended.tactical.positions[id],distance=point=>Math.min(...enemies.map(unit=>{const p=b.extended.tactical.positions[unit.id];return Math.abs(p.x-point.x)+Math.abs(p.y-point.y);}));
-   for(const point of row.reachable)if(point.cost<board.points[own]&&distance(point)<distance(source))choices.push({id,point,distance:distance(point),preferred:String(preferred)===id});
+   for(const point of row.reachable)if(point.cost<board.points[own]&&distance(point)<distance(source)&&!(point.x===board.camp.x&&point.y===board.camp.y))choices.push({id,point,distance:distance(point),preferred:String(preferred)===id});
   }
   choices.sort((a,b)=>Number(b.preferred)-Number(a.preferred)||a.distance-b.distance||a.point.cost-b.point.cost||String(a.id).localeCompare(String(b.id)));
   const move=choices[0];
   console.log('tactical approach',page.viewportSize().width,{step,round:b.round,points:board.points,action:move?{actor:move.id,...move.point,distance:move.distance}:'end-side'});
   if(move){await tacticalCell(page,b.extended.tactical.positions[move.id],touch);await tacticalCell(page,move.point,touch);await tacticalControl(page,'battle-move');trace.push({kind:'move',actor:move.id,...move.point});}
   else{await tacticalControl(page,'battle-wait');trace.push({kind:'wait',round:b.round});}
-  await tacticalSettle(page);
+  await tacticalSettle(page,{returnToMacro:true});
  }
  throw Error('No real contact reached within the bounded movement exercise: '+JSON.stringify(trace));
 }
@@ -1857,17 +1906,21 @@ test('castle contact opens a siege page for attack and retaliation without repla
   await expect(page.locator('[data-siege-formation]')).toHaveCount(4);await page.locator('[data-siege-formation="3"]').click();expect(await tacticalSave(page)).toEqual(pending,'Formation preview is not a paid game command');
   await historyScreenshot(page,testInfo,'original-siege-formations-'+language);await tacticalControl(page,'siege-form');await waitIdle(page);
   const formed=await tacticalSave(page);expect(formed.state.battle.extended.siege.formations.attackers).toBe(3);expect(formed.state.battle.extended.siege.stage).toBe('orders');expect(formed.state.rng).toEqual(pending.state.rng);
+  await page.locator('.siege-group-orders > summary').click();
   for(const kind of ['infantry','archer','cavalry','general'])await expect(page.locator('#siege-order-'+kind)).toBeVisible();
   await page.locator('#siege-order-general').selectOption('wait');await page.locator('#siege-order-archer').selectOption('wait');expect(await tacticalSave(page)).toEqual(formed);
-  await tacticalControl(page,'siege-step');await waitIdle(page);let progressed=await tacticalSave(page);expect(progressed.state.battle.extended.siege.round).toBe(2);
+  let progressed=(await tacticalSoldierRound(page)).save;expect(progressed.state.battle.extended.siege.round).toBe(2);
   expect(progressed.state.battle.extended.siege.units.map(u=>[u.id,u.x,u.y])).not.toEqual(formed.state.battle.extended.siege.units.map(u=>[u.id,u.x,u.y]));
   expect(progressed.state.battle.extended.tactical.points).toEqual(pending.state.battle.extended.tactical.points);await historyScreenshot(page,testInfo,'original-siege-orders-'+language);
   const mid=JSON.stringify(progressed);await imported(mid);expect(await tacticalSave(page)).toEqual(progressed,'Loading restores the exact pending piece positions, orders and RNG');
   const roundBeforeAuto=progressed.state.battle.extended.siege.round;await tacticalControl(page,'siege-run');await expect.poll(async()=>{const saved=await tacticalSave(page);return saved.state.battle.extended.siege?.round??999;}).toBeGreaterThan(roundBeforeAuto);await tacticalControl(page,'siege-run');await waitIdle(page);
   await expect(page.locator('#siege-run')).toHaveText(language==='ja'?'交戦を進める':'開始交戰');const paused=await tacticalSave(page);await page.waitForTimeout(700);expect(await tacticalSave(page)).toEqual(paused,'Pausing stops the automatic command loop');
-  await page.locator('#siege-order-infantry').selectOption('retreat');await tacticalControl(page,'siege-step');await waitIdle(page);progressed=await tacticalSave(page);expect(progressed.state.battle.extended.siege.orders.attackers.infantry).toBe('retreat','Edited orders after pausing are actually submitted');
+  const shortcut=page.locator('.siege-group-orders');if(await shortcut.getAttribute('open')===null)await shortcut.locator('summary').click();
+  await page.locator('#siege-order-infantry').selectOption('retreat');progressed=(await tacticalSoldierRound(page)).save;
+  const infantries=progressed.state.battle.extended.siege.units.filter(piece=>piece.side==='attackers'&&piece.kind==='infantry');
+  expect(infantries.length).toBeGreaterThan(0);for(const piece of infantries)expect(progressed.state.battle.extended.siege.piece_orders.attackers[piece.id]).toBe('retreat','The group shortcut submits the real order for each infantry squad after pausing');
   for(let step=0;step<16&&progressed.state.battle.extended.siege&&progressed.state.rng.draws===pending.state.rng.draws;step++){
-   await tacticalControl(page,'siege-step');await waitIdle(page);progressed=await tacticalSave(page);
+   progressed=(await tacticalSoldierRound(page)).save;
   }
   expect(progressed.state.rng.draws).toBeGreaterThan(pending.state.rng.draws);expect(progressed.state.battle.extended.tactical.points).toEqual(pending.state.battle.extended.tactical.points);
   if(progressed.state.battle.extended.siege){
@@ -1931,8 +1984,11 @@ test('city-specific battlefield keeps both armies visible and supports real batt
  await canvas.scrollIntoViewIfNeeded();await historyScreenshot(page,testInfo,'battle-full-map-and-roster');
  await language('ja');await expect(scene).toHaveAttribute('data-l10n-native','ja');await expect(page.locator('[data-unit-list=friendly]')).toContainText('武');await historyScreenshot(page,testInfo,'battle-japanese');await language('zh-Hant');expect(await read()).toEqual(unchanged);
  const contact=await tacticalApproach(page,{touch:testInfo.project.name==='touch-chromium',preferred:actorId});await expect(page.locator('#attack')).toBeEnabled();
- await command('attack');await expect(scene).toHaveAttribute('data-battle-scene-mode','engagement');await expect(canvas).toHaveJSProperty('width',1024);await expect(canvas).toHaveJSProperty('height',960);
- const committed=await read();await page.locator('[data-battle-skip]').click();await waitIdle(page);await dismiss();expect(await read()).toEqual(committed,'Skipping animation cannot resolve the attack again or consume extra RNG');
+ const beforeContact=await read();await command('attack');await waitIdle(page);const pending=await read();
+ await expect(scene).toHaveAttribute('data-battle-scene-mode',pending.state.battle.extended.siege.mode==='field'?'field-formation':'siege-formation');await expect(canvas).toHaveJSProperty('width',1024);await expect(canvas).toHaveJSProperty('height',960);
+ expect(pending.state.rng).toEqual(beforeContact.state.rng);expect(pending.state.battle.attackers).toEqual(beforeContact.state.battle.attackers);expect(pending.state.battle.defenders).toEqual(beforeContact.state.battle.defenders);
+ const committed=(await tacticalSoldierExchange(page,{testInfo,label:'battle-native-soldier-contact'})).save;
+ expect(committed.state.battle.extended.tactical.points).toEqual(pending.state.battle.extended.tactical.points,'The complete soldier encounter uses only the original attack payment');
  await expect(canvas).toHaveJSProperty('width',1984);await expect(canvas).toHaveJSProperty('height',1536);const updated=await tacticalRead(page),survivor=updated.view.game.battle.attackers.find(unit=>String(unit.id)===String(contact.actor));if(survivor?.troops>0)await expect(page.locator(`[data-actor="${contact.actor}"]`)).toBeEnabled();
  const snapshot=await read(),download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');expect(JSON.parse(raw)).toEqual(snapshot);
  await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'battle-acceptance.json',mimeType:'application/json',buffer:Buffer.from(raw)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();expect(await read()).toEqual(snapshot);
@@ -1947,7 +2003,7 @@ test('authoritative tactical movement, shared points and contact attacks persist
  const own=b.attacker===initial.view.game.player?'attackers':'defenders',foe=own==='attackers'?'defenders':'attackers';
  const chosen=b[own].filter(unit=>board.actors[unit.id]?.reachable.length>0).sort((a,b)=>b.martial-a.martial||b.troops-a.troops)[0],id=chosen.id,scene=page.locator('[data-battle-scene]'),canvas=page.locator('[data-battle-canvas]');
  await expect(page.locator('#attack')).toBeDisabled();
- const boxed=b[own].find(unit=>{const q=board.actors[unit.id];return q?.can_act&&q.reachable.length===0&&q.attack_targets.length===0&&!Object.values(q.tactic_targets).some(ids=>ids.length);});expect(boxed).toBeTruthy();
+ const boxed=b[own].find(unit=>{const q=board.actors[unit.id];return q?.can_act&&q.reachable.length===0&&q.attack_targets.length===0&&!Object.values(q.tactic_targets).some(ids=>ids.length);});expect(boxed).toBeTruthy();expect(boxed.id).not.toBe(id);
  await tacticalCell(page,b.extended.tactical.positions[boxed.id],touch);await expect(page.locator(`[data-actor="${boxed.id}"]`)).toBeEnabled();await expect(page.locator(`[data-actor="${boxed.id}"]`)).toHaveAttribute('aria-pressed','true');await expect(page.locator('#battle-move')).toBeDisabled();await expect(page.locator('.battle-move-reason')).toContainText('限制');expect(await tacticalSave(page)).toEqual(initial.save,'A surrounded unit stays inspectable and cannot bypass occupied cells');
  await tacticalCell(page,b.extended.tactical.positions[id],touch);await expect(page.locator(`[data-actor="${id}"]`)).toHaveAttribute('aria-pressed','true');await expect(scene).toHaveAttribute('data-battle-selected-actor',String(id));
  const selected={save:await tacticalSave(page),view:initial.view},row=selected.view.catalog.battle_tactical.actors[id];expect(row.reachable.length).toBeGreaterThan(0);expect(row.attack_targets).toEqual([]);await expect(scene).toHaveAttribute('data-battle-reachable-count',String(row.reachable.length));
@@ -1974,19 +2030,27 @@ test('authoritative tactical movement, shared points and contact attacks persist
  const another=[...moved.view.catalog.battle_tactical.actors[id].reachable].sort((a,b)=>a.cost-b.cost||a.y-b.y||a.x-b.x).find(p=>p.cost<moved.view.catalog.battle_tactical.points[own]-2);expect(another).toBeTruthy();
  await tacticalCell(page,another,touch);await tacticalControl(page,'battle-move');await tacticalSettle(page);const twice={save:await tacticalSave(page)};
  expect(twice.save.state.battle.extended.tactical.positions[id]).toEqual({x:another.x,y:another.y});expect(twice.save.state.battle.extended.tactical.points[own]).toBe(moved.save.state.battle.extended.tactical.points[own]-another.cost);expect(twice.save.state.rng).toEqual(moved.save.state.rng);
- const beforeEnemy=twice.save.state.battle.extended.tactical.positions;await tacticalControl(page,'battle-wait');await tacticalSettle(page);const enemyTurn={save:await tacticalSave(page)};
+ const beforeEnemy=twice.save.state.battle.extended.tactical.positions;await tacticalControl(page,'battle-wait');await tacticalSettle(page,{returnToMacro:true});const enemyTurn={save:await tacticalSave(page)};
  expect(enemyTurn.save.state.battle.round).toBe(twice.save.state.battle.round+1);expect(b[foe].some(unit=>JSON.stringify(enemyTurn.save.state.battle.extended.tactical.positions[unit.id])!==JSON.stringify(beforeEnemy[unit.id]))).toBe(true,'The enemy actually moves on its whole-side turn');
  let contact=await tacticalApproach(page,{touch,preferred:id});
  await expect(page.locator('#attack')).toBeEnabled();const beforeAttack=contact.state,actorId=contact.actor;await historyScreenshot(page,testInfo,'tactical-contact-ja');
- await tacticalControl(page,'attack');await expect(scene).toHaveAttribute('data-battle-scene-mode','engagement');const committedSave=await tacticalSave(page);
- await expect(page.locator('[data-battle-caption]')).toContainText('反撃');await historyScreenshot(page,testInfo,'tactical-retaliation-ja');await page.locator('[data-battle-skip]').click();await waitIdle(page);await tacticalDismiss(page);const committed=await tacticalRead(page);expect(committed.save).toEqual(committedSave,'Skipping both engagement scenes cannot replay damage or draw RNG');
+ await tacticalControl(page,'attack');await waitIdle(page);const pendingAttack=await tacticalSave(page);
+ await expect(scene).toHaveAttribute('data-battle-scene-mode',pendingAttack.state.battle.extended.siege.mode==='field'?'field-formation':'siege-formation');
+ expect(pendingAttack.state.rng).toEqual(beforeAttack.save.state.rng);expect(pendingAttack.state.battle[foe]).toEqual(beforeAttack.save.state.battle[foe]);expect(pendingAttack.state.battle[own]).toEqual(beforeAttack.save.state.battle[own]);
+ // Reciprocal infantry/archer/cavalry damage has its explicit controlled
+ // current-engine assertion in browser_soldier_ui. This natural300-vs1000
+ // march must also accept a lawful one-sided ranged defeat.
+ const committed=await tacticalSoldierExchange(page,{anySide:true,testInfo,label:'tactical-soldier-retaliation-ja'});
  expect(committed.save.state.battle.extended.tactical.points[own]).toBe(beforeAttack.save.state.battle.extended.tactical.points[own]-beforeAttack.view.catalog.battle_tactical.attack_cost);
- expect(committed.save.state.battle[foe].reduce((sum,u)=>sum+u.troops,0)).toBeLessThan(beforeAttack.save.state.battle[foe].reduce((sum,u)=>sum+u.troops,0));
- expect(committed.save.state.battle[own].reduce((sum,u)=>sum+u.troops,0)).toBeLessThan(beforeAttack.save.state.battle[own].reduce((sum,u)=>sum+u.troops,0),'The surviving defender immediately retaliates within the same engagement');
+ const totalTroops=save=>[own,foe].reduce((sum,side)=>sum+save.state.battle[side].reduce((n,u)=>n+u.troops,0),0);
+ expect(totalTroops(committed.save)).toBeLessThan(totalTroops(beforeAttack.save),'The real contact causes committed casualties without assuming equal-strength armies');
  const survivor=committed.save.state.battle[own].find(unit=>String(unit.id)===String(actorId)),alive=survivor.troops>0&&committed.save.state.battle.extended.support[actorId].health>0;
  await expect(page.locator(`[data-actor="${actorId}"]`))[alive?'toBeEnabled':'toBeDisabled']();
  const inspectActorId=alive?actorId:committed.save.state.battle[own].find(unit=>unit.troops>0&&committed.save.state.battle.extended.support[unit.id].health>0).id;
- let attackCount=1;const more=committed.view.catalog.battle_tactical.actors[actorId];if(more.attack_targets.length){await page.locator(`[data-target="${more.attack_targets[0]}"]`).click();await tacticalControl(page,'attack');await tacticalSettle(page);attackCount++;}else await expect(page.locator('#attack')).toBeDisabled();
+ let attackCount=1;const more=committed.view.catalog.battle_tactical.actors[actorId];if(more.attack_targets.length&&committed.save.state.battle.extended.tactical.points[own]>2){
+  await page.locator(`[data-actor="${actorId}"]`).click();await page.locator(`[data-target="${more.attack_targets[0]}"]`).click();await tacticalControl(page,'attack');await waitIdle(page);
+  expect((await tacticalSave(page)).state.battle.extended.siege).toBeTruthy();await tacticalControl(page,'siege-withdraw');await tacticalSettle(page,{returnToMacro:true});attackCount++;
+ }else if(!more.attack_targets.length)await expect(page.locator('#attack')).toBeDisabled();
  const saved={save:await tacticalSave(page)},download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');expect(JSON.parse(raw)).toEqual(saved.save);
  await page.route('**/assets/battlefields/original-15.png*',route=>route.fulfill({status:200,contentType:'image/png',body:Buffer.from('deliberately undecodable test image')}));
  await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'tactical-grid-acceptance.json',mimeType:'application/json',buffer:Buffer.from(raw)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();
@@ -1995,7 +2059,7 @@ test('authoritative tactical movement, shared points and contact attacks persist
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await historyScreenshot(page,testInfo,'tactical-image-failure-same-grid');
  const identity=await page.evaluate(async()=>{const build=await(await fetch(new URL('runtime/build.json',location.href))).json();return{worker:GameBrowserEngine.version,commit:build.commit,content_sha256:build.content_sha256,url:location.href};});
  for(const[label,value]of [['initial',initial.save],['first-move',moved.save],['two-moves',twice.save],['enemy-turn',enemyTurn.save],['restored',restored.save]]){const file=testInfo.outputPath('tactical-'+label+'.json');await writeFile(file,JSON.stringify(value));await testInfo.attach('tactical-'+label,{path:file,contentType:'application/json'});}
- const proof=testInfo.outputPath('tactical-identity-and-actions.json');await writeFile(proof,JSON.stringify({identity,actor:id,attack_actor:actorId,attack_count:attackCount,inspected_survivor:inspectActorId,movement_frames:firstMotion,first_move:first,second_move:another,contact_trace:contact.trace,points_before:initial.save.state.battle.extended.tactical.points,points_after:saved.save.state.battle.extended.tactical.points,positions_after:saved.save.state.battle.extended.tactical.positions},null,2));await testInfo.attach('tactical-identity-and-actions',{path:proof,contentType:'application/json'});
+ const proof=testInfo.outputPath('tactical-identity-and-actions.json');await writeFile(proof,JSON.stringify({identity,contact_armies:{actor_troops:beforeAttack.save.state.battle[own].find(unit=>String(unit.id)===String(actorId)).troops,target_troops:beforeAttack.save.state.battle[foe].find(unit=>String(unit.id)===String(contact.target)).troops},actor:id,attack_actor:actorId,attack_count:attackCount,inspected_survivor:inspectActorId,movement_frames:firstMotion,first_move:first,second_move:another,contact_trace:contact.trace,points_before:initial.save.state.battle.extended.tactical.points,points_after:saved.save.state.battle.extended.tactical.points,positions_after:saved.save.state.battle.extended.tactical.positions},null,2));await testInfo.attach('tactical-identity-and-actions',{path:proof,contentType:'application/json'});
  expect(errors.get(page)).toEqual([]);
 });
 
@@ -2063,7 +2127,7 @@ test('command-book confirmations and one paid city allocation flow preserve canc
  const ids=(await page.locator('#allocation-officer option').evaluateAll(nodes=>nodes.map(node=>node.value))).slice(0,3);expect(ids).toHaveLength(3);
  const distribute=async(ident,source)=>{
   const before=await read(),troops=before.state.officers[ident].troops,next=troops+1;
-  expect(next).toBeLessThanOrEqual(999);expect(before.state.cities.shujun.reserves).toBeGreaterThan(0);
+  expect(next).toBeLessThanOrEqual(1000);expect(before.state.cities.shujun.reserves).toBeGreaterThan(0);
   await page.locator('#allocation-officer').selectOption(ident);await page.locator('#allocation-troops').fill(String(next));await page.locator('#confirm-allocation').click();await waitIdle(page);await expect(page.locator('#allocation-officer')).toBeVisible();await expect(modal).toBeHidden();
   const after=await read();expect(after.state.officers[ident].troops).toBe(next);expect(after.state.cities.shujun.reserves).toBe(before.state.cities.shujun.reserves-1);expect(budget(after).used).toBe(budget(before).used);expect(active(after)).toEqual(active(before));expect(after.state.rng).toEqual(before.state.rng);expect(after.state.cities.shujun.reserves+after.state.cities.shujun.roster.officer_ids.reduce((sum,id)=>sum+after.state.officers[id].troops,0)).toBe(before.state.cities.shujun.reserves+before.state.cities.shujun.roster.officer_ids.reduce((sum,id)=>sum+before.state.officers[id].troops,0));allocations.push({source,officer:ident,troops_before:troops,troops_after:next,books_used:budget(after).used,flow:active(after).id,reserves:after.state.cities.shujun.reserves});return after;
  };
@@ -2072,7 +2136,16 @@ test('command-book confirmations and one paid city allocation flow preserve canc
  expect(await read()).toEqual(beforeNew);await modal.locator('#order-confirm-cancel').click();expect(await read()).toEqual(beforeNew);await expect(page.locator('#allocation-troops')).toHaveValue(String(next));
  await page.locator('#confirm-allocation').click();await accept('allocate');await expect(page.locator('#allocation-officer')).toBeVisible();current=await read();expect(budget(current).used).toBe(2);
  const selected=await page.locator('#allocation-officer').inputValue(),sequence=await page.locator('#allocation-officer option').evaluateAll(nodes=>nodes.map(node=>node.value)),nextOfficer=sequence[(sequence.indexOf(selected)+1)%sequence.length];
- await page.locator('#allocation-next').click();await expect(page.locator('#allocation-officer')).toHaveValue(nextOfficer);await expect(page.locator('#allocation-troops')).toHaveValue(String(current.state.officers[nextOfficer].troops));expect(await read()).toEqual(current,'Next officer only changes the displayed form, preserving the paid flow, books and troops');await expect(modal).toBeHidden();
+ const beforeNext=current,nextTroops=beforeNext.state.officers[selected].troops+1;
+ expect(nextTroops).toBeLessThanOrEqual(1000);expect(beforeNext.state.cities.shujun.reserves).toBeGreaterThan(0);
+ await page.locator('#allocation-troops').fill(String(nextTroops));await page.locator('#allocation-next').click();await waitIdle(page);
+ current=await read();expect(current.state.officers[selected].troops).toBe(nextTroops);expect(current.state.cities.shujun.reserves).toBe(beforeNext.state.cities.shujun.reserves-1);expect(budget(current).used).toBe(budget(beforeNext).used);expect(active(current)).toEqual(active(beforeNext));expect(current.state.rng).toEqual(beforeNext.state.rng);
+ const expectedNext=JSON.parse(JSON.stringify(beforeNext));expectedNext.state.officers[selected].troops=nextTroops;expectedNext.state.cities.shujun.reserves--;
+ const note=current.state.log.at(-1);expect(note).toContain(`编兵为${nextTroops}，本城预备兵${current.state.cities.shujun.reserves}。`);expect(current.state.log).toEqual([...beforeNext.state.log,note].slice(-200));expectedNext.state.log=current.state.log;
+ const nextContent=JSON.parse(JSON.stringify(current));delete expectedNext.checksum;delete nextContent.checksum;
+ expect(nextContent).toEqual(expectedNext,'Next officer saves the troop target, reserve transfer and normal log entry before switching; every other save field, the paid flow and RNG remain unchanged');expect(current.checksum).not.toBe(beforeNext.checksum);
+ await expect(page.locator('#allocation-officer')).toHaveValue(nextOfficer);await expect(page.locator('#allocation-troops')).toHaveValue(String(current.state.officers[nextOfficer].troops));await expect(modal).toBeHidden();
+ allocations.push({source:'next-officer-saves-current',officer:selected,troops_before:beforeNext.state.officers[selected].troops,troops_after:nextTroops,books_used:budget(current).used,flow:active(current).id,reserves:current.state.cities.shujun.reserves});
  // The first allocation used to be the only fresh-flow action exercised.
  // Re-select three officers and actually add reserve troops to each of them,
  // keeping the same modal and receipt, rather than merely releasing troops.

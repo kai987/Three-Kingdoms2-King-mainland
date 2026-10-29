@@ -5,7 +5,7 @@ remake designs. No original engine, ROM tables or control IR are loaded.
 """
 from dataclasses import replace
 from .errors import GameError
-from . import presentation, equipment, command_books, battle_grid, siege
+from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
                        parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref, appearance_values)
@@ -19,7 +19,7 @@ TACTICS = (
     ('火箭', 8, 'supply', '五格內敵方主將；燒毀其城池部分兵糧'),
     ('偽撃転殺', 8, 'feint', '須四鄰接敵，目標在城砦；兵損並擾亂'),
     ('共殺', 8, 'area', '目標在森林或山地且鄰接敵隊；命中目標與四鄰敵軍'),
-    ('籠絡', 10, 'surrender', '五格內非城砦敵隊；勸降後兵員入城、武將轉在野'),
+    ('籠絡', 10, 'surrender', '五格內非城砦敵隊；成功後武將帶兵立即加入本軍'),
     ('落石', 9, 'rock', '由山地或城砦向四鄰非城砦敵隊施放'),
     ('連環', 9, 'chain', '目標及四鄰另一敵隊在河流；擾亂接觸連通的水上敵隊'),
     ('十面埋伏', 10, 'ambush', '本隊在森林且至少100兵；設置一支伏兵'),
@@ -276,7 +276,7 @@ class ExpandedCampaign:
         if actor['troops']<=0:return
         own='defenders' if foe=='attackers' else 'attackers'
         choice=choose_action(state,b,foe,own,self.catalog.map_cities[b['target']]['terrain'],TACTICS,
-            settings=get_settings(state),damage_percent=self.catalog.data['rules']['battle_damage_percent'],responding=True)
+            game=self,settings=get_settings(state),damage_percent=self.catalog.data['rules']['battle_damage_percent'],responding=True)
         if choice:self._perform_battle_action(state,choice,foe,own,finish=False,counter=True)
 
     def _trigger_ambush(self,state,actor,own,*,counter=False):
@@ -308,6 +308,10 @@ class ExpandedCampaign:
         if choice['kind']=='move':
             self._execute_battle_move(state,actor,choice['x'],choice['y'],own,foe,finish=finish)
             return True
+        if choice['kind']=='facility':
+            fields={'battle_id','actor','action','batches','slot','item'}
+            battle_services.execute(self,state,{key:value for key,value in choice.items() if key in fields},side=own)
+            return True
         target=next((u for u in b[foe] if u['id']==choice['target'] and u['troops']>0),None)
         if target is None:return False
         if choice['kind']=='tactic':
@@ -333,7 +337,7 @@ class ExpandedCampaign:
         b=state.battle
         if not b or 'tactical' not in b['extended']:return
         player_side,_=self._player_sides(state)
-        for _ in range(64):  # maximum60 AP plus the voluntary pass
+        for _ in range(128):  # maximum60 AP, bounded paid facility visits, and pass
             if state.phase!='battle' or b['extended']['duel'] or b['extended'].get('siege'):return
             side=b['extended']['tactical']['side']
             if side==player_side:return
@@ -341,7 +345,7 @@ class ExpandedCampaign:
             if b['extended']['tactical']['points'][side]<=0:
                 self._end_tactical_side(state);continue
             choice=choose_action(state,b,side,foe,self.catalog.map_cities[b['target']]['terrain'],TACTICS,
-                settings=get_settings(state),damage_percent=self.catalog.data['rules']['battle_damage_percent'])
+                game=self,settings=get_settings(state),damage_percent=self.catalog.data['rules']['battle_damage_percent'])
             if choice is None or choice['kind']=='wait':
                 self._end_tactical_side(state)
             elif not self._perform_battle_action(state,choice,side,foe,finish=False,counter=True):
@@ -395,9 +399,19 @@ class ExpandedCampaign:
             counter=own!=self._player_sides(state)[0],
             move=dict(path=quote['path'],cost=quote['cost'],map_id=b['extended']['tactical']['map_id']))
         self._trigger_ambush(state,actor,own)
+        camp=battle_grid._field(b)['camp']
+        if own=='attackers' and (x,y)==camp and actor['troops']>0:
+            b['extended']['occupation']=dict(actor=actor['id'],side=own,x=x,y=y)
+            b['outcome']='victory';state.phase='result'
+            b['log'].append(f'{self.person_name(state,actor["id"])}進入空城砦，攻方取得勝利。')
+            b['log'][:]=b['log'][-80:]
+            return quote
         if finish:self._finish_action(state,actor,own,foe)
         else:self._battle_result(state)
         return quote
+
+    def _battle_facility(self,state,payload):
+        return battle_services.execute(self,state,payload)
 
     def _battle_wait(self,state,payload):
         b=state.battle
@@ -428,18 +442,20 @@ class ExpandedCampaign:
             reason=battle_grid.attack_reason(b,actor,target,own)
             if reason:raise GameError(reason)
             battle_grid.spend(b,own,battle_grid.ATTACK_COST)
-        context=battle_grid.siege_context(b,actor,target)
+        context=battle_grid.encounter_context(b,actor,target)
         self._trigger_ambush(state,actor,own,counter=counter)
         if modern and context and actor['troops']>0 and not b['extended']['support'][str(actor['id'])]['stunned']:
             siege.begin(self,state,actor,target,context)
             if state.player not in (b['attacker'],b['defender']):siege.auto(self,state)
             return
-        attacked=self._attack_hit(state,actor,target,own,counter=counter,siege=context)
+        receipt_context=({key:context[key]for key in ('fort','map_id','cell')}
+                         if context and context.get('mode','siege')=='siege' else None)
+        attacked=self._attack_hit(state,actor,target,own,counter=counter,siege=receipt_context)
         if modern and attacked:
             # Contact enters the two-sided soldier encounter. The surviving
             # defending unit may answer within that same paid encounter; this
             # is not a free whole-side AI action or a recursively paid attack.
-            self._contact_retaliation(state,target,actor,foe,siege=context)
+            self._contact_retaliation(state,target,actor,foe,siege=receipt_context)
         if finish:self._finish_action(state,actor,own,foe)
         else:self._battle_result(state)
 
@@ -513,8 +529,7 @@ class ExpandedCampaign:
             for u in victims:support[str(u['id'])]['stunned']=1
             b['log'].append(f'{title}扰乱{len(victims)}隊，下次普通攻擊失效。')
         elif effect=='surrender':
-            x['surrenders'][str(target['id'])]=target['troops'];target['troops']=0
-            b['log'].append(f'{self.person_name(state, target["id"])}接受劝降；战后转在野，兵员入城。')
+            battle_allegiance.convert(self,state,b,actor,target,own,foe)
         elif effect=='supply':
             receiver=state.cities[b['target'] if foe=='defenders' else b['source']]
             loss=min(receiver.grain,max(1,receiver.grain//8+p.intellect))
@@ -730,7 +745,9 @@ class ExpandedCampaign:
                     target.reserves+=o.troops;o.troops=0;o.faction_id=None;o.loyalty=0
                     state.extension['free_locations'][str(ident)]=target.id
             target.roster.officer_ids[:]=selected
-            source.roster.officer_ids[:]=[i for i in source.roster.officer_ids if i not in selected]
+            for city in state.cities.values():
+                if city.id!=target.id:
+                    city.roster.officer_ids[:]=[i for i in city.roster.officer_ids if i not in selected]
             target.owner=b['attacker'];target.action_used=True
             self._note(state,f'{self.faction_name(state,b["attacker"])}攻占{self.catalog.map_cities[target.id]["name"]}。')
             self._emit_event(state,'city_captured',person_ids=[state.officers[i].person_id for i in selected[:1]],
@@ -917,9 +934,10 @@ class ExpandedCampaign:
         if not b:return
         e=b['extended']
         expected={'support','duel','duel_history','ambush','surrenders','withdrawn','tactical'}
-        if set(e) not in (expected,expected|{'siege'}):raise ValueError('battle extended fields')
+        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation'}:raise ValueError('battle extended fields')
         battle_grid.validate(self,state,b)
         siege.validate(self,state,b)
+        battle_allegiance.validate(self,state,b)
         units={u['id']:u for u in b['attackers']+b['defenders']}
         if set(e['support'])!={str(i) for i in units}:raise ValueError('battle support identities')
         for key,s in e['support'].items():

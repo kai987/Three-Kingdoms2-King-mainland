@@ -44,7 +44,7 @@ def snapshot(campaign, state):
 
 def record(campaign, state, before, *, kind, actor=None, target=None, own=None,
            counter=False, tactic=None, effect=None, success=True, skipped=False,
-           move=None, reply=None, siege=None):
+           move=None, reply=None, siege=None, soldiers=None):
     if before is None:
         return
     after = snapshot(campaign, state)
@@ -56,6 +56,8 @@ def record(campaign, state, before, *, kind, actor=None, target=None, own=None,
         before=before, after=after)
     if siege is not None:
         scene['siege'] = deepcopy(siege)
+    if soldiers is not None:
+        scene['soldiers'] = deepcopy(soldiers)
     campaign._presentation_capture.append(scene)
 
 

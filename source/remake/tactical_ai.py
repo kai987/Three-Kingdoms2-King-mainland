@@ -67,6 +67,10 @@ def tactic_reason(state, battle, actor, target, own, foe, terrain, tactic):
     support = _support(battle, actor)
     if support['stunned']:
         return '该部队受扰乱，不能施计；可执行普通行动恢复。'
+    if effect=='surrender':
+        from .battle_allegiance import reason
+        failure=reason(state,battle,target,own)
+        if failure:return failure
     if 'tactical' in battle['extended']:
         from . import battle_grid
         from .campaign_expansion import TACTICS
@@ -204,13 +208,13 @@ def _tactic_value(state, battle, actor, target, own, foe, terrain, tactic, attac
 
 
 def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
-               depth=1, responding=False, used=None):
+               depth=1, responding=False, used=None, game=None):
     """Enumerate real unit/target/tactic choices; ties are stable numeric IDs."""
     if state.phase != 'battle' or battle['outcome'] or battle['extended']['duel']:
         return []
     if 'tactical' in battle['extended']:
         return _grid_candidates(state, battle, own, foe, terrain, tactics,
-            damage_percent=damage_percent, depth=depth, responding=responding)
+            damage_percent=damage_percent, depth=depth, responding=responding, game=game)
     spent = set(() if responding else battle['used'] if used is None else used)
     friends, enemies = _active(battle, own), _active(battle, foe)
     # Damage averages are reused by every tactic score; the candidate search
@@ -251,17 +255,22 @@ def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
 
 
 def choose_action(state, battle, own, foe, terrain, tactics, *, settings=None,
-                  damage_percent=32, responding=False, used=None):
+                  damage_percent=32, responding=False, used=None, game=None):
     settings = settings or {}
     rows = candidates(state, battle, own, foe, terrain, tactics,
                       damage_percent=damage_percent, depth=settings.get('tactic_depth', 1),
-                      responding=responding, used=used)
+                      responding=responding, used=used, game=game)
     if 'tactical' in battle['extended']:
         if not rows:
             return None
         ordinary = next((row for row in rows if row['kind'] == 'attack'), None)
         tactical = next((row for row in rows if row['kind'] == 'tactic'), None)
         movement = next((row for row in rows if row['kind'] == 'move'), None)
+        capture = next((row for row in rows if row.get('capture')), None)
+        service = next((row for row in rows if row['kind']=='facility'),None)
+        if capture:return capture
+        if service and service['score']>=max(ordinary['score'] if ordinary else 0,tactical['score'] if tactical else 0):
+            return service
         threshold = settings.get('tactic_threshold_percent', 115) / 100
         if tactical and tactical['score'] > 0 and (ordinary is None or tactical['score'] >= ordinary['score'] * threshold):
             if movement is None or tactical['score'] >= movement['score']:
@@ -277,7 +286,7 @@ def choose_action(state, battle, own, foe, terrain, tactics, *, settings=None,
     return ordinary
 
 
-def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percent, depth, responding):
+def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percent, depth, responding,game=None):
     """Same legal effects, plus deterministic paths to contact; no RNG lookahead."""
     from . import battle_grid as grid
     row = battle['extended']['tactical']
@@ -292,6 +301,9 @@ def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percen
     rows = []
     for actor in friends:
         support = _support(battle, actor)
+        from . import battle_services
+        service=battle_services.ai_action(game,state,battle,actor,own) if game is not None else None
+        if service:rows.append(service)
         for target in enemies:
             if not grid.attack_reason(battle, actor, target, own):
                 damage, reply = expected_contact_exchange(battle, actor, target, damage_percent)
@@ -305,6 +317,24 @@ def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percen
         if row['points'][own] <= 0:
             continue
         source, distances, previous = grid._paths(state, battle, actor)
+        camp=grid._field(battle)['camp']
+        if own=='attackers' and camp!=source and camp in distances and distances[camp]<=row['points'][own]:
+            rows.append(dict(kind='move',actor=actor['id'],target=enemies[0]['id'],tactic=None,
+                x=camp[0],y=camp[1],cost=distances[camp],score=100000,capture=True))
+        if game is not None:
+            for site in battle_services.seek(game,state,battle,actor,own):
+                destination=(site['x'],site['y'])
+                if destination not in distances or destination==source:
+                    continue
+                path=[destination]
+                while path[-1]!=source:path.append(previous[path[-1]])
+                path.reverse()
+                affordable=[point for point in path[1:]if distances[point]<=row['points'][own]]
+                if affordable:
+                    x,y=affordable[-1]
+                    rows.append(dict(kind='move',actor=actor['id'],target=enemies[0]['id'],tactic=None,
+                        x=x,y=y,cost=distances[(x,y)],score=max(1,site['score']-distances[destination]*.25),
+                        service_goal=dict(kind=site['kind'],x=site['x'],y=site['y'])))
         goals = []
         for target in enemies:
             point = row['positions'][str(target['id'])]

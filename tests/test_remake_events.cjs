@@ -41,7 +41,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  assert(validEvent(formed));assert(validEvent(skipped));
  assert(validEvent({...formed,city_ids:['jincheng','tianshui']}),'A joint founding may concern two cities');
  assert(validEvent({...formed,details:{...formed.details,reserves:0}}),'An empty existing reserve still permits a zero-troop founding');
- assert(validEvent({...formed,details:{...formed.details,reserves:1998}}));
+ assert(validEvent({...formed,details:{...formed.details,reserves:2000}}));
  for(const event of [formed,skipped]){
   for(const change of [{day:11},{audience:'player'},{city_ids:[]},{city_ids:['jincheng','longxi','home']},{city_ids:['jincheng','jincheng']},{city_ids:['']},
    {factions:[]},{factions:['beigong_boyu','song_jian']},{factions:['']},{person_ids:[]},
@@ -51,12 +51,12 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
    {reason:'unknown'},{reserves:-1},{reserves:1.5},{reserves:true},{extra:1}])assert(!validEvent({...event,details:{...event.details,...change}}));
   for(const key of ['founding_id','reason','reserves']){const details={...event.details};delete details[key];assert(!validEvent({...event,details}));}
  }
- assert(!validEvent({...formed,details:{...formed.details,reserves:1999}}));
+ assert(!validEvent({...formed,details:{...formed.details,reserves:2001}}));
  assert(!validEvent({...formed,details:{...formed.details,reason:'city_occupied'}}));
  assert(!validEvent({...skipped,details:{...skipped.details,reason:'formed'}}));
  assert(!validEvent({...skipped,details:{...skipped.details,reserves:1}}));
  const song=founding(3,'faction_founded',{person_ids:['historical-song-jian'],city_ids:['longxi'],factions:['song_jian'],details:{founding_id:'song-jian-rise-184-11',reason:'formed',reserves:999}});
- assert(validEvent(song));assert(!validEvent({...song,details:{...song.details,reserves:1000}}));
+ assert(validEvent(song));assert(!validEvent({...song,details:{...song.details,reserves:1001}}));
  const occupied={...song,id:4,kind:'faction_founding_skipped',details:{...song.details,reason:'city_occupied',reserves:0}};
  const recruits=[{person_id:'historical-beigong-boyu',name:'北宮伯玉'},{person_id:'historical-li-wenhou',name:'李文侯'},{person_id:'historical-song-jian',name:'宋建'}],portraitCalls=[];
  const revoltCatalog={...catalog,scenario_id:'mainland184-02',library:[...catalog.library,...recruits],
@@ -69,7 +69,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  }});
  revolt.setView(revoltView);revolt.events.observe(revoltView,{newGame:true});revolt.drain();
  assert.deepEqual(revolt.events.snapshot().active,[1]);assert.deepEqual(revolt.events.snapshot().pending,[[2],[3],[4]],'World founding results interrupt all players once, including skipped future factions');
- assert(revolt.modal.innerHTML.includes('地方勢力起兵'));assert(revolt.modal.innerHTML.includes('原有預備兵編入1200兵'));assert(revolt.modal.innerHTML.includes('每人至多999兵'));
+ assert(revolt.modal.innerHTML.includes('地方勢力起兵'));assert(revolt.modal.innerHTML.includes('原有預備兵編入1200兵'));assert(revolt.modal.innerHTML.includes('每人至多1000兵'));
  assert(revolt.modal.innerHTML.includes('event-map'));assert(revolt.modal.innerHTML.includes('<rect '),'Revolt illustrations reuse current pixel castle geometry');
  assert(revolt.modal.innerHTML.includes('data-portrait-person="historical-beigong-boyu"'));assert(revolt.modal.innerHTML.includes('data-portrait-person="historical-li-wenhou"'));
  assert(revolt.modal.innerHTML.includes('data-event-history="liangzhou-184"'));assert(revolt.modal.innerHTML.includes('後漢書/卷8'));assert(revolt.modal.innerHTML.includes('上旬不是史料確切起事日'));
@@ -86,7 +86,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  const coupPeople=['historical-bian-zhang','historical-beigong-boyu','historical-li-wenhou','san14-candidate-0166'],
   coup=row(5,'faction_coup',{year:186,month:12,day:1,turn:103,audience:'world',person_ids:coupPeople,city_ids:['jincheng','tianshui'],factions:['bian_zhang'],details:{coup_id:'han-sui-coup-186-12',reason:'executed',released_troops:1200}}),
   coupSkip={...coup,id:6,kind:'faction_coup_skipped',city_ids:[],details:{...coup.details,reason:'conditions_changed',released_troops:0}};
- assert(validEvent(coup));assert(validEvent(coupSkip));assert(validEvent({...coup,details:{...coup.details,released_troops:0}}));assert(validEvent({...coup,details:{...coup.details,released_troops:2997}}));
+ assert(validEvent(coup));assert(validEvent(coupSkip));assert(validEvent({...coup,details:{...coup.details,released_troops:0}}));assert(validEvent({...coup,details:{...coup.details,released_troops:3000}}));
  for(const event of[coup,coupSkip]){
   for(const change of[{day:11},{audience:'player'},{person_ids:coupPeople.slice(0,3)},{person_ids:[...coupPeople,'person-a']},
    {person_ids:[...coupPeople.slice(0,3),coupPeople[0]]},{city_ids:['jincheng','jincheng']},{city_ids:['']},{city_ids:Array.from({length:100},(_,i)=>'city-'+i)},{factions:[]},{factions:['bian_zhang','shu']},{factions:['']}])assert(!validEvent({...event,...change}));
@@ -94,7 +94,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
    {released_troops:-1},{released_troops:true},{released_troops:1.5},{extra:1}])assert(!validEvent({...event,details:{...event.details,...change}}));
   for(const key of['coup_id','reason','released_troops']){const details={...event.details};delete details[key];assert(!validEvent({...event,details}));}
  }
- assert(!validEvent({...coup,city_ids:[]}));assert(!validEvent({...coup,details:{...coup.details,released_troops:2998}}));assert(!validEvent({...coup,details:{...coup.details,reason:'conditions_changed'}}));
+ assert(!validEvent({...coup,city_ids:[]}));assert(!validEvent({...coup,details:{...coup.details,released_troops:3001}}));assert(!validEvent({...coup,details:{...coup.details,reason:'conditions_changed'}}));
  assert(!validEvent({...coupSkip,details:{...coupSkip.details,reason:'executed'}}));assert(!validEvent({...coupSkip,details:{...coupSkip.details,released_troops:1}}));
  const coupNames=['邊章','北宮伯玉','李文侯','韓遂'],coupCatalog={...revoltCatalog,
   library:[...revoltCatalog.library,...coupPeople.filter(id=>!revoltCatalog.library.some(p=>p.person_id===id)).map(id=>({person_id:id,name:coupNames[coupPeople.indexOf(id)]}))],

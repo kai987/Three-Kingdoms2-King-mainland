@@ -197,10 +197,30 @@ class SessionResponseReuseTests(unittest.TestCase):
         reference.load_save(session.export_save(),0)
         expected=reference.command('attack',payload,reference.revision)
         result=self.single_view(lambda:session.command('attack',payload,session.revision))
-        self.assertEqual(result['presentation'],expected['presentation'])
+        self.assertNotIn('presentation',expected,'Opening formation is not a pre-resolved hit')
+        self.assertNotIn('presentation',result)
+        self.assertIs(session.game,game)
         self.assertEqual(session.export_save(),reference.export_save())
         self.assertEqual(session.game.state.rng,reference.state.rng)
+        # Obtain an actual soldier turn receipt through the session's public
+        # response-reuse path, with a separate reference executing identical
+        # commands. No damage or presentation is injected into either game.
+        for kind,values in [('siege_form',dict(formation=3)),
+                            ('siege_orders',dict(orders={key:'advance'for key in ('infantry','archer','cavalry','general')})),
+                            ('siege_step',{})]:
+            command=dict(battle_id=battle['id'],**values)
+            expected=reference.command(kind,command,reference.revision)
+            result=self.single_view(lambda:session.command(kind,command,session.revision))
+            self.assertEqual(result.get('presentation'),expected.get('presentation'))
+            self.assertIs(session.game,game)
+            self.assertEqual(session.export_save(),reference.export_save())
+            self.assertEqual(session.game.state.rng,reference.state.rng)
+        self.assertTrue(result['presentation']['scenes'])
+        self.assertEqual(result['presentation']['scenes'][0]['kind'],'soldier_step')
+        self.assertTrue(result['presentation']['scenes'][0]['soldiers']['after']['events'])
         self.assertNotIn('presentation',session.view())
+        self.single_view(lambda:session.command('siege_withdraw',dict(battle_id=battle['id']),session.revision))
+        self.assertIs(session.game,game)
         result=self.single_view(lambda:session.command('retreat',dict(battle_id=battle['id']),session.revision))
         self.assertEqual(result['presentation']['scenes'][0]['kind'],'retreat')
         revision=session.revision

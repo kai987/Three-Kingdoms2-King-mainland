@@ -57,8 +57,11 @@ def _library():
                 or len(camps) != 1 or any(not _int(camps[0][axis], 0, limit)
                     for axis, limit in (('x', COLUMNS-1), ('y', ROWS-1)))):
             raise ValueError('Invalid authoritative battlefield grid')
+        services = tuple(dict(kind={'rice_shop':'market','weapon_shop':'armory','hospital':'hospital'}[service['kind']],
+                              x=service['position']['x'], y=service['position']['y'])
+                         for service in row['services'] if service['present'])
         maps[key] = dict(classes=tuple(tuple(line) for line in classes),
-                         camp=(camps[0]['x'], camps[0]['y']))
+                         camp=(camps[0]['x'], camps[0]['y']), services=services)
     cities = {key: row['map_id'] for key, row in bindings['cities'].items()}
     if any(value not in maps for value in cities.values()):
         raise ValueError('Invalid authoritative battlefield binding')
@@ -90,13 +93,13 @@ def _troops(battle, side):
 
 
 def daily_points(troops):
-    if not _int(troops, 0, 9990):
+    if not _int(troops, 0, 20000):
         raise ValueError('Invalid tactical soldier total')
     return DAILY_POINTS[min(troops // 1000, 9)]
 
 
 def point_cap(troops):
-    if not _int(troops, 0, 9990):
+    if not _int(troops, 0, 20000):
         raise ValueError('Invalid tactical soldier total')
     return POINT_CAPS[min(troops // 1000, 9)]
 
@@ -133,6 +136,9 @@ def initialize(game, state, battle):
 
 def validate(game, state, battle):
     row = battle['extended'].get('tactical')
+    conversions=battle['extended'].get('defections',{})
+    if not isinstance(conversions,dict) or any(not isinstance(value,dict) for value in conversions.values()):
+        raise ValueError('Invalid battlefield conversion ledger')
     identities = {str(unit['id']) for side in SIDES for unit in battle[side]}
     if (not isinstance(row, dict) or set(row) != {'schema', 'map_id', 'positions', 'side', 'points', 'passed'}
             or row['schema'] != SCHEMA or row['map_id'] != field_id(battle['target'])
@@ -146,8 +152,11 @@ def validate(game, state, battle):
         raise ValueError('Invalid tactical battle state')
     for side in SIDES:
         starts = [unit.get('start') for unit in battle[side]]
-        if (any(not _int(amount, 1, 999) for amount in starts)
-                or row['points'][side] > point_cap(sum(starts))):
+        original_starts = [unit.get('start') for current in SIDES for unit in battle[current]
+            if battle['extended'].get('defections', {}).get(str(unit['id']), {}).get('original_side', current)==side]
+        if (any(not _int(amount, 1, 1000) for amount in starts)
+                or any(not _int(amount, 1, 1000) for amount in original_starts)
+                or row['points'][side] > point_cap(max(sum(starts),sum(original_starts)))):
             # Casualties may lower tomorrow's cap below today's lawful carried
             # balance. The immutable opening army is still an absolute ceiling.
             raise ValueError('Tactical points exceed the opening army cap')
@@ -254,6 +263,19 @@ def siege_context(battle, actor, target):
     return None
 
 
+def encounter_context(battle, actor, target):
+    """Every real contact enters the same soldier service; class5 adds walls."""
+    context = siege_context(battle, actor, target)
+    if context is not None:
+        return dict(context, mode='siege')
+    row = battle['extended'].get('tactical')
+    if row is None:
+        return None
+    _, unit = _unit(battle, target)
+    return dict(mode='field', fort=None, map_id=row['map_id'],
+                cell=deepcopy(row['positions'][str(unit['id'])]))
+
+
 def tactic_terrain_reason(battle, actor, target, tid):
     """Recovered player target qualifiers; damage and chance stay elsewhere."""
     side, acting = _unit(battle, actor)
@@ -345,7 +367,7 @@ def movement_cost(state, unit, terrain):
 
 
 def _paths(state, battle, actor, budget=None):
-    _, unit = _unit(battle, actor)
+    side, unit = _unit(battle, actor)
     if unit is None:
         raise GameError('請選擇有效的部隊。')
     row = battle['extended']['tactical']
@@ -355,11 +377,16 @@ def _paths(state, battle, actor, budget=None):
     occupied = {(point['x'], point['y']) for key, point in row['positions'].items()
                 if key != str(unit['id']) and key in live}
     classes = _field(battle)['classes']
+    enemy_camp = _field(battle)['camp'] if side=='attackers' else None
     distances, previous = {source: 0}, {}
     queue = [(0, source[1], source[0])]
     while queue:
         cost, y, x = heappop(queue)
         if distances.get((x, y)) != cost:
+            continue
+        # Entering the undefended enemy castle ends the battle immediately;
+        # it is a legal destination, never a corridor to a later destination.
+        if (x, y) == enemy_camp and (x, y) != source:
             continue
         for nx, ny in ((x, y-1), (x-1, y), (x+1, y), (x, y+1)):
             if not (0 <= nx < COLUMNS and 0 <= ny < ROWS) or (nx, ny) in occupied:
@@ -457,7 +484,9 @@ def view(game, state, battle):
         tactic_reasons = {str(tid): {str(target['id']): tactic_reason(state, battle, actor,
             target, own, foe, terrain, tactic) for target in battle[foe]}
             for tid, tactic in enumerate(TACTICS)}
+        from . import battle_services
         actors[str(actor['id'])] = dict(can_act=bool(can_act), reason=reason,
+            facility=battle_services.quote(game,state,battle,actor,own) if can_act else None,
             reachable=cells,
             attack_targets=[u['id'] for u in battle[foe] if not attack_reasons[str(u['id'])]],
             duel_targets=[u['id'] for u in battle[foe] if not duel_reasons[str(u['id'])]],
@@ -466,6 +495,8 @@ def view(game, state, battle):
             attack_reasons=attack_reasons, duel_reasons=duel_reasons, tactic_reasons=tactic_reasons)
     return dict(schema=VIEW_SCHEMA, battle_id=battle['id'], round=battle['round'], map_id=row['map_id'],
         grid=dict(columns=COLUMNS, rows=ROWS, tile_size=TILE_SIZE), side=row['side'],
+        camp=dict(zip(('x','y'),_field(battle)['camp'])), facilities=[dict(service) for service in _field(battle).get('services',())],
+        maximum_troops=1000,
         points=deepcopy(row['points']), caps={side: point_cap(_troops(battle, side)) for side in SIDES},
         can_end=state.phase == 'battle' and row['side'] == own and not battle['extended']['duel'],
         attack_cost=ATTACK_COST, duel_cost=DUEL_COST, tactic_costs=list(TACTIC_COSTS), actors=actors)

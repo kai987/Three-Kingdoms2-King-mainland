@@ -763,6 +763,22 @@
         "map",
         "logistics"
       ]
+    },
+    "tests/test_remake_battle_objectives.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "economy",
+        "save"
+      ]
+    },
+    "tests/test_remake_soldier_rules.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "save"
+      ]
     }
   }
 }

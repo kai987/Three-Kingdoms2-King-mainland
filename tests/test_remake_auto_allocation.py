@@ -30,18 +30,18 @@ class AutoAllocationTests(unittest.TestCase):
         before = game.export_save()
         quote = domestic.allocation_preview(game, state, 'xiangyang')
         self.assertEqual(quote, dict(soldiers=1200, officers=2, remaining_reserves=0,
-            assignments=[dict(id=146, **{'from': 180}, to=999, added=819),
-                         dict(id=951, **{'from': 180}, to=561, added=381)]))
+            assignments=[dict(id=146, **{'from': 180}, to=1000, added=820),
+                         dict(id=951, **{'from': 180}, to=560, added=380)]))
         view = domestic.view(game, state)
         self.assertEqual(view['cities']['xiangyang']['allocation_preview'], quote)
-        self.assertEqual(view['factions']['shu']['allocation_preview'], dict(soldiers=2079, officers=3))
+        self.assertEqual(view['factions']['shu']['allocation_preview'], dict(soldiers=2080, officers=3))
         self.assertEqual(game.export_save(), before, 'Preview must not mutate saves or RNG')
         resources = {key: (c.gold, c.grain, c.action_used) for key, c in state.cities.items()}
         actions, totals = deepcopy(state.extension['officer_actions']), deepcopy(state.soldiers)
         books = deepcopy(state.extension['command_books'])
         domestic.finish_faction_turn(game, state, 'shu', automatic=False)
-        self.assertEqual((state.officers[146].troops, state.officers[951].troops), (999, 561))
-        self.assertEqual((state.officers[255].troops, state.cities['nanjun'].reserves), (999, 321))
+        self.assertEqual((state.officers[146].troops, state.officers[951].troops), (1000, 560))
+        self.assertEqual((state.officers[255].troops, state.cities['nanjun'].reserves), (1000, 320))
         self.assertEqual((state.officers[999].troops, state.officers[439].troops), (80, 120),
                          'Existing lower-ranked troops must never be recalled')
         self.assertEqual({key: (c.gold, c.grain, c.action_used) for key, c in state.cities.items()}, resources)
@@ -79,8 +79,8 @@ class AutoAllocationTests(unittest.TestCase):
         state, city = game.state, game.state.cities['xiangyang']
         for ident in city.roster.officer_ids:
             officer = state.officers[ident]
-            city.reserves -= 999 - officer.troops
-            officer.troops = 999
+            city.reserves -= 1000 - officer.troops
+            officer.troops = 1000
         # Build a valid abundant-reserve fixture with a matching conservation ledger.
         city.reserves = 5000
         state.soldiers['initial'] = sum(c.reserves for c in state.cities.values()) + sum(o.troops for o in state.officers.values())
@@ -124,8 +124,8 @@ class AutoAllocationTests(unittest.TestCase):
         original = {i: state.officers[i].troops for i in (951, 999, 146)}
         domestic.allocate_garrison(game, state, 'xiangyang')
         self.assertEqual({i: state.officers[i].troops for i in original}, original)
-        self.assertEqual(state.officers[439].troops, 999)
-        self.assertEqual(state.cities['xiangyang'].reserves, 321)
+        self.assertEqual(state.officers[439].troops, 1000)
+        self.assertEqual(state.cities['xiangyang'].reserves, 320)
         treasures.synchronize(game,state)
         game.validate(state)
 
@@ -151,7 +151,7 @@ class AutoAllocationTests(unittest.TestCase):
         self.assertEqual(domestic.allocation_preview(game, state, 'nanjun')['soldiers'], 0)
         person['working'] = True
         domestic.allocate_garrison(game, state, 'nanjun')
-        self.assertEqual((state.officers[candidate].troops, state.cities['nanjun'].reserves), (999, 201))
+        self.assertEqual((state.officers[candidate].troops, state.cities['nanjun'].reserves), (1000, 200))
         game.validate(state)
 
     def test_new_recruits_are_allocated_in_the_same_turn_without_extra_fees(self):
@@ -173,7 +173,7 @@ class AutoAllocationTests(unittest.TestCase):
         self.assertEqual([r['kind'] for r in orders], ['recruit', 'recruit'])
         self.assertEqual(command_books.remaining(state, 'shu'), 1)
         self.assertEqual(state.cities['xiangyang'].reserves, 0)
-        self.assertEqual(state.officers[951].troops, 661)
+        self.assertEqual(state.officers[951].troops, 660)
         game.validate(state)
 
     def test_explicit_reserve_transport_has_first_claim_and_escort_is_not_allocated(self):

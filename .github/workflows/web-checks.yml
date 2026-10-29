@@ -337,7 +337,8 @@ jobs:
     needs: [scope, web-build]
     if: needs.scope.outputs.web == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    # Includes real per-squad battles and three village services on both devices.
+    timeout-minutes: 35
     strategy:
       fail-fast: false
       matrix:

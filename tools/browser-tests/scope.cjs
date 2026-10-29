@@ -4,6 +4,8 @@ const fs=require('node:fs'),path=require('node:path');
 const ROOT=path.resolve(__dirname,'../..');
 const CANONICAL_GROUPS=Object.freeze(['boot','audio','map','scenarios','people','economy','logistics','battle','cloud','save']);
 const CASE_REGISTRY=JSON.parse(fs.readFileSync(path.join(__dirname,'cases.json'),'utf8'));
+const SOURCE_FILES=Object.freeze(['tests/browser_ui.spec.mjs','tests/browser_soldier_ui.spec.mjs']);
+function acceptanceSource(root=ROOT){return SOURCE_FILES.map(file=>fs.readFileSync(path.join(root,file),'utf8')).join('\n');}
 const fail=message=>{throw new Error('Browser test scope: '+message);};
 function strings(value,label,{allowed=null,nonempty=false}={}){
  if(!Array.isArray(value)||value.some(item=>typeof item!=='string'||!item)||new Set(value).size!==value.length||nonempty&&!value.length)fail(label+' must be a'+(nonempty?' nonempty':'')+' unique string array');
@@ -75,7 +77,7 @@ function loadBrowserScope({planPath=process.env.TK2_TEST_PLAN,root=ROOT,source,r
  const scenarioIds=knownScenarioIds(root);
  // Validate every source case before selecting a grep. Even CLI --grep cannot
  // conceal a new unregistered case, removed case, duplicate, or skipped case.
- const cases=validateRegistry(source??fs.readFileSync(path.join(root,'tests/browser_ui.spec.mjs'),'utf8'),{registry,scenarioIds});
+ const cases=validateRegistry(source??acceptanceSource(root),{registry,scenarioIds});
  let raw;
  if(planPath){
   const file=path.resolve(planPath);if(fs.statSync(file).size>1024*1024)fail('plan exceeds 1 MiB');
@@ -87,7 +89,7 @@ function loadBrowserScope({planPath=process.env.TK2_TEST_PLAN,root=ROOT,source,r
  const grep=new RegExp('(?:'+selectedCases.map(row=>'\\b'+escape(row.title)+'$').join('|')+')');
  return{plan,full:plan.full,selectedCases,scenarioIds,grep};
 }
-module.exports={CANONICAL_GROUPS,CASE_REGISTRY,knownScenarioIds,readCaseTitles,validateRegistry,validatePlan,selectCases,selectScenarioIds,loadBrowserScope};
+module.exports={CANONICAL_GROUPS,CASE_REGISTRY,SOURCE_FILES,acceptanceSource,knownScenarioIds,readCaseTitles,validateRegistry,validatePlan,selectCases,selectScenarioIds,loadBrowserScope};
 if(require.main===module){
  try{
   const args=process.argv.slice(2);if(args.length&&!(args.length===2&&args[0]==='--plan'))fail('usage: node scope.cjs [--plan path.json]');

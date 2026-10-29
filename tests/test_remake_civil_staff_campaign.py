@@ -17,7 +17,7 @@ from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
 from remake import domestic, equipment, treasures
 from remake.officers import YearState, initialize_officer, year_state
-from campaign_fixtures import controlled_catalog, arrange_contact
+from campaign_fixtures import controlled_catalog, arrange_contact, finish_soldier_encounter
 
 
 FREE_PERSON = 'san14-candidate-0001'
@@ -270,9 +270,9 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.assertEqual(game.state.cities['nanjun'].gold, 1200 - 60 - training)
         self.assertTrue(any(r['action'] == 'hire_staff' and r['city'] == 'nanjun'
                             for r in game.state.extension['ai_reports']))
-        self.assertEqual(game.state.officers[clerk['id']].troops, 999,
+        self.assertEqual(game.state.officers[clerk['id']].troops, 1000,
                          'The shared military official fills a hired defender to the normal troop cap')
-        self.assertEqual(game.state.cities['nanjun'].reserves, local_soldiers - 999)
+        self.assertEqual(game.state.cities['nanjun'].reserves, local_soldiers - 1000)
         self.assertEqual(game.state.rng.draws, 0)
         # Explicitly give the generated officer the one faction civil post.
         # Leaving the best historical appointee in that post would correctly
@@ -291,10 +291,10 @@ class CivilStaffCampaignTests(unittest.TestCase):
             if r['city'] == 'nanjun' and r['turn'] == game.state.turn - 1 and r['kind'] == 'training')
         self.assertEqual(game.state.cities['nanjun'].gold, gold - 60 - training,
                          'Shared reserve assignment does not charge the former AI-only top-up fee')
-        self.assertEqual(game.state.officers[clerk['id']].troops, 999)
+        self.assertEqual(game.state.officers[clerk['id']].troops, 1000)
         self.assertEqual(game.state.rng.draws, 1)
         self.assertEqual(game.state.officers[target].faction_id, 'shu')
-        self.assertEqual(game.state.officers[target].troops, local_soldiers - 999,
+        self.assertEqual(game.state.officers[target].troops, local_soldiers - 1000,
                          'The newly recruited historical officer receives the remaining local reserves')
         self.assertEqual(game.state.cities['nanjun'].reserves, 0)
         self.assertEqual(sum(game.state.officers[i].troops
@@ -363,6 +363,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
         game.validate(game.state)
         defender = battle['defenders'][0]['id']
         self.cmd(game, 'attack', battle_id=battle['id'], actor=146, target=defender)
+        finish_soldier_encounter(game)
         self.assertEqual(game.state.phase, 'result')
         self.cmd(game, 'settle', battle_id=battle['id'])
         self.assertEqual(game.state.cities['nanjun'].owner, 'shu')

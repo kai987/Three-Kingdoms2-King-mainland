@@ -192,7 +192,7 @@ class DelegationReplayTests(unittest.TestCase):
             for ident in ids:
                 current = self.games[0].state
                 person, home = current.officers[ident], current.cities[city.id]
-                target = min(999, person.troops + home.reserves)
+                target = min(1000, person.troops + home.reserves)
                 if target > person.troops and command_books.can_spend(current,current.player,'allocate'):
                     self.command('allocate', city=city.id, officer=ident, troops=target)
 

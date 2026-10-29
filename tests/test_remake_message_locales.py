@@ -36,6 +36,15 @@ class MessageLocaleTests(unittest.TestCase):
             self.assertIn(expected,translate(text,self.data))
         self.assertEqual(translate('217年7月上旬 攻城戰第23巡結束。',self.data),'217年7月上旬 攻城戦の第23巡が終了しました。')
 
+    def test_battle_facility_conversion_and_occupation_preserve_actual_names_numbers(self):
+        text='217年7月上旬 关羽接受籠絡，立即加入本軍；忠誠47。'
+        self.assertEqual(translate(text,self.data),'217年7月上旬 関羽が籠絡に応じて直ちに自軍へ参加しました。忠誠は47です。')
+        self.assertEqual(translate('关羽進入空城砦，攻方取得勝利。',self.data),'関羽が空いた城砦に入り、攻撃側が勝利しました。')
+        for currency in ('金錢','資金'):
+            self.assertEqual(translate(f'关羽使用戰場設施，花費{currency}50。',self.data),'関羽が戦場施設を利用し、資金50を消費しました。')
+        for text in ['目前不能使用戰場設施。','君主不能被籠絡。','請為本方每隊士兵與主將各選擇一項有效命令。']:
+            self.assertRegex(translate(text,self.data),'[ぁ-ゖァ-ヶ]')
+
     def test_all_runtime_game_errors_have_a_japanese_translation(self):
         checked = set()
         for path in (ROOT / 'source/remake').glob('*.py'):

@@ -11,7 +11,7 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, GameError, digest
 from remake.difficulty import attack_budget, get_settings
 from remake.events import LIMIT, STAFF_KINDS, SUPPLY_KINDS, empty, emit, transition, validate as validate_events
-from campaign_fixtures import controlled_catalog, reach_battle, arrange_contact
+from campaign_fixtures import controlled_catalog, reach_battle, arrange_contact, finish_soldier_encounter
 
 
 def new_game(seed=2026, difficulty='normal'):
@@ -98,6 +98,9 @@ class CampaignEventsTests(unittest.TestCase):
             if game.state.phase == 'result':
                 break
             battle = game.state.battle
+            if battle['extended'].get('siege'):
+                finish_soldier_encounter(game)
+                continue
             game.command('attack', dict(battle_id=battle_id, actor=146, target=battle['defenders'][0]['id']), game.revision)
         self.assertEqual(game.state.phase, 'result')
         revision = game.revision

@@ -1,0 +1,783 @@
+{
+  "schema": "tk2-native-soldier-animation-public-provenance-v1",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "core": {
+    "name": "Nestopia",
+    "version": "2.0.0 135dfa6",
+    "core_sha256": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a"
+  },
+  "rom_modified": false,
+  "controlled_fixture": true,
+  "natural_gameplay": false,
+  "source_state_sha256": "1b73cd97d29bb1683de449ef83739a35b8370dec3ebcf81ecea49964a3d8381f",
+  "source_id": "isolated-native-castle-advance-capture",
+  "changes": [
+    {
+      "address": "0x554",
+      "before": 2,
+      "after": 0,
+      "meaning": "controlled enemy group advance order to exercise native movement sprites"
+    },
+    {
+      "address": "0x555",
+      "before": 2,
+      "after": 0,
+      "meaning": "controlled enemy group advance order to exercise native movement sprites"
+    },
+    {
+      "address": "0x556",
+      "before": 2,
+      "after": 0,
+      "meaning": "controlled enemy group advance order to exercise native movement sprites"
+    },
+    {
+      "address": "0x557",
+      "before": 2,
+      "after": 0,
+      "meaning": "controlled enemy group advance order to exercise native movement sprites"
+    }
+  ],
+  "steps": [
+    {
+      "background": 5,
+      "frames_run": 3018,
+      "note": "Original group advance order; no ROM, PPU, OAM or result memory injected."
+    }
+  ],
+  "outputs": {
+    "capture-action-move-general-0.png": {
+      "bytes": 7590,
+      "sha256": "73a0b97b844a92ec635a57e0d24751a962bf9d69cb54c44a2d667eba04bc9822"
+    },
+    "capture-action-move-general-1.png": {
+      "bytes": 7569,
+      "sha256": "656fd2aee13ee2f98b3d54e088a40b8a0ffee8ad1f8a267b3309b78bc976cc9c"
+    },
+    "capture-action-move-infantry-0.png": {
+      "bytes": 7575,
+      "sha256": "10deac157a4b381f1b3f8f6bfdec322fcc02e4b3b6f9480b6f350ab1312f2068"
+    },
+    "capture-action-move-infantry-1.png": {
+      "bytes": 7564,
+      "sha256": "622dd230fbf898e804233a2acefa3c9fd48a917b5bfc371b78d9fa0a98df8678"
+    },
+    "capture-action-move-archer-0.png": {
+      "bytes": 7557,
+      "sha256": "6b910644219058b42cb816d945fb841b2296db2f2e5ffbf706e912bb13f279c3"
+    },
+    "capture-action-move-archer-1.png": {
+      "bytes": 7531,
+      "sha256": "c7ad2eb1fe6a31f7f73dcca2d39359ca0f54307a999ae64f134da3e88e4bd9fd"
+    },
+    "capture-action-move-cavalry-0.png": {
+      "bytes": 7632,
+      "sha256": "eefb26839bca1441033ff8eeb6ffaf402e871a75cbca46ebd3a167185b95bce0"
+    },
+    "capture-action-move-cavalry-1.png": {
+      "bytes": 7608,
+      "sha256": "31e6bbe55adfa5da3c6d27114311d248289ef2926563a125396d89a7ec37bf09"
+    },
+    "capture-action-effect-melee.png": {
+      "bytes": 7704,
+      "sha256": "3a9349b102053fe39068a316af9dfa7fa57175409d3e655786d6331f850892ae"
+    },
+    "capture-action-effect-arrow.png": {
+      "bytes": 7624,
+      "sha256": "a83ceac57a2cd74c361934c96bc5ba47369813dff47e9f0e638b68635f01a937"
+    }
+  },
+  "samples": {
+    "move-general-0": {
+      "native_frame": 418,
+      "actor_slot": 0,
+      "type_encoding": 48,
+      "substate": [
+        2,
+        2
+      ],
+      "oam": [
+        [
+          79,
+          6,
+          65,
+          24
+        ],
+        [
+          79,
+          7,
+          65,
+          16
+        ],
+        [
+          87,
+          20,
+          65,
+          24
+        ],
+        [
+          87,
+          21,
+          65,
+          16
+        ]
+      ],
+      "palette_nes": [
+        15,
+        16,
+        0,
+        32,
+        15,
+        16,
+        54,
+        22,
+        15,
+        54,
+        32,
+        22,
+        15,
+        16,
+        54,
+        16,
+        15,
+        15,
+        54,
+        22,
+        15,
+        15,
+        54,
+        16,
+        15,
+        15,
+        32,
+        22,
+        15,
+        32,
+        39,
+        23
+      ],
+      "capture": "capture-action-move-general-0.png",
+      "capture_sha256": "73a0b97b844a92ec635a57e0d24751a962bf9d69cb54c44a2d667eba04bc9822"
+    },
+    "move-general-1": {
+      "native_frame": 423,
+      "actor_slot": 0,
+      "type_encoding": 48,
+      "substate": [
+        2,
+        2
+      ],
+      "oam": [
+        [
+          79,
+          38,
+          65,
+          28
+        ],
+        [
+          79,
+          39,
+          65,
+          20
+        ],
+        [
+          87,
+          52,
+          65,
+          28
+        ],
+        [
+          87,
+          53,
+          65,
+          20
+        ]
+      ],
+      "palette_nes": [
+        15,
+        16,
+        0,
+        32,
+        15,
+        16,
+        54,
+        22,
+        15,
+        54,
+        32,
+        22,
+        15,
+        16,
+        54,
+        16,
+        15,
+        15,
+        54,
+        22,
+        15,
+        15,
+        54,
+        16,
+        15,
+        15,
+        32,
+        22,
+        15,
+        32,
+        39,
+        23
+      ],
+      "capture": "capture-action-move-general-1.png",
+      "capture_sha256": "656fd2aee13ee2f98b3d54e088a40b8a0ffee8ad1f8a267b3309b78bc976cc9c"
+    },
+    "move-infantry-0": {
+      "native_frame": 500,
+      "actor_slot": 1,
+      "type_encoding": 51,
+      "substate": [
+        2,
+        2
+      ],
+      "oam": [
+        [
+          15,
+          2,
+          65,
+          56
+        ],
+        [
+          15,
+          3,
+          65,
+          48
+        ],
+        [
+          23,
+          18,
+          65,
+          56
+        ],
+        [
+          23,
+          19,
+          65,
+          48
+        ]
+      ],
+      "palette_nes": [
+        15,
+        16,
+        0,
+        32,
+        15,
+        16,
+        54,
+        22,
+        15,
+        54,
+        32,
+        22,
+        15,
+        16,
+        54,
+        16,
+        15,
+        15,
+        54,
+        22,
+        15,
+        15,
+        54,
+        16,
+        15,
+        15,
+        32,
+        22,
+        15,
+        32,
+        39,
+        23
+      ],
+      "capture": "capture-action-move-infantry-0.png",
+      "capture_sha256": "10deac157a4b381f1b3f8f6bfdec322fcc02e4b3b6f9480b6f350ab1312f2068"
+    },
+    "move-infantry-1": {
+      "native_frame": 503,
+      "actor_slot": 1,
+      "type_encoding": 51,
+      "substate": [
+        2,
+        2
+      ],
+      "oam": [
+        [
+          15,
+          34,
+          65,
+          58
+        ],
+        [
+          15,
+          35,
+          65,
+          50
+        ],
+        [
+          23,
+          50,
+          65,
+          58
+        ],
+        [
+          23,
+          51,
+          65,
+          50
+        ]
+      ],
+      "palette_nes": [
+        15,
+        16,
+        0,
+        32,
+        15,
+        16,
+        54,
+        22,
+        15,
+        54,
+        32,
+        22,
+        15,
+        16,
+        54,
+        16,
+        15,
+        15,
+        54,
+        22,
+        15,
+        15,
+        54,
+        16,
+        15,
+        15,
+        32,
+        22,
+        15,
+        32,
+        39,
+        23
+      ],
+      "capture": "capture-action-move-infantry-1.png",
+      "capture_sha256": "622dd230fbf898e804233a2acefa3c9fd48a917b5bfc371b78d9fa0a98df8678"
+    },
+    "move-archer-0": {
+      "native_frame": 580,
+      "actor_slot": 5,
+      "type_encoding": 50,
+      "substate": [
+        2,
+        2
+      ],
+      "oam": [
+        [
+          79,
+          0,
+          65,
+          72
+        ],
+        [
+          79,
+          1,
+          65,
+          64
+        ],
+        [
+          87,
+          16,
+          65,
+          72
+        ],
+        [
+          87,
+          17,
+          65,
+          64
+        ]
+      ],
+      "palette_nes": [
+        15,
+        16,
+        0,
+        32,
+        15,
+        16,
+        54,
+        22,
+        15,
+        54,
+        32,
+        22,
+        15,
+        16,
+        54,
+        16,
+        15,
+        15,
+        54,
+        22,
+        15,
+        15,
+        54,
+        16,
+        15,
+        15,
+        32,
+        22,
+        15,
+        32,
+        39,
+        23
+      ],
+      "capture": "capture-action-move-archer-0.png",
+      "capture_sha256": "6b910644219058b42cb816d945fb841b2296db2f2e5ffbf706e912bb13f279c3"
+    },
+    "move-archer-1": {
+      "native_frame": 583,
+      "actor_slot": 5,
+      "type_encoding": 50,
+      "substate": [
+        2,
+        2
+      ],
+      "oam": [
+        [
+          79,
+          32,
+          65,
+          74
+        ],
+        [
+          79,
+          33,
+          65,
+          66
+        ],
+        [
+          87,
+          48,
+          65,
+          74
+        ],
+        [
+          87,
+          49,
+          65,
+          66
+        ]
+      ],
+      "palette_nes": [
+        15,
+        16,
+        0,
+        32,
+        15,
+        16,
+        54,
+        22,
+        15,
+        54,
+        32,
+        22,
+        15,
+        16,
+        54,
+        16,
+        15,
+        15,
+        54,
+        22,
+        15,
+        15,
+        54,
+        16,
+        15,
+        15,
+        32,
+        22,
+        15,
+        32,
+        39,
+        23
+      ],
+      "capture": "capture-action-move-archer-1.png",
+      "capture_sha256": "c7ad2eb1fe6a31f7f73dcca2d39359ca0f54307a999ae64f134da3e88e4bd9fd"
+    },
+    "move-cavalry-0": {
+      "native_frame": 258,
+      "actor_slot": 9,
+      "type_encoding": 49,
+      "substate": [
+        2,
+        2
+      ],
+      "oam": [
+        [
+          143,
+          4,
+          65,
+          88
+        ],
+        [
+          143,
+          5,
+          65,
+          80
+        ],
+        [
+          151,
+          20,
+          65,
+          88
+        ],
+        [
+          151,
+          21,
+          65,
+          80
+        ]
+      ],
+      "palette_nes": [
+        15,
+        16,
+        0,
+        32,
+        15,
+        16,
+        54,
+        22,
+        15,
+        54,
+        32,
+        22,
+        15,
+        16,
+        54,
+        16,
+        15,
+        15,
+        54,
+        22,
+        15,
+        15,
+        54,
+        16,
+        15,
+        15,
+        32,
+        22,
+        15,
+        32,
+        39,
+        23
+      ],
+      "capture": "capture-action-move-cavalry-0.png",
+      "capture_sha256": "eefb26839bca1441033ff8eeb6ffaf402e871a75cbca46ebd3a167185b95bce0"
+    },
+    "move-cavalry-1": {
+      "native_frame": 263,
+      "actor_slot": 9,
+      "type_encoding": 49,
+      "substate": [
+        2,
+        2
+      ],
+      "oam": [
+        [
+          143,
+          36,
+          65,
+          92
+        ],
+        [
+          143,
+          5,
+          65,
+          84
+        ],
+        [
+          151,
+          52,
+          65,
+          92
+        ],
+        [
+          151,
+          53,
+          65,
+          84
+        ]
+      ],
+      "palette_nes": [
+        15,
+        16,
+        0,
+        32,
+        15,
+        16,
+        54,
+        22,
+        15,
+        54,
+        32,
+        22,
+        15,
+        16,
+        54,
+        16,
+        15,
+        15,
+        54,
+        22,
+        15,
+        15,
+        54,
+        16,
+        15,
+        15,
+        32,
+        22,
+        15,
+        32,
+        39,
+        23
+      ],
+      "capture": "capture-action-move-cavalry-1.png",
+      "capture_sha256": "31e6bbe55adfa5da3c6d27114311d248289ef2926563a125396d89a7ec37bf09"
+    },
+    "effect-melee": {
+      "native_frame": 714,
+      "actor_slot": 15,
+      "type_encoding": 18,
+      "substate": [
+        2,
+        4
+      ],
+      "oam": [
+        [
+          135,
+          134,
+          2,
+          112
+        ],
+        [
+          135,
+          135,
+          2,
+          120
+        ],
+        [
+          143,
+          150,
+          2,
+          112
+        ],
+        [
+          143,
+          151,
+          2,
+          120
+        ]
+      ],
+      "palette_nes": [
+        15,
+        16,
+        0,
+        32,
+        15,
+        16,
+        54,
+        22,
+        15,
+        54,
+        32,
+        22,
+        15,
+        16,
+        54,
+        16,
+        15,
+        15,
+        54,
+        22,
+        15,
+        15,
+        54,
+        16,
+        15,
+        15,
+        32,
+        22,
+        15,
+        32,
+        39,
+        23
+      ],
+      "capture": "capture-action-effect-melee.png",
+      "capture_sha256": "3a9349b102053fe39068a316af9dfa7fa57175409d3e655786d6331f850892ae"
+    },
+    "effect-arrow": {
+      "native_frame": 64,
+      "actor_slot": 14,
+      "type_encoding": 34,
+      "substate": [
+        2,
+        7
+      ],
+      "oam": [
+        [
+          35,
+          164,
+          66,
+          108
+        ]
+      ],
+      "palette_nes": [
+        15,
+        16,
+        0,
+        32,
+        15,
+        16,
+        54,
+        22,
+        15,
+        54,
+        32,
+        22,
+        15,
+        16,
+        54,
+        16,
+        15,
+        15,
+        54,
+        22,
+        15,
+        15,
+        54,
+        16,
+        15,
+        15,
+        32,
+        22,
+        15,
+        32,
+        39,
+        23
+      ],
+      "capture": "capture-action-effect-arrow.png",
+      "capture_sha256": "a83ceac57a2cd74c361934c96bc5ba47369813dff47e9f0e638b68635f01a937"
+    }
+  }
+}
