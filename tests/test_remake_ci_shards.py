@@ -75,7 +75,7 @@ class CampaignCiShardTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('exactly 6', result.stderr)
         workflow = (ROOT / '.github/workflows/web-checks.yml').read_text()
-        rules = workflow.split('  campaign-rules:\n', 1)[1].split('  campaign-soak:\n', 1)[0]
+        rules = workflow.split('  campaign-rules:\n', 1)[1].split('  campaign-soak-replay:\n', 1)[0]
         self.assertIn('backend: [python, rust]', rules)
         self.assertIn('shard: [1, 2, 3, 4, 5, 6]', rules)
         self.assertIn('--shards 6', rules)

@@ -16,6 +16,7 @@ import json
 from pathlib import Path
 import sys
 import tempfile
+import time
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,7 +27,42 @@ from remake.march_core import using_backend
 from remake.officers import ref_sort_key
 
 
+class HeadlessCampaign(Campaign):
+    def view(self):
+        # Same test-only boundary as tools/campaign-soak/run.py. Transactions,
+        # validation, JSON saves and actual load/continuation remain unchanged.
+        return {'revision': self.revision}
+
+
 class DelegationReplayTests(unittest.TestCase):
+    def presentation_checkpoint(self, backend, game, saved):
+        state = game.state
+        battle = state.battle
+        encounter = (battle or {}).get('extended', {}).get('siege')
+        active = (battle['id'], encounter['actor'], encounter['target']) if encounter else None
+        if active is not None and self.previous_encounters.get(backend) != active:
+            self.encounter_serial[backend] += 1
+        key = (backend, state.turn, state.phase, (battle or {}).get('id'),
+               self.encounter_serial[backend], (encounter or {}).get('stage'))
+        self.previous_encounters[backend] = active
+        if key in self.render_checkpoints:
+            return
+        self.render_checkpoints.add(key)
+        rng = deepcopy(state.rng)
+        full = Campaign.view(game)
+        self.assertEqual(full['revision'], game.revision)
+        self.assertEqual(full['game'], game.to_dict())
+        self.assertEqual(len(full['catalog']['library']), 1052)
+        self.assertEqual(full['catalog']['command_books'], command_books.view(game, state))
+        metadata = full['catalog']['officer_troop_types']['officers']
+        self.assertEqual(set(metadata), {str(i) for i in state.officers})
+        from remake import troop_types
+        for ident, officer in state.officers.items():
+            self.assertEqual(metadata[str(ident)], troop_types.metadata(
+                officer.person_id, officer.profile.terrain_affinity))
+        self.assertEqual(game.export_save(), saved, 'Full view must preserve the exact saved state')
+        self.assertEqual(state.rng, rng, 'Full view must not draw gameplay RNG')
+
     def checkpoint(self):
         saves = []
         restored = []
@@ -47,9 +83,11 @@ class DelegationReplayTests(unittest.TestCase):
                 # Exercise the actual browser/cloud JSON representation, not
                 # merely an in-memory dataclass copy.
                 wire = json.loads(json.dumps(saved, ensure_ascii=False))
-                clone = Campaign(game.catalog)
+                clone = HeadlessCampaign(game.catalog)
                 clone.load_save(wire, 0)
                 self.assertEqual(clone.export_save(), saved)
+                self.presentation_checkpoint(backend, clone, saved)
+                self.restore_counts[backend] += 1
                 saves.append(saved)
                 restored.append(clone)
         for save in saves[1:]:
@@ -284,6 +322,9 @@ class DelegationReplayTests(unittest.TestCase):
 
     def replay(self, filename, faction, turns, *, backends=('rust',), staff=False, seed=2026):
         self.backends, self.games = backends, []
+        started = time.monotonic()
+        self.render_checkpoints, self.previous_encounters = set(), {}
+        self.encounter_serial, self.restore_counts = Counter(), Counter()
         self.phases, self.commands = Counter(), Counter()
         self.player_reports, self.ai_reports, self.ai_work, self.convoy_reports = set(), set(), set(), set()
         self.generated, self.staff_attack_sent, self.staff_battles = None, False, set()
@@ -297,7 +338,7 @@ class DelegationReplayTests(unittest.TestCase):
             catalog = Catalog(path)
         original_catalog = digest(catalog.data)
         for backend in backends:
-            game = Campaign(catalog)
+            game = HeadlessCampaign(catalog)
             with using_backend(backend):
                 game.command('new', dict(faction=faction, seed=seed), 0)
             self.games.append(game)
@@ -355,6 +396,12 @@ class DelegationReplayTests(unittest.TestCase):
                                 for turn, _, kind in self.player_reports),
                             'The replacement official must resume actual local reserve allocation')
         self.assertEqual(digest(catalog.data), original_catalog, 'Replay mutated the real catalog')
+        self.assertEqual(dict(self.restore_counts), {backend: sum(self.commands.values()) + 1 for backend in backends})
+        print(json.dumps(dict(scenario=filename, elapsed_seconds=round(time.monotonic()-started, 3),
+            commands=dict(self.commands), actual_json_restores=dict(self.restore_counts),
+            full_view_checkpoints=len(self.render_checkpoints),
+            final_save_sha256=self.games[0].export_save()['checksum'],
+            final_rng=vars(self.games[0].state.rng)), ensure_ascii=False), flush=True)
 
     def test_184_liu_yan_six_turns_are_identical_in_python_and_rust(self):
         # The revised184 postings and local Han Sui change real AI choices.

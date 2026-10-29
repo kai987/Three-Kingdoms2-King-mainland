@@ -156,7 +156,7 @@ jobs:
         env:
           TEST_SHARD: ${{ matrix.shard }}
         run: python -B tools/ci/run_campaign_tests.py --shard "$TEST_SHARD" --shards 6
-  campaign-soak:
+  campaign-soak-replay:
     needs: [scope, native-rules]
     if: needs.scope.outputs.soak == 'true'
     runs-on: ubuntu-latest
@@ -164,8 +164,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        case: [early, middle, late]
-        seed: [3, 2026]
+        include:
+          - {case: early, seed: 3, backend: both}
+          - {case: early, seed: 2026, backend: both}
+          - {case: middle, seed: 3, backend: python}
+          - {case: middle, seed: 3, backend: rust}
+          - {case: middle, seed: 2026, backend: python}
+          - {case: middle, seed: 2026, backend: rust}
+          - {case: late, seed: 3, backend: both}
+          - {case: late, seed: 2026, backend: both}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -179,16 +186,46 @@ jobs:
           path: build
       - name: Restore this run's checked native reference
         run: tar -xf build/native-reference.tar -C build
-      - name: Cross-year Python and Rust campaign replay
+      - name: Full-duration cross-year campaign execution
         env:
           SOAK_CASE: ${{ matrix.case }}
           SOAK_SEED: ${{ matrix.seed }}
-        run: python -B tools/campaign-soak/run.py --case "$SOAK_CASE" --seeds "$SOAK_SEED" --output "build/soak/${SOAK_CASE}-${SOAK_SEED}.json" --progress
+          SOAK_BACKEND: ${{ matrix.backend }}
+        run: python -B tools/campaign-soak/ci.py fragment --case "$SOAK_CASE" --seed "$SOAK_SEED" --backend "$SOAK_BACKEND" --head "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" --output "build/soak-ci/${SOAK_CASE}-${SOAK_SEED}-${SOAK_BACKEND}.json" --progress
       - name: Retain replay diagnostics even after failure
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: campaign-soak-${{ matrix.case }}-${{ matrix.seed }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          name: campaign-soak-execution-${{ matrix.case }}-${{ matrix.seed }}-${{ matrix.backend }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: build/soak-ci
+          if-no-files-found: ignore
+          retention-days: 7
+  campaign-soak:
+    needs: [scope, campaign-soak-replay]
+    if: always() && needs.scope.outputs.soak == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: campaign-soak-execution-*-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          merge-multiple: false
+          path: build/soak-ci
+      - name: Require every execution and exact Python/Rust state, save and RNG parity
+        env:
+          EXECUTION_RESULT: ${{ needs.campaign-soak-replay.result }}
+        run: python -B tools/campaign-soak/ci.py merge --input-dir build/soak-ci --execution-result "$EXECUTION_RESULT" --head "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" --output build/soak/merged.json
+      - name: Retain mandatory parity gate diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: campaign-soak-parity-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: build/soak
           if-no-files-found: ignore
           retention-days: 7
