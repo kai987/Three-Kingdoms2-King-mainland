@@ -2147,6 +2147,7 @@ test('command-book confirmations and one paid city allocation flow preserve canc
   expect(await read()).toEqual(beforeNew,'Next stores only a draft; troops, reserves, books and RNG remain untouched');await expect(modal).toBeHidden();batch.push({officer:ident,troops:next});
  }
  expect(await revision()).toBe(beforeRevision,'Multiple Next/select actions never issue a state-changing request');
+ await expect(page.locator('#allocation-draft-status')).toContainText('3',{useInnerText:true});await expect(page.locator('#allocation-draft-status')).not.toContainText('<span');
  for(const item of batch){await page.locator('#allocation-officer').selectOption(item.officer);await expect(page.locator('#allocation-troops')).toHaveValue(String(item.troops));}
  await page.locator('#confirm-allocation').click();await expect(modal).toBeVisible();await expect(modal.locator('#order-confirm-message')).toContainText('3');
  expect(await read()).toEqual(beforeNew);await modal.locator('#order-confirm-cancel').click();expect(await read()).toEqual(beforeNew);expect(await revision()).toBe(beforeRevision);
@@ -2155,7 +2156,7 @@ test('command-book confirmations and one paid city allocation flow preserve canc
  expect(budget(current).used).toBe(2);expect(current.state.cities.shujun.reserves).toBe(beforeNew.state.cities.shujun.reserves-3);expect(current.state.rng).toEqual(beforeNew.state.rng);
  for(const item of batch)expect(current.state.officers[item.officer].troops).toBe(item.troops);
  expect(await revision()).toBe(beforeRevision+1,'The entire three-officer batch is one atomic command');await expect(page.locator('#confirm-allocation')).toBeDisabled();
- allocations.push({source:'three-local-drafts-final-atomic-confirmation',batch,revision_before:beforeRevision,revision_after:await revision(),books_before:budget(beforeNew).used,books_after:budget(current).used,reserves_before:beforeNew.state.cities.shujun.reserves,reserves_after:current.state.cities.shujun.reserves});
+ allocations.push({source:'three-local-drafts-final-atomic-confirmation',batch,revision_before:beforeRevision,revision_after:await revision(),books_before:budget(beforeNew).used,books_after:budget(current).used,reserves_before:beforeNew.state.cities.shujun.reserves,reserves_after:current.state.cities.shujun.reserves,unpaid_navigation_checksum:beforeNew.checksum,next_preserved_save_and_revision:true,cancel_confirmation_preserved_all_drafts:true,closing_unpaid_draft_preserved_save_and_revision:true});
  for(const ident of ids)current=await distribute(ident,'standalone-continuation');expect(budget(current).used).toBe(2);await historyScreenshot(page,testInfo,'allocation-three-officers-one-book');await closeFlow();
  const remaining=budget(await read()).remaining??(budget(await read()).total-budget(await read()).used);
  for(let i=0;i<remaining;i++){

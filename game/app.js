@@ -709,7 +709,7 @@ function allocate(city,preferred=null,flow=null){
   $('#confirm-allocation').disabled=submitting||n===null||!pending.length||!GameCommandBooks.can(view,'allocate',options);
   $('#allocation-next').disabled=submitting||ids.length<2;select.disabled=submitting;input.disabled=submitting;$('#allocation-max').disabled=submitting;
   $('#allocation-preview').textContent=n===null?'':`确认后本城预备兵 ${balance()}。`;
-  $('#allocation-draft-status').textContent=cityCommandText('草稿已調整 '+pending.length+'名；尚未提交。','変更した下書き '+pending.length+'人・未確定。');
+  $('#allocation-draft-status').innerHTML=cityCommandText('草稿已調整 '+pending.length+'名；尚未提交。','変更した下書き '+pending.length+'人・未確定。');
  };
  const remember=()=>{input.max=String(maximum());draft.set(selected,clampNumberInput(input,true));};
  const switchOfficer=id=>{
