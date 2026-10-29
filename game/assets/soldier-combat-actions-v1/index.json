@@ -1,0 +1,598 @@
+{
+  "schema": "tk2-soldier-combat-actions-v1",
+  "scale": 4,
+  "logical_size": [
+    16,
+    16
+  ],
+  "frame_size": [
+    64,
+    64
+  ],
+  "frames_per_action": 4,
+  "types": {
+    "infantry": {
+      "melee": {
+        "friendly": {
+          "path": "/assets/soldier-combat-actions-v1/infantry-melee-friendly.png",
+          "width": 256,
+          "height": 64,
+          "facing": "right",
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "frames": [
+            {
+              "phase": "ready",
+              "source_rect": [
+                0,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "windup",
+              "source_rect": [
+                64,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "strike",
+              "source_rect": [
+                128,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "recover",
+              "source_rect": [
+                192,
+                0,
+                64,
+                64
+              ]
+            }
+          ],
+          "sha256": "cffa3ff97509812a2941355e6028c5cdf3009d91365d7489c2313bc24b20b285",
+          "pixel_sha256": "45b92da2a4d53de49cba049dfe575cb9947b4acd7c81f447e8a1570e8774a4c6",
+          "frame_pixel_sha256": [
+            "3687dd3d69939fdd5962ee18f861fa4edf96e5ca18b5b334dffcdd82acbc363b",
+            "48ca5b8aaea78364608c88c9bb105c44ac04d03332b00b9251e92f3d5795f718",
+            "353f7d6a3fd7768431bd6ff604270bf746d9331b9f6fd99e4eda440f0cc1c749",
+            "816029c32815c92992bf4b759a7ed4755ad3ea77a2b6002905e9c78e179f06b9"
+          ]
+        },
+        "enemy": {
+          "path": "/assets/soldier-combat-actions-v1/infantry-melee-enemy.png",
+          "width": 256,
+          "height": 64,
+          "facing": "right",
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "frames": [
+            {
+              "phase": "ready",
+              "source_rect": [
+                0,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "windup",
+              "source_rect": [
+                64,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "strike",
+              "source_rect": [
+                128,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "recover",
+              "source_rect": [
+                192,
+                0,
+                64,
+                64
+              ]
+            }
+          ],
+          "sha256": "74cecd35e39e5c0269842fed83360f2c2b002708f11f5871957ecbee50bdc6a0",
+          "pixel_sha256": "5822fb3487d23ddaaf2476504774330045b3257ac81124c93c6b57e812fba9c0",
+          "frame_pixel_sha256": [
+            "45cdb41e7bfbcf15947e1e32f1baaf9e049c18378d586ebb04c424417563ceae",
+            "80e4192e3f21c07af350ba280912486946970faae4400c02ec955d8e3fa1c9c7",
+            "adc30e97f47e79d96bc9d8a7bb906c43db3832b5db8c20470db8319010d163e4",
+            "d5354e8b87e14046f6d2a7cd3866368b5e238c0a08ed898611e35ba9ec0e1387"
+          ]
+        }
+      }
+    },
+    "archer": {
+      "melee": {
+        "friendly": {
+          "path": "/assets/soldier-combat-actions-v1/archer-melee-friendly.png",
+          "width": 256,
+          "height": 64,
+          "facing": "right",
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "frames": [
+            {
+              "phase": "ready",
+              "source_rect": [
+                0,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "windup",
+              "source_rect": [
+                64,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "strike",
+              "source_rect": [
+                128,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "recover",
+              "source_rect": [
+                192,
+                0,
+                64,
+                64
+              ]
+            }
+          ],
+          "sha256": "21101ca0507fb3bfae8b954de6d3871e34d53af819703e82e866347e8dec9651",
+          "pixel_sha256": "9b59cd1a3b9efb1f91a592981cb9b37bc02aeaab17a9404381c9a644515a7ed0",
+          "frame_pixel_sha256": [
+            "22e6f660c2d4511c2d0bdfd11c4fc590ffeca2d57b012f8333aaf17a3b264981",
+            "5b8b54ce281467ba6cf9376f12325c1fc116e95988bb9d8ac9a8678874fb9e5a",
+            "9a90b78fe8f8440fa70b70640a6469351fff8653ba51cc3e46018c38742e8bbe",
+            "9482d0f1252d621456534ab318e6119219f577526863d9ad93d0441afd52f0ac"
+          ]
+        },
+        "enemy": {
+          "path": "/assets/soldier-combat-actions-v1/archer-melee-enemy.png",
+          "width": 256,
+          "height": 64,
+          "facing": "right",
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "frames": [
+            {
+              "phase": "ready",
+              "source_rect": [
+                0,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "windup",
+              "source_rect": [
+                64,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "strike",
+              "source_rect": [
+                128,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "recover",
+              "source_rect": [
+                192,
+                0,
+                64,
+                64
+              ]
+            }
+          ],
+          "sha256": "b3e3f2f4a794a5ef638734b8f0d67fcb5fb74ff31ae2bc86eb6e3799bd94ac08",
+          "pixel_sha256": "0e37d1571fca4c4f027ee09517a9c42641e5b03ba06e99fbaa0a81c8c65ffb96",
+          "frame_pixel_sha256": [
+            "f5e9ca4ab888c97c00cb58e351893ad4793e37ac44f7af39504196ea872bbd4a",
+            "9aba2ec4792caaebd4198fe97d09297acd44ef4c4612963791f47d4ae0d90a1b",
+            "3ea443eb8ce07b4c57963a7d355de9e9d8dad7b52b80ba8e9f651283550c1b6b",
+            "4ca22de4f15b865162d10a5fe4e9e26968bcd66f200aca96bd91fc753a69f0be"
+          ]
+        }
+      },
+      "ranged": {
+        "friendly": {
+          "path": "/assets/soldier-combat-actions-v1/archer-ranged-friendly.png",
+          "width": 256,
+          "height": 64,
+          "facing": "right",
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "frames": [
+            {
+              "phase": "nock",
+              "source_rect": [
+                0,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "draw",
+              "source_rect": [
+                64,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "release",
+              "source_rect": [
+                128,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "recover",
+              "source_rect": [
+                192,
+                0,
+                64,
+                64
+              ]
+            }
+          ],
+          "sha256": "eadda74ddfea5a4d87d1dd320a11e5e1fac4bc91c5e3c3b3507b885181715336",
+          "pixel_sha256": "5bd4bf90bcaf30cd9f6643c2d98c15a2d39cbcb204fff3ff869c73fb2b56daf9",
+          "frame_pixel_sha256": [
+            "65d5bc02be86cc57b72d81661eb96a02feca7f216ca79d8bba0ea04ac9897bb2",
+            "3f748265414a84ad749f311c079b9a3e4010ba6df82c0144d736c99d4d42d132",
+            "455d10f77bcef7f583b84f813c54c9f74ada9cefbf38bcd02824f61cfbb96ea8",
+            "573d9225c4ba12bbc29db0341273664df3e68760b934e020a55f37ffc861faa7"
+          ]
+        },
+        "enemy": {
+          "path": "/assets/soldier-combat-actions-v1/archer-ranged-enemy.png",
+          "width": 256,
+          "height": 64,
+          "facing": "right",
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "frames": [
+            {
+              "phase": "nock",
+              "source_rect": [
+                0,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "draw",
+              "source_rect": [
+                64,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "release",
+              "source_rect": [
+                128,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "recover",
+              "source_rect": [
+                192,
+                0,
+                64,
+                64
+              ]
+            }
+          ],
+          "sha256": "9ce15ce0125d49a4cbd047f826e9afb78c86e293270281ca8a73883859647b5a",
+          "pixel_sha256": "8a2e4165ba2621a437ffc5c310fafaca66caf48967a6ce996d727edcb9beb303",
+          "frame_pixel_sha256": [
+            "8150a38ad4e2936e3ed3e7ef27330e50ec7cab6aa56ad2418814c5e23b1ac746",
+            "da3e7426472008d16171f29ead6b17738db7d3c8b0f05108e392191a6f89d55c",
+            "161043852fb00e220299f4943947c288136ca26c3ca0b1b77a46d203a8de6290",
+            "bf068d4f51a5ce6c5839632c0814fd8fce590f3310d528c52875f1aab6767a56"
+          ]
+        }
+      }
+    },
+    "cavalry": {
+      "melee": {
+        "friendly": {
+          "path": "/assets/soldier-combat-actions-v1/cavalry-melee-friendly.png",
+          "width": 256,
+          "height": 64,
+          "facing": "right",
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "frames": [
+            {
+              "phase": "ready",
+              "source_rect": [
+                0,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "windup",
+              "source_rect": [
+                64,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "strike",
+              "source_rect": [
+                128,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "recover",
+              "source_rect": [
+                192,
+                0,
+                64,
+                64
+              ]
+            }
+          ],
+          "sha256": "92500fe607e1af316c9ff7cad5b8c654844f20b2039caecbd92599651dc0a7ad",
+          "pixel_sha256": "1940083bcbd0ac6eb1057a68eee9466f37ec5a48e30c35417833b30d31e90451",
+          "frame_pixel_sha256": [
+            "9e9cb15e8941575acfb1b0c7534dc5202ec2192fc040c0ccd338697e8daddf6e",
+            "82b862942c219d0e197abb6504c137704e97783bfdd6a8a35be70ed781f32b01",
+            "8b95df05e5d57d7d35c05ce0a42302485f30d38fc5fe01ffa0f9c25ad8cd59d8",
+            "4e4dd8bf197df8ec029fa2c085f2b874718e793fb41000ae64f78cba646cd245"
+          ]
+        },
+        "enemy": {
+          "path": "/assets/soldier-combat-actions-v1/cavalry-melee-enemy.png",
+          "width": 256,
+          "height": 64,
+          "facing": "right",
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "frames": [
+            {
+              "phase": "ready",
+              "source_rect": [
+                0,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "windup",
+              "source_rect": [
+                64,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "strike",
+              "source_rect": [
+                128,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "recover",
+              "source_rect": [
+                192,
+                0,
+                64,
+                64
+              ]
+            }
+          ],
+          "sha256": "8ebd837d9b942e95128cb4b31c3bc6de47eb19c107c179ac608e7b9614c270c0",
+          "pixel_sha256": "26142e39eaee6d2becd989cf3009905d4f61ddc0374587ebba63092e1b5e4979",
+          "frame_pixel_sha256": [
+            "6b3fa6e597f0904eaaf0bf953cf8d7468891f363682e3302abe4cbc6118c1439",
+            "dbf91277c86c8fd6a51a65333cbae8d6ce3ebd08a4a5b862c22a3f7c5c909119",
+            "ac28affa437c338f323871d6e0591588ffa37e5fa900765a0e2153c5368034fd",
+            "742c49df0027f235986efb8748bdd31d9af122583067aa2c9d181f330216c371"
+          ]
+        }
+      }
+    },
+    "general": {
+      "melee": {
+        "friendly": {
+          "path": "/assets/soldier-combat-actions-v1/general-melee-friendly.png",
+          "width": 256,
+          "height": 64,
+          "facing": "right",
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "frames": [
+            {
+              "phase": "ready",
+              "source_rect": [
+                0,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "windup",
+              "source_rect": [
+                64,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "strike",
+              "source_rect": [
+                128,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "recover",
+              "source_rect": [
+                192,
+                0,
+                64,
+                64
+              ]
+            }
+          ],
+          "sha256": "59a27e815ef1d37e78a48bcf46a356bf86d1221c038f87b102f7d577c5791081",
+          "pixel_sha256": "869179270242f7be899c8ba4682693d767e8258fedea66c993064a6035b5b637",
+          "frame_pixel_sha256": [
+            "597936534a76e535ba04a4ac941c394d92c2bc750c67b440aad81bd6e247a11d",
+            "66a9504cfdb7c78377789962a69540e1c0bda702121ded0301b2c5fdf1edf6e4",
+            "489145a96ac2268a939c73b7d5a1aaff5e55c05805614c29dac2e4643d7bd5f8",
+            "bf1585e3d10de78136a7034c587cd77b50117e794e69b935551de20166dda69f"
+          ]
+        },
+        "enemy": {
+          "path": "/assets/soldier-combat-actions-v1/general-melee-enemy.png",
+          "width": 256,
+          "height": 64,
+          "facing": "right",
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "frames": [
+            {
+              "phase": "ready",
+              "source_rect": [
+                0,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "windup",
+              "source_rect": [
+                64,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "strike",
+              "source_rect": [
+                128,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "phase": "recover",
+              "source_rect": [
+                192,
+                0,
+                64,
+                64
+              ]
+            }
+          ],
+          "sha256": "f5bf45b6ee926cf6ddba40618f48c1f396290616fd259dc29a381d835bfdb5cf",
+          "pixel_sha256": "c22883f24551043ecd0955d66b7744a20868f13e60901c4abefff070da623574",
+          "frame_pixel_sha256": [
+            "3f19bde00f5eabdfc46df2a0eee41ea04186db7bb383f2f0296564a25e518e3e",
+            "82b3513e98fcb38a61fa4f9aed35f9c8fa4a9bd9c9e2e8e6623f6cf834a90590",
+            "4e5afe2f0b44aa72c014140c0e704d476524d7876786088be1d11f03c137cd0f",
+            "3d212b4c311ab30a1550ddcdb6832e6a11ecce08cb2fd926f01a95c20e0fb4db"
+          ]
+        }
+      }
+    }
+  },
+  "provenance": {
+    "path": "/assets/soldier-combat-actions-v1/provenance.json",
+    "sha256": "fe3fcda196af9c3237ced7c4df306ffd4954087c84b840fed759c444fc1bb328"
+  },
+  "originals_retained": true
+}

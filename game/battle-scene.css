@@ -6,11 +6,16 @@
 .battle-layout{display:grid;grid-template-columns:minmax(240px,1fr) minmax(0,var(--battle-board-width,1.4fr));gap:8px;flex:1;min-width:0;min-height:0;grid-template-rows:minmax(0,1fr)}
 .battle-layout>.nes-battle,.battle-layout>.duel-fighters{grid-column:2;grid-row:1}
 .nes-battle{display:flex;flex:1;flex-direction:column;min-height:0;min-width:0;background:#000;color:var(--paper);overflow:hidden}
-.nes-battle-toolbar{display:flex;align-items:center;justify-content:space-between;min-height:28px;gap:8px;padding:0 4px;font-size:14px;flex:none}
-.nes-battle-toolbar [data-battle-scene-title]{flex:none}
+.nes-battle-toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;min-height:28px;gap:4px 8px;padding:0 4px;font-size:14px;flex:none}
+.nes-battle-toolbar [data-battle-scene-title]{flex:none;min-width:0;max-width:100%;overflow-wrap:anywhere}
 .nes-battle-toolbar [data-battlefield-label]{flex:1;min-width:0;font-size:12px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nes-battle-toolbar button{flex:none;min-height:44px;font-size:14px;padding:0 8px;border-color:var(--paper);background:#000;color:var(--paper)}
-.busy [data-battle-skip]{pointer-events:auto}
+.nes-battle-toolbar button:hover:not(:disabled){background:#303030;color:var(--paper)}
+.nes-battle-toolbar [data-soldier-label-toggle]{min-width:44px;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.nes-battle-toolbar [data-soldier-label-toggle][aria-pressed=true]{background:var(--paper);color:#000}
+.nes-battle-toolbar [data-soldier-label-toggle][aria-pressed=true]:hover:not(:disabled){background:#fff0e8;color:#000}
+.nes-battle-toolbar [data-soldier-label-toggle]:focus-visible{outline:2px solid #ffe149;outline-offset:-3px}
+.busy [data-battle-skip],.busy [data-soldier-label-toggle]{pointer-events:auto}
 .nes-battle [data-duel-loadouts]{flex:none;padding:2px 6px;color:var(--paper);font-size:13px;max-height:190px;overflow:auto}
 .nes-battle [data-duel-loadouts] summary{cursor:pointer;min-height:44px;line-height:1.4;padding:8px 0}
 .duel-loadout-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px}
@@ -48,6 +53,14 @@
 .nes-battle canvas:focus-visible{outline:2px solid #ffe149;outline-offset:-2px}
 .battle-duel-record>.battle-log{position:absolute;inset:44px 8px 0;height:auto;overflow:auto;padding-bottom:8px;font-size:14px}
 .battle-layout:not(:has(.nes-battle,.duel-fighters))>.battle-army-menu{grid-column:1/-1}
+/* Short desktop windows scroll the battle rather than repeatedly shrinking
+   its board to make room for wrapped controls. */
+@container (min-width:661px) and (max-height:520px){
+ .battle-layout{overflow:auto;align-items:start}
+ .battle-layout>.nes-battle{min-width:320px;overflow:visible;align-self:start}
+ .battle-layout>.battle-army-menu{align-self:stretch}
+ .nes-battle-viewport{flex:none;height:auto;min-height:0;aspect-ratio:var(--battle-canvas-aspect,256/240);width:100%}
+}
 @container(max-width:660px){
  .battle-layout{grid-template-columns:minmax(0,1fr);grid-template-rows:max-content max-content;overflow:auto}
  .battle-layout>.nes-battle,.battle-layout>.duel-fighters{grid-column:1;grid-row:1}

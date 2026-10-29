@@ -1,14 +1,18 @@
 """Static releases preserve catalog identity and expose only approved inputs."""
 from pathlib import Path
+from copy import deepcopy
 import gzip
+import hashlib
 from html.parser import HTMLParser
 import importlib.util
 import json
 import subprocess
+import struct
 import tempfile
 import unittest
 from unittest.mock import patch
 import zipfile
+import zlib
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location('tk2_build_web', ROOT / 'game/build_web.py')
@@ -96,6 +100,104 @@ class BattlefieldStaticBoundaries(unittest.TestCase):
                     '/assets/battlefields/index.json': ('assets/battlefields/index.json', 'application/json; charset=utf-8'),
                     '/assets/battlefields/original-29.png': ('assets/battlefields/original-29.png', 'image/png')}
                 self.assertEqual(result, expected)
+
+
+class SoldierCombatStaticBoundaries(unittest.TestCase):
+    PREFIX = '/assets/soldier-combat-actions-v1/'
+
+    def fixture(self, folder):
+        here = Path(folder) / 'game'
+        base = here / self.PREFIX.lstrip('/')
+        base.mkdir(parents=True)
+        def chunk(kind, value):
+            return struct.pack('>I', len(value)) + kind + value + struct.pack('>I', zlib.crc32(kind + value) & 0xffffffff)
+        png = (b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', struct.pack('>IIBBBBB', 256, 64, 8, 6, 0, 0, 0))
+               + chunk(b'IDAT', zlib.compress((b'\0' + bytes(256 * 4)) * 64)) + chunk(b'IEND', b''))
+        types = {}
+        for kind in ('infantry', 'archer', 'cavalry', 'general'):
+            types[kind] = {}
+            for action in (('melee', 'ranged') if kind == 'archer' else ('melee',)):
+                types[kind][action] = {}
+                phases = ('ready', 'windup', 'strike', 'recover') if action == 'melee' else ('nock', 'draw', 'release', 'recover')
+                for side in ('friendly', 'enemy'):
+                    name = f'{kind}-{action}-{side}.png'
+                    (base / name).write_bytes(png)
+                    types[kind][action][side] = dict(path=self.PREFIX + name, width=256, height=64,
+                        facing='right', anchor=dict(x=8, y=16), sha256=hashlib.sha256(png).hexdigest(),
+                        frames=[dict(phase=phase, source_rect=[n * 64, 0, 64, 64]) for n, phase in enumerate(phases)])
+        proof = json.dumps(dict(schema='tk2-soldier-combat-actions-provenance-v1', originals_retained=True)).encode()
+        (base / 'provenance.json').write_bytes(proof)
+        data = dict(schema='tk2-soldier-combat-actions-v1', scale=4, logical_size=[16, 16],
+                    frame_size=[64, 64], frames_per_action=4, originals_retained=True, types=types,
+                    provenance=dict(path=self.PREFIX + 'provenance.json', sha256=hashlib.sha256(proof).hexdigest()))
+        (base / 'index.json').write_text(json.dumps(data))
+        return here, base, data
+
+    def test_literal_ten_atlases_and_provenance_are_the_only_publishable_paths(self):
+        with tempfile.TemporaryDirectory() as folder:
+            here, base, data = self.fixture(folder)
+            (base / 'old-save.json').write_text('private')
+            (base / 'source.png').write_bytes(b'private study')
+            result = SERVER.soldier_combat_static_assets(here)
+            expected = {self.PREFIX + name for name in ('index.json', 'provenance.json')}
+            expected.update(row['path'] for actions in data['types'].values()
+                            for sides in actions.values() for row in sides.values())
+            self.assertEqual(len(expected), 12)
+            self.assertEqual(set(result), expected)
+            self.assertTrue(all(path.lstrip('/') == value[0] for path, value in result.items()))
+
+    def test_missing_corrupt_and_rehashed_wrong_size_png_fail_closed(self):
+        for mutation in ('missing', 'corrupt', 'wrong-size'):
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as folder:
+                here, base, data = self.fixture(folder)
+                target = base / 'infantry-melee-friendly.png'
+                if mutation == 'missing':
+                    target.unlink()
+                elif mutation == 'corrupt':
+                    target.write_bytes(b'changed pixels')
+                else:
+                    raw = bytearray(target.read_bytes())
+                    raw[16:20] = struct.pack('>I', 255)
+                    target.write_bytes(raw)
+                    data['types']['infantry']['melee']['friendly']['sha256'] = hashlib.sha256(raw).hexdigest()
+                    (base / 'index.json').write_text(json.dumps(data))
+                self.assertEqual(SERVER.soldier_combat_static_assets(here), {})
+
+    def test_forged_action_geometry_phase_or_path_cannot_widen_the_allowlist(self):
+        changes = [lambda d: d.update(schema='wrong'), lambda d: d.update(scale=2),
+                   lambda d: d.update(logical_size=[32, 32]), lambda d: d.update(frames_per_action=8),
+                   lambda d: d['types']['infantry'].update(ranged=deepcopy(d['types']['archer']['ranged'])),
+                   lambda d: d['types']['general']['melee'].pop('enemy'),
+                   lambda d: d['types']['archer']['ranged']['friendly']['frames'][2].update(phase='windup'),
+                   lambda d: d['types']['infantry']['melee']['friendly']['frames'][1].update(source_rect=[0, 0, 64, 64]),
+                   lambda d: d['types']['infantry']['melee']['friendly'].update(path='/etc/passwd'),
+                   lambda d: d['types']['infantry']['melee']['friendly'].update(path=self.PREFIX + '../private.png'),
+                   lambda d: d['provenance'].update(path=self.PREFIX + 'old-save.json'),
+                   lambda d: d.update(originals_retained=False)]
+        for number, change in enumerate(changes):
+            with self.subTest(change=number), tempfile.TemporaryDirectory() as folder:
+                here, base, data = self.fixture(folder)
+                change(data)
+                (base / 'index.json').write_text(json.dumps(data))
+                self.assertEqual(SERVER.soldier_combat_static_assets(here), {})
+
+    def test_symlinked_asset_parents_manifest_provenance_and_atlas_are_refused(self):
+        for entry in ('assets', 'soldier-combat-actions-v1', 'index.json', 'provenance.json', 'infantry-melee-friendly.png'):
+            with self.subTest(entry=entry), tempfile.TemporaryDirectory() as folder:
+                here, base, data = self.fixture(folder)
+                target = here / 'assets' if entry == 'assets' else base if entry == 'soldier-combat-actions-v1' else base / entry
+                original = target.with_name(target.name + '.private')
+                target.rename(original)
+                target.symlink_to(original, target_is_directory=original.is_dir())
+                self.assertEqual(SERVER.soldier_combat_static_assets(here), {})
+
+    def test_current_shipped_manifest_is_in_static_release_but_studies_are_private(self):
+        published = SERVER.soldier_combat_static_assets(ROOT / 'game')
+        self.assertEqual(len(published), 12)
+        built = WEB.static_allowlist()
+        self.assertEqual({name for name in built if name.startswith(self.PREFIX.lstrip('/'))},
+                         {name.lstrip('/') for name in published})
+        self.assertFalse(any(name.startswith('art/') for name in built))
 
 
 class WebBuildBoundaries(unittest.TestCase):

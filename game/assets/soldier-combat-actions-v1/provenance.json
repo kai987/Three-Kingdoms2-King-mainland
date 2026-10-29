@@ -1,0 +1,444 @@
+{
+  "schema": "tk2-soldier-combat-actions-provenance-v1",
+  "source_kind": "supplementary-imagegen-pixel-art",
+  "imagegen_mode": "built_in",
+  "scope": "New four-frame attack poses referenced from retained original stand/walk figures. Not recovered native-ROM attack frames.",
+  "originals_retained": true,
+  "original_files": {
+    "game/assets/siege-original/sprite-infantry-friendly-0.png": "58a35106d55a3daf5456c379de630d4b14a1d6f75659443e62af51fe89478836",
+    "game/assets/siege-original/sprite-infantry-friendly-move-0.png": "d2733c4618aa1b420aeb16bf0e7fa7a7964dd014b0ccb56dec256bcab33aa7d2",
+    "game/assets/siege-original/sprite-infantry-friendly-move-1.png": "4509cfc55d308019720d1021dfec9f3551e7b560fde7c273f7770298411ecd49",
+    "game/assets/siege-original/sprite-infantry-enemy-0.png": "1a841081dc8d9f2fe4346350baad27182e88ed9282e36120c46693339a0d279f",
+    "game/assets/siege-original/sprite-infantry-enemy-move-0.png": "7d0d293c1ece28368da10b7db75bb310dd87bb3d1b74234562d1d175f516c204",
+    "game/assets/siege-original/sprite-infantry-enemy-move-1.png": "92db13e2bec46da4ea4722f97fe3acf12c421f895cee039a7d59c947d764f768",
+    "game/assets/siege-original/sprite-archer-friendly-0.png": "3c3062b191e57bfd9e3e7d90511a017bd08fa47d16ed30d7ce732e9672be69c3",
+    "game/assets/siege-original/sprite-archer-friendly-move-0.png": "0d875b9f61b74737838d70d17f21f82029cecd9d8b116a7ad31e590acaad32b6",
+    "game/assets/siege-original/sprite-archer-friendly-move-1.png": "bb784a20f0a10c0c5cb4625906c1728de273602e13d09aed379d5119f341e312",
+    "game/assets/siege-original/sprite-archer-enemy-0.png": "db6a5fc15e056660b807e13f49432582ed4499ddb5bf5b7cf1072fb802d162dd",
+    "game/assets/siege-original/sprite-archer-enemy-move-0.png": "dc72dd9bfb4641a5a28f9780ba660f13c22a99a95e7535a9ffd1e52e3aaadcdc",
+    "game/assets/siege-original/sprite-archer-enemy-move-1.png": "d8ddc11ab2ff35dedce45199c2932088885fed90e8c4eb17bd7c79f6293a1be3",
+    "game/assets/siege-original/sprite-cavalry-friendly-0.png": "cb776739d03cadfbee0598933651f020fd4c9aae30aa48ef46d3161e3b46243d",
+    "game/assets/siege-original/sprite-cavalry-friendly-move-0.png": "60ab86ec31222de71a66db34293dfec9c2e564913f9549993cc1e639552fa07f",
+    "game/assets/siege-original/sprite-cavalry-friendly-move-1.png": "5d07c2a53d50844befbba5a117721a4a537b8c77213a810a235f8d1f55b42874",
+    "game/assets/siege-original/sprite-cavalry-enemy-0.png": "bed6dcb8b64f9225d25e0115512f96c92c9e5f548aa3f3843bb880b8b2ca960c",
+    "game/assets/siege-original/sprite-cavalry-enemy-move-0.png": "fdead284c7c341244d3687f49635edb65a05340fb2983a1f9d8130c7a9588c15",
+    "game/assets/siege-original/sprite-cavalry-enemy-move-1.png": "2996b2edcb536877e984da07054cebb10eb426ca6e6f0fe5cef83913a9ba5442",
+    "game/assets/siege-original/sprite-general-friendly-0.png": "984310641e59a74339a5d200b911c54b610cd8cd8abccd1db49732ae03a0dbbc",
+    "game/assets/siege-original/sprite-general-friendly-move-0.png": "163fa42bb3ceecd98ac2aa6508107e75a8f6eba7bf55abc3258ebe7865adf8d3",
+    "game/assets/siege-original/sprite-general-friendly-move-1.png": "441d326d78483309ba8863b0b2983c19a363d30a2ff7926d0ebb88f6562c54fa",
+    "game/assets/siege-original/sprite-general-enemy-0.png": "d6577609fb48a1840c30002529744d71df669d7b0dfc73b0d0435b7d2ead645b",
+    "game/assets/siege-original/sprite-general-enemy-move-0.png": "5dfeb915ced84f529c578b3080b63a2e2a80fa78525239c6311e742d3333486a",
+    "game/assets/siege-original/sprite-general-enemy-move-1.png": "5549b46361a5383147ed780efd43fcef5cda439db2d63fc8b463cc5d51c3eeb3"
+  },
+  "reference_frame_count": 2,
+  "reference_frames": "retained native walking poses; not a claim that native attacks had two body frames",
+  "logical_canvas": [
+    16,
+    16
+  ],
+  "output_frame": [
+    64,
+    64
+  ],
+  "resolution_scale": 4,
+  "rendering": "direct 64px coverage sampling with three original palette colors and hard alpha; not a 4x repetition of native pixels",
+  "palette_policy": "All original gray pixels, including weapons/armor, become gray for the friendly palette and red for the enemy palette. Skin/horse, black and alpha are identical across sides.",
+  "palettes": {
+    "friendly": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        167,
+        181,
+        188
+      ],
+      [
+        255,
+        213,
+        203
+      ]
+    ],
+    "enemy": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        187,
+        45,
+        9
+      ],
+      [
+        255,
+        213,
+        203
+      ]
+    ]
+  },
+  "sources": {
+    "infantry": {
+      "study": "art/soldier-combat-actions-v1/studies/infantry.png",
+      "study_sha256": "f9c083bca47bf84cfd22f1907257c3dc0ba98faecc8875a93045d72c4394be38",
+      "prompt": "art/soldier-combat-actions-v1/prompts/infantry.txt",
+      "prompt_sha256": "f6f77ae95e4e062b1d2f69340d5268d49e527602583cae9d8ae86138e04c7576",
+      "reference": "art/soldier-combat-actions-v1/references/infantry-native-gray.png",
+      "reference_sha256": "66e570ef429474278921e1dc4e0f767aa785dca9fb1799ba2ffd24dd4b64b66f",
+      "source_size": [
+        2170,
+        725
+      ],
+      "source_rect_format": "left,top,right,bottom",
+      "source_grid": [
+        4,
+        1
+      ],
+      "source_rects": [
+        [
+          43,
+          189,
+          545,
+          662
+        ],
+        [
+          622,
+          67,
+          977,
+          661
+        ],
+        [
+          1063,
+          253,
+          1639,
+          659
+        ],
+        [
+          1669,
+          232,
+          2129,
+          660
+        ]
+      ],
+      "fitted_boxes": [
+        [
+          16,
+          22,
+          58,
+          62
+        ],
+        [
+          17,
+          12,
+          47,
+          62
+        ],
+        [
+          13,
+          28,
+          62,
+          62
+        ],
+        [
+          18,
+          26,
+          57,
+          62
+        ]
+      ],
+      "shared_scale": 0.0846262341325811,
+      "source_order": [
+        "melee:ready",
+        "melee:windup",
+        "melee:strike",
+        "melee:recover"
+      ]
+    },
+    "archer": {
+      "study": "art/soldier-combat-actions-v1/studies/archer.png",
+      "study_sha256": "c8c1a93dc6cc7df86b9aa561e622cd530b65efd9cf45db723a176b9e6e82f6b4",
+      "prompt": "art/soldier-combat-actions-v1/prompts/archer.txt",
+      "prompt_sha256": "cf7f5ded8d053499210e0eca27eedd777f03f383a1469fa9af4d715d7ca53a49",
+      "reference": "art/soldier-combat-actions-v1/references/archer-native-gray.png",
+      "reference_sha256": "5c730fbf5bb9021e7986b2d267b699d005c6247c76dc8f8c22ac15755fd9b251",
+      "source_size": [
+        1774,
+        887
+      ],
+      "source_rect_format": "left,top,right,bottom",
+      "source_grid": [
+        4,
+        2
+      ],
+      "source_rects": [
+        [
+          54,
+          50,
+          416,
+          412
+        ],
+        [
+          470,
+          50,
+          854,
+          412
+        ],
+        [
+          922,
+          50,
+          1323,
+          412
+        ],
+        [
+          1408,
+          49,
+          1736,
+          412
+        ],
+        [
+          64,
+          493,
+          365,
+          835
+        ],
+        [
+          451,
+          492,
+          706,
+          835
+        ],
+        [
+          883,
+          500,
+          1272,
+          835
+        ],
+        [
+          1404,
+          493,
+          1694,
+          835
+        ]
+      ],
+      "fitted_boxes": [
+        [
+          17,
+          20,
+          59,
+          62
+        ],
+        [
+          17,
+          20,
+          61,
+          62
+        ],
+        [
+          16,
+          20,
+          62,
+          62
+        ],
+        [
+          21,
+          20,
+          59,
+          62
+        ],
+        [
+          18,
+          23,
+          53,
+          62
+        ],
+        [
+          12,
+          22,
+          41,
+          62
+        ],
+        [
+          17,
+          23,
+          62,
+          62
+        ],
+        [
+          18,
+          23,
+          51,
+          62
+        ]
+      ],
+      "shared_scale": 0.11516314779270634,
+      "source_order": [
+        "ranged:nock",
+        "ranged:draw",
+        "ranged:release",
+        "ranged:recover",
+        "melee:ready",
+        "melee:windup",
+        "melee:strike",
+        "melee:recover"
+      ]
+    },
+    "cavalry": {
+      "study": "art/soldier-combat-actions-v1/studies/cavalry.png",
+      "study_sha256": "226cfc93b157b38f7082de806a6e871fb7864534f97279f64b956382ac6c75dc",
+      "prompt": "art/soldier-combat-actions-v1/prompts/cavalry.txt",
+      "prompt_sha256": "775a08b4c0328534e71428a357c59bd77b3f9f1b99c1c4a6c6271f95c768b62a",
+      "reference": "art/soldier-combat-actions-v1/references/cavalry-native-gray.png",
+      "reference_sha256": "e5d85174f89613ce183b67f0f5b2ee9cb22d146059c568e7aff5c51db08702c7",
+      "source_size": [
+        2172,
+        724
+      ],
+      "source_rect_format": "left,top,right,bottom",
+      "source_grid": [
+        4,
+        1
+      ],
+      "source_rects": [
+        [
+          30,
+          174,
+          552,
+          659
+        ],
+        [
+          556,
+          82,
+          1031,
+          658
+        ],
+        [
+          1091,
+          220,
+          1671,
+          659
+        ],
+        [
+          1675,
+          127,
+          2137,
+          659
+        ]
+      ],
+      "fitted_boxes": [
+        [
+          10,
+          17,
+          59,
+          62
+        ],
+        [
+          11,
+          8,
+          55,
+          62
+        ],
+        [
+          8,
+          21,
+          62,
+          62
+        ],
+        [
+          10,
+          12,
+          53,
+          62
+        ]
+      ],
+      "shared_scale": 0.09331259720062209,
+      "source_order": [
+        "melee:ready",
+        "melee:windup",
+        "melee:strike",
+        "melee:recover"
+      ]
+    },
+    "general": {
+      "study": "art/soldier-combat-actions-v1/studies/general.png",
+      "study_sha256": "e87ecda19109a42507fea703e21709ab3cb9ad23604271549849b4fecad24890",
+      "prompt": "art/soldier-combat-actions-v1/prompts/general.txt",
+      "prompt_sha256": "c17d420f2b60d608bc1f39350125a0b89fb68f9c087dd1b29ce2e4dd5d7740f2",
+      "reference": "art/soldier-combat-actions-v1/references/general-native-gray.png",
+      "reference_sha256": "f0d1cab082fcca1f239fbbb5c24b9e203cba4d53e9a1200d9be3fab8c9ebf530",
+      "source_size": [
+        2170,
+        725
+      ],
+      "source_rect_format": "left,top,right,bottom",
+      "source_grid": [
+        4,
+        1
+      ],
+      "source_rects": [
+        [
+          51,
+          179,
+          525,
+          642
+        ],
+        [
+          592,
+          98,
+          1062,
+          642
+        ],
+        [
+          1103,
+          182,
+          1642,
+          642
+        ],
+        [
+          1675,
+          165,
+          2121,
+          642
+        ]
+      ],
+      "fitted_boxes": [
+        [
+          10,
+          14,
+          59,
+          62
+        ],
+        [
+          10,
+          6,
+          58,
+          62
+        ],
+        [
+          7,
+          15,
+          62,
+          62
+        ],
+        [
+          11,
+          13,
+          57,
+          62
+        ]
+      ],
+      "shared_scale": 0.10291595197255575,
+      "source_order": [
+        "melee:ready",
+        "melee:windup",
+        "melee:strike",
+        "melee:recover"
+      ]
+    }
+  },
+  "build": {
+    "tool": "tools/soldier-combat-actions/build.cjs",
+    "tool_sha256": "bc0c89d7390a791185af70f5c8e19d71b5caa4e9e3cd0e7e9bad7dd7de08d0de"
+  }
+}

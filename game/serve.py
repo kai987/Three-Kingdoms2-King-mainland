@@ -257,6 +257,75 @@ def battle_marker_static_assets(here=None):
     return result
 
 
+def soldier_combat_static_assets(here=None):
+    """Ship only the ten reviewed four-frame attack atlases and their proof."""
+    here = Path(here) if here is not None else HERE
+    prefix = '/assets/soldier-combat-actions-v1/'
+    base = here / prefix.lstrip('/')
+    index = base / 'index.json'
+    if here.is_symlink() or (here / 'assets').is_symlink() or base.is_symlink() or index.is_symlink():
+        return {}
+    try:
+        if index.stat().st_size > 256 * 1024:
+            return {}
+        data = json.loads(index.read_text(encoding='utf-8'))
+        actions = {'infantry': ('melee',), 'archer': ('melee', 'ranged'),
+                   'cavalry': ('melee',), 'general': ('melee',)}
+        phases = {'melee': ('ready', 'windup', 'strike', 'recover'),
+                  'ranged': ('nock', 'draw', 'release', 'recover')}
+        if (not isinstance(data, dict) or data.get('schema') != 'tk2-soldier-combat-actions-v1'
+                or data.get('scale') != 4 or data.get('logical_size') != [16, 16]
+                or data.get('frame_size') != [64, 64] or data.get('frames_per_action') != 4
+                or data.get('originals_retained') is not True
+                or not isinstance(data.get('types'), dict) or set(data['types']) != set(actions)):
+            return {}
+        result = {prefix + 'index.json': (prefix.lstrip('/') + 'index.json', 'application/json; charset=utf-8')}
+        def checked_file(name, expected_hash, maximum):
+            if not isinstance(expected_hash, str) or not re.fullmatch(r'[0-9a-f]{64}', expected_hash):
+                raise ValueError('Invalid combat-art digest')
+            target = base / name
+            if target.is_symlink() or not target.is_file() or target.stat().st_size > maximum:
+                raise ValueError('Invalid combat-art file')
+            raw = target.read_bytes()
+            if hashlib.sha256(raw).hexdigest() != expected_hash:
+                raise ValueError('Combat-art file differs from its manifest')
+            return raw
+        for kind, allowed in actions.items():
+            if not isinstance(data['types'][kind], dict) or set(data['types'][kind]) != set(allowed):
+                return {}
+            for action in allowed:
+                variants = data['types'][kind][action]
+                if not isinstance(variants, dict) or set(variants) != {'friendly', 'enemy'}:
+                    return {}
+                for side in ('friendly', 'enemy'):
+                    name = f'{kind}-{action}-{side}.png'
+                    row = variants[side]
+                    expected_frames = [dict(phase=phase, source_rect=[n * 64, 0, 64, 64])
+                                       for n, phase in enumerate(phases[action])]
+                    if (not isinstance(row, dict) or row.get('path') != prefix + name
+                            or row.get('width') != 256 or row.get('height') != 64
+                            or row.get('facing') != 'right' or row.get('anchor') != {'x': 8, 'y': 16}
+                            or row.get('frames') != expected_frames):
+                        return {}
+                    raw = checked_file(name, row.get('sha256'), 1024 * 1024)
+                    if (raw[:8] != b'\x89PNG\r\n\x1a\n' or len(raw) < 24
+                            or int.from_bytes(raw[16:20], 'big') != 256
+                            or int.from_bytes(raw[20:24], 'big') != 64):
+                        return {}
+                    result[prefix + name] = (prefix.lstrip('/') + name, 'image/png')
+        proof = data.get('provenance')
+        if not isinstance(proof, dict) or proof.get('path') != prefix + 'provenance.json':
+            return {}
+        proof_data = json.loads(checked_file('provenance.json', proof.get('sha256'), 512 * 1024))
+        if (proof_data.get('schema') != 'tk2-soldier-combat-actions-provenance-v1'
+                or proof_data.get('originals_retained') is not True):
+            return {}
+        result[prefix + 'provenance.json'] = (prefix.lstrip('/') + 'provenance.json', 'application/json; charset=utf-8')
+        return result
+    except (OSError, ValueError, TypeError, AttributeError):
+        return {}
+
+
 def enhanced_battle_static_assets(here=None):
     """Only the shipped4x battle manifest and its fixed PNG filenames are public."""
     here = Path(here) if here is not None else HERE
@@ -736,6 +805,7 @@ def main():
     static.update(battle_static_assets())
     static.update(siege_static_assets())
     static.update(battle_marker_static_assets())
+    static.update(soldier_combat_static_assets())
     static.update(battlefield_static_assets())
     static.update(enhanced_battle_static_assets())
 

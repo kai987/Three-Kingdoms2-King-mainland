@@ -1,8 +1,10 @@
 """Controlled current-catalog soldier and battlefield-service UI acceptance.
 
 This is deliberately not a historical opening or a natural AI playthrough.
-The real new/allocate commands and battle initializer supply the armies. Only
-legal tactical/piece positions, a wounded support HP and a documented starting
+The real new/allocate commands and battle initializer supply the armies. The
+action-cycle fixtures explicitly hand the public allocation interface to the
+enemy owner during setup, then restore Wei; this is not a natural AI result.
+Legal tactical/piece positions, a wounded support HP and a documented starting
 seed are arranged to expose contact, villages, conversion and occupation.
 Every exported fixture must round-trip through the unchanged production loader.
 The browser imports its checksummed JSON through the visible save-file control;
@@ -20,7 +22,7 @@ from remake import battle_grid
 from remake.officers import recruitment_loyalty
 
 
-def _base(seed=20261029):
+def _base(seed=20261029, *, prepare_enemy=False):
     game = Campaign(Catalog(ROOT / 'game/data/campaigns/208-10.json'))
     game.command('new', dict(faction='wei', seed=seed), game.revision)
     city = game.state.cities['jiujiang']
@@ -31,6 +33,23 @@ def _base(seed=20261029):
                      key=lambda ident: (game.state.officers[ident].profile.intellect, -ident))
     ids = list(dict.fromkeys([actor, strategist, *ranked]))[:10]
     game.command('allocate', dict(city=city.id, officer=actor, troops=1000), game.revision)
+    if prepare_enemy:
+        # Explicit controlled test preparation, not an AI result: temporarily
+        # hand the public command interface to Danyang's owner so its actual
+        # allocation command supplies ten teams too, then restore the player.
+        enemy_city = game.state.cities['danyang']
+        enemy_actor = max(enemy_city.roster.officer_ids,
+                          key=lambda ident: (game.state.officers[ident].profile.martial_strength, -ident))
+        assert game.state.officers[enemy_actor].profile.martial_strength >= 50
+        prior_player = game.state.player
+        prior_rng = deepcopy(game.state.rng)
+        prior_mass = enemy_city.reserves + sum(game.state.officers[i].troops for i in enemy_city.roster.officer_ids)
+        game.state.player = enemy_city.owner
+        game.command('allocate', dict(city=enemy_city.id, officer=enemy_actor, troops=1000), game.revision)
+        game.state.player = prior_player
+        enemy_city = game.state.cities['danyang']
+        assert enemy_city.reserves + sum(game.state.officers[i].troops for i in enemy_city.roster.officer_ids) == prior_mass
+        assert game.state.rng == prior_rng
     state = game.state
     game._start_expanded_battle(state, state.cities['jiujiang'], state.cities['danyang'], ids)
     state.phase = 'battle'
@@ -125,6 +144,69 @@ def contact_fixture():
         contact_pieces={kind: piece['id'] for kind, piece in by_kind.items()})
 
 
+def attack_cycles_fixture(mode='field'):
+    """Both palettes and five real attack sequences at legal field cells.
+
+    Positions and side orders are arranged only for deterministic acceptance;
+    both thousand-person armies come from public allocation commands. The
+    temporary enemy-player handoff is controlled setup, not natural AI play.
+    """
+    game, actor, _ = _base(prepare_enemy=True)
+    battle = game.state.battle
+    target = battle['defenders'][0]['id']
+    if mode == 'siege':
+        x, y = battle_grid._field(battle)['camp']
+        neighbor = next((nx, ny) for nx, ny in ((x-1, y), (x+1, y), (x, y-1), (x, y+1))
+                        if 0 <= nx < battle_grid.COLUMNS and 0 <= ny < battle_grid.ROWS)
+        _positions(game, {actor: neighbor, target: (x, y)})
+    else:
+        _contact(game, actor, target)
+    game.command('attack', dict(battle_id=battle['id'], actor=actor, target=target), game.revision)
+    game.command('siege_form', dict(battle_id=battle['id'], formation=3), game.revision)
+    row = game.state.battle['extended']['siege']
+    assert row['mode'] == mode
+    groups = {side: {kind: [p for p in row['units'] if p['side'] == side and p['kind'] == kind]
+                    for kind in ('infantry', 'archer', 'cavalry', 'general')}
+              for side in ('attackers', 'defenders')}
+    for side in groups.values():
+        assert len(side['archer']) >= 2
+        assert side['cavalry'] and len(side['general']) == 1
+    # Original fortified deployments turn their infantry slots into archers.
+    # Keep that rule intact rather than inventing a defending infantry slot.
+    defenders = groups['defenders']
+    guards = defenders['infantry'][:2] if mode == 'field' else defenders['archer'][:2]
+    bowmen = defenders['archer'][:2] if mode == 'field' else defenders['archer'][2:4]
+    pairs = [
+        (groups['attackers']['infantry'][0], (4, 1), guards[0], (5, 1)),
+        (groups['attackers']['archer'][0], (3, 4), bowmen[0], (6, 4)),
+        (groups['attackers']['archer'][1], (4, 5), bowmen[1], (5, 5)),
+        (groups['attackers']['cavalry'][0], (4, 7), groups['defenders']['cavalry'][0], (5, 7)),
+        (groups['attackers']['general'][0], (4, 9), guards[1], (5, 9)),
+        (groups['attackers']['infantry'][1], (9, 9), groups['defenders']['general'][0], (10, 9)),
+    ]
+    arranged = {piece['id']: point for a, ap, b, bp in pairs for piece, point in ((a, ap), (b, bp))}
+    occupied = set(arranged.values())
+    for piece in row['units']:
+        point = arranged.get(piece['id'])
+        if point is None:
+            edge = 0 if piece['side'] == 'attackers' else 15
+            point = next((edge, y) for y in (0, 2, 4, 6, 8) if (edge, y) not in occupied)
+        piece['x'], piece['y'] = point
+        occupied.add(point)
+    for side in ('attackers', 'defenders'):
+        row['piece_orders'][side] = {p['id']: 'wait' for p in row['units'] if p['side'] == side}
+        row['piece_orders'][side][(groups[side]['archer'][0] if side == 'attackers' else bowmen[0])['id']] = 'advance'
+    return _save(game, actor=actor, target=target,
+        setup='controlled-public-allocation-with-temporary-enemy-player-handoff',
+        seed=20261029, mode=mode,
+        attack_sequences=[f"{'friendly' if side == 'attackers' else 'enemy'}:{kind}:{action}"
+                          for side in ('attackers', 'defenders') for kind in ('infantry', 'archer', 'cavalry', 'general')
+                          if groups[side][kind] for action in (('melee', 'ranged') if kind == 'archer' else ('melee',))],
+        army_troops={side: sum(p['troops'] for p in row['units'] if p['side'] == side)
+                                 for side in ('attackers', 'defenders')},
+        pieces={p['id']: dict(kind=p['kind'], side=p['side'], x=p['x'], y=p['y']) for p in row['units']})
+
+
 def conversion_fixture():
     # Search actual starting seeds using real tactic commands on separate
     # reference games. Only the successful pre-command save is exported.
@@ -178,7 +260,8 @@ def facility_fixtures():
 
 
 def fixture(kind='field'):
-    return {'field': field_fixture, 'contact': contact_fixture,
+    return {'field': field_fixture, 'contact': contact_fixture, 'attack-cycles': attack_cycles_fixture,
+            'siege-cycles': lambda: attack_cycles_fixture('siege'),
             'conversion': conversion_fixture, 'occupation': occupation_fixture,
             'facilities': facility_fixtures}[kind]()
 
