@@ -1,12 +1,46 @@
 """Small controlled current-rule fixtures, never playable historical chapters."""
 from copy import deepcopy
+from contextlib import contextmanager
 import json
 from pathlib import Path
 import tempfile
+from unittest.mock import patch
 
 from remake.campaign import Catalog
+from remake import officer_relations
+from remake.officers import appearance_values
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+@contextmanager
+def pre_relationship_opening():
+    """Retain historical golden inputs; all later allegiance rules stay active.
+
+    Only first-appearance loyalty differs from the current opening helper. The
+    complete frozen state/save hashes remain the acceptance oracle, rather than
+    removing loyalty fields from their outputs or refreshing old evidence.
+    """
+    current = officer_relations.opening_values
+    changes = []
+
+    def retained(catalog, ident, **options):
+        baseline = appearance_values(catalog.profiles[ident],
+            catalog.by_id[ident].get('initialization'), **options)
+        actual = current(catalog, ident, **options)
+        differences = {key for key in baseline.keys() | actual.keys()
+                       if baseline.get(key) != actual.get(key)}
+        if differences - {'loyalty'}:
+            raise AssertionError('Historical relationship fixture changed more than initial loyalty')
+        if differences:
+            if not baseline['loyalty'] < actual['loyalty'] <= 99:
+                raise AssertionError('Historical fixture may remove only a positive ordinary-officer floor')
+            changes.append(dict(person_id=catalog.by_id[ident]['person_id'],
+                                previous=baseline['loyalty'], current=actual['loyalty']))
+        return baseline
+
+    with patch.object(officer_relations, 'opening_values', side_effect=retained):
+        yield changes
 
 
 def controlled_catalog():

@@ -14,6 +14,7 @@ from remake import presentation
 from remake.officers import OfficerProfile
 import test_remake_tactical_ai as tactical_fixture
 from test_remake_tactical_ai import battle, actors, successful_rng
+from campaign_fixtures import pre_relationship_opening
 
 
 def active_duel(seed, *, own_health=80, enemy_health=80, round_number=1):
@@ -178,7 +179,10 @@ class DesperateDuelTests(unittest.TestCase):
                         catalog.profiles[ident] = OfficerProfile(**person['profile'])
                     return catalog
 
-                with patch.object(tactical_fixture, 'controlled_catalog', side_effect=original_stat_catalog):
+                # This corpus also predates reviewed relationship floors. Pin
+                # its opening inputs only; ordinary duel/allegiance services
+                # remain unmodified and complete output hashes stay frozen.
+                with patch.object(tactical_fixture, 'controlled_catalog', side_effect=original_stat_catalog), pre_relationship_opening():
                     game = active_duel(row['seed'])
                 orders_before = deepcopy(game.state.extension['command_books'])
                 scene = self.perform(game, row['move'])

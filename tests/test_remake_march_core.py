@@ -20,6 +20,7 @@ from remake.errors import GameError
 from remake.march_core import CoreUnavailable, config_for, invoke, using_backend
 from remake.route_hazards import allocate_survivors, evaluate_leg, route_allowed
 from remake.travel import TravelCampaign
+from campaign_fixtures import pre_relationship_opening
 
 CASES = [
     ('plain', 'shu', 'jiameng', 'fuxian', 'fastest', 7),
@@ -52,7 +53,10 @@ def campaign_fixture(case):
         path.write_text(json.dumps(data,ensure_ascii=False))
         catalog=Catalog(path)
     game = HeadlessCampaign(catalog)
-    game.command('new', dict(faction=side, seed=2026), 0)
+    # The fixed full-save corpus predates relationship loyalty. Keep those
+    # declared initial inputs; subsequent turns use the current runtime rules.
+    with pre_relationship_opening():
+        game.command('new', dict(faction=side, seed=2026), 0)
     while game.state.month != month:
         game._complete_turn(game.state)
         game._spawn_eligible(game.state)

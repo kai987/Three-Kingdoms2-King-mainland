@@ -5,12 +5,15 @@ The primary v2 goldens pin complete saves and states without normalization.
 A separate, declared migration comparison preserves the unchanged v1 evidence.
 """
 from copy import deepcopy
+from contextlib import nullcontext
 from hashlib import sha256
 import json
 import unittest
 from test_remake_march_core import (ROOT, CASES, HeadlessCampaign as Campaign, Catalog, canonical,
-    campaign_result, using_backend)
+    campaign_fixture, campaign_result, using_backend)
 import test_remake_march_core as matrix
+from remake import officer_relations
+from unittest.mock import patch
 
 
 CHECKPOINTS = ('before', 'preview', 'queued', 'arrived')
@@ -27,6 +30,32 @@ def baselines():
     if set(current['cases']) != {case[0] for case in CASES}:
         raise AssertionError('The reference must cover every real march case')
     return current, json.loads(previous_bytes)
+
+
+class HistoricalOpeningInputTests(unittest.TestCase):
+    def test_historical_fixture_changes_only_intentional_initial_loyalty(self):
+        original = officer_relations.opening_values
+        # Bypass only the fixture context for one current-policy control game.
+        with patch.object(matrix, 'pre_relationship_opening', side_effect=nullcontext):
+            current = campaign_fixture(CASES[0])
+        historical = campaign_fixture(CASES[0])
+        self.assertIs(officer_relations.opening_values, original,
+                      'Historical inputs must not disable later allegiance rules')
+        expected, retained = current.to_dict(), historical.to_dict()
+        differences = []
+        adjusted = deepcopy(retained)
+        for ident, officer in expected['officers'].items():
+            before = retained['officers'][ident]['loyalty']
+            if before != officer['loyalty']:
+                self.assertLess(before, officer['loyalty'])
+                self.assertLessEqual(officer['loyalty'], 99)
+                differences.append(ident)
+                adjusted['officers'][ident]['loyalty'] = officer['loyalty']
+        self.assertTrue(differences, 'The control must exercise real relationship floors')
+        self.assertEqual(canonical(adjusted), canonical(expected),
+                         'Every field except reviewed initial loyalty must remain exact')
+        self.assertEqual(current.catalog.sha256, historical.catalog.sha256)
+        self.assertEqual(current.state.rng, historical.state.rng)
 
 
 class MarchReferenceBaselineTests(unittest.TestCase):
