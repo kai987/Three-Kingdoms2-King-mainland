@@ -3,6 +3,14 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const source=fs.readFileSync(path.join(__dirname,'../game/loading-cover.js'),'utf8');
 const css=fs.readFileSync(path.join(__dirname,'../game/loading-cover.css'),'utf8');
+const coverProvenance=JSON.parse(fs.readFileSync(path.join(__dirname,'../art/loading-cover-v2/index.json'),'utf8'));
+assert.equal(coverProvenance.schema,'tk2-loading-cover-v2');assert.equal(coverProvenance.original_assets_retained,true);
+assert.equal(coverProvenance.frames,4);assert.equal(coverProvenance.scale,4);
+for(const row of [...coverProvenance.sources,...coverProvenance.runtime]){
+ const raw=fs.readFileSync(path.join(__dirname,'..',row.path));
+ assert.equal(require('node:crypto').createHash('sha256').update(raw).digest('hex'),row.sha256,'Generated source/runtime provenance: '+row.path);
+ assert.equal(raw.length,row.bytes);assert.deepEqual([raw.readUInt32BE(16),raw.readUInt32BE(20)],row.size);
+}
 function fixture({language='zh-Hant',storageThrows=false,loading=false,reduced=false,prefix='/Three-Kingdoms2-King-mainland/',paths=false,audio=null}={}){
  const listeners=new Map(),observers=[],timers=[],mediaListeners=new Set();
  class Element{
@@ -78,11 +86,20 @@ assert.equal((initial.listeners.get('game-language-change')||[]).length,0);
 
 const japanese=fixture({language:'ja',prefix:'/nested/game/'});assert.equal(japanese.node('game-loading-cover').getAttribute('lang'),'ja');
 assert.equal(classNode(japanese,'loading-cover-subtitle').textContent,'大陸戦役');assert.equal(classNode(japanese,'loading-cover-scenario').textContent,'184年・黄巾の乱');
-assert.equal(classNode(japanese,'loading-cover-art').src,'https://game.example/nested/game/assets/loading/cover.png','Early boot assets honor the actual project subpath before paths.js is ready');
+assert.equal(classNode(japanese,'loading-cover-art').src,'https://game.example/nested/game/assets/loading/cover-map-v2.png','Early boot assets honor the actual project subpath before paths.js is ready');
+for(const [kind,name,count] of [['rider','rider',1],['soldier','infantry',3]]){
+ const figures=japanese.all().filter(node=>node.className==='loading-cover-figure loading-cover-'+kind);
+ assert.equal(figures.length,count);
+ for(const figure of figures){
+  assert.equal(figure.children.length,1,'Each marching figure uses one clipped four-frame atlas');
+  assert.equal(figure.children[0].className,'loading-cover-frame');
+  assert.equal(figure.children[0].src,`https://game.example/nested/game/assets/loading/march-${name}-v2.png`);
+ }
+}
 japanese.window.GameI18n={locale:'zh-Hant'};japanese.emit('game-language-change');assert.equal(classNode(japanese,'loading-cover-subtitle').textContent,'大陸戰役');
 japanese.window.GameI18n.locale='ja';japanese.emit('game-language-change');japanese.window.GameLoadingCover.update({phase:'loading',receivedBytes:1024,runtimeReady:true});
 assert(classNode(japanese,'loading-cover-message').textContent.includes('実行環境を除く'));assert(classNode(japanese,'loading-cover-message').textContent.includes('準備完了'));
-const blocked=fixture({storageThrows:true,paths:true,prefix:'/nested/'});assert.equal(blocked.node('game-loading-cover').getAttribute('lang'),'zh-Hant');assert.equal(classNode(blocked,'loading-cover-art').src,'/nested/assets/loading/cover.png');
+const blocked=fixture({storageThrows:true,paths:true,prefix:'/nested/'});assert.equal(blocked.node('game-loading-cover').getAttribute('lang'),'zh-Hant');assert.equal(classNode(blocked,'loading-cover-art').src,'/nested/assets/loading/cover-map-v2.png');
 
 const retried=fixture(),{panel,button}=retried.status(),oldParent=panel.parentNode,oldNext=panel.nextSibling;
 let retryCount=0;button.onclick=()=>{retryCount++;retried.window.GameLoadingCover.update({phase:'manifest',failed:false,ready:false});};
@@ -111,10 +128,13 @@ nativeError.window.GameLoadingCover.attachStatus(nativePanel);nativeError.notice
 assert(nativeError.node('game-loading-cover').hidden,'A native first-render error remains reachable without usable campaign controls');assert.equal(nativeError.notice.textContent,'An existing native startup error');assert.equal(nativePanel.parentNode,nativeError.body);
 const bootError=fixture();bootError.window.GameBrowserEngine={ready:false};bootError.notice.className='error';bootError.window.GameLoadingCover.update({failed:true,canRetry:true});bootError.mutate();assert(!bootError.node('game-loading-cover').hidden,'Pre-ready Worker failure retains the cover and its existing retry');
 bootError.window.GameBrowserEngine.ready=true;bootError.mutate();assert(bootError.node('game-loading-cover').hidden,'A first-render error after engine readiness exposes the original error instead of blocking forever');
-for(const name of ['duelist','infantry'])for(const frame of ['00','01']){
- const file=path.join(__dirname,'../game/assets/battle-enhanced',`native-${name}-${frame}.png`),png=fs.readFileSync(file),size=name==='duelist'?384:64;
- assert.equal(png.subarray(0,8).toString('hex'),'89504e470d0a1a0a');assert.equal(png.readUInt32BE(16),size);assert.equal(png.readUInt32BE(20),size);
+for(const name of ['rider','infantry']){
+ const file=path.join(__dirname,'../game/assets/loading',`march-${name}-v2.png`),png=fs.readFileSync(file);
+ assert.equal(png.subarray(0,8).toString('hex'),'89504e470d0a1a0a');
+ assert.equal(png.readUInt32BE(16),2048,'Four 512px frames retain the 4x 128px pixel base');assert.equal(png.readUInt32BE(20),512);
 }
+assert(fs.existsSync(path.join(__dirname,'../game/assets/loading/cover.png')),'The previous cover artwork remains preserved');
+assert.equal(fs.readFileSync(path.join(__dirname,'../game/assets/loading/cover-map-v2.png')).subarray(0,8).toString('hex'),'89504e470d0a1a0a');
 async function musicChecks(){
  const settings={muted:false,bgmVolume:.35},status={supported:true,unlocked:false,playing:false,coverActive:false},calls=[];
  const player={getSettings:()=>({...settings}),getStatus:()=>({...status}),setCoverActive(value){status.coverActive=value;calls.push(['cover',value]);},

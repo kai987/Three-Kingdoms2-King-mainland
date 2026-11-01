@@ -1,0 +1,93 @@
+{
+  "schema": "tk2-loading-cover-v2",
+  "generation_mode": "built_in",
+  "art_provenance": "imagegen-style-reference",
+  "original_assets_retained": true,
+  "logical_frame_size": [
+    128,
+    128
+  ],
+  "runtime_frame_size": [
+    512,
+    512
+  ],
+  "scale": 4,
+  "frames": 4,
+  "frame_duration_ms": 240,
+  "animation": "CSS steps(4,end), presentation only; no gameplay RNG or state",
+  "references": [
+    {
+      "path": "game/assets/loading/cover.png",
+      "sha256": "eb20d529ee532dec4d23077e05b52bcb8b7ea081399c84882c234f6734be6f11",
+      "bytes": 1293477,
+      "size": [
+        1672,
+        941
+      ]
+    },
+    {
+      "path": "game/assets/map-campaign.png",
+      "sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+      "bytes": 2306634,
+      "size": [
+        1352,
+        1024
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "path": "art/loading-cover-v2/march-source.png",
+      "sha256": "e536399b2e81fcb66a1413ee37c83effe8235a705077f82441ed05d76432e546",
+      "bytes": 1368193,
+      "size": [
+        1774,
+        887
+      ]
+    },
+    {
+      "path": "art/loading-cover-v2/cover-map-source.png",
+      "sha256": "a558ba7f33766d397bacff72c8afb4bc09a6b78c4f5f5ff80eec8059ee781846",
+      "bytes": 2717313,
+      "size": [
+        1672,
+        941
+      ]
+    }
+  ],
+  "runtime": [
+    {
+      "path": "game/assets/loading/march-rider-v2.png",
+      "sha256": "93ddf09e67fc5323aa1062b7619b2a4e2c80ab3d3713cf6aa887243b7b762bb0",
+      "bytes": 99900,
+      "size": [
+        2048,
+        512
+      ]
+    },
+    {
+      "path": "game/assets/loading/march-infantry-v2.png",
+      "sha256": "c89c921d235dde6df7e86a8ab4ed2382ac22453d17311f22fbb2fb649e2973b2",
+      "bytes": 70827,
+      "size": [
+        2048,
+        512
+      ]
+    },
+    {
+      "path": "game/assets/loading/cover-map-v2.png",
+      "sha256": "a558ba7f33766d397bacff72c8afb4bc09a6b78c4f5f5ff80eec8059ee781846",
+      "bytes": 2717313,
+      "size": [
+        1672,
+        941
+      ]
+    }
+  ],
+  "prompts": [
+    "art/loading-cover-v2/march-prompt.txt",
+    "art/loading-cover-v2/background-prompt.txt"
+  ],
+  "processing": "Cover: exact generated PNG. Sprites: crop registered columns and actor rows, common per-actor bounds/scale/feet, nearest-neighbour128pixel packing and4x enlargement; no repainting. See build.py.",
+  "geography_note": "Decorative map interpretation; does not modify the actual campaign terrain or routing."
+}

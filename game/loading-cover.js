@@ -27,7 +27,7 @@
  }
  function figure(type){
   const node=element('span','loading-cover-figure loading-cover-'+type);
-  for(const frame of ['00','01'])node.append(image('/assets/battle-enhanced/native-'+(type==='rider'?'duelist':'infantry')+'-'+frame+'.png','loading-cover-frame'));
+  node.append(image('/assets/loading/march-'+(type==='rider'?'rider':'infantry')+'-v2.png','loading-cover-frame'));
   return node;
  }
  function render(){
@@ -146,8 +146,8 @@
   subtitle=element('p','loading-cover-subtitle');scenario=element('p','loading-cover-scenario');
   description=element('p','loading-cover-description');description.id='game-loading-description';heading.append(title,subtitle,scenario,description);
   const stage=element('div','loading-cover-stage');stage.setAttribute('aria-hidden','true');
-  const march=element('div','loading-cover-march');march.append(figure('rider'),figure('soldier'),figure('soldier'),figure('soldier'));
-  stage.append(image('/assets/loading/cover.png','loading-cover-art'),element('div','loading-cover-ground'),march);
+  const march=element('div','loading-cover-march');march.append(figure('soldier'),figure('soldier'),figure('soldier'),figure('rider'));
+  stage.append(image('/assets/loading/cover-map-v2.png','loading-cover-art'),march);
   const footer=element('footer','loading-cover-footer');message=element('p','loading-cover-message');message.setAttribute('role','status');message.setAttribute('aria-live','polite');slot=element('div','loading-cover-status-slot');
   startButton=element('button','loading-cover-start');startButton.id='game-loading-start';startButton.type='button';startButton.hidden=true;startButton.disabled=true;startButton.onclick=enterGame;
   const audioControls=element('div','loading-cover-audio');soundButton=element('button','loading-cover-sound');soundButton.id='game-loading-sound';soundButton.type='button';soundButton.onclick=toggleMusic;

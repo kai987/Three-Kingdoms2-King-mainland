@@ -206,14 +206,23 @@ test('pixel loading cover animates, plays the original title and waits for Start
    else{expect(bytes.readUInt32BE(16)).toBe(180);expect(bytes.readUInt32BE(20)).toBe(180);}
   }
   await expect(page.locator('#begin')).toHaveCount(0);
+  await expect(cover.locator('.loading-cover-art')).toHaveAttribute('src',/\/assets\/loading\/cover-map-v2\.png(?:\?|$)/);
   await expect.poll(()=>cover.locator('.loading-cover-art').evaluate(node=>node.complete&&node.naturalWidth>0)).toBe(true);
-  await expect.poll(()=>rider.locator('img').evaluateAll(nodes=>nodes.every(node=>node.complete&&node.naturalWidth===384))).toBe(true);
+  await expect(rider.locator('img')).toHaveCount(1);
+  await expect(rider.locator('img')).toHaveAttribute('src',/\/assets\/loading\/march-rider-v2\.png(?:\?|$)/);
+  await expect(cover.locator('.loading-cover-soldier')).toHaveCount(3);
+  for(const soldier of await cover.locator('.loading-cover-soldier').all()){
+   await expect(soldier.locator('img')).toHaveCount(1);
+   await expect(soldier.locator('img')).toHaveAttribute('src',/\/assets\/loading\/march-infantry-v2\.png(?:\?|$)/);
+  }
+  await expect.poll(()=>cover.locator('.loading-cover-frame').evaluateAll(nodes=>nodes.length===4&&nodes.every(node=>node.complete&&node.naturalWidth===2048&&node.naturalHeight===512))).toBe(true);
+  for(const figure of await cover.locator('.loading-cover-figure').all())await expect(figure).toHaveCSS('overflow','hidden');
   const runningTime=await rider.locator('img').first().evaluate(node=>node.getAnimations()[0]?.currentTime);
   expect(typeof runningTime).toBe('number');
   await expect.poll(()=>rider.locator('img').first().evaluate(node=>node.getAnimations()[0]?.currentTime)).toBeGreaterThan(runningTime);
   // Read the real CSS timeline above before controlling only this diagnostic
   // presentation. Pausing the parent march prevents the screenshot crop from
-  // moving; seeking both sprite timelines removes CI capture-scheduling races.
+  // moving; seeking the four atlas timelines removes CI capture-scheduling races.
   const seekFrames=async fraction=>cover.evaluate(async(node,value)=>{
    const animations=node.getAnimations({subtree:true});
    for(const animation of animations)animation.pause();
@@ -226,19 +235,18 @@ test('pixel loading cover animates, plays the original title and waits for Start
    return animations.map(animation=>({name:animation.animationName,state:animation.playState,time:animation.currentTime}));
   },fraction);
   const firstTimings=await seekFrames(0);
-  expect(firstTimings.filter(animation=>animation.name==='loading-cover-frame')).toHaveLength(8);
+  expect(firstTimings.filter(animation=>animation.name==='loading-cover-frame')).toHaveLength(4);
   expect(firstTimings.every(animation=>animation.state==='paused')).toBe(true);
-  await expect(rider.locator('img').nth(0)).toHaveCSS('opacity','1');
-  await expect(rider.locator('img').nth(1)).toHaveCSS('opacity','0');
+  const firstTransform=await rider.locator('img').evaluate(node=>getComputedStyle(node).transform);
   const riderBounds=await rider.boundingBox();expect(riderBounds).not.toBeNull();
   const firstFrame=await page.screenshot({path:testInfo.outputPath('loading-rider-frame-a.png'),clip:riderBounds,animations:'allow'});
   const secondTimings=await seekFrames(.75);
-  await expect(rider.locator('img').nth(0)).toHaveCSS('opacity','0');
-  await expect(rider.locator('img').nth(1)).toHaveCSS('opacity','1');
+  const secondTransform=await rider.locator('img').evaluate(node=>getComputedStyle(node).transform);
+  expect(secondTransform).not.toBe(firstTransform);
   expect(await rider.boundingBox()).toEqual(riderBounds);
   const secondFrame=await page.screenshot({path:testInfo.outputPath('loading-rider-frame-b.png'),clip:riderBounds,animations:'allow'});
   expect(secondFrame.equals(firstFrame)).toBe(false);
-  await testInfo.attach('loading-css-animation-timings',{body:Buffer.from(JSON.stringify({runningTime,firstTimings,secondTimings},null,2)),contentType:'application/json'});
+  await testInfo.attach('loading-css-animation-timings',{body:Buffer.from(JSON.stringify({runningTime,firstTimings,secondTimings,firstTransform,secondTransform},null,2)),contentType:'application/json'});
   await cover.evaluate(async node=>{
    const animations=node.getAnimations({subtree:true});for(const animation of animations)animation.play();
    await Promise.all(animations.map(animation=>animation.ready));
@@ -250,6 +258,8 @@ test('pixel loading cover animates, plays the original title and waits for Start
   await page.emulateMedia({reducedMotion:'reduce'});await expect(cover).toHaveAttribute('data-motion','still');
   const motion=await cover.locator('.loading-cover-march,.loading-cover-frame').evaluateAll(nodes=>nodes.map(node=>getComputedStyle(node).animationName));
   expect(motion.every(name=>name==='none')).toBe(true);
+  const stillTransforms=await cover.locator('.loading-cover-frame').evaluateAll(nodes=>nodes.map(node=>getComputedStyle(node).transform));
+  expect(stillTransforms.every(value=>value==='none')).toBe(true);
   await page.screenshot({path:testInfo.outputPath('loading-cover-reduced-motion.png'),fullPage:false});
   releaseManifest();
   await expect.poll(()=>page.evaluate(()=>window.GameBrowserEngine?.ready),{timeout:180_000}).toBe(true);
