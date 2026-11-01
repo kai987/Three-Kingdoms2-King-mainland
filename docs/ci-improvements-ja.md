@@ -1,0 +1,25 @@
+# 表示変更のCIとブラウザ検証時間
+
+単挑の外観設定、既存の第一・第二版の原画／プロンプト、素材の生成ツールと対応テストは、戦闘表示・人物表示として明示的に分類します。PNGの再構築、SHA、余白、原画保護、実際の装備との対応、全劇本の基本整合性は残します。原画・プロンプトと説明だけを変更した場合は公開しません。未知の兵器、世代、パス、共有ルールやCI自身の変更は、引き続き全体検証になります。
+
+ブラウザはデスクトップ・タッチ各2分割、各runnerの`workers:1`を維持します。既存の並列実行に加え、[レビュー済みの実測値](../tools/browser-tests/case-durations.json)を用いて、長いケースから予想合計時間の短い組へ配ります。新しいケースは明示的な120秒の仮の重みで必ず含め、所要時間未計測のIDを表示します。
+
+```sh
+node tools/browser-tests/verify-shards.mjs desktop-chromium
+node tools/browser-tests/verify-shards.mjs touch-chromium
+node tools/browser-tests/run-shard.mjs touch-chromium 1 --list
+```
+
+`verify-shards.mjs`は固定版Playwrightの実際の`--list`を使い、各組の内容と全ケースの和集合が一致すること、重複・欠落がないことを確認します。`run-shard.mjs`は同じ計画を実行します。これにPlaywrightの`--shard`を重ねてはいけません。選択範囲が1ケースだけなら、もう一方は明示的な0ケースとなり、実行件数を水増ししません。
+
+CIは各ケース・端末・試行の時間をJSONとして保存し、最後のゲートで4報告のcommitと完全性を検証します。`browser-timing-summary-SHA`には次を保存します。
+
+- `summary.json`：実行したケース、試行、各組の見積りと実測合計。
+- `summary.md`：読みやすい時間表。
+- `suggested-case-durations.json`：次回の時間基準の更新候補。
+
+更新候補は自動適用しません。新しい原画の変更でテストの範囲が縮むことと、測定値によってその範囲の実行順・組み合わせが変わることは、別々に検証します。時間表はケースの累計時間であり、環境構築・アーティファクト取得・アップロードを含むrunner全体の時間ではありません。
+
+通常CIとは別の定期全体検証と、共通ルール変更時の全体検証は維持します。詳細は[検証手順](testing.md)と[Playwrightの分割仕様](https://playwright.dev/docs/test-sharding)を参照してください。
+
+AIバランス観測ツール`tools/campaign-balance/run.py`とその固定の単体テストだけを変えた場合も、全戦役の長時間回帰にはしません。通常CIでは小さい制御fixtureを使う短いhelperテストを残し、長時間の観測は専用の定期／手動ワークフローに分離します。観測ツール専用の変更ではゲームを公開せず、未登録の別ツールや共有ルールの変更は全体検証を維持します。

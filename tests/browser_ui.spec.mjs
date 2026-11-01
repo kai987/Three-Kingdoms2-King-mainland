@@ -2337,3 +2337,31 @@ test('dialogue exchanges and dated family loyalty remain bilingual without repla
  expect(await read()).toEqual(after);await closeDialog(page);
  expect(errors.get(page)).toEqual([]);
 });
+
+test.describe('first-session assistance',()=>{
+ test.use({locale:'ja-JP'});
+ test('initial language, compact previews and optional three-turn guidance preserve real commands',async({page},testInfo)=>{
+  await opening(page);await expect(page.locator('html')).toHaveAttribute('lang','ja');
+  const boot=await page.evaluate(async()=>{const r=await fetch(new URL('runtime/engine-manifest.json',location.href));return (await r.json()).previews;});
+  expect(boot.encoding).toBe('gzip');expect(boot.bytes).toBeLessThan(3*1024*1024);
+  await expect(page.locator('#scenario')).toHaveValue('mainland184-02');await page.locator('input[name=faction][value=han]').check();await page.locator('#begin').click();await waitIdle(page);await tacticalDismiss(page);
+  const raw=()=>page.evaluate(async()=>{const r=await fetch('/api/save');return r.json();});
+  const before=await raw();await expect(page.locator('#tutorial-start')).toBeVisible();await page.locator('#tutorial-start').click();await expect(page.locator('#tutorial-title')).toHaveText('最初の3旬・操作ガイド');
+  await page.locator('#city-jump').selectOption('henan');await expect(page.locator('#game-tutorial')).toContainText('兵の編制を確定する');expect(await raw()).toEqual(before);
+  await page.locator('#tutorial-focus').click();expect(['allocate','city-command-tab-army']).toContain(await page.evaluate(()=>document.activeElement?.id));expect(await raw()).toEqual(before);
+  await openAllocation(page);const input=page.locator('#allocation-troops'),oldAmount=Number(await input.inputValue()),maximum=Number(await input.getAttribute('max')),amount=String(oldAmount<maximum?oldAmount+1:Math.max(0,oldAmount-1));await input.fill(amount);await page.locator('#confirm-allocation').click();await waitIdle(page);await expect(page.locator('#allocation-troops')).toHaveValue(amount);await closeDialog(page);await waitIdle(page);
+  await expect(page.locator('#game-tutorial')).toContainText('勢力の内政官を2人任命する');
+  await page.locator('#tutorial-focus').click();await page.locator('#faction-domestic').click();
+  const officers=await page.locator('#office-civil option').evaluateAll(rows=>rows.map(row=>row.value).filter(value=>/^(?:[0-9]+|clerk-[0-9]+)$/.test(value)));expect(officers.length).toBeGreaterThan(1);
+  await page.locator('#office-civil').selectOption(officers[0]);await page.locator('#office-military').selectOption(officers[1]);await page.locator('#save-domestic').click();await waitIdle(page);if(await page.locator('#dialog').isVisible())await closeDialog(page);await tacticalDismiss(page);
+  await expect(page.locator('#game-tutorial')).toContainText('行軍の見積りを確認する');const quotedBefore=await raw();
+  await clickCityCommand(page,'depart');const destination=await page.locator('#world-map .city-hit.action-target').first().getAttribute('data-city');await page.locator('#city-jump').selectOption(destination);
+  await page.locator('input[name=depart-officer]:enabled').first().check();await page.locator('#review-departure').click();await expect(page.locator('#departure-estimate')).not.toBeEmpty();await expect(page.locator('#game-tutorial')).toContainText('最初の3旬を進める');expect(await raw()).toEqual(quotedBefore);await closeDialog(page);
+  await page.locator('#tutorial-end').click();await expect(page.locator('#game-tutorial')).toHaveCount(0);expect(await raw()).toEqual(quotedBefore);
+  await page.locator('#utility-menu summary').click();await page.locator('#tutorial').click();await expect(page.locator('#game-tutorial')).toBeVisible();expect(await raw()).toEqual(quotedBefore);
+  const menu=page.locator('#utility-menu');if(await menu.getAttribute('open')===null)await menu.locator('summary').click();await page.locator('#language').selectOption('zh-Hant');await menu.locator('summary').click();await expect(page.locator('#tutorial-title')).toHaveText('最初三旬操作指引');expect(await raw()).toEqual(quotedBefore);
+  await page.screenshot({path:testInfo.outputPath('three-turn-guide.png'),fullPage:false});
+  await page.reload();await enterScenarioMenu(page);await expect(page.locator('html')).toHaveAttribute('lang','zh-Hant');await expect(page.locator('#game-tutorial')).toHaveCount(0);
+  expect(errors.get(page)).toEqual([]);
+ });
+});

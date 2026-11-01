@@ -1,0 +1,6 @@
+.game-tutorial{border:1px solid currentColor;padding:8px;margin:0 0 10px;font-size:14px;line-height:1.45;background:var(--paper,#ffd4c8);color:var(--ink,#000)}
+.game-tutorial h3{font-size:15px;margin:0 0 5px}.game-tutorial p{margin:5px 0}.game-tutorial-progress{font-variant-numeric:tabular-nums}
+.game-tutorial-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.game-tutorial button{min-height:44px;font-size:14px;padding:4px 8px;white-space:normal}
+.game-tutorial-offer{display:contents}.game-tutorial-offer button{min-width:44px;min-height:44px;flex:none;font-size:13px;padding:4px 6px}
+.game-tutorial-target{outline:3px solid #0b59bc!important;outline-offset:2px}
+#world-map .city-hit.game-tutorial-target{outline:none!important;stroke:#fff;stroke-width:3;stroke-dasharray:4 2}

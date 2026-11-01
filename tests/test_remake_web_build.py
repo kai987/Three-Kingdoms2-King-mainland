@@ -340,9 +340,22 @@ class WebReleaseArtifact(unittest.TestCase):
                              'WASM and Python must share the dated loyalty relationship policy')
             self.assertFalse(any(name.endswith(('.pyc', '.nes'))
                 or '/config/' in name and name not in public_rules for name in names))
-        previews = json.loads((self.output / self.manifest['previews']['url']).read_text())
+        from remake.preview_transport import unpack
+        row = self.manifest['previews']
+        self.assertEqual(row['encoding'], 'gzip')
+        raw = gzip.decompress((self.output / row['url']).read_bytes())
+        self.assertEqual(len(raw), row['bytes'])
+        self.assertEqual(WEB.sha256(raw), row['sha256'])
+        previews = unpack(json.loads(raw))
         self.assertEqual([row['id'] for row in previews], [row['id'] for row in self.manifest['catalogs']])
         self.assertTrue(all(row['initial_owners'] and row['faction_resources'] for row in previews))
+        # Compare every field with the independent local/list route, not only
+        # IDs or the same transport decoder run on both sides.
+        from remake.session import CampaignSession
+        index = json.loads((ROOT / 'game/data/campaigns/index.json').read_text())
+        expected = CampaignSession([ROOT / 'game/data' / name
+                                    for name in index['catalogs']])._scenario_previews()
+        self.assertEqual(previews, expected)
 
     def test_publication_hashes_and_cloud_callback_boundaries(self):
         identity = json.loads((self.output / 'runtime/build.json').read_text())

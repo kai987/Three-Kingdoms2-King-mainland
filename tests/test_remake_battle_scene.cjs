@@ -439,6 +439,14 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
  }
  // Native artwork must remain on screen for actor-less retreat, and strike must actually render an impact.
  const nativeManifest=JSON.parse(fs.readFileSync(path.join(ROOT,'game/assets/battle-original/index.json'),'utf8'));
+ // A reconciled battle view keeps its canvas/context/observer between selections.
+ {
+  const env=environment({manifest:nativeManifest}),scene=env.api.create();scene.mount(env.host,first.before);await scene.load();
+  let width=env.surface.width,height=env.surface.height,writes=0;const observer=env.observers[0],count=env.observers.length;
+  Object.defineProperty(env.surface,'width',{get:()=>width,set:value=>{width=value;writes++;}});Object.defineProperty(env.surface,'height',{get:()=>height,set:value=>{height=value;writes++;}});
+  scene.mount(env.host,first.before,{actor:first.payload.actor});assert.equal(writes,0,'Selection changes must not clear/reallocate an unchanged backing canvas');assert.equal(env.observers.length,count);assert.equal(observer.disconnects,0);
+  scene.dispose();assert.equal(observer.disconnects,1);assert.equal(env.rafs.size,0);assert.equal(env.timers.size,0);
+ }
  // New soldier poses read only committed snapshots; they do not infer a new
  // saved troop class or create another damage/randomness calculation.
  {

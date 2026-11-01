@@ -132,7 +132,7 @@ class ScopePlanTests(unittest.TestCase):
         self.assertFalse(any(result[field] for field in ('native', 'rules', 'soak', 'resupply')))
         self.assertEqual(result['python_groups'], ['global'])
 
-    def test_real_cover_plan_selects_four_browser_cases_and_eight_viewports(self):
+    def test_real_cover_plan_selects_five_browser_cases_and_ten_viewports(self):
         for path in ('game/loading-cover.js', 'game/loading-cover.css', 'game/audio.js'):
             self.repo.write(path, 'cover change\n')
         self.repo.save()
@@ -144,8 +144,8 @@ class ScopePlanTests(unittest.TestCase):
         selection = json.loads(output)
         self.assertEqual(selection['groups'], ['boot', 'audio', 'cloud'])
         self.assertEqual({row['id'] for row in selection['cases']},
-                         {'title-cover', 'recovery-title', 'dialogs-save', 'boot-retry'})
-        self.assertEqual(len(selection['cases']) * 2, 8)
+                         {'title-cover', 'recovery-title', 'dialogs-save', 'boot-retry', 'first-session-guide'})
+        self.assertEqual(len(selection['cases']) * 2, 10)
 
     def test_scenario_source_and_generated_fingerprints_do_not_widen_gameplay_scope(self):
         path = 'game/config/campaigns/scenarios/194-06.json'
@@ -291,6 +291,69 @@ class ScopePlanTests(unittest.TestCase):
         self.assertFalse(any(result[field] for field in
                              ('full', 'docs_only', 'native', 'rules', 'soak', 'resupply')))
         self.assertEqual(result['publish'], publish)
+
+    def test_duel_art_sources_configuration_and_regressions_keep_related_checks(self):
+        for path in ('game/config/duel-appearances.json',
+                     'tools/battle-enhancement/build.cjs',
+                     'art/battle-enhancement-v1/studies/sword.png',
+                     'art/battle-enhancement-v2/prompts/bow.txt',
+                     'art/battle-enhancement-v2/generation.json',
+                     'tests/test_remake_battle_enhancement.cjs',
+                     'tests/test_remake_battle_scene.cjs',
+                     'tests/test_remake_duel_appearance.cjs',
+                     'tests/test_remake_battle_enhanced_static.py'):
+            with self.subTest(path=path):
+                head = self.changed(path, 'duel presentation-only input\n')
+                result = self.repo.plan(event_name='push', ref='refs/heads/main')
+                self.assertEqual(result['mode'], 'scoped', result['reasons'])
+                self.assertEqual(set(result['groups']), PLAN.BASE_GROUPS | {'battle', 'people'})
+                self.assertEqual(result['python_groups'], ['global'])
+                self.assertFalse(any(result[field] for field in
+                                     ('full', 'native', 'rules', 'soak', 'resupply')))
+                self.assertTrue(result['web'])
+                self.assertEqual(result['publish'], not path.startswith('art/'))
+                self.repo.base = head
+
+    def test_duel_source_allowlist_does_not_hide_unknown_generation_or_weapon_inputs(self):
+        for path in ('art/battle-enhancement-v3/studies/sword.png',
+                     'art/battle-enhancement-v2/prompts/unregistered-weapon.txt',
+                     'art/battle-enhancement-v1/studies/bow.png',
+                     'art/battle-enhancement-v2/studies/sword.txt',
+                     'tools/battle-enhancement/new-tool.cjs',
+                     'game/config/duel-rules.json'):
+            with self.subTest(path=path):
+                head = self.changed(path)
+                self.assertTrue(self.repo.plan()['full'])
+                self.repo.base = head
+
+    def test_duel_builder_readme_is_documentation(self):
+        self.changed('tools/battle-enhancement/README.md', 'Packing instructions\n')
+        result = self.repo.plan(event_name='push', ref='refs/heads/main')
+        self.assertEqual(result['mode'], 'docs')
+        self.assertFalse(result['web'])
+
+    def test_offline_balance_harness_only_keeps_global_smoke_without_publication(self):
+        for path in ('tools/campaign-balance/run.py', 'tests/test_remake_campaign_balance.py'):
+            head = self.changed(path, 'bounded observer helper\n')
+            result = self.repo.plan(event_name='push', ref='refs/heads/main')
+            self.assertEqual(result['mode'], 'scoped', result['reasons'])
+            self.assertEqual(set(result['groups']), PLAN.BASE_GROUPS)
+            self.assertEqual(result['python_groups'], ['global'])
+            self.assertFalse(any(result[field] for field in ('full', 'native', 'rules', 'soak', 'resupply', 'publish')))
+            self.repo.base = head
+        self.changed('tools/campaign-balance/unknown_runner.py')
+        self.assertTrue(self.repo.plan()['full'])
+
+    def test_battle_view_and_tutorial_are_explicit_browser_modules(self):
+        head = self.changed('game/battle-view.js')
+        result = self.repo.plan()
+        self.assertEqual(result['mode'], 'scoped')
+        self.assertEqual(set(result['groups']), PLAN.BASE_GROUPS | {'battle', 'audio'})
+        self.repo.base = head
+        self.changed('game/tutorial.js')
+        result = self.repo.plan()
+        self.assertEqual(result['groups'], list(PLAN.GROUPS))
+        self.assertFalse(result['full'])
 
     def assert_full_scope(self, result, *, publish=False):
         self.assertEqual(result['mode'], 'full', result['reasons'])

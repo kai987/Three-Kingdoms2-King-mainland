@@ -113,9 +113,11 @@ python3 -B tools/campaign-soak/run.py \
 | 改動 | 選擇的驗證 |
 | --- | --- |
 | 白名單內README、純說明Markdown | 空白、UTF-8與倉庫內聯相對連結；不建置或部署遊戲 |
-| 獨立封面、圖標、音頻 | 全局輕量校驗、相關Node夾具、封面／音頻／開始入口／失敗重試／認證回跳／存讀恢復的8個視口用例 |
+| 獨立封面、圖標、音頻 | 全局輕量校驗、相關Node夾具、封面／音頻／開始入口／失敗重試／認證回跳／存讀恢復／初始引導的10個視口用例 |
 | `art/soldier-combat-actions-v1/`的直接層提示詞TXT、參考／原畫PNG | `boot,battle,cloud`相關檢查、來源與成品雜湊／重建校驗；只改這些來源或搭配說明文檔時不發布遊戲 |
 | 兵士動畫的12個固定公開檔案、`tools/soldier-combat-actions/build.cjs` | 同一戰鬥範圍，保留圖集／路徑／調色盤／尺寸、渲染、構建和相關桌面／觸屏驗收；main通過後正常發布 |
+| 單挑外觀設定、已登記的第一／二版原畫與提示詞、打包工具及對應回歸 | `boot,battle,people,cloud`與全局輕量檢查，保留PNG／雜湊／完整邊界／原圖保護／雙語與實際裝備綁定；只改原畫或提示詞不發布 |
+| `tools/campaign-balance/run.py`及其固定的短測試 | 全局契約與小型控制fixture測試、啟動相關檢查；不執行長時間平衡觀測或全戰役矩陣，專用工具變更不發布遊戲 |
 | 全局`app.js`、共用樣式或語言入口 | 全局輕量校驗、完整瀏覽器組；不因純UI改動執行規則矩陣及跨年AI |
 | 單個`scenarios/*.json`的獨立開局資料 | 全29劇本身份／引用校驗、指定ID的生成位元組與真實開局、3旬正常命令、完整存檔／RNG雙後端對照、相關歷史及瀏覽器用例 |
 | 共享武將／城池／道路／規則、遊戲構建器、CI基礎設施 | 完整驗證；劇本內覆寫公共規則也不視為局部開局變更 |
@@ -124,7 +126,7 @@ python3 -B tools/campaign-soak/run.py \
 
 兵士動畫來源只認直接位於`prompts/*.txt`、`references/*.png`、`studies/*.png`的安全檔名；公開資料只認現有10張PNG、`index.json`及`provenance.json`。未知副檔名、子目錄、相似版本目錄或與共享規則混改仍回退全量；更名同時核對舊、新路徑。已使用的提示詞、參考圖與原畫雜湊都記在來源證明內，修改後須用`node tools/soldier-combat-actions/build.cjs --write`同步成品與來源指紋，再以`--check`驗證。這個範圍使用Python的`global`組，保留全目錄輕量整合檢查，省去規則／跨年回放矩陣及無關的全劇本瀏覽器開局循環。分類器或CI策略自身修改仍完整驗證。
 
-Python與瀏覽器分別使用[`test-groups.json`](../tools/ci/test-groups.json)和[`cases.json`](../tools/browser-tests/cases.json)登記依賴。Python模組新增而未登記、瀏覽器用例未登記、計畫含未知組／未知ID，或篩選後沒有任何用例，都會失敗。`python_groups`與瀏覽器`groups`分開，避免全局UI測試意外拉入全部後端規則。瀏覽器包含33用例各兩個視口的完整66項模式；歷史專題按明列ID選入，其必要跨劇本比較保留，一般深度開局循環只使用指定ID。
+Python與瀏覽器分別使用[`test-groups.json`](../tools/ci/test-groups.json)和[`cases.json`](../tools/browser-tests/cases.json)登記依賴。Python模組新增而未登記、瀏覽器用例未登記、計畫含未知組／未知ID，或篩選後沒有任何用例，都會失敗。`python_groups`與瀏覽器`groups`分開，避免全局UI測試意外拉入全部後端規則。完整模式執行登記簿內全部用例各兩個視口；歷史專題按明列ID選入，其必要跨劇本比較保留，一般深度開局循環只使用指定ID。
 
 行軍測試另拆成純向量／ABI矩陣與[真實存檔相容性](../tests/test_remake_march_save_compat.py)。局部劇本仍檢查8條原始存檔／RNG基線與雙向後端讀檔；大向量矩陣留在完整模式。只省略未被這些基線使用的昂貴UI視圖，生產規則、原金標、完整狀態與存檔摘要不變；實際視圖由WASM回放和瀏覽器檢查。
 
@@ -140,7 +142,9 @@ TK2_TEST_PLAN=build/ci/full-plan.json node tools/browser-tests/node_modules/@pla
   --config tools/browser-tests/playwright.config.mjs --list
 ```
 
-完整模式使用Python／Rust各6分片、6組跨年種子、Rust格式／lint／原生／WASM差分，以及全部現有素材與瀏覽器驗收；桌面／觸控各拆2分片，啟動前驗證各裝置的用例並集無缺漏、無重複。可在GitHub Actions的`Web campaign checks`手動選`force_full`；每天日本時間03:00另跑一次完整回歸，定期／手動驗證不取消main推送的發布CI，也不自動發布網站。
+完整模式使用Python／Rust各6分片、6組跨年種子、Rust格式／lint／原生／WASM差分，以及全部現有素材與瀏覽器驗收；桌面／觸控各拆2分片，啟動前驗證各裝置的用例並集無缺漏、無重複。瀏覽器依[`case-durations.json`](../tools/browser-tests/case-durations.json)中經審查的各用例實測時間，把長用例優先放進預估較短的分片，不提高單機的`workers:1`。缺少歷史的新用例使用明列的120秒預估，仍保留在覆蓋中；極小範圍的空分片會明列零用例，不虛構執行。可在GitHub Actions的`Web campaign checks`手動選`force_full`；每天日本時間03:00另跑一次完整回歸，定期／手動驗證不取消main推送的發布CI，也不自動發布網站。
+
+[`verify-shards.mjs`](../tools/browser-tests/verify-shards.mjs)以真正的固定版Playwright執行`--list`，核對時間分配後的每片與完整所選用例。CI使用[`run-shard.mjs`](../tools/browser-tests/run-shard.mjs)執行相同分片，不能再同時套用Playwright的`--shard`二次篩選。每片的`tk2-browser-case-timings-v1`報告記錄用例ID、裝置、每次重試狀態與時間，不包含遊戲存檔或私人輸入。最終閘門在所有必要工作成功後，檢查四份報告都屬於目前commit、每個所選用例每裝置恰好一次，產生可讀摘要與`suggested-case-durations.json`。更新候選只保存在產物，不會自動改選擇器或時間基準；維護者審查後才更新倉庫基準。上述時間是用例累計，不等同安裝、下載與上傳在內的runner總時間。
 
 ## CI發布門檻
 
@@ -148,7 +152,7 @@ TK2_TEST_PLAN=build/ci/full-plan.json node tools/browser-tests/node_modules/@pla
 
 戰場移動驗收觀察穩定舞台中的實際旗標中間像素，從名單焦點測試四方向及Enter，再比較移動前後機動力、亂數與完整存檔。普通交鋒須看到即時回擊，確認雙方兵力下降且只扣發起方2點；演出自然結束或略過後，不能再造成第二次傷害。另保留地圖圖片失敗時的同格點選與讀檔回歸。
 
-[共用流程](../.github/workflows/web-checks.yml)只建置一次`candidate-web-SHA`，先驗真實WASM與CPU回放；桌面／觸屏在兩個獨立runner下載同一份候選包，各自檢查commit、檔案清單和內容SHA，再執行所需用例。物流／補給有獨立的條件工作。
+[共用流程](../.github/workflows/web-checks.yml)只建置一次`candidate-web-SHA`，先驗真實WASM與CPU回放；桌面／觸屏各兩片在獨立runner下載同一份候選包，各自檢查commit、檔案清單和內容SHA，再執行所需用例。物流／補給有獨立的條件工作。
 
 [最終閘門](../tools/ci/gate.py)根據計畫核對每項必要工作，失敗、取消、意外跳過或缺失都拒絕；通過後再次驗證原候選包，才保留`verified-web-SHA`。按計畫不需要的工作可顯示skipped，不能冒充已測過。
 

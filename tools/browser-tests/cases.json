@@ -444,6 +444,23 @@
         "mainland217-07"
       ],
       "scenario_scope": "fixed"
+    },
+    {
+      "id": "first-session-guide",
+      "title": "initial language, compact previews and optional three-turn guidance preserve real commands",
+      "groups": [
+        "boot",
+        "map",
+        "scenarios",
+        "people",
+        "economy",
+        "logistics",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland184-02"
+      ],
+      "scenario_scope": "fixed"
     }
   ]
 }

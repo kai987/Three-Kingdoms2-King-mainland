@@ -804,6 +804,23 @@
         "battle",
         "save"
       ]
+    },
+    "tests/test_remake_campaign_balance.py": {
+      "tier": "global",
+      "groups": [
+        "battle",
+        "economy",
+        "logistics",
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_preview_transport.py": {
+      "tier": "global",
+      "groups": [
+        "boot",
+        "scenarios",
+        "map"
+      ]
     }
   }
 }

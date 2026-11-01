@@ -303,10 +303,12 @@
    canvas.style.width=Math.max(1,Math.floor(logicalWidth*scale))+'px';canvas.style.height=Math.max(1,Math.floor(logicalHeight*scale))+'px';
   }
   function mount(element,current,selected={}){
-   resizeObserver?.disconnect();host=element;view=current;selection=selected;loadoutSignature='';
-   canvas=host?.querySelector?.('[data-battle-canvas]');ctx=null;
-   if(canvas){canvas.width=WIDTH*RESOLUTION_SCALE;canvas.height=HEIGHT*RESOLUTION_SCALE;try{ctx=canvas.getContext('2d',{alpha:false});}catch{}canvas.onclick=clickMap;canvas.onkeydown=mapKeydown;}
-   if(root.ResizeObserver&&host){resizeObserver=new root.ResizeObserver(fit);resizeObserver.observe(host.querySelector('.nes-battle-viewport')||host);}
+   const nextCanvas=element?.querySelector?.('[data-battle-canvas]'),sameSurface=host===element&&canvas===nextCanvas&&!!ctx;
+   if(!sameSurface){resizeObserver?.disconnect();resizeObserver=null;}
+   host=element;view=current;selection=selected;if(!sameSurface)loadoutSignature='';canvas=nextCanvas;
+   if(!sameSurface){ctx=null;if(canvas){canvas.width=WIDTH*RESOLUTION_SCALE;canvas.height=HEIGHT*RESOLUTION_SCALE;try{ctx=canvas.getContext('2d',{alpha:false});}catch{}}}
+   if(canvas){canvas.onclick=clickMap;canvas.onkeydown=mapKeydown;}
+   if(!sameSurface&&root.ResizeObserver&&host){resizeObserver=new root.ResizeObserver(fit);resizeObserver.observe(host.querySelector('.nes-battle-viewport')||host);}
    host?.querySelector?.('[data-battle-skip]')?.addEventListener('click',skip);
    const labels=host?.querySelector?.('[data-soldier-label-toggle]');if(labels)labels.onclick=toggleSoldierLabels;
    if(host)host.dataset.sceneAssets=assetStatus;
@@ -658,7 +660,7 @@
    const box=host?.querySelector?.('[data-duel-loadouts]');if(!box)return;
    const ids=duelParticipants(),disabled=playing||queue.length>0;box.hidden=!ids.length;
    if(!ids.length){box.innerHTML='';loadoutSignature='';return;}
-   const signature=JSON.stringify([ids,locale(),disabled,ids.map(id=>{const p=duelProfile(id);return p?[p.weapon,p.horse]:null;})]);if(signature===loadoutSignature)return;
+   const signature=JSON.stringify([ids,locale(),disabled,ids.map(id=>{const p=duelProfile(id);return p?[p.weapon,p.horse,p.weapon_label,p.horse_label,p.weapon_variants,p.horse_variants]:null;})]);if(signature===loadoutSignature)return;
    loadoutSignature=signature;const open=box.querySelector?.('details')?.open===true;
    box.innerHTML=`<details ${open?'open':''}><summary>${text('單挑裝備與坐騎（兵器依實際裝備）','一騎討ちの装備と騎馬（武器は実装備に対応）')}</summary><div class="duel-loadout-grid">${ids.map(id=>{
     const p=duelProfile(id);if(!p)return '';

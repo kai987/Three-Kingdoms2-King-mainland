@@ -6,7 +6,6 @@ Each browser worker owns one session; no shared HTTP game service is involved.
 """
 from .view_transport import ViewTransport
 from collections import OrderedDict
-from copy import deepcopy
 import json
 from pathlib import Path
 import re
@@ -16,6 +15,7 @@ from .campaign import Catalog, GameError
 from .json_boundary import DepthLimitError, loads
 from .march_core import config_for, using_backend
 from .session import CampaignSession, DEFAULT_SCENARIO
+from .preview_transport import unpack as unpack_previews
 
 
 MAX_BODY_BYTES = 2 * 1024 * 1024
@@ -55,7 +55,7 @@ def _strict_json(body):
 
 class BrowserRuntime:
     """One isolated, lazy two-catalog session behind a fixed JSON API."""
-    def __init__(self, catalog_paths: dict, opening_previews: list,
+    def __init__(self, catalog_paths: dict, opening_previews,
                  initial_scenario: str = DEFAULT_SCENARIO):
         if (not isinstance(catalog_paths, dict) or not catalog_paths
                 or len(catalog_paths) > 256
@@ -71,6 +71,7 @@ class BrowserRuntime:
             paths[key] = Path(path)
         if len(set(paths.values())) != len(paths):
             raise ValueError('Each scenario requires a distinct catalog path')
+        opening_previews = unpack_previews(opening_previews, expected_ids=paths)
         if (not isinstance(opening_previews, list)
                 or any(not isinstance(row, dict) or not isinstance(row.get('id'), str)
                        for row in opening_previews)):
@@ -81,9 +82,9 @@ class BrowserRuntime:
             raise ValueError('Opening previews must match the known scenarios')
         if not isinstance(initial_scenario, str) or initial_scenario not in paths:
             raise ValueError('Unknown initial scenario')
-        # JSON-only configuration cannot retain caller-owned mutable containers.
-        previews = deepcopy(opening_previews)
-        _encode(previews)
+        # The decoder has already validated JSON, bounded the expansion and
+        # detached every mutable container; avoid another full copy/encoding.
+        previews = opening_previews
         self._view_transport = ViewTransport()
         self.catalog_paths = paths
         with using_backend('python'):

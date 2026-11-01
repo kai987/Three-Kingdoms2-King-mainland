@@ -14,7 +14,7 @@ export default defineConfig({
  fullyParallel:false,
  workers:1,
  retries:0,
- reporter:[['list'],['html',{outputFolder:root+'build/browser-report',open:'never'}]],
+ reporter:[['list'],['html',{outputFolder:root+'build/browser-report',open:'never'}],[fileURLToPath(new URL('./timing-reporter.cjs',import.meta.url))]],
  use:{
   channel:'chromium',
   baseURL:'http://127.0.0.1:18917/Three-Kingdoms2-King-mainland/',

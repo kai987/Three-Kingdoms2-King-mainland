@@ -2,8 +2,54 @@
 'use strict';
 window.GameI18n=(()=>{
  const supported=['zh-Hant','ja'],storageKey='three-kingdoms-language';
- let locale='zh-Hant',stages=[],resources=[],exact=new Map(),words=new Map(),wordPattern=null,patterns=[],active=false;
+ function initialLocale(){
+  try{const preferred=typeof navigator==='object'&&(navigator.languages?.[0]||navigator.language);return typeof preferred==='string'&&/^ja(?:-|$)/i.test(preferred)?'ja':'zh-Hant';}catch{return 'zh-Hant';}
+ }
+ let locale=initialLocale(),stages=[],resources=[],exact=new Map(),words=new Map(),wordPattern=null,patterns=[],active=false;
  try{const saved=localStorage.getItem(storageKey);if(supported.includes(saved))locale=saved;}catch{}
+ // New UI copy uses stable IDs. The legacy sentence translator remains for
+ // existing screens, names and historical logs while those callers migrate.
+ const messageCatalog=new Map(),messageId=/^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*$/,placeholder=/\{([A-Za-z][A-Za-z0-9_]*)\}/g;
+ function parameters(template){
+  const fields=[...new Set([...template.matchAll(placeholder)].map(match=>match[1]))].sort();
+  if(/[{}]/.test(template.replace(placeholder,'')))throw Error('Invalid message placeholder');
+  return fields;
+ }
+ function registerMessages(rows){
+  if(!rows||typeof rows!=='object'||Array.isArray(rows))throw Error('Message catalog must be an object');
+  const checked=[];
+  for(const[id,row]of Object.entries(rows)){
+   if(id.length>128||!messageId.test(id)||!row||typeof row!=='object'||Array.isArray(row)||Object.keys(row).sort().join(',')!=='ja,zh-Hant')throw Error('Invalid bilingual message: '+id);
+   if(supported.some(language=>typeof row[language]!=='string'||!row[language].trim()||row[language].length>4000))throw Error('Invalid message text: '+id);
+   const fields=parameters(row['zh-Hant']);if(fields.join(',')!==parameters(row.ja).join(','))throw Error('Message parameters differ: '+id);
+   const previous=messageCatalog.get(id);
+   if(previous&&supported.some(language=>previous.text[language]!==row[language]))throw Error('Conflicting message ID: '+id);
+   checked.push([id,Object.freeze({text:Object.freeze({'zh-Hant':row['zh-Hant'],ja:row.ja}),fields:Object.freeze(fields)})]);
+  }
+  // Reject an invalid catalog atomically; do not install its valid prefix.
+  for(const[id,row]of checked)messageCatalog.set(id,row);
+  return checked.length;
+ }
+ function message(id,values={},language=locale){
+  const row=messageCatalog.get(id);if(!row)throw Error('Unknown message ID: '+id);
+  if(!supported.includes(language))throw Error('Unsupported message language');
+  if(!values||typeof values!=='object'||Array.isArray(values)||Object.keys(values).sort().join(',')!==row.fields.join(','))throw Error('Invalid message parameters: '+id);
+  for(const key of row.fields)if(typeof values[key]!=='string'&&(typeof values[key]!=='number'||!Number.isFinite(values[key])))throw Error('Invalid message parameter: '+key);
+  // Plain text only. HTML callers must escape the returned text as usual.
+  return row.text[language].replace(placeholder,(_,key)=>String(values[key]));
+ }
+ registerMessages({
+  'common.cancel':{'zh-Hant':'取消',ja:'キャンセル'},
+  'common.close':{'zh-Hant':'關閉',ja:'閉じる'},
+  'common.next':{'zh-Hant':'下一步',ja:'次へ'},
+  'common.previous':{'zh-Hant':'上一步',ja:'戻る'},
+  'common.skip':{'zh-Hant':'略過',ja:'スキップ'},
+  'common.progress':{'zh-Hant':'{current}／{total}',ja:'{current}／{total}'},
+  'battle.duel.instructions':{
+   'zh-Hant':'突擊直接進攻；防守降低損傷；佯攻克制防守，但容易被突擊克制。捨命一擊有30%機率造成雙倍基礎傷害，失敗自損10～30體力。體力耗盡者敗退，二十合仍未分勝負則返回戰場。',
+   ja:'突撃は直接攻撃、防御は被害を軽減します。牽制は防御に強く、突撃に弱くなります。捨て身の攻撃は30%の確率で基本ダメージの2倍を与え、失敗すると体力を10～30失います。体力が尽きた武将は敗退し、20合で決着しなければ戦場へ戻ります。'
+  }
+ });
  const originals=new WeakMap(),attributeOriginals=new WeakMap(),missing=new Set(),cache=new Map(),scenarioResources=[];let scenarioSignature='';
  const escapePattern=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
  const protectedDisplayTokens=/(?:[a-z][a-z0-9+.-]*:\/\/|www\.)[^\s<>"'`]+|[A-Za-z_][A-Za-z0-9_.:-]*(?:[_/-][\p{L}\d_.:/?&=%#-]+)+/giu;
@@ -137,5 +183,5 @@ window.GameI18n=(()=>{
   stages=(conversion.stages||[]).map(stage=>({phrases:trie(stage.phrases),characters:stage.characters||{}}));resources=translations;rebuild();active=true;
   document.addEventListener('change',event=>{if(event.target.matches('#language,[data-language-picker]'))setLocale(event.target.value);});apply();
  });
- return {ready,t,traditional,resourceText,setLocale,registerScenarios,apply,missing,get locale(){return locale;}};
+ return {ready,t,traditional,resourceText,setLocale,registerScenarios,registerMessages,message,apply,missing,get messageIds(){return Object.freeze([...messageCatalog.keys()].sort());},get locale(){return locale;}};
 })();

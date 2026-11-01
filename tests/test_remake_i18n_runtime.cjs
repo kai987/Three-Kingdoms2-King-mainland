@@ -112,5 +112,51 @@ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'game/i
  const storageBefore=[...storage];assert.equal(i18n.setLocale('zh-CN'),false);assert.equal(i18n.locale,'zh-Hant');assert.deepEqual([...storage],storageBefore);
  assert.equal(input.value,'13579');assert.equal(input.checked,true);assert.equal(language.children[0].children[0].data,'繁體中文');assert.equal(language.children[1].children[0].data,'日本語');
  assert.equal(storage.get('three-kingdoms-save'),'unchanged-game-save');assert.equal(JSON.stringify(rows),before);assert.equal(requests.length,3);assert(requests.every(url=>url.startsWith('/locales/')));
- console.log(`i18n runtime: ${cases.length} translation cases, ${resourceCases.length} bilingual resource cases, ${rows.length} scenario titles, native DOM restoration, immutable names/IDs/URLs/form/save and invalid-locale checks passed`);
+ // Stable IDs validate both languages and every variable before installing
+ // a catalog. Sentence edits no longer change the caller's translation key.
+ assert(i18n.messageIds.includes('battle.duel.instructions'));assert(Object.isFrozen(i18n.messageIds));
+ const messages={'test.named-progress':{'zh-Hant':'{name}：{current}／{total}',ja:'{name}：{current}／{total}'}};
+ assert.equal(i18n.registerMessages(messages),1);
+ assert.equal(i18n.message('test.named-progress',{name:'關羽',current:0,total:10},'zh-Hant'),'關羽：0／10');
+ assert.equal(i18n.message('common.next',{},'ja'),'次へ');
+ assert.equal(i18n.message('common.progress',{current:2,total:5},'zh-Hant'),'2／5');
+ assert.equal(i18n.message('test.named-progress',{name:'$&<字>{name}',current:2,total:5},'ja'),'$&<字>{name}：2／5','Substitutions are literal plain text, without recursive templates or replacement-token expansion');
+ messages['test.named-progress'].ja='changed';assert.equal(i18n.message('test.named-progress',{name:'A',current:1,total:2},'ja'),'A：1／2','A caller cannot mutate an installed translation');
+ assert.equal(i18n.registerMessages({'common.next':{'zh-Hant':'下一步',ja:'次へ'}}),1,'Identical registrations are idempotent');
+ for(const invalid of [null,[],{'test.missing-ja':{'zh-Hant':'文'}},{'test.missing-tc':{ja:'文'}},{'Test.bad':{'zh-Hant':'文',ja:'文'}},{'test.extra-language':{'zh-Hant':'文',ja:'文',en:'text'}},{'test.mismatched':{'zh-Hant':'{name}',ja:'{other}'}},{'test.unclosed':{'zh-Hant':'{name',ja:'{name'}},{'test.empty':{'zh-Hant':'',ja:'文'}},{'common.next':{'zh-Hant':'不同',ja:'次へ'}}])assert.throws(()=>i18n.registerMessages(invalid));
+ const installed=[...i18n.messageIds];
+ assert.throws(()=>i18n.registerMessages({'test.atomic-prefix':{'zh-Hant':'文',ja:'文'},'test.atomic-invalid':{'zh-Hant':'文'}}));
+ assert.deepEqual([...i18n.messageIds],installed,'Failed catalog registration cannot install a valid prefix');
+ for(const invalid of [{name:'A',current:1},{name:'A',current:1,total:2,unused:3},{name:null,current:1,total:2},{name:'A',current:NaN,total:2},{name:'A',current:Infinity,total:2},null,[]])assert.throws(()=>i18n.message('test.named-progress',invalid,'ja'));
+ assert.throws(()=>i18n.message('test.unknown'));assert.throws(()=>i18n.message('common.next',{},'en'));
+ assert.match(i18n.message('battle.duel.instructions',{},'ja'),/30%.*2倍.*10～30.*20合/);
+ assert(i18n.setLocale('ja'));assert.equal(i18n.message('common.next'),'次へ');assert(i18n.setLocale('zh-Hant'));assert.equal(i18n.message('common.next'),'下一步');
+
+ // Fresh boots choose only the primary browser language, then let a saved
+ // explicit preference override it. No locale or save is written on boot.
+ async function boot({navigator:browser,saved,blocked=false}={}){
+  const page=new Element('html'),events=[],values=new Map([['three-kingdoms-save','preserved']]),writes=[];
+  if(saved!==undefined)values.set('three-kingdoms-language',saved);
+  const doc={documentElement:page,querySelectorAll:()=>[],createTreeWalker:()=>({nextNode:()=>false}),addEventListener(){},dispatchEvent(event){events.push(event);}};
+  const env={...context,window:{},document:doc,localStorage:{getItem:key=>{if(blocked)throw Error('blocked storage');return values.get(key)??null;},setItem:(key,value)=>{if(blocked)throw Error('blocked storage');writes.push([key,value]);values.set(key,value);}},fetch:async url=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(path.join(root,'game',url),'utf8'))})};
+  if(browser!==undefined)env.navigator=browser;else delete env.navigator;
+  vm.createContext(env);vm.runInContext(fs.readFileSync(path.join(root,'game/i18n.js'),'utf8'),env);await env.window.GameI18n.ready;
+  return {i18n:env.window.GameI18n,page,values,writes,events};
+ }
+ const starts=[
+  [{navigator:{languages:['ja-JP','en-US'],language:'en-US'}},'ja'],
+  [{navigator:{languages:['en-US','ja-JP'],language:'ja-JP'}},'zh-Hant'],
+  [{navigator:{languages:[],language:'ja-JP'}},'ja'],
+  [{navigator:{languages:['zh-TW'],language:'ja-JP'}},'zh-Hant'],
+  [{navigator:{language:'JA-jp'}},'ja'],
+  [{navigator:{language:'en-US'},saved:'ja'},'ja'],
+  [{navigator:{language:'ja-JP'},saved:'zh-Hant'},'zh-Hant'],
+  [{navigator:{language:'ja-JP'},saved:'zh-CN'},'ja'],
+  [{navigator:{language:'ja-JP'},blocked:true},'ja'],
+  [{},'zh-Hant'],
+  [{navigator:{get languages(){throw Error('unavailable language list');}}},'zh-Hant'],
+ ];
+ for(const[settings,expected]of starts){const next=await boot(settings);assert.equal(next.i18n.locale,expected);assert.equal(next.page.lang,expected);assert.equal(next.writes.length,0);assert.equal(next.values.get('three-kingdoms-save'),'preserved');}
+ const denied=await boot({navigator:{language:'ja-JP'},blocked:true});assert(denied.i18n.setLocale('zh-Hant'));assert.equal(denied.i18n.locale,'zh-Hant');assert.equal(denied.events.length,1);assert.equal(denied.values.get('three-kingdoms-save'),'preserved');
+ console.log(`i18n runtime: ${cases.length} translation cases, ${resourceCases.length} bilingual resource cases, ${rows.length} scenario titles, ${starts.length} browser/preference boot cases, atomic bilingual message IDs/variables, native DOM restoration, immutable names/IDs/URLs/form/save and invalid-locale checks passed`);
 })().catch(error=>{console.error(error);process.exitCode=1;});

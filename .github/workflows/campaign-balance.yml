@@ -1,0 +1,66 @@
+name: Campaign balance observations
+
+on:
+  workflow_dispatch:
+    inputs:
+      turns:
+        description: Ten-day turns per independent campaign
+        type: choice
+        options: ['6', '12', '36']
+        default: '6'
+      seed:
+        description: Reproducible campaign seed (1 to 4294967295)
+        type: number
+        default: 3
+      difficulty:
+        description: Ordinary game difficulty
+        type: choice
+        options: [easy, normal, hard]
+        default: normal
+  schedule:
+    # Small daily observation batch, 06:20 Japan time. No publication gate.
+    - cron: '20 21 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: campaign-balance-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        era: [early, middle, late]
+    env:
+      MARCH_CORE_BACKEND: python
+      BALANCE_ERA: ${{ matrix.era }}
+      BALANCE_TURNS: ${{ github.event_name == 'workflow_dispatch' && inputs.turns || '6' }}
+      BALANCE_SEED: ${{ github.event_name == 'workflow_dispatch' && format('{0}', inputs.seed) || '3' }}
+      BALANCE_DIFFICULTY: ${{ github.event_name == 'workflow_dispatch' && inputs.difficulty || 'normal' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - name: Observe ordinary bounded campaigns
+        run: |
+          python -B tools/campaign-balance/run.py \
+            --eras "$BALANCE_ERA" --seeds "$BALANCE_SEED" \
+            --turns "$BALANCE_TURNS" --difficulty "$BALANCE_DIFFICULTY" \
+            --max-runs 6 --max-seconds 45 --max-commands 3000 \
+            --output "build/balance/$BALANCE_ERA.json"
+      - name: Retain daily comparison inputs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: campaign-balance-${{ matrix.era }}-${{ github.run_id }}
+          path: build/balance/*.json
+          if-no-files-found: warn
+          retention-days: 30

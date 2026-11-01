@@ -46,6 +46,17 @@ async function catalogData(row){
  const raw=await boundedBytes(new Response(stream),16*1024*1024);
  if(raw.length!==row.bytes)throw Error('Catalog size mismatch');await verified(raw,row.sha256);return raw;
 }
+async function previewData(row){
+ const zipped=await bytes(row.url,8*1024*1024,row.sha256);
+ let raw=zipped;
+ if(row.encoding!==undefined){
+  if(row.encoding!=='gzip'||!Number.isSafeInteger(row.bytes)||row.bytes<1||row.bytes>8*1024*1024)throw Error('Invalid preview encoding');
+  const stream=new Blob([zipped]).stream().pipeThrough(new DecompressionStream('gzip'));
+  raw=await boundedBytes(new Response(stream),8*1024*1024);
+  if(raw.length!==row.bytes)throw Error('Preview size mismatch');
+ }
+ return verified(raw,row.sha256);
+}
 function installCatalog(row,raw){
  py.FS.mkdirTree('/tk2/game/data/campaigns');py.FS.writeFile(row.path,raw);loaded.add(row.id);
  while(loaded.size>2){
@@ -83,7 +94,7 @@ const boot=(async()=>{
  const [runtime,bundle,previews,initialData]=await Promise.all([
   loadPyodide({indexURL:new URL('vendor/pyodide/',base).href}).then(value=>{runtimeReady=true;progress();return value;}),
   bytes(manifest.python_bundle.url,4*1024*1024,manifest.python_bundle.sha256).then(data=>verified(data,manifest.python_bundle.sha256)),
-  bytes(manifest.previews.url,8*1024*1024,manifest.previews.sha256).then(data=>verified(data,manifest.previews.sha256)),
+  previewData(manifest.previews),
   catalogData(initial)
  ]);
  py=runtime;stage='initializing';progress();py.unpackArchive(bundle,'zip',{extractDir:'/tk2'});installCatalog(initial,initialData);

@@ -26,10 +26,11 @@ function artifact(url){
  assert(resolved.startsWith(build+path.sep),'runtime artifacts stay inside the build');
  return fs.readFileSync(resolved);
 }
-const bundle=artifact(manifest.python_bundle.url),previewBytes=artifact(manifest.previews.url);
+const bundle=artifact(manifest.python_bundle.url),previewFile=artifact(manifest.previews.url),previewBytes=manifest.previews.encoding==='gzip'?gunzipSync(previewFile):previewFile;
 assert.equal(sha(bundle),manifest.python_bundle.sha256,'shipped Python bundle integrity');
 assert.equal(sha(previewBytes),manifest.previews.sha256,'shipped opening preview integrity');
-const previews=JSON.parse(decode(previewBytes));
+const packedPreviews=JSON.parse(decode(previewBytes));
+const previews=Array.isArray(packedPreviews)?packedPreviews:packedPreviews.rows.map(row=>({...row.values,...Object.fromEntries(Object.entries(row.refs).map(([field,index])=>[field,packedPreviews.shared[index].value]))}));
 assert.equal(previews.length,29);
 const initial=manifest.initial_scenario;
 const another=manifest.catalogs.find(row=>row.id!==initial)?.id;

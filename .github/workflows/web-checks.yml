@@ -410,7 +410,18 @@ jobs:
         run: |
           node tools/browser-tests/scope.cjs --plan "$TK2_TEST_PLAN"
           node tools/browser-tests/verify-shards.mjs "$BROWSER_PROJECT"
-          node tools/browser-tests/node_modules/@playwright/test/cli.js test --config tools/browser-tests/playwright.config.mjs --project "$BROWSER_PROJECT" --fully-parallel --shard "$BROWSER_SHARD/2"
+          node tools/browser-tests/run-shard.mjs "$BROWSER_PROJECT" "$BROWSER_SHARD"
+      - name: Retain bounded per-case timing data
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          # Stable per-commit names let a failed-job retry reuse the reports
+          # from its unchanged successful sibling jobs.
+          name: browser-timing-${{ matrix.project }}-shard-${{ matrix.shard }}-${{ github.sha }}
+          path: build/browser-timings/${{ matrix.project }}-shard-${{ matrix.shard }}.json
+          overwrite: true
+          if-no-files-found: error
+          retention-days: 7
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
@@ -465,6 +476,32 @@ jobs:
           python -c 'import os,pathlib;pathlib.Path("build/ci/needs.json").write_text(os.environ["JOB_RESULTS"])'
           python -B tools/ci/gate.py verify --plan build/ci/test-plan.json --needs build/ci/needs.json --head "$GITHUB_SHA"
           python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        if: needs.scope.outputs.web == 'true'
+        with:
+          node-version: '24'
+      - name: Collect the exact commit's browser timings
+        if: needs.scope.outputs.web == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: browser-timing-*-shard-*-${{ github.sha }}
+          path: build/browser-timings
+          merge-multiple: true
+      - name: Verify complete timing coverage and report measured shard costs
+        if: needs.scope.outputs.web == 'true'
+        env:
+          TK2_TEST_PLAN: build/ci/test-plan.json
+        run: |
+          node tools/browser-tests/aggregate-timings.mjs build/browser-timings --head "$GITHUB_SHA"
+          cat build/browser-timings/summary.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: needs.scope.outputs.web == 'true'
+        with:
+          name: browser-timing-summary-${{ github.sha }}
+          path: build/browser-timings
+          overwrite: true
+          if-no-files-found: error
+          retention-days: 7
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         if: needs.scope.outputs.web == 'true'
         with:

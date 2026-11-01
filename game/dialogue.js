@@ -99,7 +99,7 @@
   if(error)return [line(actor,c.t(`請示${action}。`,`${action}を願い出ます。`)),line(c.role('clerk'),c.t(`此次未能執行：${c.tr(error)}`,`今回は実行できません：${c.tr(error)}`))];
   if(COMMANDS[kind]==='silent'||COMMANDS[kind]==='event')return [];
   const receipt=after?.presentation,scenes=receipt?.revision===after?.revision&&Array.isArray(receipt.scenes)?receipt.scenes:[];
-  const scene=scenes.find(row=>row.kind===({tactic:'tactic',duel_start:'duel_start',duel_action:'duel_action',attack:'attack',battle_move:'move'}[kind])&&String(row.actor)===String(payload.actor))||null;
+  const scene=typeof GameBattleView==='undefined'?scenes.find(row=>row.kind===({tactic:'tactic',duel_start:'duel_start',duel_action:'duel_action',attack:'attack',battle_move:'move'}[kind])&&String(row.actor)===String(payload.actor))||null:GameBattleView.resultScene(kind,payload,before,after);
   if(kind==='duel_start'){
    const refused=scene?.success===false,accepted=scene?.success===true||!!after?.game?.battle?.extended?.duel;
    return [line(actor,c.t('可敢與我一決高下？','我と勝負する覚悟はあるか。')),line(target,refused?c.t('今日不與你爭這匹夫之勇。','今はその勝負に付き合うつもりはない。'):accepted?c.t('既然相邀，便來一戰！','その勝負、受けて立とう！'):c.t('此次挑戰已處理，請察看戰場現況。','今回の挑戦を処理しました。戦場の現状をご確認ください。'))];

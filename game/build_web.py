@@ -201,9 +201,12 @@ def runtime_catalogs(output):
         raise ValueError('No campaign catalogs')
     sys.path.insert(0, str(ROOT / 'source'))
     from remake.session import CampaignSession
-    previews = json_bytes(CampaignSession(paths)._scenario_previews())
-    put(output, 'runtime/scenario-previews.json', previews)
-    return rows, {'url': 'runtime/scenario-previews.json', 'sha256': sha256(previews)}
+    from remake.preview_transport import pack
+    previews = json_bytes(pack(CampaignSession(paths)._scenario_previews()))
+    url = 'runtime/scenario-previews.json.gz'
+    put(output, url, gzip.compress(previews, compresslevel=9, mtime=0))
+    return rows, {'url': url, 'sha256': sha256(previews),
+                  'encoding': 'gzip', 'bytes': len(previews)}
 
 
 def copy_pyodide(output):

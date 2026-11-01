@@ -37,6 +37,7 @@ UI = {
     'domestic': {'economy', 'logistics'}, 'march-supply': {'logistics'},
     'route-options': {'map', 'logistics'}, 'events': {'scenarios', 'economy', 'battle'},
     'calendar': {'scenarios', 'economy'}, 'battle-scene': {'battle'}, 'battlefields': {'battle', 'map'},
+    'battle-view': {'battle', 'audio'}, 'tutorial': set(GROUPS), 'dialogue': set(GROUPS),
     'command-books': set(GROUPS),
     'duel-appearance': {'battle', 'people'}, 'cloud-save': {'cloud'},
     'cloud-save-ui': {'cloud'}, 'cloud-recovery': {'cloud'}, 'autosave': {'save'},
@@ -65,6 +66,25 @@ SOLDIER_COMBAT_ASSET = re.compile(
     r'-(?:friendly|enemy)\.png)\Z')
 SOLDIER_COMBAT_BUILDER = 'tools/soldier-combat-actions/build.cjs'
 SOLDIER_COMBAT_README = 'tools/soldier-combat-actions/README.md'
+LEGACY_DUEL_WEAPONS = ('spear', 'serpent-spear', 'guandao', 'halberd', 'sword',
+                      'dual-swords', 'axe', 'dual-axes', 'dual-ji')
+DUEL_WEAPONS = (*LEGACY_DUEL_WEAPONS, 'guding-dao', 'ring-dao', 'bow')
+BATTLE_ENHANCEMENT_SOURCE = re.compile(
+    r'art/battle-enhancement-v(?:' + '|'.join(
+        str(version) + r'/(?:generation\.json|prompts/(?:' + '|'.join(weapons)
+        + r')\.txt|studies/(?:' + '|'.join(weapons) + r')\.png)'
+        for version, weapons in ((1, LEGACY_DUEL_WEAPONS), (2, DUEL_WEAPONS))) + r')\Z')
+BATTLE_ENHANCEMENT_INPUTS = {
+    'game/config/duel-appearances.json', 'tools/battle-enhancement/build.cjs',
+    'tests/test_remake_battle_enhancement.cjs', 'tests/test_remake_duel_appearance.cjs',
+    'tests/test_remake_battle_scene.cjs', 'tests/test_remake_battle_enhanced_static.py',
+}
+PRESENTATION_TESTS = {
+    'tests/test_remake_battle_view.cjs': {'battle', 'audio'},
+    'tests/test_remake_tutorial.cjs': set(GROUPS),
+    'tests/test_remake_i18n_runtime.cjs': set(GROUPS),
+}
+BENCHMARK_INPUTS = {'tools/campaign-balance/run.py', 'tests/test_remake_campaign_balance.py'}
 SHARED_SCENARIO_FIELDS = {
     'rules', 'cities', 'links', 'world', 'city_coordinates', 'added_city_ids',
     'travel_rules', 'travel_routes', 'travel_hazards', 'sea_routes', 'sea_links',
@@ -154,7 +174,7 @@ def changes(repo, base, head):
 def docs_path(path):
     return bool(re.fullmatch(r'README(?:[A-Za-z0-9_.-]*)\.md', path)
                 or re.fullmatch(r'docs/(?:[^/]+/)*[^/]+\.md', path)
-                or path == SOLDIER_COMBAT_README)
+                or path in (SOLDIER_COMBAT_README, 'tools/battle-enhancement/README.md'))
 
 
 def stripped(data, *paths):
@@ -330,6 +350,15 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
             elif SOLDIER_COMBAT_ASSET.fullmatch(path) or path == SOLDIER_COMBAT_BUILDER:
                 groups.add('battle')
                 reasons.append('Soldier attack atlas, provenance or packing tool: ' + path)
+            elif path in BATTLE_ENHANCEMENT_INPUTS or BATTLE_ENHANCEMENT_SOURCE.fullmatch(path):
+                groups.update(('battle', 'people'))
+                reasons.append('Duel appearance, artwork source or packing regression; retain canonical image checks: ' + path)
+            elif path in PRESENTATION_TESTS:
+                groups.update(PRESENTATION_TESTS[path])
+                reasons.append('Explicit presentation regression: ' + path)
+            elif path in BENCHMARK_INPUTS:
+                groups.add('boot')
+                reasons.append('Offline observation harness; retain bounded helper smoke, not long balance runs: ' + path)
             elif (path.startswith(('source/remake/', 'crates/', 'tools/ci/', '.github/'))
                   or path.startswith('game/config/') or path in ('game/build_campaigns.py', 'game/build_web.py', 'game/serve.py')
                   or path.endswith(('requirements.txt', 'pyproject.toml', 'Cargo.toml', 'Cargo.lock'))):
@@ -442,10 +471,13 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
     # when the resulting runtime atlases/provenance are also updated. Both
     # sides of renames are present in changed, so unknown destinations still
     # fail closed above and mixed runtime/rule changes retain normal gates.
-    if (not full and any(SOLDIER_COMBAT_SOURCE.fullmatch(path) for path in changed)
-            and all(docs_path(path) or SOLDIER_COMBAT_SOURCE.fullmatch(path) for path in changed)):
+    nonruntime_source = lambda path: bool(SOLDIER_COMBAT_SOURCE.fullmatch(path)
+                                         or BATTLE_ENHANCEMENT_SOURCE.fullmatch(path)
+                                         or path in BENCHMARK_INPUTS)
+    if (not full and any(nonruntime_source(path) for path in changed)
+            and all(docs_path(path) or nonruntime_source(path) for path in changed)):
         should_publish = False
-        reasons.append('Only soldier artwork sources/documentation changed; no runtime publication')
+        reasons.append('Only artwork/observation sources/documentation changed; no runtime publication')
     return dict(schema=SCHEMA, head=resolved_head, base=resolved_base,
                 mode='full' if full else 'scoped', full=full, docs_only=False,
                 web=True, native=native, rules=full, soak=full, resupply=resupply,

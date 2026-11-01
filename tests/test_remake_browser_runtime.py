@@ -12,10 +12,15 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake.browser_runtime import BrowserRuntime, MAX_BODY_BYTES
 from remake.campaign import Catalog
 from remake.session import CampaignSession
+from remake.preview_transport import pack as pack_previews
 from campaign_fixtures import controlled_catalog
 
 
 class BrowserRuntimeTests(unittest.TestCase):
+    def test_compact_previews_preserve_existing_state_view(self):
+        runtime = BrowserRuntime(self.paths, pack_previews(self.previews), self.identities[0])
+        self.assertEqual(self.request('/api/state', runtime=runtime)[1]['catalog']['scenarios'], self.previews)
+
     @classmethod
     def setUpClass(cls):
         cls.directory = tempfile.TemporaryDirectory()

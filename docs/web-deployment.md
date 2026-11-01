@@ -28,13 +28,15 @@ python3 -m http.server 8890 --bind 127.0.0.1 --directory build
 
 `game/build_web.py` 從 `game/serve.py` 的靜態允許清單與已驗證素材索引讀取公開資源。它不複製整個工作目錄，也不包含 ROM、模擬器狀態、歷史開發圖、SMTP 密碼、私人金鑰、`.env` 或雲端來源設定檔。單挑外觀的公開 JSON 是原本伺服器明確允許的例外；其他 `game/config/` 內容不發布。
 
+開局預覽JSON的共用欄位打包與gzip壓縮只影響傳輸；還原後以本機`CampaignSession`逐欄位比對。原始preview的JSON鍵順序不作存檔身分用途。
+
 所有 `game/data/campaigns/index.json` 列出的原始劇本以原始位元組 gzip 壓縮。`runtime/engine-manifest.json` 內的 `sha256` 及 `bytes` 指解壓後的原始資料，與本機 Catalog 身分完全相同。建置不執行 `build_campaigns.py`，不改格式、不重排 JSON、不變更劇本校驗值或亂數規則。原始戰役存檔的驗證仍由相同規則執行，過期或受損的存檔不會被靜態發布放寬接受。
 
 引擎清單格式為 `tk2-browser-engine-v1`，包含：
 
 - `pyodide_version`：固定 `314.0.7`。
 - `python_bundle`：`runtime/python.zip` 的網址與 SHA256；其中保留 `source/remake/` 及 `game/assets/map-presentation.json` 的原始相對位置。
-- `previews`：預編 `CampaignSession._scenario_previews()` 產物的網址與 SHA256，讓主選單不必載入所有劇本。
+- `previews`：預編開局摘要的gzip網址、展開長度與SHA256。以`tk2-scenario-previews-v1`共用重複地圖欄位；先做8MiB解壓上限與SHA檢查，再驗證劇本ID、共享引用及16MiB累計展開預算，還原為原有29筆摘要。主選單不必載入所有劇本本體。
 - `catalogs`：每個劇本的 `id`、壓縮檔網址、虛擬檔案系統路徑、原始 SHA256 與原始長度。
 - `initial_scenario`：目前索引最後一個劇本，與本機 CampaignSession 的預設一致。
 

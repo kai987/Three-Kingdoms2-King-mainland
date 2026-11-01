@@ -6,12 +6,13 @@ const source=fs.readFileSync(path.join(__dirname,'../game/browser-engine-worker.
 const sha=raw=>createHash('sha256').update(raw).digest('hex');
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
 async function until(test){for(let count=0;count<80;count++){if(test())return;await flush();}throw Error('Worker fixture did not reach the expected checkpoint');}
-function fixture({gateRuntime=false,failures={},mutateManifest,changeAsset,respond}={}){
+function fixture({gateRuntime=false,failures={},mutateManifest,changeAsset,respond,compressedPreviews=false}={}){
  const bundle=Buffer.from('verified-python-archive'),preview=Buffer.from('[]'),assets=new Map(),rows=['first','second','third'].map(id=>{
   const raw=Buffer.from(JSON.stringify({id,exact_bytes:'save identity stays unchanged'}));assets.set(`runtime/catalogs/${id}.json.gz`,gzipSync(raw));return{id,url:`runtime/catalogs/${id}.json.gz`,path:`/tk2/game/data/campaigns/${id}.json`,sha256:sha(raw),bytes:raw.length};
  });
- const manifest={schema:'tk2-browser-engine-v1',build_commit:'a'.repeat(40),pyodide_version:'314.0.7',python_bundle:{url:'runtime/python.zip',sha256:sha(bundle)},previews:{url:'runtime/scenario-previews.json',sha256:sha(preview)},catalogs:rows,initial_scenario:'first'};
- mutateManifest?.(manifest);assets.set('runtime/engine-manifest.json',Buffer.from(JSON.stringify(manifest)));assets.set('runtime/python.zip',bundle);assets.set('runtime/scenario-previews.json',preview);changeAsset?.(assets);
+ const previewUrl='runtime/scenario-previews.json'+(compressedPreviews?'.gz':'');
+ const manifest={schema:'tk2-browser-engine-v1',build_commit:'a'.repeat(40),pyodide_version:'314.0.7',python_bundle:{url:'runtime/python.zip',sha256:sha(bundle)},previews:{url:previewUrl,sha256:sha(preview),...(compressedPreviews?{encoding:'gzip',bytes:preview.length}:{})},catalogs:rows,initial_scenario:'first'};
+ mutateManifest?.(manifest);assets.set('runtime/engine-manifest.json',Buffer.from(JSON.stringify(manifest)));assets.set('runtime/python.zip',bundle);assets.set(previewUrl,compressedPreviews?gzipSync(preview):preview);changeAsset?.(assets);
  const messages=[],requests=[],writes=new Map(),removed=[],dispatches=[],compactDispatches=[],timers=[],unpacked=[];let runCount=0,releaseRuntime;
  const result=(revision,compact=false)=>({toJs:()=>({status:200,body:JSON.stringify({revision,game:null,...(compact?{view_cache:{token:'verified-catalog-token'}}:{})})}),destroy(){}});
  const bridge={dispatch_json(...args){dispatches.push(args);return result(dispatches.length);},dispatch_compact_json(...args){compactDispatches.push(args);return result(compactDispatches.length,true);}};
@@ -62,6 +63,21 @@ function fixture({gateRuntime=false,failures={},mutateManifest,changeAsset,respo
  concurrent.self.onmessage({data:{type:'request',id:5,path:'/api/state',method:'GET',body:null,view_cache:42}});await until(()=>concurrent.messages.some(row=>row.type==='response'&&row.id===5));
  assert.equal(concurrent.dispatches.at(-1).length,2);assert.equal(concurrent.compactDispatches.length,2,'non-string cache metadata falls back to the legacy contract');
 
+ const compressed=fixture({compressedPreviews:true});await compressed.boot;assert.equal(compressed.runCount,1);assert(compressed.requests.some(row=>row.name.endsWith('scenario-previews.json.gz')));
+ const badPreview=fixture({compressedPreviews:true,mutateManifest:m=>m.previews.bytes++});await assert.rejects(badPreview.boot,/size mismatch/);assert.equal(badPreview.runCount,0);assert.equal(badPreview.writes.size,0);
+ const badEncoding=fixture({compressedPreviews:true,mutateManifest:m=>m.previews.encoding='zip'});await assert.rejects(badEncoding.boot,/encoding/);assert.equal(badEncoding.runCount,0);
+ // Exercise the real gzip stream and raw-data SHA boundary independently.
+ // No corrupt preview may install files or enter the Python campaign.
+ for(const [label,make,pattern]of [
+  ['invalid gzip',()=>fixture({compressedPreviews:true,changeAsset:a=>a.set('runtime/scenario-previews.json.gz',Buffer.from('not gzip'))}),null],
+  ['truncated gzip',()=>fixture({compressedPreviews:true,changeAsset:a=>a.set('runtime/scenario-previews.json.gz',a.get('runtime/scenario-previews.json.gz').subarray(0,-2))}),null],
+  ['same-length preview SHA mismatch',()=>fixture({compressedPreviews:true,changeAsset:a=>a.set('runtime/scenario-previews.json.gz',gzipSync(Buffer.from('{}')))}),/integrity/],
+  ['gzip expansion beyond8MiB',()=>fixture({compressedPreviews:true,changeAsset:a=>a.set('runtime/scenario-previews.json.gz',gzipSync(Buffer.alloc(9*1024*1024,32)))}),/too large/],
+  ['declared preview length beyond8MiB',()=>fixture({compressedPreviews:true,mutateManifest:m=>m.previews.bytes=8*1024*1024+1}),/encoding/]
+ ]){
+  const broken=make();if(pattern)await assert.rejects(broken.boot,pattern,label);else await assert.rejects(broken.boot,undefined,label);
+  assert.equal(broken.runCount,0,label+' must not initialize the campaign');assert.equal(broken.writes.size,0,label+' must not install assets');
+ }
  const retried=fixture({failures:{'runtime/python.zip':2}});await retried.boot;assert.equal(retried.requests.filter(row=>row.name==='runtime/python.zip').length,3);assert.equal(retried.runCount,1);assert(retried.messages.some(row=>row.retrying));assert(retried.timers.every(timer=>!timer.active));
  const unavailable=fixture({failures:{'runtime/python.zip':9}});await assert.rejects(unavailable.boot);assert.equal(unavailable.requests.filter(row=>row.name==='runtime/python.zip').length,3,'transient retries stop after three attempts');assert.equal(unavailable.runCount,0);assert(unavailable.messages.some(row=>row.type==='fatal'));
  const missing=fixture({respond:name=>name==='runtime/python.zip'?new Response('missing',{status:404}):undefined});await assert.rejects(missing.boot);assert.equal(missing.requests.filter(row=>row.name==='runtime/python.zip').length,1,'permanent HTTP failures are not retried');
