@@ -6,9 +6,15 @@
     "basis": "passing case durations from four immutable GitHub CI job logs; rounded runner output",
     "project_overrides": {
       "touch-chromium": {
-        "commit": "3b759db1632fb470dde32d6662ac665ce6e868a6",
-        "run_id": 41311867168,
-        "basis": "Reviewed passing per-case timing reports from both touch shards; 35 unique cases, no retries"
+        "commits": [
+          "3b759db1632fb470dde32d6662ac665ce6e868a6",
+          "5b4d9830e855d5abbbe760f4a6df6e3028590159"
+        ],
+        "run_ids": [
+          41311867168,
+          41315076368
+        ],
+        "basis": "Mean of two reviewed passing 35-case runs without retries, normalized to shard 1; paired case moves support the reviewed shard-2 cost multiplier of 1.28"
       }
     }
   },
@@ -51,41 +57,47 @@
       "dialogue-relations": 14600
     },
     "touch-chromium": {
-      "scenario-labels": 11977,
-      "stale-api": 13387,
-      "opening-catalog": 162925,
-      "person-encyclopedia": 15009,
-      "recruitment": 15878,
-      "treasury": 35352,
-      "treasure-transport": 26619,
-      "facilities": 111999,
-      "drought": 75578,
-      "equipment": 85619,
-      "battle-siege": 78836,
-      "battle-layout": 176467,
-      "battle-movement": 164101,
-      "command-books": 79159,
-      "order-confirmation-allocation": 107033,
-      "ruler-succession-display": 30961,
-      "dialogue-relations": 22661,
-      "soldier-orders": 109189,
-      "battlefield-conversion-occupation": 115905,
-      "battlefield-services": 161532,
-      "title-cover": 18756,
-      "recovery-title": 12018,
-      "road-beds": 12788,
-      "dialogs-save": 33408,
-      "map-navigation": 9706,
-      "boot-retry": 7621,
-      "march-grain": 17139,
-      "city-size-layout": 17678,
-      "jingzhou-openings": 19893,
-      "jingzhou-dates": 14161,
-      "dlc-openings": 25742,
-      "han-sui-shu": 29027,
-      "xiaopei-dates": 10170,
-      "inland-water": 22746,
-      "first-session-guide": 22304
+      "scenario-labels": 11625,
+      "stale-api": 10382,
+      "opening-catalog": 129079,
+      "person-encyclopedia": 14927,
+      "recruitment": 12670,
+      "treasury": 28206,
+      "treasure-transport": 26500,
+      "facilities": 87215,
+      "drought": 75880,
+      "equipment": 67385,
+      "battle-siege": 76216,
+      "battle-layout": 135595,
+      "battle-movement": 160438,
+      "command-books": 63431,
+      "order-confirmation-allocation": 84424,
+      "ruler-succession-display": 30058,
+      "dialogue-relations": 17801,
+      "soldier-orders": 109842,
+      "battlefield-conversion-occupation": 116095,
+      "battlefield-services": 127685,
+      "title-cover": 18309,
+      "recovery-title": 9697,
+      "road-beds": 10138,
+      "dialogs-save": 32825,
+      "map-navigation": 9556,
+      "boot-retry": 7403,
+      "march-grain": 16624,
+      "city-size-layout": 13933,
+      "jingzhou-openings": 15434,
+      "jingzhou-dates": 14000,
+      "dlc-openings": 20047,
+      "han-sui-shu": 22750,
+      "xiaopei-dates": 9931,
+      "inland-water": 23068,
+      "first-session-guide": 22173
     }
+  },
+  "shard_cost_multipliers": {
+    "touch-chromium": [
+      1000,
+      1280
+    ]
   }
 }

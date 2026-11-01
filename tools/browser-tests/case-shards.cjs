@@ -12,18 +12,28 @@ function validateBaseline(value){
   if(!rows||typeof rows!=='object'||Array.isArray(rows))throw Error('Invalid browser duration rows');
   for(const[id,ms]of Object.entries(rows))if(!/^[a-z][a-z0-9-]+$/.test(id)||!Number.isSafeInteger(ms)||ms<1||ms>3600000)throw Error('Invalid browser case duration');
  }
+ if(value.shard_cost_multipliers!==undefined){
+  const rows=value.shard_cost_multipliers;
+  if(!rows||typeof rows!=='object'||Array.isArray(rows))throw Error('Invalid browser shard costs');
+  for(const[project,costs]of Object.entries(rows))if(!PROJECTS.includes(project)||!Array.isArray(costs)||costs.length!==COUNT||costs.some(cost=>!Number.isSafeInteger(cost)||cost<500||cost>2000))throw Error('Invalid browser shard costs');
+ }
  return value;
 }
+function costMultiplier(baseline,project,index){return baseline.shard_cost_multipliers?.[project]?.[index-1]??1000;}
 function partition(cases,project,{baseline=BASELINE,count=COUNT}={}){
  validateBaseline(baseline);
  if(!PROJECTS.includes(project)||!Number.isSafeInteger(count)||count<1||count>16)throw Error('Invalid browser shard device/count');
+ if(baseline.shard_cost_multipliers?.[project]&&count!==COUNT)throw Error('Measured browser shard costs require the reviewed shard count');
  if(!Array.isArray(cases)||!cases.length||new Set(cases.map(r=>r.id)).size!==cases.length)throw Error('A shard requires unique selected cases');
  const weights=baseline.projects[project],measured=id=>Object.prototype.hasOwnProperty.call(weights,id),duration=row=>measured(row.id)?weights[row.id]:baseline.default_duration_ms;
  const bins=Array.from({length:count},(_,i)=>({index:i+1,estimated_ms:0,cases:[],unmeasured:[]}));
+ const cost=(row,bin)=>Math.round(duration(row)*costMultiplier(baseline,project,bin.index)/1000);
  for(const row of [...cases].sort((a,b)=>duration(b)-duration(a)||(a.id<b.id?-1:a.id>b.id?1:0))){
   if(!/^[a-z][a-z0-9-]+$/.test(row.id)||typeof row.title!=='string'||!row.title)throw Error('Invalid selected browser case');
-  const next=[...bins].sort((a,b)=>a.estimated_ms-b.estimated_ms||a.index-b.index)[0];
-  next.cases.push(row);next.estimated_ms+=duration(row);if(!measured(row.id))next.unmeasured.push(row.id);
+  // Compare projected completion, allowing a measured slower runner to take
+  // less work. Equal multipliers retain the original desktop membership.
+  const next=[...bins].sort((a,b)=>(a.estimated_ms+cost(row,a))-(b.estimated_ms+cost(row,b))||a.index-b.index)[0];
+  next.cases.push(row);next.estimated_ms+=cost(row,next);if(!measured(row.id))next.unmeasured.push(row.id);
  }
  // Keep discovery/replay order stable inside each bin; scheduling weights do
  // not alter what a test does or its scenario/seed/timeout.
@@ -35,4 +45,4 @@ function selectedShard(selection,project,index,options){
  if(!Number.isInteger(index)||index<1||index>(options?.count??COUNT))throw Error('Invalid browser shard index');
  return partition(selection.selectedCases,project,options)[index-1];
 }
-module.exports={PROJECTS,COUNT,BASELINE,validateBaseline,partition,grep,selectedShard};
+module.exports={PROJECTS,COUNT,BASELINE,validateBaseline,costMultiplier,partition,grep,selectedShard};
