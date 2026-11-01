@@ -569,17 +569,17 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
    scene.mount(env.host,row.after);assert(await scene.load());assert.equal(loaded,1);env.draws.length=0;env.texts.length=0;
    env.doc.emit('game-language-change');
    if(!failed){
-    assert(env.texts.some(t=>t.y===50&&t.text==='雙股劍'));assert(env.texts.some(t=>t.y===57&&t.text==='的盧'));
-    assert(env.texts.some(t=>t.y===50&&t.text==='長槍'));assert(env.texts.some(t=>t.y===57&&t.text==='黑馬'));
+    assert(env.texts.some(t=>t.y===48&&t.text==='兵器：雙股劍'));assert(env.texts.some(t=>t.y===56&&t.text==='坐騎：的盧'));
+    assert(env.texts.some(t=>t.y===48&&t.text==='兵器：長槍'));assert(env.texts.some(t=>t.y===56&&t.text==='坐騎：黑馬'));
     assert(env.nodes['[data-battle-description]'].textContent.includes('雙股劍 的盧'),'Equipment remains available to screen readers');
    }else{
-    assert.equal(env.texts.filter(t=>t.y===50&&t.text==='原版備用圖').length,2);assert(!env.texts.some(t=>t.y===50&&['雙股劍','長槍'].includes(t.text)));
+    assert.equal(env.texts.filter(t=>t.y===48&&t.text==='原版備用圖').length,2);assert(!env.texts.some(t=>t.y===48&&['兵器：雙股劍','兵器：長槍'].includes(t.text)));
     assert(!env.nodes['[data-battle-description]'].textContent.includes('雙股劍'),'Fallback cannot describe mismatched native equipment as the iconic set');
     assert(env.nodes['[data-battle-description]'].textContent.includes('原版備用圖 通用騎將'));
    }
    if(!failed){assert(env.draws.some(d=>d.src===aPath));assert(env.draws.some(d=>d.src===tPath));assert(env.draws.filter(d=>[aPath,tPath].includes(d.src)).every(d=>d.args.slice(-2).join(',')==='96,96'));}
    else{assert(!env.draws.some(d=>[aPath,tPath].includes(d.src)));assert(env.draws.some(d=>/battle-original\/duelist/.test(d.src)),'Missing enhanced riders retain original mounted artwork');}
-   env.i18n.locale='ja';env.texts.length=0;env.doc.emit('game-language-change');if(!failed){assert(env.texts.some(t=>t.y===50&&t.text==='双股剣'));assert(env.texts.some(t=>t.y===57&&t.text==='黒馬'));}else assert.equal(env.texts.filter(t=>t.y===50&&t.text==='原作予備画像').length,2);
+   env.i18n.locale='ja';env.texts.length=0;env.doc.emit('game-language-change');if(!failed){assert(env.texts.some(t=>t.y===48&&t.text==='武器：双股剣'));assert(env.texts.some(t=>t.y===56&&t.text==='騎馬：黒馬'));}else assert.equal(env.texts.filter(t=>t.y===48&&t.text==='原作予備画像').length,2);
    assert.equal(JSON.stringify(row.after),before,'Equipment and high resolution rendering cannot change state, stats or RNG');
    scene.dispose();assert.equal(env.timers.size,0);assert.equal(env.rafs.size,0);
   }

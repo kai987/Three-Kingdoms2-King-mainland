@@ -58,8 +58,19 @@ assert(redTasselPixels>100);assert(protectedShoulderPixels>20);assert(whiteCoatP
 // rider/weapon pixel outside its deliberately cyan horse-only source region.
 let actionFrames=0,actionCoatPixels=0,actionRiderPixels=0,actionTasselPixels=0;
 assert.deepEqual(manifest.actions,[...builder.ACTIONS]);assert.equal(WEAPONS.length,12);assert.equal(HORSES.length,13);
+// A longer weapon, plume or detached arrow cannot change the horse's size.
+const fixture={width:512,height:384,rgba:Buffer.alloc(512*384*4)};
+for(let y=140;y<340;y++)for(let x=100;x<360;x++)fixture.rgba.set([0,180,200,255],(y*512+x)*4);
+const before=builder.actionBodyReference(fixture);
+for(let x=12;x<500;x++)fixture.rgba.set([200,210,225,255],(20*512+x)*4);
+assert.deepEqual(builder.actionBodyReference(fixture),before,'An extended steel weapon must not shrink the mounted body');
+assert.equal(before.height*before.scale,180);
+const displayedHorseHeights=[];
 for(const weapon of WEAPONS){
- const info=manifest.action_studies[weapon],source=decodePng(fs.readFileSync(path.join(ROOT,info.study))),poses=builder.actionPoseImages(source),boxes=poses.map(builder.imageBounds),scale=Math.min(...boxes.map(([l,t,r,b])=>Math.min(448/(r-l),352/(b-t))));
+ const info=manifest.action_studies[weapon],source=decodePng(fs.readFileSync(path.join(ROOT,info.study))),poses=builder.actionPoseImages(source),boxes=poses.map(builder.imageBounds),reference=builder.actionBodyReference(poses[0]),scale=reference.scale;
+ assert.equal(info.body_normalization.target_height,180);assert.equal(info.body_normalization.shared_action_scale,true);
+ assert.deepEqual(info.body_normalization.box,reference.box);
+ displayedHorseHeights.push(reference.height*scale);
  assert.equal(poses.length,8);assert.deepEqual(info.source_grid,builder.actionGrid(source));assert.deepEqual(info.source_cells,poses.map(pose=>pose.source_rect));
  const assignments=new Uint8Array(source.width*source.height);let sourcePaint=0,keptPaint=0;
  for(let i=0;i<source.width*source.height;i++)sourcePaint+=Number(source.rgba[i*4+3]>=128);
@@ -70,6 +81,7 @@ for(const weapon of WEAPONS){
  }}
  assert(keptPaint/sourcePaint>.995,'Complete mounted figures, extended weapons, horse tails and detached arrows must remain intact');
  const base=poses.map((pose,index)=>builder.fittedAction(pose,boxes[index],scale)),referenceMasks=base.map(p=>p.mask);
+ assert(base.every(p=>p.scale===scale),'All eight actions must retain the standing body scale, even when the weapon reaches farther');
  const originalBodies=base.map(p=>{const rgba=Buffer.from(p.rgba);for(let i=0;i<p.mask.length;i++)if(p.mask[i])rgba.fill(0,i*4,i*4+4);return rgba;});
  const bodyInfo=base.map(p=>{let count=0;const red=[];for(let i=0;i<p.mask.length;i++)if(!p.mask[i]&&p.rgba[i*4+3]){count++;const at=i*4;if(p.rgba[at]>90&&p.rgba[at+1]/p.rgba[at]<.30)red.push(i);}return {count,red};});
  for(const horse of HORSES){
@@ -99,5 +111,6 @@ for(const weapon of WEAPONS){
  }
 }
 assert.equal(actionFrames,12*13*8);assert(actionRiderPixels>100000);assert(actionCoatPixels>100000);
+assert(Math.max(...displayedHorseHeights)-Math.min(...displayedHorseHeights)<.001,'All twelve weapon families must use the same standing horse height');
 assert.equal(new Set(HORSES.map(horse=>JSON.stringify(builder.ACTION_COATS[horse]))).size,13,'Every named mount has its own explicit presentation palette');
 console.log(`battle enhanced art: ${nativeFormationPixels} exact original formation pixels, ${islands} preserved v1 poses, ${coats} v1 coats; ${actionFrames} independently painted action frames, ${actionCoatPixels} protected coat pixels, ${actionRiderPixels} preserved rider/weapon pixels and ${actionTasselPixels} untouched red detail pixels`);

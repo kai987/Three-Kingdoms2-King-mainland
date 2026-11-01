@@ -13,6 +13,9 @@ const LEGACY_WEAPONS=Object.freeze(['spear','serpent-spear','guandao','halberd',
 const LEGACY_HORSES=Object.freeze(['chestnut','white','black','red-hare','dilu']);
 const ACTIONS=Object.freeze(['idle','strike','guard','feint','withdraw','desperate','hit','defeat']);
 const ACTION_FRAME_WIDTH=512,ACTION_FRAME_HEIGHT=384;
+// A weapon's reach must never decide the size of its rider and mount. All
+// weapon families share this standing horse height, in actual 4x pixels.
+const ACTION_HORSE_HEIGHT=180;
 const sha=b=>crypto.createHash('sha256').update(b).digest('hex'),read=p=>fs.readFileSync(path.join(ROOT,p)),json=p=>JSON.parse(read(p));
 const PALETTE=[[0,0,0],[66,30,15],[103,43,18],[145,62,21],[186,86,29],[222,127,53],[247,162,71],[255,199,116],[255,226,168],[255,244,211],[255,255,255],[57,60,60],[100,105,104],[151,155,151],[203,207,197],[128,19,21],[208,49,32],[52,92,40],[90,143,56],[40,62,103]];
 function write(name,bytes){const target=path.join(ROOT,OUT,name);fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,bytes);return bytes;}
@@ -168,9 +171,25 @@ function actionPoseImages(image){
  });
 }
 function cyanCoat(rgb){return rgb[1]>=40&&rgb[2]>=40&&rgb[1]-rgb[0]>12&&rgb[2]-rgb[0]>12;}
+function actionBodyReference(image){
+ // Measure the deliberately saturated coat, excluding blue-gray spear tips
+ // and tiny antialiased outliers. Trim 0.5% at either end of each axis; long
+ // weapons, tassels, arrows and plumes cannot enlarge this reference box.
+ const xs=[],ys=[];
+ for(let y=0;y<image.height;y++)for(let x=0;x<image.width;x++){
+  const at=(y*image.width+x)*4,[r,g,b]=image.rgba.subarray(at,at+3);
+  if(image.rgba[at+3]>=128&&Math.min(g,b)-r>=40){xs.push(x);ys.push(y);}
+ }
+ assert(xs.length>500,'A body reference requires an explicit saturated horse-coat layer');
+ xs.sort((a,b)=>a-b);ys.sort((a,b)=>a-b);
+ const low=Math.floor(xs.length*.005),high=Math.floor(xs.length*.995);
+ const box=[xs[low],ys[low],xs[high]+1,ys[high]+1];
+ assert(box[2]>box[0]&&box[3]>box[1]);
+ return {box,height:box[3]-box[1],target_height:ACTION_HORSE_HEIGHT,scale:ACTION_HORSE_HEIGHT/(box[3]-box[1])};
+}
 function fittedAction(image,box,scale){
  const rgba=Buffer.alloc(ACTION_FRAME_WIDTH*ACTION_FRAME_HEIGHT*4),mask=new Uint8Array(ACTION_FRAME_WIDTH*ACTION_FRAME_HEIGHT),levels=new Uint8Array(ACTION_FRAME_WIDTH*ACTION_FRAME_HEIGHT),[left,top,right,bottom]=box,w=Math.round((right-left)*scale),h=Math.round((bottom-top)*scale),dx=Math.floor((ACTION_FRAME_WIDTH-w)/2),dy=ACTION_FRAME_HEIGHT-16-h;
- assert(dx>=0&&dy>=0&&w>60&&h>60,'Each action must contain a full mounted figure');
+ assert(dx>=8&&dy>=8&&w>60&&h>60,'Each action must retain a complete mounted figure at the common body scale, with transparent margins');
  for(let y=0;y<h;y+=2)for(let x=0;x<w;x+=2){
   const sx=Math.min(right-1,left+Math.floor((x+.5)/scale)),sy=Math.min(bottom-1,top+Math.floor((y+.5)/scale)),src=(sy*image.width+sx)*4;
   if(image.rgba[src+3]<128)continue;
@@ -191,10 +210,10 @@ function recolorAction(image,horse){
  return rgba;
 }
 function actionSource(weapon){
- const study=ACTION_ART+'/studies/'+weapon+'.png',prompt=ACTION_ART+'/prompts/'+weapon+'.txt',input=read(study),image=decodePng(input),poses=actionPoseImages(image),boxes=poses.map(imageBounds),scale=Math.min(...boxes.map(([l,t,r,b])=>Math.min(448/(r-l),352/(b-t))));
+ const study=ACTION_ART+'/studies/'+weapon+'.png',prompt=ACTION_ART+'/prompts/'+weapon+'.txt',input=read(study),image=decodePng(input),poses=actionPoseImages(image),boxes=poses.map(imageBounds),body=actionBodyReference(poses[0]),scale=body.scale;
  const fitted=poses.map((pose,index)=>fittedAction(pose,boxes[index],scale));
  assert.equal(new Set(fitted.map(pose=>sha(pose.rgba))).size,ACTIONS.length,`${weapon} must contain eight independently drawn actions`);
- return {fitted,metadata:{study,study_sha256:sha(input),prompt,prompt_sha256:sha(read(prompt)),source_size:[image.width,image.height],source_grid:actionGrid(image),source_cells:poses.map(p=>p.source_rect),source_boxes:boxes,actions:[...ACTIONS],coat_method:'Explicit cyan/turquoise horse-coat region; rider and weapon use no cyan'}};
+ return {fitted,metadata:{study,study_sha256:sha(input),prompt,prompt_sha256:sha(read(prompt)),source_size:[image.width,image.height],source_grid:actionGrid(image),source_cells:poses.map(p=>p.source_rect),source_boxes:boxes,actions:[...ACTIONS],body_normalization:{method:'standing_horse_saturated_coat_trimmed_bounds',reference_action:'idle',...body,shared_action_scale:true},coat_method:'Explicit cyan/turquoise horse-coat region; rider and weapon use no cyan'}};
 }
 function actionAtlasEntry(weapon,horse,source){
  const width=ACTION_FRAME_WIDTH*ACTIONS.length,height=ACTION_FRAME_HEIGHT,rgba=Buffer.alloc(width*height*4),frames=[];let maskPixels=0;
@@ -259,6 +278,8 @@ function check(){
  for(const weapon of WEAPONS){
   assert.deepEqual(Object.keys(m.action_atlases[weapon]).sort(),[...HORSES].sort());const source=m.action_studies[weapon];
   assert.equal(source.study_sha256,sha(read(source.study)));assert.equal(source.prompt_sha256,sha(read(source.prompt)));assert.deepEqual(source.actions,[...ACTIONS]);assert.deepEqual(source.source_grid,actionGrid({width:source.source_size[0],height:source.source_size[1]}));assert.equal(source.source_cells.length,8);assert.equal(source.source_boxes.length,8);
+  const reference=actionBodyReference(actionPoseImages(decodePng(read(source.study)))[0]);
+  assert.deepEqual(source.body_normalization,{method:'standing_horse_saturated_coat_trimmed_bounds',reference_action:'idle',...reference,shared_action_scale:true});
   for(const horse of HORSES){
    const row=m.action_atlases[weapon][horse];assert.equal(row.method,'imagegen_action_atlas_cyan_coat_mask');assert.equal(row.study_key,weapon);assert.match(row.path,/^\/assets\/battle-enhanced\/duel-actions-[a-z0-9-]+\.png$/);paths.add(path.basename(row.path));
    const input=read('game'+row.path),image=decodePng(input);assert.deepEqual([row.width,row.height,row.logical_width,row.logical_height],[4096,384,128,96]);assert.deepEqual([image.width,image.height],[4096,384]);assert.equal(row.sha256,sha(input));assert.equal(row.pixel_sha256,sha(image.rgba));assert.deepEqual(row.anchor,{x:64,y:96});assert(row.horse_mask_pixels>4000);
@@ -275,5 +296,5 @@ function check(){
  assert.deepEqual(fs.readdirSync(path.join(ROOT,OUT)).filter(p=>p.endsWith('.png')).sort(),[...paths].sort(),'No stale final sprites');
  return{check:true,scale:4,native_files:paths.size-generated-atlases-soldierReport.soldier_atlases,legacy_generated_frames:generated,action_atlases:atlases,action_frames:atlases*ACTIONS.length,action_types:ACTIONS.length,weapon_types:WEAPONS.length,horse_types:HORSES.length,...soldierReport};
 }
-module.exports={build,check,native4x,nearest4x,bounds,poseImages,imageBounds,fitted,horseMask,recolor,entries,atlasEntries,frameHasMargin,ACTIONS,ACTION_FRAME_WIDTH,ACTION_FRAME_HEIGHT,LEGACY_WEAPONS,LEGACY_HORSES,ACTION_COATS,actionGrid,actionPoseImages,cyanCoat,fittedAction,recolorAction,actionSource,actionAtlasEntry};
+module.exports={build,check,native4x,nearest4x,bounds,poseImages,imageBounds,fitted,horseMask,recolor,entries,atlasEntries,frameHasMargin,ACTIONS,ACTION_FRAME_WIDTH,ACTION_FRAME_HEIGHT,ACTION_HORSE_HEIGHT,LEGACY_WEAPONS,LEGACY_HORSES,ACTION_COATS,actionGrid,actionPoseImages,cyanCoat,actionBodyReference,fittedAction,recolorAction,actionSource,actionAtlasEntry};
 if(require.main===module){try{console.log(JSON.stringify(process.argv.includes('--check')?check():build()));}catch(error){console.error(error);process.exitCode=1;}}

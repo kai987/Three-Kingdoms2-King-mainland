@@ -23,7 +23,12 @@ const clone=x=>JSON.parse(JSON.stringify(x)),freeze=x=>{if(x&&typeof x==='object
  assert.equal(lookup.profile(catalog,cao.id).horse,registry.profiles[cao.person_id].horse,'Cosmetic choices never change the default binding');
  assert(Object.isFrozen(lookup.profile(catalog,cao.id).horse_variants));assert(Object.isFrozen(lookup.profile(catalog,cao.id).horse_variants[0].label));
  const other=freeze({library:[{id:runtime,person_id:'other-identity',name:'劉備'}]});assert.equal(lookup.profile(other,runtime).documented,false,'Equal runtime IDs or names cannot borrow another stable identity');assert.equal(lookup.profile(catalog,999).documented,false,'No name or substring fallback');
- for(const id of ['clerk-000001','clerk-000002',null,0,1199]){const a=lookup.profile({},id),b=lookup.profile(null,id);assert.deepEqual(a,b);assert(api.WEAPONS.includes(a.weapon));assert(['chestnut','white','black'].includes(a.horse));assert.equal(a.documented,false);}
+ const ordinaryNames={chestnut:['棗紅馬','栗毛馬'],white:['白馬','白馬'],black:['黑馬','黒馬']},ordinarySeen=new Set();
+ for(const id of ['clerk-000001','clerk-000002',null,...Array.from({length:50},(_,i)=>i)]){const a=lookup.profile({},id),b=lookup.profile(null,id);assert.deepEqual(a,b);assert(api.WEAPONS.includes(a.weapon));assert(['chestnut','white','black'].includes(a.horse));assert.equal(a.documented,false);assert.deepEqual([a.horse_label['zh-Hant'],a.horse_label.ja],ordinaryNames[a.horse]);ordinarySeen.add(a.horse);}
+ assert.equal(ordinarySeen.size,3,'All ordinary mount palettes must display their actual plain horse names');
+ assert.equal(lookup.profile(catalog,runtime).horse_label['zh-Hant'],'的盧');
+ assert.equal(lookup.profile(catalog,cao.id).horse_label['zh-Hant'],'絕影');
+ assert.equal(lookup.profile(catalog,cao.id,{horse:'zhuahuang-feidian'}).horse_label['zh-Hant'],'爪黃飛電');
  assert.equal(JSON.stringify(catalog),before,'The art registry is read-only');
  for(const mutate of [r=>r.schema='bad',r=>r.profiles=[],r=>r.profiles[liu[0]].weapon='../file',r=>r.profiles[liu[0]].horse='mythical',r=>r.profiles[liu[0]].weapon_label.ja=32,r=>r.profiles[liu[0]].horse_variants={},r=>r.profiles[liu[0]].horse_variants=[{key:'jueying',label:{'zh-Hant':'絕影',ja:'絶影'}},{key:'jueying',label:{'zh-Hant':'重複',ja:'重複'}}],r=>r.profiles[liu[0]].weapon_variants=[{key:'escape',label:{'zh-Hant':'越界',ja:'越界'}}],r=>r.profiles[liu[0]].horse_variants=[{key:'black',label:{'zh-Hant':'黑馬'}}]]){const bad=clone(registry);mutate(bad);assert.throws(()=>api.validate(bad));}
  for(const fetcher of [async()=>{throw Error('offline');},async()=>({ok:false}),async()=>({ok:true,json:async()=>({schema:'bad'})}),async()=>({ok:true,json:async()=>new Promise(()=>{})})]){

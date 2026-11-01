@@ -686,8 +686,10 @@
   }
   function equipmentLabel(value){return typeof value==='object'?value?.[locale()]||value?.['zh-Hant']||'':translate(value);}
   function duelEquipment(profile,x,matched){
-   label(matched?equipmentLabel(profile.weapon_label):text('原版備用圖','原作予備画像'),x,50,INK,6);
-   label(matched?equipmentLabel(profile.horse_label):text('通用騎將','汎用騎将'),x,57,INK,6);
+   // Keep full equipment/mount names visible in the duel itself, including
+   // touch screens where the optional loadout selector may stay collapsed.
+   label(matched?text('兵器：','武器：')+equipmentLabel(profile.weapon_label):text('原版備用圖','原作予備画像'),x,48,INK,7);
+   label(matched?text('坐騎：','騎馬：')+equipmentLabel(profile.horse_label):text('通用騎將','汎用騎将'),x,56,INK,7);
   }
   function duelCenter(profile,legacy,mirror){
    const atlas=enhanced?.action_atlases?.[profile?.weapon]?.[profile?.horse];

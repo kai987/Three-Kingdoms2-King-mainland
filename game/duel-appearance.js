@@ -9,7 +9,7 @@
   spear:['長槍','槍'], 'serpent-spear':['丈八蛇矛','丈八蛇矛'], guandao:['大刀','大刀'], halberd:['方天畫戟','方天画戟'],
   sword:['劍','剣'], 'dual-swords':['雙劍','双剣'], axe:['大斧','大斧'], 'dual-axes':['雙斧','双斧'], 'dual-ji':['雙鐵戟','双鉄戟'],
   'guding-dao':['古錠刀','古錠刀'],'ring-dao':['九環刀','九環刀'],bow:['二石鐵胎弓','二石鉄胎弓'],
-  chestnut:['棗紅馬','栗毛'], white:['白馬','白馬'], black:['黑馬','黒馬'], 'red-hare':['赤兔馬','赤兎馬'], dilu:['的盧馬','的盧'],
+  chestnut:['棗紅馬','栗毛馬'], white:['白馬','白馬'], black:['黑馬','黒馬'], 'red-hare':['赤兔','赤兎'], dilu:['的盧','的盧'],
   jueying:['絕影','絶影'],'zhuahuang-feidian':['爪黃飛電','爪黄飛電'],huiying:['灰影','灰影'],liaoyuanhuo:['燎原火','燎原火'],lifeisha:['里飛沙','里飛沙'],kuaihang:['快航','快航'],jingfan:['驚帆','驚帆'],'zhaoye-yushizi':['照夜玉獅子','照夜玉獅子']
  });
  const labels=(value,key)=>Object.freeze({'zh-Hant':typeof value?.['zh-Hant']==='string'?value['zh-Hant']:LABELS[key][0],ja:typeof value?.ja==='string'?value.ja:LABELS[key][1]});
