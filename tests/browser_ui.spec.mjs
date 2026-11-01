@@ -206,7 +206,9 @@ test('pixel loading cover animates, plays the original title and waits for Start
    else{expect(bytes.readUInt32BE(16)).toBe(180);expect(bytes.readUInt32BE(20)).toBe(180);}
   }
   await expect(page.locator('#begin')).toHaveCount(0);
-  await expect(cover.locator('.loading-cover-art')).toHaveAttribute('src',/\/assets\/loading\/cover-map-v2\.png(?:\?|$)/);
+  await expect(cover.locator('.loading-cover-map')).toBeEmpty();
+  await expect(cover.locator('.loading-cover-map img')).toHaveCount(0);
+  await expect(cover.locator('.loading-cover-art')).toHaveAttribute('src',/\/assets\/loading\/cover\.png(?:\?|$)/);
   await expect.poll(()=>cover.locator('.loading-cover-art').evaluate(node=>node.complete&&node.naturalWidth>0)).toBe(true);
   await expect(rider.locator('img')).toHaveCount(1);
   await expect(rider.locator('img')).toHaveAttribute('src',/\/assets\/loading\/march-rider-v2\.png(?:\?|$)/);
@@ -271,6 +273,46 @@ test('pixel loading cover animates, plays the original title and waits for Start
   await expect(cover.locator('.loading-cover-message')).toContainText('準備戰役畫面');
   releasePositions();await expect(page.locator('#begin')).toBeEnabled({timeout:90_000});
   await expect(cover).toBeVisible();await expect(cover).toHaveAttribute('data-phase','ready');
+  // Title geography comes from the rendered campaign rather than a separately
+  // generated cartographic painting. Every decorative castle keeps the actual
+  // city's identity and coordinates, including both original sprite layers.
+  const sourceMap=page.locator('#world-map'),coverMap=cover.locator('.loading-cover-map svg.loading-cover-world-map');
+  await expect(coverMap).toHaveCount(1);
+  const mapSignature=node=>({
+   viewBox:node.getAttribute('viewBox'),
+   terrain:[...node.querySelectorAll('image')].map(image=>Object.fromEntries(['href','x','y','width','height'].map(key=>[key,image.getAttribute(key)]))),
+   cities:[...node.querySelectorAll('[data-city]')].map(city=>({
+    id:city.getAttribute('data-city'),
+    coordinates:[...city.querySelectorAll('use')].map(sprite=>({x:sprite.getAttribute('x'),y:sprite.getAttribute('y')}))
+   })).sort((a,b)=>a.id.localeCompare(b.id))
+  });
+  await expect.poll(()=>page.evaluate(()=>window.GameMapTerrain?.controller?.active)).toBe(true);
+  const actualGeography=await sourceMap.evaluate(mapSignature);
+  expect(actualGeography.terrain[0].href).toMatch(/\/assets\/map-western-range\.png(?:\?|$)/);
+  expect(actualGeography.cities.length).toBeGreaterThan(0);
+  expect(new Set(actualGeography.cities.map(city=>city.id)).size).toBe(actualGeography.cities.length);
+  await expect.poll(()=>coverMap.evaluate(mapSignature)).toEqual(actualGeography);
+  await expect(cover.locator('.loading-cover-map img')).toHaveCount(0);
+  await expect(coverMap.locator('text')).toHaveCount(0);
+  await expect(coverMap.locator('[role],[tabindex],.city-hit,.city-outline,title')).toHaveCount(0);
+  await expect(coverMap).toHaveAttribute('aria-hidden','true');
+  const referenceIntegrity=await coverMap.evaluate(node=>{
+   const elements=[node,...node.querySelectorAll('*')],ids=elements.map(element=>element.id).filter(Boolean),references=[];
+   for(const element of elements)for(const attribute of element.attributes){
+    if((attribute.name==='href'||attribute.name==='xlink:href')&&attribute.value.startsWith('#'))references.push(attribute.value.slice(1));
+    for(const match of attribute.value.matchAll(/url\(\s*['"]?#([^)'"\s]+)['"]?\s*\)/g))references.push(match[1]);
+   }
+   const documentIds=[...document.querySelectorAll('[id]')].map(element=>element.id);
+   return{ids,references,duplicateIds:ids.filter(id=>documentIds.filter(value=>value===id).length!==1)};
+  });
+  expect(new Set(referenceIntegrity.ids).size).toBe(referenceIntegrity.ids.length);
+  expect(referenceIntegrity.ids.every(id=>id.startsWith('loading-cover-'))).toBe(true);
+  expect(referenceIntegrity.references.length).toBeGreaterThan(0);
+  expect(referenceIntegrity.references.every(id=>id.startsWith('loading-cover-')&&referenceIntegrity.ids.includes(id))).toBe(true);
+  expect(referenceIntegrity.duplicateIds).toEqual([]);
+  await expect(sourceMap).toHaveAttribute('id','world-map');
+  expect(await sourceMap.locator('[id^="loading-cover-"]').count()).toBe(0);
+  await testInfo.attach('loading-cover-actual-city-geography',{body:Buffer.from(JSON.stringify(actualGeography,null,2)),contentType:'application/json'});
   const start=page.locator('#game-loading-start'),sound=page.locator('#game-loading-sound');
   await expect(start).toBeVisible();await expect(start).toBeEnabled();await expect(start).toHaveText('開始遊戲');
   await expect(sound).toBeVisible();await expect(sound).toBeEnabled();await expect(page.locator('#game-loading-audio-note')).toBeVisible();
@@ -284,6 +326,7 @@ test('pixel loading cover animates, plays the original title and waits for Start
   await expect(sound).toHaveCSS('color','rgb(24, 16, 0)');
   await page.screenshot({path:testInfo.outputPath('loading-cover-ready-title-music.png'),fullPage:false});
   await start.click();await expect(cover).toBeHidden();
+  await expect(cover.locator('[data-city],svg.loading-cover-world-map')).toHaveCount(0);
   await expect.poll(()=>page.locator('#inspector').evaluate(node=>!!node.closest('[inert]'))).toBe(false);
   await expect.poll(()=>page.evaluate(()=>gameAudio.getStatus().coverActive)).toBe(false);
   await expect(page.locator('#game-engine-status')).toBeHidden();

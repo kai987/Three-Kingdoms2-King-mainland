@@ -35,7 +35,6 @@ def main():
                                 CELL - INSET - size[1]))
         atlas.resize((CELL * 4 * SCALE, CELL * SCALE), Image.Resampling.NEAREST).save(
             OUT / f'march-{subject}-v2.png', optimize=True)
-    (OUT / 'cover-map-v2.png').write_bytes((HERE / 'cover-map-source.png').read_bytes())
 
 
 if __name__ == '__main__':

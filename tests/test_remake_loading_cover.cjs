@@ -67,7 +67,7 @@ assert.equal(initial.node('game-loading-title').children.map(node=>node.textCont
 assert(initial.all().filter(node=>node.tagName==='IMG').every(node=>node.alt===''&&node.getAttribute('aria-hidden')==='true'),'Decorative artwork does not compete with live boot status');
 assert.equal(initial.timers.length,0,'No minimum duration, fake progress timer, or delayed dismissal is added');
 assert.equal(initial.observers.length,1);assert(initial.observers[0].options.subtree);assert(initial.observers[0].options.childList);
-assert.deepEqual([...initial.observers[0].options.attributeFilter],['disabled','hidden','class']);
+assert.deepEqual([...initial.observers[0].options.attributeFilter],['disabled','hidden','class','href','viewBox']);
 initial.window.GameLoadingCover.update({phase:'loading',receivedBytes:2048,runtimeReady:false});
 let message=classNode(initial,'loading-cover-message');assert(message.textContent.includes('2.0 KiB'));assert(message.textContent.includes('不含執行環境'));assert(!message.textContent.includes('%'));
 initial.window.GameLoadingCover.update({receivedBytes:Infinity});assert(message.textContent.includes('2.0 KiB'),'Invalid byte reports cannot invent progress');
@@ -86,7 +86,7 @@ assert.equal((initial.listeners.get('game-language-change')||[]).length,0);
 
 const japanese=fixture({language:'ja',prefix:'/nested/game/'});assert.equal(japanese.node('game-loading-cover').getAttribute('lang'),'ja');
 assert.equal(classNode(japanese,'loading-cover-subtitle').textContent,'大陸戦役');assert.equal(classNode(japanese,'loading-cover-scenario').textContent,'184年・黄巾の乱');
-assert.equal(classNode(japanese,'loading-cover-art').src,'https://game.example/nested/game/assets/loading/cover-map-v2.png','Early boot assets honor the actual project subpath before paths.js is ready');
+assert.equal(classNode(japanese,'loading-cover-art').src,'https://game.example/nested/game/assets/loading/cover.png','Early boot assets honor the actual project subpath before paths.js is ready');
 for(const [kind,name,count] of [['rider','rider',1],['soldier','infantry',3]]){
  const figures=japanese.all().filter(node=>node.className==='loading-cover-figure loading-cover-'+kind);
  assert.equal(figures.length,count);
@@ -99,7 +99,7 @@ for(const [kind,name,count] of [['rider','rider',1],['soldier','infantry',3]]){
 japanese.window.GameI18n={locale:'zh-Hant'};japanese.emit('game-language-change');assert.equal(classNode(japanese,'loading-cover-subtitle').textContent,'大陸戰役');
 japanese.window.GameI18n.locale='ja';japanese.emit('game-language-change');japanese.window.GameLoadingCover.update({phase:'loading',receivedBytes:1024,runtimeReady:true});
 assert(classNode(japanese,'loading-cover-message').textContent.includes('実行環境を除く'));assert(classNode(japanese,'loading-cover-message').textContent.includes('準備完了'));
-const blocked=fixture({storageThrows:true,paths:true,prefix:'/nested/'});assert.equal(blocked.node('game-loading-cover').getAttribute('lang'),'zh-Hant');assert.equal(classNode(blocked,'loading-cover-art').src,'/nested/assets/loading/cover-map-v2.png');
+const blocked=fixture({storageThrows:true,paths:true,prefix:'/nested/'});assert.equal(blocked.node('game-loading-cover').getAttribute('lang'),'zh-Hant');assert.equal(classNode(blocked,'loading-cover-art').src,'/nested/assets/loading/cover.png');
 
 const retried=fixture(),{panel,button}=retried.status(),oldParent=panel.parentNode,oldNext=panel.nextSibling;
 let retryCount=0;button.onclick=()=>{retryCount++;retried.window.GameLoadingCover.update({phase:'manifest',failed:false,ready:false});};
@@ -134,7 +134,7 @@ for(const name of ['rider','infantry']){
  assert.equal(png.readUInt32BE(16),2048,'Four 512px frames retain the 4x 128px pixel base');assert.equal(png.readUInt32BE(20),512);
 }
 assert(fs.existsSync(path.join(__dirname,'../game/assets/loading/cover.png')),'The previous cover artwork remains preserved');
-assert.equal(fs.readFileSync(path.join(__dirname,'../game/assets/loading/cover-map-v2.png')).subarray(0,8).toString('hex'),'89504e470d0a1a0a');
+assert.equal(fs.readFileSync(path.join(__dirname,'../game/assets/loading/cover.png')).subarray(0,8).toString('hex'),'89504e470d0a1a0a');
 async function musicChecks(){
  const settings={muted:false,bgmVolume:.35},status={supported:true,unlocked:false,playing:false,coverActive:false},calls=[];
  const player={getSettings:()=>({...settings}),getStatus:()=>({...status}),setCoverActive(value){status.coverActive=value;calls.push(['cover',value]);},

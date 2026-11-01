@@ -726,7 +726,6 @@ def main():
               '/loading-cover.js': ('loading-cover.js', 'text/javascript; charset=utf-8'),
               '/loading-cover.css': ('loading-cover.css', 'text/css; charset=utf-8'),
               '/assets/loading/cover.png': ('assets/loading/cover.png', 'image/png'),
-              '/assets/loading/cover-map-v2.png': ('assets/loading/cover-map-v2.png', 'image/png'),
               '/assets/loading/march-rider-v2.png': ('assets/loading/march-rider-v2.png', 'image/png'),
               '/assets/loading/march-infantry-v2.png': ('assets/loading/march-infantry-v2.png', 'image/png'),
               '/save-transfer.js': ('save-transfer.js', 'text/javascript; charset=utf-8'),

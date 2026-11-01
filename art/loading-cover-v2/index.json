@@ -44,15 +44,6 @@
         1774,
         887
       ]
-    },
-    {
-      "path": "art/loading-cover-v2/cover-map-source.png",
-      "sha256": "a558ba7f33766d397bacff72c8afb4bc09a6b78c4f5f5ff80eec8059ee781846",
-      "bytes": 2717313,
-      "size": [
-        1672,
-        941
-      ]
     }
   ],
   "runtime": [
@@ -73,21 +64,32 @@
         2048,
         512
       ]
-    },
-    {
-      "path": "game/assets/loading/cover-map-v2.png",
-      "sha256": "a558ba7f33766d397bacff72c8afb4bc09a6b78c4f5f5ff80eec8059ee781846",
-      "bytes": 2717313,
-      "size": [
-        1672,
-        941
-      ]
     }
   ],
   "prompts": [
     "art/loading-cover-v2/march-prompt.txt",
     "art/loading-cover-v2/background-prompt.txt"
   ],
-  "processing": "Cover: exact generated PNG. Sprites: crop registered columns and actor rows, common per-actor bounds/scale/feet, nearest-neighbour128pixel packing and4x enlargement; no repainting. See build.py.",
-  "geography_note": "Decorative map interpretation; does not modify the actual campaign terrain or routing."
+  "processing": "Sprites only: crop registered columns and actor rows, common per-actor bounds/scale/feet, nearest-neighbour128pixel packing and4x enlargement; no repainting. See build.py. Cartography is a read-only SVG clone, not a generated bitmap.",
+  "geography_note": "Uses the actual current campaign map renderer; does not change gameplay terrain, routes or state.",
+  "unselected_art": [
+    {
+      "path": "art/loading-cover-v2/cover-map-source.png",
+      "sha256": "a558ba7f33766d397bacff72c8afb4bc09a6b78c4f5f5ff80eec8059ee781846",
+      "bytes": 2717313,
+      "size": [
+        1672,
+        941
+      ],
+      "reason": "Rejected for inaccurate islands and city positions; never used by runtime"
+    }
+  ],
+  "cartography": {
+    "source": "#world-map",
+    "mode": "Read-only deep clone of the actual latest game renderer, after it is available",
+    "coordinates": "Exact original viewBox, city IDs and child use coordinates; same terrain image and route geometry",
+    "fallback": "None: no stale raster or generated map",
+    "styling": "Prefixed SVG IDs; remove labels/interaction, gold city fill and muted color; keep geometry unchanged",
+    "foreground": "game/assets/loading/cover.png, old fortress art only; upper black area masked"
+  }
 }

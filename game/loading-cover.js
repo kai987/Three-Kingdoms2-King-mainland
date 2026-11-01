@@ -8,7 +8,7 @@
  };
  const state={phase:'manifest',receivedBytes:0,runtimeReady:false,failed:false,ready:false,canRetry:false};
  let cover,subtitle,scenario,description,message,slot,observer,attached,home,pendingPanel,dismissed=false,motion;
- let startButton,soundButton,audioNote,audio,openingReady=false;
+ let startButton,soundButton,audioNote,audio,openingReady=false,mapLayer,lastMapMarkup;
  const background=new Map();
  let resolveEntered;const entered=new Promise(resolve=>{resolveEntered=resolve;});
  function locale(){
@@ -83,6 +83,36 @@
   background.delete(node);
  }
  function motionChanged(){if(cover&&!dismissed)cover.setAttribute('data-motion',motion?.matches?'still':'animated');}
+ function refreshMap(){
+  const source=doc.querySelector('#world-map');
+  if(!mapLayer||!source||typeof source.cloneNode!=='function')return;
+  const markup=source.outerHTML;if(markup===lastMapMarkup)return;
+  // Copy the current renderer, including its latest terrain, roads and dated
+  // city positions. Never redraw geography or use a historical bitmap here.
+  lastMapMarkup=markup;
+  const clone=source.cloneNode(true),ids=new Map();
+  for(const node of [clone,...clone.querySelectorAll('[id]')]){
+   const id=node.getAttribute('id');if(!id)continue;
+   const next='loading-cover-'+id;ids.set(id,next);node.setAttribute('id',next);
+  }
+  clone.setAttribute('class','loading-cover-world-map');clone.setAttribute('aria-hidden','true');
+  for(const node of [clone,...clone.querySelectorAll('*')]){
+   for(const name of ['tabindex','role','aria-label','aria-describedby'])node.removeAttribute(name);
+   for(const attribute of [...node.attributes]){
+    let value=attribute.value;
+    if((attribute.name==='href'||attribute.name==='xlink:href')&&ids.has(value.slice(1))&&value.startsWith('#'))value='#'+ids.get(value.slice(1));
+    value=value.replace(/url\(#([^)]+)\)/g,(match,id)=>ids.has(id)?'url(#'+ids.get(id)+')':match);
+    if(value!==attribute.value)node.setAttribute(attribute.name,value);
+   }
+  }
+  for(const node of clone.querySelectorAll('title,.map-city-name,.city-outline'))node.remove();
+  for(const city of clone.querySelectorAll('[data-city]')){
+   city.setAttribute('class','loading-cover-city');
+   city.querySelector('.castle-fill')?.setAttribute('fill','#dcb65c');
+   city.querySelector('.castle-border')?.setAttribute('fill','#201808');
+  }
+  mapLayer.replaceChildren(clone);
+ }
  function releaseStatus(){
   if(!attached||attached.parentNode!==slot)return;
   if(home?.parent&&home.parent.isConnected!==false)home.parent.insertBefore(attached,home.next?.parentNode===home.parent?home.next:null);
@@ -91,6 +121,8 @@
  function dismiss(){
   if(dismissed||!cover)return;
   dismissed=true;cover.hidden=true;cover.setAttribute('aria-hidden','true');
+  // Release the decorative city tree before campaign selectors become active.
+  mapLayer?.replaceChildren?.();lastMapMarkup=null;
   for(const node of [...background.keys()])restoreNode(node);
   releaseStatus();observer?.disconnect();observer=null;
   audio?.setCoverActive(false);
@@ -106,7 +138,7 @@
  }
  function checkReady(){
   if(dismissed||!cover)return;
-  blockBackground();
+  blockBackground();refreshMap();
   const inspector=doc.querySelector('#inspector');if(!inspector)return;
   const controls=[inspector.querySelector('#begin'),inspector.querySelector('#allocate')];
   const notice=doc.querySelector('#notice'),appError=/(?:^|\s)error(?:\s|$)/.test(notice?.className||'')&&(!root.GameBrowserEngine||root.GameBrowserEngine.ready);
@@ -142,24 +174,25 @@
   cover=element('section','loading-cover');cover.id='game-loading-cover';cover.setAttribute('role','region');
   cover.setAttribute('aria-labelledby','game-loading-title');cover.setAttribute('aria-describedby','game-loading-description');
   const shell=element('div','loading-cover-shell'),heading=element('header','loading-cover-heading'),title=element('h1','loading-cover-title');title.id='game-loading-title';
+  mapLayer=element('div','loading-cover-map');mapLayer.setAttribute('aria-hidden','true');
   title.append(element('span','loading-cover-name','三國志'),element('span','loading-cover-number','Ⅱ'));
   subtitle=element('p','loading-cover-subtitle');scenario=element('p','loading-cover-scenario');
   description=element('p','loading-cover-description');description.id='game-loading-description';heading.append(title,subtitle,scenario,description);
   const stage=element('div','loading-cover-stage');stage.setAttribute('aria-hidden','true');
   const march=element('div','loading-cover-march');march.append(figure('soldier'),figure('soldier'),figure('soldier'),figure('rider'));
-  stage.append(image('/assets/loading/cover-map-v2.png','loading-cover-art'),march);
+  stage.append(image('/assets/loading/cover.png','loading-cover-art'),march);
   const footer=element('footer','loading-cover-footer');message=element('p','loading-cover-message');message.setAttribute('role','status');message.setAttribute('aria-live','polite');slot=element('div','loading-cover-status-slot');
   startButton=element('button','loading-cover-start');startButton.id='game-loading-start';startButton.type='button';startButton.hidden=true;startButton.disabled=true;startButton.onclick=enterGame;
   const audioControls=element('div','loading-cover-audio');soundButton=element('button','loading-cover-sound');soundButton.id='game-loading-sound';soundButton.type='button';soundButton.onclick=toggleMusic;
   audioNote=element('p','loading-cover-audio-note');audioNote.id='game-loading-audio-note';soundButton.setAttribute('aria-describedby',audioNote.id);audioControls.append(soundButton,audioNote);
-  footer.append(message,slot,startButton,audioControls);shell.append(heading,stage,footer);cover.append(shell);doc.body.append(cover);
+  footer.append(message,slot,startButton,audioControls);shell.append(mapLayer,heading,stage,footer);cover.append(shell);doc.body.append(cover);
   try{motion=root.matchMedia?.('(prefers-reduced-motion: reduce)');}catch{}
   motionChanged();motion?.addEventListener?.('change',motionChanged);
   doc.addEventListener('game-language-change',render);doc.addEventListener('error',imageError,true);
   doc.addEventListener('pointerdown',unlockMusic,true);doc.addEventListener('keydown',unlockMusic,true);
   if(typeof root.MutationObserver==='function'){
    observer=new root.MutationObserver(checkReady);
-   observer.observe(doc.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['disabled','hidden','class']});
+   observer.observe(doc.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['disabled','hidden','class','href','viewBox']});
   }
   if(pendingPanel){attachStatus(pendingPanel);pendingPanel=null;}
   prepareAudio();render();checkReady();
