@@ -210,6 +210,18 @@ test('pixel loading cover animates, plays the original title and waits for Start
   await expect(cover.locator('.loading-cover-map img')).toHaveCount(0);
   await expect(cover.locator('.loading-cover-art')).toHaveAttribute('src',/\/assets\/loading\/cover\.png(?:\?|$)/);
   await expect.poll(()=>cover.locator('.loading-cover-art').evaluate(node=>node.complete&&node.naturalWidth>0)).toBe(true);
+  const assertPanoramaBounds=async()=>{
+   await expect(cover.locator('.loading-cover-scene')).toBeVisible();
+   await expect(cover.locator('.loading-cover-art')).toBeVisible();
+   await expect.poll(()=>cover.evaluate(node=>{
+    const stage=node.querySelector('.loading-cover-stage').getBoundingClientRect();
+    const scene=node.querySelector('.loading-cover-scene').getBoundingClientRect();
+    const art=node.querySelector('.loading-cover-art').getBoundingClientRect();
+    return[scene,art].every(rect=>rect.width>0&&rect.height>0&&rect.left>=stage.left-1&&rect.right<=stage.right+1&&rect.top>=stage.top-1&&rect.bottom<=stage.bottom+1)
+     &&Math.abs(scene.width/scene.height-16/9)<.01;
+   })).toBe(true);
+  };
+  await assertPanoramaBounds();
   await expect(rider.locator('img')).toHaveCount(1);
   await expect(rider.locator('img')).toHaveAttribute('src',/\/assets\/loading\/march-rider-v2\.png(?:\?|$)/);
   await expect(cover.locator('.loading-cover-soldier')).toHaveCount(3);
@@ -312,10 +324,15 @@ test('pixel loading cover animates, plays the original title and waits for Start
   expect(referenceIntegrity.duplicateIds).toEqual([]);
   await expect(sourceMap).toHaveAttribute('id','world-map');
   expect(await sourceMap.locator('[id^="loading-cover-"]').count()).toBe(0);
+  await assertPanoramaBounds();
   await testInfo.attach('loading-cover-actual-city-geography',{body:Buffer.from(JSON.stringify(actualGeography,null,2)),contentType:'application/json'});
   const start=page.locator('#game-loading-start'),sound=page.locator('#game-loading-sound');
   await expect(start).toBeVisible();await expect(start).toBeEnabled();await expect(start).toHaveText('開始遊戲');
   await expect(sound).toBeVisible();await expect(sound).toBeEnabled();await expect(page.locator('#game-loading-audio-note')).toBeVisible();
+  await page.screenshot({path:testInfo.outputPath('loading-cover-ready-before-audio.png'),fullPage:false});
+  const coverViewport=page.viewportSize();
+  await page.setViewportSize({width:coverViewport.height,height:coverViewport.width});await assertPanoramaBounds();
+  await page.setViewportSize(coverViewport);await assertPanoramaBounds();
   await expect.poll(()=>page.locator('#inspector').evaluate(node=>!!node.closest('[inert]'))).toBe(true);
   expect(await page.evaluate(()=>gameAudio.getStatus().unlocked)).toBe(false);
   await sound.click();

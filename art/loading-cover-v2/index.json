@@ -89,7 +89,7 @@
     "mode": "Read-only deep clone of the actual latest game renderer, after it is available",
     "coordinates": "Exact original viewBox, city IDs and child use coordinates; same terrain image and route geometry",
     "fallback": "None: no stale raster or generated map",
-    "styling": "Prefixed SVG IDs; remove labels/interaction, gold city fill and muted color; keep geometry unchanged",
+    "styling": "Current map composited inside the existing bright16:9panorama; unified1.35x horizontal cover projection, warm pixel palette andgoldcityfill/edgefade; all original logical map coordinates preserved",
     "foreground": "game/assets/loading/cover.png, old fortress art only; upper black area masked"
   }
 }

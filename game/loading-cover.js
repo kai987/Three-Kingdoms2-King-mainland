@@ -8,7 +8,7 @@
  };
  const state={phase:'manifest',receivedBytes:0,runtimeReady:false,failed:false,ready:false,canRetry:false};
  let cover,subtitle,scenario,description,message,slot,observer,attached,home,pendingPanel,dismissed=false,motion;
- let startButton,soundButton,audioNote,audio,openingReady=false,mapLayer,lastMapMarkup;
+ let startButton,soundButton,audioNote,audio,openingReady=false,mapLayer,lastMapMarkup,stageNode,sceneNode,sceneObserver;
  const background=new Map();
  let resolveEntered;const entered=new Promise(resolve=>{resolveEntered=resolve;});
  function locale(){
@@ -83,6 +83,12 @@
   background.delete(node);
  }
  function motionChanged(){if(cover&&!dismissed)cover.setAttribute('data-motion',motion?.matches?'still':'animated');}
+ function fitScene(){
+  const width=stageNode?.clientWidth,height=stageNode?.clientHeight;
+  if(dismissed||!(width>0&&height>0))return;
+  const unit=Math.min(width/16,height/9);
+  sceneNode.style.width=16*unit+'px';sceneNode.style.height=9*unit+'px';
+ }
  function refreshMap(){
   const source=doc.querySelector('#world-map');
   if(!mapLayer||!source||typeof source.cloneNode!=='function')return;
@@ -123,6 +129,7 @@
   dismissed=true;cover.hidden=true;cover.setAttribute('aria-hidden','true');
   // Release the decorative city tree before campaign selectors become active.
   mapLayer?.replaceChildren?.();lastMapMarkup=null;
+  sceneObserver?.disconnect();root.removeEventListener?.('resize',fitScene);
   for(const node of [...background.keys()])restoreNode(node);
   releaseStatus();observer?.disconnect();observer=null;
   audio?.setCoverActive(false);
@@ -178,14 +185,17 @@
   title.append(element('span','loading-cover-name','三國志'),element('span','loading-cover-number','Ⅱ'));
   subtitle=element('p','loading-cover-subtitle');scenario=element('p','loading-cover-scenario');
   description=element('p','loading-cover-description');description.id='game-loading-description';heading.append(title,subtitle,scenario,description);
-  const stage=element('div','loading-cover-stage');stage.setAttribute('aria-hidden','true');
+  const stage=element('div','loading-cover-stage');stageNode=stage;stage.setAttribute('aria-hidden','true');
+  const scene=element('div','loading-cover-scene');sceneNode=scene;
   const march=element('div','loading-cover-march');march.append(figure('soldier'),figure('soldier'),figure('soldier'),figure('rider'));
-  stage.append(image('/assets/loading/cover.png','loading-cover-art'),march);
+  scene.append(mapLayer,image('/assets/loading/cover.png','loading-cover-art'),image('/assets/loading/cover.png','loading-cover-foreground'));stage.append(scene,march);
   const footer=element('footer','loading-cover-footer');message=element('p','loading-cover-message');message.setAttribute('role','status');message.setAttribute('aria-live','polite');slot=element('div','loading-cover-status-slot');
   startButton=element('button','loading-cover-start');startButton.id='game-loading-start';startButton.type='button';startButton.hidden=true;startButton.disabled=true;startButton.onclick=enterGame;
   const audioControls=element('div','loading-cover-audio');soundButton=element('button','loading-cover-sound');soundButton.id='game-loading-sound';soundButton.type='button';soundButton.onclick=toggleMusic;
   audioNote=element('p','loading-cover-audio-note');audioNote.id='game-loading-audio-note';soundButton.setAttribute('aria-describedby',audioNote.id);audioControls.append(soundButton,audioNote);
-  footer.append(message,slot,startButton,audioControls);shell.append(mapLayer,heading,stage,footer);cover.append(shell);doc.body.append(cover);
+  footer.append(message,slot,startButton,audioControls);shell.append(heading,stage,footer);cover.append(shell);doc.body.append(cover);
+  fitScene();root.addEventListener?.('resize',fitScene);
+  if(typeof root.ResizeObserver==='function'){sceneObserver=new root.ResizeObserver(fitScene);sceneObserver.observe(stage);}
   try{motion=root.matchMedia?.('(prefers-reduced-motion: reduce)');}catch{}
   motionChanged();motion?.addEventListener?.('change',motionChanged);
   doc.addEventListener('game-language-change',render);doc.addEventListener('error',imageError,true);
