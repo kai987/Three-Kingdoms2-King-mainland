@@ -2089,8 +2089,8 @@ test('authoritative tactical movement, shared points and contact attacks persist
  const own=b.attacker===initial.view.game.player?'attackers':'defenders',foe=own==='attackers'?'defenders':'attackers';
  const chosen=b[own].filter(unit=>board.actors[unit.id]?.reachable.length>0).sort((a,b)=>b.martial-a.martial||b.troops-a.troops)[0],id=chosen.id,scene=page.locator('[data-battle-scene]'),canvas=page.locator('[data-battle-canvas]');
  await expect(page.locator('#attack')).toBeDisabled();
- const boxed=b[own].find(unit=>{const q=board.actors[unit.id];return q?.can_act&&q.reachable.length===0&&q.attack_targets.length===0&&!Object.values(q.tactic_targets).some(ids=>ids.length);});expect(boxed).toBeTruthy();expect(boxed.id).not.toBe(id);
- await tacticalCell(page,b.extended.tactical.positions[boxed.id],touch);await expect(page.locator(`[data-actor="${boxed.id}"]`)).toBeEnabled();await expect(page.locator(`[data-actor="${boxed.id}"]`)).toHaveAttribute('aria-pressed','true');await expect(page.locator('#battle-move')).toBeDisabled();await expect(page.locator('.battle-move-reason')).toContainText('限制');expect(await tacticalSave(page)).toEqual(initial.save,'A surrounded unit stays inspectable and cannot bypass occupied cells');
+ // Surrounded-unit inspection is retained by the explicitly boxed current
+ // fixture in arrival-deployment. Native initial arrays need not box a unit.
  await tacticalCell(page,b.extended.tactical.positions[id],touch);await expect(page.locator(`[data-actor="${id}"]`)).toHaveAttribute('aria-pressed','true');await expect(scene).toHaveAttribute('data-battle-selected-actor',String(id));
  const selected={save:await tacticalSave(page),view:initial.view},row=selected.view.catalog.battle_tactical.actors[id];expect(row.reachable.length).toBeGreaterThan(0);expect(row.attack_targets).toEqual([]);await expect(scene).toHaveAttribute('data-battle-reachable-count',String(row.reachable.length));
  const occupied=new Set(Object.values(b.extended.tactical.positions).map(p=>p.x+','+p.y)),reachable=new Set(row.reachable.map(p=>p.x+','+p.y));let invalid;

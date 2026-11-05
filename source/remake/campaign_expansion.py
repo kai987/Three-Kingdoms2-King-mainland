@@ -203,7 +203,7 @@ class ExpandedCampaign:
         for ident in ids: self._personnel_actor(state,source,ident)
         self._queue_march(state,source,destination,ids,'transfer',payload.get('route_mode','fastest'))
 
-    def _start_expanded_battle(self,state,source,target,ids,*,paid=False,march_supply=None):
+    def _start_expanded_battle(self,state,source,target,ids,*,paid=False,march_supply=None,arrival_city=None):
         if not paid: command_books.require(state, source.owner, 'depart')
         selected=select_deployment(source.roster,ids,state.officers)
         cost=0 if paid else max(1,sum(state.officers[i].troops for i in selected)//25)
@@ -220,7 +220,7 @@ class ExpandedCampaign:
                       'attackers':units(selected),'defenders':units(defenders),'used':[],'round':1,'outcome':None,'supply_cost':cost,
                       'log':[f'{self.catalog.map_cities[source.id]["name"]}向{self.catalog.map_cities[target.id]["name"]}出征。'],
                       'extended':{'support':support,'duel':None,'duel_history':[],'ambush':None,'surrenders':{},'withdrawn':None}}
-        battle_grid.initialize(self,state,state.battle)
+        battle_grid.initialize(self,state,state.battle,directional=True,arrival_city=arrival_city)
         if not paid:
             source.grain-=cost
             command_books.spend(state, source, 'depart')
@@ -963,7 +963,7 @@ class ExpandedCampaign:
         if not b:return
         e=b['extended']
         expected={'support','duel','duel_history','ambush','surrenders','withdrawn','tactical'}
-        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation','supply'}:raise ValueError('battle extended fields')
+        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation','supply','deployment'}:raise ValueError('battle extended fields')
         battle_grid.validate(self,state,b)
         battle_supply.validate(state,b)
         siege.validate(self,state,b)

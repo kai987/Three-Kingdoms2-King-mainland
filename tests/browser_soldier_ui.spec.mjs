@@ -539,3 +539,51 @@ test('fire arrows burn carried grain and conversion loyalty gates stay actionabl
  }
  await attach(testInfo,'original-tactic-effects-proof',proof);expect(pageErrors.get(page)).toEqual([]);
 });
+
+test('arrival-based deployment uses paired native zones and preserves old battle positions across language and save loads',async({page},testInfo)=>{
+ await opening(page);
+ const rows=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_deployment_fixture.py',import.meta.url).pathname],{encoding:'utf8',maxBuffer:12*1024*1024,timeout:90_000}));
+ expect(rows[0].provenance.attacker_zone).not.toBe(rows[1].provenance.attacker_zone);
+ const proof=[];
+ for(const value of rows){
+  await load(page,value.save,'controlled-native-arrival-'+value.source+'.json');
+  const scene=page.locator('[data-battle-scene]'),label=scene.locator('[data-battle-deployment-label]');
+  await expect(scene).toHaveAttribute('data-battle-deployment','native_pair');
+  await expect(scene).toHaveAttribute('data-battle-approach-city',value.source);await expect(label).toBeVisible();
+  const initial=await read(page);expect(initial.save.state.battle.extended.tactical.positions).toEqual(value.positions);
+  await locale(page,'zh-Hant');await expect(label).toContainText('進軍');
+  await locale(page,'ja');await expect(label).toContainText('側から進軍');await expect(label).toHaveAttribute('title',/原作テンプレート/);
+  expect(await save(page)).toEqual(initial.save,'Inspecting paired deployment and changing language do not redeploy, spend AP or roll RNG');
+  await evidence(page,testInfo,'paired-arrival-'+value.source);
+  await page.locator(`[data-actor="${value.actor}"]`).click();
+  const current=await read(page),board=current.view.catalog.battle_tactical;
+  const destination=[...board.actors[String(value.actor)].reachable].sort((a,b)=>a.cost-b.cost||a.y-b.y||a.x-b.x)[0];
+  expect(destination).toBeTruthy();await cell(page,destination,testInfo.project.name==='touch-chromium');await control(page,'battle-move');
+  const moved=await animation(page);
+  expect(moved.save.state.battle.extended.tactical.positions[String(value.actor)]).toEqual({x:destination.x,y:destination.y});
+  expect(moved.save.state.battle.extended.deployment).toEqual(value.provenance);
+  expect(moved.save.state.battle.extended.tactical.points.attackers).toBe(current.save.state.battle.extended.tactical.points.attackers-destination.cost);
+  expect(moved.save.state.rng).toEqual(current.save.state.rng);
+  await load(page,moved.save,'moved-native-arrival-roundtrip.json');expect(await save(page)).toEqual(moved.save);
+  proof.push({arrival:value.source,provenance:value.provenance,initial:value.positions,moved_to:destination});
+ }
+ const boxed=rows.find(row=>row.boxed).boxed;
+ await load(page,boxed.save,'controlled-friendly-surround.json');
+ const blocked=(await read(page)).view.catalog.battle_tactical.actors[String(boxed.actor)];
+ expect(blocked.can_act).toBe(true);expect(blocked.reachable).toEqual([]);expect(blocked.attack_targets).toEqual([]);
+ expect(Object.values(blocked.tactic_targets).every(ids=>ids.length===0)).toBe(true);
+ await cell(page,boxed.save.state.battle.extended.tactical.positions[String(boxed.actor)],testInfo.project.name==='touch-chromium');
+ await expect(page.locator(`[data-actor="${boxed.actor}"]`)).toBeEnabled();await expect(page.locator(`[data-actor="${boxed.actor}"]`)).toHaveAttribute('aria-pressed','true');
+ await expect(page.locator('#battle-move')).toBeDisabled();await expect(page.locator('.battle-move-reason')).toContainText(/限制|占有/);
+ expect(await save(page)).toEqual(boxed.save,'A surrounded officer remains inspectable without moving through allies');
+ await page.locator('#load').click();
+ await page.locator('#save-file').setInputFiles({name:'damaged-new-deployment.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(rows[0].missing_grid))});
+ await idle(page);await expect(page.locator('#notice')).toHaveClass(/error/);await expect(page.locator('#dialog')).toBeVisible();
+ expect(await save(page)).toEqual(boxed.save,'A new battle missing its coordinates is rejected rather than redeployed by legacy bootstrap');
+ await page.locator('#dialog [data-cancel]').click();
+ await load(page,rows[0].without_provenance,'existing-battle-without-deployment-receipt.json');
+ await expect(page.locator('[data-battle-scene]')).toHaveAttribute('data-battle-deployment','retained');
+ await expect(page.locator('[data-battle-deployment-label]')).toBeHidden();
+ expect(await save(page)).toEqual(rows[0].without_provenance,'An existing battle without provenance is not redeployed or backfilled on load');
+ await attach(testInfo,'paired-deployment-proof',proof);expect(pageErrors.get(page)).toEqual([]);
+});

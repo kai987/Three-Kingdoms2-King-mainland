@@ -7,7 +7,7 @@ import tempfile
 from unittest.mock import patch
 
 from remake.campaign import Campaign, Catalog
-from remake import officer_relations, city_development, battle_supply
+from remake import officer_relations, city_development, battle_supply, battle_grid
 from remake.officers import appearance_values
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -62,6 +62,26 @@ def pre_battle_provisions():
     with patch.object(battle_supply, 'initialize', no_bags), \
             patch.object(battle_supply, 'ensure', no_bags), \
             patch.object(battle_supply, 'end_day', no_day):
+        yield
+
+
+@contextmanager
+def pre_directional_deployment():
+    """Build only the old duel corpus with its declared pre-direction inputs.
+
+    Do not erase a new receipt from the acceptance projection or rewrite the
+    immutable complete state/save hashes. Current battles never enter here.
+    """
+    current=battle_grid.initialize
+
+    def retained(game,state,battle,**options):
+        options['directional']=False
+        row=current(game,state,battle,**options)
+        if 'deployment' in battle['extended']:
+            raise AssertionError('Historical duel corpus unexpectedly has arrival deployment')
+        return row
+
+    with patch.object(battle_grid,'initialize',retained):
         yield
 
 

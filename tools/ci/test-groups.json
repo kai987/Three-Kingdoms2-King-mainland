@@ -880,6 +880,23 @@
         "battle",
         "logistics"
       ]
+    },
+    "tests/test_remake_directional_deployment.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "save"
+      ]
+    },
+    "tests/test_remake_deployment_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "save",
+        "logistics"
+      ]
     }
   }
 }

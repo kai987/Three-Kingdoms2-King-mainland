@@ -3,7 +3,9 @@
 Use the shipped catalog, actual allocation command and battle initializer. Only
 the pending attacker's contact cell is arranged to exercise the castle page
 without waiting for an AI commander to choose to stay in its fort. The browser
-imports the checksummed save through the normal visible file picker.
+imports the checksummed save through the normal visible file picker. If the
+native garrison fills all contact cells, one guard swaps with the attacker's
+old cell. The fort, troops, resources, AP and RNG are left intact.
 """
 import json
 from pathlib import Path
@@ -33,8 +35,12 @@ def fixture():
     x, y = battle_grid._field(battle)['camp']
     positions = battle['extended']['tactical']['positions']
     occupied = {(point['x'], point['y']) for ident, point in positions.items() if ident != str(actor)}
-    adjacent = next((nx, ny) for nx, ny in ((x-1, y), (x+1, y), (x, y-1), (x, y+1))
-                    if 0 <= nx < 31 and 0 <= ny < 19 and (nx, ny) not in occupied)
+    neighbors=[(nx,ny)for nx,ny in((x-1,y),(x+1,y),(x,y-1),(x,y+1))if 0<=nx<31 and 0<=ny<19]
+    adjacent=next((point for point in neighbors if point not in occupied),neighbors[0])
+    blocker=next((ident for ident,point in positions.items()
+                  if ident!=str(actor)and(point['x'],point['y'])==adjacent),None)
+    if blocker is not None:
+        positions[blocker]=dict(positions[str(actor)])
     positions[str(actor)] = dict(x=adjacent[0], y=adjacent[1])
     saved = game.export_save()
     # The ordinary production loader must accept the fixture unchanged.

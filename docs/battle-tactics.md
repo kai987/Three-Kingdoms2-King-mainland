@@ -122,4 +122,4 @@ Namco官方說明書[第32–33頁](https://cdn-ak.f.st-hatena.com/images/fotoli
 
 兵士模式前進、包圍與撤退改為繞過城牆及活兵，詳見[尋路規則](soldier-pathfinding.md)。這是修正可玩性的確定性BFS適配，不是已證實的原版AI演算法。
 
-原30城的[方向部署證據](../tools/battle-deployment-original/README.md)已整理；合法矩形與預設點尚未接入執行期，現有城砦左右自動配置仍是待補項。證據包不代表部署功能已完成。
+原30城的[方向部署證據](../tools/battle-deployment-original/README.md)現已接入新戰局的預設陣位。真實行軍使用最後途經城，原模板相鄰時取原配對區，其他擴充區域按來向選擇原邊緣矩形並明示適配；已保存的位置、機動力與歸降編隊不重新配置。玩家自由部署階段尚未實作，詳見[方向部署與驗證邊界](directional-deployment.md)。

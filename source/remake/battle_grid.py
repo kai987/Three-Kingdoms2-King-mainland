@@ -104,8 +104,10 @@ def point_cap(troops):
     return POINT_CAPS[min(troops // 1000, 9)]
 
 
-def initialize(game, state, battle):
+def initialize(game, state, battle, *, directional=False, arrival_city=None):
     """Assign both armies distinct real cells; initialization never draws RNG."""
+    if 'tactical' in battle['extended']:
+        return battle['extended']['tactical']
     maps, _ = _library()
     map_id = field_id(battle['target'])
     field = maps[map_id]
@@ -113,7 +115,13 @@ def initialize(game, state, battle):
     anchors = dict(defenders=(camp_x, camp_y),
         attackers=(2 if camp_x >= COLUMNS//2 else COLUMNS-3, max(2, min(ROWS-3, camp_y))))
     occupied, positions = set(), {}
-    for side in ('defenders', 'attackers'):
+    if directional:
+        from . import battle_deployment
+        planned=battle_deployment.plan(game.catalog,battle,field,arrival_city=arrival_city)
+        if planned is not None:
+            positions=planned['positions']
+            battle['extended']['deployment']=planned['provenance']
+    for side in (() if positions else ('defenders', 'attackers')):
         ax, ay = anchors[side]
         candidates = [(x, y) for y in range(ROWS) for x in range(COLUMNS)
                       if field['classes'][y][x] in (0, 1, 2, 5)]
@@ -150,6 +158,9 @@ def validate(game, state, battle):
             or any(type(value) is not bool for value in row['passed'].values())
             or row['passed'][row['side']]):
         raise ValueError('Invalid tactical battle state')
+    if 'deployment' in battle['extended']:
+        from . import battle_deployment
+        battle_deployment.validate_provenance(game.catalog,battle,_field(battle),battle['extended']['deployment'])
     for side in SIDES:
         starts = [unit.get('start') for unit in battle[side]]
         original_starts = [unit.get('start') for current in SIDES for unit in battle[current]
@@ -502,7 +513,7 @@ def view(game, state, battle):
     return dict(schema=VIEW_SCHEMA, battle_id=battle['id'], round=battle['round'], map_id=row['map_id'],
         grid=dict(columns=COLUMNS, rows=ROWS, tile_size=TILE_SIZE), side=row['side'],
         camp=dict(zip(('x','y'),_field(battle)['camp'])), facilities=[dict(service) for service in _field(battle).get('services',())],
-        maximum_troops=1000,
+        maximum_troops=1000, deployment=deepcopy(battle['extended'].get('deployment')),
         points=deepcopy(row['points']), caps={side: point_cap(_troops(battle, side)) for side in SIDES},
         can_end=state.phase == 'battle' and row['side'] == own and not battle['extended']['duel'],
         attack_cost=ATTACK_COST, duel_cost=DUEL_COST, tactic_costs=list(TACTIC_COSTS), actors=actors)

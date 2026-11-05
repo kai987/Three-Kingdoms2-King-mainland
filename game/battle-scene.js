@@ -282,7 +282,7 @@
   }
   function html(){
    const lang=locale();
-   return `<div class="nes-battle" data-battle-scene data-l10n-native="${lang}"><div class="nes-battle-toolbar"><span data-battle-scene-title>${text('戰場','戦場')}</span><span data-battlefield-label></span><button type="button" data-soldier-label-toggle aria-pressed="false" aria-keyshortcuts="V" hidden>${text('標註：兵種／隊號 [V]','表示：兵種／隊番号 [V]')}</button><button type="button" data-battle-skip hidden>${text('略過演出','演出をスキップ')}</button></div><div data-duel-loadouts hidden></div><div class="nes-battle-viewport"><canvas width="1024" height="960" data-battle-canvas tabindex="0" role="img" aria-label="${text('戰場：點選旗標選將、空格預覽移動；方向鍵調整落點，Enter確認移動','戦場：旗を選び、空きマスで移動先を確認。矢印キーで調整し、Enterで移動')}"></canvas></div><p class="nes-battle-status" data-battle-caption aria-live="polite"></p><p class="visually-hidden" data-battle-description></p></div>`;
+   return `<div class="nes-battle" data-battle-scene data-l10n-native="${lang}"><div class="nes-battle-toolbar"><span data-battle-scene-title>${text('戰場','戦場')}</span><span data-battlefield-label></span><span data-battle-deployment-label hidden></span><button type="button" data-soldier-label-toggle aria-pressed="false" aria-keyshortcuts="V" hidden>${text('標註：兵種／隊號 [V]','表示：兵種／隊番号 [V]')}</button><button type="button" data-battle-skip hidden>${text('略過演出','演出をスキップ')}</button></div><div data-duel-loadouts hidden></div><div class="nes-battle-viewport"><canvas width="1024" height="960" data-battle-canvas tabindex="0" role="img" aria-label="${text('戰場：點選旗標選將、空格預覽移動；方向鍵調整落點，Enter確認移動','戦場：旗を選び、空きマスで移動先を確認。矢印キーで調整し、Enterで移動')}"></canvas></div><p class="nes-battle-status" data-battle-caption aria-live="polite"></p><p class="visually-hidden" data-battle-description></p></div>`;
   }
   function fit(){
    const box=host?.querySelector?.('.nes-battle-viewport');if(!box||!canvas)return;
@@ -760,6 +760,19 @@
    if(fieldLabel){fieldLabel.textContent=field?(locale()==='ja'?field.label_ja:field.label_tc)||field.field.id:text('參考戰場','参考戦場');fieldLabel.title=field?(locale()==='ja'?field.description_ja:field.description_tc)||'':text('地圖素材載入後顯示對應城池戰場','地図素材の読み込み後に都市の戦場を表示');}
    host.dataset.battlefieldId=field?.field?.id||'';
    host.dataset.battlefieldSource=field?.binding?.kind||field?.binding?.type||'fallback';
+   const deployment=view?.game?.battle?.extended?.deployment,approach=deployment?.arrival_city;
+   const hasDeployment=typeof approach==='string'&&['native_pair','regional_direction'].includes(deployment?.policy);
+   host.dataset.battleDeployment=hasDeployment?deployment.policy:'retained';
+   host.dataset.battleApproachCity=hasDeployment?approach:'';
+   const deploymentLabel=host.querySelector('[data-battle-deployment-label]');
+   if(deploymentLabel){
+    deploymentLabel.hidden=!hasDeployment||!!duel||!!soldiers;
+    const definition=view?.catalog?.cities?.find(city=>city.id===approach);
+    const named=view?.catalog?.city_history?.[approach]?definition?.name:view?.catalog?.map_presentation?.city_names?.[approach]?.displayName;
+    const name=translate(named||definition?.name||approach||'');
+    deploymentLabel.textContent=hasDeployment?text(`由${name}進軍`,`${name}側から進軍`):'';
+    deploymentLabel.title=hasDeployment?(deployment.policy==='native_pair'?text('使用相鄰原版模板配對的預設陣位；模板對應不代表原城身分已考定。','隣接する原作テンプレートの対になる初期陣位を使用。都市の対応付けは原作都市の同定を意味しません。'):text('依最後進軍方向選擇原版陣區，屬本作區域適配。','最後の進軍方向に応じて原作の配置区画を選択。本作の地域への適応です。')):'';
+   }
    const quote=tacticalView(view)?.actors?.[String(selection.actor)];host.dataset.battleReachableCount=String(quote?.reachable?.length??0);host.dataset.battleSelectedActor=String(selection.actor??'');
    const commanders=Object.fromEntries(['attackers','defenders'].map(side=>[side,view.game.battle[side][0]?.id]));
    host.dataset.battleMarkers=JSON.stringify(troopMarkers(snapshot(view)?.units||[],view.game.officers,view.catalog.officer_troop_types,commanders));

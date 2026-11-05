@@ -158,6 +158,7 @@ class TacticalCampaignTests(unittest.TestCase):
         self.assertEqual(restored.export_save(), saved)
         old = deepcopy(saved)
         del old['state']['battle']['extended']['tactical']
+        old['state']['battle']['extended'].pop('deployment',None)
         old['checksum'] = digest({key: value for key, value in old.items() if key != 'checksum'})
         restored.load_save(old, restored.revision)
         self.assertEqual(vars(restored.state.rng), vars(self.game.state.rng))
@@ -203,6 +204,7 @@ class TacticalCampaignTests(unittest.TestCase):
         before = deepcopy(game.state)
         legacy = deepcopy(game.export_save())
         del legacy['state']['battle']['extended']['tactical']
+        legacy['state']['battle']['extended'].pop('deployment',None)
         legacy['checksum'] = digest({key: value for key, value in legacy.items() if key != 'checksum'})
         restored = Campaign(game.catalog)
         restored.load_save(legacy, 0)

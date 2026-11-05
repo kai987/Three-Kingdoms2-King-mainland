@@ -489,6 +489,19 @@
         "mainland208-10"
       ],
       "scenario_scope": "fixed"
+    },
+    {
+      "id": "arrival-deployment",
+      "title": "arrival-based deployment uses paired native zones and preserves old battle positions across language and save loads",
+      "groups": [
+        "battle",
+        "map",
+        "save"
+      ],
+      "scenario_scope": "fixed",
+      "scenario_ids": [
+        "mainland190-01"
+      ]
     }
   ]
 }
