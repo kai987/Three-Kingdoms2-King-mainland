@@ -136,6 +136,10 @@ class BattlePresentationTests(unittest.TestCase):
                 b, actor, target, _, _ = actors(game)
                 if tid==8:
                     target=next(u for u in b['defenders']if u['id']!=game.state.extension['leaders'][b['defender']])
+                    # This matrix exercises successful presentation. Loyalty71+
+                    # now correctly fails after payment; its distinct receipt,
+                    # zero draws and saved snapshot have dedicated coverage.
+                    game.state.officers[target['id']].loyalty=30
                     arrange_tactic(game,tid,actor=actor,target=target)
                 successful_rng(game.state)
                 if effect in {'trap', 'rock'}:

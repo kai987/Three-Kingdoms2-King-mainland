@@ -136,7 +136,8 @@ def _chance(state, actor, target, effect):
     if effect in {'ambush', 'guard'}:
         return 1.0
     if effect == 'surrender':
-        return max(5, min(80, 40 + (profile.virtue - opponent.loyalty) // 2)) / 100
+        from .tactic_effects import conversion_chance
+        return conversion_chance(state.officers[actor['id']], opponent) / 100
     return max(10, min(95, 60 + (profile.intellect - opponent.profile.intellect) // 2)) / 100
 
 
@@ -144,6 +145,64 @@ def _loss_value(unit, amount):
     # Routing a unit also removes its future actions. No fictitious troops are
     # added to the actual result; this is only a deterministic choice weight.
     return min(unit['troops'], amount) + (24 if amount >= unit['troops'] else 0)
+
+
+def _ration_nutrition(state,battle,side):
+    from . import battle_supply
+    ledger=battle['extended'].get('supply')
+    credit=ledger['sides'][side]['credit_units']if ledger is not None else 0
+    return battle_supply.available(state,battle,side)*1000+credit
+
+
+def _wins_by_waiting(state,battle,own,foe):
+    """Close a certain modern ration win instead of opening another fight."""
+    row=battle['extended'].get('tactical')
+    if (state.phase!='battle'or battle['outcome']or battle['extended']['duel']
+            or battle['extended'].get('siege')or row is None or row['side']!=own
+            or row['passed'][own]or not row['passed'][foe]):return False
+    from . import battle_supply
+    own_units=battle_supply.daily_units(battle,own)
+    foe_units=battle_supply.daily_units(battle,foe)
+    if not own_units or not foe_units or _ration_nutrition(state,battle,foe)>=foe_units:return False
+    return own=='defenders'or _ration_nutrition(state,battle,own)>=own_units
+
+
+def _fire_supply_value(state,battle,own,foe,intellect):
+    """Remake AI heuristic: useful ration days and incremental next-day rout.
+
+    The recovered fire formula remains elsewhere. This policy neither claims
+    to reproduce the original AI nor samples a successful future fire. Eaten
+    fractional credit survives destruction; spare food beyond the remaining
+    battle period has no artificial day-denial value.
+    """
+    from . import battle_supply
+    from .tactic_effects import fire_arrow_requested
+    days_left=max(0,31-battle['round'])
+    units=battle_supply.daily_units(battle,foe)
+    if not days_left or not units:return 0
+    before=_ration_nutrition(state,battle,foe)
+    # An opponent already unable to eat needs no further fire to be routed.
+    if before<units:return 0
+    own_fed=_ration_nutrition(state,battle,own)>=battle_supply.daily_units(battle,own)
+    army=sum(_loss_value(unit,unit['troops'])for unit in _active(battle,foe))
+    grain=battle_supply.available(state,battle,foe)
+    before_days=min(days_left,before/units)
+    passed=battle['extended'].get('tactical',{}).get('passed',{}).get(foe,False)
+    values=[]
+    for roll in range(5):
+        loss=min(grain,fire_arrow_requested(grain,intellect,roll))
+        after=before-loss*1000
+        value=army*(before_days-min(days_left,after/units))/days_left
+        if after<units:
+            if own=='attackers'and not own_fed:
+                # Both hungry still means the attacker retreats, not a win.
+                value=0
+            else:
+                # A side still to act can obtain supplies or end the battle;
+                # give pressure credit rather than assume a forced withdrawal.
+                value+=army*(1 if passed else .35)
+        values.append(value)
+    return sum(values)/len(values)
 
 
 def _tactic_value(state, battle, actor, target, own, foe, terrain, tactic, attack):
@@ -170,9 +229,7 @@ def _tactic_value(state, battle, actor, target, own, foe, terrain, tactic, attac
         threat = max((attack(enemy, friend)
                       for enemy in enemies for friend in friends), default=0)
     if effect == 'supply':
-        city = state.cities[battle['target'] if foe == 'defenders' else battle['source']]
-        loss = min(city.grain, max(1, city.grain // 8 + profile.intellect))
-        value = loss / 12
+        value = _fire_supply_value(state,battle,own,foe,profile.intellect)
     elif effect == 'guard':
         value = 0 if _support(battle, actor)['guard'] else min(actor['troops'], threat) * .85
     elif effect == 'ambush':
@@ -234,6 +291,8 @@ def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
             if depth <= 0:
                 continue
             for tid in legal_tactics(state, battle, actor, target, own, foe, terrain, tactics):
+                if tactics[tid][2] == 'surrender' and not _chance(state, actor, target, 'surrender'):
+                    continue  # Legally payable, but a guaranteed failed effect.
                 value = _tactic_value(state, battle, actor, target, own, foe, terrain,
                                       tactics[tid], attack)
                 if depth >= 2:
@@ -257,6 +316,8 @@ def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
 def choose_action(state, battle, own, foe, terrain, tactics, *, settings=None,
                   damage_percent=32, responding=False, used=None, game=None):
     settings = settings or {}
+    if _wins_by_waiting(state,battle,own,foe):
+        return dict(kind='wait',actor=None,target=None,tactic=None,score=0)
     rows = candidates(state, battle, own, foe, terrain, tactics,
                       damage_percent=damage_percent, depth=settings.get('tactic_depth', 1),
                       responding=responding, used=used, game=game)
@@ -312,6 +373,8 @@ def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percen
                                        if damage else 0)))
             if depth > 0:
                 for tid in legal_tactics(state, battle, actor, target, own, foe, terrain, tactics):
+                    if tactics[tid][2] == 'surrender' and not _chance(state, actor, target, 'surrender'):
+                        continue
                     value = _tactic_value(state, battle, actor, target, own, foe, terrain, tactics[tid], attack)
                     rows.append(dict(kind='tactic', actor=actor['id'], target=target['id'], tactic=tid, score=value))
         if row['points'][own] <= 0:

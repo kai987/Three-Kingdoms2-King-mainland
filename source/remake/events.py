@@ -60,7 +60,8 @@ DETAILS = {
     'battle_started': {'battle_id', 'attacker', 'defender'},
     'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered'},
     'duel_started': set(), 'duel_result': {'result'},
-    'tactic': {'tactic', 'success'},
+    'tactic': {'tactic','success','affected_side','grain_before','grain_after','grain_loss',
+               'success_percent','target_loyalty','guaranteed_failure'},
     'march_weather': {'march_id', 'lost', 'risks'},
     'route_discovered': {'from', 'to'},
     'march_arrived': {'march_id', 'officers'},
@@ -298,6 +299,35 @@ def _validate_staff_event(row):
         raise ValueError('Civil staff event salary')
 
 
+def _validate_tactic_event(row):
+    d=row['details']
+    base={'tactic','success'}
+    if not base <= set(d) or type(d['tactic']) is not int or not 0 <= d['tactic'] <= 15 or type(d['success']) is not bool:
+        raise ValueError('Tactic event result')
+    extra=set(d)-base
+    if not extra:
+        return  # Existing committed events retain their original compact snapshot.
+    if d['tactic']==5:
+        if (extra!={'affected_side','grain_before','grain_after','grain_loss'}
+                or d['affected_side'] not in {'attackers','defenders'}
+                or any(type(d[key]) is not int or not 0 <= d[key] <= 100000000
+                       for key in ('grain_before','grain_after','grain_loss'))
+                or d['grain_before']-d['grain_after']!=d['grain_loss']
+                or not d['success'] and d['grain_loss']!=0):
+            raise ValueError('Tactic fire-arrow snapshot')
+    elif d['tactic']==8:
+        if (extra!={'success_percent','target_loyalty','guaranteed_failure'}
+                or type(d['success_percent']) is not int or not 0 <= d['success_percent'] <= 100
+                or type(d['target_loyalty']) is not int or not 0 <= d['target_loyalty'] <= 100
+                or type(d['guaranteed_failure']) is not bool
+                or d['guaranteed_failure']!=(d['target_loyalty']>=71)
+                or d['guaranteed_failure']!=(d['success_percent']==0)
+                or d['guaranteed_failure'] and d['success']):
+            raise ValueError('Tactic conversion snapshot')
+    else:
+        raise ValueError('Tactic event effect fields')
+
+
 def empty():
     return dict(next_id=1, items=[])
 
@@ -459,6 +489,8 @@ def validate(campaign, state):
             return False
         if not value_ok(row['details']):
             raise ValueError('Campaign event JSON value')
+        if row['kind']=='tactic':
+            _validate_tactic_event(row)
         if row['kind'] in STAFF_KINDS:
             _validate_staff_event(row)
         if row['kind'] in SUPPLY_KINDS:

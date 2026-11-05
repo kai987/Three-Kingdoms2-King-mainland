@@ -92,6 +92,11 @@ def available(state, battle, side):
     return _peek(state, battle, side)['remaining']
 
 
+def burned(row):
+    """Destruction is derived from receipts, never a second saved counter."""
+    return sum(receipt['grain'] for receipt in row.get('journal', []) if receipt.get('kind') == 'fire')
+
+
 def view(state, battle):
     if battle is None:
         return None
@@ -105,7 +110,7 @@ def view(state, battle):
             available_grain=row['remaining'], daily_units=units,
             daily_grain=max(0, (units-row['credit_units']+999)//1000),
             days_supported=((row['remaining']*1000+row['credit_units'])//units if units else 0),
-            consumed=row['consumed'], received=row['received'],
+            consumed=row['consumed'], received=row['received'], burned=burned(row),
             days=supply['days'] if supply else 0)
     return result
 
@@ -119,6 +124,21 @@ def receive(state, battle, side, grain):
         row['remaining'] += grain
         row['received'] += grain
         _receipt(row, 'market', supply['days'], grain)
+
+
+def destroy(state, battle, side, amount):
+    """Saturating fire loss against real carried bags; eaten credit survives."""
+    if side not in SIDES or type(amount) is not int or not 0 <= amount <= LIMIT:
+        raise ValueError('Invalid battlefield ration destruction')
+    supply = ensure(state, battle)
+    if supply['settlement'] is not None:
+        raise ValueError('Battle provisions are already settled')
+    row = supply['sides'][side]
+    actual = min(row['remaining'], amount)
+    if actual:
+        row['remaining'] -= actual
+        _receipt(row, 'fire', supply['days'], actual)
+    return actual
 
 
 def _receipt(row, kind, day, grain):
@@ -254,7 +274,7 @@ def validate(state, battle):
         if not isinstance(row['journal'], list) or len(row['journal']) > 4096:
             raise ValueError('Battle provision receipts')
         remaining, credit = row['loaded'], row['initial_credit']
-        consumed = received = days = 0
+        consumed = received = destroyed = days = 0
         for receipt in row['journal']:
             if not isinstance(receipt, dict):
                 raise ValueError('Battle provision receipt')
@@ -275,14 +295,20 @@ def validate(state, battle):
                 remaining -= used; consumed += used
                 credit = max(0,nutrition-receipt['units']); days += 1
             else:
-                if set(receipt) != {'kind','day','grain'} or receipt.get('kind') != 'market' or receipt['day'] != days:
+                if set(receipt) != {'kind','day','grain'} or receipt.get('kind') not in ('market', 'fire') or receipt['day'] != days:
                     raise ValueError('Battle provision receipt clock')
                 integer(receipt['day'],0,supply['days'])
                 integer(receipt['grain'], 1, LIMIT)
-                remaining += receipt['grain']; received += receipt['grain']
+                if receipt['kind'] == 'fire':
+                    if receipt['grain'] > remaining:
+                        raise ValueError('Battle provision destruction exceeds carried grain')
+                    remaining -= receipt['grain']; destroyed += receipt['grain']
+                else:
+                    remaining += receipt['grain']; received += receipt['grain']
                 integer(remaining, 0, LIMIT)
         if (days != supply['days'] or (remaining,credit,consumed,received) !=
-                (row['remaining'],row['credit_units'],row['consumed'],row['received'])):
+                (row['remaining'],row['credit_units'],row['consumed'],row['received'])
+                or row['loaded']+received != consumed+remaining+destroyed):
             raise ValueError('Battle provision balance')
     if shortages:
         side = 'attackers' if 'attackers' in shortages else 'defenders'

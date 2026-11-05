@@ -24,7 +24,10 @@ def fixture(attackers=1, defenders=2):
         officers={i: SimpleNamespace(profile=SimpleNamespace(terrain_affinity=0,
             martial_strength=80, intellect=80, virtue=80), loyalty=80,
             person_id='san14-candidate-0440', tier=6) for i in ids},
-        cities={'test-source': SimpleNamespace(grain=1000), 'test-target': SimpleNamespace(grain=1000)})
+        # Pure carried-grain previews also verify ownership; do not substitute
+        # ownerless warehouses for the actual source/defender city contract.
+        cities={'test-source': SimpleNamespace(grain=1000, owner='shu'),
+                'test-target': SimpleNamespace(grain=1000, owner='wei')})
     game = SimpleNamespace(catalog=SimpleNamespace(map_cities={'test-target': {'terrain': 'water'}}))
     battle = dict(id='battle-1', target='test-target', source='test-source', attacker='shu', defender='wei',
         round=1, used=[], outcome=None, **units,

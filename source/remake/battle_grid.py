@@ -486,7 +486,10 @@ def view(game, state, battle):
         tactic_reasons = {str(tid): {str(target['id']): tactic_reason(state, battle, actor,
             target, own, foe, terrain, tactic) for target in battle[foe]}
             for tid, tactic in enumerate(TACTICS)}
-        from . import battle_services
+        from . import battle_services, tactic_effects
+        previews={str(tid): {str(target['id']): tactic_effects.preview(state,battle,actor,target,own,foe,tid)
+                   for target in battle[foe] if not tactic_reasons[str(tid)][str(target['id'])]}
+                  for tid in (5,8)}
         actors[str(actor['id'])] = dict(can_act=bool(can_act), reason=reason,
             facility=battle_services.quote(game,state,battle,actor,own) if can_act else None,
             reachable=cells,
@@ -494,7 +497,8 @@ def view(game, state, battle):
             duel_targets=[u['id'] for u in battle[foe] if not duel_reasons[str(u['id'])]],
             tactic_targets={tid: [u['id'] for u in battle[foe] if not reasons[str(u['id'])]]
                             for tid, reasons in tactic_reasons.items()},
-            attack_reasons=attack_reasons, duel_reasons=duel_reasons, tactic_reasons=tactic_reasons)
+            attack_reasons=attack_reasons, duel_reasons=duel_reasons, tactic_reasons=tactic_reasons,
+            tactic_previews=previews)
     return dict(schema=VIEW_SCHEMA, battle_id=battle['id'], round=battle['round'], map_id=row['map_id'],
         grid=dict(columns=COLUMNS, rows=ROWS, tile_size=TILE_SIZE), side=row['side'],
         camp=dict(zip(('x','y'),_field(battle)['camp'])), facilities=[dict(service) for service in _field(battle).get('services',())],

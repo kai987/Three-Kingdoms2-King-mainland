@@ -45,7 +45,17 @@
   return !!row&&Number.isSafeInteger(row.id)&&row.id>0&&Object.hasOwn(KINDS,row.kind)&&['player','world'].includes(row.audience)&&
    Number.isSafeInteger(row.year)&&row.year>0&&Number.isInteger(row.month)&&row.month>=1&&row.month<=12&&[1,11,21].includes(row.day)&&Number.isSafeInteger(row.turn)&&row.turn>0&&
    ['person_ids','city_ids','factions'].every(key=>Array.isArray(row[key])&&row[key].every(id=>typeof id==='string'&&id.length<=128))&&
-   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!CITY_OPERATIONS.has(row.kind)||validCityDevelopmentEvent(row))&&(row.kind!=='battle_supply_exhausted'||validBattleSupplyEvent(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row));
+   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!CITY_OPERATIONS.has(row.kind)||validCityDevelopmentEvent(row))&&(row.kind!=='battle_supply_exhausted'||validBattleSupplyEvent(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row))&&(row.kind!=='tactic'||validTacticEvent(row));
+ }
+ function validTacticEvent(row){
+  const d=row.details,base=['tactic','success'],extra=Object.keys(d).filter(k=>!base.includes(k));
+  if(!Number.isInteger(d.tactic)||d.tactic<0||d.tactic>15||typeof d.success!=='boolean')return false;
+  if(!extra.length)return true;
+  const keys=fields=>extra.length===fields.length&&fields.every(k=>Object.hasOwn(d,k));
+  const amount=v=>Number.isSafeInteger(v)&&v>=0&&v<=100000000;
+  if(d.tactic===5)return keys(['affected_side','grain_before','grain_after','grain_loss'])&&['attackers','defenders'].includes(d.affected_side)&&[d.grain_before,d.grain_after,d.grain_loss].every(amount)&&d.grain_before-d.grain_after===d.grain_loss&&(d.success||d.grain_loss===0);
+  if(d.tactic===8)return keys(['success_percent','target_loyalty','guaranteed_failure'])&&Number.isInteger(d.success_percent)&&d.success_percent>=0&&d.success_percent<=100&&Number.isInteger(d.target_loyalty)&&d.target_loyalty>=0&&d.target_loyalty<=100&&typeof d.guaranteed_failure==='boolean'&&d.guaranteed_failure===(d.target_loyalty>=71)&&d.guaranteed_failure===(d.success_percent===0)&&(!d.guaranteed_failure||!d.success);
+  return false;
  }
  function validCoupEvent(row){
   const d=row.details;
@@ -249,7 +259,9 @@
     case 'duel_result':return text(`${p}的單挑已結束。${d.result?label(d.result):'體力與退場結果已結算。'}`,`${p}の一騎討ちが終わりました。${d.result?label(d.result):'体力と退場結果は処理されています。'}`);
     case 'tactic':{
      const title=label(view?.catalog?.tactics?.[d.tactic]?.name||text('計略','計略'));
-     return text(`${n.people[0]||p}施放${title}。${d.success===false?'未能奏效。':'效果與氣力消耗已結算。'}`,`${n.people[0]||p}が${title}を使用。${d.success===false?'効果はありませんでした。':'効果と気力の消費は精算されています。'}`);
+     if(d.tactic===5&&Number.isSafeInteger(d.grain_loss))return text(`${n.people[0]||p}施放${title}。${d.success?'燒毀敵軍隨軍糧'+d.grain_loss:'未能奏效，損失兵糧0'}；敵軍隨軍糧 ${d.grain_before} → ${d.grain_after}。機動力消耗已結算。`,`${n.people[0]||p}が${title}を使用。${d.success?'敵軍の携行兵糧'+d.grain_loss+'を焼失':'失敗し、兵糧の損失は0'}。敵軍の携行兵糧 ${d.grain_before} → ${d.grain_after}。機動力は消費済みです。`);
+     if(d.tactic===8&&d.guaranteed_failure)return text(`${n.people[0]||p}施放${title}。目標忠誠${d.target_loyalty}，依原作忠誠71以上必定失敗；已消耗10機動力。`,`${n.people[0]||p}が${title}を使用。対象の忠誠${d.target_loyalty}は71以上のため、原作の規則により必ず失敗します。機動力10を消費しました。`);
+     return text(`${n.people[0]||p}施放${title}。${d.success===false?'未能奏效。':'效果與機動力消耗已結算。'}`,`${n.people[0]||p}が${title}を使用。${d.success===false?'効果はありませんでした。':'効果と機動力の消費は精算されています。'}`);
     }
     case 'march_weather':return text(`${c}行軍途中遭遇險阻或暴風雨。${typeof d.lost==='number'?`減員${d.lost}兵。`:'實際兵損已計入部隊。'}`,`${c}への行軍中に難所や暴風雨に遭遇しました。${typeof d.lost==='number'?`${d.lost}の兵を失いました。`:'実際の損失を部隊に反映しています。'}`);
     case 'march_resupplied':{

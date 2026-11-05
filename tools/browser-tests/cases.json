@@ -475,6 +475,20 @@
         "mainland217-07"
       ],
       "scenario_scope": "fixed"
+    },
+    {
+      "id": "original-fire-conversion",
+      "title": "fire arrows burn carried grain and conversion loyalty gates stay actionable with exact points, RNG and saved receipts",
+      "groups": [
+        "battle",
+        "people",
+        "logistics",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland208-10"
+      ],
+      "scenario_scope": "fixed"
     }
   ]
 }

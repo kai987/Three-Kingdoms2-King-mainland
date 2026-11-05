@@ -502,3 +502,40 @@ test('native battlefield hospital rice shop and weapon shop use the current cell
  }
  await attach(testInfo,'battlefield-village-services-proof',proof);expect(pageErrors.get(page)).toEqual([]);
 });
+
+test('fire arrows burn carried grain and conversion loyalty gates stay actionable with exact points, RNG and saved receipts',async({page},testInfo)=>{
+ await opening(page);const proof=[];
+ for(const kind of ['fire','conversion71','conversion70']){
+  const value=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_tactic_effect_fixture.py',import.meta.url).pathname,kind],{encoding:'utf8',maxBuffer:12*1024*1024,timeout:90_000}));
+  await load(page,value.save,'controlled-original-tactic-'+kind+'.json');
+  await page.locator(`[data-actor="${value.actor}"]`).click();await page.locator(`[data-target="${value.target}"]`).click();
+  const before=await read(page);await control(page,'tactic');await page.locator('#tactic-choice').selectOption(String(value.tactic));
+  const forecast=page.locator('#tactic-effect-preview .tactic-effect-forecast:visible');
+  await expect(forecast).toHaveAttribute('data-tactic-success',String(value.preview.success_percent));
+  await expect(page.locator('#confirm-tactic')).toBeEnabled();
+  if(kind==='conversion71')await expect(forecast).toContainText(/必定失敗|必ず失敗/);
+  await page.locator('#dialog-language').selectOption('ja');await expect(page.locator('#tactic-effect-preview .tactic-effect-forecast[data-l10n-native="ja"]')).toBeVisible();
+  if(kind==='fire')await expect(forecast).toContainText('携行兵糧');
+  expect(await save(page)).toEqual(before.save,'Forecast and language changes do not roll effects or spend points');
+  await evidence(page,testInfo,'original-tactic-preview-'+kind);
+  await page.locator('#confirm-tactic').click();const after=await animation(page),prior=before.save.state,next=after.save.state;
+  expect(next.rng.draws-prior.rng.draws).toBe(kind==='fire'?2:kind==='conversion71'?0:1);
+  expect(next.battle.extended.tactical.points.attackers).toBe(prior.battle.extended.tactical.points.attackers-before.view.catalog.battle_tactical.tactic_costs[value.tactic]);
+  for(const city of Object.keys(prior.cities))expect(next.cities[city].grain).toBe(prior.cities[city].grain,'Tactics do not debit distant city warehouses');
+  const receipt=next.extension.events.items.filter(row=>row.kind==='tactic').at(-1);
+  expect(receipt.details.success).toBe(value.expected_success);
+  if(kind==='fire'){
+   const a=prior.battle.extended.supply.sides.defenders,b=next.battle.extended.supply.sides.defenders,loss=a.remaining-b.remaining;
+   expect(loss).toBeGreaterThanOrEqual(value.preview.grain_loss_min);expect(loss).toBeLessThanOrEqual(value.preview.grain_loss_max);expect(receipt.details.grain_loss).toBe(loss);
+   expect(b.journal.at(-1)).toEqual({kind:'fire',day:prior.battle.extended.supply.days,grain:loss});
+   await expect(page.locator('[data-battle-supply-side="defenders"]')).toHaveAttribute('data-battle-grain',String(b.remaining));
+  }else{
+   expect(receipt.details.success_percent).toBe(value.preview.success_percent);expect(receipt.details.target_loyalty).toBe(value.target_loyalty);
+   expect(next.officers[value.target].faction_id).toBe(kind==='conversion70'?next.player:prior.officers[value.target].faction_id);
+   if(kind==='conversion70')await expect(page.locator(`[data-actor="${value.target}"]`)).toBeEnabled();
+  }
+  await load(page,after.save,'controlled-original-tactic-'+kind+'-roundtrip.json');expect(await save(page)).toEqual(after.save,'Committed effect and grain destruction survive real import');
+  proof.push({kind,actor:value.actor,target:value.target,preview:value.preview,receipt:receipt.details,rng_delta:next.rng.draws-prior.rng.draws});
+ }
+ await attach(testInfo,'original-tactic-effects-proof',proof);expect(pageErrors.get(page)).toEqual([]);
+});

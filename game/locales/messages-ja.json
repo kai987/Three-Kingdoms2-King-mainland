@@ -4,6 +4,7 @@
   "scope": "Display-only text, never applied to state or save data. Japanese officer spellings reuse the existing supplied identity crosswalk; they do not verify historical biographies. Long original source quotations remain explicitly identified as original-language documents.",
   "official_japanese_scenario_source": "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html",
   "exact": {
+    "五格內敵方主將；燒毀敵方部分隨軍兵糧": "五マス以内の敵主将を対象に、敵軍の携行兵糧を一部焼却",
     "都市開發參數無效。": "都市開発の操作指定が正しくありません。",
     "開發參數無效。": "開発の操作指定が正しくありません。",
     "戰鬥備糧超出可用兵糧或上限。": "戦闘用の備糧が、利用可能な兵糧または上限を超えています。",
@@ -745,6 +746,10 @@
     {
       "pattern": "^((?:\\d+年\\d+月(?:(?:上|中|下)旬)?[\\s　]*)?)(.+)接受劝降；战后转在野，兵员入城。$",
       "replacement": "$1$2が降伏勧告を受諾。戦後に在野となり、兵は都市に収容されます。"
+    },
+    {
+      "pattern": "^((?:\\d+年\\d+月(?:(?:上|中|下)旬)?[\\s　]*)?)火箭燒毀敵軍隨軍兵糧(\\d+)。$",
+      "replacement": "$1火箭で敵軍の携行兵糧$2を焼き払いました。"
     },
     {
       "pattern": "^((?:\\d+年\\d+月(?:(?:上|中|下)旬)?[\\s　]*)?)火箭烧毁敌军城内粮食(\\d+)。$",

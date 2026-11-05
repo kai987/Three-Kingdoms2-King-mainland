@@ -5,6 +5,7 @@ module neither loads a ROM nor runs recovered machine code. Training and guard
 remain documented remake adjustments after the original contact calculation.
 Formation/order edits and movement previews consume no RNG.
 """
+from collections import deque
 from copy import deepcopy
 from .errors import GameError
 from . import battle_grid, presentation, equipment
@@ -244,16 +245,43 @@ def _ray_target(row,piece,enemies):
     return None
 
 
-def _move_toward(battle,row,piece,goal):
+def _move_toward(battle,row,piece,goal,*,retreat=False):
+    """Take one legal shortest-path step; tie order is a remake adaptation.
+
+    Waiting friends and native walls must permit a temporary step away from
+    the commander. A living commander remains occupied: approach a free contact
+    cell rather than planning through it. Retreat can use any free own-edge
+    cell, so a blocked original row does not prevent withdrawal indefinitely.
+    """
     occupied=_occupied(row,piece);walls=_walls(battle,row)
-    dx,dy=goal[0]-piece['x'],goal[1]-piece['y']
-    axes=[(1 if dx>0 else -1,0)]if dx else[]
-    if dy:axes.append((0,1 if dy>0 else -1))
-    if abs(dy)>abs(dx):axes.reverse()
-    for sx,sy in axes:
-        point=piece['x']+sx,piece['y']+sy
-        if 0<=point[0]<16 and 0<=point[1]<10 and point not in occupied and point not in walls:
-            piece['x'],piece['y']=point;return True
+    source=(piece['x'],piece['y'])
+    directions=((0,-1),(-1,0),(1,0),(0,1))
+    legal=lambda p:0<=p[0]<16 and 0<=p[1]<10 and p not in occupied and p not in walls
+    if goal in walls:return False
+    if retreat:
+        goals={(goal[0],y)for y in range(10)if legal((goal[0],y))}
+    elif goal in occupied:
+        goals={(goal[0]+dx,goal[1]+dy)for dx,dy in directions if legal((goal[0]+dx,goal[1]+dy))}
+    else:
+        goals={goal}if legal(goal)else set()
+    if not goals or source in goals:return False
+    queue=deque([source]);previous={source:None}
+    while queue:
+        here=queue.popleft()
+        if here in goals:
+            while previous[here]!=source:here=previous[here]
+            piece['x'],piece['y']=here
+            return True
+        dx,dy=goal[0]-here[0],goal[1]-here[1]
+        axes=[(1 if dx>0 else -1,0)]if dx else[]
+        if dy:axes.append((0,1 if dy>0 else -1))
+        if abs(dy)>abs(dx):axes.reverse()
+        # Preserve the former closer-axis preference on ties, then consider
+        # all remaining directions. No wall, friend or enemy is traversable.
+        for sx,sy in axes+[step for step in directions if step not in axes]:
+            point=here[0]+sx,here[1]+sy
+            if legal(point)and point not in previous:
+                previous[point]=here;queue.append(point)
     return False
 
 
@@ -363,7 +391,7 @@ def _step_turn(game,state,row):
                         edge=0 if side=='attackers'else 15
                         start=dict(x=piece['x'],y=piece['y'])
                         if piece['x']==edge:piece['withdrawn']=True
-                        else:_move_toward(battle,row,piece,(edge,piece['y']))
+                        else:_move_toward(battle,row,piece,(edge,piece['y']),retreat=True)
                         _event(row,'retreat',piece,start=start)
                         if piece['kind']=='general'and piece['withdrawn']:
                             _finish(game,state,row,'主將退出攻城戰，部隊返回戰術地圖。');return

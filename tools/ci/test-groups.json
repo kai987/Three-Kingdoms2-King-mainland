@@ -843,6 +843,43 @@
         "economy",
         "battle"
       ]
+    },
+    "tests/test_remake_tactic_effects.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "logistics",
+        "save"
+      ]
+    },
+    "tests/test_remake_soldier_pathfinding.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "save"
+      ]
+    },
+    "tests/test_remake_battle_deployment_reference.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map"
+      ]
+    },
+    "tests/test_remake_tactic_event_snapshots.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "save"
+      ]
+    },
+    "tests/test_remake_fire_supply_ai.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "logistics"
+      ]
     }
   }
 }

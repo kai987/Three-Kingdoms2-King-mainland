@@ -16,7 +16,7 @@ TACTICS = (
     ('虚兵', 4, 'confuse', '目標須在森林或山地；下次普通攻擊失效'),
     ('要撃', 6, 'strike', '目標須在森林或山地；五格內單隊兵損'),
     ('乱水', 7, 'water', '目標須在河流；五格內單隊兵損'),
-    ('火箭', 8, 'supply', '五格內敵方主將；燒毀其城池部分兵糧'),
+    ('火箭', 8, 'supply', '五格內敵方主將；燒毀敵方部分隨軍兵糧'),
     ('偽撃転殺', 8, 'feint', '須四鄰接敵，目標在城砦；兵損並擾亂'),
     ('共殺', 8, 'area', '目標在森林或山地且鄰接敵隊；命中目標與四鄰敵軍'),
     ('籠絡', 10, 'surrender', '五格內非城砦敵隊；成功後武將帶兵立即加入本軍'),
@@ -528,8 +528,15 @@ class ExpandedCampaign:
         enemies=[u for u in b[foe] if u['troops']>0];p=state.officers[actor['id']].profile;t=state.officers[target['id']]
         if 'tactical' not in x:a['energy']-=cost
         chance=max(10,min(95,60+(p.intellect-t.profile.intellect)//2))
-        if effect=='surrender':chance=max(5,min(80,40+(p.virtue-t.loyalty)//2))
-        success=effect in {'ambush','guard'} or state.rng.next()%100<chance
+        effect_details={}
+        if effect=='surrender':
+            from .tactic_effects import conversion_chance
+            chance=conversion_chance(state.officers[actor['id']],t)
+            effect_details=dict(success_percent=chance,target_loyalty=t.loyalty,guaranteed_failure=chance==0)
+        elif effect=='supply':
+            grain=battle_supply.available(state,b,foe)
+            effect_details=dict(affected_side=foe,grain_before=grain,grain_after=grain,grain_loss=0)
+        success=effect in {'ambush','guard'} or chance>0 and state.rng.next()%100<chance
         if not success:b['log'].append(f'{self.person_name(state, actor["id"])}施放{title}，未能奏效。')
         elif effect=='ambush':x['ambush']={'actor':actor['id']};b['log'].append('十面埋伏已設置，等待接近的敵軍行動。')
         elif effect=='guard':a['guard']=2;b['log'].append(f'{title}使本队获得两次减伤。')
@@ -541,9 +548,11 @@ class ExpandedCampaign:
         elif effect=='surrender':
             battle_allegiance.convert(self,state,b,actor,target,own,foe)
         elif effect=='supply':
-            receiver=state.cities[b['target'] if foe=='defenders' else b['source']]
-            loss=min(receiver.grain,max(1,receiver.grain//8+p.intellect))
-            receiver.grain-=loss;b['log'].append(f'火箭烧毁敌军城内粮食{loss}。')
+            from .tactic_effects import fire_arrow_requested
+            amount=fire_arrow_requested(battle_supply.available(state,b,foe),p.intellect,state.rng.next()%5)
+            loss=battle_supply.destroy(state,b,foe,amount)
+            effect_details.update(grain_after=battle_supply.available(state,b,foe),grain_loss=loss)
+            b['log'].append(f'火箭燒毀敵軍隨軍兵糧{loss}。')
         else:
             victims=(battle_grid.affected_units(b,target,tid,foe) if 'tactical' in b['extended'] else
                 ([target]+[u for u in enemies if u is not target])[:3 if effect=='area' else 2 if effect=='crossbow' else 20 if effect in {'flood','inferno'} else 1])
@@ -559,7 +568,7 @@ class ExpandedCampaign:
         if hasattr(self,'_emit_event') and state.player in (b['attacker'],b['defender']):
             self._emit_event(state,'tactic',person_ids=[state.officers[actor['id']].person_id,state.officers[target['id']].person_id],city_ids=[b['target']],
                 factions=[b['attacker'],b['defender']],
-                details={'tactic':tid,'success':success})
+                details={'tactic':tid,'success':success,**effect_details})
         presentation.record(self,state,before,kind='tactic',actor=actor['id'],
             target=target['id'],own=own,counter=counter,tactic=tid,effect=effect,success=success)
         if finish:self._finish_action(state,actor,own,foe,respond=effect!='ambush')
