@@ -56,6 +56,7 @@
  function create(options={}){
   const doc=options.document||root.document,i18n=options.i18n||root.GameI18n,model=createModel();
   const getView=options.getView||(()=>null),getSelection=options.getSelection||(()=>null);
+  const compact=root.matchMedia?.('(max-width:1000px), (max-height:540px)');
   i18n?.registerMessages?.(MESSAGES);
   let node=null,signature='',highlight=null;
   const text=(id,values={})=>i18n?.message?i18n.message(id,values):Object.entries(values).reduce((s,[key,value])=>s.replaceAll('{'+key+'}',String(value)),MESSAGES[id][i18n?.locale==='ja'?'ja':'zh-Hant']);
@@ -81,9 +82,19 @@
    control.scrollIntoView?.({block:'nearest',behavior:'instant'});control.focus?.({preventScroll:true});
    control.classList?.add('game-tutorial-target');highlight=control;
   }
+  function start(){
+   if(options.isBusy?.())return;
+   remember('started');
+   const toggle=doc?.querySelector?.('#inspector-toggle');
+   if(compact?.matches&&toggle?.getAttribute('aria-expanded')==='false')toggle.click();
+   model.begin(getView());observe(getView());
+  }
   function render(){
    const state=model.state(),inspector=doc?.querySelector?.('#inspector');
-   const host=state.status==='offer'?(inspector?.querySelector?.('.inspector-heading')||inspector):inspector;
+   // Keep the invitation in the compact bar's own flow. A heading below that
+   // sticky bar can be fully covered when the longer command panel is scrolled.
+   const offerHost=compact?.matches&&doc?.querySelector?.('.mobile-inspector-bar');
+   const host=state.status==='offer'?(offerHost||inspector?.querySelector?.('.inspector-heading')||inspector):inspector;
    if(state.status==='inactive'||!host||getView()?.game?.phase!=='city'){node?.remove?.();signature='';clearHighlight();return;}
    if(!node){node=doc.createElement('section');node.id='game-tutorial';node.className='game-tutorial';node.setAttribute('aria-labelledby','tutorial-title');}
    if(node.parentElement!==host){if(state.status==='offer')host.append(node);else host.prepend(node);}
@@ -98,17 +109,18 @@
    else body=`<p class="game-tutorial-progress">${escape(text('tutorial.progress',{current:state.completed.length+1,total:STEPS.length,turns}))}</p><strong>${escape(text('tutorial.'+state.step))}</strong><p>${escape(text('tutorial.'+state.step+'.detail'))}</p><div class="game-tutorial-actions">${button('tutorial-focus','tutorial.focus')}${button('tutorial-end','tutorial.end')}</div>`;
    if(state.status==='offer'){node.removeAttribute('aria-labelledby');node.setAttribute('aria-label',text('tutorial.title'));node.innerHTML=body;}
    else{node.removeAttribute('aria-label');node.setAttribute('aria-labelledby','tutorial-title');node.innerHTML=`<h3 id="tutorial-title">${escape(text('tutorial.title'))}</h3>${body}`;}
-   node.querySelector('#tutorial-start')?.addEventListener('click',()=>{if(options.isBusy?.())return;remember('started');model.begin(getView());observe(getView());});
+   node.querySelector('#tutorial-start')?.addEventListener('click',start);
    for(const id of ['tutorial-end','tutorial-later','tutorial-close'])node.querySelector('#'+id)?.addEventListener('click',()=>{remember('dismissed');model.dismiss();render();});
    node.querySelector('#tutorial-focus')?.addEventListener('click',focusTarget);
    if(state.status==='complete')remember('completed');
   }
   function observe(view){model.observe(view,getSelection());render();}
   const language=()=>{signature='';render();};doc?.addEventListener?.('game-language-change',language);
-  return {observe,start(){if(options.isBusy?.())return;remember('started');model.begin(getView());observe(getView());},
+  compact?.addEventListener?.('change',render);
+  return {observe,start,
    command(kind,payload,before,after){if(kind==='new'){model.dismiss();if(!preference())model.begin(after,true);}else model.command(kind,payload,before,after);observe(after);},
    routePreview(){model.routePreview();render();},loaded(){model.dismiss();render();},state:model.state,
-   dispose(){model.dismiss();render();doc?.removeEventListener?.('game-language-change',language);}};
+   dispose(){model.dismiss();render();doc?.removeEventListener?.('game-language-change',language);compact?.removeEventListener?.('change',render);}};
  }
  const api={KEY,STEPS,MESSAGES,createModel,create};
  if(typeof module==='object'&&module.exports)module.exports=api;else root.GameTutorial=api;

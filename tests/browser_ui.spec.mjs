@@ -1900,7 +1900,16 @@ test('a natural August drought shows bilingual illustrated losses and preserves 
   const details=event.details,city=event.city_ids[0],actual=current.save.state.extension.facilities.cities[city];
   expect(details.gold).toBe(0);expect(details.grain).toBeGreaterThanOrEqual(0);expect(details.reserves).toBeGreaterThanOrEqual(0);
   expect(actual.preparedness).toBe(details.preparedness_after);expect(actual.damage).toBe(details.damage_after);expect(actual.damage).toBeGreaterThan(0);
-  for(const resource of ['gold','grain','reserves'])expect(current.income[city][resource]).toBe(Math.floor(original.income[city][resource]*(100-actual.damage)/100));
+  // Physical land loss now changes production before the existing facility
+  // damage factor. Check both integer stages instead of assuming intact land.
+  const development=current.save.state.extension.city_development.cities[city],baseline=development.baseline;
+  const tax=value=>value<=50?50:value<=70?60:value<=80?70:value<=90?80:value<100?90:100;
+  const production=(row,field)=>(row.population/100)*(60+Math.floor(row[field]/3))*tax(row.governance);
+  expect(development.land).toBeLessThan(baseline.land);
+  for(const resource of ['gold','grain','reserves']){
+   const adjusted=resource==='reserves'?Math.floor(original.income[city][resource]*development.population/baseline.population):Math.floor(original.income[city][resource]*production(development,resource==='gold'?'industry':'land')/production(baseline,resource==='gold'?'industry':'land'));
+   expect(current.income[city][resource]).toBe(Math.floor(adjusted*(100-actual.damage)/100));
+  }
  }
  const live=current.save.state,currentSoldiers=Object.values(live.cities).reduce((sum,c)=>sum+c.reserves,0)+Object.values(live.officers).reduce((sum,o)=>sum+o.troops,0)+(live.extension.logistics?.convoys||[]).reduce((sum,c)=>sum+c.cargo.reserves,0);
  expect(currentSoldiers+live.soldiers.lost).toBe(live.soldiers.initial+live.soldiers.recruited);
@@ -2346,7 +2355,26 @@ test.describe('first-session assistance',()=>{
   expect(boot.encoding).toBe('gzip');expect(boot.bytes).toBeLessThan(3*1024*1024);
   await expect(page.locator('#scenario')).toHaveValue('mainland184-02');await page.locator('input[name=faction][value=han]').check();await page.locator('#begin').click();await waitIdle(page);await tacticalDismiss(page);
   const raw=()=>page.evaluate(async()=>{const r=await fetch('/api/save');return r.json();});
-  const before=await raw();await expect(page.locator('#tutorial-start')).toBeVisible();await page.locator('#tutorial-start').click();await expect(page.locator('#tutorial-title')).toHaveText('最初の3旬・操作ガイド');
+  const before=await raw();await expect(page.locator('#tutorial-start')).toBeVisible();
+  const invitation=page.locator('#tutorial-start');
+  const assertInvitationTarget=async()=>{
+   await invitation.scrollIntoViewIfNeeded();await expect(invitation).toBeInViewport();
+   const hit=await invitation.evaluate(node=>{const r=node.getBoundingClientRect(),target=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return {reachable:target===node||node.contains(target),width:r.width,height:r.height};});
+   expect(hit.reachable,'The guide midpoint must receive its own pointer event, including below sticky controls').toBe(true);expect(hit.width).toBeGreaterThanOrEqual(44);expect(hit.height).toBeGreaterThanOrEqual(44);
+  };
+  if(testInfo.project.name==='touch-chromium'){
+   for(const width of [1001,1000,390]){
+    await page.setViewportSize({width,height:844});
+    await expect.poll(()=>invitation.evaluate(node=>!!node.closest('.mobile-inspector-bar'))).toBe(width<=1000);
+    await assertInvitationTarget();
+   }
+   await page.locator('#inspector-toggle').click();await expect(page.locator('#inspector-toggle')).toHaveAttribute('aria-expanded','false');
+   await assertInvitationTarget();
+  }else await assertInvitationTarget();
+  expect(await raw()).toEqual(before,'Moving the invitation across the compact boundary is presentation-only');
+  await page.screenshot({path:testInfo.outputPath('guide-invitation.png'),fullPage:false});
+  await invitation.click();await expect(page.locator('#tutorial-title')).toHaveText('最初の3旬・操作ガイド');
+  if(testInfo.project.name==='touch-chromium')await expect(page.locator('#inspector-toggle')).toHaveAttribute('aria-expanded','true');
   await page.locator('#city-jump').selectOption('henan');await expect(page.locator('#game-tutorial')).toContainText('兵の編制を確定する');expect(await raw()).toEqual(before);
   await page.locator('#tutorial-focus').click();expect(['allocate','city-command-tab-army']).toContain(await page.evaluate(()=>document.activeElement?.id));expect(await raw()).toEqual(before);
   await openAllocation(page);const input=page.locator('#allocation-troops'),oldAmount=Number(await input.inputValue()),maximum=Number(await input.getAttribute('max')),amount=String(oldAmount<maximum?oldAmount+1:Math.max(0,oldAmount-1));await input.fill(amount);await page.locator('#confirm-allocation').click();await waitIdle(page);await expect(page.locator('#allocation-troops')).toHaveValue(amount);await closeDialog(page);await waitIdle(page);
