@@ -10,7 +10,8 @@
   faction_coup:['勢力內部奪權','勢力内の政変'],faction_coup_skipped:['奪權未成','政変の不成立'],
   city_founded:['新城建置','新都市の開設'],city_captured:['城池易主','都市の陥落'],
   city_upgraded:['都市擴建','都市の発展'],city_renamed:['城名顯示變更','都市名表示の変更'],
-  battle_started:['戰鬥開始','戦闘開始'],battle_result:['戰果揭曉','戦闘の結果'],
+  city_developed:['都市開發','都市の開発'],civil_unrest:['統治不穩','統治の不安定化'],
+  battle_started:['戰鬥開始','戦闘開始'],battle_result:['戰果揭曉','戦闘の結果'],battle_supply_exhausted:['戰場兵糧耗盡','戦場の兵糧切れ'],
   duel_started:['單挑交鋒','一騎討ち開始'],duel_result:['單挑結果','一騎討ちの結果'],
   tactic:['計略發動','計略の発動'],march_weather:['行軍遇險','行軍中の災害'],
   route_discovered:['發現新航路','新航路の発見'],march_arrived:['部隊抵達','部隊の到着'],
@@ -29,6 +30,7 @@
  const STAFF=new Set(['staff_candidate','staff_hired','staff_declined','staff_expired','staff_salary','staff_allegiance']);
  const OPERATIONS=new Set(['domestic_report','transport_departed','transport_arrived','transport_returned','transport_weather']);
  const FACILITIES=new Set(['town_developed','officer_treated','officer_studied','grain_traded','equipment_bought','prevention_improved','city_disaster']);
+ const CITY_OPERATIONS=new Set(['city_developed','civil_unrest']);
  const EQUIPMENT=new Set(['equipment_acquired']);
  const TREASURY=new Set(['treasure_found','treasure_search_failed','treasure_sold','officer_rewarded','governor_assigned']);
  const SUPPLY=new Set(['march_resupplied','march_starvation','march_retreat']);
@@ -43,7 +45,7 @@
   return !!row&&Number.isSafeInteger(row.id)&&row.id>0&&Object.hasOwn(KINDS,row.kind)&&['player','world'].includes(row.audience)&&
    Number.isSafeInteger(row.year)&&row.year>0&&Number.isInteger(row.month)&&row.month>=1&&row.month<=12&&[1,11,21].includes(row.day)&&Number.isSafeInteger(row.turn)&&row.turn>0&&
    ['person_ids','city_ids','factions'].every(key=>Array.isArray(row[key])&&row[key].every(id=>typeof id==='string'&&id.length<=128))&&
-   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row));
+   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!CITY_OPERATIONS.has(row.kind)||validCityDevelopmentEvent(row))&&(row.kind!=='battle_supply_exhausted'||validBattleSupplyEvent(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row));
  }
  function validCoupEvent(row){
   const d=row.details;
@@ -69,15 +71,32 @@
  }
  function validFacilityEvent(row){
   const d=row.details,k=row.kind,fields={town_developed:['actor','from_town','to_town','gold'],officer_treated:['actor','target','gold','before','after'],officer_studied:['actor','target','gold','before','after','bonus'],grain_traded:['actor','direction','batches','grain','gold','rate'],equipment_bought:['actor','target','slot','item','previous','gold'],prevention_improved:['actor','gold','gain','repair','preparedness_before','preparedness_after','damage_before','damage_after'],city_disaster:['disaster','gold','grain','reserves','rate','preparedness_before','preparedness_after','damage_before','damage_after']}[k];
+  if(k==='grain_traded'&&['battle_id','side','destination'].some(key=>Object.hasOwn(d,key)))fields.push('battle_id','side','destination');
   const num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max,people=k==='city_disaster'?[]:[...new Set([d.actor,...(Object.hasOwn(d,'target')?[d.target]:[])])];
-  if(row.audience!=='player'||row.city_ids.length!==1||row.factions.length!==1||Object.keys(d).sort().join(',')!==fields.sort().join(',')||JSON.stringify(row.person_ids)!==JSON.stringify(people)||!num('gold',0,100000000))return false;
+  if(row.audience!=='player'||row.city_ids.length!==1||!row.city_ids[0]||row.factions.length!==1||!row.factions[0]||people.some(id=>typeof id!=='string'||!id)||Object.keys(d).sort().join(',')!==fields.sort().join(',')||JSON.stringify(row.person_ids)!==JSON.stringify(people)||!num('gold',0,100000000))return false;
   if(k==='town_developed')return num('from_town',1,2)&&d.to_town===d.from_town+1&&d.gold>0;
   if(k==='officer_treated'||k==='officer_studied')return num('before',k==='officer_treated'?0:1,k==='officer_treated'?99:79)&&num('after',1,k==='officer_treated'?99:89)&&d.after>d.before&&d.gold>0&&(k==='officer_treated'||num('bonus',1,88)&&d.after-d.before>=5&&d.after-d.before<=12);
-  if(k==='grain_traded')return ['buy','sell'].includes(d.direction)&&num('batches',1,1000)&&num('rate',1,100)&&d.grain===d.batches*100&&d.gold===d.batches*d.rate;
+  if(k==='grain_traded')return ['buy','sell'].includes(d.direction)&&num('batches',1,1000)&&num('rate',1,100)&&d.grain===d.batches*100&&d.gold===d.batches*d.rate&&(!Object.hasOwn(d,'battle_id')||d.direction==='buy'&&d.destination==='battle'&&['attackers','defenders'].includes(d.side)&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id));
   if(k==='equipment_bought')return ['weapon','armor'].includes(d.slot)&&num('item',0,d.slot==='weapon'?28:7)&&num('previous',0,d.slot==='weapon'?28:7)&&d.item!==d.previous&&d.gold>0;
   if(!['preparedness_before','preparedness_after'].every(key=>num(key,0,99))||!['damage_before','damage_after'].every(key=>num(key,0,50)))return false;
   if(k==='prevention_improved')return num('gain',0,99)&&num('repair',0,50)&&num('gold',1,100)&&d.preparedness_after-d.preparedness_before===d.gain&&d.damage_before-d.damage_after===d.repair;
   return ['flood','drought'].includes(d.disaster)&&num('rate',0,100)&&num('grain',0,100000000)&&num('reserves',0,100000000)&&d.preparedness_after<=d.preparedness_before&&d.damage_after>=d.damage_before&&(d.disaster==='drought'?d.gold===0:d.reserves===0)&&(d.preparedness_before!==99||!['gold','grain','reserves','rate'].some(key=>d[key]));
+ }
+ function validCityDevelopmentEvent(row){
+  const d=row.details,developed=row.kind==='city_developed',fields=developed?['actor','development','gold','before','after','gain','governance_before','governance_after']:['governance','category','gold_loss','grain_loss','population_loss','land_loss','industry_loss'];
+  const num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max;
+  if(row.audience!=='player'||row.city_ids.length!==1||!row.city_ids[0]||row.factions.length!==1||!row.factions[0]||Object.keys(d).sort().join(',')!==fields.sort().join(','))return false;
+  if(developed){
+   const unit=d.development==='population'?100:1,cap=unit===100?999900:999;
+   return ['land','industry','population'].includes(d.development)&&typeof d.actor==='string'&&!!d.actor&&JSON.stringify(row.person_ids)===JSON.stringify([d.actor])&&num('gold',10,26)&&d.gold%2===0&&['before','after','gain'].every(key=>num(key,0,cap)&&d[key]%unit===0)&&d.after-d.before===d.gain&&['governance_before','governance_after'].every(key=>num(key,0,100))&&d.governance_after===Math.min(100,d.governance_before+1+(d.gain/unit>=31?1:0))&&(d.gain>0||d.governance_after>d.governance_before);
+  }
+  const categories={population:['population_loss'],resources:['gold_loss','grain_loss'],development:['land_loss','industry_loss']};
+  if(row.person_ids.length||!num('governance',0,49)||typeof d.category!=='string'||!Object.hasOwn(categories,d.category))return false;
+  return ['gold_loss','grain_loss','population_loss','land_loss','industry_loss'].every(key=>num(key,0,['gold_loss','grain_loss'].includes(key)?100000000:key==='population_loss'?999900:999)&&(categories[d.category].includes(key)||d[key]===0))&&d.population_loss%100===0;
+ }
+ function validBattleSupplyEvent(row){
+  const d=row.details,num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max;
+  return row.audience==='player'&&row.city_ids.length>=1&&row.city_ids.length<=2&&row.city_ids.every(id=>id)&&new Set(row.city_ids).size===row.city_ids.length&&row.factions.length>=1&&row.factions.length<=2&&row.factions.every(id=>id)&&new Set(row.factions).size===row.factions.length&&row.person_ids.length<=10&&row.person_ids.every(id=>id)&&new Set(row.person_ids).size===row.person_ids.length&&Object.keys(d).sort().join(',')==='battle_id,daily_grain,days,grain,missing_units,outcome,side'&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id)&&['attackers','defenders'].includes(d.side)&&num('days',1,30)&&num('grain',0,100000000)&&num('daily_grain',1,22)&&num('missing_units',1,d.daily_grain*1000)&&d.outcome===(d.side==='attackers'?'retreat':'victory');
  }
  function validEquipmentEvent(row){
   const d=row.details,num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max;
@@ -141,11 +160,11 @@
  }
  function campaignKey(view){return view?.game?JSON.stringify([view.catalog?.scenario_id||view.catalog?.title||'',view.game.seed,view.game.player]):null;}
  function eventRows(view){const rows=view?.game?.extension?.events?.items;return Array.isArray(rows)?rows.filter(validEvent).sort((a,b)=>a.id-b.id):[];}
- function automatic(row,player,inlineBattle=false){if(row.kind==='tactic'&&inlineBattle)return false;return STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)||TREASURY.has(row.kind)||FACILITIES.has(row.kind)||EQUIPMENT.has(row.kind)?row.factions.includes(player):row.audience==='player'||WORLD.has(row.kind)||row.factions.includes(player);}
+ function automatic(row,player,inlineBattle=false){if(row.kind==='tactic'&&inlineBattle)return false;return STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)||TREASURY.has(row.kind)||FACILITIES.has(row.kind)||CITY_OPERATIONS.has(row.kind)||EQUIPMENT.has(row.kind)?row.factions.includes(player):row.audience==='player'||WORLD.has(row.kind)||row.factions.includes(player);}
  function groupRows(rows){
   const groups=[],staffGroups=new Map();
   for(const row of rows){
-   if(STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)||TREASURY.has(row.kind)||FACILITIES.has(row.kind)||EQUIPMENT.has(row.kind)){const key=row.turn+':'+row.kind;if(staffGroups.has(key))staffGroups.get(key).push(row);else{const group=[row];groups.push(group);staffGroups.set(key,group);}continue;}
+   if(STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)||TREASURY.has(row.kind)||FACILITIES.has(row.kind)||CITY_OPERATIONS.has(row.kind)||EQUIPMENT.has(row.kind)){const key=row.turn+':'+row.kind;if(staffGroups.has(key))staffGroups.get(key).push(row);else{const group=[row];groups.push(group);staffGroups.set(key,group);}continue;}
    const last=groups.at(-1);if(last&&BATCH.has(row.kind)&&last[0].kind===row.kind&&last[0].turn===row.turn)last.push(row);else groups.push([row]);
   }
   return groups;
@@ -167,10 +186,18 @@
   function description(row){
    const n=names(row),p=n.people.join(text('、','・'))||text('武將','武将'),c=n.cities.join(' → ')||text('戰役地圖','戦役地図'),f=n.factions.at(-1)||text('本方','自軍'),d=row.details;
    switch(row.kind){
+    case 'city_developed':{
+     const development={land:text('土地開墾','土地の開墾'),industry:text('產業發展','産業の開発'),population:text('城町人口開發','町の人口開発')}[d.development];
+     return text(`${p}在${c}完成${development}，花費資金${d.gold}；${d.before} → ${d.after}（+${d.gain}），統治度${d.governance_before} → ${d.governance_after}。`,`${p}が${c}で${development}を終えました。支出は資金${d.gold}、${d.before} → ${d.after}（+${d.gain}）、統治度${d.governance_before} → ${d.governance_after}です。`);
+    }
+    case 'civil_unrest':{
+     const loss=d.category==='population'?text(`人口${d.population_loss}人`,`人口${d.population_loss}人`):d.category==='resources'?text(`資金${d.gold_loss}、兵糧${d.grain_loss}`,`資金${d.gold_loss}・兵糧${d.grain_loss}`):text(`土地${d.land_loss}、產業${d.industry_loss}`,`土地${d.land_loss}・産業${d.industry_loss}`);
+     return text(`${c}統治不穩（統治度${d.governance}），本次實際損失：${loss}。城池歸屬未變，請安排開發以改善統治。`,`${c}の統治が不安定になりました（統治度${d.governance}）。今回の実損は${loss}です。都市の所属は変わりません。開発を進め、統治を整えましょう。`);
+    }
     case 'town_developed':return text(`${p}在${c}完成城町發展，等級${d.from_town} → ${d.to_town}，花費${d.gold}金。町等級解鎖設施與貨架，是本作擴展配置。`,`${p}が${c}の町を発展させ、段階が${d.from_town} → ${d.to_town}になりました。支出は資金${d.gold}です。施設・品揃えの解放条件は本作の拡張設定です。`);
     case 'officer_treated':return text(`${names({...row,person_ids:[d.target]}).people[0]}在${c}醫館療傷，體力${d.before} → ${d.after}，花費${d.gold}金。恢復不超過本人體力上限。`,`${names({...row,person_ids:[d.target]}).people[0]}が${c}の医館で治療を受け、体力が${d.before} → ${d.after}になりました。支出は資金${d.gold}で、本人の体力上限を超えません。`);
     case 'officer_studied':return text(`${names({...row,person_ids:[d.target]}).people[0]}在${c}學問所進修，知${d.before} → ${d.after}，花費${d.gold}金。學習所得隨本局人物保存，已用於內政與計略。`,`${names({...row,person_ids:[d.target]}).people[0]}が${c}の学問所で学び、知が${d.before} → ${d.after}になりました。支出は資金${d.gold}です。成長はこの戦役の本人に保存され、内政と計略に反映されます。`);
-    case 'grain_traded':return text(`${p}在${c}${d.direction==='buy'?'買入':'賣出'}兵糧${d.grain}，${d.direction==='buy'?'支付':'取得'}${d.gold}金。實際庫存已結算。`,`${p}が${c}で兵糧${d.grain}を${d.direction==='buy'?'購入':'売却'}し、資金${d.gold}を${d.direction==='buy'?'支払い':'受け取り'}ました。実際の在庫に反映済みです。`);
+    case 'grain_traded':return d.destination==='battle'?text(`${p}在${c}購買兵糧${d.grain}，由出發城支付資金${d.gold}，直接補入${d.side==='attackers'?'攻方':'守方'}隨軍兵糧。城內兵糧未增加。`,`${p}が${c}で兵糧${d.grain}を購入しました。出発都市から資金${d.gold}を支払い、${d.side==='attackers'?'攻撃側':'防御側'}の携行兵糧へ直接補給しました。都市の兵糧在庫は増えていません。`):text(`${p}在${c}${d.direction==='buy'?'買入':'賣出'}兵糧${d.grain}，${d.direction==='buy'?'支付':'取得'}${d.gold}金。實際庫存已結算。`,`${p}が${c}で兵糧${d.grain}を${d.direction==='buy'?'購入':'売却'}し、資金${d.gold}を${d.direction==='buy'?'支払い':'受け取り'}ました。実際の在庫に反映済みです。`);
     case 'equipment_bought':{
      const item=view?.catalog?.facilities?.equipment_catalog?.[d.slot]?.find(row=>row.id===d.item),gear=item?(locale()==='ja'?item.name_ja:item.name_tc):text(`${d.slot==='weapon'?'武器':'防具'}${d.item+1}號`,`${d.slot==='weapon'?'武器':'防具'}${d.item+1}`),who=names({...row,person_ids:[d.target]}).people[0];
      return text(`${c}為${who}購置${gear}，花費${d.gold}金並替換原裝備，單挑效果已生效。`,`${c}で${who}のために${gear}を購入しました。資金${d.gold}を支払い、以前の装備と交換して一騎討ちに反映しました。`);
@@ -209,6 +236,11 @@
     }
     case 'city_captured':{const owner=n.factions[0]||f;return text(`${c}的歸屬改為${owner}。駐軍及資源已結算。`,`${c}は${owner}の支配下となりました。守備隊と資源は精算済みです。`);}
     case 'battle_started':return text(`${c}發生交戰。請依兵力、地形與敵軍狀態選擇行動。`,`${c}で戦闘が始まります。兵力・地形・敵の状態を見て行動を選びましょう。`);
+    case 'battle_supply_exhausted':{
+     const side=d.side==='attackers'?text('攻方','攻撃側'):text('守方','防御側'),shortage=(d.missing_units/1000).toFixed(3).replace(/\.?0+$/,'');
+     const outcome=d.side==='attackers'?text('攻方因缺糧撤退','攻撃側が兵糧不足で撤退'):text('守方因缺糧失守，攻方獲勝','防御側が兵糧不足で陥落し、攻撃側が勝利');
+     return text(`${c}戰鬥已結算${d.days}日，${side}每日需兵糧${d.daily_grain}，現餘${d.grain}，本日缺少${shortage}。${outcome}。`,`${c}の戦闘で${d.days}日が経過しました。${side}は1日${d.daily_grain}の兵糧を必要としますが、残量は${d.grain}、本日の不足は${shortage}です。${outcome}しました。`);
+    }
     case 'battle_result':{
      const outcome={victory:text('攻方獲勝','攻撃側の勝利'),defeat:text('守方獲勝','防御側の勝利'),retreat:text('攻方退卻','攻撃側の撤退')}[d.outcome]||text('戰鬥結束','戦闘終了');
      return text(`${c}：${outcome}。${typeof d.lost==='number'?`合計減員${d.lost}。`:''}請查看戰果與後續部署。`,`${c}：${outcome}。${typeof d.lost==='number'?`兵力損失は合計${d.lost}。`:''}結果と次の配置を確認してください。`);
@@ -300,7 +332,7 @@
   function illustration(rows){
    const row=rows[0],catalog=view?.catalog||{},world=catalog.world||{x:0,y:0,width:1352,height:1024,background:'/assets/map-navigation.png'};
    const ids=[...new Set(rows.flatMap(e=>[...e.person_ids,...(typeof e.details.actor==='string'?[e.details.actor]:[])]))].slice(0,4);
-   const targetScene=new Set(['battle_started','battle_result','tactic','duel_started','duel_result','march_weather','route_discovered','march_arrived','ai_campaign','march_resupplied','march_starvation','march_retreat']);
+   const targetScene=new Set(['battle_started','battle_result','battle_supply_exhausted','tactic','duel_started','duel_result','march_weather','route_discovered','march_arrived','ai_campaign','march_resupplied','march_starvation','march_retreat']);
    const cityIds=targetScene.has(row.kind)?[...row.city_ids].reverse():row.city_ids;
    const cityId=cityIds.find(id=>catalog.cities?.some(c=>c.id===id))||catalog.factions?.find(f=>f.id===view?.game?.player)?.city;
    const city=catalog.cities?.find(c=>c.id===cityId),center=city?.position||[(world.x||0)+world.width/2,(world.y||0)+world.height/2];
@@ -319,10 +351,10 @@
    // keep the existing illustration; helpers never receive commands or event data.
    const originalUI=options.originalUI||root.GameOriginalUI,sceneId={equipment_bought:'armory',grain_traded:'market',treasure_sold:'market',transport_departed:'sortie'}[row.kind];
    const scene=sceneId&&typeof originalUI?.scene==='function'?originalUI.scene(sceneId,{locale:locale(),className:'event-original-scene'}):'';
-   const iconId={officer_treated:'facility-hospital',officer_studied:'facility-school'}[row.kind];
+   const iconId={officer_treated:'facility-hospital',officer_studied:'facility-school',city_developed:'command-city',civil_unrest:'command-city',battle_supply_exhausted:'command-warehouse'}[row.kind];
    const icon=iconId&&typeof originalUI?.icon==='function'?originalUI.icon(iconId,{locale:locale(),className:'event-original-icon'}):'';
    if(scene||icon){
-    const captions={equipment_bought:['武具店 · 武具購置','武具店・武具の購入'],grain_traded:['市場 · 米糧交易','市場・兵糧の取引'],treasure_sold:['市場 · 寶物出售','市場・宝の売却'],transport_departed:['運輸隊出發','輸送隊の出発'],officer_treated:['醫館 · 武將療傷','医館・武将の治療'],officer_studied:['學問所 · 武將進修','学問所・武将の学習']};
+    const captions={equipment_bought:['武具店 · 武具購置','武具店・武具の購入'],grain_traded:['市場 · 米糧交易','市場・兵糧の取引'],treasure_sold:['市場 · 寶物出售','市場・宝の売却'],transport_departed:['運輸隊出發','輸送隊の出発'],officer_treated:['醫館 · 武將療傷','医館・武将の治療'],officer_studied:['學問所 · 武將進修','学問所・武将の学習'],city_developed:['城政 · 都市開發','都市の命令・都市開発'],civil_unrest:['城政 · 統治不穩示意','都市の命令・統治不安定のイメージ'],battle_supply_exhausted:['軍需 · 戰場缺糧示意','軍需・戦場の兵糧不足のイメージ']};
     const caption=text(...captions[row.kind]);
     return `<div class="event-art event-art-original original-ui-frame${icon?' event-art-icon':''}" data-event-art="${scene?`scene-${sceneId}`:`icon-${iconId}`}" data-event-art-use="${row.kind==='transport_departed'?'remake-adaptation':'original-context'}"><div class="event-original-stage">${scene||icon}</div>${people?`<div class="event-people">${people}</div>`:''}</div><p class="event-art-caption">${escape(caption)}</p>`;
    }

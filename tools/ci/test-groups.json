@@ -821,6 +821,28 @@
         "scenarios",
         "map"
       ]
+    },
+    "tests/test_remake_battle_supply.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "logistics",
+        "save"
+      ]
+    },
+    "tests/test_remake_city_development.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "save"
+      ]
+    },
+    "tests/test_remake_economy_supply_events.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "battle"
+      ]
     }
   }
 }

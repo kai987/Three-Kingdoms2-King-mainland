@@ -14,7 +14,7 @@ from remake import presentation
 from remake.officers import OfficerProfile
 import test_remake_tactical_ai as tactical_fixture
 from test_remake_tactical_ai import battle, actors, successful_rng
-from campaign_fixtures import pre_relationship_opening
+from campaign_fixtures import pre_relationship_opening, pre_city_development_opening, pre_battle_provisions
 
 
 def active_duel(seed, *, own_health=80, enemy_health=80, round_number=1):
@@ -182,10 +182,11 @@ class DesperateDuelTests(unittest.TestCase):
                 # This corpus also predates reviewed relationship floors. Pin
                 # its opening inputs only; ordinary duel/allegiance services
                 # remain unmodified and complete output hashes stay frozen.
-                with patch.object(tactical_fixture, 'controlled_catalog', side_effect=original_stat_catalog), pre_relationship_opening():
+                with patch.object(tactical_fixture, 'controlled_catalog', side_effect=original_stat_catalog), \
+                        pre_relationship_opening(), pre_city_development_opening(), pre_battle_provisions():
                     game = active_duel(row['seed'])
-                orders_before = deepcopy(game.state.extension['command_books'])
-                scene = self.perform(game, row['move'])
+                    orders_before = deepcopy(game.state.extension['command_books'])
+                    scene = self.perform(game, row['move'])
                 self.assertEqual(game.state.extension['command_books'], orders_before,
                                  'Tactical moves never consume strategic orders')
                 state = game.to_dict()

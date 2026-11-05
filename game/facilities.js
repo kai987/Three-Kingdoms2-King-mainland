@@ -34,7 +34,7 @@
  function summary(view,id,{locale='zh-Hant',bilingual=true}={}){
   const row=city(view,id);if(!row)return '';
   if(bilingual)return ['zh-Hant','ja'].map(language=>`<div data-locale-only="${language}" data-l10n-native="${language}">${summary(view,id,{locale:language,bilingual:false})}</div>`).join('');
-  const tc=`城町發展 ${row.town}/3 · 防災 ${row.preparedness}/99 · 災害損傷 ${row.damage}/50`,ja=`都市発展 ${row.town}/3・防災 ${row.preparedness}/99・災害損傷 ${row.damage}/50`;
+  const tc=`設施等級 ${row.town}/3 · 防災 ${row.preparedness}/99 · 災害損傷 ${row.damage}/50`,ja=`施設等級 ${row.town}/3・防災 ${row.preparedness}/99・災害損傷 ${row.damage}/50`;
   return `<p class="small facility-city-summary" data-l10n-native="${locale}" data-city-facilities="${escape(id)}">${escape(choose(locale,tc,ja))}</p>`;
  }
  function create(options={}){
@@ -132,7 +132,7 @@
   }
   function policyBody(){
    const p=active.policy,labels={gold_budget:['全勢力每旬預算','勢力全体・1旬の予算'],gold_floor:['各城保留金錢','各都市に残す資金'],grain_floor:['各城保留兵糧','各都市に残す兵糧'],grain_target:['各城兵糧目標','各都市の兵糧目標'],target_preparedness:['目標防災值','防災の目標'],heal_below:['低於此體力時受診','この体力未満で治療']},jobs={auto_prevent:['自動防災／修復','自動防災・復旧'],auto_treat:['自動診療','自動治療'],auto_trade:['自動兵糧買賣','自動で兵糧を売買'],auto_equip:['自動購置裝備','自動で装備を購入'],auto_develop:['自動發展城町','自動で町を発展'],auto_study:['自動求學','自動で学習']};
-   return `<details class="facility-policy" ${active.policyOpen?'open':''}><summary>${text('全勢力自動設施與防災方針','勢力全体の施設・防災方針')}</summary><fieldset><legend>${text('自動方針','自動方針')}</legend>${check('facility-policy-enabled',text('啟用全勢力自動執行','勢力全体の自動実行を有効にする'),p.enabled)}<div class="domestic-input-grid">${Object.entries(labels).map(([key,captions])=>number('facility-policy-'+key,text(...captions),p[key],limits[key][1],limits[key][0])).join('')}</div>${Object.entries(jobs).map(([key,captions])=>check('facility-policy-'+key,text(...captions),p[key])).join('')}<p class="small">${text('金錢預算為全勢力每旬合計。依防災／修復、診療、兵糧交易、裝備、發展、求學的順序，使用全勢力剩餘命令書與符合資格的在場武將。玩家和AI共用實際費用與行動限制。','資金予算は勢力全体の1旬の合計です。防災・復旧、治療、兵糧取引、装備、都市発展、学習の順に、勢力全体の残り命令書を使い、条件を満たす在籍武将が実行します。プレイヤーとAIは同じ費用と行動制限を使います。')}</p></fieldset></details>`;
+   return `<details class="facility-policy" ${active.policyOpen?'open':''}><summary>${text('全勢力自動設施與防災方針','勢力全体の施設・防災方針')}</summary><fieldset><legend>${text('自動方針','自動方針')}</legend>${check('facility-policy-enabled',text('啟用全勢力自動執行','勢力全体の自動実行を有効にする'),p.enabled)}<div class="domestic-input-grid">${Object.entries(labels).map(([key,captions])=>number('facility-policy-'+key,text(...captions),p[key],limits[key][1],limits[key][0])).join('')}</div>${Object.entries(jobs).map(([key,captions])=>check('facility-policy-'+key,text(...captions),p[key])).join('')}<p class="small">${text('金錢預算為全勢力每旬合計。依防災／修復、診療、兵糧交易、裝備、發展、求學的順序，使用全勢力剩餘命令書與符合資格的在場武將。玩家和AI共用實際費用與行動限制。','資金予算は勢力全体の1旬の合計です。防災・復旧、治療、兵糧取引、装備、施設等級、学習の順に、勢力全体の残り命令書を使い、条件を満たす在籍武将が実行します。プレイヤーとAIは同じ費用と行動制限を使います。')}</p></fieldset></details>`;
   }
   function feedback(){return active.error?`<p class="staff-command-error" role="alert">${text('操作未完成，請核對最新資源、設施與武將後重試。','操作を完了できませんでした。最新の資源・施設・武将を確認して再度お試しください。')}</p>`:active.saved?`<p class="domestic-saved" role="status">${text('操作已完成，預覽已更新。返回戰役可查看圖文事件。','操作が完了し、予測を更新しました。戦役に戻ると画像付きイベントを確認できます。')}</p>`:'';}
   const icon=id=>typeof GameOriginalUI!=='undefined'?GameOriginalUI.icon('facility-'+id,{locale:locale(),label:text(...services[id]),className:'facility-service-icon'}):'';
@@ -143,7 +143,7 @@
    if(active.section==='civic'){
     if(active.civicAction==='policy'){id='facility-save-policy';caption=text('儲存自動方針','自動方針を保存');gold=0;}
     else if(active.civicAction==='prevention'){id='facility-prevent';caption=text('確認防災整備','防災整備を確定');gold=range(prevent?.gold_min,prevent?.gold_max);if(!prevent?.can_prevent)reason=text('防災已到上限且無待修復損傷，或執行者不符合條件。','防災が上限で復旧対象がないか、実行武将が条件を満たしていません。');else if(!affordable(prevent.gold_max))reason=text(`金錢不足；需保留最高費用金${prevent.gold_max}。`,`資金不足です。最大費用${prevent.gold_max}が必要です。`);}
-    else{id='facility-develop';caption=text('確認城町發展','都市発展を確定');gold=source.develop?.gold;if(source.develop&&source.develop.from_town<source.develop.to_town&&!affordable(gold))reason=text(`金錢不足；需要金${shown(gold)}。`,`資金不足です。資金${shown(gold)}が必要です。`);else if(!source.develop?.can_develop)reason=text('已達最高城町等級，或目前無法發展。','町が最高段階に達しているか、現在は発展できません。');else if(!affordable(gold))reason=text(`金錢不足；需要金${shown(gold)}。`,`資金不足です。資金${shown(gold)}が必要です。`);}
+    else{id='facility-develop';caption=text('確認設施等級','施設等級を確定');gold=source.develop?.gold;if(source.develop&&source.develop.from_town<source.develop.to_town&&!affordable(gold))reason=text(`金錢不足；需要金${shown(gold)}。`,`資金不足です。資金${shown(gold)}が必要です。`);else if(!source.develop?.can_develop)reason=text('已達最高城町等級，或目前無法發展。','町が最高段階に達しているか、現在は発展できません。');else if(!affordable(gold))reason=text(`金錢不足；需要金${shown(gold)}。`,`資金不足です。資金${shown(gold)}が必要です。`);}
    }else if(active.service==='hospital'){
     id='facility-treat';caption=text('確認診療','治療を確定');gold=patient?.gold;
     if(patient&&!affordable(gold))reason=text(`金錢不足；需要金${gold}。`,`資金不足です。資金${gold}が必要です。`);else if(!patient?.can_treat)reason=text('沒有需要治療且符合條件的受診武將。','治療が必要で条件を満たす武将がいません。');else if(!affordable(gold))reason=text(`金錢不足；需要金${gold}。`,`資金不足です。資金${gold}が必要です。`);
@@ -181,8 +181,8 @@
   }
   function civicBody(){
    const source=row(),develop=source.develop;
-   const tabs=[['development',text('城町發展','町の発展')],['prevention',text('防災與修復','防災・復旧')],['policy',text('自動方針','自動方針')]];
-   let content=active.civicAction==='policy'?policyBody():active.civicAction==='prevention'?`<fieldset><legend>${text('防災與災後修復','防災と被災後の復旧')}</legend><p class="small" id="facility-prevention-preview"></p><p class="small">${text('防災值最多99、損傷最低0。費用與效果會在確認後，依顯示的參考範圍決定。','防災は99まで、損傷は0までです。費用と効果は、表示した参考範囲から確定時に決まります。')}</p></fieldset>`:`<fieldset><legend>${text('城町發展','町の発展')}</legend><p>${develop&&develop.from_town===develop.to_town?text('已達最高城町等級3。醫館、市場、學問所與武器屋均已開放。','町の発展段階は上限の3です。医館・市場・学問所・武器屋を利用できます。'):develop?text(`發展 ${shown(develop.from_town)} → ${shown(develop.to_town)}，花費金${shown(develop.gold)}。醫館與市場為基礎服務；發展後開放學問所與武器屋，最高級提供進階商品。`,`発展${shown(develop.from_town)} → ${shown(develop.to_town)}、費用は資金${shown(develop.gold)}。医館・市場は基本施設で、発展すると学問所・武器屋を利用でき、最高段階では上級商品が並びます。`):text('目前無法發展。','現在は発展できません。')}</p></fieldset>`;
+   const tabs=[['development',text('設施等級','施設の整備')],['prevention',text('防災與修復','防災・復旧')],['policy',text('自動方針','自動方針')]];
+   let content=active.civicAction==='policy'?policyBody():active.civicAction==='prevention'?`<fieldset><legend>${text('防災與災後修復','防災と被災後の復旧')}</legend><p class="small" id="facility-prevention-preview"></p><p class="small">${text('防災值最多99、損傷最低0。費用與效果會在確認後，依顯示的參考範圍決定。','防災は99まで、損傷は0までです。費用と効果は、表示した参考範囲から確定時に決まります。')}</p></fieldset>`:`<fieldset><legend>${text('設施等級','施設の整備')}</legend><p>${develop&&develop.from_town===develop.to_town?text('已達最高城町等級3。醫館、市場、學問所與武器屋均已開放。','施設の整備段階は上限の3です。医館・市場・学問所・武器屋を利用できます。'):develop?text(`發展 ${shown(develop.from_town)} → ${shown(develop.to_town)}，花費金${shown(develop.gold)}。醫館與市場為基礎服務；發展後開放學問所與武器屋，最高級提供進階商品。`,`発展${shown(develop.from_town)} → ${shown(develop.to_town)}、費用は資金${shown(develop.gold)}。医館・市場は基本施設で、発展すると学問所・武器屋を利用でき、最高段階では上級商品が並びます。`):text('目前無法發展。','現在は発展できません。')}</p></fieldset>`;
    return `<nav class="facility-civic-tabs" aria-label="${text('城政指令','都市の指令')}">${tabs.map(([id,title])=>`<button type="button" id="facility-civic-${id}" data-facility-civic="${id}" aria-pressed="${active.civicAction===id}">${title}</button>`).join('')}</nav>${content}`;
   }
   function render(){

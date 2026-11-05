@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, canonical
 from remake.dated_events import visible_factions
-from remake import civil_staff, domestic, facilities, logistics, treasures
+from remake import civil_staff, domestic, facilities, logistics, treasures, city_development
 from remake.city_economy import (apply_opening_sizes, income_at, incomes_at,
                                  profile_at, profiles_at, tier_at)
 from campaign_fixtures import advance_month
@@ -25,6 +25,7 @@ def synchronize(game, state, **options):
     civil_staff.synchronize(game, state, **options)
     treasures.synchronize(game, state)
     facilities.synchronize(game, state)
+    city_development.synchronize(game, state)
 
 
 def read(path):

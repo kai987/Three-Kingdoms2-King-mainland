@@ -9,7 +9,8 @@
   depart:['出陣','出陣'],transfer:['調動武將','武将の移動'],dispatch_transport:['派遣運輸隊','輸送隊の派遣'],
   resupply_march:['補給在途部隊','行軍中の部隊への補給'],transport_treasure:['運送寶物','宝の輸送'],
   search_treasure:['探索寶物','宝の探索'],reward_officer:['賞賜武將','武将への褒美'],sell_treasure:['出售寶物','宝の売却'],
-  develop_town:['開發町設施','町の開発'],treat_officer:['治療武將','武将の治療'],study_officer:['武將進修','武将の学習'],
+  develop_land:['開墾土地','土地の開墾'],develop_industry:['開發產業','産業の開発'],develop_population:['町開發（人口）','町の開発（人口）'],
+  develop_town:['整備設施','施設の整備'],treat_officer:['治療武將','武将の治療'],study_officer:['武將進修','武将の学習'],
   trade_grain:['交易兵糧','兵糧の取引'],buy_equipment:['購買裝備','装備の購入'],equip_owned:['更換裝備','装備の変更'],
   improve_prevention:['加強防災','防災の強化']
  });

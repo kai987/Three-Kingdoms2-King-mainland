@@ -122,6 +122,8 @@ class SiegePresentationTests(unittest.TestCase):
             if 'siege'not in game.state.battle['extended']:break
             self.cycle(game,ident)
             b=game.state.battle
+            self.assertEqual(b['extended']['supply'],original['extended']['supply'],
+                             'Soldier encounter rounds must not become macro battle days')
             saw_loss|=any(u['troops']<next(v['troops']for v in original[side]if v['id']==u['id'])for side in ('attackers','defenders')for u in b[side])
             if 'siege'in b['extended']:saw_move|=b['extended']['siege']['units']!=positions
         self.assertTrue(saw_move);self.assertTrue(saw_loss)
@@ -236,6 +238,7 @@ class SiegePresentationTests(unittest.TestCase):
         generals=[p for p in row['units']if p['kind']=='general']
         generals[0].update(x=4,y=5);generals[1].update(x=5,y=5)
         before=deepcopy(game.state.battle['extended']['tactical']['points'])
+        food=deepcopy(game.state.battle['extended']['supply'])
         orders={k:'wait'for k in ('infantry','archer','cavalry','general')};orders['general']='advance'
         game.command('siege_orders',dict(battle_id=ident,orders=orders),game.revision)
         game.command('siege_step',dict(battle_id=ident),game.revision)
@@ -247,6 +250,8 @@ class SiegePresentationTests(unittest.TestCase):
         self.assertIsNone(game.state.battle['extended']['duel'])
         self.assertEqual(game.state.battle['extended']['siege']['stage'],'orders')
         self.assertEqual(game.state.battle['extended']['tactical']['points'],before)
+        self.assertEqual(game.state.battle['extended']['supply'],food,
+                         'Duel exchanges inside a soldier encounter do not consume a battle day')
 
     def test_full_battle_log_stays_bounded_at_entry_formation_and_duel_return(self):
         game=battle(three_enemies=False);b,a,t,_=castle_contact(game)

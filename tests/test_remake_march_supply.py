@@ -78,6 +78,8 @@ class MarchSupplyTests(unittest.TestCase):
                 soldiers = deepcopy(game.state.soldiers)
                 ident,row = self.queue(game,transfer=transfer)
                 budget = march_supply.estimate(game.state,[ident],row['quote'])
+                if not transfer:
+                    budget += march_supply.cost(game.state.officers[ident].troops,1,30)
                 self.assertEqual(game.state.cities['xiangyang'].grain,before-budget)
                 self.assertEqual((row['supply']['loaded'],row['supply']['consumed'],
                                   row['supply']['remaining']),(budget,0,budget))
@@ -95,7 +97,12 @@ class MarchSupplyTests(unittest.TestCase):
                 self.assertEqual(game.state.rng,rng)
                 self.assertEqual(game.state.soldiers,soldiers)
                 game.command('arrivals',{},game.revision)
-                self.assertEqual(sum(c.grain for c in game.state.cities.values()),grain)
+                # Arrival moves existing bags into a battlefield account and
+                # loads the defender from its real city; neither mints food.
+                battle_grain = (sum(s['remaining'] for s in game.state.battle['extended']['supply']['sides'].values())
+                                if game.state.battle else 0)
+                remaining = row['supply']['remaining']
+                self.assertEqual(sum(c.grain for c in game.state.cities.values())+battle_grain,grain+remaining)
                 self.assertFalse(game.state.extension['travel']['marches'])
                 if transfer:
                     self.assertIn(ident,game.state.cities['nanjun'].roster.officer_ids)

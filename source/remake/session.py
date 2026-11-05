@@ -93,7 +93,8 @@ class CampaignSession:
         result['catalog']['city_income']=incomes_at(self.game.catalog.data,year,month)
         if self.game.state:
             from .facilities import adjusted_income
-            result['catalog']['city_income']={key:adjusted_income(self.game.state,key,income)
+            from . import city_development
+            result['catalog']['city_income']={key:adjusted_income(self.game.state,key,city_development.adjust_income(self.game,self.game.state,key,income) if key in self.game.state.cities else income)
                 for key,income in result['catalog']['city_income'].items()}
         result['catalog']['road_additions']=self.game.catalog.data.get('road_additions',[])
         result['catalog']['world']=self.game.catalog.data.get('world')
@@ -181,6 +182,7 @@ class CampaignSession:
                 raise GameError('请选择本剧本开放的城池。')
             officers=[]
             from .equipment import initial_view
+            from .city_development import opening_view
             preview_game=self.game if c is self.game.catalog else Campaign(c)
             for row in d['initial_officers']:
                 if row['city']!=city:continue
@@ -201,7 +203,7 @@ class CampaignSession:
             neutral_name=history.get('neutral_label') or ('地方汉郡（中立）' if history.get('opening',{}).get('basis')=='unmapped_local_han_administration' else '无主')
             return dict(scenario=scenario,title=d['title'],year=d['start_year'],month=d['start_month'],
                 capacity=c.rules.city_officer_capacity,
-                city=dict(id=city,owner=owner,treasure=treasure,facilities=facilities,owner_name=c.factions[owner]['name'] if owner!='neutral' else neutral_name,
+                city=dict(id=city,owner=owner,treasure=treasure,facilities=facilities,city_development=opening_view(c,city),owner_name=c.factions[owner]['name'] if owner!='neutral' else neutral_name,
                     terrain=c.map_cities[city].get('terrain'),officers=officers,
                     profile=d.get('city_profiles',{}).get(city),income=d.get('city_income',{}).get(city),history=d.get('city_history',{}).get(city),
                     **d.get('initial_city_resources',{}).get(city,d['initial_resources'])))

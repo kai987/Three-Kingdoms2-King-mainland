@@ -471,6 +471,8 @@ def month_rollover(game, state):
         city.reserves -= reserves
         state.soldiers['lost'] += reserves
         row.update(preparedness=max(0, before_p-drop), damage=min(50, before_d+rate))
+        from .city_development import on_disaster
+        on_disaster(game, state, key, kind, rate)
         details = dict(disaster=kind, gold=gold, grain=grain, reserves=reserves, rate=rate,
             preparedness_before=before_p, preparedness_after=row['preparedness'],
             damage_before=before_d, damage_after=row['damage'])

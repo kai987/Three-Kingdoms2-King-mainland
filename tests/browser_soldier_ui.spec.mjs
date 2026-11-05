@@ -473,6 +473,8 @@ test('native battlefield hospital rice shop and weapon shop use the current cell
   await page.locator(`[data-actor="${value.actor}"]`).click();const before=await read(page),quote=before.view.catalog.battle_tactical.actors[String(value.actor)].facility;
   expect(quote.kind).toBe(kind);expect(quote.x).toBe(value.site.x);expect(quote.y).toBe(value.site.y);
   await control(page,'battle-facility-open');await expect(page.locator('#dialog')).toBeVisible();
+  const side=before.save.state.battle.attacker===before.save.state.player?'attackers':'defenders';
+  await expect(page.locator(`[data-battle-supply-side="${side}"]`)).toHaveAttribute('data-battle-grain',String(before.save.state.battle.extended.supply.sides[side].remaining));
   const payer=quote.payer_city;let merchandise=null;
   if(kind==='hospital')await page.locator('#battle-facility-treat').click();
   if(kind==='market'){
@@ -491,7 +493,7 @@ test('native battlefield hospital rice shop and weapon shop use the current cell
   if(kind==='hospital'){
    expect(current.save.state.cities[payer].gold).toBe(before.save.state.cities[payer].gold-quote.medical_gold);expect(current.save.state.battle.extended.support[value.actor].health).toBeGreaterThan(before.save.state.battle.extended.support[value.actor].health);expect(current.save.state.battle.extended.support[value.actor].health).toBeLessThanOrEqual(quote.max_health);expect(current.save.state.rng.draws-before.save.state.rng.draws).toBe(1);
   }else if(kind==='market'){
-   expect(current.save.state.cities[payer].gold).toBe(before.save.state.cities[payer].gold-quote.trade.rate);expect(current.save.state.cities[payer].grain).toBe(before.save.state.cities[payer].grain+quote.trade.batch_grain);expect(current.save.state.rng).toEqual(before.save.state.rng);
+   expect(current.save.state.cities[payer].gold).toBe(before.save.state.cities[payer].gold-quote.trade.rate);expect(current.save.state.cities[payer].grain).toBe(before.save.state.cities[payer].grain);expect(current.save.state.battle.extended.supply.sides[side].remaining).toBe(before.save.state.battle.extended.supply.sides[side].remaining+quote.trade.batch_grain);await expect(page.locator(`[data-battle-supply-side="${side}"]`)).toHaveAttribute('data-battle-grain',String(current.save.state.battle.extended.supply.sides[side].remaining));expect(current.save.state.rng).toEqual(before.save.state.rng);
   }else{
    expect(current.save.state.officers[value.actor].weapon_id).toBe(merchandise.id);expect(current.save.state.officers[value.actor].profile).toEqual(before.save.state.officers[value.actor].profile);expect(current.save.state.cities[payer].gold).toBe(before.save.state.cities[payer].gold-merchandise.price);expect(current.save.state.rng).toEqual(before.save.state.rng);
   }

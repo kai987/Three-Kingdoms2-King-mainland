@@ -24,13 +24,21 @@ FACILITY_DETAILS = {
     'town_developed': {'actor','from_town','to_town','gold'},
     'officer_treated': {'actor','target','gold','before','after'},
     'officer_studied': {'actor','target','gold','before','after','bonus'},
-    'grain_traded': {'actor','direction','batches','grain','gold','rate'},
+    'grain_traded': {'actor','direction','batches','grain','gold','rate','battle_id','side','destination'},
     'equipment_bought': {'actor','target','slot','item','previous','gold'},
     'prevention_improved': {'actor','gold','gain','repair','preparedness_before',
         'preparedness_after','damage_before','damage_after'},
     'city_disaster': {'disaster','gold','grain','reserves','rate','preparedness_before',
         'preparedness_after','damage_before','damage_after'},
 }
+CITY_DEVELOPMENT_DETAILS = {
+    'city_developed': {'actor','development','gold','before','after','gain',
+        'governance_before','governance_after'},
+    'civil_unrest': {'governance','category','gold_loss','grain_loss','population_loss',
+        'land_loss','industry_loss'},
+}
+BATTLE_SUPPLY_DETAILS = {'battle_id','side','days','grain','daily_grain','missing_units','outcome'}
+BATTLE_TRADE_DETAILS = {'battle_id','side','destination'}
 EQUIPMENT_DETAILS = {'actor','target','from_person','slot','item','previous','method','battle_id','chance','roll'}
 SUPPLY_KINDS = {'march_resupplied', 'march_starvation', 'march_retreat'}
 SUPPLY_DETAILS = {'unit_kind', 'unit_id', 'grain', 'lost', 'shortage_days', 'reason'}
@@ -64,6 +72,8 @@ DETAILS = {
     **{kind: set(SUPPLY_DETAILS) for kind in SUPPLY_KINDS},
     **TREASURY_DETAILS,
     **FACILITY_DETAILS,
+    **CITY_DEVELOPMENT_DETAILS,
+    'battle_supply_exhausted': BATTLE_SUPPLY_DETAILS,
     'equipment_acquired':EQUIPMENT_DETAILS,
     'domestic_report': {'gold','grain','reserves','morale','cities','reason'},
 }
@@ -91,7 +101,10 @@ def _validate_equipment_event(row):
 
 def _validate_facility_event(row):
     d, kind = row['details'], row['kind']
-    if (set(d) != FACILITY_DETAILS[kind] or row['audience'] != 'player'
+    fields = FACILITY_DETAILS[kind]
+    if kind == 'grain_traded' and not set(d) & BATTLE_TRADE_DETAILS:
+        fields = fields - BATTLE_TRADE_DETAILS
+    if (set(d) != fields or row['audience'] != 'player'
             or len(row['city_ids']) != 1 or len(row['factions']) != 1):
         raise ValueError('Facility event fields')
     def number(key, low, high):
@@ -110,6 +123,10 @@ def _validate_facility_event(row):
     elif kind=='grain_traded':
         valid=(d['direction'] in ('buy','sell') and number('batches',1,1000)
             and number('rate',1,100) and d['grain']==d['batches']*100 and d['gold']==d['batches']*d['rate'])
+        if 'battle_id' in d:
+            valid=(valid and d['direction']=='buy' and d['destination']=='battle'
+                and d['side'] in ('attackers','defenders') and isinstance(d['battle_id'],str)
+                and re.fullmatch(r'battle-[1-9][0-9]{0,9}',d['battle_id']) is not None)
     elif kind=='equipment_bought':
         from .facility_equipment import WEAPONS, ARMORS
         maximum=len(WEAPONS if d['slot']=='weapon' else ARMORS)-1
@@ -130,6 +147,57 @@ def _validate_facility_event(row):
                 and (d['preparedness_before']!=99 or not any(d[k] for k in ('gold','grain','reserves','rate'))))
     if not valid:
         raise ValueError('Facility event receipt')
+
+
+def _validate_city_development_event(row):
+    d, kind = row['details'], row['kind']
+    if (set(d) != CITY_DEVELOPMENT_DETAILS[kind] or row['audience'] != 'player'
+            or len(row['city_ids']) != 1 or len(row['factions']) != 1):
+        raise ValueError('City development event fields')
+    def number(key, low, high):
+        return type(d[key]) is int and low <= d[key] <= high
+    if kind == 'city_developed':
+        population = d['development'] == 'population'
+        cap = 999900 if population else 999
+        valid=(d['development'] in ('land','industry','population')
+            and row['person_ids']==[d['actor']] and number('gold',10,26) and d['gold']%2==0
+            and all(number(key,0,cap) for key in ('before','after','gain'))
+            and d['after']-d['before']==d['gain']
+            and all(number(key,0,100) for key in ('governance_before','governance_after')))
+        if valid:
+            unit = 100 if population else 1
+            valid=(all(d[key]%unit==0 for key in ('before','after','gain'))
+                and d['governance_after']==min(100,d['governance_before']+1+(d['gain']//unit>=31))
+                and (d['gain']>0 or d['governance_after']>d['governance_before']))
+    else:
+        loss_fields={'population':{'population_loss'},'resources':{'gold_loss','grain_loss'},
+            'development':{'land_loss','industry_loss'}}
+        active=loss_fields.get(d['category']) if isinstance(d['category'],str) else None
+        valid=(not row['person_ids'] and number('governance',0,49) and active is not None
+            and all(number(key,0,100000000 if key in ('gold_loss','grain_loss') else
+                999900 if key=='population_loss' else 999)
+                and (key in active or d[key]==0) for key in
+                ('gold_loss','grain_loss','population_loss','land_loss','industry_loss'))
+            and d['population_loss']%100==0)
+    if not valid:
+        raise ValueError('City development event receipt')
+
+
+def _validate_battle_supply_event(row):
+    d = row['details']
+    if (set(d) != BATTLE_SUPPLY_DETAILS or row['audience'] != 'player'
+            or not 1 <= len(row['city_ids']) <= 2 or not 1 <= len(row['factions']) <= 2
+            or len(row['person_ids']) > 10 or not isinstance(d['battle_id'],str)
+            or re.fullmatch(r'battle-[1-9][0-9]{0,9}',d['battle_id']) is None
+            or d['side'] not in ('attackers','defenders')):
+        raise ValueError('Battle supply event fields')
+    for key, low, high in (('days',1,30),('grain',0,100000000),('daily_grain',1,22),
+                           ('missing_units',1,22000)):
+        if type(d[key]) is not int or not low <= d[key] <= high:
+            raise ValueError('Battle supply event values')
+    if (d['missing_units']>d['daily_grain']*1000
+            or d['outcome'] != ('retreat' if d['side']=='attackers' else 'victory')):
+        raise ValueError('Battle supply event receipt')
 
 
 def _validate_treasury_event(row):
@@ -399,6 +467,10 @@ def validate(campaign, state):
             _validate_treasury_event(row)
         if row['kind'] in FACILITY_DETAILS:
             _validate_facility_event(row)
+        if row['kind'] in CITY_DEVELOPMENT_DETAILS:
+            _validate_city_development_event(row)
+        if row['kind']=='battle_supply_exhausted':
+            _validate_battle_supply_event(row)
         if row['kind']=='equipment_acquired':
             _validate_equipment_event(row)
         if row['kind'] in {'faction_founded','faction_founding_skipped'}:

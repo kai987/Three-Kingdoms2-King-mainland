@@ -20,7 +20,7 @@ from remake.errors import GameError
 from remake.march_core import CoreUnavailable, config_for, invoke, using_backend
 from remake.route_hazards import allocate_survivors, evaluate_leg, route_allowed
 from remake.travel import TravelCampaign
-from campaign_fixtures import pre_relationship_opening
+from campaign_fixtures import pre_relationship_opening, pre_city_development_opening
 
 CASES = [
     ('plain', 'shu', 'jiameng', 'fuxian', 'fastest', 7),
@@ -75,7 +75,13 @@ def campaign_fixture(case):
     return game
 
 
+@pre_city_development_opening()
 def campaign_result(case, alternate_backend=None, *, legacy_catalog_sha256=None):
+    """Frozen eight-case march inputs; current natural parity stays separate.
+
+    Every case is a friendly transfer: no battle budget or battle service is
+    disabled. The old full-save artifact predates city development state only.
+    """
     name, side, source, target, mode, month = case
     game = campaign_fixture(case)
     result = {}

@@ -528,6 +528,8 @@ class StrategicAITests(unittest.TestCase):
         domestic.synchronize(game,game.state)
         treasures.synchronize(game,game.state)
         facilities.synchronize(game,game.state)
+        from remake import city_development
+        city_development.synchronize(game,game.state)
         game.validate(game.state);game=self.resume(game)
         self.ai_turn(game)
         plan=game.state.extension['ai_strategy']['wei']

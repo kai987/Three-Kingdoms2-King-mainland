@@ -10,7 +10,7 @@ from unittest.mock import patch
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign,Catalog,digest
-from remake import civil_staff, domestic, facilities, logistics, treasures
+from remake import civil_staff, domestic, facilities, logistics, treasures, city_development
 from remake.errors import GameError
 from remake.route_hazards import evaluate_leg
 
@@ -60,6 +60,7 @@ class HazardMarchTests(unittest.TestCase):
         civil_staff.synchronize(game,game.state,checks=False)
         treasures.synchronize(game,game.state)
         facilities.synchronize(game,game.state)
+        city_development.synchronize(game,game.state)
         game.validate(game.state)
         return city
 

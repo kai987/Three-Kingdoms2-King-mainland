@@ -115,6 +115,7 @@ class TacticalAiTests(unittest.TestCase):
                         city=b['target'] if foe=='defenders' else b['source']
                         self.assertLess(state.cities[city].grain,grain[city])
                         self.assertEqual(state.cities[b['source'] if city==b['target'] else b['target']].grain,grain[b['source'] if city==b['target'] else b['target']])
+                        self.assertEqual(b['extended']['supply'],before['extended']['supply'])
                     elif effect=='surrender':
                         self.assertIn(t,b[own]);self.assertNotIn(t,b[foe])
                         self.assertEqual(t['troops'],next(unit['troops'] for unit in before[foe] if unit['id']==t['id']))

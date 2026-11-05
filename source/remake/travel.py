@@ -218,7 +218,7 @@ class TravelCampaign:
             self._emit_event(state,'route_discovered',city_ids=[row['source'],row['target']],
                 factions=[row['owner']],details={'from':row['source'],'to':row['target']},audience='world')
 
-    def _queue_march(self, state, source, target, ids, kind, mode='fastest'):
+    def _queue_march(self, state, source, target, ids, kind, mode='fastest', *, battle_grain=None):
         order = 'depart' if kind == 'attack' else 'transfer'
         command_books.require(state, source.owner, order)
         quote = self._travel_path(state, source.id, target.id, source.owner, mode, adjacent=kind == 'attack')
@@ -231,7 +231,11 @@ class TravelCampaign:
         if mode=='explore' and not sum(state.officers[i].troops for i in ids):
             raise GameError('探索航行至少需要一名带兵武将。')
         from .march_supply import create, estimate
-        grain = estimate(state, ids, quote)
+        if kind == 'attack':
+            from .battle_supply import departure_quote
+            grain = departure_quote(state, ids, quote, battle_grain=battle_grain)['total_grain']
+        else:
+            grain = estimate(state, ids, quote)
         if source.grain < grain: raise GameError('行军粮食不足。')
         command_books.spend(state, source, order)
         source.grain -= grain
@@ -243,7 +247,7 @@ class TravelCampaign:
                    arrival_turn=state.turn+quote['turns'], checked_turn=0, quote=quote)
         row.update(departure_year=state.year,departure_month=state.month,departure_day=state.day,
                    departure_troops={str(i):state.officers[i].troops for i in ids},
-                   risks=self._march_risks(quote,state.rng), supply=create(state,ids,quote))
+                   risks=self._march_risks(quote,state.rng), supply=create(state,ids,quote,initial_grain=grain))
         row.update(status='outbound',reason='outbound',history=[],journey_source=source.id,
             mission={key:row[key] for key in ('source','target','kind','mode','departure_turn','arrival_turn')})
         travel['marches'].append(row)
@@ -400,7 +404,7 @@ class TravelCampaign:
                 ids = [i for i in ids if state.officers[i].troops>0 and state.officers[i].health>0]
                 if not ids: continue
                 self._discover_march_route(state,row)
-                self._start_expanded_battle(state, source, target, ids, paid=True)
+                self._start_expanded_battle(state, source, target, ids, paid=True, march_supply=row['supply'])
                 travel['battle_arrival'] = True
                 if state.player in (source.owner, target.owner): return
                 self._resolve_ai_battle(state)

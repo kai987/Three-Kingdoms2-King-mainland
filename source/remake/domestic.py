@@ -271,7 +271,9 @@ def _income(game, city_id, state=None):
     if state is not None:
         from .city_economy import income_at
         from .facilities import adjusted_income
-        value=adjusted_income(state,city_id,income_at(game.catalog.data,city_id,state.year,state.month) or value)
+        from .city_development import adjust_income
+        value=adjusted_income(state,city_id,adjust_income(game,state,city_id,
+            income_at(game.catalog.data,city_id,state.year,state.month) or value))
     return value
 
 
@@ -613,6 +615,9 @@ def finish_faction_turn(game, state, owner, *, automatic=True):
     """After manual commands and before the calendar advances, once per city."""
     if automatic:
         run_automatic(game, state, owner)
+        if owner != state.player:
+            from . import city_development
+            city_development.auto_turn(game, state, owner)
         from . import facilities
         facilities.synchronize(game,state)
         facilities.auto_turn(game,state,owner)

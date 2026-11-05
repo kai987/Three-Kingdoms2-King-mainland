@@ -9,7 +9,7 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
 from remake.campaign import Campaign,Catalog,digest
-from remake import facilities,logistics,march_supply,treasures
+from remake import facilities,logistics,march_supply,treasures,city_development
 from remake.errors import GameError
 from remake.march_core import using_backend
 from test_remake_domestic import domestic_catalog
@@ -248,6 +248,7 @@ class ConvoyRescueTests(unittest.TestCase):
         logistics.synchronize(game,game.state);domestic.synchronize(game,game.state)
         treasures.synchronize(game,game.state)
         facilities.synchronize(game,game.state)
+        city_development.synchronize(game,game.state)
         game.validate(game.state)
         for _ in range(6):
             game._complete_turn(game.state)

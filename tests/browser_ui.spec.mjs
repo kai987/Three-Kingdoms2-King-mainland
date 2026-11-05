@@ -2365,3 +2365,47 @@ test.describe('first-session assistance',()=>{
   expect(errors.get(page)).toEqual([]);
  });
 });
+
+test('original development commands keep pure quotes, real costs and portable saves while sorties quote separate battle grain',async({page},testInfo)=>{
+ await opening(page);await page.locator('#scenario').selectOption('mainland217-07');
+ await page.locator('input[name=faction][value=shu]').check();await page.locator('#begin').click();
+ await expect(page.locator('#end-turn')).toBeEnabled();await waitIdle(page);await dismissHistoryOpening(page);
+ await tacticalControl(page,'city-command-tab-city');await page.locator('#city-development').click();
+ const initial=await tacticalRead(page);
+ const id=await page.locator('[data-development-dialog] [data-city-development]').getAttribute('data-city-development');
+ expect(initial.view.catalog.city_development.cities[id].population).toBeGreaterThan(0);
+ await expect(page.locator('#development-quote')).toContainText(/18.?26/);
+ await page.locator('#dialog-language').selectOption('ja');await expect(page.locator('#dialog-title')).toContainText('都市の開発');
+ expect(await tacticalSave(page)).toEqual(initial.save,'Language and quote inspection do not change saved data or RNG');
+ await closeDialog(page);expect(await tacticalSave(page)).toEqual(initial.save,'Cancelling a development spends nothing');
+ for(const [kind,field] of [['develop_land','land'],['develop_industry','industry'],['develop_population','population']]){
+  await page.locator('#city-development').click();await page.locator('#development-kind').selectOption(kind);
+  const before=await tacticalRead(page),actor=await page.locator('#development-actor').inputValue(),offer=before.view.catalog.city_development.cities[id].actor_quotes[actor][kind];
+  await page.locator('#development-confirm').click();await waitIdle(page);
+  await expect(page.locator('[data-development-dialog]')).toBeVisible();
+  const after=await tacticalSave(page),old=before.save.state,next=after.state;
+  expect(next.cities[id].gold).toBeLessThanOrEqual(old.cities[id].gold-offer.gold_min);
+  expect(next.cities[id].gold).toBeGreaterThanOrEqual(old.cities[id].gold-offer.gold_max);
+  const growth=next.extension.city_development.cities[id][field]-old.extension.city_development.cities[id][field];
+  expect(growth).toBeGreaterThanOrEqual(offer.gain_min);expect(growth).toBeLessThanOrEqual(offer.gain_max);
+  expect(next.rng.draws-old.rng.draws).toBe(2);
+  await closeDialog(page);await tacticalDismiss(page);
+ }
+ await page.locator('#city-information').click();await expect(page.locator('#dialog [data-city-development]:visible')).toBeVisible();await closeDialog(page);
+ // Save/load through ordinary controls retains the independent city ledger.
+ const saved=await tacticalSave(page);await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'development-save.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(saved))});
+ await waitIdle(page);expect((await tacticalSave(page)).state.extension.city_development).toEqual(saved.state.extension.city_development);
+ await tacticalDismiss(page);
+ await tacticalControl(page,'city-command-tab-army');await page.locator('#depart').click();
+ await page.locator('#world-map .city-hit.action-target').first().press('Enter');
+ await page.locator('input[name=depart-officer]:enabled').first().check();await page.locator('#review-departure').click();
+ const budget=page.locator('#departure-battle-grain'),maximum=Number(await budget.getAttribute('max'));
+ expect(Number(await budget.inputValue())).toBeGreaterThan(0);await expect(page.locator('#departure-battle-budget')).toContainText(/戦闘用|戰鬥備糧/,{useInnerText:true});
+ await budget.fill('999999999');await expect(budget).toHaveValue(String(maximum));
+ await budget.fill('-1');await expect(budget).toHaveValue('0');
+ await page.locator('#departure-battle-grain-max').click();await expect(budget).toHaveValue(String(maximum));
+ await historyScreenshot(page,testInfo,'separate-battle-grain-budget',{fullPage:false});
+ await closeDialog(page);expect(await tacticalSave(page)).toEqual(saved,'An edited but cancelled grain draft spends nothing');
+ expect(errors.get(page)).toEqual([]);
+ await historyScreenshot(page,testInfo,'development-ledger-and-city-controls',{fullPage:false});
+});

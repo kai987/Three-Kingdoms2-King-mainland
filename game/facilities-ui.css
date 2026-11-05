@@ -76,3 +76,12 @@ dialog:has([data-facilities-dialog]) .dialog-actions{margin:0;padding-top:12px;b
  .facility-footer-buttons>button{padding:8px 4px;font-size:14px}
 }
 @media(prefers-reduced-motion:reduce){.facilities-panel{scroll-behavior:auto}}
+
+.development-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.development-stats>div{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border:1px solid var(--ink);padding:8px;min-width:0}
+.development-stats dd{margin:0;font-variant-numeric:tabular-nums}.development-stats small{font-size:.72em}
+[data-development-dialog] .field{display:grid;gap:8px;margin-block:12px}[data-development-dialog] select{min-height:44px;max-width:100%;min-width:0}
+@media(max-width:420px){.development-stats{grid-template-columns:minmax(0,1fr)}}
+
+.departure-provisions-input{display:flex;gap:8px}.departure-provisions-input input{min-width:0;flex:1}.departure-provisions-input button{min-height:44px}
+.battle-provisions{border-bottom:1px solid var(--ink);padding-bottom:8px;margin-bottom:8px}.battle-provisions p{margin:4px 0;font-variant-numeric:tabular-nums}.battle-provisions small{font-size:.8em}

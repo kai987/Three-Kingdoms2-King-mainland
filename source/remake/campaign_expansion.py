@@ -5,7 +5,7 @@ remake designs. No original engine, ROM tables or control IR are loaded.
 """
 from dataclasses import replace
 from .errors import GameError
-from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services, officer_relations
+from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services, officer_relations, battle_supply
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
                        parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref, appearance_values)
@@ -203,7 +203,7 @@ class ExpandedCampaign:
         for ident in ids: self._personnel_actor(state,source,ident)
         self._queue_march(state,source,destination,ids,'transfer',payload.get('route_mode','fastest'))
 
-    def _start_expanded_battle(self,state,source,target,ids,*,paid=False):
+    def _start_expanded_battle(self,state,source,target,ids,*,paid=False,march_supply=None):
         if not paid: command_books.require(state, source.owner, 'depart')
         selected=select_deployment(source.roster,ids,state.officers)
         cost=0 if paid else max(1,sum(state.officers[i].troops for i in selected)//25)
@@ -224,6 +224,7 @@ class ExpandedCampaign:
         if not paid:
             source.grain-=cost
             command_books.spend(state, source, 'depart')
+        battle_supply.initialize(state,state.battle,march_supply=march_supply)
         state.phase='battle'
         state.extension['officer_actions'].update({str(i):state.turn for i in selected})
         self._note(state,state.battle['log'][0])
@@ -323,9 +324,12 @@ class ExpandedCampaign:
 
     def _end_tactical_side(self,state):
         b=state.battle
+        battle_supply.ensure(state,b)
         change=battle_grid.end_side(state,b)
         b['used']=[]
-        if change['timed_out']:
+        if change['advanced_day']:
+            battle_supply.end_day(self,state,b)
+        if change['timed_out'] and state.phase=='battle':
             b['extended']['withdrawn']='attackers'
             b['outcome']='retreat';state.phase='result'
             b['log'].append('三十日戰期已滿，攻方撤退。')
@@ -377,6 +381,7 @@ class ExpandedCampaign:
         self._battle_result(state)
         if state.phase=='battle' and all(u['id'] in b['used'] for u in b[own] if u['troops']>0):
             b['used']=[];b['round']+=1
+            battle_supply.end_day(self,state,b)
             for s in b['extended']['support'].values():s['energy']=min(18,s['energy']+4)
         b['log'][:]=b['log'][-80:]
 
@@ -392,6 +397,7 @@ class ExpandedCampaign:
 
     def _execute_battle_move(self,state,actor,x,y,own,foe,*,finish=False):
         b=state.battle
+        battle_supply.ensure(state,b)
         if b['extended']['tactical']['side']!=own:
             raise GameError('目前不是本方的戰術行動階段。')
         before=presentation.snapshot(self,state)
@@ -439,6 +445,7 @@ class ExpandedCampaign:
 
     def _execute_attack(self,state,actor,target,own,foe,*,finish=True,counter=False):
         b=state.battle
+        battle_supply.ensure(state,b)
         modern='tactical' in b['extended']
         if modern:
             reason=battle_grid.attack_reason(b,actor,target,own)
@@ -500,6 +507,7 @@ class ExpandedCampaign:
         self._execute_tactic(state,actor,target,own,foe,tid)
 
     def _execute_tactic(self,state,actor,target,own,foe,tid,*,finish=True,counter=False):
+        battle_supply.ensure(state,state.battle)
         from .tactical_ai import tactic_reason
         b=state.battle
         title,cost,effect,_=TACTICS[tid];x=b['extended'];support=x['support'];a=support[str(actor['id'])]
@@ -703,6 +711,7 @@ class ExpandedCampaign:
         b=state.battle
         if state.phase!='battle' or not b or payload.get('battle_id')!=b['id']:raise GameError('当前不能退却。')
         if b['extended'].get('siege'):raise GameError('請先退出目前的攻城交鋒。')
+        battle_supply.ensure(state,b)
         own,_=self._player_sides(state)
         before=presentation.snapshot(self,state)
         b['extended']['duel']=None;b['extended']['withdrawn']=own
@@ -755,6 +764,7 @@ class ExpandedCampaign:
             self._emit_event(state,'city_captured',person_ids=[state.officers[i].person_id for i in selected[:1]],
                 city_ids=[target.id],factions=[b['attacker'],b['defender']],
                 details=dict(previous_owner=b['defender']),audience='world')
+        battle_supply.settle(self,state,b)
         state.settled_battles.append(b['id'])
         incoming=b['attacker']!=state.player
         self._note(state,f'战果已结算，合计损兵{lost}，劝降兵员{sum(x["surrenders"].values())}入城。')
@@ -817,6 +827,9 @@ class ExpandedCampaign:
         if 'facilities' in x:
             from . import facilities
             facilities.synchronize(self,state)
+        if 'city_development' in x:
+            from . import city_development
+            city_development.synchronize(self,state)
         if 'equipment' in x:
             from . import equipment
             equipment.synchronize(self,state)
@@ -880,6 +893,7 @@ class ExpandedCampaign:
     def _validate_expansion(self,state):
         x=state.extension
         fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events','civil_staff','pending_succession','domestic','logistics','treasury','facilities','equipment','command_books'}
+        if 'city_development' in x:fields.add('city_development')
         from . import dated_events
         if dated_events.enabled(self.catalog):fields.add('dated_events')
         if not isinstance(x,dict) or set(x)!=fields:raise ValueError('expanded state fields')
@@ -940,8 +954,9 @@ class ExpandedCampaign:
         if not b:return
         e=b['extended']
         expected={'support','duel','duel_history','ambush','surrenders','withdrawn','tactical'}
-        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation'}:raise ValueError('battle extended fields')
+        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation','supply'}:raise ValueError('battle extended fields')
         battle_grid.validate(self,state,b)
+        battle_supply.validate(state,b)
         siege.validate(self,state,b)
         battle_allegiance.validate(self,state,b)
         units={u['id']:u for u in b['attackers']+b['defenders']}

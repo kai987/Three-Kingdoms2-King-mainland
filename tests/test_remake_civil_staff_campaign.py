@@ -40,6 +40,10 @@ def staff_catalog(*, free=True, extra=False, enemy=False):
     data['city_income'] = {key: dict(gold=35, grain=90, reserves=0) for key in active}
     # Prevent unrelated persuasion rolls from masking the staff/global RNG split.
     data['rules']['persuade_officer_gold'] = 100000000
+    # This suite isolates the staff stream, salaries and personnel fees from
+    # autonomous development costs/draws. Real AI development and its identical
+    # paid player service have separate command-backed campaign coverage.
+    data.setdefault('city_development_rules', {})['ai_enabled'] = False
     pairs = [('yingchuan', 'nanjun' if enemy else 'nanyang')]
     if extra:
         pairs.append(('runan', 'xiangyang'))

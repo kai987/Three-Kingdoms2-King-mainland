@@ -201,7 +201,9 @@ class BattleServiceTests(unittest.TestCase):
     def test_market_and_armory_charge_and_persist_actual_resources_and_equipment(self):
         game,b,a=self.ready('market');before=deepcopy(game.state);offer=battle_services.quote(game,before,b,a,'attackers')
         command(game,'battle_facility',battle_id=b['id'],actor=a['id'],action='buy_grain',batches=2)
-        self.assertEqual(game.state.cities[b['source']].grain,before.cities[b['source']].grain+200)
+        self.assertEqual(game.state.cities[b['source']].grain,before.cities[b['source']].grain)
+        self.assertEqual(game.state.battle['extended']['supply']['sides']['attackers']['remaining'],
+                         before.battle['extended']['supply']['sides']['attackers']['remaining']+200)
         self.assertEqual(game.state.cities[b['source']].gold,before.cities[b['source']].gold-2*offer['trade']['rate'])
         self.assertEqual(game.state.rng,before.rng)
         game,b,a=self.ready('armory');offer=battle_services.quote(game,game.state,b,a,'attackers')

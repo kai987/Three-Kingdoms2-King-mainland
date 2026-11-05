@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
 from remake.campaign import Campaign,Catalog,digest
 from remake.errors import GameError
-from remake import facilities, march_supply, treasures
+from remake import facilities, march_supply, treasures, city_development
 from remake.march_core import using_backend
 from campaign_fixtures import controlled_catalog
 
@@ -177,6 +177,7 @@ class SegmentSupplyTests(unittest.TestCase):
                     civil_staff.synchronize(game,game.state,checks=False)
                     treasures.synchronize(game,game.state)
                     facilities.synchronize(game,game.state)
+                    city_development.synchronize(game,game.state)
                     game.validate(game.state)
                 # The outbound journey really arrives before ownership changes.
                 # Its friendly intermediate return node is then captured too.

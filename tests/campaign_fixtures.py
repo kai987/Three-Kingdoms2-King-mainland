@@ -6,11 +6,63 @@ from pathlib import Path
 import tempfile
 from unittest.mock import patch
 
-from remake.campaign import Catalog
-from remake import officer_relations
+from remake.campaign import Campaign, Catalog
+from remake import officer_relations, city_development, battle_supply
 from remake.officers import appearance_values
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+@contextmanager
+def pre_city_development_opening():
+    """Construct the declared old input schema for immutable historical oracles.
+
+    Only new opening construction and automatic addition of this new extension
+    are isolated. Complete runtime state/save hashes, validators, march rules,
+    stocks and RNG remain unmodified. Current gameplay tests never enter here.
+    """
+    current = Campaign._new
+
+    def retained(game, *args, **kwargs):
+        state = current(game, *args, **kwargs)
+        stocks = {key: (city.gold, city.grain, city.reserves) for key, city in state.cities.items()}
+        rng = deepcopy(state.rng)
+        if state.extension.get('city_development') != city_development.empty(game, state):
+            raise AssertionError('Historical fixture may omit only pristine opening development')
+        state.extension.pop('city_development')
+        if (stocks != {key: (city.gold, city.grain, city.reserves) for key, city in state.cities.items()}
+                or state.rng != rng):
+            raise AssertionError('Historical opening isolation changed city stocks or RNG')
+        return state
+
+    def unchanged(game, state):
+        if 'city_development' in state.extension:
+            raise AssertionError('Historical march/duel fixture unexpectedly developed a city')
+
+    with patch.object(Campaign, '_new', retained), patch.object(city_development, 'synchronize', unchanged):
+        yield
+
+
+@contextmanager
+def pre_battle_provisions():
+    """Only the frozen old duel artifact predates carried battle provisions.
+
+    Its real original stock inputs and complete effect/RNG receipts stay pinned;
+    no current battle test or runtime path uses this context. Completing a macro
+    battle day is outside this one-exchange corpus and fails explicitly.
+    """
+    def no_bags(state, battle, **kwargs):
+        if 'supply' in battle['extended']:
+            raise AssertionError('Historical single-exchange duel already has provisions')
+        return None
+
+    def no_day(*args, **kwargs):
+        raise AssertionError('Historical single-exchange duel must not advance a battle day')
+
+    with patch.object(battle_supply, 'initialize', no_bags), \
+            patch.object(battle_supply, 'ensure', no_bags), \
+            patch.object(battle_supply, 'end_day', no_day):
+        yield
 
 
 @contextmanager

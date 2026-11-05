@@ -2,7 +2,7 @@
 let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, mapPositions=null, setupPreview=null, cityLabels='major', dialogGeneration=0;
 let mapNavigation=null,mapCamera=null,mapCameraKey='',refreshRouteDialog=null,mapAction=null;
 let cloudSave=null,cloudSaveUI=null;
-let civilStaffUI=null,domesticUI=null,treasuryUI=null,facilitiesUI=null;
+let civilStaffUI=null,domesticUI=null,treasuryUI=null,facilitiesUI=null,cityDevelopmentUI=null;
 let campaignDifficulty='normal';
 let allocationDialogContext=null,allocationCloseEpoch=0;
 let battleDestination=null,battleViewKey='';
@@ -549,6 +549,8 @@ async function showCityInformation(id){
    ${cityEconomyNote(c.profile)}
    ${!preview&&typeof GameDomestic!=='undefined'?GameDomestic.summary(view,id):''}
    ${!preview&&typeof GameFacilities!=='undefined'?GameFacilities.summary(view,id):''}
+   ${!preview&&typeof GameCityDevelopment!=='undefined'?GameCityDevelopment.summary(view,id):''}
+   ${preview&&c.city_development&&typeof GameCityDevelopment!=='undefined'?GameCityDevelopment.summary({catalog:{city_development:{cities:{[id]:c.city_development}}}},id):''}
    ${preview&&c.facilities?`<p class="small" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">開局町等級 ${c.facilities.town}/3 · 防災 ${c.facilities.preparedness}/99 · ${c.facilities.services.map(service=>({hospital:'醫館',market:'市場',school:'學問所',armory:'武器屋'}[service])).join('、')}</p><p class="small" data-locale-only="ja" data-l10n-native="ja">開始時の町 ${c.facilities.town}/3・防災 ${c.facilities.preparedness}/99・${c.facilities.services.map(service=>({hospital:'医館',market:'市場',school:'学問所',armory:'武器屋'}[service])).join('・')}</p>`:''}
    ${preview?`<p class="small"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">寶 ${c.treasure??0}/99</span><span data-locale-only="ja" data-l10n-native="ja">宝 ${c.treasure??0}/99</span></p>`:typeof GameTreasury!=='undefined'?GameTreasury.summary(view,id):''}
    <dl class="resources"><div class="resource-pair"><dt>資金</dt><dd>${c.gold}</dd></div><div class="resource-pair"><dt>兵糧</dt><dd>${c.grain}</dd></div><div class="resource-pair"><dt>預備兵</dt><dd>${c.reserves}</dd></div></dl>
@@ -579,6 +581,10 @@ function delegationInterface(){
 function treasuryInterface(){
  if(!treasuryUI&&typeof GameTreasury!=='undefined')treasuryUI=GameTreasury.create({getView:()=>view,cityName:id=>cityName(id),openDialog:(...args)=>openDialog(...args),command:(kind,payload)=>command(kind,payload),dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
  return treasuryUI;
+}
+function cityDevelopmentInterface(){
+ if(!cityDevelopmentUI&&typeof GameCityDevelopment!=='undefined')cityDevelopmentUI=GameCityDevelopment.create({getView:()=>view,cityName:id=>cityName(id),openDialog:(...args)=>openDialog(...args),command:(kind,payload)=>command(kind,payload),dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
+ return cityDevelopmentUI;
 }
 function facilitiesInterface(){
  if(!facilitiesUI&&typeof GameFacilities!=='undefined')facilitiesUI=GameFacilities.create({getView:()=>view,cityName:id=>cityName(id),openDialog:(...args)=>openDialog(...args),command:(kind,payload)=>command(kind,payload),dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
@@ -682,7 +688,7 @@ function renderCity(){
  const scale=view.catalog.city_profiles[city.id],income=view.catalog.city_income[city.id],naming=view.catalog.map_presentation.city_names[city.id],training=view.catalog.domestic?.cities?.[city.id]?.morale;
  const unavailable=`<p class="small city-command-unavailable">${cityCommandText('非本方城池，無法執行都市命令。','自勢力の都市ではないため、都市の命令は実行できません。')}</p>`;
  const panels={
-  city:owned?`${view.catalog.facilities?`<button id="city-civic">${cityCommandText('發展與防災','発展・防災')}</button>`:''}${view.catalog.domestic?`<button id="city-domestic">${cityCommandText('勢力內政委任','勢力の内政担当')}</button>`:''}<button id="recruit-officer" ${(!hasCommandBook('recruit_officer')&&!hasCommandBook('persuade_officer'))||!available.length||cityOccupancy(city)>=capacity()||city.gold<60?'disabled':''}>招募 / 劝降</button>${view.catalog.civil_staff?'<button id="civil-staff">地方文吏</button>':''}`:unavailable,
+  city:owned?`${view.catalog.city_development?`<button id="city-development">${cityCommandText('城池開發','都市の開発')}</button>`:''}${view.catalog.facilities?`<button id="city-civic">${cityCommandText('設施整備與防災','施設整備・防災')}</button>`:''}${view.catalog.domestic?`<button id="city-domestic">${cityCommandText('勢力內政委任','勢力の内政担当')}</button>`:''}<button id="recruit-officer" ${(!hasCommandBook('recruit_officer')&&!hasCommandBook('persuade_officer'))||!available.length||cityOccupancy(city)>=capacity()||city.gold<60?'disabled':''}>招募 / 劝降</button>${view.catalog.civil_staff?'<button id="civil-staff">地方文吏</button>':''}`:unavailable,
   army:owned?`<div class="action-pair"><button id="allocate" class="primary" ${!hasCommandBook('allocate')||!city.roster.officer_ids.some(i=>!marching().has(i))?'disabled':''}>编兵</button><button id="depart" class="primary" ${!hasCommandBook('depart')||!fighters.length||noDepartureFood?'disabled':''}>出征</button></div>${GameCommandBooks.activeAllocation(view,city.id)?`<button id="continue-allocation">${cityCommandText('繼續上次配兵','前回の編制を続ける')}</button>`:''}<div class="action-pair"><button id="transfer" ${!hasCommandBook('transfer')||!available.length?'disabled':''}>调动武将</button><button id="recruit" ${!hasCommandBook('recruit')||city.gold<20||city.grain<30?'disabled':''}>征募预备兵</button></div>`:unavailable,
   warehouse:owned?`${view.catalog.treasury?`<button id="city-treasury">${cityCommandText('寶庫與賞賜','宝庫・褒美')}</button>`:''}${view.catalog.domestic?'<button id="city-logistics">前線支援</button>':''}`:unavailable,
   town:owned?view.catalog.facilities?`<button id="city-facilities">${cityCommandText('進入城內設施','町の施設へ')}</button>`:`<p class="small">${cityCommandText('本城的設施資料尚未提供。','この都市の施設情報は未登録です。')}</p>`:unavailable
@@ -711,6 +717,7 @@ function renderCity(){
  if($('#city-logistics'))$('#city-logistics').onclick=()=>delegationInterface()?.open(city.id,'logistics');
  if($('#city-treasury'))$('#city-treasury').onclick=()=>treasuryInterface()?.open(city.id);
  if($('#city-facilities'))$('#city-facilities').onclick=()=>facilitiesInterface()?.open(city.id);
+ if($('#city-development'))$('#city-development').onclick=()=>cityDevelopmentInterface()?.open(city.id);
  if($('#city-civic'))$('#city-civic').onclick=()=>facilitiesInterface()?.open(city.id,{section:'civic'});
  $('#end-turn').onclick=()=>command('end_turn');
  // City-only map navigation also replaces the inspector. Keep its live faction
@@ -832,19 +839,31 @@ function departure(city,targetCity=null){
   $('#review-departure').onclick=()=>{if(!hasCommandBook('depart'))return notice(commandBookReason('depart'),true);const nextTarget=$('#departure-target').value;if(draft.target!==nextTarget)draft.route_mode='fastest';draft.target=nextTarget;draft.officers=[...dialog.querySelectorAll('input[name=depart-officer]:checked')].map(x=>GameOfficerChoices.ref(x.value));if(!draft.officers.length||draft.officers.length>limit)return notice('请选择1到10名有兵力的武将。',true);if(draft.officers.some(i=>officerUnavailable(i,{troops:true})))return notice('请选择本城健康的武将。',true);if(city.grain<departureBudget(city,draft.target,draft.officers))return notice('行军粮食不足。',true);confirm();};
  };
  const confirm=()=>{
+  let battleGrainEdited=false;
   const troops=draft.officers.reduce((n,i)=>n+view.game.officers[i].troops,0),cost=Math.max(1,Math.floor(troops/25));
-  openDialog('出征确认',`<p>${escapeHtml(cityName(city.id))}出发，目标${escapeHtml(cityName(draft.target))}。</p>${commandBookHint('depart')}<p>${draft.officers.map(i=>escapeHtml(officerChoiceText(i))).join('<br>')}，共${troops}兵${view.catalog.travel_rules?'':`，耗粮${cost}`}。</p>${view.catalog.travel_rules?routeModeSelect(draft.route_mode)+'<div id="departure-estimate"></div><p id="departure-supply"></p>'+marchSupplyRuleHtml():''}<p class="small">${view.catalog.travel_rules?'确认后部队进入行军，到达后才战斗。':'确认后才出征。'}现在取消不会扣粮或消耗行动。</p>`,'<button data-cancel>取消出征</button><button id="back-to-pick">返回名单</button><button id="confirm-departure" class="primary">确认出征</button>');
+  openDialog('出征确认',`<p>${escapeHtml(cityName(city.id))}出发，目标${escapeHtml(cityName(draft.target))}。</p>${commandBookHint('depart')}<p>${draft.officers.map(i=>escapeHtml(officerChoiceText(i))).join('<br>')}，共${troops}兵${view.catalog.travel_rules?'':`，耗粮${cost}`}。</p>${view.catalog.travel_rules?routeModeSelect(draft.route_mode)+'<div id="departure-estimate"></div><p id="departure-supply"></p><label class="field">'+battleText('戰鬥備糧','戦闘用の備糧')+'<span class="departure-provisions-input"><input id="departure-battle-grain" type="number" min="0" step="1" inputmode="numeric"><button type="button" id="departure-battle-grain-max">'+battleText('最大','最大')+'</button></span></label><p id="departure-battle-budget" role="status"></p>'+marchSupplyRuleHtml():''}<p class="small">${view.catalog.travel_rules?'确认后部队进入行军，到达后才战斗。':'确认后才出征。'}现在取消不会扣粮或消耗行动。</p>`,'<button data-cancel>取消出征</button><button id="back-to-pick">返回名单</button><button id="confirm-departure" class="primary">确认出征</button>');
   const refresh=()=>{
    draft.route_mode=syncRouteModes(city.id,draft.target,draft.route_mode);
    const estimate=$('#departure-estimate'),quote=travelQuote(city.id,draft.target,draft.route_mode);
    estimate.innerHTML=travelEstimate(city.id,draft.target,draft.route_mode);previewSurvivors(estimate,quote,draft.officers);
-   const loaded=quote?marchGrain(draft.officers,quote):0;
-   $('#departure-supply').innerHTML=quote?marchSupplyHtml({loaded,consumed:0,remaining:loaded,elapsed_days:0}):'';
+   let loaded=quote?marchGrain(draft.officers,quote):0;
+   const segmentLoaded=loaded,food=$('#departure-battle-grain'),budget=$('#departure-battle-budget');
+   if(food&&quote&&typeof GameBattleSupply!=='undefined'){
+    const provision=GameBattleSupply.departure(view,city,draft.officers,quote,battleGrainEdited?draft.battle_grain:null);
+    draft.battle_grain=provision.battle_grain;food.value=provision.battle_grain;food.max=provision.battle_grain_max;
+    loaded=provision.total_grain;
+    budget.innerHTML=battleText(`首段行軍糧 ${provision.march_grain} + 戰鬥備糧 ${provision.battle_grain} = 裝載 ${loaded}；戰鬥日耗約 ${provision.daily_grain}，可支撐 ${provision.days_supported} 日。`, `最初の区間 ${provision.march_grain} + 戦闘用 ${provision.battle_grain} = 積載 ${loaded}。戦闘の一日消費は約 ${provision.daily_grain}、維持可能 ${provision.days_supported} 日。`)+(!provision.battle_grain?battleText(' 備糧為0時可能在首日斷糧撤退。',' 備糧0では初日に兵糧不足で撤退する可能性があります。'):'');
+   }
+   $('#departure-supply').innerHTML=quote?marchSupplyHtml({loaded:segmentLoaded,consumed:0,remaining:segmentLoaded,elapsed_days:0}):'';
    $('#confirm-departure').disabled=!hasCommandBook('depart')||!quote||city.grain<loaded;
    if(quote&&typeof tutorial!=='undefined')tutorial?.routePreview();
    GameI18n.apply();
   };
   if($('#route-mode')){$('#route-mode').onchange=()=>{draft.route_mode=$('#route-mode').value;refresh();};watchRouteDialog(refresh);refresh();}
+  if($('#departure-battle-grain')){
+   $('#departure-battle-grain').oninput=()=>{battleGrainEdited=true;draft.battle_grain=$('#departure-battle-grain').value;refresh();};
+   $('#departure-battle-grain-max').onclick=()=>{battleGrainEdited=true;draft.battle_grain=Number($('#departure-battle-grain').max);refresh();};
+  }
   $('#back-to-pick').onclick=pick;
   $('#confirm-departure').disabled=$('#confirm-departure').disabled||!hasCommandBook('depart');
   $('#confirm-departure').onclick=async()=>{
@@ -1086,7 +1105,7 @@ function battleFacilityName(kind){return ({hospital:battlePlain('醫館','医館
 function openBattleFacility(){
  const b=view.game?.battle,ident=actor,site=battleActor()?.facility;
  if(busy||view.game?.phase!=='battle'||!b||!site||!battleActor()?.can_act)return;
- const header=`<div class="battle-facility-art">${typeof GameOriginalUI==='undefined'?'':site.kind==='hospital'?GameOriginalUI.icon('facility-hospital',{locale:GameI18n.locale}):GameOriginalUI.scene(site.kind,{locale:GameI18n.locale})}</div><p>${escapeHtml(officerChoiceText(ident))}</p><p class="small">${battleText('移動至原版戰場村落後可使用；不消耗戰略命令書。','原作の戦場の村へ移動すると利用できます。戦略の命令書は使いません。')}</p><p class="battle-facility-resources"><span>${battleText('資金','資金')} ${site.gold}</span><span>${battleText('兵糧','兵糧')} ${site.grain}</span><span>${battleText('體力','体力')} ${site.health}/${site.max_health}</span></p>`;
+ const header=`<div class="battle-facility-art">${typeof GameOriginalUI==='undefined'?'':site.kind==='hospital'?GameOriginalUI.icon('facility-hospital',{locale:GameI18n.locale}):GameOriginalUI.scene(site.kind,{locale:GameI18n.locale})}</div><p>${escapeHtml(officerChoiceText(ident))}</p><p class="small">${battleText('移動至原版戰場村落後可使用；不消耗戰略命令書。','原作の戦場の村へ移動すると利用できます。戦略の命令書は使いません。')}</p><p class="battle-facility-resources"><span>${battleText('資金','資金')} ${site.gold}</span><span>${battleText('隨軍糧','携行兵糧')} ${site.grain}</span><span>${battleText('體力','体力')} ${site.health}/${site.max_health}</span></p>`;
  let body='',footer='';
  if(site.kind==='hospital'){
   body=`<p>${battleText(`療傷費用：資金 ${site.medical_gold}。`,`治療費：資金 ${site.medical_gold}。`)}</p>`;
@@ -1132,6 +1151,7 @@ function updateBattleStage(mode,html){
 }
 function updateBattleControls(html){
  const node=$('#inspector'),controller=typeof battleView==='undefined'?null:battleView;
+ if(typeof GameBattleSupply!=='undefined')html=GameBattleSupply.summary(view,GameI18n.locale)+html;
  if(controller)controller.controls(node,html);else node.innerHTML=html;
 }
 function renderSiege(b){

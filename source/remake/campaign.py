@@ -13,7 +13,7 @@ from threading import RLock
 from types import SimpleNamespace
 
 from .errors import GameError
-from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations
+from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from .city_economy import income_at
@@ -276,6 +276,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         for owner, policy in state.extension['treasury']['factions'].items():
             policy['enabled'] = owner != faction
         state.extension['facilities'] = facilities.empty(self,state)
+        state.extension['city_development'] = city_development.empty(self,state)
         state.extension['equipment'] = equipment.empty(self,state)
         command_books.initialize(self, state)
         equipment.synchronize(self,state)
@@ -318,6 +319,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'logistics':logistics.view(self,state,travel_quotes=travel.get('travel_quotes',{})),
                                 'treasury':treasures.view(self,state),
                                 'facilities':facilities.view(self,state),
+                                'city_development':city_development.view(self,state),
+                                'battle_supply':battle_supply.view(state,state.battle) if state and state.battle else None,
+                                'battle_supply_rules':battle_supply.rules(),
                                 'equipment':equipment.view(self,state),
                                 'command_books':command_books.view(self,state),
                                 'battle_tactical':battle_grid.view(self,state,state.battle) if state else None,
@@ -365,13 +369,20 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                **{action:self._facility_command(action) for action in
                                   ('develop_town','treat_officer','study_officer','trade_grain',
                                    'buy_equipment','improve_prevention','set_facility_policy')},
+                               **{action:self._development_command(action) for action in
+                                  ('develop_land','develop_industry','develop_population')},
                                'equip_owned':lambda state,payload:equipment.equip_owned(self,state,payload,state.player)}
                     if kind not in methods:
                         raise GameError('未提供这项操作。')
                     if kind not in ('allocate', 'allocation_close'):
                         command_books.close_allocation(candidate, candidate.player)
+                    if candidate.phase == 'battle' and kind in {
+                            'attack','retreat','battle_move','battle_wait','battle_facility','tactic',
+                            'duel_start','duel_action','siege_form','siege_orders','siege_step','siege_withdraw'}:
+                        battle_supply.ensure(candidate,candidate.battle)
                     methods[kind](candidate, payload)
                     self._synchronize_siege(candidate)
+                city_development.synchronize(self,candidate)
                 record_events(self, self.state, candidate, kind, payload)
                 civil_staff.synchronize(self, candidate, opening=kind == 'new', monthly=candidate.day == 1)
                 logistics.synchronize(self,candidate)
@@ -404,6 +415,14 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                    'sell_treasure':treasures.sell, 'set_governor':treasures.set_governor,
                    'set_treasury_policy':treasures.set_policy}[kind]
         return lambda state, payload: service(self,state,payload,state.player)
+
+    def _development_command(self, kind):
+        def execute(state,payload):
+            if set(payload) != {'city','actor'}:
+                raise GameError('開發參數無效。')
+            self._owned_city(state,payload.get('city'),action=True)
+            return city_development.execute(self,state,{**payload,'kind':kind},state.player)
+        return execute
 
     def _facility_command(self, kind):
         service = {'develop_town':facilities.develop, 'treat_officer':facilities.treat,
@@ -495,7 +514,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         if not isinstance(ids, list) or any(not (type(i) is int or is_generated_ref(i)) for i in ids):
             raise GameError('出征名单无效。')
         for ident in ids:self._personnel_actor(state,source,ident)
-        self._queue_march(state,source,target,ids,'attack',payload.get('route_mode','fastest'))
+        self._queue_march(state,source,target,ids,'attack',payload.get('route_mode','fastest'),
+                          battle_grain=payload.get('battle_grain'))
 
     def _damage(self, state, attacker, defender):
         spread = 90 + state.rng.next() % 21
@@ -538,6 +558,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 setattr(parent,field,getattr(parent,field)-resources[field])
             state.cities[key] = City(key,parent.owner,CityRoster(key,rules=self.catalog.rules),**resources)
             facilities.synchronize(self,state)
+            city_development.synchronize(self,state)
             treasures.synchronize(self,state)
             treasures.inherit_city(state,key,parent.id)
             if key == 'xinxing' and 'month' not in rule:
@@ -580,6 +601,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             if city.owner != 'neutral':
                 income=income_at(self.catalog.data,city.id,state.year,state.month) or {
                     'gold':r['monthly_gold_income'],'grain':r['monthly_grain_income'],'reserves':0}
+                income=city_development.adjust_income(self,state,city.id,income)
                 income=facilities.adjusted_income(state,city.id,income)
                 city.gold += income['gold']
                 city.grain += income['grain']
@@ -591,6 +613,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 officer.health = min(officer.profile.health_max, officer.health + r['monthly_heal'])
         domestic.month_rollover(self,state)
         facilities.month_rollover(self,state)
+        city_development.month_rollover(self,state)
 
     def _complete_turn(self, state):
         """Commit one fixed ten-day turn and begin the next strategic phase."""
@@ -622,6 +645,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         domestic.synchronize(self,state)
         treasures.synchronize(self,state)
         facilities.synchronize(self,state)
+        city_development.synchronize(self,state)
         equipment.synchronize(self,state)
         if logistics.due(state) or any(r['arrival_turn'] <= state.turn for r in state.extension['travel']['marches']):
             state.phase = 'arrivals'
@@ -712,6 +736,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         treasures.validate(self,state)
         facilities.validate(self,state)
         equipment.validate(self,state)
+        city_development.validate(self,state)
         validate_events(self, state)
         self._validate_expansion(state)
         if state.player not in self.catalog.factions or state.phase not in {'city', 'battle', 'result', 'ai', 'finished', 'arrivals'}:

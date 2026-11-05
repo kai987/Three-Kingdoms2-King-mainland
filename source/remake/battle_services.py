@@ -6,7 +6,7 @@ existing facility tables; entering a village pays ordinary terrain movement,
 and service use never spends a strategic command book.
 """
 from .errors import GameError
-from . import battle_grid, equipment, facilities
+from . import battle_grid, equipment, facilities, battle_supply
 from .officers import parse_officer_ref
 
 LIMIT = 100000000
@@ -46,7 +46,8 @@ def quote(game, state, battle, actor, side, *, site=None):
         return None
     payer, officer = _payer(state, battle, side), state.officers[actor['id']]
     hp = battle['extended']['support'][str(actor['id'])]['health']
-    result = dict(site, payer_city=payer.id, gold=payer.gold, grain=payer.grain,
+    grain=battle_supply.available(state,battle,side)
+    result = dict(site, payer_city=payer.id, gold=payer.gold, grain=grain,
         health=hp, max_health=officer.profile.health_max, actions=[ACTIONS[site['kind']]],
         stock={'weapon': [], 'armor': []}, trade=None,
         medical_gold=facilities._rule(game, 'medical_gold'))
@@ -54,7 +55,7 @@ def quote(game, state, battle, actor, side, *, site=None):
         rate = facilities._rule(game, 'market_buy_rates')[str(_town(state,battle))]
         batch = facilities._rule(game, 'trade_batch_grain')
         result['trade'] = dict(rate=rate, batch_grain=batch,
-            max_batches=max(0,min(facilities._rule(game,'trade_max_batches'),payer.gold//rate,(LIMIT-payer.grain)//batch)))
+            max_batches=max(0,min(facilities._rule(game,'trade_max_batches'),payer.gold//rate,(LIMIT-grain)//batch)))
     if site['kind'] == 'armory':
         result['stock'] = _stock(state,battle,officer)
     return result
@@ -104,9 +105,11 @@ def execute(game, state, payload, *, side=None):
         if type(batches) is not int or not 1 <= batches <= trade['max_batches']:
             raise GameError('兵糧交易數量超出可用金錢或上限。')
         gold, grain = batches*trade['rate'], batches*trade['batch_grain']
-        payer.gold -= gold; payer.grain += grain
+        battle_supply.receive(state,battle,own,grain)
+        payer.gold -= gold
         kind = 'grain_traded'
-        details = dict(actor=officer.person_id,direction='buy',batches=batches,grain=grain,gold=gold,rate=trade['rate'])
+        details = dict(actor=officer.person_id,direction='buy',batches=batches,grain=grain,gold=gold,rate=trade['rate'],
+                       battle_id=battle['id'],side=own,destination='battle')
     else:
         slot, item = payload['slot'], payload['item']
         if not isinstance(slot,str) or slot not in ('weapon','armor') or type(item) is not int:

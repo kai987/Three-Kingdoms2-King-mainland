@@ -32,6 +32,10 @@ def facility_catalog(*,month=4,disasters=False):
         facility_rules=deepcopy(facilities.RULES),
         facility_disaster_cities=dict(flood=['xiangyang'],drought=['xiangyang']))
     data['facility_rules'].update(disasters_enabled=disasters)
+    # Facility visits have their own exact fee/RNG receipts. Keep independent
+    # autonomous development out of this fixture; its real-AI shared transaction
+    # is covered by test_remake_city_development instead.
+    data.setdefault('city_development_rules', {})['ai_enabled'] = False
     data['rules']['persuade_officer_gold']=100000000
     data['initial_owners']['nanjun']='shu'
     for key in data['active_cities']:

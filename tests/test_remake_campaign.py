@@ -85,7 +85,8 @@ class CampaignTests(unittest.TestCase):
         self.assertEqual(self.game.state.extension['command_books']['factions']['shu']['used'], 2)
         row=self.game.state.extension['travel']['marches'][0]
         self.assertEqual(self.game.state.cities['xiangyang'].grain,
-                         3800-estimate(self.game.state,[999],row['quote']))
+                         3800-row['supply']['loaded'])
+        self.assertEqual(row['supply']['loaded'],estimate(self.game.state,[999],row['quote'])+21)
         self.assertEqual(row['supply']['consumed'],0)
         self.assertEqual(self.game.state.soldiers, ledger)
         self.assertIn(999, self.game.state.cities['xiangyang'].roster.officer_ids)
@@ -155,10 +156,11 @@ class CampaignTests(unittest.TestCase):
             self.cmd('siege_withdraw',dict(battle_id=battle_id))
         remaining = self.game.state.battle['attackers'][0]['troops']
         paid_grain = self.game.state.cities['nanyang'].grain
+        returned_grain = self.game.state.battle['extended']['supply']['sides']['attackers']['remaining']
         self.cmd('retreat', dict(battle_id=battle_id))
         self.cmd('settle', dict(battle_id=battle_id))
         self.assertEqual(self.game.state.officers[123].troops, remaining)
-        self.assertEqual(self.game.state.cities['nanyang'].grain, paid_grain)
+        self.assertEqual(self.game.state.cities['nanyang'].grain, paid_grain+returned_grain)
         self.assertEqual(self.game.state.cities['xiangyang'].owner, 'shu')
 
     def test_ten_day_ai_receipt_is_idempotent(self):

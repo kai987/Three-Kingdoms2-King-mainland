@@ -461,6 +461,20 @@
         "mainland184-02"
       ],
       "scenario_scope": "fixed"
+    },
+    {
+      "id": "city-development-and-battle-grain",
+      "title": "original development commands keep pure quotes, real costs and portable saves while sorties quote separate battle grain",
+      "groups": [
+        "economy",
+        "battle",
+        "logistics",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland217-07"
+      ],
+      "scenario_scope": "fixed"
     }
   ]
 }

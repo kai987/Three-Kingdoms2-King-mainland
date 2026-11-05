@@ -33,7 +33,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  return{events,modal,parent,doc,i18n,header,portraitRequests,drain,setView:v=>{current=v;},setBusy:v=>{busy=v;},setPreview:v=>{preview=v;}};
 }
 (async()=>{
- assert.equal(Object.keys(KINDS).length,56);
+ assert.equal(Object.keys(KINDS).length,59);
  const founding=(id,kind='faction_founded',extra={})=>row(id,kind,{year:184,month:11,day:1,turn:28,audience:'world',
   person_ids:['historical-beigong-boyu','historical-li-wenhou'],city_ids:['jincheng'],factions:['beigong_boyu'],
   details:{founding_id:'liangzhou-revolt-184-11',reason:kind==='faction_founded'?'formed':'leader_unavailable',reserves:kind==='faction_founded'?1200:0},...extra});
@@ -314,5 +314,5 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
   assert(line.includes('劉禪'));assert(!line.includes('劉備'),'Event faction labels follow the live ruler, not the opening name');
  }
  assert.equal(JSON.stringify(inheritedView),inheritedBefore,'Bilingual event display never changes faction identity or state');inherited.events.dispose();
- console.log('events: 56 bilingual scenes, strict coup/founding/supply/city-name snapshots, dated historical context, local batching, read-only playback, locale continuity and immutable RNG/state passed');
+ console.log('events: 59 bilingual scenes, strict coup/founding/supply/city-name snapshots, dated historical context, local batching, read-only playback, locale continuity and immutable RNG/state passed');
 })().catch(error=>{console.error(error);process.exitCode=1});
