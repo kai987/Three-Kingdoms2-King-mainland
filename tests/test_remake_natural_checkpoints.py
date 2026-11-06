@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT/'source'), str(ROOT/'tests')]
 from campaign_fixtures import controlled_catalog
 from remake import battle_placement, march_core
-from remake.campaign import canonical, digest
+from remake.campaign import Campaign, Catalog, SeedRng, canonical, digest
 from remake.march_core import using_backend
 
 spec = importlib.util.spec_from_file_location('natural_checkpoints', ROOT/'tools/campaign-checkpoints/run.py')
@@ -57,7 +57,209 @@ def next_place(replay):
                 **battle['extended']['tactical']['positions'][str(row['actor'])])
 
 
+def observe_controlled(game, output=None):
+    """Install a declared fixture before observation; never a natural run."""
+    spec = settings(game.catalog, faction=game.state.player, seed=game.state.seed)
+    replay = checkpoints.CheckpointReplay(game.catalog, spec, 'python', output=output)
+    saved = checkpoints.encoded(game.export_save())
+    replay.game.load_save(saved, replay.game.revision)
+    assert checkpoints.encoded(replay.game.export_save()) == saved
+    return replay
+
+
+def controlled_contacts():
+    from browser_siege_fixture import fixture
+    from remake import battle_grid
+    row = fixture()
+    game = Campaign(Catalog(ROOT/'game/data/campaigns/208-10.json'))
+    game.load_save(row['save'], 0)
+    battle = game.state.battle
+    positions = battle['extended']['tactical']['positions']
+    actor, fort = row['actor'], row['fort']
+    enemy = next(u['id'] for u in battle['defenders'] if u['id'] != fort)
+    field = battle_grid._field(battle)
+    x, y = (positions[str(actor)][axis] for axis in ('x','y'))
+    point = next((px,py) for px,py in ((x-1,y),(x+1,y),(x,y-1),(x,y+1))
+        if 0 <= px < 31 and 0 <= py < 19 and field['classes'][py][px] != 5)
+    old = deepcopy(positions[str(enemy)])
+    blocker = next((key for key,p in positions.items()
+        if key != str(enemy) and (p['x'],p['y']) == point), None)
+    if blocker is not None:
+        positions[blocker] = old
+    positions[str(enemy)] = dict(x=point[0],y=point[1])
+    game.validate(game.state)
+    assert battle_grid.siege_context(battle, actor, enemy) is None
+    assert battle_grid.siege_context(battle, actor, fort) is not None
+    return game, actor, enemy, fort
+
+
+def contact_cycle(replay, actor, target):
+    ident = replay.game.state.battle['id']
+    replay.command('attack', battle_id=ident, actor=actor, target=target)
+    replay.command('siege_form', battle_id=ident, formation=0)
+    replay.command('siege_orders', battle_id=ident,
+                   orders={kind:'wait' for kind in ('infantry','archer','cavalry','general')})
+    replay.command('siege_step', battle_id=ident)
+    replay.command('siege_withdraw', battle_id=ident)
+
+
 class NaturalCheckpointTests(unittest.TestCase):
+    def test_fixed_strata_do_not_collapse_encounters_or_condition_kinds(self):
+        extension = dict(conditions={'units':{'1':{'kind':'phantom','remaining':2},
+            '2':{'kind':'chain','remaining':3},'3':{'kind':'qimen','remaining':1},
+            '4':{'kind':'chain','remaining':0}}}, siege={'stage':'formation','mode':'field'})
+        state = SimpleNamespace(phase='battle',battle={'extended':extension})
+        state.battle['defenders'] = [dict(id=3,troops=0)]
+        before = deepcopy(state)
+        self.assertEqual(checkpoints.observed_strata(state),
+            ('condition_phantom','condition_chain','condition_qimen','field_formation'))
+        self.assertEqual(state, before)
+        self.assertIn('condition_qimen',checkpoints.observed_strata(state),
+                      'A retained positive Qimen ledger is evidence even with zero troops')
+        self.assertEqual((len(checkpoints.STRATA),len(checkpoints.ENCOUNTERS)),(11,6))
+        for mode, label in (('field','field'),('siege','fort')):
+            for stage in checkpoints.STAGES:
+                extension['siege'] = dict(mode=mode,stage=stage)
+                self.assertIn(label+'_'+stage, checkpoints.observed_strata(state))
+        extension['siege'].pop('mode')
+        self.assertIn('fort_combat', checkpoints.observed_strata(state))
+        extension['siege']['mode'] = 'unknown'
+        with self.assertRaisesRegex(ValueError, 'encounter mode'):
+            checkpoints.observed_strata(state)
+        extension['siege'] = None
+        extension['conditions']['units']['3']['kind'] = 'unknown'
+        with self.assertRaisesRegex(ValueError, 'condition kind'):
+            checkpoints.observed_strata(state)
+        state.phase = 'result'
+        self.assertEqual(checkpoints.observed_strata(state), ())
+
+    def test_field_then_fort_keeps_legacy_first_witness_and_probes_each_real_snapshot_once(self):
+        with using_backend('python'), tempfile.TemporaryDirectory() as folder:
+            game, actor, enemy, fort = controlled_contacts()
+            replay = observe_controlled(game, Path(folder))
+            actual, calls = replay.game, []
+            original = checkpoints.soak.HeadlessCampaign.command
+            def counted(game, kind, *args, **kwargs):
+                if game is not actual:
+                    calls.append(kind)
+                return original(game, kind, *args, **kwargs)
+            with patch.object(checkpoints.soak.HeadlessCampaign, 'command', counted):
+                contact_cycle(replay, actor, enemy)
+                legacy = {key:deepcopy(replay.captures[key]) for key in checkpoints.KINDS if key in replay.captures}
+                first_files = {row['file']:json.loads((Path(folder)/row['file']).read_text()) for row in legacy.values()}
+                contact_cycle(replay, actor, fort)
+            self.assertEqual({key:replay.captures[key] for key in legacy}, legacy)
+            for filename, saved in first_files.items():
+                self.assertEqual(json.loads((Path(folder)/filename).read_text()), saved)
+            self.assertEqual(len(calls), 12, 'Six distinct committed states require two backend commands each, not one pair per alias')
+            observed = replay.observation()
+            self.assertEqual(observed['physical_saves'],dict(captured=6,verified=6,verified_backend_commands=12))
+            self.assertEqual(len(list(Path(folder).glob('*.save.json'))),6)
+            detail = observed['strata']
+            self.assertEqual(detail['coverage']['encounters']['verified_count'],6)
+            self.assertEqual(detail['coverage']['encounters']['verified_status'],'complete')
+            self.assertEqual(detail['coverage']['verified_count'],6)
+            self.assertEqual(detail['coverage']['verified_status'],'partial')
+            for row in detail['checkpoints']:
+                expected = 'field' if row['kind'].startswith('field_') else 'siege'
+                self.assertEqual(row['encounter_mode'], expected)
+                self.assertEqual(row['encounter_context']['mode'], expected)
+                self.assertEqual(row['continuation']['status'], 'verified')
+                self.assertEqual(len(row['continuation']['probes']),2)
+
+    def test_new_fort_only_pending_witness_is_incomplete_after_legacy_stages_verified(self):
+        game, actor, enemy, fort = controlled_contacts()
+        def stop_at_new_fort(replay, turns):
+            replay.game.load_save(game.export_save(), replay.game.revision)
+            contact_cycle(replay, actor, enemy)
+            replay.command('attack', battle_id=replay.game.state.battle['id'], actor=actor, target=fort)
+            return {'backend':replay.backend}
+        with patch.object(checkpoints.CheckpointReplay, 'run', stop_at_new_fort):
+            row, _ = checkpoints.run_leg(game.catalog, settings(game.catalog,faction='wei'), 'python', observe=True)
+        self.assertEqual((row['verification_status'],row['stop_reason']),('incomplete','pending_without_continuation'))
+        obs = row['observation']
+        self.assertEqual(obs['pending_without_continuation'],[])
+        self.assertEqual(obs['strata']['pending_without_continuation'],['fort_formation'])
+        self.assertEqual(obs['strata']['coverage']['observed_count'],4)
+        self.assertEqual(obs['strata']['coverage']['verified_count'],3)
+
+    def test_nonzero_strata_preserve_observer_off_and_both_main_backend_parity(self):
+        game, actor, _, fort = controlled_contacts()
+        def same_public_path(replay, turns):
+            replay.game.load_save(game.export_save(),replay.game.revision)
+            ident = replay.game.state.battle['id']
+            replay.command('attack',battle_id=ident,actor=actor,target=fort)
+            replay.command('siege_form',battle_id=ident,formation=0)
+            replay.command('siege_withdraw',battle_id=ident)
+            if replay.observe and replay.backend == 'rust':
+                # Test diagnostic accounting normalization, never gameplay or
+                # a natural sample. Warm native counters need not be equal.
+                for capture in replay.captures.values():
+                    for probe in capture['continuation'].get('probes',[]):
+                        probe['native_calls'] += 7
+            return dict(backend=replay.backend,command_sha256=replay.transcript.hexdigest())
+        with tempfile.TemporaryDirectory() as folder, patch.object(checkpoints.CheckpointReplay,'run',same_public_path):
+            report=checkpoints.run(game.catalog,settings(game.catalog,faction='wei'),folder)
+        self.assertEqual(report['verification_status'],'passed')
+        self.assertEqual(report['parity'],'passed')
+        self.assertEqual(report['detailed_coverage']['denominator'],11)
+        self.assertEqual(report['detailed_coverage']['verified_count'],2)
+        self.assertTrue(all(leg['observer_did_not_change_policy']for leg in report['legs']))
+
+    def test_legacy_fort_mode_metadata_is_normalized_without_mutating_the_save(self):
+        with using_backend('python'):
+            game, actor, _, fort = controlled_contacts()
+            game.command('attack',dict(battle_id=game.state.battle['id'],actor=actor,target=fort),game.revision)
+            game.state.battle['extended']['siege'].pop('mode')
+            game.validate(game.state)
+            replay = observe_controlled(game)
+            replay.command('siege_form',battle_id=game.state.battle['id'],formation=0)
+            row = replay.captures['fort_orders']
+            self.assertEqual(row['encounter_mode_source'],'legacy_default')
+            self.assertEqual(row['encounter_context']['mode'],'siege')
+            self.assertNotIn('mode',replay.capture_saves['fort_orders']['state']['battle']['extended']['siege'])
+            replay.command('siege_orders',battle_id=game.state.battle['id'],
+                orders={kind:'wait' for kind in ('infantry','archer','cavalry','general')})
+            self.assertEqual(replay.captures['fort_orders']['continuation']['status'],'verified')
+
+    def test_phantom_then_chain_and_qimen_capture_separate_paid_public_states(self):
+        from test_remake_chain_campaign import prepared, ZHU_GE, WAIT
+        from remake import battle_grid
+        with using_backend('python'):
+            game, roles, _, _ = prepared()
+            battle = game.state.battle
+            points = battle['extended']['tactical']['positions']
+            field = battle_grid._field(battle)
+            source = points[str(ZHU_GE)]
+            victim = roles['remote']
+            occupied = {(p['x'],p['y']) for key,p in points.items() if key != str(victim)}
+            candidates = [(x,y) for y in range(19) for x in range(31)
+                if field['classes'][y][x] in (0,4) and (x,y) not in occupied
+                and max(abs(x-source['x']),abs(y-source['y'])) <= 5]
+            x,y = min(candidates,key=lambda p:(max(abs(p[0]-source['x']),abs(p[1]-source['y'])),p[1],p[0]))
+            points[str(victim)] = dict(x=x,y=y)
+            # One disclosed controlled initial seed; no gate, duration or RNG
+            # result is replaced while any actual command/probe executes.
+            game.state.seed=3; game.state.rng=SeedRng(3); game.validate(game.state)
+            replay = observe_controlled(game)
+            ident = battle['id']
+            replay.command('tactic',battle_id=ident,actor=ZHU_GE,target=victim,tactic=2)
+            with patch('remake.tactical_ai.choose_action',return_value=WAIT):
+                replay.command('tactic',battle_id=ident,actor=ZHU_GE,target=roles['center'],tactic=10)
+                self.assertEqual(replay.stratum_counts['condition_chain'],1, 'Three affected units count as one observed committed state')
+                replay.command('battle_wait',battle_id=ident)
+                replay.command('tactic',battle_id=ident,actor=ZHU_GE,target=victim,tactic=15)
+                replay.command('battle_wait',battle_id=ident)
+            self.assertEqual(replay.captures['active_conditions']['condition_kinds'],['phantom'])
+            detail = replay.observation()['strata']
+            self.assertEqual(detail['coverage']['conditions']['verified_count'],3)
+            self.assertEqual(detail['coverage']['conditions']['denominator'],3)
+            self.assertEqual(detail['coverage']['conditions']['verified_status'],'complete')
+            self.assertEqual(detail['coverage']['verified_count'],3)
+            self.assertEqual(detail['coverage']['denominator'],11)
+            for kind in checkpoints.CONDITIONS:
+                self.assertEqual(replay.captures['condition_'+kind]['continuation']['status'],'verified')
+
     def test_committed_kind_detection_is_separate_and_read_only(self):
         extension = dict(placement={'confirmed':1, 'order':['1','2']},
             conditions={'units':{'2':{'kind':'phantom', 'remaining':2}}},

@@ -24,9 +24,13 @@ _spec = importlib.util.spec_from_file_location('_checkpoint_soak', ROOT/'tools/c
 soak = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(soak)
 
-SCHEMA = 'tk2-natural-checkpoints-v1'
+SCHEMA = 'tk2-natural-checkpoints-v2'
 KINDS = ('partial_placement', 'active_conditions', 'siege_formation',
          'siege_orders', 'siege_combat', 'duel')
+STAGES = ('formation', 'orders', 'combat')
+CONDITIONS = ('phantom', 'chain', 'qimen')
+ENCOUNTERS = tuple(mode+'_'+stage for mode in ('field', 'fort') for stage in STAGES)
+STRATA = ('partial_placement',) + tuple('condition_'+kind for kind in CONDITIONS) + ENCOUNTERS + ('duel',)
 BACKENDS = ('python', 'rust')
 
 
@@ -95,6 +99,45 @@ def observed_kinds(state):
     return tuple(result)
 
 
+def observed_strata(state):
+    """Fixed detailed labels; a field witness cannot occupy a fort's slot."""
+    coarse = observed_kinds(state)
+    if not coarse:
+        return ()
+    extension = state.battle['extended']
+    labels = set(coarse) & {'partial_placement', 'duel'}
+    for row in extension.get('conditions', {}).get('units', {}).values():
+        if type(row.get('remaining')) is int and row['remaining'] > 0:
+            if row.get('kind') not in CONDITIONS:
+                raise ValueError('Unsupported observed condition kind')
+            labels.add('condition_'+row['kind'])
+    encounter = extension.get('siege') or {}
+    if encounter.get('stage') in STAGES:
+        # Match siege._mode's existing legacy-save default, not city terrain
+        # or an assumption that the defending side must own the fort.
+        mode = encounter.get('mode', 'siege')
+        if mode not in ('field', 'siege'):
+            raise ValueError('Unsupported observed encounter mode')
+        labels.add(('fort' if mode == 'siege' else 'field')+'_'+encounter['stage'])
+    return tuple(key for key in STRATA if key in labels)
+
+
+def coverage(keys, observed, verified):
+    keys = tuple(keys)
+    status = lambda present: 'complete' if all(key in present for key in keys) else 'partial' if any(key in present for key in keys) else 'unobserved'
+    return dict(denominator=len(keys), observed_count=sum(key in observed for key in keys),
+        verified_count=sum(key in verified for key in keys),
+        observed_status=status(observed), verified_status=status(verified),
+        unobserved=[key for key in keys if key not in observed],
+        unverified=[key for key in keys if key not in verified])
+
+
+def detailed_coverage(observed, verified):
+    return dict(**coverage(STRATA, observed, verified),
+        encounters=coverage(ENCOUNTERS, observed, verified),
+        conditions=coverage(tuple('condition_'+kind for kind in CONDITIONS), observed, verified))
+
+
 class CheckpointReplay(soak.Replay):
     def __init__(self, catalog, spec, backend, *, output=None, observe=True,
                  clock=time.monotonic):
@@ -104,6 +147,7 @@ class CheckpointReplay(soak.Replay):
         self.clock, self.started = clock, clock()
         self.captures, self.capture_saves, self.pending = {}, {}, []
         self.observation_counts = dict.fromkeys(KINDS, 0)
+        self.stratum_counts = dict.fromkeys(STRATA, 0)
         self.main_native_calls = 0
         super().__init__(catalog, spec['faction'], spec['seed'], backend)
 
@@ -115,29 +159,32 @@ class CheckpointReplay(soak.Replay):
         for key in self.pending:
             if self.capture_saves[key] != before:
                 raise AssertionError('Checkpoint is not the immediately preceding actual state')
-            probes = []
-            for backend in BACKENDS:
-                with using_backend(backend):
-                    calls = backend_status()
-                    clone = soak.HeadlessCampaign(self.game.catalog)
-                    clone.load_save(encoded(self.capture_saves[key]), 0)
-                    if encoded(clone.export_save()) != before:
-                        raise AssertionError('Checkpoint load changed the complete save')
-                    clone.command(kind, deepcopy(payload), clone.revision)
-                    result = encoded(clone.export_save())
-                    if result != after:
-                        raise AssertionError('Checkpoint continuation differs on '+backend)
-                    probes.append(dict(backend=backend, before_checksum=before['checksum'],
-                        after_checksum=result['checksum'], state_sha256=digest(result['state']),
-                        rng=deepcopy(result['state']['rng']), complete_save_equal=True,
-                        native_calls=backend_status()['calls']-calls['calls']))
-                if (encoded(self.game.export_save()) != main_after
-                        or digest(self.game.catalog.data) != catalog_before):
-                    raise AssertionError('Continuation probe mutated the actual game or catalog')
+        # All labels from one committed snapshot share one physical save and
+        # one actual next-command pair, rather than multiplying proof counts.
+        probes = []
+        for backend in BACKENDS:
+            with using_backend(backend):
+                calls = backend_status()
+                clone = soak.HeadlessCampaign(self.game.catalog)
+                clone.load_save(encoded(before), 0)
+                if encoded(clone.export_save()) != before:
+                    raise AssertionError('Checkpoint load changed the complete save')
+                clone.command(kind, deepcopy(payload), clone.revision)
+                result = encoded(clone.export_save())
+                if result != after:
+                    raise AssertionError('Checkpoint continuation differs on '+backend)
+                probes.append(dict(backend=backend, before_checksum=before['checksum'],
+                    after_checksum=result['checksum'], state_sha256=digest(result['state']),
+                    rng=deepcopy(result['state']['rng']), complete_save_equal=True,
+                    native_calls=backend_status()['calls']-calls['calls']))
+            if (encoded(self.game.export_save()) != main_after
+                    or digest(self.game.catalog.data) != catalog_before):
+                raise AssertionError('Continuation probe mutated the actual game or catalog')
+        for key in self.pending:
             self.captures[key]['continuation'] = dict(status='verified', command=kind,
                 payload=deepcopy(payload), before_checksum=before['checksum'],
                 after_checksum=after['checksum'], before_phase=before['state']['phase'],
-                after_phase=after['state']['phase'], probes=probes)
+                after_phase=after['state']['phase'], probes=deepcopy(probes))
         self.pending.clear()
 
     def command(self, kind, **payload):
@@ -158,35 +205,56 @@ class CheckpointReplay(soak.Replay):
         after = encoded(self.game.export_save())
         if self.pending:
             self._probe(kind, payload, before, after)
-        for key in observed_kinds(self.game.state):
+        coarse, strata = observed_kinds(self.game.state), observed_strata(self.game.state)
+        for key in coarse:
             self.observation_counts[key] += 1
-            if key in self.captures:
-                continue
+        for key in strata:
+            self.stratum_counts[key] += 1
+        labels = list(dict.fromkeys((*coarse, *strata)))
+        fresh = [key for key in labels if key not in self.captures]
+        filename = fresh[0]+'.save.json' if fresh else None
+        for key in fresh:
             battle = self.game.state.battle
             extension = battle['extended']
             row = dict(kind=key, command=kind, payload=deepcopy(payload),
                 command_index=sum(self.commands.values()), phase=self.game.state.phase,
                 turn=self.game.state.turn, battle_id=battle['id'], battle_round=battle['round'],
                 checksum=after['checksum'], state_sha256=digest(after['state']),
-                rng=deepcopy(after['state']['rng']), file=key+'.save.json',
+                rng=deepcopy(after['state']['rng']), file=filename, labels=fresh[:],
                 continuation=dict(status='pending_without_continuation'))
             if key == 'partial_placement':
                 p = extension['placement']
                 row['placement'] = dict(confirmed=p['confirmed'], count=len(p['order']))
-            if key == 'active_conditions':
-                row['condition_kinds'] = sorted({v['kind'] for v in extension['conditions']['units'].values()})
-            if key.startswith('siege_'):
+            if key == 'active_conditions' or key.startswith('condition_'):
+                row['condition_kinds'] = [kind for kind in CONDITIONS if 'condition_'+kind in strata]
+            if key in ENCOUNTERS or key.startswith('siege_'):
                 row['encounter_mode'] = extension['siege'].get('mode', 'siege')
+                row['encounter_mode_source'] = 'explicit' if 'mode' in extension['siege'] else 'legacy_default'
+                row['encounter_context'] = {name:deepcopy(extension['siege'].get(name))
+                    for name in ('fort', 'map_id', 'cell')}
+                row['encounter_context']['mode'] = row['encounter_mode']
             self.captures[key], self.capture_saves[key] = row, after
             self.pending.append(key)
-            if self.output is not None:
-                write(Path(self.output)/row['file'], after)
+        if fresh and self.output is not None:
+            write(Path(self.output)/filename, after)
 
     def observation(self):
+        observed = {key for key, count in self.stratum_counts.items() if count}
+        verified = {key for key in STRATA if key in self.captures
+                    and self.captures[key]['continuation']['status'] == 'verified'}
+        files = {row['file'] for row in self.captures.values()}
+        continued = {row['file'] for row in self.captures.values()
+                     if row['continuation']['status'] == 'verified'}
         return dict(observation_counts=deepcopy(self.observation_counts),
-                    checkpoints=deepcopy(list(self.captures.values())),
+                    checkpoints=deepcopy([row for key,row in self.captures.items() if key in KINDS]),
                     unobserved=[key for key in KINDS if not self.observation_counts[key]],
-                    pending_without_continuation=list(self.pending))
+                    pending_without_continuation=[key for key in self.pending if key in KINDS],
+                    strata=dict(observation_counts=deepcopy(self.stratum_counts),
+                        checkpoints=deepcopy([row for key,row in self.captures.items() if key in STRATA]),
+                        pending_without_continuation=[key for key in self.pending if key in STRATA],
+                        coverage=detailed_coverage(observed, verified)),
+                    physical_saves=dict(captured=len(files), verified=len(continued),
+                        verified_backend_commands=len(BACKENDS)*len(continued)))
 
 
 def run_leg(catalog, spec, backend, *, observe, output=None):
@@ -215,7 +283,7 @@ def run_leg(catalog, spec, backend, *, observe, output=None):
     if replay.clock()-replay.started >= spec['max_seconds'] and status == 'passed':
         status, stop = 'incomplete', 'wall_time'
     observation = replay.observation()
-    if observation['pending_without_continuation'] and status == 'passed':
+    if (observation['pending_without_continuation'] or observation['strata']['pending_without_continuation']) and status == 'passed':
         status, stop = 'incomplete', 'pending_without_continuation'
     terminal = state.phase == 'finished' and state.extension['outcome'] in ('victory', 'defeat')
     if terminal and status == 'passed':
@@ -283,7 +351,7 @@ def run(catalog, spec, output, *, backends=BACKENDS):
     report = dict(schema=SCHEMA, verification_status='running', scenario=catalog.data['id'],
         catalog_sha256=catalog.sha256, spec=spec, backends=list(backends),
         policy='unchanged campaign-soak Replay', limit_scope='before each public command; no hard per-command timeout',
-        checkpoint_scope='first committed natural state of each kind; no injected people/resources/results',
+        checkpoint_scope='first committed state per legacy kind and fixed mode/condition stratum; no injected people/resources/results',
         source_commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
         sources_before=before, legs=[], parity='unverified')
     write(output/'report.json', report)
@@ -309,9 +377,9 @@ def run(catalog, spec, output, *, backends=BACKENDS):
         observation = deepcopy(observed['observation'])
         # Native register/cache calls are accounting, not game state. They can
         # differ with an already-warm explicit backend context.
-        for capture in observation['checkpoints']:
+        for capture in observation['checkpoints'] + observation['strata']['checkpoints']:
             for probe in capture['continuation'].get('probes', []):
-                probe.pop('native_calls')
+                probe.pop('native_calls', None)
         materials.append(dict(result={k:v for k,v in observed['result'].items() if k != 'backend'},
                               save=saved, observation=observation))
         write(output/'report.json', report)
@@ -335,6 +403,12 @@ def run(catalog, spec, output, *, backends=BACKENDS):
     report.update(observed_kinds=[key for key in KINDS if key in observed],
                   unobserved_kinds=[key for key in KINDS if key not in observed],
                   coverage_status='complete' if len(observed) == len(KINDS) else 'partial' if observed else 'unobserved')
+    strata = {key for leg in report['legs'] for key,count in
+              leg['observed'].get('observation', {}).get('strata', {}).get('observation_counts', {}).items() if count}
+    verified = {row['kind'] for leg in report['legs'] for row in
+                leg['observed'].get('observation', {}).get('strata', {}).get('checkpoints', [])
+                if row['continuation']['status'] == 'verified'}
+    report.update(stratum_definitions=list(STRATA), detailed_coverage=detailed_coverage(strata, verified))
     write(output/'report.json', report)
     return report
 
@@ -357,7 +431,7 @@ def main(argv=None):
     except (ValueError, OSError) as exc:
         parser.error(str(exc))
     print(json.dumps({k:report[k] for k in ('verification_status', 'scenario', 'parity',
-          'coverage_status', 'observed_kinds', 'unobserved_kinds', 'elapsed_seconds')}, ensure_ascii=False))
+          'coverage_status', 'observed_kinds', 'unobserved_kinds', 'detailed_coverage', 'elapsed_seconds')}, ensure_ascii=False))
     return 0 if report['verification_status'] == 'passed' else 1
 
 
