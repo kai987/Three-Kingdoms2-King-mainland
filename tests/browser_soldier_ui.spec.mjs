@@ -644,3 +644,44 @@ test('phantom seals only movement with bilingual counts, actual contact, daily e
  proof.push({kind:'expiry',before:1,after:0,round:expired.save.state.battle.round,rng_unchanged:true});
  await attach(testInfo,'phantom-condition-proof',proof);expect(pageErrors.get(page)).toEqual([]);
 });
+
+test('chain applies independent connected water counts with bilingual movement-only locks and saved expiry',async({page},testInfo)=>{
+ await opening(page);
+ const [cast,restricted,expiry]=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_chain_fixture.py',import.meta.url).pathname],{encoding:'utf8',maxBuffer:16*1024*1024,timeout:90_000})),proof=[];
+ await load(page,cast.save,'controlled-chain-cast.json');await page.locator(`[data-actor="${cast.actor}"]`).click();await page.locator(`[data-target="${cast.target}"]`).click();
+ const before=await read(page);await control(page,'tactic');await page.locator('#tactic-choice').selectOption('10');
+ const forecast=page.locator('#tactic-effect-preview .tactic-effect-forecast:visible');
+ await expect(forecast).toContainText('3 支水上敵隊各自抽取計數 4–5');await expect(forecast).toContainText('陸地敵隊只傳遞連通');
+ await page.locator('#dialog-language').selectOption('ja');await expect(forecast).toContainText('陸上の敵は接続を伝えるだけ');expect(await save(page)).toEqual(before.save);
+ await page.locator('#confirm-tactic').click();const after=await animation(page);
+ expect(after.save.state.rng.draws-before.save.state.rng.draws).toBe(4);
+ expect(after.save.state.battle.extended.tactical.points.attackers).toBe(before.save.state.battle.extended.tactical.points.attackers-9);
+ for(const [index,id]of cast.targets.entries()){
+  expect(after.save.state.battle.extended.conditions.units[id]).toEqual({kind:'chain',remaining:cast.counts[index]});
+  await expect(page.locator(`[data-target="${id}"] [data-chain-count="${cast.counts[index]}"]`)).toBeVisible();
+ }
+ expect(after.save.state.battle.extended.conditions.units[String(cast.bridge)]).toBeUndefined();
+ expect(after.save.state.battle.extended.support).toEqual(before.save.state.battle.extended.support);
+ expect(after.save.state.battle.attackers).toEqual(before.save.state.battle.attackers);expect(after.save.state.battle.defenders).toEqual(before.save.state.battle.defenders);
+ const menu=page.locator('#utility-menu');if(await menu.getAttribute('open')===null)await menu.locator('summary').click();await page.locator('#event-history').click();
+ await expect(page.locator('#event-description .event-facts')).toContainText('付与時カウント4／5／4');await page.locator('#event-dialog [data-language-picker]').selectOption('zh-Hant');
+ await expect(page.locator('#event-description .event-facts')).toContainText('3支水上敵隊');await expect(page.locator('#event-dialog .event-person img').first()).toBeVisible();
+ await evidence(page,testInfo,'chain-independent-water-event-tc');await dismissEvents(page);expect(await save(page)).toEqual(after.save);
+ proof.push({kind:'cast',targets:cast.targets,counts:cast.counts,bridge:cast.bridge,draws:4,event:after.save.state.extension.events.items.at(-1).details});
+ await load(page,restricted.save,'controlled-chain-restricted.json');await page.locator(`[data-actor="${restricted.target}"]`).click();await page.locator(`[data-target="${restricted.actor}"]`).click();
+ const locked=await read(page);await expect(page.locator(`[data-actor="${restricted.target}"] [data-chain-count="4"]`)).toBeVisible();
+ expect(locked.view.catalog.battle_tactical.actors[String(restricted.target)].reachable).toEqual([]);
+ await expect(page.locator('#battle-move')).toBeDisabled();await expect(page.locator('#attack')).toBeEnabled();await expect(page.locator('#duel')).toBeEnabled();
+ await locale(page,'ja');await expect(page.locator('.battle-move-reason')).toContainText('連環により移動できません');
+ await page.locator(`[data-actor="${restricted.target}"]`).focus();await page.keyboard.press('ArrowRight');await page.keyboard.press('Enter');expect(await save(page)).toEqual(locked.save);
+ await evidence(page,testInfo,'chain-locked-attack-enabled-ja');
+ await control(page,'tactic');await page.locator('#tactic-choice').selectOption('0');await expect(page.locator('#confirm-tactic')).toBeEnabled();await page.locator('#confirm-tactic').click();const fire=await animation(page);
+ expect(fire.save.state.battle.extended.conditions.units[String(restricted.target)]).toEqual({kind:'chain',remaining:4});
+ await control(page,'attack');await idle(page);const contact=await save(page);expect(contact.state.battle.extended.siege).toBeTruthy();expect(contact.state.battle.extended.conditions.units[String(restricted.target)]).toEqual({kind:'chain',remaining:4});proof.push({kind:'restricted',attack:true,tactic:true,own_lock_preserved:true});
+ await load(page,expiry.save,'controlled-chain-expiry.json');await expect(page.locator(`[data-target="${expiry.target}"] [data-chain-count="1"]`)).toBeVisible();
+ const expiryBefore=await read(page);await control(page,'battle-wait');const expired=await animation(page);
+ expect(expired.save.state.battle.round).toBe(expiryBefore.save.state.battle.round+1);expect(expired.save.state.rng).toEqual(expiryBefore.save.state.rng);expect(expired.save.state.battle.extended.conditions.units[String(expiry.target)]).toBeUndefined();
+ await expect(page.locator(`[data-target="${expiry.target}"] [data-chain-count]`)).toHaveCount(0);
+ await load(page,expired.save,'chain-expired-roundtrip.json');expect(await save(page)).toEqual(expired.save);proof.push({kind:'expiry',rng_unchanged:true,round:expired.save.state.battle.round});
+ await attach(testInfo,'chain-condition-proof',proof);expect(pageErrors.get(page)).toEqual([]);
+});

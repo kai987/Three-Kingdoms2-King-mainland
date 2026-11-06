@@ -515,6 +515,19 @@
       "scenario_ids": [
         "mainland208-10"
       ]
+    },
+    {
+      "id": "chain-condition",
+      "title": "chain applies independent connected water counts with bilingual movement-only locks and saved expiry",
+      "groups": [
+        "battle",
+        "people",
+        "save"
+      ],
+      "scenario_scope": "fixed",
+      "scenario_ids": [
+        "mainland208-10"
+      ]
     }
   ]
 }

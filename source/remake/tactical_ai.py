@@ -4,6 +4,7 @@ Scores describe expected effects, never sampled future results. No candidate
 reads or advances the campaign RNG, and neither side receives hidden bonuses.
 """
 from functools import lru_cache
+from math import fsum
 import json
 from pathlib import Path
 
@@ -205,7 +206,7 @@ def _fire_supply_value(state,battle,own,foe,intellect):
     return sum(values)/len(values)
 
 
-def _phantom_mobility_value(battle,target,own,foe):
+def _movement_lock_value(battle,target,own,foe,count):
     """Author-adapted movement denial, not a canceled attack or original AI.
 
     A geometric approach estimate keeps this bounded without one Dijkstra per
@@ -216,7 +217,7 @@ def _phantom_mobility_value(battle,target,own,foe):
     if battle_conditions.remaining(battle,target['id']):return 0
     row=battle['extended'].get('tactical')
     if row is None:return 0
-    phases=min(max(0,battle_conditions.duration(own)-int(own=='defenders')),
+    phases=min(max(0,count-int(own=='defenders')),
                max(0,31-battle['round']-int(own=='defenders')))
     if not phases:return 0
     positions=row['positions'];point=positions[str(target['id'])]
@@ -236,6 +237,24 @@ def _phantom_mobility_value(battle,target,own,foe):
         return sum(_loss_value(unit,unit['troops'])for unit in friends)
     if distance<=1:return 0  # Adjacent attack/tactics remain usable while locked.
     return _loss_value(target,target['troops'])*min(1,phases/(distance-1))
+
+
+def _phantom_mobility_value(battle,target,own,foe):
+    from .battle_conditions import duration
+    return _movement_lock_value(battle,target,own,foe,duration(own))
+
+
+def _chain_mobility_value(battle,targets,own,foe):
+    """Mean independent duration rolls, never guessed draws or lost attacks.
+
+    Only the already-filtered water recipients count. Existing phantom/chain
+    locks have no incremental value; other unlocked members of the same
+    connected set can still justify a cast. The estimate is order-independent
+    and adds no path searches to the existing once-per-actor movement plan.
+    """
+    from .battle_conditions import chain_duration
+    count=(chain_duration(own,0)+chain_duration(own,1))/2
+    return fsum(_movement_lock_value(battle,target,own,foe,count)for target in targets)
 
 
 def _tactic_value(state, battle, actor, target, own, foe, terrain, tactic, attack):
@@ -270,6 +289,8 @@ def _tactic_value(state, battle, actor, target, own, foe, terrain, tactic, attac
                      for enemy in enemies), default=0) * .85
     elif effect=='confuse'and modern:
         value=_phantom_mobility_value(battle,target,own,foe)
+    elif effect=='chain'and modern:
+        value=_chain_mobility_value(battle,ordered,own,foe)
     elif effect in {'confuse', 'chain'}:
         victims = ordered if modern else ordered[:1 if effect == 'confuse' else 3]
         value = sum(max((attack(unit, friend)
@@ -411,7 +432,7 @@ def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percen
                     if tactics[tid][2] == 'surrender' and not _chance(state, actor, target, 'surrender'):
                         continue
                     value = _tactic_value(state, battle, actor, target, own, foe, terrain, tactics[tid], attack)
-                    if tactics[tid][2]=='confuse'and value<=0:
+                    if tactics[tid][2]in{'confuse','chain'}and value<=0:
                         # Player repetition stays legal and paid. AI must not
                         # fall back to a harmful re-cast that first frees it.
                         continue

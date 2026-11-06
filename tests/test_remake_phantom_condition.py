@@ -235,7 +235,7 @@ class PhantomConditionServiceTests(unittest.TestCase):
             lambda e:e['conditions']['units'].__setitem__('999', dict(kind='phantom', remaining=1)),
             lambda e:e['conditions']['units'].__setitem__(2, dict(kind='phantom', remaining=1)),
             lambda e:e['conditions']['units'].__setitem__('2', None),
-            lambda e:e['conditions']['units']['2'].__setitem__('kind', 'chain'),
+            lambda e:e['conditions']['units']['2'].__setitem__('kind', 'unknown'),
             lambda e:e['conditions']['units']['2'].__setitem__('remaining', 0),
             lambda e:e['conditions']['units']['2'].__setitem__('remaining', 4),
             lambda e:e['conditions']['units']['2'].__setitem__('remaining', True),

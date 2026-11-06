@@ -1,6 +1,8 @@
-"""Original phantom movement restriction, separate from legacy support flags.
+"""Original phantom/chain movement restrictions, outside legacy support flags.
 
 Original B155 writes3 for an attacking caster and2 for a defending caster.
+Chain B3FE writes4/5 for an attacking caster and3/4 for a defending caster;
+its accepted0/1 sample is supplied by the caller for each actual water target.
 Only the completed defender-to-attacker day boundary decrements this clock.
 The caller must settle food and battle termination before advancing it, and
 must call apply only after an actual successful cast. Nothing here spends AP,
@@ -83,8 +85,9 @@ def _checked(battle, *, pending_day=False, allow_removed=False):
         if (type(key) is not str or not key or key.strip() != key
                 or not isinstance(condition, dict)
                 or set(condition) != {'kind', 'remaining'}
-                or condition['kind'] != 'phantom'
-                or not _integer(condition['remaining'], 1, 3)):
+                or condition['kind'] not in ('phantom', 'chain')
+                or not _integer(condition['remaining'], 1,
+                                3 if condition['kind'] == 'phantom' else 5)):
             raise ValueError('Invalid battle condition unit fields')
         if not allow_removed and not _live(extension, units, key):
             raise ValueError('Battle condition references a removed unit')
@@ -96,6 +99,15 @@ def duration(side):
     if side not in SIDES:
         raise ValueError('Invalid phantom caster side')
     return 3 if side == 'attackers' else 2
+
+
+def chain_duration(side, roll):
+    """B3FE's accepted0/1 sample; no RNG or target traversal lives here."""
+    if side not in SIDES:
+        raise ValueError('Invalid chain caster side')
+    if not _integer(roll, 0, 1):
+        raise ValueError('Invalid chain duration sample')
+    return (4 if side == 'attackers' else 3)+roll
 
 
 def validate(battle):
@@ -115,6 +127,13 @@ def remaining(battle, ident):
     return row['units'].get(key, {}).get('remaining', 0) if row else 0
 
 
+def kind(battle, ident):
+    """Pure optional condition tag; old stunned/guard never imply a kind."""
+    key = _key(ident)
+    row = _checked(battle)
+    return row['units'].get(key, {}).get('kind') if row else None
+
+
 def movement_blocked(battle, ident):
     """This gate belongs only on tactical movement, never all actions."""
     return remaining(battle, ident) > 0
@@ -126,7 +145,15 @@ def apply(battle, ident, side):
     Success qualification and AP debit belong to the shared tactic command.
     An old battle receives its optional extension only at this mutation.
     """
-    count = duration(side)
+    return _apply(battle, ident, side, 'phantom', duration(side))
+
+
+def apply_chain(battle, ident, side, roll):
+    """Apply one successful water victim; overwrite either existing kind."""
+    return _apply(battle, ident, side, 'chain', chain_duration(side, roll))
+
+
+def _apply(battle, ident, side, condition_kind, count):
     key = _key(ident)
     extension = _extension(battle)
     row = _checked(battle)
@@ -134,11 +161,11 @@ def apply(battle, ident, side):
     units = _units(battle)
     if (not _integer(current, 1, MAX_DAY) or battle.get('outcome') is not None
             or not _live(extension, units, key) or units[key][0] == side):
-        raise ValueError('Invalid phantom target or battle phase')
+        raise ValueError('Invalid battle condition target or phase')
     if row is None:
         row = dict(schema=SCHEMA, day=current, units={})
         extension['conditions'] = row
-    row['units'][key] = dict(kind='phantom', remaining=count)
+    row['units'][key] = dict(kind=condition_kind, remaining=count)
     return count
 
 
@@ -185,10 +212,11 @@ def advance_daily(state, battle):
         raise ValueError('Invalid battle condition day sequence')
     units, changes = {}, []
     for key in sorted(row['units']):
+        condition_kind = row['units'][key]['kind']
         before = row['units'][key]['remaining']
         after = before-1
         if after:
-            units[key] = dict(kind='phantom', remaining=after)
-        changes.append(dict(id=key, kind='phantom', before=before, remaining=after))
+            units[key] = dict(kind=condition_kind, remaining=after)
+        changes.append(dict(id=key, kind=condition_kind, before=before, remaining=after))
     row.update(day=current, units=units)
     return changes

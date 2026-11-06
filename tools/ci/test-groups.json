@@ -920,6 +920,30 @@
         "battle",
         "people"
       ]
+    },
+    "tests/test_remake_chain_condition.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_chain_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_chain_ai.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "save"
+      ]
     }
   }
 }

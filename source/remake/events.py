@@ -61,7 +61,7 @@ DETAILS = {
     'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered'},
     'duel_started': set(), 'duel_result': {'result'},
     'tactic': {'tactic','success','affected_side','grain_before','grain_after','grain_loss',
-               'success_percent','target_loyalty','guaranteed_failure','condition','condition_count'},
+               'success_percent','target_loyalty','guaranteed_failure','condition','condition_count','condition_counts'},
     'march_weather': {'march_id', 'lost', 'risks'},
     'route_discovered': {'from', 'to'},
     'march_arrived': {'march_id', 'officers'},
@@ -312,6 +312,19 @@ def _validate_tactic_event(row):
                 or type(d['condition_count']) is not int
                 or d['condition_count'] not in ((2,3) if d['success'] else (0,))):
             raise ValueError('Tactic phantom snapshot')
+    elif d['tactic']==10:
+        counts=d.get('condition_counts')
+        if (extra!={'condition','condition_counts'} or d['condition']!='chain'
+                or not isinstance(counts,list) or not (2<=len(counts)<=20 if d['success'] else not counts)):
+            raise ValueError('Tactic chain snapshot')
+        seen=set()
+        for item in counts:
+            if (not isinstance(item,dict) or set(item)!={'id','remaining'}
+                    or type(item['id']) is not str or not 1<=len(item['id'])<=128
+                    or item['id'].strip()!=item['id'] or item['id'] in seen
+                    or type(item['remaining']) is not int or not 3<=item['remaining']<=5):
+                raise ValueError('Tactic chain target snapshot')
+            seen.add(item['id'])
     elif d['tactic']==5:
         if (extra!={'affected_side','grain_before','grain_after','grain_loss'}
                 or d['affected_side'] not in {'attackers','defenders'}

@@ -21,7 +21,7 @@ TACTICS = (
     ('共殺', 8, 'area', '目標在森林或山地且鄰接敵隊；命中目標與四鄰敵軍'),
     ('籠絡', 10, 'surrender', '五格內非城砦敵隊；成功後武將帶兵立即加入本軍'),
     ('落石', 9, 'rock', '由山地或城砦向四鄰非城砦敵隊施放'),
-    ('連環', 9, 'chain', '目標及四鄰另一敵隊在河流；擾亂接觸連通的水上敵隊'),
+    ('連環', 9, 'chain', '目標及四鄰另一敵隊在河流；封鎖連通水上敵隊的移動，按日界消退'),
     ('十面埋伏', 10, 'ambush', '本隊在森林且至少100兵；設置一支伏兵'),
     ('水攻', 10, 'flood', '目標及四鄰另一敵隊在河流；攻擊接觸連通的水上敵隊'),
     ('連弩', 8, 'crossbow', '本隊在城砦並四鄰接敵；攻擊所選單隊'),
@@ -338,7 +338,8 @@ class ExpandedCampaign:
             for change_row in battle_conditions.advance_daily(state,b):
                 if not change_row['remaining']:
                     ident=deserialize_officer_ref(change_row['id'],self.catalog.rules)
-                    b['log'].append(f'{self.person_name(state,ident)}的虛兵效果消退。')
+                    label='連環' if change_row['kind']=='chain' else '虛兵'
+                    b['log'].append(f'{self.person_name(state,ident)}的{label}效果消退。')
         b['log'][:]=b['log'][-80:]
         return change
 
@@ -514,8 +515,13 @@ class ExpandedCampaign:
         self._execute_tactic(state,actor,target,own,foe,tid)
 
     def _clear_phantom(self,state,ident):
+        # This existing hook now clears either native low-state movement lock.
+        # A sibling unit can already be removed inside this transaction;
+        # clear() permits that narrow state until the result hook cleans it.
+        kind=state.battle['extended'].get('conditions',{}).get('units',{}).get(str(ident),{}).get('kind')
         if battle_conditions.clear(state.battle,ident):
-            state.battle['log'].append(f'{self.person_name(state,ident)}的虛兵效果解除。')
+            label='連環' if kind=='chain' else '虛兵'
+            state.battle['log'].append(f'{self.person_name(state,ident)}的{label}效果解除。')
 
     def _execute_tactic(self,state,actor,target,own,foe,tid,*,finish=True,counter=False):
         battle_supply.ensure(state,state.battle)
@@ -527,6 +533,10 @@ class ExpandedCampaign:
         if reason:raise GameError(reason)
         if 'tactical' in x:
             battle_grid.spend(b,own,battle_grid.TACTIC_COSTS[tid])
+            # The paid confirmation clears the actual target before effect
+            # adjudication, including an interruption by the remake's ambush.
+            # ID11 selects self; sharing this with AI is a declared adaptation.
+            self._clear_phantom(state,actor['id'] if tid==11 else target['id'])
         self._trigger_ambush(state,actor,own,counter=counter)
         before=presentation.snapshot(self,state)
         if actor['troops']<=0:
@@ -537,16 +547,13 @@ class ExpandedCampaign:
             else:self._battle_result(state)
             return
         enemies=[u for u in b[foe] if u['troops']>0];p=state.officers[actor['id']].profile;t=state.officers[target['id']]
-        if 'tactical' in x:
-            # Native player ambush selects self; the original AI bypasses its
-            # clear. Shared self-clearing is the explicitly documented parity
-            # adaptation, never a clear of the old UI's ignored enemy target.
-            self._clear_phantom(state,actor['id'] if tid==11 else target['id'])
         if 'tactical' not in x:a['energy']-=cost
         chance=max(10,min(95,60+(p.intellect-t.profile.intellect)//2))
         effect_details={}
         if effect=='confuse' and 'tactical' in x:
             effect_details=dict(condition='phantom',condition_count=0)
+        elif effect=='chain' and 'tactical' in x:
+            effect_details=dict(condition='chain',condition_counts=[])
         elif effect=='surrender':
             from .tactic_effects import conversion_chance
             chance=conversion_chance(state.officers[actor['id']],t)
@@ -562,6 +569,13 @@ class ExpandedCampaign:
             count=battle_conditions.apply(b,target['id'],own)
             effect_details['condition_count']=count
             b['log'].append(f'{self.person_name(state,target["id"])}受到虛兵，移動封鎖計數{count}。')
+        elif effect=='chain' and 'tactical' in x:
+            # Keep the recovered BFS water-filtered order. Non-water bridges
+            # are not victims and must not consume duration draws.
+            for victim in battle_grid.affected_units(b,target,tid,foe):
+                count=battle_conditions.apply_chain(b,victim['id'],own,state.rng.next()%2)
+                effect_details['condition_counts'].append(dict(id=str(victim['id']),remaining=count))
+                b['log'].append(f'{self.person_name(state,victim["id"])}受到連環，移動封鎖計數{count}。')
         elif effect in {'confuse','chain'}:
             victims=(battle_grid.affected_units(b,target,tid,foe) if 'tactical' in b['extended']
                 else [target] if effect=='confuse' else [target]+[u for u in enemies if u is not target][:2])
