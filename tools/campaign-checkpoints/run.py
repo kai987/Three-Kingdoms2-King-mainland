@@ -1,6 +1,6 @@
 """Observe real committed intermediate saves without changing the soak policy.
 
-Only public commands from the existing Replay are used. First natural states
+Only public commands from explicitly named existing Replay policies are used. First states
 are saved; their next actual command is replayed on fresh Python/Rust clones.
 Turn/command/wall limits are verification budgets, never campaign outcomes.
 """
@@ -23,8 +23,11 @@ from remake.march_core import backend_status, using_backend
 _spec = importlib.util.spec_from_file_location('_checkpoint_soak', ROOT/'tools/campaign-soak/run.py')
 soak = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(soak)
+_spec = importlib.util.spec_from_file_location('_checkpoint_balance', ROOT/'tools/campaign-balance/run.py')
+balance = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(balance)
 
-SCHEMA = 'tk2-natural-checkpoints-v2'
+SCHEMA = 'tk2-natural-checkpoints-v3'
 KINDS = ('partial_placement', 'active_conditions', 'siege_formation',
          'siege_orders', 'siege_combat', 'duel')
 STAGES = ('formation', 'orders', 'combat')
@@ -32,6 +35,7 @@ CONDITIONS = ('phantom', 'chain', 'qimen')
 ENCOUNTERS = tuple(mode+'_'+stage for mode in ('field', 'fort') for stage in STAGES)
 STRATA = ('partial_placement',) + tuple('condition_'+kind for kind in CONDITIONS) + ENCOUNTERS + ('duel',)
 BACKENDS = ('python', 'rust')
+POLICIES = ('soak', 'offensive')
 
 
 class VerificationLimit(Exception):
@@ -138,18 +142,97 @@ def detailed_coverage(observed, verified):
         conditions=coverage(tuple('condition_'+kind for kind in CONDITIONS), observed, verified))
 
 
-class CheckpointReplay(soak.Replay):
+def campaign_status(state):
+    owned = sum(city.owner == state.player for city in state.cities.values())
+    outcome = state.extension['outcome'] if state.phase == 'finished' else 'unresolved'
+    return dict(phase=state.phase, turn=state.turn, date=[state.year,state.month,state.day],
+        player=state.player, owned_cities=owned, active_cities=len(state.cities),
+        outcome=outcome, unification_verified=state.phase == 'finished'
+        and outcome == 'victory' and bool(state.cities) and owned == len(state.cities))
+
+
+def learnability_snapshot(game):
+    """Actual opening/current officers, not a claim about unseen intervals."""
+    from remake.tactical_ai import _learnability, maximum_tactic
+    special = _learnability()[1]
+    state = game.state
+    cities = {ident:city.id for city in state.cities.values() for ident in city.roster.officer_ids}
+    combat = {unit['id'] for side in ('attackers','defenders')
+              for unit in (state.battle or {}).get(side, [])}
+    rows = [dict(person_id=officer.person_id, runtime_id=ident,
+        alive=officer.alive, faction=officer.faction_id, city=cities.get(ident),
+        experience=officer.experience, tier=officer.tier,
+        maximum_tactic=maximum_tactic(officer), in_battle=ident in combat)
+        for ident,officer in state.officers.items() if officer.person_id in special]
+    return sorted(rows, key=lambda row:row['person_id'])
+
+
+class _CheckpointObserver:
+    policy = 'soak'
+
     def __init__(self, catalog, spec, backend, *, output=None, observe=True,
                  clock=time.monotonic):
         if backend not in BACKENDS or type(observe) is not bool:
             raise ValueError('Invalid checkpoint execution mode')
         self.spec, self.output, self.observe = deepcopy(spec), output, observe
         self.clock, self.started = clock, clock()
+        self.observer_spec, self.observer_started = deepcopy(spec), self.started
         self.captures, self.capture_saves, self.pending = {}, {}, []
         self.observation_counts = dict.fromkeys(KINDS, 0)
         self.stratum_counts = dict.fromkeys(STRATA, 0)
         self.main_native_calls = 0
-        super().__init__(catalog, spec['faction'], spec['seed'], backend)
+        self.opening_learnability, self.last_city_checkpoint, self.terminal = None, None, None
+        self._progress_turn = None
+        if self.policy == 'offensive':
+            # Delegate the complete existing policy, including its public
+            # set_domestic payload transformation; do not create a hybrid.
+            super().__init__(catalog, dict(spec, backend=backend, policy='offensive',
+                difficulty='normal', scenario=catalog.data['id']))
+        else:
+            super().__init__(catalog, spec['faction'], spec['seed'], backend)
+        self.opening_learnability = learnability_snapshot(self.game)
+        self._persist()
+
+    def _journal(self, kind, payload):
+        if self.output is not None:
+            row = dict(index=sum(self.commands.values()), command=kind, payload=payload,
+                state_sha256=self.game.journal[-1]['after_sha256'],
+                phase=self.game.state.phase, turn=self.game.state.turn,
+                rng=dict(state=self.game.state.rng.state,draws=self.game.state.rng.draws))
+            # Close/flush per accepted command. This is process-stop evidence,
+            # not fsync/power-loss durability and not a resumable Python frame.
+            with (Path(self.output)/'commands.jsonl').open('a') as stream:
+                stream.write(canonical(row)+'\n')
+
+    def _persist(self, verification_status='running'):
+        if self.output is not None:
+            write(Path(self.output)/'progress.json', dict(schema=SCHEMA,
+                verification_status=verification_status, policy=self.policy, observe=self.observe,
+                commands=sum(self.commands.values()), campaign=campaign_status(self.game.state),
+                last_city_checkpoint=self.last_city_checkpoint,
+                opening_learnability=self.opening_learnability,
+                current_learnability=learnability_snapshot(self.game),
+                observation=self.observation(), terminal=self.terminal))
+
+    def _terminal_loads(self, kind, payload, saved):
+        probes = []
+        catalog_before = digest(self.game.catalog.data)
+        for backend in BACKENDS:
+            with using_backend(backend):
+                clone = soak.HeadlessCampaign(self.game.catalog)
+                clone.load_save(encoded(saved), 0)
+                if encoded(clone.export_save()) != saved:
+                    raise AssertionError('Terminal save changed on '+backend)
+                probes.append(dict(backend=backend, complete_save_equal=True))
+        if (encoded(self.game.export_save()) != saved
+                or digest(self.game.catalog.data) != catalog_before):
+            raise AssertionError('Terminal load probe mutated the actual game or catalog')
+        self.terminal = dict(status='verified_terminal_load', command=kind,
+            payload=deepcopy(payload), checksum=saved['checksum'],
+            campaign=campaign_status(self.game.state), loads=probes,
+            next_command='none: finished campaigns do not require another command')
+        if self.output is not None:
+            write(Path(self.output)/'terminal.save.json', saved)
 
     def _probe(self, kind, payload, before, after):
         catalog_before = digest(self.game.catalog.data)
@@ -188,9 +271,9 @@ class CheckpointReplay(soak.Replay):
         self.pending.clear()
 
     def command(self, kind, **payload):
-        if self.clock()-self.started >= self.spec['max_seconds']:
+        if self.clock()-self.observer_started >= self.observer_spec['max_seconds']:
             raise VerificationLimit('wall_time')
-        if sum(getattr(self, 'commands', {}).values()) >= self.spec['max_commands']:
+        if sum(getattr(self, 'commands', {}).values()) >= self.observer_spec['max_commands']:
             raise VerificationLimit('command_limit')
         before = encoded(self.game.export_save()) if self.pending else None
         if self.pending and any(self.capture_saves[key] != before for key in self.pending):
@@ -200,18 +283,32 @@ class CheckpointReplay(soak.Replay):
             raise AssertionError('Caller must select the explicit main backend context')
         super().command(kind, **payload)
         self.main_native_calls += backend_status()['calls']-status['calls']
+        # BalanceReplay may transform a public payload. Record/probe the
+        # effective committed command, never the caller's pre-policy payload.
+        payload = deepcopy(self.recent_commands[-1]['payload'])
+        self._journal(kind, payload)
+        state = self.game.state
+        city_boundary = state.phase == 'city' and self._progress_turn != state.turn
+        if city_boundary:
+            self.last_city_checkpoint = campaign_status(state)
+            self.last_city_checkpoint['completed_turns'] = state.turn-getattr(self,'initial',{}).get('turn',state.turn)
+            self._progress_turn = state.turn
         if not self.observe:
+            if city_boundary:
+                self._persist()
             return
-        after = encoded(self.game.export_save())
-        if self.pending:
-            self._probe(kind, payload, before, after)
         coarse, strata = observed_kinds(self.game.state), observed_strata(self.game.state)
+        labels = list(dict.fromkeys((*coarse, *strata)))
+        fresh = [key for key in labels if key not in self.captures]
+        terminal = state.phase == 'finished' and self.terminal is None
+        continued = bool(self.pending)
+        after = encoded(self.game.export_save()) if continued or fresh or terminal else None
+        if continued:
+            self._probe(kind, payload, before, after)
         for key in coarse:
             self.observation_counts[key] += 1
         for key in strata:
             self.stratum_counts[key] += 1
-        labels = list(dict.fromkeys((*coarse, *strata)))
-        fresh = [key for key in labels if key not in self.captures]
         filename = fresh[0]+'.save.json' if fresh else None
         for key in fresh:
             battle = self.game.state.battle
@@ -237,6 +334,10 @@ class CheckpointReplay(soak.Replay):
             self.pending.append(key)
         if fresh and self.output is not None:
             write(Path(self.output)/filename, after)
+        if terminal:
+            self._terminal_loads(kind, payload, after)
+        if fresh or continued or terminal or city_boundary:
+            self._persist()
 
     def observation(self):
         observed = {key for key, count in self.stratum_counts.items() if count}
@@ -257,15 +358,27 @@ class CheckpointReplay(soak.Replay):
                         verified_backend_commands=len(BACKENDS)*len(continued)))
 
 
-def run_leg(catalog, spec, backend, *, observe, output=None):
+class CheckpointReplay(_CheckpointObserver, soak.Replay):
+    """Original unchanged soak policy (the default)."""
+
+
+class OffensiveCheckpointReplay(_CheckpointObserver, balance.BalanceReplay):
+    """Existing balance public-orders-v1/offensive policy, kept distinct."""
+    policy = 'offensive'
+
+
+def run_leg(catalog, spec, backend, *, observe, output=None, policy='soak'):
+    if policy not in POLICIES:
+        raise ValueError('Invalid checkpoint player policy')
     started = time.monotonic()
     replay, result, stop, status, error = None, None, 'turn_limit', 'passed', None
     try:
         with using_backend(backend):
-            replay = CheckpointReplay(catalog, spec, backend, output=output, observe=observe)
+            cls = CheckpointReplay if policy == 'soak' else OffensiveCheckpointReplay
+            replay = cls(catalog, spec, backend, output=output, observe=observe)
             result = replay.run(spec['turns'])
-    except VerificationLimit as exc:
-        stop, status = str(exc), 'incomplete'
+    except (VerificationLimit, balance.LimitReached) as exc:
+        stop, status = 'command_limit' if str(exc) == 'commands' else str(exc), 'incomplete'
     except AssertionError as exc:
         if str(exc).startswith(('Phase resolution exceeded ', 'Replay exceeded the 100000 command budget')):
             stop, status = 'execution_budget', 'incomplete'
@@ -280,7 +393,7 @@ def run_leg(catalog, spec, backend, *, observe, output=None):
     final_save = encoded(replay.game.export_save())
     if digest(catalog.data) != replay.catalog_sha:
         status, error = 'failed', 'Replay mutated the source catalog'
-    if replay.clock()-replay.started >= spec['max_seconds'] and status == 'passed':
+    if replay.clock()-replay.observer_started >= spec['max_seconds'] and status == 'passed':
         status, stop = 'incomplete', 'wall_time'
     observation = replay.observation()
     if (observation['pending_without_continuation'] or observation['strata']['pending_without_continuation']) and status == 'passed':
@@ -296,16 +409,25 @@ def run_leg(catalog, spec, backend, *, observe, output=None):
         main_backend=backend, main_native_calls=replay.main_native_calls,
         final_save_sha256=digest(final_save), final_checksum=final_save['checksum'],
         rng=deepcopy(final_save['state']['rng']), result=result, observation=observation,
+        policy=policy, campaign=campaign_status(state),
+        last_city_checkpoint=replay.last_city_checkpoint,
+        learnability=dict(opening=replay.opening_learnability, final=learnability_snapshot(replay.game)),
+        terminal=replay.terminal,
         elapsed_seconds=round(time.monotonic()-started, 3))
     if output is not None:
         write(Path(output)/'final.save.json', final_save)
+        journal = Path(output)/'commands.jsonl'
+        row['command_journal_sha256'] = hashlib.sha256(journal.read_bytes()).hexdigest()
+        write(Path(output)/'leg-report.json', row)
+        replay._persist(status)
     return row, final_save
 
 
 def source_hashes():
     paths = sorted((ROOT/'source/remake').glob('*.py'))
     paths += sorted((ROOT/'game').glob('*.js'))
-    paths += [ROOT/'tools/campaign-soak/run.py', Path(__file__).resolve()]
+    paths += [ROOT/'tools/campaign-soak/run.py', ROOT/'tools/campaign-balance/run.py',
+              ROOT/'game/config/references/original-battle-tactics-v1.json', Path(__file__).resolve()]
     return {str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
 
 
@@ -336,7 +458,9 @@ def indexed_catalog(name, *, root=ROOT):
     return catalog
 
 
-def run(catalog, spec, output, *, backends=BACKENDS):
+def run(catalog, spec, output, *, backends=BACKENDS, policy='soak'):
+    if policy not in POLICIES:
+        raise ValueError('Invalid checkpoint player policy')
     if (not isinstance(backends, (tuple, list)) or not backends
             or any(type(backend) is not str for backend in backends)
             or len(set(backends)) != len(backends)
@@ -350,7 +474,9 @@ def run(catalog, spec, output, *, backends=BACKENDS):
     before, start = source_hashes(), time.monotonic()
     report = dict(schema=SCHEMA, verification_status='running', scenario=catalog.data['id'],
         catalog_sha256=catalog.sha256, spec=spec, backends=list(backends),
-        policy='unchanged campaign-soak Replay', limit_scope='before each public command; no hard per-command timeout',
+        policy=('unchanged campaign-soak Replay' if policy == 'soak' else
+                'existing campaign-balance '+balance.POLICY_VERSION+'/offensive'),
+        player_policy=policy, limit_scope='before each public command; no hard per-command timeout',
         checkpoint_scope='first committed state per legacy kind and fixed mode/condition stratum; no injected people/resources/results',
         source_commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
         sources_before=before, legs=[], parity='unverified')
@@ -358,16 +484,17 @@ def run(catalog, spec, output, *, backends=BACKENDS):
     materials = []
     for backend in backends:
         folder = output/backend; folder.mkdir()
-        observed, saved = run_leg(catalog, spec, backend, observe=True, output=folder)
+        observed, saved = run_leg(catalog, spec, backend, observe=True, output=folder, policy=policy)
         row = dict(observed=observed, baseline=None, observer_did_not_change_policy=False)
         report['legs'].append(row)
         if observed['verification_status'] != 'passed':
             break
         baseline_folder = folder/'baseline'; baseline_folder.mkdir()
-        baseline, baseline_saved = run_leg(catalog, spec, backend, observe=False, output=baseline_folder)
+        baseline, baseline_saved = run_leg(catalog, spec, backend, observe=False, output=baseline_folder, policy=policy)
         row['baseline'] = baseline
         same = (baseline['verification_status'] == 'passed' and saved == baseline_saved
-                and observed['result'] == baseline['result'])
+                and observed['result'] == baseline['result']
+                and observed['command_journal_sha256'] == baseline['command_journal_sha256'])
         row['observer_did_not_change_policy'] = same
         if not same:
             if baseline['verification_status'] == 'passed':
@@ -422,12 +549,13 @@ def main(argv=None):
     parser.add_argument('--max-commands', type=int, default=2000)
     parser.add_argument('--max-seconds', type=float, default=300)
     parser.add_argument('--backends', choices=BACKENDS, nargs='+', default=list(BACKENDS))
+    parser.add_argument('--policy', choices=POLICIES, default='soak')
     parser.add_argument('--output-dir', type=Path, required=True)
     args = parser.parse_args(argv)
     try:
         catalog = indexed_catalog(args.scenario)
         spec = settings(catalog, args.faction, args.seed, args.turns, args.max_commands, args.max_seconds)
-        report = run(catalog, spec, args.output_dir, backends=tuple(args.backends))
+        report = run(catalog, spec, args.output_dir, backends=tuple(args.backends), policy=args.policy)
     except (ValueError, OSError) as exc:
         parser.error(str(exc))
     print(json.dumps({k:report[k] for k in ('verification_status', 'scenario', 'parity',

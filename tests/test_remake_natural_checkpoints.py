@@ -1,11 +1,12 @@
 """Bounded observer-harness checks, separate from real-catalog evidence.
 
-Small controlled catalogs isolate harness failures. Only the separate CLI's
-unchanged shipped-catalog replays count as natural campaign observations.
+Small controlled catalogs isolate harness failures. Only separately labelled
+shipped-catalog public-policy replays count as natural campaign observations.
 """
 from copy import deepcopy
 from contextlib import redirect_stderr, redirect_stdout
 import importlib.util
+import hashlib
 import io
 import json
 from pathlib import Path
@@ -101,6 +102,31 @@ def contact_cycle(replay, actor, target):
                    orders={kind:'wait' for kind in ('infantry','archer','cavalry','general')})
     replay.command('siege_step', battle_id=ident)
     replay.command('siege_withdraw', battle_id=ident)
+
+
+def command_journal(folder):
+    return [json.loads(line) for line in (Path(folder)/'commands.jsonl').read_text().splitlines()]
+
+
+def last_empty_city_catalog():
+    """Two declared cities isolate a real public last-city claim, not a natural win."""
+    data = deepcopy(controlled_catalog().data)
+    active = ['xiangyang', 'nanjun']
+    data.update(id='controlled-public-last-city', active_cities=active,
+                initial_owners=dict(xiangyang='shu', nanjun='neutral'))
+    data['factions'] = [row for row in data['factions'] if row['id'] == 'shu']
+    data['faction_rulers'] = {'shu': data['faction_rulers']['shu']}
+    data['initial_officers'] = [row for row in data['initial_officers'] if row['city'] == 'xiangyang']
+    data['appearance_locations'] = {row['person_id']: row['city'] for row in data['initial_officers']}
+    data['links'] = [['xiangyang', 'nanjun']]
+    data['travel_routes'] = [row for row in data['travel_routes']
+        if {row['from'], row['to']} == set(active)]
+    for field in ('initial_city_resources', 'city_income'):
+        data[field] = {key: data[field][key] for key in active}
+    with tempfile.TemporaryDirectory() as folder:
+        path = Path(folder)/'last-city-controlled.json'
+        path.write_text(json.dumps(data, ensure_ascii=False))
+        return Catalog(path)
 
 
 class NaturalCheckpointTests(unittest.TestCase):
@@ -316,6 +342,9 @@ class NaturalCheckpointTests(unittest.TestCase):
         catalog = controlled_catalog(); before = digest(catalog.data)
         with tempfile.TemporaryDirectory() as folder:
             report = checkpoints.run(catalog, settings(catalog), folder, backends=('python',))
+            progress = json.loads((Path(folder)/'python/progress.json').read_text())
+        self.assertEqual(report['schema'], 'tk2-natural-checkpoints-v3')
+        self.assertEqual(progress['verification_status'], 'passed')
         self.assertEqual(report['verification_status'], 'passed')
         self.assertEqual(report['parity'], 'single_backend_only')
         self.assertEqual(report['coverage_status'], 'unobserved')
@@ -450,7 +479,7 @@ class NaturalCheckpointTests(unittest.TestCase):
         original = checkpoints.CheckpointReplay.run
         def expired_after_run(replay, turns):
             result = original(replay, turns)
-            replay.started -= replay.spec['max_seconds']
+            replay.observer_started -= replay.observer_spec['max_seconds']
             return result
         with patch.object(checkpoints.CheckpointReplay, 'run', expired_after_run):
             row, _ = checkpoints.run_leg(controlled_catalog(), settings(), 'python', observe=True)
@@ -471,6 +500,251 @@ class NaturalCheckpointTests(unittest.TestCase):
             self.assertEqual(code, 1)
             self.assertEqual(json.loads(printed.getvalue())['verification_status'], 'incomplete')
             self.assertEqual(json.loads((output/'report.json').read_text())['verification_status'], 'incomplete')
+
+
+class CheckpointV3Tests(unittest.TestCase):
+    def test_existing_offensive_policy_matches_actual_balance_run_and_effective_journals(self):
+        # A declared empty final neighbor keeps the complete inherited run
+        # bounded while still executing new, appointments and a paid sortie.
+        catalog = last_empty_city_catalog()
+        source = digest(catalog.data)
+        for backend in checkpoints.BACKENDS:
+            with self.subTest(backend=backend), using_backend(backend), tempfile.TemporaryDirectory() as folder:
+                spec = settings(catalog)
+                original = checkpoints.balance.soak.Replay.command
+                expected = []
+
+                def record_reference(replay, kind, **payload):
+                    result = original(replay, kind, **payload)
+                    recent = replay.recent_commands[-1]
+                    expected.append(dict(index=sum(replay.commands.values()), command=kind,
+                        payload=deepcopy(recent['payload']), state_sha256=recent['state_sha256'],
+                        phase=replay.game.state.phase, turn=replay.game.state.turn,
+                        rng=dict(state=replay.game.state.rng.state, draws=replay.game.state.rng.draws)))
+                    return result
+
+                with patch.object(checkpoints.balance.soak.Replay, 'command', record_reference):
+                    reference = checkpoints.balance.BalanceReplay(catalog, dict(spec,
+                        backend=backend, policy='offensive', difficulty='normal', scenario=catalog.data['id']))
+                    result = reference.run(spec['turns'])
+                saved = checkpoints.encoded(reference.game.export_save())
+                transcript = ''.join(canonical([row['command'], row['payload'], row['state_sha256']])+'\n'
+                                     for row in expected)
+                self.assertEqual(hashlib.sha256(transcript.encode()).hexdigest(), reference.transcript.hexdigest())
+                domestic = [row for row in expected if row['command'] == 'set_domestic']
+                self.assertTrue(domestic, 'The actual policy payload transformation must be exercised')
+                self.assertEqual(domestic[0]['payload']['policy']['task_order'],
+                                 ['recruit', 'personnel', 'transport'])
+                journal_bytes = ''.join(canonical(row)+'\n' for row in expected).encode()
+                for observe in (True, False):
+                    target = Path(folder)/str(observe); target.mkdir()
+                    replay = checkpoints.OffensiveCheckpointReplay(catalog, spec, backend,
+                        output=target, observe=observe)
+                    self.assertEqual(replay.run(spec['turns']), result)
+                    self.assertEqual(checkpoints.encoded(replay.game.export_save()), saved)
+                    self.assertEqual(replay.transcript.hexdigest(), reference.transcript.hexdigest())
+                    self.assertEqual((target/'commands.jsonl').read_bytes(), journal_bytes)
+                    self.assertEqual(command_journal(target), expected)
+                    self.assertEqual(len(expected), sum(replay.commands.values()))
+                    if not observe:
+                        self.assertEqual(replay.observation()['physical_saves']['captured'], 0)
+        self.assertEqual(digest(catalog.data), source)
+
+    def test_accepted_command_journal_survives_a_probe_failure(self):
+        with using_backend('python'), tempfile.TemporaryDirectory() as folder:
+            replay = checkpoints.CheckpointReplay(controlled_catalog(), settings(), 'python', output=Path(folder))
+            public_battle(replay)
+            replay.command('battle_place', **next_place(replay))
+            payload = next_place(replay)
+            before = len(command_journal(folder))
+            with patch.object(replay, '_probe', side_effect=AssertionError('controlled probe failure')):
+                with self.assertRaisesRegex(AssertionError, 'controlled probe failure'):
+                    replay.command('battle_place', **payload)
+            rows = command_journal(folder)
+            self.assertEqual(len(rows), before+1)
+            self.assertEqual(rows[-1]['payload'], payload)
+            self.assertEqual(rows[-1]['state_sha256'], replay.game.journal[-1]['after_sha256'])
+            self.assertEqual(rows[-1]['rng'], dict(state=replay.game.state.rng.state, draws=replay.game.state.rng.draws))
+            self.assertEqual(replay.game.state.battle['extended']['placement']['confirmed'], 2)
+            self.assertEqual(replay.captures['partial_placement']['continuation']['status'],
+                             'pending_without_continuation')
+            self.assertEqual(json.loads((Path(folder)/'progress.json').read_text())['verification_status'], 'running')
+            replay.game.validate(replay.game.state)
+
+    def test_accepted_command_and_witness_survive_progress_write_failure(self):
+        catalog = controlled_catalog()
+        fail_once = [False]
+        original_write = checkpoints.write
+
+        def fail_progress(path, value):
+            if Path(path).name == 'progress.json' and fail_once[0]:
+                fail_once[0] = False
+                raise OSError('controlled progress write failure')
+            return original_write(path, value)
+
+        def stop_after_accepted_place(replay, turns):
+            public_battle(replay)
+            fail_once[0] = True
+            replay.command('battle_place', **next_place(replay))
+            raise AssertionError('Expected the one-shot I/O failure')
+
+        with tempfile.TemporaryDirectory() as folder, \
+                patch.object(checkpoints.CheckpointReplay, 'run', stop_after_accepted_place), \
+                patch.object(checkpoints, 'write', fail_progress):
+            row, saved = checkpoints.run_leg(catalog, settings(catalog), 'python', observe=True, output=Path(folder))
+            journal = command_journal(folder)
+            progress = json.loads((Path(folder)/'progress.json').read_text())
+            witness = json.loads((Path(folder)/row['observation']['checkpoints'][0]['file']).read_text())
+        self.assertEqual(row['verification_status'], 'failed')
+        self.assertIn('controlled progress write failure', row['error'])
+        self.assertEqual(journal[-1]['command'], 'battle_place')
+        self.assertEqual(journal[-1]['index'], sum(row['commands'].values()))
+        self.assertEqual(witness, saved)
+        self.assertEqual(saved['state']['battle']['extended']['placement']['confirmed'], 1)
+        self.assertEqual(progress['verification_status'], 'failed')
+        self.assertEqual(row['observation']['physical_saves']['verified'], 0)
+
+    def test_progress_persists_fresh_and_continued_witnesses_and_city_boundaries(self):
+        with using_backend('python'), tempfile.TemporaryDirectory() as folder:
+            replay = checkpoints.CheckpointReplay(controlled_catalog(), settings(), 'python', output=Path(folder))
+            public_battle(replay)
+            replay.command('battle_place', **next_place(replay))
+            fresh = json.loads((Path(folder)/'progress.json').read_text())
+            self.assertEqual(fresh['observation']['pending_without_continuation'], ['partial_placement'])
+            replay.command('battle_place', **next_place(replay))
+            continued = json.loads((Path(folder)/'progress.json').read_text())
+            self.assertEqual(continued['commands'], fresh['commands']+1)
+            self.assertEqual(continued['observation']['physical_saves']['verified_backend_commands'], 2)
+            self.assertEqual(continued['observation']['checkpoints'][0]['continuation']['status'], 'verified')
+        with using_backend('python'), tempfile.TemporaryDirectory() as folder:
+            replay = checkpoints.CheckpointReplay(controlled_catalog(), settings(), 'python', output=Path(folder))
+            initial = deepcopy(replay.last_city_checkpoint)
+            replay.command('end_turn')
+            replay.resolve()
+            progress = json.loads((Path(folder)/'progress.json').read_text())
+            self.assertEqual(progress['campaign']['phase'], 'city')
+            self.assertEqual(progress['last_city_checkpoint']['turn'], initial['turn']+1)
+            self.assertEqual(progress['last_city_checkpoint']['completed_turns'], 1)
+            self.assertEqual(progress['commands'], sum(replay.commands.values()))
+            self.assertEqual(progress['verification_status'], 'running')
+
+    def test_invalid_policy_fails_before_output_and_source_pins_include_policy_dependencies(self):
+        catalog = controlled_catalog()
+        with tempfile.TemporaryDirectory() as folder:
+            for policy in ('unknown', True, None):
+                output = Path(folder)/str(policy)
+                with self.subTest(policy=policy), self.assertRaisesRegex(ValueError, 'player policy'):
+                    checkpoints.run(catalog, settings(catalog), output, policy=policy)
+                self.assertFalse(output.exists())
+            output = Path(folder)/'cli-uncreated'
+            with patch.object(checkpoints, 'indexed_catalog', side_effect=AssertionError('No catalog should be opened')), \
+                    redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
+                checkpoints.main(['--policy', 'unknown', '--output-dir', str(output)])
+            self.assertFalse(output.exists())
+        pins = checkpoints.source_hashes()
+        self.assertIn('tools/campaign-balance/run.py', pins)
+        self.assertIn('game/config/references/original-battle-tactics-v1.json', pins)
+
+    def test_offensive_base_limits_are_incomplete_and_observer_clock_is_independent(self):
+        for reason in ('commands', 'wall_time'):
+            saved_before = []
+
+            def expire_base(replay, turns):
+                saved_before.append(checkpoints.encoded(replay.game.export_save()))
+                if reason == 'commands':
+                    replay.spec['max_commands'] = sum(replay.commands.values())
+                else:
+                    replay.deadline = 0
+                replay.command('end_turn')
+
+            with self.subTest(reason=reason), patch.object(checkpoints.OffensiveCheckpointReplay, 'run', expire_base):
+                row, saved = checkpoints.run_leg(controlled_catalog(), settings(), 'python',
+                                                 observe=True, policy='offensive')
+            self.assertEqual(row['verification_status'], 'incomplete')
+            self.assertEqual(row['stop_reason'], 'command_limit' if reason == 'commands' else reason)
+            self.assertEqual(row['commands'], {'new': 1})
+            self.assertEqual(saved, saved_before[0])
+        now = [10.0]
+        with using_backend('python'):
+            replay = checkpoints.OffensiveCheckpointReplay(controlled_catalog(), settings(), 'python', clock=lambda:now[0])
+            self.assertEqual(replay.observer_started, 10.0)
+            before = checkpoints.encoded(replay.game.export_save())
+            replay.started = -1000000
+            replay.spec['max_seconds'] = 3000
+            now[0] = 40.0
+            with self.assertRaisesRegex(checkpoints.VerificationLimit, 'wall_time'):
+                replay.command('end_turn')
+            self.assertEqual(checkpoints.encoded(replay.game.export_save()), before)
+
+    def test_learnability_is_a_pure_current_snapshot_and_report_separates_opening_final(self):
+        with using_backend('python'):
+            replay = checkpoints.CheckpointReplay(controlled_catalog(), settings(), 'python')
+            before = checkpoints.encoded(replay.game.export_save())
+            catalog_before = digest(replay.game.catalog.data)
+            first = checkpoints.learnability_snapshot(replay.game)
+            self.assertEqual(checkpoints.learnability_snapshot(replay.game), first)
+            self.assertEqual(checkpoints.encoded(replay.game.export_save()), before)
+            self.assertEqual(digest(replay.game.catalog.data), catalog_before)
+            self.assertTrue(first)
+            for row in first:
+                officer = replay.game.state.officers[row['runtime_id']]
+                self.assertEqual((row['experience'], row['tier'], row['alive']),
+                                 (officer.experience, officer.tier, officer.alive))
+                self.assertFalse(row['in_battle'])
+        row, _ = checkpoints.run_leg(controlled_catalog(), settings(), 'python', observe=False)
+        self.assertEqual(set(row['learnability']), {'opening', 'final'})
+        self.assertEqual(row['learnability']['opening'], first)
+        self.assertEqual(row['campaign']['outcome'], 'unresolved')
+
+    def test_public_last_empty_city_claim_has_terminal_loads_without_an_extra_command(self):
+        for backend in checkpoints.BACKENDS:
+            with self.subTest(backend=backend), using_backend(backend), tempfile.TemporaryDirectory() as folder:
+                catalog = last_empty_city_catalog()
+                replay = checkpoints.CheckpointReplay(catalog, settings(catalog), backend, output=Path(folder))
+                actor = replay.game.state.cities['xiangyang'].roster.officer_ids[0]
+                actual, clone_commands = replay.game, []
+                original = checkpoints.soak.HeadlessCampaign.command
+
+                def observe_commands(game, kind, *args, **kwargs):
+                    if game is not actual:
+                        clone_commands.append(kind)
+                    return original(game, kind, *args, **kwargs)
+
+                with patch.object(checkpoints.soak.HeadlessCampaign, 'command', observe_commands):
+                    replay.command('depart', source='xiangyang', target='nanjun', officers=[actor], route_mode='land')
+                    replay.command('end_turn')
+                    for _ in range(10):
+                        state = replay.game.state
+                        if state.phase == 'finished':
+                            break
+                        if state.phase == 'ai':
+                            replay.command('ai', turn=state.turn)
+                        elif state.phase == 'arrivals':
+                            replay.command('arrivals')
+                        elif state.phase == 'result':
+                            replay.command('settle', battle_id=state.battle['id'])
+                        else:
+                            self.fail('Unexpected controlled last-city phase '+state.phase)
+                status = checkpoints.campaign_status(replay.game.state)
+                self.assertEqual((status['phase'], status['outcome']), ('finished', 'victory'))
+                self.assertTrue(status['unification_verified'])
+                self.assertEqual((status['owned_cities'], status['active_cities']), (2, 2))
+                self.assertEqual(replay.terminal['status'], 'verified_terminal_load')
+                self.assertEqual(replay.terminal['command'], 'settle')
+                self.assertEqual([row['backend'] for row in replay.terminal['loads']], ['python', 'rust'])
+                self.assertEqual(clone_commands, [], 'Terminal proof loads the save; it does not issue a further public command')
+                self.assertEqual(json.loads((Path(folder)/'terminal.save.json').read_text()),
+                                 checkpoints.encoded(replay.game.export_save()))
+                self.assertEqual(command_journal(folder)[-1]['command'], 'settle')
+                self.assertEqual(len(command_journal(folder)), sum(replay.commands.values()))
+        # Clearly synthetic classifier negatives: never natural campaign wins.
+        for phase, outcome, owners in (('city', 'victory', ['shu']),
+                ('finished', 'victory', ['shu', 'neutral']), ('finished', 'defeat', ['shu']),
+                ('finished', 'victory', [])):
+            state = SimpleNamespace(player='shu', phase=phase, extension={'outcome':outcome},
+                cities={str(i):SimpleNamespace(owner=owner) for i,owner in enumerate(owners)},
+                turn=1, year=217, month=11, day=1)
+            self.assertFalse(checkpoints.campaign_status(state)['unification_verified'])
 
 
 if __name__ == '__main__':
