@@ -237,7 +237,7 @@ class CampaignSoakCITests(unittest.TestCase):
         executor=workflow.split('  campaign-soak-replay:\n',1)[1].split('  campaign-soak:\n',1)[0]
         matrix=re.findall(r'- \{case: (\w+), seed: (\d+), backend: (\w+)\}',executor)
         self.assertEqual([(case,int(seed),backend) for case,seed,backend in matrix],list(ci.EXECUTIONS))
-        self.assertIn('timeout-minutes: 20',executor)
+        self.assertIn('timeout-minutes: 40',executor)
         self.assertNotIn('--turns',executor)
         self.assertIn('ci.py fragment',executor)
         self.assertIn('${{ github.run_attempt }}',executor)

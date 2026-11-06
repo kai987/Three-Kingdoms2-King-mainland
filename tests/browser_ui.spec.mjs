@@ -154,7 +154,28 @@ async function tacticalOpening(page){
  await expect(page.locator('#departure-target')).toHaveValue('danyang');const officers=page.locator('input[name=depart-officer]:enabled');expect(await officers.count()).toBeGreaterThanOrEqual(10);
  for(let i=0;i<10;i++)await officers.nth(i).check();await page.locator('#review-departure').click();await page.locator('#confirm-departure').click();await waitIdle(page);await tacticalDismiss(page);
  for(const id of ['end-turn','run-ai','process-arrivals']){await page.locator('#'+id).click();await waitIdle(page);await tacticalDismiss(page);}
- await expect(page.locator('[data-battle-scene]')).toHaveAttribute('data-battle-scene-mode','tactical');return tacticalRead(page);
+ await expect(page.locator('[data-battle-scene]')).toHaveAttribute('data-battle-scene-mode','tactical');
+ // The tactical scene also hosts sequential pre-battle placement. Complete
+ // its real visible confirmations before exercising combat-only controls.
+ const before=await tacticalRead(page),placement=before.view.catalog.battle_tactical.placement;
+ expect(placement.pending).toBe(true);expect(placement.confirmed).toBe(0);
+ expect(placement.total).toBeGreaterThan(0);expect(placement.total).toBeLessThanOrEqual(10);
+ let current=before;
+ for(let index=0;index<placement.total;index++){
+  expect(current.view.catalog.battle_tactical.placement.confirmed).toBe(index);
+  await tacticalControl(page,'battle-place-confirm');await waitIdle(page);await tacticalDismiss(page);
+  current=await tacticalRead(page);
+  expect(current.view.catalog.battle_tactical.placement.confirmed).toBe(index+1);
+ }
+ expect(current.view.catalog.battle_tactical.placement.pending).toBe(false);
+ await expect(page.locator('#battle-place-confirm')).toHaveCount(0);
+ await expect(page.locator('#battle-wait')).toBeEnabled();
+ for(const key of ['cities','officers','rng'])expect(current.save.state[key]).toEqual(before.save.state[key],'Attacker placement only commits positions and progress');
+ for(const key of ['round','used','attackers','defenders'])expect(current.save.state.battle[key]).toEqual(before.save.state.battle[key]);
+ for(const key of ['supply','support','auto_deployment'])expect(current.save.state.battle.extended[key]).toEqual(before.save.state.battle.extended[key]);
+ expect(current.save.state.battle.extended.tactical.points).toEqual(before.save.state.battle.extended.tactical.points);
+ expect(current.save.state.extension.command_books).toEqual(before.save.state.extension.command_books);
+ return current;
 }
 async function tacticalApproach(page,{touch=false,preferred=null,max=18}={}){
  const trace=[];
@@ -2049,6 +2070,7 @@ test('city-specific battlefield keeps both armies visible and supports real batt
  await expect(page.locator('[data-battlefield-label]')).toHaveAttribute('title',/ROM/);
  expect((await read()).state.battle.target).toBe('danyang');expect(await page.evaluate(()=>GameBrowserEngine.ready)).toBe(true);
  expect(fields.some(row=>row.url.includes('/Three-Kingdoms2-King-mainland/assets/battlefields/original-15.png')&&row.status===200)).toBe(true);
+ await expect(page.locator('[data-unit-list]')).toHaveCount(2);
  const geometry=await page.evaluate(()=>{
   const rect=node=>{const r=node.getBoundingClientRect();return{x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height};};
   return{roster:rect(document.querySelector('.battle-army-menu')),map:rect(document.querySelector('[data-battle-canvas]')),lists:[...document.querySelectorAll('[data-unit-list]')].map(n=>({...rect(n),content:n.scrollHeight})),overflow:document.documentElement.scrollWidth>innerWidth,wide:document.querySelector('.battle-layout').clientWidth>660};

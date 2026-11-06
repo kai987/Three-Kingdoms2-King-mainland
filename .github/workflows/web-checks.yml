@@ -160,7 +160,9 @@ jobs:
     needs: [scope, native-rules]
     if: needs.scope.outputs.soak == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # The full 144-turn Rust replay exceeded 20 minutes on the measured runner.
+    # Keep every turn and seed; budget the complete replay instead of trimming it.
+    timeout-minutes: 40
     strategy:
       fail-fast: false
       matrix:
