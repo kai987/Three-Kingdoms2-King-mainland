@@ -126,8 +126,12 @@ def validate(game,state,battle):
     active_ids = row['order'][:row['confirmed']+1]
     positions = tactical['positions']
     _require(set(positions) == set(other_ids+active_ids),'Invalid partial placement position identities')
-    defaults = _zone(game,battle,other)['defaults']
-    _require(all(positions[key] == point for key,point in zip(other_ids,defaults)),
+    if 'auto_deployment' in x:
+        from . import battle_auto_deployment
+        opposing = battle_auto_deployment.initial_positions(game,battle,other)
+    else:
+        opposing = dict(zip(other_ids,_zone(game,battle,other)['defaults']))
+    _require(set(opposing) == set(other_ids) and all(positions[key] == point for key,point in opposing.items()),
              'Manual placement changed the fixed opposing deployment')
     allowed = {(point['x'],point['y']) for point in zone['cells']}
     seen = set()
@@ -157,9 +161,13 @@ def initialize(game,state,battle):
     other = SIDES[1-SIDES.index(side)]
     order = [_ident(unit) for unit in candidate[side]]
     extension['placement'] = dict(schema=SCHEMA,side=side,order=order,confirmed=0)
-    defaults = _zone(game,candidate,other)['defaults']
-    _require(len(defaults) >= len(candidate[other]),'Insufficient opposing deployment candidates')
-    positions = {_ident(unit):dict(point) for unit,point in zip(candidate[other],defaults)}
+    if 'auto_deployment' in extension:
+        from . import battle_auto_deployment
+        positions = battle_auto_deployment.initial_positions(game,candidate,other)
+    else:
+        defaults = _zone(game,candidate,other)['defaults']
+        _require(len(defaults) >= len(candidate[other]),'Insufficient opposing deployment candidates')
+        positions = {_ident(unit):dict(point) for unit,point in zip(candidate[other],defaults)}
     positions[order[0]] = _default(_zone(game,candidate,side)['defaults'],positions)
     extension['tactical']['positions'] = positions
     _validate_grid(game,state,candidate)

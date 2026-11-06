@@ -160,6 +160,7 @@ class TacticalCampaignTests(unittest.TestCase):
         del old['state']['battle']['extended']['tactical']
         old['state']['battle']['extended'].pop('deployment',None)
         old['state']['battle']['extended'].pop('placement',None)  # Genuine pre-placement schema.
+        old['state']['battle']['extended'].pop('auto_deployment',None)  # No modern AI receipt in that schema.
         old['checksum'] = digest({key: value for key, value in old.items() if key != 'checksum'})
         restored.load_save(old, restored.revision)
         self.assertEqual(vars(restored.state.rng), vars(self.game.state.rng))

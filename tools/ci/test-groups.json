@@ -986,6 +986,33 @@
         "people",
         "save"
       ]
+    },
+    "tests/test_remake_ai_deployment.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_ai_deployment_reference.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_auto_deployment_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ]
     }
   }
 }

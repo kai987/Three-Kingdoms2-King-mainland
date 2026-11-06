@@ -5,7 +5,7 @@ remake designs. No original engine, ROM tables or control IR are loaded.
 """
 from dataclasses import replace
 from .errors import GameError
-from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services, officer_relations, battle_supply, battle_conditions, battle_placement
+from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services, officer_relations, battle_supply, battle_conditions, battle_placement, battle_auto_deployment
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
                        parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref, appearance_values)
@@ -239,7 +239,7 @@ class ExpandedCampaign:
         # Only an interactive arrival requests this new setup stage. Private
         # preconfigured battle constructors keep their existing ready layout.
         if manual_deployment and state.phase=='battle':
-            battle_placement.initialize(self,state,state.battle)
+            battle_auto_deployment.initialize(self,state,state.battle)
         if state.phase=='battle' and state.player==target.owner and not battle_placement.pending(state.battle):
             self._run_tactical_ai_turn(state)
 
@@ -1049,7 +1049,7 @@ class ExpandedCampaign:
         if not b:return
         e=b['extended']
         expected={'support','duel','duel_history','ambush','surrenders','withdrawn','tactical'}
-        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation','supply','deployment','conditions','placement'}:raise ValueError('battle extended fields')
+        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation','supply','deployment','conditions','placement','auto_deployment'}:raise ValueError('battle extended fields')
         battle_grid.validate(self,state,b)
         battle_conditions.validate(b)
         battle_supply.validate(state,b)

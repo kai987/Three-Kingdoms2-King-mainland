@@ -716,7 +716,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 # Existing current-catalog battles had presentation-only flags.
                 # Assign their first real cells once, preserving troops and RNG.
                 if candidate.battle and 'tactical' not in candidate.battle['extended']:
-                    if {'deployment','conditions','placement'} & set(candidate.battle['extended']):
+                    if {'deployment','conditions','placement','auto_deployment'} & set(candidate.battle['extended']):
                         raise ValueError('Modern battle is missing its saved positions')
                     tactical=battle_grid.initialize(self, candidate, candidate.battle)
                     # The former counter-based UI always saved on the player's

@@ -143,7 +143,7 @@ def initialize(game, state, battle, *, directional=False, arrival_city=None):
 
 
 def validate(game, state, battle):
-    from . import battle_placement
+    from . import battle_placement,battle_auto_deployment
     row = battle['extended'].get('tactical')
     conversions=battle['extended'].get('defections',{})
     if not isinstance(conversions,dict) or any(not isinstance(value,dict) for value in conversions.values()):
@@ -164,6 +164,7 @@ def validate(game, state, battle):
         from . import battle_deployment
         battle_deployment.validate_provenance(game.catalog,battle,_field(battle),battle['extended']['deployment'])
     battle_placement.validate(game,state,battle)
+    battle_auto_deployment.validate(game,state,battle)
     for side in SIDES:
         starts = [unit.get('start') for unit in battle[side]]
         original_starts = [unit.get('start') for current in SIDES for unit in battle[current]
@@ -503,6 +504,8 @@ def view(game, state, battle):
     terrain = game.catalog.map_cities[battle['target']]['terrain']
     from . import battle_placement
     placement = battle_placement.view(game,state,battle)
+    from . import battle_auto_deployment
+    automatic = battle_auto_deployment.view(game,state,battle)
     placing = bool(placement and placement['pending'])
     actors = {}
     for actor in battle[own]:
@@ -545,6 +548,7 @@ def view(game, state, battle):
         grid=dict(columns=COLUMNS, rows=ROWS, tile_size=TILE_SIZE), side=row['side'],
         camp=dict(zip(('x','y'),_field(battle)['camp'])), facilities=[dict(service) for service in _field(battle).get('services',())],
         maximum_troops=1000, deployment=deepcopy(battle['extended'].get('deployment')),placement=placement,
+        auto_deployment=automatic,
         points=deepcopy(row['points']), caps={side: point_cap(_troops(battle, side)) for side in SIDES},
         can_end=not placing and state.phase == 'battle' and row['side'] == own and not battle['extended']['duel'],
         attack_cost=ATTACK_COST, duel_cost=DUEL_COST, tactic_costs=list(TACTIC_COSTS), actors=actors)

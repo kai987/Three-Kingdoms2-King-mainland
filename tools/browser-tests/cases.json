@@ -555,6 +555,20 @@
       "scenario_ids": [
         "mainland217-07"
       ]
+    },
+    {
+      "id": "ai-deployment",
+      "title": "native AI deployment keeps commanders and grouped martial order while sharing legal cells and preserving legacy saves",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ],
+      "scenario_scope": "fixed",
+      "scenario_ids": [
+        "mainland217-07"
+      ]
     }
   ]
 }

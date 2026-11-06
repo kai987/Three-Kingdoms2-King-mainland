@@ -745,10 +745,40 @@ test('manual deployment places sequentially in native zones with zero-cost check
  const ready=await read(page);expect(ready.save.state.battle.extended.placement.confirmed).toBe(3);expect(ready.view.catalog.battle_tactical.placement.pending).toBe(false);expect(domain(ready.save)).toEqual(domain(before.save));await expect(page.locator('#battle-place-confirm')).toHaveCount(0);await expect(page.locator('#battle-wait')).toBeEnabled();
  proof.push({kind:'attacker',future_does_not_occupy:true,next_default:first.save.state.battle.extended.tactical.positions[String(attacker.expected_next.actor)],resource_domain_unchanged:true,autosave:true});
  await load(page,defender.save,'real-arrival-defender-placement.json');const defenseBefore=await read(page);await expect(page.locator('[data-placement-total]')).toHaveAttribute('data-placement-total','10');
- await expect(page.locator('#stage')).toContainText('相手は初期配置済み');await cell(page,defender.terrain_cells['3'],testInfo.project.name.startsWith('touch'));await control(page,'battle-place-confirm');await idle(page);const water=await read(page);
+ await expect(page.locator('#stage')).toContainText('相手は武力と陣型に応じて配置済み');await cell(page,defender.terrain_cells['3'],testInfo.project.name.startsWith('touch'));await control(page,'battle-place-confirm');await idle(page);const water=await read(page);
  expect(water.save.state.battle.extended.tactical.positions[String(defender.actor)]).toEqual(defender.terrain_cells['3']);expect(domain(water.save)).toEqual(domain(defenseBefore.save));await evidence(page,testInfo,'manual-defender-commander-water-ja');proof.push({kind:'defender',commander_left_camp:true,water_legal:true,ai_has_not_acted:true});
  await load(page,last.save,'real-defender-last-placement.json');await expect(page.locator('[data-placement-progress]')).toHaveAttribute('data-placement-progress','9');const lastBefore=await read(page);await control(page,'battle-place-confirm');const started=await animation(page);
  expect(started.save.state.battle.extended.placement.confirmed).toBe(10);expect(started.save.state.battle.round).toBe(1);expect(started.save.state.battle.extended.supply.days).toBe(0);expect(started.save.state.battle.extended.tactical.side).toBe('defenders');expect(started.save.state.battle.extended.tactical.passed.attackers).toBe(true);expect(started.save.state.battle.extended.tactical.points.attackers).toBeLessThan(lastBefore.save.state.battle.extended.tactical.points.attackers);
  await expect(page.locator('#battle-place-confirm')).toHaveCount(0);await expect(page.locator('#battle-wait')).toBeEnabled();await load(page,started.save,'completed-placement-ready-battle.json');expect(await save(page)).toEqual(started.save);proof.push({kind:'defender_last',first_attacker_ai_ran:true,round:1,food_days:0});
  await attach(testInfo,'manual-deployment-proof',proof);expect(pageErrors.get(page)).toEqual([]);
+});
+
+test('native AI deployment keeps commanders and grouped martial order while sharing legal cells and preserving legacy saves',async({page},testInfo)=>{
+ await opening(page);
+ const rows=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_ai_deployment_fixture.py',import.meta.url).pathname],{encoding:'utf8',maxBuffer:16*1024*1024,timeout:90_000})),proof=[];
+ const expectedOrders={defenders:['13','99','121','379','76','215','425','37','286','149'],attackers:['50','203','119']};
+ const domain=value=>{const state=structuredClone(value.state);delete state.battle.extended.placement;delete state.battle.extended.tactical.positions;return state;};
+ for(const row of rows){
+  await load(page,row.save,'real-native-ai-'+row.side+'.json');const before=await read(page),board=before.view.catalog.battle_tactical,plan=board.auto_deployment.sides[row.side];
+  expect(plan.order).toEqual(expectedOrders[row.side]);expect(plan.groups).toEqual(row.groups);expect(plan.binding).toEqual(row.binding);expect(plan.profile).toBe(row.profile);
+  expect(row.order[0]).toBe(String(before.save.state.battle[row.side][0].id));
+  for(const id of row.order)expect(before.save.state.battle.extended.tactical.positions[id]).toEqual(row.expected[id]);
+  await expect(page.locator('[data-ai-deployment]')).toHaveAttribute('data-ai-deployment','strategy');
+  await locale(page,'zh-Hant');await expect(page.locator('[data-ai-deployment]')).toContainText('依武力與陣型');expect(await save(page)).toEqual(before.save);
+  if(row.side==='defenders')await evidence(page,testInfo,'ai-grouped-defender-native-tc');
+  await locale(page,'ja');await expect(page.locator('[data-ai-deployment]')).toContainText('武力と陣型');expect(await save(page)).toEqual(before.save);
+  if(row.side==='attackers')await evidence(page,testInfo,'ai-grouped-attacker-native-ja');
+  await control(page,'battle-place-confirm');await idle(page);const after=await read(page);
+  expect(domain(after.save)).toEqual(domain(before.save));expect(after.save.state.battle.extended.auto_deployment).toEqual(before.save.state.battle.extended.auto_deployment);
+  for(const id of row.order)expect(after.save.state.battle.extended.tactical.positions[id]).toEqual(row.expected[id]);
+  await load(page,after.save,'partial-manual-with-frozen-ai.json');expect(await save(page)).toEqual(after.save);
+  proof.push({side:row.side,profile:row.profile,order:plan.order,groups:plan.groups,positions:row.expected,resources_unchanged:true,roundtrip:true});
+ }
+ const legacy=rows[0].legacy;await load(page,legacy,'controlled-previous-ordered-defaults.json');const previous=await read(page);
+ expect(previous.view.catalog.battle_tactical.auto_deployment).toBeNull();await expect(page.locator('[data-ai-deployment]')).toHaveAttribute('data-ai-deployment','legacy');
+ expect(await save(page)).toEqual(legacy);await control(page,'battle-place-confirm');await idle(page);const continued=await read(page);
+ expect(continued.save.state.battle.extended.auto_deployment).toBeUndefined();
+ for(const unit of legacy.state.battle.defenders)expect(continued.save.state.battle.extended.tactical.positions[String(unit.id)]).toEqual(legacy.state.battle.extended.tactical.positions[String(unit.id)]);
+ expect(domain(continued.save)).toEqual(domain(legacy));proof.push({kind:'controlled_legacy_pending',not_retrofitted:true});
+ await attach(testInfo,'ai-deployment-proof',proof);expect(pageErrors.get(page)).toEqual([]);
 });
