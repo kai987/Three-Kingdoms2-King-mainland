@@ -53,6 +53,7 @@
   if(!extra.length)return true;
   const keys=fields=>extra.length===fields.length&&fields.every(k=>Object.hasOwn(d,k));
   const amount=v=>Number.isSafeInteger(v)&&v>=0&&v<=100000000;
+  if(d.tactic===2)return keys(['condition','condition_count'])&&d.condition==='phantom'&&Number.isInteger(d.condition_count)&&(d.success?[2,3]:[0]).includes(d.condition_count);
   if(d.tactic===5)return keys(['affected_side','grain_before','grain_after','grain_loss'])&&['attackers','defenders'].includes(d.affected_side)&&[d.grain_before,d.grain_after,d.grain_loss].every(amount)&&d.grain_before-d.grain_after===d.grain_loss&&(d.success||d.grain_loss===0);
   if(d.tactic===8)return keys(['success_percent','target_loyalty','guaranteed_failure'])&&Number.isInteger(d.success_percent)&&d.success_percent>=0&&d.success_percent<=100&&Number.isInteger(d.target_loyalty)&&d.target_loyalty>=0&&d.target_loyalty<=100&&typeof d.guaranteed_failure==='boolean'&&d.guaranteed_failure===(d.target_loyalty>=71)&&d.guaranteed_failure===(d.success_percent===0)&&(!d.guaranteed_failure||!d.success);
   return false;
@@ -258,6 +259,7 @@
     case 'duel_started':return text(`${p}展開單挑，勝負依招式與武力判定。`,`${p}が一騎討ちに臨みます。技の選択と武力が勝負を左右します。`);
     case 'duel_result':return text(`${p}的單挑已結束。${d.result?label(d.result):'體力與退場結果已結算。'}`,`${p}の一騎討ちが終わりました。${d.result?label(d.result):'体力と退場結果は処理されています。'}`);
     case 'tactic':{
+     if(d.tactic===2&&d.condition==='phantom')return text(`${n.people[0]||p}施放虛兵。${d.success?'目標移動受限，施放時計數'+d.condition_count+'；按日界消退，仍可攻擊或施計':'未能奏效'}。機動力消耗已結算。`,`${n.people[0]||p}が虚兵を使用。${d.success?'対象の移動を封鎖。付与時カウント'+d.condition_count+'で、日界に減少します。攻撃や計略は可能':'効果なし'}。機動力は消費済みです。`);
      const title=label(view?.catalog?.tactics?.[d.tactic]?.name||text('計略','計略'));
      if(d.tactic===5&&Number.isSafeInteger(d.grain_loss))return text(`${n.people[0]||p}施放${title}。${d.success?'燒毀敵軍隨軍糧'+d.grain_loss:'未能奏效，損失兵糧0'}；敵軍隨軍糧 ${d.grain_before} → ${d.grain_after}。機動力消耗已結算。`,`${n.people[0]||p}が${title}を使用。${d.success?'敵軍の携行兵糧'+d.grain_loss+'を焼失':'失敗し、兵糧の損失は0'}。敵軍の携行兵糧 ${d.grain_before} → ${d.grain_after}。機動力は消費済みです。`);
      if(d.tactic===8&&d.guaranteed_failure)return text(`${n.people[0]||p}施放${title}。目標忠誠${d.target_loyalty}，依原作忠誠71以上必定失敗；已消耗10機動力。`,`${n.people[0]||p}が${title}を使用。対象の忠誠${d.target_loyalty}は71以上のため、原作の規則により必ず失敗します。機動力10を消費しました。`);

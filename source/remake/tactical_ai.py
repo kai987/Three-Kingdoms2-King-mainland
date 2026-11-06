@@ -205,6 +205,39 @@ def _fire_supply_value(state,battle,own,foe,intellect):
     return sum(values)/len(values)
 
 
+def _phantom_mobility_value(battle,target,own,foe):
+    """Author-adapted movement denial, not a canceled attack or original AI.
+
+    A geometric approach estimate keeps this bounded without one Dijkstra per
+    caster/target. Counts are native day-boundary scans: a defending cast loses
+    its first scan before the affected attacker receives its next turn.
+    """
+    from . import battle_grid as grid,battle_conditions
+    if battle_conditions.remaining(battle,target['id']):return 0
+    row=battle['extended'].get('tactical')
+    if row is None:return 0
+    phases=min(max(0,battle_conditions.duration(own)-int(own=='defenders')),
+               max(0,31-battle['round']-int(own=='defenders')))
+    if not phases:return 0
+    positions=row['positions'];point=positions[str(target['id'])]
+    start=point['x'],point['y']
+    occupied={(positions[str(unit['id'])]['x'],positions[str(unit['id'])]['y'])
+              for side in grid.SIDES for unit in _active(battle,side)if unit['id']!=target['id']}
+    neighbors=((start[0]-1,start[1]),(start[0]+1,start[1]),(start[0],start[1]-1),(start[0],start[1]+1))
+    if not any(0<=x<grid.COLUMNS and 0<=y<grid.ROWS and(x,y)not in occupied for x,y in neighbors):return 0
+    friends=_active(battle,own)
+    if not friends:return 0
+    distance=min(abs(start[0]-positions[str(unit['id'])]['x'])
+                 +abs(start[1]-positions[str(unit['id'])]['y'])for unit in friends)
+    camp=grid._field(battle)['camp']
+    if foe=='attackers'and camp not in occupied and abs(start[0]-camp[0])+abs(start[1]-camp[1])==1:
+        # An empty castle can be occupied in one macro step even while an
+        # opposing army is adjacent. This rewards denying entry, not damage.
+        return sum(_loss_value(unit,unit['troops'])for unit in friends)
+    if distance<=1:return 0  # Adjacent attack/tactics remain usable while locked.
+    return _loss_value(target,target['troops'])*min(1,phases/(distance-1))
+
+
 def _tactic_value(state, battle, actor, target, own, foe, terrain, tactic, attack):
     _, cost, effect, _ = tactic
     enemies, friends = _active(battle, foe), _active(battle, own)
@@ -235,6 +268,8 @@ def _tactic_value(state, battle, actor, target, own, foe, terrain, tactic, attac
     elif effect == 'ambush':
         value = max((min(enemy['troops'], profile.intellect * 2)
                      for enemy in enemies), default=0) * .85
+    elif effect=='confuse'and modern:
+        value=_phantom_mobility_value(battle,target,own,foe)
     elif effect in {'confuse', 'chain'}:
         victims = ordered if modern else ordered[:1 if effect == 'confuse' else 3]
         value = sum(max((attack(unit, friend)
@@ -376,8 +411,13 @@ def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percen
                     if tactics[tid][2] == 'surrender' and not _chance(state, actor, target, 'surrender'):
                         continue
                     value = _tactic_value(state, battle, actor, target, own, foe, terrain, tactics[tid], attack)
+                    if tactics[tid][2]=='confuse'and value<=0:
+                        # Player repetition stays legal and paid. AI must not
+                        # fall back to a harmful re-cast that first frees it.
+                        continue
                     rows.append(dict(kind='tactic', actor=actor['id'], target=target['id'], tactic=tid, score=value))
-        if row['points'][own] <= 0:
+        from . import battle_conditions
+        if row['points'][own] <= 0 or battle_conditions.movement_blocked(battle,actor['id']):
             continue
         source, distances, previous = grid._paths(state, battle, actor)
         camp=grid._field(battle)['camp']

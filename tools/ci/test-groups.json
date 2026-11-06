@@ -897,6 +897,29 @@
         "save",
         "logistics"
       ]
+    },
+    "tests/test_remake_phantom_condition.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "save"
+      ]
+    },
+    "tests/test_remake_phantom_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "save",
+        "people",
+        "logistics"
+      ]
+    },
+    "tests/test_remake_phantom_ai.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people"
+      ]
     }
   }
 }

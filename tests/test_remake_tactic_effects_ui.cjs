@@ -18,4 +18,15 @@ assert(events.validEvent(event(burned)));assert(events.validEvent(event(failed))
 for(const patch of [{grain_after:159},{grain_loss:-1},{success:false},{tactic:8},{extra:0},{affected_side:'city'}])assert(!events.validEvent(event({...burned,...patch})),JSON.stringify(patch));
 for(const patch of [{success:true},{success_percent:1},{target_loyalty:70},{guaranteed_failure:false},{success_percent:true}])assert(!events.validEvent(event({...failed,...patch})),JSON.stringify(patch));
 for(const source of [burned,failed])for(const key of Object.keys(source)){const missing={...source};delete missing[key];assert(!events.validEvent(event(missing)),'Partial snapshot '+key);}
+const phantom={schema:'tk2-tactic-effect-preview-v1',tactic:2,success_percent:60,condition:'phantom',condition_count:3,target_count:0};
+const statusView=structuredClone(view);statusView.catalog.battle_tactical.actors[1].tactic_previews[2]={2:phantom};
+statusView.game={battle:{extended:{conditions:{schema:'tk2-battle-conditions-v1',day:1,units:{1:{kind:'phantom',remaining:3},2:{kind:'phantom',remaining:2}}}}}};
+const statusBefore=JSON.stringify(statusView);
+assert(effects.summary(statusView,1,2,2).includes('仍可攻擊或施計'));assert(effects.summary(statusView,1,2,2,{locale:'ja'}).includes('固定の行動不能ターン数ではありません'));
+assert(effects.summary(statusView,1,2,0).includes('data-phantom-clear-preview="2"'),'Other tactics disclose clearing before failure too');
+assert(effects.summary(statusView,1,2,11).includes('data-phantom-clear-preview="3"'),'Ambush addresses actual self, never the ignored enemy parameter');
+for(const patch of [{condition:'stun'},{condition_count:1},{condition_count:true},{target_count:-1},{target_count:4}]){const broken=structuredClone(statusView);Object.assign(broken.catalog.battle_tactical.actors[1].tactic_previews[2][2],patch);assert.equal(effects.forecast(broken,1,2,2),null);}
+assert.equal(JSON.stringify(statusView),statusBefore,'Status rendering never advances the clock or removes a condition');
+for(const details of [{tactic:2,success:true,condition:'phantom',condition_count:3},{tactic:2,success:true,condition:'phantom',condition_count:2},{tactic:2,success:false,condition:'phantom',condition_count:0}])assert(events.validEvent(event(details)));
+for(const patch of [{condition:'chain'},{condition_count:true},{condition_count:1},{condition_count:0},{success:false},{extra:1}])assert(!events.validEvent(event({tactic:2,success:true,condition:'phantom',condition_count:3,...patch})));
 console.log('tactic forecasts: original conversion threshold, carried-grain intervals, bilingual cost disclosure, invalid-data rejection, strict committed snapshots and pure reads passed');

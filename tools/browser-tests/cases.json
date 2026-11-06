@@ -502,6 +502,19 @@
       "scenario_ids": [
         "mainland190-01"
       ]
+    },
+    {
+      "id": "phantom-condition",
+      "title": "phantom seals only movement with bilingual counts, actual contact, daily expiry and exact saved state",
+      "groups": [
+        "battle",
+        "people",
+        "save"
+      ],
+      "scenario_scope": "fixed",
+      "scenario_ids": [
+        "mainland208-10"
+      ]
     }
   ]
 }

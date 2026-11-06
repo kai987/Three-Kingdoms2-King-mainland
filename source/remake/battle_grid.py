@@ -220,6 +220,16 @@ def attack_reason(battle, actor, target, side):
     return ''
 
 
+def move_reason(battle, actor, side=None):
+    reason=_action_reason(battle,actor,side)
+    if reason:
+        return reason
+    from .battle_conditions import movement_blocked
+    if movement_blocked(battle,actor['id'] if isinstance(actor,dict) else actor):
+        return '本隊受虛兵影響，不能移動；仍可攻擊或施計。'
+    return ''
+
+
 def tactic_range_reason(battle, actor, target, tid):
     if 'tactical' not in battle['extended']:
         return ''
@@ -418,7 +428,7 @@ def move_quote(game, state, battle, actor, x, y):
     if not _int(x, 0, COLUMNS-1) or not _int(y, 0, ROWS-1):
         raise GameError('移動目的地超出戰場邊界。')
     side, unit = _unit(battle, actor)
-    reason = _action_reason(battle, actor, side)
+    reason = move_reason(battle, actor, side)
     if reason:
         raise GameError(reason)
     source, distances, previous = _paths(state, battle, actor)
@@ -486,7 +496,8 @@ def view(game, state, battle):
         reason = _action_reason(battle, actor, own)
         can_act = not reason and row['points'][own] > 0 and state.phase == 'battle'
         cells = []
-        if can_act:
+        movement_reason=move_reason(battle,actor,own)
+        if can_act and not movement_reason:
             source, distances, _ = _paths(state, battle, actor, row['points'][own])
             cells = [dict(x=x, y=y, cost=cost) for (x, y), cost in sorted(distances.items(),
                 key=lambda item: (item[0][1], item[0][0])) if (x, y) != source]
@@ -500,8 +511,9 @@ def view(game, state, battle):
         from . import battle_services, tactic_effects
         previews={str(tid): {str(target['id']): tactic_effects.preview(state,battle,actor,target,own,foe,tid)
                    for target in battle[foe] if not tactic_reasons[str(tid)][str(target['id'])]}
-                  for tid in (5,8)}
+                  for tid in (2,5,8)}
         actors[str(actor['id'])] = dict(can_act=bool(can_act), reason=reason,
+            move_reason=movement_reason,
             facility=battle_services.quote(game,state,battle,actor,own) if can_act else None,
             reachable=cells,
             attack_targets=[u['id'] for u in battle[foe] if not attack_reasons[str(u['id'])]],

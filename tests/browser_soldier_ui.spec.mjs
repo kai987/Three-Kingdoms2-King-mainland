@@ -587,3 +587,60 @@ test('arrival-based deployment uses paired native zones and preserves old battle
  expect(await save(page)).toEqual(rows[0].without_provenance,'An existing battle without provenance is not redeployed or backfilled on load');
  await attach(testInfo,'paired-deployment-proof',proof);expect(pageErrors.get(page)).toEqual([]);
 });
+
+test('phantom seals only movement with bilingual counts, actual contact, daily expiry and exact saved state',async({page},testInfo)=>{
+ await opening(page);
+ const rows=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_phantom_fixture.py',import.meta.url).pathname],{encoding:'utf8',maxBuffer:16*1024*1024,timeout:90_000}));
+ const [cast,restricted,expiry]=rows,proof=[];
+ await load(page,cast.save,'controlled-phantom-cast.json');
+ await page.locator(`[data-actor="${cast.actor}"]`).click();await page.locator(`[data-target="${cast.target}"]`).click();
+ const original=await read(page);await control(page,'tactic');await page.locator('#tactic-choice').selectOption('2');
+ const forecast=page.locator('#tactic-effect-preview .tactic-effect-forecast:visible');
+ await expect(forecast).toHaveAttribute('data-tactic-success',String(cast.preview.success_percent));
+ await expect(forecast).toContainText('仍可攻擊或施計');await page.locator('#dialog-language').selectOption('ja');
+ await expect(forecast).toContainText('固定の行動不能ターン数ではありません');expect(await save(page)).toEqual(original.save);
+ await page.locator('#confirm-tactic').click();const castResult=await animation(page);
+ expect(castResult.save.state.rng.draws-original.save.state.rng.draws).toBe(1);
+ expect(castResult.save.state.battle.extended.tactical.points.attackers).toBe(original.save.state.battle.extended.tactical.points.attackers-4);
+ expect(castResult.save.state.battle.extended.conditions.units[String(cast.target)]).toEqual({kind:'phantom',remaining:3});
+ expect(castResult.save.state.battle.extended.support).toEqual(original.save.state.battle.extended.support);
+ expect(castResult.save.state.battle.attackers).toEqual(original.save.state.battle.attackers);expect(castResult.save.state.battle.defenders).toEqual(original.save.state.battle.defenders);
+ await expect(page.locator(`[data-target="${cast.target}"] [data-phantom-count="3"]`)).toBeVisible();
+ // The committed illustrated event uses the new count, while acknowledgement
+ // and language changes cannot replay the effect or consume another sample.
+ const menu=page.locator('#utility-menu');if(await menu.getAttribute('open')===null)await menu.locator('summary').click();
+ await page.locator('#event-history').click();await expect(page.locator('#event-dialog')).toBeVisible();
+ await expect(page.locator('#event-description .event-facts')).toContainText('付与時カウント3');
+ await page.locator('#event-dialog [data-language-picker]').selectOption('zh-Hant');await expect(page.locator('#event-description .event-facts')).toContainText('施放時計數3');
+ await expect(page.locator('#event-dialog .event-person img').first()).toBeVisible();await evidence(page,testInfo,'phantom-committed-event-tc');
+ await dismissEvents(page);expect(await save(page)).toEqual(castResult.save);
+ proof.push({kind:'cast',count:3,rng_delta:1,event:castResult.save.state.extension.events.items.at(-1).details});
+
+ await load(page,restricted.save,'controlled-phantom-restricted.json');
+ await page.locator(`[data-actor="${restricted.actor}"]`).click();await page.locator(`[data-target="${restricted.target}"]`).click();
+ const locked=await read(page);await expect(page.locator(`[data-actor="${restricted.actor}"] [data-phantom-count="3"]`)).toBeVisible();
+ expect(locked.view.catalog.battle_tactical.actors[String(restricted.actor)].reachable).toEqual([]);
+ await expect(page.locator('#battle-move')).toBeDisabled();await expect(page.locator('#attack')).toBeEnabled();await expect(page.locator('#duel')).toBeEnabled();
+ await expect(page.locator('.battle-move-reason')).toContainText('不能移動');
+ await locale(page,'ja');await expect(page.locator('.battle-move-reason')).toContainText('移動できません');
+ await page.locator(`[data-actor="${restricted.actor}"]`).focus();await page.keyboard.press('ArrowRight');await page.keyboard.press('Enter');
+ await expect(page.locator('#battle-move')).toBeDisabled();expect(await save(page)).toEqual(locked.save,'Keyboard movement cannot bypass phantom');
+ await evidence(page,testInfo,'phantom-locked-but-can-attack-ja');
+ await control(page,'tactic');await page.locator('#tactic-choice').selectOption('0');await expect(page.locator('#confirm-tactic')).toBeEnabled();await page.locator('#confirm-tactic').click();
+ const recast=await animation(page);expect(recast.save.state.battle.extended.conditions.units[String(restricted.actor)].remaining).toBe(3);
+ expect(recast.save.state.battle.extended.tactical.points.defenders).toBe(locked.save.state.battle.extended.tactical.points.defenders-6);
+ await control(page,'attack');await idle(page);const contact=await save(page);
+ expect(contact.state.battle.extended.siege).toBeTruthy();expect(contact.state.battle.extended.conditions.units[String(restricted.actor)].remaining).toBe(3);
+ expect(contact.state.rng).toEqual(recast.save.state.rng);proof.push({kind:'restricted',count:3,actual_tactic:true,contact_started:true});
+
+ await load(page,expiry.save,'controlled-phantom-expiry.json');
+ await page.locator(`[data-actor="${expiry.actor}"]`).click();await expect(page.locator(`[data-actor="${expiry.actor}"] [data-phantom-count="1"]`)).toBeVisible();
+ const beforeExpiry=await read(page);await control(page,'battle-wait');const expired=await animation(page);
+ expect(expired.save.state.battle.round).toBe(beforeExpiry.save.state.battle.round+1);expect(expired.save.state.rng).toEqual(beforeExpiry.save.state.rng);
+ expect(expired.save.state.battle.extended.conditions).toEqual({schema:'tk2-battle-conditions-v1',day:expired.save.state.battle.round,units:{}});
+ expect(expired.view.catalog.battle_tactical.actors[String(expiry.actor)].reachable.length).toBeGreaterThan(0);
+ await expect(page.locator(`[data-actor="${expiry.actor}"] [data-phantom-count]`)).toHaveCount(0);
+ await load(page,expired.save,'phantom-expired-roundtrip.json');expect(await save(page)).toEqual(expired.save);
+ proof.push({kind:'expiry',before:1,after:0,round:expired.save.state.battle.round,rng_unchanged:true});
+ await attach(testInfo,'phantom-condition-proof',proof);expect(pageErrors.get(page)).toEqual([]);
+});

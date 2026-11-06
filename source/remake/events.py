@@ -61,7 +61,7 @@ DETAILS = {
     'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered'},
     'duel_started': set(), 'duel_result': {'result'},
     'tactic': {'tactic','success','affected_side','grain_before','grain_after','grain_loss',
-               'success_percent','target_loyalty','guaranteed_failure'},
+               'success_percent','target_loyalty','guaranteed_failure','condition','condition_count'},
     'march_weather': {'march_id', 'lost', 'risks'},
     'route_discovered': {'from', 'to'},
     'march_arrived': {'march_id', 'officers'},
@@ -307,7 +307,12 @@ def _validate_tactic_event(row):
     extra=set(d)-base
     if not extra:
         return  # Existing committed events retain their original compact snapshot.
-    if d['tactic']==5:
+    if d['tactic']==2:
+        if (extra!={'condition','condition_count'} or d['condition']!='phantom'
+                or type(d['condition_count']) is not int
+                or d['condition_count'] not in ((2,3) if d['success'] else (0,))):
+            raise ValueError('Tactic phantom snapshot')
+    elif d['tactic']==5:
         if (extra!={'affected_side','grain_before','grain_after','grain_loss'}
                 or d['affected_side'] not in {'attackers','defenders'}
                 or any(type(d[key]) is not int or not 0 <= d[key] <= 100000000

@@ -5,7 +5,7 @@ remake designs. No original engine, ROM tables or control IR are loaded.
 """
 from dataclasses import replace
 from .errors import GameError
-from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services, officer_relations, battle_supply
+from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services, officer_relations, battle_supply, battle_conditions
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
                        parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref, appearance_values)
@@ -13,7 +13,7 @@ from .officers import (YearState, experience_tier, initialize_officer, integer,
 TACTICS = (
     ('火計', 6, 'fire', '目標須在森林或平地；五格內單隊兵損'),
     ('陥穽', 5, 'trap', '目標須在森林或山地；五格內單隊體力損傷'),
-    ('虚兵', 4, 'confuse', '目標須在森林或山地；下次普通攻擊失效'),
+    ('虚兵', 4, 'confuse', '目標須在森林或山地；限制戰術移動，按日界消退'),
     ('要撃', 6, 'strike', '目標須在森林或山地；五格內單隊兵損'),
     ('乱水', 7, 'water', '目標須在河流；五格內單隊兵損'),
     ('火箭', 8, 'supply', '五格內敵方主將；燒毀敵方部分隨軍兵糧'),
@@ -262,6 +262,7 @@ class ExpandedCampaign:
 
     def _battle_result(self,state):
         b=state.battle
+        battle_conditions.drop_removed(b)
         attacking=any(u['troops']>0 for u in b['attackers'])
         defending=any(u['troops']>0 for u in b['defenders'])
         if not attacking and not defending:
@@ -333,6 +334,11 @@ class ExpandedCampaign:
             b['extended']['withdrawn']='attackers'
             b['outcome']='retreat';state.phase='result'
             b['log'].append('三十日戰期已滿，攻方撤退。')
+        if change['advanced_day']:
+            for change_row in battle_conditions.advance_daily(state,b):
+                if not change_row['remaining']:
+                    ident=deserialize_officer_ref(change_row['id'],self.catalog.rules)
+                    b['log'].append(f'{self.person_name(state,ident)}的虛兵效果消退。')
         b['log'][:]=b['log'][-80:]
         return change
 
@@ -451,6 +457,7 @@ class ExpandedCampaign:
             reason=battle_grid.attack_reason(b,actor,target,own)
             if reason:raise GameError(reason)
             battle_grid.spend(b,own,battle_grid.ATTACK_COST)
+            self._clear_phantom(state,target['id'])
         context=battle_grid.encounter_context(b,actor,target)
         self._trigger_ambush(state,actor,own,counter=counter)
         if modern and context and actor['troops']>0 and not b['extended']['support'][str(actor['id'])]['stunned']:
@@ -506,6 +513,10 @@ class ExpandedCampaign:
         tid=integer(payload.get('tactic'),0,15,'tactic')
         self._execute_tactic(state,actor,target,own,foe,tid)
 
+    def _clear_phantom(self,state,ident):
+        if battle_conditions.clear(state.battle,ident):
+            state.battle['log'].append(f'{self.person_name(state,ident)}的虛兵效果解除。')
+
     def _execute_tactic(self,state,actor,target,own,foe,tid,*,finish=True,counter=False):
         battle_supply.ensure(state,state.battle)
         from .tactical_ai import tactic_reason
@@ -526,10 +537,17 @@ class ExpandedCampaign:
             else:self._battle_result(state)
             return
         enemies=[u for u in b[foe] if u['troops']>0];p=state.officers[actor['id']].profile;t=state.officers[target['id']]
+        if 'tactical' in x:
+            # Native player ambush selects self; the original AI bypasses its
+            # clear. Shared self-clearing is the explicitly documented parity
+            # adaptation, never a clear of the old UI's ignored enemy target.
+            self._clear_phantom(state,actor['id'] if tid==11 else target['id'])
         if 'tactical' not in x:a['energy']-=cost
         chance=max(10,min(95,60+(p.intellect-t.profile.intellect)//2))
         effect_details={}
-        if effect=='surrender':
+        if effect=='confuse' and 'tactical' in x:
+            effect_details=dict(condition='phantom',condition_count=0)
+        elif effect=='surrender':
             from .tactic_effects import conversion_chance
             chance=conversion_chance(state.officers[actor['id']],t)
             effect_details=dict(success_percent=chance,target_loyalty=t.loyalty,guaranteed_failure=chance==0)
@@ -540,6 +558,10 @@ class ExpandedCampaign:
         if not success:b['log'].append(f'{self.person_name(state, actor["id"])}施放{title}，未能奏效。')
         elif effect=='ambush':x['ambush']={'actor':actor['id']};b['log'].append('十面埋伏已設置，等待接近的敵軍行動。')
         elif effect=='guard':a['guard']=2;b['log'].append(f'{title}使本队获得两次减伤。')
+        elif effect=='confuse' and 'tactical' in x:
+            count=battle_conditions.apply(b,target['id'],own)
+            effect_details['condition_count']=count
+            b['log'].append(f'{self.person_name(state,target["id"])}受到虛兵，移動封鎖計數{count}。')
         elif effect in {'confuse','chain'}:
             victims=(battle_grid.affected_units(b,target,tid,foe) if 'tactical' in b['extended']
                 else [target] if effect=='confuse' else [target]+[u for u in enemies if u is not target][:2])
@@ -963,8 +985,9 @@ class ExpandedCampaign:
         if not b:return
         e=b['extended']
         expected={'support','duel','duel_history','ambush','surrenders','withdrawn','tactical'}
-        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation','supply','deployment'}:raise ValueError('battle extended fields')
+        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation','supply','deployment','conditions'}:raise ValueError('battle extended fields')
         battle_grid.validate(self,state,b)
+        battle_conditions.validate(b)
         battle_supply.validate(state,b)
         siege.validate(self,state,b)
         battle_allegiance.validate(self,state,b)

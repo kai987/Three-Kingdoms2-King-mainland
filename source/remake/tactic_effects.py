@@ -59,10 +59,16 @@ def general_chance(actor, target):
 
 def preview(state, battle, actor, target, own, foe, tid):
     """Pure actor/target quote; legality and maneuver payment remain separate."""
-    if type(tid) is not int or tid not in (5, 8):
+    if type(tid) is not int or tid not in (2, 5, 8):
         return None
     from . import battle_supply
     caster, opponent = state.officers[actor['id']], state.officers[target['id']]
+    if tid == 2:
+        from . import battle_conditions
+        return dict(schema=SCHEMA,tactic=2,success_percent=general_chance(caster,opponent),
+                    failure_without_rng=False,failure_rng_draws=1,success_rng_draws=1,
+                    condition='phantom',condition_count=battle_conditions.duration(own),
+                    target_count=battle_conditions.remaining(battle,target['id']))
     if tid == 8:
         chance = conversion_chance(caster, opponent)
         return dict(schema=SCHEMA, tactic=8, success_percent=chance, failure_without_rng=chance == 0,

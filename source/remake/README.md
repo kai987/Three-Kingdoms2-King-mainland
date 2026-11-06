@@ -6,6 +6,7 @@
 | --- | --- |
 | `campaign.py` | 戰役狀態、亂數、原子指令、兵員守恆、驗證與存檔 |
 | `officers.py` | 屬性、出生／出仕／退場、名冊、忠誠、容量與出戰 |
+| `battle_conditions.py` | 獨立虛兵移動封鎖、日界與清除；不推定舊stunned來源 |
 | `battle_deployment.py` | 新戰局依最後途經城選擇原版陣區、純規劃與部署來源驗證 |
 | `tactic_effects.py` | 已核對的火箭損糧、籠絡機率及純預覽；一般成功門保留本作模型 |
 | `campaign_expansion.py` | 招募、勸降、16 計略、單挑、戰後處理、AI 與簡化繼承 |
