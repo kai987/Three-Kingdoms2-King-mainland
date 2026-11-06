@@ -1031,6 +1031,13 @@
         "people",
         "save"
       ]
+    },
+    "tests/test_remake_natural_checkpoints.py": {
+      "tier": "compatibility",
+      "groups": [
+        "battle",
+        "save"
+      ]
     }
   }
 }

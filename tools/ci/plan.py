@@ -85,6 +85,7 @@ PRESENTATION_TESTS = {
     'tests/test_remake_i18n_runtime.cjs': set(GROUPS),
 }
 BENCHMARK_INPUTS = {'tools/campaign-balance/run.py', 'tests/test_remake_campaign_balance.py'}
+CHECKPOINT_INPUTS = {'tools/campaign-checkpoints/run.py', 'tests/test_remake_natural_checkpoints.py'}
 SHARED_SCENARIO_FIELDS = {
     'rules', 'cities', 'links', 'world', 'city_coordinates', 'added_city_ids',
     'travel_rules', 'travel_routes', 'travel_hazards', 'sea_routes', 'sea_links',
@@ -359,6 +360,10 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
             elif path in BENCHMARK_INPUTS:
                 groups.add('boot')
                 reasons.append('Offline observation harness; retain bounded helper smoke, not long balance runs: ' + path)
+            elif path in CHECKPOINT_INPUTS:
+                groups.add('boot')
+                native = True
+                reasons.append('Offline save continuation helper requires the native reference and compatibility tests: ' + path)
             elif (path.startswith(('source/remake/', 'crates/', 'tools/ci/', '.github/'))
                   or path.startswith('game/config/') or path in ('game/build_campaigns.py', 'game/build_web.py', 'game/serve.py')
                   or path.endswith(('requirements.txt', 'pyproject.toml', 'Cargo.toml', 'Cargo.lock'))):
@@ -473,7 +478,7 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
     # fail closed above and mixed runtime/rule changes retain normal gates.
     nonruntime_source = lambda path: bool(SOLDIER_COMBAT_SOURCE.fullmatch(path)
                                          or BATTLE_ENHANCEMENT_SOURCE.fullmatch(path)
-                                         or path in BENCHMARK_INPUTS)
+                                         or path in BENCHMARK_INPUTS or path in CHECKPOINT_INPUTS)
     if (not full and any(nonruntime_source(path) for path in changed)
             and all(docs_path(path) or nonruntime_source(path) for path in changed)):
         should_publish = False

@@ -344,6 +344,28 @@ class ScopePlanTests(unittest.TestCase):
         self.changed('tools/campaign-balance/unknown_runner.py')
         self.assertTrue(self.repo.plan()['full'])
 
+    def test_natural_checkpoint_helper_requires_native_compatibility_without_long_replays(self):
+        for path in ('tools/campaign-checkpoints/run.py', 'tests/test_remake_natural_checkpoints.py'):
+            head = self.changed(path, 'bounded checkpoint helper\n')
+            result = self.repo.plan(event_name='push', ref='refs/heads/main')
+            self.assertEqual(result['mode'], 'scoped', result['reasons'])
+            self.assertEqual(set(result['groups']), PLAN.BASE_GROUPS)
+            self.assertEqual(result['python_groups'], ['global', 'scenarios', 'compat'])
+            self.assertEqual(result['scenario_ids'], ['mainland217-07'])
+            self.assertTrue(result['native'])
+            self.assertFalse(any(result[field] for field in ('full', 'rules', 'soak', 'resupply', 'publish')))
+            self.repo.base = head
+        self.changed('tools/campaign-checkpoints/run.py', 'updated checkpoint helper\n')
+        self.changed('game/loading-cover.js', 'changed runtime cover\n')
+        mixed = self.repo.plan(event_name='push', ref='refs/heads/main')
+        self.assertEqual(mixed['python_groups'], ['global', 'scenarios', 'compat'])
+        self.assertEqual(mixed['scenario_ids'], ['mainland217-07'])
+        self.assertIn('audio', mixed['groups'])
+        self.assertTrue(mixed['native'])
+        self.assertTrue(mixed['publish'], 'A mixed runtime edit retains its deployment gate')
+        self.changed('tools/campaign-checkpoints/unknown_runner.py')
+        self.assertTrue(self.repo.plan()['full'])
+
     def test_battle_view_and_tutorial_are_explicit_browser_modules(self):
         head = self.changed('game/battle-view.js')
         result = self.repo.plan()
