@@ -569,6 +569,20 @@
       "scenario_ids": [
         "mainland217-07"
       ]
+    },
+    {
+      "id": "general-tactic-gate",
+      "title": "general tactic forecasts share native distance and tier rules without drawing results",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ],
+      "scenario_scope": "fixed",
+      "scenario_ids": [
+        "mainland208-10"
+      ]
     }
   ]
 }

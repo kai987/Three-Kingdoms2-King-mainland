@@ -73,7 +73,9 @@ class QimenAITests(unittest.TestCase):
         _,state,battle=qimen_fixture();actor,target=battle['attackers'][0],battle['defenders'][0]
         state.officers[actor['id']].profile.intellect=95
         state.officers[target['id']].profile.intellect=75
-        self.assertEqual(ai._chance(state,actor,target,'guard',battle),.7)
+        position(battle,1,5,5);position(battle,101,7,5)
+        # Same tier6:positive knowledge20 +distance2 correction5 +shared10.
+        self.assertEqual(ai._chance(state,actor,target,'guard',battle),.35)
         self.assertEqual(ai._chance(state,actor,target,'guard'),1)
         old=deepcopy(battle);old['extended'].pop('tactical')
         self.assertEqual(ai._chance(state,actor,target,'guard',old),1)
@@ -196,7 +198,7 @@ class QimenAITests(unittest.TestCase):
         choice=ai.choose_action(state,battle,'defenders','attackers','plain',TACTICS,game=game)
         self.assertEqual((choice['kind'],choice['tactic'],choice['actor']),('tactic',15,439))
         target=next(unit for unit in battle['attackers']if unit['id']==choice['target'])
-        chance=tactic_effects.general_chance(state.officers[439],state.officers[target['id']])
+        chance=tactic_effects.success_chance(state,battle,caster,target)
         expected=prepare_actual_roll(state,chance,success=True)
         expected.next();initial_count=conditions.qimen_duration('defenders',expected.next()%4)
         loss=min(target['troops'],80+expected.next()%71)

@@ -291,6 +291,12 @@ class BattleGridTests(unittest.TestCase):
         position(battle, 102, 20, 10)
         battle['defenders'][0]['troops'] = 1
         battle['defenders'][1].update(troops=999, start=999)
+        with patch.object(grid, '_field', return_value=plain()):
+            tiny = candidates(state, battle, 'attackers', 'defenders', 'plain', TACTICS, depth=2)
+            # Same knowledge/tier at distance4:5% of value50 minus10AP*1.8
+            # is -15.5, so this tiny enemy is no longer a useful AI cast.
+            self.assertFalse(any(row['actor']==1 and row['tactic']==15 for row in tiny))
+        battle['defenders'][0]['troops'] = 500
         before = deepcopy((battle, vars(state.rng)))
         with patch.object(grid, '_field', return_value=plain()):
             rows = candidates(state, battle, 'attackers', 'defenders', 'plain', TACTICS, depth=2)
@@ -303,7 +309,7 @@ class BattleGridTests(unittest.TestCase):
         self.assertEqual((battle, vars(state.rng)), before)
         _, state, battle = fixture(attackers=2, defenders=1)
         position(battle, 1, 5, 5)
-        position(battle, 2, 10, 5)
+        position(battle, 2, 13, 5)  # Both casters are four cells from the enemy.
         position(battle, 101, 9, 5)
         with patch.object(grid, '_field', return_value=plain()):
             rows = candidates(state, battle, 'attackers', 'defenders', 'plain', TACTICS, depth=2)

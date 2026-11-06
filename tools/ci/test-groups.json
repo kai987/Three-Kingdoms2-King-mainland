@@ -1013,6 +1013,24 @@
         "people",
         "save"
       ]
+    },
+    "tests/test_remake_general_tactic_gate.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_general_tactic_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ]
     }
   }
 }

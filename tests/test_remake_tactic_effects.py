@@ -134,7 +134,7 @@ class FireArrowCampaignTests(unittest.TestCase):
             with self.subTest(side=own):
                 game, actor, target, own, foe = prepared(5, own)
                 state, b = game.state, game.state.battle
-                chance = tactic_effects.general_chance(state.officers[actor['id']], state.officers[target['id']])
+                chance = tactic_effects.success_chance(state,b,actor,target)
                 state.rng = SeedRng(seed_for(lambda roll: roll < chance))
                 expected_rng = deepcopy(state.rng)
                 self.assertLess(expected_rng.next()%100, chance)
@@ -167,7 +167,7 @@ class FireArrowCampaignTests(unittest.TestCase):
     def test_failure_pays_eight_ap_and_draws_no_percentage_factor(self):
         game, actor, target, own, foe = prepared(5)
         state, b = game.state, game.state.battle
-        chance = tactic_effects.general_chance(state.officers[actor['id']], state.officers[target['id']])
+        chance = tactic_effects.success_chance(state,b,actor,target)
         state.rng = SeedRng(seed_for(lambda roll: roll >= chance))
         before = deepcopy(state)
         command(game, 'tactic', battle_id=b['id'], actor=actor['id'], target=target['id'], tactic=5)

@@ -12,7 +12,7 @@ function load(value,options={}){
 }
 try{
  const full=scopes.loadBrowserScope({planPath:''});
- assert.equal(full.full,true);assert.equal(full.selectedCases.length,43);
+ assert.equal(full.full,true);assert.equal(full.selectedCases.length,44);
  assert.deepEqual(new Set(scopes.readCaseTitles(source)),new Set(scopes.CASE_REGISTRY.cases.map(row=>row.title)));
  const union=new Set();
  for(const group of scopes.CANONICAL_GROUPS){
@@ -25,6 +25,7 @@ try{
  const audioExpected=['title-cover','recovery-title','dialogs-save','boot-retry'],expected=[...audioExpected,'first-session-guide'];
  assert.deepEqual(boot.selectedCases.map(row=>row.id),expected);assert.deepEqual(audio.selectedCases.map(row=>row.id),audioExpected);
  for(const group of ['economy','logistics','battle','save'])assert(load(plan([group],['mainland217-07'])).selectedCases.some(row=>row.id==='city-development-and-battle-grain'));
+ for(const group of ['battle','map','people','save'])assert(load(plan([group],['mainland208-10'])).selectedCases.some(row=>row.id==='general-tactic-gate'),'General tactic forecasts retain actual distance/tier acceptance in '+group);
  const battle=new Set(load(plan(['battle'])).selectedCases.map(row=>row.id));
  assert(boot.selectedCases.every(row=>!battle.has(row.id)),'Boot and audio changes never pull unrelated battle acceptance');
  const soldierMedia=load(plan(['boot','battle','cloud']));
@@ -74,5 +75,5 @@ try{
  assert.throws(()=>scopes.loadBrowserScope({planPath:broken}),/cannot read plan JSON/);
  const cli=spawnSync(process.execPath,[path.join(__dirname,'../tools/browser-tests/scope.cjs'),'--plan',broken],{encoding:'utf8'});
  assert.notEqual(cli.status,0);assert(cli.stderr.includes('Browser test scope:'));
- console.log('browser scopes: all 43 cases registered before grep, full/group union, initial guide with bounded boot/audio, soldier media field/castle coverage, scenario-local deep openings, opaque plan provenance and fail-closed unknown/empty/invalid plans passed');
+ console.log('browser scopes: all 44 cases registered before grep, full/group union, initial guide with bounded boot/audio, soldier media field/castle coverage, scenario-local deep openings, opaque plan provenance and fail-closed unknown/empty/invalid plans passed');
 }finally{fs.rmSync(directory,{recursive:true,force:true});}

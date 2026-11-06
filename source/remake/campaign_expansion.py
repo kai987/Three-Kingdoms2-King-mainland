@@ -591,7 +591,8 @@ class ExpandedCampaign:
             return
         enemies=[u for u in b[foe] if u['troops']>0];p=state.officers[actor['id']].profile;t=state.officers[target['id']]
         if 'tactical' not in x:a['energy']-=cost
-        chance=max(10,min(95,60+(p.intellect-t.profile.intellect)//2))
+        from .tactic_effects import success_chance
+        chance=success_chance(state,b,actor,target)
         effect_details={}
         modern_qimen=tid==15 and 'tactical' in x
         if modern_qimen:

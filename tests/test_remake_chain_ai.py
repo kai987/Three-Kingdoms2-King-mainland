@@ -120,7 +120,7 @@ class ChainAITests(unittest.TestCase):
             # A locked primary target is still a useful route to other water
             # recipients. Do not apply phantom's single-target filter here.
             selected=next(row for row in rows if row['kind']=='tactic'and row['tactic']==10 and row['target']==101)
-            chance=ai._chance(state,battle['attackers'][0],targets[0],'chain')
+            chance=ai._chance(state,battle['attackers'][0],targets[0],'chain',battle)
             self.assertAlmostEqual(selected['score'],expected*chance-9*1.8)
 
     def test_all_locked_has_no_ai_chain_candidate_but_player_repeat_stays_legal(self):
@@ -183,7 +183,7 @@ class ChainAITests(unittest.TestCase):
         target=next(unit for unit in battle['attackers']if unit['id']==choice['target'])
         victims=grid.affected_units(battle,target,10,'attackers')
         self.assertEqual(len(victims),3)
-        chance=tactic_effects.general_chance(state.officers[439],state.officers[target['id']])
+        chance=tactic_effects.success_chance(state,battle,caster,target)
         state.rng=SeedRng(actual_success_seed(chance,len(victims)))
         expected=deepcopy(state.rng);expected.next()
         counts=[dict(id=str(unit['id']),remaining=conditions.chain_duration('defenders',expected.next()%2))for unit in victims]

@@ -26,8 +26,10 @@ def arrived(*,troops=1000,battle_grain=3,all_officers=False):
     battle=game.state.battle;row=battle['extended']['tactical']
     actor,target=battle['defenders'][0],battle['attackers'][0]
     # Keep actual carried bags and fractional credit. This controlled contact
-    # is four cells apart, so a regular attack cannot replace the fire tactic.
-    row['positions'][str(actor['id'])]=dict(x=5,y=5)
+    # is three cells apart, so a regular attack cannot replace the fire tactic.
+    # The native distance gate is10% here; the old four-cell setup is5% and
+    # legitimately favors movement, covered separately below.
+    row['positions'][str(actor['id'])]=dict(x=6,y=5)
     row['positions'][str(target['id'])]=dict(x=9,y=5)
     game.validate(game.state)
     return game,actor,target
@@ -58,7 +60,7 @@ class FireSupplyAITests(unittest.TestCase):
         # retaining the native opening10AP rather than granting extra AP.
         battle['extended']['tactical']['side']='attackers'
         battle['extended']['tactical']['passed']['attackers']=False
-        chance=tactic_effects.general_chance(state.officers[actor['id']],state.officers[target['id']])
+        chance=tactic_effects.success_chance(state,battle,actor,target)
         seed=next(i for i in range(1,1000)if SeedRng(i).next()%100<chance)
         state.rng=SeedRng(seed);expected=deepcopy(state.rng)
         expected.next();expected.next()
@@ -89,7 +91,7 @@ class FireSupplyAITests(unittest.TestCase):
         game,actor,target=arrived();state,battle=game.state,game.state.battle
         battle['extended']['tactical']['points']['defenders']=20
         original=deepcopy(battle['extended']['tactical']['positions'])
-        chance=tactic_effects.general_chance(state.officers[actor['id']],state.officers[target['id']])
+        chance=tactic_effects.success_chance(state,battle,actor,target)
         state.rng=SeedRng(next(i for i in range(1,1000)if SeedRng(i).next()%100<chance))
         before=deepcopy(state.rng);expected=deepcopy(before);expected.next();expected.next()
         game.validate(state)
@@ -101,6 +103,24 @@ class FireSupplyAITests(unittest.TestCase):
         self.assertEqual(current['extended']['tactical']['positions'],original)
         self.assertEqual(current['attackers'][0]['troops'],1000)
         self.assertEqual(game.state.rng,expected)
+
+    def test_native_far_gate_prefers_move_while_three_cell_food_pressure_prefers_fire(self):
+        game,actor,target=arrived();state,battle=game.state,game.state.battle
+        enemy_turn(game)
+        self.assertEqual(tactic_effects.success_chance(state,battle,actor,target),10)
+        before=game.export_save()
+        near=tactical_ai.choose_action(state,battle,'defenders','attackers','plain',TACTICS,game=game)
+        self.assertEqual((near['kind'],near['tactic']),('tactic',5))
+        self.assertEqual(game.export_save(),before)
+        # Explicit prior controlled location,not an actual free movement.
+        battle['extended']['tactical']['positions'][str(actor['id'])]=dict(x=5,y=5)
+        self.assertEqual(tactic_effects.success_chance(state,battle,actor,target),5)
+        before=game.export_save()
+        with patch.object(SeedRng,'next',side_effect=AssertionError('No decision sampling')):
+            far=tactical_ai.choose_action(state,battle,'defenders','attackers','plain',TACTICS,game=game)
+        self.assertEqual((far['kind'],far['tactic']),('move',None))
+        self.assertGreater(near['score'],far['score'])
+        self.assertEqual(game.export_save(),before)
 
     def test_edible_fractional_credit_prevents_a_false_next_day_rout_bonus(self):
         for troops,credit in((120,780),(400,500)):

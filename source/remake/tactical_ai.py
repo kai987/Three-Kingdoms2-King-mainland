@@ -133,14 +133,16 @@ def expected_contact_exchange(battle, actor, target, damage_percent=32):
 
 
 def _chance(state, actor, target, effect, battle=None):
-    profile, opponent = state.officers[actor['id']].profile, state.officers[target['id']]
+    opponent = state.officers[target['id']]
     if effect == 'ambush' or effect == 'guard' and not (
             battle is not None and 'tactical' in battle['extended']):
         return 1.0
     if effect == 'surrender':
         from .tactic_effects import conversion_chance
         return conversion_chance(state.officers[actor['id']], opponent) / 100
-    return max(10, min(95, 60 + (profile.intellect - opponent.profile.intellect) // 2)) / 100
+    from .tactic_effects import general_chance,success_chance
+    return (success_chance(state,battle,actor,target) if battle is not None
+            else general_chance(state.officers[actor['id']],opponent)) / 100
 
 
 def _loss_value(unit, amount):

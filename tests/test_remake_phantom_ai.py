@@ -50,7 +50,7 @@ class PhantomAITests(unittest.TestCase):
         self.assertEqual((choice['kind'],choice['tactic']),('tactic',2))
         self.assertGreater(choice['score'],0)
         row['side']='attackers';row['passed']['attackers']=False
-        chance=tactic_effects.general_chance(state.officers[actor['id']],state.officers[target['id']])
+        chance=tactic_effects.success_chance(state,battle,actor,target)
         expected=set_roll(state,chance,success=True)
         stocks={key:(c.gold,c.grain,c.reserves)for key,c in state.cities.items()}
         books=deepcopy(state.extension['command_books'])
@@ -126,7 +126,7 @@ class PhantomAITests(unittest.TestCase):
         conditions.apply(battle,actor['id'],'defenders')
         self.assertIn(2,ai.legal_tactics(state,battle,actor,target,'attackers','defenders','plain',TACTICS))
         ap=battle['extended']['tactical']['points']['attackers']
-        chance=tactic_effects.general_chance(state.officers[actor['id']],state.officers[target['id']])
+        chance=tactic_effects.success_chance(state,battle,actor,target)
         expected=set_roll(state,chance,success=True)
         command(game,'tactic',battle_id=battle['id'],actor=actor['id'],target=target['id'],tactic=2)
         current=game.state.battle

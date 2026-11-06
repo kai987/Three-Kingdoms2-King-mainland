@@ -648,6 +648,7 @@ test('phantom seals only movement with bilingual counts, actual contact, daily e
 test('chain applies independent connected water counts with bilingual movement-only locks and saved expiry',async({page},testInfo)=>{
  await opening(page);
  const [cast,restricted,expiry]=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_chain_fixture.py',import.meta.url).pathname],{encoding:'utf8',maxBuffer:16*1024*1024,timeout:90_000})),proof=[];
+ const restrictedCount=restricted.counts[restricted.targets.indexOf(String(restricted.target))];expect([4,5]).toContain(restrictedCount);
  await load(page,cast.save,'controlled-chain-cast.json');await page.locator(`[data-actor="${cast.actor}"]`).click();await page.locator(`[data-target="${cast.target}"]`).click();
  const before=await read(page);await control(page,'tactic');await page.locator('#tactic-choice').selectOption('10');
  const forecast=page.locator('#tactic-effect-preview .tactic-effect-forecast:visible');
@@ -664,20 +665,20 @@ test('chain applies independent connected water counts with bilingual movement-o
  expect(after.save.state.battle.extended.support).toEqual(before.save.state.battle.extended.support);
  expect(after.save.state.battle.attackers).toEqual(before.save.state.battle.attackers);expect(after.save.state.battle.defenders).toEqual(before.save.state.battle.defenders);
  const menu=page.locator('#utility-menu');if(await menu.getAttribute('open')===null)await menu.locator('summary').click();await page.locator('#event-history').click();
- await expect(page.locator('#event-description .event-facts')).toContainText('付与時カウント4／5／4');await page.locator('#event-dialog [data-language-picker]').selectOption('zh-Hant');
+ await expect(page.locator('#event-description .event-facts')).toContainText('付与時カウント'+cast.counts.join('／'));await page.locator('#event-dialog [data-language-picker]').selectOption('zh-Hant');
  await expect(page.locator('#event-description .event-facts')).toContainText('3支水上敵隊');await expect(page.locator('#event-dialog .event-person img').first()).toBeVisible();
  await evidence(page,testInfo,'chain-independent-water-event-tc');await dismissEvents(page);expect(await save(page)).toEqual(after.save);
  proof.push({kind:'cast',targets:cast.targets,counts:cast.counts,bridge:cast.bridge,draws:4,event:after.save.state.extension.events.items.at(-1).details});
  await load(page,restricted.save,'controlled-chain-restricted.json');await page.locator(`[data-actor="${restricted.target}"]`).click();await page.locator(`[data-target="${restricted.actor}"]`).click();
- const locked=await read(page);await expect(page.locator(`[data-actor="${restricted.target}"] [data-chain-count="4"]`)).toBeVisible();
+ const locked=await read(page);await expect(page.locator(`[data-actor="${restricted.target}"] [data-chain-count="${restrictedCount}"]`)).toBeVisible();
  expect(locked.view.catalog.battle_tactical.actors[String(restricted.target)].reachable).toEqual([]);
  await expect(page.locator('#battle-move')).toBeDisabled();await expect(page.locator('#attack')).toBeEnabled();await expect(page.locator('#duel')).toBeEnabled();
  await locale(page,'ja');await expect(page.locator('.battle-move-reason')).toContainText('連環により移動できません');
  await page.locator(`[data-actor="${restricted.target}"]`).focus();await page.keyboard.press('ArrowRight');await page.keyboard.press('Enter');expect(await save(page)).toEqual(locked.save);
  await evidence(page,testInfo,'chain-locked-attack-enabled-ja');
  await control(page,'tactic');await page.locator('#tactic-choice').selectOption('0');await expect(page.locator('#confirm-tactic')).toBeEnabled();await page.locator('#confirm-tactic').click();const fire=await animation(page);
- expect(fire.save.state.battle.extended.conditions.units[String(restricted.target)]).toEqual({kind:'chain',remaining:4});
- await control(page,'attack');await idle(page);const contact=await save(page);expect(contact.state.battle.extended.siege).toBeTruthy();expect(contact.state.battle.extended.conditions.units[String(restricted.target)]).toEqual({kind:'chain',remaining:4});proof.push({kind:'restricted',attack:true,tactic:true,own_lock_preserved:true});
+ expect(fire.save.state.battle.extended.conditions.units[String(restricted.target)]).toEqual({kind:'chain',remaining:restrictedCount});
+ await control(page,'attack');await idle(page);const contact=await save(page);expect(contact.state.battle.extended.siege).toBeTruthy();expect(contact.state.battle.extended.conditions.units[String(restricted.target)]).toEqual({kind:'chain',remaining:restrictedCount});proof.push({kind:'restricted',attack:true,tactic:true,own_lock_preserved:true});
  await load(page,expiry.save,'controlled-chain-expiry.json');await expect(page.locator(`[data-target="${expiry.target}"] [data-chain-count="1"]`)).toBeVisible();
  const expiryBefore=await read(page);await control(page,'battle-wait');const expired=await animation(page);
  expect(expired.save.state.battle.round).toBe(expiryBefore.save.state.battle.round+1);expect(expired.save.state.rng).toEqual(expiryBefore.save.state.rng);expect(expired.save.state.battle.extended.conditions.units[String(expiry.target)]).toBeUndefined();
@@ -689,18 +690,22 @@ test('chain applies independent connected water counts with bilingual movement-o
 test('qimen targets enemies with daily losses and experience, bilingual receipts and exact zero-troop expiry',async({page},testInfo)=>{
  await opening(page);
  const [cast,restricted,daily,expiry]=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_qimen_fixture.py',import.meta.url).pathname],{encoding:'utf8',maxBuffer:16*1024*1024,timeout:90_000})),proof=[];
+ // The new spatial success gate selects a different ordinary fixture seed.
+ // Preserve the actual post-cast reference and every RNG/loss assertion,
+ // rather than couple presentation checks to the old seed's duration.
+ const castCount=restricted.count;expect(castCount).toBeGreaterThanOrEqual(6);expect(castCount).toBeLessThanOrEqual(9);
  await load(page,cast.save,'controlled-qimen-cast.json');await page.locator(`[data-actor="${cast.actor}"]`).click();await page.locator(`[data-target="${cast.target}"]`).click();
  const before=await read(page);await control(page,'tactic');await page.locator('#tactic-choice').selectOption('15');
  const forecast=page.locator('#tactic-effect-preview .tactic-effect-forecast:visible');await expect(forecast).toContainText('最後一次也損兵');await page.locator('#dialog-language').selectOption('ja');await expect(forecast).toContainText('自軍の盾ではなく');expect(await save(page)).toEqual(before.save);
  await page.locator('#confirm-tactic').click();const castResult=await animation(page);
  expect(castResult.save.state.rng.draws-before.save.state.rng.draws).toBe(2);expect(castResult.save.state.battle.extended.tactical.points.attackers).toBe(before.save.state.battle.extended.tactical.points.attackers-10);
- expect(castResult.save.state.battle.extended.conditions.units[String(cast.target)]).toEqual({kind:'qimen',remaining:7});
+ expect(castResult.save.state.battle.extended.conditions.units[String(cast.target)]).toEqual({kind:'qimen',remaining:castCount});
  expect(castResult.save.state.battle.extended.support).toEqual(before.save.state.battle.extended.support);expect(castResult.save.state.battle.attackers).toEqual(before.save.state.battle.attackers);expect(castResult.save.state.battle.defenders).toEqual(before.save.state.battle.defenders);
- await expect(page.locator(`[data-target="${cast.target}"] [data-qimen-count="7"]`)).toBeVisible();proof.push({kind:'cast',draws:2,count:7,guard_created:false});
+ await expect(page.locator(`[data-target="${cast.target}"] [data-qimen-count="${castCount}"]`)).toBeVisible();proof.push({kind:'cast',draws:2,count:castCount,guard_created:false});
  await load(page,restricted.save,'controlled-qimen-restricted.json');await page.locator(`[data-actor="${restricted.locked_actor}"]`).click();await page.locator(`[data-target="${restricted.enemy}"]`).click();const locked=await read(page);
  await expect(page.locator('#battle-move')).toBeDisabled();await expect(page.locator('#attack')).toBeEnabled();await expect(page.locator('#duel')).toBeEnabled();expect(locked.view.catalog.battle_tactical.actors[String(restricted.locked_actor)].reachable).toEqual([]);
  await locale(page,'ja');await expect(page.locator('.battle-move-reason')).toContainText('奇門遁甲により移動できません');await page.locator(`[data-actor="${restricted.locked_actor}"]`).focus();await page.keyboard.press('ArrowRight');await page.keyboard.press('Enter');expect(await save(page)).toEqual(locked.save);await evidence(page,testInfo,'qimen-enemy-lock-no-self-shield-ja');
- await control(page,'tactic');await page.locator('#tactic-choice').selectOption('0');await page.locator('#confirm-tactic').click();const fire=await animation(page);expect(fire.save.state.battle.extended.conditions.units[String(restricted.locked_actor)].remaining).toBe(7);
+ await control(page,'tactic');await page.locator('#tactic-choice').selectOption('0');await page.locator('#confirm-tactic').click();const fire=await animation(page);expect(fire.save.state.battle.extended.conditions.units[String(restricted.locked_actor)].remaining).toBe(castCount);
  await control(page,'attack');await idle(page);expect((await save(page)).state.battle.extended.siege).toBeTruthy();proof.push({kind:'restricted',attack:true,tactic:true,own_counter_preserved:true});
  for(const row of[daily,expiry]){
   await load(page,row.save,'controlled-qimen-'+row.kind+'.json');const prior=await read(page);await control(page,'battle-wait');const result=await animation(page),expected=row.expected_daily;
@@ -710,8 +715,8 @@ test('qimen targets enemies with daily losses and experience, bilingual receipts
   expect(result.save.state.battle.extended.conditions.units[String(row.target)]).toEqual(expected.count?{kind:'qimen',remaining:expected.count}:undefined);
   expect(result.save.state.battle.extended.conditions.high_order).toEqual(prior.save.state.battle.extended.conditions.high_order);
   if(row.kind==='daily'){
-   const menu=page.locator('#utility-menu');if(await menu.getAttribute('open')===null)await menu.locator('summary').click();await page.locator('#event-history').click();await expect(page.locator('#event-title')).toContainText('奇門の日界効果');await expect(page.locator('#event-description .event-facts')).toContainText('損兵合計108');
-   await page.locator('#event-dialog [data-language-picker]').selectOption('zh-Hant');await expect(page.locator('#event-title')).toContainText('奇門日界效果');await expect(page.locator('#event-description .event-facts')).toContainText('增加經驗96');await expect(page.locator('#event-dialog .event-person img').first()).toBeVisible();await evidence(page,testInfo,'qimen-daily-committed-loss-and-xp-tc');await dismissEvents(page);expect(await save(page)).toEqual(result.save);
+   const menu=page.locator('#utility-menu');if(await menu.getAttribute('open')===null)await menu.locator('summary').click();await page.locator('#event-history').click();await expect(page.locator('#event-title')).toContainText('奇門の日界効果');await expect(page.locator('#event-description .event-facts')).toContainText('損兵合計'+expected.rows.reduce((sum,tick)=>sum+tick.loss,0));
+   await page.locator('#event-dialog [data-language-picker]').selectOption('zh-Hant');await expect(page.locator('#event-title')).toContainText('奇門日界效果');await expect(page.locator('#event-description .event-facts')).toContainText('增加經驗'+expected.experience_gain);await expect(page.locator('#event-dialog .event-person img').first()).toBeVisible();await evidence(page,testInfo,'qimen-daily-committed-loss-and-xp-tc');await dismissEvents(page);expect(await save(page)).toEqual(result.save);
   }else{
    expect(prior.save.state.battle.defenders.find(u=>u.id===row.target).troops).toBe(0);expect(result.save.state.rng.draws-prior.save.state.rng.draws).toBe(1);await expect(page.locator(`[data-target="${row.target}"] [data-qimen-count]`)).toHaveCount(0);
   }
@@ -781,4 +786,35 @@ test('native AI deployment keeps commanders and grouped martial order while shar
  for(const unit of legacy.state.battle.defenders)expect(continued.save.state.battle.extended.tactical.positions[String(unit.id)]).toEqual(legacy.state.battle.extended.tactical.positions[String(unit.id)]);
  expect(domain(continued.save)).toEqual(domain(legacy));proof.push({kind:'controlled_legacy_pending',not_retrofitted:true});
  await attach(testInfo,'ai-deployment-proof',proof);expect(pageErrors.get(page)).toEqual([]);
+});
+
+test('general tactic forecasts share native distance and tier rules without drawing results',async({page},testInfo)=>{
+ await opening(page);
+ const rows=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_general_tactic_fixture.py',import.meta.url).pathname],{encoding:'utf8',maxBuffer:16*1024*1024,timeout:90_000})),proof=[];
+ for(const row of rows){
+  await load(page,row.save,'controlled-general-distance-'+row.distance+'.json');await page.locator(`[data-actor="${row.actor}"]`).click();await page.locator(`[data-target="${row.target}"]`).click();
+  const before=await read(page),quotes=before.view.catalog.battle_tactical.actors[String(row.actor)].tactic_previews;
+  expect(quotes['2'][String(row.target)]).toEqual(row.preview);
+  await control(page,'tactic');const forecast=page.locator('#tactic-effect-preview .tactic-effect-forecast:visible');
+  for(const tid of ['0','2']){
+   await page.locator('#tactic-choice').selectOption(tid);
+   await expect(forecast).toHaveAttribute('data-tactic-success',String(row.percent));
+   for(const language of ['zh-Hant','ja']){
+    await page.locator('#dialog-language').selectOption(language);
+    await expect(forecast).toContainText(language==='ja'?'プレイヤー／AI共通':'玩家／AI共用');
+    await expect(forecast).toContainText(language==='ja'?'経験等級':'經驗等級');
+    if(tid==='0')await expect(forecast).toContainText(language==='ja'?`距離 ${row.distance}マス`:`距離 ${row.distance} 格`);
+    expect(await save(page)).toEqual(before.save,'Changing a quote/language must not pay or sample');
+   }
+  }
+  await evidence(page,testInfo,'general-distance-'+row.distance+'-ja');
+  await page.locator('#confirm-tactic').click();const after=await animation(page);
+  expect(after.save.state.rng).toEqual(row.expected_rng);expect(after.save.state.battle.extended.tactical.points.attackers).toBe(before.save.state.battle.extended.tactical.points.attackers-4);
+  expect(after.save.state.extension.events.items.at(-1).details.success).toBe(row.expected_success);
+  expect(after.save.state.battle.extended.conditions?.units?.[String(row.target)]?.remaining??0).toBe(row.expected_success?3:0);
+  expect(after.save.state.battle.attackers).toEqual(before.save.state.battle.attackers);expect(after.save.state.battle.defenders).toEqual(before.save.state.battle.defenders);
+  await load(page,after.save,'committed-general-distance-'+row.distance+'.json');expect(await save(page)).toEqual(after.save);
+  proof.push({distance:row.distance,threshold:row.percent,sample:row.sample,success:row.expected_success,rng:after.save.state.rng,roundtrip:true,preview_pure:true});
+ }
+ await attach(testInfo,'general-tactic-proof',proof);expect(pageErrors.get(page)).toEqual([]);
 });

@@ -533,7 +533,7 @@ def view(game, state, battle):
         from . import battle_services, tactic_effects
         previews={str(tid): {str(target['id']): tactic_effects.preview(state,battle,actor,target,own,foe,tid)
                    for target in battle[foe] if not tactic_reasons[str(tid)][str(target['id'])]}
-                  for tid in (2,5,8,10,15)}
+                  for tid in range(len(TACTICS)) if tid!=11}
         actors[str(actor['id'])] = dict(can_act=bool(can_act), reason=reason,
             move_reason=movement_reason,
             facility=battle_services.quote(game,state,battle,actor,own) if can_act else None,

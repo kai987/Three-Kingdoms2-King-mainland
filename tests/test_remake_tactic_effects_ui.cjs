@@ -69,3 +69,103 @@ const qdaily={tactic:15,success:true,condition:'qimen',qimen_phase:'daily',qimen
 assert(events.validEvent(event(qdaily)));assert(events.validEvent(event({...qdaily,qimen_ticks:[{...qtick,troops_before:0,loss:0}]})));
 for(const patch of [{success:false},{experience_gain:2551},{experience_gain:true},{qimen_ticks:[]},{qimen_ticks:[qtick,qtick]},{qimen_ticks:[{...qtick,remaining:1}]},{qimen_ticks:[{...qtick,troops_after:1}]},{qimen_ticks:[{...qtick,loss:79,troops_before:79,troops_after:0,extra:1}]}])assert(!events.validEvent(event({...qdaily,...patch})),JSON.stringify(patch));
 console.log('Qimen: bilingual enemy forecasts, source pause, high count clears and strict cast/daily receipts passed');
+
+// B02B's fourteen actual common-gate dispatches share source-qualified UI
+// metadata. Conversion8 and self-target ambush11 remain distinct. These are
+// committed backend quotes, not a second JavaScript probability calculation.
+const generalIds=[0,1,2,3,4,5,6,7,9,10,12,13,14,15];
+const generalView=structuredClone(view);
+generalView.catalog.battle_tactical.tactic_costs=[6,5,4,6,7,8,8,8,10,9,9,10,10,8,12,10];
+generalView.catalog.battle_tactical.actors[1].tactic_previews={};
+for(const tid of generalIds){
+ const extra=tid===2?phantom:tid===5?fire:tid===10?chain:tid===15?qimen:{};
+ generalView.catalog.battle_tactical.actors[1].tactic_previews[tid]={2:{...extra,
+  schema:'tk2-tactic-effect-preview-v1',tactic:tid,success_gate:'shared_native',
+  distance:1,shared_bonus:10,success_percent:5}};
+}
+const allGeneralBefore=JSON.stringify(generalView);
+for(const tid of generalIds){
+ const quote=effects.forecast(generalView,1,2,tid);
+ assert(quote,'Every real general gate has a forecast: '+tid);
+ assert.equal(quote.success_percent,5,'The original legal signed-byte edge must not be presented as95%');
+ for(const locale of ['zh-Hant','ja']){
+  const html=effects.summary(generalView,1,2,tid,{locale});
+  assert(html.includes('data-tactic-effect-forecast="'+tid+'"'));
+  assert(html.includes('data-tactic-success="5"'));
+  assert(html.includes('成功率 5%'));
+  assert(html.includes(locale==='ja'?'プレイヤー／AI共通':'玩家／AI共用'));
+  assert(html.includes(locale==='ja'?'経験等級':'經驗等級'));
+  assert(!html.includes(locale==='ja'?'成功判定は本作の方式':'沿用本作成功判定'));
+  if(![2,5,10,15].includes(tid)){
+   assert(html.includes(locale==='ja'?'距離 1マス':'距離 1 格'));
+   assert(html.includes(locale==='ja'?'表示では抽選しません':'預覽不抽取結果'));
+  }
+ }
+ const both=effects.summary(generalView,1,2,tid);
+ assert(both.includes('data-locale-only="zh-Hant"'));
+ assert(both.includes('data-locale-only="ja"'));
+}
+assert.equal(JSON.stringify(generalView),allGeneralBefore);
+function alteredGeneral(patch,tid=0){
+ const next=structuredClone(generalView);
+ Object.assign(next.catalog.battle_tactical.actors[1].tactic_previews[tid][2],patch);
+ return next;
+}
+for(const patch of [
+ {success_gate:'native-ai-difficulty'},{success_gate:true},{success_gate:null},
+ {distance:-1},{distance:31},{distance:true},{distance:1.5},{distance:'1'},
+ {shared_bonus:5},{shared_bonus:20},{shared_bonus:true},{shared_bonus:'10'},
+ {success_percent:0},{success_percent:4},{success_percent:96},{success_percent:100},
+ {success_percent:true},{success_percent:'5<script>'},
+ {distance:6,success_percent:5},{distance:30,success_percent:95},
+]){
+ const invalid=alteredGeneral(patch);
+ assert.equal(effects.forecast(invalid,1,2,0),null,JSON.stringify(patch));
+ assert.equal(effects.summary(invalid,1,2,0,{locale:'ja'}),'','Bad shared metadata has no misleading label');
+}
+for(const patch of [{distance:0,success_percent:5},{distance:5,success_percent:95},
+                    {distance:6,success_percent:0},{distance:30,success_percent:0}]){
+ const accepted=alteredGeneral(patch);
+ assert(effects.forecast(accepted,1,2,0));
+ for(const locale of ['zh-Hant','ja']){
+  const html=effects.summary(accepted,1,2,0,{locale});
+  assert(html.includes('data-tactic-success="'+patch.success_percent+'"'));
+  assert(html.includes(locale==='ja'?`距離 ${patch.distance}マス`:`距離 ${patch.distance} 格`));
+ }
+}
+for(const tid of [0,1,3,4,6,7,9,12,13,14]){
+ const incomplete=structuredClone(generalView);
+ delete incomplete.catalog.battle_tactical.actors[1].tactic_previews[tid][2].success_gate;
+ assert.equal(effects.forecast(incomplete,1,2,tid),null,'New generic forecast requires a gate source');
+}
+const oldGeneral=alteredGeneral({success_gate:'legacy_nonspatial',success_percent:60});
+delete oldGeneral.catalog.battle_tactical.actors[1].tactic_previews[0][2].distance;
+delete oldGeneral.catalog.battle_tactical.actors[1].tactic_previews[0][2].shared_bonus;
+assert(effects.forecast(oldGeneral,1,2,0));
+assert(effects.summary(oldGeneral,1,2,0,{locale:'ja'}).includes('成功判定は本作の方式'));
+assert(!effects.summary(oldGeneral,1,2,0,{locale:'ja'}).includes('プレイヤー／AI共通'));
+for(const patch of [{distance:1},{shared_bonus:10}]){
+ const partial=structuredClone(oldGeneral);
+ Object.assign(partial.catalog.battle_tactical.actors[1].tactic_previews[0][2],patch);
+ assert.equal(effects.forecast(partial,1,2,0),null,'Legacy quote cannot masquerade as a partial spatial quote');
+}
+const wrongConversion=structuredClone(view);
+Object.assign(wrongConversion.catalog.battle_tactical.actors[1].tactic_previews[8][2],
+ {success_gate:'shared_native',distance:1,shared_bonus:10});
+assert.equal(effects.forecast(wrongConversion,1,2,8),null,'The separate loyalty gate cannot claim B7BE metadata');
+const wrongAmbush=structuredClone(generalView);
+wrongAmbush.catalog.battle_tactical.actors[1].tactic_previews[11]={2:{
+ schema:'tk2-tactic-effect-preview-v1',tactic:11,success_percent:5,
+ success_gate:'shared_native',distance:1,shared_bonus:10}};
+assert.equal(effects.forecast(wrongAmbush,1,2,11),null,'Self-target ambush has no shared gate');
+const frozenGeneral=structuredClone(generalView);
+function freeze(value){if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;}
+freeze(frozenGeneral);
+const originalRandom=Math.random;
+try{
+ Math.random=()=>{throw Error('Forecast rendering must never sample a result');};
+ for(let repeat=0;repeat<3;repeat++)for(const tid of generalIds)for(const locale of ['zh-Hant','ja'])
+  assert(effects.summary(frozenGeneral,1,2,tid,{locale}).includes('data-tactic-success="5"'));
+}finally{Math.random=originalRandom;}
+assert.equal(JSON.stringify(generalView),allGeneralBefore,'All IDs/locales preserve the backend quote and saved state');
+console.log('general tactic forecasts: all14 real gates, original signed-byte5% edge, native/legacy source boundaries, range0..30, bilingual shared rules and read-only/no-random rendering passed');

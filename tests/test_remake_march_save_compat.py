@@ -185,7 +185,15 @@ class MarchCampaignNativeCompatibilityTests(unittest.TestCase):
                     with using_backend('python'):
                         confirm_default_placement(PlacementCommands())
                     continue
-                kind, payload = 'retreat', {'battle_id': state.battle['id']}
+                if state.battle['extended']['duel']:
+                    kind, payload = 'duel_action', {'battle_id': state.battle['id'], 'move': 'withdraw'}
+                elif state.battle['extended'].get('siege'):
+                    # A real enemy contact can now precede this defensive
+                    # driver's retreat. Leave that encounter publicly first;
+                    # never erase it or bypass either backend's transaction.
+                    kind, payload = 'siege_withdraw', {'battle_id': state.battle['id']}
+                else:
+                    kind, payload = 'retreat', {'battle_id': state.battle['id']}
             elif state.phase == 'result':
                 kind, payload = 'settle', {'battle_id': state.battle['id']}
             else:
