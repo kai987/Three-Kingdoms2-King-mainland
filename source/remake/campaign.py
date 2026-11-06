@@ -13,7 +13,7 @@ from threading import RLock
 from types import SimpleNamespace
 
 from .errors import GameError
-from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply
+from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from .city_economy import income_at
@@ -356,6 +356,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                'recruit': self._recruit, 'depart': self._depart,
                                'attack': self._attack, 'retreat': self._retreat, 'settle': self._settle,
                                'battle_move':self._battle_move, 'battle_wait':self._battle_wait,
+                               'battle_place':self._battle_place,
                                'battle_facility':self._battle_facility,
                                **{action:self._siege_command(action) for action in
                                   ('siege_form','siege_orders','siege_step','siege_withdraw')},
@@ -374,6 +375,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                'equip_owned':lambda state,payload:equipment.equip_owned(self,state,payload,state.player)}
                     if kind not in methods:
                         raise GameError('未提供这项操作。')
+                    if (candidate.battle and battle_placement.pending(candidate.battle)
+                            and kind!='battle_place'):
+                        raise GameError(battle_placement.REASON)
                     if kind not in ('allocate', 'allocation_close'):
                         command_books.close_allocation(candidate, candidate.player)
                     if candidate.phase == 'battle' and kind in {
@@ -712,7 +716,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 # Existing current-catalog battles had presentation-only flags.
                 # Assign their first real cells once, preserving troops and RNG.
                 if candidate.battle and 'tactical' not in candidate.battle['extended']:
-                    if {'deployment','conditions'} & set(candidate.battle['extended']):
+                    if {'deployment','conditions','placement'} & set(candidate.battle['extended']):
                         raise ValueError('Modern battle is missing its saved positions')
                     tactical=battle_grid.initialize(self, candidate, candidate.battle)
                     # The former counter-based UI always saved on the player's

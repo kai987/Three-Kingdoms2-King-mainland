@@ -15,7 +15,7 @@ from remake.campaign import Campaign, Catalog, GameError, canonical
 from remake.officers import (CapacityError, CityRoster, YearState, select_deployment,
                             transfer_officers, year_state)
 from remake.session import CampaignSession
-from campaign_fixtures import advance_month
+from campaign_fixtures import advance_month,confirm_default_placement
 
 
 EXEMPT_OPENING = {'scenario_excluded', 'closed_career'}
@@ -312,6 +312,8 @@ class PlacementCompletionTests(unittest.TestCase):
                 elif phase == 'ai':
                     game.command('ai', {'turn': game.state.turn}, game.revision)
                 elif phase == 'battle':
+                    confirm_default_placement(game)
+                    if game.state.phase!='battle':continue
                     game.command('retreat', {'battle_id': game.state.battle['id']}, game.revision)
                 elif phase == 'result':
                     game.command('settle', {'battle_id': game.state.battle['id']}, game.revision)

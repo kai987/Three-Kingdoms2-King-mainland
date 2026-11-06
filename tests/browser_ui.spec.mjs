@@ -1887,7 +1887,8 @@ test('a natural August drought shows bilingual illustrated losses and preserves 
   else if(phase==='ai')await page.locator('#run-ai').click();
   else if(phase==='arrivals')await page.locator('#process-arrivals').click();
   else if(phase==='battle'){
-   await page.locator('#retreat').click();await expect(page.locator('#confirm-retreat')).toBeVisible();await page.locator('#confirm-retreat').click();
+   if(current.save.state.battle?.extended?.placement?.confirmed<current.save.state.battle?.extended?.placement?.order?.length)await page.locator('#battle-place-confirm').click();
+   else{await page.locator('#retreat').click();await expect(page.locator('#confirm-retreat')).toBeVisible();await page.locator('#confirm-retreat').click();}
   }else if(phase==='result')await page.locator('#settle').click();
   else throw new Error('The natural drought campaign unexpectedly finished before August: '+phase);
   await waitIdle(page);

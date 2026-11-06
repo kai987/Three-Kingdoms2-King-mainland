@@ -719,3 +719,36 @@ test('qimen targets enemies with daily losses and experience, bilingual receipts
  }
  await attach(testInfo,'qimen-condition-proof',proof);expect(pageErrors.get(page)).toEqual([]);
 });
+
+test('manual deployment places sequentially in native zones with zero-cost checkpoints and defender AI handoff',async({page},testInfo)=>{
+ await opening(page);
+ const [attacker,defender,last]=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_manual_deployment_fixture.py',import.meta.url).pathname],{encoding:'utf8',maxBuffer:16*1024*1024,timeout:90_000})),proof=[];
+ const domain=value=>{const state=structuredClone(value.state);delete state.battle.extended.placement;delete state.battle.extended.tactical.positions;return state;};
+ await load(page,attacker.save,'real-arrival-attacker-placement.json');const before=await read(page);
+ await expect(page.locator('[data-placement-progress]')).toHaveAttribute('data-placement-progress','0');await expect(page.locator('[data-placement-total]')).toHaveAttribute('data-placement-total','3');
+ await expect(page.locator('#attack')).toHaveCount(0);await expect(page.locator('#battle-wait')).toHaveCount(0);expect(before.view.catalog.battle_tactical.can_end).toBe(false);
+ expect(Object.keys(before.save.state.battle.extended.tactical.positions).sort()).toEqual(attacker.position_ids);expect(Object.values(before.view.catalog.battle_tactical.actors).every(a=>!a.can_act)).toBe(true);
+ await cell(page,attacker.keyboard_point,testInfo.project.name.startsWith('touch'));await idle(page);expect(await save(page)).toEqual(before.save,'Unconfirmed pointer preview is not a saved move');
+ const canvas=page.locator('[data-battle-canvas]');await canvas.focus();await page.keyboard.press('b');await page.keyboard.press('Escape');await page.keyboard.press('Shift');expect(await save(page)).toEqual(before.save);
+ await cell(page,attacker.future_default,testInfo.project.name.startsWith('touch'));await evidence(page,testInfo,'manual-placement-future-default-preview-tc');expect(await save(page)).toEqual(before.save);
+ // Real native Enter default actions are exercised while the key remains
+ // held; autorepeat must never confirm the next officer automatically.
+ await page.locator('#battle-place-confirm').focus();await page.keyboard.down('Enter');await idle(page);await expect(page.locator('[data-placement-progress]')).toHaveAttribute('data-placement-progress','1');const first=await read(page);
+ expect(first.save.state.battle.extended.tactical.positions[String(attacker.actor)]).toEqual(attacker.future_default);
+ expect(first.view.catalog.battle_tactical.placement.actor).toBe(attacker.expected_next.actor);expect(first.save.state.battle.extended.tactical.positions[String(attacker.expected_next.actor)]).toEqual(attacker.expected_next.default_point);
+ expect(Object.keys(first.save.state.battle.extended.tactical.positions).sort()).toEqual(attacker.expected_next.position_ids);expect(domain(first.save)).toEqual(domain(before.save));
+ await page.keyboard.down('Enter');await page.waitForTimeout(250);await idle(page);expect(await save(page)).toEqual(first.save,'Held Enter must not confirm a second officer');await page.keyboard.up('Enter');
+ await expect.poll(()=>page.evaluate(checksum=>{const raw=localStorage.getItem('three-kingdoms-autosaves-v1');if(!raw)return false;const rows=JSON.parse(raw);return rows.items?.some(row=>JSON.parse(row.raw).checksum===checksum)||false;},first.save.checksum)).toBe(true);
+ await load(page,first.save,'confirmed-placement-checkpoint.json');expect(await save(page)).toEqual(first.save);await expect(page.locator('[data-placement-progress]')).toHaveAttribute('data-placement-progress','1');
+ await locale(page,'ja');await expect(page.locator('#battle-place-confirm')).toContainText('この位置で確定');await expect(page.locator('#inspector')).toContainText('未確定の配置プレビューは保存しません');
+ for(let i=0;i<2;i++){await control(page,'battle-place-confirm');await idle(page);}
+ const ready=await read(page);expect(ready.save.state.battle.extended.placement.confirmed).toBe(3);expect(ready.view.catalog.battle_tactical.placement.pending).toBe(false);expect(domain(ready.save)).toEqual(domain(before.save));await expect(page.locator('#battle-place-confirm')).toHaveCount(0);await expect(page.locator('#battle-wait')).toBeEnabled();
+ proof.push({kind:'attacker',future_does_not_occupy:true,next_default:first.save.state.battle.extended.tactical.positions[String(attacker.expected_next.actor)],resource_domain_unchanged:true,autosave:true});
+ await load(page,defender.save,'real-arrival-defender-placement.json');const defenseBefore=await read(page);await expect(page.locator('[data-placement-total]')).toHaveAttribute('data-placement-total','10');
+ await expect(page.locator('#stage')).toContainText('相手は初期配置済み');await cell(page,defender.terrain_cells['3'],testInfo.project.name.startsWith('touch'));await control(page,'battle-place-confirm');await idle(page);const water=await read(page);
+ expect(water.save.state.battle.extended.tactical.positions[String(defender.actor)]).toEqual(defender.terrain_cells['3']);expect(domain(water.save)).toEqual(domain(defenseBefore.save));await evidence(page,testInfo,'manual-defender-commander-water-ja');proof.push({kind:'defender',commander_left_camp:true,water_legal:true,ai_has_not_acted:true});
+ await load(page,last.save,'real-defender-last-placement.json');await expect(page.locator('[data-placement-progress]')).toHaveAttribute('data-placement-progress','9');const lastBefore=await read(page);await control(page,'battle-place-confirm');const started=await animation(page);
+ expect(started.save.state.battle.extended.placement.confirmed).toBe(10);expect(started.save.state.battle.round).toBe(1);expect(started.save.state.battle.extended.supply.days).toBe(0);expect(started.save.state.battle.extended.tactical.side).toBe('defenders');expect(started.save.state.battle.extended.tactical.passed.attackers).toBe(true);expect(started.save.state.battle.extended.tactical.points.attackers).toBeLessThan(lastBefore.save.state.battle.extended.tactical.points.attackers);
+ await expect(page.locator('#battle-place-confirm')).toHaveCount(0);await expect(page.locator('#battle-wait')).toBeEnabled();await load(page,started.save,'completed-placement-ready-battle.json');expect(await save(page)).toEqual(started.save);proof.push({kind:'defender_last',first_attacker_ai_ran:true,round:1,food_days:0});
+ await attach(testInfo,'manual-deployment-proof',proof);expect(pageErrors.get(page)).toEqual([]);
+});

@@ -541,6 +541,20 @@
       "scenario_ids": [
         "mainland234-02"
       ]
+    },
+    {
+      "id": "manual-deployment",
+      "title": "manual deployment places sequentially in native zones with zero-cost checkpoints and defender AI handoff",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ],
+      "scenario_scope": "fixed",
+      "scenario_ids": [
+        "mainland217-07"
+      ]
     }
   ]
 }

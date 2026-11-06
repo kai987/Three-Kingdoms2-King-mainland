@@ -166,6 +166,19 @@ def controlled_catalog():
         return Catalog(path)
 
 
+def confirm_default_placement(game):
+    """Explicitly accept each real default for tests of post-placement rules.
+
+    This never removes the phase, edits its counter or bypasses the public
+    command. Tests of placement itself must not call this convenience helper.
+    """
+    from remake import battle_placement
+    while game.state.battle and battle_placement.pending(game.state.battle):
+        row=game.view()['catalog']['battle_tactical']['placement']
+        point=game.state.battle['extended']['tactical']['positions'][str(row['actor'])]
+        game.command('battle_place',dict(battle_id=game.state.battle['id'],actor=row['actor'],**point),game.revision)
+
+
 def reach_battle(game):
     """Advance the real calendar and arrival handler for a queued test army."""
     marches = game.state.extension['travel']['marches']
@@ -177,6 +190,7 @@ def reach_battle(game):
     game.state.phase = 'arrivals'
     game.command('arrivals', {}, game.revision)
     assert game.state.phase == 'battle'
+    confirm_default_placement(game)
     return game.state.battle['id']
 
 

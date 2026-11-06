@@ -159,6 +159,7 @@ class TacticalCampaignTests(unittest.TestCase):
         old = deepcopy(saved)
         del old['state']['battle']['extended']['tactical']
         old['state']['battle']['extended'].pop('deployment',None)
+        old['state']['battle']['extended'].pop('placement',None)  # Genuine pre-placement schema.
         old['checksum'] = digest({key: value for key, value in old.items() if key != 'checksum'})
         restored.load_save(old, restored.revision)
         self.assertEqual(vars(restored.state.rng), vars(self.game.state.rng))

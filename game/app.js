@@ -261,6 +261,7 @@ async function command(kind,payload={}){
   }
   if(kind==='new')checkpoint='new';
   else if(kind==='settle'||['result','finished'].includes(view.game?.phase))checkpoint='battle';
+  else if(kind==='battle_place')checkpoint='progress';
   else if(kind==='end_turn'||previousTurn!==view.game?.turn)checkpoint='turn';
   await scene?.play();
   if(!silentDialogue&&typeof showDialogueFeedback==='function')showDialogueFeedback(kind,payload,dialogueBefore,view);
@@ -1051,6 +1052,9 @@ function showPerson(id){
 function battleText(tc,ja){return `<span data-locale-only="zh-Hant" data-l10n-native="zh-Hant" ${GameI18n.locale==='ja'?'hidden':''}>${escapeHtml(tc)}</span><span data-locale-only="ja" data-l10n-native="ja" ${GameI18n.locale==='ja'?'':'hidden'}>${escapeHtml(ja)}</span>`;}
 function battlePlain(tc,ja){return GameI18n.locale==='ja'?ja:tc;}
 function battleTactical(){return typeof GameBattleScene==='undefined'?null:GameBattleScene.tacticalView(view);}
+function battlePlacement(){const p=battleTactical()?.placement;return p?.pending?p:null;}
+function placementPoint(){return battleDestination||battlePosition(battlePlacement()?.actor);}
+function placementAllowed(point){return !!point&&battlePlacement()?.cells?.some(p=>p.x===point.x&&p.y===point.y)===true;}
 function battlePosition(id){return typeof GameBattleScene==='undefined'?null:GameBattleScene.unitPosition(view,id);}
 function battleActor(){return battleTactical()?.actors?.[String(actor)]||null;}
 function battleTargetAllowed(kind){return view.game?.phase==='battle'&&battleActor()?.can_act===true&&(battleActor()?.[kind+'_targets']||[]).some(id=>String(id)===String(target));}
@@ -1058,11 +1062,13 @@ function battleActionReason(kind){const row=battleActor();return row?.[kind+'_re
 function battleMoveQuote(){return battleActor()?.reachable?.find(p=>p.x===battleDestination?.x&&p.y===battleDestination?.y)||null;}
 function selectBattleUnit(side,id){
  if(busy||view.game?.phase!=='battle')return;
+ if(battlePlacement())return;
  if(side==='actor')actor=id;else target=id;
  battleDestination=null;gameAudio.play('click');renderBattle();
 }
 function selectBattleCell(point){
  if(busy||view.game?.phase!=='battle'||!Number.isInteger(point?.x)||!Number.isInteger(point?.y)||point.x<0||point.x>=31||point.y<0||point.y>=19)return;
+ if(battlePlacement()&&!placementAllowed(point))return;
  battleDestination={x:point.x,y:point.y};renderBattle();
 }
 function navigateBattleCell(dx,dy){
@@ -1070,6 +1076,15 @@ function navigateBattleCell(dx,dy){
  selectBattleCell({x:Math.max(0,Math.min(30,point.x+dx)),y:Math.max(0,Math.min(18,point.y+dy))});
 }
 function battleKeyboard(event){
+ if(battlePlacement()){
+  if(event.defaultPrevented||event.isComposing||event.ctrlKey||event.metaKey||event.altKey||busy||dialog.open||document.querySelector('dialog[open]'))return;
+  const focus=event.target||document.activeElement;if(focus?.isContentEditable||focus?.closest?.('input,select,textarea,[contenteditable],[data-language-picker]'))return;
+  if(focus?.closest?.('button,a,summary,[role="button"]')&&!focus.closest?.('#stage,#inspector'))return;
+  const direction={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[event.key];
+  if(direction){event.preventDefault();navigateBattleCell(...direction);}
+  else if(event.key==='Enter'||event.key.toLowerCase()==='a'){event.preventDefault();if(!event.repeat)void confirmBattlePlacement();}
+  return;
+ }
  if(view?.game?.battle?.extended?.siege&&!view.game.battle.extended.duel){siegeUI?.keyboard(event);return;}
  if(event.defaultPrevented||event.isComposing||event.ctrlKey||event.metaKey||event.altKey||busy||(typeof battleScene!=='undefined'&&battleScene?.playing)||view?.game?.phase!=='battle'||view.game.battle?.extended?.duel||!battleActor()?.can_act)return;
  if(dialog.open||$('#event-dialog')?.open||document.querySelector('dialog[open]'))return;
@@ -1084,7 +1099,9 @@ function battleKeyboard(event){
  else if(event.key==='Enter'&&!event.repeat&&battleMoveQuote()&&(!focus?.closest?.('button,a,summary,[role="button"]')||focus.closest?.('[data-battle-nav],#battle-move,[data-actor],[data-target]'))){event.preventDefault();void confirmBattleMove();}
  else if(event.key==='Escape'&&battleDestination){event.preventDefault();battleDestination=null;renderBattle();}
 }
+async function confirmBattlePlacement(){const p=battlePlacement(),point=placementPoint();if(busy||!p||!placementAllowed(point))return false;return command('battle_place',{battle_id:view.game.battle.id,actor:p.actor,x:point.x,y:point.y});}
 async function confirmBattleMove(){
+ if(battlePlacement())return confirmBattlePlacement();
  if(busy||view.game?.phase!=='battle'||!battleMoveQuote()||!battleActor()?.can_act)return false;
  const b=view.game.battle,point={...battleDestination};return command('battle_move',{battle_id:b.id,actor,x:point.x,y:point.y});
 }
@@ -1163,6 +1180,17 @@ function renderSiege(b){
  siegeUI?.bind($('#inspector'));GameI18n.apply();
  restoreBattleView();
 }
+function renderBattlePlacement(board){
+ const game=view.game,b=game.battle,p=board.placement,own=p.side,foe=own==='attackers'?'defenders':'attackers';
+ actor=p.actor;target=b[foe][0]?.id??null;
+ const point=placementPoint(),legal=placementAllowed(point),current=String(actor),picture=battleScene?.html()||'';
+ const roster=b[own].map((u,index)=>`<div class="unit ${String(u.id)===current?'selected':''}" data-placement-unit="${u.id}" aria-current="${String(u.id)===current?'step':'false'}"><span class="officer-identity">${portraitHtml(u.id,'battle')}<span>${escapeHtml(name(u.id))}<small>${battleText(index<p.confirmed?'已確認':index===p.confirmed?'正在布陣':'待布陣',index<p.confirmed?'確定済み':index===p.confirmed?'配置中':'未配置')}</small></span></span><span class="troops">${u.troops}兵</span></div>`).join('');
+ const restore=updateBattleStage('tactical',`<div class="arena"><div class="arena-heading"><h2>${escapeHtml(cityName(b.target))} · ${battleText('戰前布陣','戦前配置')}</h2><span>${battleText('第1日','第1日')}</span></div><div class="battle-layout">${picture}<details class="battle-army-menu" open><summary>${battleText('布陣順序','配置順')}</summary><div class="armies"><section class="army"><h3>${battleText('本方','自軍')}</h3><div class="unit-list" data-placement-roster>${roster}</div></section><section class="army"><h3>${battleText('對方已按預設布陣','相手は初期配置済み')}</h3><p class="small">${battleText('尚未輪到的本方武將不會占位。','未配置の自軍武将はマスを占有しません。')}</p></section></div></details></div></div>`);
+ battleScene?.mount($('#stage [data-battle-scene]'),view,{actor,target,destination:point});
+ updateBattleControls(`<h2>${battleText('戰前布陣','戦前配置')}</h2><p class="battle-ap" data-placement-progress="${p.confirmed}" data-placement-total="${p.total}" role="status" aria-live="polite">${battleText(`已確認 ${p.confirmed}/${p.total} · 當前 ${p.confirmed+1}/${p.total}`,`確定済み ${p.confirmed}/${p.total}・現在 ${p.confirmed+1}/${p.total}`)}</p><p class="battle-selection">${portraitHtml(actor,'battle')} ${escapeHtml(name(actor))}</p><p>${battleText('選擇亮格，可用方向鍵或滑鼠／觸控調整目前武將的位置。山地與水格也可布陣。','明るいマスを選び、方向キー・マウス・タッチで現在の武将を配置します。山地や水上も配置可能です。')}</p><p class="small" role="status" data-placement-point>${point?battleText(`位置 ${point.x+1},${point.y+1}`,`位置 ${point.x+1},${point.y+1}`):'—'}</p><div class="battle-move-controls">${[['left','←',-1,0],['up','↑',0,-1],['down','↓',0,1],['right','→',1,0]].map(([id,label,dx,dy])=>`<button type="button" data-placement-nav="${id}" aria-label="${battlePlain('調整位置：','配置先を調整：')+label}" ${!point||!placementAllowed({x:point.x+dx,y:point.y+dy})?'disabled':''}>${label}</button>`).join('')}</div><button type="button" id="battle-place-confirm" class="primary" ${!legal?'disabled':''}>${battleText('確認此將位置 · Enter／A','この位置で確定・Enter／A')}</button><p class="small">${battleText('布陣不消耗機動力、命令書或額外兵糧；最後一將確認後開始戰鬥。','配置で機動力・命令書・追加の兵糧は消費しません。最後の武将を確定すると戦闘開始です。')}</p><p class="small">${battleText('每將確認後保存進度；未確認的位置預覽不會寫入存檔。','武将ごとの確定時点を保存します。未確定の配置プレビューは保存しません。')}</p>`);
+ document.querySelectorAll('[data-placement-nav]').forEach(button=>button.onclick=()=>navigateBattleCell(...({left:[-1,0],up:[0,-1],down:[0,1],right:[1,0]}[button.dataset.placementNav])));
+ $('#battle-place-confirm').onclick=confirmBattlePlacement;GameI18n.apply();restore();
+}
 function renderBattle(){
  if(mapNavigation){mapNavigation.destroy();mapNavigation=null;}
  const game=view.game,b=game.battle;
@@ -1171,6 +1199,7 @@ function renderBattle(){
  if(typeof siegeUI!=='undefined')siegeUI?.reset();
  const key=[view.catalog.scenario_id,b.id,view.revision].join(':');if(key!==battleViewKey){battleViewKey=key;battleDestination=null;}
  const board=battleTactical();
+ if(board?.placement?.pending)return renderBattlePlacement(board);
  const own=b.attacker===game.player?'attackers':'defenders',foe=own==='attackers'?'defenders':'attackers',friendly=b[own],hostile=b[foe];
  const available=u=>{const q=board?.actors?.[String(u.id)];return(q?.reachable?.length||0)+(q?.attack_targets?.length||0)+Object.values(q?.tactic_targets||{}).reduce((sum,ids)=>sum+ids.length,0);};
  const usable=friendly.filter(u=>u.troops>0&&board?.actors?.[String(u.id)]?.can_act).sort((a,b)=>Number(available(b)>0)-Number(available(a)>0)),enemies=hostile.filter(u=>u.troops>0);

@@ -143,6 +143,7 @@ def initialize(game, state, battle, *, directional=False, arrival_city=None):
 
 
 def validate(game, state, battle):
+    from . import battle_placement
     row = battle['extended'].get('tactical')
     conversions=battle['extended'].get('defections',{})
     if not isinstance(conversions,dict) or any(not isinstance(value,dict) for value in conversions.values()):
@@ -151,7 +152,8 @@ def validate(game, state, battle):
     if (not isinstance(row, dict) or set(row) != {'schema', 'map_id', 'positions', 'side', 'points', 'passed'}
             or row['schema'] != SCHEMA or row['map_id'] != field_id(battle['target'])
             or row['side'] not in SIDES or not isinstance(row['positions'], dict)
-            or set(row['positions']) != identities
+            or (not battle_placement.pending(battle) and set(row['positions']) != identities)
+            or set(row['positions'])-identities
             or not isinstance(row['points'], dict) or set(row['points']) != set(SIDES)
             or any(not _int(value, 0, POINT_CAPS[-1]) for value in row['points'].values())
             or not isinstance(row['passed'], dict) or set(row['passed']) != set(SIDES)
@@ -161,6 +163,7 @@ def validate(game, state, battle):
     if 'deployment' in battle['extended']:
         from . import battle_deployment
         battle_deployment.validate_provenance(game.catalog,battle,_field(battle),battle['extended']['deployment'])
+    battle_placement.validate(game,state,battle)
     for side in SIDES:
         starts = [unit.get('start') for unit in battle[side]]
         original_starts = [unit.get('start') for current in SIDES for unit in battle[current]
@@ -184,6 +187,9 @@ def validate(game, state, battle):
 
 
 def _action_reason(battle, actor, side=None):
+    from . import battle_placement
+    if battle_placement.pending(battle):
+        return battle_placement.REASON
     own, unit = _unit(battle, actor)
     row = battle['extended'].get('tactical')
     if unit is None or not _live(battle, unit):
@@ -495,8 +501,17 @@ def view(game, state, battle):
     own = 'attackers' if battle['attacker'] == state.player else 'defenders'
     foe = 'defenders' if own == 'attackers' else 'attackers'
     terrain = game.catalog.map_cities[battle['target']]['terrain']
+    from . import battle_placement
+    placement = battle_placement.view(game,state,battle)
+    placing = bool(placement and placement['pending'])
     actors = {}
     for actor in battle[own]:
+        if placing:
+            actors[str(actor['id'])] = dict(can_act=False,reason=battle_placement.REASON,
+                move_reason=battle_placement.REASON,facility=None,reachable=[],
+                attack_targets=[],duel_targets=[],tactic_targets={str(tid):[] for tid in range(len(TACTICS))},
+                attack_reasons={},duel_reasons={},tactic_reasons={},tactic_previews={})
+            continue
         reason = _action_reason(battle, actor, own)
         can_act = not reason and row['points'][own] > 0 and state.phase == 'battle'
         cells = []
@@ -529,7 +544,7 @@ def view(game, state, battle):
     return dict(schema=VIEW_SCHEMA, battle_id=battle['id'], round=battle['round'], map_id=row['map_id'],
         grid=dict(columns=COLUMNS, rows=ROWS, tile_size=TILE_SIZE), side=row['side'],
         camp=dict(zip(('x','y'),_field(battle)['camp'])), facilities=[dict(service) for service in _field(battle).get('services',())],
-        maximum_troops=1000, deployment=deepcopy(battle['extended'].get('deployment')),
+        maximum_troops=1000, deployment=deepcopy(battle['extended'].get('deployment')),placement=placement,
         points=deepcopy(row['points']), caps={side: point_cap(_troops(battle, side)) for side in SIDES},
-        can_end=state.phase == 'battle' and row['side'] == own and not battle['extended']['duel'],
+        can_end=not placing and state.phase == 'battle' and row['side'] == own and not battle['extended']['duel'],
         attack_cost=ATTACK_COST, duel_cost=DUEL_COST, tactic_costs=list(TACTIC_COSTS), actors=actors)

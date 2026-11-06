@@ -5,7 +5,7 @@ remake designs. No original engine, ROM tables or control IR are loaded.
 """
 from dataclasses import replace
 from .errors import GameError
-from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services, officer_relations, battle_supply, battle_conditions
+from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services, officer_relations, battle_supply, battle_conditions, battle_placement
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
                        parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref, appearance_values)
@@ -203,7 +203,7 @@ class ExpandedCampaign:
         for ident in ids: self._personnel_actor(state,source,ident)
         self._queue_march(state,source,destination,ids,'transfer',payload.get('route_mode','fastest'))
 
-    def _start_expanded_battle(self,state,source,target,ids,*,paid=False,march_supply=None,arrival_city=None):
+    def _start_expanded_battle(self,state,source,target,ids,*,paid=False,march_supply=None,arrival_city=None,manual_deployment=False):
         if not paid: command_books.require(state, source.owner, 'depart')
         selected=select_deployment(source.roster,ids,state.officers)
         cost=0 if paid else max(1,sum(state.officers[i].troops for i in selected)//25)
@@ -236,7 +236,26 @@ class ExpandedCampaign:
         # Deployment makes participants unavailable for local civil duties.
         from . import treasures
         treasures.synchronize(self,state)
-        if state.phase=='battle' and state.player==target.owner:
+        # Only an interactive arrival requests this new setup stage. Private
+        # preconfigured battle constructors keep their existing ready layout.
+        if manual_deployment and state.phase=='battle':
+            battle_placement.initialize(self,state,state.battle)
+        if state.phase=='battle' and state.player==target.owner and not battle_placement.pending(state.battle):
+            self._run_tactical_ai_turn(state)
+
+    def _battle_place(self,state,payload):
+        b=state.battle
+        if (state.phase!='battle' or not b or payload.get('battle_id')!=b['id']
+                or set(payload)!={'battle_id','actor','x','y'} or not battle_placement.pending(b)):
+            raise GameError('目前沒有待確認的武將布陣。')
+        try:
+            ident=parse_officer_ref(payload.get('actor'),self.catalog.rules)
+        except (TypeError,ValueError):
+            raise GameError('請選擇目前待布陣的武將。') from None
+        battle_placement.confirm(self,state,b,ident,payload['x'],payload['y'])
+        # Attacker-first remains the battle rule. A defending human gets to
+        # place everyone before this one existing opening AI phase can run.
+        if not battle_placement.pending(b) and state.player==b['defender']:
             self._run_tactical_ai_turn(state)
 
     def _player_sides(self,state):
@@ -325,6 +344,8 @@ class ExpandedCampaign:
 
     def _end_tactical_side(self,state):
         b=state.battle
+        if battle_placement.pending(b):
+            raise GameError(battle_placement.REASON)
         battle_supply.ensure(state,b)
         change=battle_grid.end_side(state,b)
         b['used']=[]
@@ -370,7 +391,7 @@ class ExpandedCampaign:
         from .difficulty import get_settings
         from .tactical_ai import choose_action
         b=state.battle
-        if not b or 'tactical' not in b['extended']:return
+        if not b or 'tactical' not in b['extended'] or battle_placement.pending(b):return
         player_side,_=self._player_sides(state)
         for _ in range(128):  # maximum60 AP, bounded paid facility visits, and pass
             if state.phase!='battle' or b['extended']['duel'] or b['extended'].get('siege'):return
@@ -1028,7 +1049,7 @@ class ExpandedCampaign:
         if not b:return
         e=b['extended']
         expected={'support','duel','duel_history','ambush','surrenders','withdrawn','tactical'}
-        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation','supply','deployment','conditions'}:raise ValueError('battle extended fields')
+        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation','supply','deployment','conditions','placement'}:raise ValueError('battle extended fields')
         battle_grid.validate(self,state,b)
         battle_conditions.validate(b)
         battle_supply.validate(state,b)

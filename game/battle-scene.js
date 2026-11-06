@@ -377,12 +377,12 @@
    return cells.filter(cell).map(p=>({x:p.x*16+8,y:p.y*16+8}));
   }
   function positions(state){
-   const out=new Map();for(const unit of state.units){const p=animationPositions?.get(String(unit.id))||unitPosition(view,unit.id);if(p)out.set(unit.id,{gx:p.x,gy:p.y,x:p.x*16+8,y:p.y*16+8});}
+   const out=new Map();for(const unit of state.units){const placement=tacticalView(view)?.placement,p=placement?.pending&&String(placement.actor)===String(unit.id)&&cell(selection.destination)?selection.destination:animationPositions?.get(String(unit.id))||unitPosition(view,unit.id);if(p)out.set(unit.id,{gx:p.x,gy:p.y,x:p.x*16+8,y:p.y*16+8});}
    if(frame?.scene.kind==='move'){const point=movementStage(frame.scene,frame.progress);if(point)out.set(frame.scene.actor,point);}return out;
   }
   function paintReachable(){
    const quote=tacticalView(view)?.actors?.[String(selection.actor)];
-   for(const p of quote?.reachable||[])if(cell(p)){rectangle(p.x*16+1,p.y*16+1,14,14,'rgba(255,255,255,.18)');outline(p.x*16+1,p.y*16+1,14,14,'#a7e7ff');}
+   for(const p of tacticalView(view)?.placement?.pending?tacticalView(view).placement.cells:quote?.reachable||[])if(cell(p)){rectangle(p.x*16+1,p.y*16+1,14,14,'rgba(255,255,255,.18)');outline(p.x*16+1,p.y*16+1,14,14,'#a7e7ff');}
    const cursor=selection.destination;if(cell(cursor)){outline(cursor.x*16,cursor.y*16,16,16,'#ffe149');outline(cursor.x*16+1,cursor.y*16+1,14,14,INK);}
   }
   function flag(u,p,selected,enemy,attackable,marker){
@@ -782,6 +782,8 @@
    host.dataset.soldierMode=soldiers?.mode||'';
    host.dataset.soldierCombatAssets=combatAssets?(combatRows().every(row=>!!soldierImage(row))?'ready':'partial'):combatPromise?'unavailable':'idle';
    if(frame?.scene?.kind!=='soldier_step'){host.dataset.soldierAnimation='';host.dataset.soldierAnimationActor='';host.dataset.soldierAnimationEvent='';}
+   host.dataset.battlePlacement=tacticalView(view)?.placement?.pending?'pending':'';
+   host.dataset.battlePlaced=String(tacticalView(view)?.placement?.confirmed??'');
    host.dataset.battleDestination=cell(selection.destination)?selection.destination.x+','+selection.destination.y:'';
    const movement=frame?.scene?.kind==='move'?movementStage(frame.scene,frame.progress):null;
    host.dataset.battleMoveActor=movement?String(frame.scene.actor):'';host.dataset.battleMoveStep=movement?String(movement.index):'';
@@ -815,14 +817,15 @@
    if(x<0||y<0||x>=width)return;
    const selected={x:Math.floor(x/16),y:Math.floor(y/16)};if(!cell(selected))return;
    const state=snapshot(view),own=view.game.battle.attacker===view.game.player?'attackers':'defenders',found=state.units.find(unit=>{const p=unitPosition(view,unit.id);return unit.troops>0&&unit.health>0&&p?.x===selected.x&&p?.y===selected.y;});
+   if(tacticalView(view)?.placement?.pending){options.onCell?.(selected);return;}
    if(found)options.onSelect?.(found.side===own?'actor':'target',found.id);else options.onCell?.(selected);
   }
   function mapKeydown(event){
-   if(event.defaultPrevented||event.isComposing||event.ctrlKey||event.metaKey||event.altKey||playing||options.canInteract?.()===false||view?.game?.phase!=='battle'||view.game.battle?.extended?.duel||view.game.battle?.extended?.siege||!tacticalView(view)?.actors?.[String(selection.actor)]?.can_act)return;
+   if(event.defaultPrevented||event.isComposing||event.ctrlKey||event.metaKey||event.altKey||playing||options.canInteract?.()===false||view?.game?.phase!=='battle'||view.game.battle?.extended?.duel||view.game.battle?.extended?.siege||!(tacticalView(view)?.placement?.pending||tacticalView(view)?.actors?.[String(selection.actor)]?.can_act))return;
    const direction={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[event.key];
    if(direction){event.preventDefault();options.onNavigate?.(...direction);}
-   else if(event.key==='Enter'){event.preventDefault();options.onConfirmMove?.();}
-   else if(event.key==='Escape'){event.preventDefault();options.onCancelMove?.();}
+   else if((event.key==='Enter'||tacticalView(view)?.placement?.pending&&event.key.toLowerCase()==='a')&&(!tacticalView(view)?.placement?.pending||!event.repeat)){event.preventDefault();options.onConfirmMove?.();}
+   else if(event.key==='Escape'&&!tacticalView(view)?.placement?.pending){event.preventDefault();options.onCancelMove?.();}
   }
   function finish(playOutcome=true){if(handle!==null)caf?.(handle);handle=null;const wasPlaying=playing;playing=false;frame=null;queue=[];animationPositions=null;updateText();draw();if(wasPlaying)options.onSettled?.();if(playOutcome&&outcomeCue)options.onOutcome?.(outcomeCue);outcomeCue=null;const resolve=resolvePlay;resolvePlay=null;resolve?.();}
   function skip(){finish();}

@@ -968,6 +968,24 @@
         "people",
         "save"
       ]
+    },
+    "tests/test_remake_manual_deployment.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_manual_deployment_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ]
     }
   }
 }

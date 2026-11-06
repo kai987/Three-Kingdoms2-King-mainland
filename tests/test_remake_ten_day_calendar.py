@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, GameError, digest
 from remake import domestic
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import controlled_catalog, confirm_default_placement
 
 
 class TenDayCalendarTests(unittest.TestCase):
@@ -148,6 +148,7 @@ class TenDayCalendarTests(unittest.TestCase):
         loaded = Campaign(catalog)
         loaded.load_save(saved, 0)
         self.assertEqual(loaded.export_save(), saved)
+        confirm_default_placement(loaded)
         battle_id = loaded.state.battle['id']
         loaded.command('retreat', dict(battle_id=battle_id), loaded.revision)
         loaded.command('settle', dict(battle_id=battle_id), loaded.revision)

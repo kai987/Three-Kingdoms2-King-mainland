@@ -22,9 +22,10 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, digest
-from remake import command_books, domestic, logistics
+from remake import command_books, domestic, logistics, battle_placement
 from remake.march_core import using_backend
 from remake.officers import ref_sort_key
+from campaign_fixtures import confirm_default_placement
 
 
 class HeadlessCampaign(Campaign):
@@ -32,6 +33,19 @@ class HeadlessCampaign(Campaign):
         # Same test-only boundary as tools/campaign-soak/run.py. Transactions,
         # validation, JSON saves and actual load/continuation remain unchanged.
         return {'revision': self.revision}
+
+
+class PlacementCommands:
+    """Keep each public confirmation in the replay's dual-backend checkpoint."""
+    def __init__(self,replay):self.replay=replay
+    @property
+    def state(self):return self.replay.games[0].state
+    @property
+    def revision(self):return self.replay.games[0].revision
+    def view(self):return Campaign.view(self.replay.games[0])
+    def command(self,kind,payload,revision):
+        self.replay.assertEqual(revision,self.revision)
+        return self.replay.command(kind,**payload)
 
 
 class DelegationReplayTests(unittest.TestCase):
@@ -252,6 +266,10 @@ class DelegationReplayTests(unittest.TestCase):
                 self.command('settle', battle_id=state.battle['id'])
             elif state.phase == 'battle':
                 battle = state.battle
+                if battle_placement.pending(battle):
+                    with using_backend(self.backends[0]):
+                        confirm_default_placement(PlacementCommands(self))
+                    continue
                 if battle['extended']['duel']:
                     self.command('duel_action', battle_id=battle['id'], move='withdraw')
                     continue

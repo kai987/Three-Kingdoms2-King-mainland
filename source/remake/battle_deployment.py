@@ -188,3 +188,26 @@ def validate_provenance(catalog, battle, field, record):
         'Invalid deployment provenance fields')
     selected = _selection(catalog,battle,field,record['arrival_city'])
     _require(selected is not None and record == selected[0],'Deployment provenance does not match its arrival')
+
+
+def placement_zone(catalog, battle, field, side):
+    """Return fresh visible manual cells and ordered safe defaults for one side.
+
+    C447 bounds are half-open packed coordinates. C4B1 skips packed row15,
+    which is metadata rather than a visible row. Terrain classes are not an
+    additional manual-placement restriction. The provenance, not current army
+    coordinates, selects the native rectangle.
+    """
+    _require(side in SIDES,'Invalid manual deployment side')
+    record = battle.get('extended',{}).get('deployment')
+    validate_provenance(catalog,battle,field,record)
+    zone = _selection(catalog,battle,field,record['arrival_city'])[1][side]
+    bounds = zone['bounds']
+    xs = range(max(0,bounds['min_x']),min(COLUMNS,bounds['max_x_exclusive']))
+    ys = [y-int(y >= 16) for y in range(max(0,bounds['min_packed_y']),
+          min(20,bounds['max_packed_y_exclusive'])) if y != 15]
+    _require(bool(xs) and bool(ys),'Empty visible manual deployment rectangle')
+    return dict(bounds=dict(min_x=xs[0],max_x_exclusive=xs[-1]+1,
+                            min_y=ys[0],max_y_exclusive=ys[-1]+1),
+                cells=[dict(x=x,y=y) for y in ys for x in xs],
+                defaults=[dict(x=x,y=y) for x,y in _cells(zone)])

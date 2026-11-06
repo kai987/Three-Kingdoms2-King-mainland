@@ -405,7 +405,7 @@ class TravelCampaign:
                 if not ids: continue
                 self._discover_march_route(state,row)
                 self._start_expanded_battle(state, source, target, ids, paid=True, march_supply=row['supply'],
-                    arrival_city=row['quote']['path'][-2])
+                    arrival_city=row['quote']['path'][-2],manual_deployment=True)
                 travel['battle_arrival'] = True
                 if state.player in (source.owner, target.owner): return
                 self._resolve_ai_battle(state)
@@ -419,6 +419,9 @@ class TravelCampaign:
         from .difficulty import get_settings
         from .tactical_ai import choose_action
         battle = state.battle
+        from .battle_placement import pending, REASON
+        if pending(battle):
+            raise GameError(REASON)
         from . import battle_grid
         terrain=self.catalog.map_cities[battle['target']]['terrain']
         settings=get_settings(state)

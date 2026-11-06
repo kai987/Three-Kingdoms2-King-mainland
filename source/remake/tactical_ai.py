@@ -346,6 +346,8 @@ def _tactic_value(state, battle, actor, target, own, foe, terrain, tactic, attac
 def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
                depth=1, responding=False, used=None, game=None):
     """Enumerate real unit/target/tactic choices; ties are stable numeric IDs."""
+    from .battle_placement import pending
+    if pending(battle):return []
     if state.phase != 'battle' or battle['outcome'] or battle['extended']['duel']:
         return []
     if 'tactical' in battle['extended']:
@@ -394,6 +396,8 @@ def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
 
 def choose_action(state, battle, own, foe, terrain, tactics, *, settings=None,
                   damage_percent=32, responding=False, used=None, game=None):
+    from .battle_placement import pending
+    if pending(battle):return None
     settings = settings or {}
     if _wins_by_waiting(state,battle,own,foe):
         return dict(kind='wait',actor=None,target=None,tactic=None,score=0)

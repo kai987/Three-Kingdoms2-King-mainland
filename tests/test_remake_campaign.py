@@ -11,7 +11,7 @@ from remake.campaign import Campaign, GameError, digest
 from remake.officers import initialize_officer, PersonDefinition, OfficerProfile
 from remake.march_supply import estimate
 from campaign_fixtures import (arrange_contact, controlled_catalog, reach_battle,
-                               finish_soldier_encounter,soldier_encounter_step)
+                               finish_soldier_encounter,soldier_encounter_step,confirm_default_placement)
 from remake import battle_grid
 from remake.tactical_ai import choose_action
 from remake.campaign_expansion import TACTICS
@@ -33,6 +33,9 @@ class CampaignTests(unittest.TestCase):
     def fight(self):
         for _ in range(2000):
             state = self.game.state
+            if state.phase=='battle':
+                confirm_default_placement(self.game)
+                state=self.game.state
             b = state.battle
             if state.phase == 'result':
                 return b['outcome']

@@ -21,7 +21,7 @@ from remake.difficulty import get_settings
 from remake.march_core import using_backend
 from remake.officers import ref_sort_key
 from remake.tactical_ai import choose_action
-from remake import domestic, logistics, command_books
+from remake import domestic, logistics, command_books, battle_placement
 
 CASES = {
     'early': dict(scenario='184-02', faction='yellow_turban', turns=72),
@@ -145,6 +145,16 @@ class Replay:
                 self.command('settle', battle_id=state.battle['id'])
             elif state.phase == 'battle':
                 battle = state.battle
+                if battle_placement.pending(battle):
+                    # This headless driver chooses each actual native default,
+                    # just as a player confirming the new setup would. Keep
+                    # the public command/transcript/RNG path; never edit phase
+                    # counters or remove the deployment receipt to skip it.
+                    placement=battle_placement.view(game,state,battle)
+                    actor=placement['actor']
+                    point=battle['extended']['tactical']['positions'][str(actor)]
+                    self.command('battle_place',battle_id=battle['id'],actor=actor,**point)
+                    continue
                 if battle['extended']['duel']:
                     self.command('duel_action', battle_id=battle['id'], move='withdraw')
                     continue
