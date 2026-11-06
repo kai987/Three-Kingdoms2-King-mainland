@@ -26,6 +26,9 @@ from remake.march_core import using_backend
 spec = importlib.util.spec_from_file_location('natural_checkpoints', ROOT/'tools/campaign-checkpoints/run.py')
 checkpoints = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(checkpoints)
+saved_spec = importlib.util.spec_from_file_location('saved_checkpoints', ROOT/'tools/campaign-checkpoints/replay_saved.py')
+saved_checkpoints = importlib.util.module_from_spec(saved_spec)
+saved_spec.loader.exec_module(saved_checkpoints)
 
 
 def settings(catalog=None, **changes):
@@ -745,6 +748,94 @@ class CheckpointV3Tests(unittest.TestCase):
                 cities={str(i):SimpleNamespace(owner=owner) for i,owner in enumerate(owners)},
                 turn=1, year=217, month=11, day=1)
             self.assertFalse(checkpoints.campaign_status(state)['unification_verified'])
+
+
+class SavedPublicReplayTests(unittest.TestCase):
+    """Controlled harness checks, explicitly not natural campaign coverage."""
+
+    def origin(self, *, battle=False):
+        catalog = controlled_catalog()
+        replay = checkpoints.CheckpointReplay(catalog, settings(catalog), 'python', observe=False)
+        if battle:
+            public_battle(replay)
+        return catalog, checkpoints.encoded(replay.game.export_save())
+
+    def test_load_inserts_no_command_or_rng_and_keeps_pending_battle(self):
+        with using_backend('python'):
+            catalog, saved = self.origin(battle=True)
+            original = deepcopy(saved)
+            replay = saved_checkpoints.SavedCheckpointReplay(catalog, saved, settings(catalog), 'python')
+            self.assertEqual(checkpoints.encoded(replay.game.export_save()), saved)
+            self.assertEqual(replay.commands, {})
+            self.assertEqual(replay.recent_commands, [])
+            self.assertEqual(replay.initial['phase'], 'battle')
+            self.assertIsNone(replay.last_city_checkpoint)
+            self.assertEqual(saved, original)
+            self.assertEqual([r['kind'] for r in replay.game.journal], ['load'])
+
+    def test_city_origin_is_zero_completed_cycles_and_rejects_wrong_identity(self):
+        with using_backend('python'):
+            catalog, saved = self.origin()
+            replay = saved_checkpoints.SavedCheckpointReplay(catalog, saved, settings(catalog), 'python')
+            self.assertEqual(replay.last_city_checkpoint['completed_turns'], 0)
+            with self.assertRaisesRegex(ValueError, 'faction/seed'):
+                saved_checkpoints.SavedCheckpointReplay(catalog, saved, settings(catalog, seed=7), 'python')
+
+    def test_exact_recorded_public_sequence_replays_four_legs(self):
+        with tempfile.TemporaryDirectory() as temp, using_backend('python'):
+            catalog, saved = self.origin()
+            folder = Path(temp)/'selection'
+            folder.mkdir()
+            replay = saved_checkpoints.SavedCheckpointReplay(catalog, saved, settings(catalog), 'python', output=folder)
+            replay.command('end_turn')
+            rows = [json.loads(line) for line in (folder/'commands.jsonl').read_text().splitlines()]
+            origin = deepcopy(saved)
+            report = saved_checkpoints.run(catalog, saved, rows, settings(catalog), Path(temp)/'verified',
+                provenance=dict(origin='controlled test only', selection_policy='one public end_turn',
+                    classification='controlled harness regression, not natural'))
+            self.assertEqual(report['verification_status'], 'passed')
+            self.assertEqual(report['parity'], 'passed')
+            self.assertEqual(len(report['legs']), 4)
+            self.assertTrue(all(r['commands'] == {'end_turn':1} for r in report['legs']))
+            self.assertTrue(report['origin_unchanged'])
+            self.assertTrue(report['sources_unchanged'])
+            self.assertEqual(saved, origin)
+            self.assertFalse(any(r['campaign']['unification_verified'] for r in report['legs']))
+
+    def test_boundary_mismatch_is_failed_and_keeps_actual_committed_save(self):
+        with tempfile.TemporaryDirectory() as temp, using_backend('python'):
+            catalog, saved = self.origin()
+            folder = Path(temp)
+            rows = [dict(index=1, command='end_turn', payload={}, state_sha256='0'*64,
+                         phase='ai', turn=1, rng=saved['state']['rng'])]
+            report = saved_checkpoints.replay_leg(catalog, saved, rows, settings(catalog), 'python', folder, observe=True)
+            self.assertEqual(report['verification_status'], 'failed')
+            self.assertIn('boundary differs', report['error'])
+            self.assertEqual(report['command_count'], 1)
+            self.assertTrue((folder/'final.save.json').exists())
+            self.assertEqual(report['campaign']['phase'], 'ai')
+
+    def test_rejects_reset_commands_missing_provenance_and_nonempty_output(self):
+        row = dict(index=1, command='new', payload={}, state_sha256='a'*64,
+                   phase='city', turn=1, rng=dict(state=1, draws=0))
+        with self.assertRaises(ValueError):
+            saved_checkpoints.sequence([row])
+        row['command'] = 'end_turn'
+        for field, value in (('index', 2), ('index', True), ('payload', []),
+                ('state_sha256', 'z'*64), ('rng', None), ('rng', dict(state=1, draws=False)),
+                ('rng', dict(state=True, draws=0)), ('rng', dict(state=0, draws=0))):
+            with self.assertRaises(ValueError):
+                saved_checkpoints.sequence([dict(row, **{field:value})])
+        with using_backend('python'):
+            catalog, saved = self.origin()
+            with self.assertRaisesRegex(ValueError, 'provenance|origin'):
+                saved_checkpoints.run(catalog, saved, [row], settings(catalog), None, provenance={})
+            with tempfile.TemporaryDirectory() as temp:
+                (Path(temp)/'existing.json').write_text('{}')
+                with self.assertRaisesRegex(ValueError, 'empty'):
+                    saved_checkpoints.run(catalog, saved, [row], settings(catalog), Path(temp),
+                        provenance=dict(origin='controlled test', selection_policy='end turn',
+                            classification='controlled only'))
 
 
 if __name__ == '__main__':
