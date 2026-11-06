@@ -160,13 +160,17 @@ async function tacticalOpening(page){
  const before=await tacticalRead(page),placement=before.view.catalog.battle_tactical.placement;
  expect(placement.pending).toBe(true);expect(placement.confirmed).toBe(0);
  expect(placement.total).toBeGreaterThan(0);expect(placement.total).toBeLessThanOrEqual(10);
- let current=before;
+ // A full state view includes expensive derived catalog previews. Each intermediate
+ // checkpoint needs only the committed save; fetch the rich preview once.
+ let saved=before.save;
  for(let index=0;index<placement.total;index++){
-  expect(current.view.catalog.battle_tactical.placement.confirmed).toBe(index);
+  expect(saved.state.battle.extended.placement.confirmed).toBe(index);
   await tacticalControl(page,'battle-place-confirm');await waitIdle(page);await tacticalDismiss(page);
-  current=await tacticalRead(page);
-  expect(current.view.catalog.battle_tactical.placement.confirmed).toBe(index+1);
+  saved=await tacticalSave(page);
+  expect(saved.state.battle.extended.placement.confirmed).toBe(index+1);
  }
+ const current=await tacticalRead(page);
+ expect(current.save).toEqual(saved,'Reading the completed tactical preview cannot commit another action');
  expect(current.view.catalog.battle_tactical.placement.pending).toBe(false);
  await expect(page.locator('#battle-place-confirm')).toHaveCount(0);
  await expect(page.locator('#battle-wait')).toBeEnabled();
