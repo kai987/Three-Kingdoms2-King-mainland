@@ -2111,6 +2111,9 @@ test('city-specific battlefield keeps both armies visible and supports real batt
 });
 
 test('authoritative tactical movement, shared points and contact attacks persist with a missing battlefield image',async({page},testInfo)=>{
+ // The measured touch flow needs ~243s, including nine successful rich reads.
+ // Preserve every control/assertion and the 30s action/expect limits.
+ test.setTimeout(300_000);
  const touch=testInfo.project.name==='touch-chromium',initial=await tacticalOpening(page),b=initial.view.game.battle,board=initial.view.catalog.battle_tactical;
  expect(board.schema).toBe('tk2-battle-tactical-view-v1');expect(b.extended.tactical.schema).toBe('tk2-battle-tactical-v1');expect(board.grid).toEqual({columns:31,rows:19,tile_size:16});
  const own=b.attacker===initial.view.game.player?'attackers':'defenders',foe=own==='attackers'?'defenders':'attackers';
