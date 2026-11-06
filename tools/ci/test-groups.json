@@ -944,6 +944,30 @@
         "people",
         "save"
       ]
+    },
+    "tests/test_remake_qimen_condition.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_qimen_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_qimen_ai.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "save"
+      ]
     }
   }
 }

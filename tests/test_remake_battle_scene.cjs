@@ -114,7 +114,7 @@ def legacy_contact_display(game,payload,key):
 for tid,(_,cost,effect,_) in enumerate(TACTICS):
  terrain='water' if effect in {'water','chain','flood'} else 'mountain' if effect=='rock' else 'plain'
  game=scene_battle(terrain);arrange(game,tid);b,a,t,*_=actors(game);successful_rng(game.state)
- action(game,'tactic',dict(battle_id=b['id'],actor=a['id'],target=t['id'],tactic=tid),'tactic:'+effect)
+ action(game,'tactic',dict(battle_id=b['id'],actor=a['id'],target=t['id'],tactic=tid),'tactic:'+('qimen' if tid==15 else effect))
 for key in ('attack','attack_guard','attack_defeat','ambush','stunned','failure','retreat','duel'):
  game=scene_battle(three_enemies=False);arrange(game);b,a,t,*_=actors(game)
  if key=='attack_guard':b['extended']['support'][str(t['id'])]['guard']=2
@@ -170,7 +170,15 @@ game._complete_turn(game.state);game._reconcile_factions(game.state)
 game._start_expanded_battle(game.state,game.state.cities['nanjun'],game.state.cities['jiangxia'],[ident])
 arrange(game)
 legacy_contact_display(game,dict(battle_id=game.state.battle['id'],actor=ident,target=game.state.battle['defenders'][0]['id']),'mixed')
-print(json.dumps(dict(rows=rows,tactics=[dict(id=i,effect=t[2]) for i,t in enumerate(TACTICS)]),ensure_ascii=False,separators=(',',':')))
+from test_remake_qimen_campaign import prepared as qprepared,cast as qcast,unit as qunit,ZHU_GE
+from remake import battle_allegiance
+from unittest.mock import patch
+qgame,roles,own,foe=qprepared('defenders');qcast(qgame,roles);qb=qgame.state.battle
+battle_allegiance.convert(qgame,qgame.state,qb,qb[foe][0],qunit(qb,ZHU_GE),foe,own)
+qgame._reconcile_factions(qgame.state);qgame.validate(qgame.state)
+with patch('remake.tactical_ai.choose_action',return_value=dict(kind='wait',actor=None,target=None,tactic=None,score=0)):
+ action(qgame,'battle_wait',dict(battle_id=qb['id']),'qimen-daily-converted')
+print(json.dumps(dict(rows=rows,tactics=[dict(id=i,effect='qimen' if i==15 else t[2]) for i,t in enumerate(TACTICS)]),ensure_ascii=False,separators=(',',':')))
 `],{cwd:ROOT,encoding:'utf8',maxBuffer:8*1024*1024,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}}));
 const clone=value=>JSON.parse(JSON.stringify(value));
 function freeze(value){if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;}
@@ -211,6 +219,10 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
 (async()=>{
  const accepted=new Map(actual.rows.map(row=>[row.key,scenesFor(row)]));
  for(const tactic of actual.tactics){const row=actual.rows.find(r=>r.key==='tactic:'+tactic.effect),scenes=accepted.get(row.key);assert(scenes.length,`Actual tactic ${tactic.id}/${tactic.effect} must not be discarded`);assert.equal(scenes[0].tactic,tactic.id);assert.equal(scenes[0].effect,tactic.effect);}
+ const daily=accepted.get('qimen-daily-converted');assert(daily.length,'A real daily receipt after source conversion must remain playable');
+ const tick=daily.find(s=>s.effect==='qimen_daily');assert(tick);assert.equal(tick.before.units.find(u=>u.id===tick.actor).side,tick.before.units.find(u=>u.id===tick.target).side,'The true source and target now share a side');
+ const dailyRow=actual.rows.find(r=>r.key==='qimen-daily-converted');
+ for(const change of [s=>s.effect='qimen',s=>s.tactic=14,s=>s.success=false,s=>s.skipped=true,s=>s.after.units[0].health--]){const bad=clone(dailyRow);change(bad.after.presentation.scenes.find(s=>s.effect==='qimen_daily'));assert.equal(scenesFor(bad).length,0,'Only narrowly marked daily results allow same-side effects');}
  assert.equal(actual.tactics.length,16);assert(accepted.get('tactic:strike').length,'要撃 uses strike');
  const attack=accepted.get('attack');assert.equal(attack[0].kind,'attack');assert.equal(attack.length,2,'A surviving ordinary target immediately returns a blow in the same exchange');
  assert.equal(attack[1].kind,'attack');assert.equal(attack[1].counter,true);assert.equal(attack[1].actor,attack[0].target);assert.equal(attack[1].target,attack[0].actor);assert.deepEqual(normalize(attack[1].before),normalize(attack[0].after));
@@ -457,7 +469,7 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   const defeated=accepted.get('attack_defeat')[0];assert.equal(standalone.soldierActionPose(defeated,defeated.target,.6),'defeat');
   const stunned=accepted.get('stunned')[0];assert.equal(standalone.soldierActionPose(stunned,stunned.actor,.45),'idle');
   const crossbow=accepted.get('tactic:crossbow')[0];assert.equal(standalone.soldierActionPose(crossbow,crossbow.actor,.4),'attack');
-  const guard=accepted.get('tactic:guard')[0];assert.equal(standalone.soldierActionPose(guard,guard.actor,.4),'guard');
+  const qimen=accepted.get('tactic:qimen')[0];assert.notEqual(standalone.soldierActionPose(qimen,qimen.actor,.4),'guard','Qimen no longer draws a self shield');
   const retreat=accepted.get('retreat')[0],own=retreat.before.units.find(u=>u.side===retreat.own),foe=retreat.before.units.find(u=>u.side!==retreat.own);
   assert.equal(standalone.soldierActionPose(retreat,own.id,.5),'retreat');assert.equal(standalone.soldierActionPose(retreat,foe.id,.5),'idle');
   assert.equal(standalone.soldierActionPose(null,actor,.4),'idle');
@@ -472,7 +484,7 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
    assert(!env.imageRequests.some(p=>p.includes('/soldiers-')));assert(env.draws.some(d=>d.src.startsWith('/assets/battle-enhanced/attack_formation')));scene.skip();await play;scene.dispose();
   }
  }
- for(const key of ['attack','attack_guard','attack_defeat','tactic:crossbow','tactic:guard','retreat']){
+ for(const key of ['attack','attack_guard','attack_defeat','tactic:crossbow','tactic:qimen','retreat']){
   const row=actual.rows.find(r=>r.key===key),before=JSON.stringify(row),hd=enhancedSoldiers(nativeManifest),env=environment({manifest:nativeManifest,enhancedManifest:hd}),scene=env.api.create();
   scene.observe(row.kind,row.payload,freeze(row.before),freeze(row.after));scene.mount(env.host,row.after);await scene.load();assert(!env.imageRequests.some(p=>p.includes('/soldiers-')),'Tactical view must not preload soldier atlases');
   const play=scene.play();for(let i=0;i<15;i++)await Promise.resolve();assert(scene.playing);env.step(0);assert.equal(new Set(env.imageRequests.filter(p=>p.includes('/soldiers-'))).size,6);assert(!env.imageRequests.some(p=>p.includes('/duel-actions-')));

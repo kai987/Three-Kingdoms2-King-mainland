@@ -132,9 +132,10 @@ def expected_contact_exchange(battle, actor, target, damage_percent=32):
     return outgoing, expected_attack(battle, replying, actor, damage_percent)
 
 
-def _chance(state, actor, target, effect):
+def _chance(state, actor, target, effect, battle=None):
     profile, opponent = state.officers[actor['id']].profile, state.officers[target['id']]
-    if effect in {'ambush', 'guard'}:
+    if effect == 'ambush' or effect == 'guard' and not (
+            battle is not None and 'tactical' in battle['extended']):
         return 1.0
     if effect == 'surrender':
         from .tactic_effects import conversion_chance
@@ -257,11 +258,31 @@ def _chain_mobility_value(battle,targets,own,foe):
     return fsum(_movement_lock_value(battle,target,own,foe,count)for target in targets)
 
 
+def _qimen_value(state,battle,target,own,foe):
+    """Author-adapted delayed loss plus movement denial, not a self shield.
+
+    Each accepted duration is valued separately before saturation and the
+    remaining-day cap.115 is the mean80..150 demand, not a sampled future hit.
+    The last usable damage boundary is round30; a round30 cast may still deny
+    a defender's current movement but cannot invent damage after timeout.
+    """
+    from .battle_conditions import kind,qimen_duration,qimen_source
+    if qimen_source(state,battle) is None or kind(battle,target['id'])=='qimen':return 0
+    days_left=max(0,30-battle['round'])
+    values=[]
+    for roll in range(4):
+        count=qimen_duration(own,roll)
+        damage=min(target['troops'],115*min(count,days_left))
+        values.append((_loss_value(target,damage)if damage else 0)
+                      +_movement_lock_value(battle,target,own,foe,count))
+    return fsum(values)/len(values)
+
+
 def _tactic_value(state, battle, actor, target, own, foe, terrain, tactic, attack):
     _, cost, effect, _ = tactic
     enemies, friends = _active(battle, foe), _active(battle, own)
     profile = state.officers[actor['id']].profile
-    chance = _chance(state, actor, target, effect)
+    chance = _chance(state, actor, target, effect,battle)
     modern = 'tactical' in battle['extended']
     if modern:
         from .battle_grid import TACTIC_COSTS, affected_units
@@ -282,6 +303,8 @@ def _tactic_value(state, battle, actor, target, own, foe, terrain, tactic, attac
                       for enemy in enemies for friend in friends), default=0)
     if effect == 'supply':
         value = _fire_supply_value(state,battle,own,foe,profile.intellect)
+    elif effect=='guard'and modern:
+        value=_qimen_value(state,battle,target,own,foe)
     elif effect == 'guard':
         value = 0 if _support(battle, actor)['guard'] else min(actor['troops'], threat) * .85
     elif effect == 'ambush':
@@ -432,7 +455,7 @@ def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percen
                     if tactics[tid][2] == 'surrender' and not _chance(state, actor, target, 'surrender'):
                         continue
                     value = _tactic_value(state, battle, actor, target, own, foe, terrain, tactics[tid], attack)
-                    if tactics[tid][2]in{'confuse','chain'}and value<=0:
+                    if tactics[tid][2]in{'confuse','chain','guard'}and value<=0:
                         # Player repetition stays legal and paid. AI must not
                         # fall back to a harmful re-cast that first frees it.
                         continue

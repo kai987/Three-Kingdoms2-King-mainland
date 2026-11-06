@@ -226,6 +226,8 @@ def move_reason(battle, actor, side=None):
         return reason
     from .battle_conditions import movement_blocked, kind
     if movement_blocked(battle,actor['id'] if isinstance(actor,dict) else actor):
+        if kind(battle,actor['id'] if isinstance(actor,dict) else actor)=='qimen':
+            return '本隊受奇門遁甲影響，不能移動；仍可攻擊或施計。'
         if kind(battle,actor['id'] if isinstance(actor,dict) else actor)=='chain':
             return '本隊受連環影響，不能移動；仍可攻擊或施計。'
         return '本隊受虛兵影響，不能移動；仍可攻擊或施計。'
@@ -513,7 +515,7 @@ def view(game, state, battle):
         from . import battle_services, tactic_effects
         previews={str(tid): {str(target['id']): tactic_effects.preview(state,battle,actor,target,own,foe,tid)
                    for target in battle[foe] if not tactic_reasons[str(tid)][str(target['id'])]}
-                  for tid in (2,5,8,10)}
+                  for tid in (2,5,8,10,15)}
         actors[str(actor['id'])] = dict(can_act=bool(can_act), reason=reason,
             move_reason=movement_reason,
             facility=battle_services.quote(game,state,battle,actor,own) if can_act else None,

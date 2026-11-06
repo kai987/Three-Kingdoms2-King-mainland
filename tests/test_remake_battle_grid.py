@@ -284,7 +284,7 @@ class BattleGridTests(unittest.TestCase):
             self.assertEqual(choose_action(state, battle, 'attackers', 'defenders', 'plain', TACTICS)['kind'], 'wait')
         self.assertEqual(state.rng.draws, 0)
 
-    def test_guard_score_excludes_remote_armies_and_danger_to_another_friendly_unit(self):
+    def test_qimen_scores_the_enemy_without_using_the_casters_old_shield(self):
         _, state, battle = fixture(defenders=2)
         position(battle, 1, 5, 5)
         position(battle, 101, 9, 5)
@@ -294,11 +294,12 @@ class BattleGridTests(unittest.TestCase):
         before = deepcopy((battle, vars(state.rng)))
         with patch.object(grid, '_field', return_value=plain()):
             rows = candidates(state, battle, 'attackers', 'defenders', 'plain', TACTICS, depth=2)
-            guard = next(row for row in rows if row['actor'] == 1 and row['tactic'] == 15)
-            self.assertLessEqual(guard['score'], 0)
-            choice = choose_action(state, battle, 'attackers', 'defenders', 'plain', TACTICS,
-                                   settings={'tactic_depth': 2})
-            self.assertNotEqual(choice['tactic'], 15)
+            qimen = next(row for row in rows if row['actor'] == 1 and row['tactic'] == 15)
+            self.assertGreater(qimen['score'], 0)
+            battle['extended']['support']['1']['guard'] = 2
+            protected = candidates(state, battle, 'attackers', 'defenders', 'plain', TACTICS, depth=2)
+            self.assertEqual(next(row['score'] for row in protected if row['actor'] == 1 and row['tactic'] == 15), qimen['score'])
+            battle['extended']['support']['1']['guard'] = 0
         self.assertEqual((battle, vars(state.rng)), before)
         _, state, battle = fixture(attackers=2, defenders=1)
         position(battle, 1, 5, 5)
@@ -306,8 +307,9 @@ class BattleGridTests(unittest.TestCase):
         position(battle, 101, 9, 5)
         with patch.object(grid, '_field', return_value=plain()):
             rows = candidates(state, battle, 'attackers', 'defenders', 'plain', TACTICS, depth=2)
-        self.assertLessEqual(next(row['score'] for row in rows if row['actor'] == 1 and row['tactic'] == 15), 0)
-        self.assertGreater(next(row['score'] for row in rows if row['actor'] == 2 and row['tactic'] == 15), 0)
+        scores = [next(row['score'] for row in rows if row['actor'] == actor and row['tactic'] == 15) for actor in (1, 2)]
+        self.assertGreater(scores[0], 0)
+        self.assertEqual(scores[0], scores[1], 'The same enemy effect is not protection for a nearby caster')
 
     def test_view_is_read_only_and_exposes_authoritative_targets_not_client_geometry(self):
         game, state, battle = fixture(defenders=1)

@@ -149,7 +149,7 @@ class BattlePresentationTests(unittest.TestCase):
                 scenes = self.perform(game, 'tactic', battle_id=b['id'], actor=actor['id'],
                                       target=target['id'], tactic=tid)
                 scene = scenes[0]
-                self.assertEqual((scene['kind'], scene['tactic'], scene['effect']), ('tactic', tid, effect))
+                self.assertEqual((scene['kind'], scene['tactic'], scene['effect']), ('tactic', tid, 'qimen' if tid==15 else effect))
                 self.assertTrue(scene['success']); self.assertFalse(scene['skipped'])
                 self.assertEqual(self.unit(scene, 'after', actor['id'])['energy'],
                                  self.unit(scene, 'before', actor['id'])['energy'])

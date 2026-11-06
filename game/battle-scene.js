@@ -6,7 +6,7 @@
  const WIDTH=256,HEIGHT=240,RESOLUTION_SCALE=4,SCHEMA='tk2-battle-presentation-v1';
  const FIELD_WIDTH=496,FIELD_HEIGHT=304,FIELD_HUD=80;
  const PAPER='#ffd4c8',INK='#000000',ASSET_ROOT='/assets/battle-original/',ENHANCED_ROOT='/assets/battle-enhanced/';
- const EFFECTS=new Set(['fire','trap','strike','water','confuse','supply','feint','rock','area','chain','crossbow','surrender','ambush','flood','inferno','guard']);
+ const EFFECTS=new Set(['fire','trap','strike','water','confuse','supply','feint','rock','area','chain','crossbow','surrender','ambush','flood','inferno','guard','qimen','qimen_daily']);
  const KINDS=new Set(['move','attack','tactic','ambush','duel_start','duel_action','retreat','soldier_step']);
  const DUEL_ACTIONS=Object.freeze(['idle','strike','guard','feint','withdraw','desperate','hit','defeat']);
  const SOLDIER_ACTIONS=Object.freeze(['idle','march','ready','attack','guard','hit','retreat','defeat']);
@@ -122,7 +122,8 @@
    if(s.before.units.length!==s.after.units.length||s.before.units.some(u=>!s.after.units.some(v=>v.id===u.id&&(v.side===u.side||s.kind==='tactic'&&s.effect==='surrender'&&s.success&&u.id===s.target&&v.side===s.own))))return false;
    if(s.kind==='move'){const a=s.before.units.find(u=>u.id===s.actor);if(!reference(s.actor)||!a||a.side!==s.own||a.troops<=0||a.health<=0||s.target!==null||!validMovement(s.move)||s.success!==true||s.skipped!==false)return false;}
    else if(s.kind==='retreat'){if(s.actor!==null||s.target!==null)return false;}
-   else{const a=s.before.units.find(u=>u.id===s.actor),t=s.before.units.find(u=>u.id===s.target);if(!reference(s.actor)||!reference(s.target)||!a||!t||a.side!==s.own||t.side===s.own)return false;}
+   else{const a=s.before.units.find(u=>u.id===s.actor),t=s.before.units.find(u=>u.id===s.target);if(!reference(s.actor)||!reference(s.target)||!a||!t||a.side!==s.own||t.side===s.own&&!(s.kind==='tactic'&&s.tactic===15&&s.effect==='qimen_daily'&&s.success&&!s.skipped))return false;}
+   if(s.effect==='qimen_daily'&&(s.kind!=='tactic'||s.tactic!==15||!s.success||s.skipped||s.before.round!==s.after.round||s.after.units.some(u=>{const old=s.before.units.find(v=>v.id===u.id);return u.troops>old.troops||['health','energy','guard','stunned'].some(k=>u[k]!==old[k]);})))return false;
    if(['tactic','ambush'].includes(s.kind)){if(!bounded(s.tactic,15)||!EFFECTS.has(s.effect))return false;}else if(s.tactic!==null||s.effect!==null&&!validSiege(s))return false;
    if(s.kind==='duel_action'){if(!['strike','guard','feint','withdraw','desperate'].includes(s.move)||(s.move==='withdraw'?s.reply!==null:!['strike','guard','feint','desperate'].includes(s.reply)))return false;}
    else if(s.kind==='move'){if(s.reply!==null)return false;}
@@ -525,7 +526,7 @@
    else if(effect==='surrender'){rectangle(targetX-3,38,1,55,INK);rectangle(targetX-2,38,22,15,'#ffffff');}
    else if(effect==='trap'){rectangle(targetX-21,103,42,12,INK);rectangle(targetX-15,107,30,6,'#7c3400');}
    else if(effect==='ambush'){for(let i=0;i<5;i++){rectangle(targetX-35+i*16,104,14,16,'#185800');const x=targetX-28+i*16,y=110-Math.sin(progress*Math.PI)*16;if(!soldierSprite('infantry',scene.own==='attackers'?'left':'right','attack',x,y))sprite('infantry',x,y,tick+i,{maxWidth:22,maxHeight:30});}}
-   else if(['chain','confuse'].includes(effect))for(let i=0;i<8;i++){const x=targetX-24+(i*11+tick*3)%54,cy=25+i%4*17;outline(x,cy,5,5,i%2?'#fff':'#0068b8');}
+   else if(['chain','confuse','qimen','qimen_daily'].includes(effect))for(let i=0;i<8;i++){const x=targetX-24+(i*11+tick*3)%54,cy=25+i%4*17;outline(x,cy,5,5,effect.startsWith('qimen')?(i%2?'#f8d878':'#9c40c8'):(i%2?'#fff':'#0068b8'));}
   }
   function paintEngagement(scene,progress){
    const stage=attackStage(progress,scene.skipped),state=(scene.kind==='attack'?stage.resolved:progress>=.55)?scene.after:scene.before;background('plain');

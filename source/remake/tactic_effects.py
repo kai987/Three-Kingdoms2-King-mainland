@@ -59,7 +59,7 @@ def general_chance(actor, target):
 
 def preview(state, battle, actor, target, own, foe, tid):
     """Pure actor/target quote; legality and maneuver payment remain separate."""
-    if type(tid) is not int or tid not in (2, 5, 8, 10):
+    if type(tid) is not int or tid not in (2, 5, 8, 10, 15):
         return None
     from . import battle_supply
     caster, opponent = state.officers[actor['id']], state.officers[target['id']]
@@ -76,6 +76,13 @@ def preview(state, battle, actor, target, own, foe, tid):
                     failure_without_rng=False,failure_rng_draws=1,success_rng_draws=1+len(targets),
                     condition='chain',count_min=battle_conditions.chain_duration(own,0),
                     count_max=battle_conditions.chain_duration(own,1),target_ids=targets)
+    if tid == 15:
+        from . import battle_conditions
+        return dict(schema=SCHEMA,tactic=15,success_percent=general_chance(caster,opponent),
+                    failure_without_rng=False,failure_rng_draws=1,success_rng_draws=2,
+                    condition='qimen',count_min=battle_conditions.qimen_duration(own,0),
+                    count_max=battle_conditions.qimen_duration(own,3),daily_loss_min=80,daily_loss_max=150,
+                    source_present=battle_conditions.qimen_source(state,battle) is not None)
     if tid == 8:
         chance = conversion_chance(caster, opponent)
         return dict(schema=SCHEMA, tactic=8, success_percent=chance, failure_without_rng=chance == 0,

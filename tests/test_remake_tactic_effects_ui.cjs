@@ -25,7 +25,7 @@ const statusBefore=JSON.stringify(statusView);
 assert(effects.summary(statusView,1,2,2).includes('仍可攻擊或施計'));assert(effects.summary(statusView,1,2,2,{locale:'ja'}).includes('固定の行動不能ターン数ではありません'));
 assert(effects.summary(statusView,1,2,0).includes('data-phantom-clear-preview="2"'),'Other tactics disclose clearing before failure too');
 assert(effects.summary(statusView,1,2,11).includes('data-phantom-clear-preview="3"'),'Ambush addresses actual self, never the ignored enemy parameter');
-for(const patch of [{condition:'stun'},{condition_count:1},{condition_count:true},{target_count:-1},{target_count:6}]){const broken=structuredClone(statusView);Object.assign(broken.catalog.battle_tactical.actors[1].tactic_previews[2][2],patch);assert.equal(effects.forecast(broken,1,2,2),null);}
+for(const patch of [{condition:'stun'},{condition_count:1},{condition_count:true},{target_count:-1},{target_count:10}]){const broken=structuredClone(statusView);Object.assign(broken.catalog.battle_tactical.actors[1].tactic_previews[2][2],patch);assert.equal(effects.forecast(broken,1,2,2),null);}
 assert.equal(JSON.stringify(statusView),statusBefore,'Status rendering never advances the clock or removes a condition');
 for(const details of [{tactic:2,success:true,condition:'phantom',condition_count:3},{tactic:2,success:true,condition:'phantom',condition_count:2},{tactic:2,success:false,condition:'phantom',condition_count:0}])assert(events.validEvent(event(details)));
 for(const patch of [{condition:'chain'},{condition_count:true},{condition_count:1},{condition_count:0},{success:false},{extra:1}])assert(!events.validEvent(event({tactic:2,success:true,condition:'phantom',condition_count:3,...patch})));
@@ -54,3 +54,18 @@ for(const length of [11,20]){
  assert(events.validEvent(event({...chained,condition_counts:Array.from({length},(_,i)=>({id:String(i),remaining:4}))})));
 }
 assert(!events.validEvent(event({...chained,condition_counts:Array.from({length:21},(_,i)=>({id:String(i),remaining:4}))})));
+const qimen={schema:'tk2-tactic-effect-preview-v1',tactic:15,success_percent:80,condition:'qimen',count_min:6,count_max:9,daily_loss_min:80,daily_loss_max:150,source_present:true};
+const qView=structuredClone(chainView);qView.catalog.battle_tactical.actors[1].tactic_previews[15]={2:qimen};qView.game.battle.extended.conditions.units[2]={kind:'qimen',remaining:9};
+const qBefore=JSON.stringify(qView);
+assert(effects.summary(qView,1,2,15).includes('最後一次也損兵'));assert(effects.summary(qView,1,2,15,{locale:'ja'}).includes('自軍の盾ではなく'));
+assert(effects.summary(qView,1,2,2).includes('data-qimen-clear-preview="9"'));assert(effects.forecast(qView,1,2,2));
+for(const patch of [{condition:'guard'},{count_min:4},{count_max:8},{daily_loss_min:79},{daily_loss_max:151},{source_present:1}]){const bad=structuredClone(qView);Object.assign(bad.catalog.battle_tactical.actors[1].tactic_previews[15][2],patch);assert.equal(effects.forecast(bad,1,2,15),null);}
+assert.equal(JSON.stringify(qView),qBefore);
+const qcast={tactic:15,success:true,condition:'qimen',qimen_phase:'cast',condition_count:9};
+assert(events.validEvent(event(qcast)));assert(events.validEvent(event({...qcast,success:false,condition_count:0})));
+for(const patch of [{condition_count:4},{condition_count:10},{condition_count:true},{qimen_phase:'daily'},{success:false},{extra:1}])assert(!events.validEvent(event({...qcast,...patch})));
+const qtick={id:'2',before:1,remaining:0,troops_before:99,troops_after:0,loss:99};
+const qdaily={tactic:15,success:true,condition:'qimen',qimen_phase:'daily',qimen_ticks:[qtick],experience_id:'1',experience_gain:0};
+assert(events.validEvent(event(qdaily)));assert(events.validEvent(event({...qdaily,qimen_ticks:[{...qtick,troops_before:0,loss:0}]})));
+for(const patch of [{success:false},{experience_gain:2551},{experience_gain:true},{qimen_ticks:[]},{qimen_ticks:[qtick,qtick]},{qimen_ticks:[{...qtick,remaining:1}]},{qimen_ticks:[{...qtick,troops_after:1}]},{qimen_ticks:[{...qtick,loss:79,troops_before:79,troops_after:0,extra:1}]}])assert(!events.validEvent(event({...qdaily,...patch})),JSON.stringify(patch));
+console.log('Qimen: bilingual enemy forecasts, source pause, high count clears and strict cast/daily receipts passed');

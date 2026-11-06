@@ -528,6 +528,19 @@
       "scenario_ids": [
         "mainland208-10"
       ]
+    },
+    {
+      "id": "qimen-condition",
+      "title": "qimen targets enemies with daily losses and experience, bilingual receipts and exact zero-troop expiry",
+      "groups": [
+        "battle",
+        "people",
+        "save"
+      ],
+      "scenario_scope": "fixed",
+      "scenario_ids": [
+        "mainland234-02"
+      ]
     }
   ]
 }

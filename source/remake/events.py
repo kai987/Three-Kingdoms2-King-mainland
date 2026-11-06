@@ -61,7 +61,8 @@ DETAILS = {
     'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered'},
     'duel_started': set(), 'duel_result': {'result'},
     'tactic': {'tactic','success','affected_side','grain_before','grain_after','grain_loss',
-               'success_percent','target_loyalty','guaranteed_failure','condition','condition_count','condition_counts'},
+               'success_percent','target_loyalty','guaranteed_failure','condition','condition_count','condition_counts',
+               'qimen_phase','qimen_ticks','experience_id','experience_gain'},
     'march_weather': {'march_id', 'lost', 'risks'},
     'route_discovered': {'from', 'to'},
     'march_arrived': {'march_id', 'officers'},
@@ -312,6 +313,33 @@ def _validate_tactic_event(row):
                 or type(d['condition_count']) is not int
                 or d['condition_count'] not in ((2,3) if d['success'] else (0,))):
             raise ValueError('Tactic phantom snapshot')
+    elif d['tactic']==15:
+        if d.get('condition')!='qimen':raise ValueError('Tactic qimen condition')
+        if d.get('qimen_phase')=='cast':
+            if (extra!={'condition','condition_count','qimen_phase'}
+                    or type(d['condition_count']) is not int
+                    or d['condition_count'] not in (range(5,10) if d['success'] else (0,))):
+                raise ValueError('Tactic qimen cast snapshot')
+        elif d.get('qimen_phase')=='daily':
+            if (extra!={'condition','qimen_phase','qimen_ticks','experience_id','experience_gain'}
+                    or not d['success'] or type(d['experience_id']) is not str
+                    or not 1<=len(d['experience_id'])<=128 or d['experience_id'].strip()!=d['experience_id']
+                    or type(d['experience_gain']) is not int or not 0<=d['experience_gain']<=2550
+                    or not isinstance(d['qimen_ticks'],list) or not 1<=len(d['qimen_ticks'])<=20):
+                raise ValueError('Tactic qimen daily snapshot')
+            seen=set()
+            for tick in d['qimen_ticks']:
+                if (not isinstance(tick,dict) or set(tick)!={'id','before','remaining','troops_before','troops_after','loss'}
+                        or type(tick['id']) is not str or not 1<=len(tick['id'])<=128
+                        or tick['id'].strip()!=tick['id'] or tick['id'] in seen
+                        or any(type(tick[key]) is not int for key in ('before','remaining','troops_before','troops_after','loss'))
+                        or not 1<=tick['before']<=9 or tick['remaining']!=tick['before']-1
+                        or not 0<=tick['troops_after']<=tick['troops_before']<=1000
+                        or tick['loss']!=tick['troops_before']-tick['troops_after']
+                        or not min(80,tick['troops_before'])<=tick['loss']<=min(150,tick['troops_before'])):
+                    raise ValueError('Tactic qimen tick snapshot')
+                seen.add(tick['id'])
+        else:raise ValueError('Tactic qimen phase')
     elif d['tactic']==10:
         counts=d.get('condition_counts')
         if (extra!={'condition','condition_counts'} or d['condition']!='chain'

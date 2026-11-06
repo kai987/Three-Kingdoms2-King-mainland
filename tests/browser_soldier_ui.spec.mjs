@@ -685,3 +685,37 @@ test('chain applies independent connected water counts with bilingual movement-o
  await load(page,expired.save,'chain-expired-roundtrip.json');expect(await save(page)).toEqual(expired.save);proof.push({kind:'expiry',rng_unchanged:true,round:expired.save.state.battle.round});
  await attach(testInfo,'chain-condition-proof',proof);expect(pageErrors.get(page)).toEqual([]);
 });
+
+test('qimen targets enemies with daily losses and experience, bilingual receipts and exact zero-troop expiry',async({page},testInfo)=>{
+ await opening(page);
+ const [cast,restricted,daily,expiry]=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_qimen_fixture.py',import.meta.url).pathname],{encoding:'utf8',maxBuffer:16*1024*1024,timeout:90_000})),proof=[];
+ await load(page,cast.save,'controlled-qimen-cast.json');await page.locator(`[data-actor="${cast.actor}"]`).click();await page.locator(`[data-target="${cast.target}"]`).click();
+ const before=await read(page);await control(page,'tactic');await page.locator('#tactic-choice').selectOption('15');
+ const forecast=page.locator('#tactic-effect-preview .tactic-effect-forecast:visible');await expect(forecast).toContainText('最後一次也損兵');await page.locator('#dialog-language').selectOption('ja');await expect(forecast).toContainText('自軍の盾ではなく');expect(await save(page)).toEqual(before.save);
+ await page.locator('#confirm-tactic').click();const castResult=await animation(page);
+ expect(castResult.save.state.rng.draws-before.save.state.rng.draws).toBe(2);expect(castResult.save.state.battle.extended.tactical.points.attackers).toBe(before.save.state.battle.extended.tactical.points.attackers-10);
+ expect(castResult.save.state.battle.extended.conditions.units[String(cast.target)]).toEqual({kind:'qimen',remaining:7});
+ expect(castResult.save.state.battle.extended.support).toEqual(before.save.state.battle.extended.support);expect(castResult.save.state.battle.attackers).toEqual(before.save.state.battle.attackers);expect(castResult.save.state.battle.defenders).toEqual(before.save.state.battle.defenders);
+ await expect(page.locator(`[data-target="${cast.target}"] [data-qimen-count="7"]`)).toBeVisible();proof.push({kind:'cast',draws:2,count:7,guard_created:false});
+ await load(page,restricted.save,'controlled-qimen-restricted.json');await page.locator(`[data-actor="${restricted.locked_actor}"]`).click();await page.locator(`[data-target="${restricted.enemy}"]`).click();const locked=await read(page);
+ await expect(page.locator('#battle-move')).toBeDisabled();await expect(page.locator('#attack')).toBeEnabled();await expect(page.locator('#duel')).toBeEnabled();expect(locked.view.catalog.battle_tactical.actors[String(restricted.locked_actor)].reachable).toEqual([]);
+ await locale(page,'ja');await expect(page.locator('.battle-move-reason')).toContainText('奇門遁甲により移動できません');await page.locator(`[data-actor="${restricted.locked_actor}"]`).focus();await page.keyboard.press('ArrowRight');await page.keyboard.press('Enter');expect(await save(page)).toEqual(locked.save);await evidence(page,testInfo,'qimen-enemy-lock-no-self-shield-ja');
+ await control(page,'tactic');await page.locator('#tactic-choice').selectOption('0');await page.locator('#confirm-tactic').click();const fire=await animation(page);expect(fire.save.state.battle.extended.conditions.units[String(restricted.locked_actor)].remaining).toBe(7);
+ await control(page,'attack');await idle(page);expect((await save(page)).state.battle.extended.siege).toBeTruthy();proof.push({kind:'restricted',attack:true,tactic:true,own_counter_preserved:true});
+ for(const row of[daily,expiry]){
+  await load(page,row.save,'controlled-qimen-'+row.kind+'.json');const prior=await read(page);await control(page,'battle-wait');const result=await animation(page),expected=row.expected_daily;
+  expect(result.save.state.rng).toEqual(expected.rng);expect(result.save.state.battle.round).toBe(expected.round);expect(result.save.state.officers[String(row.actor)].experience).toBe(expected.experience);expect(result.save.state.officers[String(row.actor)].tier).toBe(expected.tier);
+  expect(result.save.state.officers[String(row.actor)].profile).toEqual(prior.save.state.officers[String(row.actor)].profile);expect(result.save.state.soldiers).toEqual(prior.save.state.soldiers);
+  const receipt=result.save.state.extension.events.items.at(-1).details;expect(receipt).toEqual({tactic:15,success:true,condition:'qimen',qimen_phase:'daily',qimen_ticks:expected.rows,experience_id:String(row.actor),experience_gain:expected.experience_gain});
+  expect(result.save.state.battle.extended.conditions.units[String(row.target)]).toEqual(expected.count?{kind:'qimen',remaining:expected.count}:undefined);
+  expect(result.save.state.battle.extended.conditions.high_order).toEqual(prior.save.state.battle.extended.conditions.high_order);
+  if(row.kind==='daily'){
+   const menu=page.locator('#utility-menu');if(await menu.getAttribute('open')===null)await menu.locator('summary').click();await page.locator('#event-history').click();await expect(page.locator('#event-title')).toContainText('奇門の日界効果');await expect(page.locator('#event-description .event-facts')).toContainText('損兵合計108');
+   await page.locator('#event-dialog [data-language-picker]').selectOption('zh-Hant');await expect(page.locator('#event-title')).toContainText('奇門日界效果');await expect(page.locator('#event-description .event-facts')).toContainText('增加經驗96');await expect(page.locator('#event-dialog .event-person img').first()).toBeVisible();await evidence(page,testInfo,'qimen-daily-committed-loss-and-xp-tc');await dismissEvents(page);expect(await save(page)).toEqual(result.save);
+  }else{
+   expect(prior.save.state.battle.defenders.find(u=>u.id===row.target).troops).toBe(0);expect(result.save.state.rng.draws-prior.save.state.rng.draws).toBe(1);await expect(page.locator(`[data-target="${row.target}"] [data-qimen-count]`)).toHaveCount(0);
+  }
+  await load(page,result.save,'qimen-'+row.kind+'-roundtrip.json');expect(await save(page)).toEqual(result.save);proof.push({kind:row.kind,rows:receipt.qimen_ticks,experience_gain:receipt.experience_gain,round:expected.round});
+ }
+ await attach(testInfo,'qimen-condition-proof',proof);expect(pageErrors.get(page)).toEqual([]);
+});

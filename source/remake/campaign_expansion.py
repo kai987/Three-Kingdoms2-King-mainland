@@ -26,7 +26,7 @@ TACTICS = (
     ('水攻', 10, 'flood', '目標及四鄰另一敵隊在河流；攻擊接觸連通的水上敵隊'),
     ('連弩', 8, 'crossbow', '本隊在城砦並四鄰接敵；攻擊所選單隊'),
     ('劫火', 12, 'inferno', '非城砦敵隊四鄰相接；攻擊該接觸連通集合'),
-    ('奇門遁甲', 10, 'guard', '五格內非河流、非城砦目標；本隊獲兩次減傷'))
+    ('奇門遁甲', 10, 'guard', '五格內非河流、非城砦敵隊；封鎖移動，諸葛亮在場時按日界損兵'))
 
 
 class ExpandedCampaign:
@@ -335,11 +335,33 @@ class ExpandedCampaign:
             b['outcome']='retreat';state.phase='result'
             b['log'].append('三十日戰期已滿，攻方撤退。')
         if change['advanced_day']:
-            for change_row in battle_conditions.advance_daily(state,b):
+            source=battle_conditions.qimen_source(state,b)
+            old_experience=state.officers[source].experience if source is not None else 0
+            before=presentation.snapshot(self,state)
+            changes=battle_conditions.advance_daily(state,b)
+            ticks=[]
+            for change_row in changes:
+                ident=deserialize_officer_ref(change_row['id'],self.catalog.rules)
+                if change_row['kind']=='qimen':
+                    ticks.append({key:change_row[key] for key in ('id','before','remaining','troops_before','troops_after','loss')})
+                    b['log'].append(f'{self.person_name(state,ident)}受到奇門日界效果，損兵{change_row["loss"]}，剩餘計數{change_row["remaining"]}。')
                 if not change_row['remaining']:
-                    ident=deserialize_officer_ref(change_row['id'],self.catalog.rules)
-                    label='連環' if change_row['kind']=='chain' else '虛兵'
+                    label={'chain':'連環','qimen':'奇門遁甲'}.get(change_row['kind'],'虛兵')
                     b['log'].append(f'{self.person_name(state,ident)}的{label}效果消退。')
+            if ticks:
+                gain=state.officers[source].experience-old_experience
+                self._battle_result(state)
+                if hasattr(self,'_emit_event') and state.player in (b['attacker'],b['defender']):
+                    people=list(dict.fromkeys([state.officers[source].person_id]+[
+                        state.officers[deserialize_officer_ref(tick['id'],self.catalog.rules)].person_id for tick in ticks]))
+                    self._emit_event(state,'tactic',person_ids=people,city_ids=[b['target']],
+                        factions=[b['attacker'],b['defender']],details=dict(tactic=15,success=True,
+                            condition='qimen',qimen_phase='daily',qimen_ticks=ticks,
+                            experience_id=str(source),experience_gain=gain))
+                source_side=next(side for side in battle_grid.SIDES if any(u['id']==source for u in b[side]))
+                presentation.record(self,state,before,kind='tactic',actor=source,
+                    target=deserialize_officer_ref(ticks[0]['id'],self.catalog.rules),own=source_side,
+                    tactic=15,effect='qimen_daily',success=True)
         b['log'][:]=b['log'][-80:]
         return change
 
@@ -520,7 +542,7 @@ class ExpandedCampaign:
         # clear() permits that narrow state until the result hook cleans it.
         kind=state.battle['extended'].get('conditions',{}).get('units',{}).get(str(ident),{}).get('kind')
         if battle_conditions.clear(state.battle,ident):
-            label='連環' if kind=='chain' else '虛兵'
+            label={'chain':'連環','qimen':'奇門遁甲'}.get(kind,'虛兵')
             state.battle['log'].append(f'{self.person_name(state,ident)}的{label}效果解除。')
 
     def _execute_tactic(self,state,actor,target,own,foe,tid,*,finish=True,counter=False):
@@ -550,7 +572,10 @@ class ExpandedCampaign:
         if 'tactical' not in x:a['energy']-=cost
         chance=max(10,min(95,60+(p.intellect-t.profile.intellect)//2))
         effect_details={}
-        if effect=='confuse' and 'tactical' in x:
+        modern_qimen=tid==15 and 'tactical' in x
+        if modern_qimen:
+            effect_details=dict(condition='qimen',condition_count=0,qimen_phase='cast')
+        elif effect=='confuse' and 'tactical' in x:
             effect_details=dict(condition='phantom',condition_count=0)
         elif effect=='chain' and 'tactical' in x:
             effect_details=dict(condition='chain',condition_counts=[])
@@ -561,9 +586,13 @@ class ExpandedCampaign:
         elif effect=='supply':
             grain=battle_supply.available(state,b,foe)
             effect_details=dict(affected_side=foe,grain_before=grain,grain_after=grain,grain_loss=0)
-        success=effect in {'ambush','guard'} or chance>0 and state.rng.next()%100<chance
+        success=(effect in {'ambush','guard'} and not modern_qimen) or chance>0 and state.rng.next()%100<chance
         if not success:b['log'].append(f'{self.person_name(state, actor["id"])}施放{title}，未能奏效。')
         elif effect=='ambush':x['ambush']={'actor':actor['id']};b['log'].append('十面埋伏已設置，等待接近的敵軍行動。')
+        elif modern_qimen:
+            count=battle_conditions.apply_qimen(b,target['id'],own,state.rng.next()%4)
+            effect_details['condition_count']=count
+            b['log'].append(f'{self.person_name(state,target["id"])}受到奇門遁甲，移動封鎖計數{count}。')
         elif effect=='guard':a['guard']=2;b['log'].append(f'{title}使本队获得两次减伤。')
         elif effect=='confuse' and 'tactical' in x:
             count=battle_conditions.apply(b,target['id'],own)
@@ -606,7 +635,7 @@ class ExpandedCampaign:
                 factions=[b['attacker'],b['defender']],
                 details={'tactic':tid,'success':success,**effect_details})
         presentation.record(self,state,before,kind='tactic',actor=actor['id'],
-            target=target['id'],own=own,counter=counter,tactic=tid,effect=effect,success=success)
+            target=target['id'],own=own,counter=counter,tactic=tid,effect='qimen' if modern_qimen else effect,success=success)
         if finish:self._finish_action(state,actor,own,foe,respond=effect!='ambush')
         else:self._battle_result(state)
 
