@@ -90,7 +90,7 @@ class Replay:
         self.command('new', faction=faction, seed=seed, difficulty='normal')
         self.initial = snapshot(self.game)
 
-    def command(self, kind, **payload):
+    def command(self, kind, /, **payload):
         self.game.command(kind, deepcopy(payload), self.game.revision)
         self.commands[kind] += 1
         # The production transaction already hashes the complete committed

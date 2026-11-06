@@ -345,7 +345,8 @@ class ScopePlanTests(unittest.TestCase):
         self.assertTrue(self.repo.plan()['full'])
 
     def test_natural_checkpoint_helper_requires_native_compatibility_without_long_replays(self):
-        for path in ('tools/campaign-checkpoints/run.py', 'tests/test_remake_natural_checkpoints.py'):
+        for path in ('tools/campaign-checkpoints/run.py', 'tools/campaign-checkpoints/replay_saved.py',
+                     'tools/campaign-checkpoints/parallel_saved.py', 'tests/test_remake_natural_checkpoints.py'):
             head = self.changed(path, 'bounded checkpoint helper\n')
             result = self.repo.plan(event_name='push', ref='refs/heads/main')
             self.assertEqual(result['mode'], 'scoped', result['reasons'])

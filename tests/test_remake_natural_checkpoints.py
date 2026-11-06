@@ -29,6 +29,9 @@ spec.loader.exec_module(checkpoints)
 saved_spec = importlib.util.spec_from_file_location('saved_checkpoints', ROOT/'tools/campaign-checkpoints/replay_saved.py')
 saved_checkpoints = importlib.util.module_from_spec(saved_spec)
 saved_spec.loader.exec_module(saved_checkpoints)
+parallel_spec = importlib.util.spec_from_file_location('parallel_checkpoints', ROOT/'tools/campaign-checkpoints/parallel_saved.py')
+parallel_checkpoints = importlib.util.module_from_spec(parallel_spec)
+parallel_spec.loader.exec_module(parallel_checkpoints)
 
 
 def settings(catalog=None, **changes):
@@ -773,6 +776,26 @@ class SavedPublicReplayTests(unittest.TestCase):
             self.assertEqual(saved, original)
             self.assertEqual([r['kind'] for r in replay.game.journal], ['load'])
 
+    def test_payload_kind_is_forwarded_without_becoming_the_command_name(self):
+        with using_backend('python'):
+            catalog,saved=self.origin()
+            first=saved_checkpoints.SavedCheckpointReplay(catalog,saved,settings(catalog),'python')
+            state=first.game.state
+            city=next(c for c in state.cities.values() if c.owner==state.player and c.gold>0)
+            target=next(i for i in city.roster.officer_ids if i!=state.extension['leaders'][state.player]
+                        and state.officers[i].loyalty<100)
+            payload=dict(city=city.id,officer=target,kind='gold',amount=1)
+            first.command('reward_officer',**payload)
+            expected=checkpoints.encoded(first.game.export_save())
+            self.assertEqual(first.recent_commands[-1]['kind'],'reward_officer')
+            self.assertEqual(first.recent_commands[-1]['payload'],payload)
+            self.assertEqual(first.commands,{'reward_officer':1})
+            self.assertEqual(expected['state']['rng'],saved['state']['rng'])
+            with using_backend('rust'):
+                second=saved_checkpoints.SavedCheckpointReplay(catalog,saved,settings(catalog),'rust')
+                second.command('reward_officer',**payload)
+                self.assertEqual(checkpoints.encoded(second.game.export_save()),expected)
+
     def test_city_origin_is_zero_completed_cycles_and_rejects_wrong_identity(self):
         with using_backend('python'):
             catalog, saved = self.origin()
@@ -836,6 +859,104 @@ class SavedPublicReplayTests(unittest.TestCase):
                     saved_checkpoints.run(catalog, saved, [row], settings(catalog), Path(temp),
                         provenance=dict(origin='controlled test', selection_policy='end turn',
                             classification='controlled only'))
+
+
+class ParallelSavedReplayTests(unittest.TestCase):
+    """Isolated worker failures and a short indexed smoke, not campaign coverage."""
+
+    def recorded_stub(self):
+        return [dict(index=1,command='end_turn',payload={},state_sha256='0'*64,
+                     phase='ai',turn=1,rng=dict(state=1,draws=0))]
+
+    def controlled_provenance(self):
+        return dict(origin='controlled harness',selection_policy='fault injection only',classification='not natural')
+
+    def test_worker_metadata_and_actual_final_file_are_required(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            final = dict(state=dict(rng=dict(state=1,draws=0)))
+            checkpoints.write(folder/'final.save.json',final)
+            expected,before = dict(command_count=1,origin='controlled',command_sha256='a'*64),dict(source='pinned')
+            row = dict(backend='python',observe=True,identity=expected,sources_before=before,
+                sources_after=before,verification_status='passed',command_count=1,command_sha256='a'*64,
+                final_save_sha256=digest(final))
+            self.assertEqual(parallel_checkpoints.validate_leg('python-observed',row,expected,before,folder),row)
+            for key,value in (('backend','rust'),('observe',False),('identity',{}),
+                    ('sources_after',{}),('verification_status','unknown'),
+                    ('command_count',True),('command_count',2),('command_sha256',None),('final_save_sha256','0'*64)):
+                with self.assertRaises(ValueError):
+                    parallel_checkpoints.validate_leg('python-observed',dict(row,**{key:value}),expected,before,folder)
+            for malformed in (None,[],'not an object'):
+                with self.assertRaises(ValueError):
+                    parallel_checkpoints.validate_leg('python-observed',malformed,expected,before,folder)
+
+    def test_spawn_failure_cannot_certify_missing_workers(self):
+        with tempfile.TemporaryDirectory() as temp, using_backend('python'):
+            catalog = controlled_catalog()
+            base = checkpoints.CheckpointReplay(catalog,settings(catalog),'python',observe=False)
+            saved = checkpoints.encoded(base.game.export_save())
+            args = SimpleNamespace(output_dir=Path(temp)/'failed',scenario='217-07')
+            with patch.object(parallel_checkpoints.subprocess,'Popen',side_effect=OSError('controlled launch failure')):
+                report = parallel_checkpoints.run(args,catalog,saved,self.recorded_stub(),settings(catalog),self.controlled_provenance())
+            self.assertEqual(report['verification_status'],'failed')
+            self.assertEqual(report['parity'],'unverified')
+            self.assertEqual(report['legs'][0]['stop_reason'],'worker_launch_error')
+            self.assertFalse(report['complete_raw_save_and_journal_equal'])
+            self.assertTrue((args.output_dir/'report.json').exists())
+
+    def test_timeout_terminates_only_the_owned_overdue_worker(self):
+        class Process:
+            def __init__(self,index):
+                self.pid,self.args,self.returncode,self.terminated = index,['controlled'],None,False
+            def poll(self): return self.returncode
+            def wait(self,timeout=None):
+                if self.pid==0 and not self.terminated:
+                    raise parallel_checkpoints.subprocess.TimeoutExpired(self.args,timeout)
+                self.returncode=1
+                return 1
+            def terminate(self): self.terminated=True;self.returncode=-15
+            def kill(self): raise AssertionError('A terminated controlled worker must not need kill')
+        with tempfile.TemporaryDirectory() as temp, using_backend('python'):
+            catalog = controlled_catalog()
+            base = checkpoints.CheckpointReplay(catalog,settings(catalog),'python',observe=False)
+            saved = checkpoints.encoded(base.game.export_save())
+            workers=[Process(i) for i in range(4)]
+            args=SimpleNamespace(output_dir=Path(temp)/'timeout',scenario='217-07')
+            with patch.object(parallel_checkpoints.subprocess,'Popen',side_effect=workers):
+                report=parallel_checkpoints.run(args,catalog,saved,self.recorded_stub(),settings(catalog),self.controlled_provenance())
+            self.assertEqual(report['legs'][0]['stop_reason'],'worker_wall_time')
+            self.assertTrue(workers[0].terminated)
+            self.assertFalse(any(p.terminated for p in workers[1:]))
+            self.assertNotEqual(report['verification_status'],'passed')
+
+    def test_four_real_subprocesses_match_one_recorded_public_command(self):
+        with tempfile.TemporaryDirectory() as temp, using_backend('python'):
+            catalog=checkpoints.indexed_catalog('217-07')
+            game=checkpoints.soak.HeadlessCampaign(catalog)
+            game.command('new',dict(faction='wei',seed=2026,difficulty='normal'),0)
+            saved=checkpoints.encoded(game.export_save())
+            spec=settings(catalog,faction='wei',max_seconds=60)
+            selection=Path(temp)/'selection';selection.mkdir()
+            player=saved_checkpoints.SavedCheckpointReplay(catalog,saved,spec,'python',output=selection,observe=False)
+            state=player.game.state
+            city=next(c for c in state.cities.values() if c.owner==state.player and c.gold>0
+                and any(i!=state.extension['leaders'][state.player] and state.officers[i].loyalty<100
+                        for i in c.roster.officer_ids))
+            target=next(i for i in city.roster.officer_ids if i!=state.extension['leaders'][state.player]
+                        and state.officers[i].loyalty<100)
+            player.command('reward_officer',city=city.id,officer=target,kind='gold',amount=1)
+            rows=[json.loads(line) for line in (selection/'commands.jsonl').read_text().splitlines()]
+            args=SimpleNamespace(output_dir=Path(temp)/'parallel',scenario='217-07')
+            report=parallel_checkpoints.run(args,catalog,saved,rows,spec,
+                dict(origin='controlled indexed smoke',selection_policy='one gold reward',classification='harness smoke only'))
+            self.assertEqual(report['verification_status'],'passed')
+            self.assertEqual(report['parity'],'passed')
+            self.assertEqual(len(report['legs']),4)
+            self.assertTrue(report['sources_unchanged'])
+            self.assertTrue(report['complete_raw_save_and_journal_equal'])
+            self.assertTrue(all(r['commands']=={'reward_officer':1} for r in report['legs']))
+            self.assertTrue(all(r['final_save_sha256']==digest(checkpoints.encoded(player.game.export_save()))
+                for r in report['legs']))
 
 
 if __name__ == '__main__':

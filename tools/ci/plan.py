@@ -85,7 +85,10 @@ PRESENTATION_TESTS = {
     'tests/test_remake_i18n_runtime.cjs': set(GROUPS),
 }
 BENCHMARK_INPUTS = {'tools/campaign-balance/run.py', 'tests/test_remake_campaign_balance.py'}
-CHECKPOINT_INPUTS = {'tools/campaign-checkpoints/run.py', 'tests/test_remake_natural_checkpoints.py'}
+CHECKPOINT_INPUTS = {
+    'tools/campaign-checkpoints/run.py', 'tools/campaign-checkpoints/replay_saved.py',
+    'tools/campaign-checkpoints/parallel_saved.py', 'tests/test_remake_natural_checkpoints.py',
+}
 SHARED_SCENARIO_FIELDS = {
     'rules', 'cities', 'links', 'world', 'city_coordinates', 'added_city_ids',
     'travel_rules', 'travel_routes', 'travel_hazards', 'sea_routes', 'sea_links',

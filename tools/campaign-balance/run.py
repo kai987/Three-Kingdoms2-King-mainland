@@ -93,7 +93,7 @@ class BalanceReplay(soak.Replay):
         self.initial_ownership = dict(self.initial['ownership'])
         self.sample()
 
-    def command(self, kind, **payload):
+    def command(self, kind, /, **payload):
         if time.monotonic() >= self.deadline:
             raise LimitReached('wall_time')
         if sum(getattr(self, 'commands', {}).values()) >= self.spec['max_commands']:

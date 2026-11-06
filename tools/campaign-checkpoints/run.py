@@ -270,7 +270,7 @@ class _CheckpointObserver:
                 after_phase=after['state']['phase'], probes=deepcopy(probes))
         self.pending.clear()
 
-    def command(self, kind, **payload):
+    def command(self, kind, /, **payload):
         if self.clock()-self.observer_started >= self.observer_spec['max_seconds']:
             raise VerificationLimit('wall_time')
         if sum(getattr(self, 'commands', {}).values()) >= self.observer_spec['max_commands']:
