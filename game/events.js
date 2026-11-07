@@ -14,6 +14,13 @@
   historical_tongguan:['潼關開戰','潼関の戦いの開幕'],
   historical_sun_liu_alliance_ended:['孫劉盟約解除','孫権・劉備の同盟解消'],
   historical_yiling:['夷陵開戰','夷陵の戦いの開幕'],
+  historical_hefei:['孫權北攻合淝','孫権の合肥進攻'],
+  historical_hefei_defense:['張遼迎戰合淝','張遼、合肥で迎撃'],
+  historical_hanzhong_preparation:['劉備籌備漢中戰事','劉備、漢中攻略を準備'],
+  historical_hanzhong:['漢中開戰','漢中の戦いの開幕'],
+  historical_dingjun:['定軍山交鋒','定軍山の戦い'],
+  historical_nanzhong:['諸葛亮南征','諸葛亮の南征'],
+  historical_liaodong:['魏軍征討遼東','魏軍の遼東遠征'],
   city_founded:['新城建置','新都市の開設'],city_captured:['城池易主','都市の陥落'],
   city_upgraded:['都市擴建','都市の発展'],city_renamed:['城名顯示變更','都市名表示の変更'],
   city_developed:['都市開發','都市の開発'],civil_unrest:['統治不穩','統治の不安定化'],
@@ -44,10 +51,13 @@
  const BATCH=new Set(['officer_appeared','officer_death','recruit_success','recruit_failure','march_arrived','march_returned']);
  const FOUNDINGS=new Set(['faction_founded','faction_founding_skipped']);
  const COUPS=new Set(['faction_coup','faction_coup_skipped']);
- // A second count fixes the number of recorded people where the event requires it.
+ // Fixed snapshot sizes for factions, people and cities where specified.
  const HISTORICAL_CAMPAIGNS=Object.freeze({
   historical_guandu:[2],historical_sun_liu_alliance:[2],historical_cao_southern_campaign:[3],
-  historical_tongguan:[3,3],historical_sun_liu_alliance_ended:[2,2],historical_yiling:[2,2]
+  historical_tongguan:[3,3],historical_sun_liu_alliance_ended:[2,2],historical_yiling:[2,2],
+  historical_hefei:[2,3,3],historical_hefei_defense:[2,2,1],
+  historical_hanzhong_preparation:[2,3,3],historical_hanzhong:[2,2,3],historical_dingjun:[2,2,1],
+  historical_nanzhong:[2,2,3],historical_liaodong:[2,3,2]
  });
  const WORLD=new Set(['campaign_start','officer_appeared','officer_death','succession','faction_ended','faction_founded','faction_founding_skipped','faction_coup','faction_coup_skipped',...Object.keys(HISTORICAL_CAMPAIGNS),'city_founded','city_upgraded','city_renamed','city_captured','new_year','campaign_victory','campaign_defeat']);
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -60,9 +70,9 @@
  }
  function validHistoricalCampaign(row){
   const validIds=(ids,min,max)=>ids.length>=min&&ids.length<=max&&ids.every(id=>id.length>0&&id.trim()===id)&&new Set(ids).size===ids.length;
-  const [factions,people]=HISTORICAL_CAMPAIGNS[row.kind];
+  const [factions,people,cities]=HISTORICAL_CAMPAIGNS[row.kind];
   return row.audience==='world'&&Object.keys(row.details).length===0&&
-   validIds(row.person_ids,people??1,people??4)&&validIds(row.city_ids,1,8)&&validIds(row.factions,factions,factions);
+   validIds(row.person_ids,people??1,people??4)&&validIds(row.city_ids,cities??1,cities??8)&&validIds(row.factions,factions,factions);
  }
  function validTacticEvent(row){
   const d=row.details,base=['tactic','success'],extra=Object.keys(d).filter(k=>!base.includes(k));
@@ -270,6 +280,27 @@
     case 'historical_tongguan':return text('曹操與馬超、韓遂在潼關一帶開戰。馬超與韓遂各自領軍，至211年9月底互不攻城。由電腦操控的勢力會優先評估這條戰線，玩家自行下達出征命令。各軍依兵力、兵糧與實際路線行軍，勝負由交戰結果決定。','曹操と馬超・韓遂の間で潼関の戦いが始まりました。馬超と韓遂はそれぞれ軍を指揮し、211年9月末まで互いの都市を攻めません。AIはこの戦線での出陣を優先して検討し、プレイヤーは自分で出陣を命じます。各軍は兵力・兵糧と実際の経路に従って進み、勝敗は交戦の結果で決まります。');
     case 'historical_sun_liu_alliance_ended':return text('荊州局勢生變，孫權與劉備解除盟約。雙方可再次對彼此下達軍事命令，既有城池歸屬與部隊兵力依當前戰局保留。','荊州の情勢が変わり、孫権と劉備の同盟が解消されました。双方は互いに軍事行動を取れるようになります。都市の支配と各部隊の兵力は、現在の戦況を引き継ぎます。');
     case 'historical_yiling':return text('劉備與孫權因荊州之爭在夷陵一帶開戰。劉備由電腦操控時，會優先評估向孫權出征。玩家自行決定是否發兵。各軍備糧後沿實際路線前進，戰果由交戰結果決定。','荊州をめぐる対立から、劉備と孫権の間で夷陵の戦いが始まりました。AIが劉備軍を操作する場合は、孫権軍への出陣を優先して検討します。プレイヤーは派兵するかどうかを決めます。部隊は兵糧を携えて実際の経路を進み、戦果は交戦の結果で決まります。');
+    case 'historical_hefei':return text(
+     '孫權準備北攻合淝。本作以地圖上的壽春代理合淝戰區，史實上的壽春與合淝是兩座城。孫權軍的電腦將優先考慮攻向壽春，玩家自行下令。部隊須備糧並走完實際路線。',
+     '孫権が合肥への進攻を準備します。本作では地図上の寿春を合肥戦域の代替拠点とします。史実の寿春と合肥は別の都市です。孫権軍のAIは寿春への進攻を優先し、プレイヤーは自分で出陣を命じます。部隊は兵糧を携えて実際の経路を進みます。');
+    case 'historical_hefei_defense':return text(
+     '孫權軍抵達壽春，張遼迎戰。本作以壽春代理合淝戰區，史實上的壽春與合淝是兩座城。守軍按實際在場的兵力應戰，勝負依本場戰鬥結算。',
+     '孫権軍が寿春に到着し、張遼が迎え撃ちます。本作では寿春を合肥戦域の代替拠点とします。史実の寿春と合肥は別の都市です。守備側はその場の兵力で応戦し、勝敗は実際の戦闘で決まります。');
+    case 'historical_hanzhong_preparation':return text(
+     '法正勸劉備奪取漢中。曹操仍控制漢中，劉備可從蜀北據點籌措兵糧、集結部隊。這一階段是備戰，出征須另行下令。',
+     '法正が劉備に漢中攻略を進言します。漢中はなお曹操の支配下にあり、劉備は蜀北の拠点で兵糧を整え、部隊を集められます。ここでは準備に入り、出陣には別途命令が必要です。');
+    case 'historical_hanzhong':return text(
+     '劉備與曹操展開漢中爭奪。劉備軍的電腦將優先考慮進攻漢中，玩家自行決定出征。兩軍沿實際路線調兵、補給並交戰。',
+     '劉備と曹操の漢中争奪が始まります。劉備軍のAIは漢中への進攻を優先し、プレイヤーは自分で出陣を決めます。両軍は実際の経路で兵を動かし、補給を受けて戦います。');
+    case 'historical_dingjun':return text(
+     '黃忠與夏侯淵在漢中戰區交鋒。本作以漢中節點呈現定軍山一帶。兩將按實際兵力參戰，勝負由本場戰鬥決定。',
+     '黄忠と夏侯淵が漢中戦域で交戦します。本作では漢中の拠点で定軍山周辺を表します。両将は実際の兵力で戦い、勝敗はこの戦闘で決まります。');
+    case 'historical_nanzhong':return text(
+     '諸葛亮於春季展開南征，此時戰事仍在進行。孟獲據建寧、牂牁，蜀軍可沿現有道路出征。城池得失與武將去留依實際戰局處理。',
+     '諸葛亮は春に南征を始め、戦いはなお続いています。孟獲が建寧・牂牁を押さえ、蜀軍は既存の経路で出陣できます。都市の支配と武将の去就は実際の戦況に従います。');
+    case 'historical_liaodong':return text(
+     '曹叡命司馬懿討伐據守襄平的公孫淵。魏軍的電腦將優先考慮遼西至襄平的戰線，玩家自行調兵。攻城以部隊實際抵達為前提，勝負依交戰結果決定。',
+     '曹叡が司馬懿に、襄平に拠る公孫淵の討伐を命じます。魏軍のAIは遼西から襄平に至る戦線を優先し、プレイヤーは自分で兵を動かします。部隊が到着して初めて攻城となり、勝敗は交戦の結果で決まります。');
     case 'city_founded':{const founded=n.cities[0]||c,parent=n.cities[1];return text(`${founded}依年代建置，承接${parent||'原城'}目前歸屬及部分資源。`,`${founded}が設定年代に開設され、${parent||'元の都市'}の現在の所属と一部の資源を引き継ぎました。`);}
     case 'city_renamed':return text(`${row.year}年${row.month}月起，本作節點的顯示城名由${label(d.from_name)}切換為${label(d.to_name)}。目前歸屬、武將、兵數與庫存保持實際戰局狀態。`,`${row.year}年${row.month}月から、本作の拠点表示名が${label(d.from_name)}から${label(d.to_name)}へ切り替わりました。現在の支配・武将・兵力・在庫は実際の戦況を引き継ぎます。`);
     case 'city_upgraded':{
@@ -379,7 +410,7 @@
   function illustration(rows){
    const row=rows[0],catalog=view?.catalog||{},world=catalog.world||{x:0,y:0,width:1352,height:1024,background:'/assets/map-navigation.png'};
    const ids=[...new Set(rows.flatMap(e=>[...e.person_ids,...(typeof e.details.actor==='string'?[e.details.actor]:[])]))].slice(0,4);
-   const targetScene=new Set(['battle_started','battle_result','battle_supply_exhausted','tactic','duel_started','duel_result','march_weather','route_discovered','march_arrived','ai_campaign','march_resupplied','march_starvation','march_retreat']);
+   const targetScene=new Set(['battle_started','battle_result','battle_supply_exhausted','tactic','duel_started','duel_result','march_weather','route_discovered','march_arrived','ai_campaign','march_resupplied','march_starvation','march_retreat','historical_hefei','historical_hanzhong_preparation','historical_hanzhong','historical_liaodong']);
    const cityIds=targetScene.has(row.kind)?[...row.city_ids].reverse():row.city_ids;
    const cityId=cityIds.find(id=>catalog.cities?.some(c=>c.id===id))||catalog.factions?.find(f=>f.id===view?.game?.player)?.city;
    const city=catalog.cities?.find(c=>c.id===cityId),center=city?.position||[(world.x||0)+world.width/2,(world.y||0)+world.height/2];

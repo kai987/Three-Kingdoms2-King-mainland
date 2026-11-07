@@ -51,6 +51,10 @@ all 32 complete state/save hashes, including `extension.command_books`, are pinn
 without projecting fields out of the current acceptance checks. Export version 2
 and cross-backend pending-march loads are checked explicitly.
 
+The fixed friendly transfers predate the Hanzhong preparation and advance
+events. Only these two calendar triggers are excluded from the frozen replay.
+The natural campaign parity test keeps both events enabled.
+
 A separate migration proof works only on a copy of each checkpoint: remove the
 new command-book ledger, restore envelope version 1 and the frozen old controlled
 catalog identity, and recompute the copy's envelope checksum. Both complete hashes

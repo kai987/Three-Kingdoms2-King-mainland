@@ -413,6 +413,7 @@ class TravelCampaign:
                 self._discover_march_route(state,row)
                 self._start_expanded_battle(state, source, target, ids, paid=True, march_supply=row['supply'],
                     arrival_city=row['quote']['path'][-2],manual_deployment=True)
+                historical_campaigns.process_battle(self, state)
                 travel['battle_arrival'] = True
                 if state.player in (source.owner, target.owner): return
                 self._resolve_ai_battle(state)

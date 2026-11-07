@@ -33,7 +33,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  return{events,modal,parent,doc,i18n,header,portraitRequests,drain,setView:v=>{current=v;},setBusy:v=>{busy=v;},setPreview:v=>{preview=v;}};
 }
 (async()=>{
- assert.equal(Object.keys(KINDS).length,65);
+ assert.equal(Object.keys(KINDS).length,72);
  const campaignRows=[
   row(1,'historical_guandu',{audience:'world',factions:['wei','yuan_shao']}),
   row(2,'historical_sun_liu_alliance',{audience:'world',factions:['wu','shu']}),
@@ -81,6 +81,41 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  campaignPlayback.modal.querySelector('[data-event-next]').onclick();campaignPlayback.drain();
  assert(!campaignPlayback.modal.open);assert.equal(JSON.stringify(campaignView),campaignBefore);
  campaignPlayback.events.dispose();
+ const newCampaigns=[
+  {kind:'historical_hefei',date:[215,8],sides:['wu','wei'],people:['sun-quan','cao-cao','zhang-liao'],cities:['danyang','lujiang','jiujiang'],snippets:['壽春代理合淝戰區','寿春を合肥戦域の代替拠点']},
+  {kind:'historical_hefei_defense',date:[215,8],sides:['wei','wu'],people:['zhang-liao','sun-quan'],cities:['jiujiang'],snippets:['史實上的壽春與合淝是兩座城','史実の寿春と合肥は別の都市']},
+  {kind:'historical_hanzhong_preparation',date:[217,7],sides:['shu','wei'],people:['liu-bei','cao-cao','fa-zheng'],cities:['zitong','baxi','hanzhong'],snippets:['法正勸劉備','法正が劉備に']},
+  {kind:'historical_hanzhong',date:[218,1],sides:['shu','wei'],people:['liu-bei','cao-cao'],cities:['zitong','baxi','hanzhong'],snippets:['沿實際路線','実際の経路']},
+  {kind:'historical_dingjun',date:[219,1],sides:['shu','wei'],people:['huang-zhong','xiahou-yuan'],cities:['hanzhong'],snippets:['勝負由本場戰鬥決定','勝敗はこの戦闘で決まります']},
+  {kind:'historical_nanzhong',date:[225,7],sides:['shu','nanman'],people:['zhuge-liang','meng-huo'],cities:['jianning','zangke','yunnan'],snippets:['春季展開南征','春に南征を始め']},
+  {kind:'historical_liaodong',date:[238,1],sides:['wei','gongsun'],people:['cao-rui','sima-yi','gongsun-yuan'],cities:['liaoxi','liaodong'],snippets:['遼西至襄平','遼西から襄平']}
+ ];
+ for(const {kind,date:[year,month],sides,people,cities,snippets} of newCampaigns){
+  const event=row(1,kind,{year,month,audience:'world',factions:sides,person_ids:people,city_ids:cities});
+  assert(validEvent(event),kind);
+  for(const field of ['person_ids','city_ids','factions']){
+   assert(!validEvent({...event,[field]:event[field].slice(1)}),kind+' rejects an incomplete '+field);
+   assert(!validEvent({...event,[field]:[...event[field],'extra']}),kind+' rejects an extra '+field);
+  }
+  const playback=fixture([],{portraits:{entry:id=>people.includes(id),html:id=>`<span data-portrait-person="${id}"></span>`}});
+  const current=view([event]);
+  current.catalog={...catalog,cities:cities.map((id,index)=>({id,name:id==='jiujiang'?'壽春':id,position:[300+index*200,300]}))};
+  const before=JSON.stringify(current);
+  playback.events.observe(current,{newGame:true});playback.drain();
+  assert(playback.modal.open,kind+' opens automatically');
+  for(const [index,locale] of ['zh-Hant','ja'].entries()){
+   playback.i18n.locale=locale;playback.doc.emit('game-language-change');
+   assert(playback.modal.innerHTML.includes(KINDS[kind][index]),kind+' renders its title in '+locale);
+   assert(playback.modal.innerHTML.includes(snippets[index]),kind+' renders event facts in '+locale);
+   assert(playback.modal.innerHTML.includes('class="event-map"'));
+   for(const person of people)assert(playback.modal.innerHTML.includes(`data-portrait-person="${person}"`));
+  }
+  if(kind==='historical_hefei')assert(playback.modal.innerHTML.includes('viewBox="556 214 288 172"'),'合淝 illustration centers its 壽春 proxy');
+  playback.modal.querySelector('[data-event-next]').onclick();playback.drain();
+  assert(!playback.modal.open);
+  assert.equal(JSON.stringify(current),before,'Historical playback does not alter the campaign');
+  playback.events.dispose();
+ }
  const founding=(id,kind='faction_founded',extra={})=>row(id,kind,{year:184,month:11,day:1,turn:28,audience:'world',
   person_ids:['historical-beigong-boyu','historical-li-wenhou'],city_ids:['jincheng'],factions:['beigong_boyu'],
   details:{founding_id:'liangzhou-revolt-184-11',reason:kind==='faction_founded'?'formed':'leader_unavailable',reserves:kind==='faction_founded'?1200:0},...extra});
@@ -361,5 +396,5 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
   assert(line.includes('劉禪'));assert(!line.includes('劉備'),'Event faction labels follow the live ruler, not the opening name');
  }
  assert.equal(JSON.stringify(inheritedView),inheritedBefore,'Bilingual event display never changes faction identity or state');inherited.events.dispose();
- console.log('events: 65 bilingual scenes, strict historical campaign/coup/founding/supply/city-name snapshots, local batching, read-only playback, locale continuity and immutable RNG/state passed');
+ console.log('events: 72 bilingual scenes, strict historical campaign/coup/founding/supply/city-name snapshots, local batching, read-only playback, locale continuity and immutable RNG/state passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

@@ -12,10 +12,12 @@ import sys
 import tempfile
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, canonical, digest
+from remake import historical_campaigns
 from remake.errors import GameError
 from remake.march_core import CoreUnavailable, config_for, invoke, using_backend
 from remake.route_hazards import allocate_survivors, evaluate_leg, route_allowed
@@ -76,11 +78,17 @@ def campaign_fixture(case):
 
 
 @pre_city_development_opening()
+@patch.object(historical_campaigns, 'RULES', {
+    kind: rule for kind, rule in historical_campaigns.RULES.items()
+    if kind not in {historical_campaigns.HANZHONG_PREPARATION, historical_campaigns.HANZHONG}
+})
 def campaign_result(case, alternate_backend=None, *, legacy_catalog_sha256=None):
     """Frozen eight-case march inputs; current natural parity stays separate.
 
     Every case is a friendly transfer: no battle budget or battle service is
-    disabled. The old full-save artifact predates city development state only.
+    disabled. The old full-save artifact predates city development state and
+    the two Hanzhong calendar milestones in this 217 opening. The separate
+    natural campaign replay exercises the live scenario with both enabled.
     """
     name, side, source, target, mode, month = case
     game = campaign_fixture(case)
