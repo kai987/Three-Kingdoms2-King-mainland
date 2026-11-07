@@ -9,7 +9,7 @@ from heapq import heappop, heappush
 from itertools import count
 from math import asin, ceil, cos, radians, sin, sqrt
 from .errors import GameError
-from . import command_books
+from . import command_books, historical_campaigns
 from .officers import (integer, select_deployment, transfer_officers,
                        ref_sort_key, deserialize_officer_ref)
 
@@ -219,6 +219,8 @@ class TravelCampaign:
                 factions=[row['owner']],details={'from':row['source'],'to':row['target']},audience='world')
 
     def _queue_march(self, state, source, target, ids, kind, mode='fastest', *, battle_grain=None):
+        if kind == 'attack' and historical_campaigns.allied(state, source.owner, target.owner):
+            raise GameError('孙刘同盟期间，不能向盟友出征。')
         order = 'depart' if kind == 'attack' else 'transfer'
         command_books.require(state, source.owner, order)
         quote = self._travel_path(state, source.id, target.id, source.owner, mode, adjacent=kind == 'attack')
@@ -348,6 +350,7 @@ class TravelCampaign:
 
     def _arrivals(self, state, payload):
         if state.phase != 'arrivals': raise GameError('当前没有待处理的到达事件。')
+        historical_campaigns.process(self,state)
         self._process_march_supply(state)
         if 'logistics' in state.extension:
             from .logistics import process_arrivals
@@ -375,6 +378,10 @@ class TravelCampaign:
                 if row['owner']==state.player:
                     self._emit_event(state,'march_returned',city_ids=[source.id,target.id],factions=[row['owner']],
                         details=dict(march_id=row['id'],reason='army_lost'))
+                continue
+            if historical_campaigns.allied(state, row['owner'], target.owner):
+                row['supply']['retreat_requested']=True;row['supply']['waiting']=True;row['reason']='target_changed'
+                self._resolve_supply_retreats(state)
                 continue
             if target.owner == row['owner']:
                 if target.grain+row['supply']['remaining']>100000000:

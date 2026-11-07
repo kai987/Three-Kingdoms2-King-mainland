@@ -6,7 +6,7 @@ into one friendly destination only after an actual arrival. No ROM inputs.
 from copy import copy, deepcopy
 
 from .errors import GameError
-from . import command_books
+from . import command_books, historical_campaigns
 from .officers import parse_officer_ref
 from .route_hazards import allocate_survivors, evaluate_leg, route_allowed, _python_route_allowed
 
@@ -215,6 +215,7 @@ def _fronts(game, state, owner):
         for a, b in ((route['from'], route['to']), (route['to'], route['from'])):
             if (a in state.cities and b in state.cities and state.cities[a].owner == owner
                     and state.cities[b].owner not in {owner, 'neutral'}
+                    and not historical_campaigns.allied(state, owner, state.cities[b].owner)
                     and _python_route_allowed(game.catalog.data, route, a, b)):
                 found.add(a)
     return [state.cities[key] for key in sorted(found)]

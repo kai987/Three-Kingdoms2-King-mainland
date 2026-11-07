@@ -382,6 +382,19 @@
         "save"
       ]
     },
+    "tests/test_remake_historical_campaigns.py": {
+      "tier": "related",
+      "groups": [
+        "scenarios",
+        "battle",
+        "logistics",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland200-01",
+        "mainland208-10"
+      ]
+    },
     "tests/test_remake_historical_scenarios.py": {
       "tier": "full",
       "groups": [

@@ -9,7 +9,7 @@ from itertools import combinations
 
 from .difficulty import attack_budget, get_settings
 from .errors import GameError
-from . import command_books, officer_relations
+from . import command_books, historical_campaigns, officer_relations
 from .officers import integer, recruitment_loyalty, ref_sort_key
 from . import civil_staff
 from .march_supply import DENOMINATOR, OFFICER_UNITS, estimate as march_grain, next_supply_days
@@ -40,10 +40,12 @@ class StrategicAI:
 
     def threat(self, city, exclude=None):
         hostile = [self.strength(c) for c in self.neighbors(city)
-                   if c.id != exclude and c.owner not in (city.owner, 'neutral')]
+                   if c.id != exclude and c.owner not in (city.owner, 'neutral')
+                   and not historical_campaigns.allied(self.state, city.owner, c.owner)]
         incoming = [sum(self.state.officers[i].troops for i in m['officers'])
                     for m in self.state.extension['travel']['marches']
-                    if m['target'] == city.id and m['owner'] != city.owner and m['kind'] == 'attack']
+                    if m['target'] == city.id and m['owner'] != city.owner and m['kind'] == 'attack'
+                    and not historical_campaigns.allied(self.state, city.owner, m['owner'])]
         return sum(sorted(hostile, reverse=True)[:2]) + sum(incoming)
 
     def available(self, city):
@@ -194,9 +196,16 @@ class StrategicAI:
 
     def objective(self, owner, preferred=None):
         cities = [c for c in self.state.cities.values() if c.owner == owner]
-        targets = sorted({c.id for city in cities for c in self.neighbors(city) if c.owner != owner})
-        if preferred in targets:
+        targets = sorted({c.id for city in cities for c in self.neighbors(city) if c.owner != owner
+                          and not historical_campaigns.allied(self.state, owner, c.owner)})
+        priority = historical_campaigns.priority_targets(self.state, owner, targets)
+        if priority:
+            targets = sorted(priority)
+        elif preferred in targets:
             targets = [preferred]
+        # If the southern front can actually be attacked, favour Jiangxia
+        # over the wider Sun–Liu front. Strength and supply gates still apply.
+        first = 'jiangxia' if 'jiangxia' in priority and historical_campaigns.priority_factions(self.state) == ('wei',) else None
         available_budget = min(max(0, self.budget-self.state.extension['ai_attacks']),
                                command_books.remaining(self.state, owner)//max(1,command_books.cost('depart')))
         winners, potential = [], []
@@ -236,8 +245,10 @@ class StrategicAI:
                     winners.extend(feasible)
                     break
         if winners:
-            best = min(winners, key=lambda row: row[:4])
+            best = min(winners, key=lambda row: (row[2] != first, *row[:4]))
             return best[2], best[4]
+        if first:
+            return first, []
         return (min(potential)[2] if potential else None), []
 
     def plan(self, owner):
@@ -246,7 +257,8 @@ class StrategicAI:
         turn = self.state.turn
         if old and old['last_turn'] == turn:
             return old
-        valid = old and old['target'] in self.state.cities and self.state.cities[old['target']].owner != owner
+        target = self.state.cities.get(old['target']) if old else None
+        valid = target and target.owner != owner and not historical_campaigns.allied(self.state, owner, target.owner)
         if valid:
             pending = []
             active = {m['id'] for m in self.state.extension['travel']['marches']}
@@ -284,7 +296,9 @@ class StrategicAI:
             target = self.state.cities.get(order['target'])
             ids = order['officers']
             quote = self.quote(city, target, order['mode'], adjacent=True) if target else None
-            usable = target and target.owner != city.owner and all(i in self.army(city,target.id) for i in ids)
+            usable = (target and target.owner != city.owner
+                      and not historical_campaigns.allied(self.state, city.owner, target.owner)
+                      and all(i in self.army(city,target.id) for i in ids))
             if (not usable or not self.safe(quote,ids) or not self.provisioned(city, ids, quote)
                     or self.state.turn+quote['turns'] > order['arrival_turn']
                     or self.state.extension['ai_attacks'] >= self.budget):
@@ -310,7 +324,8 @@ class StrategicAI:
         for target in self.state.cities.values():
             if target.id == city.id or target.owner != city.owner:
                 continue
-            frontier = [n for n in self.neighbors(target) if n.owner != city.owner]
+            frontier = [n for n in self.neighbors(target) if n.owner != city.owner
+                        and not historical_campaigns.allied(self.state, city.owner, n.owner)]
             if not frontier:
                 continue
             if plan['target'] and not any(n.id==plan['target'] for n in frontier):
@@ -418,7 +433,9 @@ def run(campaign, state, payload):
             if owner != state.player:
                 prepare_ai(campaign,state,owner)
     if not x['ai_queue']:
-        x['ai_queue'] = [c.id for c in sorted(state.cities.values(),key=lambda c:(c.owner,c.id))
+        priority = {owner: rank for rank, owner in enumerate(historical_campaigns.priority_factions(state))}
+        x['ai_queue'] = [c.id for c in sorted(state.cities.values(),
+                         key=lambda c: (priority.get(c.owner, len(priority)), c.owner, c.id))
                          if c.owner not in (state.player,'neutral')]
         x['ai_cursor'] = 0;x['ai_attacks'] = 0
     while x['ai_cursor'] < len(x['ai_queue']):

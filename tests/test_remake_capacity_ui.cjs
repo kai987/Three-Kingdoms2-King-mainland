@@ -125,7 +125,13 @@ async function weightedTransferChecks(){
  context.departure(home);assert(lastDialog.body.includes('选择1—10名武将'));assert.equal((lastDialog.body.match(/name="depart-officer"/g)||[]).length,99);
  picked=Array.from({length:11},(_,value)=>({value:String(value)}));element('#review-departure').onclick();
  assert.equal(lastNotice.error,true);assert.equal(lastDialog.title,'选择出征名单','11 members may not enter a battle from a 99-member city');
- picked=picked.slice(0,10);element('#review-departure').onclick();assert.equal(lastDialog.title,'出征确认');await element('#confirm-departure').onclick();assert.equal(lastCommand.kind,'depart');assert.equal(lastCommand.payload.officers.length,10);
+ picked=picked.slice(0,10);element('#review-departure').onclick();assert.equal(lastDialog.title,'出征确认');
+ const previousCommand=lastCommand,departureDialog=lastDialog;
+ context.view.catalog.non_aggression=[['wei','wu']];
+ await element('#confirm-departure').onclick();assert.equal(lastCommand,previousCommand,'A stale departure confirmation cannot issue an order against an ally');
+ context.departure(home,'enemy');assert.equal(lastDialog,departureDialog,'An allied destination cannot open a departure dialog');
+ delete context.view.catalog.non_aggression;
+ await element('#confirm-departure').onclick();assert.equal(lastCommand.kind,'depart');assert.equal(lastCommand.payload.officers.length,10);
  assert.equal(JSON.stringify(context.view.game),before,'Rendering and uncommitted confirmation never mutate runtime state');
  // Display reads the supplied capacity, rather than freezing 99 into UI copy.
  context.view.catalog.rules.city_officer_capacity=30;home.roster.officer_ids=home.roster.officer_ids.slice(0,30);

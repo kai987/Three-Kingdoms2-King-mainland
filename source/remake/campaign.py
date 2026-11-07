@@ -13,6 +13,7 @@ from threading import RLock
 from types import SimpleNamespace
 
 from .errors import GameError
+from . import historical_campaigns
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
@@ -301,6 +302,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             state = self.state
             available = sum(year_state(p, state.year) == YearState.AVAILABLE for p in self.catalog.definitions.values()) if state else None
             travel = self._travel_view(state)
+            alliances = historical_campaigns.alliances(state)
             return {'revision': self.revision, 'game': self.to_dict(),
                     'catalog': {'title': self.catalog.data['title'], 'factions': dated_events.visible_factions(self.catalog,state),
                                 'scheduled_factions':[self.catalog.factions[r['faction']] for r in dated_events.foundings(self.catalog)],
@@ -313,6 +315,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'difficulties': catalog_choices(),
                                 'notes': self.catalog.data['design_notes'], 'library_count': len(self.catalog.definitions),
                                 'year_available': available,
+                                **({'non_aggression': alliances} if alliances else {}),
                                 **self._expanded_catalog_view(state), **travel,
                                 'civil_staff': self._civil_staff_view(state),
                                 'domestic':domestic.view(self,state),
@@ -388,6 +391,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     self._synchronize_siege(candidate)
                 city_development.synchronize(self,candidate)
                 record_events(self, self.state, candidate, kind, payload)
+                historical_campaigns.process(self,candidate)
                 civil_staff.synchronize(self, candidate, opening=kind == 'new', monthly=candidate.day == 1)
                 logistics.synchronize(self,candidate)
                 domestic.synchronize(self,candidate)
