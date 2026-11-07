@@ -58,7 +58,7 @@ DETAILS = {
     'faction_founding_skipped': {'founding_id','reason','reserves'},
     'faction_coup': {'coup_id','reason','released_troops'},
     'faction_coup_skipped': {'coup_id','reason','released_troops'},
-    **{kind: set() for kind in historical_campaigns.RULES},
+    **{kind: set() for kind in historical_campaigns.EVENT_FACTIONS},
     'battle_started': {'battle_id', 'attacker', 'defender'},
     'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered'},
     'duel_started': set(), 'duel_result': {'result'},
@@ -553,7 +553,7 @@ def validate(campaign, state):
             _validate_battle_supply_event(row)
         if row['kind']=='equipment_acquired':
             _validate_equipment_event(row)
-        if row['kind'] in historical_campaigns.RULES:
+        if row['kind'] in historical_campaigns.EVENT_FACTIONS:
             historical_campaigns.validate_event(campaign.catalog,state,row)
         if row['kind'] in {'faction_founded','faction_founding_skipped'}:
             rules={r['id']:r for r in campaign.catalog.data.get('faction_foundings',[])}

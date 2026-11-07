@@ -198,14 +198,11 @@ class StrategicAI:
         cities = [c for c in self.state.cities.values() if c.owner == owner]
         targets = sorted({c.id for city in cities for c in self.neighbors(city) if c.owner != owner
                           and not historical_campaigns.allied(self.state, owner, c.owner)})
-        priority = historical_campaigns.priority_targets(self.state, owner, targets)
+        priority, first = historical_campaigns.priority_targets(self.state, owner, targets)
         if priority:
             targets = sorted(priority)
         elif preferred in targets:
             targets = [preferred]
-        # If the southern front can actually be attacked, favour Jiangxia
-        # over the wider Sun–Liu front. Strength and supply gates still apply.
-        first = 'jiangxia' if 'jiangxia' in priority and historical_campaigns.priority_factions(self.state) == ('wei',) else None
         available_budget = min(max(0, self.budget-self.state.extension['ai_attacks']),
                                command_books.remaining(self.state, owner)//max(1,command_books.cost('depart')))
         winners, potential = [], []

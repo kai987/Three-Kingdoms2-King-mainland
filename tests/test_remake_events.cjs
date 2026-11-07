@@ -33,16 +33,23 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  return{events,modal,parent,doc,i18n,header,portraitRequests,drain,setView:v=>{current=v;},setBusy:v=>{busy=v;},setPreview:v=>{preview=v;}};
 }
 (async()=>{
- assert.equal(Object.keys(KINDS).length,62);
+ assert.equal(Object.keys(KINDS).length,65);
  const campaignRows=[
   row(1,'historical_guandu',{audience:'world',factions:['wei','yuan_shao']}),
   row(2,'historical_sun_liu_alliance',{audience:'world',factions:['wu','shu']}),
-  row(3,'historical_cao_southern_campaign',{audience:'world',factions:['wei','wu','shu']})
+  row(3,'historical_cao_southern_campaign',{audience:'world',factions:['wei','wu','shu']}),
+  row(4,'historical_tongguan',{audience:'world',factions:['wei','ma_teng','han_sui'],person_ids:['cao-cao','ma-chao','han-sui']}),
+  row(5,'historical_sun_liu_alliance_ended',{audience:'world',factions:['shu','wu'],person_ids:['person-a','sun-quan']}),
+  row(6,'historical_yiling',{audience:'world',factions:['shu','wu'],person_ids:['person-a','sun-quan']})
  ];
  for(const event of campaignRows){
   assert(validEvent(event));
   for(const patch of [{audience:'player'},{details:{result:'victory'}},{city_ids:[]},{city_ids:['home','home']},
    {person_ids:[]},{person_ids:[' person-a']},{factions:event.factions.slice(1)}])assert(!validEvent({...event,...patch}));
+ }
+ for(const event of campaignRows.slice(3)){
+  assert(!validEvent({...event,person_ids:event.person_ids.slice(1)}));
+  assert(!validEvent({...event,person_ids:[...event.person_ids,'other']}));
  }
  const campaignView=view(campaignRows),campaignBefore=JSON.stringify(campaignView),campaignPlayback=fixture();
  campaignPlayback.setView(campaignView);
@@ -56,9 +63,21 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  campaignPlayback.modal.querySelector('[data-event-next]').onclick();campaignPlayback.drain();
  assert(campaignPlayback.modal.innerHTML.includes('孫権・劉備の同盟'));
  assert(campaignPlayback.modal.innerHTML.includes('互いの都市を攻められず'));
+ assert(campaignPlayback.modal.innerHTML.includes('荊州の情勢が決裂の条件を満たしたとき'));
  campaignPlayback.modal.querySelector('[data-event-next]').onclick();campaignPlayback.drain();
  assert(campaignPlayback.modal.innerHTML.includes('曹操軍の南征'));
  assert(campaignPlayback.modal.innerHTML.includes('自分で出陣を決めます'));
+ for(const [title,summary] of [
+  ['潼関の戦いの開幕','曹操と馬超・韓遂'],
+  ['孫権・劉備の同盟解消','互いに軍事行動を取れる'],
+  ['夷陵の戦いの開幕','戦果は交戦の結果で決まります']
+ ]){
+  campaignPlayback.modal.querySelector('[data-event-next]').onclick();campaignPlayback.drain();
+  assert(campaignPlayback.modal.innerHTML.includes(title));
+  assert(campaignPlayback.modal.innerHTML.includes(summary));
+ }
+ campaignPlayback.i18n.locale='zh-Hant';campaignPlayback.doc.emit('game-language-change');
+ assert(campaignPlayback.modal.innerHTML.includes('夷陵開戰'));
  campaignPlayback.modal.querySelector('[data-event-next]').onclick();campaignPlayback.drain();
  assert(!campaignPlayback.modal.open);assert.equal(JSON.stringify(campaignView),campaignBefore);
  campaignPlayback.events.dispose();
@@ -342,5 +361,5 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
   assert(line.includes('劉禪'));assert(!line.includes('劉備'),'Event faction labels follow the live ruler, not the opening name');
  }
  assert.equal(JSON.stringify(inheritedView),inheritedBefore,'Bilingual event display never changes faction identity or state');inherited.events.dispose();
- console.log('events: 62 bilingual scenes, strict historical campaign/coup/founding/supply/city-name snapshots, local batching, read-only playback, locale continuity and immutable RNG/state passed');
+ console.log('events: 65 bilingual scenes, strict historical campaign/coup/founding/supply/city-name snapshots, local batching, read-only playback, locale continuity and immutable RNG/state passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

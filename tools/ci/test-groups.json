@@ -392,7 +392,10 @@
       ],
       "scenario_ids": [
         "mainland200-01",
-        "mainland208-10"
+        "mainland208-10",
+        "mainland211-07-tongguan",
+        "mainland219-07",
+        "mainland221-07"
       ]
     },
     "tests/test_remake_historical_scenarios.py": {

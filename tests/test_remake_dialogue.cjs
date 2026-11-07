@@ -108,5 +108,5 @@ assert(controller.history());drain();assert(modal.open,'Tactical event remains a
  assert.equal(clears,meaningfulClears+1,'Next meaningful command clears old feedback');
  assert(app.includes("$('#journal')?.prepend(panel)"),'Compact feedback occupies existing bounded report area');assert(!app.includes("$('#notice')?.after(panel)"));
  assert(app.includes('refreshPersonnelDialogue();GameI18n.apply()'));assert(app.includes('data-officer-relation='));
- console.log('dialogue: all 62 events, 47 commands, bilingual speakers, refusal receipts, portrait fallbacks, save/RNG immutability, modal queue/locale and central feedback passed');
+ console.log('dialogue: all 65 events, 47 commands, bilingual speakers, refusal receipts, portrait fallbacks, save/RNG immutability, modal queue/locale and central feedback passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

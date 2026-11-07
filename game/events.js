@@ -11,6 +11,9 @@
   historical_guandu:['官渡開戰','官渡の戦いの開幕'],
   historical_sun_liu_alliance:['孫劉結盟','孫権・劉備の同盟'],
   historical_cao_southern_campaign:['曹軍南下','曹操軍の南征'],
+  historical_tongguan:['潼關開戰','潼関の戦いの開幕'],
+  historical_sun_liu_alliance_ended:['孫劉盟約解除','孫権・劉備の同盟解消'],
+  historical_yiling:['夷陵開戰','夷陵の戦いの開幕'],
   city_founded:['新城建置','新都市の開設'],city_captured:['城池易主','都市の陥落'],
   city_upgraded:['都市擴建','都市の発展'],city_renamed:['城名顯示變更','都市名表示の変更'],
   city_developed:['都市開發','都市の開発'],civil_unrest:['統治不穩','統治の不安定化'],
@@ -41,21 +44,25 @@
  const BATCH=new Set(['officer_appeared','officer_death','recruit_success','recruit_failure','march_arrived','march_returned']);
  const FOUNDINGS=new Set(['faction_founded','faction_founding_skipped']);
  const COUPS=new Set(['faction_coup','faction_coup_skipped']);
- const HISTORICAL_CAMPAIGNS=new Set(['historical_guandu','historical_sun_liu_alliance','historical_cao_southern_campaign']);
- const WORLD=new Set(['campaign_start','officer_appeared','officer_death','succession','faction_ended','faction_founded','faction_founding_skipped','faction_coup','faction_coup_skipped',...HISTORICAL_CAMPAIGNS,'city_founded','city_upgraded','city_renamed','city_captured','new_year','campaign_victory','campaign_defeat']);
+ // A second count fixes the number of recorded people where the event requires it.
+ const HISTORICAL_CAMPAIGNS=Object.freeze({
+  historical_guandu:[2],historical_sun_liu_alliance:[2],historical_cao_southern_campaign:[3],
+  historical_tongguan:[3,3],historical_sun_liu_alliance_ended:[2,2],historical_yiling:[2,2]
+ });
+ const WORLD=new Set(['campaign_start','officer_appeared','officer_death','succession','faction_ended','faction_founded','faction_founding_skipped','faction_coup','faction_coup_skipped',...Object.keys(HISTORICAL_CAMPAIGNS),'city_founded','city_upgraded','city_renamed','city_captured','new_year','campaign_victory','campaign_defeat']);
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const clone=value=>JSON.parse(JSON.stringify(value));
  function validEvent(row){
   return !!row&&Number.isSafeInteger(row.id)&&row.id>0&&Object.hasOwn(KINDS,row.kind)&&['player','world'].includes(row.audience)&&
    Number.isSafeInteger(row.year)&&row.year>0&&Number.isInteger(row.month)&&row.month>=1&&row.month<=12&&[1,11,21].includes(row.day)&&Number.isSafeInteger(row.turn)&&row.turn>0&&
    ['person_ids','city_ids','factions'].every(key=>Array.isArray(row[key])&&row[key].every(id=>typeof id==='string'&&id.length<=128))&&
-   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!CITY_OPERATIONS.has(row.kind)||validCityDevelopmentEvent(row))&&(row.kind!=='battle_supply_exhausted'||validBattleSupplyEvent(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(!HISTORICAL_CAMPAIGNS.has(row.kind)||validHistoricalCampaign(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row))&&(row.kind!=='tactic'||validTacticEvent(row));
+   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!CITY_OPERATIONS.has(row.kind)||validCityDevelopmentEvent(row))&&(row.kind!=='battle_supply_exhausted'||validBattleSupplyEvent(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(!Object.hasOwn(HISTORICAL_CAMPAIGNS,row.kind)||validHistoricalCampaign(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row))&&(row.kind!=='tactic'||validTacticEvent(row));
  }
  function validHistoricalCampaign(row){
   const validIds=(ids,min,max)=>ids.length>=min&&ids.length<=max&&ids.every(id=>id.length>0&&id.trim()===id)&&new Set(ids).size===ids.length;
-  const factions=row.kind==='historical_cao_southern_campaign'?3:2;
+  const [factions,people]=HISTORICAL_CAMPAIGNS[row.kind];
   return row.audience==='world'&&Object.keys(row.details).length===0&&
-   validIds(row.person_ids,1,4)&&validIds(row.city_ids,1,8)&&validIds(row.factions,factions,factions);
+   validIds(row.person_ids,people??1,people??4)&&validIds(row.city_ids,1,8)&&validIds(row.factions,factions,factions);
  }
  function validTacticEvent(row){
   const d=row.details,base=['tactic','success'],extra=Object.keys(d).filter(k=>!base.includes(k));
@@ -258,8 +265,11 @@
     case 'faction_coup':{const victims=n.people.slice(0,3).join(text('、','・')),successor=n.people[3]||text('繼任者','後継者');return text(`${victims}遇害，${successor}奪取原勢力主導權並自立。釋放兵員${d.released_troops}，各自歸入原所在城池的預備兵；沒有額外產生兵員或錢糧，其他城池與未涉事件武將沿用當前戰局。`,`${victims}が殺害され、${successor}が元の勢力の主導権を奪って自立しました。配下兵${d.released_troops}を、それぞれ元の所在都市の予備兵へ戻しました。兵員・資金・兵糧を新たに発生させず、その他の都市と事件に関与しない武将は現在の戦況を引き継ぎます。`);}
     case 'faction_coup_skipped':return text(`原定的內部奪權條件已改變：原主將或四名相關人物的歸屬、生死、行軍情況不符，本次不執行殺害或強制轉屬。尊重當前戰局，此判定不會重複。`,'予定していた政変の条件が変わりました。元の君主、または関係者4人の所属・生死・行軍状況が条件を満たさないため、殺害や強制的な所属変更を行いません。現在の戦況を尊重し、この判定は繰り返しません。');
     case 'historical_guandu':return text('曹操與袁紹在官渡一帶開戰。由電腦操控的一方會優先評估攻打對方，玩家自行下達出征命令。軍隊須備糧並走完實際路線，勝負由交戰結果決定。','曹操と袁紹の間で官渡の戦いが始まりました。AIは相手への進攻を優先して検討し、プレイヤーは自分で出陣を命じます。部隊は兵糧を携えて実際の経路を進み、勝敗は交戦の結果で決まります。');
-    case 'historical_sun_liu_alliance':return text('孫權與劉備結盟，共同對抗曹軍。結盟期間，雙方不能攻打彼此的城池，各自指揮部隊。曹、孫、劉任一方退出戰局時，盟約結束。','孫権と劉備が同盟を結び、曹操軍に対抗します。同盟中は互いの都市を攻められず、部隊はそれぞれの勢力が指揮します。曹・孫・劉のいずれかの勢力が戦役から退くと、同盟は終了します。');
+    case 'historical_sun_liu_alliance':return text('孫權與劉備結盟，共同對抗曹軍。結盟期間，雙方不能攻打彼此的城池，各自指揮部隊。荊州局勢符合決裂條件、夷陵開戰，或曹、孫、劉任一方退出戰局時，盟約結束。','孫権と劉備が同盟を結び、曹操軍に対抗します。同盟中は互いの都市を攻められず、部隊はそれぞれの勢力が指揮します。荊州の情勢が決裂の条件を満たしたとき、夷陵の戦いが始まったとき、または曹・孫・劉のいずれかの勢力が戦役から退いたときに、同盟は終了します。');
     case 'historical_cao_southern_campaign':return text('曹軍開始籌劃南征。若曹軍由電腦操控，將優先評估南線出征，待兵力、兵糧與路線符合條件才發兵。若由玩家操控，出征由玩家決定。各場戰鬥按實際戰況結算。','曹操軍が南征の準備に入りました。AIが曹操軍を操作する場合は南方への出陣を優先し、兵力・兵糧・経路の条件がそろってから派兵します。プレイヤーが曹操軍を操作する場合は、自分で出陣を決めます。勝敗は各戦闘の結果に従います。');
+    case 'historical_tongguan':return text('曹操與馬超、韓遂在潼關一帶開戰。馬超與韓遂各自領軍，至211年9月底互不攻城。由電腦操控的勢力會優先評估這條戰線，玩家自行下達出征命令。各軍依兵力、兵糧與實際路線行軍，勝負由交戰結果決定。','曹操と馬超・韓遂の間で潼関の戦いが始まりました。馬超と韓遂はそれぞれ軍を指揮し、211年9月末まで互いの都市を攻めません。AIはこの戦線での出陣を優先して検討し、プレイヤーは自分で出陣を命じます。各軍は兵力・兵糧と実際の経路に従って進み、勝敗は交戦の結果で決まります。');
+    case 'historical_sun_liu_alliance_ended':return text('荊州局勢生變，孫權與劉備解除盟約。雙方可再次對彼此下達軍事命令，既有城池歸屬與部隊兵力依當前戰局保留。','荊州の情勢が変わり、孫権と劉備の同盟が解消されました。双方は互いに軍事行動を取れるようになります。都市の支配と各部隊の兵力は、現在の戦況を引き継ぎます。');
+    case 'historical_yiling':return text('劉備與孫權因荊州之爭在夷陵一帶開戰。劉備由電腦操控時，會優先評估向孫權出征。玩家自行決定是否發兵。各軍備糧後沿實際路線前進，戰果由交戰結果決定。','荊州をめぐる対立から、劉備と孫権の間で夷陵の戦いが始まりました。AIが劉備軍を操作する場合は、孫権軍への出陣を優先して検討します。プレイヤーは派兵するかどうかを決めます。部隊は兵糧を携えて実際の経路を進み、戦果は交戦の結果で決まります。');
     case 'city_founded':{const founded=n.cities[0]||c,parent=n.cities[1];return text(`${founded}依年代建置，承接${parent||'原城'}目前歸屬及部分資源。`,`${founded}が設定年代に開設され、${parent||'元の都市'}の現在の所属と一部の資源を引き継ぎました。`);}
     case 'city_renamed':return text(`${row.year}年${row.month}月起，本作節點的顯示城名由${label(d.from_name)}切換為${label(d.to_name)}。目前歸屬、武將、兵數與庫存保持實際戰局狀態。`,`${row.year}年${row.month}月から、本作の拠点表示名が${label(d.from_name)}から${label(d.to_name)}へ切り替わりました。現在の支配・武将・兵力・在庫は実際の戦況を引き継ぎます。`);
     case 'city_upgraded':{

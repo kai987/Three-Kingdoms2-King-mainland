@@ -220,7 +220,7 @@ class TravelCampaign:
 
     def _queue_march(self, state, source, target, ids, kind, mode='fastest', *, battle_grain=None):
         if kind == 'attack' and historical_campaigns.allied(state, source.owner, target.owner):
-            raise GameError('孙刘同盟期间，不能向盟友出征。')
+            raise GameError('同盟期间，不能向盟友出征。')
         order = 'depart' if kind == 'attack' else 'transfer'
         command_books.require(state, source.owner, order)
         quote = self._travel_path(state, source.id, target.id, source.owner, mode, adjacent=kind == 'attack')
