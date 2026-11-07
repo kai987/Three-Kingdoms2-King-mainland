@@ -22,6 +22,17 @@ context.finishMapAction('enemy');assert.deepEqual(opened,[['depart','home','enem
 context.beginMapAction('recruit',home);context.finishMapAction('empty');assert.deepEqual(opened.at(-1),['recruit','home','empty']);
 context.beginMapAction('recruit',home);context.cancelMapAction();assert.equal(context.mapAction,null);
 assert.equal(JSON.stringify(view),snapshot,'Target review, invalid cities and cancellation never write state/revision/RNG');
+// A live alliance removes an otherwise reachable target from the map, even if
+// an old highlighted button is selected after the relationship changes.
+context.beginMapAction('depart',home);
+view.catalog.non_aggression=[['wu','wei']];
+assert.deepEqual(same(context.actionTargetCities('depart',home)),['empty']);
+const openedBeforeAllianceClick=opened.length;
+context.finishMapAction('enemy');
+assert.equal(opened.length,openedBeforeAllianceClick);assert(notices.at(-1).error);
+context.cancelMapAction();
+context.beginMapAction('depart',home);assert.deepEqual(same(context.mapAction.targets),['empty']);context.cancelMapAction();
+delete view.catalog.non_aggression;
 // A sole local candidate opens directly without a map focus/highlight step.
 const oldFree=view.catalog.recruitable.home,oldEnemy=view.catalog.persuadable.home;
 view.catalog.recruitable.home=[2];view.catalog.persuadable.home=[];

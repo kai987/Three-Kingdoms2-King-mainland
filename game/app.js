@@ -685,7 +685,7 @@ function cityCommandPanel(city,key,body){return `<div class="city-command-panel 
 function renderCity(){
  const game=view.game,city=game.cities[selectedCity],owned=city.owner===game.player;
  const available=city.roster.officer_ids.filter(i=>!officerUnavailable(i)),fighters=available.filter(i=>game.officers[i].troops>0);
- const noDepartureFood=fighters.every(i=>view.catalog.travel_rules?Object.values(game.cities).filter(c=>c.owner!==game.player).every(c=>city.grain<departureBudget(city,c.id,[i])):city.grain<Math.max(1,Math.floor(game.officers[i].troops/25)));
+ const noDepartureFood=fighters.every(i=>view.catalog.travel_rules?Object.values(game.cities).filter(isDepartureTarget).every(c=>city.grain<departureBudget(city,c.id,[i])):city.grain<Math.max(1,Math.floor(game.officers[i].troops/25)));
  const scale=view.catalog.city_profiles[city.id],income=view.catalog.city_income[city.id],naming=view.catalog.map_presentation.city_names[city.id],training=view.catalog.domestic?.cities?.[city.id]?.morale;
  const unavailable=`<p class="small city-command-unavailable">${cityCommandText('非本方城池，無法執行都市命令。','自勢力の都市ではないため、都市の命令は実行できません。')}</p>`;
  const panels={
@@ -773,10 +773,17 @@ function allocate(city,preferred=null,flow=null){
 }
 
 function actionTargetCities(kind,city){
- if(kind==='depart')return Object.values(view.game.cities).filter(c=>c.owner!==view.game.player&&(view.catalog.travel_hazards?availableRouteModes(city.id,c.id).length:view.catalog.links.some(e=>e.includes(city.id)&&e.includes(c.id)))).map(c=>c.id);
+ if(kind==='depart')return Object.values(view.game.cities).filter(c=>isDepartureTarget(c)&&(view.catalog.travel_hazards?availableRouteModes(city.id,c.id).length:view.catalog.links.some(e=>e.includes(city.id)&&e.includes(c.id)))).map(c=>c.id);
  const free=new Set((view.catalog.recruitable?.[city.id]||[]).map(i=>view.game.extension.free_locations[i]));
  const enemy=new Set(view.catalog.persuadable?.[city.id]||[]);
  return Object.values(view.game.cities).filter(c=>free.has(c.id)||c.roster.officer_ids.some(i=>enemy.has(i))).map(c=>c.id);
+}
+function isDepartureTarget(city){
+ const player=view.game.player;
+ return !!city&&city.owner!==player&&!view.catalog.non_aggression?.some(pair=>pair.includes(player)&&pair.includes(city.owner));
+}
+function rejectDepartureTarget(){
+ return notice(GameI18n.locale==='ja'?'この都市には出陣できません。':'目前不能向這座城出征。',true);
 }
 function beginMapAction(kind,city){
  if(busy||view.game?.phase!=='city'||city.owner!==view.game.player)return;
@@ -826,7 +833,7 @@ function departureBudget(city,destination,ids){
  return Math.min(Infinity,...availableRouteModes(city.id,destination).map(mode=>marchGrain(ids,travelQuote(city.id,destination,mode))));
 }
 function departure(city,targetCity=null){
- const targets=Object.values(view.game.cities).filter(c=>(!targetCity||c.id===targetCity)&&c.owner!==view.game.player&&(view.catalog.travel_hazards?availableRouteModes(city.id,c.id).length:view.catalog.links.some(e=>e.includes(city.id)&&e.includes(c.id))));
+ const targets=actionTargetCities('depart',city).filter(id=>!targetCity||id===targetCity).map(id=>view.game.cities[id]);
  if(!targets.length)return notice(view.catalog.travel_hazards?'没有可出征的陆路或沿海城池。':'没有相邻的敌方城池。');
  const draft={source:city.id,target:targets[0].id,officers:[],route_mode:'fastest'};
  const pick=()=>{
@@ -837,7 +844,7 @@ function departure(city,targetCity=null){
    selectionStatus('departure',count,limit,poor?'当前兵粮不足，请减少出阵兵数。':'');$('#review-departure').disabled=!hasCommandBook('depart')||count===0||poor;
   }});
   $('#departure-target').onchange=()=>{const ids=[...dialog.querySelectorAll('input[name=depart-officer]:checked')].map(x=>GameOfficerChoices.ref(x.value));const poor=city.grain<departureBudget(city,$('#departure-target').value,ids);selectionStatus('departure',ids.length,limit,poor?'当前兵粮不足，请减少出阵兵数。':'');$('#review-departure').disabled=!hasCommandBook('depart')||!ids.length||poor;};
-  $('#review-departure').onclick=()=>{if(!hasCommandBook('depart'))return notice(commandBookReason('depart'),true);const nextTarget=$('#departure-target').value;if(draft.target!==nextTarget)draft.route_mode='fastest';draft.target=nextTarget;draft.officers=[...dialog.querySelectorAll('input[name=depart-officer]:checked')].map(x=>GameOfficerChoices.ref(x.value));if(!draft.officers.length||draft.officers.length>limit)return notice('请选择1到10名有兵力的武将。',true);if(draft.officers.some(i=>officerUnavailable(i,{troops:true})))return notice('请选择本城健康的武将。',true);if(city.grain<departureBudget(city,draft.target,draft.officers))return notice('行军粮食不足。',true);confirm();};
+  $('#review-departure').onclick=()=>{if(!hasCommandBook('depart'))return notice(commandBookReason('depart'),true);const nextTarget=$('#departure-target').value;if(!isDepartureTarget(view.game.cities[nextTarget]))return rejectDepartureTarget();if(draft.target!==nextTarget)draft.route_mode='fastest';draft.target=nextTarget;draft.officers=[...dialog.querySelectorAll('input[name=depart-officer]:checked')].map(x=>GameOfficerChoices.ref(x.value));if(!draft.officers.length||draft.officers.length>limit)return notice('请选择1到10名有兵力的武将。',true);if(draft.officers.some(i=>officerUnavailable(i,{troops:true})))return notice('请选择本城健康的武将。',true);if(city.grain<departureBudget(city,draft.target,draft.officers))return notice('行军粮食不足。',true);confirm();};
  };
  const confirm=()=>{
   let battleGrainEdited=false;
@@ -869,6 +876,7 @@ function departure(city,targetCity=null){
   $('#confirm-departure').disabled=$('#confirm-departure').disabled||!hasCommandBook('depart');
   $('#confirm-departure').onclick=async()=>{
    if(!hasCommandBook('depart'))return notice(commandBookReason('depart'),true);
+   if(!isDepartureTarget(view.game.cities[draft.target]))return rejectDepartureTarget();
    if(view.catalog.travel_rules){refresh();const quote=travelQuote(city.id,draft.target,draft.route_mode);if(!quote)return notice('没有符合条件的路线。',true);if(city.grain<marchGrain(draft.officers,quote))return notice('行军粮食不足。',true);}
    actor=target=null;if(await command('depart',draft))dialog.close();
   };

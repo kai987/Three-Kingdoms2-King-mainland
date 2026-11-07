@@ -5,6 +5,7 @@ remake designs. No original engine, ROM tables or control IR are loaded.
 """
 from dataclasses import replace
 from .errors import GameError
+from . import historical_campaigns
 from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services, officer_relations, battle_supply, battle_conditions, battle_placement, battle_auto_deployment
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
@@ -992,8 +993,10 @@ class ExpandedCampaign:
         if 'city_development' in x:fields.add('city_development')
         from . import dated_events
         if dated_events.enabled(self.catalog):fields.add('dated_events')
+        if historical_campaigns.RECEIPTS in x:fields.add(historical_campaigns.RECEIPTS)
         if not isinstance(x,dict) or set(x)!=fields:raise ValueError('expanded state fields')
         dated_events.validate_state(self,state)
+        historical_campaigns.validate_state(self.catalog,state)
         self._validate_travel(state)
         if not isinstance(x['free_locations'],dict) or not isinstance(x['officer_actions'],dict):raise ValueError('personnel state')
         for key,city in x['free_locations'].items():

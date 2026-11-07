@@ -5,6 +5,7 @@ conquests, consume random numbers, or acknowledge/advance a game from the UI.
 """
 from copy import deepcopy
 import re
+from . import historical_campaigns
 from .officers import ref_sort_key, is_generated_ref
 
 LIMIT = 100
@@ -57,6 +58,7 @@ DETAILS = {
     'faction_founding_skipped': {'founding_id','reason','reserves'},
     'faction_coup': {'coup_id','reason','released_troops'},
     'faction_coup_skipped': {'coup_id','reason','released_troops'},
+    **{kind: set() for kind in historical_campaigns.RULES},
     'battle_started': {'battle_id', 'attacker', 'defender'},
     'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered'},
     'duel_started': set(), 'duel_result': {'result'},
@@ -551,6 +553,8 @@ def validate(campaign, state):
             _validate_battle_supply_event(row)
         if row['kind']=='equipment_acquired':
             _validate_equipment_event(row)
+        if row['kind'] in historical_campaigns.RULES:
+            historical_campaigns.validate_event(campaign.catalog,state,row)
         if row['kind'] in {'faction_founded','faction_founding_skipped'}:
             rules={r['id']:r for r in campaign.catalog.data.get('faction_foundings',[])}
             d=row['details']; rule=rules.get(d.get('founding_id'))
