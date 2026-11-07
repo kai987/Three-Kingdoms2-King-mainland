@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog
 from remake.errors import GameError
-from remake import battle_placement, historical_campaigns as history
+from remake import battle_placement, civil_staff, historical_campaigns as history
 from remake.march_core import using_backend
 from remake.officers import transfer_officers
 
@@ -176,6 +176,81 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertEqual(game.state.cities['jiangxia'].owner, 'shu')
         self.assertNotIn(game.state.battle['id'], game.state.settled_battles)
         self.resume(game)
+
+    def marriage_fixture(self, player):
+        game = self.opening('208-10', player)
+        # Keep the opening political situation while advancing the actual calendar.
+        for _ in range(41):
+            game._complete_turn(game.state)
+            game._reconcile_factions(game.state)
+            civil_staff.synchronize(game, game.state, monthly=game.state.day == 1)
+        self.assertEqual((game.state.year, game.state.month, game.state.day), (209, 11, 21))
+        game.validate(game.state)
+        return game
+
+    def test_sun_liu_marriage_moves_sun_shangxiang_to_liu_bei_and_survives_reload(self):
+        for player in ('shu', 'wu'):
+            with self.subTest(player=player):
+                game = self.marriage_fixture(player)
+                ident = game.catalog.ids['san14-candidate-0565']
+                self.assertEqual(game.state.officers[ident].faction_id, 'wu')
+                self.assertFalse(self.events(game, history.MARRIAGE))
+                self.advance(game)
+                self.assertEqual(game.state.phase, 'arrivals')
+                before = deepcopy(game.state.officers[ident])
+                before.faction_id = 'shu'
+                self.arrivals(game)
+
+                self.assertEqual(game.state.officers[ident], before)
+                homes = [city.id for city in game.state.cities.values() if ident in city.roster.officer_ids]
+                self.assertEqual(homes, ['jiangxia'])
+                self.assertEqual(game.state.cities['wujun'].owner, 'wu')
+                self.assertEqual(game.state.cities['jiangxia'].owner, 'shu')
+                self.assertTrue(history.allied(game.state, 'wu', 'shu'))
+                event, = self.events(game, history.MARRIAGE)
+                self.assertEqual((event['year'], event['month'], event['day'], event['audience']),
+                                 (209, 12, 1, 'world'))
+                self.assertEqual(event['city_ids'], ['wujun', 'jiangxia'])
+                self.assertEqual(event['factions'], ['shu', 'wu'])
+                self.assertEqual(event['person_ids'],
+                                 ['san14-candidate-0952', 'san14-candidate-0565', 'san14-candidate-0553'])
+                self.assertFalse(any('san14-candidate-0565' in row['person_ids']
+                                     for row in self.events(game, 'defection')))
+                game = self.resume(game)
+                before = game.export_save()
+                history.process(game, game.state)
+                self.assertEqual(game.export_save(), before)
+
+    def test_sun_liu_marriage_requires_historical_alliance_and_available_rosters(self):
+        game = self.marriage_fixture('wu')
+        game._complete_turn(game.state)
+        person = game.catalog.ids['san14-candidate-0565']
+        for reason in ('outside month', 'hypothetical', 'no alliance', 'dead',
+                       'changed allegiance', 'changed ruler', 'marching', 'pending successor', 'city full'):
+            with self.subTest(reason=reason):
+                state = deepcopy(game.state)
+                if reason == 'outside month':
+                    state.month = 11
+                elif reason == 'no alliance':
+                    state.extension.pop(history.RECEIPTS)
+                elif reason == 'dead':
+                    state.officers[person].alive = False
+                elif reason == 'changed allegiance':
+                    state.officers[person].faction_id = 'shu'
+                elif reason == 'changed ruler':
+                    state.extension['leaders']['wu'] = person
+                elif reason == 'pending successor':
+                    state.extension['pending_succession']['wu'] = {'candidates': [person]}
+                before = game.to_dict(state)
+                group = 'if' if reason == 'hypothetical' else game.catalog.data['main_scenario']['group']
+                marching = {person} if reason == 'marching' else set()
+                capacity = game.catalog.rules.city_officer_capacity if reason == 'city full' else 0
+                with patch.dict(game.catalog.data['main_scenario'], group=group), \
+                        patch.object(game, '_march_ids', return_value=marching), \
+                        patch.object(game, '_city_occupancy', return_value=capacity), \
+                        patch.object(state.rng, 'next', side_effect=AssertionError('event used RNG')):
+                    history.process(game, state)
+                self.assertEqual(game.to_dict(state), before)
 
     def test_changed_cities_and_if_opening_do_not_trigger(self):
         hypothetical = self.opening('208-10', 'shu', start_month=12, group='if')

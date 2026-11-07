@@ -41,6 +41,13 @@ try{
  const joined=dialogue.event(row('recruit_success'),base,'ja',i18n);assert.equal(joined[0].personId,'liu-bei');assert.equal(joined[1].personId,'guan-yu');assert.equal(joined[1].name,'関羽');
  const opening=dialogue.event(row('campaign_start',1,{person_ids:[]}),base);assert.equal(opening[1].personId,'liu-bei','Missing opening participant falls back to actual ruler');
  const coup=dialogue.event(row('faction_coup',1,{person_ids:['liu-bei','guan-yu','cao-cao']}),base);assert.equal(coup[1].personId,'cao-cao','Coup dialogue belongs to successor, never the victims');
+ const marriageView=clone(base);marriageView.catalog.library.push({person_id:'sun-shangxiang',name:'孫尚香'});
+ const marriage=row('historical_sun_liu_marriage',1,{person_ids:['liu-bei','sun-shangxiang','sun-quan'],details:{}});
+ for(const language of ['zh-Hant','ja']){
+  const lines=dialogue.event(marriage,marriageView,language,i18n);
+  assert.deepEqual(lines.map(line=>line.personId),['liu-bei','sun-shangxiang'],'Marriage dialogue belongs to the couple');
+  assert.equal(lines[1].name,'孫尚香');
+ }
  const owned=row('equipment_acquired',1,{person_ids:['liu-bei','guan-yu'],details:{actor:'liu-bei',target:'guan-yu',from_person:'guan-yu',method:'owned'}});
  const loot=row('equipment_acquired',1,{person_ids:['guan-yu','cao-cao'],details:{actor:'guan-yu',target:'guan-yu',from_person:'cao-cao',method:'duel'}});
  for(const language of ['zh-Hant','ja']){
@@ -108,5 +115,5 @@ assert(controller.history());drain();assert(modal.open,'Tactical event remains a
  assert.equal(clears,meaningfulClears+1,'Next meaningful command clears old feedback');
  assert(app.includes("$('#journal')?.prepend(panel)"),'Compact feedback occupies existing bounded report area');assert(!app.includes("$('#notice')?.after(panel)"));
  assert(app.includes('refreshPersonnelDialogue();GameI18n.apply()'));assert(app.includes('data-officer-relation='));
- console.log('dialogue: all 72 events, 47 commands, bilingual speakers, refusal receipts, portrait fallbacks, save/RNG immutability, modal queue/locale and central feedback passed');
+ console.log('dialogue: all 73 events, 47 commands, bilingual speakers, refusal receipts, portrait fallbacks, save/RNG immutability, modal queue/locale and central feedback passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

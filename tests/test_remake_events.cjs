@@ -33,7 +33,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  return{events,modal,parent,doc,i18n,header,portraitRequests,drain,setView:v=>{current=v;},setBusy:v=>{busy=v;},setPreview:v=>{preview=v;}};
 }
 (async()=>{
- assert.equal(Object.keys(KINDS).length,72);
+ assert.equal(Object.keys(KINDS).length,73);
  const campaignRows=[
   row(1,'historical_guandu',{audience:'world',factions:['wei','yuan_shao']}),
   row(2,'historical_sun_liu_alliance',{audience:'world',factions:['wu','shu']}),
@@ -82,6 +82,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  assert(!campaignPlayback.modal.open);assert.equal(JSON.stringify(campaignView),campaignBefore);
  campaignPlayback.events.dispose();
  const newCampaigns=[
+  {kind:'historical_sun_liu_marriage',date:[209,12],sides:['shu','wu'],people:['liu-bei','sun-shangxiang','sun-quan'],cities:['wujun','nanjun'],snippets:['加入劉備勢力並駐於江陵','劉備軍に加わって江陵に駐在']},
   {kind:'historical_hefei',date:[215,8],sides:['wu','wei'],people:['sun-quan','cao-cao','zhang-liao'],cities:['danyang','lujiang','jiujiang'],snippets:['壽春代理合淝戰區','寿春を合肥戦域の代替拠点']},
   {kind:'historical_hefei_defense',date:[215,8],sides:['wei','wu'],people:['zhang-liao','sun-quan'],cities:['jiujiang'],snippets:['史實上的壽春與合淝是兩座城','史実の寿春と合肥は別の都市']},
   {kind:'historical_hanzhong_preparation',date:[217,7],sides:['shu','wei'],people:['liu-bei','cao-cao','fa-zheng'],cities:['zitong','baxi','hanzhong'],snippets:['法正勸劉備','法正が劉備に']},
@@ -99,7 +100,8 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
   }
   const playback=fixture([],{portraits:{entry:id=>people.includes(id),html:id=>`<span data-portrait-person="${id}"></span>`}});
   const current=view([event]);
-  current.catalog={...catalog,cities:cities.map((id,index)=>({id,name:id==='jiujiang'?'壽春':id,position:[300+index*200,300]}))};
+  const cityNames={jiujiang:'壽春',wujun:'吳',nanjun:'江陵'};
+  current.catalog={...catalog,cities:cities.map((id,index)=>({id,name:cityNames[id]||id,position:[300+index*200,300]}))};
   const before=JSON.stringify(current);
   playback.events.observe(current,{newGame:true});playback.drain();
   assert(playback.modal.open,kind+' opens automatically');
@@ -111,6 +113,12 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
    for(const person of people)assert(playback.modal.innerHTML.includes(`data-portrait-person="${person}"`));
   }
   if(kind==='historical_hefei')assert(playback.modal.innerHTML.includes('viewBox="556 214 288 172"'),'合淝 illustration centers its 壽春 proxy');
+  if(kind==='historical_sun_liu_marriage'){
+   assert(playback.modal.innerHTML.includes('viewBox="356 214 288 172"'),'Marriage illustration centers the destination');
+   assert(playback.modal.innerHTML.includes('data-event-history="sun-liu-marriage"'));
+   assert(playback.modal.innerHTML.includes('資治通鑑/卷066'));
+   assert(playback.modal.innerHTML.includes('両都市の支配は従来どおり'));
+  }
   playback.modal.querySelector('[data-event-next]').onclick();playback.drain();
   assert(!playback.modal.open);
   assert.equal(JSON.stringify(current),before,'Historical playback does not alter the campaign');
@@ -396,5 +404,5 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
   assert(line.includes('劉禪'));assert(!line.includes('劉備'),'Event faction labels follow the live ruler, not the opening name');
  }
  assert.equal(JSON.stringify(inheritedView),inheritedBefore,'Bilingual event display never changes faction identity or state');inherited.events.dispose();
- console.log('events: 72 bilingual scenes, strict historical campaign/coup/founding/supply/city-name snapshots, local batching, read-only playback, locale continuity and immutable RNG/state passed');
+ console.log('events: 73 bilingual scenes, strict historical campaign/coup/founding/supply/city-name snapshots, local batching, read-only playback, locale continuity and immutable RNG/state passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

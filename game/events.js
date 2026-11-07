@@ -10,6 +10,7 @@
   faction_coup:['勢力內部奪權','勢力内の政変'],faction_coup_skipped:['奪權未成','政変の不成立'],
   historical_guandu:['官渡開戰','官渡の戦いの開幕'],
   historical_sun_liu_alliance:['孫劉結盟','孫権・劉備の同盟'],
+  historical_sun_liu_marriage:['劉備迎娶孫尚香','劉備と孫尚香の婚姻'],
   historical_cao_southern_campaign:['曹軍南下','曹操軍の南征'],
   historical_tongguan:['潼關開戰','潼関の戦いの開幕'],
   historical_sun_liu_alliance_ended:['孫劉盟約解除','孫権・劉備の同盟解消'],
@@ -54,6 +55,7 @@
  // Fixed snapshot sizes for factions, people and cities where specified.
  const HISTORICAL_CAMPAIGNS=Object.freeze({
   historical_guandu:[2],historical_sun_liu_alliance:[2],historical_cao_southern_campaign:[3],
+  historical_sun_liu_marriage:[2,3,2],
   historical_tongguan:[3,3],historical_sun_liu_alliance_ended:[2,2],historical_yiling:[2,2],
   historical_hefei:[2,3,3],historical_hefei_defense:[2,2,1],
   historical_hanzhong_preparation:[2,3,3],historical_hanzhong:[2,2,3],historical_dingjun:[2,2,1],
@@ -276,6 +278,9 @@
     case 'faction_coup_skipped':return text(`原定的內部奪權條件已改變：原主將或四名相關人物的歸屬、生死、行軍情況不符，本次不執行殺害或強制轉屬。尊重當前戰局，此判定不會重複。`,'予定していた政変の条件が変わりました。元の君主、または関係者4人の所属・生死・行軍状況が条件を満たさないため、殺害や強制的な所属変更を行いません。現在の戦況を尊重し、この判定は繰り返しません。');
     case 'historical_guandu':return text('曹操與袁紹在官渡一帶開戰。由電腦操控的一方會優先評估攻打對方，玩家自行下達出征命令。軍隊須備糧並走完實際路線，勝負由交戰結果決定。','曹操と袁紹の間で官渡の戦いが始まりました。AIは相手への進攻を優先して検討し、プレイヤーは自分で出陣を命じます。部隊は兵糧を携えて実際の経路を進み、勝敗は交戦の結果で決まります。');
     case 'historical_sun_liu_alliance':return text('孫權與劉備結盟，共同對抗曹軍。結盟期間，雙方不能攻打彼此的城池，各自指揮部隊。荊州局勢符合決裂條件、夷陵開戰，或曹、孫、劉任一方退出戰局時，盟約結束。','孫権と劉備が同盟を結び、曹操軍に対抗します。同盟中は互いの都市を攻められず、部隊はそれぞれの勢力が指揮します。荊州の情勢が決裂の条件を満たしたとき、夷陵の戦いが始まったとき、または曹・孫・劉のいずれかの勢力が戦役から退いたときに、同盟は終了します。');
+    case 'historical_sun_liu_marriage':return text(
+     `劉備與孫尚香成婚。孫尚香離開${n.cities[0]}，加入劉備勢力並駐於${n.cities[1]}。兩城的歸屬照舊。`,
+     `劉備と孫尚香が婚姻を結びました。孫尚香は${n.cities[0]}を離れ、劉備軍に加わって${n.cities[1]}に駐在します。両都市の支配は従来どおりです。`);
     case 'historical_cao_southern_campaign':return text('曹軍開始籌劃南征。若曹軍由電腦操控，將優先評估南線出征，待兵力、兵糧與路線符合條件才發兵。若由玩家操控，出征由玩家決定。各場戰鬥按實際戰況結算。','曹操軍が南征の準備に入りました。AIが曹操軍を操作する場合は南方への出陣を優先し、兵力・兵糧・経路の条件がそろってから派兵します。プレイヤーが曹操軍を操作する場合は、自分で出陣を決めます。勝敗は各戦闘の結果に従います。');
     case 'historical_tongguan':return text('曹操與馬超、韓遂在潼關一帶開戰。馬超與韓遂各自領軍，至211年9月底互不攻城。由電腦操控的勢力會優先評估這條戰線，玩家自行下達出征命令。各軍依兵力、兵糧與實際路線行軍，勝負由交戰結果決定。','曹操と馬超・韓遂の間で潼関の戦いが始まりました。馬超と韓遂はそれぞれ軍を指揮し、211年9月末まで互いの都市を攻めません。AIはこの戦線での出陣を優先して検討し、プレイヤーは自分で出陣を命じます。各軍は兵力・兵糧と実際の経路に従って進み、勝敗は交戦の結果で決まります。');
     case 'historical_sun_liu_alliance_ended':return text('荊州局勢生變，孫權與劉備解除盟約。雙方可再次對彼此下達軍事命令，既有城池歸屬與部隊兵力依當前戰局保留。','荊州の情勢が変わり、孫権と劉備の同盟が解消されました。双方は互いに軍事行動を取れるようになります。都市の支配と各部隊の兵力は、現在の戦況を引き継ぎます。');
@@ -384,6 +389,11 @@
    }
   }
   function historicalIntroduction(row){
+   if(row.kind==='historical_sun_liu_marriage'){
+    const body=text('《資治通鑑》將孫權嫁妹給劉備一事編於建安十四年（209年）冬。《三國志》記她是孫權之妹，後來稱孫夫人。本作沿用「孫尚香」作為人物名稱。','『資治通鑑』は、孫権が妹を劉備に嫁がせたことを建安14年（209年）の冬に記しています。『三国志』は孫権の妹として記し、後には孫夫人と呼んでいます。本作での人物名は「孫尚香」です。');
+    const sources=[['資治通鑑/卷066','《資治通鑑》卷66','『資治通鑑』巻66'],['三國志/卷32','《三國志》先主傳','『三国志』先主伝'],['三國志/卷37','《三國志》法正傳','『三国志』法正伝']];
+    return `<aside class="event-history" data-event-history="sun-liu-marriage"><h3>${text('史實背景','史実の背景')}</h3><p>${escape(body)}</p><p class="event-history-sources">${sources.map(([path,tc,ja])=>`<a href="https://zh.wikisource.org/zh-hant/${path}" target="_blank" rel="noopener noreferrer">${escape(text(tc,ja))}</a>`).join(' · ')}</p></aside>`;
+   }
    if(COUPS.has(row.kind)&&row.year===186&&row.month===12&&row.details.coup_id==='han-sui-coup-186-12'){
     const body=text('《後漢書·董卓傳》把韓遂殺邊章、北宮伯玉、李文侯的敘事接在中平三年冬；《資治通鑑》編入187年，《三國志·武帝紀》裴注引《典略》另記邊章病卒。本作採《後漢書》的奪權敘述，以186年12月上旬作指定遊戲月界；不是三書一致記載的確切遇害月，也不主張韓遂史實稱王。事件仍受當前主將、人物歸屬、生死及行軍條件約束。','『後漢書』の「董卓伝」は、韓遂による辺章・北宮伯玉・李文侯の殺害を中平3年冬の記述に続けて置きます。『資治通鑑』は187年に収め、『三国志』「武帝紀」の裴松之注が引く『典略』には辺章の病死という異なる記述もあります。本作は『後漢書』の主導権奪取の叙述を採り、186年12月上旬を指定されたゲーム上の境界とします。三書が一致して示す正確な殺害月ではなく、韓遂が史実で王を称したとも扱いません。事件の発生は、現在の君主と人物の所属・生死・行軍状況に従います。');
     const sources=[['後漢書/卷72','《後漢書》卷72','『後漢書』巻72'],['資治通鑑/卷058','《資治通鑑》卷058','『資治通鑑』巻58'],['三國志/卷01','《三國志》卷01','『三国志』巻1']];
@@ -410,7 +420,7 @@
   function illustration(rows){
    const row=rows[0],catalog=view?.catalog||{},world=catalog.world||{x:0,y:0,width:1352,height:1024,background:'/assets/map-navigation.png'};
    const ids=[...new Set(rows.flatMap(e=>[...e.person_ids,...(typeof e.details.actor==='string'?[e.details.actor]:[])]))].slice(0,4);
-   const targetScene=new Set(['battle_started','battle_result','battle_supply_exhausted','tactic','duel_started','duel_result','march_weather','route_discovered','march_arrived','ai_campaign','march_resupplied','march_starvation','march_retreat','historical_hefei','historical_hanzhong_preparation','historical_hanzhong','historical_liaodong']);
+   const targetScene=new Set(['battle_started','battle_result','battle_supply_exhausted','tactic','duel_started','duel_result','march_weather','route_discovered','march_arrived','ai_campaign','march_resupplied','march_starvation','march_retreat','historical_sun_liu_marriage','historical_hefei','historical_hanzhong_preparation','historical_hanzhong','historical_liaodong']);
    const cityIds=targetScene.has(row.kind)?[...row.city_ids].reverse():row.city_ids;
    const cityId=cityIds.find(id=>catalog.cities?.some(c=>c.id===id))||catalog.factions?.find(f=>f.id===view?.game?.player)?.city;
    const city=catalog.cities?.find(c=>c.id===cityId),center=city?.position||[(world.x||0)+world.width/2,(world.y||0)+world.height/2];

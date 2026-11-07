@@ -1,8 +1,11 @@
-"""Conditional historical fronts and their wartime alliances."""
+"""Conditional historical campaigns and diplomacy."""
+
+from .officers import transfer_officers
 
 GUANDU = 'historical_guandu'
 ALLIANCE = 'historical_sun_liu_alliance'
 SOUTH = 'historical_cao_southern_campaign'
+MARRIAGE = 'historical_sun_liu_marriage'
 TONGGUAN = 'historical_tongguan'
 YILING = 'historical_yiling'
 HEFEI = 'historical_hefei'
@@ -29,6 +32,7 @@ CAO_RUI = 'san14-candidate-0501'
 MENG_HUO = 'san14-candidate-0845'
 GONGSUN_YUAN = 'san14-candidate-0262'
 ZHANG_LIAO = 'san14-candidate-0663'
+LADY_SUN = 'san14-candidate-0565'
 FA_ZHENG = 'san14-candidate-0827'
 HUANG_ZHONG = 'san14-candidate-0271'
 XIAHOU_YUAN = 'san14-candidate-0114'
@@ -49,6 +53,7 @@ RULES = {
              (('wei', 'yuan_shao'), ('dongjun', 'wei'), ('yingchuan', 'wei'))),
     ALLIANCE: ((208, 10), (208, 12), (*SUN_LIU, 'wei'), SOUTHERN_FRONT),
     SOUTH: ((208, 12), (208, 12), ('wei', *SUN_LIU), SOUTHERN_FRONT),
+    MARRIAGE: ((209, 12), (209, 12), ('shu', 'wu'), ()),
     TONGGUAN: ((211, 7), (211, 9), ('wei', *GUANZHONG_COALITION),
                (('hongnong', 'wei'), ('jingzhao', 'wei'), ('fengyi', 'ma_teng'),
                 ('fufeng', 'ma_teng'), ('jincheng', 'han_sui'))),
@@ -105,6 +110,7 @@ EVENT_CITIES = {
     LIAODONG: ('liaoxi', 'liaodong'),
 }
 EVENT_PEOPLE = {
+    MARRIAGE: (LEADERS['shu'], LADY_SUN, LEADERS['wu']),
     HEFEI: (LEADERS['wu'], LEADERS['wei'], ZHANG_LIAO),
     HEFEI_DEFENSE: (ZHANG_LIAO, LEADERS['wu']),
     HANZHONG_PREPARATION: (LEADERS['shu'], LEADERS['wei'], FA_ZHENG),
@@ -116,6 +122,7 @@ NOTES = {
     GUANDU: '袁绍与曹操在黄河沿线开战。双方依战局安排出征。',
     ALLIANCE: '孙权与刘备结盟抗曹，同盟期间两方不得相互出征。',
     SOUTH: '曹军以江陵为南下据点，战斗按实际行军和接敌结算。',
+    MARRIAGE: '刘备与孙夫人联姻，孙尚香转属刘备。',
     TONGGUAN: '曹操西征，马超、韩遂在关中联合抗曹。',
     YILING: '刘备准备东征，战事由实际行军和交战决定。',
     ALLIANCE_ENDED: '荆州局势生变，孙刘同盟解除。',
@@ -190,6 +197,27 @@ def _jingzhou_front(game, state):
     return ()
 
 
+def _marriage_transfer(game, state):
+    if (state.phase != 'city' or not _alliance_active(state)
+            or any(side in state.extension['pending_succession'] for side in SUN_LIU)):
+        return ()
+    ident = game.catalog.ids.get(LADY_SUN)
+    officer = state.officers.get(ident)
+    leader = state.extension['leaders']['shu']
+    if (officer is None or not officer.alive or officer.faction_id != 'wu'
+            or game._march_ids(state).intersection((ident, leader))):
+        return ()
+    source = next((city for city in state.cities.values()
+                   if city.owner == 'wu' and ident in city.roster.officer_ids), None)
+    target = next((city for city in state.cities.values()
+                   if city.owner == 'shu' and leader in city.roster.officer_ids), None)
+    if source is None or target is None or game._city_occupancy(state, target) >= game.catalog.rules.city_officer_capacity:
+        return ()
+    transfer_officers(source.roster, target.roster, [ident])
+    officer.faction_id = 'shu'
+    return source.id, target.id
+
+
 def _record(game, state, receipts, kind, cities):
     state.extension.setdefault(RECEIPTS, receipts)
     receipts[kind] = state.turn
@@ -229,7 +257,9 @@ def process(game, state):
             continue
         if kind == YILING and _alliance_active(state):
             _record(game, state, receipts, ALLIANCE_ENDED, ('badong', 'yidu'))
-        _record(game, state, receipts, kind, EVENT_CITIES[kind])
+        cities = _marriage_transfer(game, state) if kind == MARRIAGE else EVENT_CITIES[kind]
+        if cities:
+            _record(game, state, receipts, kind, cities)
 
 
 def process_battle(game, state):
@@ -363,12 +393,14 @@ def validate_state(catalog, state):
         start, end, factions, holdings = RULES[kind]
         if (not start <= date <= end
                 or not set(factions) <= set(catalog.factions)
-                or any(city not in state.cities for city in EVENT_CITIES[kind])
+                or any(city not in state.cities for city in EVENT_CITIES.get(kind, ()))
                 or any(city not in state.cities for city, _ in holdings)
                 or any(person not in catalog.ids for person in (*_leader_ids(factions, kind), *_event_people(kind)))):
             raise ValueError('Historical campaign receipt')
     if SOUTH in receipts and (ALLIANCE not in receipts or receipts[ALLIANCE] > receipts[SOUTH]):
         raise ValueError('Historical alliance must precede the southern campaign')
+    if MARRIAGE in receipts and (ALLIANCE not in receipts or receipts[ALLIANCE] >= receipts[MARRIAGE]):
+        raise ValueError('Historical alliance must precede the marriage')
 
 
 def validate_event(catalog, state, row):
@@ -379,6 +411,8 @@ def validate_event(catalog, state, row):
     if kind == ALLIANCE_ENDED:
         cities_ok = (len(cities) == 2 and cities[0] != cities[1]
                      and all(city in side for city, side in zip(cities, JINGZHOU_FRONT)))
+    elif kind == MARRIAGE:
+        cities_ok = len(cities) == 2 and cities[0] != cities[1]
     else:
         cities_ok = cities == list(EVENT_CITIES[kind])
     if (type(turn) is not int or row['turn'] != turn or row['audience'] != 'world' or row['details']
