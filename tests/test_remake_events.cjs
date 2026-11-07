@@ -33,7 +33,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  return{events,modal,parent,doc,i18n,header,portraitRequests,drain,setView:v=>{current=v;},setBusy:v=>{busy=v;},setPreview:v=>{preview=v;}};
 }
 (async()=>{
- assert.equal(Object.keys(KINDS).length,73);
+ assert.equal(Object.keys(KINDS).length,87);
  const campaignRows=[
   row(1,'historical_guandu',{audience:'world',factions:['wei','yuan_shao']}),
   row(2,'historical_sun_liu_alliance',{audience:'world',factions:['wu','shu']}),
@@ -82,6 +82,20 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  assert(!campaignPlayback.modal.open);assert.equal(JSON.stringify(campaignView),campaignBefore);
  campaignPlayback.events.dispose();
  const newCampaigns=[
+  {kind:"historical_youzhou_pacification",date:[188,6],sides:["liu_yu","zhang_chun"],people:["san14-candidate-0932","san14-candidate-0266","san14-candidate-0628","san14-candidate-0612"],cities:["liaoxi","yuyang","yan"],snippets:["張純與張舉聯合烏桓起事","張純と張挙が烏桓と結ん"],primarySource:"https://zh.wikisource.org/zh-hant/資治通鑑/卷059"},
+  {kind:"historical_dong_zhuo_coalition",date:[190,1],sides:["wang_kuang","dong_zhuo","yuan_shao","wei"],people:["san14-candidate-0035","san14-candidate-0047","san14-candidate-0521","san14-candidate-0736"],cities:["bohai","henei","henan"],snippets:["關東諸軍推袁紹為盟主，","関東の諸軍は袁紹を盟主"],primarySource:"https://zh.wikisource.org/zh-hant/三國志/卷01"},
+  {kind:"historical_sun_jian_jingzhou",date:[191,10],sides:["sun_jian","liu_biao","yuan_shu"],people:["san14-candidate-0551","san14-candidate-0953","san14-candidate-0032"],cities:["changsha","nanyang","jiangxia","xiangyang"],snippets:["關東諸軍分裂，袁術遣孫","関東の諸軍が分裂し、袁"],primarySource:"https://zh.wikisource.org/zh-hant/資治通鑑/卷060"},
+  {kind:"historical_yanzhou_counteroffensive",date:[194,6],sides:["wei","lubu"],people:["san14-candidate-0521","san14-candidate-0393","san14-candidate-0987","san14-candidate-0671"],cities:["jiyin","chenliu","dongjun"],snippets:["張邈與陳宮迎立呂布，兗","張邈と陳宮が呂布を迎え"],primarySource:"https://zh.wikisource.org/zh-hant/三國志/卷01"},
+  {kind:"historical_welcome_han_emperor",date:[196,6],sides:["wei"],people:["san14-candidate-0521","san14-candidate-0393","san14-candidate-0689","san14-candidate-0511"],cities:["chenliu","yingchuan","henan"],snippets:["漢獻帝自關中東返，荀彧","献帝が関中から東に戻る"],primarySource:"https://zh.wikisource.org/zh-hant/三國志/卷01"},
+  {kind:"historical_xiapi_expedition",date:[198,9],sides:["wei","lubu","shu"],people:["san14-candidate-0521","san14-candidate-0987","san14-candidate-0952","san14-candidate-0671"],cities:["yingchuan","qiao","xiapi"],snippets:["建安三年，高順攻劉備，","建安3年、高順が劉備を"],primarySource:"https://zh.wikisource.org/zh-hant/三國志/卷01"},
+  {kind:"historical_liyang_campaign",date:[202,9],sides:["wei","yuan_shang","yuan_tan"],people:["san14-candidate-0521","san14-candidate-0034","san14-candidate-0037"],cities:["dongjun","beihai","wei"],snippets:["袁紹去世後，袁尚接掌冀","袁紹の死後、袁尚が冀州"],primarySource:"https://zh.wikisource.org/zh-hant/三國志/卷01"},
+  {kind:"historical_three_visits",date:[207,9],sides:["shu","liu_biao"],people:["san14-candidate-0952","san14-candidate-0446","san14-candidate-0440"],cities:["yiyang","xiangyang"],snippets:["徐庶向劉備推薦諸葛亮。","徐庶が劉備に諸葛亮を推"],primarySource:"https://zh.wikisource.org/zh-hant/三國志/卷35"},
+  {kind:"historical_yizhou_campaign",date:[212,12],sides:["shu","liu_zhang"],people:["san14-candidate-0952","san14-candidate-0938","san14-candidate-0827"],cities:["fuxian","shujun","guanghan"],snippets:["劉璋與劉備因援軍和糧草","援軍と兵糧をめぐって劉"],primarySource:"https://zh.wikisource.org/zh-hant/資治通鑑/卷066"},
+  {kind:"historical_xiangfan",date:[219,7],sides:["shu","wei"],people:["san14-candidate-0147","san14-candidate-0518","san14-candidate-0952","san14-candidate-0521"],cities:["nanjun","yiyang","xincheng","xiangyang"],snippets:["關羽由荊州北攻，曹仁據","関羽は荊州から北進し、"],primarySource:"https://zh.wikisource.org/zh-hant/三國志/卷36"},
+  {kind:"historical_memorial",date:[227,2],sides:["shu"],people:["san14-candidate-0440","san14-candidate-0945"],cities:["shujun","hanzhong"],snippets:["建興五年，諸葛亮向劉禪","建興5年、諸葛亮は劉禅"],primarySource:"https://zh.wikisource.org/zh-hant/三國志/卷35#諸葛亮"},
+  {kind:"historical_wuzhang",date:[234,2],sides:["shu","wei"],people:["san14-candidate-0440","san14-candidate-0344"],cities:["hanzhong","fufeng"],snippets:["建興十二年，諸葛亮由斜","建興12年、諸葛亮は斜"],primarySource:"https://zh.wikisource.org/zh-hant/三國志/卷35#諸葛亮"},
+  {kind:"historical_gaopingling",date:[249,1],sides:["wei"],people:["san14-candidate-0344","san14-candidate-0522","san14-candidate-0529"],cities:["henan"],snippets:["曹芳前往祭拜高平陵，司","曹芳が高平陵へ参拝に赴"],primarySource:"https://zh.wikisource.org/zh-hant/三國志/卷04#齊王"},
+  {kind:"historical_wei_invades_shu",date:[263,5],sides:["wei","shu"],people:["san14-candidate-0406","san14-candidate-0720","san14-candidate-0503","san14-candidate-0945"],cities:["fufeng","wudu","hanzhong"],snippets:["景元四年五月，曹奐下詔","景元4年5月、曹奐は鍾"],primarySource:"https://zh.wikisource.org/zh-hant/三國志/卷04#陳留王"},
   {kind:'historical_sun_liu_marriage',date:[209,12],sides:['shu','wu'],people:['liu-bei','sun-shangxiang','sun-quan'],cities:['wujun','nanjun'],snippets:['加入劉備勢力並駐於江陵','劉備軍に加わって江陵に駐在']},
   {kind:'historical_hefei',date:[215,8],sides:['wu','wei'],people:['sun-quan','cao-cao','zhang-liao'],cities:['danyang','lujiang','jiujiang'],snippets:['壽春代理合淝戰區','寿春を合肥戦域の代替拠点']},
   {kind:'historical_hefei_defense',date:[215,8],sides:['wei','wu'],people:['zhang-liao','sun-quan'],cities:['jiujiang'],snippets:['史實上的壽春與合淝是兩座城','史実の寿春と合肥は別の都市']},
@@ -91,7 +105,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
   {kind:'historical_nanzhong',date:[225,7],sides:['shu','nanman'],people:['zhuge-liang','meng-huo'],cities:['jianning','zangke','yunnan'],snippets:['春季展開南征','春に南征を始め']},
   {kind:'historical_liaodong',date:[238,1],sides:['wei','gongsun'],people:['cao-rui','sima-yi','gongsun-yuan'],cities:['liaoxi','liaodong'],snippets:['遼西至襄平','遼西から襄平']}
  ];
- for(const {kind,date:[year,month],sides,people,cities,snippets} of newCampaigns){
+ for(const {kind,date:[year,month],sides,people,cities,snippets,primarySource} of newCampaigns){
   const event=row(1,kind,{year,month,audience:'world',factions:sides,person_ids:people,city_ids:cities});
   assert(validEvent(event),kind);
   for(const field of ['person_ids','city_ids','factions']){
@@ -110,6 +124,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
    assert(playback.modal.innerHTML.includes(KINDS[kind][index]),kind+' renders its title in '+locale);
    assert(playback.modal.innerHTML.includes(snippets[index]),kind+' renders event facts in '+locale);
    assert(playback.modal.innerHTML.includes('class="event-map"'));
+   if(primarySource)assert(playback.modal.innerHTML.includes(primarySource));
    for(const person of people)assert(playback.modal.innerHTML.includes(`data-portrait-person="${person}"`));
   }
   if(kind==='historical_hefei')assert(playback.modal.innerHTML.includes('viewBox="556 214 288 172"'),'合淝 illustration centers its 壽春 proxy');
@@ -404,5 +419,5 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
   assert(line.includes('劉禪'));assert(!line.includes('劉備'),'Event faction labels follow the live ruler, not the opening name');
  }
  assert.equal(JSON.stringify(inheritedView),inheritedBefore,'Bilingual event display never changes faction identity or state');inherited.events.dispose();
- console.log('events: 73 bilingual scenes, strict historical campaign/coup/founding/supply/city-name snapshots, local batching, read-only playback, locale continuity and immutable RNG/state passed');
+ console.log('events: 87 bilingual scenes, strict historical campaign/coup/founding/supply/city-name snapshots, local batching, read-only playback, locale continuity and immutable RNG/state passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

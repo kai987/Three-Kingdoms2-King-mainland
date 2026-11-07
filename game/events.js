@@ -1,7 +1,108 @@
 /* Read-only event playback. Acknowledgements never become campaign commands. */
 'use strict';
 (function(root){
+ const CHAPTER_TEXT=Object.freeze({
+  historical_youzhou_pacification:{
+   title:["劉虞出鎮幽州","劉虞、幽州に赴任"],
+   counts:[2,4,3],
+   front:false,
+   text:["張純與張舉聯合烏桓起事，朝廷命劉虞主理幽州。劉虞向諸部傳達招撫之意，公孫瓚則在北方以兵抵抗。地圖以薊、漁陽及遼西呈現幽州局勢。","張純と張挙が烏桓と結んで挙兵し、朝廷は劉虞に幽州を任せました。劉虞は諸部族に帰順を促し、公孫瓚は北方で武力をもって対抗しました。地図では薊・漁陽・遼西で幽州の情勢を示します。"],
+   sources:[["《資治通鑑》卷059","https://zh.wikisource.org/zh-hant/資治通鑑/卷059"],["《後漢書》劉虞傳","https://zh.wikisource.org/zh-hant/後漢書/卷73"]]
+  },
+  historical_dong_zhuo_coalition:{
+   title:["關東諸軍討董卓","関東諸侯、董卓討伐に挙兵"],
+   counts:[4,4,3],
+   front:true,
+   text:["關東諸軍推袁紹為盟主，曹操亦起兵響應。河內太守王匡屯兵河陽津，本作以河內通往洛陽的路線呈現這條戰線。王匡軍按當前兵糧與道路進退。","関東の諸軍は袁紹を盟主に推し、曹操も挙兵しました。河内太守の王匡は河陽津に駐兵し、本作では河内から洛陽への経路でこの戦線を表します。王匡軍は兵糧と道の状況に応じて進退を決めます。"],
+   sources:[["《三國志》武帝紀","https://zh.wikisource.org/zh-hant/三國志/卷01"],["《三國志》董卓傳","https://zh.wikisource.org/zh-hant/三國志/卷06"]]
+  },
+  historical_sun_jian_jingzhou:{
+   title:["孫堅進兵荊州","孫堅、荊州へ進軍"],
+   counts:[3,3,4],
+   front:true,
+   text:["關東諸軍分裂，袁術遣孫堅攻劉表。《資治通鑑》將此戰繫於初平二年冬。本作以江夏、江陵呈現由長沙一帶進攻荊州的前線，襄陽為劉表的重鎮。","関東の諸軍が分裂し、袁術は孫堅を劉表の討伐に向かわせました。『資治通鑑』はこの戦いを初平二年の冬に置いています。本作では長沙方面から荊州へ向かう前線を江夏と江陵で表し、襄陽を劉表の要地とします。"],
+   sources:[["《資治通鑑》卷060","https://zh.wikisource.org/zh-hant/資治通鑑/卷060"],["《三國志》孫堅傳","https://zh.wikisource.org/zh-hant/三國志/卷46"]]
+  },
+  historical_yanzhou_counteroffensive:{
+   title:["兗州之變・濮陽攻防","兗州の変・濮陽攻防"],
+   counts:[2,4,3],
+   front:true,
+   text:["張邈與陳宮迎立呂布，兗州多城響應。荀彧等人守住曹軍據點，曹操回軍向濮陽。本作沿用鄄城防區至濮陽的現有路線，雙方須實際調兵交戰。","張邈と陳宮が呂布を迎え、多くの城がこれに呼応しました。荀彧らが曹操軍の拠点を守り、曹操は軍を返して濮陽へ向かいました。本作では鄄城の防衛圏から濮陽へ至る既存の経路を使い、双方が実際に兵を動かして戦います。"],
+   sources:[["《三國志》武帝紀","https://zh.wikisource.org/zh-hant/三國志/卷01"],["《資治通鑑》卷061","https://zh.wikisource.org/zh-hant/資治通鑑/卷061"]]
+  },
+  historical_welcome_han_emperor:{
+   title:["曹操商議奉迎天子","曹操、献帝の迎え入れを協議"],
+   counts:[1,4,3],
+   front:false,
+   text:["漢獻帝自關中東返，荀彧、程昱勸曹操迎奉朝廷，曹洪曾率軍西迎。史載獻帝七月返洛陽，九月東遷許縣。六月開局先呈現曹軍的奉迎之議，地圖標出陳留、許縣與洛陽。","献帝が関中から東に戻るなか、荀彧と程昱は曹操に朝廷を迎えるよう勧め、曹洪も軍を率いて西へ向かいました。史書では献帝は七月に洛陽へ戻り、九月に許へ移りました。六月の開幕では曹操軍の協議を描き、陳留・許・洛陽を地図に示します。"],
+   sources:[["《三國志》武帝紀","https://zh.wikisource.org/zh-hant/三國志/卷01"],["《資治通鑑》卷062","https://zh.wikisource.org/zh-hant/資治通鑑/卷062"]]
+  },
+  historical_xiapi_expedition:{
+   title:["曹操東征呂布","曹操の呂布討伐"],
+   counts:[3,4,3],
+   front:true,
+   text:["建安三年，高順攻劉備，曹操於九月東征呂布。這個劇本三月開局，下邳與曹軍初始領地之間沒有直通道路，需先依實際戰局打通進軍路線。下邳的攻守與陳宮的去留由實戰決定。","建安3年、高順が劉備を攻め、曹操は9月に呂布討伐へ向かった。このシナリオは3月から始まり、初期配置では曹操領と下邳を直接結ぶ道がない。実際の戦況に応じて進路を確保し、下邳の攻防と陳宮の去就は戦闘で決まる。"],
+   sources:[["《三國志·武帝紀》","https://zh.wikisource.org/zh-hant/三國志/卷01"],["《三國志·呂布傳》","https://zh.wikisource.org/zh-hant/三國志/卷07"]]
+  },
+  historical_liyang_campaign:{
+   title:["河北爭亂・曹操北攻黎陽","河北争乱・曹操の黎陽進攻"],
+   counts:[3,3,3],
+   front:true,
+   text:["袁紹去世後，袁尚接掌冀州，袁譚屯黎陽。建安七年九月，曹操北進，袁氏兄弟一度並肩抵禦。本作以鄴節點代表黎陽至鄴的戰線。曹軍可由濮陽（東郡）或河內進軍。","袁紹の死後、袁尚が冀州を継ぎ、袁譚は黎陽に陣取った。建安7年9月に曹操が北進すると、袁氏の兄弟は一時ともに抵抗した。本作では鄴を黎陽から鄴にかけての戦域の代理とする。曹操軍は濮陽（東郡）や河内から進軍できる。"],
+   sources:[["《三國志·武帝紀》","https://zh.wikisource.org/zh-hant/三國志/卷01"],["《三國志·袁紹傳》","https://zh.wikisource.org/zh-hant/三國志/卷06"]]
+  },
+  historical_three_visits:{
+   title:["徐庶薦諸葛亮","徐庶、諸葛亮を推薦"],
+   counts:[2,3,2],
+   front:false,
+   text:["徐庶向劉備推薦諸葛亮。《三國志》記劉備在新野駐屯時曾三次前往拜訪，請教天下大勢。本作以章陵與襄陽標示荊州的活動範圍，諸葛亮仍依本局登場與招募規則加入。","徐庶が劉備に諸葛亮を推薦した。『三国志』は、劉備が新野に駐屯していた頃に三度訪ね、天下の情勢について教えを請うたと伝える。本作では章陵と襄陽で荊州での活動範囲を示す。諸葛亮はこの戦局の登場・登用ルールに従って加わる。"],
+   sources:[["《三國志·諸葛亮傳》","https://zh.wikisource.org/zh-hant/三國志/卷35"],["《三國志·先主傳》","https://zh.wikisource.org/zh-hant/三國志/卷32"]]
+  },
+  historical_yizhou_campaign:{
+   title:["涪城決裂・入蜀爭奪戰","涪城で決裂・入蜀争奪戦"],
+   counts:[2,3,3],
+   front:true,
+   text:["劉璋與劉備因援軍和糧草問題決裂。建安十七年十二月，劉備由葭萌轉向涪城，益州北部成為戰線。劉備軍可沿現有道路由涪城或葭萌進軍，成都仍由當前守軍駐守。","援軍と兵糧をめぐって劉璋と劉備は決裂した。建安17年12月、劉備は葭萌から涪城へ進み、益州北部が戦域となった。劉備軍は涪城や葭萌から既存の道を進軍できる。成都は引き続き現在の守備軍が守る。"],
+   sources:[["《資治通鑑》卷六十六","https://zh.wikisource.org/zh-hant/資治通鑑/卷066"],["《三國志·先主傳》","https://zh.wikisource.org/zh-hant/三國志/卷32"]]
+  },
+  historical_xiangfan:{
+   title:["襄樊之戰・關羽北攻","襄樊の戦い・関羽の北進"],
+   counts:[2,4,4],
+   front:true,
+   text:["關羽由荊州北攻，曹仁據守樊城。《武帝紀》記七月曹操遣于禁增援。地圖以襄陽代理樊城戰區。江陵可先攻章陵，新城（上庸方向）則可直達襄陽。","関羽は荊州から北進し、曹仁は樊城を守った。『武帝紀』は7月に曹操が于禁を援軍に送ったと記す。本作では襄陽を樊城戦域の代理拠点とする。江陵からは章陵を先に攻められ、新城（上庸方面）からは襄陽に直行できる。"],
+   sources:[["《三國志·關羽傳》","https://zh.wikisource.org/zh-hant/三國志/卷36"],["《三國志·武帝紀》","https://zh.wikisource.org/zh-hant/三國志/卷01"]]
+  },
+  historical_memorial:{
+   title:["諸葛亮上出師表","諸葛亮、出師の表を奉る"],
+   counts:[1,2,2],
+   front:false,
+   text:["建興五年，諸葛亮向劉禪上《出師表》，勸他親近賢臣，並請命北伐。漢中是蜀軍北駐與備戰的據點。玩家可在漢中集結、備糧，日後依實際戰局決定何時進軍。","建興5年、諸葛亮は劉禅に『出師の表』を奉り、賢臣を重んじるよう諫め、北伐の許しを求めました。漢中は蜀軍が北方への出陣に備える拠点です。プレイヤーは漢中で兵と兵糧を集め、戦況に応じて進軍を決められます。"],
+   sources:[["《三國志》諸葛亮傳","https://zh.wikisource.org/zh-hant/三國志/卷35#諸葛亮"],["《三國志》後主傳","https://zh.wikisource.org/zh-hant/三國志/卷33"]]
+  },
+  historical_wuzhang:{
+   title:["諸葛亮進軍五丈原","諸葛亮、五丈原へ進軍"],
+   counts:[2,2,2],
+   front:true,
+   text:["建興十二年，諸葛亮由斜谷出兵，在五丈原與司馬懿對峙。本圖以扶風城代表五丈原一帶的戰區。蜀軍可從漢中備糧出征，兩軍依實際行軍與交戰決定勝負。","建興12年、諸葛亮は斜谷から出兵し、五丈原で司馬懿と対峙しました。本作では扶風の都市で五丈原周辺の戦域を表します。蜀軍は漢中で兵糧を整えて出陣でき、勝敗は部隊の進軍と交戦によって決まります。"],
+   sources:[["《三國志》諸葛亮傳","https://zh.wikisource.org/zh-hant/三國志/卷35#諸葛亮"],["《三國志》後主傳","https://zh.wikisource.org/zh-hant/三國志/卷33"],["《晉書》宣帝紀","https://zh.wikisource.org/zh-hant/晉書/卷001#青龍"]]
+  },
+  historical_gaopingling:{
+   title:["高平陵之變","高平陵の変"],
+   counts:[1,3,1],
+   front:false,
+   text:["曹芳前往祭拜高平陵，司馬懿趁此時在洛陽上奏，要求解除曹爽兄弟的官職。這是魏廷內部的權力對峙。曹芳仍是魏主，司馬懿與曹爽的去留由此後的實際戰局決定。","曹芳が高平陵へ参拝に赴くと、司馬懿はその機に洛陽で上奏し、曹爽とその弟たちの罷免を求めました。魏の朝廷内で起きた政変です。魏の君主は曹芳のままで、司馬懿と曹爽の去就は以後の戦況に委ねられます。"],
+   sources:[["《三國志》齊王紀","https://zh.wikisource.org/zh-hant/三國志/卷04#齊王"],["《晉書》宣帝紀","https://zh.wikisource.org/zh-hant/晉書/卷001#嘉平"]]
+  },
+  historical_wei_invades_shu:{
+   title:["魏軍奉詔伐蜀","魏軍、詔を受け蜀へ進軍"],
+   counts:[2,4,3],
+   front:true,
+   text:["景元四年五月，曹奐下詔，令鍾會由駱谷入蜀，鄧艾與諸葛緒分進以牽制姜維。本作的魏軍可沿既有路線進攻漢中或武都，守軍可以調度抵禦。成都的歸屬由實際戰事決定。","景元4年5月、曹奐は鍾会に駱谷から蜀へ入るよう命じ、鄧艾と諸葛緒にも別路を進んで姜維を牽制させました。本作では、魏軍が既存の経路で漢中や武都を攻め、守備側は部隊を動かして迎え撃てます。成都の帰趨は実際の戦いによって決まります。"],
+   sources:[["《三國志》陳留王紀","https://zh.wikisource.org/zh-hant/三國志/卷04#陳留王"],["《三國志》鄧艾、鍾會傳","https://zh.wikisource.org/zh-hant/三國志/卷28#鄧艾"]]
+  }
+ });
  const KINDS=Object.freeze({
+  ...Object.fromEntries(Object.entries(CHAPTER_TEXT).map(([kind,chapter])=>[kind,chapter.title])),
   campaign_start:['戰役揭幕','戦役の開幕'],officer_appeared:['武將登場','武将の登場'],
   recruit_success:['登用成功','登用に成功'],recruit_failure:['登用未果','登用を断られました'],
   defection:['武將轉屬','武将の移籍'],officer_death:['武將逝世','武将の死去'],
@@ -59,7 +160,8 @@
   historical_tongguan:[3,3],historical_sun_liu_alliance_ended:[2,2],historical_yiling:[2,2],
   historical_hefei:[2,3,3],historical_hefei_defense:[2,2,1],
   historical_hanzhong_preparation:[2,3,3],historical_hanzhong:[2,2,3],historical_dingjun:[2,2,1],
-  historical_nanzhong:[2,2,3],historical_liaodong:[2,3,2]
+  historical_nanzhong:[2,2,3],historical_liaodong:[2,3,2],
+  ...Object.fromEntries(Object.entries(CHAPTER_TEXT).map(([kind,chapter])=>[kind,chapter.counts]))
  });
  const WORLD=new Set(['campaign_start','officer_appeared','officer_death','succession','faction_ended','faction_founded','faction_founding_skipped','faction_coup','faction_coup_skipped',...Object.keys(HISTORICAL_CAMPAIGNS),'city_founded','city_upgraded','city_renamed','city_captured','new_year','campaign_victory','campaign_defeat']);
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -232,6 +334,13 @@
     factions:row.factions.map(id=>{const faction=catalog.factions?.find(f=>f.id===id)||catalog.scheduled_factions?.find(f=>f.id===id);return label(faction?.display_name||faction?.name||(id==='neutral'?text('無主','空白都市'):text('未具名勢力','名前未設定の勢力')));})};
   }
   function description(row){
+   const chapter=CHAPTER_TEXT[row.kind];
+   if(chapter){
+    const history=text(...chapter.text);
+    return chapter.front?history+text(
+     ' 有可通行的路線時，進攻方的電腦會優先評估這條戰線。玩家自行下令，部隊按現有路線與兵糧規則行軍，勝負由實際交戰決定。',
+     ' 通行できる経路があれば、進攻側のAIはこの戦線を優先します。プレイヤーは自分で出陣を命じます。部隊は既存の経路と兵糧のルールに従い、勝敗は実際の戦闘で決まります。'):history;
+   }
    const n=names(row),p=n.people.join(text('、','・'))||text('武將','武将'),c=n.cities.join(' → ')||text('戰役地圖','戦役地図'),f=n.factions.at(-1)||text('本方','自軍'),d=row.details;
    switch(row.kind){
     case 'city_developed':{
@@ -389,6 +498,11 @@
    }
   }
   function historicalIntroduction(row){
+   const chapter=CHAPTER_TEXT[row.kind];
+   if(chapter){
+    const links=chapter.sources.map(([label,url])=>`<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${escape(label)}</a>`).join(' · ');
+    return `<aside class="event-history"><h3>${text('參考史料','参照史料')}</h3><p class="event-history-sources">${links}</p></aside>`;
+   }
    if(row.kind==='historical_sun_liu_marriage'){
     const body=text('《資治通鑑》將孫權嫁妹給劉備一事編於建安十四年（209年）冬。《三國志》記她是孫權之妹，後來稱孫夫人。本作沿用「孫尚香」作為人物名稱。','『資治通鑑』は、孫権が妹を劉備に嫁がせたことを建安14年（209年）の冬に記しています。『三国志』は孫権の妹として記し、後には孫夫人と呼んでいます。本作での人物名は「孫尚香」です。');
     const sources=[['資治通鑑/卷066','《資治通鑑》卷66','『資治通鑑』巻66'],['三國志/卷32','《三國志》先主傳','『三国志』先主伝'],['三國志/卷37','《三國志》法正傳','『三国志』法正伝']];
@@ -421,7 +535,7 @@
    const row=rows[0],catalog=view?.catalog||{},world=catalog.world||{x:0,y:0,width:1352,height:1024,background:'/assets/map-navigation.png'};
    const ids=[...new Set(rows.flatMap(e=>[...e.person_ids,...(typeof e.details.actor==='string'?[e.details.actor]:[])]))].slice(0,4);
    const targetScene=new Set(['battle_started','battle_result','battle_supply_exhausted','tactic','duel_started','duel_result','march_weather','route_discovered','march_arrived','ai_campaign','march_resupplied','march_starvation','march_retreat','historical_sun_liu_marriage','historical_hefei','historical_hanzhong_preparation','historical_hanzhong','historical_liaodong']);
-   const cityIds=targetScene.has(row.kind)?[...row.city_ids].reverse():row.city_ids;
+   const cityIds=(Object.hasOwn(CHAPTER_TEXT,row.kind)||targetScene.has(row.kind))?[...row.city_ids].reverse():row.city_ids;
    const cityId=cityIds.find(id=>catalog.cities?.some(c=>c.id===id))||catalog.factions?.find(f=>f.id===view?.game?.player)?.city;
    const city=catalog.cities?.find(c=>c.id===cityId),center=city?.position||[(world.x||0)+world.width/2,(world.y||0)+world.height/2];
    const background=catalog.map_presentation?.road_center_corrections?.backgrounds?.[world.background]||world.background;

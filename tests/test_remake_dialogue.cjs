@@ -48,6 +48,18 @@ try{
   assert.deepEqual(lines.map(line=>line.personId),['liu-bei','sun-shangxiang'],'Marriage dialogue belongs to the couple');
   assert.equal(lines[1].name,'孫尚香');
  }
+ const chapterView=clone(base);
+ for(const [person_id,name] of [['xu-shu','徐庶'],['zhuge-liang','諸葛亮'],['cao-ren','曹仁'],['sima-yi','司馬懿'],['cao-shuang','曹爽'],['cao-fang','曹芳']])
+  chapterView.catalog.library.push({person_id,name});
+ const chapterSpeakers=[
+  ['historical_three_visits',['liu-bei','xu-shu','zhuge-liang'],['xu-shu','liu-bei']],
+  ['historical_xiangfan',['guan-yu','cao-ren','liu-bei','cao-cao'],['guan-yu','cao-ren']],
+  ['historical_gaopingling',['sima-yi','cao-shuang','cao-fang'],['sima-yi','cao-shuang']]
+ ];
+ for(const language of ['zh-Hant','ja'])for(const [kind,person_ids,expected] of chapterSpeakers){
+  const exchange=dialogue.event(row(kind,1,{person_ids,details:{}}),chapterView,language,i18n);
+  assert.deepEqual(exchange.map(line=>line.personId),expected,kind+' uses the chapter participants in speaking order');
+ }
  const owned=row('equipment_acquired',1,{person_ids:['liu-bei','guan-yu'],details:{actor:'liu-bei',target:'guan-yu',from_person:'guan-yu',method:'owned'}});
  const loot=row('equipment_acquired',1,{person_ids:['guan-yu','cao-cao'],details:{actor:'guan-yu',target:'guan-yu',from_person:'cao-cao',method:'duel'}});
  for(const language of ['zh-Hant','ja']){
@@ -115,5 +127,5 @@ assert(controller.history());drain();assert(modal.open,'Tactical event remains a
  assert.equal(clears,meaningfulClears+1,'Next meaningful command clears old feedback');
  assert(app.includes("$('#journal')?.prepend(panel)"),'Compact feedback occupies existing bounded report area');assert(!app.includes("$('#notice')?.after(panel)"));
  assert(app.includes('refreshPersonnelDialogue();GameI18n.apply()'));assert(app.includes('data-officer-relation='));
- console.log('dialogue: all 73 events, 47 commands, bilingual speakers, refusal receipts, portrait fallbacks, save/RNG immutability, modal queue/locale and central feedback passed');
+ console.log(`dialogue: all ${dialogue.EVENT_KINDS.length} events, ${Object.keys(dialogue.COMMANDS).length} commands, bilingual speakers, refusal receipts, portrait fallbacks, save/RNG immutability, modal queue/locale and central feedback passed`);
 })().catch(error=>{console.error(error);process.exitCode=1;});

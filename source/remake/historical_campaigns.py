@@ -1,6 +1,7 @@
 """Conditional historical campaigns and diplomacy."""
 
 from .officers import transfer_officers
+from .historical_chapters import CHAPTERS
 
 GUANDU = 'historical_guandu'
 ALLIANCE = 'historical_sun_liu_alliance'
@@ -65,16 +66,20 @@ RULES = {
                (('jianning', 'nanman'), ('zangke', 'nanman'))),
     LIAODONG: ((238, 1), (238, 8), ('wei', 'gongsun'),
                (('liaoxi', 'wei'), ('liaodong', 'gongsun'))),
+    **{kind: (row.start, row.end, tuple(owner for owner, _ in row.leaders), row.holdings)
+       for kind, row in CHAPTERS.items()},
 }
 RULE_LEADERS = {
     NANZHONG: (LIU_SHAN, MENG_HUO),
     LIAODONG: (CAO_RUI, GONGSUN_YUAN),
+    **{kind: tuple(person for _, person in row.leaders) for kind, row in CHAPTERS.items()},
 }
 REQUIRED_OFFICERS = {
-    HEFEI: (ZHANG_LIAO, 'wei'),
-    HANZHONG_PREPARATION: (FA_ZHENG, 'shu'),
-    NANZHONG: (ZHUGE_LIANG, 'shu'),
-    LIAODONG: (SIMA_YI, 'wei'),
+    HEFEI: ((ZHANG_LIAO, 'wei'),),
+    HANZHONG_PREPARATION: ((FA_ZHENG, 'shu'),),
+    NANZHONG: ((ZHUGE_LIANG, 'shu'),),
+    LIAODONG: ((SIMA_YI, 'wei'),),
+    **{kind: row.officers for kind, row in CHAPTERS.items()},
 }
 # The first side is the attacking faction. A connected, still-held approach
 # is enough to start the event, even if another approach changed hands.
@@ -84,8 +89,12 @@ FRONTS = {
     HANZHONG: (('zitong', 'baxi', 'jiameng'), ('hanzhong',)),
     NANZHONG: (('zhuti', 'yuexi', 'yongchang', 'fuling', 'bajun'), ('jianning', 'zangke', 'yunnan')),
     LIAODONG: (('liaoxi',), ('liaodong',)),
+    **{kind: (row.approaches, row.targets) for kind, row in CHAPTERS.items() if row.targets},
 }
-FRONT_PRIORITIES = (HEFEI, HANZHONG, NANZHONG, LIAODONG)
+FRONT_PRIORITIES = (HEFEI, HANZHONG, NANZHONG, LIAODONG,
+                    *(kind for kind, row in CHAPTERS.items() if row.targets))
+FIRST_EVENT_YEAR = min(start[0] for start, _, _, _ in RULES.values())
+LAST_EVENT_YEAR = max(end[0] for _, end, _, _ in RULES.values())
 BATTLE_STAGES = {
     HEFEI_DEFENSE: (HEFEI, RULES[HEFEI][:2], 'jiujiang', None, ZHANG_LIAO),
     DINGJUN: (HANZHONG, ((219, 1), (219, 5)), 'hanzhong', HUANG_ZHONG, XIAHOU_YUAN),
@@ -108,6 +117,7 @@ EVENT_CITIES = {
     DINGJUN: ('hanzhong',),
     NANZHONG: ('jianning', 'zangke', 'yunnan'),
     LIAODONG: ('liaoxi', 'liaodong'),
+    **{kind: row.cities for kind, row in CHAPTERS.items()},
 }
 EVENT_PEOPLE = {
     MARRIAGE: (LEADERS['shu'], LADY_SUN, LEADERS['wu']),
@@ -117,6 +127,7 @@ EVENT_PEOPLE = {
     DINGJUN: (HUANG_ZHONG, XIAHOU_YUAN),
     NANZHONG: (ZHUGE_LIANG, MENG_HUO),
     LIAODONG: (CAO_RUI, SIMA_YI, GONGSUN_YUAN),
+    **{kind: row.people for kind, row in CHAPTERS.items()},
 }
 NOTES = {
     GUANDU: '袁绍与曹操在黄河沿线开战。双方依战局安排出征。',
@@ -133,6 +144,7 @@ NOTES = {
     DINGJUN: '黄忠和夏侯渊在汉中战场交锋。',
     NANZHONG: '诸葛亮与孟获在南中对峙，战事由实际交战决定。',
     LIAODONG: '曹叡下诏讨辽东，司马懿所在的魏军准备进兵襄平。',
+    **{kind: row.note for kind, row in CHAPTERS.items()},
 }
 
 
@@ -168,18 +180,21 @@ def _has_leaders(state, factions, kind=None):
 
 
 def _in_service(game, state, kind):
-    if kind not in REQUIRED_OFFICERS:
-        return True
-    person, faction = REQUIRED_OFFICERS[kind]
-    officer = state.officers.get(game.catalog.ids.get(person))
-    return officer is not None and officer.alive and officer.faction_id == faction
+    for person, faction in REQUIRED_OFFICERS.get(kind, ()):
+        officer = state.officers.get(game.catalog.ids.get(person))
+        if officer is None or not officer.alive or officer.faction_id != faction:
+            return False
+    return True
 
 
 def _front_open(game, state, kind):
     if kind not in FRONTS:
         return True
     approaches, targets = FRONTS[kind]
-    attacker, defender = EVENT_FACTIONS[kind]
+    # Xiapi has a campaign objective but no legal approach at its opening.
+    if not approaches:
+        return True
+    attacker, defender = EVENT_FACTIONS[kind][:2]
     enemy_cities = {city for city in targets if _holds(state, ((city, defender),))}
     return any(_holds(state, ((source, attacker),))
                and enemy_cities.intersection(game._neighbors(source, state)) for source in approaches)
@@ -232,7 +247,8 @@ def _record(game, state, receipts, kind, cities):
 
 
 def process(game, state):
-    if state.phase not in ('city', 'arrivals') or not (200 <= state.year <= 238) or not _historical(game.catalog):
+    if (state.phase not in ('city', 'arrivals') or not FIRST_EVENT_YEAR <= state.year <= LAST_EVENT_YEAR
+            or not _historical(game.catalog)):
         return
     now = _date(state)
     receipts = state.extension.get(RECEIPTS, {})
@@ -251,6 +267,8 @@ def process(game, state):
         if kind in receipts or not start <= now <= end:
             continue
         if kind == SOUTH and ALLIANCE not in receipts:
+            continue
+        if any(city not in state.cities for city in EVENT_CITIES.get(kind, ())):
             continue
         if (not _holds(state, holdings) or not _has_leaders(state, factions, kind)
                 or not _in_service(game, state, kind) or not _front_open(game, state, kind)):
@@ -338,7 +356,8 @@ def priority_targets(state, owner, targets):
     event = _priority_event(state)
     if owner not in priority_factions(state):
         return set(), None
-    opponents = [faction for faction in EVENT_FACTIONS[event]
+    sides = EVENT_FACTIONS[event][:2] if event in FRONT_PRIORITIES else EVENT_FACTIONS[event]
+    opponents = [faction for faction in sides
                  if faction != owner and not allied(state, owner, faction)]
     eligible = {key for key in targets if state.cities[key].owner in opponents}
     if event in FRONT_PRIORITIES:
