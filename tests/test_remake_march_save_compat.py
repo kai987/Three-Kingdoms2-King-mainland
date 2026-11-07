@@ -12,7 +12,9 @@ import unittest
 from test_remake_march_core import (ROOT, CASES, HeadlessCampaign as Campaign, Catalog, canonical,
     campaign_fixture, campaign_result, using_backend)
 import test_remake_march_core as matrix
-from remake import officer_relations
+from remake import officer_relations,battle_placement
+from remake.campaign import Campaign as FullCampaign
+from campaign_fixtures import confirm_default_placement
 from unittest.mock import patch
 
 
@@ -155,6 +157,17 @@ class MarchCampaignNativeCompatibilityTests(unittest.TestCase):
                              (reference_game.state.rng.state, reference_game.state.rng.draws), label)
             saw_march |= bool(reference_game.state.extension['travel']['marches'])
 
+        class PlacementCommands:
+            @property
+            def state(self):return reference_game.state
+            @property
+            def revision(self):return reference_game.revision
+            def view(self):return FullCampaign.view(reference_game)
+            def command(self,kind,payload,revision):
+                self_outer.assertEqual(revision,self.revision)
+                return dispatch(kind,payload)
+
+        self_outer=self
         dispatch('new', dict(faction='wu', seed=2026))
         for _ in range(100):
             state = reference_game.state
@@ -168,7 +181,19 @@ class MarchCampaignNativeCompatibilityTests(unittest.TestCase):
             elif state.phase == 'arrivals':
                 kind, payload = 'arrivals', {}
             elif state.phase == 'battle':
-                kind, payload = 'retreat', {'battle_id': state.battle['id']}
+                if battle_placement.pending(state.battle):
+                    with using_backend('python'):
+                        confirm_default_placement(PlacementCommands())
+                    continue
+                if state.battle['extended']['duel']:
+                    kind, payload = 'duel_action', {'battle_id': state.battle['id'], 'move': 'withdraw'}
+                elif state.battle['extended'].get('siege'):
+                    # A real enemy contact can now precede this defensive
+                    # driver's retreat. Leave that encounter publicly first;
+                    # never erase it or bypass either backend's transaction.
+                    kind, payload = 'siege_withdraw', {'battle_id': state.battle['id']}
+                else:
+                    kind, payload = 'retreat', {'battle_id': state.battle['id']}
             elif state.phase == 'result':
                 kind, payload = 'settle', {'battle_id': state.battle['id']}
             else:

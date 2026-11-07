@@ -104,8 +104,10 @@ def point_cap(troops):
     return POINT_CAPS[min(troops // 1000, 9)]
 
 
-def initialize(game, state, battle):
+def initialize(game, state, battle, *, directional=False, arrival_city=None):
     """Assign both armies distinct real cells; initialization never draws RNG."""
+    if 'tactical' in battle['extended']:
+        return battle['extended']['tactical']
     maps, _ = _library()
     map_id = field_id(battle['target'])
     field = maps[map_id]
@@ -113,7 +115,13 @@ def initialize(game, state, battle):
     anchors = dict(defenders=(camp_x, camp_y),
         attackers=(2 if camp_x >= COLUMNS//2 else COLUMNS-3, max(2, min(ROWS-3, camp_y))))
     occupied, positions = set(), {}
-    for side in ('defenders', 'attackers'):
+    if directional:
+        from . import battle_deployment
+        planned=battle_deployment.plan(game.catalog,battle,field,arrival_city=arrival_city)
+        if planned is not None:
+            positions=planned['positions']
+            battle['extended']['deployment']=planned['provenance']
+    for side in (() if positions else ('defenders', 'attackers')):
         ax, ay = anchors[side]
         candidates = [(x, y) for y in range(ROWS) for x in range(COLUMNS)
                       if field['classes'][y][x] in (0, 1, 2, 5)]
@@ -135,6 +143,7 @@ def initialize(game, state, battle):
 
 
 def validate(game, state, battle):
+    from . import battle_placement,battle_auto_deployment
     row = battle['extended'].get('tactical')
     conversions=battle['extended'].get('defections',{})
     if not isinstance(conversions,dict) or any(not isinstance(value,dict) for value in conversions.values()):
@@ -143,13 +152,19 @@ def validate(game, state, battle):
     if (not isinstance(row, dict) or set(row) != {'schema', 'map_id', 'positions', 'side', 'points', 'passed'}
             or row['schema'] != SCHEMA or row['map_id'] != field_id(battle['target'])
             or row['side'] not in SIDES or not isinstance(row['positions'], dict)
-            or set(row['positions']) != identities
+            or (not battle_placement.pending(battle) and set(row['positions']) != identities)
+            or set(row['positions'])-identities
             or not isinstance(row['points'], dict) or set(row['points']) != set(SIDES)
             or any(not _int(value, 0, POINT_CAPS[-1]) for value in row['points'].values())
             or not isinstance(row['passed'], dict) or set(row['passed']) != set(SIDES)
             or any(type(value) is not bool for value in row['passed'].values())
             or row['passed'][row['side']]):
         raise ValueError('Invalid tactical battle state')
+    if 'deployment' in battle['extended']:
+        from . import battle_deployment
+        battle_deployment.validate_provenance(game.catalog,battle,_field(battle),battle['extended']['deployment'])
+    battle_placement.validate(game,state,battle)
+    battle_auto_deployment.validate(game,state,battle)
     for side in SIDES:
         starts = [unit.get('start') for unit in battle[side]]
         original_starts = [unit.get('start') for current in SIDES for unit in battle[current]
@@ -173,6 +188,9 @@ def validate(game, state, battle):
 
 
 def _action_reason(battle, actor, side=None):
+    from . import battle_placement
+    if battle_placement.pending(battle):
+        return battle_placement.REASON
     own, unit = _unit(battle, actor)
     row = battle['extended'].get('tactical')
     if unit is None or not _live(battle, unit):
@@ -206,6 +224,20 @@ def attack_reason(battle, actor, target, side):
     first, second = row['positions'][str(acting['id'])], row['positions'][str(victim['id'])]
     if abs(first['x']-second['x']) + abs(first['y']-second['y']) != 1:
         return '必須移動至敵軍上下左右相鄰的位置才能攻擊。'
+    return ''
+
+
+def move_reason(battle, actor, side=None):
+    reason=_action_reason(battle,actor,side)
+    if reason:
+        return reason
+    from .battle_conditions import movement_blocked, kind
+    if movement_blocked(battle,actor['id'] if isinstance(actor,dict) else actor):
+        if kind(battle,actor['id'] if isinstance(actor,dict) else actor)=='qimen':
+            return '本隊受奇門遁甲影響，不能移動；仍可攻擊或施計。'
+        if kind(battle,actor['id'] if isinstance(actor,dict) else actor)=='chain':
+            return '本隊受連環影響，不能移動；仍可攻擊或施計。'
+        return '本隊受虛兵影響，不能移動；仍可攻擊或施計。'
     return ''
 
 
@@ -407,7 +439,7 @@ def move_quote(game, state, battle, actor, x, y):
     if not _int(x, 0, COLUMNS-1) or not _int(y, 0, ROWS-1):
         raise GameError('移動目的地超出戰場邊界。')
     side, unit = _unit(battle, actor)
-    reason = _action_reason(battle, actor, side)
+    reason = move_reason(battle, actor, side)
     if reason:
         raise GameError(reason)
     source, distances, previous = _paths(state, battle, actor)
@@ -470,12 +502,24 @@ def view(game, state, battle):
     own = 'attackers' if battle['attacker'] == state.player else 'defenders'
     foe = 'defenders' if own == 'attackers' else 'attackers'
     terrain = game.catalog.map_cities[battle['target']]['terrain']
+    from . import battle_placement
+    placement = battle_placement.view(game,state,battle)
+    from . import battle_auto_deployment
+    automatic = battle_auto_deployment.view(game,state,battle)
+    placing = bool(placement and placement['pending'])
     actors = {}
     for actor in battle[own]:
+        if placing:
+            actors[str(actor['id'])] = dict(can_act=False,reason=battle_placement.REASON,
+                move_reason=battle_placement.REASON,facility=None,reachable=[],
+                attack_targets=[],duel_targets=[],tactic_targets={str(tid):[] for tid in range(len(TACTICS))},
+                attack_reasons={},duel_reasons={},tactic_reasons={},tactic_previews={})
+            continue
         reason = _action_reason(battle, actor, own)
         can_act = not reason and row['points'][own] > 0 and state.phase == 'battle'
         cells = []
-        if can_act:
+        movement_reason=move_reason(battle,actor,own)
+        if can_act and not movement_reason:
             source, distances, _ = _paths(state, battle, actor, row['points'][own])
             cells = [dict(x=x, y=y, cost=cost) for (x, y), cost in sorted(distances.items(),
                 key=lambda item: (item[0][1], item[0][0])) if (x, y) != source]
@@ -486,19 +530,25 @@ def view(game, state, battle):
         tactic_reasons = {str(tid): {str(target['id']): tactic_reason(state, battle, actor,
             target, own, foe, terrain, tactic) for target in battle[foe]}
             for tid, tactic in enumerate(TACTICS)}
-        from . import battle_services
+        from . import battle_services, tactic_effects
+        previews={str(tid): {str(target['id']): tactic_effects.preview(state,battle,actor,target,own,foe,tid)
+                   for target in battle[foe] if not tactic_reasons[str(tid)][str(target['id'])]}
+                  for tid in range(len(TACTICS)) if tid!=11}
         actors[str(actor['id'])] = dict(can_act=bool(can_act), reason=reason,
+            move_reason=movement_reason,
             facility=battle_services.quote(game,state,battle,actor,own) if can_act else None,
             reachable=cells,
             attack_targets=[u['id'] for u in battle[foe] if not attack_reasons[str(u['id'])]],
             duel_targets=[u['id'] for u in battle[foe] if not duel_reasons[str(u['id'])]],
             tactic_targets={tid: [u['id'] for u in battle[foe] if not reasons[str(u['id'])]]
                             for tid, reasons in tactic_reasons.items()},
-            attack_reasons=attack_reasons, duel_reasons=duel_reasons, tactic_reasons=tactic_reasons)
+            attack_reasons=attack_reasons, duel_reasons=duel_reasons, tactic_reasons=tactic_reasons,
+            tactic_previews=previews)
     return dict(schema=VIEW_SCHEMA, battle_id=battle['id'], round=battle['round'], map_id=row['map_id'],
         grid=dict(columns=COLUMNS, rows=ROWS, tile_size=TILE_SIZE), side=row['side'],
         camp=dict(zip(('x','y'),_field(battle)['camp'])), facilities=[dict(service) for service in _field(battle).get('services',())],
-        maximum_troops=1000,
+        maximum_troops=1000, deployment=deepcopy(battle['extended'].get('deployment')),placement=placement,
+        auto_deployment=automatic,
         points=deepcopy(row['points']), caps={side: point_cap(_troops(battle, side)) for side in SIDES},
-        can_end=state.phase == 'battle' and row['side'] == own and not battle['extended']['duel'],
+        can_end=not placing and state.phase == 'battle' and row['side'] == own and not battle['extended']['duel'],
         attack_cost=ATTACK_COST, duel_cost=DUEL_COST, tactic_costs=list(TACTIC_COSTS), actors=actors)

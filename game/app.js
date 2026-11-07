@@ -261,6 +261,7 @@ async function command(kind,payload={}){
   }
   if(kind==='new')checkpoint='new';
   else if(kind==='settle'||['result','finished'].includes(view.game?.phase))checkpoint='battle';
+  else if(kind==='battle_place')checkpoint='progress';
   else if(kind==='end_turn'||previousTurn!==view.game?.turn)checkpoint='turn';
   await scene?.play();
   if(!silentDialogue&&typeof showDialogueFeedback==='function')showDialogueFeedback(kind,payload,dialogueBefore,view);
@@ -1051,6 +1052,9 @@ function showPerson(id){
 function battleText(tc,ja){return `<span data-locale-only="zh-Hant" data-l10n-native="zh-Hant" ${GameI18n.locale==='ja'?'hidden':''}>${escapeHtml(tc)}</span><span data-locale-only="ja" data-l10n-native="ja" ${GameI18n.locale==='ja'?'':'hidden'}>${escapeHtml(ja)}</span>`;}
 function battlePlain(tc,ja){return GameI18n.locale==='ja'?ja:tc;}
 function battleTactical(){return typeof GameBattleScene==='undefined'?null:GameBattleScene.tacticalView(view);}
+function battlePlacement(){const p=battleTactical()?.placement;return p?.pending?p:null;}
+function placementPoint(){return battleDestination||battlePosition(battlePlacement()?.actor);}
+function placementAllowed(point){return !!point&&battlePlacement()?.cells?.some(p=>p.x===point.x&&p.y===point.y)===true;}
 function battlePosition(id){return typeof GameBattleScene==='undefined'?null:GameBattleScene.unitPosition(view,id);}
 function battleActor(){return battleTactical()?.actors?.[String(actor)]||null;}
 function battleTargetAllowed(kind){return view.game?.phase==='battle'&&battleActor()?.can_act===true&&(battleActor()?.[kind+'_targets']||[]).some(id=>String(id)===String(target));}
@@ -1058,11 +1062,13 @@ function battleActionReason(kind){const row=battleActor();return row?.[kind+'_re
 function battleMoveQuote(){return battleActor()?.reachable?.find(p=>p.x===battleDestination?.x&&p.y===battleDestination?.y)||null;}
 function selectBattleUnit(side,id){
  if(busy||view.game?.phase!=='battle')return;
+ if(battlePlacement())return;
  if(side==='actor')actor=id;else target=id;
  battleDestination=null;gameAudio.play('click');renderBattle();
 }
 function selectBattleCell(point){
  if(busy||view.game?.phase!=='battle'||!Number.isInteger(point?.x)||!Number.isInteger(point?.y)||point.x<0||point.x>=31||point.y<0||point.y>=19)return;
+ if(battlePlacement()&&!placementAllowed(point))return;
  battleDestination={x:point.x,y:point.y};renderBattle();
 }
 function navigateBattleCell(dx,dy){
@@ -1070,6 +1076,15 @@ function navigateBattleCell(dx,dy){
  selectBattleCell({x:Math.max(0,Math.min(30,point.x+dx)),y:Math.max(0,Math.min(18,point.y+dy))});
 }
 function battleKeyboard(event){
+ if(battlePlacement()){
+  if(event.defaultPrevented||event.isComposing||event.ctrlKey||event.metaKey||event.altKey||busy||dialog.open||document.querySelector('dialog[open]'))return;
+  const focus=event.target||document.activeElement;if(focus?.isContentEditable||focus?.closest?.('input,select,textarea,[contenteditable],[data-language-picker]'))return;
+  if(focus?.closest?.('button,a,summary,[role="button"]')&&!focus.closest?.('#stage,#inspector'))return;
+  const direction={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[event.key];
+  if(direction){event.preventDefault();navigateBattleCell(...direction);}
+  else if(event.key==='Enter'||event.key.toLowerCase()==='a'){event.preventDefault();if(!event.repeat)void confirmBattlePlacement();}
+  return;
+ }
  if(view?.game?.battle?.extended?.siege&&!view.game.battle.extended.duel){siegeUI?.keyboard(event);return;}
  if(event.defaultPrevented||event.isComposing||event.ctrlKey||event.metaKey||event.altKey||busy||(typeof battleScene!=='undefined'&&battleScene?.playing)||view?.game?.phase!=='battle'||view.game.battle?.extended?.duel||!battleActor()?.can_act)return;
  if(dialog.open||$('#event-dialog')?.open||document.querySelector('dialog[open]'))return;
@@ -1084,7 +1099,9 @@ function battleKeyboard(event){
  else if(event.key==='Enter'&&!event.repeat&&battleMoveQuote()&&(!focus?.closest?.('button,a,summary,[role="button"]')||focus.closest?.('[data-battle-nav],#battle-move,[data-actor],[data-target]'))){event.preventDefault();void confirmBattleMove();}
  else if(event.key==='Escape'&&battleDestination){event.preventDefault();battleDestination=null;renderBattle();}
 }
+async function confirmBattlePlacement(){const p=battlePlacement(),point=placementPoint();if(busy||!p||!placementAllowed(point))return false;return command('battle_place',{battle_id:view.game.battle.id,actor:p.actor,x:point.x,y:point.y});}
 async function confirmBattleMove(){
+ if(battlePlacement())return confirmBattlePlacement();
  if(busy||view.game?.phase!=='battle'||!battleMoveQuote()||!battleActor()?.can_act)return false;
  const b=view.game.battle,point={...battleDestination};return command('battle_move',{battle_id:b.id,actor,x:point.x,y:point.y});
 }
@@ -1096,9 +1113,9 @@ function tacticUnavailable(t,b){
 function tactics(b){
  const board=battleTactical(),choices=view.catalog.tactics.map(t=>({...t,unavailable:tacticUnavailable(t,b)}));
  const points=board?.points?.[board.side]??'—',maximum=board?.caps?.[board.side]??'—';
- openDialog('选择计略',`<p>${escapeHtml(officerChoiceText(actor))}<br>目标：${escapeHtml(officerChoiceText(target))}</p><p>${battleText(`本方共用機動力 ${points}/${maximum}。`,`自軍共通の機動力 ${points}/${maximum}。`)}</p><label class="field">${battleText('計略','計略')}<select id="tactic-choice">${choices.map(t=>`<option value="${t.id}" ${t.unavailable?`disabled title="${escapeHtml(GameI18n.t(t.unavailable))}"`:''}>${escapeHtml(GameI18n.t(t.name))} · ${board?.tactic_costs?.[t.id]??'—'}${battlePlain('機動','機動')}${t.unavailable?battlePlain('（不可用）','（使用不可）'):''}</option>`).join('')}</select></label><p id="tactic-description"></p><p class="small">${battleText('射程、地形、擾亂與機動力條件由實際戰場判定；確定前不扣機動力或抽取結果。','射程・地形・混乱・機動力の条件は実際の戦場で判定します。確定前に機動力の消費や抽選は起こりません。')}</p>`,'<button data-cancel>取消</button><button id="confirm-tactic" class="primary">施放计略</button>');
+ openDialog('选择计略',`<p>${escapeHtml(officerChoiceText(actor))}<br>目标：${escapeHtml(officerChoiceText(target))}</p><p>${battleText(`本方共用機動力 ${points}/${maximum}。`,`自軍共通の機動力 ${points}/${maximum}。`)}</p><label class="field">${battleText('計略','計略')}<select id="tactic-choice">${choices.map(t=>`<option value="${t.id}" ${t.unavailable?`disabled title="${escapeHtml(GameI18n.t(t.unavailable))}"`:''}>${escapeHtml(GameI18n.t(t.name))} · ${board?.tactic_costs?.[t.id]??'—'}${battlePlain('機動','機動')}${t.unavailable?battlePlain('（不可用）','（使用不可）'):''}</option>`).join('')}</select></label><p id="tactic-description"></p><div id="tactic-effect-preview" role="status" aria-live="polite"></div><p class="small">${battleText('射程、地形、擾亂與機動力條件由實際戰場判定；確定前不扣機動力或抽取結果。','射程・地形・混乱・機動力の条件は実際の戦場で判定します。確定前に機動力の消費や抽選は起こりません。')}</p>`,'<button data-cancel>取消</button><button id="confirm-tactic" class="primary">施放计略</button>');
  $('#tactic-choice').value=String(choices.find(t=>!t.unavailable)?.id??'');
- const change=()=>{const selected=choices.find(t=>String(t.id)===$('#tactic-choice').value);$('#tactic-description').textContent=selected?.description||battlePlain('目前沒有可施放的計略。','現在、使用できる計略はありません。');$('#confirm-tactic').disabled=!selected||!!tacticUnavailable(selected,b);GameI18n.apply();};$('#tactic-choice').onchange=change;change();
+ const change=()=>{const selected=choices.find(t=>String(t.id)===$('#tactic-choice').value);$('#tactic-description').textContent=selected?.description||battlePlain('目前沒有可施放的計略。','現在、使用できる計略はありません。');$('#confirm-tactic').disabled=!selected||!!tacticUnavailable(selected,b);$('#tactic-effect-preview').innerHTML=selected&&typeof GameTacticEffects!=='undefined'?GameTacticEffects.summary(view,actor,target,selected.id):'';GameI18n.apply();};$('#tactic-choice').onchange=change;change();
  $('#confirm-tactic').onclick=async()=>{const t=choices.find(t=>String(t.id)===$('#tactic-choice').value);if(!t)return;const reason=tacticUnavailable(t,view.game.battle);if(reason)return notice(reason,true);if(await command('tactic',{battle_id:b.id,actor,target,tactic:t.id}))dialog.close();};
 }
 function battleFacilityName(kind){return ({hospital:battlePlain('醫館','医館'),market:battlePlain('米屋','米屋'),armory:battlePlain('武器屋','武器屋')})[kind]||battlePlain('戰場設施','戦場施設');}
@@ -1163,6 +1180,17 @@ function renderSiege(b){
  siegeUI?.bind($('#inspector'));GameI18n.apply();
  restoreBattleView();
 }
+function renderBattlePlacement(board){
+ const game=view.game,b=game.battle,p=board.placement,own=p.side,foe=own==='attackers'?'defenders':'attackers',automatic=board.auto_deployment?.sides?.[foe];
+ actor=p.actor;target=b[foe][0]?.id??null;
+ const point=placementPoint(),legal=placementAllowed(point),current=String(actor),picture=battleScene?.html()||'';
+ const roster=b[own].map((u,index)=>`<div class="unit ${String(u.id)===current?'selected':''}" data-placement-unit="${u.id}" aria-current="${String(u.id)===current?'step':'false'}"><span class="officer-identity">${portraitHtml(u.id,'battle')}<span>${escapeHtml(name(u.id))}<small>${battleText(index<p.confirmed?'已確認':index===p.confirmed?'正在布陣':'待布陣',index<p.confirmed?'確定済み':index===p.confirmed?'配置中':'未配置')}</small></span></span><span class="troops">${u.troops}兵</span></div>`).join('');
+ const restore=updateBattleStage('tactical',`<div class="arena"><div class="arena-heading"><h2>${escapeHtml(cityName(b.target))} · ${battleText('戰前布陣','戦前配置')}</h2><span>${battleText('第1日','第1日')}</span></div><div class="battle-layout">${picture}<details class="battle-army-menu" open><summary>${battleText('布陣順序','配置順')}</summary><div class="armies"><section class="army"><h3>${battleText('本方','自軍')}</h3><div class="unit-list" data-placement-roster>${roster}</div></section><section class="army"><h3 data-ai-deployment="${automatic?'strategy':'legacy'}">${battleText(automatic?'對方已依武力與陣型布陣':'對方已按預設布陣',automatic?'相手は武力と陣型に応じて配置済み':'相手は初期配置済み')}</h3><p class="small">${battleText('尚未輪到的本方武將不會占位。','未配置の自軍武将はマスを占有しません。')}</p></section></div></details></div></div>`);
+ battleScene?.mount($('#stage [data-battle-scene]'),view,{actor,target,destination:point});
+ updateBattleControls(`<h2>${battleText('戰前布陣','戦前配置')}</h2><p class="battle-ap" data-placement-progress="${p.confirmed}" data-placement-total="${p.total}" role="status" aria-live="polite">${battleText(`已確認 ${p.confirmed}/${p.total} · 當前 ${p.confirmed+1}/${p.total}`,`確定済み ${p.confirmed}/${p.total}・現在 ${p.confirmed+1}/${p.total}`)}</p><p class="battle-selection">${portraitHtml(actor,'battle')} ${escapeHtml(name(actor))}</p><p>${battleText('選擇亮格，可用方向鍵或滑鼠／觸控調整目前武將的位置。山地與水格也可布陣。','明るいマスを選び、方向キー・マウス・タッチで現在の武将を配置します。山地や水上も配置可能です。')}</p><p class="small" role="status" data-placement-point>${point?battleText(`位置 ${point.x+1},${point.y+1}`,`位置 ${point.x+1},${point.y+1}`):'—'}</p><div class="battle-move-controls">${[['left','←',-1,0],['up','↑',0,-1],['down','↓',0,1],['right','→',1,0]].map(([id,label,dx,dy])=>`<button type="button" data-placement-nav="${id}" aria-label="${battlePlain('調整位置：','配置先を調整：')+label}" ${!point||!placementAllowed({x:point.x+dx,y:point.y+dy})?'disabled':''}>${label}</button>`).join('')}</div><button type="button" id="battle-place-confirm" class="primary" ${!legal?'disabled':''}>${battleText('確認此將位置 · Enter／A','この位置で確定・Enter／A')}</button><p class="small">${battleText('布陣不消耗機動力、命令書或額外兵糧；最後一將確認後開始戰鬥。','配置で機動力・命令書・追加の兵糧は消費しません。最後の武将を確定すると戦闘開始です。')}</p><p class="small">${battleText('每將確認後保存進度；未確認的位置預覽不會寫入存檔。','武将ごとの確定時点を保存します。未確定の配置プレビューは保存しません。')}</p>`);
+ document.querySelectorAll('[data-placement-nav]').forEach(button=>button.onclick=()=>navigateBattleCell(...({left:[-1,0],up:[0,-1],down:[0,1],right:[1,0]}[button.dataset.placementNav])));
+ $('#battle-place-confirm').onclick=confirmBattlePlacement;GameI18n.apply();restore();
+}
 function renderBattle(){
  if(mapNavigation){mapNavigation.destroy();mapNavigation=null;}
  const game=view.game,b=game.battle;
@@ -1171,12 +1199,13 @@ function renderBattle(){
  if(typeof siegeUI!=='undefined')siegeUI?.reset();
  const key=[view.catalog.scenario_id,b.id,view.revision].join(':');if(key!==battleViewKey){battleViewKey=key;battleDestination=null;}
  const board=battleTactical();
+ if(board?.placement?.pending)return renderBattlePlacement(board);
  const own=b.attacker===game.player?'attackers':'defenders',foe=own==='attackers'?'defenders':'attackers',friendly=b[own],hostile=b[foe];
  const available=u=>{const q=board?.actors?.[String(u.id)];return(q?.reachable?.length||0)+(q?.attack_targets?.length||0)+Object.values(q?.tactic_targets||{}).reduce((sum,ids)=>sum+ids.length,0);};
  const usable=friendly.filter(u=>u.troops>0&&board?.actors?.[String(u.id)]?.can_act).sort((a,b)=>Number(available(b)>0)-Number(available(a)>0)),enemies=hostile.filter(u=>u.troops>0);
  if(!friendly.some(u=>u.troops>0&&u.id===actor))actor=usable[0]?.id??friendly.find(u=>u.troops>0)?.id??null;
  if(!enemies.some(u=>u.id===target))target=enemies[0]?.id??null;
- const unitStatus=(u,side)=>{const support=b.extended?.support?.[u.id],ready=board?.actors?.[String(u.id)]?.can_act,kind=u.troops===0?'routed':support?.stunned?'stunned':support?.guard?'guard':side==='actor'?(ready?'ready':'waiting'):'enemy',labels={routed:['潰散','敗走'],waiting:['暫不可行動','現在行動不可'],stunned:['受擾亂','混乱中'],guard:['防備中','防御中'],ready:['可行動','行動可能'],enemy:['敵方','敵軍']};return `<span class="battle-unit-status" data-unit-status="${kind}">${battleText(...labels[kind])}</span>`;};
+ const unitStatus=(u,side)=>{const support=b.extended?.support?.[u.id],ready=board?.actors?.[String(u.id)]?.can_act,kind=u.troops===0?'routed':support?.stunned?'stunned':support?.guard?'guard':side==='actor'?(ready?'ready':'waiting'):'enemy',labels={routed:['潰散','敗走'],waiting:['暫不可行動','現在行動不可'],stunned:['受擾亂','混乱中'],guard:['防備中','防御中'],ready:['可行動','行動可能'],enemy:['敵方','敵軍']};const condition=b.extended?.conditions?.units?.[String(u.id)],count=condition?.remaining,locked=['chain','qimen'].includes(condition?.kind)?condition.kind:'phantom';return `<span class="battle-unit-status" data-unit-status="${kind}">${battleText(...labels[kind])}</span>`+(Number.isInteger(count)&&count>0&&count<=({phantom:3,chain:5,qimen:9}[locked])?`<span class="battle-unit-status" data-${locked}-count="${count}" title="${escapeHtml(battlePlain('限制移動；剩餘日界掃描次數，仍可攻擊或施計。','移動を封鎖。日界で減る残数です。攻撃や計略は可能です。'))}">${locked==='qimen'?battleText('奇門遁甲','奇門遁甲'):locked==='chain'?battleText('連環','連環'):battleText('虛兵','虚兵')} ${count}</span>`:'');};
  const unitList=(units,side)=>units.map(u=>{const p=battlePosition(u.id);return `<button class="unit ${u.troops===0?'routed':''}" data-${side}="${u.id}" aria-pressed="${(side==='actor'?actor:target)===u.id}" ${game.phase!=='battle'||u.troops===0?'disabled':''}><span class="officer-identity">${portraitHtml(u.id,'battle')}<span>${escapeHtml(name(u.id))}${unitStatus(u,side)}<small>${escapeHtml(officerAttributes(u.id))}</small></span></span><span class="troops">${u.troops}兵${b.extended?`<small>${battleText('體','体')}${b.extended.support[u.id].health}${p?` · ${p.x+1},${p.y+1}`:''}</small>`:''}</span></button>`;}).join('');
  const picture=typeof battleScene==='undefined'?'':battleScene?.html()||'';
  const restoreBattleView=updateBattleStage('tactical',`<div class="arena"><div class="arena-heading"><h2>${escapeHtml(cityName(b.target))}之战</h2><span>${battleText(`第${b.round}日`,`第${b.round}日`)}</span></div><div class="battle-layout">${picture}<details class="battle-army-menu" open><summary>部队名单 · 本方${friendly.length}人 · 对方${hostile.length}人</summary><div class="armies"><section class="army"><h3>本方${own==='defenders'?'（守方）':'（攻方）'}</h3><div class="unit-list" data-unit-list="friendly">${unitList(friendly,'actor')}</div></section><section class="army"><h3>对方${own==='defenders'?'（攻方）':'（守方）'}</h3><div class="unit-list" data-unit-list="hostile">${unitList(hostile,'target')||'<p>无守军</p>'}</div></section></div></details></div></div>`);
@@ -1191,7 +1220,7 @@ function renderBattle(){
  }
  const allowed=battleTargetAllowed('attack'),duelAllowed=battleTargetAllowed('duel'),tacticsAllowed=Object.values(battleActor()?.tactic_targets||{}).some(ids=>ids.some(id=>String(id)===String(target))),move=battleMoveQuote(),position=battlePosition(actor),ready=battleActor()?.can_act===true;
  const destination=battleDestination?battleText(`落點 ${battleDestination.x+1},${battleDestination.y+1}${move?` · 消耗${move.cost}機動`:''}`,`移動先 ${battleDestination.x+1},${battleDestination.y+1}${move?` · 機動力${move.cost}を消費`:''}`):battleText('選擇亮格預覽落點與機動消耗。','明るいマスを選ぶと移動先と必要な機動力を確認できます。');
- const moveReason=battleDestination&&!move?battleText('此格目前不可達，請另選亮格。','このマスへは移動できません。明るいマスを選んでください。'):ready&&actor!==null&&!available(friendly.find(unit=>unit.id===actor))?battleText('本隊受占位或地形移動費限制，請先移動周圍友軍或結束本方行動。','占有マスや地形の移動費により、この部隊は行動できません。周囲の味方を先に動かすか、自軍の行動を終了してください。'):'';
+ const moveReason=battleActor()?.move_reason?escapeHtml(GameI18n.t(battleActor().move_reason)):battleDestination&&!move?battleText('此格目前不可達，請另選亮格。','このマスへは移動できません。明るいマスを選んでください。'):ready&&actor!==null&&!available(friendly.find(unit=>unit.id===actor))?battleText('本隊受占位或地形移動費限制，請先移動周圍友軍或結束本方行動。','占有マスや地形の移動費により、この部隊は行動できません。周囲の味方を先に動かすか、自軍の行動を終了してください。'):'';
  const ownPoints=board?.points?.[own]??'—',ownCap=board?.caps?.[own]??'—',foePoints=board?.points?.[foe]??'—',foeCap=board?.caps?.[foe]??'—';
  const movement=game.phase==='battle'?`<div class="battle-movement" data-battle-movement><p class="small" id="battle-move-preview" role="status" aria-live="polite" data-battle-move-x="${battleDestination?.x??''}" data-battle-move-y="${battleDestination?.y??''}" data-battle-move-cost="${move?.cost??''}">${destination}</p><div class="battle-move-controls">${[['left','←',-1,0],['up','↑',0,-1],['down','↓',0,1],['right','→',1,0]].map(([id,label,dx,dy])=>`<button type="button" data-battle-nav="${id}" data-dx="${dx}" data-dy="${dy}" aria-label="${battlePlain('調整落點：','移動先を調整：')+label}" ${!position||!ready?'disabled':''}>${label}</button>`).join('')}<button id="battle-move" class="primary" ${!ready||!move?'disabled':''}>${battleText('移動','移動')}</button><button id="battle-cancel-move" ${!battleDestination?'disabled':''}>${battleText('取消','取消')}</button></div><p class="small battle-move-reason" role="status">${moveReason}</p></div>`:'';
  const labels={victory:own==='attackers'?'本方胜利':'本方城池失守',defeat:own==='attackers'?'本方败退':'本方守城成功',retreat:'攻方退却'};

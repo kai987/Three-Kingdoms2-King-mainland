@@ -154,7 +154,32 @@ async function tacticalOpening(page){
  await expect(page.locator('#departure-target')).toHaveValue('danyang');const officers=page.locator('input[name=depart-officer]:enabled');expect(await officers.count()).toBeGreaterThanOrEqual(10);
  for(let i=0;i<10;i++)await officers.nth(i).check();await page.locator('#review-departure').click();await page.locator('#confirm-departure').click();await waitIdle(page);await tacticalDismiss(page);
  for(const id of ['end-turn','run-ai','process-arrivals']){await page.locator('#'+id).click();await waitIdle(page);await tacticalDismiss(page);}
- await expect(page.locator('[data-battle-scene]')).toHaveAttribute('data-battle-scene-mode','tactical');return tacticalRead(page);
+ await expect(page.locator('[data-battle-scene]')).toHaveAttribute('data-battle-scene-mode','tactical');
+ // The tactical scene also hosts sequential pre-battle placement. Complete
+ // its real visible confirmations before exercising combat-only controls.
+ const before=await tacticalRead(page),placement=before.view.catalog.battle_tactical.placement;
+ expect(placement.pending).toBe(true);expect(placement.confirmed).toBe(0);
+ expect(placement.total).toBeGreaterThan(0);expect(placement.total).toBeLessThanOrEqual(10);
+ // A full state view includes expensive derived catalog previews. Each intermediate
+ // checkpoint needs only the committed save; fetch the rich preview once.
+ let saved=before.save;
+ for(let index=0;index<placement.total;index++){
+  expect(saved.state.battle.extended.placement.confirmed).toBe(index);
+  await tacticalControl(page,'battle-place-confirm');await waitIdle(page);await tacticalDismiss(page);
+  saved=await tacticalSave(page);
+  expect(saved.state.battle.extended.placement.confirmed).toBe(index+1);
+ }
+ const current=await tacticalRead(page);
+ expect(current.save).toEqual(saved,'Reading the completed tactical preview cannot commit another action');
+ expect(current.view.catalog.battle_tactical.placement.pending).toBe(false);
+ await expect(page.locator('#battle-place-confirm')).toHaveCount(0);
+ await expect(page.locator('#battle-wait')).toBeEnabled();
+ for(const key of ['cities','officers','rng'])expect(current.save.state[key]).toEqual(before.save.state[key],'Attacker placement only commits positions and progress');
+ for(const key of ['round','used','attackers','defenders'])expect(current.save.state.battle[key]).toEqual(before.save.state.battle[key]);
+ for(const key of ['supply','support','auto_deployment'])expect(current.save.state.battle.extended[key]).toEqual(before.save.state.battle.extended[key]);
+ expect(current.save.state.battle.extended.tactical.points).toEqual(before.save.state.battle.extended.tactical.points);
+ expect(current.save.state.extension.command_books).toEqual(before.save.state.extension.command_books);
+ return current;
 }
 async function tacticalApproach(page,{touch=false,preferred=null,max=18}={}){
  const trace=[];
@@ -1887,7 +1912,8 @@ test('a natural August drought shows bilingual illustrated losses and preserves 
   else if(phase==='ai')await page.locator('#run-ai').click();
   else if(phase==='arrivals')await page.locator('#process-arrivals').click();
   else if(phase==='battle'){
-   await page.locator('#retreat').click();await expect(page.locator('#confirm-retreat')).toBeVisible();await page.locator('#confirm-retreat').click();
+   if(current.save.state.battle?.extended?.placement?.confirmed<current.save.state.battle?.extended?.placement?.order?.length)await page.locator('#battle-place-confirm').click();
+   else{await page.locator('#retreat').click();await expect(page.locator('#confirm-retreat')).toBeVisible();await page.locator('#confirm-retreat').click();}
   }else if(phase==='result')await page.locator('#settle').click();
   else throw new Error('The natural drought campaign unexpectedly finished before August: '+phase);
   await waitIdle(page);
@@ -2048,6 +2074,7 @@ test('city-specific battlefield keeps both armies visible and supports real batt
  await expect(page.locator('[data-battlefield-label]')).toHaveAttribute('title',/ROM/);
  expect((await read()).state.battle.target).toBe('danyang');expect(await page.evaluate(()=>GameBrowserEngine.ready)).toBe(true);
  expect(fields.some(row=>row.url.includes('/Three-Kingdoms2-King-mainland/assets/battlefields/original-15.png')&&row.status===200)).toBe(true);
+ await expect(page.locator('[data-unit-list]')).toHaveCount(2);
  const geometry=await page.evaluate(()=>{
   const rect=node=>{const r=node.getBoundingClientRect();return{x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height};};
   return{roster:rect(document.querySelector('.battle-army-menu')),map:rect(document.querySelector('[data-battle-canvas]')),lists:[...document.querySelectorAll('[data-unit-list]')].map(n=>({...rect(n),content:n.scrollHeight})),overflow:document.documentElement.scrollWidth>innerWidth,wide:document.querySelector('.battle-layout').clientWidth>660};
@@ -2084,13 +2111,16 @@ test('city-specific battlefield keeps both armies visible and supports real batt
 });
 
 test('authoritative tactical movement, shared points and contact attacks persist with a missing battlefield image',async({page},testInfo)=>{
+ // The measured touch flow needs ~243s, including nine successful rich reads.
+ // Preserve every control/assertion and the 30s action/expect limits.
+ test.setTimeout(300_000);
  const touch=testInfo.project.name==='touch-chromium',initial=await tacticalOpening(page),b=initial.view.game.battle,board=initial.view.catalog.battle_tactical;
  expect(board.schema).toBe('tk2-battle-tactical-view-v1');expect(b.extended.tactical.schema).toBe('tk2-battle-tactical-v1');expect(board.grid).toEqual({columns:31,rows:19,tile_size:16});
  const own=b.attacker===initial.view.game.player?'attackers':'defenders',foe=own==='attackers'?'defenders':'attackers';
  const chosen=b[own].filter(unit=>board.actors[unit.id]?.reachable.length>0).sort((a,b)=>b.martial-a.martial||b.troops-a.troops)[0],id=chosen.id,scene=page.locator('[data-battle-scene]'),canvas=page.locator('[data-battle-canvas]');
  await expect(page.locator('#attack')).toBeDisabled();
- const boxed=b[own].find(unit=>{const q=board.actors[unit.id];return q?.can_act&&q.reachable.length===0&&q.attack_targets.length===0&&!Object.values(q.tactic_targets).some(ids=>ids.length);});expect(boxed).toBeTruthy();expect(boxed.id).not.toBe(id);
- await tacticalCell(page,b.extended.tactical.positions[boxed.id],touch);await expect(page.locator(`[data-actor="${boxed.id}"]`)).toBeEnabled();await expect(page.locator(`[data-actor="${boxed.id}"]`)).toHaveAttribute('aria-pressed','true');await expect(page.locator('#battle-move')).toBeDisabled();await expect(page.locator('.battle-move-reason')).toContainText('限制');expect(await tacticalSave(page)).toEqual(initial.save,'A surrounded unit stays inspectable and cannot bypass occupied cells');
+ // Surrounded-unit inspection is retained by the explicitly boxed current
+ // fixture in arrival-deployment. Native initial arrays need not box a unit.
  await tacticalCell(page,b.extended.tactical.positions[id],touch);await expect(page.locator(`[data-actor="${id}"]`)).toHaveAttribute('aria-pressed','true');await expect(scene).toHaveAttribute('data-battle-selected-actor',String(id));
  const selected={save:await tacticalSave(page),view:initial.view},row=selected.view.catalog.battle_tactical.actors[id];expect(row.reachable.length).toBeGreaterThan(0);expect(row.attack_targets).toEqual([]);await expect(scene).toHaveAttribute('data-battle-reachable-count',String(row.reachable.length));
  const occupied=new Set(Object.values(b.extended.tactical.positions).map(p=>p.x+','+p.y)),reachable=new Set(row.reachable.map(p=>p.x+','+p.y));let invalid;

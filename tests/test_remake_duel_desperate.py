@@ -14,7 +14,7 @@ from remake import presentation
 from remake.officers import OfficerProfile
 import test_remake_tactical_ai as tactical_fixture
 from test_remake_tactical_ai import battle, actors, successful_rng
-from campaign_fixtures import pre_relationship_opening, pre_city_development_opening, pre_battle_provisions
+from campaign_fixtures import pre_relationship_opening, pre_city_development_opening, pre_battle_provisions, pre_directional_deployment
 
 
 def active_duel(seed, *, own_health=80, enemy_health=80, round_number=1):
@@ -183,7 +183,7 @@ class DesperateDuelTests(unittest.TestCase):
                 # its opening inputs only; ordinary duel/allegiance services
                 # remain unmodified and complete output hashes stay frozen.
                 with patch.object(tactical_fixture, 'controlled_catalog', side_effect=original_stat_catalog), \
-                        pre_relationship_opening(), pre_city_development_opening(), pre_battle_provisions():
+                        pre_relationship_opening(), pre_city_development_opening(), pre_battle_provisions(), pre_directional_deployment():
                     game = active_duel(row['seed'])
                     orders_before = deepcopy(game.state.extension['command_books'])
                     scene = self.perform(game, row['move'])

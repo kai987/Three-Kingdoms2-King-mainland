@@ -78,6 +78,12 @@ class TacticalAiTests(unittest.TestCase):
         found=set()
         for terrain in ('plain','mountain','water'):
             game=kernel_battle(terrain);state=game.state;b,a,t,own,foe=actors(game)
+            # This all16-effects fixture needs a genuinely susceptible target.
+            # Loyal71+ remains legal for the player but is not an AI candidate;
+            # that exact paid/no-RNG failure has dedicated campaign coverage.
+            for enemy in b[foe]:
+                if enemy['id'] not in state.extension['leaders'].values():
+                    state.officers[enemy['id']].loyalty=30
             before=game.to_dict()
             rows=candidates(state,b,own,foe,terrain,TACTICS,depth=2)
             tids={r['tactic'] for r in rows if r['kind']=='tactic'};found|=tids
@@ -96,6 +102,7 @@ class TacticalAiTests(unittest.TestCase):
                     game=kernel_battle(terrain);state=game.state;b,a,t,own,foe=actors(game,own)
                     if effect=='surrender':
                         t=next(unit for unit in b[foe] if unit['id'] not in state.extension['leaders'].values())
+                        state.officers[t['id']].loyalty=30
                     # Every actor has at least 100 troops in the controlled
                     # roster. Low health isolates trap/rock's routed-HP effect.
                     if effect in {'trap','rock'}:b['extended']['support'][str(t['id'])]['health']=2
@@ -112,17 +119,18 @@ class TacticalAiTests(unittest.TestCase):
                         count=sum(s['stunned'] for key,s in b['extended']['support'].items() if int(key) in {u['id'] for u in b[foe]})
                         self.assertEqual(count,min(len(b[foe]),1 if effect=='confuse' else 3))
                     elif effect=='supply':
-                        city=b['target'] if foe=='defenders' else b['source']
-                        self.assertLess(state.cities[city].grain,grain[city])
-                        self.assertEqual(state.cities[b['source'] if city==b['target'] else b['target']].grain,grain[b['source'] if city==b['target'] else b['target']])
-                        self.assertEqual(b['extended']['supply'],before['extended']['supply'])
+                        self.assertEqual({key:c.grain for key,c in state.cities.items()},grain)
+                        current=b['extended']['supply']['sides'];previous=before['extended']['supply']['sides']
+                        self.assertLess(current[foe]['remaining'],previous[foe]['remaining'])
+                        self.assertEqual(current[own],previous[own])
+                        self.assertEqual(current[foe]['journal'][-1]['kind'],'fire')
                     elif effect=='surrender':
                         self.assertIn(t,b[own]);self.assertNotIn(t,b[foe])
                         self.assertEqual(t['troops'],next(unit['troops'] for unit in before[foe] if unit['id']==t['id']))
                         self.assertIn(str(t['id']),b['extended']['defections'])
                     else:self.assertLess(sum(u['troops'] for u in b[foe]),sum(u['troops'] for u in before[foe]))
                     if effect in {'trap','rock'}:self.assertEqual(t['troops'],0)
-                    self.assertEqual(state.rng.draws,0 if effect in {'ambush','guard'} else 1+(0 if effect in {'confuse','chain','supply','surrender'} else min(len(b[foe]),3 if effect=='area' else 2 if effect=='crossbow' else 20 if effect in {'flood','inferno'} else 1)))
+                    self.assertEqual(state.rng.draws,0 if effect in {'ambush','guard'} else 1+(1 if effect=='supply' else 0 if effect in {'confuse','chain','surrender'} else min(len(b[foe]),3 if effect=='area' else 2 if effect=='crossbow' else 20 if effect in {'flood','inferno'} else 1)))
 
     def test_candidate_evaluation_never_calls_rng_or_changes_inputs(self):
         game=kernel_battle('water');state=game.state;b=state.battle;before=game.to_dict()
@@ -170,7 +178,11 @@ class TacticalAiTests(unittest.TestCase):
         def score(tid):return next(r['score'] for r in candidates(state,b,own,foe,'plain',TACTICS,depth=2) if r['actor']==a['id'] and r['target']==t['id'] and r['tactic']==tid)
         normal=score(15);b['extended']['support'][str(a['id'])]['guard']=2
         self.assertLess(score(15),normal)
-        state.cities[b['target']].grain=0;self.assertLess(score(5),0)
+        fire=score(5);state.cities[b['target']].grain=0
+        self.assertEqual(score(5),fire,'Warehouse stock is not the carried-ration target')
+        from remake import battle_supply
+        battle_supply.destroy(state,b,foe,battle_supply.available(state,b,foe))
+        self.assertLess(score(5),0)
         t['troops']=0;self.assertNotIn(t['id'],{r['target'] for r in candidates(state,b,own,foe,'plain',TACTICS)})
         self.assertGreater(expected_attack(b,a,b[foe][1]),0)
 

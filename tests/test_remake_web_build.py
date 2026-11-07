@@ -321,18 +321,31 @@ class WebReleaseArtifact(unittest.TestCase):
             self.assertIn('source/remake/browser_runtime.py', names)
             self.assertIn('source/remake/troop_types.py', names)
             self.assertIn('source/remake/officer_relations.py', names)
+            self.assertIn('source/remake/battle_deployment.py', names)
+            self.assertIn('source/remake/battle_ai_deployment.py', names)
+            self.assertIn('source/remake/battle_auto_deployment.py', names)
             self.assertIn('game/assets/map-presentation.json', names)
             for name in ('game/assets/battlefields/index.json',
                          'game/config/battlefield-city-bindings.json',
                          'game/config/references/original-battle-tactics-v1.json',
+                         'game/config/references/original-battle-deployment-v1.json',
+                         'game/config/references/original-battle-ai-deployment-v1.json',
                          'game/config/references/officer-troop-types-v1.json',
                          'game/config/references/officer-relations-v1.json'):
                 self.assertIn(name,names,'The actual WASM rules need the original tactical data')
             public_rules={'game/config/battlefield-city-bindings.json',
                           'game/config/references/original-battle-tactics-v1.json',
+                          'game/config/references/original-battle-deployment-v1.json',
+                          'game/config/references/original-battle-ai-deployment-v1.json',
                           'game/config/references/officer-troop-types-v1.json',
                           'game/config/references/officer-relations-v1.json'}
             troop_policy='game/config/references/officer-troop-types-v1.json'
+            deployment_policy='game/config/references/original-battle-deployment-v1.json'
+            self.assertEqual(bundle.read(deployment_policy),(ROOT/deployment_policy).read_bytes(),
+                             'WASM and Python must use the same audited deployment rectangles')
+            ai_policy='game/config/references/original-battle-ai-deployment-v1.json'
+            self.assertEqual(bundle.read(ai_policy),(ROOT/ai_policy).read_bytes(),
+                             'WASM and Python must share the pinned native AI formation profiles')
             self.assertEqual(bundle.read(troop_policy),(ROOT/troop_policy).read_bytes(),
                              'WASM must receive the same reviewed troop-type policy as Python')
             relation_policy='game/config/references/officer-relations-v1.json'

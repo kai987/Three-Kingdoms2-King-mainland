@@ -1,0 +1,434 @@
+{
+  "schema": "tk2-original-battle-ai-deployment-v1",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "scope": "Native data and instruction-derived rules only; no115-city lineage binding or runtime code.",
+  "source_tables": {
+    "defender_group_offsets": {
+      "physical_bank": 8,
+      "cpu": "B30E",
+      "rom_file_offset": 70430,
+      "length": 4,
+      "hex": "02080c14",
+      "sha256": "9b2cf966adf226a8e2028886d77bf2b63fcaa7aa571d5916af87e2c6b7fe2f8e"
+    },
+    "attacker_group_offsets": {
+      "physical_bank": 8,
+      "cpu": "B36D",
+      "rom_file_offset": 70525,
+      "length": 4,
+      "hex": "020c161c",
+      "sha256": "b2f3c5d4cef4b82ac0599dfa620c941a371480c01d12f492bf256ff88c274316"
+    },
+    "profiles": {
+      "physical_bank": 8,
+      "cpu": "B3FD",
+      "rom_file_offset": 70669,
+      "length": 108,
+      "hex": "100011002100211031103210321132213222001001100120112011212121213121322133010001101110121012202220222122223231100020002100210131013111321142114212100011001110211021112211222132213321100011002100211021112211321133113312",
+      "sha256": "a70cd1fc0a10600d3e662ac844e1c871b7911d255e966307b4914516f88f8cb5"
+    }
+  },
+  "original_slot_families": [
+    0,
+    1,
+    2,
+    0,
+    2,
+    1,
+    0
+  ],
+  "group_byte_offsets": {
+    "defenders": [
+      2,
+      8,
+      12,
+      20
+    ],
+    "attackers": [
+      2,
+      12,
+      22,
+      28
+    ]
+  },
+  "profiles": [
+    {
+      "index": 0,
+      "side": "defenders",
+      "family": 0,
+      "counts": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          1,
+          1,
+          0
+        ],
+        [
+          3,
+          1,
+          1,
+          0
+        ],
+        [
+          3,
+          2,
+          1,
+          0
+        ],
+        [
+          3,
+          2,
+          1,
+          1
+        ],
+        [
+          3,
+          2,
+          2,
+          1
+        ],
+        [
+          3,
+          2,
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "index": 1,
+      "side": "defenders",
+      "family": 1,
+      "counts": [
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          2,
+          0
+        ],
+        [
+          1,
+          1,
+          2,
+          0
+        ],
+        [
+          1,
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          1,
+          3,
+          1
+        ],
+        [
+          2,
+          1,
+          3,
+          2
+        ],
+        [
+          2,
+          1,
+          3,
+          3
+        ]
+      ]
+    },
+    {
+      "index": 2,
+      "side": "defenders",
+      "family": 2,
+      "counts": [
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          2,
+          1,
+          0
+        ],
+        [
+          1,
+          2,
+          2,
+          0
+        ],
+        [
+          2,
+          2,
+          2,
+          0
+        ],
+        [
+          2,
+          2,
+          2,
+          1
+        ],
+        [
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          3,
+          2,
+          3,
+          1
+        ]
+      ]
+    },
+    {
+      "index": 3,
+      "side": "attackers",
+      "family": 0,
+      "counts": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          1,
+          0,
+          1
+        ],
+        [
+          3,
+          1,
+          0,
+          1
+        ],
+        [
+          3,
+          1,
+          1,
+          1
+        ],
+        [
+          3,
+          2,
+          1,
+          1
+        ],
+        [
+          4,
+          2,
+          1,
+          1
+        ],
+        [
+          4,
+          2,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "index": 4,
+      "side": "attackers",
+      "family": 1,
+      "counts": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          2,
+          1,
+          1,
+          0
+        ],
+        [
+          2,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          2,
+          1
+        ],
+        [
+          3,
+          2,
+          2,
+          1
+        ],
+        [
+          3,
+          3,
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "index": 5,
+      "side": "attackers",
+      "family": 2,
+      "counts": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          1,
+          1,
+          0
+        ],
+        [
+          2,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          1,
+          1
+        ],
+        [
+          3,
+          2,
+          1,
+          1
+        ],
+        [
+          3,
+          3,
+          1,
+          1
+        ],
+        [
+          3,
+          3,
+          1,
+          2
+        ]
+      ]
+    }
+  ],
+  "rules": {
+    "commander_group": 0,
+    "commander_point_byte_offset": 0,
+    "noncommander_order": "B371: n-1 full adjacent passes; swap when next martial >= current martial; commander excluded",
+    "profile": "B1B0: family + (3 for attackers else0), two bytes per noncommander count1..9",
+    "zero_noncommanders": "No profile read; only commander placed. Native scratch count cache is not cleared.",
+    "position": "B272/B278 commander at offset0; B290/B296 group cursor reads packed_y,x and advances2",
+    "native_legality": "No C447 rectangle, D6B6 occupancy or terrain check; shared remake safety is a separate adaptation",
+    "rng": "No random call or cursor advance in B130/B1B0/B371/B2AE/B312",
+    "side_order": "B130: defending AI first, attacking AI second; skip human controller sides",
+    "faction": "B4D3 fixed slot pointers; profile depends on slot, not the current successor stored in leader byte0"
+  }
+}

@@ -13,7 +13,7 @@ from remake import facilities, treasures
 from remake.march_core import using_backend
 from remake.march_supply import estimate as march_grain
 from remake.strategic_ai import StrategicAI, validate_strategies
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import controlled_catalog, confirm_default_placement
 
 
 def catalog_from_data(data):
@@ -129,6 +129,7 @@ class StrategicAITests(unittest.TestCase):
         game.command('arrivals',{},game.revision)
         self.assertEqual(game.state.phase,'battle')
         game=self.resume(game)
+        confirm_default_placement(game)
         battle=game.state.battle['id']
         game.command('retreat',dict(battle_id=battle),game.revision)
         game.command('settle',dict(battle_id=battle),game.revision)

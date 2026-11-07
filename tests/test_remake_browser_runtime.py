@@ -153,6 +153,11 @@ class BrowserRuntimeTests(unittest.TestCase):
             elif phase=='arrivals':view=command('arrivals')
             else:self.fail('Unexpected phase before the real arrival: '+phase)
         self.assertEqual(view['game']['phase'],'battle')
+        while view['catalog']['battle_tactical'].get('placement',{}).get('pending'):
+            placement=view['catalog']['battle_tactical']['placement']
+            battle=view['game']['battle'];actor=placement['actor']
+            point=battle['extended']['tactical']['positions'][str(actor)]
+            view=command('battle_place',battle_id=battle['id'],actor=actor,**point)
         battle=view['game']['battle']
         reachable=view['catalog']['battle_tactical']['actors']['146']['reachable']
         destination=min(reachable,key=lambda p:(p['cost'],p['y'],p['x']))

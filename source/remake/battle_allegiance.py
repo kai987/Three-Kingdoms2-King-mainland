@@ -61,6 +61,8 @@ def convert(game, state, battle, actor, target, own, foe):
         battle['extended']['ambush'] = None
     support = battle['extended']['support'][str(target['id'])]
     support['stunned'] = support['guard'] = 0
+    from . import battle_conditions
+    battle_conditions.clear(battle,target['id'])
     state.extension['officer_actions'][str(target['id'])] = state.turn
     battle['log'].append(f'{game.person_name(state,target["id"])}接受籠絡，立即加入本軍；忠誠{officer.loyalty}。')
     battle['log'][:] = battle['log'][-80:]

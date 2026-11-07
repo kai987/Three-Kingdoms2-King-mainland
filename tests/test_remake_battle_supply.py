@@ -310,6 +310,12 @@ class BattleSupplyTests(unittest.TestCase):
             elif state.phase=='arrivals':dispatch('arrivals')
             else:self.fail('Unexpected actual campaign transition: '+state.phase)
         else:self.fail('The real departure never reached battle')
+        # Public arrival now pauses for each original default placement. Keep
+        # this parity test on the same real commands across both backends.
+        while games[0].view()['catalog']['battle_tactical'].get('placement',{}).get('pending'):
+            placement=games[0].view()['catalog']['battle_tactical']['placement']
+            point=games[0].state.battle['extended']['tactical']['positions'][str(placement['actor'])]
+            dispatch('battle_place',battle_id=games[0].state.battle['id'],actor=placement['actor'],**point)
         self.assertIn('supply',games[0].state.battle['extended'])
         self.assertEqual(games[0].state.battle['extended']['supply']['sides']['attackers']['initial_credit'],720)
         with patch('remake.tactical_ai.choose_action',return_value=WAIT):

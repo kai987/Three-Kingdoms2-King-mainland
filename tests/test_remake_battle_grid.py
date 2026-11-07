@@ -24,7 +24,10 @@ def fixture(attackers=1, defenders=2):
         officers={i: SimpleNamespace(profile=SimpleNamespace(terrain_affinity=0,
             martial_strength=80, intellect=80, virtue=80), loyalty=80,
             person_id='san14-candidate-0440', tier=6) for i in ids},
-        cities={'test-source': SimpleNamespace(grain=1000), 'test-target': SimpleNamespace(grain=1000)})
+        # Pure carried-grain previews also verify ownership; do not substitute
+        # ownerless warehouses for the actual source/defender city contract.
+        cities={'test-source': SimpleNamespace(grain=1000, owner='shu'),
+                'test-target': SimpleNamespace(grain=1000, owner='wei')})
     game = SimpleNamespace(catalog=SimpleNamespace(map_cities={'test-target': {'terrain': 'water'}}))
     battle = dict(id='battle-1', target='test-target', source='test-source', attacker='shu', defender='wei',
         round=1, used=[], outcome=None, **units,
@@ -281,30 +284,38 @@ class BattleGridTests(unittest.TestCase):
             self.assertEqual(choose_action(state, battle, 'attackers', 'defenders', 'plain', TACTICS)['kind'], 'wait')
         self.assertEqual(state.rng.draws, 0)
 
-    def test_guard_score_excludes_remote_armies_and_danger_to_another_friendly_unit(self):
+    def test_qimen_scores_the_enemy_without_using_the_casters_old_shield(self):
         _, state, battle = fixture(defenders=2)
         position(battle, 1, 5, 5)
         position(battle, 101, 9, 5)
         position(battle, 102, 20, 10)
         battle['defenders'][0]['troops'] = 1
         battle['defenders'][1].update(troops=999, start=999)
+        with patch.object(grid, '_field', return_value=plain()):
+            tiny = candidates(state, battle, 'attackers', 'defenders', 'plain', TACTICS, depth=2)
+            # Same knowledge/tier at distance4:5% of value50 minus10AP*1.8
+            # is -15.5, so this tiny enemy is no longer a useful AI cast.
+            self.assertFalse(any(row['actor']==1 and row['tactic']==15 for row in tiny))
+        battle['defenders'][0]['troops'] = 500
         before = deepcopy((battle, vars(state.rng)))
         with patch.object(grid, '_field', return_value=plain()):
             rows = candidates(state, battle, 'attackers', 'defenders', 'plain', TACTICS, depth=2)
-            guard = next(row for row in rows if row['actor'] == 1 and row['tactic'] == 15)
-            self.assertLessEqual(guard['score'], 0)
-            choice = choose_action(state, battle, 'attackers', 'defenders', 'plain', TACTICS,
-                                   settings={'tactic_depth': 2})
-            self.assertNotEqual(choice['tactic'], 15)
+            qimen = next(row for row in rows if row['actor'] == 1 and row['tactic'] == 15)
+            self.assertGreater(qimen['score'], 0)
+            battle['extended']['support']['1']['guard'] = 2
+            protected = candidates(state, battle, 'attackers', 'defenders', 'plain', TACTICS, depth=2)
+            self.assertEqual(next(row['score'] for row in protected if row['actor'] == 1 and row['tactic'] == 15), qimen['score'])
+            battle['extended']['support']['1']['guard'] = 0
         self.assertEqual((battle, vars(state.rng)), before)
         _, state, battle = fixture(attackers=2, defenders=1)
         position(battle, 1, 5, 5)
-        position(battle, 2, 10, 5)
+        position(battle, 2, 13, 5)  # Both casters are four cells from the enemy.
         position(battle, 101, 9, 5)
         with patch.object(grid, '_field', return_value=plain()):
             rows = candidates(state, battle, 'attackers', 'defenders', 'plain', TACTICS, depth=2)
-        self.assertLessEqual(next(row['score'] for row in rows if row['actor'] == 1 and row['tactic'] == 15), 0)
-        self.assertGreater(next(row['score'] for row in rows if row['actor'] == 2 and row['tactic'] == 15), 0)
+        scores = [next(row['score'] for row in rows if row['actor'] == actor and row['tactic'] == 15) for actor in (1, 2)]
+        self.assertGreater(scores[0], 0)
+        self.assertEqual(scores[0], scores[1], 'The same enemy effect is not protection for a nearby caster')
 
     def test_view_is_read_only_and_exposes_authoritative_targets_not_client_geometry(self):
         game, state, battle = fixture(defenders=1)

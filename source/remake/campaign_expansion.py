@@ -5,7 +5,7 @@ remake designs. No original engine, ROM tables or control IR are loaded.
 """
 from dataclasses import replace
 from .errors import GameError
-from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services, officer_relations, battle_supply
+from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services, officer_relations, battle_supply, battle_conditions, battle_placement, battle_auto_deployment
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
                        parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref, appearance_values)
@@ -13,20 +13,20 @@ from .officers import (YearState, experience_tier, initialize_officer, integer,
 TACTICS = (
     ('火計', 6, 'fire', '目標須在森林或平地；五格內單隊兵損'),
     ('陥穽', 5, 'trap', '目標須在森林或山地；五格內單隊體力損傷'),
-    ('虚兵', 4, 'confuse', '目標須在森林或山地；下次普通攻擊失效'),
+    ('虚兵', 4, 'confuse', '目標須在森林或山地；限制戰術移動，按日界消退'),
     ('要撃', 6, 'strike', '目標須在森林或山地；五格內單隊兵損'),
     ('乱水', 7, 'water', '目標須在河流；五格內單隊兵損'),
-    ('火箭', 8, 'supply', '五格內敵方主將；燒毀其城池部分兵糧'),
+    ('火箭', 8, 'supply', '五格內敵方主將；燒毀敵方部分隨軍兵糧'),
     ('偽撃転殺', 8, 'feint', '須四鄰接敵，目標在城砦；兵損並擾亂'),
     ('共殺', 8, 'area', '目標在森林或山地且鄰接敵隊；命中目標與四鄰敵軍'),
     ('籠絡', 10, 'surrender', '五格內非城砦敵隊；成功後武將帶兵立即加入本軍'),
     ('落石', 9, 'rock', '由山地或城砦向四鄰非城砦敵隊施放'),
-    ('連環', 9, 'chain', '目標及四鄰另一敵隊在河流；擾亂接觸連通的水上敵隊'),
+    ('連環', 9, 'chain', '目標及四鄰另一敵隊在河流；封鎖連通水上敵隊的移動，按日界消退'),
     ('十面埋伏', 10, 'ambush', '本隊在森林且至少100兵；設置一支伏兵'),
     ('水攻', 10, 'flood', '目標及四鄰另一敵隊在河流；攻擊接觸連通的水上敵隊'),
     ('連弩', 8, 'crossbow', '本隊在城砦並四鄰接敵；攻擊所選單隊'),
     ('劫火', 12, 'inferno', '非城砦敵隊四鄰相接；攻擊該接觸連通集合'),
-    ('奇門遁甲', 10, 'guard', '五格內非河流、非城砦目標；本隊獲兩次減傷'))
+    ('奇門遁甲', 10, 'guard', '五格內非河流、非城砦敵隊；封鎖移動，諸葛亮在場時按日界損兵'))
 
 
 class ExpandedCampaign:
@@ -203,7 +203,7 @@ class ExpandedCampaign:
         for ident in ids: self._personnel_actor(state,source,ident)
         self._queue_march(state,source,destination,ids,'transfer',payload.get('route_mode','fastest'))
 
-    def _start_expanded_battle(self,state,source,target,ids,*,paid=False,march_supply=None):
+    def _start_expanded_battle(self,state,source,target,ids,*,paid=False,march_supply=None,arrival_city=None,manual_deployment=False):
         if not paid: command_books.require(state, source.owner, 'depart')
         selected=select_deployment(source.roster,ids,state.officers)
         cost=0 if paid else max(1,sum(state.officers[i].troops for i in selected)//25)
@@ -220,7 +220,7 @@ class ExpandedCampaign:
                       'attackers':units(selected),'defenders':units(defenders),'used':[],'round':1,'outcome':None,'supply_cost':cost,
                       'log':[f'{self.catalog.map_cities[source.id]["name"]}向{self.catalog.map_cities[target.id]["name"]}出征。'],
                       'extended':{'support':support,'duel':None,'duel_history':[],'ambush':None,'surrenders':{},'withdrawn':None}}
-        battle_grid.initialize(self,state,state.battle)
+        battle_grid.initialize(self,state,state.battle,directional=True,arrival_city=arrival_city)
         if not paid:
             source.grain-=cost
             command_books.spend(state, source, 'depart')
@@ -236,7 +236,26 @@ class ExpandedCampaign:
         # Deployment makes participants unavailable for local civil duties.
         from . import treasures
         treasures.synchronize(self,state)
-        if state.phase=='battle' and state.player==target.owner:
+        # Only an interactive arrival requests this new setup stage. Private
+        # preconfigured battle constructors keep their existing ready layout.
+        if manual_deployment and state.phase=='battle':
+            battle_auto_deployment.initialize(self,state,state.battle)
+        if state.phase=='battle' and state.player==target.owner and not battle_placement.pending(state.battle):
+            self._run_tactical_ai_turn(state)
+
+    def _battle_place(self,state,payload):
+        b=state.battle
+        if (state.phase!='battle' or not b or payload.get('battle_id')!=b['id']
+                or set(payload)!={'battle_id','actor','x','y'} or not battle_placement.pending(b)):
+            raise GameError('目前沒有待確認的武將布陣。')
+        try:
+            ident=parse_officer_ref(payload.get('actor'),self.catalog.rules)
+        except (TypeError,ValueError):
+            raise GameError('請選擇目前待布陣的武將。') from None
+        battle_placement.confirm(self,state,b,ident,payload['x'],payload['y'])
+        # Attacker-first remains the battle rule. A defending human gets to
+        # place everyone before this one existing opening AI phase can run.
+        if not battle_placement.pending(b) and state.player==b['defender']:
             self._run_tactical_ai_turn(state)
 
     def _player_sides(self,state):
@@ -262,6 +281,7 @@ class ExpandedCampaign:
 
     def _battle_result(self,state):
         b=state.battle
+        battle_conditions.drop_removed(b)
         attacking=any(u['troops']>0 for u in b['attackers'])
         defending=any(u['troops']>0 for u in b['defenders'])
         if not attacking and not defending:
@@ -324,6 +344,8 @@ class ExpandedCampaign:
 
     def _end_tactical_side(self,state):
         b=state.battle
+        if battle_placement.pending(b):
+            raise GameError(battle_placement.REASON)
         battle_supply.ensure(state,b)
         change=battle_grid.end_side(state,b)
         b['used']=[]
@@ -333,6 +355,34 @@ class ExpandedCampaign:
             b['extended']['withdrawn']='attackers'
             b['outcome']='retreat';state.phase='result'
             b['log'].append('三十日戰期已滿，攻方撤退。')
+        if change['advanced_day']:
+            source=battle_conditions.qimen_source(state,b)
+            old_experience=state.officers[source].experience if source is not None else 0
+            before=presentation.snapshot(self,state)
+            changes=battle_conditions.advance_daily(state,b)
+            ticks=[]
+            for change_row in changes:
+                ident=deserialize_officer_ref(change_row['id'],self.catalog.rules)
+                if change_row['kind']=='qimen':
+                    ticks.append({key:change_row[key] for key in ('id','before','remaining','troops_before','troops_after','loss')})
+                    b['log'].append(f'{self.person_name(state,ident)}受到奇門日界效果，損兵{change_row["loss"]}，剩餘計數{change_row["remaining"]}。')
+                if not change_row['remaining']:
+                    label={'chain':'連環','qimen':'奇門遁甲'}.get(change_row['kind'],'虛兵')
+                    b['log'].append(f'{self.person_name(state,ident)}的{label}效果消退。')
+            if ticks:
+                gain=state.officers[source].experience-old_experience
+                self._battle_result(state)
+                if hasattr(self,'_emit_event') and state.player in (b['attacker'],b['defender']):
+                    people=list(dict.fromkeys([state.officers[source].person_id]+[
+                        state.officers[deserialize_officer_ref(tick['id'],self.catalog.rules)].person_id for tick in ticks]))
+                    self._emit_event(state,'tactic',person_ids=people,city_ids=[b['target']],
+                        factions=[b['attacker'],b['defender']],details=dict(tactic=15,success=True,
+                            condition='qimen',qimen_phase='daily',qimen_ticks=ticks,
+                            experience_id=str(source),experience_gain=gain))
+                source_side=next(side for side in battle_grid.SIDES if any(u['id']==source for u in b[side]))
+                presentation.record(self,state,before,kind='tactic',actor=source,
+                    target=deserialize_officer_ref(ticks[0]['id'],self.catalog.rules),own=source_side,
+                    tactic=15,effect='qimen_daily',success=True)
         b['log'][:]=b['log'][-80:]
         return change
 
@@ -341,7 +391,7 @@ class ExpandedCampaign:
         from .difficulty import get_settings
         from .tactical_ai import choose_action
         b=state.battle
-        if not b or 'tactical' not in b['extended']:return
+        if not b or 'tactical' not in b['extended'] or battle_placement.pending(b):return
         player_side,_=self._player_sides(state)
         for _ in range(128):  # maximum60 AP, bounded paid facility visits, and pass
             if state.phase!='battle' or b['extended']['duel'] or b['extended'].get('siege'):return
@@ -451,6 +501,7 @@ class ExpandedCampaign:
             reason=battle_grid.attack_reason(b,actor,target,own)
             if reason:raise GameError(reason)
             battle_grid.spend(b,own,battle_grid.ATTACK_COST)
+            self._clear_phantom(state,target['id'])
         context=battle_grid.encounter_context(b,actor,target)
         self._trigger_ambush(state,actor,own,counter=counter)
         if modern and context and actor['troops']>0 and not b['extended']['support'][str(actor['id'])]['stunned']:
@@ -506,6 +557,15 @@ class ExpandedCampaign:
         tid=integer(payload.get('tactic'),0,15,'tactic')
         self._execute_tactic(state,actor,target,own,foe,tid)
 
+    def _clear_phantom(self,state,ident):
+        # This existing hook now clears either native low-state movement lock.
+        # A sibling unit can already be removed inside this transaction;
+        # clear() permits that narrow state until the result hook cleans it.
+        kind=state.battle['extended'].get('conditions',{}).get('units',{}).get(str(ident),{}).get('kind')
+        if battle_conditions.clear(state.battle,ident):
+            label={'chain':'連環','qimen':'奇門遁甲'}.get(kind,'虛兵')
+            state.battle['log'].append(f'{self.person_name(state,ident)}的{label}效果解除。')
+
     def _execute_tactic(self,state,actor,target,own,foe,tid,*,finish=True,counter=False):
         battle_supply.ensure(state,state.battle)
         from .tactical_ai import tactic_reason
@@ -516,6 +576,10 @@ class ExpandedCampaign:
         if reason:raise GameError(reason)
         if 'tactical' in x:
             battle_grid.spend(b,own,battle_grid.TACTIC_COSTS[tid])
+            # The paid confirmation clears the actual target before effect
+            # adjudication, including an interruption by the remake's ambush.
+            # ID11 selects self; sharing this with AI is a declared adaptation.
+            self._clear_phantom(state,actor['id'] if tid==11 else target['id'])
         self._trigger_ambush(state,actor,own,counter=counter)
         before=presentation.snapshot(self,state)
         if actor['troops']<=0:
@@ -527,12 +591,42 @@ class ExpandedCampaign:
             return
         enemies=[u for u in b[foe] if u['troops']>0];p=state.officers[actor['id']].profile;t=state.officers[target['id']]
         if 'tactical' not in x:a['energy']-=cost
-        chance=max(10,min(95,60+(p.intellect-t.profile.intellect)//2))
-        if effect=='surrender':chance=max(5,min(80,40+(p.virtue-t.loyalty)//2))
-        success=effect in {'ambush','guard'} or state.rng.next()%100<chance
+        from .tactic_effects import success_chance
+        chance=success_chance(state,b,actor,target)
+        effect_details={}
+        modern_qimen=tid==15 and 'tactical' in x
+        if modern_qimen:
+            effect_details=dict(condition='qimen',condition_count=0,qimen_phase='cast')
+        elif effect=='confuse' and 'tactical' in x:
+            effect_details=dict(condition='phantom',condition_count=0)
+        elif effect=='chain' and 'tactical' in x:
+            effect_details=dict(condition='chain',condition_counts=[])
+        elif effect=='surrender':
+            from .tactic_effects import conversion_chance
+            chance=conversion_chance(state.officers[actor['id']],t)
+            effect_details=dict(success_percent=chance,target_loyalty=t.loyalty,guaranteed_failure=chance==0)
+        elif effect=='supply':
+            grain=battle_supply.available(state,b,foe)
+            effect_details=dict(affected_side=foe,grain_before=grain,grain_after=grain,grain_loss=0)
+        success=(effect in {'ambush','guard'} and not modern_qimen) or chance>0 and state.rng.next()%100<chance
         if not success:b['log'].append(f'{self.person_name(state, actor["id"])}施放{title}，未能奏效。')
         elif effect=='ambush':x['ambush']={'actor':actor['id']};b['log'].append('十面埋伏已設置，等待接近的敵軍行動。')
+        elif modern_qimen:
+            count=battle_conditions.apply_qimen(b,target['id'],own,state.rng.next()%4)
+            effect_details['condition_count']=count
+            b['log'].append(f'{self.person_name(state,target["id"])}受到奇門遁甲，移動封鎖計數{count}。')
         elif effect=='guard':a['guard']=2;b['log'].append(f'{title}使本队获得两次减伤。')
+        elif effect=='confuse' and 'tactical' in x:
+            count=battle_conditions.apply(b,target['id'],own)
+            effect_details['condition_count']=count
+            b['log'].append(f'{self.person_name(state,target["id"])}受到虛兵，移動封鎖計數{count}。')
+        elif effect=='chain' and 'tactical' in x:
+            # Keep the recovered BFS water-filtered order. Non-water bridges
+            # are not victims and must not consume duration draws.
+            for victim in battle_grid.affected_units(b,target,tid,foe):
+                count=battle_conditions.apply_chain(b,victim['id'],own,state.rng.next()%2)
+                effect_details['condition_counts'].append(dict(id=str(victim['id']),remaining=count))
+                b['log'].append(f'{self.person_name(state,victim["id"])}受到連環，移動封鎖計數{count}。')
         elif effect in {'confuse','chain'}:
             victims=(battle_grid.affected_units(b,target,tid,foe) if 'tactical' in b['extended']
                 else [target] if effect=='confuse' else [target]+[u for u in enemies if u is not target][:2])
@@ -541,9 +635,11 @@ class ExpandedCampaign:
         elif effect=='surrender':
             battle_allegiance.convert(self,state,b,actor,target,own,foe)
         elif effect=='supply':
-            receiver=state.cities[b['target'] if foe=='defenders' else b['source']]
-            loss=min(receiver.grain,max(1,receiver.grain//8+p.intellect))
-            receiver.grain-=loss;b['log'].append(f'火箭烧毁敌军城内粮食{loss}。')
+            from .tactic_effects import fire_arrow_requested
+            amount=fire_arrow_requested(battle_supply.available(state,b,foe),p.intellect,state.rng.next()%5)
+            loss=battle_supply.destroy(state,b,foe,amount)
+            effect_details.update(grain_after=battle_supply.available(state,b,foe),grain_loss=loss)
+            b['log'].append(f'火箭燒毀敵軍隨軍兵糧{loss}。')
         else:
             victims=(battle_grid.affected_units(b,target,tid,foe) if 'tactical' in b['extended'] else
                 ([target]+[u for u in enemies if u is not target])[:3 if effect=='area' else 2 if effect=='crossbow' else 20 if effect in {'flood','inferno'} else 1])
@@ -559,9 +655,9 @@ class ExpandedCampaign:
         if hasattr(self,'_emit_event') and state.player in (b['attacker'],b['defender']):
             self._emit_event(state,'tactic',person_ids=[state.officers[actor['id']].person_id,state.officers[target['id']].person_id],city_ids=[b['target']],
                 factions=[b['attacker'],b['defender']],
-                details={'tactic':tid,'success':success})
+                details={'tactic':tid,'success':success,**effect_details})
         presentation.record(self,state,before,kind='tactic',actor=actor['id'],
-            target=target['id'],own=own,counter=counter,tactic=tid,effect=effect,success=success)
+            target=target['id'],own=own,counter=counter,tactic=tid,effect='qimen' if modern_qimen else effect,success=success)
         if finish:self._finish_action(state,actor,own,foe,respond=effect!='ambush')
         else:self._battle_result(state)
 
@@ -954,8 +1050,9 @@ class ExpandedCampaign:
         if not b:return
         e=b['extended']
         expected={'support','duel','duel_history','ambush','surrenders','withdrawn','tactical'}
-        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation','supply'}:raise ValueError('battle extended fields')
+        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation','supply','deployment','conditions','placement','auto_deployment'}:raise ValueError('battle extended fields')
         battle_grid.validate(self,state,b)
+        battle_conditions.validate(b)
         battle_supply.validate(state,b)
         siege.validate(self,state,b)
         battle_allegiance.validate(self,state,b)

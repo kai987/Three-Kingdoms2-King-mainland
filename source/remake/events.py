@@ -60,7 +60,9 @@ DETAILS = {
     'battle_started': {'battle_id', 'attacker', 'defender'},
     'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered'},
     'duel_started': set(), 'duel_result': {'result'},
-    'tactic': {'tactic', 'success'},
+    'tactic': {'tactic','success','affected_side','grain_before','grain_after','grain_loss',
+               'success_percent','target_loyalty','guaranteed_failure','condition','condition_count','condition_counts',
+               'qimen_phase','qimen_ticks','experience_id','experience_gain'},
     'march_weather': {'march_id', 'lost', 'risks'},
     'route_discovered': {'from', 'to'},
     'march_arrived': {'march_id', 'officers'},
@@ -298,6 +300,80 @@ def _validate_staff_event(row):
         raise ValueError('Civil staff event salary')
 
 
+def _validate_tactic_event(row):
+    d=row['details']
+    base={'tactic','success'}
+    if not base <= set(d) or type(d['tactic']) is not int or not 0 <= d['tactic'] <= 15 or type(d['success']) is not bool:
+        raise ValueError('Tactic event result')
+    extra=set(d)-base
+    if not extra:
+        return  # Existing committed events retain their original compact snapshot.
+    if d['tactic']==2:
+        if (extra!={'condition','condition_count'} or d['condition']!='phantom'
+                or type(d['condition_count']) is not int
+                or d['condition_count'] not in ((2,3) if d['success'] else (0,))):
+            raise ValueError('Tactic phantom snapshot')
+    elif d['tactic']==15:
+        if d.get('condition')!='qimen':raise ValueError('Tactic qimen condition')
+        if d.get('qimen_phase')=='cast':
+            if (extra!={'condition','condition_count','qimen_phase'}
+                    or type(d['condition_count']) is not int
+                    or d['condition_count'] not in (range(5,10) if d['success'] else (0,))):
+                raise ValueError('Tactic qimen cast snapshot')
+        elif d.get('qimen_phase')=='daily':
+            if (extra!={'condition','qimen_phase','qimen_ticks','experience_id','experience_gain'}
+                    or not d['success'] or type(d['experience_id']) is not str
+                    or not 1<=len(d['experience_id'])<=128 or d['experience_id'].strip()!=d['experience_id']
+                    or type(d['experience_gain']) is not int or not 0<=d['experience_gain']<=2550
+                    or not isinstance(d['qimen_ticks'],list) or not 1<=len(d['qimen_ticks'])<=20):
+                raise ValueError('Tactic qimen daily snapshot')
+            seen=set()
+            for tick in d['qimen_ticks']:
+                if (not isinstance(tick,dict) or set(tick)!={'id','before','remaining','troops_before','troops_after','loss'}
+                        or type(tick['id']) is not str or not 1<=len(tick['id'])<=128
+                        or tick['id'].strip()!=tick['id'] or tick['id'] in seen
+                        or any(type(tick[key]) is not int for key in ('before','remaining','troops_before','troops_after','loss'))
+                        or not 1<=tick['before']<=9 or tick['remaining']!=tick['before']-1
+                        or not 0<=tick['troops_after']<=tick['troops_before']<=1000
+                        or tick['loss']!=tick['troops_before']-tick['troops_after']
+                        or not min(80,tick['troops_before'])<=tick['loss']<=min(150,tick['troops_before'])):
+                    raise ValueError('Tactic qimen tick snapshot')
+                seen.add(tick['id'])
+        else:raise ValueError('Tactic qimen phase')
+    elif d['tactic']==10:
+        counts=d.get('condition_counts')
+        if (extra!={'condition','condition_counts'} or d['condition']!='chain'
+                or not isinstance(counts,list) or not (2<=len(counts)<=20 if d['success'] else not counts)):
+            raise ValueError('Tactic chain snapshot')
+        seen=set()
+        for item in counts:
+            if (not isinstance(item,dict) or set(item)!={'id','remaining'}
+                    or type(item['id']) is not str or not 1<=len(item['id'])<=128
+                    or item['id'].strip()!=item['id'] or item['id'] in seen
+                    or type(item['remaining']) is not int or not 3<=item['remaining']<=5):
+                raise ValueError('Tactic chain target snapshot')
+            seen.add(item['id'])
+    elif d['tactic']==5:
+        if (extra!={'affected_side','grain_before','grain_after','grain_loss'}
+                or d['affected_side'] not in {'attackers','defenders'}
+                or any(type(d[key]) is not int or not 0 <= d[key] <= 100000000
+                       for key in ('grain_before','grain_after','grain_loss'))
+                or d['grain_before']-d['grain_after']!=d['grain_loss']
+                or not d['success'] and d['grain_loss']!=0):
+            raise ValueError('Tactic fire-arrow snapshot')
+    elif d['tactic']==8:
+        if (extra!={'success_percent','target_loyalty','guaranteed_failure'}
+                or type(d['success_percent']) is not int or not 0 <= d['success_percent'] <= 100
+                or type(d['target_loyalty']) is not int or not 0 <= d['target_loyalty'] <= 100
+                or type(d['guaranteed_failure']) is not bool
+                or d['guaranteed_failure']!=(d['target_loyalty']>=71)
+                or d['guaranteed_failure']!=(d['success_percent']==0)
+                or d['guaranteed_failure'] and d['success']):
+            raise ValueError('Tactic conversion snapshot')
+    else:
+        raise ValueError('Tactic event effect fields')
+
+
 def empty():
     return dict(next_id=1, items=[])
 
@@ -459,6 +535,8 @@ def validate(campaign, state):
             return False
         if not value_ok(row['details']):
             raise ValueError('Campaign event JSON value')
+        if row['kind']=='tactic':
+            _validate_tactic_event(row)
         if row['kind'] in STAFF_KINDS:
             _validate_staff_event(row)
         if row['kind'] in SUPPLY_KINDS:

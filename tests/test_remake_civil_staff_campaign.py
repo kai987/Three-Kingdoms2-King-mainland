@@ -17,7 +17,7 @@ from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
 from remake import domestic, equipment, treasures
 from remake.officers import YearState, initialize_officer, year_state
-from campaign_fixtures import controlled_catalog, arrange_contact, finish_soldier_encounter
+from campaign_fixtures import controlled_catalog, arrange_contact, finish_soldier_encounter, confirm_default_placement
 
 
 FREE_PERSON = 'san14-candidate-0001'
@@ -358,6 +358,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.cmd(game, 'depart', source='xiangyang', target='nanjun', officers=[146])
         self.step(game)
         self.assertEqual(game.state.phase, 'battle')
+        confirm_default_placement(game)
         self.fill(game, 'yingchuan', 98)
         # Wound the actual defending battle unit so one real attack/settlement
         # reaches the escape boundary, without altering its reserved start ledger.

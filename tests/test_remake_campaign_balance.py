@@ -13,8 +13,8 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'source'))
-from campaign_fixtures import controlled_catalog
-from remake.campaign import digest
+from campaign_fixtures import controlled_catalog,confirm_default_placement
+from remake.campaign import Campaign,digest
 from remake.march_core import using_backend
 
 spec = importlib.util.spec_from_file_location('campaign_balance', ROOT/'tools/campaign-balance/run.py')
@@ -100,10 +100,32 @@ class CampaignBalanceTests(unittest.TestCase):
                 else:
                     self.fail('Expected an actual arriving battle, got '+state.phase)
             self.assertEqual(replay.game.state.phase, 'battle')
+            # The metrics case observes a ready battle. Suppress only this
+            # headless driver's response shortcut while real confirmations run.
+            game=replay.game
+            with patch.object(game,'view',side_effect=lambda:Campaign.view(game)):
+                confirm_default_placement(game)
             before = replay.game.export_save()
             result = balance.metrics(replay.game)
             self.assertIn('xiangyang', result['factions']['shu']['short_fronts'])
             self.assertEqual(replay.game.export_save(), before)
+
+    def test_inherited_balance_driver_confirms_actual_pending_arrival_before_combat(self):
+        with using_backend('python'):
+            replay=balance.BalanceReplay(controlled_catalog(),settings(max_seconds=60))
+            replay.command('depart',source='xiangyang',target='nanyang',officers=[146],route_mode='land')
+            replay.command('end_turn')
+            for _ in range(10):
+                state=replay.game.state
+                if state.phase=='battle':break
+                if state.phase=='ai':replay.command('ai',turn=state.turn)
+                elif state.phase=='arrivals':replay.command('arrivals')
+                else:self.fail('Expected an actual incoming deployment, got '+state.phase)
+            self.assertEqual(replay.game.state.battle['extended']['placement']['confirmed'],0)
+            replay.resolve()
+            self.assertEqual(replay.commands['battle_place'],1)
+            self.assertEqual(replay.game.state.phase,'city')
+            replay.game.validate(replay.game.state)
 
     def test_cap_is_unresolved_and_never_reported_as_a_player_loss(self):
         with using_backend('python'):

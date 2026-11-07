@@ -4,6 +4,7 @@ Scores describe expected effects, never sampled future results. No candidate
 reads or advances the campaign RNG, and neither side receives hidden bonuses.
 """
 from functools import lru_cache
+from math import fsum
 import json
 from pathlib import Path
 
@@ -131,13 +132,17 @@ def expected_contact_exchange(battle, actor, target, damage_percent=32):
     return outgoing, expected_attack(battle, replying, actor, damage_percent)
 
 
-def _chance(state, actor, target, effect):
-    profile, opponent = state.officers[actor['id']].profile, state.officers[target['id']]
-    if effect in {'ambush', 'guard'}:
+def _chance(state, actor, target, effect, battle=None):
+    opponent = state.officers[target['id']]
+    if effect == 'ambush' or effect == 'guard' and not (
+            battle is not None and 'tactical' in battle['extended']):
         return 1.0
     if effect == 'surrender':
-        return max(5, min(80, 40 + (profile.virtue - opponent.loyalty) // 2)) / 100
-    return max(10, min(95, 60 + (profile.intellect - opponent.profile.intellect) // 2)) / 100
+        from .tactic_effects import conversion_chance
+        return conversion_chance(state.officers[actor['id']], opponent) / 100
+    from .tactic_effects import general_chance,success_chance
+    return (success_chance(state,battle,actor,target) if battle is not None
+            else general_chance(state.officers[actor['id']],opponent)) / 100
 
 
 def _loss_value(unit, amount):
@@ -146,11 +151,140 @@ def _loss_value(unit, amount):
     return min(unit['troops'], amount) + (24 if amount >= unit['troops'] else 0)
 
 
+def _ration_nutrition(state,battle,side):
+    from . import battle_supply
+    ledger=battle['extended'].get('supply')
+    credit=ledger['sides'][side]['credit_units']if ledger is not None else 0
+    return battle_supply.available(state,battle,side)*1000+credit
+
+
+def _wins_by_waiting(state,battle,own,foe):
+    """Close a certain modern ration win instead of opening another fight."""
+    row=battle['extended'].get('tactical')
+    if (state.phase!='battle'or battle['outcome']or battle['extended']['duel']
+            or battle['extended'].get('siege')or row is None or row['side']!=own
+            or row['passed'][own]or not row['passed'][foe]):return False
+    from . import battle_supply
+    own_units=battle_supply.daily_units(battle,own)
+    foe_units=battle_supply.daily_units(battle,foe)
+    if not own_units or not foe_units or _ration_nutrition(state,battle,foe)>=foe_units:return False
+    return own=='defenders'or _ration_nutrition(state,battle,own)>=own_units
+
+
+def _fire_supply_value(state,battle,own,foe,intellect):
+    """Remake AI heuristic: useful ration days and incremental next-day rout.
+
+    The recovered fire formula remains elsewhere. This policy neither claims
+    to reproduce the original AI nor samples a successful future fire. Eaten
+    fractional credit survives destruction; spare food beyond the remaining
+    battle period has no artificial day-denial value.
+    """
+    from . import battle_supply
+    from .tactic_effects import fire_arrow_requested
+    days_left=max(0,31-battle['round'])
+    units=battle_supply.daily_units(battle,foe)
+    if not days_left or not units:return 0
+    before=_ration_nutrition(state,battle,foe)
+    # An opponent already unable to eat needs no further fire to be routed.
+    if before<units:return 0
+    own_fed=_ration_nutrition(state,battle,own)>=battle_supply.daily_units(battle,own)
+    army=sum(_loss_value(unit,unit['troops'])for unit in _active(battle,foe))
+    grain=battle_supply.available(state,battle,foe)
+    before_days=min(days_left,before/units)
+    passed=battle['extended'].get('tactical',{}).get('passed',{}).get(foe,False)
+    values=[]
+    for roll in range(5):
+        loss=min(grain,fire_arrow_requested(grain,intellect,roll))
+        after=before-loss*1000
+        value=army*(before_days-min(days_left,after/units))/days_left
+        if after<units:
+            if own=='attackers'and not own_fed:
+                # Both hungry still means the attacker retreats, not a win.
+                value=0
+            else:
+                # A side still to act can obtain supplies or end the battle;
+                # give pressure credit rather than assume a forced withdrawal.
+                value+=army*(1 if passed else .35)
+        values.append(value)
+    return sum(values)/len(values)
+
+
+def _movement_lock_value(battle,target,own,foe,count):
+    """Author-adapted movement denial, not a canceled attack or original AI.
+
+    A geometric approach estimate keeps this bounded without one Dijkstra per
+    caster/target. Counts are native day-boundary scans: a defending cast loses
+    its first scan before the affected attacker receives its next turn.
+    """
+    from . import battle_grid as grid,battle_conditions
+    if battle_conditions.remaining(battle,target['id']):return 0
+    row=battle['extended'].get('tactical')
+    if row is None:return 0
+    phases=min(max(0,count-int(own=='defenders')),
+               max(0,31-battle['round']-int(own=='defenders')))
+    if not phases:return 0
+    positions=row['positions'];point=positions[str(target['id'])]
+    start=point['x'],point['y']
+    occupied={(positions[str(unit['id'])]['x'],positions[str(unit['id'])]['y'])
+              for side in grid.SIDES for unit in _active(battle,side)if unit['id']!=target['id']}
+    neighbors=((start[0]-1,start[1]),(start[0]+1,start[1]),(start[0],start[1]-1),(start[0],start[1]+1))
+    if not any(0<=x<grid.COLUMNS and 0<=y<grid.ROWS and(x,y)not in occupied for x,y in neighbors):return 0
+    friends=_active(battle,own)
+    if not friends:return 0
+    distance=min(abs(start[0]-positions[str(unit['id'])]['x'])
+                 +abs(start[1]-positions[str(unit['id'])]['y'])for unit in friends)
+    camp=grid._field(battle)['camp']
+    if foe=='attackers'and camp not in occupied and abs(start[0]-camp[0])+abs(start[1]-camp[1])==1:
+        # An empty castle can be occupied in one macro step even while an
+        # opposing army is adjacent. This rewards denying entry, not damage.
+        return sum(_loss_value(unit,unit['troops'])for unit in friends)
+    if distance<=1:return 0  # Adjacent attack/tactics remain usable while locked.
+    return _loss_value(target,target['troops'])*min(1,phases/(distance-1))
+
+
+def _phantom_mobility_value(battle,target,own,foe):
+    from .battle_conditions import duration
+    return _movement_lock_value(battle,target,own,foe,duration(own))
+
+
+def _chain_mobility_value(battle,targets,own,foe):
+    """Mean independent duration rolls, never guessed draws or lost attacks.
+
+    Only the already-filtered water recipients count. Existing phantom/chain
+    locks have no incremental value; other unlocked members of the same
+    connected set can still justify a cast. The estimate is order-independent
+    and adds no path searches to the existing once-per-actor movement plan.
+    """
+    from .battle_conditions import chain_duration
+    count=(chain_duration(own,0)+chain_duration(own,1))/2
+    return fsum(_movement_lock_value(battle,target,own,foe,count)for target in targets)
+
+
+def _qimen_value(state,battle,target,own,foe):
+    """Author-adapted delayed loss plus movement denial, not a self shield.
+
+    Each accepted duration is valued separately before saturation and the
+    remaining-day cap.115 is the mean80..150 demand, not a sampled future hit.
+    The last usable damage boundary is round30; a round30 cast may still deny
+    a defender's current movement but cannot invent damage after timeout.
+    """
+    from .battle_conditions import kind,qimen_duration,qimen_source
+    if qimen_source(state,battle) is None or kind(battle,target['id'])=='qimen':return 0
+    days_left=max(0,30-battle['round'])
+    values=[]
+    for roll in range(4):
+        count=qimen_duration(own,roll)
+        damage=min(target['troops'],115*min(count,days_left))
+        values.append((_loss_value(target,damage)if damage else 0)
+                      +_movement_lock_value(battle,target,own,foe,count))
+    return fsum(values)/len(values)
+
+
 def _tactic_value(state, battle, actor, target, own, foe, terrain, tactic, attack):
     _, cost, effect, _ = tactic
     enemies, friends = _active(battle, foe), _active(battle, own)
     profile = state.officers[actor['id']].profile
-    chance = _chance(state, actor, target, effect)
+    chance = _chance(state, actor, target, effect,battle)
     modern = 'tactical' in battle['extended']
     if modern:
         from .battle_grid import TACTIC_COSTS, affected_units
@@ -170,14 +304,18 @@ def _tactic_value(state, battle, actor, target, own, foe, terrain, tactic, attac
         threat = max((attack(enemy, friend)
                       for enemy in enemies for friend in friends), default=0)
     if effect == 'supply':
-        city = state.cities[battle['target'] if foe == 'defenders' else battle['source']]
-        loss = min(city.grain, max(1, city.grain // 8 + profile.intellect))
-        value = loss / 12
+        value = _fire_supply_value(state,battle,own,foe,profile.intellect)
+    elif effect=='guard'and modern:
+        value=_qimen_value(state,battle,target,own,foe)
     elif effect == 'guard':
         value = 0 if _support(battle, actor)['guard'] else min(actor['troops'], threat) * .85
     elif effect == 'ambush':
         value = max((min(enemy['troops'], profile.intellect * 2)
                      for enemy in enemies), default=0) * .85
+    elif effect=='confuse'and modern:
+        value=_phantom_mobility_value(battle,target,own,foe)
+    elif effect=='chain'and modern:
+        value=_chain_mobility_value(battle,ordered,own,foe)
     elif effect in {'confuse', 'chain'}:
         victims = ordered if modern else ordered[:1 if effect == 'confuse' else 3]
         value = sum(max((attack(unit, friend)
@@ -210,6 +348,8 @@ def _tactic_value(state, battle, actor, target, own, foe, terrain, tactic, attac
 def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
                depth=1, responding=False, used=None, game=None):
     """Enumerate real unit/target/tactic choices; ties are stable numeric IDs."""
+    from .battle_placement import pending
+    if pending(battle):return []
     if state.phase != 'battle' or battle['outcome'] or battle['extended']['duel']:
         return []
     if 'tactical' in battle['extended']:
@@ -234,6 +374,8 @@ def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
             if depth <= 0:
                 continue
             for tid in legal_tactics(state, battle, actor, target, own, foe, terrain, tactics):
+                if tactics[tid][2] == 'surrender' and not _chance(state, actor, target, 'surrender'):
+                    continue  # Legally payable, but a guaranteed failed effect.
                 value = _tactic_value(state, battle, actor, target, own, foe, terrain,
                                       tactics[tid], attack)
                 if depth >= 2:
@@ -256,7 +398,11 @@ def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
 
 def choose_action(state, battle, own, foe, terrain, tactics, *, settings=None,
                   damage_percent=32, responding=False, used=None, game=None):
+    from .battle_placement import pending
+    if pending(battle):return None
     settings = settings or {}
+    if _wins_by_waiting(state,battle,own,foe):
+        return dict(kind='wait',actor=None,target=None,tactic=None,score=0)
     rows = candidates(state, battle, own, foe, terrain, tactics,
                       damage_percent=damage_percent, depth=settings.get('tactic_depth', 1),
                       responding=responding, used=used, game=game)
@@ -312,9 +458,16 @@ def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percen
                                        if damage else 0)))
             if depth > 0:
                 for tid in legal_tactics(state, battle, actor, target, own, foe, terrain, tactics):
+                    if tactics[tid][2] == 'surrender' and not _chance(state, actor, target, 'surrender'):
+                        continue
                     value = _tactic_value(state, battle, actor, target, own, foe, terrain, tactics[tid], attack)
+                    if tactics[tid][2]in{'confuse','chain','guard'}and value<=0:
+                        # Player repetition stays legal and paid. AI must not
+                        # fall back to a harmful re-cast that first frees it.
+                        continue
                     rows.append(dict(kind='tactic', actor=actor['id'], target=target['id'], tactic=tid, score=value))
-        if row['points'][own] <= 0:
+        from . import battle_conditions
+        if row['points'][own] <= 0 or battle_conditions.movement_blocked(battle,actor['id']):
             continue
         source, distances, previous = grid._paths(state, battle, actor)
         camp=grid._field(battle)['camp']

@@ -6,7 +6,7 @@
  const WIDTH=256,HEIGHT=240,RESOLUTION_SCALE=4,SCHEMA='tk2-battle-presentation-v1';
  const FIELD_WIDTH=496,FIELD_HEIGHT=304,FIELD_HUD=80;
  const PAPER='#ffd4c8',INK='#000000',ASSET_ROOT='/assets/battle-original/',ENHANCED_ROOT='/assets/battle-enhanced/';
- const EFFECTS=new Set(['fire','trap','strike','water','confuse','supply','feint','rock','area','chain','crossbow','surrender','ambush','flood','inferno','guard']);
+ const EFFECTS=new Set(['fire','trap','strike','water','confuse','supply','feint','rock','area','chain','crossbow','surrender','ambush','flood','inferno','guard','qimen','qimen_daily']);
  const KINDS=new Set(['move','attack','tactic','ambush','duel_start','duel_action','retreat','soldier_step']);
  const DUEL_ACTIONS=Object.freeze(['idle','strike','guard','feint','withdraw','desperate','hit','defeat']);
  const SOLDIER_ACTIONS=Object.freeze(['idle','march','ready','attack','guard','hit','retreat','defeat']);
@@ -122,7 +122,8 @@
    if(s.before.units.length!==s.after.units.length||s.before.units.some(u=>!s.after.units.some(v=>v.id===u.id&&(v.side===u.side||s.kind==='tactic'&&s.effect==='surrender'&&s.success&&u.id===s.target&&v.side===s.own))))return false;
    if(s.kind==='move'){const a=s.before.units.find(u=>u.id===s.actor);if(!reference(s.actor)||!a||a.side!==s.own||a.troops<=0||a.health<=0||s.target!==null||!validMovement(s.move)||s.success!==true||s.skipped!==false)return false;}
    else if(s.kind==='retreat'){if(s.actor!==null||s.target!==null)return false;}
-   else{const a=s.before.units.find(u=>u.id===s.actor),t=s.before.units.find(u=>u.id===s.target);if(!reference(s.actor)||!reference(s.target)||!a||!t||a.side!==s.own||t.side===s.own)return false;}
+   else{const a=s.before.units.find(u=>u.id===s.actor),t=s.before.units.find(u=>u.id===s.target);if(!reference(s.actor)||!reference(s.target)||!a||!t||a.side!==s.own||t.side===s.own&&!(s.kind==='tactic'&&s.tactic===15&&s.effect==='qimen_daily'&&s.success&&!s.skipped))return false;}
+   if(s.effect==='qimen_daily'&&(s.kind!=='tactic'||s.tactic!==15||!s.success||s.skipped||s.before.round!==s.after.round||s.after.units.some(u=>{const old=s.before.units.find(v=>v.id===u.id);return u.troops>old.troops||['health','energy','guard','stunned'].some(k=>u[k]!==old[k]);})))return false;
    if(['tactic','ambush'].includes(s.kind)){if(!bounded(s.tactic,15)||!EFFECTS.has(s.effect))return false;}else if(s.tactic!==null||s.effect!==null&&!validSiege(s))return false;
    if(s.kind==='duel_action'){if(!['strike','guard','feint','withdraw','desperate'].includes(s.move)||(s.move==='withdraw'?s.reply!==null:!['strike','guard','feint','desperate'].includes(s.reply)))return false;}
    else if(s.kind==='move'){if(s.reply!==null)return false;}
@@ -282,7 +283,7 @@
   }
   function html(){
    const lang=locale();
-   return `<div class="nes-battle" data-battle-scene data-l10n-native="${lang}"><div class="nes-battle-toolbar"><span data-battle-scene-title>${text('戰場','戦場')}</span><span data-battlefield-label></span><button type="button" data-soldier-label-toggle aria-pressed="false" aria-keyshortcuts="V" hidden>${text('標註：兵種／隊號 [V]','表示：兵種／隊番号 [V]')}</button><button type="button" data-battle-skip hidden>${text('略過演出','演出をスキップ')}</button></div><div data-duel-loadouts hidden></div><div class="nes-battle-viewport"><canvas width="1024" height="960" data-battle-canvas tabindex="0" role="img" aria-label="${text('戰場：點選旗標選將、空格預覽移動；方向鍵調整落點，Enter確認移動','戦場：旗を選び、空きマスで移動先を確認。矢印キーで調整し、Enterで移動')}"></canvas></div><p class="nes-battle-status" data-battle-caption aria-live="polite"></p><p class="visually-hidden" data-battle-description></p></div>`;
+   return `<div class="nes-battle" data-battle-scene data-l10n-native="${lang}"><div class="nes-battle-toolbar"><span data-battle-scene-title>${text('戰場','戦場')}</span><span data-battlefield-label></span><span data-battle-deployment-label hidden></span><button type="button" data-soldier-label-toggle aria-pressed="false" aria-keyshortcuts="V" hidden>${text('標註：兵種／隊號 [V]','表示：兵種／隊番号 [V]')}</button><button type="button" data-battle-skip hidden>${text('略過演出','演出をスキップ')}</button></div><div data-duel-loadouts hidden></div><div class="nes-battle-viewport"><canvas width="1024" height="960" data-battle-canvas tabindex="0" role="img" aria-label="${text('戰場：點選旗標選將、空格預覽移動；方向鍵調整落點，Enter確認移動','戦場：旗を選び、空きマスで移動先を確認。矢印キーで調整し、Enterで移動')}"></canvas></div><p class="nes-battle-status" data-battle-caption aria-live="polite"></p><p class="visually-hidden" data-battle-description></p></div>`;
   }
   function fit(){
    const box=host?.querySelector?.('.nes-battle-viewport');if(!box||!canvas)return;
@@ -376,12 +377,12 @@
    return cells.filter(cell).map(p=>({x:p.x*16+8,y:p.y*16+8}));
   }
   function positions(state){
-   const out=new Map();for(const unit of state.units){const p=animationPositions?.get(String(unit.id))||unitPosition(view,unit.id);if(p)out.set(unit.id,{gx:p.x,gy:p.y,x:p.x*16+8,y:p.y*16+8});}
+   const out=new Map();for(const unit of state.units){const placement=tacticalView(view)?.placement,p=placement?.pending&&String(placement.actor)===String(unit.id)&&cell(selection.destination)?selection.destination:animationPositions?.get(String(unit.id))||unitPosition(view,unit.id);if(p)out.set(unit.id,{gx:p.x,gy:p.y,x:p.x*16+8,y:p.y*16+8});}
    if(frame?.scene.kind==='move'){const point=movementStage(frame.scene,frame.progress);if(point)out.set(frame.scene.actor,point);}return out;
   }
   function paintReachable(){
    const quote=tacticalView(view)?.actors?.[String(selection.actor)];
-   for(const p of quote?.reachable||[])if(cell(p)){rectangle(p.x*16+1,p.y*16+1,14,14,'rgba(255,255,255,.18)');outline(p.x*16+1,p.y*16+1,14,14,'#a7e7ff');}
+   for(const p of tacticalView(view)?.placement?.pending?tacticalView(view).placement.cells:quote?.reachable||[])if(cell(p)){rectangle(p.x*16+1,p.y*16+1,14,14,'rgba(255,255,255,.18)');outline(p.x*16+1,p.y*16+1,14,14,'#a7e7ff');}
    const cursor=selection.destination;if(cell(cursor)){outline(cursor.x*16,cursor.y*16,16,16,'#ffe149');outline(cursor.x*16+1,cursor.y*16+1,14,14,INK);}
   }
   function flag(u,p,selected,enemy,attackable,marker){
@@ -525,7 +526,7 @@
    else if(effect==='surrender'){rectangle(targetX-3,38,1,55,INK);rectangle(targetX-2,38,22,15,'#ffffff');}
    else if(effect==='trap'){rectangle(targetX-21,103,42,12,INK);rectangle(targetX-15,107,30,6,'#7c3400');}
    else if(effect==='ambush'){for(let i=0;i<5;i++){rectangle(targetX-35+i*16,104,14,16,'#185800');const x=targetX-28+i*16,y=110-Math.sin(progress*Math.PI)*16;if(!soldierSprite('infantry',scene.own==='attackers'?'left':'right','attack',x,y))sprite('infantry',x,y,tick+i,{maxWidth:22,maxHeight:30});}}
-   else if(['chain','confuse'].includes(effect))for(let i=0;i<8;i++){const x=targetX-24+(i*11+tick*3)%54,cy=25+i%4*17;outline(x,cy,5,5,i%2?'#fff':'#0068b8');}
+   else if(['chain','confuse','qimen','qimen_daily'].includes(effect))for(let i=0;i<8;i++){const x=targetX-24+(i*11+tick*3)%54,cy=25+i%4*17;outline(x,cy,5,5,effect.startsWith('qimen')?(i%2?'#f8d878':'#9c40c8'):(i%2?'#fff':'#0068b8'));}
   }
   function paintEngagement(scene,progress){
    const stage=attackStage(progress,scene.skipped),state=(scene.kind==='attack'?stage.resolved:progress>=.55)?scene.after:scene.before;background('plain');
@@ -760,6 +761,19 @@
    if(fieldLabel){fieldLabel.textContent=field?(locale()==='ja'?field.label_ja:field.label_tc)||field.field.id:text('參考戰場','参考戦場');fieldLabel.title=field?(locale()==='ja'?field.description_ja:field.description_tc)||'':text('地圖素材載入後顯示對應城池戰場','地図素材の読み込み後に都市の戦場を表示');}
    host.dataset.battlefieldId=field?.field?.id||'';
    host.dataset.battlefieldSource=field?.binding?.kind||field?.binding?.type||'fallback';
+   const deployment=view?.game?.battle?.extended?.deployment,approach=deployment?.arrival_city;
+   const hasDeployment=typeof approach==='string'&&['native_pair','regional_direction'].includes(deployment?.policy);
+   host.dataset.battleDeployment=hasDeployment?deployment.policy:'retained';
+   host.dataset.battleApproachCity=hasDeployment?approach:'';
+   const deploymentLabel=host.querySelector('[data-battle-deployment-label]');
+   if(deploymentLabel){
+    deploymentLabel.hidden=!hasDeployment||!!duel||!!soldiers;
+    const definition=view?.catalog?.cities?.find(city=>city.id===approach);
+    const named=view?.catalog?.city_history?.[approach]?definition?.name:view?.catalog?.map_presentation?.city_names?.[approach]?.displayName;
+    const name=translate(named||definition?.name||approach||'');
+    deploymentLabel.textContent=hasDeployment?text(`由${name}進軍`,`${name}側から進軍`):'';
+    deploymentLabel.title=hasDeployment?(deployment.policy==='native_pair'?text('使用相鄰原版模板配對的預設陣位；模板對應不代表原城身分已考定。','隣接する原作テンプレートの対になる初期陣位を使用。都市の対応付けは原作都市の同定を意味しません。'):text('依最後進軍方向選擇原版陣區，屬本作區域適配。','最後の進軍方向に応じて原作の配置区画を選択。本作の地域への適応です。')):'';
+   }
    const quote=tacticalView(view)?.actors?.[String(selection.actor)];host.dataset.battleReachableCount=String(quote?.reachable?.length??0);host.dataset.battleSelectedActor=String(selection.actor??'');
    const commanders=Object.fromEntries(['attackers','defenders'].map(side=>[side,view.game.battle[side][0]?.id]));
    host.dataset.battleMarkers=JSON.stringify(troopMarkers(snapshot(view)?.units||[],view.game.officers,view.catalog.officer_troop_types,commanders));
@@ -768,6 +782,8 @@
    host.dataset.soldierMode=soldiers?.mode||'';
    host.dataset.soldierCombatAssets=combatAssets?(combatRows().every(row=>!!soldierImage(row))?'ready':'partial'):combatPromise?'unavailable':'idle';
    if(frame?.scene?.kind!=='soldier_step'){host.dataset.soldierAnimation='';host.dataset.soldierAnimationActor='';host.dataset.soldierAnimationEvent='';}
+   host.dataset.battlePlacement=tacticalView(view)?.placement?.pending?'pending':'';
+   host.dataset.battlePlaced=String(tacticalView(view)?.placement?.confirmed??'');
    host.dataset.battleDestination=cell(selection.destination)?selection.destination.x+','+selection.destination.y:'';
    const movement=frame?.scene?.kind==='move'?movementStage(frame.scene,frame.progress):null;
    host.dataset.battleMoveActor=movement?String(frame.scene.actor):'';host.dataset.battleMoveStep=movement?String(movement.index):'';
@@ -801,14 +817,15 @@
    if(x<0||y<0||x>=width)return;
    const selected={x:Math.floor(x/16),y:Math.floor(y/16)};if(!cell(selected))return;
    const state=snapshot(view),own=view.game.battle.attacker===view.game.player?'attackers':'defenders',found=state.units.find(unit=>{const p=unitPosition(view,unit.id);return unit.troops>0&&unit.health>0&&p?.x===selected.x&&p?.y===selected.y;});
+   if(tacticalView(view)?.placement?.pending){options.onCell?.(selected);return;}
    if(found)options.onSelect?.(found.side===own?'actor':'target',found.id);else options.onCell?.(selected);
   }
   function mapKeydown(event){
-   if(event.defaultPrevented||event.isComposing||event.ctrlKey||event.metaKey||event.altKey||playing||options.canInteract?.()===false||view?.game?.phase!=='battle'||view.game.battle?.extended?.duel||view.game.battle?.extended?.siege||!tacticalView(view)?.actors?.[String(selection.actor)]?.can_act)return;
+   if(event.defaultPrevented||event.isComposing||event.ctrlKey||event.metaKey||event.altKey||playing||options.canInteract?.()===false||view?.game?.phase!=='battle'||view.game.battle?.extended?.duel||view.game.battle?.extended?.siege||!(tacticalView(view)?.placement?.pending||tacticalView(view)?.actors?.[String(selection.actor)]?.can_act))return;
    const direction={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[event.key];
    if(direction){event.preventDefault();options.onNavigate?.(...direction);}
-   else if(event.key==='Enter'){event.preventDefault();options.onConfirmMove?.();}
-   else if(event.key==='Escape'){event.preventDefault();options.onCancelMove?.();}
+   else if((event.key==='Enter'||tacticalView(view)?.placement?.pending&&event.key.toLowerCase()==='a')&&(!tacticalView(view)?.placement?.pending||!event.repeat)){event.preventDefault();options.onConfirmMove?.();}
+   else if(event.key==='Escape'&&!tacticalView(view)?.placement?.pending){event.preventDefault();options.onCancelMove?.();}
   }
   function finish(playOutcome=true){if(handle!==null)caf?.(handle);handle=null;const wasPlaying=playing;playing=false;frame=null;queue=[];animationPositions=null;updateText();draw();if(wasPlaying)options.onSettled?.();if(playOutcome&&outcomeCue)options.onOutcome?.(outcomeCue);outcomeCue=null;const resolve=resolvePlay;resolvePlay=null;resolve?.();}
   function skip(){finish();}
