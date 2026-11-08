@@ -1,6 +1,6 @@
 # 目前戰役規則
 
-29 個劇本共用目前規則，最多 115 城、每城 99 名在籍武將、每方出戰 10 人、每將最多 999 兵。人物總庫 1,030 人，按劇本日期與明列 IF 差異安排在籍、在野、未來登場或排除。
+29 個劇本共用目前規則，最多 115 城、每城 99 名在籍武將、每方出戰 10 人、每將最多 10,000 兵。人物總庫 1,030 人，按劇本日期與明列 IF 差異安排在籍、在野、未來登場或排除。
 
 有資料的1,000人，武、知參考逐人SAN14遊戲數值、德取SAN14魅力；來源100依本作尺度轉成99並保留原值。其餘30人的武、知為本作設定，德設60。這項屬性換算本身不改武、知、適性、人物ID、年代與歷史歸城。原版ROM德與舊歷史評分作證據保存，不再覆蓋新的魅力轉換政策。目前1,030人記錄與初次1,023人的轉換差異、來源見[武將屬性來源](officer-attribute-sources.md)。
 
@@ -36,11 +36,11 @@
 | --- | --- | --- |
 | 劇本與人物庫 | 29個劇本，史實23／假想6，預設184年2月；1,030名歷史人物 | [劇本索引](../game/config/campaigns/index.json)、[人物來源](../game/config/campaigns/people.json) |
 | 武將屬性 | 武／知／德對應SAN14武力／知力／魅力；1,000人有魅力、30人德60。原表初始體力與忠誠分別核對 | [屬性政策與差異](officer-attribute-sources.md)、[原版表逐行參考](../game/config/references/cnblogs-officer-stats.json) |
-| 城池與兵員 | 最多115城，每城歷史在籍武將及已雇文吏合計99人，每方出戰10人，每將最多999兵 | [共用規則](../game/config/campaigns/shared.json)、[人物與名冊](../source/remake/officers.py)、[戰役校驗](../source/remake/campaign.py) |
+| 城池與兵員 | 最多115城，每城歷史在籍武將及已雇文吏合計99人，每方出戰10人，每將最多10,000兵，交鋒最多10隊，滿編每隊1,000人 | [共用規則](../game/config/campaigns/shared.json)、[人物與名冊](../source/remake/officers.py)、[戰役校驗](../source/remake/campaign.py) |
 | 命令書 | 全勢力共用、同城可重複；旬界按領城快照發放，不結轉 | [原版依據與費用](command-books.md)、[額度服務](../source/remake/command_books.py) |
 | 曆法 | 1旬10日，每月30日，上／中／下旬從1／11／21日開始 | [共用曆法設定](../game/config/campaigns/shared.json)、[旬月推進](../source/remake/campaign.py) |
 | 都市規模 | 譙郡221年、建業240年1月升級，濮陽通常；不重設進行中庫存 | [都市規模設定](../game/config/city-scale-rules.json)、[共享計算](../source/remake/city_economy.py) |
-| 行軍口糧 | 分段預裝、友城補給、在途救援、等待耗糧、缺糧減員及真實撤退 | [口糧計算與收據](../source/remake/march_supply.py)、[行軍規則](hazardous-travel.md) |
+| 行軍口糧 | 按每日實際兵力計糧，分段預裝、友城補給、在途救援、等待耗糧、缺糧減員及真實撤退 | [口糧計算與收據](../source/remake/march_supply.py)、[行軍規則](hazardous-travel.md) |
 | 戰鬥畫面 | 1024×960，原版256×240的寬高各4倍 | [戰鬥素材索引](../game/assets/battle-enhanced/index.json)、[戰鬥說明](battle-scenes.md) |
 | 單挑外觀 | 12類兵器、13類坐騎；27位具名人物配置 | [動作圖集索引](../game/assets/battle-enhanced/index.json)、[穩定人物ID對照](../game/config/duel-appearances.json) |
 | 圖文事件 | 39類，最多保留最近100項 | [事件定義與上限](../source/remake/events.py)、[展示範圍](ai-and-events.md) |
