@@ -114,8 +114,13 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
   }
   const playback=fixture([],{portraits:{entry:id=>people.includes(id),html:id=>`<span data-portrait-person="${id}"></span>`}});
   const current=view([event]);
-  const cityNames={jiujiang:'壽春',wujun:'吳',nanjun:'江陵'};
+  const cityNames={jiujiang:'壽春',wujun:'吳',nanjun:'江陵',xincheng:'新城',jianning:'建寧',zangke:'牂牁'};
   current.catalog={...catalog,cities:cities.map((id,index)=>({id,name:cityNames[id]||id,position:[300+index*200,300]}))};
+  current.catalog.city_history={
+   xincheng:{names:[{name:'房陵',end:219},{name:'新城',start:220}]},
+   jianning:{names:[{name:'味县',to_date:[225,9]},{name:'建宁',from_date:[225,10]}]}
+  };
+  playback.i18n.t=(value,language)=>value==='味县'?(language==='ja'?'味県':'味縣'):value;
   const before=JSON.stringify(current);
   playback.events.observe(current,{newGame:true});playback.drain();
   assert(playback.modal.open,kind+' opens automatically');
@@ -126,6 +131,17 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
    assert(playback.modal.innerHTML.includes('class="event-map"'));
    if(primarySource)assert(playback.modal.innerHTML.includes(primarySource));
    for(const person of people)assert(playback.modal.innerHTML.includes(`data-portrait-person="${person}"`));
+   if(kind==='historical_xiangfan'){
+    assert.match(playback.modal.innerHTML,/<span class="event-location">[^<]*房陵/);
+    assert(!playback.modal.innerHTML.includes('新城'));
+    assert(playback.modal.innerHTML.includes(['房陵（上庸方向）直達襄陽','房陵（上庸方面）から襄陽へ直行'][index]));
+   }
+   if(kind==='historical_nanzhong'){
+    const label=['味縣','味県'][index];
+    assert(playback.modal.innerHTML.includes(`<span class="event-location"> · ${label}`));
+    assert(playback.modal.innerHTML.includes([`孟獲據${label}、牂牁`,`孟獲が${label}・牂牁`][index]));
+    assert(!playback.modal.innerHTML.includes('建寧'));
+   }
   }
   if(kind==='historical_hefei')assert(playback.modal.innerHTML.includes('viewBox="556 214 288 172"'),'合淝 illustration centers its 壽春 proxy');
   if(kind==='historical_sun_liu_marriage'){

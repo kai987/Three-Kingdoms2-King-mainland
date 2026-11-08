@@ -46757,6 +46757,11 @@
             "explicit_scenario_scope": 6
           }
         }
+      },
+      "city_foundings": {
+        "delete": [
+          "xindu"
+        ]
       }
     }
   },

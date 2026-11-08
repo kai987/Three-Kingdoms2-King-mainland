@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, GameError, canonical
 from remake.officers import (CapacityError, CityRoster, YearState, select_deployment,
                             transfer_officers, year_state)
+from remake.map_presentation import city_names
 from remake.session import CampaignSession
 from campaign_fixtures import advance_month,confirm_default_placement
 
@@ -85,7 +86,7 @@ class PlacementCompletionTests(unittest.TestCase):
         self.assertEqual(self.index['default'], 'mainland217-07')
         portrait_people = self.portrait_index['people']
         stable = self.catalogs[217, 7]
-        shared_board = ('cities', 'links', 'city_foundings', 'travel_routes',
+        shared_board = ('cities', 'links', 'travel_routes',
                         'travel_hazards', 'sea_routes', 'exploration_routes', 'world')
         for date, catalog in self.catalogs.items():
             data = catalog.data
@@ -98,6 +99,10 @@ class PlacementCompletionTests(unittest.TestCase):
                 self.assertEqual(len(data['people']), 1052)
                 for key in shared_board:
                     self.assertEqual(data[key], stable.data[key], key)
+                foundings = dict(stable.data['city_foundings'])
+                if data['main_scenario']['group'] == 'if' and date[:2] < (208, 1):
+                    foundings.pop('xindu')
+                self.assertEqual(data['city_foundings'], foundings)
                 self.assertEqual(set(catalog.ids), set(portrait_people))
                 for person in data['people']:
                     self.assertEqual(person['runtime_id'], stable.ids[person['person_id']])
@@ -114,6 +119,30 @@ class PlacementCompletionTests(unittest.TestCase):
                     self.assertIsInstance(assignment['appearance_plan'], dict)
                     self.assertTrue(assignment['appearance_plan'])
                     self.assertNotIn(assignment['status'], PENDING)
+
+    def test_historical_openings_use_reviewed_city_names_and_foundings(self):
+        historical = [(date, catalog) for date, catalog in self.catalogs.items()
+                      if catalog.data['main_scenario']['group'] != 'if']
+        self.assertEqual(len(historical), 23)
+        for key, catalog in historical:
+            date = key[:2]
+            year, _ = date
+            with self.subTest(date=key):
+                game = self.game(key)
+                active = set(game.state.cities)
+                self.assertEqual(active, set(catalog.active_city_ids(*date)))
+                self.assertEqual(active, set(catalog.data['initial_owners']))
+                self.assertEqual('xindu' in active, year >= 208)
+                names = city_names(catalog, *date)
+                self.assertEqual(names['hepu'], '合浦' if year < 228 else '珠官')
+                if 'xindu' in active:
+                    self.assertEqual(names['xindu'], '新都')
+                badong = '固陵' if 216 <= year < 221 else '鱼复' if year < 201 or 214 <= year < 216 else '巴东'
+                self.assertEqual(names['badong'], badong)
+                self.assertEqual(names['xincheng'], '房陵' if date < (220, 7) else '新城')
+                self.assertEqual(names['jianning'], '味县' if date < (225, 10) else '建宁')
+                self.assertEqual(names['xinggu'], '宛温县' if date < (225, 10) else '兴古')
+                self.assertTrue({'hepu', 'badong', 'xincheng', 'jianning', 'xinggu'} <= active)
 
     def test_available_people_are_present_or_explicitly_excluded_and_never_overfill(self):
         for date, catalog in self.catalogs.items():

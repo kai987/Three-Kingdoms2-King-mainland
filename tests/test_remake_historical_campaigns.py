@@ -113,6 +113,19 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertEqual((event['turn'], event['audience']), (game.state.turn, 'world'))
         self.assertEqual(set(event['factions']), {'yuan_shao', 'wei'})
         game = self.resume(game)
+        # The revised 200 opening can produce an independent attack on Shouchun
+        # at the rollover. Resolve it through normal commands before testing Yuan.
+        if game.state.phase == 'battle':
+            battle_id = game.state.battle['id']
+            self.assertNotEqual(game.state.battle['attacker'], 'yuan_shao')
+            while battle_placement.pending(game.state.battle):
+                battle = game.state.battle
+                actor = battle_placement.view(game, game.state, battle)['actor']
+                point = battle['extended']['tactical']['positions'][str(actor)]
+                game.command('battle_place', {'battle_id': battle_id, 'actor': actor, **point}, game.revision)
+            game.command('retreat', {'battle_id': battle_id}, game.revision)
+            game.command('settle', {'battle_id': battle_id}, game.revision)
+            self.arrivals(game)
         self.advance(game)
         army = next(row for row in game.state.extension['travel']['marches']
                     if row['owner'] == 'yuan_shao' and row['kind'] == 'attack'

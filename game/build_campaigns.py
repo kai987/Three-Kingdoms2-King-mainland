@@ -134,6 +134,7 @@ def load_sources(*, timing=True):
     public_stats = read('game/config/references/cnblogs-officer-stats.json')
     san14_abilities = read('game/config/references/san14-abilities.json')
     city_scale_rules = read('game/config/city-scale-rules.json')
+    city_name_rules = read('game/config/city-name-rules.json')
     original_identities = read('game/config/portrait-identity-map.json')
     if sha256((ROOT/'game/config/portrait-identity-map.json').read_bytes()).hexdigest() != original_stats['identity_source_sha256']:
         raise ValueError('Original officer identity source differs')
@@ -165,6 +166,9 @@ def load_sources(*, timing=True):
         if source.get('schema') != 'tk2-campaign-override-v1' or source.get('id') != entry['id']:
             raise ValueError('Campaign source identity mismatch')
         data = apply_patch(shared['catalog'], source.get('overrides', {}))
+        for city, rule in city_name_rules.items():
+            history = data['city_history'].setdefault(city, {})
+            history.update(deepcopy(rule), sources=[*rule['sources'], *history.get('sources', [])])
         apply_opening_sizes(data, city_scale_rules)
         current_people = apply_patch(persons, source.get('people_overrides', {}))
         if set(current_people) != set(order):

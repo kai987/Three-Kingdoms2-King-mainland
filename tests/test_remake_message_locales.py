@@ -89,7 +89,9 @@ class MessageLocaleTests(unittest.TestCase):
         for source, japanese in {'犍为': '犍為', '临贺': '臨賀', '弘农': '弘農',
                                  '扶风': '扶風', '张掖': '張掖', '雁门': '雁門',
                                  '蕲春': '蘄春', '赵国': '趙国', '汉寿': '漢寿',
-                                 '甘陵': '甘陵', '官渡': '官渡の戦い', '赤壁': '赤壁の戦い'}.items():
+                                 '甘陵': '甘陵', '官渡': '官渡の戦い', '赤壁': '赤壁の戦い',
+                                 '鱼复': '魚復', '房陵': '房陵', '味县': '味県', '宛温县': '宛温県',
+                                 '建宁': '建寧', '兴古': '興古', '珠官': '珠官', '合浦': '合浦'}.items():
             self.assertEqual(translate(source, self.data), japanese)
 
     def test_latest_catalog_rule_notes_and_chronology_are_japanese_prose(self):

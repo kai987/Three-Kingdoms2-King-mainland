@@ -258,7 +258,6 @@
         "xinggu",
         "yinping",
         "fuling",
-        "xindu",
         "poyang",
         "luling",
         "qichun",
@@ -334,7 +333,7 @@
         },
         {
           "person_id": "san14-candidate-0019",
-          "city": "xindu",
+          "city": "danyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": true
@@ -1076,7 +1075,7 @@
         },
         {
           "person_id": "san14-candidate-0335",
-          "city": "xindu",
+          "city": "danyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1510,7 +1509,7 @@
         },
         {
           "person_id": "san14-candidate-0563",
-          "city": "xindu",
+          "city": "danyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1580,7 +1579,7 @@
         },
         {
           "person_id": "san14-candidate-0598",
-          "city": "xindu",
+          "city": "danyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1951,7 +1950,7 @@
         },
         {
           "person_id": "san14-candidate-0783",
-          "city": "xindu",
+          "city": "danyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -3074,7 +3073,6 @@
           "xinggu": "liu_zhang",
           "yinping": "neutral",
           "fuling": "liu_zhang",
-          "xindu": "liu_you",
           "poyang": "neutral",
           "luling": "neutral",
           "qichun": "neutral",
@@ -3119,7 +3117,8 @@
         },
         "delete": [
           "yidu",
-          "xinxing"
+          "xinxing",
+          "xindu"
         ]
       },
       "appearance_locations": {
@@ -3226,7 +3225,7 @@
           "san14-candidate-0315": "badong",
           "san14-candidate-0318": "jingzhao",
           "san14-candidate-0328": "pingyuan",
-          "san14-candidate-0335": "xindu",
+          "san14-candidate-0335": "danyang",
           "san14-candidate-0344": "henan",
           "san14-candidate-0347": "xiangyang",
           "san14-candidate-0350": "henan",
@@ -3311,7 +3310,7 @@
           "san14-candidate-0558": "wujun",
           "san14-candidate-0559": "taiyuan",
           "san14-candidate-0562": "wujun",
-          "san14-candidate-0563": "xindu",
+          "san14-candidate-0563": "danyang",
           "san14-candidate-0564": "wujun",
           "san14-candidate-0565": "wujun",
           "san14-candidate-0579": "yan",
@@ -3473,7 +3472,7 @@
           "san14-candidate-0003": "jingzhao",
           "san14-candidate-0006": "pingyuan",
           "san14-candidate-0008": "wei",
-          "san14-candidate-0019": "xindu",
+          "san14-candidate-0019": "danyang",
           "san14-candidate-0025": "jiujiang",
           "san14-candidate-0027": "tianshui",
           "san14-candidate-0029": "jinan",
@@ -3633,7 +3632,7 @@
           "san14-candidate-0592": "fufeng",
           "san14-candidate-0595": "nanyang",
           "san14-candidate-0597": "hanzhong",
-          "san14-candidate-0598": "xindu",
+          "san14-candidate-0598": "danyang",
           "san14-candidate-0599": "wei",
           "san14-candidate-0601": "taiyuan",
           "san14-candidate-0602": "taiyuan",
@@ -3688,7 +3687,7 @@
           "san14-candidate-0770": "anding",
           "san14-candidate-0771": "wuwei",
           "san14-candidate-0778": "wei",
-          "san14-candidate-0783": "xindu",
+          "san14-candidate-0783": "danyang",
           "san14-candidate-0790": "danyang",
           "san14-candidate-0792": "xiapi",
           "san14-candidate-0800": "jiujiang",
@@ -4324,7 +4323,7 @@
               "source_ruler": "劉繇",
               "year_state": "death_year_review",
               "faction": "liu_you",
-              "city": "xindu",
+              "city": "danyang",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "death_year_resolved": true,
@@ -4332,7 +4331,7 @@
                 "person_id": "san14-candidate-0019",
                 "faction": "liu_you",
                 "origin": "danyang",
-                "city": "xindu",
+                "city": "danyang",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -4360,7 +4359,7 @@
                     194,
                     12
                   ],
-                  "city": "xindu",
+                  "city": "danyang",
                   "status": "serving",
                   "basis": "person_specific_SAN14_location_board_proxy"
                 }
@@ -12871,13 +12870,13 @@
             "set": {
               "source_ruler": "劉繇",
               "faction": "liu_you",
-              "city": "xindu"
+              "city": "danyang"
             },
             "update": {
               "posting_reference": {
                 "set": {
                   "faction": "liu_you",
-                  "city": "xindu"
+                  "city": "danyang"
                 }
               },
               "appearance_plan": {
@@ -12886,7 +12885,7 @@
                     194,
                     6
                   ],
-                  "city": "xindu"
+                  "city": "danyang"
                 }
               }
             }
@@ -18389,13 +18388,13 @@
             "set": {
               "source_ruler": "劉繇",
               "faction": "liu_you",
-              "city": "xindu"
+              "city": "danyang"
             },
             "update": {
               "posting_reference": {
                 "set": {
                   "faction": "liu_you",
-                  "city": "xindu"
+                  "city": "danyang"
                 }
               },
               "appearance_plan": {
@@ -18404,7 +18403,7 @@
                     194,
                     6
                   ],
-                  "city": "xindu"
+                  "city": "danyang"
                 }
               }
             }
@@ -19462,14 +19461,14 @@
               "source_ruler": "劉繇",
               "year_state": "available",
               "faction": "liu_you",
-              "city": "xindu",
+              "city": "danyang",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0598",
                 "faction": "liu_you",
                 "origin": "danyang",
-                "city": "xindu",
+                "city": "danyang",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -19497,7 +19496,7 @@
                     195,
                     12
                   ],
-                  "city": "xindu",
+                  "city": "danyang",
                   "status": "serving",
                   "basis": "person_specific_SAN14_location_board_proxy"
                 }
@@ -24559,14 +24558,14 @@
               "source_ruler": "劉繇",
               "year_state": "available",
               "faction": "liu_you",
-              "city": "xindu",
+              "city": "danyang",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0783",
                 "faction": "liu_you",
                 "origin": "danyang",
-                "city": "xindu",
+                "city": "danyang",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -24594,7 +24593,7 @@
                     195,
                     12
                   ],
-                  "city": "xindu",
+                  "city": "danyang",
                   "status": "serving",
                   "basis": "person_specific_SAN14_location_board_proxy"
                 }
@@ -35827,9 +35826,9 @@
           },
           "danyang": {
             "set": {
-              "gold": 2480,
-              "grain": 7950,
-              "reserves": 2160
+              "gold": 3560,
+              "grain": 11550,
+              "reserves": 3240
             }
           },
           "jiujiang": {

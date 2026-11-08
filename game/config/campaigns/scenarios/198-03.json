@@ -234,7 +234,6 @@
         "xinggu",
         "yinping",
         "fuling",
-        "xindu",
         "poyang",
         "luling",
         "qichun",
@@ -3558,7 +3557,8 @@
         },
         "delete": [
           "yidu",
-          "xinxing"
+          "xinxing",
+          "xindu"
         ]
       },
       "appearance_locations": {
@@ -68154,9 +68154,9 @@
           },
           "danyang": {
             "set": {
-              "gold": 2480,
-              "grain": 7950,
-              "reserves": 2160
+              "gold": 3560,
+              "grain": 11550,
+              "reserves": 3240
             }
           },
           "jiujiang": {

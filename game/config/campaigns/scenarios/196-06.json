@@ -250,7 +250,6 @@
         "xinggu",
         "yinping",
         "fuling",
-        "xindu",
         "poyang",
         "luling",
         "qichun",
@@ -1033,7 +1032,7 @@
         },
         {
           "person_id": "san14-candidate-0335",
-          "city": "xindu",
+          "city": "poyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1446,7 +1445,7 @@
         },
         {
           "person_id": "san14-candidate-0563",
-          "city": "xindu",
+          "city": "poyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -3500,7 +3499,6 @@
           "xinggu": "liu_zhang",
           "yinping": "neutral",
           "fuling": "liu_zhang",
-          "xindu": "liu_you",
           "poyang": "liu_you",
           "luling": "neutral",
           "qichun": "neutral",
@@ -3545,7 +3543,8 @@
         },
         "delete": [
           "yidu",
-          "xinxing"
+          "xinxing",
+          "xindu"
         ]
       },
       "appearance_locations": {
@@ -3652,7 +3651,7 @@
           "san14-candidate-0315": "badong",
           "san14-candidate-0318": "jingzhao",
           "san14-candidate-0328": "pingyuan",
-          "san14-candidate-0335": "xindu",
+          "san14-candidate-0335": "poyang",
           "san14-candidate-0344": "henan",
           "san14-candidate-0347": "xiangyang",
           "san14-candidate-0350": "henan",
@@ -3737,7 +3736,7 @@
           "san14-candidate-0558": "wujun",
           "san14-candidate-0559": "taiyuan",
           "san14-candidate-0562": "wujun",
-          "san14-candidate-0563": "xindu",
+          "san14-candidate-0563": "poyang",
           "san14-candidate-0564": "wujun",
           "san14-candidate-0565": "wujun",
           "san14-candidate-0579": "yan",
@@ -15287,7 +15286,7 @@
             "set": {
               "source_ruler": "刘繇",
               "faction": "liu_you",
-              "city": "xindu",
+              "city": "poyang",
               "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
               "source_snapshot": "mainland194-06-v11"
             },
@@ -15296,7 +15295,7 @@
                 "set": {
                   "faction": "liu_you",
                   "origin": "yuzhang",
-                  "city": "xindu"
+                  "city": "poyang"
                 }
               },
               "appearance_plan": {
@@ -15305,7 +15304,7 @@
                     196,
                     6
                   ],
-                  "city": "xindu"
+                  "city": "poyang"
                 }
               }
             }
@@ -22180,7 +22179,7 @@
             "set": {
               "source_ruler": "刘繇",
               "faction": "liu_you",
-              "city": "xindu",
+              "city": "poyang",
               "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
               "source_snapshot": "mainland194-06-v11"
             },
@@ -22189,7 +22188,7 @@
                 "set": {
                   "faction": "liu_you",
                   "origin": "yuzhang",
-                  "city": "xindu"
+                  "city": "poyang"
                 }
               },
               "appearance_plan": {
@@ -22198,7 +22197,7 @@
                     196,
                     6
                   ],
-                  "city": "xindu"
+                  "city": "poyang"
                 }
               }
             }
@@ -40543,9 +40542,9 @@
           },
           "poyang": {
             "set": {
-              "gold": 1030,
-              "grain": 4325,
-              "reserves": 1080
+              "gold": 2110,
+              "grain": 7925,
+              "reserves": 2160
             }
           },
           "luling": {

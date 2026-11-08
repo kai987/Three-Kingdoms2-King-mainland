@@ -69,8 +69,8 @@
    title:["襄樊之戰・關羽北攻","襄樊の戦い・関羽の北進"],
    counts:[2,4,4],
    front:true,
-   text:["關羽由荊州北攻，曹仁據守樊城。《武帝紀》記七月曹操遣于禁增援。地圖以襄陽代理樊城戰區。江陵可先攻章陵，新城（上庸方向）則可直達襄陽。","関羽は荊州から北進し、曹仁は樊城を守った。『武帝紀』は7月に曹操が于禁を援軍に送ったと記す。本作では襄陽を樊城戦域の代理拠点とする。江陵からは章陵を先に攻められ、新城（上庸方面）からは襄陽に直行できる。"],
-   sources:[["《三國志·關羽傳》","https://zh.wikisource.org/zh-hant/三國志/卷36"],["《三國志·武帝紀》","https://zh.wikisource.org/zh-hant/三國志/卷01"]]
+   text:["關羽由荊州北攻，曹仁據守樊城。《武帝紀》記七月曹操遣于禁增援。《劉封傳》記劉封、孟達未應關羽向上庸求援。本作以襄陽代理樊城戰區，玩家可從房陵（上庸方向）直達襄陽，或從江陵先攻章陵。","関羽は荊州から北進し、曹仁は樊城を守った。『武帝紀』は7月に曹操が于禁を援軍に送ったと記す。『劉封伝』によれば、劉封と孟達は関羽が上庸に求めた援軍を送らなかった。本作では襄陽を樊城戦域の代理拠点とし、プレイヤーは房陵（上庸方面）から襄陽へ直行するか、江陵から先に章陵を攻められる。"],
+   sources:[["《三國志·關羽傳》","https://zh.wikisource.org/zh-hant/三國志/卷36"],["《三國志·武帝紀》","https://zh.wikisource.org/zh-hant/三國志/卷01"],["《三國志·劉封傳》","https://zh.wikisource.org/zh-hant/三國志/卷40#劉封"]]
   },
   historical_memorial:{
    title:["諸葛亮上出師表","諸葛亮、出師の表を奉る"],
@@ -330,7 +330,12 @@
   function names(row){
    const catalog=view?.catalog||{},people=new Map((catalog.library||[]).map(p=>[p.person_id,p.name]));
    const personName=id=>{const current=Object.entries(view?.game?.officers||{}).find(([,person])=>person.person_id===id);return people.get(id)||(current&&catalog.names?.[current[0]])||text('未具名武將','名前未設定の武将');};
-   return {people:row.person_ids.map(id=>label(personName(id))),cities:row.city_ids.map(id=>label(catalog.cities?.find(c=>c.id===id)?.name||text('未知城池','不明な都市'))),
+   const monthIndex=([year,month])=>year*12+month,date=monthIndex([row.year,row.month]);
+   const cityName=id=>{
+    const period=catalog.city_history?.[id]?.names?.find(p=>date>=monthIndex(p.from_date||[p.start??1,1])&&date<=monthIndex(p.to_date||[p.end??9999,12]));
+    return period?.name||catalog.cities?.find(c=>c.id===id)?.name||text('未知城池','不明な都市');
+   };
+   return {people:row.person_ids.map(id=>label(personName(id))),cities:row.city_ids.map(id=>label(cityName(id))),
     factions:row.factions.map(id=>{const faction=catalog.factions?.find(f=>f.id===id)||catalog.scheduled_factions?.find(f=>f.id===id);return label(faction?.display_name||faction?.name||(id==='neutral'?text('無主','空白都市'):text('未具名勢力','名前未設定の勢力')));})};
   }
   function description(row){
@@ -410,8 +415,8 @@
      '黃忠與夏侯淵在漢中戰區交鋒。本作以漢中節點呈現定軍山一帶。兩將按實際兵力參戰，勝負由本場戰鬥決定。',
      '黄忠と夏侯淵が漢中戦域で交戦します。本作では漢中の拠点で定軍山周辺を表します。両将は実際の兵力で戦い、勝敗はこの戦闘で決まります。');
     case 'historical_nanzhong':return text(
-     '諸葛亮於春季展開南征，此時戰事仍在進行。孟獲據建寧、牂牁，蜀軍可沿現有道路出征。城池得失與武將去留依實際戰局處理。',
-     '諸葛亮は春に南征を始め、戦いはなお続いています。孟獲が建寧・牂牁を押さえ、蜀軍は既存の経路で出陣できます。都市の支配と武将の去就は実際の戦況に従います。');
+     `諸葛亮於春季展開南征，此時戰事仍在進行。孟獲據${n.cities[0]}、${n.cities[1]}，蜀軍可沿現有道路出征。城池得失與武將去留依實際戰局處理。`,
+     `諸葛亮は春に南征を始め、戦いはなお続いています。孟獲が${n.cities[0]}・${n.cities[1]}を押さえ、蜀軍は既存の経路で出陣できます。都市の支配と武将の去就は実際の戦況に従います。`);
     case 'historical_liaodong':return text(
      '曹叡命司馬懿討伐據守襄平的公孫淵。魏軍的電腦將優先考慮遼西至襄平的戰線，玩家自行調兵。攻城以部隊實際抵達為前提，勝負依交戰結果決定。',
      '曹叡が司馬懿に、襄平に拠る公孫淵の討伐を命じます。魏軍のAIは遼西から襄平に至る戦線を優先し、プレイヤーは自分で兵を動かします。部隊が到着して初めて攻城となり、勝敗は交戦の結果で決まります。');
