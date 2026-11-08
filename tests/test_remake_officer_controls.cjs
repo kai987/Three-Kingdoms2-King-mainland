@@ -41,6 +41,7 @@ const context={refreshPersonnelDialogue(){},dialogGeneration:0,queueAllocationCl
  }
  return true;
 }};
+context.view.catalog.rules.officer_troop_capacity=10000;
 context.GameCommandBooks=commandBookFixture.api;commandBookFixture.attach(context.view);
 vm.createContext(context);
 context.isRuler=id=>context.GameOfficerChoices.isRuler(id,context.view.game.extension?.leaders);
@@ -78,7 +79,7 @@ const values=html=>[...html.matchAll(/<option value="(\d+)"/g)].map(m=>Number(m[
  assert.equal(officers[1].troops,40);assert.equal(officers[2].troops,90);assert.equal(city.reserves,0);assert.equal(lastCommand.payload.flow,paidFlow);assert.equal(commandBookFixture.api.row(context.view).used,1,'Later batches reuse the exact paid city flow');
  // Bounds clamp before a switch even when paste does not fire an input event.
  input.value='-5';input.oninput();assert.equal(input.value,'0');input.value='3.9';input.oninput();assert.equal(input.value,'3');input.value='';input.oninput();assert.equal(input.value,'');input.onblur();assert.equal(input.value,'0');
- city.reserves=5000;context.allocate(city,1);assert.equal(input.max,'1000');input.value='99999';await element('#allocation-next').onclick();element('#allocation-officer').value='1';element('#allocation-officer').onchange();assert.equal(input.value,'1000');assert.equal(officers[1].troops,40,'Next stores a capped draft without allocating soldiers');
+ city.reserves=12000;context.allocate(city,1);assert.equal(input.max,'10000');input.value='99999';await element('#allocation-next').onclick();element('#allocation-officer').value='1';element('#allocation-officer').onchange();assert.equal(input.value,'10000');assert.equal(officers[1].troops,40,'Next stores a capped draft without allocating soldiers');
  // Closing and opening anew discards unconfirmed drafts.
  context.allocate(city,1);assert.equal(input.value,'40');assert(element('#confirm-allocation').disabled);
  const seed={min:'1',max:'4294967295',value:'999999999999'};context.bindNumberInput(seed);seed.oninput();assert.equal(seed.value,'4294967295');seed.value='-2';seed.onchange();assert.equal(seed.value,'1');seed.value='';seed.onblur();assert.equal(seed.value,'1');seed.value='Infinity';seed.onblur();assert.equal(seed.value,'1');

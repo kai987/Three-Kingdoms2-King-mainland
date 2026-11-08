@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake import battle_grid, presentation
 from remake.campaign import Campaign
 from remake.errors import GameError
+from campaign_fixtures import controlled_catalog
 from test_remake_tactical_ai import battle, actors
 
 
@@ -112,6 +113,37 @@ class SiegePresentationTests(unittest.TestCase):
             self.assertEqual(sum(p['troops']for p in ours),total)
             self.assertEqual([p['troops']for p in ours],[min(100,total-i*100)for i in range((total+99)//100)])
             self.assertTrue(all(p['kind']!='infantry'for p in row['units']if p['side']=='defenders'))
+
+    def test_ten_thousand_soldiers_per_commander_fight_in_ten_squads(self):
+        game=Campaign(controlled_catalog())
+        game.command('new',dict(faction='shu',seed=2026),0)
+        state=game.state
+        source,target=state.cities['xiangyang'],state.cities['nanyang']
+        source.reserves+=10000
+        defender=state.officers[target.roster.officer_ids[0]]
+        state.soldiers['initial']+=10000+10000-defender.troops
+        defender.troops=10000
+        game.command('allocate',dict(city=source.id,officer=146,troops=10000),game.revision)
+        state=game.state
+        game._start_expanded_battle(state,state.cities[source.id],state.cities[target.id],[146])
+        b,actor,victim,_=castle_contact(game)
+        game.command('attack',dict(battle_id=b['id'],actor=actor['id'],target=victim['id']),game.revision)
+        row=game.state.battle['extended']['siege']
+        self.assertEqual(row['squad_sizes'],dict(attackers=1000,defenders=1000))
+        for side in ('attackers','defenders'):
+            self.assertEqual([p['troops'] for p in row['units'] if p['side']==side],[0]+[1000]*10)
+        game.command('siege_form',dict(battle_id=b['id'],formation=2),game.revision)
+        for _ in range(30):
+            result=self.cycle(game,b['id'])
+            scene=next(s for s in result['presentation']['scenes'] if s['kind']=='soldier_step')
+            if any(event['loss']>100 for event in scene['soldiers']['after']['events']):
+                break
+        else:
+            self.fail('A tenfold squad never caused a scaled loss')
+        saved=game.export_save()
+        restored=Campaign(game.catalog)
+        restored.load_save(saved,restored.revision)
+        self.assertEqual(restored.export_save(),saved)
 
     def test_steps_move_and_exchange_real_losses_then_return_without_extra_ap(self):
         game,ident,actor,fort,_=self.start()

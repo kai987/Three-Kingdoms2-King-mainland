@@ -129,6 +129,28 @@ class BattleSupplyTests(unittest.TestCase):
         self.assertEqual(game.state.rng,before.rng)
         game.validate(game.state)
 
+    def test_large_army_shortage_event_and_meal_ledger_survive_reload(self):
+        game = new()
+        state = game.state
+        source = state.cities['xiangyang']
+        officers = source.roster.officer_ids[:3]
+        source.reserves += 30000
+        state.soldiers['initial'] += 30000
+        command(game, 'allocate', city=source.id,
+                allocations=[dict(officer=ident, troops=10000) for ident in officers])
+        command(game, 'depart', source=source.id, target='nanyang', officers=officers, battle_grain=0)
+        reach_battle(game)
+        with patch('remake.tactical_ai.choose_action', return_value=WAIT):
+            command(game, 'battle_wait', battle_id=game.state.battle['id'])
+        event = game.state.extension['events']['items'][-1]
+        self.assertEqual(event['kind'], 'battle_supply_exhausted')
+        self.assertEqual(event['details']['daily_grain'], 31)
+        self.assertGreater(event['details']['missing_units'], 22000)
+        saved = game.export_save()
+        restored = Campaign(game.catalog)
+        restored.load_save(saved, 0)
+        self.assertEqual(restored.export_save(), saved)
+
     def test_empty_armies_withdraw_by_identical_rules_and_ties_favor_the_defender(self):
         for attack, defend, side, outcome in ((0,30,'attackers','retreat'),
                 (30,0,'defenders','victory'),(0,0,'attackers','retreat')):

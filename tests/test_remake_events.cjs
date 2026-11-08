@@ -215,7 +215,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
    {released_troops:-1},{released_troops:true},{released_troops:1.5},{extra:1}])assert(!validEvent({...event,details:{...event.details,...change}}));
   for(const key of['coup_id','reason','released_troops']){const details={...event.details};delete details[key];assert(!validEvent({...event,details}));}
  }
- assert(!validEvent({...coup,city_ids:[]}));assert(!validEvent({...coup,details:{...coup.details,released_troops:3001}}));assert(!validEvent({...coup,details:{...coup.details,reason:'conditions_changed'}}));
+ assert(!validEvent({...coup,city_ids:[]}));assert(validEvent({...coup,details:{...coup.details,released_troops:30000}}));assert(!validEvent({...coup,details:{...coup.details,released_troops:30001}}));assert(!validEvent({...coup,details:{...coup.details,reason:'conditions_changed'}}));
  assert(!validEvent({...coupSkip,details:{...coupSkip.details,reason:'executed'}}));assert(!validEvent({...coupSkip,details:{...coupSkip.details,released_troops:1}}));
  const coupNames=['邊章','北宮伯玉','李文侯','韓遂'],coupCatalog={...revoltCatalog,
   library:[...revoltCatalog.library,...coupPeople.filter(id=>!revoltCatalog.library.some(p=>p.person_id===id)).map(id=>({person_id:id,name:coupNames[coupPeople.indexOf(id)]}))],

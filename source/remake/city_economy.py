@@ -63,6 +63,27 @@ def incomes_at(data, year, month):
             for city_id in data.get('city_income', {})}
 
 
+def opening_development(data, city_id, tier):
+    """Use the existing dated economy to set remake development baselines."""
+    profile = data.get('city_profiles', {}).get(city_id, {})
+    if profile.get('economy_numeric_basis') != 'authorial_remake_balance_not_historical_measurement':
+        return {}
+    income = data.get('city_income', {}).get(city_id)
+    if income is None:
+        return {}
+    size = TIER_MULTIPLIERS[tier]
+    gold, grain = income['gold'], income['grain']
+    controlled = data['initial_owners'].get(city_id, 'neutral') != 'neutral'
+    # Grain and gold already account for regional geography, war and recovery.
+    # Use per-tier production for governance so a capital is not automatically
+    # more stable than a prosperous small city.
+    stability = (gold + grain // 4) // (4 * size)
+    return dict(land=min(850, 40 * size + grain),
+                industry=min(850, 36 * size + 2 * gold),
+                population=min(8500, 200 * size + 2 * grain + 3 * gold) * 100,
+                governance=min(92, (58 if controlled else 47) + stability))
+
+
 def apply_opening_sizes(data, rules):
     """Apply reviewed settings once to an untransformed canonical source.
 

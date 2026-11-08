@@ -1,11 +1,12 @@
 """Deterministic daily food, real checkpoints and auditable starvation."""
 from copy import deepcopy
+from .officers import OFFICER_TROOP_CAP
 
 DENOMINATOR=1000
 OFFICER_UNITS=100
 LIMIT=100000000
-MAX_DAILY_UNITS=LIMIT+99*(1000+OFFICER_UNITS)
-MAX_TRAVELLING_SOLDIERS=LIMIT+99*1000
+MAX_DAILY_UNITS=LIMIT+99*(OFFICER_TROOP_CAP+OFFICER_UNITS)
+MAX_TRAVELLING_SOLDIERS=LIMIT+99*OFFICER_TROOP_CAP
 SCHEMA='tk2-segment-supply-v2'
 RETREAT_DAYS=10
 _FIELDS={'schema','troops','officers','reserves','elapsed_days','route_days','loaded','received',
@@ -257,7 +258,7 @@ def validate(supply,quote,departure_turn,state_turn):
     if (supply['start_tick']!=(departure_turn-1)*10 or supply['clock_tick']!=end
         or supply['last_turn']!=end//10+1 or supply['credit_units']>=1000
         or supply['route_days']>quote['days'] or supply['officers']>99
-        or supply['troops']>supply['officers']*1000 or supply['from_cargo']>supply['loaded']):
+        or supply['troops']>supply['officers']*OFFICER_TROOP_CAP or supply['from_cargo']>supply['loaded']):
         raise ValueError('Segment supply clock or manifest')
     refills=supply['refills']
     if not isinstance(refills,list) or len(refills)>100000:raise ValueError('Segment supply refill list')
@@ -279,7 +280,7 @@ def validate(supply,quote,departure_turn,state_turn):
         if (not isinstance(manifest,dict) or set(manifest)!={'tick','troops','reserves'}
             or type(manifest['tick'])is not int or not previous_tick<manifest['tick']<=max(end,supply['start_tick']+1)
             or not isinstance(manifest['troops'],dict) or len(manifest['troops'])>99
-            or any(not isinstance(k,str) or type(v)is not int or not 0<=v<=1000 for k,v in manifest['troops'].items())
+            or any(not isinstance(k,str) or type(v)is not int or not 0<=v<=OFFICER_TROOP_CAP for k,v in manifest['troops'].items())
             or type(manifest['reserves'])is not int or not 0<=manifest['reserves']<=LIMIT):
             raise ValueError('Segment ration manifest fields')
         previous_tick=manifest['tick']
@@ -337,10 +338,10 @@ def validate(supply,quote,departure_turn,state_turn):
     lost=0
     for tick,row in zip(hungry_ticks,hunger):
         if (not isinstance(row,dict) or set(row)!={'tick','after_risks','before','after','reserves_before','reserves_after','lost'}
-            or row['tick']!=tick or type(row['after_risks'])is not int or not 0<=row['after_risks']<=1000
+            or row['tick']!=tick or type(row['after_risks'])is not int or not 0<=row['after_risks']<=OFFICER_TROOP_CAP
             or not isinstance(row['before'],dict) or not isinstance(row['after'],dict)
             or set(row['before'])!=set(row['after']) or len(row['before'])>99
-            or any(not isinstance(k,str) or type(v)is not int or not 0<=v<=1000 for k,v in row['before'].items())
+            or any(not isinstance(k,str) or type(v)is not int or not 0<=v<=OFFICER_TROOP_CAP for k,v in row['before'].items())
             or any(type(v)is not int or v!=max(0,row['before'][k]-(row['before'][k]+99)//100) for k,v in row['after'].items())
             or type(row['reserves_before'])is not int or not 0<=row['reserves_before']<=LIMIT
             or type(row['reserves_after'])is not int or row['reserves_after']!=max(0,row['reserves_before']-(row['reserves_before']+99)//100)

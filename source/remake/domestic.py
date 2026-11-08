@@ -10,7 +10,7 @@ from copy import deepcopy
 
 from .errors import GameError
 from . import command_books
-from .officers import parse_officer_ref
+from .officers import OFFICER_TROOP_CAP, parse_officer_ref
 
 SCHEMA = 'tk2-domestic-v2'
 RULES = dict(max_income_bonus_percent=40, personnel_gold=60, persuasion_gold=100,
@@ -345,7 +345,7 @@ def allocation_preview(game, state, city_id):
 
     A faction official manages every owned city, but troops stay in their own
     city. Existing troops are retained; only the unassigned reserve is filled
-    into each eligible officer in ability order, up to the requested 1000 cap.
+    into each eligible officer in ability order, up to the troop cap.
     """
     city = state.cities[city_id]
     result = dict(soldiers=0, officers=0, remaining_reserves=city.reserves, assignments=[])
@@ -355,12 +355,12 @@ def allocation_preview(game, state, city_id):
     if official is None or not _present(game, state, city, official):
         return result
     available = [state.officers[i] for i in city.roster.officer_ids
-                 if state.officers[i].troops < 1000 and _present(game, state, city, i)]
+                 if state.officers[i].troops < OFFICER_TROOP_CAP and _present(game, state, city, i)]
     available.sort(key=lambda officer: (-officer.profile.martial_strength,
         -officer.profile.intellect, -officer.profile.virtue, -officer.health,
         -officer.experience, _ref_key(officer.runtime_id)))
     for officer in available:
-        amount = min(result['remaining_reserves'], max(0, 1000 - officer.troops))
+        amount = min(result['remaining_reserves'], OFFICER_TROOP_CAP - officer.troops)
         if not amount:
             continue
         result['assignments'].append(dict(id=officer.runtime_id, **{'from': officer.troops},
@@ -791,7 +791,7 @@ def validate(game, state):
         if row['kind'] == 'training' and (not _integer(details['gain'], 1, 5)
                 or not _integer(details['morale'], details['gain'], 100)):
             raise ValueError('Domestic report morale')
-        if row['kind'] == 'allocation' and (not _integer(details['soldiers'], 1, 1000 * game.catalog.rules.city_officer_capacity)
+        if row['kind'] == 'allocation' and (not _integer(details['soldiers'], 1, OFFICER_TROOP_CAP * game.catalog.rules.city_officer_capacity)
                 or not _integer(details['officers'], 1, game.catalog.rules.city_officer_capacity)
                 or details['officers'] > details['soldiers']):
             raise ValueError('Domestic allocation report')

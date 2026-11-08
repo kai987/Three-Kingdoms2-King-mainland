@@ -68,7 +68,7 @@ class CampaignTests(unittest.TestCase):
 
     def test_invalid_commands_preserve_state_rng_and_revision(self):
         original, revision = self.game.to_dict(), self.game.revision
-        for kind, payload in [('allocate', dict(city='xiangyang', officer=999, troops=1001)),
+        for kind, payload in [('allocate', dict(city='xiangyang', officer=999, troops=10001)),
                 ('depart', dict(source='xiangyang', target='jiangxia', officers=[999])),
                 ('depart', dict(source='xiangyang', target='nanjun', officers=[999, 999])),
                 ('allocate', dict(city='nanjun', officer=255, troops=30))]:

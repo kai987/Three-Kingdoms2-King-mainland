@@ -10,6 +10,10 @@ from enum import Enum
 import re
 from typing import Iterable, Mapping
 
+OFFICER_TROOP_CAP = 10000
+BATTLE_OFFICERS_PER_SIDE = 10
+MAX_BATTLE_OFFICERS = 2 * BATTLE_OFFICERS_PER_SIDE
+
 
 def integer(value, low, high, label):
     if type(value) is not int or not low <= value <= high:
@@ -50,12 +54,12 @@ def deserialize_officer_ref(value, rules=None):
 @dataclass(frozen=True)
 class GameRules:
     city_officer_capacity: int = 99
-    battle_officers_per_side: int = 10
+    battle_officers_per_side: int = BATTLE_OFFICERS_PER_SIDE
     runtime_capacity: int = 1200
 
     def __post_init__(self):
         integer(self.city_officer_capacity, 1, 65534, 'city capacity')
-        integer(self.battle_officers_per_side, 1, 10, 'battle capacity')
+        integer(self.battle_officers_per_side, 1, BATTLE_OFFICERS_PER_SIDE, 'battle capacity')
         integer(self.runtime_capacity, 1, 65535, 'runtime capacity')
 
     def officer_id(self, value):
@@ -297,7 +301,7 @@ def initialize_officer(person: PersonDefinition, runtime_id: int, profile: Offic
         loyalty = 100
     else:
         integer(loyalty, 0, 99, 'scenario loyalty')
-    integer(troops, 0, 1000, 'initial troops')
+    integer(troops, 0, OFFICER_TROOP_CAP, 'initial troops')
     from .facility_equipment import WEAPONS, ARMORS
     integer(weapon_id, 0, len(WEAPONS)-1, 'weapon')
     integer(armor_id, 0, len(ARMORS)-1, 'armor')

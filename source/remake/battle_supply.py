@@ -7,9 +7,11 @@ Reading/quoting a battle never loads provisions or advances randomness.
 """
 from .errors import GameError
 from .march_supply import DENOMINATOR, OFFICER_UNITS, LIMIT, estimate
+from .officers import MAX_BATTLE_OFFICERS, OFFICER_TROOP_CAP
 
 SCHEMA = 'tk2-battle-supply-v1'
 BUDGET_DAYS = 30
+MAX_BATTLE_DAILY_UNITS = MAX_BATTLE_OFFICERS * (OFFICER_TROOP_CAP + OFFICER_UNITS)
 SIDES = ('attackers', 'defenders')
 _SIDE_FIELDS = {'owner', 'origin', 'loaded', 'initial_credit', 'received', 'consumed',
                 'remaining', 'credit_units', 'journal'}
@@ -282,7 +284,7 @@ def validate(state, battle):
                 if set(receipt) != {'kind','day','units','used','missing'} or receipt['day'] != days+1:
                     raise ValueError('Battle provision meal clock')
                 integer(receipt['day'],1,supply['days'])
-                integer(receipt['units'], 0, 22000)
+                integer(receipt['units'], 0, MAX_BATTLE_DAILY_UNITS)
                 used = min(remaining, (max(0,receipt['units']-credit)+999)//1000)
                 nutrition = credit+used*1000
                 missing = max(0,receipt['units']-nutrition)

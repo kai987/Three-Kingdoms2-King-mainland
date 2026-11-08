@@ -74,10 +74,12 @@ class EconomySupplyEventTests(unittest.TestCase):
         row.update(person_ids=[],city_ids=['home','enemy'],factions=['shu','wei'])
         self.check(row)
         self.check({**row,'details':{**details,'side':'defenders','outcome':'victory'}})
+        self.check({**row,'details':{**details,'daily_grain':202,'missing_units':202000}})
         self.reject_details(row,[dict(battle_id='battle-0'),dict(battle_id='<script>'),
             dict(side='attacker'),dict(days=0),dict(days=31),dict(days=True),
-            dict(grain=-1),dict(daily_grain=0),dict(daily_grain=23),
-            dict(missing_units=0),dict(missing_units=10001),dict(outcome='victory'),dict(extra=1)])
+            dict(grain=-1),dict(daily_grain=0),dict(daily_grain=203),
+            dict(missing_units=0),dict(missing_units=10001),
+            dict(daily_grain=202,missing_units=202001),dict(outcome='victory'),dict(extra=1)])
 
     def test_battle_grain_destination_is_optional_as_one_complete_buy_receipt(self):
         base=dict(actor='person-a',direction='buy',batches=3,grain=300,gold=30,rate=10)

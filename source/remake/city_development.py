@@ -8,11 +8,12 @@ the extension, debit stocks, or advance the campaign random generator.
 from copy import deepcopy
 
 from . import command_books
-from .city_economy import income_at, tier_at
+from .city_economy import income_at, opening_development, tier_at
 from .errors import GameError
 from .officers import ref_sort_key
 
-SCHEMA = 'tk2-city-development-v1'
+LEGACY_SCHEMA = 'tk2-city-development-v1'
+SCHEMA = 'tk2-city-development-v2'
 LIMITS = dict(land=999, industry=999, population=999900, governance=100)
 ACTIONS = dict(develop_land='land', develop_industry='industry', develop_population='population')
 DEFAULTS = {tier: dict(land=150*size, industry=150*size,
@@ -50,7 +51,7 @@ def _metrics(row):
         raise ValueError('City development metrics')
 
 
-def opening_view(catalog, city_id):
+def opening_view(catalog, city_id, *, legacy=False):
     """Opening data uses the scenario date, never the current conquered tier."""
     if not isinstance(city_id, str) or city_id not in catalog.map_cities:
         raise ValueError('Unknown city development opening identity')
@@ -62,15 +63,18 @@ def opening_view(catalog, city_id):
     if not isinstance(override, dict) or set(override)-set(LIMITS):
         raise ValueError('City development opening fields')
     tier = tier_at(data, city_id, data['start_year'], data['start_month'])
-    row = dict(DEFAULTS[tier], **override)
+    row = dict(DEFAULTS[tier])
+    if not legacy:
+        row.update(opening_development(data, city_id, tier))
+    row.update(override)
     _metrics(row)
     if row['population'] == 0:
         raise ValueError('City development opening population must be positive')
     return row
 
 
-def _new_city(game, city):
-    opening = opening_view(game.catalog, city.id)
+def _new_city(game, city, *, legacy=False):
+    opening = opening_view(game.catalog, city.id, legacy=legacy)
     return dict(owner=city.owner, **opening, baseline=deepcopy(opening), cooldown=0)
 
 
@@ -86,9 +90,11 @@ def synchronize(game, state):
     if 'city_development' not in state.extension:
         state.extension['city_development'] = empty(game, state)
     pool = state.extension['city_development']
+    legacy = pool['schema'] == LEGACY_SCHEMA
     for key, city in state.cities.items():
-        row = pool['cities'].setdefault(key, _new_city(game, city))
-        row['owner'] = city.owner
+        if key not in pool['cities']:
+            pool['cities'][key] = _new_city(game, city, legacy=legacy)
+        pool['cities'][key]['owner'] = city.owner
     for key in set(pool['cities'])-set(state.cities):
         del pool['cities'][key]
     for owner in game.catalog.factions:
@@ -340,7 +346,7 @@ def validate(game, state):
     if 'city_development' not in state.extension:
         return
     pool = state.extension['city_development']
-    if (not isinstance(pool, dict) or set(pool) != _POOL_FIELDS or pool['schema'] != SCHEMA
+    if (not isinstance(pool, dict) or set(pool) != _POOL_FIELDS or pool['schema'] not in (LEGACY_SCHEMA, SCHEMA)
             or not isinstance(pool['cities'], dict) or set(pool['cities']) != set(state.cities)):
         raise ValueError('City development schema')
     opening_month = game.catalog.data['start_year']*12+game.catalog.data['start_month']-1
@@ -355,5 +361,5 @@ def validate(game, state):
         if not isinstance(row, dict) or set(row) != _CITY_FIELDS or row['owner'] != city.owner or not _int(row['cooldown'], 0, 6):
             raise ValueError('City development city fields')
         _metrics({field: row[field] for field in LIMITS})
-        if row['baseline'] != opening_view(game.catalog, key):
+        if row['baseline'] != opening_view(game.catalog, key, legacy=pool['schema'] == LEGACY_SCHEMA):
             raise ValueError('City development immutable opening reference')

@@ -6,7 +6,9 @@ conquests, consume random numbers, or acknowledge/advance a game from the UI.
 from copy import deepcopy
 import re
 from . import historical_campaigns
-from .officers import ref_sort_key, is_generated_ref
+from .battle_supply import DENOMINATOR, MAX_BATTLE_DAILY_UNITS
+from .dated_events import FOUNDING_TROOP_TARGET
+from .officers import OFFICER_TROOP_CAP, ref_sort_key, is_generated_ref
 
 LIMIT = 100
 STAFF_KINDS = {'staff_candidate', 'staff_hired', 'staff_declined', 'staff_expired',
@@ -195,11 +197,12 @@ def _validate_battle_supply_event(row):
             or re.fullmatch(r'battle-[1-9][0-9]{0,9}',d['battle_id']) is None
             or d['side'] not in ('attackers','defenders')):
         raise ValueError('Battle supply event fields')
-    for key, low, high in (('days',1,30),('grain',0,100000000),('daily_grain',1,22),
-                           ('missing_units',1,22000)):
+    for key, low, high in (('days',1,30),('grain',0,100000000),
+                           ('daily_grain',1,MAX_BATTLE_DAILY_UNITS//DENOMINATOR),
+                           ('missing_units',1,MAX_BATTLE_DAILY_UNITS)):
         if type(d[key]) is not int or not low <= d[key] <= high:
             raise ValueError('Battle supply event values')
-    if (d['missing_units']>d['daily_grain']*1000
+    if (d['missing_units']>d['daily_grain']*DENOMINATOR
             or d['outcome'] != ('retreat' if d['side']=='attackers' else 'victory')):
         raise ValueError('Battle supply event receipt')
 
@@ -336,7 +339,7 @@ def _validate_tactic_event(row):
                         or tick['id'].strip()!=tick['id'] or tick['id'] in seen
                         or any(type(tick[key]) is not int for key in ('before','remaining','troops_before','troops_after','loss'))
                         or not 1<=tick['before']<=9 or tick['remaining']!=tick['before']-1
-                        or not 0<=tick['troops_after']<=tick['troops_before']<=1000
+                        or not 0<=tick['troops_after']<=tick['troops_before']<=OFFICER_TROOP_CAP
                         or tick['loss']!=tick['troops_before']-tick['troops_after']
                         or not min(80,tick['troops_before'])<=tick['loss']<=min(150,tick['troops_before'])):
                     raise ValueError('Tactic qimen tick snapshot')
@@ -562,7 +565,7 @@ def validate(campaign, state):
                     or row['day']!=1 or [row['year'],row['month']]!=rule['date']
                     or row['city_ids']!=rule['cities'] or row['factions']!=[rule['faction']]
                     or not row['person_ids'] or not set(row['person_ids'])<=set(rule['members'])
-                    or type(d['reserves']) is not int or not 0<=d['reserves']<=1000*len(row['person_ids'])
+                    or type(d['reserves']) is not int or not 0<=d['reserves']<=FOUNDING_TROOP_TARGET*len(row['person_ids'])
                     or (row['kind']=='faction_founded' and
                         (d['reason']!='formed' or rule['ruler'] not in row['person_ids']))
                     or (row['kind']=='faction_founding_skipped' and
@@ -574,7 +577,7 @@ def validate(campaign, state):
             if (set(d)!=DETAILS[row['kind']] or rule is None or row['audience']!='world'
                     or row['day']!=1 or [row['year'],row['month']]!=rule['date']
                     or row['factions']!=[rule['faction']] or row['person_ids']!=[*rule['victims'],rule['successor']]
-                    or type(d['released_troops']) is not int or not 0<=d['released_troops']<=1000*len(rule['victims'])
+                    or type(d['released_troops']) is not int or not 0<=d['released_troops']<=OFFICER_TROOP_CAP*len(rule['victims'])
                     or (row['kind']=='faction_coup' and (d['reason']!='executed' or not row['city_ids']))
                     or (row['kind']=='faction_coup_skipped' and
                         (d['reason']!='conditions_changed' or d['released_troops']))):

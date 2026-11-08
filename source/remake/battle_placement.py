@@ -7,6 +7,7 @@ until their turn. Reads never initialize a legacy battle or draw random values.
 from copy import deepcopy
 
 from .errors import GameError
+from .officers import OFFICER_TROOP_CAP
 
 SCHEMA = 'tk2-battle-placement-v1'
 VIEW_SCHEMA = 'tk2-battle-placement-view-v1'
@@ -107,7 +108,7 @@ def validate(game,state,battle):
     for current in SIDES:
         for unit in battle[current]:
             key = _ident(unit); support = x['support'][key]
-            _require(type(unit.get('start')) is int and 1 <= unit['start'] <= 1000
+            _require(type(unit.get('start')) is int and 1 <= unit['start'] <= OFFICER_TROOP_CAP
                 and type(unit.get('troops')) is int and unit['troops'] == unit['start']
                 and type(support.get('health')) is int and support['health'] == state.officers[unit['id']].health
                 and type(support.get('energy')) is int and support['energy'] == 18

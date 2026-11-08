@@ -69,6 +69,23 @@ class MarchSupplyTests(unittest.TestCase):
         self.assertEqual((supply['elapsed_days'],supply['remaining']),(11,0))
         self.assertEqual(march_supply.consume(supply,1,quote,1000),0)
 
+    def test_ten_thousand_soldiers_are_allocated_marched_and_restored(self):
+        game = self.game()
+        source = game.state.cities['xiangyang']
+        ident = source.roster.officer_ids[1]
+        source.reserves += 10000
+        game.state.soldiers['initial'] += 10000
+        game.command('allocate', dict(city=source.id, officer=ident, troops=10000), game.revision)
+        _, march = self.queue(game)
+        self.assertEqual(march['supply']['troops'], 10000)
+        self.assertEqual(march['supply']['loaded'], 556)  # 253 march + 303 battle
+        game = self.restore(game)
+        self.advance(game)
+        march = game.state.extension['travel']['marches'][0]
+        self.assertEqual(march['supply']['consumed'], 101)
+        self.assertEqual(game.state.officers[ident].troops, 10000)
+        self.restore(game)
+
     def test_attack_and_transfer_tick_real_days_roundtrip_and_never_rebill_arrival(self):
         for transfer in (False,True):
             with self.subTest(transfer=transfer):

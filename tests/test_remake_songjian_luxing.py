@@ -169,12 +169,15 @@ class SongJianLuXingTests(unittest.TestCase):
         self.assertEqual(len(state.cities['anding'].roster.officer_ids), 14)
         for ident in state.cities['anding'].roster.officer_ids:
             self.assertEqual(state.officers[ident].faction_id, 'dong_zhuo')
-            self.assertEqual(state.officers[ident].troops, 300)
+            self.assertGreaterEqual(state.officers[ident].troops, 300)
             plan = game.catalog.data['era_assignments'][state.officers[ident].person_id]
             self.assertEqual((plan['faction'], plan['city']), ('dong_zhuo', 'anding'))
         # Yan Xing is now also a local candidate; his former300 troops return
         # to the same city rather than disappearing or creating soldiers.
-        self.assertEqual(state.cities['wuwei'].reserves, 1860)
+        wuwei = state.cities['wuwei']
+        self.assertEqual(wuwei.reserves + sum(state.officers[i].troops
+            for i in wuwei.roster.officer_ids), 1860 + sum(
+            row['troops'] for row in game.catalog.data['initial_officers'] if row['city'] == 'wuwei'))
         self.assertIsNone(state.officers[165].faction_id)
         self.assertEqual(state.officers[165].troops, 0)
         self.assertEqual(state.extension['free_locations']['165'], 'jincheng')

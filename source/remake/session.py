@@ -20,11 +20,12 @@ def faction_resources(catalog, state=None):
             for field in ('gold','grain','reserves'):totals[owner][field]+=getattr(city,field)
     else:
         data=catalog.data
+        stocks,_=catalog.opening_garrisons
         for key in data['active_cities']:
             owner=data['initial_owners'][key]
             if owner not in totals:continue
             totals[owner]['cities']+=1
-            values=data.get('initial_city_resources',{}).get(key,data['initial_resources'])
+            values=stocks[key]
             for field in ('gold','grain','reserves'):totals[owner][field]+=values[field]
     return totals
 
@@ -181,6 +182,7 @@ class CampaignSession:
             if not isinstance(city,str) or city not in d['active_cities']:
                 raise GameError('请选择本剧本开放的城池。')
             officers=[]
+            stocks,troops=c.opening_garrisons
             from .equipment import initial_view
             from .city_development import opening_view
             preview_game=self.game if c is self.game.catalog else Campaign(c)
@@ -188,7 +190,7 @@ class CampaignSession:
                 if row['city']!=city:continue
                 ident=c.ids[row['person_id']];profile=c.profiles[ident]
                 officers.append(dict(id=ident,person_id=row['person_id'],name=c.name(ident),martial_strength=profile.martial_strength,
-                                     intellect=profile.intellect,virtue=profile.virtue,troops=row['troops'],
+                                     intellect=profile.intellect,virtue=profile.virtue,troops=troops[row['person_id']],
                                      experience=0,tier=0,
                                      **opening_values(c,ident,
                                                          faction_id=d['initial_owners'][city],is_ruler=row.get('ruler',False)),
@@ -206,7 +208,7 @@ class CampaignSession:
                 city=dict(id=city,owner=owner,treasure=treasure,facilities=facilities,city_development=opening_view(c,city),owner_name=c.factions[owner]['name'] if owner!='neutral' else neutral_name,
                     terrain=c.map_cities[city].get('terrain'),officers=officers,
                     profile=d.get('city_profiles',{}).get(city),income=d.get('city_income',{}).get(city),history=d.get('city_history',{}).get(city),
-                    **d.get('initial_city_resources',{}).get(city,d['initial_resources'])))
+                    **stocks[city]))
 
     def load_save(self, save, revision):
         with self.lock:

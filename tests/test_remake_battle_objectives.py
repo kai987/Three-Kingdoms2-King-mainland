@@ -155,7 +155,7 @@ class BattleObjectiveTests(unittest.TestCase):
         flow=game.state.extension['command_books']['factions']['shu']['allocation']['active']['id']
         command(game,'allocation_close',city='xiangyang',flow=flow)
         saved=game.export_save()
-        with self.assertRaises((GameError,ValueError)):command(game,'allocate',city='xiangyang',officer=146,troops=1001)
+        with self.assertRaises((GameError,ValueError)):command(game,'allocate',city='xiangyang',officer=146,troops=10001)
         self.assertEqual(game.export_save(),saved)
         command(game,'depart',source='xiangyang',target='nanyang',officers=[146])
         game.validate(game.state)

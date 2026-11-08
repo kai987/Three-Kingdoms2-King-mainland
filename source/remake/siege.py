@@ -9,12 +9,16 @@ from collections import deque
 from copy import deepcopy
 from .errors import GameError
 from . import battle_grid, presentation, equipment
+from .officers import OFFICER_TROOP_CAP
 
 SCHEMA = 'tk2-siege-v1'
 SIDES = ('attackers', 'defenders')
 KINDS = ('infantry', 'archer', 'cavalry', 'general')
 ORDERS = ('advance', 'retreat', 'wait', 'surround')
 MAX_ROUNDS = 200
+SQUAD_SLOTS = 10
+NATIVE_SQUAD_SIZE = 100
+MAX_SQUAD_SIZE = OFFICER_TROOP_CAP // SQUAD_SLOTS
 # physical14, X pointers B794 / Y pointers B7A0; slot0 is the commander.
 FORMATIONS = (
  ((1,2,2,2,3,3,3,4,4,5,3),(5,1,2,3,4,5,6,7,8,9,9)),
@@ -36,7 +40,7 @@ WALLS = frozenset(((6,0),(11,0),(11,1),(6,2),(11,2),(6,3),(7,3),
  (8,3),(9,3),(11,3),(6,7),(7,7),(8,7),(9,7),(11,7),(6,8),(11,8),(11,9)))
 FIELDS = {'schema','actor','target','fort','map_id','cell','stage','round',
           'formations','orders','units'}
-OPTIONAL_FIELDS = {'mode','piece_orders','events','attack_bases'}
+OPTIONAL_FIELDS = {'mode','piece_orders','events','attack_bases','squad_sizes'}
 PIECE_FIELDS = {'id','side','kind','x','y','troops','health','withdrawn'}
 EVENT_FIELDS = {'kind','actor','target','from','to','loss'}
 EVENT_KINDS = ('move','melee','arrow','retreat','surround')
@@ -75,6 +79,10 @@ def soldier_damage(base, troops, kind, target_kind, weapon=0, armor=0, ranged=Fa
 
 def _mode(row):
     return row.get('mode','siege')
+
+
+def _squad_size(row, side):
+    return row.get('squad_sizes', {}).get(side, NATIVE_SQUAD_SIZE)
 
 
 def _order(row,piece):
@@ -121,24 +129,29 @@ def _position(side, kind, slot, formation, fortified):
 
 
 def _deploy(game,state,row):
-    battle=state.battle;pieces=[]
+    battle=state.battle;pieces=[];squad_sizes={}
     for side in SIDES:
         unit=_main(battle,row,side);officer=state.officers[unit['id']]
-        if type(unit['troops'])is not int or not 1<=unit['troops']<=1000:
-            raise GameError('每名武將須帶兵1至1000人，最多十隊。')
-        count=(unit['troops']+99)//100
+        total=unit['troops']
+        if type(total)is not int or not 1<=total<=OFFICER_TROOP_CAP:
+            raise GameError('每名武將須帶兵1至10000人，最多十隊。')
+        count=min(SQUAD_SLOTS,(total+NATIVE_SQUAD_SIZE-1)//NATIVE_SQUAD_SIZE)
+        size=max(NATIVE_SQUAD_SIZE,(total+count-1)//count)
+        squad_sizes[side]=size
         group=0 if unit['martial']>=80 else 1 if unit['martial']>=50 else 2
         a,b=THRESHOLDS[min(7,officer.tier)][group]
         fortified=unit['id']==row['fort']
         if fortified:a=0
         for slot in range(count+1):
             kind='general' if slot==0 else 'infantry' if slot<a else 'archer' if slot<b else 'cavalry'
-            troops=0 if slot==0 else min(100,unit['troops']-(slot-1)*100)
+            troops=0 if slot==0 else min(size,total-(slot-1)*size)
             health=battle['extended']['support'][str(unit['id'])]['health'] if slot==0 else troops
             x,y=_position(side,kind,slot,row['formations'][side] or 0,fortified)
             pieces.append(dict(id=('a'if side=='attackers'else'd')+str(slot),side=side,
                                kind=kind,x=x,y=y,troops=troops,health=health,withdrawn=False))
     row['units']=pieces
+    if any(size>NATIVE_SQUAD_SIZE for size in squad_sizes.values()):
+        row['squad_sizes']=squad_sizes
 
 
 def begin(game,state,actor,target,context):
@@ -292,8 +305,12 @@ def _hit(game,state,row,piece,target,*,ranged=False):
     acting_officer=state.officers[actor['id']];defending_officer=state.officers[victim['id']]
     weapon=equipment.item('weapon',acting_officer.weapon_id)['power']
     armor=equipment.item('armor',defending_officer.armor_id)['power']
-    count=piece['health']if piece['kind']=='general'else piece['troops']
+    size=_squad_size(row,piece['side'])
+    count=(piece['health'] if piece['kind']=='general'
+           else (piece['troops']*NATIVE_SQUAD_SIZE+size-1)//size)
     loss=soldier_damage(row['attack_bases'][piece['side']],count,piece['kind'],target['kind'],weapon,armor,ranged)
+    if piece['kind']!='general' and target['kind']!='general':
+        loss=loss*size//NATIVE_SQUAD_SIZE
     # The city training rule predates this soldier reconstruction. Preserve it
     # explicitly after original arithmetic; it is not a native coefficient.
     support=battle['extended']['support'][str(victim['id'])]
@@ -493,13 +510,19 @@ def validate(game,state,battle):
     if any(value is None and(side!=player or row['stage']!='formation')for side,value in row['formations'].items()):raise ValueError('Invalid siege waiting formation')
     if set(row['orders'])!=set(SIDES)or any(not isinstance(o,dict)or set(o)!=set(KINDS)or any(v not in ORDERS for v in o.values())for o in row['orders'].values()):raise ValueError('Invalid siege orders')
     if not isinstance(row['units'],list)or not 4<=len(row['units'])<=22:raise ValueError('Invalid siege pieces')
+    if 'squad_sizes' in row:
+        sizes=row['squad_sizes']
+        if (not isinstance(sizes,dict) or set(sizes)!=set(SIDES)
+                or any(type(size)is not int or not NATIVE_SQUAD_SIZE<=size<=MAX_SQUAD_SIZE for size in sizes.values())
+                or max(sizes.values())==NATIVE_SQUAD_SIZE):
+            raise ValueError('Invalid siege squad sizes')
     seen=set();occupied=set()
     for p in row['units']:
         if (not isinstance(p,dict)or set(p)!=PIECE_FIELDS or p['side']not in SIDES or p['kind']not in KINDS
                 or not isinstance(p['id'],str)or p['id']in seen
                 or type(p['x'])is not int or not 0<=p['x']<16 or type(p['y'])is not int or not 0<=p['y']<10
-                or type(p['troops'])is not int or not 0<=p['troops']<=100
-                or type(p['health'])is not int or not 0<=p['health']<=100 or type(p['withdrawn'])is not bool
+                or type(p['troops'])is not int or not 0<=p['troops']<=_squad_size(row,p['side'])
+                or type(p['health'])is not int or not 0<=p['health']<=(100 if p['kind']=='general' else _squad_size(row,p['side'])) or type(p['withdrawn'])is not bool
                 or p['kind']=='general'and p['troops']!=0 or p['kind']!='general'and p['troops']!=p['health']):raise ValueError('Invalid siege piece')
         seen.add(p['id'])
         if _live(p):
@@ -510,6 +533,8 @@ def validate(game,state,battle):
         pieces=[p for p in row['units']if p['side']==side];unit=_main(battle,row,side)
         if (sum(p['kind']=='general'for p in pieces)!=1
                 or not 2<=len(pieces)<=11
+                or (_squad_size(row,side)>NATIVE_SQUAD_SIZE
+                    and (len(pieces)!=SQUAD_SLOTS+1 or _squad_size(row,side)>(unit['start']+SQUAD_SLOTS-1)//SQUAD_SLOTS))
                 or {p['id']for p in pieces}!={(('a'if side=='attackers'else'd')+str(i))for i in range(len(pieces))}
                 or unit['troops']<=0
                 or any(p['withdrawn']for p in pieces if p['kind']=='general')
@@ -528,10 +553,11 @@ def validate(game,state,battle):
             raise ValueError('Invalid soldier attack bases')
     events=row.get('events',[])
     if not isinstance(events,list)or len(events)>MAX_EVENTS:raise ValueError('Invalid soldier animation receipt')
+    max_loss=max(_squad_size(row,side) for side in SIDES)
     for event in events:
         if (not isinstance(event,dict)or set(event)!=EVENT_FIELDS or event['kind']not in EVENT_KINDS
                 or event['actor']not in seen or event['target']is not None and event['target']not in seen
-                or type(event['loss'])is not int or not 0<=event['loss']<=100
+                or type(event['loss'])is not int or not 0<=event['loss']<=max_loss
                 or any(not isinstance(event[k],dict)or set(event[k])!={'x','y'}
                        or type(event[k]['x'])is not int or not 0<=event[k]['x']<16
                        or type(event[k]['y'])is not int or not 0<=event[k]['y']<10 for k in ('from','to'))):

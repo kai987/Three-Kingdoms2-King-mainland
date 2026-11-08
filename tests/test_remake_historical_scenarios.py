@@ -834,7 +834,10 @@ class Nanzhong225SetupTests(unittest.TestCase):
         ma_chao = self.catalog.ids['san14-candidate-0769']
         self.assertNotIn(ma_chao, game.state.officers)
         self.assertEqual(self.catalog.definitions['san14-candidate-0769'].death_year, 222)
-        self.assertEqual(game.state.cities['shujun'].reserves, 5090)
+        chengdu = game.state.cities['shujun']
+        self.assertEqual(chengdu.reserves + sum(game.state.officers[i].troops
+            for i in chengdu.roster.officer_ids), 5090 + sum(
+            row['troops'] for row in self.catalog.data['initial_officers'] if row['city'] == 'shujun'))
         self.assertEqual(game.state.soldiers['initial'], 271350)
         before = game.to_dict()
         game._spawn_eligible(game.state)

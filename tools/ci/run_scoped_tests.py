@@ -219,11 +219,14 @@ def scenario_smoke(identities,backends=('python','rust'),*,root=ROOT,turns=3):
                 state=replay.game.state
                 require((state.year,state.month,state.day,state.turn)==(catalog.data['start_year'],catalog.data['start_month'],1,1),f'{identity}: opening date differs')
                 require(set(state.cities)==set(catalog.data['active_cities']),f'{identity}: opening active cities differ')
+                opening_stocks,opening_troops=catalog.opening_garrisons
                 for city in state.cities.values():
                     require(city.owner==catalog.data['initial_owners'][city.id],f'{identity}: initial owner differs for {city.id}')
-                    stock=catalog.data['initial_city_resources'][city.id]
+                    stock=opening_stocks[city.id]
                     require(all(getattr(city,key)==stock[key]for key in('gold','grain','reserves')),f'{identity}: initial stock differs for {city.id}')
                     require(len(city.roster.officer_ids)<=99,f'{identity}: opening officer capacity exceeded')
+                    require(all(state.officers[oid].troops==opening_troops[state.officers[oid].person_id]
+                                for oid in city.roster.officer_ids),f'{identity}: opening garrison differs for {city.id}')
                 result=replay.run(turns);saved=replay.game.export_save();replay.game.validate(replay.game.state)
                 require(result['completed_turns']==turns,f'{identity}: three-turn smoke ended before its coverage target')
                 outputs.append({k:v for k,v in result.items()if k!='backend'});saves.append(saved)

@@ -121,7 +121,7 @@ async function acceptance(browser,kind,viewport){
    assert.equal(events[0].details.founding_id,'liangzhou-revolt-184-11');assert.equal(events[1].details.founding_id,'song-jian-rise-184-11');
    assert.deepEqual([...events[0].city_ids].sort(),['jincheng','tianshui']);assert.equal(events[0].person_ids.length,4);
    assert(!events[0].person_ids.includes(PEOPLE.song),'The narrative participant is not duplicated into the active Bian roster');
-   for(const event of events)assert(event.details.reserves>=0&&event.details.reserves<=999*event.person_ids.length);
+   for(const event of events)assert(event.details.reserves>=0&&event.details.reserves<=1000*event.person_ids.length);
   }else if(kind==='retirement'){
    assert.equal(after.state.year,214);assert.equal(after.state.month,10);
    const retired=officer(after,PEOPLE.song);assert.equal(retired.alive,false);assert.equal(retired.troops,0);assert.equal(retired.faction_id,null);

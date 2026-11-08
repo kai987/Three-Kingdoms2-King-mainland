@@ -11,6 +11,7 @@ import json
 from pathlib import Path
 
 from .errors import GameError
+from .officers import MAX_BATTLE_OFFICERS, OFFICER_TROOP_CAP
 
 SCHEMA = 'tk2-battle-tactical-v1'
 VIEW_SCHEMA = 'tk2-battle-tactical-view-v1'
@@ -93,13 +94,13 @@ def _troops(battle, side):
 
 
 def daily_points(troops):
-    if not _int(troops, 0, 20000):
+    if not _int(troops, 0, MAX_BATTLE_OFFICERS * OFFICER_TROOP_CAP):
         raise ValueError('Invalid tactical soldier total')
     return DAILY_POINTS[min(troops // 1000, 9)]
 
 
 def point_cap(troops):
-    if not _int(troops, 0, 20000):
+    if not _int(troops, 0, MAX_BATTLE_OFFICERS * OFFICER_TROOP_CAP):
         raise ValueError('Invalid tactical soldier total')
     return POINT_CAPS[min(troops // 1000, 9)]
 
@@ -169,8 +170,8 @@ def validate(game, state, battle):
         starts = [unit.get('start') for unit in battle[side]]
         original_starts = [unit.get('start') for current in SIDES for unit in battle[current]
             if battle['extended'].get('defections', {}).get(str(unit['id']), {}).get('original_side', current)==side]
-        if (any(not _int(amount, 1, 1000) for amount in starts)
-                or any(not _int(amount, 1, 1000) for amount in original_starts)
+        if (any(not _int(amount, 1, OFFICER_TROOP_CAP) for amount in starts)
+                or any(not _int(amount, 1, OFFICER_TROOP_CAP) for amount in original_starts)
                 or row['points'][side] > point_cap(max(sum(starts),sum(original_starts)))):
             # Casualties may lower tomorrow's cap below today's lawful carried
             # balance. The immutable opening army is still an absolute ceiling.
@@ -547,7 +548,7 @@ def view(game, state, battle):
     return dict(schema=VIEW_SCHEMA, battle_id=battle['id'], round=battle['round'], map_id=row['map_id'],
         grid=dict(columns=COLUMNS, rows=ROWS, tile_size=TILE_SIZE), side=row['side'],
         camp=dict(zip(('x','y'),_field(battle)['camp'])), facilities=[dict(service) for service in _field(battle).get('services',())],
-        maximum_troops=1000, deployment=deepcopy(battle['extended'].get('deployment')),placement=placement,
+        maximum_troops=OFFICER_TROOP_CAP, deployment=deepcopy(battle['extended'].get('deployment')),placement=placement,
         auto_deployment=automatic,
         points=deepcopy(row['points']), caps={side: point_cap(_troops(battle, side)) for side in SIDES},
         can_end=not placing and state.phase == 'battle' and row['side'] == own and not battle['extended']['duel'],

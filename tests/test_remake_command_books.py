@@ -67,7 +67,7 @@ class CommandBooks(unittest.TestCase):
         self.assertEqual(books.remaining(self.game.state, 'shu'), total - 1)
         before = self.game.export_save()
         with self.assertRaises((ValueError, GameError)):
-            self.cmd('allocate', dict(city='xiangyang', officer=999, troops=1001))
+            self.cmd('allocate', dict(city='xiangyang', officer=999, troops=10001))
         self.assertEqual(self.game.export_save(), before)
 
     def test_city_wide_distribution_pays_once_across_multiple_officers(self):
@@ -89,15 +89,17 @@ class CommandBooks(unittest.TestCase):
         self.game.validate(self.game.state)
 
     def test_confirmed_batch_commits_all_officers_and_pays_only_one_book(self):
+        self.game.state.cities['xiangyang'].reserves += 9000
+        self.game.state.soldiers['initial'] += 9000
         before = deepcopy(self.game.state)
         city = before.cities['xiangyang']
         first, second, unchanged = city.roster.officer_ids[:3]
         self.cmd('allocate', dict(city=city.id, allocations=[
-            dict(officer=first, troops=1000), dict(officer=second, troops=0),
+            dict(officer=first, troops=10000), dict(officer=second, troops=0),
             dict(officer=unchanged, troops=before.officers[unchanged].troops)], flow=None))
         state = self.game.state
-        self.assertEqual((state.officers[first].troops, state.officers[second].troops), (1000, 0))
-        delta = 1000 - before.officers[first].troops - before.officers[second].troops
+        self.assertEqual((state.officers[first].troops, state.officers[second].troops), (10000, 0))
+        delta = 10000 - before.officers[first].troops - before.officers[second].troops
         self.assertEqual(state.cities[city.id].reserves, city.reserves - delta)
         self.assertEqual(state.soldiers, before.soldiers)
         self.assertEqual(state.rng, before.rng)
@@ -153,7 +155,7 @@ class CommandBooks(unittest.TestCase):
             None, {}, [], [valid] * 100, [valid, valid], [valid, None],
             [valid, dict(officer=second)], [valid, dict(officer=second, troops=200, extra=True)],
             [valid, dict(officer=second, troops=True)], [valid, dict(officer=True, troops=200)],
-            [valid, dict(officer=second, troops=-1)], [valid, dict(officer=second, troops=1001)],
+            [valid, dict(officer=second, troops=-1)], [valid, dict(officer=second, troops=10001)],
             [valid, dict(officer=1200, troops=200)],
             [valid, dict(officer=self.game.state.cities['nanyang'].roster.officer_ids[0], troops=200)]
         )]
@@ -240,7 +242,7 @@ class CommandBooks(unittest.TestCase):
             troops=self.game.state.officers[ident].troops, flow=None))
         self.assertEqual(self.game.export_save(), before)
         self.assertIsNone(books.active_allocation(self.game.state, 'shu'))
-        for troops in (-1, 1001, True):
+        for troops in (-1, 10001, True):
             with self.assertRaises((GameError, ValueError)):
                 self.cmd('allocate', dict(city=city.id, officer=ident, troops=troops, flow=None))
             self.assertEqual(self.game.export_save(), before)
