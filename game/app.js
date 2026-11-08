@@ -378,6 +378,43 @@ function setPreviewFaction(id,focus=null,reveal=false){
  }
  return true;
 }
+function layoutCityLabels(cities,offsets,world){
+ const above=[0,-17,'middle'];
+ const nearby=[above,[0,38,'middle'],[-23,8,'end'],[23,8,'start'],
+  [-23,-13,'end'],[23,-13,'start'],[-23,29,'end'],[23,29,'start'],
+  [-32,-19,'end'],[32,-19,'start'],[0,-36,'middle'],[0,54,'middle'],
+  [-8,-17,'middle'],[8,-17,'middle'],[-23,22,'end'],[23,22,'start']];
+ const positions=cities.map(c=>mapPosition(c));
+ const icons=positions.map(([x,y])=>[x-17,y-9,x+17,y+17]);
+ const placed=[];
+ const overlaps=(a,b)=>a[0]<b[2]&&a[2]>b[0]&&a[1]<b[3]&&a[3]>b[1];
+ const top=world.y||0;
+ const plans=cities.map((city,index)=>{
+  const [x,y]=positions[index],name=cityName(city.id);
+  // The map uses 16-unit Unifont with a 3-unit outline.
+  const width=Array.from(GameI18n.t(name)).length*16;
+  const ownFrame=[x-21,y-13,x+21,y+21];
+  const offset=offsets[city.id];
+  const preferred=offset?.[0]===0&&offset[1]===-24&&offset[2]==='middle'?above:offset||above;
+  const unique=new Map([preferred,...nearby].map(point=>[point.join(','),point]));
+  const candidates=[...unique.values()].map(([dx,dy,anchor])=>{
+   const tx=x+dx,ty=y+dy,left=tx-(anchor==='middle'?width/2:anchor==='end'?width:0);
+   return {x:tx,y:ty,anchor,bounds:[left-2,ty-16,left+width+2,ty+4]};
+  });
+  const fit=({bounds:b})=>b[0]>=world.x&&b[1]>=top&&b[2]<=world.x+world.width&&b[3]<=top+world.height
+   &&!overlaps(b,ownFrame)&&!icons.some(icon=>overlaps(b,icon));
+  return {city,name,index,candidates:candidates.filter(fit),fallback:candidates[0]};
+ });
+ // Give the most crowded cities first choice; retain board order for drawing.
+ const labels=[];
+ for(const {city,name,index,candidates,fallback} of plans.sort((a,b)=>a.candidates.length-b.candidates.length)){
+  const label=candidates.find(({bounds})=>!placed.some(other=>overlaps(bounds,other)))||fallback;
+  placed.push(label.bounds);
+  labels[index]={city,name,...label};
+ }
+ return labels;
+}
+
 function renderMap(){
  const game=view.game,preview=setupPreview,owners=preview?.initial_owners||Object.fromEntries(Object.values(game?.cities||{}).map(c=>[c.id,c.owner]));
  const board=preview?.map_cities||view.catalog.cities;
@@ -436,7 +473,7 @@ function renderMap(){
   const outline=`<use class="castle-border" href="#castle-outline-pixels" x="${x}" y="${y}" fill="${owner==='neutral'?'#fff':'#000'}"/>`;
   const colored=`<use class="castle-fill" href="#castle-fill-pixels" x="${x}" y="${y}" fill="${mapColor(owner)}"/>`;
   const actionable=mapAction?.targets.includes(c.id);
-  return `<g role="button" tabindex="0" class="city-hit ${owner==='neutral'?'unowned':''} ${focused===c.id?'selected':''} ${preview&&owner===preview.faction?'preview-owned':''} ${mapAction?(actionable?'action-target':'action-unavailable'):''}" data-city="${c.id}" data-owner="${owner}"${mapAction?` data-action-eligible="${!!actionable}"`:''} aria-label="${escapeHtml(cityName(c.id))}，${escapeHtml(ownerName(owner,c.id))}${actionable?'，可选择目标':''}"><title>${escapeHtml(cityName(c.id))} · ${escapeHtml(ownerName(owner,c.id))}</title>${outline}${colored}<rect class="city-outline" x="${x-21}" y="${y-21}" width="42" height="42"/></g>`;
+  return `<g role="button" tabindex="0" class="city-hit ${owner==='neutral'?'unowned':''} ${focused===c.id?'selected':''} ${preview&&owner===preview.faction?'preview-owned':''} ${mapAction?(actionable?'action-target':'action-unavailable'):''}" data-city="${c.id}" data-owner="${owner}"${mapAction?` data-action-eligible="${!!actionable}"`:''} aria-label="${escapeHtml(cityName(c.id))}，${escapeHtml(ownerName(owner,c.id))}${actionable?'，可选择目标':''}"><title>${escapeHtml(cityName(c.id))} · ${escapeHtml(ownerName(owner,c.id))}</title>${outline}${colored}<rect class="city-hit-area" x="${x-21}" y="${y-21}" width="42" height="42" fill="transparent"/><rect class="city-outline" x="${x-20}" y="${y-11}" width="40" height="30"/></g>`;
  }).join('');
  const extras=preview?.road_additions||view.catalog.road_additions;
  const hazardous=!!(preview?preview.travel_hazards:view.catalog.travel_hazards);
@@ -472,9 +509,9 @@ function renderMap(){
   return `<g data-regional-road="${r.from}-${r.to}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;
  })).join('');
  const offsets=preview?.city_label_offsets||view.catalog.city_label_offsets||{};
- const labels=cityLabels==='none'?'':active.filter(c=>cityLabels==='all'||(['giant','large'].includes(cityLabels)?cityProfiles[c.id]?.tier===cityLabels:added.includes(c.id)||view.catalog.map_presentation.labelled_city_ids.includes(c.id)||c.id===focused)).map(c=>{
-  const [x,y]=mapPosition(c),[dx,dy,anchor]=offsets[c.id]||[0,-24,'middle'];return `<text class="map-city-name" x="${x+dx}" y="${y+dy}" text-anchor="${anchor}" data-city-label="${c.id}" aria-hidden="true">${escapeHtml(cityName(c.id))}</text>`;
- }).join('');
+ const labels=cityLabels==='none'?'':layoutCityLabels(active,offsets,world)
+  .filter(({city:c})=>cityLabels==='all'||(['giant','large'].includes(cityLabels)?cityProfiles[c.id]?.tier===cityLabels:added.includes(c.id)||view.catalog.map_presentation.labelled_city_ids.includes(c.id)||c.id===focused))
+  .map(({city,name,x,y,anchor})=>`<text class="map-city-name" x="${x}" y="${y}" text-anchor="${anchor}" data-city-label="${city.id}" aria-hidden="true">${escapeHtml(name)}</text>`).join('');
  const bridges=mapBridgeLayer([roads,expansionRoads,regionalRoads,navigableSeas,navigableRivers]);
  const labelName={major:'主城',giant:'巨大都市',large:'大都市',all:'全部',none:'关闭'}[cityLabels];
  const toolbar=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''} ${mapAction&&!mapAction.targets.includes(c.id)?'disabled':''}>${escapeHtml(cityName(c.id))} · ${escapeHtml(ownerName(owners[c.id],c.id))}</option>`).join('')}</select></label><button id="map-labels" data-label-mode="${cityLabels}" aria-label="切换城名显示" title="城名：${labelName}"><span class="map-labels-full">城名：${labelName}</span><span class="map-labels-compact">${{major:'名：主',giant:'名：巨',large:'名：大',all:'名：全',none:'名：隐'}[cityLabels]}</span></button></div>`;

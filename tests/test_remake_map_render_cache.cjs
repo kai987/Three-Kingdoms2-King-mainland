@@ -26,7 +26,7 @@ function environment(){
   factions:[{id:'wei',name:'曹操'},{id:'wu',name:'孫權'}],world:{x:0,y:0,width:1352,height:1024,background:'/map.png'},map_presentation:presentation,
   road_additions:[['a','b']],travel_hazards:true,sea_routes:[],discovered_routes:[],regional_roads:[],scenarios:[]};
  const context={view:{game,catalog},setupPreview:null,selectedCity:'a',busy:false,mapMode:'all',cityLabels:'major',mapAction:null,
-  mapCamera:null,mapCameraKey:'',mapNavigation:null,GameMapRenderCache,GameI18n:{locale:'zh-Hant'},
+  mapCamera:null,mapCameraKey:'',mapNavigation:null,GameMapRenderCache,GameI18n:{locale:'zh-Hant',t:String},
   GameCalendar:{text:d=>`${d.year}-${d.month}-${d.day}`,iso:d=>`${d.year}-${d.month}-${d.day}`,period:day=>String(day)},
   $:selector=>selector.startsWith('#')?elements.get(selector.slice(1)):cityElements.find(el=>selector===`[data-city="${el.dataset.city}"]`),
   document:{querySelectorAll:selector=>{assert.equal(selector,'[data-city],[data-city-label]');return cityElements;}},
@@ -46,7 +46,7 @@ function environment(){
  const namesStart=source.indexOf('\n',source.indexOf('const mapPosition='))+1;
  vm.runInContext(source.slice(namesStart,source.indexOf('const mapColor=')),context);
  vm.runInContext(source.slice(source.indexOf('function factionDisplayName('),source.indexOf('function setPreviewFaction(')),context);
- vm.runInContext(source.slice(source.indexOf('function renderMap(){'),source.indexOf('\nasync function showCityInformation(')),context);
+ vm.runInContext(source.slice(source.indexOf('function layoutCityLabels('),source.indexOf('\nasync function showCityInformation(')),context);
  return {context,counts,elements,stage,cities:()=>cityElements,render:()=>context.renderMap(),markup:()=>markup};
 }
 const env=environment(),{context,counts,elements}=env;
@@ -168,4 +168,15 @@ filtered.context.GameI18n.locale='ja';filtered.render();assert.deepEqual(labels(
 filtered.elements.get('map-labels').onclick();assert.deepEqual(labels(),['c']);
 filtered.context.GameI18n.locale='zh-Hant';filtered.render();assert.deepEqual(labels(),['c']);
 assert.equal(JSON.stringify(filteredView.game),stateBefore,'City label modes, preview and language changes never alter campaign state/RNG');
+
+const crowded=environment(),crowdedView=crowded.context.view;
+crowdedView.catalog.cities[0].position=[106,44];
+crowdedView.catalog.cities[1].position=[100,100];
+crowdedView.catalog.city_label_offsets={a:[0,38,'middle']};
+crowded.context.cityLabels='all';crowded.render();
+assert.match(crowded.markup(),/x="106" y="82" text-anchor="middle" data-city-label="a"/);
+assert.match(crowded.markup(),/x="100" y="138" text-anchor="middle" data-city-label="b"/,
+ 'A neighboring label already occupies the usual space above the city');
+assert.match(crowded.markup(),/class="city-hit-area" x="85" y="23" width="42" height="42"/);
+assert.match(crowded.markup(),/class="city-outline" x="86" y="33" width="40" height="30"/);
 console.log('map render cache: same-scene SVG/control/focus/navigation reuse, current-snapshot handlers, full visual invalidation, new routes and battle/stage recovery passed');
