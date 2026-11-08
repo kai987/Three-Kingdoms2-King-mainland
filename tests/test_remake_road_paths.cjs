@@ -88,7 +88,7 @@ assert(!source.includes('<image href="${world.background}"'));
 // paint across their black edge. Both masks keep the same native geometry.
 const castleContext={active:[{id:'old',position:[100,200]},{id:'empty',position:[300,400]}],
  owners:{old:'wei',empty:'neutral'},mapPosition:c=>c.position,mapColor:id=>id==='neutral'?'#ffffff':'#0088ff',
- focused:null,preview:null,mapAction:null,cityCaption:id=>id,ownerName:id=>id,escapeHtml:String};
+ focused:null,preview:null,mapAction:null,cityName:id=>id,ownerName:id=>id,escapeHtml:String};
 vm.createContext(castleContext);
 const castleStart=source.indexOf(' const castles=active.map('),castleEnd=source.indexOf(' const extras=',castleStart);
 assert(castleStart>=0&&castleEnd>castleStart);

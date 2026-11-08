@@ -31,8 +31,7 @@ function environment(){
   $:selector=>selector.startsWith('#')?elements.get(selector.slice(1)):cityElements.find(el=>selector===`[data-city="${el.dataset.city}"]`),
   document:{querySelectorAll:selector=>{assert.equal(selector,'[data-city],[data-city-label]');return cityElements;}},
   escapeHtml:String,mapPosition:city=>city.position,mapBackgroundHref:value=>value,
-  cityName:id=>(context.setupPreview?.city_names||Object.fromEntries(context.view.catalog.cities.map(c=>[c.id,c.name])))[id],
-  cityCaption:id=>context.cityName(id),mapColor:id=>context.view.catalog.map_presentation.colors[id]||'#fff',
+  mapColor:id=>context.view.catalog.map_presentation.colors[id]||'#fff',
   landMapPath:points=>{counts.paths++;return 'M'+points.map(p=>p.join(' ')).join('L');},smoothMapPath:points=>'M'+points.map(p=>p.join(' ')).join('L'),
   mapAccessKey:points=>JSON.stringify(points),mapBridgeLayer:()=>'',setPreviewFaction(){},
   gameAudio:{play(){}},renderCity(){counts.city++;},showCityInformation:id=>counts.information.push(id),finishMapAction(){},cancelMapAction(){},
@@ -44,12 +43,20 @@ function environment(){
   }}
  };
  vm.createContext(context);
+ const namesStart=source.indexOf('\n',source.indexOf('const mapPosition='))+1;
+ vm.runInContext(source.slice(namesStart,source.indexOf('const mapColor=')),context);
  vm.runInContext(source.slice(source.indexOf('function factionDisplayName('),source.indexOf('function setPreviewFaction(')),context);
  vm.runInContext(source.slice(source.indexOf('function renderMap(){'),source.indexOf('\nasync function showCityInformation(')),context);
  return {context,counts,elements,stage,cities:()=>cityElements,render:()=>context.renderMap(),markup:()=>markup};
 }
 const env=environment(),{context,counts,elements}=env;
+// A static alias must never replace or join the dated name on any map control.
+context.view.catalog.map_presentation.city_names.a={displayName:'後甲'};
 env.render();const svg=elements.get('world-map'),nav=context.mapNavigation,city=env.cities()[0],zoom=elements.get('map-zoom-in');
+assert.match(env.markup(),/data-city-label="a" aria-hidden="true">甲<\/text>/);
+assert.match(env.markup(),/aria-label="甲，曹操"/);
+assert.match(env.markup(),/<option value="a"[^>]*>甲 · 曹操<\/option>/);
+assert(!env.markup().includes('後甲'));
 city.focus();const camera=JSON.stringify(context.mapCamera);assert.equal(counts.writes,1);assert.equal(counts.paths,1);
 // Native/Worker responses may replace the complete state object. Training,
 // recruitment, reserve allocation, resources and RNG do not alter the scene.
@@ -107,8 +114,11 @@ assert(!env.markup().includes('data-inactive-city="b"'));
 invalidates('world/background',()=>context.view.catalog.world={...context.view.catalog.world,width:1400,background:'/next.png'});
 assert.equal(context.mapCamera.zoom,1,'A changed world retains the existing reset-to-fit rule');
 const preview={id:'preview-225',year:225,month:7,day:1,initial_owners:{a:'wu',b:'wei'},factions:context.view.catalog.factions,
- map_cities:context.view.catalog.cities,active_cities:['a','b'],city_names:{a:'甲',b:'乙'},faction:'wu',focus:'a',world:context.view.catalog.world};
+ map_cities:context.view.catalog.cities,active_cities:['a','b'],city_names:{a:'早甲',b:'乙'},faction:'wu',focus:'a',world:context.view.catalog.world};
 invalidates('preview board',()=>context.setupPreview=preview);
+assert.match(env.markup(),/aria-label="早甲，孫策"/);
+assert.match(env.markup(),/<option value="a"[^>]*>早甲 · 孫策<\/option>/);
+assert(!env.markup().includes('後甲'));
 invalidates('preview selected faction',()=>preview.faction='wei');assert(env.markup().includes('preview-owned'));
 invalidates('preview date',()=>preview.month=8);
 invalidates('return from preview',()=>context.setupPreview=null);
