@@ -7,6 +7,7 @@ let campaignDifficulty='normal';
 let allocationDialogContext=null,allocationCloseEpoch=0;
 let battleDestination=null,battleViewKey='';
 let dialogueFeedback=null;
+let observerPlaying=false,observerTimer=null;
 const viewCache=typeof GameViewCache==='undefined'?null:GameViewCache.create();
 const localAutosave=typeof GameAutosave==='undefined'?null:GameAutosave.create({getRawSave:()=>request('/api/save',undefined,{text:true}),getView:()=>view,isBusy:()=>busy,loadRawSave:loadSave,locale:()=>GameI18n.locale,onStatus:state=>{if(state.state==='error')notice(localAutosave.statusText(),true);}});
 document.addEventListener('game-language-change',()=>{localAutosave?.refresh();refreshDialogueFeedback();refreshPersonnelDialogue();if(setupPreview)setPreviewFaction(setupPreview.faction,setupPreview.focus);else if(view?.game?.battle&&!busy&&!dialog.open)renderBattle();});
@@ -21,7 +22,14 @@ const battleScene=typeof GameBattleScene==='undefined'?null:GameBattleScene.crea
 const battleView=typeof GameBattleView==='undefined'?null:GameBattleView.create({document,window});
 const tutorial=typeof GameTutorial==='undefined'?null:GameTutorial.create({document,i18n:GameI18n,getView:()=>view,getSelection:()=>selectedCity,isBusy:()=>busy});
 const siegeUI=typeof GameSiegeUI==='undefined'?null:GameSiegeUI.create({i18n:GameI18n,getView:()=>view,isBusy:()=>busy,command,name:id=>name(id),portrait:id=>portraitHtml(id,'battle'),refresh:()=>renderBattle()});
-document.addEventListener('visibilitychange',()=>{siegeUI?.stop();if(!document.hidden&&view?.game?.battle?.extended?.siege&&!busy)renderBattle();});
+document.addEventListener('visibilitychange',()=>{
+ siegeUI?.stop();
+ if(document.hidden){clearTimeout(observerTimer);observerTimer=null;}
+ else{
+  if(view?.game?.battle?.extended?.siege&&!busy)renderBattle();
+  scheduleObserver();
+ }
+});
 const gameEvents=typeof GameEvents==='undefined'?null:GameEvents.create({getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview,parentDialog:dialog});
 let audioOutcome=null;
 // Browsers require a real gesture before creating/resuming the audio context.
@@ -134,8 +142,13 @@ function watchRouteDialog(refresh){
 }
 MarchCore.subscribe(()=>refreshRouteDialog?.());
 function renderMarches(){
- const rows=view.game?.extension?.travel?.marches||[];
- return rows.length?`<div class="marches"><h3>在途部队</h3>${rows.filter(r=>r.owner===view.game.player).map(r=>`<p data-march="${r.id}">${escapeHtml(cityName(r.journey_source||r.source))} → ${escapeHtml(cityName(r.target))}<br>${r.officers.map(i=>escapeHtml(name(i))).join('、')} · ${r.quote.distance_km}公里<br>${marchStatusHtml(r)}${marchPositionHtml(r)}${r.supply?'<br>'+marchSupplyHtml(r.supply,r.history):''}</p>`).join('')||'<p>本方暂无在途部队。</p>'}<p class="small">在途者保留出发城编制与容量，不参加守城，不能再次行动。每旬固定10日，每月3旬。</p></div>`:'';
+ const rows=view.game?.extension?.travel?.marches||[],observing=isObserver();
+ const visible=rows.filter(r=>observing||r.owner===view.game.player);
+ const entries=visible.map(r=>`<p data-march="${r.id}">${observing?escapeHtml(faction(r.owner))+' · ':''}${escapeHtml(cityName(r.journey_source||r.source))} → ${escapeHtml(cityName(r.target))}<br>${r.officers.map(i=>escapeHtml(name(i))).join('、')} · ${r.quote.distance_km}公里<br>${marchStatusHtml(r)}${marchPositionHtml(r)}${r.supply?'<br>'+marchSupplyHtml(r.supply,r.history):''}</p>`).join('');
+ if(observing){
+  return `<details id="observer-marches" class="marches"><summary>${battleText('各勢力在途部隊','各勢力の行軍部隊')} · ${visible.length}</summary>${entries||`<p>${battleText('目前沒有在途部隊。','現在行軍中の部隊はありません。')}</p>`}</details>`;
+ }
+ return rows.length?`<div class="marches"><h3>在途部队</h3>${entries||'<p>本方暂无在途部队。</p>'}<p class="small">在途者保留出发城编制与容量，不参加守城，不能再次行动。每旬固定10日，每月3旬。</p></div>`:'';
 }
 const mapPosition=c=>(setupPreview?setupPreview.world:view.catalog.world)?c.position:mapPositions?.positions[c.id]||c.position;
 // Both views already supply city names resolved for their respective dates.
@@ -216,7 +229,7 @@ function refreshPersonnelDialogue(){
 function refreshDomesticButton(){
  const button=$('#faction-domestic');if(button)button.disabled=busy||!!setupPreview||view?.game?.phase!=='city'||!view?.catalog?.domestic?.factions?.[view?.game?.player]||!Object.values(view?.game?.cities||{}).some(c=>c.owner===view.game.player);
 }
-function setBusy(value){busy=value;refreshDomesticButton();document.body.classList.toggle('busy',value);if($('#city-jump'))$('#city-jump').disabled=value;$('#main-menu').disabled=value||!view?.game||!!setupPreview;cloudSaveUI?.refreshButton();if($('#event-history'))$('#event-history').disabled=value||!!setupPreview||!view?.game?.extension?.events?.items?.length;if(!value)gameEvents?.pump();}
+function setBusy(value){busy=value;refreshDomesticButton();refreshObserverControls();document.body.classList.toggle('busy',value);if($('#city-jump'))$('#city-jump').disabled=value;$('#main-menu').disabled=value||!view?.game||!!setupPreview;cloudSaveUI?.refreshButton();if($('#event-history'))$('#event-history').disabled=value||!!setupPreview||!view?.game?.extension?.events?.items?.length;if(!value)gameEvents?.pump();}
 async function request(path,body,{raw=false,text=false}={}){
  const settings=body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:raw?body:JSON.stringify(body)};
  if(viewCache&&typeof GameBrowserEngine!=='undefined'&&['/api/state','/api/command','/api/load'].includes(path))settings.tk2ViewCache=viewCache.token();
@@ -294,6 +307,7 @@ function openDialog(title,body,actions,{allocation=null}={}){
 }
 function selectFaction(){
  clearDialogueFeedback();
+ setObserverPlaying(false);
  if(typeof siegeUI!=='undefined')siegeUI?.stop();
  mapAction=null;
  if($('#event-history'))$('#event-history').disabled=true;
@@ -326,7 +340,9 @@ function selectFaction(){
   ${option.main_scenario?`<details class="scenario-notes"><summary>剧本资料与配置范围</summary>${scenarioKind}<p>${escapeHtml(option.main_scenario.summary)}</p>${scenarioExtra}<p>本作${option.cities}城改编，现有${option.configured}份完整属性。${option.main_scenario.virtue_default_policy?'部分德值按用户指定暂设60，人物库可查评分来源。':''}新年代的部分归属为前后快照推定，未确认者不自动入场。</p>${option.main_scenario.city_chronology_note?`<p class="small">${escapeHtml(option.main_scenario.city_chronology_note)}</p>`:''}${scenarioSource}</details>`:scenarioKind}
   <details class="seed-settings"><summary>随机种子</summary><label class="seed-label" for="seed">随机种子<input id="seed" type="number" min="1" max="4294967295" step="1" value="2026" aria-describedby="seed-help"></label><p id="seed-help" class="small">控制招募、战斗等随机判定；相同种子与操作可重现战局。</p></details></details></div>`;
   $('#inspector').classList.add('setup-menu');
-  $('#inspector').innerHTML=`<div class="inspector-heading"><h2>主菜单</h2></div>${content}<div class="actions">${view.game?`<button class="primary" id="cancel-setup">${view.game.phase==='finished'?'返回战役结果':'继续当前战役'}</button>`:''}<button class="${view.game?'':'primary'}" id="begin">${view.game?'开始新战役':'开始战役'}</button></div>`;
+  const observerEntry=view.catalog.observer_mode?`<button id="begin-observation" aria-describedby="observation-help">${battleText('開始觀戰','観戦を開始')}</button>`:'';
+  $('#inspector').innerHTML=`<div class="inspector-heading"><h2>主菜单</h2></div>${content}<div class="actions">${view.game?`<button class="primary" id="cancel-setup">${view.game.phase==='finished'?'返回战役结果':'继续当前战役'}</button>`:''}<button class="${view.game?'':'primary'}" id="begin">${view.game?'开始新战役':'开始战役'}</button>${observerEntry}</div>`;
+  if(observerEntry)$('#setup-summary').insertAdjacentHTML('afterend',`<p id="observation-help" class="small">${battleText('觀戰時，各勢力由 AI 自動行動。','観戦中は、すべての勢力がAIで行動します。')}</p>`);
   const refreshPreview=(id=setupPreview.faction,focus=setupPreview.focus)=>{
    setPreviewFaction(id,focus);
    $('#library').disabled=true;renderMap();
@@ -337,15 +353,18 @@ function selectFaction(){
   $('#scenario').onchange=()=>draw($('#scenario').value);
   $('#difficulty').onchange=()=>{campaignDifficulty=$('#difficulty').value;};
   bindNumberInput($('#seed'));
-  $('#begin').onclick=async()=>{
-   const f=document.querySelector('input[name=faction]:checked')?.value,seed=clampNumberInput($('#seed'),true);
+  const start=async f=>{
+   const seed=clampNumberInput($('#seed'),true);
    if(!Number.isInteger(seed)||seed<1||seed>4294967295)return notice('随机种子请填写1到4294967295之间的整数。',true);
    const pending=setupPreview;setupPreview=null;
    if(await command('new',{faction:f,seed,scenario,difficulty:campaignDifficulty})){
     cityCommandGroups.clear();
-    selectedCity=view.catalog.factions.find(x=>x.id===f).city;actor=target=null;mapMode='all';dialog.close();render();
+    selectedCity=view.catalog.factions.find(x=>x.id===f)?.city||pending.focus;actor=target=null;mapMode='all';dialog.close();render();
+    if(isObserver())setObserverPlaying(true);
    }else{setupPreview=pending;renderMap();}
   };
+  $('#begin').onclick=()=>start(document.querySelector('input[name=faction]:checked')?.value);
+  if(observerEntry)$('#begin-observation').onclick=()=>start('observer');
  };
  draw(initial.id);
  $('#scenario').focus();
@@ -528,6 +547,7 @@ function renderMap(){
   if(busy)return;
   if(mapAction&&!preview&&game.phase==='city')return finishMapAction(id);
   if(preview){preview.focus=id;setPreviewFaction(owners[id],id,true);}
+  else if(isObserver()){selectedCity=id;renderObserver();}
   else{selectedCity=id;if(game.phase==='city'){$('#inspector').scrollTop=0;renderCity();}}
   if(!inspect){const city=board.find(c=>c.id===id);if(city)mapNavigation.focus(...mapPosition(city),mapCamera?.zoom||1);}
   renderMap();
@@ -1019,7 +1039,7 @@ function personStatus(p){
 function showLibrary(){
  if(!view.catalog.library)return notice('请进入扩展战役查看人物配置状态。');
  const total=view.catalog.library.length;
- openDialog(`${total}人武将库`,`<p>${view.catalog.coverage.configured_profiles}人属性齐全，${view.catalog.coverage.pending_profiles}人待配置。德按《三国志14》魅力转换；没有魅力资料者按指定默认60。开局体力与忠诚分别注明来源和适用范围。点击姓名查看评分依据与本年代驻城安排。</p>${libraryEntrySummary(view.catalog.library,view.game)}<div class="library-tools"><input id="library-search" aria-label="检索武将" placeholder="姓名、别名或人物编号"><select id="library-filter" aria-label="人物筛选"><option value="all">全部${total}人</option>${libraryEntryOptions(view.game?.player)}</select></div><div id="library-results"></div>${view.catalog.library.some(p=>p.chronology_design?.death_year===null)?'<p class="small">＊为本作退场年，并非已知卒年；新增人物的估计年代可查看来源。</p>':''}<div class="library-tools"><button id="library-prev">上一页</button><span id="library-count"></span><button id="library-next">下一页</button></div>`,`<button data-cancel>返回战役</button>${view.game&&view.catalog.civil_staff&&!setupPreview?'<button id="library-staff">地方文吏名册</button>':''}`);
+ openDialog(`${total}人武将库`,`<p>${view.catalog.coverage.configured_profiles}人属性齐全，${view.catalog.coverage.pending_profiles}人待配置。德按《三国志14》魅力转换；没有魅力资料者按指定默认60。开局体力与忠诚分别注明来源和适用范围。点击姓名查看评分依据与本年代驻城安排。</p>${libraryEntrySummary(view.catalog.library,view.game)}<div class="library-tools"><input id="library-search" aria-label="检索武将" placeholder="姓名、别名或人物编号"><select id="library-filter" aria-label="人物筛选"><option value="all">全部${total}人</option>${libraryEntryOptions(isObserver()?null:view.game?.player)}</select></div><div id="library-results"></div>${view.catalog.library.some(p=>p.chronology_design?.death_year===null)?'<p class="small">＊为本作退场年，并非已知卒年；新增人物的估计年代可查看来源。</p>':''}<div class="library-tools"><button id="library-prev">上一页</button><span id="library-count"></span><button id="library-next">下一页</button></div>`,`<button data-cancel>返回战役</button>${view.game&&view.catalog.civil_staff&&!setupPreview?'<button id="library-staff">地方文吏名册</button>':''}`);
  if($('#library-staff'))$('#library-staff').onclick=()=>staffInterface()?.openRegistry();
  let page=0;
  const draw=()=>{const q=$('#library-search').value.trim(),filter=$('#library-filter').value;const people=view.catalog.library.filter(p=>(!q||[p.name,p.person_id,...p.aliases].some(s=>[s,GameI18n.t(s,'zh-Hant'),GameI18n.t(s,'ja')].some(label=>label.includes(q))))&&libraryFilterMatches(p,filter,view.game?.player));const max=Math.max(0,Math.ceil(people.length/12)-1);page=Math.min(page,max);
@@ -1292,6 +1312,63 @@ function renderSuccession(){
  const update=()=>{$('#successor-summary').textContent=officerChoiceText(GameOfficerChoices.ref($('#successor-officer').value),{loyalty:true});GameI18n.apply();};$('#successor-officer').onchange=update;update();
  $('#choose-successor').onclick=()=>command('choose_successor',{officer:GameOfficerChoices.ref($('#successor-officer').value)});
 }
+function isObserver(){return view?.game?.player==='observer';}
+function canObserve(){return isObserver()&&!setupPreview&&view.game.phase==='city';}
+function refreshObserverControls(){
+ const toggle=$('#observer-toggle'),step=$('#observer-step');
+ if(!toggle||!step)return;
+ toggle.disabled=busy&&!observerPlaying;
+ toggle.innerHTML=observerPlaying?battleText('暫停觀戰','観戦を一時停止'):battleText('繼續觀戰','観戦を再開');
+ step.disabled=busy||observerPlaying;
+ const status=$('#observer-status');
+ status.dataset.observerState=observerPlaying?'playing':'paused';
+ status.innerHTML=observerPlaying?battleText('自動推進中','自動進行中'):battleText('已暫停','一時停止中');
+}
+function scheduleObserver(){
+ if(observerTimer!==null||!observerPlaying||!canObserve()||document.hidden)return;
+ observerTimer=setTimeout(async()=>{
+  observerTimer=null;
+  if(!observerPlaying||!canObserve()||document.hidden)return;
+  if(!busy&&!document.querySelector('dialog[open]')){
+   if(!await command('observe_turn'))setObserverPlaying(false);
+  }
+  scheduleObserver();
+ },1800);
+}
+function setObserverPlaying(value){
+ observerPlaying=value&&canObserve();
+ clearTimeout(observerTimer);
+ observerTimer=null;
+ refreshObserverControls();
+ scheduleObserver();
+}
+function renderObserver(){
+ const inspector=$('#inspector'),game=view.game,city=game.cities[selectedCity];
+ const focused=inspector.contains(document.activeElement)?document.activeElement.id:null;
+ const open=[...inspector.querySelectorAll('details[open]')].map(node=>node.id||node.className);
+ const winner=view.catalog.observer_winner;
+ const results=game.extension.events?.items.filter(row=>row.kind==='battle_result').slice(-6).reverse()||[];
+ const outcomes={victory:['攻方獲勝','攻撃側の勝利'],defeat:['守方獲勝','防御側の勝利'],retreat:['攻方退卻','攻撃側の撤退']};
+ const recent=results.length?`<ol class="observer-battles">${results.map(row=>{
+  const [from,to]=row.city_ids,[attacker,defender]=row.factions;
+  const outcome=outcomes[row.details.outcome]||['戰鬥結束','戦闘終了'];
+  return `<li data-observer-battle="${row.id}"><time>${escapeHtml(GameCalendar.text(row))}</time> · ${escapeHtml(cityName(from))} → ${escapeHtml(cityName(to))}<br>${escapeHtml(faction(attacker))} · ${escapeHtml(faction(defender))} · ${battleText(...outcome)} · ${battleText('損兵','損兵')} ${escapeHtml(row.details.lost)}</li>`;
+ }).join('')}</ol>`:`<p class="small">${battleText('尚無已結算的戰鬥。','精算済みの戦闘はまだありません。')}</p>`;
+ inspector.innerHTML=`<div class="inspector-heading"><h2>${battleText('第三方觀戰','第三者観戦')}</h2></div>
+ <p class="small">${battleText('各勢力由 AI 行動。可查看城池、行軍和戰果。','各勢力はAIで行動します。都市・行軍・戦闘結果を確認できます。')}</p>
+ ${canObserve()?`<p id="observer-status" role="status"></p><div class="actions action-pair observer-actions"><button id="observer-toggle" class="primary"></button><button id="observer-step">${battleText('推進一旬','1旬進める')}</button></div>`:
+ `<p role="status">${winner?battleText(GameI18n.t(faction(winner),'zh-Hant')+'完成天下統一。',GameI18n.t(faction(winner),'ja')+'が天下を統一しました。'):battleText('觀戰已結束。','観戦が終了しました。')}</p>`}
+ <div class="actions observer-actions"><button id="observer-city">${battleText('查看城池','都市情報')} · ${escapeHtml(cityName(city.id))}</button></div>
+ <h3>${battleText('近期戰果','最近の戦闘結果')}</h3>${recent}${renderMarches()}${factionLedger()}`;
+ for(const node of inspector.querySelectorAll('details'))node.open=open.includes(node.id||node.className);
+ if($('#observer-toggle'))$('#observer-toggle').onclick=()=>setObserverPlaying(!observerPlaying);
+ if($('#observer-step'))$('#observer-step').onclick=()=>{
+  if(canObserve()&&!observerPlaying&&!busy&&!document.querySelector('dialog[open]'))void command('observe_turn');
+ };
+ $('#observer-city').onclick=()=>showCityInformation(city.id);
+ refreshObserverControls();
+ if(focused)document.getElementById(focused)?.focus({preventScroll:true});
+}
 function render(){
  try{
  if(!view)return;
@@ -1299,7 +1376,7 @@ function render(){
  if(typeof gameEvents!=='undefined')gameEvents?.pump();
  if($('#event-history'))$('#event-history').disabled=busy||!!setupPreview||!view.game?.extension?.events?.items?.length;
  if(mapAction&&(view.revision!==mapAction.revision||view.game?.phase!=='city'||setupPreview))mapAction=null;
- MarchCore.update(view);
+ MarchCore.update(isObserver()?null:view);
  GameI18n.registerScenarios(view.catalog.scenarios);
  $('#inspector').classList.remove('setup-menu');
  const game=view.game;
@@ -1321,17 +1398,18 @@ function render(){
  $('#date').textContent=game?`${GameCalendar.text(game)}　第${game.turn}回合 · 1旬10日 · ${difficultyName(game.extension?.difficulty)}`:'选择势力';
  if(!game){renderMap();selectFaction();return;}
  if(!selectedCity||!game.cities[selectedCity])selectedCity=Object.values(game.cities).find(c=>c.owner===game.player)?.id||view.catalog.active_cities[0];
- if(game.phase==='battle'||game.phase==='result')renderBattle();
+ if(isObserver()){if(game.phase==='finished')setObserverPlaying(false);renderMap();renderObserver();}
+ else if(game.phase==='battle'||game.phase==='result')renderBattle();
  else{renderMap();if(game.phase==='city')renderCity();else if(game.phase==='arrivals'){$('#inspector').innerHTML='<h2>行军到达</h2><p>部队已到达预计旬期。处理到达后入城或进入战斗；满城、易主和路线中断会重新核对。</p><div class="actions"><button id="process-arrivals" class="primary">处理到达部队</button></div>';$('#process-arrivals').onclick=()=>command('arrivals');}else if(game.phase==='ai'){$('#inspector').innerHTML='<div class="inspector-heading"><h2>电脑回合</h2></div><p>电脑处理人事、调兵和出征。遭到攻击时由本方操作守军；接收战果后继续电脑行动，再推进到下一旬。</p><div class="actions"><button id="run-ai" class="primary">执行电脑行动</button></div>';$('#run-ai').onclick=()=>command('ai',{turn:game.turn});}else{$('#inspector').innerHTML=`<h2>${game.extension?.outcome==='victory'?'天下归一':'战役结束'}</h2><p>本次战役已结算，可保存或重新选择势力。</p><div class="actions"><button id="play-again" class="primary">重新选择势力</button></div>`;$('#play-again').onclick=()=>selectFaction();}}
  if(game.extension?.pending_succession?.[game.player]&&game.phase==='city')renderSuccession();
  const appendInspector=html=>{const footer=$('#city-command-footer');if(footer)footer.insertAdjacentHTML('beforebegin',html);else $('#inspector').insertAdjacentHTML('beforeend',html);};
- if(game.extension?.travel)appendInspector(renderMarches());
- if(game.extension?.logistics)appendInspector(delegationInterface()?.convoyList()||'');
+ if(game.extension?.travel&&!isObserver())appendInspector(renderMarches());
+ if(game.extension?.logistics&&!isObserver())appendInspector(delegationInterface()?.convoyList()||'');
  if(game.extension&&!$('#inspector .faction-ledger'))appendInspector(factionLedger());
  $('#journal').innerHTML=game.log.slice(-5).map(t=>`<li>${escapeHtml(displayLog(t))}</li>`).join('');
  refreshDialogueFeedback();
  }finally{
-  if($('#tutorial'))$('#tutorial').disabled=typeof tutorial==='undefined'||!tutorial||!view?.game||!!setupPreview;
+  if($('#tutorial'))$('#tutorial').disabled=typeof tutorial==='undefined'||!tutorial||!view?.game||!!setupPreview||isObserver();
   if(typeof tutorial!=='undefined')tutorial?.observe(view);
  }
 }
@@ -1361,6 +1439,7 @@ $('#save').onclick=async()=>{
 async function loadSave(save,guard=()=>true){
  if(busy||!guard())return false;
  clearDialogueFeedback();
+ setObserverPlaying(false);
  if(typeof siegeUI!=='undefined')siegeUI?.stop();
  const resumeAutosave=localAutosave?.status().state==='saving';
  localAutosave?.invalidate();let loaded=false;setBusy(true);

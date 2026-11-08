@@ -118,7 +118,7 @@
   const language=()=>{signature='';render();};doc?.addEventListener?.('game-language-change',language);
   compact?.addEventListener?.('change',render);
   return {observe,start,
-   command(kind,payload,before,after){if(kind==='new'){model.dismiss();if(!preference())model.begin(after,true);}else model.command(kind,payload,before,after);observe(after);},
+   command(kind,payload,before,after){if(kind==='new'){model.dismiss();if(after?.game?.player!=='observer'&&!preference())model.begin(after,true);}else model.command(kind,payload,before,after);observe(after);},
    routePreview(){model.routePreview();render();},loaded(){model.dismiss();render();},state:model.state,
    dispose(){model.dismiss();render();doc?.removeEventListener?.('game-language-change',language);compact?.removeEventListener?.('change',render);}};
  }

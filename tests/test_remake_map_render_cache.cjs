@@ -9,7 +9,7 @@ class Element{
  focus(){this.focused=true;}
 }
 function environment(){
- const counts={writes:0,attaches:0,destroys:0,paths:0,city:0,information:[]};
+ const counts={writes:0,attaches:0,destroys:0,paths:0,city:0,observer:0,information:[]};
  const elements=new Map([['date',new Element()],['inspector',new Element()]]);let cityElements=[],markup='';
  const stage=new Element();elements.set('stage',stage);
  Object.defineProperty(stage,'innerHTML',{get:()=>markup,set:value=>{
@@ -18,7 +18,7 @@ function environment(){
   for(const match of value.matchAll(/\bid="([^"]+)"/g))elements.set(match[1],new Element());
   cityElements=[...value.matchAll(/\bdata-city(?:-label)?="([^"]+)"/g)].map(match=>new Element({[match[0].startsWith('data-city-label')?'cityLabel':'city']:match[1]}));
  }});
- const game={year:200,month:1,day:1,turn:1,phase:'city',cities:{a:{id:'a',owner:'wei',reserves:100},b:{id:'b',owner:'neutral'}},officers:{1:{troops:300}},rng:{draws:0}};
+ const game={player:'wei',year:200,month:1,day:1,turn:1,phase:'city',cities:{a:{id:'a',owner:'wei',reserves:100},b:{id:'b',owner:'neutral'}},officers:{1:{troops:300}},rng:{draws:0}};
  const presentation={colors:{wei:'#00f',wu:'#f00',neutral:'#fff'},castle_fill_pixels:[[0,0]],castle_outline_pixels:[[-4,-4]],
   city_names:{},labelled_city_ids:['a','b'],added_land_roads:[{from:'a',to:'b',new_branch:[[100,100],[200,200]]}],expansion_connections:[]};
  const catalog={scenario_id:'scenario-200',cities:[{id:'a',name:'甲',position:[100,100]},{id:'b',name:'乙',position:[200,200]}],active_cities:['a','b'],
@@ -34,7 +34,8 @@ function environment(){
   mapColor:id=>context.view.catalog.map_presentation.colors[id]||'#fff',
   landMapPath:points=>{counts.paths++;return 'M'+points.map(p=>p.join(' ')).join('L');},smoothMapPath:points=>'M'+points.map(p=>p.join(' ')).join('L'),
   mapAccessKey:points=>JSON.stringify(points),mapBridgeLayer:()=>'',setPreviewFaction(){},
-  gameAudio:{play(){}},renderCity(){counts.city++;},showCityInformation:id=>counts.information.push(id),finishMapAction(){},cancelMapAction(){},
+  gameAudio:{play(){}},isObserver:()=>context.view.game?.player==='observer',renderObserver(){counts.observer++;},
+  renderCity(){counts.city++;},showCityInformation:id=>counts.information.push(id),finishMapAction(){},cancelMapAction(){},
   MapNavigation:{attach(svg,{initial,onChange}){
    counts.attaches++;let camera={x:150,y:150,zoom:1,...initial};
    const notify=()=>onChange({...camera});notify();
@@ -179,4 +180,12 @@ assert.match(crowded.markup(),/x="100" y="138" text-anchor="middle" data-city-la
  'A neighboring label already occupies the usual space above the city');
 assert.match(crowded.markup(),/class="city-hit-area" x="85" y="23" width="42" height="42"/);
 assert.match(crowded.markup(),/class="city-outline" x="86" y="33" width="40" height="30"/);
+const observing=environment();
+observing.context.view.game.player='observer';
+observing.render();
+observing.cities().find(city=>city.dataset.city==='b').onclick({detail:1});
+assert.equal(observing.context.selectedCity,'b');
+assert.equal(observing.counts.observer,1);
+assert.equal(observing.counts.city,0,'Observation selects cities without opening faction orders');
+assert.deepEqual(observing.counts.information,['b']);
 console.log('map render cache: same-scene SVG/control/focus/navigation reuse, current-snapshot handlers, full visual invalidation, new routes and battle/stage recovery passed');
