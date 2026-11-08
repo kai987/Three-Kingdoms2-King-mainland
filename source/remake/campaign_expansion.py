@@ -5,7 +5,7 @@ remake designs. No original engine, ROM tables or control IR are loaded.
 """
 from dataclasses import replace
 from .errors import GameError
-from . import historical_campaigns
+from . import historical_campaigns, observer
 from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services, officer_relations, battle_supply, battle_conditions, battle_placement, battle_auto_deployment
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
@@ -229,10 +229,12 @@ class ExpandedCampaign:
         state.phase='battle'
         state.extension['officer_actions'].update({str(i):state.turn for i in selected})
         self._note(state,state.battle['log'][0])
-        if state.player in (source.owner,target.owner):
+        observing = state.player == observer.SEAT
+        if observing or state.player in (source.owner,target.owner):
             self._emit_event(state,'battle_started',person_ids=[state.officers[i].person_id for i in [*selected[:1],*defenders[:1]]],
                 city_ids=[source.id,target.id],factions=[source.owner,target.owner],
-                details=dict(battle_id=state.battle['id'],attacker=source.owner,defender=target.owner))
+                details=dict(battle_id=state.battle['id'],attacker=source.owner,defender=target.owner),
+                audience='world' if observing else 'player')
         if not defenders: state.battle['outcome']='victory';state.phase='result'
         # Deployment makes participants unavailable for local civil duties.
         from . import treasures
@@ -865,11 +867,13 @@ class ExpandedCampaign:
         state.settled_battles.append(b['id'])
         incoming=b['attacker']!=state.player
         self._note(state,f'战果已结算，合计损兵{lost}，劝降兵员{sum(x["surrenders"].values())}入城。')
-        if state.player in (b['attacker'],b['defender']):
+        observing = state.player == observer.SEAT
+        if observing or state.player in (b['attacker'],b['defender']):
             self._emit_event(state,'battle_result',city_ids=[b['source'],b['target']],
                 person_ids=[state.officers[u['id']].person_id for u in (b['attackers'][:1]+b['defenders'][:1])],
                 factions=[b['attacker'],b['defender']],
-                details=dict(battle_id=b['id'],outcome=b['outcome'],lost=lost,surrendered=sum(x['surrenders'].values())))
+                details=dict(battle_id=b['id'],outcome=b['outcome'],lost=lost,surrendered=sum(x['surrenders'].values())),
+                audience='world' if observing else 'player')
         state.battle=None;state.phase='ai' if incoming else 'city'
         travel=state.extension['travel']
         if travel['battle_arrival']:
@@ -907,7 +911,15 @@ class ExpandedCampaign:
                     self._note(state,f'{self.person_name(state, leader)}接任势力主将。')
         for faction,pending in list(x['pending_succession'].items()):
             pending['candidates']=[i for i in pending['candidates'] if i in state.officers and state.officers[i].alive and state.officers[i].faction_id==faction]
-        if state.player in x['ended_factions']:
+        if state.player == observer.SEAT:
+            result = observer.outcome(state)
+            if result is not None and x['outcome'] is None:
+                state.phase = 'finished'
+                x['outcome'] = result
+                winner = observer.winner(state)
+                self._note(state, f'{self.faction_name(state, winner)}统一{len(state.cities)}城。'
+                           if winner else '各势力均已退出战役。')
+        elif state.player in x['ended_factions']:
             state.phase='finished';x['outcome']='defeat'
         elif all(c.owner==state.player for c in state.cities.values()):
             state.phase='finished';x['outcome']='victory';self._note(state,f'{len(state.cities)}城归一，战役胜利。')
@@ -1035,8 +1047,11 @@ class ExpandedCampaign:
             for ident in pending['candidates']:
                 parse_officer_ref(ident,self.catalog.rules)
         if x['outcome'] not in {None,'victory','defeat'} or (state.phase=='finished')!=(x['outcome'] is not None):raise ValueError('campaign ending')
-        if x['outcome']=='victory' and not all(c.owner==state.player for c in state.cities.values()):raise ValueError('false mainland victory')
-        if x['outcome']=='defeat' and state.player not in x['ended_factions']:raise ValueError('false mainland defeat')
+        if state.player == observer.SEAT:
+            if x['outcome'] != observer.outcome(state):raise ValueError('false observer result')
+        else:
+            if x['outcome']=='victory' and not all(c.owner==state.player for c in state.cities.values()):raise ValueError('false mainland victory')
+            if x['outcome']=='defeat' and state.player not in x['ended_factions']:raise ValueError('false mainland defeat')
         queue=x['ai_queue']
         if not isinstance(queue,list) or len(queue)!=len(set(queue)) or not set(queue)<=set(state.cities):raise ValueError('AI queue')
         from .difficulty import attack_budget

@@ -9,7 +9,7 @@ from heapq import heappop, heappush
 from itertools import count
 from math import asin, ceil, cos, radians, sin, sqrt
 from .errors import GameError
-from . import command_books, historical_campaigns
+from . import command_books, historical_campaigns, observer
 from .officers import (OFFICER_TROOP_CAP, integer, select_deployment, transfer_officers,
                        ref_sort_key, deserialize_officer_ref)
 
@@ -460,8 +460,9 @@ class TravelCampaign:
             discovered = set(state.extension['travel']['discovered'])
             result['discovered_routes'] = [row for row in self.catalog.data.get('exploration_routes', [])
                                            if row['id'] in discovered]
-            result['travel_quotes'] = invoke('batch', data=self.catalog.data,
-                                            **state_input(state), player=state.player)
+            if state.player != observer.SEAT:
+                result['travel_quotes'] = invoke('batch', data=self.catalog.data,
+                                                **state_input(state), player=state.player)
         return result
 
     def _python_travel_view(self, state):
@@ -473,7 +474,7 @@ class TravelCampaign:
                     travel_hazards=self.catalog.data['travel_hazards'],
                     discovered_routes=[r for r in self.catalog.data.get('exploration_routes',[]) if r['id'] in discovered],
                     coastal_city_ids=list(self.catalog.data['travel_hazards'].get('coastal_cities',[])))
-        if state is None:
+        if state is None or state.player == observer.SEAT:
             return result
         routes=self._known_routes(state)
         adjacency={key:[] for key in state.cities}

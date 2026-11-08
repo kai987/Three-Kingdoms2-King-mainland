@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign, Catalog, canonical
 from remake import facilities, treasures
+from remake.errors import GameError
 from remake.march_core import using_backend
 from remake.march_supply import estimate as march_grain
 from remake.strategic_ai import StrategicAI, validate_strategies
@@ -584,6 +585,100 @@ class StrategicAITests(unittest.TestCase):
                 self.assertTrue(all(c.gold>=0 and c.grain>=0 and c.reserves>=0 for c in game.state.cities.values()))
                 results.append(game.export_save())
         self.assertEqual(canonical(results[0]),canonical(results[1]))
+
+
+class ObserverCampaignTests(unittest.TestCase):
+    def start(self, faction='observer', catalog=None):
+        game = Campaign(catalog or strategic_catalog())
+        game.command('new', dict(faction=faction, seed=2026), 0)
+        return game
+
+    def advance(self, game):
+        turn = game.state.turn
+        view = game.command('observe_turn', {}, game.revision)
+        self.assertEqual(game.state.turn, turn + 1)
+        self.assertEqual(game.state.completed_ai_turns, list(range(1, turn + 1)))
+        self.assertIn(game.state.phase, ('city', 'finished'))
+        self.assertIsNone(game.state.battle)
+        return view
+
+    def test_all_factions_plan_and_real_battles_resolve_without_player_input(self):
+        game = self.start()
+        opening = game.view()
+        self.assertEqual(opening['game']['player'], 'observer')
+        factions = {city.owner for city in game.state.cities.values()} - {'neutral'}
+        self.assertEqual({row['id'] for row in opening['catalog']['factions']}, factions)
+        self.advance(game)
+        self.assertEqual(set(game.state.extension['ai_strategy']), factions)
+        self.assertTrue(any(order['kind'] == 'attack' and order['owner'] == 'wei'
+                            for order in game.state.extension['travel']['marches']))
+
+        saved = game.export_save()
+        restored = Campaign(game.catalog)
+        restored.load_save(saved, 0)
+        self.assertEqual(restored.export_save(), saved)
+        self.advance(game)
+        self.advance(restored)
+        self.assertEqual(restored.export_save(), game.export_save())
+        self.assertTrue(game.state.settled_battles)
+        events = game.state.extension['events']['items']
+        for battle in game.state.settled_battles:
+            for kind in ('battle_started', 'battle_result'):
+                self.assertTrue(any(event['kind'] == kind and event['audience'] == 'world'
+                                    and event['details']['battle_id'] == battle for event in events))
+        game.validate(game.state)
+
+    def test_observer_rejects_player_orders_and_player_save_restores_control(self):
+        game = self.start()
+        saved, revision = game.export_save(), game.revision
+        officer = game.state.cities['xiangyang'].roster.officer_ids[0]
+        for kind, payload in (
+            ('allocate', dict(city='xiangyang', officer=officer, troops=1)),
+            ('end_turn', {}),
+            ('ai', {'turn': game.state.turn}),
+        ):
+            with self.subTest(kind=kind), self.assertRaises(GameError):
+                game.command(kind, payload, revision)
+            self.assertEqual(game.revision, revision)
+            self.assertEqual(game.export_save(), saved)
+
+        player = self.start(faction='shu', catalog=game.catalog)
+        player_save = player.export_save()
+        game.load_save(player_save, game.revision)
+        self.assertEqual(game.export_save(), player_save)
+        with self.assertRaises(GameError):
+            game.command('observe_turn', {}, game.revision)
+        self.assertEqual(game.export_save(), player_save)
+        game.command('end_turn', {}, game.revision)
+        self.assertEqual(game.state.phase, 'ai')
+
+    def test_final_ai_capture_reports_winner_and_stops_observation(self):
+        data = deepcopy(strategic_catalog().data)
+        data['active_cities'] = ['nanyang', 'xiangyang']
+        data['initial_owners'] = {'nanyang': 'wei', 'xiangyang': 'neutral'}
+        data['factions'] = [row for row in data['factions'] if row['id'] == 'wei']
+        data['faction_rulers'] = {'wei': data['faction_rulers']['wei']}
+        data['initial_officers'] = [row for row in data['initial_officers'] if row['city'] == 'nanyang']
+        data['links'] = [['nanyang', 'xiangyang']]
+        data['travel_routes'] = [route for route in data['travel_routes']
+                                 if (route['from'], route['to']) == ('nanyang', 'xiangyang')]
+        game = self.start(catalog=catalog_from_data(data))
+        self.advance(game)
+        finished = self.advance(game)
+        self.assertEqual(game.state.phase, 'finished')
+        self.assertEqual(game.state.extension['outcome'], 'victory')
+        self.assertEqual(finished['catalog']['observer_winner'], 'wei')
+        self.assertTrue(all(city.owner == 'wei' for city in game.state.cities.values()))
+
+        final_save, revision = game.export_save(), game.revision
+        with self.assertRaises(GameError):
+            game.command('observe_turn', {}, revision)
+        self.assertEqual(game.revision, revision)
+        self.assertEqual(game.export_save(), final_save)
+        restored = Campaign(game.catalog)
+        view = restored.load_save(final_save, 0)
+        self.assertEqual(view['catalog']['observer_winner'], 'wei')
+        self.assertEqual(restored.export_save(), final_save)
 
 
 if __name__=='__main__':unittest.main()

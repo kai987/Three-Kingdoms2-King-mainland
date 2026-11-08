@@ -310,7 +310,11 @@
  }
  function campaignKey(view){return view?.game?JSON.stringify([view.catalog?.scenario_id||view.catalog?.title||'',view.game.seed,view.game.player]):null;}
  function eventRows(view){const rows=view?.game?.extension?.events?.items;return Array.isArray(rows)?rows.filter(validEvent).sort((a,b)=>a.id-b.id):[];}
- function automatic(row,player,inlineBattle=false){if(row.kind==='tactic'&&inlineBattle)return false;return STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)||TREASURY.has(row.kind)||FACILITIES.has(row.kind)||CITY_OPERATIONS.has(row.kind)||EQUIPMENT.has(row.kind)?row.factions.includes(player):row.audience==='player'||WORLD.has(row.kind)||row.factions.includes(player);}
+ function automatic(row,player,inlineBattle=false){
+  if(player==='observer')return Object.hasOwn(HISTORICAL_CAMPAIGNS,row.kind)||['campaign_victory','campaign_defeat'].includes(row.kind);
+  if(row.kind==='tactic'&&inlineBattle)return false;
+  return STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)||TREASURY.has(row.kind)||FACILITIES.has(row.kind)||CITY_OPERATIONS.has(row.kind)||EQUIPMENT.has(row.kind)?row.factions.includes(player):row.audience==='player'||WORLD.has(row.kind)||row.factions.includes(player);
+ }
  function groupRows(rows){
   const groups=[],staffGroups=new Map();
   for(const row of rows){
@@ -339,12 +343,15 @@
     factions:row.factions.map(id=>{const faction=catalog.factions?.find(f=>f.id===id)||catalog.scheduled_factions?.find(f=>f.id===id);return label(faction?.display_name||faction?.name||(id==='neutral'?text('無主','空白都市'):text('未具名勢力','名前未設定の勢力')));})};
   }
   function description(row){
+   const observing=view?.game?.player==='observer';
    const chapter=CHAPTER_TEXT[row.kind];
    if(chapter){
     const history=text(...chapter.text);
-    return chapter.front?history+text(
+    return chapter.front?history+(observing?text(
+     ' 路線可通行時，進攻方的 AI 會優先評估這條戰線，勝負由實際交戰決定。',
+     ' 通行できる経路があれば、進攻側のAIはこの戦線を優先します。勝敗は実際の戦闘で決まります。'):text(
      ' 有可通行的路線時，進攻方的電腦會優先評估這條戰線。玩家自行下令，部隊按現有路線與兵糧規則行軍，勝負由實際交戰決定。',
-     ' 通行できる経路があれば、進攻側のAIはこの戦線を優先します。プレイヤーは自分で出陣を命じます。部隊は既存の経路と兵糧のルールに従い、勝敗は実際の戦闘で決まります。'):history;
+     ' 通行できる経路があれば、進攻側のAIはこの戦線を優先します。プレイヤーは自分で出陣を命じます。部隊は既存の経路と兵糧のルールに従い、勝敗は実際の戦闘で決まります。')):history;
    }
    const n=names(row),p=n.people.join(text('、','・'))||text('武將','武将'),c=n.cities.join(' → ')||text('戰役地圖','戦役地図'),f=n.factions.at(-1)||text('本方','自軍'),d=row.details;
    switch(row.kind){
@@ -378,7 +385,7 @@
      return text(`${c}賞賜${recipient}${gift}，忠誠${d.loyalty_before} → ${d.loyalty_after}（+${d.gain}）。費用已扣除，依太守德值與本作規則結算。`,`${c}で${recipient}に${gift}を与え、忠誠が${d.loyalty_before} → ${d.loyalty_after}（+${d.gain}）になりました。費用は差し引き済みで、太守の徳と本作のルールに従って精算しました。`);
     }
     case 'governor_assigned':return text(`${c}太守：${d.governor?p:'尚無適任者'}（${d.mode==='auto'?'自動選任':'指定'}）。任命不消耗城池行動；兩名全勢力內政官的委任另行管理。`,`${c}の太守は${d.governor?p:'該当者なし'}（${d.mode==='auto'?'自動選任':'指定'}）です。任命では都市行動を使いません。勢力全体の内政担当2名は別に管理します。`);
-    case 'campaign_start':return text(`${f}展開新的戰役。每旬10日，請安排人事、兵力與行軍。`,`${f}による新たな戦役が始まります。1旬10日、人事・兵力・行軍を整えましょう。`);
+    case 'campaign_start':return observing?text('第三方觀戰開始。所有勢力由 AI 行動。','第三者観戦が始まりました。すべての勢力がAIで行動します。'):text(`${f}展開新的戰役。每旬10日，請安排人事、兵力與行軍。`,`${f}による新たな戦役が始まります。1旬10日、人事・兵力・行軍を整えましょう。`);
     case 'officer_appeared':return text(`${p}已到登場年代，在${c}待訪。`,`${p}が登場年を迎え、${c}で仕官先を待っています。`);
     case 'recruit_success':return text(`${p}接受登用，加入${f}。`,`${p}が登用に応じ、${f}へ加わりました。`);
     case 'recruit_failure':return text(`${p}此次未接受登用。尋訪費用已按規則結算。`,`${p}は今回の登用を断りました。訪問費用は規則どおり精算されています。`);
@@ -427,7 +434,7 @@
      return text(`${c}於${row.year}年${row.month}月由${tiers[d.from_tier]||'大都市'}升為${tiers[d.to_tier]||'巨大都市'}。今後每月收入：金${income.gold??0}、糧${income.grain??0}、預備兵${income.reserves??0}。這是本作的都市規模設定。`,`${row.year}年${row.month}月、${c}が${tiers[d.from_tier]||'大都市'}から${tiers[d.to_tier]||'巨大都市'}へ発展しました。以後の月収は資金${income.gold??0}・兵糧${income.grain??0}・予備兵${income.reserves??0}です。本作独自の都市規模設定です。`);
     }
     case 'city_captured':{const owner=n.factions[0]||f;return text(`${c}的歸屬改為${owner}。駐軍及資源已結算。`,`${c}は${owner}の支配下となりました。守備隊と資源は精算済みです。`);}
-    case 'battle_started':return text(`${c}發生交戰。請依兵力、地形與敵軍狀態選擇行動。`,`${c}で戦闘が始まります。兵力・地形・敵の状態を見て行動を選びましょう。`);
+    case 'battle_started':return observing?text(`${c}發生交戰，雙方由 AI 指揮。`,`${c}で戦闘が始まりました。両軍ともAIが指揮します。`):text(`${c}發生交戰。請依兵力、地形與敵軍狀態選擇行動。`,`${c}で戦闘が始まります。兵力・地形・敵の状態を見て行動を選びましょう。`);
     case 'battle_supply_exhausted':{
      const side=d.side==='attackers'?text('攻方','攻撃側'):text('守方','防御側'),shortage=(d.missing_units/1000).toFixed(3).replace(/\.?0+$/,'');
      const outcome=d.side==='attackers'?text('攻方因缺糧撤退','攻撃側が兵糧不足で撤退'):text('守方因缺糧失守，攻方獲勝','防御側が兵糧不足で陥落し、攻撃側が勝利');
@@ -435,7 +442,8 @@
     }
     case 'battle_result':{
      const outcome={victory:text('攻方獲勝','攻撃側の勝利'),defeat:text('守方獲勝','防御側の勝利'),retreat:text('攻方退卻','攻撃側の撤退')}[d.outcome]||text('戰鬥結束','戦闘終了');
-     return text(`${c}：${outcome}。${typeof d.lost==='number'?`合計減員${d.lost}。`:''}請查看戰果與後續部署。`,`${c}：${outcome}。${typeof d.lost==='number'?`兵力損失は合計${d.lost}。`:''}結果と次の配置を確認してください。`);
+     const summary=text(`${c}：${outcome}。${typeof d.lost==='number'?`合計減員${d.lost}。`:''}`,`${c}：${outcome}。${typeof d.lost==='number'?`兵力損失は合計${d.lost}。`:''}`);
+     return observing?summary:summary+text('請查看戰果與後續部署。','結果と次の配置を確認してください。');
     }
     case 'duel_started':return text(`${p}展開單挑，勝負依招式與武力判定。`,`${p}が一騎討ちに臨みます。技の選択と武力が勝負を左右します。`);
     case 'duel_result':return text(`${p}的單挑已結束。${d.result?label(d.result):'體力與退場結果已結算。'}`,`${p}の一騎討ちが終わりました。${d.result?label(d.result):'体力と退場結果は処理されています。'}`);
@@ -498,7 +506,7 @@
     }
     case 'transport_weather':return text(`${c}的運輸隊途中遇險，預備兵損失${d.lost}。現有貨物：金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}；不重複結算同次災害。`,`${c}への輸送中に災害が発生し、予備兵${d.lost}を失いました。現在の貨物は資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}です。同じ災害を重複精算しません。`);
     case 'campaign_victory':return text(`${f}完成天下統一。本次戰役已結算，可保存進度。`,`${f}が天下を統一しました。戦役の精算を終え、進行状況を保存できます。`);
-    case 'campaign_defeat':return text(`${f}已無法繼續作戰。可保存結果或重新選擇劇本。`,`${f}は戦いを続けられなくなりました。結果を保存するか、シナリオを選び直せます。`);
+    case 'campaign_defeat':return observing?text('各勢力已退出，觀戰結束。','すべての勢力が退場し、観戦を終了しました。'):text(`${f}已無法繼續作戰。可保存結果或重新選擇劇本。`,`${f}は戦いを続けられなくなりました。結果を保存するか、シナリオを選び直せます。`);
     default:{const attacker=n.factions[0]||f;return text(`${attacker}正規劃以${c}為目標的${d.coordinated?'多路協同':'進軍'}作戰。計畫可能包含尚未出發的部隊，實際行軍請核對在途名冊。`,`${attacker}が${c}を目標とする${d.coordinated?'複数部隊の連携':'進軍'}作戦を計画しています。未出発の部隊を含む場合があるため、実際の行軍は行軍中の名簿で確認してください。`);}
    }
   }

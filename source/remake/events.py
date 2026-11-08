@@ -5,7 +5,7 @@ conquests, consume random numbers, or acknowledge/advance a game from the UI.
 """
 from copy import deepcopy
 import re
-from . import historical_campaigns
+from . import historical_campaigns, observer
 from .battle_supply import DENOMINATOR, MAX_BATTLE_DAILY_UNITS
 from .dated_events import FOUNDING_TROOP_TARGET
 from .officers import OFFICER_TROOP_CAP, ref_sort_key, is_generated_ref
@@ -402,11 +402,12 @@ def transition(campaign, before, after, kind, payload):
     person = lambda ident: after.officers[ident].person_id
     if before is None or kind == 'new':
         leader = after.extension['leaders'].get(after.player)
+        observing = after.player == observer.SEAT
         emit(campaign, after, 'campaign_start',
              person_ids=[person(leader)] if leader is not None else [],
              city_ids=[c.id for c in after.cities.values() if c.owner == after.player][:1],
-             factions=[after.player], details=dict(difficulty=after.extension['difficulty'],
-             scenario_title=campaign.catalog.data['title']))
+             factions=[] if observing else [after.player], details=dict(difficulty=after.extension['difficulty'],
+             scenario_title=campaign.catalog.data['title']), audience='world' if observing else 'player')
         return
     for ident, officer in sorted(after.officers.items(), key=lambda item: ref_sort_key(item[0])):
         previous = before.officers.get(ident)
@@ -491,7 +492,9 @@ def transition(campaign, before, after, kind, payload):
                  details=dict(target=target, sources=list(dict.fromkeys(o['source'] for o in plan['orders'])),
                  arrival_turn=plan['arrival_turn'], coordinated=len(plan['orders']) > 1))
     if after.extension['outcome'] and after.extension['outcome'] != before.extension['outcome']:
-        emit(campaign, after, 'campaign_' + after.extension['outcome'], factions=[after.player], audience='world')
+        winner = observer.winner(after) if after.player == observer.SEAT else after.player
+        emit(campaign, after, 'campaign_' + after.extension['outcome'],
+             factions=[winner] if winner else [], audience='world')
 
 
 def validate(campaign, state):

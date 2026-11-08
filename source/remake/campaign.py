@@ -14,7 +14,7 @@ from threading import RLock
 from types import SimpleNamespace
 
 from .errors import GameError
-from . import historical_campaigns
+from . import historical_campaigns, observer
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
@@ -248,7 +248,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
 
     def _new(self, faction, seed, difficulty='normal'):
         from . import dated_events
-        if faction not in {f['id'] for f in dated_events.visible_factions(self.catalog)}:
+        if not isinstance(faction, str) or (
+                faction != observer.SEAT and faction not in {f['id'] for f in dated_events.visible_factions(self.catalog)}):
             raise GameError('请选择一个势力。')
         integer(seed, 1, 0xffffffff, 'seed')
         if not isinstance(difficulty, str) or difficulty not in DIFFICULTIES:
@@ -290,7 +291,11 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         for owner, policy in state.extension['facilities']['factions'].items():
             if owner != faction and d.get('facility_ai_default',True):
                 policy.update(enabled=True,auto_develop=True,auto_study=True,auto_trade=True,auto_equip=True)
-        self._note(state, f'开始{d["title"]}，选择{self.catalog.factions[faction]["name"]}。')
+        if faction == observer.SEAT:
+            self._note(state, f'开始{d["title"]}，各势力由电脑行动。')
+            self._reconcile_factions(state)
+        else:
+            self._note(state, f'开始{d["title"]}，选择{self.catalog.factions[faction]["name"]}。')
         return state
 
     def to_dict(self, state=None):
@@ -311,6 +316,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             alliances = historical_campaigns.alliances(state)
             return {'revision': self.revision, 'game': self.to_dict(),
                     'catalog': {'title': self.catalog.data['title'], 'factions': dated_events.visible_factions(self.catalog,state),
+                                'observer_mode': True,
+                                **({'observer_winner': observer.winner(state)} if state and state.player == observer.SEAT else {}),
                                 'scheduled_factions':[self.catalog.factions[r['faction']] for r in dated_events.foundings(self.catalog)],
                                 'cities': list(self.catalog.map_cities.values()),
                                 'active_cities': self.catalog.active_city_ids(
@@ -343,6 +350,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         with self.lock:
             if not isinstance(payload, dict):
                 raise GameError('操作参数无效。')
+            if self.state and self.state.player == observer.SEAT and kind not in ('new', 'observe_turn'):
+                raise GameError('观战模式中，各势力由电脑行动。')
             # Domain idempotency survives saves and restores, even after the UI
             # has already advanced to another phase/revision.
             if self.state and kind == 'settle' and payload.get('battle_id') in self.state.settled_battles:
@@ -371,6 +380,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                **{action:self._siege_command(action) for action in
                                   ('siege_form','siege_orders','siege_step','siege_withdraw')},
                                'end_turn': self._end_turn, 'ai': self._ai, 'arrivals': self._arrivals,
+                               'observe_turn': self._observe_turn,
                                'hire_staff': self._hire_staff, 'reject_staff': self._reject_staff,
                                'staff_recruit': self._staff_recruit, 'choose_successor': self._choose_successor,
                                'set_domestic':self._set_domestic,'set_logistics':self._set_logistics,
@@ -562,6 +572,15 @@ class Campaign(TravelCampaign, ExpandedCampaign):
     def _ai(self, state, payload):
         return self._expanded_ai(state, payload)
 
+    def _observe_turn(self, state, payload):
+        """Run one strategic turn and its due AI battles in one transaction."""
+        if state.player != observer.SEAT or state.phase != 'city' or payload:
+            raise GameError('当前不能推进观战。')
+        state.phase = 'ai'
+        self._ai(state, {'turn': state.turn})
+        if state.phase == 'arrivals':
+            self._arrivals(state, {})
+
     def _open_dated_cities(self, state):
         """Split an existing actual territory; do not replay historical conquest."""
         for key, rule in self.catalog.data.get('city_foundings', {}).items():
@@ -664,7 +683,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         equipment.synchronize(self,state)
         if logistics.due(state) or any(r['arrival_turn'] <= state.turn for r in state.extension['travel']['marches']):
             state.phase = 'arrivals'
-        if not any(c.owner == state.player for c in state.cities.values()) or not any(o.alive and o.faction_id == state.player for o in state.officers.values()):
+        if state.player != observer.SEAT and (
+                not any(c.owner == state.player for c in state.cities.values())
+                or not any(o.alive and o.faction_id == state.player for o in state.officers.values())):
             state.phase = 'finished'
             self._note(state, '本方已无可用驻军，本次演练结束。')
         else:
@@ -756,8 +777,11 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         city_development.validate(self,state)
         validate_events(self, state)
         self._validate_expansion(state)
-        if state.player not in self.catalog.factions or state.phase not in {'city', 'battle', 'result', 'ai', 'finished', 'arrivals'}:
+        if ((state.player != observer.SEAT and state.player not in self.catalog.factions)
+                or state.phase not in {'city', 'battle', 'result', 'ai', 'finished', 'arrivals'}):
             raise ValueError('campaign phase/player')
+        if state.player == observer.SEAT and (state.phase not in {'city', 'finished'} or state.battle is not None):
+            raise ValueError('observer phase')
         integer(state.year, 1, 400, 'year')
         integer(state.month, 1, 12, 'month')
         integer(state.day, 1, 21, 'day')
