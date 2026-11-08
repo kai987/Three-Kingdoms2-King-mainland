@@ -635,6 +635,79 @@ def auto_dispatch_city(game, state, city_id):
     return True
 
 
+def attack_grain_shortage(state, target, required_grain):
+    """Account for convoys already bringing grain to this launch city."""
+    inbound = _inbound(state, target.id)['grain'] if 'logistics' in state.extension else 0
+    return max(0, required_grain - target.grain - inbound)
+
+
+def dispatch_attack_grain(game, state, target, required_grain, *, protected_officers=(), max_turns=None):
+    """Send grain for a specific AI sortie using the ordinary convoy service."""
+    owner = target.owner
+    if ('logistics' not in state.extension or state.phase != 'ai' or owner == state.player
+            or not command_books.can_spend(state, owner, 'dispatch_transport')):
+        return False
+    shortage = attack_grain_shortage(state, target, required_grain)
+    pool = _pool(state)
+    if not shortage or pool['next_id'] > 1000000:
+        return False
+
+    active_origins = {row['source'] for row in pool['convoys']}
+    threatened = {row['target'] for row in state.extension['travel']['marches']
+                  if row['kind'] == 'attack' and row['owner'] != owner
+                  and not historical_campaigns.allied(state, owner, row['owner'])}
+    protected = set(protected_officers)
+    target_room = LIMIT - target.grain - _inbound(state, target.id)['grain']
+    engines, candidates = {}, []
+    for source in state.cities.values():
+        if (source.owner != owner or source.id == target.id or source.id in active_origins
+                or source.id in threatened or pool['receipts'].get('city:' + source.id, 0) > state.turn):
+            continue
+        row = pool['cities'][source.id]
+        policy = row['policy']
+        if (not policy['enabled'] or policy['target_city'] not in (None, target.id)
+                or row['last_dispatch_turn'] == state.turn or not policy['max_grain']
+                or source.gold < policy['reserve_gold'] or source.reserves < policy['reserve_reserves']
+                or source.grain <= policy['reserve_grain']
+                or _present_count(game, state, source) <= policy['reserve_officers']):
+            continue
+        escorts = [ident for ident in _eligible(game, state, source) if ident not in protected]
+        if not escorts:
+            continue
+        # A light escort consumes less of the shipment on the return journey.
+        escort = min(escorts, key=lambda ident: (state.officers[ident].troops, _key(ident)))
+        permissions = policy['allow_sea'], policy['allow_special']
+        if permissions not in engines:
+            engines[permissions] = _safe_engine(game, policy)
+        engine = engines[permissions]
+        quotes = {f'{source.id}:{target.id}:{mode}': engine._travel_path(state, source.id, target.id, owner, mode)
+                  for mode in ('land', 'fastest')}
+        selected = _safe_quote(game, state, source, target, policy, quotes=quotes)
+        if selected is None:
+            continue
+        mode, quote = selected
+        if max_turns is not None and quote['turns'] > max_turns:
+            continue
+        rations = _rations(state, quote, [escort], _empty_cargo())
+        capacity = min(policy['max_grain'], source.grain - policy['reserve_grain'] - rations,
+                       target_room)
+        if capacity > 0:
+            candidates.append((capacity < shortage, quote['days'], -min(capacity, shortage),
+                               source.id, mode, escort, capacity))
+    if not candidates:
+        return False
+
+    _, _, _, source_id, mode, escort, capacity = min(candidates, key=lambda row: row[:4])
+    source = state.cities[source_id]
+    policy = pool['cities'][source_id]['policy']
+    selected = _safe_quote(game, state, target, source, policy)
+    return_rations = _rations(state, selected[1], [escort], _empty_cargo()) if selected else 0
+    cargo = dict(_empty_cargo(), grain=min(capacity, shortage + return_rations))
+    dispatch(game, state, dict(source=source_id, target=target.id, officers=[escort],
+                               cargo=cargo, route_mode=mode), owner)
+    return True
+
+
 def _auto_transfer_city(game,state,city_id):
     """Permanent front personnel use the ordinary movement service, not cargo."""
     source=state.cities[city_id];policy=_pool(state)['cities'][city_id]['policy']

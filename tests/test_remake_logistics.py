@@ -11,11 +11,13 @@ sys.path[:0] = [str(ROOT / 'source'), str(ROOT / 'tests')]
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
 from remake import command_books, civil_staff, domestic, equipment, logistics, treasures
+from remake.battle_supply import BUDGET_DAYS
+from remake.march_supply import required_grain
 from remake.officers import YearState, initialize_officer, year_state
 from test_remake_domestic import domestic_catalog
 
 
-def transport_catalog(*, sea=False, long=False):
+def transport_catalog(*, sea=False, long=False, rear=False):
     data = deepcopy(domestic_catalog().data)
     data['id'] = 'controlled-transport'
     for row in data['travel_routes']:
@@ -24,6 +26,11 @@ def transport_catalog(*, sea=False, long=False):
                 row.update(mode='sea', terrain='sea', distance_km=300, land_km=0, sea_km=300, days=10)
             elif long:
                 row.update(distance_km=900, land_km=900, days=30)
+    if rear:
+        front_link = {'nanyang', 'xiangyang'}
+        data['links'] = [link for link in data['links'] if set(link) != front_link]
+        data['travel_routes'] = [row for row in data['travel_routes']
+                                 if {row['from'], row['to']} != front_link]
     with tempfile.TemporaryDirectory() as tmp:
         p = Path(tmp) / 'transport.json'; p.write_text(json.dumps(data, ensure_ascii=False))
         return Catalog(p)
@@ -80,6 +87,62 @@ class LogisticsTests(unittest.TestCase):
             game.command(kind, payload, cursor)
         self.assertEqual(game.export_save(), before)
         self.assertEqual(game.revision, cursor)
+
+    def test_ai_attack_grain_uses_rear_convoy_and_accounts_for_inbound_cargo(self):
+        game = Campaign(transport_catalog(rear=True))
+        game.command('new', dict(faction='wei', seed=2026), 0)
+        game.command('end_turn', {}, game.revision)
+        state = game.state
+        domestic.prepare_ai(game, state, 'shu')
+        source, target = state.cities['xiangyang'], state.cities['nanjun']
+        source.grain, target.grain = 1000, 200
+        offices = domestic.appointments(state, 'shu')
+        spare = [ident for ident in source.roster.officer_ids if ident not in (offices['civil'], offices['military'])]
+        books = command_books.remaining(state, 'shu')
+
+        self.assertTrue(logistics.dispatch_attack_grain(game, state, target, 550,
+                                                         protected_officers=spare[:1], max_turns=2))
+        row, = state.extension['logistics']['convoys']
+        self.assertEqual((row['source'], row['target'], row['officers']), (source.id, target.id, spare[1:]))
+        self.assertEqual(row['cargo'], dict(gold=0, grain=351, reserves=0, treasure=0))
+        self.assertEqual(source.grain, 1000 - row['cargo']['grain'] - row['journeys'][0]['supply']['loaded'])
+        self.assertGreaterEqual(source.grain, 500)
+        self.assertEqual(target.grain, 200)
+        self.assertEqual(command_books.remaining(state, 'shu'), books - 1)
+        self.assertEqual(logistics.attack_grain_shortage(state, target, 550), 0)
+        self.assertFalse(logistics.dispatch_attack_grain(game, state, target, 550))
+        game.validate(state)
+
+        self.advance_due(game)
+        self.assertGreaterEqual(game.state.cities['nanjun'].grain, 550)
+        self.assertTrue(game.state.extension['logistics']['convoys'][0]['delivery_done'])
+
+    def test_observer_resupplies_a_stranded_attack_through_to_victory(self):
+        data = transport_catalog(rear=True).data
+        data['rules']['ai_max_attacks_per_turn'] = 3
+        data['initial_owners']['nanyang'] = 'shu'
+        data['factions'] = [faction for faction in data['factions'] if faction['id'] != 'wei']
+        data['faction_rulers'].pop('wei')
+        data['initial_officers'][0].update(city='nanjun', ruler=False, troops=6000)
+        data['initial_city_resources']['nanjun'].update(grain=0, reserves=0)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'endgame.json'
+            path.write_text(json.dumps(data, ensure_ascii=False))
+            game = Campaign(Catalog(path))
+        game.command('new', dict(faction='observer', seed=2026), 0)
+
+        game.command('observe_turn', {}, game.revision)
+        reports = game.state.extension['logistics']['reports']
+        arrival, = [row for row in reports if row['kind'] == 'transport_arrived']
+        self.assertEqual((arrival['source'], arrival['target']), ('xiangyang', 'nanjun'))
+        self.assertGreaterEqual(game.state.cities['nanjun'].grain,
+                                required_grain(6000, 1, 1 + BUDGET_DAYS))
+        self.assertFalse(game.state.settled_battles)
+
+        finished = game.command('observe_turn', {}, game.revision)
+        self.assertEqual(finished['catalog']['observer_winner'], 'shu')
+        self.assertEqual(game.state.phase, 'finished')
+        self.assertEqual(len(game.state.settled_battles), 1)
 
     def test_actual_dispatch_arrival_cargo_and_personnel_are_conserved(self):
         game = self.game()
