@@ -4,6 +4,7 @@ Coordinated columns remain separate legal ten-officer armies. Their departure
 dates, rather than edited march receipts, align their existing arrival service.
 Planning only reads published state; actual recruitment still owns its RNG roll.
 """
+from collections import Counter, defaultdict
 from copy import copy
 from itertools import combinations
 
@@ -12,7 +13,7 @@ from .errors import GameError
 from . import command_books, historical_campaigns, officer_relations
 from .officers import integer, recruitment_loyalty, ref_sort_key
 from . import civil_staff
-from .march_supply import DENOMINATOR, OFFICER_UNITS, estimate as march_grain, next_supply_days
+from .march_supply import DENOMINATOR, OFFICER_UNITS, estimate as march_grain, next_supply_days, required_grain
 from .route_hazards import allocate_survivors
 
 
@@ -22,6 +23,13 @@ class StrategicAI:
         self.settings = get_settings(state)
         self.budget = attack_budget(campaign.catalog, state)
         self.quotes = {}
+        self.neighbor_ids = {}
+        self.support_checked = set()
+        holdings = Counter(city.owner for city in state.cities.values() if city.owner != 'neutral')
+        # Let both sides concentrate on the remaining fronts once the map
+        # has consolidated. Earlier campaigns retain their wider priorities.
+        self.endgame = (1 <= len(holdings) <= 2
+                        and max(holdings.values()) * 4 >= len(state.cities) * 3)
 
     def defenders(self, city):
         """The same healthy, present top ten units the battle can actually use."""
@@ -35,8 +43,10 @@ class StrategicAI:
         return sum(self.state.officers[i].troops for i in self.defenders(city))
 
     def neighbors(self, city):
-        return [self.state.cities[k] for k in self.game._neighbors(city.id, self.state)
-                if k in self.state.cities]
+        if city.id not in self.neighbor_ids:
+            self.neighbor_ids[city.id] = tuple(key for key in self.game._neighbors(city.id, self.state)
+                                               if key in self.state.cities)
+        return [self.state.cities[key] for key in self.neighbor_ids[city.id]]
 
     def threat(self, city, exclude=None):
         hostile = [self.strength(c) for c in self.neighbors(city)
@@ -155,7 +165,7 @@ class StrategicAI:
                 credit += needed * DENOMINATOR
         return True
 
-    def attack_option(self, city, target):
+    def attack_option(self, city, target, *, require_grain=True):
         ids = self.army(city, target.id)
         total = sum(self.state.officers[i].troops for i in ids)
         if total < self.settings['min_attack_troops']:
@@ -163,7 +173,7 @@ class StrategicAI:
         options = []
         for mode in ('land', 'fastest'):
             quote = self.quote(city, target, mode, adjacent=True)
-            if self.safe(quote, ids) and self.provisioned(city, ids, quote):
+            if self.safe(quote, ids) and (not require_grain or self.provisioned(city, ids, quote)):
                 survivors = self.survivors(quote, ids)
                 options.append(dict(source=city.id, target=target.id, officers=ids,
                                     mode=mode, quote=quote, survivors=survivors))
@@ -194,10 +204,23 @@ class StrategicAI:
                 return orders
         return []
 
+    def attack_approaches(self, owner):
+        approaches = defaultdict(list)
+        for source in self.state.cities.values():
+            if source.owner != owner:
+                continue
+            for target in self.neighbors(source):
+                if target.owner != owner and not historical_campaigns.allied(self.state, owner, target.owner):
+                    approaches[target.id].append(source)
+        return approaches
+
+    def attack_requirement(self, target):
+        return max(self.settings['min_attack_troops'],
+                   (self.strength(target)*self.settings['attack_ratio_percent']+99)//100)
+
     def objective(self, owner, preferred=None):
-        cities = [c for c in self.state.cities.values() if c.owner == owner]
-        targets = sorted({c.id for city in cities for c in self.neighbors(city) if c.owner != owner
-                          and not historical_campaigns.allied(self.state, owner, c.owner)})
+        approaches = self.attack_approaches(owner)
+        targets = sorted(approaches)
         priority, first = historical_campaigns.priority_targets(self.state, owner, targets)
         if priority:
             targets = sorted(priority)
@@ -210,18 +233,18 @@ class StrategicAI:
             target = self.state.cities[key]
             defend = self.strength(target)
             potential.append((defend, -target.grain, target.id))
-            options = [o for city in cities if command_books.can_spend(self.state, owner, 'depart')
+            options = [o for city in approaches[key] if command_books.can_spend(self.state, owner, 'depart')
                        and (o := self.attack_option(city, target)) is not None]
             options.sort(key=lambda o: (-o['survivors'], o['quote']['days'], o['source']))
             # Limit enumeration to the six strongest approaches, then at most
             # three legal armies. This keeps a large campaign's plan bounded.
             limit = min(self.settings['max_attack_sources'], available_budget)
+            required = max(self.settings['min_attack_troops'],
+                           (defend*self.settings['attack_ratio_percent']+99)//100)
             for size in range(1, limit+1):
                 feasible = []
                 for members in combinations(options[:6], size):
                     power = sum(o['survivors'] for o in members)
-                    required = max(self.settings['min_attack_troops'],
-                                   (defend*self.settings['attack_ratio_percent']+99)//100)
                     if power < required:
                         continue
                     orders = self.schedule(members)
@@ -273,7 +296,7 @@ class StrategicAI:
                 old['last_turn'] = turn
                 return old
             if turn < old['review_turn']:
-                target, orders = self.objective(owner, old['target'])
+                target, orders = self.objective(owner, None if self.endgame else old['target'])
                 old.update(target=target, orders=orders, last_turn=turn,
                            arrival_turn=orders[0]['arrival_turn'] if orders else None)
                 return old
@@ -283,6 +306,62 @@ class StrategicAI:
             arrival_turn=orders[0]['arrival_turn'] if orders else None, orders=orders)
         plans[owner] = current
         return current
+
+    def support_endgame(self, owner, plan):
+        """Fund or reinforce one viable front while no attack is ready."""
+        if not self.endgame or plan['orders'] or not self.budget or owner in self.support_checked:
+            return
+        self.support_checked.add(owner)
+        from . import ai_rally, logistics
+        from .battle_supply import BUDGET_DAYS
+
+        approaches = self.attack_approaches(owner)
+        priority, first = historical_campaigns.priority_targets(self.state, owner, sorted(approaches))
+        targets = sorted(priority or approaches)
+        requests, fronts = [], []
+        max_columns = min(self.settings['max_attack_sources'], self.budget)
+        for key in targets:
+            target = self.state.cities[key]
+            required = self.attack_requirement(target)
+            ready = sorted(((option['survivors'], source.id) for source in approaches[key]
+                            if (option := self.attack_option(source, target)) is not None), reverse=True)
+            power = sum(strength for strength, _ in ready[:max_columns])
+            if power < required:
+                fronts.append((key != first, (required-power)*100//required, key != plan['target'], key))
+            if 'logistics' not in self.state.extension:
+                continue
+            for source in approaches[key]:
+                option = self.attack_option(source, target, require_grain=False)
+                if option is None:
+                    continue
+                grain = march_grain(self.state, option['officers'], option['quote'])
+                if source.grain >= grain:
+                    continue
+                supporting = [strength for strength, city_id in ready if city_id != source.id]
+                if option['survivors'] + sum(supporting[:max_columns-1]) >= required:
+                    ids = option['officers']
+                    troops = sum(self.state.officers[ident].troops for ident in ids)
+                    total_grain = grain + required_grain(troops, len(ids), BUDGET_DAYS)
+                    requests.append((key != first, option['quote']['days'], total_grain-source.grain,
+                                     key, source.id, total_grain))
+
+        for _, _, _, key, source_id, grain in sorted(requests):
+            source = self.state.cities[source_id]
+            if (not logistics.attack_grain_shortage(self.state, source, grain)
+                    or logistics.dispatch_attack_grain(self.game, self.state, source, grain,
+                                                       max_turns=self.settings['max_route_turns'])):
+                plan['target'] = key
+                return
+
+        for _, _, _, key in sorted(fronts):
+            target = self.state.cities[key]
+            fronts_for_target = {source.id for source in approaches[key]}
+            for donor in sorted(self.state.cities.values(), key=lambda city: city.id):
+                if (donor.owner == owner and donor.id not in fronts_for_target
+                        and any(city.id in fronts_for_target for city in self.neighbors(donor))
+                        and ai_rally.reinforce(self, donor, target)):
+                    plan['target'] = key
+                    return
 
     def depart(self, city, plan):
         for order in list(plan['orders']):
@@ -445,6 +524,9 @@ def run(campaign, state, payload):
             if not command_books.can_spend(state, city.owner):
                 break
             plan = ai.plan(city.owner)
+            ai.support_endgame(city.owner, plan)
+            if not command_books.can_spend(state, city.owner):
+                break
             ai.prepare(city)
             if not ai.depart(city,plan) and not ai.reinforce(city,plan):
                 if 'domestic' not in x:

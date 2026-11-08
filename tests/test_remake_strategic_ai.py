@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign, Catalog, canonical
 from remake import facilities, treasures
+from remake.ai_rally import reinforce as reinforce_attack_front
 from remake.errors import GameError
 from remake.march_core import using_backend
 from remake.march_supply import estimate as march_grain
@@ -78,6 +79,30 @@ class StrategicAITests(unittest.TestCase):
         saved=game.export_save();other=Campaign(game.catalog);other.load_save(saved,0)
         self.assertEqual(other.export_save(),saved)
         return other
+
+    def test_neighbor_rally_turns_an_understrength_front_into_a_legal_attack(self):
+        game = self.new(troops=1000, second=100)
+        state = game.state
+        ai = StrategicAI(game, state)
+        donor, front, enemy = (state.cities[key] for key in ('runan', 'nanyang', 'xiangyang'))
+        grain_before = donor.grain
+        self.assertEqual(ai.objective('wei'), (enemy.id, []))
+
+        self.assertTrue(reinforce_attack_front(ai, donor, enemy))
+        march, = state.extension['travel']['marches']
+        self.assertEqual((march['source'], march['target'], march['kind']), (donor.id, front.id, 'transfer'))
+        self.assertEqual(sum(state.officers[ident].troops for ident in march['officers']), 600)
+        self.assertEqual(donor.grain, grain_before - march_grain(state, march['officers'], march['quote']))
+        self.assertEqual(len(ai.available(donor)), 1)
+        self.assertFalse(reinforce_attack_front(ai, donor, enemy))
+        game.validate(state)
+
+        self.ai_turn(game)
+        game.command('arrivals', {}, game.revision)
+        self.assertTrue(set(march['officers']).issubset(game.state.cities[front.id].roster.officer_ids))
+        target, orders = StrategicAI(game, game.state).objective('wei')
+        self.assertEqual(target, enemy.id)
+        self.assertTrue(any(order['source'] == front.id for order in orders))
 
     def test_planning_is_read_only_and_uses_actual_top_ten_defenders(self):
         game=self.new(defenders=13,troops=100)
