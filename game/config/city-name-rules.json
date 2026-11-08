@@ -1,0 +1,75 @@
+{
+  "hepu": {
+    "names": [
+      {"from_date": [1, 1], "to_date": [227, 12], "name": "合浦"},
+      {"from_date": [228, 1], "name": "珠官"}
+    ],
+    "detail": "漢代已有合浦郡。孫權於黃武七年（228年）改稱珠官；原典只載年份，本作以1月為切換界線。",
+    "detail_ja": "漢代にはすでに合浦郡が置かれていました。孫権は黄武7年（228年）に珠官へ改称しました。史料に月の記載がないため、本作では1月に切り替えます。",
+    "sources": ["https://zh.wikisource.org/wiki/三國志/卷47"]
+  },
+  "xindu": {
+    "names": [
+      {"from_date": [208, 1], "name": "新都"}
+    ],
+    "detail": "節點定位在新都郡治始新。建安十三年（208年），孫權從歙縣析置始新縣並設新都郡；早期屬歙縣境內，尚無此處的獨立縣城。1月是本作按建置年開放的界線，史料未載確月。",
+    "detail_ja": "地点は新都郡の郡治・始新です。建安13年（208年）に孫権が歙県を分けて始新県と新都郡を設けました。それ以前は歙県の一部でした。設置月は記録されていないため、本作では1月に開放します。",
+    "sources": [
+      "https://www.shidianguji.com/zh/book/LS0004/chapter/1kview8bnwn4c",
+      "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_32221"
+    ]
+  },
+  "badong": {
+    "names": [
+      {"from_date": [1, 1], "to_date": [200, 12], "name": "鱼复"},
+      {"from_date": [201, 1], "to_date": [213, 12], "name": "巴东"},
+      {"from_date": [214, 1], "to_date": [215, 12], "name": "鱼复"},
+      {"from_date": [216, 1], "to_date": [220, 12], "name": "固陵"},
+      {"from_date": [221, 1], "name": "巴东"}
+    ],
+    "detail": "同一節點沿用漢代魚復縣的位置。劉璋於201年改固陵為巴東。劉備入主益州後改置江關都尉，這段使用舊縣名；216年復置固陵郡，221年復稱巴東。缺確月的變更均以1月為本作界線。",
+    "detail_ja": "漢代の魚復県の位置を引き継ぐ地点です。劉璋は201年に固陵郡を巴東郡へ改称しました。劉備が益州を領有して江関都尉を置いた時期は旧県名を使います。216年に固陵郡、221年に巴東郡へ戻りました。月が不明な変更は本作では1月に切り替えます。",
+    "sources": [
+      "https://ctext.org/wiki.pl?chapter=288254&if=en",
+      "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_44482"
+    ]
+  },
+  "xincheng": {
+    "names": [
+      {"from_date": [1, 1], "to_date": [220, 6], "name": "房陵"},
+      {"from_date": [220, 7], "name": "新城"}
+    ],
+    "detail": "節點定位在漢代房陵。曹魏於220年孟達來降後合房陵、上庸、西城為新城郡；本作以《資治通鑑》秋七月條作界線。219年襄樊之戰中，房陵節點用於表示上庸方向。",
+    "detail_ja": "地点は漢代の房陵です。220年に孟達が降ると魏は房陵・上庸・西城をまとめて新城郡を置きました。本作は『資治通鑑』の秋7月の記事を境に切り替えます。219年の襄樊の戦いでは、房陵の地点で上庸方面を表します。",
+    "sources": [
+      "https://zh.wikisource.org/wiki/三國志/卷40",
+      "https://bailushuyuan.org/novel/traditional/chapters/12844",
+      "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_45924"
+    ]
+  },
+  "jianning": {
+    "names": [
+      {"from_date": [1, 1], "to_date": [225, 9], "name": "味县"},
+      {"from_date": [225, 10], "name": "建宁"}
+    ],
+    "detail": "味縣是漢代益州郡舊縣。225年秋平定南中後，益州郡改為建寧郡，治味縣。本作以秋後10月切換，7月南征劇本開局仍顯示舊縣名。",
+    "detail_ja": "味県は漢代の益州郡に属した県です。225年秋の南中平定後、益州郡は建寧郡に改称され、郡治は味県に移りました。本作では秋の後の10月に切り替え、7月の南蛮征伐の開始時は旧県名を表示します。",
+    "sources": [
+      "https://ctext.org/wiki.pl?chapter=174251&if=gb",
+      "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_45526"
+    ]
+  },
+  "xinggu": {
+    "names": [
+      {"from_date": [1, 1], "to_date": [225, 9], "name": "宛温县"},
+      {"from_date": [225, 10], "name": "兴古"}
+    ],
+    "detail": "節點定位在漢代牂牁郡的宛溫縣。225年秋平定南中後，蜀分建寧、牂牁設興古郡。《水經注》通行本記郡治在宛溫。本作以秋後10月切換。",
+    "detail_ja": "地点は漢代に牂牁郡に属した宛温県です。225年秋の南中平定後、蜀は建寧郡と牂牁郡の一部から興古郡を設けました。『水経注』の通行本は郡治を宛温と記します。本作では秋の後の10月に切り替えます。",
+    "sources": [
+      "https://ctext.org/wiki.pl?chapter=174251&if=gb",
+      "https://www.shidianguji.com/zh/book/NGJ8924119990165161591/chapter/1lvcsj4uf1w73",
+      "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_45532"
+    ]
+  }
+}

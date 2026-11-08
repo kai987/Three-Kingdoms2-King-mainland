@@ -109,6 +109,22 @@ class CityLifecycleTests(unittest.TestCase):
         with self.assertRaises(ValueError):loaded.load_save(bad,loaded.revision)
         self.assertEqual(loaded.to_dict(),game.to_dict())
 
+    def test_xindu_founding_keeps_early_history_and_if_openings_distinct(self):
+        historical = Catalog(ROOT/'game/data/campaigns/207-09.json')
+        alternate = Catalog(ROOT/'game/data/campaigns/197-07.json')
+        self.assertNotIn('xindu', historical.active_city_ids(207, 12))
+        self.assertIn('xindu', alternate.active_city_ids(197, 7))
+        game = self.start(historical)
+        for month in (10, 11, 12):
+            advance_month(game)
+            self.assertEqual((game.state.year, game.state.month), (207, month))
+            self.assertNotIn('xindu', game.state.cities)
+        advance_month(game)
+        self.assertEqual((game.state.year, game.state.month), (208, 1))
+        self.assertEqual(game.state.cities['xindu'].owner, game.state.cities['danyang'].owner)
+        self.assertIn('xindu', game.view()['catalog']['active_cities'])
+        game.validate(game.state)
+
     def test_current_dated_city_boundaries_match_calendar_and_roundtrip(self):
         catalog=Catalog(ROOT/'game/data/campaigns/207-09.json')
         # Exact game boundaries are explicit even where the source gives only

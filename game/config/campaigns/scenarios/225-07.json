@@ -30221,7 +30221,7 @@
                 "https://zh.wikisource.org/zh-hant/三國志/卷43",
                 "https://zh.wikisource.org/zh-hant/華陽國志_(四庫全書本)/卷04"
               ],
-              "note": "依用戶指定將雍闓納入孟獲勢力，駐建寧。史料記雍闓在諸葛亮南征途中已為高定部曲所殺；225年7月仍可出場為本作開局合併設定，保留原資料死亡年225及當年出場確認，非逐月史實或SAN14原始配置。",
+              "note": "依用戶指定將雍闓納入孟獲勢力，駐味縣（後來的建寧郡治）。史料記雍闓在諸葛亮南征途中已為高定部曲所殺；225年7月仍可出場為本作開局合併設定，保留原資料死亡年225及當年出場確認，非逐月史實或SAN14原始配置。",
               "reference_date": [
                 225,
                 7
@@ -30274,7 +30274,7 @@
                 "https://zh.wikisource.org/zh-hant/三國志/卷43",
                 "https://zh.wikisource.org/zh-hant/華陽國志_(四庫全書本)/卷04"
               ],
-              "note": "依用戶指定將高定納入孟獲勢力，沿用建寧駐地。史料所記活動地為越巂，且於225年南征時被斬；本庫死亡年251是第三方遊戲設定轉錄，本次不改共享生卒年，不將此開局歸屬與駐地宣稱為逐月史實。",
+              "note": "依用戶指定將高定納入孟獲勢力，沿用味縣駐地。史料所記活動地為越巂，且於225年南征時被斬；本庫死亡年251是第三方遊戲設定轉錄，本次不改共享生卒年，不將此開局歸屬與駐地宣稱為逐月史實。",
               "reference_date": [
                 225,
                 7
@@ -31344,7 +31344,7 @@
           "group": "dlc",
           "title": "征伐南蠻",
           "official_source": "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-          "summary": "劉禪繼位，諸葛亮南征；依本作開局設定，孟獲統合雍闓、高定、朱褒，領有建寧、雲南、興古及牂牁。",
+          "summary": "劉禪繼位，諸葛亮南征。依本作開局設定，孟獲統合雍闓、高定、朱褒，領有味縣、雲南、宛溫縣及牂牁。",
           "setup_basis": "explicit_DLC_story_premise_with_retimed_remake_snapshot_and_user_225_nanzhong_merge",
           "membership_basis": "Retimed nearby immutable remake snapshot plus explicit story/leadership membership revisions; missing historical affiliations are not represented as verified SAN14 export.; source_referenced_v13_career_windows_and_explicit_new_person_game_design; user_requested_225_nanzhong_merge_not_month_exact_history",
           "scope": "The ten additional scenarios on the linked PK official page, plus the requested211 full-board custom campaign and official234-02 store bonus;225 is one entry.",
@@ -31353,8 +31353,8 @@
             "ja": "南蛮征伐"
           },
           "summary_i18n": {
-            "zh-Hant": "劉禪繼位，諸葛亮南征；依本作開局設定，孟獲統合雍闓、高定、朱褒，領有建寧、雲南、興古及牂牁。",
-            "ja": "劉禅の即位後、諸葛亮が南征する。本作の開始設定では孟獲の配下に雍闓・高定・朱褒をまとめ、建寧・雲南・興古・牂牁を領有する。"
+            "zh-Hant": "劉禪繼位，諸葛亮南征。依本作開局設定，孟獲統合雍闓、高定、朱褒，領有味縣、雲南、宛溫縣及牂牁。",
+            "ja": "劉禅の即位後、諸葛亮が南征する。本作の開始設定では孟獲の配下に雍闓・高定・朱褒をまとめ、味県・雲南・宛温県・牂牁を領有する。"
           },
           "fictional": false,
           "source_urls": [
@@ -34882,7 +34882,7 @@
               "opening": {
                 "set": {
                   "basis": "DLC_independent_story_territory_adaptation",
-                  "note": "劉禪繼位，諸葛亮南征；孟獲等南中勢力據建寧、雲南及周邊。",
+                  "note": "劉禪繼位，諸葛亮南征。孟獲等南中勢力據味縣、雲南及周邊。",
                   "sources": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
@@ -34896,7 +34896,7 @@
               "opening": {
                 "set": {
                   "basis": "DLC_independent_story_territory_adaptation",
-                  "note": "劉禪繼位，諸葛亮南征；孟獲等南中勢力據建寧、雲南及周邊。",
+                  "note": "劉禪繼位，諸葛亮南征。孟獲等南中勢力據味縣、雲南及周邊。",
                   "sources": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
@@ -34910,7 +34910,7 @@
               "opening": {
                 "set": {
                   "basis": "DLC_independent_story_territory_adaptation",
-                  "note": "劉禪繼位，諸葛亮南征；孟獲等南中勢力據建寧、雲南及周邊。",
+                  "note": "劉禪繼位，諸葛亮南征。孟獲等南中勢力據味縣、雲南及周邊。",
                   "sources": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
@@ -34924,7 +34924,7 @@
               "opening": {
                 "set": {
                   "basis": "DLC_independent_story_territory_adaptation",
-                  "note": "劉禪繼位，諸葛亮南征；孟獲等南中勢力據建寧、雲南及周邊。",
+                  "note": "劉禪繼位，諸葛亮南征。孟獲等南中勢力據味縣、雲南及周邊。",
                   "sources": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
@@ -34938,7 +34938,7 @@
               "opening": {
                 "set": {
                   "basis": "DLC_independent_story_territory_adaptation",
-                  "note": "劉禪繼位，諸葛亮南征；孟獲等南中勢力據建寧、雲南及周邊。",
+                  "note": "劉禪繼位，諸葛亮南征。孟獲等南中勢力據味縣、雲南及周邊。",
                   "sources": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
@@ -34952,7 +34952,7 @@
               "opening": {
                 "set": {
                   "basis": "DLC_independent_story_territory_adaptation",
-                  "note": "劉禪繼位，諸葛亮南征；孟獲等南中勢力據建寧、雲南及周邊。",
+                  "note": "劉禪繼位，諸葛亮南征。孟獲等南中勢力據味縣、雲南及周邊。",
                   "sources": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
@@ -34967,7 +34967,7 @@
                 "set": {
                   "owner": "wu",
                   "basis": "DLC_independent_story_territory_adaptation",
-                  "note": "劉禪繼位，諸葛亮南征；孟獲等南中勢力據建寧、雲南及周邊。",
+                  "note": "劉禪繼位，諸葛亮南征。孟獲等南中勢力據味縣、雲南及周邊。",
                   "sources": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
@@ -35033,7 +35033,7 @@
               "opening": {
                 "set": {
                   "basis": "DLC_independent_story_territory_adaptation",
-                  "note": "劉禪繼位，諸葛亮南征；孟獲等南中勢力據建寧、雲南及周邊。",
+                  "note": "劉禪繼位，諸葛亮南征。孟獲等南中勢力據味縣、雲南及周邊。",
                   "sources": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
@@ -35047,7 +35047,7 @@
               "opening": {
                 "set": {
                   "basis": "DLC_independent_story_territory_adaptation",
-                  "note": "劉禪繼位，諸葛亮南征；孟獲等南中勢力據建寧、雲南及周邊。",
+                  "note": "劉禪繼位，諸葛亮南征。孟獲等南中勢力據味縣、雲南及周邊。",
                   "sources": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
@@ -35061,7 +35061,7 @@
               "opening": {
                 "set": {
                   "basis": "DLC_independent_story_territory_adaptation",
-                  "note": "劉禪繼位，諸葛亮南征；孟獲等南中勢力據建寧、雲南及周邊。",
+                  "note": "劉禪繼位，諸葛亮南征。孟獲等南中勢力據味縣、雲南及周邊。",
                   "sources": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
@@ -35075,7 +35075,7 @@
               "opening": {
                 "set": {
                   "basis": "DLC_independent_story_territory_adaptation",
-                  "note": "劉禪繼位，諸葛亮南征；孟獲等南中勢力據建寧、雲南及周邊。",
+                  "note": "劉禪繼位，諸葛亮南征。孟獲等南中勢力據味縣、雲南及周邊。",
                   "sources": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"

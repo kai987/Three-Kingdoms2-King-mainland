@@ -162,7 +162,6 @@
         "xinggu",
         "yinping",
         "fuling",
-        "xindu",
         "poyang",
         "luling",
         "qichun",
@@ -2446,7 +2445,6 @@
           "xinggu": "neutral",
           "yinping": "neutral",
           "fuling": "neutral",
-          "xindu": "neutral",
           "poyang": "neutral",
           "luling": "neutral",
           "qichun": "neutral",
@@ -2492,7 +2490,8 @@
         },
         "delete": [
           "yidu",
-          "xinxing"
+          "xinxing",
+          "xindu"
         ]
       },
       "appearance_locations": {
@@ -39236,9 +39235,9 @@
           },
           "danyang": {
             "set": {
-              "gold": 2350,
-              "grain": 7525,
-              "reserves": 2040
+              "gold": 3370,
+              "grain": 10950,
+              "reserves": 3060
             }
           },
           "jiujiang": {

@@ -76,7 +76,7 @@ class MapPresentationTests(unittest.TestCase):
         self.assertEqual(source['schema'],'tk2-map-source-v1')
         ground_sha=hashlib.sha256((ROOT/'game/map-source/hydrology-ground.png').read_bytes()).hexdigest()
         self.assertEqual(meta['inactive_castle_ground_sha256'],ground_sha)
-        self.assertEqual(meta['inactive_castle_ids'],['yiyang','yidu'])
+        self.assertEqual(meta['inactive_castle_ids'],['yiyang','yidu','xindu'])
         self.assertEqual(meta['inactive_castle_ground'],'/assets/map-city-ground.png')
         base=deepcopy(meta);base.pop('road_center_corrections');base.pop('road_bridges');base.pop('inactive_castle_ground_sha256');base.pop('city_road_bed')
         self.assertEqual(source['presentation'],base)

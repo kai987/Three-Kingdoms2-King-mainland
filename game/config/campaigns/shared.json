@@ -55353,6 +55353,15 @@
         "precision": "attested_year_user_authored_month",
         "date_note": "史料確證208年，9月為本作依使用者指定的建置月份。",
         "source": "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
+      },
+      "xindu": {
+        "year": 208,
+        "month": 1,
+        "parent": "danyang",
+        "resource_divisor": 4,
+        "precision": "attested_year_game_month",
+        "date_note": "《三國志·賀齊傳》載208年析歙縣葉鄉置始新縣，並立新都郡治於始新。史料未記確月，1月為本作年界。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
       }
     },
     "added_city_ids": [

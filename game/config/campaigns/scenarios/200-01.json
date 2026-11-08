@@ -170,7 +170,6 @@
         "xinggu",
         "yinping",
         "fuling",
-        "xindu",
         "poyang",
         "luling",
         "qichun",
@@ -897,7 +896,7 @@
         },
         {
           "person_id": "san14-candidate-0292",
-          "city": "xindu",
+          "city": "danyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1443,7 +1442,7 @@
         },
         {
           "person_id": "san14-candidate-0567",
-          "city": "xindu",
+          "city": "danyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1464,7 +1463,7 @@
         },
         {
           "person_id": "san14-candidate-0575",
-          "city": "xindu",
+          "city": "danyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1919,7 +1918,7 @@
         },
         {
           "person_id": "san14-candidate-0802",
-          "city": "xindu",
+          "city": "danyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2304,7 +2303,7 @@
         },
         {
           "person_id": "san14-candidate-0986",
-          "city": "xindu",
+          "city": "danyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -3073,7 +3072,8 @@
         },
         "delete": [
           "yidu",
-          "xinxing"
+          "xinxing",
+          "xindu"
         ]
       },
       "appearance_locations": {
@@ -3345,7 +3345,7 @@
           "san14-candidate-0796": "tianshui",
           "san14-candidate-0799": "runan",
           "san14-candidate-0801": "nanjun",
-          "san14-candidate-0802": "xindu",
+          "san14-candidate-0802": "danyang",
           "san14-candidate-0804": "tianshui",
           "san14-candidate-0805": "yan",
           "san14-candidate-0807": "guiyang",
@@ -3414,7 +3414,7 @@
           "san14-candidate-0980": "jiyin",
           "san14-candidate-0981": "taiyuan",
           "san14-candidate-0985": "danyang",
-          "san14-candidate-0986": "xindu",
+          "san14-candidate-0986": "danyang",
           "san14-candidate-0988": "lujiang",
           "san14-candidate-0993": "yan",
           "san14-candidate-0999": "qiao",
@@ -3474,7 +3474,7 @@
           "san14-candidate-0281": "jinan",
           "san14-candidate-0285": "jiangxia",
           "san14-candidate-0289": "yuzhang",
-          "san14-candidate-0292": "xindu",
+          "san14-candidate-0292": "danyang",
           "san14-candidate-0296": "runan",
           "san14-candidate-0300": "wujun",
           "san14-candidate-0308": "shanyang",
@@ -3519,10 +3519,10 @@
           "san14-candidate-0549": "luling",
           "san14-candidate-0552": "xiapi",
           "san14-candidate-0557": "wujun",
-          "san14-candidate-0567": "xindu",
+          "san14-candidate-0567": "danyang",
           "san14-candidate-0572": "yuzhang",
           "san14-candidate-0574": "danyang",
-          "san14-candidate-0575": "xindu",
+          "san14-candidate-0575": "danyang",
           "san14-candidate-0576": "kuaiji",
           "san14-candidate-0583": "danyang",
           "san14-candidate-0584": "wujun",
@@ -10175,13 +10175,13 @@
               "source_ruler": "孫策",
               "year_state": "available",
               "faction": "wu",
-              "city": "xindu",
+              "city": "danyang",
               "placement_basis": "historical_review_20261025",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0292",
                 "faction": "wu",
-                "city": "xindu",
+                "city": "danyang",
                 "basis": "reviewed_regional_or_novel_posting",
                 "source_urls": [
                   "https://zh.wikisource.org/wiki/三國志/卷49",
@@ -10232,7 +10232,7 @@
                     216,
                     12
                   ],
-                  "city": "xindu",
+                  "city": "danyang",
                   "status": "serving",
                   "basis": "authorial_garrison_relocation"
                 }
@@ -16412,13 +16412,13 @@
               "source_ruler": "孫策",
               "year_state": "available",
               "faction": "wu",
-              "city": "xindu",
+              "city": "danyang",
               "placement_basis": "historical_review_20261025",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0567",
                 "faction": "wu",
-                "city": "xindu",
+                "city": "danyang",
                 "basis": "reviewed_regional_or_novel_posting",
                 "source_urls": [
                   "https://zh.wikisource.org/wiki/三國志/卷49",
@@ -16469,7 +16469,7 @@
                     206,
                     12
                   ],
-                  "city": "xindu",
+                  "city": "danyang",
                   "status": "serving",
                   "basis": "authorial_garrison_relocation"
                 }
@@ -16608,13 +16608,13 @@
               "source_ruler": "孫策",
               "year_state": "available",
               "faction": "wu",
-              "city": "xindu",
+              "city": "danyang",
               "placement_basis": "historical_review_20261025",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0575",
                 "faction": "wu",
-                "city": "xindu",
+                "city": "danyang",
                 "basis": "reviewed_regional_or_novel_posting",
                 "source_urls": [
                   "https://zh.wikisource.org/wiki/三國志/卷49",
@@ -16665,7 +16665,7 @@
                     215,
                     12
                   ],
-                  "city": "xindu",
+                  "city": "danyang",
                   "status": "serving",
                   "basis": "authorial_garrison_relocation"
                 }
@@ -22056,7 +22056,7 @@
           "san14-candidate-0802": {
             "set": {
               "source_ruler": "孫策",
-              "city": "xindu",
+              "city": "danyang",
               "placement_basis": "historical_review_20261025",
               "membership_revision": {
                 "basis": "authorial_garrison_relocation",
@@ -22073,7 +22073,7 @@
             "update": {
               "posting_reference": {
                 "set": {
-                  "city": "xindu",
+                  "city": "danyang",
                   "basis": "reviewed_regional_or_novel_posting",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷49",
@@ -22096,7 +22096,7 @@
                     200,
                     1
                   ],
-                  "city": "xindu",
+                  "city": "danyang",
                   "basis": "authorial_garrison_relocation"
                 }
               },
@@ -26548,7 +26548,7 @@
           "san14-candidate-0986": {
             "set": {
               "source_ruler": "孫策",
-              "city": "xindu",
+              "city": "danyang",
               "placement_basis": "historical_review_20261025",
               "membership_revision": {
                 "basis": "authorial_garrison_relocation",
@@ -26565,7 +26565,7 @@
             "update": {
               "posting_reference": {
                 "set": {
-                  "city": "xindu",
+                  "city": "danyang",
                   "basis": "reviewed_regional_or_novel_posting",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷49",
@@ -26588,7 +26588,7 @@
                     200,
                     1
                   ],
-                  "city": "xindu",
+                  "city": "danyang",
                   "basis": "authorial_garrison_relocation"
                 }
               },
@@ -30489,9 +30489,9 @@
           },
           "danyang": {
             "set": {
-              "gold": 2900,
-              "grain": 9625,
-              "reserves": 2640
+              "gold": 4160,
+              "grain": 14000,
+              "reserves": 3960
             }
           },
           "jiujiang": {

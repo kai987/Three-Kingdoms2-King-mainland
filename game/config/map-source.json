@@ -4014,7 +4014,8 @@
     },
     "inactive_castle_ids": [
       "yiyang",
-      "yidu"
+      "yidu",
+      "xindu"
     ],
     "inactive_castle_ground": "/assets/map-city-ground.png"
   },

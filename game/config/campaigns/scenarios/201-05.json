@@ -42497,6 +42497,11 @@
             "retainer_affiliation_review_20261027": 22
           }
         }
+      },
+      "city_foundings": {
+        "delete": [
+          "xindu"
+        ]
       }
     }
   },

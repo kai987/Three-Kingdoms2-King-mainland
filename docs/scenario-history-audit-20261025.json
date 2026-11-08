@@ -1,9 +1,9 @@
 {
   "schema": "tk2-scenario-history-audit-v1",
-  "review_revision": "2026-10-27",
+  "review_revision": "2026-11-08",
   "review_file": "game/config/references/scenario-history-review.json",
-  "review_sha256": "26d5dec0f8fa9ea2ce7c3ec16a09c53d602c22b777af7eab2c6cab5027225dfb",
-  "presentation_sha256": "0d017c36eb95b354f20bf50f699ff8aa70d04a267fcd775b391109946a3d1796",
+  "review_sha256": "96860c9cf2a4e67ceb3bda0e687e9cfe400638275c71d05d82499b3f4b158f6c",
+  "presentation_sha256": "bf89e1e46a8bf9b651f0cf57ac69ffafcbab24cc99f1a5be6d44f1ba8449580c",
   "scope": "Regional review and current-data consistency, not a complete attested city/month prefect list or a SAN14 export.",
   "boundary_definition": "Different opening owners connected by links, sea_links or travel_routes; each unordered city pair is listed once. These are network borders, not geographic administrative boundary polygons.",
   "historical_count": 23,
@@ -16,18 +16,18 @@
     "mainland235-01"
   ],
   "summary": {
-    "cities": 2515,
+    "cities": 2505,
     "factions": 253,
     "future_factions": 2,
     "scheduled_faction_foundings": 2,
     "scheduled_faction_coups": 1,
-    "boundary_links": 1351,
+    "boundary_links": 1344,
     "opening_officers": 8847,
     "new_factions": 43,
     "city_changes": 107,
-    "officer_changes": 782,
+    "officer_changes": 789,
     "city_change_records": 109,
-    "officer_change_records": 798
+    "officer_change_records": 822
   },
   "fictional_adaptation_summary": {
     "cities": 543,
@@ -171,7 +171,7 @@
       "title": "184年2月 · 黄巾之乱",
       "title_ja": "184年2月 · 黄巾之乱",
       "catalog_file": "game/data/campaigns/184-02.json",
-      "catalog_sha256": "e7fa11e0ae63057a819fc3ec747aa173a0920ce2c480df3059240fff91c697e2",
+      "catalog_sha256": "aded33f0ff1abaee67dee6954d8e27dc584e34fc033c35772f717a6e8aa4c581",
       "factions": [
         {
           "id": "ding_yuan",
@@ -413,7 +413,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 108,
+      "city_count": 107,
       "city_owners": [
         {
           "city": "anding",
@@ -429,7 +429,7 @@
         },
         {
           "city": "badong",
-          "name": "巴东",
+          "name": "鱼复",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -615,7 +615,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -645,7 +645,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -927,19 +927,13 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
-          "owner": "neutral",
-          "neutral_label": null
-        },
-        {
-          "city": "xindu",
-          "name": "新都",
+          "name": "房陵",
           "owner": "neutral",
           "neutral_label": null
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -5534,7 +5528,7 @@
       "title": "188年6月 · 漢朝搖搖欲墜",
       "title_ja": "揺らぐ漢朝",
       "catalog_file": "game/data/campaigns/188-06.json",
-      "catalog_sha256": "87754067e0b18e55bc5d511d60ec2c1f1daf1b5c26ef69e9975d064d2f93eb1a",
+      "catalog_sha256": "682709e039ffe1fc46e799dc5b1b16ea01053c93b33446a6ebbb80103f3c3c30",
       "factions": [
         {
           "id": "ding_yuan",
@@ -5649,7 +5643,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 108,
+      "city_count": 107,
       "city_owners": [
         {
           "city": "anding",
@@ -5665,7 +5659,7 @@
         },
         {
           "city": "badong",
-          "name": "巴东",
+          "name": "鱼复",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -5851,7 +5845,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -5881,7 +5875,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -6163,19 +6157,13 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
-          "owner": "neutral",
-          "neutral_label": null
-        },
-        {
-          "city": "xindu",
-          "name": "新都",
+          "name": "房陵",
           "owner": "neutral",
           "neutral_label": null
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -11130,7 +11118,7 @@
       "title": "190年1月 · 反董卓联盟",
       "title_ja": "190年1月 · 反董卓联盟",
       "catalog_file": "game/data/campaigns/190-01.json",
-      "catalog_sha256": "23986c0d6aeb31744f65e8e2c66e68c46a816fdc35ea2edfb540e514aec340bc",
+      "catalog_sha256": "94d2aaad9708e91ea9375267398f32e2ab640849e27445db1c1022df0a5449a6",
       "factions": [
         {
           "id": "bao_xin",
@@ -11389,7 +11377,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 108,
+      "city_count": 107,
       "city_owners": [
         {
           "city": "anding",
@@ -11405,7 +11393,7 @@
         },
         {
           "city": "badong",
-          "name": "巴东",
+          "name": "鱼复",
           "owner": "liu_yan",
           "neutral_label": null
         },
@@ -11591,7 +11579,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -11621,7 +11609,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "liu_yan",
           "neutral_label": null
         },
@@ -11903,19 +11891,13 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
-          "owner": "neutral",
-          "neutral_label": null
-        },
-        {
-          "city": "xindu",
-          "name": "新都",
+          "name": "房陵",
           "owner": "neutral",
           "neutral_label": null
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "liu_yan",
           "neutral_label": null
         },
@@ -14044,7 +14026,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0042",
@@ -15134,7 +15116,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0287",
@@ -16764,7 +16746,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0748",
@@ -17194,7 +17176,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0877",
@@ -18812,7 +18794,7 @@
       "title": "191年10月 · 二袁的意图",
       "title_ja": "191年10月 · 二袁的意图",
       "catalog_file": "game/data/campaigns/191-10.json",
-      "catalog_sha256": "11bac5bd48fbc8c72386ee2d05841b269b557bd7f29b95c25d620ae4dfd37674",
+      "catalog_sha256": "5d7c9f33bd00db80f384c7e84d6004d3a32dc6c0d16516a52479f88002f2010b",
       "factions": [
         {
           "id": "bao_xin",
@@ -19035,7 +19017,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 108,
+      "city_count": 107,
       "city_owners": [
         {
           "city": "anding",
@@ -19051,7 +19033,7 @@
         },
         {
           "city": "badong",
-          "name": "巴东",
+          "name": "鱼复",
           "owner": "liu_yan",
           "neutral_label": null
         },
@@ -19237,7 +19219,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -19267,7 +19249,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "liu_yan",
           "neutral_label": null
         },
@@ -19549,19 +19531,13 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
-          "owner": "neutral",
-          "neutral_label": null
-        },
-        {
-          "city": "xindu",
-          "name": "新都",
+          "name": "房陵",
           "owner": "neutral",
           "neutral_label": null
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "liu_yan",
           "neutral_label": null
         },
@@ -22370,7 +22346,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0233",
@@ -22770,7 +22746,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0315",
@@ -24370,7 +24346,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0747",
@@ -24790,7 +24766,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0877",
@@ -26535,7 +26511,7 @@
       "title": "194年6月 · 群雄割据",
       "title_ja": "194年6月 · 群雄割据",
       "catalog_file": "game/data/campaigns/194-06.json",
-      "catalog_sha256": "265f427dd1d56afd5e635625ea0e6c5d27a592bbbd767b810587d0be89aee69a",
+      "catalog_sha256": "f606018bb3483be9181200f17a891ab5e84a527edd48a596caebcfafab4c6dc6",
       "factions": [
         {
           "id": "gongsun",
@@ -26597,7 +26573,7 @@
           "person_id": "san14-candidate-0963",
           "city": "danyang",
           "city_name": "秣陵",
-          "city_count": 2,
+          "city_count": 1,
           "officer_count": 10
         },
         {
@@ -26758,7 +26734,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 108,
+      "city_count": 107,
       "city_owners": [
         {
           "city": "anding",
@@ -26774,7 +26750,7 @@
         },
         {
           "city": "badong",
-          "name": "巴东",
+          "name": "鱼复",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -26960,7 +26936,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -26990,7 +26966,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -27272,19 +27248,13 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "neutral",
           "neutral_label": null
         },
         {
-          "city": "xindu",
-          "name": "新都",
-          "owner": "liu_you",
-          "neutral_label": null
-        },
-        {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -28715,23 +28685,6 @@
         {
           "cities": [
             "kuaiji",
-            "xindu"
-          ],
-          "owners": [
-            "wang_lang",
-            "liu_you"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "kuaiji",
             "yizhou"
           ],
           "owners": [
@@ -28939,23 +28892,6 @@
         },
         {
           "cities": [
-            "poyang",
-            "xindu"
-          ],
-          "owners": [
-            "neutral",
-            "liu_you"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
             "qi",
             "shanyang"
           ],
@@ -29149,23 +29085,6 @@
           "owners": [
             "liu_zhang",
             "neutral"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "wujun",
-            "xindu"
-          ],
-          "owners": [
-            "xu_gong",
-            "liu_you"
           ],
           "modes": [
             "land"
@@ -29418,10 +29337,10 @@
           "name": "于糜",
           "status": "serving",
           "faction": "liu_you",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0025",
@@ -29631,7 +29550,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0067",
@@ -30731,7 +30650,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0317",
@@ -30868,10 +30787,10 @@
           "name": "是仪",
           "status": "serving",
           "faction": "liu_you",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0336",
@@ -31698,10 +31617,10 @@
           "name": "孙邵",
           "status": "serving",
           "faction": "liu_you",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0567",
@@ -31818,10 +31737,10 @@
           "name": "张英",
           "status": "serving",
           "faction": "liu_you",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0599",
@@ -32281,7 +32200,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0702",
@@ -32598,10 +32517,10 @@
           "name": "樊能",
           "status": "serving",
           "faction": "liu_you",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0786",
@@ -33011,7 +32930,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0893",
@@ -33251,7 +33170,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0962",
@@ -33699,6 +33618,22 @@
           "name": "赵宠"
         },
         {
+          "person_id": "san14-candidate-0019",
+          "name": "于糜",
+          "before": {
+            "faction": "liu_you",
+            "city": "xindu",
+            "status": "serving"
+          },
+          "faction": "liu_you",
+          "city": "danyang",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
+          ]
+        },
+        {
           "person_id": "san14-candidate-0030",
           "name": "阎行",
           "before": {
@@ -33930,6 +33865,22 @@
           ]
         },
         {
+          "person_id": "san14-candidate-0335",
+          "name": "是仪",
+          "before": {
+            "faction": "liu_you",
+            "city": "xindu",
+            "status": "serving"
+          },
+          "faction": "liu_you",
+          "city": "danyang",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
+          ]
+        },
+        {
           "person_id": "san14-candidate-0353",
           "name": "司马朗",
           "before": {
@@ -34136,6 +34087,38 @@
           ]
         },
         {
+          "person_id": "san14-candidate-0563",
+          "name": "孙邵",
+          "before": {
+            "faction": "liu_you",
+            "city": "xindu",
+            "status": "serving"
+          },
+          "faction": "liu_you",
+          "city": "danyang",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0598",
+          "name": "张英",
+          "before": {
+            "faction": "liu_you",
+            "city": "xindu",
+            "status": "serving"
+          },
+          "faction": "liu_you",
+          "city": "danyang",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
+          ]
+        },
+        {
           "person_id": "san14-candidate-0625",
           "name": "张绣",
           "before": {
@@ -34319,6 +34302,22 @@
           ]
         },
         {
+          "person_id": "san14-candidate-0783",
+          "name": "樊能",
+          "before": {
+            "faction": "liu_you",
+            "city": "xindu",
+            "status": "serving"
+          },
+          "faction": "liu_you",
+          "city": "danyang",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
+          ]
+        },
+        {
           "person_id": "san14-candidate-0804",
           "name": "傅干",
           "before": {
@@ -34484,7 +34483,7 @@
       "title": "196年6月 · 曹操得勢",
       "title_ja": "曹操の台頭",
       "catalog_file": "game/data/campaigns/196-06.json",
-      "catalog_sha256": "a85d45d7933466e93f647559198fb9bd35903f6102fe8983ce6478d86c8323ec",
+      "catalog_sha256": "7373b1fca47f95c803280c126444c1ab18b469d1ce9cca4b938c85f192fa76ce",
       "factions": [
         {
           "id": "gongsun",
@@ -34555,7 +34554,7 @@
           "person_id": "san14-candidate-0963",
           "city": "poyang",
           "city_name": "鄱阳",
-          "city_count": 2,
+          "city_count": 1,
           "officer_count": 4
         },
         {
@@ -34698,7 +34697,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 108,
+      "city_count": 107,
       "city_owners": [
         {
           "city": "anding",
@@ -34714,7 +34713,7 @@
         },
         {
           "city": "badong",
-          "name": "巴东",
+          "name": "鱼复",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -34900,7 +34899,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -34930,7 +34929,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -35212,19 +35211,13 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "neutral",
           "neutral_label": null
         },
         {
-          "city": "xindu",
-          "name": "新都",
-          "owner": "liu_you",
-          "neutral_label": null
-        },
-        {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -35734,23 +35727,6 @@
           "owners": [
             "wu",
             "shu"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "danyang",
-            "xindu"
-          ],
-          "owners": [
-            "wu",
-            "liu_you"
           ],
           "modes": [
             "land"
@@ -36620,23 +36596,6 @@
         {
           "cities": [
             "kuaiji",
-            "xindu"
-          ],
-          "owners": [
-            "wang_lang",
-            "liu_you"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "kuaiji",
             "yizhou"
           ],
           "owners": [
@@ -37090,23 +37049,6 @@
           "owners": [
             "liu_zhang",
             "neutral"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "wujun",
-            "xindu"
-          ],
-          "owners": [
-            "wu",
-            "liu_you"
           ],
           "modes": [
             "land"
@@ -37632,7 +37574,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0067",
@@ -38732,7 +38674,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0317",
@@ -38869,10 +38811,10 @@
           "name": "是仪",
           "status": "serving",
           "faction": "liu_you",
-          "city": "xindu",
+          "city": "poyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "鄱阳"
         },
         {
           "person_id": "san14-candidate-0336",
@@ -39779,10 +39721,10 @@
           "name": "孙邵",
           "status": "serving",
           "faction": "liu_you",
-          "city": "xindu",
+          "city": "poyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "鄱阳"
         },
         {
           "person_id": "san14-candidate-0567",
@@ -40362,7 +40304,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0702",
@@ -41122,7 +41064,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0893",
@@ -41382,7 +41324,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0962",
@@ -41998,6 +41940,22 @@
           ]
         },
         {
+          "person_id": "san14-candidate-0335",
+          "name": "是仪",
+          "before": {
+            "faction": "liu_you",
+            "city": "xindu",
+            "status": "serving"
+          },
+          "faction": "liu_you",
+          "city": "poyang",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
+          ]
+        },
+        {
           "person_id": "san14-candidate-0373",
           "name": "周泰",
           "before": {
@@ -42086,6 +42044,22 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷18",
             "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0563",
+          "name": "孙邵",
+          "before": {
+            "faction": "liu_you",
+            "city": "xindu",
+            "status": "serving"
+          },
+          "faction": "liu_you",
+          "city": "poyang",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         },
         {
@@ -42370,7 +42344,7 @@
       "title": "198年3月 · 呂布討伐戰",
       "title_ja": "呂布討伐戦",
       "catalog_file": "game/data/campaigns/198-03.json",
-      "catalog_sha256": "22132789aa615cfb25851c70a284b5d4faeec95a2a4df4fb7aa631def4e7d241",
+      "catalog_sha256": "73b546ab265aaa3f51c58992d69ceca62345dc85b8e06aeb13898f33eab576e8",
       "factions": [
         {
           "id": "gongsun",
@@ -42495,7 +42469,7 @@
           "person_id": "san14-candidate-0557",
           "city": "danyang",
           "city_name": "秣陵",
-          "city_count": 4,
+          "city_count": 3,
           "officer_count": 28
         },
         {
@@ -42566,7 +42540,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 108,
+      "city_count": 107,
       "city_owners": [
         {
           "city": "anding",
@@ -42582,7 +42556,7 @@
         },
         {
           "city": "badong",
-          "name": "巴东",
+          "name": "鱼复",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -42768,7 +42742,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -42798,7 +42772,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -43080,19 +43054,13 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "neutral",
           "neutral_label": null
         },
         {
-          "city": "xindu",
-          "name": "新都",
-          "owner": "wu",
-          "neutral_label": null
-        },
-        {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -44593,23 +44561,6 @@
         {
           "cities": [
             "poyang",
-            "xindu"
-          ],
-          "owners": [
-            "neutral",
-            "wu"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "poyang",
             "yuzhang"
           ],
           "owners": [
@@ -46072,7 +46023,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0234",
@@ -48862,7 +48813,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0893",
@@ -50067,7 +50018,7 @@
       "title": "200年1月 · 官渡之战",
       "title_ja": "200年1月 · 官渡之战",
       "catalog_file": "game/data/campaigns/200-01.json",
-      "catalog_sha256": "06968ca9193defd781533b76baeb7a47e8a883955354133e8cd52ca1b7f53bce",
+      "catalog_sha256": "3cc2b7909d89b7c68794b97e2982831156224f1ebaa43e7a02e0c0d6dc44b73b",
       "factions": [
         {
           "id": "gongsun",
@@ -50156,7 +50107,7 @@
           "person_id": "san14-candidate-0557",
           "city": "wujun",
           "city_name": "吴",
-          "city_count": 9,
+          "city_count": 8,
           "officer_count": 44
         },
         {
@@ -50191,7 +50142,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 108,
+      "city_count": 107,
       "city_owners": [
         {
           "city": "anding",
@@ -50207,7 +50158,7 @@
         },
         {
           "city": "badong",
-          "name": "巴东",
+          "name": "鱼复",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -50393,7 +50344,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "shi_xie",
           "neutral_label": null
         },
@@ -50423,7 +50374,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -50705,19 +50656,13 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "wei",
           "neutral_label": null
         },
         {
-          "city": "xindu",
-          "name": "新都",
-          "owner": "wu",
-          "neutral_label": null
-        },
-        {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -52474,7 +52419,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0067",
@@ -52664,7 +52609,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0105",
@@ -53374,7 +53319,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0275",
@@ -53441,10 +53386,10 @@
           "name": "吴国太",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0295",
@@ -53914,7 +53859,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0393",
@@ -54404,7 +54349,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0534",
@@ -54551,10 +54496,10 @@
           "name": "孙静",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0572",
@@ -54581,10 +54526,10 @@
           "name": "孙瑜",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0576",
@@ -54874,7 +54819,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0642",
@@ -55304,7 +55249,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0754",
@@ -55501,10 +55446,10 @@
           "name": "傅婴",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0804",
@@ -55744,7 +55689,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0855",
@@ -55754,7 +55699,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0862",
@@ -55914,7 +55859,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0895",
@@ -56234,7 +56179,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0976",
@@ -56291,10 +56236,10 @@
           "name": "吕范",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0988",
@@ -56753,18 +56698,15 @@
           "name": "吴国太",
           "before": {
             "faction": "wu",
-            "city": "hepu",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         },
         {
@@ -56937,18 +56879,15 @@
           "name": "孙静",
           "before": {
             "faction": "wu",
-            "city": "yulin",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         },
         {
@@ -56956,18 +56895,15 @@
           "name": "孙瑜",
           "before": {
             "faction": "wu",
-            "city": "hepu",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         },
         {
@@ -57082,18 +57018,15 @@
           "name": "傅婴",
           "before": {
             "faction": "wu",
-            "city": "hepu",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         },
         {
@@ -57207,18 +57140,15 @@
           "name": "吕范",
           "before": {
             "faction": "wu",
-            "city": "linhe",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         }
       ],
@@ -57249,7 +57179,7 @@
       "title": "202年6月 · 河北爭亂",
       "title_ja": "河北争乱",
       "catalog_file": "game/data/campaigns/202-06.json",
-      "catalog_sha256": "4c02e66b39e4e3ac7ffa0221c2ca078fe541abba225a00d520c3b487506157cd",
+      "catalog_sha256": "d00ce03943a83ec6d05c2e5435f228570467b4352100ee0a5a8bfeb274b11c1c",
       "factions": [
         {
           "id": "gao_gan",
@@ -57347,7 +57277,7 @@
           "person_id": "san14-candidate-0553",
           "city": "wujun",
           "city_name": "吴",
-          "city_count": 9,
+          "city_count": 8,
           "officer_count": 49
         },
         {
@@ -57400,7 +57330,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 108,
+      "city_count": 107,
       "city_owners": [
         {
           "city": "anding",
@@ -57602,7 +57532,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "shi_xie",
           "neutral_label": null
         },
@@ -57632,7 +57562,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -57914,19 +57844,13 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "wei",
           "neutral_label": null
         },
         {
-          "city": "xindu",
-          "name": "新都",
-          "owner": "wu",
-          "neutral_label": null
-        },
-        {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -60058,7 +59982,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0102",
@@ -60528,7 +60452,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0216",
@@ -61215,10 +61139,10 @@
           "name": "周泰",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0379",
@@ -61338,7 +61262,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0409",
@@ -61748,7 +61672,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0521",
@@ -61925,10 +61849,10 @@
           "name": "孙贲",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0574",
@@ -61955,10 +61879,10 @@
           "name": "孙翊",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0581",
@@ -62425,10 +62349,10 @@
           "name": "陈武",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0687",
@@ -62458,7 +62382,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0691",
@@ -63158,7 +63082,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0862",
@@ -63198,7 +63122,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0867",
@@ -63318,7 +63242,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0895",
@@ -63678,7 +63602,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0983",
@@ -63725,10 +63649,10 @@
           "name": "吕蒙",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0994",
@@ -64176,18 +64100,15 @@
           "name": "周泰",
           "before": {
             "faction": "wu",
-            "city": "hepu",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         },
         {
@@ -64288,18 +64209,15 @@
           "name": "孙贲",
           "before": {
             "faction": "wu",
-            "city": "yulin",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         },
         {
@@ -64307,18 +64225,15 @@
           "name": "孙翊",
           "before": {
             "faction": "wu",
-            "city": "hepu",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         },
         {
@@ -64363,18 +64278,15 @@
           "name": "陈武",
           "before": {
             "faction": "wu",
-            "city": "yulin",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         },
         {
@@ -64595,18 +64507,15 @@
           "name": "吕蒙",
           "before": {
             "faction": "wu",
-            "city": "yulin",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         }
       ],
@@ -64637,7 +64546,7 @@
       "title": "207年9月 · 三顾茅庐",
       "title_ja": "207年9月 · 三顾茅庐",
       "catalog_file": "game/data/campaigns/207-09.json",
-      "catalog_sha256": "bcf53378914c52f3e2deb9b30cc1ae5c108ce2f5cf9e4088117b309743e778f5",
+      "catalog_sha256": "a32b1fda9dd23fdc8ce1fbdba536cf97b56dede418b8315c1b7c4824364d0fe3",
       "factions": [
         {
           "id": "gongsun",
@@ -64726,7 +64635,7 @@
           "person_id": "san14-candidate-0553",
           "city": "wujun",
           "city_name": "吴",
-          "city_count": 9,
+          "city_count": 8,
           "officer_count": 69
         },
         {
@@ -64761,7 +64670,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 108,
+      "city_count": 107,
       "city_owners": [
         {
           "city": "anding",
@@ -64963,7 +64872,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "shi_xie",
           "neutral_label": null
         },
@@ -64993,7 +64902,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -65275,19 +65184,13 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "wei",
           "neutral_label": null
         },
         {
-          "city": "xindu",
-          "name": "新都",
-          "owner": "wu",
-          "neutral_label": null
-        },
-        {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -66840,7 +66743,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0057",
@@ -67030,7 +66933,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0099",
@@ -67160,7 +67063,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0133",
@@ -67617,10 +67520,10 @@
           "name": "黄盖",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0250",
@@ -67700,7 +67603,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0274",
@@ -67720,7 +67623,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0285",
@@ -67787,10 +67690,10 @@
           "name": "顾邵",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0303",
@@ -68147,10 +68050,10 @@
           "name": "周善",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0371",
@@ -68220,7 +68123,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0389",
@@ -68250,7 +68153,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0392",
@@ -68390,7 +68293,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0427",
@@ -68560,7 +68463,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0465",
@@ -68570,7 +68473,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0467",
@@ -68617,10 +68520,10 @@
           "name": "薛综",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0485",
@@ -68780,7 +68683,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0524",
@@ -68947,10 +68850,10 @@
           "name": "孙贲",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0575",
@@ -69130,7 +69033,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0615",
@@ -69217,10 +69120,10 @@
           "name": "张承",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0635",
@@ -69420,7 +69323,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0684",
@@ -69720,7 +69623,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0756",
@@ -70230,7 +70133,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0862",
@@ -70410,7 +70313,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0895",
@@ -70530,7 +70433,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0928",
@@ -70850,7 +70753,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0985",
@@ -70927,10 +70830,10 @@
           "name": "鲁肃",
           "status": "serving",
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新都"
+          "city_name": "秣陵"
         },
         {
           "person_id": "san14-candidate-0999",
@@ -71577,18 +71480,15 @@
           "name": "黄盖",
           "before": {
             "faction": "wu",
-            "city": "yulin",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         },
         {
@@ -71650,18 +71550,15 @@
           "name": "顾邵",
           "before": {
             "faction": "wu",
-            "city": "hepu",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         },
         {
@@ -71688,18 +71585,15 @@
           "name": "周善",
           "before": {
             "faction": "wu",
-            "city": "yulin",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         },
         {
@@ -71871,18 +71765,15 @@
           "name": "薛综",
           "before": {
             "faction": "wu",
-            "city": "hepu",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         },
         {
@@ -71982,18 +71873,15 @@
           "name": "孙贲",
           "before": {
             "faction": "wu",
-            "city": "hepu",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         },
         {
@@ -72075,18 +71963,15 @@
           "name": "张承",
           "before": {
             "faction": "wu",
-            "city": "yulin",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         },
         {
@@ -72551,18 +72436,15 @@
           "name": "鲁肃",
           "before": {
             "faction": "wu",
-            "city": "yulin",
+            "city": "xindu",
             "status": "serving"
           },
           "faction": "wu",
-          "city": "xindu",
+          "city": "danyang",
           "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+          "note": "新都尚未設郡，保留原勢力並改駐同勢力現有城池；此為開局調整。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷49",
-            "https://zh.wikisource.org/wiki/三國志/卷52",
-            "https://zh.wikisource.org/wiki/宋書/卷37",
-            "https://zh.wikisource.org/wiki/宋書/卷38"
+            "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
         }
       ],
@@ -72593,7 +72475,7 @@
       "title": "208年10月 · 赤壁之战",
       "title_ja": "208年10月 · 赤壁之战",
       "catalog_file": "game/data/campaigns/208-10.json",
-      "catalog_sha256": "8cd70f7b4eb01e11693563603fc0324f308216451fe7015a552fb443c7b57e67",
+      "catalog_sha256": "bf856fa1a3a603b70778ee960916658bebd695528a149efa9ecf11e2e598b70a",
       "factions": [
         {
           "id": "gongsun",
@@ -72946,7 +72828,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "shi_xie",
           "neutral_label": null
         },
@@ -72976,7 +72858,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -73258,7 +73140,7 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "wei",
           "neutral_label": null
         },
@@ -73270,7 +73152,7 @@
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -74903,7 +74785,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0055",
@@ -75043,7 +74925,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0084",
@@ -75173,7 +75055,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0120",
@@ -75383,7 +75265,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0171",
@@ -75793,7 +75675,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0274",
@@ -76173,7 +76055,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0355",
@@ -76333,7 +76215,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0392",
@@ -76453,7 +76335,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0424",
@@ -76643,7 +76525,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0462",
@@ -76663,7 +76545,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0465",
@@ -76853,7 +76735,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0517",
@@ -77143,7 +77025,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0593",
@@ -77383,7 +77265,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0654",
@@ -77763,7 +77645,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0745",
@@ -78273,7 +78155,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0844",
@@ -78353,7 +78235,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0862",
@@ -78753,7 +78635,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0944",
@@ -79033,7 +78915,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0997",
@@ -80724,7 +80606,7 @@
       "title": "211年7月 · 潼關之戰",
       "title_ja": "潼関の戦い",
       "catalog_file": "game/data/campaigns/211-07-tongguan.json",
-      "catalog_sha256": "6414324c84f4d9487553c08c3b2bb291846dfc7fd24bf675ebddfb212bad0bac",
+      "catalog_sha256": "ab318dee0b8906ba25d98083518db0321d34d5fee77b0511dc6f6529a8a2aa87",
       "factions": [
         {
           "id": "gongsun",
@@ -81032,7 +80914,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "wu",
           "neutral_label": null
         },
@@ -81062,7 +80944,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -81344,7 +81226,7 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "wei",
           "neutral_label": null
         },
@@ -81356,7 +81238,7 @@
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -82734,7 +82616,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0057",
@@ -82914,7 +82796,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0091",
@@ -83074,7 +82956,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0124",
@@ -83114,7 +82996,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0136",
@@ -83434,7 +83316,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0220",
@@ -83604,7 +83486,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0273",
@@ -83654,7 +83536,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0292",
@@ -83814,7 +83696,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0332",
@@ -83994,7 +83876,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0370",
@@ -84144,7 +84026,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0392",
@@ -84184,7 +84066,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0405",
@@ -84324,7 +84206,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0446",
@@ -84394,7 +84276,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0457",
@@ -84424,7 +84306,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0465",
@@ -84624,7 +84506,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0516",
@@ -84804,7 +84686,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0558",
@@ -84874,7 +84756,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0581",
@@ -85024,7 +84906,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0618",
@@ -85274,7 +85156,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0680",
@@ -85434,7 +85316,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0706",
@@ -85604,7 +85486,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0756",
@@ -86134,7 +86016,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0856",
@@ -86184,7 +86066,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0867",
@@ -86344,7 +86226,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0902",
@@ -86704,7 +86586,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0981",
@@ -87650,7 +87532,7 @@
       "title": "212年12月 · 入蜀爭奪戰",
       "title_ja": "入蜀争奪戦",
       "catalog_file": "game/data/campaigns/212-12.json",
-      "catalog_sha256": "bbfee78702113ad7f64196738b652d5a27990e45be5711b191b7d6e5a0674fb1",
+      "catalog_sha256": "82c26a709df4ad47d066b47a833af18a6515eb5946eda96819038ac9b15d943c",
       "factions": [
         {
           "id": "gongsun",
@@ -87949,7 +87831,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "wu",
           "neutral_label": null
         },
@@ -87979,7 +87861,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -88261,7 +88143,7 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "wei",
           "neutral_label": null
         },
@@ -88273,7 +88155,7 @@
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -89634,7 +89516,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0055",
@@ -89774,7 +89656,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0084",
@@ -90004,7 +89886,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0136",
@@ -90144,7 +90026,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0174",
@@ -90494,7 +90376,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0273",
@@ -90514,7 +90396,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0288",
@@ -90524,7 +90406,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0292",
@@ -90864,7 +90746,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0371",
@@ -90954,7 +90836,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0385",
@@ -91004,7 +90886,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0392",
@@ -91094,7 +90976,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0427",
@@ -91164,7 +91046,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0446",
@@ -91264,7 +91146,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0465",
@@ -91294,7 +91176,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0475",
@@ -91494,7 +91376,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0521",
@@ -91634,7 +91516,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0558",
@@ -91804,7 +91686,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0613",
@@ -92124,7 +92006,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0689",
@@ -92144,7 +92026,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0692",
@@ -92234,7 +92116,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0706",
@@ -92404,7 +92286,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0756",
@@ -92884,7 +92766,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0852",
@@ -92904,7 +92786,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0856",
@@ -93094,7 +92976,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0901",
@@ -93104,7 +92986,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0902",
@@ -93394,7 +93276,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0974",
@@ -95588,7 +95470,7 @@
       "title": "215年8月 · 合淝之戰",
       "title_ja": "合肥の戦い",
       "catalog_file": "game/data/campaigns/215-08.json",
-      "catalog_sha256": "8d3e7ca19b56983d1d5e5dc69ef007bae06374c4d96f489a172b25f95c0a0236",
+      "catalog_sha256": "85e616db8cd73059654c0b7858e7bf03c8363d2b5a82db3c60488bffe203e8c1",
       "factions": [
         {
           "id": "gongsun",
@@ -95665,7 +95547,7 @@
         },
         {
           "city": "badong",
-          "name": "巴东",
+          "name": "鱼复",
           "owner": "shu",
           "neutral_label": null
         },
@@ -95851,7 +95733,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "wu",
           "neutral_label": null
         },
@@ -95881,7 +95763,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "shu",
           "neutral_label": null
         },
@@ -96163,7 +96045,7 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "wei",
           "neutral_label": null
         },
@@ -96175,7 +96057,7 @@
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "shu",
           "neutral_label": null
         },
@@ -96958,7 +96840,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0007",
@@ -97048,7 +96930,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0030",
@@ -97148,7 +97030,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0061",
@@ -97268,7 +97150,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0091",
@@ -97368,7 +97250,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0111",
@@ -97388,7 +97270,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0120",
@@ -97498,7 +97380,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0138",
@@ -97548,7 +97430,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0151",
@@ -97738,7 +97620,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0205",
@@ -97798,7 +97680,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0220",
@@ -97988,7 +97870,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0273",
@@ -98008,7 +97890,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0288",
@@ -98108,7 +97990,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0314",
@@ -98128,7 +98010,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0317",
@@ -98278,7 +98160,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0350",
@@ -98498,7 +98380,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0391",
@@ -98508,7 +98390,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0392",
@@ -98548,7 +98430,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0408",
@@ -98618,7 +98500,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0429",
@@ -98728,7 +98610,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0451",
@@ -98758,7 +98640,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0457",
@@ -98788,7 +98670,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0465",
@@ -98868,7 +98750,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0489",
@@ -98998,7 +98880,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0516",
@@ -99088,7 +98970,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0531",
@@ -99128,7 +99010,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0545",
@@ -99338,7 +99220,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0608",
@@ -99368,7 +99250,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0616",
@@ -99488,7 +99370,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0645",
@@ -99608,7 +99490,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0673",
@@ -99698,7 +99580,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0692",
@@ -99798,7 +99680,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0706",
@@ -99838,7 +99720,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0718",
@@ -100038,7 +99920,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0769",
@@ -100188,7 +100070,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0799",
@@ -100208,7 +100090,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0802",
@@ -100388,7 +100270,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0844",
@@ -100448,7 +100330,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0851",
@@ -100668,7 +100550,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0903",
@@ -100688,7 +100570,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0910",
@@ -100768,7 +100650,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0934",
@@ -100928,7 +100810,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0971",
@@ -101008,7 +100890,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0981",
@@ -101278,7 +101160,7 @@
       "title": "217年7月 · 汉中争夺战",
       "title_ja": "217年7月 · 汉中争夺战",
       "catalog_file": "game/data/campaigns/217-07.json",
-      "catalog_sha256": "6e8ab07ac702184f2fb688a96c0a7dfd9f6c49fd9c39fc55f1d07696096974d8",
+      "catalog_sha256": "5358fdf8f2c5fb8a9addff3cb012dd3fe97e8d3eacb5684f29444598300a446f",
       "factions": [
         {
           "id": "gongsun",
@@ -101355,7 +101237,7 @@
         },
         {
           "city": "badong",
-          "name": "巴东",
+          "name": "固陵",
           "owner": "shu",
           "neutral_label": null
         },
@@ -101541,7 +101423,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "wu",
           "neutral_label": null
         },
@@ -101571,7 +101453,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "shu",
           "neutral_label": null
         },
@@ -101853,7 +101735,7 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "wei",
           "neutral_label": null
         },
@@ -101865,7 +101747,7 @@
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "shu",
           "neutral_label": null
         },
@@ -102718,7 +102600,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "固陵"
         },
         {
           "person_id": "san14-candidate-0014",
@@ -102778,7 +102660,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0030",
@@ -102888,7 +102770,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0070",
@@ -102998,7 +102880,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0089",
@@ -103018,7 +102900,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0092",
@@ -103108,7 +102990,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "固陵"
         },
         {
           "person_id": "san14-candidate-0111",
@@ -103128,7 +103010,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0114",
@@ -103228,7 +103110,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0134",
@@ -103468,7 +103350,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "固陵"
         },
         {
           "person_id": "san14-candidate-0190",
@@ -103488,7 +103370,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0197",
@@ -103708,7 +103590,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0255",
@@ -103778,7 +103660,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0273",
@@ -103848,7 +103730,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0306",
@@ -103878,7 +103760,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "固陵"
         },
         {
           "person_id": "san14-candidate-0310",
@@ -104038,7 +103920,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0347",
@@ -104208,7 +104090,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0383",
@@ -104268,7 +104150,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0392",
@@ -104298,7 +104180,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "固陵"
         },
         {
           "person_id": "san14-candidate-0407",
@@ -104308,7 +104190,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0408",
@@ -104508,7 +104390,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0452",
@@ -104528,7 +104410,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0457",
@@ -104558,7 +104440,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0465",
@@ -104658,7 +104540,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0494",
@@ -104668,7 +104550,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0496",
@@ -104778,7 +104660,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0517",
@@ -104888,7 +104770,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0537",
@@ -104998,7 +104880,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0579",
@@ -105178,7 +105060,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0623",
@@ -105228,7 +105110,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "固陵"
         },
         {
           "person_id": "san14-candidate-0634",
@@ -105428,7 +105310,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "固陵"
         },
         {
           "person_id": "san14-candidate-0689",
@@ -105478,7 +105360,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0696",
@@ -105518,7 +105400,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0704",
@@ -105728,7 +105610,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0756",
@@ -105778,7 +105660,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "固陵"
         },
         {
           "person_id": "san14-candidate-0767",
@@ -105918,7 +105800,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "固陵"
         },
         {
           "person_id": "san14-candidate-0796",
@@ -106018,7 +105900,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0816",
@@ -106198,7 +106080,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "固陵"
         },
         {
           "person_id": "san14-candidate-0850",
@@ -106358,7 +106240,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0891",
@@ -106378,7 +106260,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "固陵"
         },
         {
           "person_id": "san14-candidate-0899",
@@ -106618,7 +106500,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "固陵"
         },
         {
           "person_id": "san14-candidate-0959",
@@ -106678,7 +106560,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0972",
@@ -107049,7 +106931,7 @@
       "title": "219年7月 · 关羽包围网",
       "title_ja": "219年7月 · 关羽包围网",
       "catalog_file": "game/data/campaigns/219-07.json",
-      "catalog_sha256": "832b6c1c3f121023ae3981ee54682d40f057698fa04a5b6d4d698b10fae8b68e",
+      "catalog_sha256": "b62d187ddf8f6f2524c8e23d5f7d7fa75550162a8b4370b2fd97e039545336c4",
       "factions": [
         {
           "id": "gongsun",
@@ -107126,7 +107008,7 @@
         },
         {
           "city": "badong",
-          "name": "巴东",
+          "name": "固陵",
           "owner": "shu",
           "neutral_label": null
         },
@@ -107312,7 +107194,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "wu",
           "neutral_label": null
         },
@@ -107342,7 +107224,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "shu",
           "neutral_label": null
         },
@@ -107624,7 +107506,7 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "shu",
           "neutral_label": null
         },
@@ -107636,7 +107518,7 @@
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "shu",
           "neutral_label": null
         },
@@ -108720,7 +108602,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0080",
@@ -108990,7 +108872,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0135",
@@ -109120,7 +109002,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0164",
@@ -109400,7 +109282,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0246",
@@ -109620,7 +109502,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0304",
@@ -109850,7 +109732,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0356",
@@ -109980,7 +109862,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0382",
@@ -110130,7 +110012,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0424",
@@ -110440,7 +110322,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0490",
@@ -110790,7 +110672,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0565",
@@ -110960,7 +110842,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0615",
@@ -111180,7 +111062,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0669",
@@ -111190,7 +111072,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0672",
@@ -111520,7 +111402,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0748",
@@ -111680,7 +111562,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0781",
@@ -111810,7 +111692,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0804",
@@ -111930,7 +111812,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0830",
@@ -112100,7 +111982,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0863",
@@ -112300,7 +112182,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0916",
@@ -112520,7 +112402,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0971",
@@ -112600,7 +112482,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0980",
@@ -112894,7 +112776,7 @@
       "title": "221年7月 · 夷陵前夕",
       "title_ja": "221年7月 · 夷陵前夕",
       "catalog_file": "game/data/campaigns/221-07.json",
-      "catalog_sha256": "ef8cb4790c296c313ee3fe18159865f84e51ef5f3998fd3e8332ac6a41c33e7f",
+      "catalog_sha256": "b811f534066ccb88436c42219920f243b38c4ae12410aaf53606de0065e8b1d2",
       "factions": [
         {
           "id": "gongsun",
@@ -113157,7 +113039,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "wu",
           "neutral_label": null
         },
@@ -113187,7 +113069,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "shu",
           "neutral_label": null
         },
@@ -113487,7 +113369,7 @@
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "shu",
           "neutral_label": null
         },
@@ -114309,7 +114191,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0022",
@@ -115299,7 +115181,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0294",
@@ -115669,7 +115551,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0380",
@@ -116009,7 +115891,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0450",
@@ -116499,7 +116381,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0579",
@@ -116809,7 +116691,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0646",
@@ -117309,7 +117191,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0780",
@@ -117969,7 +117851,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0934",
@@ -118432,7 +118314,7 @@
       "title": "225年7月 · 征伐南蠻",
       "title_ja": "南蛮征伐",
       "catalog_file": "game/data/campaigns/225-07.json",
-      "catalog_sha256": "2ec13bfd1123040ba6789b52d6d73c69419ee67b7d92386591ea7cd69a96ecc9",
+      "catalog_sha256": "e737c5a057098f9b596139180242d607134a7dc1ee47dfba630fce5c20ab2ed8",
       "factions": [
         {
           "id": "gongsun",
@@ -118448,7 +118330,7 @@
           "ruler": "孟获",
           "person_id": "san14-candidate-0845",
           "city": "jianning",
-          "city_name": "建宁",
+          "city_name": "味县",
           "city_count": 4,
           "officer_count": 16
         },
@@ -118704,7 +118586,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "wu",
           "neutral_label": null
         },
@@ -118734,7 +118616,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "nanman",
           "neutral_label": null
         },
@@ -119034,7 +118916,7 @@
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "nanman",
           "neutral_label": null
         },
@@ -120211,7 +120093,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0100",
@@ -120251,7 +120133,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0109",
@@ -120711,7 +120593,7 @@
           "city": "xinggu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "兴古"
+          "city_name": "宛温县"
         },
         {
           "person_id": "san14-candidate-0225",
@@ -120871,7 +120753,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0273",
@@ -121041,7 +120923,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0314",
@@ -121311,7 +121193,7 @@
           "city": "xinggu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "兴古"
+          "city_name": "宛温县"
         },
         {
           "person_id": "san14-candidate-0385",
@@ -121451,7 +121333,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0424",
@@ -122011,7 +121893,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0546",
@@ -122151,7 +122033,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0588",
@@ -122301,7 +122183,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0626",
@@ -122601,7 +122483,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0708",
@@ -122731,7 +122613,7 @@
           "city": "xinggu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "兴古"
+          "city_name": "宛温县"
         },
         {
           "person_id": "san14-candidate-0749",
@@ -122991,7 +122873,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0824",
@@ -123101,7 +122983,7 @@
           "city": "jianning",
           "ruler": true,
           "appearance_basis": "explicit_serving",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0846",
@@ -123141,7 +123023,7 @@
           "city": "xinggu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "兴古"
+          "city_name": "宛温县"
         },
         {
           "person_id": "san14-candidate-0851",
@@ -123161,7 +123043,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0856",
@@ -123271,7 +123153,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0883",
@@ -123691,7 +123573,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0980",
@@ -123875,7 +123757,7 @@
           "faction": "nanman",
           "city": "jianning",
           "certainty": "authorial_user_requested_historical_override",
-          "note": "依用戶指定將高定納入孟獲勢力，沿用建寧駐地。史料所記活動地為越巂，且於225年南征時被斬；本庫死亡年251是第三方遊戲設定轉錄，本次不改共享生卒年，不將此開局歸屬與駐地宣稱為逐月史實。",
+          "note": "依用戶指定將高定納入孟獲勢力，沿用味縣駐地。史料所記活動地為越巂，且於225年南征時被斬；本庫死亡年251是第三方遊戲設定轉錄，本次不改共享生卒年，不將此開局歸屬與駐地宣稱為逐月史實。",
           "source_urls": [
             "https://zh.wikisource.org/zh-hant/三國志/卷43",
             "https://zh.wikisource.org/zh-hant/華陽國志_(四庫全書本)/卷04"
@@ -124020,7 +123902,7 @@
           "faction": "nanman",
           "city": "jianning",
           "certainty": "authorial_user_requested_historical_override",
-          "note": "依用戶指定將雍闓納入孟獲勢力，駐建寧。史料記雍闓在諸葛亮南征途中已為高定部曲所殺；225年7月仍可出場為本作開局合併設定，保留原資料死亡年225及當年出場確認，非逐月史實或SAN14原始配置。",
+          "note": "依用戶指定將雍闓納入孟獲勢力，駐味縣（後來的建寧郡治）。史料記雍闓在諸葛亮南征途中已為高定部曲所殺；225年7月仍可出場為本作開局合併設定，保留原資料死亡年225及當年出場確認，非逐月史實或SAN14原始配置。",
           "source_urls": [
             "https://zh.wikisource.org/zh-hant/三國志/卷43",
             "https://zh.wikisource.org/zh-hant/華陽國志_(四庫全書本)/卷04"
@@ -124075,7 +123957,7 @@
       "title": "227年2月 · 出师表",
       "title_ja": "227年2月 · 出师表",
       "catalog_file": "game/data/campaigns/227-02.json",
-      "catalog_sha256": "8a3bd9884057c1e3a5ecc137b6ac9851cfa060cf1002fdab1e882230c50262fb",
+      "catalog_sha256": "b99f1334b8ecc336774e5756d1df6e53983d05036eebafca37a26ef4dfbb2967",
       "factions": [
         {
           "id": "gongsun",
@@ -124329,7 +124211,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "wu",
           "neutral_label": null
         },
@@ -129143,7 +129025,7 @@
       "title": "234年2月 · 秋風五丈原",
       "title_ja": "秋風五丈原",
       "catalog_file": "game/data/campaigns/234-02.json",
-      "catalog_sha256": "40664c0067baa56bb1ed1a35851bfca6d7bfd4c873e4b02d4487af480b3ca812",
+      "catalog_sha256": "27091cd99dddba687140084f23133d3d2e9e5509b1a2260307280ec6c9abfaee",
       "factions": [
         {
           "id": "gongsun",
@@ -133729,7 +133611,7 @@
       "title": "238年1月 · 征讨辽东",
       "title_ja": "238年1月 · 征讨辽东",
       "catalog_file": "game/data/campaigns/238-01.json",
-      "catalog_sha256": "6cfd3376af0d596496ccf3c34239ea9a590c7aed07a43289b75fa4142c90b698",
+      "catalog_sha256": "ab7fe774a33ca2d7dde657d01b0bf91e13274e3a4f6b97b3152ffd0dbaabaf13",
       "factions": [
         {
           "id": "gongsun",
@@ -138276,7 +138158,7 @@
       "title": "249年1月 · 正始之变",
       "title_ja": "249年1月 · 正始之变",
       "catalog_file": "game/data/campaigns/249-01.json",
-      "catalog_sha256": "518faf379b87c66216c6d5ca0303b9fffd754bfee1ed80945d3e3eda15ab16b7",
+      "catalog_sha256": "503fd9bffa6f02f3c3c4c6ffd261cf6c43e37f4ce1521c316e3ff75200287ec5",
       "factions": [
         {
           "id": "shu",
@@ -142376,7 +142258,7 @@
       "title": "263年5月 · 蜀漢滅亡",
       "title_ja": "蜀漢の滅亡",
       "catalog_file": "game/data/campaigns/263-05.json",
-      "catalog_sha256": "b06a320f5a0cc6f4af520afbefd386ad88f7b4438dd91a5ab79dec8505650177",
+      "catalog_sha256": "23f5b3d12b421ccbfd9b6579f2bbe8474f0cdcb43de77f1026fda9f82dbc6f06",
       "factions": [
         {
           "id": "lu_xing",
@@ -145714,7 +145596,7 @@
       "title": "197年7月 · 皇帝呂布",
       "title_ja": "皇帝呂布",
       "catalog_file": "game/data/campaigns/197-07.json",
-      "catalog_sha256": "39ec2158d3c092ec12e8dc8f152d2ac9fc4394404d72d13470585cc5ced5f917",
+      "catalog_sha256": "beffb5790e3770bda5350485a1d77367a258876bc8167e4aebde4933270e71c7",
       "factions": [
         {
           "id": "gongsun",
@@ -145944,7 +145826,7 @@
         },
         {
           "city": "badong",
-          "name": "巴东",
+          "name": "鱼复",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -146130,7 +146012,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -146160,7 +146042,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -146442,7 +146324,7 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -146454,7 +146336,7 @@
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -148775,7 +148657,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0067",
@@ -149915,7 +149797,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0317",
@@ -151515,7 +151397,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0702",
@@ -152345,7 +152227,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0893",
@@ -152615,7 +152497,7 @@
           "city": "badong",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "巴东"
+          "city_name": "鱼复"
         },
         {
           "person_id": "san14-candidate-0962",
@@ -153571,7 +153453,7 @@
       "title": "201年5月 · 華北霸者・袁紹",
       "title_ja": "華北の覇者・袁紹",
       "catalog_file": "game/data/campaigns/201-05.json",
-      "catalog_sha256": "d4b3b847a52c325ef608054833b5aa8f3eee36ae4bc937f9f5878d7ccf8ffd19",
+      "catalog_sha256": "3a1591b184d95fdf91512b329f4000b44d24426fde813e3be2bb12f8f28d7deb",
       "factions": [
         {
           "id": "gongsun",
@@ -153897,7 +153779,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "wu",
           "neutral_label": null
         },
@@ -153927,7 +153809,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -154209,7 +154091,7 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "yuan_shao",
           "neutral_label": null
         },
@@ -154221,7 +154103,7 @@
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -156018,7 +155900,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0089",
@@ -156108,7 +155990,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0114",
@@ -157248,7 +157130,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0379",
@@ -157388,7 +157270,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0411",
@@ -157718,7 +157600,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0511",
@@ -158018,7 +157900,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0592",
@@ -158408,7 +158290,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0683",
@@ -159138,7 +159020,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0862",
@@ -159298,7 +159180,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0895",
@@ -159688,7 +159570,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0988",
@@ -160018,7 +159900,7 @@
       "title": "209年6月 · 志在千里",
       "title_ja": "志在千里",
       "catalog_file": "game/data/campaigns/209-06.json",
-      "catalog_sha256": "9b434f750cd526eb5f254e5a542bbe84a49c9eff510bc5cea5604d6853e0e105",
+      "catalog_sha256": "f0dc7db88186a30c4be48bc107e54d42670b1096280b932e63c45bdef69be0d6",
       "factions": [
         {
           "id": "gongsun",
@@ -160326,7 +160208,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "wu",
           "neutral_label": null
         },
@@ -160356,7 +160238,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -160638,7 +160520,7 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "wei",
           "neutral_label": null
         },
@@ -160650,7 +160532,7 @@
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -162099,7 +161981,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0061",
@@ -162249,7 +162131,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0089",
@@ -162309,7 +162191,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0101",
@@ -162549,7 +162431,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0166",
@@ -162809,7 +162691,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0236",
@@ -162939,7 +162821,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0274",
@@ -163109,7 +162991,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0318",
@@ -163179,7 +163061,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0336",
@@ -163459,7 +163341,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0391",
@@ -163469,7 +163351,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0392",
@@ -163499,7 +163381,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0402",
@@ -163739,7 +163621,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0457",
@@ -163779,7 +163661,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0465",
@@ -163859,7 +163741,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0490",
@@ -163989,7 +163871,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0518",
@@ -164179,7 +164061,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0565",
@@ -164359,7 +164241,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0613",
@@ -164399,7 +164281,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0618",
@@ -164729,7 +164611,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0697",
@@ -164789,7 +164671,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0706",
@@ -165299,7 +165181,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0827",
@@ -165649,7 +165531,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0892",
@@ -165969,7 +165851,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0961",
@@ -166149,7 +166031,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0999",
@@ -166494,7 +166376,7 @@
       "title": "210年11月 · 二分天下之計",
       "title_ja": "天下二分計",
       "catalog_file": "game/data/campaigns/210-11.json",
-      "catalog_sha256": "afa30b8895825181901a7eba451f263fba2753b37d46b894cdfe42f9fd2f8379",
+      "catalog_sha256": "ed97027476900fc365a52300e0191f717abf577a53443ad9fffc87cab53b576e",
       "factions": [
         {
           "id": "gongsun",
@@ -166784,7 +166666,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "wu",
           "neutral_label": null
         },
@@ -166814,7 +166696,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "wu",
           "neutral_label": null
         },
@@ -167096,7 +166978,7 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "wei",
           "neutral_label": null
         },
@@ -167108,7 +166990,7 @@
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "wu",
           "neutral_label": null
         },
@@ -168417,7 +168299,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0053",
@@ -168567,7 +168449,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0082",
@@ -168727,7 +168609,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0114",
@@ -168927,7 +168809,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0166",
@@ -169007,7 +168889,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0183",
@@ -169317,7 +169199,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0273",
@@ -169327,7 +169209,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0274",
@@ -169707,7 +169589,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0371",
@@ -169777,7 +169659,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0381",
@@ -169857,7 +169739,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0392",
@@ -169967,7 +169849,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0426",
@@ -170147,7 +170029,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0465",
@@ -170157,7 +170039,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0467",
@@ -170357,7 +170239,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0518",
@@ -170457,7 +170339,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0539",
@@ -170597,7 +170479,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0581",
@@ -170897,7 +170779,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0646",
@@ -170967,7 +170849,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0665",
@@ -171297,7 +171179,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0745",
@@ -171797,7 +171679,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0846",
@@ -172057,7 +171939,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0895",
@@ -172277,7 +172159,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0948",
@@ -172936,7 +172818,7 @@
       "title": "212年6月 · 錦馬超展翅高飛",
       "title_ja": "錦馬超飛翔",
       "catalog_file": "game/data/campaigns/212-06.json",
-      "catalog_sha256": "b84ba9c17eecc58dfddbd92f615f33854d4f22c4abaa251de59fe04433a7ca83",
+      "catalog_sha256": "b45d654f8bf998d11a92810d03fb48a50fd5b3366a8fde1f5bba12131f1bdfcb",
       "factions": [
         {
           "id": "cao_zhang",
@@ -173253,7 +173135,7 @@
         },
         {
           "city": "hepu",
-          "name": "珠官",
+          "name": "合浦",
           "owner": "wu",
           "neutral_label": null
         },
@@ -173283,7 +173165,7 @@
         },
         {
           "city": "jianning",
-          "name": "建宁",
+          "name": "味县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -173565,7 +173447,7 @@
         },
         {
           "city": "xincheng",
-          "name": "新城",
+          "name": "房陵",
           "owner": "wei",
           "neutral_label": null
         },
@@ -173577,7 +173459,7 @@
         },
         {
           "city": "xinggu",
-          "name": "兴古",
+          "name": "宛温县",
           "owner": "liu_zhang",
           "neutral_label": null
         },
@@ -175141,7 +175023,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0061",
@@ -175361,7 +175243,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0107",
@@ -175481,7 +175363,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0136",
@@ -175791,7 +175673,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0216",
@@ -175971,7 +175853,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0273",
@@ -176011,7 +175893,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0292",
@@ -176291,7 +176173,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0355",
@@ -176351,7 +176233,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0370",
@@ -176501,7 +176383,7 @@
           "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "建宁"
+          "city_name": "味县"
         },
         {
           "person_id": "san14-candidate-0392",
@@ -176671,7 +176553,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0446",
@@ -176721,7 +176603,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0451",
@@ -176771,7 +176653,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_free",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0465",
@@ -176991,7 +176873,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0520",
@@ -177131,7 +177013,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0558",
@@ -177341,7 +177223,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0618",
@@ -177391,7 +177273,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0631",
@@ -177761,7 +177643,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0706",
@@ -177931,7 +177813,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0756",
@@ -178641,7 +178523,7 @@
           "city": "hepu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "珠官"
+          "city_name": "合浦"
         },
         {
           "person_id": "san14-candidate-0902",
@@ -178761,7 +178643,7 @@
           "city": "xincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "新城"
+          "city_name": "房陵"
         },
         {
           "person_id": "san14-candidate-0934",
