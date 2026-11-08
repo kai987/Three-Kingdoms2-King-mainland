@@ -6,6 +6,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from dataclasses import asdict, dataclass, field
+from functools import cached_property
 import hashlib
 import json
 from pathlib import Path
@@ -18,9 +19,10 @@ from . import civil_staff, domestic, logistics, presentation, treasures, facilit
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from .city_economy import income_at
+from .starting_garrisons import resolve as resolve_opening_garrisons
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
 from .events import empty as empty_events, emit as emit_event, transition as record_events, validate as validate_events
-from .officers import (CityRoster, GameRules, OfficerProfile, PersonDefinition,
+from .officers import (OFFICER_TROOP_CAP, CityRoster, GameRules, OfficerProfile, PersonDefinition,
                        RuntimeOfficer, YearState, advance_year, experience_tier,
                        initialize_officer, integer, year_state, is_generated_ref,
                        parse_officer_ref, deserialize_officer_ref, ref_sort_key, appearance_values)
@@ -118,6 +120,10 @@ class Catalog:
         expected_people = self.data['officer_count']
         integer(expected_people, 1, self.rules.runtime_capacity, 'catalog officer count')
         assert len(self.definitions) == expected_people and len(self.map_cities) == expected
+
+    @cached_property
+    def opening_garrisons(self):
+        return resolve_opening_garrisons(self)
 
     def active_city_ids(self, year, month=1):
         opened = set(self.data['active_cities'])
@@ -248,11 +254,11 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         if not isinstance(difficulty, str) or difficulty not in DIFFICULTIES:
             raise GameError('请选择简单、普通或困难难度。')
         d = self.catalog.data
+        resources, troops = self.catalog.opening_garrisons
         state = CampaignState(faction, seed, SeedRng(seed), d['start_year'], d['start_month'], d['start_year'])
         for key in d['active_cities']:
-            resources = d.get('initial_city_resources',{}).get(key,d['initial_resources'])
             state.cities[key] = City(key, d['initial_owners'][key],
-                                     CityRoster(key, rules=self.catalog.rules), **resources)
+                                     CityRoster(key, rules=self.catalog.rules), **resources[key])
         for row in d['initial_officers']:
             ident = self.catalog.ids[row['person_id']]
             city = state.cities[row['city']]
@@ -261,7 +267,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                          is_ruler=row.get('ruler', False),
                          **officer_relations.opening_values(self.catalog, ident,
                                              faction_id=city.owner, is_ruler=row.get('ruler', False)),
-                         troops=row['troops'], rules=self.catalog.rules,
+                         troops=troops[row['person_id']], rules=self.catalog.rules,
                          resolve_death_year=row.get('resolve_death_year', False))
             state.officers[ident] = officer
             city.roster.officer_ids.append(ident)
@@ -310,7 +316,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'active_cities': self.catalog.active_city_ids(
                                     state.year if state else self.catalog.data['start_year'],
                                     state.month if state else self.catalog.data['start_month']),
-                                'links': self.catalog.data['links'], 'rules': self.catalog.data['rules'],
+                                'links': self.catalog.data['links'],
+                                'rules': {**self.catalog.data['rules'], 'officer_troop_capacity': OFFICER_TROOP_CAP},
                                 'calendar_rules': self.catalog.data['calendar_rules'],
                                 'difficulties': catalog_choices(),
                                 'notes': self.catalog.data['design_notes'], 'library_count': len(self.catalog.definitions),
@@ -458,7 +465,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         planned, seen, marching = [], set(), self._march_ids(state)
         for row in allocations:
             ident = parse_officer_ref(row['officer'], self.catalog.rules)
-            troops = integer(row['troops'], 0, 1000, 'troops')
+            troops = integer(row['troops'], 0, OFFICER_TROOP_CAP, 'troops')
             if ident in seen:
                 raise GameError('操作参数无效。')
             seen.add(ident)
@@ -788,7 +795,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 raise ValueError('officer identity/profile')
             people.add(officer.person_id)
             for value, low, high in ((officer.health, 0, officer.profile.health_max), (officer.loyalty, 0, 100),
-                                     (officer.troops, 0, 1000), (officer.weapon_id, 0, len(equipment.WEAPONS)-1), (officer.armor_id, 0, len(equipment.ARMORS)-1),
+                                     (officer.troops, 0, OFFICER_TROOP_CAP), (officer.weapon_id, 0, len(equipment.WEAPONS)-1), (officer.armor_id, 0, len(equipment.ARMORS)-1),
                                      (officer.experience, 0, 49999), (officer.tier, 0, 7)):
                 integer(value, low, high, 'officer state')
             if officer.tier != experience_tier(officer.experience) or type(officer.alive) is not bool:
@@ -856,7 +863,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     if set(unit) != {'id', 'troops', 'start', 'martial'}:
                         raise ValueError('battle unit fields')
                     self.catalog.rules.officer_id(unit['id'])
-                    integer(unit['start'], 1, 1000, 'starting battle troops')
+                    integer(unit['start'], 1, OFFICER_TROOP_CAP, 'starting battle troops')
                     officer = state.officers[unit['id']]
                     from .battle_allegiance import home_for
                     home=home_for(battle,unit,key)

@@ -333,7 +333,10 @@ class HanSuiIfTests(unittest.TestCase):
                 self.assertEqual({row['person_id'] for row in city['officers']}, MEMBERS)
                 self.assertEqual({row['person_id'] for row in city['officers'] if row['is_ruler']},
                                  {HAN_SUI})
-                self.assertEqual(sum(row['troops'] for row in city['officers']), 900)
+                troops = sum(row['troops'] for row in city['officers'])
+                authored_reserves = self.catalogs[chapter].data['initial_city_resources']['jincheng']['reserves']
+                self.assertGreater(troops, 900)
+                self.assertEqual(troops + city['reserves'], 900 + authored_reserves)
                 self.assertEqual(preview['faction_resources']['han_sui'],
                                  dict(cities=1, **{field: city[field]
                                       for field in ('gold', 'grain', 'reserves')}))

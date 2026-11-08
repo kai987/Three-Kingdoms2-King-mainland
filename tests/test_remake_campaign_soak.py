@@ -18,6 +18,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.march_core import using_backend
+from remake.officers import OFFICER_TROOP_CAP
 from campaign_fixtures import controlled_catalog
 
 spec = importlib.util.spec_from_file_location('campaign_soak', ROOT / 'tools/campaign-soak/run.py')
@@ -151,7 +152,7 @@ class CampaignSoakTests(unittest.TestCase):
             ids = city.roster.officer_ids
             self.assertEqual(city.reserves+sum(replay.game.state.officers[i].troops for i in ids),
                 initial['reserves']+sum(before['state']['officers'][str(i)]['troops'] for i in ids))
-            self.assertTrue(all(0 <= replay.game.state.officers[i].troops <= 1000 for i in ids))
+            self.assertTrue(all(0 <= replay.game.state.officers[i].troops <= OFFICER_TROOP_CAP for i in ids))
 
     def test_faction_offices_choose_from_all_cities_in_the_real_184_opening(self):
         catalog = soak.Catalog(ROOT/'game/data/campaigns/184-02.json')

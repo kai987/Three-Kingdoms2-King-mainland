@@ -26,7 +26,8 @@ rejectDetails(developed,[{development:'town'},{development:[]},{gold:true},{gold
 for(const change of [{population_loss:0},{category:'resources',population_loss:0,gold_loss:100,grain_loss:200},{category:'development',population_loss:0,land_loss:40,industry_loss:20}])assert(events.validEvent({...unrest,details:{...unrest.details,...change}}));
 rejectDetails(unrest,[{category:'riot'},{category:{}},{category:'__proto__'},{governance:50},{governance:true},{population_loss:401},{population_loss:-100},{gold_loss:1},{population_loss:1000000},{extra:1}]);
 assert(events.validEvent({...exhausted,details:{...exhausted.details,side:'defenders',outcome:'victory'}}));
-rejectDetails(exhausted,[{battle_id:'battle-0'},{battle_id:'<script>'},{side:'attacker'},{days:0},{days:31},{days:true},{grain:-1},{daily_grain:0},{daily_grain:23},{missing_units:0},{missing_units:10001},{outcome:'victory'},{extra:1}]);
+assert(events.validEvent({...exhausted,details:{...exhausted.details,daily_grain:202,missing_units:202000}}));
+rejectDetails(exhausted,[{battle_id:'battle-0'},{battle_id:'<script>'},{side:'attacker'},{days:0},{days:31},{days:true},{grain:-1},{daily_grain:0},{daily_grain:203},{missing_units:0},{missing_units:10001},{daily_grain:202,missing_units:202001},{outcome:'victory'},{extra:1}]);
 const cityTrade=clone(traded);for(const key of ['battle_id','side','destination'])delete cityTrade.details[key];assert(events.validEvent(cityTrade));
 rejectDetails(traded,[{direction:'sell'},{side:'attackers<script>'},{destination:'city'},{battle_id:'battle-01'},{grain:299},{extra:1}]);
 

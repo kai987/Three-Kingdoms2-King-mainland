@@ -181,12 +181,21 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertTrue(columns)
         self.assertTrue(all(game.state.cities[row['target']].owner in {'wu', 'shu'} for row in columns))
         self.assertTrue(all(row['quote']['days'] > 0 and row['supply']['loaded'] > 0 for row in columns))
-        self.assertTrue(any(row['target'] == 'jiangxia' for row in columns))
+        jiangxia_columns = [row for row in columns if row['target'] == 'jiangxia']
+        self.assertTrue(jiangxia_columns)
+        jiangxia = min(jiangxia_columns, key=lambda row: row['arrival_turn'])
         self.assertEqual(game.state.cities['jiangxia'].owner, 'shu')
         self.assertIsNone(game.state.battle)
         self.arrivals(game)
+        while game.state.turn < jiangxia['arrival_turn']:
+            self.assertTrue(any(row['id'] == jiangxia['id']
+                                for row in game.state.extension['travel']['marches']))
+            self.advance(game)
+            self.arrivals(game)
         self.assertEqual(game.state.phase, 'battle')
+        self.assertEqual(game.state.turn, jiangxia['arrival_turn'])
         self.assertEqual(game.state.battle['target'], 'jiangxia')
+        self.assertEqual(game.state.battle['attacker'], 'wei')
         self.assertEqual(game.state.cities['jiangxia'].owner, 'shu')
         self.assertNotIn(game.state.battle['id'], game.state.settled_battles)
         self.resume(game)
@@ -558,6 +567,10 @@ class HistoricalCampaignTests(unittest.TestCase):
         transfer_officers(cities['zitong'].roster, cities['baxi'].roster, [huang_zhong])
         transfer_officers(cities['yinping'].roster, cities['hanzhong'].roster, [xiahou_yuan])
         self.allocate_from_reserves(game, cities['hanzhong'], xiahou_yuan, 999)
+        # Hold this garrison in place during the approach. With the larger
+        # opening army the AI can otherwise send Xiahou Yuan on another sortie.
+        cities['yinping'].grain += cities['hanzhong'].grain
+        cities['hanzhong'].grain = 0
         self.march_to_battle(game, 'baxi', 'hanzhong', huang_zhong)
         self.assert_unresolved_battle(game, 'shu', 'wei', 'baxi', 'hanzhong')
         clash, = self.events(game, history.DINGJUN)

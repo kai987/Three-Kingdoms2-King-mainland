@@ -16,6 +16,7 @@ from remake import domestic
 from remake.errors import GameError
 from remake.campaign import Campaign, Catalog
 from remake.city_economy import income_at
+from remake.session import CampaignSession
 from test_remake_facilities import fixture
 from test_remake_civil_staff_campaign import staff_catalog
 
@@ -276,6 +277,31 @@ class DevelopmentTests(unittest.TestCase):
 
 
 class DevelopmentCampaignTests(unittest.TestCase):
+    def test_legacy_city_development_save_keeps_progress_and_income_baseline(self):
+        path = ROOT/'game/data/campaigns/221-07.json'
+        catalog = Catalog(path)
+        legacy = Campaign(catalog)
+        legacy.state = legacy._new('shu', 2026)
+        pool = legacy.state.extension['city_development']
+        pool['schema'] = 'tk2-city-development-v1'
+        for key, row in pool['cities'].items():
+            size = {'normal': 1, 'large': 2, 'giant': 3}[catalog.data['city_profiles'][key]['tier']]
+            baseline = dict(land=150*size, industry=150*size, population=50000*size, governance=70)
+            row.update(baseline, baseline=baseline.copy())
+        old_row = pool['cities']['shujun']
+        old_row.update(land=482, population=151300, governance=72)
+        save = legacy.export_save()
+        restored = Campaign(catalog)
+        with patch.object(restored, 'view', return_value={}):
+            restored.load_save(json.loads(json.dumps(save)), 0)
+        development.synchronize(restored, restored.state)
+        self.assertEqual(restored.export_save(), save)
+        self.assertEqual(restored.state.extension['city_development']['cities']['shujun'], old_row)
+        self.assertNotEqual(development.opening_view(catalog, 'shujun'), old_row['baseline'])
+        income = income_at(catalog.data, 'shujun', 221, 7)
+        self.assertGreater(development.adjust_income(restored, restored.state, 'shujun', income)['grain'],
+                           income['grain'])
+
     def test_real_ai_turn_executes_the_same_paid_development_and_seeded_effect(self):
         data = deepcopy(staff_catalog(free=False).data)
         data['city_development_rules'].update(enabled=True, ai_enabled=True)
@@ -324,9 +350,11 @@ class DevelopmentCampaignTests(unittest.TestCase):
     def test_all_29_real_openings_pure_income_identity_and_three_saved_developments(self):
         paths = [path for path in sorted((ROOT/'game/data/campaigns').glob('*.json')) if path.name != 'index.json']
         self.assertEqual(len(paths), 29)
+        session = CampaignSession(paths)
+        examples = {}
         for path in paths:
             with self.subTest(scenario=path.stem):
-                catalog = Catalog(path)
+                catalog = session.catalogs['mainland' + path.stem]
                 game = Campaign(catalog)
                 # Full aggregate response serialization is exercised once per
                 # opening below. Skip only repeated unrelated UI quote builds;
@@ -336,6 +364,12 @@ class DevelopmentCampaignTests(unittest.TestCase):
                 before = game.export_save()
                 view = game.view()['catalog']['city_development']
                 self.assertEqual(set(view['cities']), set(game.state.cities))
+                for field in development.LIMITS:
+                    self.assertGreater(len({row[field] for row in view['cities'].values()}), 10)
+                for key in ('henan', 'shujun', 'wenshan'):
+                    preview = session.preview_city(catalog.data['id'], key)['city']['city_development']
+                    self.assertEqual(preview, view['cities'][key]['baseline'])
+                    examples[path.stem, key] = preview
                 for key, row in view['cities'].items():
                     self.assertEqual({field: row[field] for field in development.LIMITS},
                                      development.opening_view(catalog, key))
@@ -370,6 +404,11 @@ class DevelopmentCampaignTests(unittest.TestCase):
                     # The next development really runs on the restored state.
                     game = restored
                 self.assertEqual(game.state.rng.draws, before['state']['rng']['draws']+6)
+        for field in development.LIMITS:
+            self.assertLess(examples['191-10', 'henan'][field], examples['184-02', 'henan'][field])
+            self.assertLess(examples['191-10', 'henan'][field], examples['221-07', 'henan'][field])
+        for field in ('land', 'industry', 'population'):
+            self.assertGreater(examples['184-02', 'shujun'][field], examples['184-02', 'wenshan'][field])
 
 
 if __name__ == '__main__':

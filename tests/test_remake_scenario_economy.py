@@ -13,6 +13,8 @@ from remake.dated_events import visible_factions
 from remake import civil_staff, domestic, facilities, logistics, treasures, city_development
 from remake.city_economy import (apply_opening_sizes, income_at, incomes_at,
                                  profile_at, profiles_at, tier_at)
+from remake.officers import OFFICER_TROOP_CAP
+from remake.starting_garrisons import frontier_cities
 from campaign_fixtures import advance_month
 
 FIELDS = ('gold', 'grain', 'reserves')
@@ -86,6 +88,24 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         game.state = game._new(side, 2026)
         game.validate(game.state)
         return game
+
+    def assert_opening_material(self, game):
+        data = game.catalog.data
+        authored = {}
+        for row in data['initial_officers']:
+            authored.setdefault(row['city'], {})[row['person_id']] = row['troops']
+        for city in game.state.cities.values():
+            stocks = data['initial_city_resources'][city.id]
+            self.assertEqual((city.gold, city.grain), (stocks['gold'], stocks['grain']))
+            opening = authored.get(city.id, {})
+            actual = {game.state.officers[i].person_id: game.state.officers[i].troops
+                      for i in city.roster.officer_ids}
+            self.assertEqual(actual.keys(), opening.keys())
+            self.assertEqual(city.reserves + sum(actual.values()),
+                             stocks['reserves'] + sum(opening.values()))
+            self.assertTrue(all(opening[pid] <= troops <= OFFICER_TROOP_CAP
+                                for pid, troops in actual.items()))
+            self.assertGreaterEqual(city.reserves, (stocks['reserves'] * 40 + 99) // 100)
 
     def test_all_current_openings_have_dated_nonuniform_stocks_and_income(self):
         self.assertEqual(len(self.catalogs), 29)
@@ -180,9 +200,13 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         for date, catalog in self.catalogs.items():
             game = self.game(date, next(iter(catalog.factions)))
             self.assertEqual(game.state.rng.draws, 0)
-            for key, city in game.state.cities.items():
-                self.assertEqual(tuple(getattr(city, field) for field in FIELDS),
-                                 tuple(catalog.data['initial_city_resources'][key][field] for field in FIELDS))
+            self.assert_opening_material(game)
+            serving = [officer.troops for officer in game.state.officers.values() if officer.faction_id]
+            self.assertGreater(len(set(serving)), 10)
+            frontier = frontier_cities(catalog.data)
+            self.assertTrue(any(game.state.officers[i].troops > 700
+                                for city in game.state.cities.values() if city.id in frontier
+                                for i in city.roster.officer_ids))
 
     def test_every_selectable_faction_can_start_and_soldier_initial_ledger_matches_new_reserves(self):
         starts = 0
@@ -197,10 +221,9 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                     self.assertEqual(game.state.soldiers['initial'],
                         sum(city.reserves for city in game.state.cities.values()) +
                         sum(officer.troops for officer in game.state.officers.values()))
-                    for city in game.state.cities.values():
-                        self.assertEqual(tuple(getattr(city, field) for field in FIELDS),
-                                         tuple(catalog.data['initial_city_resources'][city.id][field] for field in FIELDS))
-                        self.assertLessEqual(len(city.roster.officer_ids), 99)
+                    self.assert_opening_material(game)
+                    self.assertTrue(all(len(city.roster.officer_ids) <= 99
+                                        for city in game.state.cities.values()))
                     starts += 1
         self.assertGreaterEqual(starts, 200)
 
@@ -216,7 +239,8 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         self.assertLess(city.grain, before[1])
         self.assertGreater(city.reserves, before[2])
         recruited_reserves = city.reserves
-        game.command('allocate', dict(city=city.id, officer=officer, troops=310), game.revision)
+        target = game.state.officers[officer].troops + 10
+        game.command('allocate', dict(city=city.id, officer=officer, troops=target), game.revision)
         self.assertEqual(game.state.cities[city.id].reserves, recruited_reserves - 10)
         before = {key: tuple(getattr(c, field) for field in FIELDS) for key, c in game.state.cities.items()}
         rng = deepcopy(game.state.rng)

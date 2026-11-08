@@ -149,10 +149,12 @@ class LateRulerReviewTests(unittest.TestCase):
                 self.assertIs(initial[KANG]['resolve_death_year'], False)
                 for ident in (kang_id, gong_id):
                     self.assertEqual(game.state.officers[ident].faction_id, 'gongsun')
-                    self.assertEqual(game.state.officers[ident].troops, 300)
+                    self.assertGreaterEqual(game.state.officers[ident].troops, 300)
                     self.assertIn(ident, game.state.cities['liaodong'].roster.officer_ids)
-                self.assertEqual(game.state.cities['liaodong'].reserves,
-                                 expected['reserves'])
+                liaodong = game.state.cities['liaodong']
+                self.assertEqual(liaodong.reserves + sum(game.state.officers[i].troops
+                    for i in liaodong.roster.officer_ids), expected['reserves'] + sum(
+                    row['troops'] for row in initial.values() if row['city'] == 'liaodong'))
                 actual = (sum(city.reserves for city in game.state.cities.values())
                           + sum(officer.troops for officer in game.state.officers.values()))
                 self.assertEqual(actual, expected['soldiers'])

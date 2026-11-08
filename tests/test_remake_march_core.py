@@ -17,7 +17,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, canonical, digest
-from remake import historical_campaigns
+from remake import historical_campaigns, starting_garrisons
 from remake.errors import GameError
 from remake.march_core import CoreUnavailable, config_for, invoke, using_backend
 from remake.route_hazards import allocate_survivors, evaluate_leg, route_allowed
@@ -55,9 +55,10 @@ def campaign_fixture(case):
         path.write_text(json.dumps(data,ensure_ascii=False))
         catalog=Catalog(path)
     game = HeadlessCampaign(catalog)
-    # The fixed full-save corpus predates relationship loyalty. Keep those
-    # declared initial inputs; subsequent turns use the current runtime rules.
-    with pre_relationship_opening():
+    # The fixed full-save corpus predates relationship loyalty and garrison
+    # mobilization. Keep those inputs, then use the current march rules.
+    with pre_relationship_opening(), patch.object(
+            catalog, 'opening_garrisons', starting_garrisons.authored(catalog)):
         game.command('new', dict(faction=side, seed=2026), 0)
     while game.state.month != month:
         game._complete_turn(game.state)

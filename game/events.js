@@ -195,7 +195,7 @@
   if(d.condition!=='qimen')return false;
   if(d.qimen_phase==='cast')return keys(['condition','condition_count','qimen_phase'])&&Number.isInteger(d.condition_count)&&(d.success?d.condition_count>=5&&d.condition_count<=9:d.condition_count===0);
   if(d.qimen_phase!=='daily'||!d.success||!keys(['condition','qimen_phase','qimen_ticks','experience_id','experience_gain'])||typeof d.experience_id!=='string'||!d.experience_id||d.experience_id.length>128||d.experience_id.trim()!==d.experience_id||!Number.isInteger(d.experience_gain)||d.experience_gain<0||d.experience_gain>2550||!Array.isArray(d.qimen_ticks)||!d.qimen_ticks.length||d.qimen_ticks.length>20)return false;
-  return d.qimen_ticks.every(t=>t&&typeof t==='object'&&!Array.isArray(t)&&Object.keys(t).sort().join(',')==='before,id,loss,remaining,troops_after,troops_before'&&typeof t.id==='string'&&t.id.length>0&&t.id.length<=128&&t.id.trim()===t.id&&['before','remaining','troops_before','troops_after','loss'].every(k=>Number.isInteger(t[k]))&&t.before>=1&&t.before<=9&&t.remaining===t.before-1&&t.troops_before>=0&&t.troops_before<=1000&&t.troops_after>=0&&t.troops_after<=t.troops_before&&t.loss===t.troops_before-t.troops_after&&t.loss>=Math.min(80,t.troops_before)&&t.loss<=Math.min(150,t.troops_before))&&new Set(d.qimen_ticks.map(t=>t.id)).size===d.qimen_ticks.length;
+  return d.qimen_ticks.every(t=>t&&typeof t==='object'&&!Array.isArray(t)&&Object.keys(t).sort().join(',')==='before,id,loss,remaining,troops_after,troops_before'&&typeof t.id==='string'&&t.id.length>0&&t.id.length<=128&&t.id.trim()===t.id&&['before','remaining','troops_before','troops_after','loss'].every(k=>Number.isInteger(t[k]))&&t.before>=1&&t.before<=9&&t.remaining===t.before-1&&t.troops_before>=0&&t.troops_before<=10000&&t.troops_after>=0&&t.troops_after<=t.troops_before&&t.loss===t.troops_before-t.troops_after&&t.loss>=Math.min(80,t.troops_before)&&t.loss<=Math.min(150,t.troops_before))&&new Set(d.qimen_ticks.map(t=>t.id)).size===d.qimen_ticks.length;
  }
  function validCoupEvent(row){
   const d=row.details;
@@ -205,7 +205,7 @@
    Object.keys(d).sort().join(',')!=='coup_id,reason,released_troops'||
    typeof d.coup_id!=='string'||!/^[a-z][a-z0-9_-]{0,79}$/.test(d.coup_id)||
    !Number.isSafeInteger(d.released_troops)||d.released_troops<0)return false;
-  return row.kind==='faction_coup'?row.city_ids.length>0&&d.reason==='executed'&&d.released_troops<=3000:
+  return row.kind==='faction_coup'?row.city_ids.length>0&&d.reason==='executed'&&d.released_troops<=30000:
    d.reason==='conditions_changed'&&d.released_troops===0;
  }
  function validFoundingEvent(row){
@@ -246,7 +246,7 @@
  }
  function validBattleSupplyEvent(row){
   const d=row.details,num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max;
-  return row.audience==='player'&&row.city_ids.length>=1&&row.city_ids.length<=2&&row.city_ids.every(id=>id)&&new Set(row.city_ids).size===row.city_ids.length&&row.factions.length>=1&&row.factions.length<=2&&row.factions.every(id=>id)&&new Set(row.factions).size===row.factions.length&&row.person_ids.length<=10&&row.person_ids.every(id=>id)&&new Set(row.person_ids).size===row.person_ids.length&&Object.keys(d).sort().join(',')==='battle_id,daily_grain,days,grain,missing_units,outcome,side'&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id)&&['attackers','defenders'].includes(d.side)&&num('days',1,30)&&num('grain',0,100000000)&&num('daily_grain',1,22)&&num('missing_units',1,d.daily_grain*1000)&&d.outcome===(d.side==='attackers'?'retreat':'victory');
+  return row.audience==='player'&&row.city_ids.length>=1&&row.city_ids.length<=2&&row.city_ids.every(id=>id)&&new Set(row.city_ids).size===row.city_ids.length&&row.factions.length>=1&&row.factions.length<=2&&row.factions.every(id=>id)&&new Set(row.factions).size===row.factions.length&&row.person_ids.length<=10&&row.person_ids.every(id=>id)&&new Set(row.person_ids).size===row.person_ids.length&&Object.keys(d).sort().join(',')==='battle_id,daily_grain,days,grain,missing_units,outcome,side'&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id)&&['attackers','defenders'].includes(d.side)&&num('days',1,30)&&num('grain',0,100000000)&&num('daily_grain',1,202)&&num('missing_units',1,d.daily_grain*1000)&&d.outcome===(d.side==='attackers'?'retreat':'victory');
  }
  function validEquipmentEvent(row){
   const d=row.details,num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max;

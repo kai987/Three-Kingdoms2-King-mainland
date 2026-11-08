@@ -82,7 +82,7 @@
  function validSnapshot(s){
   if(!s||Object.keys(s).sort().join(',')!=='duel,outcome,round,units'||!bounded(s.round,1000000)||s.round<1||![null,'victory','defeat','retreat'].includes(s.outcome)||!Array.isArray(s.units)||s.units.length>20)return false;
   const seen=new Set();
-  for(const u of s.units){if(!u||Array.isArray(u)||Object.keys(u).sort().join(',')!=='energy,guard,health,id,side,stunned,troops'||!reference(u.id)||seen.has(String(u.id))||!['attackers','defenders'].includes(u.side)||!bounded(u.troops,1000)||!bounded(u.health,99)||!bounded(u.energy,18)||!bounded(u.guard,2)||!bounded(u.stunned,1))return false;seen.add(String(u.id));}
+  for(const u of s.units){if(!u||Array.isArray(u)||Object.keys(u).sort().join(',')!=='energy,guard,health,id,side,stunned,troops'||!reference(u.id)||seen.has(String(u.id))||!['attackers','defenders'].includes(u.side)||!bounded(u.troops,10000)||!bounded(u.health,99)||!bounded(u.energy,18)||!bounded(u.guard,2)||!bounded(u.stunned,1))return false;seen.add(String(u.id));}
   if(s.duel===null)return true;
   if(!s.duel||Object.keys(s.duel).sort().join(',')!=='actor,round,target'||!reference(s.duel.actor)||!reference(s.duel.target)||!bounded(s.duel.round,21)||s.duel.round<1)return false;
   const a=s.units.find(u=>u.id===s.duel.actor),t=s.units.find(u=>u.id===s.duel.target);return !!a&&!!t&&a.side!==t.side;
@@ -109,8 +109,10 @@
  function validSoldiers(row){
   if(!row||row.schema!=='tk2-siege-v1'||!reference(row.actor)||!reference(row.target)||!['field','siege'].includes(row.mode||'siege')||!Array.isArray(row.units)||row.units.length>22||row.units.length<2||!Array.isArray(row.events??[])||(row.events??[]).length>44)return false;
   const ids=new Set(),point=p=>p&&bounded(p.x,15)&&bounded(p.y,9);
-  if(!row.units.every(unit=>unit&&/^[ad](?:[0-9]|10)$/.test(unit.id)&&!ids.has(unit.id)&&ids.add(unit.id)&&unit.side===(unit.id[0]==='a'?'attackers':'defenders')&&['infantry','archer','cavalry','general'].includes(unit.kind)&&point(unit)&&bounded(unit.troops,100)&&bounded(unit.health,100)&&typeof unit.withdrawn==='boolean'))return false;
-  return (row.events??[]).every(event=>event&&['move','melee','arrow','retreat','surround'].includes(event.kind)&&ids.has(event.actor)&&(event.target===null||ids.has(event.target))&&point(event.from)&&point(event.to)&&bounded(event.loss,100));
+  const sizes=row.squad_sizes??{attackers:100,defenders:100};
+  if(Object.keys(sizes).sort().join(',')!=='attackers,defenders'||Object.values(sizes).some(n=>!bounded(n,1000)||n<100))return false;
+  if(!row.units.every(unit=>unit&&/^[ad](?:[0-9]|10)$/.test(unit.id)&&!ids.has(unit.id)&&ids.add(unit.id)&&unit.side===(unit.id[0]==='a'?'attackers':'defenders')&&['infantry','archer','cavalry','general'].includes(unit.kind)&&point(unit)&&bounded(unit.troops,sizes[unit.side])&&bounded(unit.health,unit.kind==='general'?100:sizes[unit.side])&&typeof unit.withdrawn==='boolean'))return false;
+  return (row.events??[]).every(event=>event&&['move','melee','arrow','retreat','surround'].includes(event.kind)&&ids.has(event.actor)&&(event.target===null||ids.has(event.target))&&point(event.from)&&point(event.to)&&bounded(event.loss,Math.max(...Object.values(sizes))));
  }
  function validSoldierScene(scene){return scene?.kind==='soldier_step'&&validSoldiers(scene.soldiers?.before)&&validSoldiers(scene.soldiers?.after)&&Array.isArray(scene.soldiers.after.events)&&scene.soldiers.before.actor===scene.actor&&scene.soldiers.after.actor===scene.actor&&scene.soldiers.before.target===scene.target&&scene.soldiers.after.target===scene.target;}
  function receiptScenes(receipt,battleId,revision){
@@ -594,7 +596,7 @@
     // A single switchable top label leaves the lower body unobstructed. Only
     // the active strike briefly clears it so all four poses remain visible;
     // the roster/HUD retain both the troop kind and current count throughout.
-    if(unit.kind!=='general'&&!attacking){const count=soldierLabelMode==='troops',code=count?String(unit.troops):{infantry:text('步','歩'),archer:'弓',cavalry:'騎'}[unit.kind]+slot;rectangle(x*16,y*16,16,5,count?INK:PAPER);label(code,x*16+1,y*16,count?PAPER:INK,5);}
+    if(unit.kind!=='general'&&!attacking){const count=soldierLabelMode==='troops',code=count?String(unit.troops):{infantry:text('步','歩'),archer:'弓',cavalry:'騎'}[unit.kind]+slot;rectangle(x*16,y*16,16,5,count?INK:PAPER);label(code,x*16+1,y*16,count?PAPER:INK,code.length>3?4:5);}
     if(unit.id===selection.siegeSelectedPiece)outline(x*16,y*16,16,16,'#ffe149');
    }
    if(motion?.event?.kind==='arrow'&&motion.progress>=.5&&motion.progress<SOLDIER_CONTACT){
@@ -612,7 +614,7 @@
      label(({general:text('體','体'),cavalry:text('騎','騎'),archer:text('弓','弓'),infantry:text('步','歩')}[kind])+' '+amount,x+48,182+i*11,INK,9);
     }
    }
-   label(row.stage==='formation'?text('請選擇陣形','陣形を決めてください'):text('第'+row.round+'巡 · 每隊100人，逐隊指令','第'+row.round+'巡・1隊100人、各隊への命令'),8,228,INK,8);
+   label(row.stage==='formation'?text('請選擇陣形','陣形を決めてください'):text('第'+row.round+'巡 · 逐隊指令','第'+row.round+'巡・各隊への命令'),8,228,INK,8);
   }
   function paintSoldierStep(scene,progress){
    const source=scene.soldiers,events=source.after.events;

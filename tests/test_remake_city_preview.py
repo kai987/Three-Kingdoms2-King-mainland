@@ -51,13 +51,12 @@ class CityPreviewTests(unittest.TestCase):
     def test_preview_during_ai_uses_the_selected_opening_without_mutating_live_save(self):
         s=self.session
         s.command('new',{'scenario':'mainland217-07','faction':'shu','seed':2026},s.revision)
+        opening=s.preview_city('mainland217-07','shujun')
         city=s.game.state.cities['shujun'];ident=city.roster.officer_ids[0]
         s.command('allocate',{'city':'shujun','officer':ident,'troops':500},s.revision)
         s.command('end_turn',{},s.revision);saved=s.export_save();revision=s.revision
         preview=s.preview_city('mainland217-07','shujun')
-        self.assertEqual(preview['city']['officers'][0]['troops'],300)
-        expected=s.game.catalog.data['initial_city_resources']['shujun']
-        self.assertEqual(preview['city']['reserves'],expected['reserves'])
+        self.assertEqual(preview,opening)
         another=s.preview_city('mainland225-07','jianning')
         self.assertEqual(another['city']['owner'],'nanman')
         self.assertIsNotNone(another['city']['profile'])

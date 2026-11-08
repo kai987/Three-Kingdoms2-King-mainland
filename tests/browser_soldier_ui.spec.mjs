@@ -236,7 +236,7 @@ async function busySoldierToolbarReplay(page,testInfo,value,expected){
  await load(page,value.save,'independent-'+value.mode+'-busy-layout-replay.json');
  const scene=page.locator('[data-battle-scene]'),button=page.locator('#siege-step');
  if(!await button.isVisible())await page.locator('#inspector-toggle').click();await expect(button).toBeEnabled();
- await page.clock.pauseAt(new Date(await page.evaluate(()=>Date.now())+100));await button.click({force:true});
+ await page.clock.pauseAt(new Date(await page.evaluate(()=>Date.now())+1000));await button.click({force:true});
  await waitSoldierReplay(page);await expect(scene).toHaveAttribute('data-soldier-combat-source','supplemental-4x');await expect(page.locator('body')).toHaveClass(/\bbusy\b/);
  const committed=await save(page);expect(committed).toEqual(expected);
  const layouts=await compactSoldierToolbarEvidence(page,testInfo,value.mode,'busy',{advanceClock:true});
@@ -260,7 +260,7 @@ async function attackCycleEvidence(page,testInfo,kind='attack-cycles'){
  labelProof.compact_idle=await compactSoldierToolbarEvidence(page,testInfo,value.mode,'idle');
  const initial=await read(page,false),button=page.locator('#siege-step');
  if(!await button.isVisible())await page.locator('#inspector-toggle').click();await expect(button).toBeEnabled();
- await page.clock.pauseAt(new Date(await page.evaluate(()=>Date.now())+100));
+ await page.clock.pauseAt(new Date(await page.evaluate(()=>Date.now())+1000));
  await button.click({force:true});
  await waitSoldierReplay(page);
  const samples=new Map(),overlays=new Map();let committed=null,started=false,busyLabelsChecked=false;
@@ -355,7 +355,7 @@ test('field soldier formations expose ten hundred-person teams and replay actual
   expect(metadata).toBeTruthy();expect([0,1,2]).toContain(metadata.code);expect(marker.type).toBe(['平','山','水'][metadata.code]);
   expect(metadata.base_code).toBe(before.save.state.officers[String(marker.id)].profile.terrain_affinity);
   expect(['verified_original_rom','original_table_transcription','design_trait_inference','design_region_inference','retained_design','fallback_design','generated_design']).toContain(metadata.source_kind);
-  expect(marker.troops).toBe(unit.troops);expect(marker.teams).toBe(Math.ceil(marker.troops/100));expect(marker.teams).toBeGreaterThanOrEqual(1);expect(marker.teams).toBeLessThanOrEqual(10);
+  expect(marker.troops).toBe(unit.troops);expect(marker.teams).toBe(Math.min(10,Math.ceil(marker.troops/100)));expect(marker.teams).toBeGreaterThanOrEqual(1);expect(marker.teams).toBeLessThanOrEqual(10);
   expect(marker.commander).toBe(String(marker.id)===String(battle[marker.side][0].id));
  }
  const actorMarker=markers.find(row=>String(row.id)===String(macro.actor));expect(actorMarker.troops).toBe(1000);expect(actorMarker.teams).toBe(10);
@@ -397,7 +397,7 @@ test('field soldier formations expose ten hundred-person teams and replay actual
   await expect(scene).toHaveAttribute('data-battle-scene-mode','field-orders');await expect(page.locator('[data-siege-piece-order]')).toHaveCount(11);
   const initial=await read(page,false),step=page.locator('#siege-step');
   if(!await step.isVisible())await page.locator('#inspector-toggle').click();await expect(step).toBeEnabled();
-  await page.clock.pauseAt(new Date(await page.evaluate(()=>Date.now())+100));await step.click({force:true});
+  await page.clock.pauseAt(new Date(await page.evaluate(()=>Date.now())+1000));await step.click({force:true});
   await waitSoldierReplay(page);
   await expect(page.locator('[data-battle-skip]')).toBeVisible();
   expect(await page.evaluate(()=>battleScene.state().scene)).toBe('soldier_step');
@@ -761,7 +761,8 @@ test('manual deployment places sequentially in native zones with zero-cost check
 test('native AI deployment keeps commanders and grouped martial order while sharing legal cells and preserving legacy saves',async({page},testInfo)=>{
  await opening(page);
  const rows=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_ai_deployment_fixture.py',import.meta.url).pathname],{encoding:'utf8',maxBuffer:16*1024*1024,timeout:90_000})),proof=[];
- const expectedOrders={defenders:['13','99','121','379','76','215','425','37','286','149'],attackers:['50','203','119']};
+ // Opening troop allocation changes which defenders make the ten-unit garrison.
+ const expectedOrders={defenders:['829','99','504','714','121','980','13','379','37','464'],attackers:['50','203','119']};
  const domain=value=>{const state=structuredClone(value.state);delete state.battle.extended.placement;delete state.battle.extended.tactical.positions;return state;};
  for(const row of rows){
   await load(page,row.save,'real-native-ai-'+row.side+'.json');const before=await read(page),board=before.view.catalog.battle_tactical,plan=board.auto_deployment.sides[row.side];

@@ -61,7 +61,8 @@
    const row=synchronize();if(!row)return '';
    const side=ownSide(view()),locked=view().game.battle[side].some(unit=>unit.id===row.fort);
    const field=row.mode==='field';
-   const introduction=`<p class="small">${text('每隊最多100人，逐隊下令；也可按兵種統一下令。每巡依序移動或接敵攻擊，可暫停改令。','1隊は最大100人です。各隊へ命令し、兵種ごとに一括指示もできます。各巡で移動・接敵攻撃を行い、途中で停止できます。')}</p>`;
+   const squadSize=row.squad_sizes?.[side]??100;
+   const introduction=`<p class="small">${text(`本方每隊最多${squadSize}人，可逐隊下令或按兵種下令。每巡依序移動或接敵攻擊，可暫停改令。`,`自軍の1隊は最大${squadSize}人です。各隊や兵種ごとに命令できます。各巡で移動・接敵攻撃を行い、途中で停止できます。`)}</p>`;
    const heading=`<h2>${field?text('野戰 · 排兵布陣','野戦・陣形と命令'):text('攻城 · 排兵布陣','城内戦・陣形と命令')}</h2><p>${text('第','第')}${row.round||1}${text('巡','巡')}</p>`;
    const formation=`<div class="siege-formation-options">${FORMATIONS.map(([tc,ja],i)=>`<button type="button" data-siege-formation="${i}" aria-pressed="${draftFormation===i}"><img width="33" height="33" alt="" src="${root.GamePaths?.asset('/assets/siege-original/formation-'+i+'.png')||'/assets/siege-original/formation-'+i+'.png'}"><span>${locale()==='ja'?ja:tc}</span></button>`).join('')}</div>`;
    const orders=`<div class="siege-orders">${KINDS.map(kind=>`<label class="field" for="siege-order-${kind}"><span>${kindName(kind)}</span><select id="siege-order-${kind}" data-siege-order="${kind}" ${automatic?'disabled':''}>${ORDERS.map(order=>`<option value="${order}" ${draftOrders?.[kind]===order?'selected':''}>${orderName(order)}</option>`).join('')}</select></label>`).join('')}</div>`;

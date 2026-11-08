@@ -1456,9 +1456,18 @@ test('all 29 real Worker openings keep preview and live initial health and facti
   const mapOwners=await page.locator('#world-map .city-hit').evaluateAll(nodes=>Object.fromEntries(nodes.map(node=>[node.dataset.city,node.dataset.owner])));
   for(const city of previews){
    const live=saved.state.cities[city.id],resources=catalog.initial_city_resources?.[city.id]||catalog.initial_resources;
+   const authored=catalog.initial_officers.filter(officer=>officer.city===city.id);
+   const officers=live.roster.officer_ids.map(id=>saved.state.officers[id]);
    expect(live.owner).toBe(catalog.initial_owners[city.id]);
-   for(const key of ['gold','grain','reserves'])expect(live[key],`${scenario}/${city.id} initial ${key}`).toBe(resources[key]);
-   expect(live.roster.officer_ids.map(id=>saved.state.officers[id].person_id).sort()).toEqual(catalog.initial_officers.filter(officer=>officer.city===city.id).map(officer=>officer.person_id).sort());
+   for(const key of ['gold','grain'])expect(live[key],`${scenario}/${city.id} initial ${key}`).toBe(resources[key]);
+   expect(live.reserves).toBe(city.reserves);
+   expect(live.reserves+officers.reduce((sum,officer)=>sum+officer.troops,0)).toBe(
+    resources.reserves+authored.reduce((sum,officer)=>sum+officer.troops,0));
+   expect(officers.map(officer=>officer.person_id).sort()).toEqual(authored.map(officer=>officer.person_id).sort());
+   expect(Object.fromEntries(officers.map(officer=>[officer.person_id,officer.troops]))).toEqual(
+    Object.fromEntries(city.officers.map(officer=>[officer.person_id,officer.troops])));
+   const development=saved.state.extension.city_development.cities[city.id];
+   for(const key of ['land','industry','population','governance'])expect(development[key]).toBe(city.city_development[key]);
    expect(mapOwners[city.id],`${scenario}/${city.id} visible map ownership`).toBe(live.owner);
   }
   const liveOfficers=Object.values(saved.state.officers);
@@ -2243,7 +2252,7 @@ test('command-book confirmations and one paid city allocation flow preserve canc
  const ids=(await page.locator('#allocation-officer option').evaluateAll(nodes=>nodes.map(node=>node.value))).slice(0,3);expect(ids).toHaveLength(3);
  const distribute=async(ident,source)=>{
   const before=await read(),troops=before.state.officers[ident].troops,next=troops+1;
-  expect(next).toBeLessThanOrEqual(1000);expect(before.state.cities.shujun.reserves).toBeGreaterThan(0);
+  expect(next).toBeLessThanOrEqual(10000);expect(before.state.cities.shujun.reserves).toBeGreaterThan(0);
   await page.locator('#allocation-officer').selectOption(ident);await page.locator('#allocation-troops').fill(String(next));await page.locator('#confirm-allocation').click();await waitIdle(page);await expect(page.locator('#allocation-officer')).toBeVisible();await expect(modal).toBeHidden();
   const after=await read();expect(after.state.officers[ident].troops).toBe(next);expect(after.state.cities.shujun.reserves).toBe(before.state.cities.shujun.reserves-1);expect(budget(after).used).toBe(budget(before).used);expect(active(after)).toEqual(active(before));expect(after.state.rng).toEqual(before.state.rng);expect(after.state.cities.shujun.reserves+after.state.cities.shujun.roster.officer_ids.reduce((sum,id)=>sum+after.state.officers[id].troops,0)).toBe(before.state.cities.shujun.reserves+before.state.cities.shujun.roster.officer_ids.reduce((sum,id)=>sum+before.state.officers[id].troops,0));allocations.push({source,officer:ident,troops_before:troops,troops_after:next,books_used:budget(after).used,flow:active(after).id,reserves:after.state.cities.shujun.reserves});return after;
  };
@@ -2258,7 +2267,7 @@ test('command-book confirmations and one paid city allocation flow preserve canc
  await openAllocation(page);await page.locator('#allocation-officer').selectOption(discarded);await expect(page.locator('#allocation-troops')).toHaveValue(String(untouched.state.officers[discarded].troops));
  const beforeNew=await read(),beforeRevision=await revision(),batch=[];
  for(const ident of ids){
-  const next=beforeNew.state.officers[ident].troops+1;expect(next).toBeLessThanOrEqual(1000);
+  const next=beforeNew.state.officers[ident].troops+1;expect(next).toBeLessThanOrEqual(10000);
   await page.locator('#allocation-officer').selectOption(ident);await page.locator('#allocation-troops').fill(String(next));await page.locator('#allocation-next').click();
   expect(await read()).toEqual(beforeNew,'Next stores only a draft; troops, reserves, books and RNG remain untouched');await expect(modal).toBeHidden();batch.push({officer:ident,troops:next});
  }

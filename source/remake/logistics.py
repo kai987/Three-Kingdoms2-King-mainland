@@ -7,7 +7,7 @@ from copy import copy, deepcopy
 
 from .errors import GameError
 from . import command_books, historical_campaigns
-from .officers import parse_officer_ref
+from .officers import OFFICER_TROOP_CAP, parse_officer_ref
 from .route_hazards import allocate_survivors, evaluate_leg, route_allowed, _python_route_allowed
 
 SCHEMA = 'tk2-logistics-v3'
@@ -1192,7 +1192,7 @@ def validate(game, state):
             supply = journey['supply']
             manifest=journey['departure_troops']
             if (not isinstance(manifest,dict) or not set(manifest)<={str(i) for i in row['original_officers']}
-                    or any(not _int(n,0,1000) for n in manifest.values())
+                    or any(not _int(n,0,OFFICER_TROOP_CAP) for n in manifest.values())
                     or supply['troops']!=sum(manifest.values()) or supply['officers']!=len(manifest)):
                 raise ValueError('Logistics departure troop snapshot')
             if (supply['officers'] > len(row['original_officers'])
@@ -1228,7 +1228,7 @@ def validate(game, state):
                     if any(k != 'cargo' and k not in {str(i) for i in row['original_officers']} for k in keys):
                         raise ValueError('Logistics hazard officer snapshot')
                     before_values = [risk['before'][key] for key in keys]
-                    if any(not _int(n, 0, LIMIT if key == 'cargo' else 1000) for key, n in zip(keys, before_values)):
+                    if any(not _int(n, 0, LIMIT if key == 'cargo' else OFFICER_TROOP_CAP) for key, n in zip(keys, before_values)):
                         raise ValueError('Logistics hazard troop bounds')
                     after_values = allocate_survivors(before_values, risk['survival_numerator'], risk['survival_denominator'])
                     if any(risk['after'][key] != n for key, n in zip(keys, after_values)) or risk['lost'] != sum(before_values) - sum(after_values):
