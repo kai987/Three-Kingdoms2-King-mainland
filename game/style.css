@@ -219,6 +219,7 @@ outline:none
 }
 .city-hit .city-outline{
 fill:transparent;
+pointer-events:none;
 stroke:var(--neutral);
 stroke-width:2;
 vector-effect:non-scaling-stroke;

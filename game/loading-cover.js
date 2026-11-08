@@ -111,7 +111,7 @@
     if(value!==attribute.value)node.setAttribute(attribute.name,value);
    }
   }
-  for(const node of clone.querySelectorAll('title,.map-city-name,.city-outline'))node.remove();
+  for(const node of clone.querySelectorAll('title,.map-city-name,.city-hit-area,.city-outline'))node.remove();
   for(const city of clone.querySelectorAll('[data-city]')){
    city.setAttribute('class','loading-cover-city');
    city.querySelector('.castle-fill')?.setAttribute('fill','#dcb65c');
