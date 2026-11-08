@@ -761,7 +761,8 @@ test('manual deployment places sequentially in native zones with zero-cost check
 test('native AI deployment keeps commanders and grouped martial order while sharing legal cells and preserving legacy saves',async({page},testInfo)=>{
  await opening(page);
  const rows=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_ai_deployment_fixture.py',import.meta.url).pathname],{encoding:'utf8',maxBuffer:16*1024*1024,timeout:90_000})),proof=[];
- const expectedOrders={defenders:['13','99','121','379','76','215','425','37','286','149'],attackers:['50','203','119']};
+ // Opening troop allocation changes which defenders make the ten-unit garrison.
+ const expectedOrders={defenders:['829','99','504','714','121','980','13','379','37','464'],attackers:['50','203','119']};
  const domain=value=>{const state=structuredClone(value.state);delete state.battle.extended.placement;delete state.battle.extended.tactical.positions;return state;};
  for(const row of rows){
   await load(page,row.save,'real-native-ai-'+row.side+'.json');const before=await read(page),board=before.view.catalog.battle_tactical,plan=board.auto_deployment.sides[row.side];

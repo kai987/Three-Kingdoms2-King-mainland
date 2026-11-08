@@ -11,9 +11,10 @@ away, and selects an ordinary starting seed whose actual success draw passes.
 
 Every condition, day, periodic hit and experience award comes from real public
 commands. Restricted explicitly hands the human interface to the affected
-defender; daily/expiry set only defendingAP to0 to isolate the next public
-wait. Expiry preparation chooses WAIT policy while real turns, grain, clocks,
-damage and RNG continue. Historical events are cleared only at export. No
+defender; daily/expiry set defending AP to 0 to isolate the next public wait.
+Expiry preparation starts the target at one soldier and chooses WAIT policy
+while real turns, grain, clocks, damage and RNG continue. Historical events
+are cleared only at export. No
 condition counts, day cursors, grain ledger or random results are assigned.
 Every save validates and round-trips canonically through the production loader.
 """
@@ -76,8 +77,8 @@ def _prepared():
         available=[ident for ident in source.roster.officer_ids if ident not in marching
                    and state.officers[ident].troops>0 and state.officers[ident].health>0]
         assert ACTOR in available and len(available)>=4
-        # Four real300-person units earn16 native openingAP, so the10AP cast
-        # remains observable before a forced pass; no extraAP is fabricated.
+        # Four real opening units keep the 10AP cast observable before a
+        # forced pass. No extra AP is fabricated.
         ids=[ACTOR]+[ident for ident in available if ident!=ACTOR][:3]
         # Explicit controlled learned tier, without changing the source profile.
         state.officers[ACTOR].experience=10000;state.officers[ACTOR].tier=6
@@ -169,14 +170,16 @@ def fixtures():
     daily['expected_daily'],_= _next_daily(game,daily['save'],target)
     assert daily['expected_daily']['count']==count-1
 
-    # Policy isolation only: the real public wait, both side transitions,
-    # meal ledger, damage draws, XP and condition clock still run each day.
+    # Stage a one-soldier survivor for this specific zero-troop regression.
+    # The real public waits then apply all damage, draws, XP and expiry.
+    next(unit for unit in battle['defenders'] if unit['id']==target)['troops']=1
     while conditions.remaining(game.state.battle,target)>1:
         with patch('remake.tactical_ai.choose_action',return_value=WAIT):
             _command(game,'battle_wait',battle_id=game.state.battle['id'])
         assert game.state.phase=='battle'
     battle=game.state.battle
     assert conditions.kind(battle,target)=='qimen'and conditions.remaining(battle,target)==1
+    assert next(unit for unit in battle['defenders'] if unit['id']==target)['troops']==0
     battle['extended']['tactical']['points']['defenders']=0
     expiry=_checked_save(game,kind='expiry',count=1,controlled_side='attackers',defender_ap=0,**shared)
     expiry['expected_daily'],expired=_next_daily(game,expiry['save'],target)
