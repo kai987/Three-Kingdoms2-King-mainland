@@ -12,7 +12,7 @@ function load(value,options={}){
 }
 try{
  const full=scopes.loadBrowserScope({planPath:''});
- assert.equal(full.full,true);assert.equal(full.selectedCases.length,44);
+ assert.equal(full.full,true);assert.equal(full.selectedCases.length,45);
  assert.deepEqual(new Set(scopes.readCaseTitles(source)),new Set(scopes.CASE_REGISTRY.cases.map(row=>row.title)));
  const union=new Set();
  for(const group of scopes.CANONICAL_GROUPS){
@@ -52,7 +52,7 @@ try{
   assert.equal(boot.grep.test('touch-chromium browser_ui.spec.mjs '+row.title),expected.includes(row.id));
  }
  const local=load(plan(['scenarios'],['mainland184-02'],{schema:'shared-plan',head:'opaque-provenance',web:{enabled:true}}));
- assert.deepEqual(local.selectedCases.map(row=>row.id),['opening-catalog','first-session-guide']);
+ assert.deepEqual(local.selectedCases.map(row=>row.id),['observer-speed','opening-catalog','first-session-guide']);
  assert.deepEqual(scopes.selectScenarioIds(known,local),['mainland184-02'],'A local scenario plan cannot silently expand the deep opening loop to all 29');
  assert.deepEqual(scopes.selectScenarioIds(known,full),known);
  const historical=load(plan(['scenarios'],['mainland188-06']));
@@ -75,5 +75,5 @@ try{
  assert.throws(()=>scopes.loadBrowserScope({planPath:broken}),/cannot read plan JSON/);
  const cli=spawnSync(process.execPath,[path.join(__dirname,'../tools/browser-tests/scope.cjs'),'--plan',broken],{encoding:'utf8'});
  assert.notEqual(cli.status,0);assert(cli.stderr.includes('Browser test scope:'));
- console.log('browser scopes: all 44 cases registered before grep, full/group union, initial guide with bounded boot/audio, soldier media field/castle coverage, scenario-local deep openings, opaque plan provenance and fail-closed unknown/empty/invalid plans passed');
+ console.log('browser scopes: all 45 cases registered before grep, full/group union, initial guide with bounded boot/audio, soldier media field/castle coverage, scenario-local deep openings, opaque plan provenance and fail-closed unknown/empty/invalid plans passed');
 }finally{fs.rmSync(directory,{recursive:true,force:true});}

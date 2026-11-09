@@ -423,6 +423,90 @@ test('recovery callback waits for title Start',async({page},testInfo)=>{
  expect(errors.get(page)).toEqual([]);
 });
 
+test('observer speed changes cadence without resuming a pause and city counts follow ownership',async({page})=>{
+ await opening(page);
+ await page.clock.install({time:new Date('2026-01-01T00:00:00Z')});
+ await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+ await page.locator('#begin-observation').press('Enter');
+ const speed=page.locator('#observer-speed'),status=page.locator('#observer-status');
+ const toggle=page.locator('#observer-toggle'),step=page.locator('#observer-step');
+ const ledger=page.locator('#inspector .faction-ledger');
+ const turn=async()=>(await tacticalSave(page)).state.turn;
+ await expect(speed).toHaveValue('normal');
+ await expect(speed).toHaveAccessibleName('觀戰速度');
+ await expect(speed.locator('option')).toHaveText(['慢速','普通','快速']);
+ await page.clock.runFor(180);
+ await expect(status).toHaveAttribute('data-observer-state','playing');
+ const openingSave=await tacticalSave(page);
+ expect(openingSave.state.player).toBe('observer');
+ const openingTurn=openingSave.state.turn;
+ const readCityCounts=async save=>{
+  const owned=Object.values(save.state.cities).reduce((counts,city)=>{
+   if(city.owner!=='neutral')counts[city.owner]=(counts[city.owner]||0)+1;
+   return counts;
+  },{});
+  const shown=await ledger.locator('tbody tr').evaluateAll(rows=>Object.fromEntries(rows.map(row=>[
+   row.dataset.factionResources,row.querySelector('[data-faction-cities]')?.textContent
+  ])));
+  expect(Object.keys(shown)).toEqual(expect.arrayContaining(Object.keys(owned)));
+  for(const [faction,count] of Object.entries(shown))expect(count,faction).toBe(String(owned[faction]||0));
+  return shown;
+ };
+ await ledger.locator('summary').press('Enter');
+ await expect(ledger.getByRole('columnheader',{name:'城池數',exact:true})).toBeVisible();
+ const openingCounts=await readCityCounts(openingSave);
+ const finishTurn=async expected=>{
+  await expect.poll(turn).toBe(expected);
+  await expect.poll(()=>page.evaluate(()=>view.game.turn)).toBe(expected);
+  await page.clock.runFor(180);
+  await waitIdle(page);
+ };
+ const expectNextAfter=async(delay,previous)=>{
+  await page.clock.runFor(delay-1);
+  expect(await turn()).toBe(previous);
+  await page.clock.runFor(1);
+  await finishTurn(previous+1);
+ };
+
+ // Change before the original 1.8-second timer expires and exercise the
+ // first slow boundary. A stale pending timer would cause an early turn.
+ const speedControl=await speed.elementHandle();
+ await speed.selectOption('slow');
+ await expectNextAfter(3600,openingTurn);
+ const firstTurnCounts=await readCityCounts(await tacticalSave(page));
+ expect(firstTurnCounts).not.toEqual(openingCounts);
+ expect(await speed.evaluate((node,original)=>node===original,speedControl)).toBe(true);
+ await speedControl.dispose();
+ await expect(speed).toHaveValue('slow');
+ await speed.selectOption('fast');
+ await expectNextAfter(600,openingTurn+1);
+ await expect(speed).toHaveValue('fast');
+
+ await toggle.press('Enter');
+ await expect(status).toHaveAttribute('data-observer-state','paused');
+ const paused=await tacticalSave(page);
+ await speed.selectOption('normal');
+ await page.locator('#utility-menu summary').press('Enter');
+ await page.locator('#language').selectOption('ja');
+ await expect(speed).toHaveAccessibleName('観戦速度');
+ await expect(speed.locator('option')).toHaveText(['低速','標準','高速']);
+ await expect(speed).toHaveValue('normal');
+ await expect(ledger.getByRole('columnheader',{name:'都市数',exact:true})).toBeVisible();
+ await page.locator('#utility-menu summary').press('Enter');
+ await page.clock.runFor(3600);
+ expect(await tacticalSave(page)).toEqual(paused);
+ await expect(status).toHaveAttribute('data-observer-state','paused');
+ await step.press('Enter');
+ await finishTurn(openingTurn+3);
+ await page.clock.runFor(3600);
+ expect(await turn()).toBe(openingTurn+3);
+ await toggle.press('Enter');
+ await expectNextAfter(1800,openingTurn+3);
+ await toggle.press('Enter');
+ await expect(status).toHaveAttribute('data-observer-state','paused');
+ expect(errors.get(page)).toEqual([]);
+});
+
 test('city road beds survive hidden castles, shared inland reaches draw once and ruler portraits stay centered',async({page},testInfo)=>{
  await opening(page);await page.locator('#scenario').selectOption('mainland207-09');await page.locator('input[name=faction][value=shu]').check();
  const portrait=page.locator('#setup-summary .portrait-frame');await portrait.scrollIntoViewIfNeeded();

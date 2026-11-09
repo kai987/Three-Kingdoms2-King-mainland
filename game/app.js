@@ -7,7 +7,12 @@ let campaignDifficulty='normal';
 let allocationDialogContext=null,allocationCloseEpoch=0;
 let battleDestination=null,battleViewKey='';
 let dialogueFeedback=null;
-let observerPlaying=false,observerTimer=null;
+const OBSERVER_SPEEDS={
+ slow:{delay:3600,labels:['慢速','低速']},
+ normal:{delay:1800,labels:['普通','標準']},
+ fast:{delay:600,labels:['快速','高速']}
+};
+let observerPlaying=false,observerTimer=null,observerSpeed='normal';
 const viewCache=typeof GameViewCache==='undefined'?null:GameViewCache.create();
 const localAutosave=typeof GameAutosave==='undefined'?null:GameAutosave.create({getRawSave:()=>request('/api/save',undefined,{text:true}),getView:()=>view,isBusy:()=>busy,loadRawSave:loadSave,locale:()=>GameI18n.locale,onStatus:state=>{if(state.state==='error')notice(localAutosave.statusText(),true);}});
 document.addEventListener('game-language-change',()=>{localAutosave?.refresh();refreshDialogueFeedback();refreshPersonnelDialogue();if(setupPreview)setPreviewFaction(setupPreview.faction,setupPreview.focus);else if(view?.game?.battle&&!busy&&!dialog.open)renderBattle();});
@@ -100,8 +105,18 @@ function resourceSummary(id,preview=setupPreview){
  const r=factionResources(id,preview);
  return r?`钱 ${r.gold} · 粮 ${r.grain} · 预备兵 ${r.reserves} · 武将 ${r.officers}人${view.catalog.civil_staff?` · 文吏 ${preview?0:view.catalog.civil_staff.faction_counts?.[id]??0}人`:''}`:'资源资料待载入';
 }
-function factionLedger(){
- return `<details class="faction-ledger"><summary>各势力资源</summary><p class="small">按当前所属城池合计，不含在途物资及武将带兵。</p><p class="small">武将按当前在籍人数计，含在途；不含在野和已退场人物。</p><div class="faction-ledger-scroll"><table><thead><tr><th>势力</th><th>武将数</th>${view.catalog.civil_staff?'<th>文吏</th>':''}<th>钱</th><th>粮</th><th>预备兵</th></tr></thead><tbody>${view.catalog.factions.map(f=>{const r=factionResources(f.id,null);return `<tr data-faction-resources="${f.id}"><th><svg class="faction-swatch ledger-swatch" width="12" height="12" aria-hidden="true"><rect width="12" height="12" fill="${mapColor(f.id)}"/></svg>${escapeHtml(factionDisplayName(f))}</th><td data-faction-officers="${f.id}">${r.officers}</td>${view.catalog.civil_staff?`<td data-faction-staff="${f.id}">${view.catalog.civil_staff.faction_counts?.[f.id]??0}</td>`:''}<td>${r.gold}</td><td>${r.grain}</td><td>${r.reserves}</td></tr>`;}).join('')}</tbody></table></div></details>`;
+function factionLedger({showCityCount=false}={}){
+ const staff=view.catalog.civil_staff;
+ const rows=view.catalog.factions.map(f=>{
+  const r=factionResources(f.id,null);
+  return `<tr data-faction-resources="${f.id}">
+  <th><svg class="faction-swatch ledger-swatch" width="12" height="12" aria-hidden="true"><rect width="12" height="12" fill="${mapColor(f.id)}"/></svg>${escapeHtml(factionDisplayName(f))}</th>
+  ${showCityCount?`<td data-faction-cities="${f.id}">${r.cities}</td>`:''}<td data-faction-officers="${f.id}">${r.officers}</td>
+  ${staff?`<td data-faction-staff="${f.id}">${staff.faction_counts?.[f.id]??0}</td>`:''}<td>${r.gold}</td><td>${r.grain}</td><td>${r.reserves}</td></tr>`;
+ }).join('');
+ return `<details class="faction-ledger"><summary>各势力资源</summary>
+ <p class="small">按当前所属城池合计，不含在途物资及武将带兵。</p><p class="small">武将按当前在籍人数计，含在途；不含在野和已退场人物。</p>
+ <div class="faction-ledger-scroll"><table><thead><tr><th>势力</th>${showCityCount?`<th>${battleText('城池數','都市数')}</th>`:''}<th>武将数</th>${staff?'<th>文吏</th>':''}<th>钱</th><th>粮</th><th>预备兵</th></tr></thead><tbody>${rows}</tbody></table></div></details>`;
 }
 function routeRisk(quote){
  const lines=(quote.routes||[]).filter(r=>r.hazard).map(r=>{
@@ -229,7 +244,15 @@ function refreshPersonnelDialogue(){
 function refreshDomesticButton(){
  const button=$('#faction-domestic');if(button)button.disabled=busy||!!setupPreview||view?.game?.phase!=='city'||!view?.catalog?.domestic?.factions?.[view?.game?.player]||!Object.values(view?.game?.cities||{}).some(c=>c.owner===view.game.player);
 }
-function setBusy(value){busy=value;refreshDomesticButton();refreshObserverControls();document.body.classList.toggle('busy',value);if($('#city-jump'))$('#city-jump').disabled=value;$('#main-menu').disabled=value||!view?.game||!!setupPreview;cloudSaveUI?.refreshButton();if($('#event-history'))$('#event-history').disabled=value||!!setupPreview||!view?.game?.extension?.events?.items?.length;if(!value)gameEvents?.pump();}
+function setBusy(value){
+ busy=value;refreshDomesticButton();refreshObserverControls();
+ document.body.classList.toggle('busy',value);
+ if($('#city-jump'))$('#city-jump').disabled=value;
+ $('#main-menu').disabled=value||!view?.game||!!setupPreview;
+ cloudSaveUI?.refreshButton();
+ if($('#event-history'))$('#event-history').disabled=value||!!setupPreview||!view?.game?.extension?.events?.items?.length;
+ if(!value){gameEvents?.pump();scheduleObserver();}
+}
 async function request(path,body,{raw=false,text=false}={}){
  const settings=body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:raw?body:JSON.stringify(body)};
  if(viewCache&&typeof GameBrowserEngine!=='undefined'&&['/api/state','/api/command','/api/load'].includes(path))settings.tk2ViewCache=viewCache.token();
@@ -1315,6 +1338,12 @@ function renderSuccession(){
 }
 function isObserver(){return view?.game?.player==='observer';}
 function canObserve(){return isObserver()&&!setupPreview&&view.game.phase==='city';}
+function refreshObserverSpeedLabels(){
+ for(const option of document.querySelectorAll('#observer-speed option')){
+  option.dataset.l10nNative=GameI18n.locale;
+  option.textContent=battlePlain(...OBSERVER_SPEEDS[option.value].labels);
+ }
+}
 function refreshObserverControls(){
  const toggle=$('#observer-toggle'),step=$('#observer-step');
  if(!toggle||!step)return;
@@ -1326,7 +1355,7 @@ function refreshObserverControls(){
  status.innerHTML=observerPlaying?battleText('自動推進中','自動進行中'):battleText('已暫停','一時停止中');
 }
 function scheduleObserver(){
- if(observerTimer!==null||!observerPlaying||!canObserve()||document.hidden)return;
+ if(observerTimer!==null||!observerPlaying||busy||!canObserve()||document.hidden)return;
  observerTimer=setTimeout(async()=>{
   observerTimer=null;
   if(!observerPlaying||!canObserve()||document.hidden)return;
@@ -1334,7 +1363,7 @@ function scheduleObserver(){
    if(!await command('observe_turn'))setObserverPlaying(false);
   }
   scheduleObserver();
- },1800);
+ },OBSERVER_SPEEDS[observerSpeed].delay);
 }
 function setObserverPlaying(value){
  observerPlaying=value&&canObserve();
@@ -1347,6 +1376,30 @@ function renderObserver(){
  const inspector=$('#inspector'),game=view.game,city=game.cities[selectedCity];
  const focused=inspector.contains(document.activeElement)?document.activeElement.id:null;
  const open=[...inspector.querySelectorAll('details[open]')].map(node=>node.id||node.className);
+ const active=canObserve();
+ // Keep the speed selector mounted when a turn refreshes the battle reports.
+ if(!$('#observer-details')||Boolean($('#observer-speed'))!==active){
+  inspector.innerHTML=`<div class="inspector-heading"><h2>${battleText('第三方觀戰','第三者観戦')}</h2></div>
+  <p class="small">${battleText('各勢力由 AI 行動。可查看城池、行軍和戰果。','各勢力はAIで行動します。都市・行軍・戦闘結果を確認できます。')}</p>
+  ${active?`<p id="observer-status" role="status"></p>
+  <label class="field" for="observer-speed">${battleText('觀戰速度','観戦速度')}<select id="observer-speed">${Object.keys(OBSERVER_SPEEDS).map(id=>`<option value="${id}"></option>`).join('')}</select></label>
+  <div class="actions action-pair observer-actions"><button id="observer-toggle" class="primary"></button><button id="observer-step">${battleText('推進一旬','1旬進める')}</button></div>`:''}
+  <div id="observer-details"></div>`;
+  if(active){
+   const speed=$('#observer-speed');
+   speed.value=observerSpeed;
+   refreshObserverSpeedLabels();
+   speed.onchange=()=>{
+    if(!Object.hasOwn(OBSERVER_SPEEDS,speed.value)||speed.value===observerSpeed)return;
+    observerSpeed=speed.value;
+    setObserverPlaying(observerPlaying);
+   };
+   $('#observer-toggle').onclick=()=>setObserverPlaying(!observerPlaying);
+   $('#observer-step').onclick=()=>{
+    if(canObserve()&&!observerPlaying&&!busy&&!document.querySelector('dialog[open]'))void command('observe_turn');
+   };
+  }
+ }
  const winner=view.catalog.observer_winner;
  const results=game.extension.events?.items.filter(row=>row.kind==='battle_result').slice(-6).reverse()||[];
  const outcomes={victory:['攻方獲勝','攻撃側の勝利'],defeat:['守方獲勝','防御側の勝利'],retreat:['攻方退卻','攻撃側の撤退']};
@@ -1355,17 +1408,11 @@ function renderObserver(){
   const outcome=outcomes[row.details.outcome]||['戰鬥結束','戦闘終了'];
   return `<li data-observer-battle="${row.id}"><time>${escapeHtml(GameCalendar.text(row))}</time> · ${escapeHtml(cityName(from))} → ${escapeHtml(cityName(to))}<br>${escapeHtml(faction(attacker))} · ${escapeHtml(faction(defender))} · ${battleText(...outcome)} · ${battleText('損兵','損兵')} ${escapeHtml(row.details.lost)}</li>`;
  }).join('')}</ol>`:`<p class="small">${battleText('尚無已結算的戰鬥。','精算済みの戦闘はまだありません。')}</p>`;
- inspector.innerHTML=`<div class="inspector-heading"><h2>${battleText('第三方觀戰','第三者観戦')}</h2></div>
- <p class="small">${battleText('各勢力由 AI 行動。可查看城池、行軍和戰果。','各勢力はAIで行動します。都市・行軍・戦闘結果を確認できます。')}</p>
- ${canObserve()?`<p id="observer-status" role="status"></p><div class="actions action-pair observer-actions"><button id="observer-toggle" class="primary"></button><button id="observer-step">${battleText('推進一旬','1旬進める')}</button></div>`:
+ $('#observer-details').innerHTML=`${active?'':
  `<p role="status">${winner?battleText(GameI18n.t(faction(winner),'zh-Hant')+'完成天下統一。',GameI18n.t(faction(winner),'ja')+'が天下を統一しました。'):battleText('觀戰已結束。','観戦が終了しました。')}</p>`}
  <div class="actions observer-actions"><button id="observer-city">${battleText('查看城池','都市情報')} · ${escapeHtml(cityName(city.id))}</button></div>
- <h3>${battleText('近期戰果','最近の戦闘結果')}</h3>${recent}${renderMarches()}${factionLedger()}`;
+ <h3>${battleText('近期戰果','最近の戦闘結果')}</h3>${recent}${renderMarches()}${factionLedger({showCityCount:true})}`;
  for(const node of inspector.querySelectorAll('details'))node.open=open.includes(node.id||node.className);
- if($('#observer-toggle'))$('#observer-toggle').onclick=()=>setObserverPlaying(!observerPlaying);
- if($('#observer-step'))$('#observer-step').onclick=()=>{
-  if(canObserve()&&!observerPlaying&&!busy&&!document.querySelector('dialog[open]'))void command('observe_turn');
- };
  $('#observer-city').onclick=()=>showCityInformation(city.id);
  refreshObserverControls();
  if(focused)document.getElementById(focused)?.focus({preventScroll:true});
@@ -1495,5 +1542,6 @@ async function initializeApp(){
  }catch(error){if(typeof GameBrowserEngine!=='undefined'&&GameBrowserEngine.failed)notice();else notice(GameI18n.locale==='ja'?'ゲームを読み込めません。ページを再読み込みしてください。':'遊戲無法載入，請重新整理頁面後重試。',true);}
  finally{appInitializing=false;}
 }
+document.addEventListener('game-language-change',refreshObserverSpeedLabels);
 document.addEventListener('game-engine-ready',()=>{if(!appInitialized)void initializeApp();});
 void initializeApp();
