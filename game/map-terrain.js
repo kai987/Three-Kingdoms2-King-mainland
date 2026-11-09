@@ -3,12 +3,14 @@
 (function(root){
  const VERSION='western-range-v1',SOURCE='/assets/map-road-centers.png',ASSET='/assets/map-western-range.png';
  const MAPS='svg#world-map, svg.event-map',XLINK='http://www.w3.org/1999/xlink';
+ const RETRY_DELAYS=[1000,4000,16000];
  if(root?.GameMapTerrain?.version===VERSION&&root.GameMapTerrain.controller)return;
  const installed=new WeakMap();
- function install({document=root?.document,MutationObserver=root?.MutationObserver,Image=root?.Image}={}){
-  if(!document?.documentElement||typeof MutationObserver!=='function'||typeof Image!=='function')return null;
+ function install({document=root?.document,Image=root?.Image}={}){
+  if(!document?.documentElement||typeof Image!=='function')return null;
   if(installed.has(document))return installed.get(document);
-  let active=false,destroyed=false;
+  const network=document.defaultView;
+  let active=false,destroyed=false,image=null,retryTimer=null,retryCount=0;
   const source=root?.GamePaths?.asset(SOURCE)||SOURCE;
   const artHash=document.currentScript?.getAttribute?.('data-art-sha256');
   const revision=/^[a-f0-9]{64}$/i.test(artHash||'')?artHash:'current-map-v2';
@@ -36,43 +38,64 @@
    let changed=0;for(const svg of document.querySelectorAll(MAPS))if(replace(svg))changed++;
    return changed;
   }
-  const observer=new MutationObserver(records=>{
-   if(destroyed||!active)return;
-   const maps=new Set();
-   function collect(node){
-    if(node?.nodeType!==1)return;
-    const map=node.closest?.(MAPS);if(map)maps.add(map);
-    for(const nested of node.querySelectorAll?.(MAPS)||[])maps.add(nested);
-   }
-   for(const record of records){collect(record.target);for(const node of record.addedNodes)collect(node);}
-   // MutationObserver runs after the complete synchronous SVG render and
-   // before painting. Attribute writes are not observed, while removing the
-   // old layer produces at most one further, idempotent child-list callback.
-   for(const svg of maps)replace(svg);
-  });
-  observer.observe(document.documentElement,{childList:true,subtree:true});
   let finish;
   const ready=new Promise(resolve=>{finish=resolve;});
-  const image=new Image();image.decoding='async';
-  let completed=false;
-  function loaded(ok){
-   if(completed)return;completed=true;image.onload=null;image.onerror=null;
-   active=!destroyed&&ok&&image.naturalWidth===1352&&image.naturalHeight===1024;
-   if(active)refresh();finish(active);
+  function cancelRetry(){
+   if(retryTimer===null)return;
+   network.clearTimeout(retryTimer);
+   retryTimer=null;
   }
-  image.onerror=()=>loaded(false);
-  image.onload=()=>{
-   if(typeof image.decode==='function')Promise.resolve().then(()=>image.decode()).then(()=>loaded(true),()=>loaded(false));
-   else loaded(true);
-  };
-  const controller={ready,refresh,get active(){return active;},destroy(){
-   if(destroyed)return;destroyed=true;active=false;observer.disconnect();
-   image.onload=null;image.onerror=null;installed.delete(document);finish(false);
+  function load(){
+   if(destroyed||image)return;
+   cancelRetry();
+   const candidate=new Image();
+   image=candidate;
+   candidate.decoding='async';
+   function loaded(ok){
+    if(destroyed||image!==candidate||active)return;
+    candidate.onload=candidate.onerror=null;
+    active=ok&&candidate.naturalWidth===1352&&candidate.naturalHeight===1024;
+    if(active){
+     // Retain the decoded image so new SVGs can reuse it during an outage.
+     refresh();
+    }else{
+     image=null;
+     if(network?.navigator?.onLine!==false&&retryCount<RETRY_DELAYS.length){
+      retryTimer=network?.setTimeout(()=>{
+       retryTimer=null;
+       load();
+      },RETRY_DELAYS[retryCount++])??null;
+     }
+    }
+    finish(active);
+   }
+   candidate.onerror=()=>loaded(false);
+   candidate.onload=()=>{
+    if(typeof candidate.decode==='function')Promise.resolve().then(()=>candidate.decode()).then(()=>loaded(true),()=>loaded(false));
+    else loaded(true);
+   };
+   candidate.src=asset;
+  }
+  function reconnect(){
+   retryCount=0;
+   load();
+  }
+  // The renderers resolve before inserting SVG markup. Setting the fallback
+  // href first would initiate a request even if it were replaced before paint.
+  const controller={ready,refresh,resolve:background=>active&&background===source?asset:background,
+   get active(){return active;},destroy(){
+   if(destroyed)return;
+   destroyed=true;active=false;
+   cancelRetry();
+   network?.removeEventListener('online',reconnect);
+   if(image)image.onload=image.onerror=null;
+   image=null;installed.delete(document);finish(false);
   }};
   installed.set(document,controller);
   // Until decoding succeeds the original map and recolor stay together. A
   // missing/corrupt asset therefore retains a complete, usable old map.
-  image.src=asset;
+  network?.addEventListener('online',reconnect);
+  load();
   return controller;
  }
  const api={version:VERSION,SOURCE,ASSET,install};
