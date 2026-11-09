@@ -16,6 +16,7 @@ let observerPlaying=false,observerTimer=null,observerSpeed='normal';
 const viewCache=typeof GameViewCache==='undefined'?null:GameViewCache.create();
 const localAutosave=typeof GameAutosave==='undefined'?null:GameAutosave.create({getRawSave:()=>request('/api/save',undefined,{text:true}),getView:()=>view,isBusy:()=>busy,loadRawSave:loadSave,locale:()=>GameI18n.locale,onStatus:state=>{if(state.state==='error')notice(localAutosave.statusText(),true);}});
 document.addEventListener('game-language-change',()=>{localAutosave?.refresh();refreshDialogueFeedback();refreshPersonnelDialogue();if(setupPreview)setPreviewFaction(setupPreview.faction,setupPreview.focus);else if(view?.game?.battle&&!busy&&!dialog.open)renderBattle();});
+document.addEventListener('game-language-change',refreshObserverSpeedLabels);
 const difficultyName=id=>({easy:'简单',normal:'普通',hard:'困难'}[id]||'普通');
 const $=s=>document.querySelector(s), dialog=$('#dialog'),survivorPreviews=new WeakMap();
 const gameAudio=GameAudio.page();
@@ -1344,7 +1345,6 @@ function refreshObserverSpeedLabels(){
   option.textContent=battlePlain(...OBSERVER_SPEEDS[option.value].labels);
  }
 }
-document.addEventListener('game-language-change',refreshObserverSpeedLabels);
 function refreshObserverControls(){
  const toggle=$('#observer-toggle'),step=$('#observer-step');
  if(!toggle||!step)return;
