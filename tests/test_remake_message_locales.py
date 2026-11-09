@@ -64,6 +64,15 @@ class MessageLocaleTests(unittest.TestCase):
         self.assertTrue({'存档无效，当前进度未改变。','请选择有效的战役。',
                          '请选择本城健康的武将。','当前不是待处理的电脑回合。'}<=checked)
 
+    def test_diplomacy_log_preserves_date_envoy_target_and_outcome(self):
+        for command, japanese in [('親善', '親善'), ('同盟', '同盟'), ('歸還俘虜', '捕虜返還'),
+                                  ('請求攻擊', '攻撃要請'), ('勸告投降', '降伏勧告')]:
+            with self.subTest(command=command):
+                self.assertEqual(translate(f'217年7月上旬 諸葛亮向孙权提出{command}，結果：達成。', self.data),
+                                 f'217年7月上旬 諸葛亮が孫権に「{japanese}」を提案。結果：成立。')
+        self.assertEqual(translate('諸葛亮向孙权提出歸還俘虜，結果：遭拒。', self.data),
+                         '諸葛亮が孫権に「捕虜返還」を提案。結果：拒否。')
+
     def test_all1052_officer_identities_keep_the_name_crosswalk(self):
         self.assertEqual(len(self.catalog['people']), 1052)
         ids = set()

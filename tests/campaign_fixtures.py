@@ -7,10 +7,22 @@ import tempfile
 from unittest.mock import patch
 
 from remake.campaign import Campaign, Catalog
-from remake import officer_relations, city_development, battle_supply, battle_grid
+from remake import officer_relations, city_development, battle_supply, battle_grid, civil_staff
 from remake.officers import appearance_values
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+@contextmanager
+def pre_civil_staff_profile():
+    """Retain the generated-person inputs of the immutable march corpus."""
+    generate = civil_staff._immutable_record
+
+    def retained(game, state, number, *, legacy=False):
+        return generate(game, state, number, legacy=True)
+
+    with patch.object(civil_staff, '_immutable_record', side_effect=retained):
+        yield
 
 
 @contextmanager

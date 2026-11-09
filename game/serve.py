@@ -757,6 +757,7 @@ def main():
               '/officer-selection.js': ('officer-selection.js', 'text/javascript; charset=utf-8'),
               '/civil-staff.js': ('civil-staff.js', 'text/javascript; charset=utf-8'),
               '/domestic.js': ('domestic.js', 'text/javascript; charset=utf-8'),
+              '/diplomacy.js': ('diplomacy.js', 'text/javascript; charset=utf-8'),
               '/treasury.js': ('treasury.js', 'text/javascript; charset=utf-8'),
               '/facilities.js': ('facilities.js', 'text/javascript; charset=utf-8'),
               '/city-development.js': ('city-development.js', 'text/javascript; charset=utf-8'),

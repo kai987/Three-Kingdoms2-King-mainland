@@ -10,8 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT/'source'), str(ROOT/'tests')]
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import civil_staff, domestic, logistics, march_supply
-from remake.march_core import using_backend
+from remake import civil_staff, diplomacy, domestic, logistics, march_supply
+from remake.march_core import enabled, using_backend
 from campaign_fixtures import controlled_catalog
 from test_remake_domestic import domestic_catalog
 
@@ -27,6 +27,90 @@ def supply_catalog(*, days=25, transfer=False):
         path = Path(tmp)/'supply.json'
         path.write_text(json.dumps(data,ensure_ascii=False))
         return Catalog(path)
+
+
+def allied_corridor():
+    data = deepcopy(controlled_catalog().data)
+    data.update(id='controlled-allied-corridor')
+    data['active_cities'].append('yingchuan')
+    data['initial_owners']['yingchuan'] = 'shu'
+    data['initial_city_resources']['yingchuan'] = dict(data['initial_resources'])
+    data['city_income'] = {key: dict(gold=0, grain=0, reserves=0) for key in data['active_cities']}
+    for route in data['travel_routes']:
+        if {route['from'], route['to']} == {'xiangyang', 'nanjun'}:
+            route.update(days=10, distance_km=300, land_km=300)
+    data['links'].append(['jiangxia', 'yingchuan'])
+    data['travel_routes'].append(dict(id='controlled:jiangxia:yingchuan', **{'from': 'jiangxia', 'to': 'yingchuan'},
+        mode='land', terrain='plain', distance_km=30, land_km=30, sea_km=0, days=1))
+    with tempfile.TemporaryDirectory() as tmp:
+        path = Path(tmp) / 'corridor.json'
+        path.write_text(json.dumps(data, ensure_ascii=False))
+        return Catalog(path)
+
+
+class AlliedTransitTests(unittest.TestCase):
+    def campaign(self, *, expires):
+        game = Campaign(allied_corridor())
+        game.command('new', dict(faction='shu', seed=2026), 0)
+        expected = ['xiangyang', 'nanjun', 'jiangxia', 'yingchuan']
+        for backend in ('python', 'rust') if enabled() else ('python',):
+            with using_backend(backend):
+                self.assertIsNone(game._travel_path(game.state, expected[0], expected[-1], 'shu', 'land'))
+        game.state.extension['diplomacy'] = dict(relations={}, treaties={'shu|wu': expires},
+                                               prisoners={}, requests={})
+        for backend in ('python', 'rust') if enabled() else ('python',):
+            with using_backend(backend):
+                self.assertEqual(game._travel_path(game.state, expected[0], expected[-1], 'shu', 'land')['path'], expected)
+                self.assertEqual(game._travel_view(game.state)['travel_quotes']['xiangyang:yingchuan:land']['path'],
+                                 expected)
+                self.assertIsNone(game._travel_path(game.state, expected[0], 'jiangxia', 'shu', 'land'))
+        return game
+
+    def advance(self, game):
+        if game.state.phase == 'arrivals':
+            game.command('arrivals', {}, game.revision)
+        else:
+            game._complete_turn(game.state)
+            diplomacy.synchronize(game, game.state)
+            game._spawn_eligible(game.state)
+            game._reconcile_factions(game.state)
+            game.validate(game.state)
+
+    def test_transfer_and_convoy_can_cross_allied_city_without_using_its_grain(self):
+        for order, lane in (('transfer', 'travel'), ('dispatch_transport', 'logistics')):
+            for expires in (2, 20):
+                with self.subTest(order=order, expires=expires):
+                    game = self.campaign(expires=expires)
+                    source, destination = (game.state.cities[key] for key in ('xiangyang', 'yingchuan'))
+                    grain = game.state.cities['jiangxia'].grain
+                    gold = destination.gold
+                    ident = source.roster.officer_ids[1]
+                    order_data = dict(source=source.id, target=destination.id, officers=[ident], route_mode='land')
+                    if lane == 'logistics':
+                        order_data['cargo'] = dict(gold=100, grain=200, reserves=0)
+                    game.command(order, order_data, game.revision)
+                    key = 'marches' if lane == 'travel' else 'convoys'
+                    saved = game.export_save()
+                    game = Campaign(game.catalog)
+                    game.load_save(saved, 0)
+                    self.assertEqual(game.export_save(), saved)
+                    for _ in range(10):
+                        if not game.state.extension[lane][key]:
+                            break
+                        self.advance(game)
+                    else:
+                        self.fail('Allied journey did not finish')
+                    source, destination = (game.state.cities[key] for key in ('xiangyang', 'yingchuan'))
+                    self.assertEqual(game.state.cities['jiangxia'].grain, grain, 'Allied grain is never consumed')
+                    self.assertNotIn(ident, game.state.cities['jiangxia'].roster.officer_ids)
+                    if expires == 2:
+                        self.assertIn(ident, source.roster.officer_ids)
+                        self.assertEqual(destination.gold, gold, 'Expired passage cannot deliver cargo')
+                    elif lane == 'travel':
+                        self.assertIn(ident, destination.roster.officer_ids)
+                    else:
+                        self.assertIn(ident, source.roster.officer_ids)
+                        self.assertEqual(destination.gold, gold + 100)
 
 
 class MarchSupplyTests(unittest.TestCase):

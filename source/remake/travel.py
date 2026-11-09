@@ -97,7 +97,7 @@ class TravelCampaign:
         if enabled():
             if mode not in self._travel_modes():
                 raise GameError('请选择有效的行军路线。')
-            return invoke('path', data=self.catalog.data, **state_input(state),
+            return invoke('path', data=self.catalog.data, **state_input(state, owner),
                           source=source, target=target, owner=owner, mode=mode,
                           adjacent=adjacent)
         return self._python_travel_path(state, source, target, owner, mode, adjacent=adjacent)
@@ -150,7 +150,7 @@ class TravelCampaign:
                     continue
                 if adjacent and (here!=source or nxt!=target):
                     continue
-                if not adjacent and state.cities[nxt].owner not in (owner, 'neutral'):
+                if not adjacent and not historical_campaigns.transit_allowed(state, owner, state.cities[nxt].owner):
                     continue
                 if not route_allowed(self.catalog.data,raw,here,nxt):
                     continue
@@ -363,21 +363,24 @@ class TravelCampaign:
             row['checked_turn'] = state.turn
             source, target = (state.cities[row[k]] for k in ('source', 'target'))
             ids = row['officers']
-            if row['status']!='returning' and row['kind']=='transfer' and any(state.cities[k].owner not in (row['owner'], 'neutral')
-                                              for k in row['quote']['path'][1:-1]):
-                row['supply']['retreat_requested']=True;row['supply']['waiting']=True;row['reason']='route_blocked'
-                self._resolve_supply_retreats(state)
-                continue
-            if row['kind']=='transfer' and target.owner!=row['owner']:
-                row['supply']['retreat_requested']=True;row['supply']['waiting']=True;row['reason']='target_changed'
-                self._resolve_supply_retreats(state)
-                continue
+            # Once the route has been travelled, its weather applies even if
+            # the destination or an intermediate city changed allegiance.
             if row['risks'] and not self._apply_march_risks(state,row):
                 travel['marches'].remove(row)
                 self._note(state,f'行军{row["id"]}遭遇灾害后带兵全损，航行或进军失败；武将返回出发城编制，未发现新航路。')
                 if row['owner']==state.player:
                     self._emit_event(state,'march_returned',city_ids=[source.id,target.id],factions=[row['owner']],
                         details=dict(march_id=row['id'],reason='army_lost'))
+                continue
+            if row['status']!='returning' and row['kind']=='transfer' and any(
+                    not historical_campaigns.transit_allowed(state, row['owner'], state.cities[k].owner)
+                    for k in row['quote']['path'][1:-1]):
+                row['supply']['retreat_requested']=True;row['supply']['waiting']=True;row['reason']='route_blocked'
+                self._resolve_supply_retreats(state)
+                continue
+            if row['kind']=='transfer' and target.owner!=row['owner']:
+                row['supply']['retreat_requested']=True;row['supply']['waiting']=True;row['reason']='target_changed'
+                self._resolve_supply_retreats(state)
                 continue
             if historical_campaigns.allied(state, row['owner'], target.owner):
                 row['supply']['retreat_requested']=True;row['supply']['waiting']=True;row['reason']='target_changed'
@@ -462,7 +465,7 @@ class TravelCampaign:
                                            if row['id'] in discovered]
             if state.player != observer.SEAT:
                 result['travel_quotes'] = invoke('batch', data=self.catalog.data,
-                                                **state_input(state), player=state.player)
+                                                **state_input(state, state.player), player=state.player)
         return result
 
     def _python_travel_view(self, state):
@@ -500,14 +503,16 @@ class TravelCampaign:
                     if here in seen:
                         continue
                     seen.add(here)
-                    # Neutral cities can connect the tree, but only our own
+                    # Neutral and allied cities can connect the tree, but only our own
                     # cities are transfer destinations. Direct attacks below
                     # are quoted independently of this transit search.
                     if legs and state.cities[here].owner==state.player:
                         quotes[f'{source}:{here}:{mode}']=self._quote(path,legs)
                     for leg in adjacency[here]:
                         target=leg['to']
-                        if target in seen or state.cities[target].owner not in (state.player, 'neutral') or mode=='land' and leg['mode']!='land':
+                        if (target in seen
+                                or not historical_campaigns.transit_allowed(state, state.player, state.cities[target].owner)
+                                or mode=='land' and leg['mode']!='land'):
                             continue
                         heappush(queue,(days+leg['days'],distance+leg['distance_km'],target,next(serial),path+[target],legs+[leg]))
                 # Attacks remain direct city-to-city legs; friendly paths above

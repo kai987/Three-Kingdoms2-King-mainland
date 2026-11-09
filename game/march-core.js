@@ -2,13 +2,15 @@
 'use strict';
 (function(root){
  const geometryKey=view=>view.catalog.travel_rules.geometry_sha256||'';
+ const alliesOf=view=>[...new Set((view.catalog.non_aggression||[])
+  .filter(pair=>pair.includes(view.game.player)).flatMap(pair=>pair.filter(faction=>faction!==view.game.player)))].sort();
  // Route quotes depend on road conditions, rather than the command revision.
  // Canonical copies avoid recalculating the full batch when roster/resources,
  // turn phase or insertion order changes, while retaining active-city changes.
  const stateKey=view=>view?.game&&view.catalog?.travel_rules?JSON.stringify([
   view.catalog.scenario_id,geometryKey(view),view.game.player,view.game.year,view.game.month,
   Object.values(view.game.cities).map(({id,owner})=>[id,owner]).sort(([a],[b])=>a<b?-1:a>b?1:0),
-  [...(view.game.extension?.travel?.discovered||[])].sort()
+  [...(view.game.extension?.travel?.discovered||[])].sort(),alliesOf(view)
  ]):null;
  function createMarchCore({workerFactory=()=>new Worker(root.GamePaths?.asset('/march-worker.js')||'/march-worker.js'),fetcher=(...args)=>fetch(...args),timeout=30000}={}){
   let worker=null,failed=false,sequence=0,key=null,quotes=null,pendingUpdate=null,engine='idle',lastError=null;
@@ -69,7 +71,10 @@
    if(!next){engine=failed?'fallback':'idle';return Promise.resolve();}
    if(failed)return Promise.resolve();
    engine='loading';
-   const snapshot={scenario:view.catalog.scenario_id,geometry:geometryKey(view),cities:Object.values(view.game.cities).map(({id,owner})=>({id,owner})),year:view.game.year,month:view.game.month,discovered:[...(view.game.extension?.travel?.discovered||[])],player:view.game.player};
+   const allies=new Set(alliesOf(view));
+   const snapshot={scenario:view.catalog.scenario_id,geometry:geometryKey(view),
+    cities:Object.values(view.game.cities).map(({id,owner})=>({id,owner:allies.has(owner)?'neutral':owner})),
+    year:view.game.year,month:view.game.month,discovered:[...(view.game.extension?.travel?.discovered||[])],player:view.game.player};
    pendingUpdate=(async()=>{
     try{
      const contextId=await context(snapshot.scenario,snapshot.geometry);

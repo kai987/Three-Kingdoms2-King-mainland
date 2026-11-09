@@ -379,8 +379,15 @@ class LogisticsTests(unittest.TestCase):
         self.advance_due(game)
         row = game.state.extension['logistics']['convoys'][0]
         self.assertEqual(row['status'], 'waiting')
-        self.assertLess(row['cargo']['reserves'], 300)
-        self.assertTrue(all(r['applied'] for r in row['journeys'][0]['risks']))
+        risk, = row['journeys'][0]['risks']
+        self.assertTrue(risk['applied'])
+        self.assertGreater(risk['before']['999'], 0)
+        self.assertEqual(risk['before']['cargo'], 300)
+        self.assertEqual(row['cargo']['reserves'], risk['after']['cargo'])
+        self.assertEqual(game.state.officers[999].troops, risk['after']['999'])
+        before, after = sum(risk['before'].values()), sum(risk['after'].values())
+        self.assertEqual(after, before * risk['survival_numerator'] // risk['survival_denominator'])
+        self.assertEqual(risk['lost'], before - after)
         cargo, lost, rng = deepcopy(row['cargo']), game.state.soldiers['lost'], deepcopy(game.state.rng)
         game._complete_turn(game.state); game.command('arrivals', {}, game.revision)
         row = game.state.extension['logistics']['convoys'][0]

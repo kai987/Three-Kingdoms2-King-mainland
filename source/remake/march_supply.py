@@ -1,5 +1,6 @@
 """Deterministic daily food, real checkpoints and auditable starvation."""
 from copy import deepcopy
+from .historical_campaigns import transit_allowed
 from .officers import OFFICER_TROOP_CAP
 
 DENOMINATOR=1000
@@ -174,9 +175,9 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
             if on_cargo_change is None:raise ValueError('Cargo ration debit needs its transport ledger')
             on_cargo_change('rations',dict(cargo,grain=cargo['grain']-amount),tick)
             receive(supply,amount,'cargo',unit['id'],state.turn)
-        blocked=(supply['route_days']<quote['days'] and city_id is not None
-                 and next_city(journey)!=quote['path'][-1]
-                 and state.cities[next_city(journey)].owner not in {unit['owner'],'neutral'})
+        upcoming = next_city(journey) if city_id is not None else None
+        blocked=(upcoming is not None and upcoming!=quote['path'][-1]
+                 and not transit_allowed(state,unit['owner'],state.cities[upcoming].owner))
         if blocked:supply['retreat_requested']=True;unit['reason']='route_blocked'
         enough=supply['remaining']*1000+supply['credit_units']>=units*distance
         moving=(supply['route_days']<quote['days'] and not blocked and not unit.get('hold')

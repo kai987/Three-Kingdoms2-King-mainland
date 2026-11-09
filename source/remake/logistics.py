@@ -828,6 +828,19 @@ def _dock(game, state, row, target):
     return True
 
 
+def settle_surrender(game, state, owner, holdings):
+    """Account for the surrendering faction's cargo and escorts before transfer."""
+    for row in list(_pool(state)['convoys']):
+        if row['owner'] != owner:
+            continue
+        candidates = sorted(holdings, key=lambda city: (city.id != row['source'], city.id))
+        target = next((city for city in candidates
+                       if not _receiving_blocker(game, state, row, city, returning=True)), None)
+        if target is None:
+            raise GameError('對方城池沒有空間接收在途運輸隊，無法完成受降。')
+        _dock(game, state, row, target)
+
+
 def _unload(game, state, row, target):
     """Cargo arrives; escorts retain their home slots until the real return."""
     from . import domestic

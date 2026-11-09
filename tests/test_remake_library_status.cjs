@@ -10,6 +10,10 @@ vm.runInContext(source.slice(source.indexOf('// Classify actual runtime entry'),
 const status=p=>context.libraryEntryStatus({missing:[],alive:null,year_state:'available',...p});
 assert.equal(status({alive:true,faction:'wei',year_state:'dead',era_assignment:{status:'pending_history'}}),'serving');
 assert.equal(status({alive:true,faction:null,location:'henan',era_assignment:{status:'serving'}}),'free');
+const prisoner={alive:true,faction:null,prisoner:{city:'henan'},missing:[]};
+assert.equal(status(prisoner),'captive');
+assert(!context.libraryFilterMatches(prisoner,'free'));
+assert(!context.libraryFilterMatches(prisoner,'unentered'));
 assert.equal(status({alive:false,faction:'wei',era_assignment:{status:'serving'}}),'retired');
 assert.equal(status({year_state:'not_born',era_assignment:{status:'pending_history'}}),'not_born');
 assert.equal(status({year_state:'not_appeared',era_assignment:{status:'serving'}}),'not_appeared');

@@ -312,7 +312,7 @@ def _tongguan_active(state):
             and not any(owner in state.extension['ended_factions'] for owner in EVENT_FACTIONS[TONGGUAN]))
 
 
-def allied(state, first, second):
+def historical_allied(state, first, second):
     if first == second:
         return False
     return ((first in SUN_LIU and second in SUN_LIU and _alliance_active(state))
@@ -322,7 +322,18 @@ def allied(state, first, second):
 def alliances(state):
     if state is None:
         return []
-    return [list(pair) for pair in (SUN_LIU, GUANZHONG_COALITION) if allied(state, *pair)]
+    from . import diplomacy
+    scripted = [list(pair) for pair in (SUN_LIU, GUANZHONG_COALITION) if historical_allied(state, *pair)]
+    return scripted + [pair for pair in diplomacy.alliances(state) if not historical_allied(state, *pair)]
+
+
+def allied(state, first, second):
+    from . import diplomacy
+    return historical_allied(state, first, second) or (first != second and diplomacy.allied(state, first, second))
+
+
+def transit_allowed(state, owner, other):
+    return other in {owner, 'neutral'} or allied(state, owner, other)
 
 
 def _priority_event(state):

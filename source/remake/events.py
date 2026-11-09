@@ -82,6 +82,7 @@ DETAILS = {
     'battle_supply_exhausted': BATTLE_SUPPLY_DETAILS,
     'equipment_acquired':EQUIPMENT_DETAILS,
     'domestic_report': {'gold','grain','reserves','morale','cities','reason'},
+    'diplomacy_result': {'action','success','score','duration'},
 }
 
 
@@ -559,6 +560,17 @@ def validate(campaign, state):
             _validate_battle_supply_event(row)
         if row['kind']=='equipment_acquired':
             _validate_equipment_event(row)
+        if row['kind']=='diplomacy_result':
+            from .diplomacy import MAX_TURNS, PARAMETERS
+            d = row['details']
+            if (set(d) != DETAILS[row['kind']] or d['action'] not in PARAMETERS
+                    or type(d['success']) is not bool or type(d['score']) is not int
+                    or not 0 <= d['score'] <= 100 or type(d['duration']) is not int
+                    or (not 1 <= d['duration'] <= MAX_TURNS if d['action']=='alliance' else d['duration']!=0)
+                    or len(row['factions']) != 2 or row['audience'] != 'player'
+                    or len(row['city_ids']) != (2 if d['action']=='request_attack' else 1)
+                    or len(row['person_ids']) != (2 if d['action']=='return_captives' else 1)):
+                raise ValueError('Diplomacy event receipt')
         if row['kind'] in historical_campaigns.EVENT_FACTIONS:
             historical_campaigns.validate_event(campaign.catalog,state,row)
         if row['kind'] in {'faction_founded','faction_founding_skipped'}:

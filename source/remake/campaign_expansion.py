@@ -818,6 +818,7 @@ class ExpandedCampaign:
         presentation.record(self,state,before,kind='retreat',own=own)
 
     def _expanded_settle(self,state,payload):
+        from . import diplomacy
         b=state.battle
         if state.phase!='result' or not b or payload.get('battle_id')!=b['id']:raise GameError('没有待接收的战果。')
         source,target=state.cities[b['source']],state.cities[b['target']];x=b['extended']
@@ -838,6 +839,7 @@ class ExpandedCampaign:
             o=state.officers[u['id']];o.troops=u['troops'];o.health=x['support'][str(u['id'])]['health']
             o.experience=min(49999,o.experience+max(1,lost//max(1,len(b['attackers'])+len(b['defenders']))));o.tier=experience_tier(o.experience)
         state.soldiers['lost']+=lost
+        diplomacy.battle_relations(self,state,b)
         for key,amount in x['surrenders'].items():
             ident=deserialize_officer_ref(key,self.catalog.rules);owner_city=target if ident in target.roster.officer_ids else source
             owner_city.reserves+=amount;owner_city.roster.officer_ids.remove(ident)
@@ -845,6 +847,7 @@ class ExpandedCampaign:
             state.extension['free_locations'][key]=owner_city.id
         if b['outcome']=='victory':
             selected=[u['id'] for u in b['attackers'] if str(u['id']) not in x['surrenders']]
+            defeated={u['id'] for u in b['defenders']} if x['withdrawn']!='defenders' else set()
             # Defenders escape to the nearest adjacent friendly city with room.
             for ident in list(target.roster.officer_ids):
                 o=state.officers[ident]
@@ -852,8 +855,11 @@ class ExpandedCampaign:
                 if homes:
                     home=homes[0];home.roster.officer_ids.append(ident)
                 else:
+                    held=(ident in defeated and diplomacy.capture(state,o,city=target.id,
+                          captor=b['attacker'],origin=b['defender']))
                     target.reserves+=o.troops;o.troops=0;o.faction_id=None;o.loyalty=0
-                    state.extension['free_locations'][str(ident)]=target.id
+                    if not held:
+                        state.extension['free_locations'][str(ident)]=target.id
             target.roster.officer_ids[:]=selected
             for city in state.cities.values():
                 if city.id!=target.id:
@@ -882,7 +888,7 @@ class ExpandedCampaign:
         self._reconcile_factions(state)
 
     def _reconcile_factions(self,state):
-        from . import dated_events
+        from . import dated_events, diplomacy
         x=state.extension
         for faction in sorted(self.catalog.factions):
             if dated_events.dormant(self.catalog,state,faction):
@@ -911,6 +917,7 @@ class ExpandedCampaign:
                     self._note(state,f'{self.person_name(state, leader)}接任势力主将。')
         for faction,pending in list(x['pending_succession'].items()):
             pending['candidates']=[i for i in pending['candidates'] if i in state.officers and state.officers[i].alive and state.officers[i].faction_id==faction]
+        diplomacy.synchronize(self,state)
         if state.player == observer.SEAT:
             result = observer.outcome(state)
             if result is not None and x['outcome'] is None:
@@ -973,6 +980,7 @@ class ExpandedCampaign:
     def _expanded_catalog_view(self,state):
         from . import troop_types
         library=[]
+        prisoners=state.extension.get('diplomacy',{}).get('prisoners',{}) if state else {}
         for ident,row in self.catalog.by_id.items():
             person=self.catalog.definitions[row['person_id']];profile=self.catalog.profiles[ident]
             officer=state.officers.get(ident) if state else None
@@ -981,6 +989,7 @@ class ExpandedCampaign:
                             'year_state':year_state(person,state.year if state else self.catalog.data['start_year']).value,
                             'faction':officer.faction_id if officer else None,'alive':officer.alive if officer else None,
                             'location':state.extension['free_locations'].get(str(ident)) if state else self.catalog.data['appearance_locations'].get(person.person_id),
+                            **({'prisoner':dict(prisoners[str(ident)])} if str(ident) in prisoners else {}),
                             'martial':profile.martial_strength,'intellect':officer.profile.intellect if officer else profile.intellect,'virtue':profile.virtue,
                             'base_intellect':profile.intellect,
                             'study_gain':officer.profile.intellect-profile.intellect if officer else 0,
@@ -1006,6 +1015,7 @@ class ExpandedCampaign:
         from . import dated_events
         if dated_events.enabled(self.catalog):fields.add('dated_events')
         if historical_campaigns.RECEIPTS in x:fields.add(historical_campaigns.RECEIPTS)
+        if 'diplomacy' in x:fields.add('diplomacy')
         if not isinstance(x,dict) or set(x)!=fields:raise ValueError('expanded state fields')
         dated_events.validate_state(self,state)
         historical_campaigns.validate_state(self.catalog,state)
@@ -1014,8 +1024,10 @@ class ExpandedCampaign:
         for key,city in x['free_locations'].items():
             ident=deserialize_officer_ref(key,self.catalog.rules)
             if str(ident)!=key or ident not in state.officers or city not in state.cities or state.officers[ident].faction_id is not None:raise ValueError('free officer location')
+        prisoners=x.get('diplomacy',{}).get('prisoners',{})
         for ident,o in state.officers.items():
-            if o.alive and o.faction_id is None and str(ident) not in x['free_locations']:raise ValueError('unlocated free officer')
+            if (o.alive and o.faction_id is None and str(ident) not in x['free_locations']
+                    and str(ident) not in prisoners):raise ValueError('unlocated free officer')
             if o.alive and year_state(self.person_definition(state, ident),state.year) not in {YearState.AVAILABLE,YearState.DEATH_YEAR_REVIEW}:raise ValueError('unborn or retired free officer')
         for key,turn in x['officer_actions'].items():
             if deserialize_officer_ref(key,self.catalog.rules) not in state.officers:raise ValueError('officer action identity')

@@ -10,12 +10,13 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import domestic, equipment, treasures
+from remake import civil_staff, diplomacy, domestic, equipment, facilities, treasures
 from remake.officers import OFFICER_TROOP_CAP, YearState, initialize_officer, year_state
 from campaign_fixtures import controlled_catalog, arrange_contact, finish_soldier_encounter, confirm_default_placement
 
@@ -200,6 +201,53 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.assertGreater(self.pool(game)['rng']['draws'], 0, 'Monthly shortage generation actually exercised its independent stream')
         self.assertEqual(game.state.rng.draws, 0)
 
+    def test_load_upgrades_legacy_candidates_and_employees_without_replaying_rng(self):
+        generate = civil_staff._immutable_record
+        empty = civil_staff.empty
+        cap = facilities.RULES['study_cap']
+
+        def legacy(campaign, state, number):
+            return generate(campaign, state, number, legacy=True)
+
+        for number, new_base in ((3, 69), (7, 88), (11, 90)):
+            with patch.object(civil_staff, '_immutable_record', side_effect=legacy), patch.object(
+                    civil_staff, 'empty', side_effect=lambda campaign, state: dict(empty(campaign, state), next_id=number)):
+                game = self.new(free=False, extra=True)
+                ident = self.hire(game)
+                employee = self.pool(game)['people'][ident]
+                candidate = self.pool(game)['cities']['runan']['candidate']
+                base = civil_staff.officer_profile(employee)
+                saves = []
+                for bonus in (8, cap - base.intellect):
+                    game.state.extension['facilities']['study'][ident] = bonus
+                    game.state.officers[ident].profile = facilities.learned_profile(game.state, ident, base)
+                    game.validate(game.state)
+                    saves.append((bonus, game.export_save()))
+
+            for bonus, save in saves:
+                with self.subTest(number=number, bonus=bonus):
+                    restored = Campaign(game.catalog)
+                    restored.load_save(save, 0)
+                    pool = self.pool(restored)
+                    for old, new in ((employee, pool['people'][ident]),
+                                     (candidate, pool['cities']['runan']['candidate'])):
+                        self.assertEqual({k: v for k, v in old.items() if k != 'profile'},
+                                         {k: v for k, v in new.items() if k != 'profile'})
+                        self.assertTrue(60 <= new['profile']['intellect'] <= 90)
+                        self.assertTrue(60 <= new['profile']['virtue'] <= 70)
+                        self.assertGreaterEqual(new['profile']['intellect'], old['profile']['intellect'])
+                    upgraded = restored.export_save()
+                    self.assertEqual(upgraded['state']['rng'], save['state']['rng'])
+                    self.assertEqual(pool['rng'], save['state']['extension']['civil_staff']['rng'])
+                    self.assertEqual(pool['people'][ident]['profile']['intellect'], new_base)
+                    retained_bonus = max(0, min(bonus, cap - new_base))
+                    self.assertEqual(restored.state.extension['facilities']['study'].get(ident, 0), retained_bonus)
+                    self.assertEqual(restored.state.officers[ident].profile.intellect, new_base + retained_bonus)
+                    self.assertGreaterEqual(restored.state.officers[ident].profile.intellect, base.intellect + bonus)
+                    round_trip = Campaign(game.catalog)
+                    round_trip.load_save(upgraded, 0)
+                    self.assertEqual(round_trip.export_save(), upgraded)
+
     def test_rejection_expiry_and_signed_but_tampered_saves_are_atomic(self):
         game = self.new(free=False, extra=True)
         candidate = self.pool(game)['cities']['nanjun']['candidate']['id']
@@ -375,7 +423,9 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.cmd(game, 'settle', battle_id=battle['id'])
         self.assertEqual(game.state.cities['nanjun'].owner, 'shu')
         self.assertIsNone(game.state.officers[defender].faction_id)
-        self.assertEqual(game.state.extension['free_locations'][str(defender)], 'nanjun')
+        self.assertNotIn(str(defender), game.state.extension['free_locations'])
+        prisoner = game.state.extension[diplomacy.KEY]['prisoners'][str(defender)]
+        self.assertEqual((prisoner['city'], prisoner['captor'], prisoner['origin']), ('nanjun', 'shu', 'wei'))
         self.assertEqual(game._city_occupancy(game.state, game.state.cities['yingchuan']), 99)
         game.validate(game.state)
 

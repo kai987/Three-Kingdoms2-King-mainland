@@ -99,6 +99,7 @@ class ViewTransportTests(unittest.TestCase):
             'gold': lambda view: view['game']['cities'][city_id].update(gold=9876),
             'day': lambda view: view['game'].update(day=21),
             'phase': lambda view: view['game'].update(phase='ai'),
+            'unrelated_alliance': lambda view: view['catalog'].setdefault('non_aggression', []).append(['wei', 'wu']),
             'revision': lambda view: view.update(revision=view['revision'] + 7),
         }
         for name, change in changes.items():
@@ -126,6 +127,7 @@ class ViewTransportTests(unittest.TestCase):
             'year': lambda view: view['game'].update(year=218),
             'month': lambda view: view['game'].update(month=7),
             'owner': lambda view: view['game']['cities'][city_id].update(owner='wu'),
+            'allied_transit': lambda view: view['catalog'].setdefault('non_aggression', []).append(['shu', 'wei']),
             'new_city': lambda view: view['game']['cities'].update(newly_founded=dict(
                 baseline['game']['cities'][city_id], id='newly_founded')),
             'player': lambda view: view['game'].update(player='wei'),

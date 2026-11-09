@@ -651,5 +651,7 @@ def validate(game, state):
         if ident not in state.officers or not _int(bonus,1,89):
             raise ValueError('Facilities study reference')
         base=_base_profile(game,state,ident)
-        if base.intellect>=80 or bonus>89-base.intellect or state.officers[ident].profile!=learned_profile(state,ident,base):
+        # A generated officer can retain study earned before a base-stat upgrade.
+        if ((base.intellect>=80 and not is_generated_ref(ident))
+                or bonus>89-base.intellect or state.officers[ident].profile!=learned_profile(state,ident,base)):
             raise ValueError('Facilities learned profile')

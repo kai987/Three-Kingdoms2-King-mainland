@@ -8,7 +8,7 @@ from hashlib import sha256
 import re
 
 from .errors import GameError
-from . import command_books
+from . import command_books, historical_campaigns
 from .officers import (OfficerProfile, PersonDefinition, initialize_officer,
                        is_generated_ref, year_state, YearState)
 
@@ -95,7 +95,8 @@ def _effective_count(state, city):
                 and state.turn <= march.get('arrival_turn', -1) <= state.turn + 3):
             path = march.get('quote', {}).get('path', [march.get('source'), city.id])
             if (not path or path[0] not in state.cities or state.cities[path[0]].owner != city.owner
-                    or any(key not in state.cities or state.cities[key].owner not in {city.owner, 'neutral'} for key in path)):
+                    or any(key not in state.cities or not historical_campaigns.transit_allowed(
+                        state, city.owner, state.cities[key].owner) for key in path)):
                 continue
             ids.update(i for i in march['officers'] if i in state.officers and state.officers[i].alive)
     # Transport escorts unload and return home; they never fill a permanent
@@ -131,7 +132,7 @@ def initialize(campaign, state):
     synchronize(campaign, state, opening=True)
 
 
-def _immutable_record(campaign, state, number):
+def _immutable_record(campaign, state, number, *, legacy=False):
     """Independent per-ID source; validation can verify generated attributes."""
     random = _seed(f'{SCHEMA}:person:{state.seed}:{number}')
 
@@ -148,11 +149,20 @@ def _immutable_record(campaign, state, number):
     else:
         raise ValueError('Civil staff name pool unavailable')
     health = 60 + draw() % 21
-    return dict(id=f'clerk-{number:06d}', name=name,
-                portrait=PORTRAITS[draw() % len(PORTRAITS)],
-                specialty=SPECIALTIES[draw() % len(SPECIALTIES)],
-                profile=dict(health_max=health, martial_strength=10 + draw() % 26,
-                             intellect=40 + draw() % 26, virtue=60))
+    portrait = PORTRAITS[draw() % len(PORTRAITS)]
+    specialty = SPECIALTIES[draw() % len(SPECIALTIES)]
+    martial_strength = 10 + draw() % 26
+    intellect_roll = draw()
+    intellect = 40 + intellect_roll % 26
+    virtue = 60
+    if not legacy:
+        # The same identity's new base must never lower its old intellect.
+        intellect = max(intellect, 60 + intellect_roll % 31)
+        virtue += draw() % 11
+    profile = dict(health_max=health, martial_strength=martial_strength,
+                   intellect=intellect, virtue=virtue)
+    return dict(id=f'clerk-{number:06d}', name=name, portrait=portrait,
+                specialty=specialty, profile=profile)
 
 
 def definition(person):
@@ -191,6 +201,13 @@ def runtime_view(state, person):
     return result
 
 
+def _unassigned_city(state, ident, fallback):
+    prisoner = state.extension.get('diplomacy', {}).get('prisoners', {}).get(ident)
+    if prisoner is not None:
+        return prisoner['city']
+    return state.extension.get('free_locations', {}).get(ident, fallback)
+
+
 def sync_people(state):
     """Location/owner are views of normal officer membership, never city capture."""
     pool = state.extension['civil_staff']
@@ -203,7 +220,7 @@ def sync_people(state):
         if person['owner'] != owner:
             person['working'] = False
         person['owner'] = owner
-        person['city'] = locations.get(ident, state.extension.get('free_locations', {}).get(ident, person['city']))
+        person['city'] = locations.get(ident, _unassigned_city(state, ident, person['city']))
         person['action_turn'] = state.extension.get('officer_actions', {}).get(ident, 0)
         if not officer.alive or officer.faction_id in (None, 'neutral'):
             person['working'] = False
@@ -511,7 +528,34 @@ def view(campaign, state):
     return result
 
 
-def validate(campaign, state):
+def migrate_profiles(campaign, state):
+    """Upgrade valid old profiles during load without consuming either RNG."""
+    migrations = validate(campaign, state, allow_legacy_profiles=True)
+    if not migrations:
+        return
+    from . import facilities, treasures
+    # Check the saved learning and governor records before changing the stats
+    # they derive from. Only automatic governor selection may then change.
+    facilities.validate(campaign, state)
+    treasures.validate(campaign, state)
+    study = state.extension['facilities']['study']
+    for person, profile in migrations:
+        person['profile'] = profile
+        ident = person['id']
+        officer = state.officers.get(ident)
+        if officer is None:
+            continue
+        if ident in study:
+            remaining = facilities.RULES['study_cap'] - profile['intellect']
+            if remaining > 0:
+                study[ident] = min(study[ident], remaining)
+            else:
+                del study[ident]
+        officer.profile = facilities.learned_profile(state, ident, officer_profile(person))
+    treasures.synchronize(campaign, state)
+
+
+def validate(campaign, state, *, allow_legacy_profiles=False):
     pool = state.extension['civil_staff']
     if (not isinstance(pool, dict) or set(pool) != {'schema', 'rng', 'next_id', 'cities', 'people', 'last_payroll_month'}
             or pool['schema'] != SCHEMA):
@@ -526,6 +570,7 @@ def validate(campaign, state):
             or not isinstance(pool['people'], dict) or len(pool['people']) > 100000):
         raise ValueError('Civil staff state bounds')
     seen = set()
+    migrations = []
 
     def record(person, employee=False):
         fields = _EMPLOYEE_FIELDS if employee else _RECORD_FIELDS
@@ -540,7 +585,10 @@ def validate(campaign, state):
         seen.add(person['id'])
         expected = _immutable_record(campaign, state, number)
         if any(person.get(key) != value for key, value in expected.items()):
-            raise ValueError('Civil staff generated identity/profile')
+            if not allow_legacy_profiles or any(person.get(key) != value for key, value in
+                    _immutable_record(campaign, state, number, legacy=True).items()):
+                raise ValueError('Civil staff generated identity/profile')
+            migrations.append((person, expected['profile']))
         if (not _int(person['health'], 0, person['profile']['health_max'])
                 or type(person['troops']) is not int or person['troops'] != 0
                 or type(person['experience']) is not int or person['experience'] != 0
@@ -581,10 +629,11 @@ def validate(campaign, state):
         if officer is None or officer.person_id != key or officer.profile != learned_profile(state,key,officer_profile(person)):
             raise ValueError('Civil staff runtime identity/profile')
         actual_city = next((c.id for c in state.cities.values() if key in c.roster.officer_ids),
-            state.extension.get('free_locations', {}).get(key, person['city']))
+                           _unassigned_city(state, key, person['city']))
         if person['city'] != actual_city or person['owner'] != (officer.faction_id or 'neutral'):
             raise ValueError('Civil staff runtime location/owner')
         if not officer.alive and person['working']:
             raise ValueError('Dead generated officer is working')
     if {i for i in state.officers if is_generated_ref(i)} != set(pool['people']):
         raise ValueError('Generated runtime/registry set')
+    return migrations

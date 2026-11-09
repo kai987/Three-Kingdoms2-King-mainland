@@ -2,7 +2,7 @@
 let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, mapPositions=null, setupPreview=null, cityLabels='major', dialogGeneration=0;
 let mapNavigation=null,mapCamera=null,mapCameraKey='',refreshRouteDialog=null,mapAction=null;
 let cloudSave=null,cloudSaveUI=null;
-let civilStaffUI=null,domesticUI=null,treasuryUI=null,facilitiesUI=null,cityDevelopmentUI=null;
+let civilStaffUI=null,domesticUI=null,treasuryUI=null,facilitiesUI=null,cityDevelopmentUI=null,diplomacyUI=null;
 let campaignDifficulty='normal';
 let allocationDialogContext=null,allocationCloseEpoch=0;
 let battleDestination=null,battleViewKey='';
@@ -245,7 +245,7 @@ function refreshDomesticButton(){
  const button=$('#faction-domestic');if(button)button.disabled=busy||!!setupPreview||view?.game?.phase!=='city'||!view?.catalog?.domestic?.factions?.[view?.game?.player]||!Object.values(view?.game?.cities||{}).some(c=>c.owner===view.game.player);
 }
 function setBusy(value){
- busy=value;refreshDomesticButton();refreshObserverControls();
+ busy=value;refreshDomesticButton();refreshDiplomacyButton();refreshObserverControls();
  document.body.classList.toggle('busy',value);
  if($('#city-jump'))$('#city-jump').disabled=value;
  $('#main-menu').disabled=value||!view?.game||!!setupPreview;
@@ -339,6 +339,7 @@ function selectFaction(){
  const scenarios=view.catalog.scenarios;
  const initial=scenarios.find(x=>x.id===current)||scenarios[0];
  $('#main-menu').disabled=true;$('#main-menu').setAttribute('aria-expanded','true');
+ if($('#faction-diplomacy'))$('#faction-diplomacy').disabled=true;
  if(dialog.open)dialog.close();
  const draw=(scenario)=>{
   const option=scenarios.find(x=>x.id===scenario);
@@ -658,6 +659,14 @@ function delegationInterface(){
  if(!domesticUI&&typeof GameDomestic!=='undefined')domesticUI=GameDomestic.create({getView:()=>view,cityName:id=>cityName(id),openDialog:(...args)=>openDialog(...args),command:(kind,payload)=>command(kind,payload),dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
  return domesticUI;
 }
+function diplomacyInterface(){
+ if(!diplomacyUI&&typeof GameDiplomacy!=='undefined')diplomacyUI=GameDiplomacy.create({getView:()=>view,cityName,factionName:faction,openDialog,command,dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
+ return diplomacyUI;
+}
+function refreshDiplomacyButton(){
+ const button=$('#faction-diplomacy');
+ if(button)button.disabled=!diplomacyInterface()?.canOpen();
+}
 function treasuryInterface(){
  if(!treasuryUI&&typeof GameTreasury!=='undefined')treasuryUI=GameTreasury.create({getView:()=>view,cityName:id=>cityName(id),openDialog:(...args)=>openDialog(...args),command:(kind,payload)=>command(kind,payload),dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
  return treasuryUI;
@@ -903,7 +912,7 @@ function marchSupplyHtml(s,history=[]){
  return `<span data-supply-loaded="${s.loaded}" data-supply-consumed="${s.consumed}" data-supply-remaining="${s.remaining}" data-supply-route-days="${route}" data-supply-waiting-days="${waiting}" data-supply-shortage="${streak}"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">本程隨軍糧：初裝${s.loaded} · 途中補給${received} · 已耗${s.consumed} · 剩餘${s.remaining}<br>前進${route}日 · 等待${waiting}日 · 缺糧${shortage}日（連續${streak}日） · 斷糧減員${lost}${s.retreat_requested?' · 已觸發撤退':''}${history.length?`<br>往返累計耗糧${total.consumed} · 斷糧減員${total.lost}`:''}</span><span data-locale-only="ja" data-l10n-native="ja" hidden>現在の行程の兵糧：初期積載${s.loaded}・途中補給${received}・消費${s.consumed}・残り${s.remaining}<br>前進${route}日・待機${waiting}日・食糧不足${shortage}日（連続${streak}日）・飢餓損耗${lost}${s.retreat_requested?'・撤退が発動':''}${history.length?`<br>往復の累計消費${total.consumed}・飢餓損耗${total.lost}`:''}</span></span>`;
 }
 function marchSupplyRuleHtml(){
- return '<p class="small"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">出發只預裝至下一座本方城的口糧，途中依友城庫存補給；沒有友城則預裝全程。等待也每日耗糧，缺糧會暫停前進並每日損兵1%，連續10日於旬末撤退。可從本方城派運輸隊向在途部隊送糧。兵糧按兵數、隨行人數與實際日數累計取整。</span><span data-locale-only="ja" data-l10n-native="ja" hidden>次の自勢力都市までの兵糧を積み、途中は友軍都市の在庫から補給します。友軍都市がなければ全行程分を積みます。待機中も毎日消費し、不足時は前進を止め、1日1%の兵を失います。10日連続で不足すると旬末に撤退します。自勢力の都市から行軍部隊へ兵糧を届けられます。兵数・同行人数・実際の日数に基づき累計で切り上げます。</span></p>';
+ return '<p class="small"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">出發只預裝至下一座本方城的口糧，途中由本方城池補給；沿途沒有本方城池時預裝全程。等待也每日耗糧，缺糧會暫停前進並每日損兵1%，連續10日於旬末撤退。可從本方城派運輸隊向在途部隊送糧。兵糧按兵數、隨行人數與實際日數累計取整。</span><span data-locale-only="ja" data-l10n-native="ja" hidden>次の自勢力都市までの兵糧を積み、途中は自勢力の都市から補給します。経由地に自勢力の都市がなければ全行程分を積みます。待機中も毎日消費し、不足時は前進を止め、1日1%の兵を失います。10日連続で不足すると旬末に撤退します。自勢力の都市から行軍部隊へ兵糧を届けられます。兵数・同行人数・実際の日数に基づき累計で切り上げます。</span></p>';
 }
 function marchGrain(ids,quote){return GameMarchSupply.estimate(view.game.officers,ids,quote,0,view.game.cities,view.game.cities[quote.path?.[0]]?.owner??view.game.player);}
 function departureBudget(city,destination,ids){
@@ -980,7 +989,7 @@ function recruitOfficer(city,targetCity=null){
 function transferCity(city){
  const destinations=Object.values(view.game.cities).filter(c=>c.id!==city.id&&c.owner===view.game.player);
  if(!destinations.length)return notice('没有其他本方城池可接收武将。');
- const introduction=view.catalog.travel_rules?`<p><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">可經相通的本方城池及無主城調任，不能穿越敵城。目的城須屬本方，上限${capacity()}人；使用全勢力共用命令書。</span><span data-locale-only="ja" data-l10n-native="ja" hidden>自勢力の都市と空白都市を経由して移動できます。敵都市は通過できません。目的都市は自勢力、定員${capacity()}人まで。勢力全体で共有する命令書を使います。</span></p>${marchSupplyRuleHtml()}`:`<p>可经过相通的本方城池及无主城，不能穿过敌城；目的城必须属本方。费用为每人每段道路5粮。使用全势力共用命令书，目的城仍最多${capacity()}人。</p>`;
+ const introduction=view.catalog.travel_rules?`<p><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">可經相通的本方城池、無主城和同盟領地調任。目的城須屬本方，上限${capacity()}人；使用全勢力共用命令書。</span><span data-locale-only="ja" data-l10n-native="ja" hidden>自勢力の都市、空白都市、同盟領を経由して移動できます。目的都市は自勢力、定員${capacity()}人まで。勢力全体で共有する命令書を使います。</span></p>${marchSupplyRuleHtml()}`:`<p>可经过相通的本方城池及无主城，不能穿过敌城；目的城必须属本方。费用为每人每段道路5粮。使用全势力共用命令书，目的城仍最多${capacity()}人。</p>`;
  openDialog('调动武将',`${introduction}${commandBookHint('transfer')}${view.catalog.travel_rules?routeModeSelect()+'<div id="transfer-estimate"></div><p id="transfer-supply"></p>':''}<label class="field">目的城<select id="transfer-city">${destinations.map(c=>`<option value="${c.id}">${escapeHtml(cityName(c.id))} · ${cityOccupancy(c)}/${capacity()}人</option>`).join('')}</select></label><div class="selection-status"><p id="transfer-count" role="status" aria-live="polite"></p><p class="small" id="transfer-reason"></p></div><div class="officer-picker">${sortedOfficers(city.roster.officer_ids).map(i=>`<label><input type="checkbox" name="transfer-officer" value="${i}" ${officerUnavailable(i)?'disabled':''}>${escapeHtml(officerChoiceText(i,{loyalty:true}))}</label>`).join('')}</div>`,'<button data-cancel>取消</button><button id="confirm-transfer" class="primary">确认调动</button>');
  let selection,updating=false,limit=0,quote=null;
  const updateEstimate=()=>{
@@ -1007,7 +1016,7 @@ function transferCity(city){
 }
 // Classify actual runtime entry before consulting immutable opening plans.
 function libraryEntryStatus(p){
- if(p.alive===true)return p.faction?'serving':'free';
+ if(p.alive===true)return p.prisoner?'captive':p.faction?'serving':'free';
  if(p.alive===false||p.year_state==='dead')return 'retired';
  if(p.year_state==='not_born'||p.year_state==='not_appeared')return p.year_state;
  if(p.missing.length)return 'missing';
@@ -1016,7 +1025,7 @@ function libraryEntryStatus(p){
  return p.year_state==='unknown'?'unknown':'unentered';
 }
 function libraryEntryCounts(people){
- const counts={serving:0,free:0,not_born:0,not_appeared:0,retired:0,death_review:0,pending_history:0,pending_capacity:0,pending_faction:0,scenario_excluded:0,missing:0,unknown:0,unentered:0};
+ const counts={serving:0,free:0,captive:0,not_born:0,not_appeared:0,retired:0,death_review:0,pending_history:0,pending_capacity:0,pending_faction:0,scenario_excluded:0,missing:0,unknown:0,unentered:0};
  for(const p of people)counts[libraryEntryStatus(p)]++;
  return counts;
 }
@@ -1033,7 +1042,7 @@ function libraryFilterMatches(p,filter,player=null){
  const status=libraryEntryStatus(p);
  if(filter==='all')return true;
  if(filter==='own')return !!player&&p.alive===true&&p.faction===player;
- if(filter==='unentered')return !['serving','free','retired'].includes(status);
+ if(filter==='unentered')return !['serving','free','captive','retired'].includes(status);
  return ['serving','free','retired'].includes(filter)&&status===filter;
 }
 function refreshLibraryEntryLabels(){
@@ -1048,13 +1057,14 @@ function refreshLibraryEntryLabels(){
 }
 function libraryEntrySummary(people,game){
  if(!game)return '<div class="small" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">尚未開始戰役。總人物庫與開局規劃不等於實際駐城；開始後可查看本局在籍與在野人數。</div><div class="small" data-locale-only="ja" data-l10n-native="ja">戦役はまだ始まっていません。人物総数と開始時の配置計画は、実際の所属人数とは異なります。開始後に仕官中・在野の人数を確認できます。</div>';
- const c=libraryEntryCounts(people),actual=c.serving+c.free,other=c.missing+c.unknown+c.unentered;
- return `<div class="library-entry-summary" data-locale-only="zh-Hant" data-l10n-native="zh-Hant"><p>${game.year}年${game.month}月本局：在籍 <strong data-entry-count="serving">${c.serving}</strong> 人，在野 <strong data-entry-count="free">${c.free}</strong> 人；已登場 ${actual}／總庫 ${people.length} 人。</p><p class="small">未出生 ${c.not_born}、未出仕 ${c.not_appeared}、已退出／過卒年 ${c.retired}、卒年待核 ${c.death_review}；歸屬待考 ${c.pending_history}、勢力待配置 ${c.pending_faction}、容量不足 ${c.pending_capacity}、劇本排除 ${c.scenario_excluded}、其他未入局 ${other}。</p><p class="small">在籍包含行軍中的武將；在野者有所在地，但不佔城內名冊。待考或容量不足者不計入各城在籍，開局規劃不代表已經安置。</p></div><div class="library-entry-summary" data-locale-only="ja" data-l10n-native="ja"><p>${game.year}年${game.month}月の戦役：仕官中 <strong data-entry-count="serving">${c.serving}</strong> 人、在野 <strong data-entry-count="free">${c.free}</strong> 人。登場済み ${actual}／人物総数 ${people.length} 人。</p><p class="small">未出生 ${c.not_born}、登場前 ${c.not_appeared}、退場・没年経過 ${c.retired}、没年要確認 ${c.death_review}。所属未確定 ${c.pending_history}、勢力未設定 ${c.pending_faction}、定員不足 ${c.pending_capacity}、シナリオ対象外 ${c.scenario_excluded}、その他未登場 ${other}。</p><p class="small">仕官中には行軍中の武将も含みます。在野武将には現在地がありますが、都市の所属名簿には入りません。所属未確定・定員不足の人物は都市の人数に含めず、開始時の計画を実際の配置とはみなしません。</p></div>`;
+ const c=libraryEntryCounts(people),actual=c.serving+c.free+c.captive,other=c.missing+c.unknown+c.unentered;
+ return `<div class="library-entry-summary" data-locale-only="zh-Hant" data-l10n-native="zh-Hant"><p>${game.year}年${game.month}月本局：在籍 <strong data-entry-count="serving">${c.serving}</strong> 人，在野 <strong data-entry-count="free">${c.free}</strong> 人${c.captive?`，俘虜 ${c.captive} 人`: ''}；已登場 ${actual}／總庫 ${people.length} 人。</p><p class="small">未出生 ${c.not_born}、未出仕 ${c.not_appeared}、已退出／過卒年 ${c.retired}、卒年待核 ${c.death_review}；歸屬待考 ${c.pending_history}、勢力待配置 ${c.pending_faction}、容量不足 ${c.pending_capacity}、劇本排除 ${c.scenario_excluded}、其他未入局 ${other}。</p><p class="small">在籍包含行軍中的武將；在野者有所在地，但不佔城內名冊。待考或容量不足者不計入各城在籍，開局規劃不代表已經安置。</p></div><div class="library-entry-summary" data-locale-only="ja" data-l10n-native="ja"><p>${game.year}年${game.month}月の戦役：仕官中 <strong data-entry-count="serving">${c.serving}</strong> 人、在野 <strong data-entry-count="free">${c.free}</strong> 人${c.captive?`、捕虜 ${c.captive} 人`: ''}。登場済み ${actual}／人物総数 ${people.length} 人。</p><p class="small">未出生 ${c.not_born}、登場前 ${c.not_appeared}、退場・没年経過 ${c.retired}、没年要確認 ${c.death_review}。所属未確定 ${c.pending_history}、勢力未設定 ${c.pending_faction}、定員不足 ${c.pending_capacity}、シナリオ対象外 ${c.scenario_excluded}、その他未登場 ${other}。</p><p class="small">仕官中には行軍中の武将も含みます。在野武将には現在地がありますが、都市の所属名簿には入りません。所属未確定・定員不足の人物は都市の人数に含めず、開始時の計画を実際の配置とはみなしません。</p></div>`;
 }
 document.addEventListener('game-language-change',refreshLibraryEntryLabels);
 function personStatus(p){
  if(p.missing.length)return '待补：'+p.missing.map(k=>({health_max:'体力',martial_strength:'武',intellect:'知',virtue:'德',terrain_affinity:'适性'})[k]).join('、');
  if(p.alive===false)return '已退出';
+ if(p.prisoner)return battleText('俘虜','捕虜')+' · '+escapeHtml(cityName(p.prisoner.city));
  if(p.alive)return p.faction?escapeHtml(faction(p.faction)):'在野 · '+escapeHtml(cityName(p.location));
  const labels={not_born:'未出生',not_appeared:'未出仕',available:'年代合格',death_year_review:'卒年待核',dead:'已过卒年',unknown:'年代待核'};
  if(['not_born','not_appeared','dead'].includes(p.year_state))return labels[p.year_state];
@@ -1441,7 +1451,7 @@ function render(){
  $('#save').disabled=!game;
  $('#restart').disabled=!game;
  $('#main-menu').disabled=busy||!game||!!setupPreview;
- $('#main-menu').setAttribute('aria-expanded',String(!!setupPreview));refreshDomesticButton();
+ $('#main-menu').setAttribute('aria-expanded',String(!!setupPreview));refreshDomesticButton();refreshDiplomacyButton();
  cloudSaveUI?.refreshButton();
  $('#date').textContent=game?`${GameCalendar.text(game)}　第${game.turn}回合 · 1旬10日 · ${difficultyName(game.extension?.difficulty)}`:'选择势力';
  if(!game){renderMap();selectFaction();return;}
@@ -1479,6 +1489,7 @@ $('#audio-settings').onclick=()=>{
 };
 $('#main-menu').onclick=()=>{if(!busy)selectFaction();};
 $('#faction-domestic').onclick=()=>delegationInterface()?.open(null,'domestic');
+$('#faction-diplomacy')?.addEventListener('click',()=>diplomacyInterface()?.open());
 $('#restart').onclick=()=>selectFaction();
 $('#save').onclick=async()=>{
  if(busy)return;

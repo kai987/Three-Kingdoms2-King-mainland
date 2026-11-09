@@ -53,6 +53,7 @@ const makeView=revision=>({revision,catalog:{scenario_id:'same-catalog',travel_r
  await routeAdapter.update(orderOnly);assert.equal(routeWorker.sent.filter(row=>row.request.op==='batch').length,1,'Equivalent city/discovery ordering does not repeat a batch');assert.equal(JSON.stringify(orderOnly),orderBefore,'Canonical cache keys never reorder the supplied game state');
  const changes=[
   ['year',view=>{view.game.year=218;}],['month',view=>{view.game.month=8;}],['ownership',view=>{view.game.cities.b.owner='neutral';}],
+  ['allied transit',view=>{view.catalog.non_aggression=[['shu','wei']];}],
   ['city opening',view=>{view.game.cities.c={id:'c',owner:'shu'};}],['city removal',view=>{delete view.game.cities.b;}],
   ['discovered route',view=>{view.game.extension.travel.discovered.push('new-sea-route');}],
   ['player',view=>{view.game.player='wei';}],['geometry',view=>{view.catalog.travel_rules.geometry_sha256='new-geometry';}],
@@ -61,6 +62,7 @@ const makeView=revision=>({revision,catalog:{scenario_id:'same-catalog',travel_r
  for(const [reason,change]of changes){
   const changed=JSON.parse(JSON.stringify(routeBase));change(changed);const immutable=JSON.stringify(changed),count=routeWorker.sent.filter(row=>row.request.op==='batch').length;
   await routeAdapter.update(changed);assert.equal(routeWorker.sent.filter(row=>row.request.op==='batch').length,count+1,reason+' recalculates routes');assert.deepEqual(routeAdapter.quotesFor(changed),{});assert.equal(routeAdapter.quotesFor(routeBase),null);assert.equal(JSON.stringify(changed),immutable,reason+' leaves the game and RNG unchanged');
+  if(reason==='allied transit')assert.equal(routeWorker.sent.at(-1).request.cities.find(city=>city.id==='b').owner,'neutral','Allies are projected as pass-through nodes only in the worker request');
  }
  assert.equal(routeUrls.length,3,'Months, ownership, active cities, discoveries and players reuse their immutable graph; new geometry/scenarios register new graphs');
  const cachedWorker=new AutoWorker(),cached=createMarchCore({workerFactory:()=>cachedWorker,fetcher:async()=>({ok:true,json:async()=>({})})});

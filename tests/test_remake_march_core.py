@@ -22,7 +22,7 @@ from remake.errors import GameError
 from remake.march_core import CoreUnavailable, config_for, invoke, using_backend
 from remake.route_hazards import allocate_survivors, evaluate_leg, route_allowed
 from remake.travel import TravelCampaign
-from campaign_fixtures import pre_relationship_opening, pre_city_development_opening
+from campaign_fixtures import pre_relationship_opening, pre_city_development_opening, pre_civil_staff_profile
 
 CASES = [
     ('plain', 'shu', 'jiameng', 'fuxian', 'fastest', 7),
@@ -78,6 +78,7 @@ def campaign_fixture(case):
     return game
 
 
+@pre_civil_staff_profile()
 @pre_city_development_opening()
 @patch.object(historical_campaigns, 'RULES', {
     kind: rule for kind, rule in historical_campaigns.RULES.items()
@@ -88,8 +89,8 @@ def campaign_result(case, alternate_backend=None, *, legacy_catalog_sha256=None)
 
     Every case is a friendly transfer: no battle budget or battle service is
     disabled. The old full-save artifact predates city development state and
-    the two Hanzhong calendar milestones in this 217 opening. The separate
-    natural campaign replay exercises the live scenario with both enabled.
+    the two Hanzhong calendar milestones in this 217 opening. It also used
+    the original civil-staff profiles. The natural replay uses current rules.
     """
     name, side, source, target, mode, month = case
     game = campaign_fixture(case)

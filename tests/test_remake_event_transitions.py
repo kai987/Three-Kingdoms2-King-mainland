@@ -268,7 +268,7 @@ class CampaignEventTransitionTests(unittest.TestCase):
         self.assertIn(ident, game.state.cities['hepu'].roster.officer_ids)
         game.validate(game.state)
 
-    def test_captured_island_starts_real_reverse_voyage_without_discovering_or_teleporting(self):
+    def test_captured_island_settles_outbound_weather_before_real_reverse_voyage(self):
         game, ident, march = self.sailing()
         # Controlled ownership change after departure: move the existing friendly
         # residents out intact, then use the actual arrival invalidation branch.
@@ -286,11 +286,16 @@ class CampaignEventTransitionTests(unittest.TestCase):
         city_development.synchronize(game, game.state)
         game.validate(game.state)
         before_troops = game.state.officers[ident].troops
+        before_lost = game.state.soldiers['lost']
         before_rng = deepcopy(game.state.rng)
+        risk, = march['risks']
+        survivors = before_troops * risk['survival_numerator'] // risk['survival_denominator']
         game.command('arrivals', {}, game.revision)
-        self.assertEqual(game.state.officers[ident].troops, before_troops)
+        self.assertGreater(survivors, 0)
+        self.assertEqual(game.state.officers[ident].troops, survivors)
+        self.assertEqual(game.state.soldiers['lost'] - before_lost, before_troops - survivors)
         self.assertEqual(game.state.rng.draws,before_rng.draws+1,
-            'The new return voyage owns its normal monsoon roll; the original weather is not applied')
+            'The return voyage draws once; completed outbound weather uses its existing roll')
         self.assertFalse(events(game, 'march_returned'),'An island changing ownership does not instantly return its officers to the origin')
         returning=game.state.extension['travel']['marches'][0]
         self.assertEqual(returning['id'],march['id'])
@@ -304,14 +309,19 @@ class CampaignEventTransitionTests(unittest.TestCase):
         self.assertEqual(returning['supply']['route_days'],0)
         self.assertIn(ident,game._march_ids(game.state),'A returning officer remains physically in transit')
         self.assertEqual(len(returning['history']),1)
-        self.assertFalse(any(risk['applied'] for risk in returning['history'][0]['risks']))
+        outbound_risk, = returning['history'][0]['risks']
+        self.assertTrue(outbound_risk['applied'])
+        self.assertEqual(outbound_risk['before'], {str(ident): before_troops})
+        self.assertEqual(outbound_risk['after'], {str(ident): survivors})
         self.assertFalse(any(risk['applied'] for risk in returning['risks']))
         retreat=events(game,'march_retreat')
         self.assertEqual(len(retreat),1)
         self.assertEqual(retreat[0]['details'],dict(unit_kind='march',unit_id=march['id'],
             grain=0,lost=0,shortage_days=0,reason='target_changed'))
         self.assertEqual(retreat[0]['city_ids'],['hepu'])
-        self.assertFalse(events(game, 'march_weather'))
+        weather, = events(game, 'march_weather')
+        self.assertEqual(weather['city_ids'], ['hepu', 'yizhou'])
+        self.assertEqual(weather['details']['lost'], before_troops - survivors)
         self.assertFalse(events(game, 'route_discovered'))
         self.assertFalse(events(game, 'march_arrived'))
         game.validate(game.state)
