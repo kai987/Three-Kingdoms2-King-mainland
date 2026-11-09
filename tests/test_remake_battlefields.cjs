@@ -99,5 +99,5 @@ const response=value=>({ok:true,text:async()=>JSON.stringify(value)});
  assert.equal(stalled.status,'unavailable');
  await new Promise(resolve=>setTimeout(resolve,15));
  assert(signals.every(signal=>signal?.aborted),'Timed-out metadata requests must be aborted');
- console.log('battlefield bindings:115 explicit city choices, honest source labels, full-grid/path validation, immutable deterministic selection, two metadata reads/no image preload, bilingual labels and bounded failure passed');
+ console.log(`battlefield bindings: ${bindings.city_count} explicit city choices, honest source labels, full-grid/path validation, immutable deterministic selection, two metadata reads/no image preload, bilingual labels and bounded failure passed`);
 })().catch(error=>{console.error(error);process.exitCode=1;});

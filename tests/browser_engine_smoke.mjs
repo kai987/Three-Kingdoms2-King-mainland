@@ -146,7 +146,7 @@ def _tk2_response_semantic(body):
 from remake.tactical_ai import _learnability as _battle_learnability
 json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
             'special_people':len(_battle_learnability()[1])})`));
- assert.deepEqual(tacticalData,{maps:30,cities:115,special_people:21},
+ assert.deepEqual(tacticalData,{maps:30,cities:126,special_people:21},
   'Actual WebAssembly loads the same original battlefield and tactic tables as native Python');
  createBridge('primary');createBridge('isolated');
  const isolatedMenu=state('isolated');

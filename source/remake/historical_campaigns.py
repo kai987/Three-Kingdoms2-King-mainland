@@ -59,7 +59,7 @@ RULES = {
                (('hongnong', 'wei'), ('jingzhao', 'wei'), ('fengyi', 'ma_teng'),
                 ('fufeng', 'ma_teng'), ('jincheng', 'han_sui'))),
     YILING: ((221, 7), (222, 6), ('shu', 'wu'), YILING_FRONT),
-    HEFEI: ((215, 8), (215, 10), ('wu', 'wei'), (('jiujiang', 'wei'),)),
+    HEFEI: ((215, 8), (215, 10), ('wu', 'wei'), (('hefei', 'wei'),)),
     HANZHONG_PREPARATION: ((217, 7), (217, 12), ('shu', 'wei'), HANZHONG_HOLDINGS),
     HANZHONG: ((218, 1), (219, 5), ('shu', 'wei'), HANZHONG_HOLDINGS),
     NANZHONG: ((225, 3), (225, 9), ('shu', 'nanman'),
@@ -84,7 +84,7 @@ REQUIRED_OFFICERS = {
 # The first side is the attacking faction. A connected, still-held approach
 # is enough to start the event, even if another approach changed hands.
 FRONTS = {
-    HEFEI: (('danyang', 'lujiang'), ('jiujiang',)),
+    HEFEI: (('danyang', 'lujiang'), ('hefei',)),
     HANZHONG_PREPARATION: (('zitong', 'baxi', 'jiameng'), ('hanzhong',)),
     HANZHONG: (('zitong', 'baxi', 'jiameng'), ('hanzhong',)),
     NANZHONG: (('zhuti', 'yuexi', 'yongchang', 'fuling', 'bajun'), ('jianning', 'zangke', 'yunnan')),
@@ -96,7 +96,7 @@ FRONT_PRIORITIES = (HEFEI, HANZHONG, NANZHONG, LIAODONG,
 FIRST_EVENT_YEAR = min(start[0] for start, _, _, _ in RULES.values())
 LAST_EVENT_YEAR = max(end[0] for _, end, _, _ in RULES.values())
 BATTLE_STAGES = {
-    HEFEI_DEFENSE: (HEFEI, RULES[HEFEI][:2], 'jiujiang', None, ZHANG_LIAO),
+    HEFEI_DEFENSE: (HEFEI, RULES[HEFEI][:2], 'hefei', None, ZHANG_LIAO),
     DINGJUN: (HANZHONG, ((219, 1), (219, 5)), 'hanzhong', HUANG_ZHONG, XIAHOU_YUAN),
 }
 EVENT_FACTIONS = {kind: factions[:2] if kind == ALLIANCE else factions
@@ -110,8 +110,8 @@ EVENT_CITIES = {
     SOUTH: ('nanjun', 'jiangxia', 'wujun'),
     TONGGUAN: ('hongnong', 'fengyi', 'jingzhao', 'fufeng', 'jincheng'),
     YILING: ('badong', 'yidu', 'nanjun'),
-    HEFEI: ('danyang', 'lujiang', 'jiujiang'),
-    HEFEI_DEFENSE: ('jiujiang',),
+    HEFEI: ('danyang', 'lujiang', 'hefei'),
+    HEFEI_DEFENSE: ('hefei',),
     HANZHONG_PREPARATION: ('zitong', 'baxi', 'hanzhong'),
     HANZHONG: ('zitong', 'baxi', 'hanzhong'),
     DINGJUN: ('hanzhong',),
@@ -137,8 +137,8 @@ NOTES = {
     TONGGUAN: '曹操西征，马超、韩遂在关中联合抗曹。',
     YILING: '刘备准备东征，战事由实际行军和交战决定。',
     ALLIANCE_ENDED: '荆州局势生变，孙刘同盟解除。',
-    HEFEI: '孙权准备进兵合淝，地图以寿春代表此战区。',
-    HEFEI_DEFENSE: '吴军抵达寿春战区，张辽随守军迎战。',
+    HEFEI: '孙权准备进兵合淝，诸军筹粮待发。',
+    HEFEI_DEFENSE: '吴军抵达合肥，张辽随守军迎战。',
     HANZHONG_PREPARATION: '法正向刘备献策，蜀军筹备争夺汉中。',
     HANZHONG: '刘备筹划进兵汉中，魏军据守汉中。',
     DINGJUN: '黄忠和夏侯渊在汉中战场交锋。',

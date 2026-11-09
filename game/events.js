@@ -302,7 +302,7 @@
   const d=row.details,domestic=row.kind==='domestic_report',fields=domestic?['gold','grain','reserves','morale','cities','reason']:['convoy_id','gold','grain','reserves','treasure','lost','reason'];
   if(Object.keys(d).some(key=>!fields.includes(key))||fields.some(key=>!Object.hasOwn(d,key))||typeof d.reason!=='string'||!/^[a-z_]{1,80}$/.test(d.reason))return false;
   for(const key of fields)if(key!=='reason'&&(!Number.isInteger(d[key])||d[key]<0||d[key]>100000000))return false;
-  return domestic?['turn','month'].includes(d.reason)&&d.morale<=11500&&d.cities>=1&&d.cities<=115:d.convoy_id>=1&&d.treasure<=99;
+  return domestic?['turn','month'].includes(d.reason)&&d.morale<=12600&&d.cities>=1&&d.cities<=126:d.convoy_id>=1&&d.treasure<=99;
  }
  function validStaffEvent(row){
   const d=row.details,allowed=['staff_id','name','portrait','reason','amount','paid','bonus','counts'];
@@ -315,7 +315,7 @@
   if(Object.hasOwn(d,'reason')&&(typeof d.reason!=='string'||!/^[a-z_]{1,80}$/.test(d.reason)))return false;
   for(const k of ['amount','paid'])if(Object.hasOwn(d,k)&&(!Number.isInteger(d[k])||d[k]<0||d[k]>100000000))return false;
   if(Object.hasOwn(d,'bonus')&&(!d.bonus||typeof d.bonus!=='object'||Array.isArray(d.bonus)||Object.keys(d.bonus).sort().join(',')!=='gold,grain,reserves'||Object.values(d.bonus).some(n=>!Number.isInteger(n)||n<0||n>100000000)))return false;
-  if(Object.hasOwn(d,'counts')&&(!d.counts||typeof d.counts!=='object'||Array.isArray(d.counts)||Object.keys(d.counts).sort().join(',')!=='cities,staff,total_unpaid'||!Number.isInteger(d.counts.staff)||d.counts.staff<1||d.counts.staff>11385||!Number.isInteger(d.counts.cities)||d.counts.cities<1||d.counts.cities>115||d.counts.staff<d.counts.cities||d.counts.staff>d.counts.cities*99||!Number.isInteger(d.counts.total_unpaid)||d.counts.total_unpaid<0||d.counts.total_unpaid>d.counts.staff))return false;
+  if(Object.hasOwn(d,'counts')&&(!d.counts||typeof d.counts!=='object'||Array.isArray(d.counts)||Object.keys(d.counts).sort().join(',')!=='cities,staff,total_unpaid'||!Number.isInteger(d.counts.staff)||d.counts.staff<1||!Number.isInteger(d.counts.cities)||d.counts.cities<1||d.counts.cities>126||d.counts.staff<d.counts.cities||d.counts.staff>d.counts.cities*99||!Number.isInteger(d.counts.total_unpaid)||d.counts.total_unpaid<0||d.counts.total_unpaid>d.counts.staff))return false;
   return row.kind!=='staff_salary'||d.paid<=d.amount&&d.amount===d.counts.staff*5&&d.paid%5===0&&d.counts.total_unpaid===d.counts.staff-d.paid/5;
  }
  function campaignKey(view){return view?.game?JSON.stringify([view.catalog?.scenario_id||view.catalog?.title||'',view.game.seed,view.game.player]):null;}
@@ -425,11 +425,11 @@
     case 'historical_sun_liu_alliance_ended':return text('荊州局勢生變，孫權與劉備解除盟約。雙方可再次對彼此下達軍事命令，既有城池歸屬與部隊兵力依當前戰局保留。','荊州の情勢が変わり、孫権と劉備の同盟が解消されました。双方は互いに軍事行動を取れるようになります。都市の支配と各部隊の兵力は、現在の戦況を引き継ぎます。');
     case 'historical_yiling':return text('劉備與孫權因荊州之爭在夷陵一帶開戰。劉備由電腦操控時，會優先評估向孫權出征。玩家自行決定是否發兵。各軍備糧後沿實際路線前進，戰果由交戰結果決定。','荊州をめぐる対立から、劉備と孫権の間で夷陵の戦いが始まりました。AIが劉備軍を操作する場合は、孫権軍への出陣を優先して検討します。プレイヤーは派兵するかどうかを決めます。部隊は兵糧を携えて実際の経路を進み、戦果は交戦の結果で決まります。');
     case 'historical_hefei':return text(
-     '孫權準備北攻合淝。本作以地圖上的壽春代理合淝戰區，史實上的壽春與合淝是兩座城。孫權軍的電腦將優先考慮攻向壽春，玩家自行下令。部隊須備糧並走完實際路線。',
-     '孫権が合肥への進攻を準備します。本作では地図上の寿春を合肥戦域の代替拠点とします。史実の寿春と合肥は別の都市です。孫権軍のAIは寿春への進攻を優先し、プレイヤーは自分で出陣を命じます。部隊は兵糧を携えて実際の経路を進みます。');
+     '孫權準備北攻合淝。孫權軍的電腦將優先考慮攻向合肥，玩家自行下令。部隊須備糧並走完實際路線。',
+     '孫権が合肥への進攻を準備します。孫権軍のAIは合肥への進攻を優先し、プレイヤーは自分で出陣を命じます。部隊は兵糧を携えて実際の経路を進みます。');
     case 'historical_hefei_defense':return text(
-     '孫權軍抵達壽春，張遼迎戰。本作以壽春代理合淝戰區，史實上的壽春與合淝是兩座城。守軍按實際在場的兵力應戰，勝負依本場戰鬥結算。',
-     '孫権軍が寿春に到着し、張遼が迎え撃ちます。本作では寿春を合肥戦域の代替拠点とします。史実の寿春と合肥は別の都市です。守備側はその場の兵力で応戦し、勝敗は実際の戦闘で決まります。');
+     '孫權軍抵達合肥，張遼迎戰。守軍按實際在場的兵力應戰，勝負依本場戰鬥結算。',
+     '孫権軍が合肥に到着し、張遼が迎え撃ちます。守備側はその場の兵力で応戦し、勝敗は実際の戦闘で決まります。');
     case 'historical_hanzhong_preparation':return text(
      '法正勸劉備奪取漢中。曹操仍控制漢中，劉備可從蜀北據點籌措兵糧、集結部隊。這一階段是備戰，出征須另行下令。',
      '法正が劉備に漢中攻略を進言します。漢中はなお曹操の支配下にあり、劉備は蜀北の拠点で兵糧を整え、部隊を集められます。ここでは準備に入り、出陣には別途命令が必要です。');

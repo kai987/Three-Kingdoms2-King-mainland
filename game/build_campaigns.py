@@ -6,6 +6,7 @@ object differences; lists keep their source order. No earlier generated catalog,
 network service, ROM or player save is an input.
 """
 from copy import deepcopy
+from collections import Counter
 from pathlib import Path
 import argparse
 import json
@@ -18,7 +19,7 @@ from hashlib import sha256
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'source'))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools/officer-placement'))
-from remake.city_economy import apply_opening_sizes
+from remake.city_economy import TIER_LABELS, TIER_MULTIPLIERS, apply_opening_sizes
 from remake.treasures import RULES as TREASURY_RULES
 from remake.facilities import RULES as FACILITY_RULES
 from remake.equipment import RULES as EQUIPMENT_RULES, build_initials
@@ -33,6 +34,30 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'game/config/campaigns'
 OUTPUT = ROOT / 'game/data/campaigns'
 SCENARIO_FILE = re.compile(r'scenarios/(?P<date>[0-9]{3}-[0-9]{2})(?:-(?P<variant>[a-z][a-z0-9]*(?:-[a-z0-9]+)*))?\.json\Z')
+# The original raster still uses the 115 centers in shared.json. These cities
+# are drawn by the same live sprite renderer at separately reviewed centers.
+EXPANSION_CITIES = {
+    'hefei': ('合肥', 'jiujiang'),
+    'guangling': ('广陵', 'xiapi'),
+    'chaisang': ('柴桑', 'yuzhang'),
+    'xicheng': ('西城', 'hanzhong'),
+    'shangyong': ('上庸', 'xincheng'),
+    'yiling': ('夷陵', 'nanjun'),
+    'changli': ('昌黎', 'liaodong'),
+    'pingyang': ('平阳', 'hedong'),
+    'hengyang': ('衡阳', 'changsha'),
+    'xiangdong': ('湘东', 'changsha'),
+    'jianping': ('建平', 'yidu'),
+}
+HAN_ANNALS = 'https://zh.wikisource.org/wiki/三國志/卷04'
+WU_ANNALS = 'https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnux22fnsn_304'
+EXPANSION_FOUNDINGS = {
+    'changli': (244, 9, 'attested_annal_month', '曹魏於244年九月立昌黎縣。', HAN_ANNALS),
+    'pingyang': (247, 5, 'attested_annal_month', '平陽為舊縣，247年五月曹魏分河東設郡，本作按立郡開放。', HAN_ANNALS),
+    'hengyang': (257, 2, 'attested_annal_month', '孫吳於257年二月分長沙西部置衡陽郡，治湘南。', WU_ANNALS),
+    'xiangdong': (257, 2, 'attested_annal_month', '孫吳於257年二月分長沙東部置湘東郡，治酃縣。', WU_ANNALS),
+    'jianping': (260, 1, 'attested_year_game_month', '孫吳260年分宜都置郡；史料未載確月，本作以1月為年界。', 'https://zh.wikisource.org/wiki/宋書/卷37'),
+}
 
 
 def read(path):
@@ -74,6 +99,93 @@ def apply_patch(base, patch):
             raise ValueError('Updating unknown campaign dictionary: ' + str(key))
         result[key] = apply_patch(result[key], child)
     return result
+
+
+def apply_city_expansion(data, locations, opening, notes, people_by_id):
+    """Append reviewed cities without editing the inherited map or IF overrides."""
+    date = data['start_year'], data['start_month']
+    for city_id, (name, parent) in EXPANSION_CITIES.items():
+        loc = locations[city_id]
+        data['cities'].append(dict(id=city_id, name=name, position=loc['position'], terrain=loc['terrain']))
+        data['city_coordinates'][city_id] = loc['coordinates']
+        history = data['city_history'].setdefault(city_id, {})
+        history.setdefault('detail', notes[city_id]['basis'])
+        history['sources'] = list(dict.fromkeys([*history.get('sources', []), *notes[city_id]['sources']]))
+        data['added_city_ids'].append(city_id)
+        profile = deepcopy(data['city_profiles'][parent])
+        parent_scale = TIER_MULTIPLIERS[profile['tier']]
+        profile.update(tier='normal', label=TIER_LABELS['normal'], reference_income=None,
+                       basis='historical_city_expansion_regional_balance',
+                       is_SAN14_starting_resources=False, economy_source_ids=[])
+        for key in ('tier_basis', 'tier_date_precision'):
+            profile.pop(key, None)
+        data['city_profiles'][city_id] = profile
+        data['initial_city_resources'][city_id] = {
+            field: value // (2 * parent_scale)
+            for field, value in data['initial_city_resources'][parent].items()}
+        data['city_income'][city_id] = {
+            field: value // parent_scale for field, value in data['city_income'][parent].items()}
+        if city_id in EXPANSION_FOUNDINGS:
+            year, month, precision, note, source = EXPANSION_FOUNDINGS[city_id]
+            data['city_foundings'][city_id] = dict(
+                year=year, month=month, parent=parent, resource_divisor=4, precision=precision,
+                date_note=note, source=source)
+            if date < (year, month):
+                continue
+        data['active_cities'].append(city_id)
+
+    new_active = set(EXPANSION_CITIES) & set(data['active_cities'])
+    owners, garrisons = opening['owners'], opening['garrisons']
+    factions = {row['id']: row for row in data['factions']}
+    if set(owners) != new_active or set(garrisons) != new_active or set(owners.values()) - (set(factions) | {'neutral'}):
+        raise ValueError(f'{data["id"]}: expansion opening does not match active cities/factions')
+    data['initial_owners'].update(owners)
+    data['city_count'] = len(data['cities'])
+    officers = {row['person_id']: row for row in data['initial_officers']}
+    moves = opening.get('transfers', {})
+    attested = opening.get('attested_garrisons', {})
+    if set(attested) - new_active:
+        raise ValueError(f'{data["id"]}: garrison evidence for inactive city')
+    seen, transfers = set(), set()
+    for city_id, people in garrisons.items():
+        named_posts = set(attested.get(city_id, []))
+        if named_posts - set(people):
+            raise ValueError(f'{data["id"]}: unassigned attested garrison at {city_id}')
+        history = data['city_history'][city_id]
+        fictional = data['main_scenario']['group'] == 'if'
+        history['opening'] = dict(
+            owner=owners[city_id], basis='fictional_scenario_adaptation' if fictional else 'reviewed_regional_opening',
+            note=('按假想劇本的既有勢力格局配置。' if fictional
+                  else '有任職史料的駐將單列。其餘按當年勢力範圍及可用人物配置。'),
+            sources=history['sources'])
+        history['garrisons'] = []
+        for person_id in people:
+            officer = officers.get(person_id)
+            if not officer or officer.get('ruler') or person_id in seen or owners[city_id] == 'neutral':
+                raise ValueError(f'{data["id"]}: invalid garrison officer {person_id} at {city_id}')
+            previous = data['initial_owners'][officer['city']]
+            if previous != owners[city_id]:
+                if moves.get(person_id) != previous:
+                    raise ValueError(f'{data["id"]}: unreviewed garrison transfer of {person_id}')
+                transfers.add(person_id)
+            seen.add(person_id)
+            officer['city'] = city_id
+            era = data['era_assignments'][person_id]
+            basis = 'attested_expansion_post' if person_id in named_posts else 'expansion_regional_defence'
+            era.update(city=city_id, faction=owners[city_id], placement_basis=basis)
+            if isinstance(era.get('posting_reference'), dict):
+                era['posting_reference'].update(city=city_id, faction=owners[city_id], basis=basis)
+            era['appearance_plan']['city'] = city_id
+            data['appearance_locations'][person_id] = city_id
+            history['garrisons'].append(dict(
+                person_id=person_id, name=people_by_id[person_id]['name'], basis=basis))
+    if transfers != set(moves):
+        raise ValueError(f'{data["id"]}: unused expansion transfers')
+    roster = Counter(row['city'] for row in officers.values())
+    data['coverage']['planned_max_city_roster'] = max(roster.values(), default=0)
+    by_faction = Counter(data['initial_owners'][row['city']] for row in officers.values())
+    for faction, row in factions.items():
+        row['initial_officers'] = by_faction[faction]
 
 
 def apply_navigation_sources(data, navigation):
@@ -135,6 +247,14 @@ def load_sources(*, timing=True):
     san14_abilities = read('game/config/references/san14-abilities.json')
     city_scale_rules = read('game/config/city-scale-rules.json')
     city_name_rules = read('game/config/city-name-rules.json')
+    expansion_map = read('game/config/campaigns/city-expansion-map.json')['cities']
+    expansion_openings = read('game/config/campaigns/city-expansion-openings.json')
+    canonical_index = read('game/config/campaigns/index.json')
+    if (expansion_openings.get('schema') != 'tk2-city-expansion-openings-v1'
+            or set(expansion_map) != set(EXPANSION_CITIES)
+            or set(expansion_openings['scenarios']) != {row['id'] for row in canonical_index['scenarios']}
+            or set(expansion_openings['notes']) != set(EXPANSION_CITIES)):
+        raise ValueError('Incomplete reviewed historical city expansion')
     original_identities = read('game/config/portrait-identity-map.json')
     if sha256((ROOT/'game/config/portrait-identity-map.json').read_bytes()).hexdigest() != original_stats['identity_source_sha256']:
         raise ValueError('Original officer identity source differs')
@@ -173,6 +293,8 @@ def load_sources(*, timing=True):
         current_people = apply_patch(persons, source.get('people_overrides', {}))
         if set(current_people) != set(order):
             raise ValueError('A campaign may not add or remove canonical person identities')
+        apply_city_expansion(data, expansion_map, expansion_openings['scenarios'][entry['id']],
+                             expansion_openings['notes'], current_people)
         original_people = validate_original_virtue(current_people, original_stats, original_identities)
         stat_counts = validate_campaign_stats(current_people, public_stats, san14_abilities)
         data['coverage'].update(

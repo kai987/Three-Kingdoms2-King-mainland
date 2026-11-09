@@ -29,8 +29,8 @@ LIU_DAI = 'san14-candidate-0947'
 ZHAO_FAN = 'san14-candidate-0654'
 YONG_KAI = 'san14-candidate-0855'
 
-# Pre-review world soldiers include active cities only, never unused resources
-# belonging to a city absent from that particular scenario.
+# Pre-review soldier totals cover the original active board. Compare the
+# separately authored reserves at the later expansion cities as an addition.
 KANG_OPENINGS = {
     '210-11': dict(reserves=1240, soldiers=270570, members=3),
     '212-06': dict(reserves=940, soldiers=285400, members=4),
@@ -73,6 +73,8 @@ class LateRulerReviewTests(unittest.TestCase):
         cls.data = {row['id'].removeprefix('mainland'): row for row in sources}
         cls.raw_people = json.loads(
             (ROOT / 'game/config/campaigns/people.json').read_text())['people']
+        cls.expansion = json.loads(
+            (ROOT / 'game/config/campaigns/city-expansion-openings.json').read_text())['scenarios']
         cls.temp = tempfile.TemporaryDirectory(prefix='tk2-late-rulers-')
         cls.catalogs = {}
 
@@ -157,9 +159,12 @@ class LateRulerReviewTests(unittest.TestCase):
                     row['troops'] for row in initial.values() if row['city'] == 'liaodong'))
                 actual = (sum(city.reserves for city in game.state.cities.values())
                           + sum(officer.troops for officer in game.state.officers.values()))
-                self.assertEqual(actual, expected['soldiers'])
+                new_cities = self.expansion[catalog.data['id']]['owners']
+                added_reserves = sum(catalog.data['initial_city_resources'][city]['reserves']
+                                     for city in new_cities)
+                self.assertEqual(actual, expected['soldiers'] + added_reserves)
                 self.assertEqual(game.state.soldiers,
-                                 dict(initial=expected['soldiers'], recruited=0, lost=0))
+                                 dict(initial=actual, recruited=0, lost=0))
                 self.assertEqual(faction_officer_counts(catalog)['gongsun'],
                                  expected['members'])
                 self.assertEqual(catalog.factions['gongsun']['initial_officers'],

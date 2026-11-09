@@ -4,6 +4,8 @@ Use --wasm-vectors to emit read-only Python reference vectors for Node's real
 WebAssembly ABI test. No live server or existing player campaign is changed.
 """
 from copy import deepcopy
+import gzip
+from hashlib import sha256
 import json
 import os
 from pathlib import Path
@@ -46,7 +48,13 @@ def campaign_fixture(case):
     name, side, source, target, mode, month = case
     # Keep the fixed march vectors independent of seasonal city disasters.
     # Dedicated facility tests exercise those new calendar RNG draws.
-    data=json.loads((ROOT/'game/data/campaigns/217-07.json').read_text())
+    # Full-state v1/v2 hashes include the city inventory and exact catalog
+    # digest. Retain their 115-city input, including its exact serialization.
+    source = ROOT/'tests/fixtures/march-catalog-before-266-expansion.json.gz'
+    raw = gzip.decompress(source.read_bytes())
+    if sha256(raw).hexdigest() != '5358fdf8f2c5fb8a9addff3cb012dd3fe97e8d3eacb5684f29444598300a446f':
+        raise ValueError('Historical march catalog differs from the pinned input')
+    data = json.loads(raw)
     data['facility_rules']['disasters_enabled']=False
     data['facility_ai_default']=False
     data['equipment_rules']['combat_enabled']=False

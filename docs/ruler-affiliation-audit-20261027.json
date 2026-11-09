@@ -2,10 +2,10 @@
   "schema": "tk2-ruler-affiliation-audit-v1",
   "review_revision": "2026-10-27",
   "base_commit": "69a6e8f01239159b91e150637f888278af3b7a88",
-  "review_sha256": "4359282d90629a68bcc4bb3f306db1b8454b85a2084f2713cb4691f512e513ff",
-  "presentation_sha256": "bf89e1e46a8bf9b651f0cf57ac69ffafcbab24cc99f1a5be6d44f1ba8449580c",
-  "locale_sha256": "a0d8c38b517567262b70ce442943a8ba275160880799fd5f31b675f3de550ea5",
-  "japanese_sha256": "5bf3811028230eac9683d80ad98c81f76c3fcb80ad40dcb0f0ca5cb153ab8da4",
+  "review_sha256": "63a8e40fa89bc0fa69a6956bb7aca7d4ff2a90f4f0dbf6eaad1f423a283882cc",
+  "presentation_sha256": "2688b6b0375b9fbfd2b1f49952745363a8d8744be5c988c170eda047fc3785ca",
+  "locale_sha256": "5f79bc85e588b539426980de13a9654dbd326700477d28936c8abe32a6336b3a",
+  "japanese_sha256": "2000590ddd3d0de0077c340db9155fd09a39fbaf735058a0db8802f3f58d4793",
   "baseline_serving_non_ruler_reviews": 283,
   "pool": [
     {
@@ -1511,9 +1511,9 @@
         }
       ],
       "material": {
-        "gold": 147640,
-        "grain": 520075,
-        "soldiers": 194760
+        "gold": 151559,
+        "grain": 534580,
+        "soldiers": 198982
       },
       "placement_counts": {
         "reference_classes": {
@@ -1718,13 +1718,24 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [
         "bian_zhang",
         "song_jian"
       ],
-      "catalog_sha256": "aded33f0ff1abaee67dee6954d8e27dc584e34fc033c35772f717a6e8aa4c581"
+      "catalog_sha256": "6b77693be0d506720523235e15a5f5a7c2b41465f4bbe8987c65028019354b05"
     },
     {
       "id": "mainland188-06",
@@ -2880,9 +2891,9 @@
         }
       ],
       "material": {
-        "gold": 147640,
-        "grain": 520075,
-        "soldiers": 187860
+        "gold": 151559,
+        "grain": 534580,
+        "soldiers": 192082
       },
       "placement_counts": {
         "reference_classes": {
@@ -3163,10 +3174,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "682709e039ffe1fc46e799dc5b1b16ea01053c93b33446a6ebbb80103f3c3c30"
+      "catalog_sha256": "f127baf0b5462a5bbb9b6cd89a43cf62f721be7b0ef5ff3d1397afa3abc3d5fc"
     },
     {
       "id": "mainland190-01",
@@ -4422,9 +4444,9 @@
         }
       ],
       "material": {
-        "gold": 143240,
-        "grain": 495475,
-        "soldiers": 223570
+        "gold": 147270,
+        "grain": 509954,
+        "soldiers": 227792
       },
       "placement_counts": {
         "reference_classes": {
@@ -5059,10 +5081,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "94d2aaad9708e91ea9375267398f32e2ab640849e27445db1c1022df0a5449a6"
+      "catalog_sha256": "543a91c1b347d2fdfc3fdbe15ece7f4afe4805bd63ce5dd7a61acf9c922a936d"
     },
     {
       "id": "mainland191-10",
@@ -6286,9 +6319,9 @@
         }
       ],
       "material": {
-        "gold": 141250,
-        "grain": 488325,
-        "soldiers": 236450
+        "gold": 145280,
+        "grain": 502804,
+        "soldiers": 240672
       },
       "placement_counts": {
         "reference_classes": {
@@ -6506,10 +6539,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "5d7c9f33bd00db80f384c7e84d6004d3a32dc6c0d16516a52479f88002f2010b"
+      "catalog_sha256": "707648dd0db8c8cf096b443b0c59d7e90627f04b6bb7758540c115b4e85e0453"
     },
     {
       "id": "mainland194-06",
@@ -7732,9 +7776,9 @@
         }
       ],
       "material": {
-        "gold": 139030,
-        "grain": 480975,
-        "soldiers": 232740
+        "gold": 142975,
+        "grain": 495116,
+        "soldiers": 236857
       },
       "placement_counts": {
         "reference_classes": {
@@ -8193,10 +8237,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "f606018bb3483be9181200f17a891ab5e84a527edd48a596caebcfafab4c6dc6"
+      "catalog_sha256": "2c3f017f5f27fe303ba7c13750c66cd9ec043a7800c16f7ded706ec4020b5ae6"
     },
     {
       "id": "mainland196-06",
@@ -9403,9 +9458,9 @@
         }
       ],
       "material": {
-        "gold": 136810,
-        "grain": 472400,
-        "soldiers": 229210
+        "gold": 140755,
+        "grain": 486541,
+        "soldiers": 233327
       },
       "placement_counts": {
         "reference_classes": {
@@ -9779,10 +9834,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "7373b1fca47f95c803280c126444c1ab18b469d1ce9cca4b938c85f192fa76ce"
+      "catalog_sha256": "3f31fe154f71d5acc6a2f304491cdea18179e77d259dfee9c74812bc7e3284b9"
     },
     {
       "id": "mainland197-07",
@@ -10997,9 +11063,9 @@
         }
       ],
       "material": {
-        "gold": 137820,
-        "grain": 477325,
-        "soldiers": 227180
+        "gold": 141765,
+        "grain": 491466,
+        "soldiers": 231147
       },
       "placement_counts": {
         "reference_classes": {
@@ -11624,10 +11690,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "beffb5790e3770bda5350485a1d77367a258876bc8167e4aebde4933270e71c7"
+      "catalog_sha256": "6d4b963ebbd3f46cd07929c7e10f8a9e6a487b39ac5f102ab23ef40683014c93"
     },
     {
       "id": "mainland198-03",
@@ -12816,9 +12893,9 @@
         }
       ],
       "material": {
-        "gold": 137830,
-        "grain": 477325,
-        "soldiers": 232880
+        "gold": 141775,
+        "grain": 491466,
+        "soldiers": 236922
       },
       "placement_counts": {
         "reference_classes": {
@@ -13339,10 +13416,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "73b546ab265aaa3f51c58992d69ceca62345dc85b8e06aeb13898f33eab576e8"
+      "catalog_sha256": "af8174e9229f129bdad33e636aa19c46d92a42e6066dad8bfcfb054b57f1ccc2"
     },
     {
       "id": "mainland200-01",
@@ -14493,9 +14581,9 @@
         }
       ],
       "material": {
-        "gold": 148290,
-        "grain": 525325,
-        "soldiers": 249250
+        "gold": 152615,
+        "grain": 541281,
+        "soldiers": 253827
       },
       "placement_counts": {
         "reference_classes": {
@@ -14753,10 +14841,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "3cc2b7909d89b7c68794b97e2982831156224f1ebaa43e7a02e0c0d6dc44b73b"
+      "catalog_sha256": "990664bbb22245963395f01890a2677bb6f71c439bf75dce55d553ac204d0528"
     },
     {
       "id": "mainland201-05",
@@ -15911,9 +16010,9 @@
         }
       ],
       "material": {
-        "gold": 148290,
-        "grain": 525325,
-        "soldiers": 245350
+        "gold": 152615,
+        "grain": 541281,
+        "soldiers": 249927
       },
       "placement_counts": {
         "reference_classes": {
@@ -16060,10 +16159,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "3a1591b184d95fdf91512b329f4000b44d24426fde813e3be2bb12f8f28d7deb"
+      "catalog_sha256": "e464e39b18e7a1d71c78baf010d7b693d57e0972436ea434ff9dc73bbe6ce061"
     },
     {
       "id": "mainland202-06",
@@ -17222,9 +17332,9 @@
         }
       ],
       "material": {
-        "gold": 148290,
-        "grain": 525325,
-        "soldiers": 251350
+        "gold": 152615,
+        "grain": 541281,
+        "soldiers": 255927
       },
       "placement_counts": {
         "reference_classes": {
@@ -17477,10 +17587,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "d00ce03943a83ec6d05c2e5435f228570467b4352100ee0a5a8bfeb274b11c1c"
+      "catalog_sha256": "27b312d41068230af32837820605bdac26f7b5089b0a409290d820dec9f721d4"
     },
     {
       "id": "mainland207-09",
@@ -18626,9 +18747,9 @@
         }
       ],
       "material": {
-        "gold": 153530,
-        "grain": 549100,
-        "soldiers": 264930
+        "gold": 157855,
+        "grain": 565056,
+        "soldiers": 269507
       },
       "placement_counts": {
         "reference_classes": {
@@ -18960,10 +19081,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "a32b1fda9dd23fdc8ce1fbdba536cf97b56dede418b8315c1b7c4824364d0fe3"
+      "catalog_sha256": "195a2fb4d0b90c3f20d0dec8a629777999602bdff6a6b89321a195cf1ac76806"
     },
     {
       "id": "mainland208-10",
@@ -20112,9 +20244,9 @@
         }
       ],
       "material": {
-        "gold": 148630,
-        "grain": 523825,
-        "soldiers": 273570
+        "gold": 152127,
+        "grain": 536336,
+        "soldiers": 277622
       },
       "placement_counts": {
         "reference_classes": {
@@ -20403,10 +20535,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "bf856fa1a3a603b70778ee960916658bebd695528a149efa9ecf11e2e598b70a"
+      "catalog_sha256": "96ee40d1d31c54307803a0e8a6ceabbac5f4e45b4f9e4a41b9eb333717083c80"
     },
     {
       "id": "mainland209-06",
@@ -21519,9 +21662,9 @@
         }
       ],
       "material": {
-        "gold": 148630,
-        "grain": 523825,
-        "soldiers": 273870
+        "gold": 152127,
+        "grain": 536336,
+        "soldiers": 277772
       },
       "placement_counts": {
         "reference_classes": {
@@ -21671,10 +21814,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "f0dc7db88186a30c4be48bc107e54d42670b1096280b932e63c45bdef69be0d6"
+      "catalog_sha256": "c8993c352657ca42ef5f75c507e133ccbe50fcf2848a949afc312c566d4b070e"
     },
     {
       "id": "mainland210-11",
@@ -22781,9 +22935,9 @@
         }
       ],
       "material": {
-        "gold": 148630,
-        "grain": 523825,
-        "soldiers": 270570
+        "gold": 152127,
+        "grain": 536336,
+        "soldiers": 274472
       },
       "placement_counts": {
         "reference_classes": {
@@ -22990,10 +23144,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "ed97027476900fc365a52300e0191f717abf577a53443ad9fffc87cab53b576e"
+      "catalog_sha256": "0be7a78f55ffed5aff698f2c65aa09081a0d55484db6ee1c332a793ddb48f82f"
     },
     {
       "id": "mainland211-07-tongguan",
@@ -24105,9 +24270,9 @@
         }
       ],
       "material": {
-        "gold": 157380,
-        "grain": 550975,
-        "soldiers": 289000
+        "gold": 161217,
+        "grain": 564560,
+        "soldiers": 293290
       },
       "placement_counts": {
         "reference_classes": {
@@ -24406,10 +24571,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "ab318dee0b8906ba25d98083518db0321d34d5fee77b0511dc6f6529a8a2aa87"
+      "catalog_sha256": "5bfe975aa239e193cc691dc3481031e7abdf598b448a1fa758f51c33ce6020fd"
     },
     {
       "id": "mainland212-06",
@@ -25525,9 +25701,9 @@
         }
       ],
       "material": {
-        "gold": 157380,
-        "grain": 550975,
-        "soldiers": 285400
+        "gold": 161217,
+        "grain": 564560,
+        "soldiers": 289690
       },
       "placement_counts": {
         "reference_classes": {
@@ -25733,10 +25909,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "b45d654f8bf998d11a92810d03fb48a50fd5b3366a8fde1f5bba12131f1bdfcb"
+      "catalog_sha256": "f53b77a0d7fb4b705022aa559114102e41d42913603ae099448bfe048bc80808"
     },
     {
       "id": "mainland212-12",
@@ -26839,9 +27026,9 @@
         }
       ],
       "material": {
-        "gold": 157380,
-        "grain": 550975,
-        "soldiers": 279400
+        "gold": 161217,
+        "grain": 564560,
+        "soldiers": 283540
       },
       "placement_counts": {
         "reference_classes": {
@@ -27084,10 +27271,21 @@
         "jiameng": "葭萌",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "82c26a709df4ad47d066b47a833af18a6515eb5946eda96819038ac9b15d943c"
+      "catalog_sha256": "a00b80e2f9ee5d4631a820b21283dd24d9505c3aedf32e36337c5931776f635e"
     },
     {
       "id": "mainland215-08",
@@ -28168,9 +28366,9 @@
         }
       ],
       "material": {
-        "gold": 158350,
-        "grain": 556525,
-        "soldiers": 282930
+        "gold": 162097,
+        "grain": 569710,
+        "soldiers": 287262
       },
       "placement_counts": {
         "reference_classes": {
@@ -28442,10 +28640,21 @@
         "jiameng": "汉寿",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "85e616db8cd73059654c0b7858e7bf03c8363d2b5a82db3c60488bffe203e8c1"
+      "catalog_sha256": "35b8a70ad3ca914c5912164a5ebfc9bfef33ccc8f0985619166d807b14508d2b"
     },
     {
       "id": "mainland217-07",
@@ -29528,9 +29737,9 @@
         }
       ],
       "material": {
-        "gold": 158590,
-        "grain": 555750,
-        "soldiers": 283620
+        "gold": 162397,
+        "grain": 568742,
+        "soldiers": 288125
       },
       "placement_counts": {
         "reference_classes": {
@@ -29850,10 +30059,21 @@
         "jiameng": "汉寿",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "5358fdf8f2c5fb8a9addff3cb012dd3fe97e8d3eacb5684f29444598300a446f"
+      "catalog_sha256": "909b20f60826882d0968f655edeccfd894dfa190bd2995262240529615e5eeb5"
     },
     {
       "id": "mainland219-07",
@@ -30938,9 +31158,9 @@
         }
       ],
       "material": {
-        "gold": 152060,
-        "grain": 526625,
-        "soldiers": 281640
+        "gold": 155371,
+        "grain": 538185,
+        "soldiers": 285367
       },
       "placement_counts": {
         "reference_classes": {
@@ -31197,10 +31417,21 @@
         "jiameng": "汉寿",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "b62d187ddf8f6f2524c8e23d5f7d7fa75550162a8b4370b2fd97e039545336c4"
+      "catalog_sha256": "1a13c4fcd1b675793d2c6573a635bd56ea75637bf1af73854360171bfe9e7d39"
     },
     {
       "id": "mainland221-07",
@@ -32281,9 +32512,9 @@
         }
       ],
       "material": {
-        "gold": 167170,
-        "grain": 568375,
-        "soldiers": 281870
+        "gold": 170672,
+        "grain": 580405,
+        "soldiers": 285907
       },
       "placement_counts": {
         "reference_classes": {
@@ -32563,10 +32794,21 @@
         "jiameng": "汉寿",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "夷陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "b811f534066ccb88436c42219920f243b38c4ae12410aaf53606de0065e8b1d2"
+      "catalog_sha256": "3fd9f375fb4987478146f196387b7a360f35df38d7fc06aeabb1a6deb4ac1861"
     },
     {
       "id": "mainland225-07",
@@ -33648,9 +33890,9 @@
         }
       ],
       "material": {
-        "gold": 169240,
-        "grain": 577550,
-        "soldiers": 271350
+        "gold": 172925,
+        "grain": 590336,
+        "soldiers": 275517
       },
       "placement_counts": {
         "reference_classes": {
@@ -33886,10 +34128,21 @@
         "jiameng": "汉寿",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "西陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "e737c5a057098f9b596139180242d607134a7dc1ee47dfba630fce5c20ab2ed8"
+      "catalog_sha256": "a274c47bed6b8b18f2f4ada34f0facb5ab2ed18729253f4fbd6516466740c01d"
     },
     {
       "id": "mainland227-02",
@@ -34957,9 +35210,9 @@
         }
       ],
       "material": {
-        "gold": 170470,
-        "grain": 572800,
-        "soldiers": 281150
+        "gold": 174130,
+        "grain": 585336,
+        "soldiers": 285630
       },
       "placement_counts": {
         "reference_classes": {
@@ -35276,10 +35529,21 @@
         "jiameng": "汉寿",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "西陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "b99f1334b8ecc336774e5756d1df6e53983d05036eebafca37a26ef4dfbb2967"
+      "catalog_sha256": "5038b26cbc1bf2fabe77cc0d2553109d949c203da466413b0a4984d2ef721877"
     },
     {
       "id": "mainland234-02",
@@ -36341,9 +36605,9 @@
         }
       ],
       "material": {
-        "gold": 171230,
-        "grain": 574625,
-        "soldiers": 273780
+        "gold": 174890,
+        "grain": 587161,
+        "soldiers": 278260
       },
       "placement_counts": {
         "reference_classes": {
@@ -36622,10 +36886,21 @@
         "jiameng": "汉寿",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "西陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "27091cd99dddba687140084f23133d3d2e9e5509b1a2260307280ec6c9abfaee"
+      "catalog_sha256": "e8ac58d127da30c1be82c67e7e8dcdf481ddf82cd7229de1a52e320d38b2dd7a"
     },
     {
       "id": "mainland235-01",
@@ -37681,9 +37956,9 @@
         }
       ],
       "material": {
-        "gold": 177390,
-        "grain": 616575,
-        "soldiers": 275620
+        "gold": 181377,
+        "grain": 630967,
+        "soldiers": 280122
       },
       "placement_counts": {
         "reference_classes": {
@@ -37851,10 +38126,21 @@
         "jiameng": "汉寿",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "西陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "9ffaf4cba118a36bc76301b8227cb9ac5a5abdf2117484df5b6b7e2f4551220d"
+      "catalog_sha256": "5310db19d5a0be9f816935b14a21cf8fab22d16117f23b6d4e188c7810cc88c4"
     },
     {
       "id": "mainland238-01",
@@ -38916,9 +39202,9 @@
         }
       ],
       "material": {
-        "gold": 177390,
-        "grain": 616575,
-        "soldiers": 272620
+        "gold": 181377,
+        "grain": 630967,
+        "soldiers": 277122
       },
       "placement_counts": {
         "reference_classes": {
@@ -39197,10 +39483,21 @@
         "jiameng": "汉寿",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "西陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "ab7fe774a33ca2d7dde657d01b0bf91e13274e3a4f6b97b3152ffd0dbaabaf13"
+      "catalog_sha256": "b3e59835d61e7c9d699db2d7a530ca01ade219eb0aa317555324003bde4b2b4b"
     },
     {
       "id": "mainland249-01",
@@ -40253,9 +40550,9 @@
         }
       ],
       "material": {
-        "gold": 185000,
-        "grain": 637900,
-        "soldiers": 261520
+        "gold": 190667,
+        "grain": 656767,
+        "soldiers": 267562
       },
       "placement_counts": {
         "reference_classes": {
@@ -40569,10 +40866,21 @@
         "jiameng": "汉寿",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "西陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "503fd9bffa6f02f3c3c4c6ffd261cf6c43e37f4ce1521c316e3ff75200287ec5"
+      "catalog_sha256": "9ab011eec1033c37a156e5edc6061b1f50fc5c25fd82bd0e8604a3f463beb204"
     },
     {
       "id": "mainland263-05",
@@ -41630,9 +41938,9 @@
         }
       ],
       "material": {
-        "gold": 173990,
-        "grain": 585550,
-        "soldiers": 227800
+        "gold": 181144,
+        "grain": 609285,
+        "soldiers": 235455
       },
       "placement_counts": {
         "reference_classes": {
@@ -41820,7 +42128,7 @@
         "linhe": "临贺",
         "nanhai": "番禺",
         "gaoliang": "高凉",
-        "hepu": "珠官",
+        "hepu": "合浦",
         "jiuzhen": "九真",
         "rinan": "日南",
         "yan": "蓟",
@@ -41862,10 +42170,21 @@
         "jiameng": "汉寿",
         "fuxian": "涪县",
         "dangqu": "宕渠",
-        "nanguang": "南广"
+        "nanguang": "南广",
+        "hefei": "合肥",
+        "guangling": "广陵",
+        "chaisang": "柴桑",
+        "xicheng": "西城",
+        "shangyong": "上庸",
+        "yiling": "西陵",
+        "changli": "昌黎",
+        "pingyang": "平阳",
+        "hengyang": "衡阳",
+        "xiangdong": "湘东",
+        "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "23f5b3d12b421ccbfd9b6579f2bbe8474f0cdcb43de77f1026fda9f82dbc6f06"
+      "catalog_sha256": "03b3d5567e196cdd05bd9f7dacdcbdcfc91c8ec344ff84015e6c7f57599068e3"
     }
   ]
 }

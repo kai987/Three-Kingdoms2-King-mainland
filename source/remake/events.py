@@ -294,8 +294,8 @@ def _validate_staff_event(row):
     if 'counts' in details:
         counts = details['counts']
         if (not isinstance(counts, dict) or set(counts) != {'staff', 'total_unpaid', 'cities'}
-                or type(counts['staff']) is not int or not 1 <= counts['staff'] <= 11385
-                or type(counts['cities']) is not int or not 1 <= counts['cities'] <= 115
+                or type(counts['staff']) is not int or counts['staff'] < 1
+                or type(counts['cities']) is not int or not 1 <= counts['cities'] <= 126
                 or not counts['cities'] <= counts['staff'] <= counts['cities'] * 99
                 or type(counts['total_unpaid']) is not int or not 0 <= counts['total_unpaid'] <= counts['staff']):
             raise ValueError('Civil staff event counts')

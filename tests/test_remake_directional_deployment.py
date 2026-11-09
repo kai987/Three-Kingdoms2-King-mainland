@@ -120,7 +120,7 @@ class DirectionalDeploymentTests(unittest.TestCase):
             self.assertEqual(plan['provenance']['arrival_city'],source)
             self.assert_legal(battle,plan)
             count += 1
-        self.assertEqual(count,115)
+        self.assertEqual(count,126)
 
     def test_original_outside_points_and_duplicate_defaults_are_safely_skipped(self):
         catalog = self.catalog()

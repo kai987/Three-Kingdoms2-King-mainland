@@ -7,7 +7,10 @@ const {chromium}=require('playwright'),root=path.resolve(__dirname,'..');
  const riverNetwork=JSON.parse(require('node:child_process').execFileSync('python3',['-B',path.join(__dirname,'river_network.py')],{cwd:root,encoding:'utf8',maxBuffer:8*1024*1024}));
  assert.equal(corridors.river_network_source,'game/config/river-network.json');
  corridors.river_routes=[...(corridors.river_routes||[]),...riverNetwork.routes];
- const page=await b.newPage(),file=path.join(__dirname,'config/navigation-geometry.json'),catalog=JSON.parse(fs.readFileSync(path.join(__dirname,'data/campaigns/249-01.json'))),positions=Object.fromEntries(catalog.cities.map(c=>[c.id,c.position]));
+ const page=await b.newPage(),file=path.join(__dirname,'config/navigation-geometry.json');
+ const shared=JSON.parse(fs.readFileSync(path.join(__dirname,'config/campaigns/shared.json'))).catalog;
+ const expansion=JSON.parse(fs.readFileSync(path.join(__dirname,'config/campaigns/city-expansion-map.json'))).cities;
+ const positions=Object.fromEntries([...shared.cities.map(c=>[c.id,c.position]),...Object.entries(expansion).map(([id,c])=>[id,c.position])]);
  const result=await page.evaluate(async({png,positions,corridors})=>{
   const image=new Image();image.src=png;await image.decode();const c=document.createElement('canvas');c.width=image.width;c.height=image.height;const ctx=c.getContext('2d');ctx.drawImage(image,0,0);const pixels=ctx.getImageData(0,0,c.width,c.height).data;
   const step=4,W=Math.floor(c.width/step),H=Math.floor(c.height/step),N=W*H;
@@ -48,7 +51,13 @@ const {chromium}=require('playwright'),root=path.resolve(__dirname,'..');
    points[0]=positions[id];const port=point(ports[id]);if(points.at(-1).some((v,i)=>v!==port[i]))points.push(port);
    access[id]=simplify(points);
   }
-  const land_roads=corridors.land_connections.map(row=>{
+  const land_roads=corridors.land_connections.map(({points,...row})=>{
+   if(points){
+    const matches=(a,b)=>a?.length===2&&b?.length===2&&a.every((v,i)=>v===b[i]);
+    if(!matches(points[0],positions[row.from])||!matches(points.at(-1),positions[row.to]))
+     throw Error('Reviewed land corridor must join the city centers: '+row.from+':'+row.to);
+    return {...row,draw:[{mode:'land',points}]};
+   }
    const junction=index(row.junction),from=route(index(positions[row.from]),junction,false),to=route(junction,index(positions[row.to]),false);
    from[0]=positions[row.from];to[to.length-1]=positions[row.to];
    return {...row,draw:[{mode:'land',points:simplify(from)},{mode:'land',points:simplify(to)}]};

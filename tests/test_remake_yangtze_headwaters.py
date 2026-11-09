@@ -169,42 +169,54 @@ class YangtzeHeadwatersTests(unittest.TestCase):
                              for x, y in self.pixels
                              for left, top, right, bottom in peak_cores))
 
-    def test_only_the_reviewed_fu_branch_and_one_jialing_split_change_navigation(self):
+    def test_new_ports_share_reviewed_reaches_without_changing_legacy_river_lines(self):
         spec = json.loads((ROOT / 'game/config/river-network.json').read_bytes())
         geometry = {key: deepcopy(spec[key]) for key in ('connections', 'nodes', 'ports', 'reaches')}
-        # Recover the exact pre-Fu network, rather than replacing the old
-        # frozen hash with a new snapshot that could hide unrelated changes.
-        additions = [row for row in geometry['connections']
-                     if (row['from'], row['to']) == ('fuxian', 'bajun')]
-        self.assertEqual(len(additions), 1)
-        geometry['connections'].remove(additions[0])
-        for connection in geometry['connections']:
-            if connection['reaches'] == ['jialing:baxi:dianjiang', 'jialing:dianjiang:bajun']:
-                self.assertEqual((connection['from'], connection['to']), ('baxi', 'bajun'))
-                connection['reaches'] = ['jialing:baxi:bajun']
-        reaches = {row['id']: row for row in geometry['reaches']}
-        upstream, downstream = (reaches[key] for key in
-                                ('jialing:baxi:dianjiang', 'jialing:dianjiang:bajun'))
-        self.assertEqual(upstream['points'][-1], downstream['points'][0])
-        self.assertEqual((upstream['from'], upstream['to'], downstream['from'], downstream['to']),
-                         ('jialing:baxi', 'jialing:dianjiang', 'jialing:dianjiang', 'yangtze:bajun'))
-        original = dict(id='jialing:baxi:bajun', river='jialing',
-                        **{'from': upstream['from'], 'to': downstream['to']},
-                        points=upstream['points'] + downstream['points'][1:])
-        geometry['reaches'] = [original if row['id'] == upstream['id'] else row
-                               for row in geometry['reaches']
-                               if row['id'] not in (downstream['id'], 'fu:fuxian:dianjiang')]
+        # Invert only approved reach subdivisions. The older digest continues
+        # to catch changes to original water pixels, endpoints and connections.
+        splits = {
+            'jialing:baxi:bajun': ('jialing:baxi:dianjiang', 'jialing:dianjiang:bajun'),
+            'han:hanzhong:xincheng': ('han:hanzhong:xicheng', 'han:xicheng:shangyong', 'han:shangyong:xincheng'),
+            'xiang:lingling:changsha': ('xiang:lingling:xiangdong', 'xiang:xiangdong:hengyang', 'xiang:hengyang:changsha'),
+            'yangtze:badong:yidu': ('yangtze:badong:jianping', 'yangtze:jianping:yiling', 'yangtze:yiling:yidu'),
+            'yangtze:danyang:wujun': ('yangtze:danyang:guangling', 'yangtze:guangling:wujun'),
+            'yangtze:qichun:pengli': ('yangtze:qichun:chaisang', 'yangtze:chaisang:pengli'),
+        }
+        ports = {'fuxian', 'xicheng', 'shangyong', 'xiangdong', 'hengyang',
+                 'jianping', 'yiling', 'guangling', 'chaisang'}
+        geometry['connections'] = [row for row in geometry['connections']
+                                   if not ({row['from'], row['to']} & ports)]
+        for port in ports:
+            node = geometry['ports'].pop(port)['node']
+            if port != 'fuxian':
+                geometry['nodes'].pop(node)
         geometry['nodes'].pop('fu:fuxian')
         geometry['nodes'].pop('jialing:dianjiang')
-        geometry['ports'].pop('fuxian')
+        geometry['reaches'] = [row for row in geometry['reaches'] if row['id'] != 'fu:fuxian:dianjiang']
+        reaches = {row['id']: row for row in geometry['reaches']}
+        for original, pieces in splits.items():
+            rows = [reaches[key] for key in pieces]
+            for first, second in zip(rows, rows[1:]):
+                self.assertEqual((first['to'], first['points'][-1]), (second['from'], second['points'][0]))
+                self.assertEqual(first['river'], second['river'])
+            merged = dict(id=original, river=rows[0]['river'], **{'from': rows[0]['from'], 'to': rows[-1]['to']},
+                          points=rows[0]['points'] + [point for row in rows[1:] for point in row['points'][1:]])
+            geometry['reaches'] = [merged if row['id'] == pieces[0] else row for row in geometry['reaches']
+                                   if row['id'] not in pieces[1:]]
+            for connection in geometry['connections']:
+                route = connection['reaches']
+                if pieces[0] in route:
+                    i = route.index(pieces[0])
+                    self.assertEqual(tuple(route[i:i + len(pieces)]), pieces)
+                    route[i:i + len(pieces)] = [original]
         self.assertEqual(canonical_sha(geometry), NETWORK_GEOMETRY_SHA)
         self.assertEqual((len(geometry['connections']), len(geometry['reaches'])), (44, 47))
-        self.assertEqual((len(spec['connections']), len(spec['reaches'])), (45, 49))
+        self.assertEqual((len(spec['connections']), len(spec['reaches'])), (60, 57))
         expected_ids = {row.get('id', f"{row['from']}:{row['to']}:river")
                         for row in spec['connections']}
         result = network.build()
-        self.assertEqual(result['reach_count'], 49)
-        self.assertEqual(len(result['routes']), 45)
+        self.assertEqual(result['reach_count'], 57)
+        self.assertEqual(len(result['routes']), 60)
         self.assertEqual({row['id'] for row in result['routes']}, expected_ids)
         self.assertFalse(any(ADDITION in identity for identity in spec['nodes']))
         self.assertFalse(any(ADDITION in row['id'] for row in spec['reaches']))

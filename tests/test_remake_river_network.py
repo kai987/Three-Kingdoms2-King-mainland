@@ -21,6 +21,8 @@ class SharedRiverNetwork(unittest.TestCase):
         cls.spec = json.loads((ROOT / 'game/config/river-network.json').read_text())
         shared = json.loads((ROOT / 'game/config/campaigns/shared.json').read_text())['catalog']
         cls.positions = {row['id']: row['position'] for row in shared['cities']}
+        expansion = json.loads((ROOT / 'game/config/campaigns/city-expansion-map.json').read_text())['cities']
+        cls.positions.update({city: row['position'] for city, row in expansion.items()})
         cls.compiled = build()
 
     def test_fixed_city_nodes_and_shared_junctions_compile_without_mutating_sources(self):
@@ -28,9 +30,9 @@ class SharedRiverNetwork(unittest.TestCase):
         before = deepcopy(spec)
         routes = compile_network(spec, self.positions)
         self.assertEqual(spec, before)
-        self.assertEqual(len(routes), 45)
+        self.assertEqual(len(routes), 60)
         self.assertEqual(len({row['id'] for row in routes}), len(routes))
-        self.assertEqual(self.compiled['reach_count'], 49)
+        self.assertEqual(self.compiled['reach_count'], 57)
         for route in routes:
             self.assertEqual(route['draw'][0]['points'][0], self.positions[route['from']])
             self.assertEqual(route['draw'][-1]['points'][-1], self.positions[route['to']])
@@ -55,7 +57,7 @@ class SharedRiverNetwork(unittest.TestCase):
                 self.assertIn(part['points'], (expected, list(reversed(expected))))
         self.assertEqual(set(usage), set(canonical))
         self.assertEqual(usage['yangtze:dongting:jiangxia'], 3)
-        self.assertEqual(usage['yangtze:pengli:lujiang'], 2)
+        self.assertEqual(usage['yangtze:pengli:lujiang'], 3)
         self.assertEqual(usage['xiang:changsha:yuan'], 2)
 
     def test_dated_optional_ports_do_not_cut_the_main_river_when_city_is_absent(self):

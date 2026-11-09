@@ -42,6 +42,8 @@ class FuRiverTests(unittest.TestCase):
         cls.water_config = read('game/config/water-corrections.json')
         cls.positions = {city['id']: city['position'] for city in
                          read('game/config/campaigns/shared.json')['catalog']['cities']}
+        expansion = read('game/config/campaigns/city-expansion-map.json')['cities']
+        cls.positions.update({city: row['position'] for city, row in expansion.items()})
         cls.svg = ET.parse(ROOT / 'game/map-source/historic-water.svg').getroot()
         cls.group = cls.svg.find('.//svg:g[@data-authorial-addition="fu-dianjiang"]', NS)
         cls.pixels = rect_pixels(cls.group)
@@ -77,7 +79,7 @@ class FuRiverTests(unittest.TestCase):
 
     def test_ports_and_shared_lower_reach_do_not_require_a_stop_at_another_city(self):
         route = self.routes['fuxian:bajun:river']
-        self.assertEqual((len(self.routes), self.compiled['reach_count']), (45, 49))
+        self.assertEqual((len(self.routes), self.compiled['reach_count']), (60, 57))
         self.assertEqual([part['reach_id'] for part in route['draw'][1:-1]],
                          ['fu:fuxian:dianjiang', 'jialing:dianjiang:bajun'])
         self.assertEqual(route['draw'][0]['points'], [[294, 462], [316, 462]])

@@ -84,6 +84,7 @@ async function build({output='game/config/route-geometry.json'}={}){
  const {chromium}=require('playwright');
  const source=json('game/config/road-centers.json'),presentation=json('game/config/map-source.json').presentation;
  const constraints=json('game/config/route-corridors.json').land_path_constraints??{};
+ const expansionCities=json('game/config/campaigns/city-expansion-map.json').cities;
  // Read canonical sources before timing, so changing a quote cannot change
  // geometry inputs or create a catalogue/geometry build dependency cycle.
  const canonical=JSON.parse(execFileSync('python3',['-B','-c',
@@ -99,8 +100,17 @@ async function build({output='game/config/route-geometry.json'}={}){
  const strokes=source.original_paths.flatMap((d,i)=>removed.has(i)?[]:[{d:replacements.get(i)??d,source:'baked:'+i}]).filter(x=>x.d);
  const dynamic=new Map();
  const draw=(route,{smooth=false}={})=>route.draw.map((part,index)=>({mode:part.mode,d:part.mode!=='land'?context.smoothMapPath(part.points):context.landMapPath(part.points,{smooth,from:index===0?route.from:null,to:index===route.draw.length-1?route.to:null})}));
- function explicit(route,options){const parts=draw(route,options);dynamic.set(route.id??pair(route.from,route.to),{from:route.from,to:route.to,parts});for(const part of parts)if(part.mode==='land')strokes.push({d:part.d,source:'dynamic:'+route.from+':'+route.to});}
- for(const route of current.regional_roads||[])explicit(route,{smooth:true});
+ function explicit(route,{smooth=false,legacyGraph=true}={}){
+  const parts=draw(route,{smooth});
+  dynamic.set(route.id??pair(route.from,route.to),{from:route.from,to:route.to,parts});
+  if(legacyGraph)for(const part of parts)if(part.mode==='land')strokes.push({d:part.d,source:'dynamic:'+route.from+':'+route.to});
+ }
+ for(const route of current.regional_roads||[]){
+  // Added roads serve their own playable links. The baked legacy corridors
+  // stay visible and keep their existing geometry, including shared stops.
+  const expansion=Object.hasOwn(expansionCities,route.from)||Object.hasOwn(expansionCities,route.to);
+  explicit(route,{smooth:true,legacyGraph:!expansion});
+ }
  for(const route of presentation.expansion_connections)if(route.mode==='land')explicit(route);
  for(const route of presentation.added_land_roads){const d=context.landMapPath(route.new_branch,{to:route.to});strokes.push({d,source:'branch:'+route.from+':'+route.to});}
  const routes=[...current.travel_routes,...current.exploration_routes];
@@ -148,7 +158,7 @@ async function build({output='game/config/route-geometry.json'}={}){
  const ratios={land:[],sea:[],river:[]};for(const[id,r]of Object.entries(compiled))for(const p of r.parts)if(p.chord_px)ratios[p.mode].push({id,ratio:p.length_px/p.chord_px});
  const extrema=Object.fromEntries(Object.entries(ratios).map(([mode,rows])=>[mode,{min:rows.sort((a,b)=>a.ratio-b.ratio)[0],max:rows.at(-1)}]));
  const sourceIndex=json('game/config/campaigns/index.json');
- const inputs=['game/build_route_geometry.cjs','game/build_campaigns.py','game/config/road-centers.json','game/road_centers.py','game/config/navigation-geometry.json','game/config/route-corridors.json','game/road_history.py','game/config/road-history.json','game/build_navigation_geometry.cjs','game/config/river-network.json','game/river_network.py','game/config/map-source.json','game/app.js','game/config/route-render-source.json','game/config/campaigns/shared.json','game/config/campaigns/index.json',...sourceIndex.scenarios.map(s=>'game/config/campaigns/'+s.file)];
+ const inputs=['game/build_route_geometry.cjs','game/build_campaigns.py','game/config/road-centers.json','game/road_centers.py','game/config/navigation-geometry.json','game/config/route-corridors.json','game/road_history.py','game/config/road-history.json','game/build_navigation_geometry.cjs','game/config/river-network.json','game/river_network.py','game/config/map-source.json','game/app.js','game/config/route-render-source.json','game/config/campaigns/shared.json','game/config/campaigns/city-expansion-map.json','game/config/campaigns/city-expansion-openings.json','game/config/campaigns/index.json',...sourceIndex.scenarios.map(s=>'game/config/campaigns/'+s.file)];
  const sources=Object.fromEntries(inputs.map(p=>[p,sha(read(p))]));
  sources['game/app.js']=renderSourceHash(read('game/app.js'),read('game/build_route_geometry.cjs'),json('game/config/route-render-source.json'));
  const result={schema:'tk2-route-geometry-v1',policy:'Existing logical legs only. Actual rendered SVG curves; no straight-line fallback. Land city_sections identify exact intermediate city stops; runtime must enforce active-city transit. Geographic conversion belongs to the campaign compiler.',sources,input_geometry_sha256:sha(Buffer.from(JSON.stringify(current))),routes:compiled,audit:{catalogs:canonical.catalogs,input_routes:routes.length,compiled_routes:Object.keys(compiled).length,graph_nodes:graph.size,graph_strokes:strokes.length,unmatched,shared_city_pass_through:thirdCityExceptions,curvature:extrema}};

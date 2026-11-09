@@ -86,10 +86,13 @@ class RouteCorridorTests(unittest.TestCase):
     def test_existing_logical_routes_and_all_city_positions_are_preserved(self):
         original = {r['id']: r for r in self.shared['travel_routes']}
         identity_fields = ('from', 'to', 'mode', 'terrain')
+        positions = [(city['id'], city['position']) for city in self.shared['cities']]
+        coordinates = self.shared['city_coordinates']
         for catalog in self.catalogs:
-            self.assertEqual([(c['id'],c['position']) for c in catalog.data['cities']],
-                             [(c['id'],c['position']) for c in self.shared['cities']])
-            self.assertEqual(catalog.data['city_coordinates'], self.shared['city_coordinates'])
+            self.assertEqual([(c['id'], c['position']) for c in catalog.data['cities'][:len(positions)]],
+                             positions)
+            self.assertEqual({city: catalog.data['city_coordinates'][city] for city in coordinates},
+                             coordinates)
             compiled = {r['id']: r for r in catalog.data['travel_routes']}
             for key, row in original.items():
                 self.assertEqual({k: compiled[key][k] for k in identity_fields},

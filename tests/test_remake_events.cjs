@@ -118,8 +118,8 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
   {kind:"historical_gaopingling",date:[249,1],sides:["wei"],people:["san14-candidate-0344","san14-candidate-0522","san14-candidate-0529"],cities:["henan"],snippets:["曹芳前往祭拜高平陵，司","曹芳が高平陵へ参拝に赴"],primarySource:"https://zh.wikisource.org/zh-hant/三國志/卷04#齊王"},
   {kind:"historical_wei_invades_shu",date:[263,5],sides:["wei","shu"],people:["san14-candidate-0406","san14-candidate-0720","san14-candidate-0503","san14-candidate-0945"],cities:["fufeng","wudu","hanzhong"],snippets:["景元四年五月，曹奐下詔","景元4年5月、曹奐は鍾"],primarySource:"https://zh.wikisource.org/zh-hant/三國志/卷04#陳留王"},
   {kind:'historical_sun_liu_marriage',date:[209,12],sides:['shu','wu'],people:['liu-bei','sun-shangxiang','sun-quan'],cities:['wujun','nanjun'],snippets:['加入劉備勢力並駐於江陵','劉備軍に加わって江陵に駐在']},
-  {kind:'historical_hefei',date:[215,8],sides:['wu','wei'],people:['sun-quan','cao-cao','zhang-liao'],cities:['danyang','lujiang','jiujiang'],snippets:['壽春代理合淝戰區','寿春を合肥戦域の代替拠点']},
-  {kind:'historical_hefei_defense',date:[215,8],sides:['wei','wu'],people:['zhang-liao','sun-quan'],cities:['jiujiang'],snippets:['史實上的壽春與合淝是兩座城','史実の寿春と合肥は別の都市']},
+  {kind:'historical_hefei',date:[215,8],sides:['wu','wei'],people:['sun-quan','cao-cao','zhang-liao'],cities:['danyang','lujiang','hefei'],snippets:['合肥','合肥']},
+  {kind:'historical_hefei_defense',date:[215,8],sides:['wei','wu'],people:['zhang-liao','sun-quan'],cities:['hefei'],snippets:['合肥','合肥']},
   {kind:'historical_hanzhong_preparation',date:[217,7],sides:['shu','wei'],people:['liu-bei','cao-cao','fa-zheng'],cities:['zitong','baxi','hanzhong'],snippets:['法正勸劉備','法正が劉備に']},
   {kind:'historical_hanzhong',date:[218,1],sides:['shu','wei'],people:['liu-bei','cao-cao'],cities:['zitong','baxi','hanzhong'],snippets:['沿實際路線','実際の経路']},
   {kind:'historical_dingjun',date:[219,1],sides:['shu','wei'],people:['huang-zhong','xiahou-yuan'],cities:['hanzhong'],snippets:['勝負由本場戰鬥決定','勝敗はこの戦闘で決まります']},
@@ -164,7 +164,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
     assert(!playback.modal.innerHTML.includes('建寧'));
    }
   }
-  if(kind==='historical_hefei')assert(playback.modal.innerHTML.includes('viewBox="556 214 288 172"'),'合淝 illustration centers its 壽春 proxy');
+  if(kind==='historical_hefei')assert(playback.modal.innerHTML.includes('viewBox="556 214 288 172"'),'合淝 illustration centers its battlefield');
   if(kind==='historical_sun_liu_marriage'){
    assert(playback.modal.innerHTML.includes('viewBox="356 214 288 172"'),'Marriage illustration centers the destination');
    assert(playback.modal.innerHTML.includes('data-event-history="sun-liu-marriage"'));
@@ -344,7 +344,8 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  }
  assert(validEvent(transport));assert(validEvent(work));for(const bad of [{convoy_id:0},{gold:-1},{lost:1.5},{reason:'<script>'},{unknown:1}])assert(!validEvent({...transport,details:{...transport.details,...bad}}));
  const training=fixture([work]),trainingBefore=JSON.stringify(work);for(const locale of ['zh-Hant','ja']){training.i18n.locale=locale;const message=training.events.description(work);assert(message.includes(locale==='ja'?'練度の成果は150':'訓練度成果150'));assert(!message.includes('士氣'));assert(!message.includes('士気'));}assert.equal(JSON.stringify(work),trainingBefore,'Renaming historical training reports preserves their saved numerical details');
- assert(!validEvent({...work,details:{...work.details,cities:116}}));assert(!validEvent({...work,details:{...work.details,reason:'unknown'}}));
+ assert(validEvent({...work,details:{...work.details,cities:126,morale:12600}}));
+ assert(!validEvent({...work,details:{...work.details,cities:127}}));assert(!validEvent({...work,details:{...work.details,reason:'unknown'}}));
  assert.deepEqual(groupRows([transport,{...transport,id:9},work]).map(g=>g.length),[2,1]);
  for(const kind of ['march_resupplied','march_starvation','march_retreat']){
   const sample=supplyRow(20,kind);assert(validEvent(sample));
@@ -378,7 +379,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  assert(!validEvent(staffRow(1,'staff_candidate',{person_ids:['person-a']})));assert(!validEvent(staffRow(1,'staff_candidate',{city_ids:[]})));
  assert(!validEvent({...salary,details:{...salary.details,paid:6}}));assert(!validEvent({...salary,details:{...salary.details,bonus:{gold:0,grain:0,reserves:-1}}}));
  assert(!validEvent({...salary,details:{...salary.details,paid:1}}));assert(!validEvent({...salary,details:{...salary.details,counts:{staff:1,total_unpaid:0,cities:1}}}));
- assert(validEvent({...salary,details:{amount:1725,paid:1720,bonus:{gold:230,grain:200,reserves:80},counts:{staff:345,total_unpaid:1,cities:115}}}));
+ assert(validEvent({...salary,details:{amount:62370,paid:62365,bonus:{gold:230,grain:200,reserves:80},counts:{staff:12474,total_unpaid:1,cities:126}}}));
  assert.deepEqual(groupRows([staffRow(1),salary,staffRow(3),staffRow(4,'staff_candidate',{turn:2})]).map(g=>g.map(e=>e.id)),[[1,3],[2],[4]],'Interleaved staff events share one same-turn scene per kind');
  const staff=fixture(),staffView=view([staffRow(1),salary,staffRow(3,'staff_candidate',{factions:['wei'],audience:'player'}),staffRow(4,'staff_candidate',{details:{...staffRow(4).details,staff_id:'clerk-000002',name:'周平',portrait:'clerk-2'}})]);
  const staffBefore=JSON.stringify(staffView);staff.events.observe(staffView,{newGame:true});staff.drain();assert.deepEqual(staff.events.snapshot().active,[1,4]);assert.deepEqual(staff.events.snapshot().pending,[[2]],'Remote AI staff events never interrupt this player, even with a broad audience');

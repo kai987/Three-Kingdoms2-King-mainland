@@ -124,6 +124,13 @@
       "tier": "global",
       "groups": []
     },
+    "tests/test_remake_city_expansion.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "scenarios"
+      ]
+    },
     "tests/test_remake_city_lifecycles.py": {
       "tier": "full",
       "groups": [

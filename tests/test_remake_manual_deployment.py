@@ -1,6 +1,6 @@
 """Controlled native-rectangle placement services, without emulator claims.
 
-These geometry fixtures use the current catalog's unchanged115 bindings and
+These geometry fixtures use the current catalog's 126 bindings and
 recovered128 adjacent template pairs. Real campaign transactions are covered
 separately; no map, historical profile or frozen gameplay oracle is rewritten.
 """
@@ -95,7 +95,7 @@ class ManualDeploymentTests(unittest.TestCase):
                     count+=1
         self.assertEqual((count,minima),(256,dict(attackers=4,defenders=5)))
 
-    def test_all115_city_regions_have_visible_manual_cells_and_twenty_placeable_units(self):
+    def test_all_city_regions_have_visible_manual_cells_and_twenty_placeable_units(self):
         count=0
         for target,mid in self.bindings.items():
             neighbors={row['source_original_city_index'] for row in self.reference[mid]['neighbors']}
@@ -109,7 +109,7 @@ class ManualDeploymentTests(unittest.TestCase):
                 self.finish(game,state,battle)
                 grid.validate(game,state,battle)
             count+=1
-        self.assertEqual(count,115)
+        self.assertEqual(count,126)
 
     def test_future_units_do_not_occupy_cells_and_each_default_rescans_from_first(self):
         game,state,battle=self.start('defenders')

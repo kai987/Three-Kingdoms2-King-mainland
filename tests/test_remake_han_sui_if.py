@@ -14,7 +14,9 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
+sys.path.insert(0, str(ROOT / 'game'))
 
+from build_campaigns import apply_patch
 from remake.campaign import Catalog
 from remake.session import CampaignSession
 
@@ -102,12 +104,34 @@ class HanSuiIfTests(unittest.TestCase):
                         for chapter in BASELINES]
         cls.review = json.loads((ROOT / 'game/config/references/retainer-affiliation-review.json').read_text())
         cls.decisions = {row['id']: row for row in cls.review['scenarios']}
+        sources = ROOT / 'game/config/campaigns'
+        cls.shared = json.loads((sources / 'shared.json').read_text())['catalog']
+        cls.sources = {row['id']: sources / row['file']
+                       for row in json.loads((sources / 'index.json').read_text())['scenarios']}
+        cls.expansion = json.loads((sources / 'city-expansion-openings.json').read_text())['scenarios']
         canonical = json.loads((ROOT / 'game/config/campaigns/people.json').read_text())
         cls.base_order = canonical['order'][:1030]
         cls.base_ids = set(cls.base_order)
         cls.base_snapshot = dict(order=cls.base_order,
                                  people={pid: canonical['people'][pid] for pid in cls.base_order})
         cls.new_ids = set(canonical['order'][1030:])
+
+    def pre_expansion_board(self, data):
+        """Apply the frozen Han Sui oracles to their original board domain."""
+        source = json.loads(self.sources[data['id']].read_text())
+        old = apply_patch(self.shared, source['overrides'])
+        plan = self.expansion[data['id']]
+        approved = {pid: city for city, people in plan['garrisons'].items() for pid in people}
+        old_locations = {row['person_id']: row['city'] for row in old['initial_officers']}
+        rows = []
+        for row in data['initial_officers']:
+            pid = row['person_id']
+            if pid in approved:
+                self.assertEqual(row['city'], approved[pid], pid)
+                row = dict(row, city=old_locations[pid])
+            rows.append(row)
+        return dict(data, active_cities=[city for city in data['active_cities']
+                                       if city not in plan['owners']], initial_officers=rows)
 
     def legacy_attributes(self, data):
         """Restore only explicitly reviewed death-year fields for the f65 hash.
@@ -258,7 +282,7 @@ class HanSuiIfTests(unittest.TestCase):
             restored.game.validate(restored.game.state)
 
     def test_188_separation_conserves_materials_people_and_other_garrisons(self):
-        data = self.catalogs['188-06'].data
+        data = self.pre_expansion_board(self.catalogs['188-06'].data)
         actual = (len(data['initial_officers']), len(data['initial_free_officers']),
                   sum(row['troops'] for row in data['initial_officers']),
                   *(sum(data['initial_city_resources'].get(city, data['initial_resources'])[field]
@@ -376,7 +400,7 @@ class HanSuiIfTests(unittest.TestCase):
     def test_separation_conserves_materials_stats_and_every_unaffected_garrison(self):
         for chapter, baseline in BASELINES.items():
             with self.subTest(chapter=chapter):
-                data = self.catalogs[chapter].data
+                data = self.pre_expansion_board(self.catalogs[chapter].data)
                 actual = (len(data['initial_officers']), len(data['initial_free_officers']),
                           sum(row['troops'] for row in data['initial_officers']),
                           *(sum(data['initial_city_resources'].get(city,

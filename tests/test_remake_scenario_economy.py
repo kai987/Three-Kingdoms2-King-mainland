@@ -38,6 +38,8 @@ class DatedScenarioEconomyTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.index = read('game/data/campaigns/index.json')
+        cls.expansion = read('game/config/campaigns/city-expansion-openings.json')['scenarios']
+        cls.expansion_cities = read('game/config/campaigns/city-expansion-map.json')['cities']
         cls.retainer_review = {row['id']: row for row in read(
             'game/config/references/retainer-affiliation-review.json')['scenarios']}
         cls.catalogs = {}
@@ -116,6 +118,9 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                 self.assertEqual(data['schema'], 'tk2-campaign-v1')
                 frozen = self.retainer_review[data['id']]
                 changes = {row['person_id']: row for row in frozen['changes']}
+                expansion = self.expansion[data['id']]
+                expansion_garrisons = {person: city for city, people in expansion['garrisons'].items()
+                                       for person in people}
                 for row in data['initial_officers']:
                     # Reviewed additions draw from existing city reserves.
                     # Exhaustion can give partial or zero troops; unchanged
@@ -128,7 +133,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                     self.assertEqual(row['troops'], expected, (date, row['person_id']))
                     if change:
                         self.assertEqual(change['after']['status'], 'serving')
-                        self.assertEqual(change['after']['city'], row['city'])
+                        self.assertEqual(row['city'], expansion_garrisons.get(row['person_id'], change['after']['city']))
                 actual_material = dict(
                     gold=sum(data['initial_city_resources'][city]['gold'] for city in data['active_cities']),
                     grain=sum(data['initial_city_resources'][city]['grain'] for city in data['active_cities']),
@@ -149,7 +154,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                             self.assertLess(value, 100000)
                             if values is stocks and field == 'reserves':
                                 self.assertGreaterEqual(value, 0)
-                                if value == 0:
+                                if value == 0 and key not in self.expansion_cities:
                                     self.assertGreater(baseline['reserves'], 0)
                                     self.assertTrue(any(transfer['actual_delta'] < 0
                                         and transfer['actual_after'] == 0
@@ -158,6 +163,9 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                             else:
                                 self.assertGreater(value, 0)
                     profile = data['city_profiles'][key]
+                    if key in self.expansion_cities:
+                        self.assertEqual(profile['tier'], 'normal')
+                        self.assertEqual(profile['basis'], 'historical_city_expansion_regional_balance')
                     self.assertIn(profile['tier'], ('normal', 'large', 'giant'))
                     self.assertIs(profile['is_SAN14_starting_resources'], False)
                     self.assertEqual(profile['economy_reference_date'], list(date[:2]))

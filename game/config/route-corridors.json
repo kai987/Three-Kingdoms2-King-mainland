@@ -127,6 +127,768 @@
         "basis": "依長江南岸與洞庭東岸區域交通概化江夏—長沙陸路，跨河處繪製橋梁表示渡越；不是已考證的連續漢代官道或古橋復原。",
         "source": "https://zh.wikisource.org/zh-hant/三國志/卷54"
       }
+    },
+    {
+      "from": "hefei",
+      "to": "jiujiang",
+      "mode": "land",
+      "terrain": "plain",
+      "points": [
+        [
+          990,
+          416
+        ],
+        [
+          978,
+          409
+        ],
+        [
+          965,
+          402
+        ],
+        [
+          954,
+          403
+        ],
+        [
+          945,
+          406
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·劉馥傳》與《吳主傳》載合肥經營及江淮軍行。連接壽春、合肥、廬江與江東方向的道路是本作區域走廊。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷15#劉馥"
+      }
+    },
+    {
+      "from": "hefei",
+      "to": "lujiang",
+      "mode": "land",
+      "terrain": "plain",
+      "points": [
+        [
+          990,
+          416
+        ],
+        [
+          982,
+          430
+        ],
+        [
+          977,
+          443
+        ],
+        [
+          951,
+          448
+        ],
+        [
+          936,
+          451
+        ],
+        [
+          925,
+          454
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·劉馥傳》與《吳主傳》載合肥經營及江淮軍行。連接壽春、合肥、廬江與江東方向的道路是本作區域走廊。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷15#劉馥"
+      }
+    },
+    {
+      "from": "hefei",
+      "to": "danyang",
+      "mode": "land",
+      "terrain": "plain",
+      "points": [
+        [
+          990,
+          416
+        ],
+        [
+          1002,
+          410
+        ],
+        [
+          1013,
+          415
+        ],
+        [
+          1024,
+          418
+        ],
+        [
+          1037,
+          422
+        ],
+        [
+          1050,
+          427
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·劉馥傳》與《吳主傳》載合肥經營及江淮軍行。連接壽春、合肥、廬江與江東方向的道路是本作區域走廊。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷15#劉馥"
+      }
+    },
+    {
+      "from": "guangling",
+      "to": "xiapi",
+      "mode": "land",
+      "terrain": "plain",
+      "points": [
+        [
+          1097,
+          387
+        ],
+        [
+          1076,
+          380
+        ],
+        [
+          1059,
+          374
+        ],
+        [
+          1040,
+          368
+        ],
+        [
+          1020,
+          362
+        ],
+        [
+          1009,
+          358
+        ],
+        [
+          996,
+          351
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·文帝紀》記曹丕至廣陵臨江。由下邳至廣陵以及建業方向的路徑代表江淮陸行與過江轉運。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷02"
+      }
+    },
+    {
+      "from": "guangling",
+      "to": "danyang",
+      "mode": "land",
+      "terrain": "plain",
+      "points": [
+        [
+          1097,
+          387
+        ],
+        [
+          1084,
+          390
+        ],
+        [
+          1076,
+          398
+        ],
+        [
+          1071,
+          410
+        ],
+        [
+          1061,
+          421
+        ],
+        [
+          1050,
+          427
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·文帝紀》記曹丕至廣陵臨江。由下邳至廣陵以及建業方向的路徑代表江淮陸行與過江轉運。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷02"
+      }
+    },
+    {
+      "from": "chaisang",
+      "to": "qichun",
+      "mode": "land",
+      "terrain": "plain",
+      "points": [
+        [
+          892,
+          552
+        ],
+        [
+          890,
+          542
+        ],
+        [
+          891,
+          532
+        ],
+        [
+          886,
+          523
+        ],
+        [
+          874,
+          512
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·諸葛亮傳》記柴桑為孫權接使與屯駐地。此線概括柴桑沿江地帶往蘄春及豫章的道路與渡口。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷35"
+      }
+    },
+    {
+      "from": "chaisang",
+      "to": "yuzhang",
+      "mode": "land",
+      "terrain": "plain",
+      "points": [
+        [
+          892,
+          552
+        ],
+        [
+          896,
+          562
+        ],
+        [
+          901,
+          571
+        ],
+        [
+          904,
+          579
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·諸葛亮傳》記柴桑為孫權接使與屯駐地。此線概括柴桑沿江地帶往蘄春及豫章的道路與渡口。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷35"
+      }
+    },
+    {
+      "from": "xicheng",
+      "to": "hanzhong",
+      "mode": "land",
+      "terrain": "mountain",
+      "points": [
+        [
+          475,
+          427
+        ],
+        [
+          461,
+          422
+        ],
+        [
+          443,
+          419
+        ],
+        [
+          430,
+          417
+        ],
+        [
+          421,
+          411
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·劉封傳》載西城、上庸、房陵的分合及漢水軍行。山地陸線連接漢中、西城、上庸與房陵的城址。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷40"
+      }
+    },
+    {
+      "from": "xicheng",
+      "to": "shangyong",
+      "mode": "land",
+      "terrain": "mountain",
+      "points": [
+        [
+          475,
+          427
+        ],
+        [
+          487,
+          420
+        ],
+        [
+          503,
+          416
+        ],
+        [
+          522,
+          419
+        ],
+        [
+          539,
+          415
+        ],
+        [
+          557,
+          416
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·劉封傳》載西城、上庸、房陵的分合及漢水軍行。山地陸線連接漢中、西城、上庸與房陵的城址。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷40"
+      }
+    },
+    {
+      "from": "shangyong",
+      "to": "xincheng",
+      "mode": "land",
+      "terrain": "mountain",
+      "points": [
+        [
+          557,
+          416
+        ],
+        [
+          575,
+          419
+        ],
+        [
+          586,
+          414
+        ],
+        [
+          598,
+          416
+        ],
+        [
+          610,
+          427
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·劉封傳》載西城、上庸、房陵的分合及漢水軍行。山地陸線連接漢中、西城、上庸與房陵的城址。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷40"
+      }
+    },
+    {
+      "from": "yiling",
+      "to": "yidu",
+      "mode": "land",
+      "terrain": "mountain",
+      "points": [
+        [
+          614,
+          487
+        ],
+        [
+          626,
+          484
+        ],
+        [
+          637,
+          480
+        ],
+        [
+          647,
+          472
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·陸遜傳》記夷陵沿山佈營的軍行。道路以長江北岸與峽口兩側的區域通行為依據。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷58"
+      }
+    },
+    {
+      "from": "yiling",
+      "to": "nanjun",
+      "mode": "land",
+      "terrain": "plain",
+      "points": [
+        [
+          614,
+          487
+        ],
+        [
+          633,
+          491
+        ],
+        [
+          646,
+          495
+        ],
+        [
+          667,
+          511
+        ],
+        [
+          681,
+          507
+        ],
+        [
+          691,
+          503
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·陸遜傳》記夷陵沿山佈營的軍行。道路以長江北岸與峽口兩側的區域通行為依據。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷58"
+      }
+    },
+    {
+      "from": "yiling",
+      "to": "jianping",
+      "mode": "land",
+      "terrain": "mountain",
+      "points": [
+        [
+          614,
+          487
+        ],
+        [
+          608,
+          498
+        ],
+        [
+          602,
+          510
+        ],
+        [
+          596,
+          519
+        ],
+        [
+          593,
+          528
+        ],
+        [
+          592,
+          536
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《宋書·州郡志》記吳建平與巴東、宜都周邊的縣域沿革。峽江岸路以既有峽谷通道為概化。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/宋書/卷37"
+      }
+    },
+    {
+      "from": "jianping",
+      "to": "badong",
+      "mode": "land",
+      "terrain": "mountain",
+      "points": [
+        [
+          592,
+          536
+        ],
+        [
+          587,
+          518
+        ],
+        [
+          580,
+          503
+        ],
+        [
+          569,
+          492
+        ],
+        [
+          555,
+          476
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《宋書·州郡志》記吳建平與巴東、宜都周邊的縣域沿革。峽江岸路以既有峽谷通道為概化。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/宋書/卷37"
+      }
+    },
+    {
+      "from": "changli",
+      "to": "liaodong",
+      "mode": "land",
+      "terrain": "plain",
+      "points": [
+        [
+          1138,
+          57
+        ],
+        [
+          1154,
+          60
+        ],
+        [
+          1170,
+          65
+        ],
+        [
+          1183,
+          73
+        ],
+        [
+          1194,
+          78
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·齊王芳紀》記遼東屬國置昌黎縣。《晉書·地理志》列昌黎與遼東、遼西，據其相鄰區域配置沿岸與支谷道路。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/晉書/卷014#平州"
+      }
+    },
+    {
+      "from": "changli",
+      "to": "liaoxi",
+      "mode": "land",
+      "terrain": "plain",
+      "points": [
+        [
+          1138,
+          57
+        ],
+        [
+          1122,
+          60
+        ],
+        [
+          1109,
+          63
+        ],
+        [
+          1092,
+          76
+        ],
+        [
+          1077,
+          92
+        ],
+        [
+          1067,
+          109
+        ],
+        [
+          1061,
+          121
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·齊王芳紀》記遼東屬國置昌黎縣。《晉書·地理志》列昌黎與遼東、遼西，據其相鄰區域配置沿岸與支谷道路。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/晉書/卷014#平州"
+      }
+    },
+    {
+      "from": "pingyang",
+      "to": "hedong",
+      "mode": "land",
+      "terrain": "plain",
+      "points": [
+        [
+          690,
+          273
+        ],
+        [
+          679,
+          284
+        ],
+        [
+          655,
+          287
+        ],
+        [
+          638,
+          301
+        ],
+        [
+          629,
+          322
+        ],
+        [
+          634,
+          340
+        ],
+        [
+          647,
+          360
+        ],
+        [
+          657,
+          385
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·齊王芳紀》記從河東汾北分置平陽郡。遊戲用汾水谷地及通上黨的山道概括區域聯繫。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷04#齊王"
+      }
+    },
+    {
+      "from": "pingyang",
+      "to": "shangdang",
+      "mode": "land",
+      "terrain": "mountain",
+      "points": [
+        [
+          690,
+          273
+        ],
+        [
+          702,
+          273
+        ],
+        [
+          714,
+          268
+        ],
+        [
+          725,
+          267
+        ],
+        [
+          733,
+          266
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·齊王芳紀》記從河東汾北分置平陽郡。遊戲用汾水谷地及通上黨的山道概括區域聯繫。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷04#齊王"
+      }
+    },
+    {
+      "from": "hengyang",
+      "to": "changsha",
+      "mode": "land",
+      "terrain": "plain",
+      "points": [
+        [
+          716,
+          623
+        ],
+        [
+          709,
+          611
+        ],
+        [
+          712,
+          595
+        ],
+        [
+          721,
+          587
+        ],
+        [
+          727,
+          577
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·孫亮傳》記長沙分出衡陽及湘東，《水經注》描述湘水與沿岸縣城。此線概括湘水河谷及通桂陽的山間陸路。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/水經注/38"
+      }
+    },
+    {
+      "from": "hengyang",
+      "to": "xiangdong",
+      "mode": "land",
+      "terrain": "plain",
+      "points": [
+        [
+          716,
+          623
+        ],
+        [
+          731,
+          628
+        ],
+        [
+          747,
+          631
+        ],
+        [
+          757,
+          640
+        ],
+        [
+          767,
+          646
+        ],
+        [
+          772,
+          656
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·孫亮傳》記長沙分出衡陽及湘東，《水經注》描述湘水與沿岸縣城。此線概括湘水河谷及通桂陽的山間陸路。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/水經注/38"
+      }
+    },
+    {
+      "from": "xiangdong",
+      "to": "guiyang",
+      "mode": "land",
+      "terrain": "mountain",
+      "points": [
+        [
+          772,
+          656
+        ],
+        [
+          762,
+          663
+        ],
+        [
+          748,
+          668
+        ],
+        [
+          738,
+          669
+        ],
+        [
+          730,
+          671
+        ]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·孫亮傳》記長沙分出衡陽及湘東，《水經注》描述湘水與沿岸縣城。此線概括湘水河谷及通桂陽的山間陸路。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/水經注/38"
+      }
     }
   ],
   "river_rules": {

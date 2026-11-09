@@ -4,7 +4,7 @@
   "survey": {
     "water_source": "game/map-source/historic-water.svg",
     "wei_correction": "game/config/water-corrections.json",
-    "method": "Legacy river centerline samples retain the existing named blue-water masks and accepted Wei correction. The attested Fu–Jialing corridor adds a narrow authored branch and a shared Dianjiang confluence; existing river trunks, city positions and mountains are unchanged. Pixel and geographic ports are game calibrations, not identified ancient harbours."
+    "method": "Legacy river centerline samples retain the existing named blue-water masks and accepted Wei correction. The attested Fu–Jialing corridor adds a narrow authored branch and a shared Dianjiang confluence; existing river trunks, city positions and mountains are unchanged. Pixel and geographic ports are game calibrations, not identified ancient harbours. 此次新增城市沿用既有水面，新增港點將共用河段按位置切分，未改動水域像素。"
   },
   "rivers": {
     "yangtze": {
@@ -657,6 +657,86 @@
       "geo": [
         106.28,
         29.97
+      ]
+    },
+    "yangtze:guangling": {
+      "position": [
+        1089,
+        406
+      ],
+      "geo": [
+        119.42,
+        32.22
+      ]
+    },
+    "yangtze:chaisang": {
+      "position": [
+        895,
+        547
+      ],
+      "geo": [
+        115.86,
+        29.78
+      ]
+    },
+    "han:xicheng": {
+      "position": [
+        475,
+        444
+      ],
+      "geo": [
+        109.03,
+        32.72
+      ]
+    },
+    "han:shangyong": {
+      "position": [
+        556,
+        453
+      ],
+      "geo": [
+        110.43,
+        32.82
+      ]
+    },
+    "yangtze:jianping": {
+      "position": [
+        592,
+        503
+      ],
+      "geo": [
+        109.89,
+        31.07
+      ]
+    },
+    "yangtze:yiling": {
+      "position": [
+        610,
+        501
+      ],
+      "geo": [
+        111.28,
+        30.71
+      ]
+    },
+    "xiang:xiangdong": {
+      "position": [
+        687,
+        643
+      ],
+      "geo": [
+        112.64,
+        26.9
+      ]
+    },
+    "xiang:hengyang": {
+      "position": [
+        689,
+        625
+      ],
+      "geo": [
+        112.6,
+        27.66
       ]
     }
   },
@@ -1400,6 +1480,150 @@
           462
         ]
       ]
+    },
+    "guangling": {
+      "node": "yangtze:guangling",
+      "access": [
+        [
+          1097,
+          387
+        ],
+        [
+          1094,
+          397
+        ],
+        [
+          1089,
+          406
+        ]
+      ]
+    },
+    "chaisang": {
+      "node": "yangtze:chaisang",
+      "access": [
+        [
+          892,
+          552
+        ],
+        [
+          895,
+          547
+        ]
+      ]
+    },
+    "xicheng": {
+      "node": "han:xicheng",
+      "access": [
+        [
+          475,
+          427
+        ],
+        [
+          475,
+          444
+        ]
+      ]
+    },
+    "shangyong": {
+      "node": "han:shangyong",
+      "access": [
+        [
+          557,
+          416
+        ],
+        [
+          560,
+          427
+        ],
+        [
+          561,
+          441
+        ],
+        [
+          556,
+          453
+        ]
+      ]
+    },
+    "yiling": {
+      "node": "yangtze:yiling",
+      "access": [
+        [
+          614,
+          487
+        ],
+        [
+          610,
+          501
+        ]
+      ]
+    },
+    "jianping": {
+      "node": "yangtze:jianping",
+      "access": [
+        [
+          592,
+          536
+        ],
+        [
+          594,
+          526
+        ],
+        [
+          595,
+          514
+        ],
+        [
+          592,
+          503
+        ]
+      ]
+    },
+    "hengyang": {
+      "node": "xiang:hengyang",
+      "access": [
+        [
+          716,
+          623
+        ],
+        [
+          704,
+          624
+        ],
+        [
+          689,
+          625
+        ]
+      ]
+    },
+    "xiangdong": {
+      "node": "xiang:xiangdong",
+      "access": [
+        [
+          772,
+          656
+        ],
+        [
+          750,
+          649
+        ],
+        [
+          727,
+          643
+        ],
+        [
+          707,
+          638
+        ],
+        [
+          695,
+          638
+        ],
+        [
+          687,
+          643
+        ]
+      ]
     }
   },
   "reaches": [
@@ -1756,10 +1980,10 @@
       ]
     },
     {
-      "id": "yangtze:badong:yidu",
+      "id": "yangtze:badong:jianping",
       "river": "yangtze",
       "from": "yangtze:badong",
-      "to": "yangtze:yidu",
+      "to": "yangtze:jianping",
       "points": [
         [
           568,
@@ -1796,6 +2020,18 @@
         [
           592,
           503
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:jianping:yiling",
+      "river": "yangtze",
+      "from": "yangtze:jianping",
+      "to": "yangtze:yiling",
+      "points": [
+        [
+          592,
+          503
         ],
         [
           595,
@@ -1817,6 +2053,18 @@
           607,
           501
         ],
+        [
+          610,
+          501
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:yiling:yidu",
+      "river": "yangtze",
+      "from": "yangtze:yiling",
+      "to": "yangtze:yidu",
+      "points": [
         [
           610,
           501
@@ -2432,10 +2680,10 @@
       ]
     },
     {
-      "id": "yangtze:danyang:wujun",
+      "id": "yangtze:danyang:guangling",
       "river": "yangtze",
       "from": "yangtze:danyang",
-      "to": "yangtze:wujun",
+      "to": "yangtze:guangling",
       "points": [
         [
           1050,
@@ -2489,6 +2737,18 @@
           1086,
           406
         ],
+        [
+          1089,
+          406
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:guangling:wujun",
+      "river": "yangtze",
+      "from": "yangtze:guangling",
+      "to": "yangtze:wujun",
+      "points": [
         [
           1089,
           406
@@ -2572,10 +2832,10 @@
       ]
     },
     {
-      "id": "han:hanzhong:xincheng",
+      "id": "han:hanzhong:xicheng",
       "river": "han",
       "from": "han:hanzhong",
-      "to": "han:xincheng",
+      "to": "han:xicheng",
       "points": [
         [
           421,
@@ -2649,6 +2909,18 @@
           472,
           443
         ],
+        [
+          475,
+          444
+        ]
+      ]
+    },
+    {
+      "id": "han:xicheng:shangyong",
+      "river": "han",
+      "from": "han:xicheng",
+      "to": "han:shangyong",
+      "points": [
         [
           475,
           444
@@ -2757,6 +3029,18 @@
           553,
           453
         ],
+        [
+          556,
+          453
+        ]
+      ]
+    },
+    {
+      "id": "han:shangyong:xincheng",
+      "river": "han",
+      "from": "han:shangyong",
+      "to": "han:xincheng",
+      "points": [
         [
           556,
           453
@@ -4692,10 +4976,10 @@
       ]
     },
     {
-      "id": "xiang:lingling:changsha",
+      "id": "xiang:lingling:xiangdong",
       "river": "xiang",
       "from": "xiang:lingling",
-      "to": "xiang:changsha",
+      "to": "xiang:xiangdong",
       "points": [
         [
           687,
@@ -4720,6 +5004,18 @@
         [
           687,
           643
+        ]
+      ]
+    },
+    {
+      "id": "xiang:xiangdong:hengyang",
+      "river": "xiang",
+      "from": "xiang:xiangdong",
+      "to": "xiang:hengyang",
+      "points": [
+        [
+          687,
+          643
         ],
         [
           687,
@@ -4741,6 +5037,18 @@
           689,
           628
         ],
+        [
+          689,
+          625
+        ]
+      ]
+    },
+    {
+      "id": "xiang:hengyang:changsha",
+      "river": "xiang",
+      "from": "xiang:hengyang",
+      "to": "xiang:changsha",
+      "points": [
         [
           689,
           625
@@ -4968,10 +5276,10 @@
       ]
     },
     {
-      "id": "yangtze:qichun:pengli",
+      "id": "yangtze:qichun:chaisang",
       "river": "yangtze",
       "from": "yangtze:qichun",
-      "to": "yangtze:pengli",
+      "to": "yangtze:chaisang",
       "points": [
         [
           880,
@@ -4993,6 +5301,18 @@
           892,
           547
         ],
+        [
+          895,
+          547
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:chaisang:pengli",
+      "river": "yangtze",
+      "from": "yangtze:chaisang",
+      "to": "yangtze:pengli",
+      "points": [
         [
           895,
           547
@@ -5938,7 +6258,9 @@
       "from": "badong",
       "to": "yidu",
       "reaches": [
-        "yangtze:badong:yidu"
+        "yangtze:badong:jianping",
+        "yangtze:jianping:yiling",
+        "yangtze:yiling:yidu"
       ]
     },
     {
@@ -5975,7 +6297,8 @@
       "from": "qichun",
       "to": "lujiang",
       "reaches": [
-        "yangtze:qichun:pengli",
+        "yangtze:qichun:chaisang",
+        "yangtze:chaisang:pengli",
         "yangtze:pengli:lujiang"
       ]
     },
@@ -5990,7 +6313,8 @@
       "from": "danyang",
       "to": "wujun",
       "reaches": [
-        "yangtze:danyang:wujun"
+        "yangtze:danyang:guangling",
+        "yangtze:guangling:wujun"
       ]
     },
     {
@@ -6006,7 +6330,9 @@
       "from": "hanzhong",
       "to": "xincheng",
       "reaches": [
-        "han:hanzhong:xincheng"
+        "han:hanzhong:xicheng",
+        "han:xicheng:shangyong",
+        "han:shangyong:xincheng"
       ],
       "history": {
         "classification": "attested_upper_han_downstream_plan_game_navigation",
@@ -6149,7 +6475,9 @@
       "from": "lingling",
       "to": "changsha",
       "reaches": [
-        "xiang:lingling:changsha"
+        "xiang:lingling:xiangdong",
+        "xiang:xiangdong:hengyang",
+        "xiang:hengyang:changsha"
       ]
     },
     {
@@ -6224,7 +6552,9 @@
       "from": "badong",
       "to": "nanjun",
       "reaches": [
-        "yangtze:badong:yidu",
+        "yangtze:badong:jianping",
+        "yangtze:jianping:yiling",
+        "yangtze:yiling:yidu",
         "yangtze:yidu:nanjun"
       ],
       "optional_port_bypass": "yidu"
@@ -6286,6 +6616,232 @@
           "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_44679"
         ],
         "limits": "史料證明軍事水陸通道，未提供全年雙向大艦運能、古港精確位置或逐日航速。像素水線、港點與地理坐標屬本作概化；沿用既定長江順逆流航速，內河不適用海路季風或海上風暴減員。此墊江為今合川，不是今日墊江縣。"
+      }
+    },
+    {
+      "from": "guangling",
+      "to": "danyang",
+      "reaches": [
+        "-yangtze:danyang:guangling"
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "廣陵按長江北岸接駁建業與吳縣方向，沿用既有長江河道。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷02"
+        ]
+      }
+    },
+    {
+      "from": "guangling",
+      "to": "wujun",
+      "reaches": [
+        "yangtze:guangling:wujun"
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "廣陵按長江北岸接駁建業與吳縣方向，沿用既有長江河道。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷02"
+        ]
+      }
+    },
+    {
+      "from": "chaisang",
+      "to": "qichun",
+      "reaches": [
+        "-yangtze:qichun:chaisang"
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "柴桑以長江南岸港點接入同一主河道，往鄱陽經彭蠡湖口。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷35",
+          "https://zh.wikisource.org/wiki/水經注/35"
+        ]
+      }
+    },
+    {
+      "from": "chaisang",
+      "to": "lujiang",
+      "reaches": [
+        "yangtze:chaisang:pengli",
+        "yangtze:pengli:lujiang"
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "柴桑以長江南岸港點接入同一主河道，往鄱陽經彭蠡湖口。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷35",
+          "https://zh.wikisource.org/wiki/水經注/35"
+        ]
+      }
+    },
+    {
+      "from": "chaisang",
+      "to": "poyang",
+      "reaches": [
+        "yangtze:chaisang:pengli",
+        "-pengli:poyang:yangtze"
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "柴桑以長江南岸港點接入同一主河道，往鄱陽經彭蠡湖口。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷35",
+          "https://zh.wikisource.org/wiki/水經注/35"
+        ]
+      }
+    },
+    {
+      "from": "xicheng",
+      "to": "hanzhong",
+      "reaches": [
+        "-han:hanzhong:xicheng"
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "西城位於漢水沿線。上庸在堵水一帶，採從城址陸路到漢水的接駁，未把堵水全程設為軍用航道。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷40",
+          "https://zh.wikisource.org/wiki/水經注/27"
+        ]
+      }
+    },
+    {
+      "from": "xicheng",
+      "to": "shangyong",
+      "reaches": [
+        "han:xicheng:shangyong"
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "西城位於漢水沿線。上庸在堵水一帶，採從城址陸路到漢水的接駁，未把堵水全程設為軍用航道。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷40",
+          "https://zh.wikisource.org/wiki/水經注/27"
+        ]
+      }
+    },
+    {
+      "from": "shangyong",
+      "to": "xincheng",
+      "reaches": [
+        "han:shangyong:xincheng"
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "西城位於漢水沿線。上庸在堵水一帶，採從城址陸路到漢水的接駁，未把堵水全程設為軍用航道。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷40",
+          "https://zh.wikisource.org/wiki/水經注/27"
+        ]
+      }
+    },
+    {
+      "from": "yiling",
+      "to": "yidu",
+      "reaches": [
+        "yangtze:yiling:yidu"
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "峽江水線沿長江主幹。西陵、宜都、巴東及吳建平分用各地接岸點；晉同名郡另有沿革。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/34",
+          "https://zh.wikisource.org/wiki/宋書/卷37"
+        ]
+      }
+    },
+    {
+      "from": "yiling",
+      "to": "jianping",
+      "reaches": [
+        "-yangtze:jianping:yiling"
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "峽江水線沿長江主幹。西陵、宜都、巴東及吳建平分用各地接岸點；晉同名郡另有沿革。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/34",
+          "https://zh.wikisource.org/wiki/宋書/卷37"
+        ]
+      }
+    },
+    {
+      "from": "yiling",
+      "to": "nanjun",
+      "reaches": [
+        "yangtze:yiling:yidu",
+        "yangtze:yidu:nanjun"
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "峽江水線沿長江主幹。西陵、宜都、巴東及吳建平分用各地接岸點；晉同名郡另有沿革。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/34",
+          "https://zh.wikisource.org/wiki/宋書/卷37"
+        ]
+      }
+    },
+    {
+      "from": "jianping",
+      "to": "badong",
+      "reaches": [
+        "-yangtze:badong:jianping"
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "峽江水線沿長江主幹。西陵、宜都、巴東及吳建平分用各地接岸點；晉同名郡另有沿革。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/34",
+          "https://zh.wikisource.org/wiki/宋書/卷37"
+        ]
+      }
+    },
+    {
+      "from": "hengyang",
+      "to": "changsha",
+      "reaches": [
+        "xiang:hengyang:changsha"
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "衡陽郡治湘南與湘東郡治酃縣都連接湘水河谷。兩城接岸道路沿用既有湘水主幹。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/38",
+          "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnux22fnsn_304"
+        ]
+      }
+    },
+    {
+      "from": "hengyang",
+      "to": "xiangdong",
+      "reaches": [
+        "-xiang:xiangdong:hengyang"
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "衡陽郡治湘南與湘東郡治酃縣都連接湘水河谷。兩城接岸道路沿用既有湘水主幹。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/38",
+          "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnux22fnsn_304"
+        ]
+      }
+    },
+    {
+      "from": "xiangdong",
+      "to": "lingling",
+      "reaches": [
+        "-xiang:lingling:xiangdong"
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "衡陽郡治湘南與湘東郡治酃縣都連接湘水河谷。兩城接岸道路沿用既有湘水主幹。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/38",
+          "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnux22fnsn_304"
+        ]
       }
     }
   ]
