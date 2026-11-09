@@ -443,7 +443,8 @@ function renderMap(){
  const cityProfiles=preview?.city_profiles||view.catalog.city_profiles||{};
  const focused=preview?.focus||selectedCity,selected=board.find(c=>c.id===focused),center=selected?mapPosition(selected):[760,440];
  const world=(preview?preview.world:view.catalog.world)||{x:0,y:0,width:1352,height:1024,background:view.catalog.map_presentation.background};
- const backgroundHref=mapBackgroundHref(world.background);
+ const baseBackgroundHref=mapBackgroundHref(world.background);
+ const backgroundHref=globalThis.GameMapTerrain?.controller?.resolve(baseBackgroundHref)??baseBackgroundHref;
  const cameraKey=[world.x,world.y||0,world.width,world.height,world.background].join(':');
  const date={day:1,...(preview||game||view.catalog.scenarios.find(s=>s.id===view.catalog.scenario_id))};
  // Only presentation inputs belong in this key. Troops, funds, RNG and command
@@ -481,7 +482,7 @@ function renderMap(){
   const mask=[...view.catalog.map_presentation.castle_fill_pixels,...view.catalog.map_presentation.castle_outline_pixels].map(([dx,dy])=>`<rect x="${x+dx}" y="${y+dy}" width="4" height="4"/>`).join('');
   return `<g data-inactive-city="${c.id}" pointer-events="none"><defs><clipPath id="${clip}" clipPathUnits="userSpaceOnUse">${mask}</clipPath></defs><image href="${mapBackgroundHref(inactiveGround)}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}" clip-path="url(#${clip})"/></g>`;
  }).join(''):'';
- const recolor=view.catalog.map_presentation.mountain_recolors;
+ const recolor=backgroundHref===baseBackgroundHref?view.catalog.map_presentation.mountain_recolors:null;
  const mountainMask=recolor?.patches.map(p=>p.runs.map(([y,x,n])=>`M${x} ${y}h${n}v1h-${n}z`).join('')).join('')||'';
  const mountainDefs=mountainMask?`<clipPath id="western-mountain-faces"><path d="${mountainMask}"/></clipPath><filter id="western-mountain-color" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="${recolor.color_matrix.join(' ')}"/></filter>`:'';
  const mountainColors=mountainMask?`<g clip-path="url(#western-mountain-faces)" data-terrain-recolor="chengdu-west"><image href="${backgroundHref}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}" filter="url(#western-mountain-color)"/></g>`:'';
