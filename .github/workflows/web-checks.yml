@@ -378,8 +378,8 @@ jobs:
     needs: [scope, web-build]
     if: needs.scope.outputs.web == 'true'
     runs-on: ubuntu-latest
-    # Includes real per-squad battles and three village services on both devices.
-    timeout-minutes: 35
+    # Allow for runner variability in the full touch suite with the expanded map.
+    timeout-minutes: ${{ matrix.project == 'touch-chromium' && 40 || 35 }}
     strategy:
       fail-fast: false
       matrix:
