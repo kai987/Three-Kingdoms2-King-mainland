@@ -23,6 +23,18 @@
       "scenario_scope": "unbound"
     },
     {
+      "id": "observer-speed",
+      "title": "observer speed changes cadence without resuming a pause and city counts follow ownership",
+      "groups": [
+        "scenarios",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland184-02"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
       "id": "road-beds",
       "title": "city road beds survive hidden castles, shared inland reaches draw once and ruler portraits stay centered",
       "groups": [
