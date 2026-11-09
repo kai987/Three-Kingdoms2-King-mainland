@@ -9,7 +9,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake import civil_staff as staff
-from remake import command_books
+from remake import command_books, diplomacy
 from remake.errors import GameError
 from remake.officers import GameRules
 
@@ -84,9 +84,9 @@ class CivilStaffTests(unittest.TestCase):
         pool = state.extension['civil_staff']
         candidate = pool['cities']['empty']['candidate']
         self.assertEqual(candidate['id'], 'clerk-005001')
-        self.assertEqual(candidate['profile']['virtue'], 60)
+        self.assertTrue(60 <= candidate['profile']['virtue'] <= 70)
         self.assertTrue(10 <= candidate['profile']['martial_strength'] <= 35)
-        self.assertTrue(40 <= candidate['profile']['intellect'] <= 65)
+        self.assertTrue(60 <= candidate['profile']['intellect'] <= 90)
         self.assertIsNone(pool['cities']['one']['candidate'])
         self.assertIsNone(pool['cities']['capital']['candidate'])
         self.assertIsNone(pool['cities']['neutral']['candidate'])
@@ -99,6 +99,15 @@ class CivilStaffTests(unittest.TestCase):
         staff.synchronize(game, state, opening=True)
         self.assertEqual(state, frozen)
         staff.validate(game, state)
+
+    def test_generated_intellect_and_virtue_cover_both_inclusive_bounds(self):
+        game, state = fixture()
+        before = deepcopy(state)
+        profiles = [staff._immutable_record(game, state, number)['profile']
+                    for number in range(1, 129)]
+        for field, high in (('intellect', 90), ('virtue', 70)):
+            self.assertEqual({profile[field] for profile in profiles}, set(range(60, high + 1)))
+        self.assertEqual(state, before)
 
     def test_marching_roster_and_confirmed_near_arrivals_prevent_false_empty_city_offer(self):
         game, state = fixture()
@@ -307,6 +316,23 @@ class CivilStaffTests(unittest.TestCase):
         self.assertEqual({i:o for i,o in state.officers.items() if type(i) is int}, historical)
         staff.validate(game, state)
 
+    def test_captured_generated_employee_uses_custody_location_without_a_free_location(self):
+        game, state = fixture()
+        person = open_and_hire(game, state)
+        ident = person['id']
+        officer = state.officers[ident]
+        state.cities['empty'].roster.officer_ids.remove(ident)
+        state.cities['capital'].owner = 'two'
+        self.assertTrue(diplomacy.capture(state, officer, city='capital', captor='two', origin='one'))
+        officer.faction_id, officer.loyalty = None, 0
+        staff.synchronize(game, state, checks=False)
+        self.assertEqual((person['city'], person['owner'], person['working']), ('capital', 'neutral', False))
+        self.assertNotIn(ident, state.extension.get('free_locations', {}))
+        staff.validate(game, state)
+        person['city'] = 'empty'
+        with self.assertRaisesRegex(ValueError, 'runtime location'):
+            staff.validate(game, state)
+
     def test_players_and_ai_use_same_hire_and_payroll_with_no_remote_event_flood(self):
         game, state = fixture()
         state.cities['empty'].owner = 'two'
@@ -325,9 +351,8 @@ class CivilStaffTests(unittest.TestCase):
         self.assertFalse(state.events)
         advance_month(game, state)
         staff.synchronize(game, state, monthly=True)
-        self.assertEqual(state.cities['empty'].gold, gold-65 +
-                         (4 if person['specialty'] == 'commerce' and person['profile']['intellect'] < 60 else
-                          5 if person['specialty'] == 'commerce' else 0))
+        bonus = 2 + person['profile']['intellect'] // 20 if person['specialty'] == 'commerce' else 0
+        self.assertEqual(state.cities['empty'].gold, gold - 65 + bonus)
         self.assertFalse(any(event['kind'] == 'staff_salary' for event in state.events))
         staff.validate(game, state)
 

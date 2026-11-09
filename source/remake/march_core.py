@@ -147,8 +147,14 @@ def invoke(operation, *, data=None, **payload):
         return _call(lib, dict(payload, op=operation))
 
 
-def state_input(state):
-    return dict(cities=[dict(id=city.id, owner=city.owner) for city in state.cities.values()],
+def state_input(state, owner=None):
+    from .historical_campaigns import allied
+    allies = {faction for faction in {city.owner for city in state.cities.values()}
+              if owner is not None and allied(state, owner, faction)}
+    # Rust treats neutral nodes as pass-through but never as destinations for
+    # transfers. Project allied owners only in this calculation's input.
+    return dict(cities=[dict(id=city.id, owner='neutral' if city.owner in allies else city.owner)
+                        for city in state.cities.values()],
                 year=getattr(state, 'year', None),
                 month=state.month,
                 discovered=state.extension.get('travel', {}).get('discovered', []))

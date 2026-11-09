@@ -12,7 +12,7 @@
   develop_land:['開墾土地','土地の開墾'],develop_industry:['開發產業','産業の開発'],develop_population:['町開發（人口）','町の開発（人口）'],
   develop_town:['整備設施','施設の整備'],treat_officer:['治療武將','武将の治療'],study_officer:['武將進修','武将の学習'],
   trade_grain:['交易兵糧','兵糧の取引'],buy_equipment:['購買裝備','装備の購入'],equip_owned:['更換裝備','装備の変更'],
-  improve_prevention:['加強防災','防災の強化']
+  improve_prevention:['加強防災','防災の強化'],diplomacy:['外交','外交']
  });
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const choose=(locale,tc,ja)=>locale==='ja'?ja:tc;
@@ -29,6 +29,7 @@
   const raw=id?(options.cityName?.(id)||id):choose(locale,'本勢力','自勢力');
   const city=options.translate?.(raw,locale)||raw;
   let action=labels?.[locale==='ja'?1:0]||kind,allocation_count=null,allocation_delta=null;
+  if(kind==='diplomacy')action=root.GameDiplomacy?.actionName(payload.action,locale)||action;
   if(kind==='allocate'&&Array.isArray(payload.allocations)){
    allocation_count=payload.allocations.length;
    allocation_delta=payload.allocations.reduce((sum,row)=>sum+row.troops-(view.game.officers?.[row.officer]?.troops??0),0);

@@ -10,7 +10,7 @@ from itertools import combinations
 
 from .difficulty import attack_budget, get_settings
 from .errors import GameError
-from . import command_books, historical_campaigns, officer_relations
+from . import command_books, diplomacy, historical_campaigns, officer_relations
 from .officers import integer, recruitment_loyalty, ref_sort_key
 from . import civil_staff
 from .march_supply import DENOMINATOR, OFFICER_UNITS, estimate as march_grain, next_supply_days, required_grain
@@ -218,10 +218,16 @@ class StrategicAI:
         return max(self.settings['min_attack_troops'],
                    (self.strength(target)*self.settings['attack_ratio_percent']+99)//100)
 
+    def priority_targets(self, owner, targets):
+        requested = diplomacy.requested_target(self.state, owner)
+        if requested in targets:
+            return {requested}, requested
+        return historical_campaigns.priority_targets(self.state, owner, targets)
+
     def objective(self, owner, preferred=None):
         approaches = self.attack_approaches(owner)
         targets = sorted(approaches)
-        priority, first = historical_campaigns.priority_targets(self.state, owner, targets)
+        priority, first = self.priority_targets(owner, targets)
         if priority:
             targets = sorted(priority)
         elif preferred in targets:
@@ -316,7 +322,7 @@ class StrategicAI:
         from .battle_supply import BUDGET_DAYS
 
         approaches = self.attack_approaches(owner)
-        priority, first = historical_campaigns.priority_targets(self.state, owner, sorted(approaches))
+        priority, first = self.priority_targets(owner, sorted(approaches))
         targets = sorted(priority or approaches)
         requests, fronts = [], []
         max_columns = min(self.settings['max_attack_sources'], self.budget)

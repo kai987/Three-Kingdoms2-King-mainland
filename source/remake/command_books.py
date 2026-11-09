@@ -11,7 +11,7 @@ TOTAL_BY_CITIES = (0, 3, 3, 3, 4, 5, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9,
                    9, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13)
 MAXIMUM = 13
 COSTS = dict(recruit=1, recruit_officer=1, persuade_officer=1, staff_recruit=1,
-             hire_staff=1, depart=1, transfer=1, dispatch_transport=1,
+             hire_staff=1, depart=1, transfer=1, dispatch_transport=1, diplomacy=1,
              search_treasure=1, reward_officer=1, sell_treasure=1,
              develop_land=1, develop_industry=1, develop_population=1,
              develop_town=1, treat_officer=1, study_officer=1, trade_grain=1,

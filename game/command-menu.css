@@ -28,3 +28,11 @@
 .city-roster-list button > span:last-child { flex: 0 0 auto; font-size: 14px; }
 
 .command-books{margin:6px 0;padding:5px 8px;border:1px solid currentColor;line-height:1.4;overflow-wrap:anywhere}
+.diplomacy-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}
+.diplomacy-fields input,[data-diplomacy-dialog]>label>input{width:100%;min-width:0}
+.diplomacy-relations-scroll{max-height:12em;overflow:auto;margin:6px 0 12px}
+[data-diplomacy-relations]{margin-bottom:12px}
+[data-diplomacy-relations] summary{min-height:44px;display:list-item;cursor:pointer;padding:8px 0}
+.diplomacy-relations-scroll table{width:100%;border-collapse:collapse;text-align:left}
+.diplomacy-relations-scroll th,.diplomacy-relations-scroll td{border-bottom:1px solid currentColor;padding:4px 6px}
+@media(max-width:520px){.diplomacy-fields{grid-template-columns:minmax(0,1fr)}}

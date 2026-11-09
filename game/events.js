@@ -140,7 +140,7 @@
   staff_candidate:['地方文吏推薦','在地文官の推薦'],staff_hired:['文吏受聘','文官の雇用'],
   staff_declined:['婉拒文吏','文官の採用見送り'],staff_expired:['文吏候選撤回','文官候補の取り下げ'],
   staff_salary:['文吏月俸與成果','文官の俸給と業務成果'],staff_allegiance:['文吏留任','文官の留任'],
-  domestic_report:['內政執行摘要','内政の実行報告'],transport_departed:['運輸隊出發','輸送隊の出発'],transport_arrived:['運輸隊抵達','輸送隊の到着'],transport_returned:['運輸隊折返','輸送隊の帰還'],transport_weather:['運輸途中遇險','輸送中の災害']
+  diplomacy_result:['外交結果','外交の結果'],domestic_report:['內政執行摘要','内政の実行報告'],transport_departed:['運輸隊出發','輸送隊の出発'],transport_arrived:['運輸隊抵達','輸送隊の到着'],transport_returned:['運輸隊折返','輸送隊の帰還'],transport_weather:['運輸途中遇險','輸送中の災害']
  });
  const STAFF=new Set(['staff_candidate','staff_hired','staff_declined','staff_expired','staff_salary','staff_allegiance']);
  const OPERATIONS=new Set(['domestic_report','transport_departed','transport_arrived','transport_returned','transport_weather']);
@@ -167,10 +167,20 @@
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const clone=value=>JSON.parse(JSON.stringify(value));
  function validEvent(row){
+  if(row?.kind==='diplomacy_result'&&!validDiplomacyEvent(row))return false;
   return !!row&&Number.isSafeInteger(row.id)&&row.id>0&&Object.hasOwn(KINDS,row.kind)&&['player','world'].includes(row.audience)&&
    Number.isSafeInteger(row.year)&&row.year>0&&Number.isInteger(row.month)&&row.month>=1&&row.month<=12&&[1,11,21].includes(row.day)&&Number.isSafeInteger(row.turn)&&row.turn>0&&
    ['person_ids','city_ids','factions'].every(key=>Array.isArray(row[key])&&row[key].every(id=>typeof id==='string'&&id.length<=128))&&
    !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!CITY_OPERATIONS.has(row.kind)||validCityDevelopmentEvent(row))&&(row.kind!=='battle_supply_exhausted'||validBattleSupplyEvent(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(!Object.hasOwn(HISTORICAL_CAMPAIGNS,row.kind)||validHistoricalCampaign(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row))&&(row.kind!=='tactic'||validTacticEvent(row));
+ }
+ function validDiplomacyEvent(row){
+  const d=row.details;
+  return row.audience==='player'&&row.factions?.length===2&&
+   d&&Object.keys(d).sort().join(',')==='action,duration,score,success'&&
+   ['goodwill','alliance','return_captives','request_attack','surrender'].includes(d.action)&&
+   typeof d.success==='boolean'&&Number.isInteger(d.score)&&d.score>=0&&d.score<=100&&
+   Number.isInteger(d.duration)&&(d.action==='alliance'?d.duration>=1&&d.duration<=72:d.duration===0)&&
+   row.city_ids?.length===(d.action==='request_attack'?2:1)&&row.person_ids?.length===(d.action==='return_captives'?2:1);
  }
  function validHistoricalCampaign(row){
   const validIds=(ids,min,max)=>ids.length>=min&&ids.length<=max&&ids.every(id=>id.length>0&&id.trim()===id)&&new Set(ids).size===ids.length;
@@ -355,6 +365,14 @@
    }
    const n=names(row),p=n.people.join(text('、','・'))||text('武將','武将'),c=n.cities.join(' → ')||text('戰役地圖','戦役地図'),f=n.factions.at(-1)||text('本方','自軍'),d=row.details;
    switch(row.kind){
+    case 'diplomacy_result':{
+     const envoy=n.people[0],prisoner=n.people[1],targetCity=n.cities[1];
+     if(d.action==='goodwill')return text(`${envoy}向${f}送上禮物，外交感情升至${d.score}。`,`${envoy}が${f}に贈り物を届け、外交感情が${d.score}に上がりました。`);
+     if(d.action==='alliance')return text(`${envoy}與${f}締結${d.duration}旬同盟。同盟期間互不出征，可通過盟友領地調動。`,`${envoy}が${f}と${d.duration}旬の同盟を締結しました。同盟中は互いに攻撃せず、同盟領を経由して移動できます。`);
+     if(d.action==='request_attack')return text(`${f}答應優先評估向${targetCity}出征。須備足兵力與兵糧才會發兵。`,`${f}は${targetCity}への出陣を優先して検討します。兵力と兵糧がそろえば出陣します。`);
+     if(d.action==='return_captives')return d.success?text(`${f}已將${prisoner}交還我方。`,`${f}は${prisoner}を返還しました。`):text(`${f}拒絕交還${prisoner}。`,`${f}は${prisoner}の返還を拒みました。`);
+     return text(`${f}接受勸降，其城池、庫存及在籍武將轉歸我方。`,`${f}は降伏勧告を受け入れ、所属都市・備蓄・在籍武将が自勢力に加わりました。`);
+    }
     case 'city_developed':{
      const development={land:text('土地開墾','土地の開墾'),industry:text('產業發展','産業の開発'),population:text('城町人口開發','町の人口開発')}[d.development];
      return text(`${p}在${c}完成${development}，花費資金${d.gold}；${d.before} → ${d.after}（+${d.gain}），統治度${d.governance_before} → ${d.governance_after}。`,`${p}が${c}で${development}を終えました。支出は資金${d.gold}、${d.before} → ${d.after}（+${d.gain}）、統治度${d.governance_before} → ${d.governance_after}です。`);
@@ -504,7 +522,7 @@
      const reason={army_missing:text('受補給部隊已不在途中','補給先の部隊がすでに行軍中ではないため'),army_changed:text('受補給部隊的任務或歸屬改變','補給先部隊の任務・所属が変わったため'),rendezvous_wait:text('在會合點等待受補給部隊','会合地点で補給先の部隊を待つため'),rendezvous_missed:text('未能在會合點接上部隊','会合地点で部隊と合流できなかったため'),delivered:text('途中補給交付完成','途中補給の引き渡しを終えたため'),escort_return:text('押運武將沿實際道路返程','護送武将が実際の経路で帰還するため'),retreat:text('運輸隊改向友城撤退','輸送隊が友軍都市への撤退に移ったため')}[d.reason];
      return reason?text(`${c}：${reason}。現有金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}仍按實際位置及返程處理，不會立即送回原城。`,`${c}：${reason}、資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}を実際の位置と帰路に従って処理します。出発都市へ瞬時に戻しません。`):text(`${c}的原運輸任務已中止或折返，現有金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}按實際返程結算。`,`${c}への元の輸送任務は中止または帰還となりました。残る資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}は実際の帰路に従って精算します。`);
     }
-    case 'transport_weather':return text(`${c}的運輸隊途中遇險，預備兵損失${d.lost}。現有貨物：金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}；不重複結算同次災害。`,`${c}への輸送中に災害が発生し、予備兵${d.lost}を失いました。現在の貨物は資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}です。同じ災害を重複精算しません。`);
+    case 'transport_weather':return text(`${c}的運輸隊途中遇險，護送兵與預備兵合計損失${d.lost}人。剩餘資金${d.gold}、兵糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}。同次災害只結算一次。`,`${c}への輸送中に災害が発生し、護衛兵と予備兵を合わせて${d.lost}人を失いました。現在の貨物は資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}です。同じ災害の精算は一度です。`);
     case 'campaign_victory':return text(`${f}完成天下統一。本次戰役已結算，可保存進度。`,`${f}が天下を統一しました。戦役の精算を終え、進行状況を保存できます。`);
     case 'campaign_defeat':return observing?text('各勢力已退出，觀戰結束。','すべての勢力が退場し、観戦を終了しました。'):text(`${f}已無法繼續作戰。可保存結果或重新選擇劇本。`,`${f}は戦いを続けられなくなりました。結果を保存するか、シナリオを選び直せます。`);
     default:{const attacker=n.factions[0]||f;return text(`${attacker}正規劃以${c}為目標的${d.coordinated?'多路協同':'進軍'}作戰。計畫可能包含尚未出發的部隊，實際行軍請核對在途名冊。`,`${attacker}が${c}を目標とする${d.coordinated?'複数部隊の連携':'進軍'}作戦を計画しています。未出発の部隊を含む場合があるため、実際の行軍は行軍中の名簿で確認してください。`);}

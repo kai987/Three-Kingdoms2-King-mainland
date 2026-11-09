@@ -163,6 +163,83 @@ class HazardMarchTests(unittest.TestCase):
         self.assertEqual(risks[0]['legs'],[0,1])
         self.assertTrue(10<=risks[0]['survival_numerator']<=20)
 
+    def test_published_routes_commit_full_army_losses_on_arrival(self):
+        catalog = Catalog(ROOT / 'game/data/campaigns/217-07.json')
+        cases = (
+            ('wei', 7, 'yinping', 'shujun', 'special', 'depart', None, 10000),
+            ('wei', 7, 'hanzhong', 'jingzhao', 'special', 'transfer', None, 15000),
+            ('wei', 10, 'hanzhong', 'jingzhao', 'special', 'transfer', None, 24000),
+            ('wu', 7, 'hepu', 'zhuya', 'sea', 'depart', 'headwind', 3300),
+            ('wei', 7, 'beihai', 'lelang', 'sea', 'depart', 'tailwind', 3300),
+        )
+        for owner, month, source, target, mode, order, wind, expected in cases:
+            with self.subTest(source=source, target=target, month=month):
+                game = Campaign(catalog)
+                game.command('new', dict(faction=owner, seed=2026), 0)
+                while game.state.month != month:
+                    game._complete_turn(game.state)
+                    game._spawn_eligible(game.state)
+                    game._reconcile_factions(game.state)
+                ids = game.state.cities[source].roster.officer_ids[:3]
+                self.assertEqual(len(ids), 3)
+                self.set_troops(game, ids, 10000)
+                game.validate(game.state)
+                draws = game.state.rng.draws
+                game.command(order, dict(source=source, target=target, officers=ids,
+                                         route_mode=mode), game.revision)
+                row, = game.state.extension['travel']['marches']
+                risk, = row['risks']
+                hazard = row['quote']['routes'][0]['hazard']
+                self.assertEqual(hazard['wind'], wind)
+                self.assertEqual(game.state.rng.draws - draws, int(wind is not None))
+                if wind:
+                    self.assertEqual((hazard['loss_percent_min'], hazard['loss_percent_max']), (80, 90))
+                self.assertEqual(30000 * risk['survival_numerator'] // risk['survival_denominator'], expected)
+                self.assertFalse(risk['applied'])
+                self.assertEqual(sum(game.state.officers[i].troops for i in ids), 30000)
+                while game.state.turn < row['arrival_turn']:
+                    game._complete_turn(game.state)
+                    game._spawn_eligible(game.state)
+                    game._reconcile_factions(game.state)
+                self.assertEqual(sum(game.state.officers[i].troops for i in ids), 30000)
+                lost = game.state.soldiers['lost']
+                game.command('arrivals', {}, game.revision)
+                self.assertEqual(sum(game.state.officers[i].troops for i in ids), expected)
+                self.assertEqual(game.state.soldiers['lost'] - lost, 30000 - expected)
+                if order == 'depart':
+                    self.assertEqual(sum(unit['start'] for unit in game.state.battle['attackers']), expected)
+
+    def test_completed_hazard_applies_before_retreat_from_a_lost_destination(self):
+        game = self.game('wei')
+        self.empty(game, 'shujun', 'wei')
+        ids = game.state.cities['yinping'].roster.officer_ids[:3]
+        self.set_troops(game, ids, 10000)
+        game.command('transfer', dict(source='yinping', target='shujun', officers=ids,
+                                      route_mode='special'), game.revision)
+        self.empty(game, 'shujun', 'shu')
+        # A pending save from before arrival must still pay the full loss.
+        loaded = Campaign(game.catalog)
+        loaded.load_save(game.export_save(), 0)
+        lost = loaded.state.soldiers['lost']
+        self.arrive(loaded)
+        self.assertEqual(sum(loaded.state.officers[i].troops for i in ids), 10000)
+        self.assertEqual(loaded.state.soldiers['lost'] - lost, 20000)
+        self.assertTrue(set(ids).isdisjoint(loaded.state.cities['shujun'].roster.officer_ids))
+        march, = loaded.state.extension['travel']['marches']
+        outbound = march['history'][0] if march['history'] else march
+        self.assertTrue(outbound['risks'][0]['applied'])
+        self.assertEqual(outbound['risks'][0]['lost'], 20000)
+
+        weather = lambda: [r['id'] for r in loaded.state.extension['events']['items']
+                           if r['kind'] == 'march_weather' and r['city_ids'] == ['yinping', 'shujun']]
+        original = weather()
+        self.assertEqual(len(original), 1)
+        loaded._complete_turn(loaded.state)
+        if loaded.state.phase == 'arrivals':
+            loaded.command('arrivals', {}, loaded.revision)
+        self.assertEqual(weather(), original)
+        loaded.validate(loaded.state)
+
     def test_resolved_hazards_remain_valid_after_waiting_officer_dies(self):
         # Controlled calendar fixture isolates deaths while a full port/city
         # waits; it does not claim a natural multi-year military outcome.

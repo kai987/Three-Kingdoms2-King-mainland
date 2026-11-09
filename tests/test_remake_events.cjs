@@ -33,7 +33,16 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  return{events,modal,parent,doc,i18n,header,portraitRequests,drain,setView:v=>{current=v;},setBusy:v=>{busy=v;},setPreview:v=>{preview=v;}};
 }
 (async()=>{
- assert.equal(Object.keys(KINDS).length,87);
+ assert.equal(Object.keys(KINDS).length,88);
+ const alliance=row(1,'diplomacy_result',{factions:['shu','wei'],
+  details:{action:'alliance',success:true,score:65,duration:72}});
+ assert(validEvent(alliance));
+ assert(!validEvent({...alliance,details:{...alliance.details,duration:73}}));
+ const diplomacy=fixture([alliance]);
+ diplomacy.events.observe(view([alliance]),{newGame:true});diplomacy.drain();
+ assert(diplomacy.modal.innerHTML.includes('72旬同盟'));
+ diplomacy.i18n.locale='ja';diplomacy.doc.emit('game-language-change');
+ assert(diplomacy.modal.innerHTML.includes('72旬の同盟'));
  const campaignRows=[
   row(1,'historical_guandu',{audience:'world',factions:['wei','yuan_shao']}),
   row(2,'historical_sun_liu_alliance',{audience:'world',factions:['wu','shu']}),
@@ -435,5 +444,5 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
   assert(line.includes('劉禪'));assert(!line.includes('劉備'),'Event faction labels follow the live ruler, not the opening name');
  }
  assert.equal(JSON.stringify(inheritedView),inheritedBefore,'Bilingual event display never changes faction identity or state');inherited.events.dispose();
- console.log('events: 87 bilingual scenes, strict historical campaign/coup/founding/supply/city-name snapshots, local batching, read-only playback, locale continuity and immutable RNG/state passed');
+ console.log('events: 88 bilingual scenes, strict diplomacy/historical/coup/founding/supply/city-name snapshots, local batching, read-only playback, locale continuity and immutable RNG/state passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

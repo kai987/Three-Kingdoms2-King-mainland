@@ -10,7 +10,7 @@ STATIC_FIELDS = frozenset(('title', 'links', 'rules', 'calendar_rules',
     'scenario_id', 'faction_colors', 'sea_routes', 'travel_hazards',
     'added_city_ids', 'regional_roads', 'river_routes', 'city_label_offsets', 'city_history', 'scenarios',
     'travel_rules', 'coastal_city_ids'))
-PERSON_STATE = frozenset(('year_state', 'faction', 'alive', 'location', 'intellect', 'study_gain'))
+PERSON_STATE = frozenset(('year_state', 'faction', 'alive', 'location', 'intellect', 'study_gain', 'prisoner'))
 
 
 class ViewTransport:
@@ -37,11 +37,14 @@ class ViewTransport:
         known_static, _, known_quotes = known.partition(':')
         game = value['game']
         # Read-only route quotes depend on ownership, active cities, player,
-        # year/month and discovered routes. Troops, gold, phase, RNG and revision
+        # year/month, allied transit and discovered routes. Troops, gold, phase, RNG and revision
         # never enter route search. Catalog bytes fix geometry and all rules.
+        allies = sorted({owner for pair in catalog.get('non_aggression', [])
+                         if game is not None and game['player'] in pair
+                         for owner in pair if owner != game['player']})
         route_key = [source_sha, None if game is None else [game['player'], game['year'], game['month'],
             [(key, city['owner']) for key, city in game['cities'].items()],
-            game['extension']['travel']['discovered']]]
+            game['extension']['travel']['discovered'], allies]]
         quote_token = hashlib.sha256(json.dumps(route_key, sort_keys=True,
             separators=(',', ':')).encode()).hexdigest()
         current = {key: field for key, field in catalog.items() if key not in STATIC_FIELDS}

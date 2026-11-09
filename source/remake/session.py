@@ -33,8 +33,8 @@ def faction_resources(catalog, state=None):
 def faction_officer_counts(catalog, state=None):
     """Count current living members once, including marching/battle officers.
 
-    There is no separate captive pool: a personnel transfer is reflected by
-    faction_id. Free, neutral, dead and not-yet-instantiated people do not count.
+    Personnel transfers are reflected by faction_id. Captive, free, neutral,
+    dead and not-yet-instantiated people do not count.
     Opening previews use actual starting rosters, not planned era assignments.
     """
     members={key:set() for key in catalog.factions}

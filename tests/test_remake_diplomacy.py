@@ -1,0 +1,260 @@
+"""Committed diplomacy through normal campaign commands and saved state."""
+from copy import deepcopy
+import json
+from pathlib import Path
+import sys
+import tempfile
+import unittest
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT/'source'))
+from remake import battle_grid, command_books, diplomacy, historical_campaigns, logistics, treasures
+from remake.campaign import Campaign, Catalog, digest
+from remake.errors import GameError
+from campaign_fixtures import controlled_catalog, confirm_default_placement
+from test_remake_battle_objectives import place as place_battle_unit
+
+
+def diplomacy_catalog(*, with_convoy=False):
+    data = deepcopy(controlled_catalog().data)
+    data['id'] = 'controlled-diplomacy'
+    data['rules']['ai_max_attacks_per_turn'] = 1
+    data['active_cities'] += ['yingchuan', 'runan']
+    data['initial_owners'].update(nanjun='wu', jiangxia='shu', yingchuan='shu', runan='shu')
+    for faction in data['factions']:
+        if faction['id'] in {'shu', 'wu'}:
+            faction['city'] = 'jiangxia' if faction['id'] == 'shu' else 'nanjun'
+    officers = data['initial_officers']
+    officers[1]['city'] = 'jiangxia'
+    officers[5].update(city='nanjun', troops=6000)
+    if with_convoy:
+        data['active_cities'].append('yuzhang')
+        data['initial_owners'].update(nanjun='wei', yuzhang='wu')
+        next(f for f in data['factions'] if f['id'] == 'wu')['city'] = 'yuzhang'
+        officers[5]['city'] = 'yuzhang'
+    for row in officers:
+        data['appearance_locations'][row['person_id']] = row['city']
+    for city in data['active_cities']:
+        data['initial_city_resources'][city] = dict(gold=2000, grain=6000, reserves=1200)
+        data['city_income'][city] = dict(gold=0, grain=0, reserves=0)
+    if with_convoy:
+        data['initial_city_resources']['runan']['reserves'] = 2200
+    for a, b in [('nanjun', 'nanyang'), ('jiangxia', 'yingchuan'), ('yingchuan', 'runan')]:
+        data['links'].append([a, b])
+        data['travel_routes'].append(dict(id=f'diplomacy:{a}:{b}', **{'from':a,'to':b},
+            mode='land', terrain='plain', distance_km=30, land_km=30, sea_km=0, days=1))
+    with tempfile.TemporaryDirectory() as tmp:
+        path = Path(tmp)/'diplomacy.json'
+        path.write_text(json.dumps(data, ensure_ascii=False))
+        return Catalog(path)
+
+
+class DiplomacyTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.catalog = diplomacy_catalog()
+
+    def start(self, faction='shu'):
+        game = Campaign(self.catalog)
+        game.command('new', dict(faction=faction, seed=2026), 0)
+        return game
+
+    def order(self, game, action, target='wei', city='xiangyang', envoy=None, **extra):
+        if envoy is None:
+            envoy = next(i for i in game.state.cities[city].roster.officer_ids
+                         if game.state.extension['officer_actions'].get(str(i)) != game.state.turn)
+        return game.command('diplomacy', dict(action=action, city=city, envoy=envoy, target=target, **extra),
+                            game.revision)
+
+    def target(self, game, faction):
+        return next(row for row in game.view()['catalog']['diplomacy']['targets'] if row['id'] == faction)
+
+    def test_goodwill_transfers_each_gift_and_rejects_invalid_amount_atomically(self):
+        self.assertEqual([diplomacy.stage(score) for score in (100, 65, 50, 35, 20, 0)],
+                         ['intimate', 'friendly', 'normal', 'discord', 'hostile', 'hateful'])
+        for resource, amount in [('gold', 1800), ('grain', 5800), ('treasure', 2)]:
+            with self.subTest(resource=resource):
+                game = self.start()
+                if resource == 'treasure':
+                    self.assertGreaterEqual(treasures.count(game.state, 'xiangyang'), amount)
+                    stock = lambda city: treasures.count(game.state, city)
+                else:
+                    stock = lambda city: getattr(game.state.cities[city], resource)
+                before = {city:stock(city) for city in game.state.cities}
+                saved = game.export_save()
+                orders = command_books.remaining(game.state, 'shu')
+                with self.assertRaises(GameError):
+                    self.order(game, 'goodwill', resource=resource, amount=20001)
+                self.assertEqual(game.export_save(), saved)
+                self.order(game, 'goodwill', resource=resource, amount=amount)
+                self.assertEqual(stock('xiangyang'), before['xiangyang']-amount)
+                self.assertEqual(stock('nanyang'), before['nanyang']+amount)
+                self.assertEqual(sum(stock(city) for city in before), sum(before.values()))
+                self.assertEqual(command_books.remaining(game.state, 'shu'), orders-1)
+                score = diplomacy.relation(game.state, 'shu', 'wei')
+                self.assertGreater(score, 50)
+                self.assertEqual(score, diplomacy.relation(game.state, 'wei', 'shu'))
+                self.assertEqual(self.target(game, 'wei')['score'], score)
+                self.assertEqual(game.state.rng.draws, saved['state']['rng']['draws'])
+
+    def test_treaty_protects_attacks_allows_transit_and_expires_after_72_turns(self):
+        game = self.start()
+        self.assertIsNone(game._travel_path(game.state, 'xiangyang', 'jiangxia', 'shu', 'land'))
+        self.order(game, 'alliance', target='wu', duration=72)
+        self.assertTrue(historical_campaigns.allied(game.state, 'wu', 'shu'))
+        self.assertEqual(self.target(game, 'wu')['alliance'], {'historical':False, 'turns':72})
+        save = game.export_save()
+        loaded = Campaign(game.catalog)
+        loaded.load_save(save, 0)
+        self.assertEqual(loaded.export_save(), save)
+        game = loaded
+        quote = game._travel_path(game.state, 'xiangyang', 'jiangxia', 'shu', 'land')
+        self.assertEqual(quote['path'], ['xiangyang', 'nanjun', 'jiangxia'])
+        ids = game.state.cities['xiangyang'].roster.officer_ids
+        available = [i for i in ids if game.state.extension['officer_actions'].get(str(i)) != game.state.turn]
+        with self.assertRaisesRegex(GameError, '同盟'):
+            game.command('depart', dict(source='xiangyang', target='nanjun', officers=available[:1]),
+                         game.revision)
+        self.assertEqual(game.export_save(), save)
+        game.command('transfer', dict(source='xiangyang', target='jiangxia', officers=available[:1],
+                                     route_mode='land'), game.revision)
+        game._complete_turn(game.state)
+        game.command('arrivals', {}, game.revision)
+        self.assertIn(available[0], game.state.cities['jiangxia'].roster.officer_ids)
+        self.assertEqual(game.state.cities['nanjun'].owner, 'wu')
+        for _ in range(70):
+            game._complete_turn(game.state)
+        self.assertEqual(game.state.turn, 72)
+        self.assertTrue(historical_campaigns.allied(game.state, 'shu', 'wu'))
+        game.command('end_turn', {}, game.revision)
+        game.command('ai', dict(turn=game.state.turn), game.revision)
+        self.assertEqual(game.state.turn, 73)
+        self.assertFalse(historical_campaigns.allied(game.state, 'shu', 'wu'))
+        self.assertIsNone(game._travel_path(game.state, 'xiangyang', 'jiangxia', 'shu', 'land'))
+        game.validate(game.state)
+
+    def test_battle_settlement_captures_and_diplomacy_returns_an_officer(self):
+        game = self.start()
+        self.order(game, 'goodwill', city='jiangxia', resource='gold', amount=1800)
+        source, target = (game.state.cities[key] for key in ('nanyang', 'xiangyang'))
+        prisoner = target.roster.officer_ids[0]
+        game._start_expanded_battle(game.state, source, target, source.roster.officer_ids[:1],
+                                    manual_deployment=True)
+        confirm_default_placement(game)
+        battle = game.state.battle
+        camp_x, camp_y = battle_grid._field(battle)['camp']
+        # Control the late tactical positions, then let the real AI capture
+        # the unoccupied fortress after the defending player's command.
+        camp = {'x':camp_x,'y':camp_y}
+        positions = battle['extended']['tactical']['positions']
+        for unit in battle['defenders']:
+            if positions[str(unit['id'])] == camp:
+                place_battle_unit(game, unit, (0, 18))
+        place_battle_unit(game, battle['attackers'][0], (camp_x-1, camp_y))
+        game.command('battle_wait', dict(battle_id=battle['id']), game.revision)
+        self.assertEqual(game.state.battle['outcome'], 'victory')
+        self.assertIn('occupation', game.state.battle['extended'])
+        game.command('settle', dict(battle_id=battle['id']), game.revision)
+        self.assertEqual(game.state.cities['xiangyang'].owner, 'wei')
+        officer = game.state.officers[prisoner]
+        self.assertEqual((officer.faction_id, officer.troops), (None, 0))
+        captive = game.state.extension['diplomacy']['prisoners'][str(prisoner)]
+        self.assertEqual((captive['origin'], captive['captor'], captive['city']), ('shu', 'wei', 'xiangyang'))
+        self.assertNotIn(str(prisoner), game.state.extension['free_locations'])
+        self.assertEqual(next(row for row in game.view()['catalog']['library'] if row['id']==prisoner)['prisoner'], captive)
+        game._complete_turn(game.state)
+        self.assertIn(prisoner, [row['id'] for row in self.target(game, 'wei')['captives']])
+        self.order(game, 'return_captives', city='jiangxia', prisoner=prisoner)
+        self.assertIn(prisoner, game.state.cities['jiangxia'].roster.officer_ids)
+        self.assertEqual(game.state.officers[prisoner].faction_id, 'shu')
+        self.assertNotIn(str(prisoner), game.state.extension['diplomacy']['prisoners'])
+        self.assertNotIn('prisoner', next(row for row in game.view()['catalog']['library'] if row['id']==prisoner))
+        game.validate(game.state)
+
+    def test_attack_request_dispatches_a_real_allied_march(self):
+        game = self.start()
+        self.order(game, 'goodwill', target='wu', resource='gold', amount=1800)
+        self.order(game, 'alliance', target='wu', duration=12)
+        self.assertIn('nanyang', self.target(game, 'wu')['attack_cities'])
+        self.order(game, 'request_attack', target='wu', attack_city='nanyang')
+        self.assertEqual(diplomacy.requested_target(game.state, 'wu'), 'nanyang')
+        self.assertEqual(game.state.extension['travel']['marches'], [])
+        game.command('end_turn', {}, game.revision)
+        game.command('ai', dict(turn=game.state.turn), game.revision)
+        march, = [row for row in game.state.extension['travel']['marches']
+                  if row['owner']=='wu' and row['kind']=='attack' and row['target']=='nanyang']
+        self.assertEqual(march['source'], 'nanjun')
+        self.assertGreater(march['arrival_turn'], march['departure_turn'])
+        self.assertIsNone(diplomacy.requested_target(game.state, 'wu'))
+        game.validate(game.state)
+
+    def test_surrender_preserves_city_resources_and_soldiers(self):
+        game = self.start()
+        def stocks():
+            return {key:(city.gold,city.grain,city.reserves,treasures.count(game.state,key))
+                    for key,city in game.state.cities.items()}
+        initial_stocks = stocks()
+        initial_soldiers = deepcopy(game.state.soldiers)
+        garrison = list(game.state.cities['nanyang'].roster.officer_ids)
+        self.assertTrue(self.target(game, 'wei')['actions']['surrender'])
+        self.order(game, 'surrender')
+        self.assertEqual(game.state.cities['nanyang'].owner, 'shu')
+        self.assertEqual(game.state.cities['nanyang'].roster.officer_ids, garrison)
+        self.assertTrue(all(game.state.officers[i].faction_id=='shu' for i in garrison))
+        self.assertIn('wei', game.state.extension['ended_factions'])
+        self.assertEqual(stocks(), initial_stocks)
+        self.assertEqual(game.state.soldiers, initial_soldiers)
+
+    def test_surrender_accounts_for_march_rations_and_convoy_cargo(self):
+        game = Campaign(diplomacy_catalog(with_convoy=True))
+        game.command('new', dict(faction='shu', seed=2026), 0)
+        self.order(game, 'goodwill', city='jiangxia', resource='gold', amount=1800)
+
+        def stocks():
+            return {key: (city.gold, city.grain, city.reserves, treasures.count(game.state, key))
+                    for key, city in game.state.cities.items()}
+
+        initial_stocks = stocks()
+        initial_soldiers = deepcopy(game.state.soldiers)
+        state = game.state
+        capital, origin, target = (state.cities[key] for key in ('nanyang', 'nanjun', 'xiangyang'))
+        attacker = capital.roster.officer_ids[0]
+        escort = origin.roster.officer_ids[0]
+        game._queue_march(state, capital, target, [attacker], 'attack', mode='land')
+        logistics.set_policy(game, state, dict(city=origin.id, policy=dict(reserve_officers=0)), 'wei')
+        convoy = logistics.dispatch(game, state, dict(source=origin.id, target=capital.id,
+            officers=[escort], cargo=dict(gold=100, grain=200, reserves=300, treasure=1), route_mode='land'), 'wei')
+        self.assertGreater(state.extension['travel']['marches'][0]['supply']['remaining'], 0)
+        self.assertGreater(convoy['journeys'][0]['supply']['remaining'], 0)
+        self.assertEqual(convoy['cargo'], dict(gold=100, grain=200, reserves=300, treasure=1))
+        treasures.synchronize(game, state)
+        game.validate(state)
+        self.assertTrue(self.target(game, 'wei')['actions']['surrender'])
+
+        self.order(game, 'surrender')
+        state = game.state
+        self.assertEqual(stocks(), initial_stocks)
+        self.assertEqual(state.soldiers, initial_soldiers)
+        self.assertEqual(state.extension['travel']['marches'], [])
+        self.assertEqual(state.extension['logistics']['convoys'], [])
+        for ident, city in ((attacker, 'nanyang'), (escort, 'nanjun')):
+            self.assertEqual(state.officers[ident].faction_id, 'shu')
+            self.assertIn(ident, state.cities[city].roster.officer_ids)
+        game.validate(state)
+
+    def test_existing_save_without_diplomacy_remains_usable(self):
+        game = self.start()
+        save = game.export_save()
+        save.pop('checksum')
+        save['state']['extension'].pop('diplomacy', None)
+        save['checksum'] = digest(save)
+        restored = Campaign(game.catalog)
+        restored.load_save(save, 0)
+        self.assertEqual(restored.export_save(), save)
+        self.assertEqual(self.target(restored, 'wei')['stage'], 'normal')
+        self.order(restored, 'alliance', duration=3)
+        self.assertTrue(historical_campaigns.allied(restored.state, 'shu', 'wei'))
+
+
+if __name__ == '__main__':
+    unittest.main()

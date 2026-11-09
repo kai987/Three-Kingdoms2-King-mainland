@@ -14,7 +14,7 @@ from threading import RLock
 from types import SimpleNamespace
 
 from .errors import GameError
-from . import historical_campaigns, observer
+from . import diplomacy, historical_campaigns, observer
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
@@ -332,6 +332,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 **({'non_aggression': alliances} if alliances else {}),
                                 **self._expanded_catalog_view(state), **travel,
                                 'civil_staff': self._civil_staff_view(state),
+                                'diplomacy': diplomacy.view(self, state),
                                 'domestic':domestic.view(self,state),
                                 'logistics':logistics.view(self,state,travel_quotes=travel.get('travel_quotes',{})),
                                 'treasury':treasures.view(self,state),
@@ -381,6 +382,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                   ('siege_form','siege_orders','siege_step','siege_withdraw')},
                                'end_turn': self._end_turn, 'ai': self._ai, 'arrivals': self._arrivals,
                                'observe_turn': self._observe_turn,
+                               'diplomacy': lambda state, payload: diplomacy.execute(self, state, payload, state.player),
                                'hire_staff': self._hire_staff, 'reject_staff': self._reject_staff,
                                'staff_recruit': self._staff_recruit, 'choose_successor': self._choose_successor,
                                'set_domestic':self._set_domestic,'set_logistics':self._set_logistics,
@@ -409,6 +411,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 city_development.synchronize(self,candidate)
                 record_events(self, self.state, candidate, kind, payload)
                 historical_campaigns.process(self,candidate)
+                diplomacy.synchronize(self,candidate)
                 civil_staff.synchronize(self, candidate, opening=kind == 'new', monthly=candidate.day == 1)
                 logistics.synchronize(self,candidate)
                 domestic.synchronize(self,candidate)
@@ -757,6 +760,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     own,_=self._player_sides(candidate)
                     tactical['side']=own
                     if own=='defenders':tactical['passed']['attackers']=True
+                civil_staff.migrate_profiles(self, candidate)
                 self.validate(candidate)
             except (ValueError, TypeError, KeyError, AttributeError, OverflowError) as exc:
                 raise GameError('存档无效，当前进度未改变。') from exc
@@ -768,6 +772,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
     def validate(self, state):
         get_settings(state)
         command_books.validate(self, state)
+        diplomacy.validate(self, state)
         civil_staff.validate(self, state)
         domestic.validate(self,state)
         logistics.validate(self,state)
