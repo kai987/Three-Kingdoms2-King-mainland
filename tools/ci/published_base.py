@@ -17,6 +17,7 @@ from urllib.parse import urlsplit
 
 SHA = re.compile(r'[0-9a-f]{40}')
 REPOSITORY = re.compile(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+')
+DEPLOY_STEPS = {'Deploy verified artifact', 'Deploy fresh verified artifact'}
 
 
 class BaselineUnavailable(RuntimeError):
@@ -137,7 +138,7 @@ def resolve_published_base(repository, *, workflow='pages.yml', branch='main',
                         or job.get('status') != 'completed' or job.get('conclusion') != 'success'
                         or type(job.get('id')) is not int or job['id'] < 1
                         or not isinstance(job.get('steps'), list)
-                        or not any(isinstance(step, dict) and step.get('name') == 'Deploy verified artifact'
+                        or not any(isinstance(step, dict) and step.get('name') in DEPLOY_STEPS
                                    and step.get('conclusion') == 'success' for step in job['steps'])):
                     continue
                 try:

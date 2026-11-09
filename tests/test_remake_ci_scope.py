@@ -725,6 +725,23 @@ class PublishedBaselineTests(unittest.TestCase):
         result = PUBLISHED.resolve_published_base(self.repository, exclude_head='b' * 40, api=self.fixture())
         self.assertEqual(result['sha'], 'a' * 40)
 
+    def test_fresh_artifact_retry_is_a_baseline_only_if_deploy_succeeds(self):
+        original = self.fixture()
+        for conclusion, expected in (('success', 'b'), ('failure', 'a')):
+            def api(endpoint):
+                value = original(endpoint)
+                if '/runs/2/attempts/' in endpoint:
+                    job = value['jobs'][0]
+                    job['conclusion'] = conclusion
+                    job['steps'] = [
+                        dict(name='Deploy verified artifact', conclusion='failure'),
+                        dict(name='Deploy fresh verified artifact', conclusion=conclusion),
+                    ]
+                return value
+            with self.subTest(conclusion=conclusion):
+                result = PUBLISHED.resolve_published_base(self.repository, api=api)
+                self.assertEqual(result['sha'], expected * 40)
+
     def test_stops_after_first_trustworthy_active_deployment(self):
         original = self.fixture()
         calls = []

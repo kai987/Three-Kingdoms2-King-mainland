@@ -41,6 +41,8 @@ jobs:
       current: ${{ steps.identity.outputs.current }}
       commit: ${{ steps.identity.outputs.commit }}
       publish: ${{ steps.scope.outputs.publish }}
+      artifact: ${{ steps.identity.outputs.artifact }}
+      archive_sha256: ${{ steps.archive.outputs.sha256 }}
     steps:
       - name: Require the successful main commit to still be current
         id: identity
@@ -52,6 +54,7 @@ jobs:
           set -euo pipefail
           current=$(gh api "repos/${GITHUB_REPOSITORY}/commits/main" --jq .sha)
           printf 'commit=%s\nrun=%s\n' "$SOURCE_SHA" "$SOURCE_RUN" >> "$GITHUB_OUTPUT"
+          printf 'artifact=github-pages-%s\n' "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
           if [ "$SOURCE_SHA" = "$current" ]; then
             printf 'current=true\n' >> "$GITHUB_OUTPUT"
           else
@@ -124,7 +127,15 @@ jobs:
         if: steps.identity.outputs.current == 'true' && steps.scope.outputs.publish == 'true'
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
+          name: ${{ steps.identity.outputs.artifact }}
           path: verified-web
+      - name: Record the verified Pages archive checksum
+        if: steps.identity.outputs.current == 'true' && steps.scope.outputs.publish == 'true'
+        id: archive
+        run: |
+          set -euo pipefail
+          checksum=$(sha256sum "$RUNNER_TEMP/artifact.tar")
+          printf 'sha256=%s\n' "${checksum%% *}" >> "$GITHUB_OUTPUT"
 
   deploy:
     needs: prepare
@@ -135,13 +146,14 @@ jobs:
       needs.prepare.result == 'success' && needs.prepare.outputs.current == 'true' &&
       needs.prepare.outputs.publish == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     permissions:
       contents: read
       pages: write
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment_retry.outputs.page_url || steps.deployment.outputs.page_url }}
     steps:
       - name: Recheck main immediately before deployment
         env:
@@ -150,4 +162,45 @@ jobs:
         run: test "$(gh api "repos/${GITHUB_REPOSITORY}/commits/main" --jq .sha)" = "$EXPECTED_SHA"
       - name: Deploy verified artifact
         id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+        # A failed-job rerun may reuse prepare's artifact from a previous attempt.
+        if: needs.prepare.outputs.artifact == format('github-pages-{0}', github.run_attempt)
+        continue-on-error: true
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+        with:
+          artifact_name: ${{ needs.prepare.outputs.artifact }}
+      - name: Allow Pages to settle before retrying with a fresh artifact
+        id: retry_wait
+        if: steps.deployment.outcome == 'failure' || steps.deployment.outcome == 'skipped'
+        run: sleep 60
+      - name: Download the verified Pages archive for retry
+        if: steps.retry_wait.outcome == 'success'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: ${{ needs.prepare.outputs.artifact }}
+          path: ${{ runner.temp }}/pages-retry
+      - name: Require the retry archive to match the verified archive byte for byte
+        if: steps.retry_wait.outcome == 'success'
+        working-directory: ${{ runner.temp }}/pages-retry
+        env:
+          EXPECTED_SHA256: ${{ needs.prepare.outputs.archive_sha256 }}
+        run: printf '%s  artifact.tar\n' "$EXPECTED_SHA256" | sha256sum -c -
+      - name: Upload the same archive as a new Pages artifact
+        if: steps.retry_wait.outcome == 'success'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: github-pages-retry-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/pages-retry/artifact.tar
+          if-no-files-found: error
+          retention-days: 1
+      - name: Recheck main immediately before the retry
+        if: steps.retry_wait.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_SHA: ${{ needs.prepare.outputs.commit }}
+        run: test "$(gh api "repos/${GITHUB_REPOSITORY}/commits/main" --jq .sha)" = "$EXPECTED_SHA"
+      - name: Deploy fresh verified artifact
+        id: deployment_retry
+        if: steps.retry_wait.outcome == 'success'
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+        with:
+          artifact_name: github-pages-retry-${{ github.run_attempt }}
