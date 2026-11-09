@@ -233,6 +233,15 @@
         "scenarios"
       ]
     },
+    "tests/test_remake_diplomacy.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "logistics",
+        "battle",
+        "save"
+      ]
+    },
     "tests/test_remake_domestic.py": {
       "tier": "related",
       "groups": [
