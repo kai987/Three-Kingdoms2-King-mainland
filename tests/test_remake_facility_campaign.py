@@ -138,21 +138,29 @@ class FacilityCampaignTests(unittest.TestCase):
         self.assertEqual(game.export_save(),loaded.export_save())
 
     def test_generated_student_retains_base_identity_through_learning_and_save(self):
-        game=Campaign(staff_catalog())
-        self.cmd(game,'new',faction='shu',seed=2026)
-        city='nanjun';ident=game.state.extension['civil_staff']['cities'][city]['candidate']['id']
-        self.cmd(game,'hire_staff',city=city,candidate=ident)
-        self.advance(game)
-        game.state.extension['facilities']['cities'][city]['town']=2
-        base=deepcopy(game.state.extension['civil_staff']['people'][ident]['profile'])
-        before=game.state.officers[ident].profile.intellect
-        self.cmd(game,'study_officer',city=city,actor=ident,officer=ident)
-        self.assertGreater(game.state.officers[ident].profile.intellect,before)
-        self.assertEqual(game.state.extension['civil_staff']['people'][ident]['profile'],base)
-        self.assertNotIn(ident,game.catalog.by_id)
-        restored=self.restore(game)
-        self.assertEqual(restored.state.officers[ident].profile,game.state.officers[ident].profile)
-        self.assertEqual(restored.person_profile(restored.state,ident),restored.state.officers[ident].profile)
+        catalog=staff_catalog()
+        for seed, can_study in ((2027, True), (2026, False)):
+            with self.subTest(seed=seed):
+                game=Campaign(catalog)
+                self.cmd(game,'new',faction='shu',seed=seed)
+                city='nanjun';ident=game.state.extension['civil_staff']['cities'][city]['candidate']['id']
+                self.cmd(game,'hire_staff',city=city,candidate=ident)
+                self.advance(game)
+                game.state.extension['facilities']['cities'][city]['town']=2
+                base=deepcopy(game.state.extension['civil_staff']['people'][ident]['profile'])
+                before=game.state.officers[ident].profile.intellect
+                if can_study:
+                    self.cmd(game,'study_officer',city=city,actor=ident,officer=ident)
+                    self.assertGreater(game.state.officers[ident].profile.intellect,before)
+                else:
+                    self.assertGreaterEqual(before,facilities.RULES['study_cap'])
+                    self.fails(game,'study_officer',city=city,actor=ident,officer=ident)
+                    self.assertEqual(game.state.officers[ident].profile.intellect,before)
+                self.assertEqual(game.state.extension['civil_staff']['people'][ident]['profile'],base)
+                self.assertNotIn(ident,game.catalog.by_id)
+                restored=self.restore(game)
+                self.assertEqual(restored.state.officers[ident].profile,game.state.officers[ident].profile)
+                self.assertEqual(restored.person_profile(restored.state,ident),restored.state.officers[ident].profile)
 
     def test_backend_changes_keep_real_facility_rolls_actions_and_save_bytes_equal(self):
         try:
