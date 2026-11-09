@@ -16,7 +16,6 @@ let observerPlaying=false,observerTimer=null,observerSpeed='normal';
 const viewCache=typeof GameViewCache==='undefined'?null:GameViewCache.create();
 const localAutosave=typeof GameAutosave==='undefined'?null:GameAutosave.create({getRawSave:()=>request('/api/save',undefined,{text:true}),getView:()=>view,isBusy:()=>busy,loadRawSave:loadSave,locale:()=>GameI18n.locale,onStatus:state=>{if(state.state==='error')notice(localAutosave.statusText(),true);}});
 document.addEventListener('game-language-change',()=>{localAutosave?.refresh();refreshDialogueFeedback();refreshPersonnelDialogue();if(setupPreview)setPreviewFaction(setupPreview.faction,setupPreview.focus);else if(view?.game?.battle&&!busy&&!dialog.open)renderBattle();});
-document.addEventListener('game-language-change',refreshObserverSpeedLabels);
 const difficultyName=id=>({easy:'简单',normal:'普通',hard:'困难'}[id]||'普通');
 const $=s=>document.querySelector(s), dialog=$('#dialog'),survivorPreviews=new WeakMap();
 const gameAudio=GameAudio.page();
@@ -1543,5 +1542,6 @@ async function initializeApp(){
  }catch(error){if(typeof GameBrowserEngine!=='undefined'&&GameBrowserEngine.failed)notice();else notice(GameI18n.locale==='ja'?'ゲームを読み込めません。ページを再読み込みしてください。':'遊戲無法載入，請重新整理頁面後重試。',true);}
  finally{appInitializing=false;}
 }
+document.addEventListener('game-language-change',refreshObserverSpeedLabels);
 document.addEventListener('game-engine-ready',()=>{if(!appInitialized)void initializeApp();});
 void initializeApp();
