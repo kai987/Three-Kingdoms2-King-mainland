@@ -122,7 +122,9 @@ jobs:
     needs: [scope, native-rules]
     if: needs.scope.outputs.rules == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # The expanded 217 and 263 office replays share shard 2. The Python job
+    # exhausted 20 minutes and the Rust job finished with 21 seconds to spare.
+    timeout-minutes: ${{ matrix.shard == 2 && 30 || 20 }}
     strategy:
       fail-fast: false
       matrix:
