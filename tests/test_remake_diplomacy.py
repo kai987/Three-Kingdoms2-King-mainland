@@ -5,17 +5,18 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'source'))
-from remake import battle_grid, command_books, diplomacy, historical_campaigns, logistics, treasures
+from remake import battle_grid, command_books, diplomacy, historical_campaigns, logistics, observer, treasures
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
 from campaign_fixtures import controlled_catalog, confirm_default_placement
 from test_remake_battle_objectives import place as place_battle_unit
 
 
-def diplomacy_catalog(*, with_convoy=False):
+def diplomacy_catalog(*, with_convoy=False, configure=None):
     data = deepcopy(controlled_catalog().data)
     data['id'] = 'controlled-diplomacy'
     data['rules']['ai_max_attacks_per_turn'] = 1
@@ -43,6 +44,8 @@ def diplomacy_catalog(*, with_convoy=False):
         data['links'].append([a, b])
         data['travel_routes'].append(dict(id=f'diplomacy:{a}:{b}', **{'from':a,'to':b},
             mode='land', terrain='plain', distance_km=30, land_km=30, sea_km=0, days=1))
+    if configure is not None:
+        configure(data)
     with tempfile.TemporaryDirectory() as tmp:
         path = Path(tmp)/'diplomacy.json'
         path.write_text(json.dumps(data, ensure_ascii=False))
@@ -254,6 +257,225 @@ class DiplomacyTests(unittest.TestCase):
         self.assertEqual(self.target(restored, 'wei')['stage'], 'normal')
         self.order(restored, 'alliance', duration=3)
         self.assertTrue(historical_campaigns.allied(restored.state, 'shu', 'wei'))
+
+
+class ObserverDiplomacyTests(unittest.TestCase):
+    @staticmethod
+    def no_departures(data):
+        data['rules']['ai_max_attacks_per_turn'] = 0
+
+    def start(self, *, configure=None, faction=observer.SEAT):
+        game = Campaign(diplomacy_catalog(configure=configure))
+        game.command('new', dict(faction=faction, seed=2026), 0)
+        return game
+
+    def events(self, game, action=None, factions=None):
+        return [row for row in game.state.extension['events']['items']
+                if row['kind'] == 'diplomacy_result'
+                and (action is None or row['details']['action'] == action)
+                and (factions is None or set(row['factions']) == set(factions))]
+
+    def advance(self, game):
+        turn = game.state.turn
+        snapshot = {}
+        complete_turn = game._complete_turn
+
+        def complete_with_receipts(state):
+            snapshot.update(
+                orders=deepcopy(state.extension['command_books']['factions']),
+                officer_actions=dict(state.extension['officer_actions']))
+            complete_turn(state)
+
+        # Read the existing receipt immediately before the normal turn refresh.
+        with patch.object(game, '_complete_turn', side_effect=complete_with_receipts):
+            game.command('observe_turn', {}, game.revision)
+        self.assertEqual(game.state.turn, turn + 1)
+        self.assertEqual(game.state.completed_ai_turns[-1], turn)
+        self.assertIn(game.state.phase, ('city', 'finished'))
+        self.assertIsNone(game.state.battle)
+        events = [row for row in self.events(game) if row['turn'] == turn]
+        self.assertTrue(all(row['audience'] == 'world' for row in events))
+        self.assertEqual(len(events), len({row['factions'][0] for row in events}))
+        for event in events:
+            owner, _ = event['factions']
+            self.assertIn(dict(city=event['city_ids'][0], kind='diplomacy', cost=1),
+                          snapshot['orders'][owner]['orders'])
+            envoy = next(i for i, o in game.state.officers.items() if o.person_id == event['person_ids'][0])
+            self.assertEqual(snapshot['officer_actions'][str(envoy)], turn)
+        return snapshot
+
+    def reach_surrender_pressure(self, game):
+        for _ in range(3):
+            if game.state.player == observer.SEAT:
+                self.advance(game)
+            else:
+                game.command('end_turn', {}, game.revision)
+                game.command('ai', dict(turn=game.state.turn), game.revision)
+        self.assertEqual(game.state.cities['nanyang'].owner, 'wei')
+        diplomacy._pool(game.state)['relations']['shu|wei'] = 38
+
+    def test_observer_replays_goodwill_and_a_finite_defensive_alliance(self):
+        def configure(data):
+            self.no_departures(data)
+            for row in data['initial_officers']:
+                if row['person_id'] == 'san14-candidate-0147':
+                    row['troops'] = 8000
+            # Both neighbors can benefit from coordination without meeting the
+            # shared surrender ratio against a one-city faction.
+            for city in ('nanyang', 'nanjun'):
+                data['initial_city_resources'][city]['reserves'] = 6000
+        game = self.start(configure=configure)
+        self.assertEqual(diplomacy.alliances(game.state), [])
+        saved = game.export_save()
+        restored = Campaign(game.catalog)
+        restored.load_save(saved, 0)
+        for _ in range(3):
+            self.advance(game)
+            restored.command('observe_turn', {}, restored.revision)
+            self.assertEqual(restored.export_save(), game.export_save())
+            if self.events(game, 'alliance'):
+                break
+        alliance = self.events(game, 'alliance')[0]
+        pair = alliance['factions']
+        goodwill = self.events(game, 'goodwill', pair)
+        self.assertTrue(goodwill)
+        self.assertGreater(goodwill[0]['details']['score'], 50)
+        self.assertLess(goodwill[0]['id'], alliance['id'])
+        self.assertTrue(alliance['details']['success'])
+        duration = alliance['details']['duration']
+        self.assertGreaterEqual(duration, 1)
+        self.assertLessEqual(duration, diplomacy.MAX_TURNS)
+        self.assertEqual(diplomacy.expiry(game.state, *pair), alliance['turn'] + duration)
+
+    def test_observer_ai_returns_a_captive_using_shared_officer_and_order_receipts(self):
+        game = self.start(configure=self.no_departures)
+        city = game.state.cities['xiangyang']
+        prisoner = next(i for i in city.roster.officer_ids if i != game.state.extension['leaders']['shu'])
+        officer = game.state.officers[prisoner]
+        city.reserves += officer.troops
+        city.roster.officer_ids.remove(prisoner)
+        officer.troops = 0
+        officer.faction_id = None
+        self.assertTrue(diplomacy.capture(game.state, officer, city='nanyang', captor='wei', origin='shu'))
+        treasures.synchronize(game, game.state)
+        game.validate(game.state)
+        self.advance(game)
+        returned, = self.events(game, 'return_captives', ('shu', 'wei'))
+        self.assertEqual(returned['factions'], ['shu', 'wei'])
+        self.assertTrue(returned['details']['success'])
+        self.assertEqual(returned['person_ids'][-1], officer.person_id)
+        self.assertNotIn(str(prisoner), game.state.extension['diplomacy']['prisoners'])
+        self.assertEqual(game.state.officers[prisoner].faction_id, 'shu')
+        self.assertTrue(any(c.owner == 'shu' and prisoner in c.roster.officer_ids
+                            for c in game.state.cities.values()))
+
+    def test_observer_ai_asks_an_ally_to_launch_a_real_attack(self):
+        def configure(data):
+            data['initial_city_resources']['nanyang']['reserves'] = 4000
+        game = self.start(configure=configure)
+        # Stage a previously signed pact so the real AI turn makes the request.
+        diplomatic = diplomacy._pool(game.state)
+        diplomatic['relations']['shu|wu'] = diplomacy.FRIENDLY
+        diplomatic['treaties']['shu|wu'] = game.state.turn + 12
+        game.validate(game.state)
+        self.advance(game)
+        request, = self.events(game, 'request_attack', ('shu', 'wu'))
+        self.assertEqual(request['factions'], ['shu', 'wu'])
+        self.assertEqual(request['city_ids'][-1], 'nanyang')
+        self.assertTrue(request['details']['success'])
+        departure, = [row for row in game.state.extension['ai_reports']
+                      if row['faction'] == 'wu' and row['city'] == 'nanjun'
+                      and row['target'] == 'nanyang' and row['action'] == 'attack']
+        self.assertEqual(departure['turn'], request['turn'])
+        battles = [row for row in game.state.extension['events']['items']
+                   if row['kind'] == 'battle_started' and row['city_ids'] == ['nanjun', 'nanyang']]
+        self.assertTrue(any(row['factions'] == ['wu', 'wei'] for row in battles))
+        self.assertIsNone(diplomacy.requested_target(game.state, 'wu'))
+
+    def test_observer_ai_accepts_surrender_and_human_keeps_its_own_orders(self):
+        observed = self.start(configure=self.no_departures)
+        self.reach_surrender_pressure(observed)
+        city = observed.state.cities['nanyang']
+        roster = city.roster.officer_ids.copy()
+        self.advance(observed)
+        event, = self.events(observed, 'surrender', ('shu', 'wei'))
+        self.assertEqual(event['factions'], ['shu', 'wei'])
+        self.assertTrue(event['details']['success'])
+        self.assertEqual(observed.state.cities['nanyang'].owner, 'shu')
+        self.assertTrue(all(observed.state.officers[i].faction_id == 'shu' for i in roster))
+        self.assertIn('wei', observed.state.extension['ended_factions'])
+
+        game = self.start(configure=self.no_departures, faction='shu')
+        self.reach_surrender_pressure(game)
+        saved, revision = game.export_save(), game.revision
+        with self.assertRaises(GameError):
+            game.command('observe_turn', {}, revision)
+        self.assertEqual(game.export_save(), saved)
+        game.command('end_turn', {}, revision)
+        game.command('ai', dict(turn=game.state.turn), game.revision)
+        self.assertFalse(any(row['factions'][0] == 'shu' for row in self.events(game, 'surrender')))
+        self.assertEqual(game.state.cities['nanyang'].owner, 'wei')
+
+    def test_observer_rejects_manual_diplomacy_and_ai_respects_exhausted_books(self):
+        game = self.start(configure=self.no_departures)
+        self.reach_surrender_pressure(game)
+        city = game.state.cities['xiangyang']
+        payload = dict(action='surrender', city=city.id, envoy=city.roster.officer_ids[0], target='wei')
+        saved, revision = game.export_save(), game.revision
+        with self.assertRaises(GameError):
+            game.command('diplomacy', payload, revision)
+        self.assertEqual(game.revision, revision)
+        self.assertEqual(game.export_save(), saved)
+        while command_books.can_spend(game.state, 'shu', 'diplomacy'):
+            command_books.spend(game.state, city, 'allocate')
+        self.advance(game)
+        self.assertFalse(any(row['factions'][0] == 'shu' for row in self.events(game, 'surrender')))
+        self.assertEqual(game.state.cities['nanyang'].owner, 'wei')
+
+    def test_observer_keeps_resources_and_orders_when_surrender_cannot_refund_grain(self):
+        def configure(data):
+            self.no_departures(data)
+            route = next(row for row in data['travel_routes']
+                         if (row['from'], row['to']) == ('nanyang', 'xiangyang'))
+            route.update(distance_km=600, land_km=600, days=20)
+        game = self.start(configure=configure)
+        self.reach_surrender_pressure(game)
+        state = game.state
+        source = state.cities['nanyang']
+        game._queue_march(state, source, state.cities['xiangyang'],
+                          source.roster.officer_ids[:1], 'attack', 'land')
+        source.grain = 100000000
+        march, = state.extension['travel']['marches']
+        self.assertGreater(march['arrival_turn'], state.turn + 1)
+        treasures.synchronize(game, state)
+        game.validate(state)
+        execute = diplomacy.execute
+        rejected = []
+
+        def check_rejection(campaign, candidate, payload, owner):
+            if payload['action'] != 'surrender' or owner != 'shu':
+                return execute(campaign, candidate, payload, owner)
+            before = campaign.to_dict(candidate)
+            try:
+                return execute(campaign, candidate, payload, owner)
+            except GameError as error:
+                self.assertIn('沒有空間收回隨軍糧', str(error))
+                self.assertEqual(campaign.to_dict(candidate), before)
+                rejected.append(payload)
+                raise
+
+        with patch.object(diplomacy, 'execute', side_effect=check_rejection):
+            snapshot = self.advance(game)
+        attempt, = rejected
+        self.assertEqual(attempt['target'], 'wei')
+        self.assertFalse(self.events(game, 'surrender', ('shu', 'wei')))
+        self.assertNotIn('diplomacy', [row['kind'] for row in snapshot['orders']['shu']['orders']])
+        self.assertNotEqual(snapshot['officer_actions'].get(str(attempt['envoy'])), state.turn)
+        self.assertEqual(game.state.cities['nanyang'].owner, 'wei')
+        surviving, = game.state.extension['travel']['marches']
+        self.assertEqual(surviving['id'], march['id'])
+        self.assertEqual(surviving['officers'], march['officers'])
+        self.assertGreater(surviving['supply']['remaining'], 0)
 
 
 if __name__ == '__main__':

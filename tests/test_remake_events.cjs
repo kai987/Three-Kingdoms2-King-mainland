@@ -43,6 +43,18 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  assert(diplomacy.modal.innerHTML.includes('72旬同盟'));
  diplomacy.i18n.locale='ja';diplomacy.doc.emit('game-language-change');
  assert(diplomacy.modal.innerHTML.includes('72旬の同盟'));
+ const returnOrder=row(1,'diplomacy_result',{audience:'world',factions:['shu','wei'],
+  person_ids:['person-a','person-b'],details:{action:'return_captives',success:true,score:55,duration:0}});
+ const observerView=view([returnOrder]);observerView.game.player='observer';
+ const observerDiplomacy=fixture();
+ observerDiplomacy.setView(observerView);
+ observerDiplomacy.events.observe(observerView,{newGame:true});observerDiplomacy.drain();
+ assert(!observerDiplomacy.modal.open,'Routine AI diplomacy does not interrupt observation');
+ assert(observerDiplomacy.events.history());observerDiplomacy.drain();
+ assert(observerDiplomacy.modal.innerHTML.includes('將曹操交還劉備勢力'));
+ observerDiplomacy.i18n.locale='ja';observerDiplomacy.doc.emit('game-language-change');
+ assert(observerDiplomacy.modal.innerHTML.includes('曹操を劉備勢力に返還'));
+ observerDiplomacy.events.dispose();
  const campaignRows=[
   row(1,'historical_guandu',{audience:'world',factions:['wei','yuan_shao']}),
   row(2,'historical_sun_liu_alliance',{audience:'world',factions:['wu','shu']}),

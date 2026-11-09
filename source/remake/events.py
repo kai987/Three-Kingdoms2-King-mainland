@@ -567,7 +567,7 @@ def validate(campaign, state):
                     or type(d['success']) is not bool or type(d['score']) is not int
                     or not 0 <= d['score'] <= 100 or type(d['duration']) is not int
                     or (not 1 <= d['duration'] <= MAX_TURNS if d['action']=='alliance' else d['duration']!=0)
-                    or len(row['factions']) != 2 or row['audience'] != 'player'
+                    or len(row['factions']) != 2
                     or len(row['city_ids']) != (2 if d['action']=='request_attack' else 1)
                     or len(row['person_ids']) != (2 if d['action']=='return_captives' else 1)):
                 raise ValueError('Diplomacy event receipt')

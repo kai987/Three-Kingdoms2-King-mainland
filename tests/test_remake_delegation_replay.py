@@ -175,23 +175,27 @@ class DelegationReplayTests(unittest.TestCase):
 
     def generated_maneuver(self):
         """A hired rear-area clerk uses the same transfer and attack commands."""
-        if self.generated is None or self.staff_attack_sent:
+        if self.generated is None or self.staff_battles:
             return
         game, state = self.games[0], self.games[0].state
         ident = self.generated
-        if ident in game._march_ids(state) or not state.officers[ident].alive:
+        if ident in game._march_ids(state) or not state.officers[ident].alive or state.officers[ident].troops <= 0:
             return
         home = next((c for c in state.cities.values() if ident in c.roster.officer_ids), None)
         if home is None or home.owner != state.player or not command_books.can_spend(state,state.player):
             return
+        threatened = {row['target'] for row in state.extension['travel']['marches']
+                      if row['owner'] != state.player and row['kind'] == 'attack'
+                      and row['status'] == 'outbound'}
         choices = []
-        for target in game._neighbors(home.id, state):
-            city = state.cities[target]
-            if city.owner in {state.player, 'neutral'} or not city.roster.officer_ids:
-                continue
-            quote = game._travel_path(state, home.id, target, state.player, 'land', adjacent=True)
-            if quote and all(not leg.get('hazard') for leg in quote['routes']):
-                choices.append((quote['days'], target))
+        if home.id not in threatened:
+            for target in game._neighbors(home.id, state):
+                city = state.cities[target]
+                if city.owner in {state.player, 'neutral'} or not city.roster.officer_ids:
+                    continue
+                quote = game._travel_path(state, home.id, target, state.player, 'land', adjacent=True)
+                if quote and all(not leg.get('hazard') for leg in quote['routes']):
+                    choices.append((quote['days'], target))
         if choices:
             _, target = min(choices)
             self.command('depart', source=home.id, target=target,
@@ -200,10 +204,11 @@ class DelegationReplayTests(unittest.TestCase):
             return
         # A real intervening city is now a stop, so Xiangyang need not itself
         # border the enemy. Move the clerk to the nearest actual land front
-        # through public commands rather than assuming a visual bypass.
+        # through public commands. An already incoming army can take a
+        # departure city before the clerk reaches the destination.
         fronts = []
         for city in state.cities.values():
-            if city.owner != state.player or city.id == home.id:
+            if city.owner != state.player or city.id == home.id or city.id in threatened:
                 continue
             if not any(state.cities[key].owner not in {state.player, 'neutral'}
                        and state.cities[key].roster.officer_ids

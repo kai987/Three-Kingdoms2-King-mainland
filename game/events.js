@@ -175,7 +175,7 @@
  }
  function validDiplomacyEvent(row){
   const d=row.details;
-  return row.audience==='player'&&row.factions?.length===2&&
+  return row.factions?.length===2&&
    d&&Object.keys(d).sort().join(',')==='action,duration,score,success'&&
    ['goodwill','alliance','return_captives','request_attack','surrender'].includes(d.action)&&
    typeof d.success==='boolean'&&Number.isInteger(d.score)&&d.score>=0&&d.score<=100&&
@@ -366,12 +366,12 @@
    const n=names(row),p=n.people.join(text('、','・'))||text('武將','武将'),c=n.cities.join(' → ')||text('戰役地圖','戦役地図'),f=n.factions.at(-1)||text('本方','自軍'),d=row.details;
    switch(row.kind){
     case 'diplomacy_result':{
-     const envoy=n.people[0],prisoner=n.people[1],targetCity=n.cities[1];
+     const envoy=n.people[0],prisoner=n.people[1],targetCity=n.cities[1],sender=n.factions[0];
      if(d.action==='goodwill')return text(`${envoy}向${f}送上禮物，外交感情升至${d.score}。`,`${envoy}が${f}に贈り物を届け、外交感情が${d.score}に上がりました。`);
      if(d.action==='alliance')return text(`${envoy}與${f}締結${d.duration}旬同盟。同盟期間互不出征，可通過盟友領地調動。`,`${envoy}が${f}と${d.duration}旬の同盟を締結しました。同盟中は互いに攻撃せず、同盟領を経由して移動できます。`);
-     if(d.action==='request_attack')return text(`${f}答應優先評估向${targetCity}出征。須備足兵力與兵糧才會發兵。`,`${f}は${targetCity}への出陣を優先して検討します。兵力と兵糧がそろえば出陣します。`);
-     if(d.action==='return_captives')return d.success?text(`${f}已將${prisoner}交還我方。`,`${f}は${prisoner}を返還しました。`):text(`${f}拒絕交還${prisoner}。`,`${f}は${prisoner}の返還を拒みました。`);
-     return text(`${f}接受勸降，其城池、庫存及在籍武將轉歸我方。`,`${f}は降伏勧告を受け入れ、所属都市・備蓄・在籍武将が自勢力に加わりました。`);
+     if(d.action==='request_attack')return text(`${sender}請${f}優先評估向${targetCity}出征。須備足兵力與兵糧才會發兵。`,`${sender}は${f}に${targetCity}への出陣を要請しました。兵力と兵糧がそろえば出陣します。`);
+     if(d.action==='return_captives')return d.success?text(`${f}已將${prisoner}交還${sender}。`,`${f}は${prisoner}を${sender}に返還しました。`):text(`${f}拒絕向${sender}交還${prisoner}。`,`${f}は${sender}への${prisoner}の返還を拒みました。`);
+     return text(`${f}接受${sender}的勸降，其城池、庫存及在籍武將轉歸${sender}。`,`${f}は${sender}の降伏勧告を受け入れ、所属都市・備蓄・在籍武将が${sender}に加わりました。`);
     }
     case 'city_developed':{
      const development={land:text('土地開墾','土地の開墾'),industry:text('產業發展','産業の開発'),population:text('城町人口開發','町の人口開発')}[d.development];

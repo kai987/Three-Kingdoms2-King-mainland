@@ -10,7 +10,7 @@ from itertools import combinations
 
 from .difficulty import attack_budget, get_settings
 from .errors import GameError
-from . import command_books, diplomacy, historical_campaigns, officer_relations
+from . import command_books, diplomacy, diplomacy_ai, historical_campaigns, officer_relations
 from .officers import integer, recruitment_loyalty, ref_sort_key
 from . import civil_staff
 from .march_supply import DENOMINATOR, OFFICER_UNITS, estimate as march_grain, next_supply_days, required_grain
@@ -504,9 +504,40 @@ class StrategicAI:
             self.quotes.clear()
 
 
+def _open_ai_queue(campaign, state):
+    priority = {owner: rank for rank, owner in enumerate(historical_campaigns.priority_factions(state))}
+
+    def order(owner):
+        return priority.get(owner, len(priority)), owner
+
+    owners = {city.owner for city in state.cities.values() if city.owner not in (state.player, 'neutral')}
+    planner = StrategicAI(campaign, state)
+    for owner in sorted(owners, key=order):
+        for payload in diplomacy_ai.orders(planner, owner):
+            try:
+                diplomacy.execute(campaign, state, payload, owner)
+            except GameError:
+                continue
+            planner.quotes.clear()
+            if state.phase != 'ai':
+                return
+            break
+
+    x = state.extension
+    x['ai_queue'] = [city.id for city in sorted(state.cities.values(), key=lambda city: (*order(city.owner), city.id))
+                     if city.owner not in (state.player, 'neutral')]
+    x['ai_cursor'] = 0
+    x['ai_attacks'] = 0
+
+
 def run(campaign, state, payload):
     if state.phase != 'ai' or payload.get('turn') != state.turn:
         raise GameError('当前不是待处理的电脑回合。')
+    # Resuming an interrupted city queue must not repeat this turn's diplomacy.
+    if not state.extension['ai_queue']:
+        _open_ai_queue(campaign, state)
+        if state.phase != 'ai':
+            return
     x = state.extension
     ai = StrategicAI(campaign,state)
     if 'domestic' in x:
@@ -514,12 +545,6 @@ def run(campaign, state, payload):
         for owner in sorted(campaign.catalog.factions):
             if owner != state.player:
                 prepare_ai(campaign,state,owner)
-    if not x['ai_queue']:
-        priority = {owner: rank for rank, owner in enumerate(historical_campaigns.priority_factions(state))}
-        x['ai_queue'] = [c.id for c in sorted(state.cities.values(),
-                         key=lambda c: (priority.get(c.owner, len(priority)), c.owner, c.id))
-                         if c.owner not in (state.player,'neutral')]
-        x['ai_cursor'] = 0;x['ai_attacks'] = 0
     while x['ai_cursor'] < len(x['ai_queue']):
         key = x['ai_queue'][x['ai_cursor']];x['ai_cursor'] += 1
         city = state.cities.get(key)
