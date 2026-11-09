@@ -54,6 +54,13 @@ JINGNAN = {
 }
 
 
+def expansion_material(data):
+    plan = json.loads((ROOT / 'game/config/campaigns/city-expansion-openings.json').read_text())
+    opened = plan['scenarios'][data['id']]['owners']
+    return tuple(sum(data['initial_city_resources'][city][field] for city in opened)
+                 for field in ('gold', 'grain', 'reserves'))
+
+
 class HistoricalScenarioTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -337,9 +344,9 @@ class EarlyIndependentRulerTests(unittest.TestCase):
         'san14-candidate-0308', 'san14-candidate-0014',
     }
     # Published69a6e8f active-world totals before changing any allegiances.
-    # Inactive future cities are deliberately excluded from the conservation
-    # boundary. Converting an officer to free/dead returns his300 troops to
-    # the original city; restoring Fan Chou consumes300 existing reserves.
+    # The frozen conservation boundary excludes future cities and the later
+    # map expansion. Converting an officer to free/dead returns his 300
+    # troops to the original city; restoring Fan Chou consumes 300 reserves.
     ACTIVE_WORLD_BASELINE = {
         '188-06': (147640, 520075, 187860),
         '190-01': (143240, 495475, 223570),
@@ -559,7 +566,9 @@ class EarlyIndependentRulerTests(unittest.TestCase):
                               sum(city.grain for city in game.state.cities.values()),
                               sum(city.reserves for city in game.state.cities.values()) +
                               sum(officer.troops for officer in game.state.officers.values()))
-                    self.assertEqual(totals, self.ACTIVE_WORLD_BASELINE[chapter])
+                    expected = tuple(old + added for old, added in zip(
+                        self.ACTIVE_WORLD_BASELINE[chapter], expansion_material(data)))
+                    self.assertEqual(totals, expected)
                     self.assertEqual(game.state.soldiers['initial'], totals[2])
 
     def test_new_local_commands_start_preview_and_restore_without_changing_membership(self):
@@ -838,7 +847,8 @@ class Nanzhong225SetupTests(unittest.TestCase):
         self.assertEqual(chengdu.reserves + sum(game.state.officers[i].troops
             for i in chengdu.roster.officer_ids), 5090 + sum(
             row['troops'] for row in self.catalog.data['initial_officers'] if row['city'] == 'shujun'))
-        self.assertEqual(game.state.soldiers['initial'], 271350)
+        self.assertEqual(game.state.soldiers['initial'],
+                         271350 + expansion_material(self.catalog.data)[2])
         before = game.to_dict()
         game._spawn_eligible(game.state)
         game.validate(game.state)

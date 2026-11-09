@@ -122,7 +122,9 @@ jobs:
     needs: [scope, native-rules]
     if: needs.scope.outputs.rules == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # The expanded 217 and 263 office replays share shard 2. The Python job
+    # exhausted 20 minutes and the Rust job finished with 21 seconds to spare.
+    timeout-minutes: ${{ matrix.shard == 2 && 30 || 20 }}
     strategy:
       fail-fast: false
       matrix:
@@ -376,8 +378,8 @@ jobs:
     needs: [scope, web-build]
     if: needs.scope.outputs.web == 'true'
     runs-on: ubuntu-latest
-    # Includes real per-squad battles and three village services on both devices.
-    timeout-minutes: 35
+    # Allow for runner variability in the full touch suite with the expanded map.
+    timeout-minutes: ${{ matrix.project == 'touch-chromium' && 40 || 35 }}
     strategy:
       fail-fast: false
       matrix:

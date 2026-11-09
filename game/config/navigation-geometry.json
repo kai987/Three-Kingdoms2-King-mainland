@@ -308,6 +308,873 @@
           ]
         }
       ]
+    },
+    {
+      "from": "hefei",
+      "to": "jiujiang",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·劉馥傳》與《吳主傳》載合肥經營及江淮軍行。連接壽春、合肥、廬江與江東方向的道路是本作區域走廊。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷15#劉馥"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              990,
+              416
+            ],
+            [
+              978,
+              409
+            ],
+            [
+              965,
+              402
+            ],
+            [
+              954,
+              403
+            ],
+            [
+              945,
+              406
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "hefei",
+      "to": "lujiang",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·劉馥傳》與《吳主傳》載合肥經營及江淮軍行。連接壽春、合肥、廬江與江東方向的道路是本作區域走廊。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷15#劉馥"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              990,
+              416
+            ],
+            [
+              982,
+              430
+            ],
+            [
+              977,
+              443
+            ],
+            [
+              951,
+              448
+            ],
+            [
+              936,
+              451
+            ],
+            [
+              925,
+              454
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "hefei",
+      "to": "danyang",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·劉馥傳》與《吳主傳》載合肥經營及江淮軍行。連接壽春、合肥、廬江與江東方向的道路是本作區域走廊。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷15#劉馥"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              990,
+              416
+            ],
+            [
+              1002,
+              410
+            ],
+            [
+              1013,
+              415
+            ],
+            [
+              1024,
+              418
+            ],
+            [
+              1037,
+              422
+            ],
+            [
+              1050,
+              427
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "guangling",
+      "to": "xiapi",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·文帝紀》記曹丕至廣陵臨江。由下邳至廣陵以及建業方向的路徑代表江淮陸行與過江轉運。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷02"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              1097,
+              387
+            ],
+            [
+              1076,
+              380
+            ],
+            [
+              1059,
+              374
+            ],
+            [
+              1040,
+              368
+            ],
+            [
+              1020,
+              362
+            ],
+            [
+              1009,
+              358
+            ],
+            [
+              996,
+              351
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "guangling",
+      "to": "danyang",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·文帝紀》記曹丕至廣陵臨江。由下邳至廣陵以及建業方向的路徑代表江淮陸行與過江轉運。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷02"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              1097,
+              387
+            ],
+            [
+              1084,
+              390
+            ],
+            [
+              1076,
+              398
+            ],
+            [
+              1071,
+              410
+            ],
+            [
+              1061,
+              421
+            ],
+            [
+              1050,
+              427
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "chaisang",
+      "to": "qichun",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·諸葛亮傳》記柴桑為孫權接使與屯駐地。此線概括柴桑沿江地帶往蘄春及豫章的道路與渡口。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷35"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              892,
+              552
+            ],
+            [
+              890,
+              542
+            ],
+            [
+              891,
+              532
+            ],
+            [
+              886,
+              523
+            ],
+            [
+              874,
+              512
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "chaisang",
+      "to": "yuzhang",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·諸葛亮傳》記柴桑為孫權接使與屯駐地。此線概括柴桑沿江地帶往蘄春及豫章的道路與渡口。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷35"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              892,
+              552
+            ],
+            [
+              896,
+              562
+            ],
+            [
+              901,
+              571
+            ],
+            [
+              904,
+              579
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "xicheng",
+      "to": "hanzhong",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·劉封傳》載西城、上庸、房陵的分合及漢水軍行。山地陸線連接漢中、西城、上庸與房陵的城址。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷40"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              475,
+              427
+            ],
+            [
+              461,
+              422
+            ],
+            [
+              443,
+              419
+            ],
+            [
+              430,
+              417
+            ],
+            [
+              421,
+              411
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "xicheng",
+      "to": "shangyong",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·劉封傳》載西城、上庸、房陵的分合及漢水軍行。山地陸線連接漢中、西城、上庸與房陵的城址。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷40"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              475,
+              427
+            ],
+            [
+              487,
+              420
+            ],
+            [
+              503,
+              416
+            ],
+            [
+              522,
+              419
+            ],
+            [
+              539,
+              415
+            ],
+            [
+              557,
+              416
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "shangyong",
+      "to": "xincheng",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·劉封傳》載西城、上庸、房陵的分合及漢水軍行。山地陸線連接漢中、西城、上庸與房陵的城址。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷40"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              557,
+              416
+            ],
+            [
+              575,
+              419
+            ],
+            [
+              586,
+              414
+            ],
+            [
+              598,
+              416
+            ],
+            [
+              610,
+              427
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "yiling",
+      "to": "yidu",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·陸遜傳》記夷陵沿山佈營的軍行。道路以長江北岸與峽口兩側的區域通行為依據。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷58"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              614,
+              487
+            ],
+            [
+              626,
+              484
+            ],
+            [
+              637,
+              480
+            ],
+            [
+              647,
+              472
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "yiling",
+      "to": "nanjun",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·陸遜傳》記夷陵沿山佈營的軍行。道路以長江北岸與峽口兩側的區域通行為依據。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷58"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              614,
+              487
+            ],
+            [
+              633,
+              491
+            ],
+            [
+              646,
+              495
+            ],
+            [
+              667,
+              511
+            ],
+            [
+              681,
+              507
+            ],
+            [
+              691,
+              503
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "yiling",
+      "to": "jianping",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《宋書·州郡志》記吳建平與巴東、宜都周邊的縣域沿革。峽江岸路以既有峽谷通道為概化。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/宋書/卷37"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              614,
+              487
+            ],
+            [
+              608,
+              498
+            ],
+            [
+              602,
+              510
+            ],
+            [
+              596,
+              519
+            ],
+            [
+              593,
+              528
+            ],
+            [
+              592,
+              536
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "jianping",
+      "to": "badong",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《宋書·州郡志》記吳建平與巴東、宜都周邊的縣域沿革。峽江岸路以既有峽谷通道為概化。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/宋書/卷37"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              592,
+              536
+            ],
+            [
+              587,
+              518
+            ],
+            [
+              580,
+              503
+            ],
+            [
+              569,
+              492
+            ],
+            [
+              555,
+              476
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "changli",
+      "to": "liaodong",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·齊王芳紀》記遼東屬國置昌黎縣。《晉書·地理志》列昌黎與遼東、遼西，據其相鄰區域配置沿岸與支谷道路。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/晉書/卷014#平州"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              1138,
+              57
+            ],
+            [
+              1154,
+              60
+            ],
+            [
+              1170,
+              65
+            ],
+            [
+              1183,
+              73
+            ],
+            [
+              1194,
+              78
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "changli",
+      "to": "liaoxi",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·齊王芳紀》記遼東屬國置昌黎縣。《晉書·地理志》列昌黎與遼東、遼西，據其相鄰區域配置沿岸與支谷道路。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/晉書/卷014#平州"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              1138,
+              57
+            ],
+            [
+              1122,
+              60
+            ],
+            [
+              1109,
+              63
+            ],
+            [
+              1092,
+              76
+            ],
+            [
+              1077,
+              92
+            ],
+            [
+              1067,
+              109
+            ],
+            [
+              1061,
+              121
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "pingyang",
+      "to": "hedong",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·齊王芳紀》記從河東汾北分置平陽郡。遊戲用汾水谷地及通上黨的山道概括區域聯繫。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷04#齊王"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              690,
+              273
+            ],
+            [
+              679,
+              284
+            ],
+            [
+              655,
+              287
+            ],
+            [
+              638,
+              301
+            ],
+            [
+              629,
+              322
+            ],
+            [
+              634,
+              340
+            ],
+            [
+              647,
+              360
+            ],
+            [
+              657,
+              385
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "pingyang",
+      "to": "shangdang",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·齊王芳紀》記從河東汾北分置平陽郡。遊戲用汾水谷地及通上黨的山道概括區域聯繫。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷04#齊王"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              690,
+              273
+            ],
+            [
+              702,
+              273
+            ],
+            [
+              714,
+              268
+            ],
+            [
+              725,
+              267
+            ],
+            [
+              733,
+              266
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "hengyang",
+      "to": "changsha",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·孫亮傳》記長沙分出衡陽及湘東，《水經注》描述湘水與沿岸縣城。此線概括湘水河谷及通桂陽的山間陸路。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/水經注/38"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              716,
+              623
+            ],
+            [
+              709,
+              611
+            ],
+            [
+              712,
+              595
+            ],
+            [
+              721,
+              587
+            ],
+            [
+              727,
+              577
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "hengyang",
+      "to": "xiangdong",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·孫亮傳》記長沙分出衡陽及湘東，《水經注》描述湘水與沿岸縣城。此線概括湘水河谷及通桂陽的山間陸路。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/水經注/38"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              716,
+              623
+            ],
+            [
+              731,
+              628
+            ],
+            [
+              747,
+              631
+            ],
+            [
+              757,
+              640
+            ],
+            [
+              767,
+              646
+            ],
+            [
+              772,
+              656
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "xiangdong",
+      "to": "guiyang",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·孫亮傳》記長沙分出衡陽及湘東，《水經注》描述湘水與沿岸縣城。此線概括湘水河谷及通桂陽的山間陸路。具體折點與渡河位置為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/wiki/水經注/38"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              772,
+              656
+            ],
+            [
+              762,
+              663
+            ],
+            [
+              748,
+              668
+            ],
+            [
+              738,
+              669
+            ],
+            [
+              730,
+              671
+            ]
+          ]
+        }
+      ]
     }
   ],
   "river_routes": [
@@ -873,13 +1740,39 @@
           31.03
         ],
         [
+          109.89,
+          31.07
+        ],
+        [
+          111.28,
+          30.71
+        ],
+        [
           111.45,
           30.39
         ]
       ],
       "river_segments": [
         {
-          "reach_id": "yangtze:badong:yidu",
+          "reach_id": "yangtze:badong:jianping",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "badong"
+        },
+        {
+          "reach_id": "yangtze:jianping:yiling",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "badong"
+        },
+        {
+          "reach_id": "yangtze:yiling:yidu",
           "river_id": "yangtze",
           "name_tc": "長江",
           "name_ja": "長江",
@@ -905,7 +1798,7 @@
         },
         {
           "mode": "river",
-          "reach_id": "yangtze:badong:yidu",
+          "reach_id": "yangtze:badong:jianping",
           "river_id": "yangtze",
           "points": [
             [
@@ -943,6 +1836,17 @@
             [
               592,
               503
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:jianping:yiling",
+          "river_id": "yangtze",
+          "points": [
+            [
+              592,
+              503
             ],
             [
               595,
@@ -964,6 +1868,17 @@
               607,
               501
             ],
+            [
+              610,
+              501
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:yiling:yidu",
+          "river_id": "yangtze",
+          "points": [
             [
               610,
               501
@@ -1759,6 +2674,10 @@
           30.1
         ],
         [
+          115.86,
+          29.78
+        ],
+        [
           116.22,
           29.76
         ],
@@ -1769,7 +2688,16 @@
       ],
       "river_segments": [
         {
-          "reach_id": "yangtze:qichun:pengli",
+          "reach_id": "yangtze:qichun:chaisang",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "qichun"
+        },
+        {
+          "reach_id": "yangtze:chaisang:pengli",
           "river_id": "yangtze",
           "name_tc": "長江",
           "name_ja": "長江",
@@ -1804,7 +2732,7 @@
         },
         {
           "mode": "river",
-          "reach_id": "yangtze:qichun:pengli",
+          "reach_id": "yangtze:qichun:chaisang",
           "river_id": "yangtze",
           "points": [
             [
@@ -1827,6 +2755,17 @@
               892,
               547
             ],
+            [
+              895,
+              547
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:chaisang:pengli",
+          "river_id": "yangtze",
+          "points": [
             [
               895,
               547
@@ -2247,13 +3186,26 @@
           32.05
         ],
         [
+          119.42,
+          32.22
+        ],
+        [
           120.66,
           31.95
         ]
       ],
       "river_segments": [
         {
-          "reach_id": "yangtze:danyang:wujun",
+          "reach_id": "yangtze:danyang:guangling",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "danyang"
+        },
+        {
+          "reach_id": "yangtze:guangling:wujun",
           "river_id": "yangtze",
           "name_tc": "長江",
           "name_ja": "長江",
@@ -2279,7 +3231,7 @@
         },
         {
           "mode": "river",
-          "reach_id": "yangtze:danyang:wujun",
+          "reach_id": "yangtze:danyang:guangling",
           "river_id": "yangtze",
           "points": [
             [
@@ -2334,6 +3286,17 @@
               1086,
               406
             ],
+            [
+              1089,
+              406
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:guangling:wujun",
+          "river_id": "yangtze",
+          "points": [
             [
               1089,
               406
@@ -2704,13 +3667,39 @@
           33
         ],
         [
+          109.03,
+          32.72
+        ],
+        [
+          110.43,
+          32.82
+        ],
+        [
           110.75,
           32.03
         ]
       ],
       "river_segments": [
         {
-          "reach_id": "han:hanzhong:xincheng",
+          "reach_id": "han:hanzhong:xicheng",
+          "river_id": "han",
+          "name_tc": "漢水",
+          "name_ja": "漢水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "hanzhong"
+        },
+        {
+          "reach_id": "han:xicheng:shangyong",
+          "river_id": "han",
+          "name_tc": "漢水",
+          "name_ja": "漢水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "hanzhong"
+        },
+        {
+          "reach_id": "han:shangyong:xincheng",
           "river_id": "han",
           "name_tc": "漢水",
           "name_ja": "漢水",
@@ -2768,7 +3757,7 @@
         },
         {
           "mode": "river",
-          "reach_id": "han:hanzhong:xincheng",
+          "reach_id": "han:hanzhong:xicheng",
           "river_id": "han",
           "points": [
             [
@@ -2843,6 +3832,17 @@
               472,
               443
             ],
+            [
+              475,
+              444
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "han:xicheng:shangyong",
+          "river_id": "han",
+          "points": [
             [
               475,
               444
@@ -2951,6 +3951,17 @@
               553,
               453
             ],
+            [
+              556,
+              453
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "han:shangyong:xincheng",
+          "river_id": "han",
+          "points": [
             [
               556,
               453
@@ -6350,13 +7361,39 @@
           26.21
         ],
         [
+          112.64,
+          26.9
+        ],
+        [
+          112.6,
+          27.66
+        ],
+        [
           112.97,
           28.24
         ]
       ],
       "river_segments": [
         {
-          "reach_id": "xiang:lingling:changsha",
+          "reach_id": "xiang:lingling:xiangdong",
+          "river_id": "xiang",
+          "name_tc": "湘水（含洞庭出口）",
+          "name_ja": "湘水（洞庭出口を含む）",
+          "speed_key": "xiang",
+          "distance_km": 1,
+          "downstream_from": "lingling"
+        },
+        {
+          "reach_id": "xiang:xiangdong:hengyang",
+          "river_id": "xiang",
+          "name_tc": "湘水（含洞庭出口）",
+          "name_ja": "湘水（洞庭出口を含む）",
+          "speed_key": "xiang",
+          "distance_km": 1,
+          "downstream_from": "lingling"
+        },
+        {
+          "reach_id": "xiang:hengyang:changsha",
           "river_id": "xiang",
           "name_tc": "湘水（含洞庭出口）",
           "name_ja": "湘水（洞庭出口を含む）",
@@ -6382,7 +7419,7 @@
         },
         {
           "mode": "river",
-          "reach_id": "xiang:lingling:changsha",
+          "reach_id": "xiang:lingling:xiangdong",
           "river_id": "xiang",
           "points": [
             [
@@ -6408,6 +7445,17 @@
             [
               687,
               643
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "xiang:xiangdong:hengyang",
+          "river_id": "xiang",
+          "points": [
+            [
+              687,
+              643
             ],
             [
               687,
@@ -6429,6 +7477,17 @@
               689,
               628
             ],
+            [
+              689,
+              625
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "xiang:hengyang:changsha",
+          "river_id": "xiang",
+          "points": [
             [
               689,
               625
@@ -8159,6 +9218,14 @@
           31.03
         ],
         [
+          109.89,
+          31.07
+        ],
+        [
+          111.28,
+          30.71
+        ],
+        [
           111.45,
           30.39
         ],
@@ -8169,7 +9236,25 @@
       ],
       "river_segments": [
         {
-          "reach_id": "yangtze:badong:yidu",
+          "reach_id": "yangtze:badong:jianping",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "badong"
+        },
+        {
+          "reach_id": "yangtze:jianping:yiling",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "badong"
+        },
+        {
+          "reach_id": "yangtze:yiling:yidu",
           "river_id": "yangtze",
           "name_tc": "長江",
           "name_ja": "長江",
@@ -8204,7 +9289,7 @@
         },
         {
           "mode": "river",
-          "reach_id": "yangtze:badong:yidu",
+          "reach_id": "yangtze:badong:jianping",
           "river_id": "yangtze",
           "points": [
             [
@@ -8242,6 +9327,17 @@
             [
               592,
               503
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:jianping:yiling",
+          "river_id": "yangtze",
+          "points": [
+            [
+              592,
+              503
             ],
             [
               595,
@@ -8263,6 +9359,17 @@
               607,
               501
             ],
+            [
+              610,
+              501
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:yiling:yidu",
+          "river_id": "yangtze",
+          "points": [
             [
               610,
               501
@@ -9253,6 +10360,2291 @@
           "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_44679"
         ],
         "limits": "史料證明軍事水陸通道，未提供全年雙向大艦運能、古港精確位置或逐日航速。像素水線、港點與地理坐標屬本作概化；沿用既定長江順逆流航速，內河不適用海路季風或海上風暴減員。此墊江為今合川，不是今日墊江縣。"
+      }
+    },
+    {
+      "id": "guangling:danyang:river",
+      "from": "guangling",
+      "to": "danyang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          119.42,
+          32.22
+        ],
+        [
+          118.78,
+          32.05
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:danyang:guangling",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "danyang"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "guangling",
+          "points": [
+            [
+              1097,
+              387
+            ],
+            [
+              1094,
+              397
+            ],
+            [
+              1089,
+              406
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:danyang:guangling",
+          "river_id": "yangtze",
+          "points": [
+            [
+              1089,
+              406
+            ],
+            [
+              1086,
+              406
+            ],
+            [
+              1083,
+              404
+            ],
+            [
+              1080,
+              404
+            ],
+            [
+              1077,
+              403
+            ],
+            [
+              1074,
+              402
+            ],
+            [
+              1071,
+              402
+            ],
+            [
+              1068,
+              402
+            ],
+            [
+              1065,
+              402
+            ],
+            [
+              1062,
+              401
+            ],
+            [
+              1059,
+              401
+            ],
+            [
+              1056,
+              401
+            ],
+            [
+              1053,
+              401
+            ],
+            [
+              1050,
+              401
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "danyang",
+          "points": [
+            [
+              1050,
+              401
+            ],
+            [
+              1050,
+              427
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "廣陵按長江北岸接駁建業與吳縣方向，沿用既有長江河道。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35",
+          "https://zh.wikisource.org/wiki/三國志/卷02"
+        ]
+      }
+    },
+    {
+      "id": "guangling:wujun:river",
+      "from": "guangling",
+      "to": "wujun",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          119.42,
+          32.22
+        ],
+        [
+          120.66,
+          31.95
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:guangling:wujun",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "guangling"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "guangling",
+          "points": [
+            [
+              1097,
+              387
+            ],
+            [
+              1094,
+              397
+            ],
+            [
+              1089,
+              406
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:guangling:wujun",
+          "river_id": "yangtze",
+          "points": [
+            [
+              1089,
+              406
+            ],
+            [
+              1092,
+              406
+            ],
+            [
+              1095,
+              407
+            ],
+            [
+              1098,
+              408
+            ],
+            [
+              1101,
+              410
+            ],
+            [
+              1104,
+              410
+            ],
+            [
+              1107,
+              412
+            ],
+            [
+              1110,
+              412
+            ],
+            [
+              1113,
+              412
+            ],
+            [
+              1116,
+              413
+            ],
+            [
+              1119,
+              414
+            ],
+            [
+              1122,
+              416
+            ],
+            [
+              1125,
+              418
+            ],
+            [
+              1128,
+              420
+            ],
+            [
+              1131,
+              420
+            ],
+            [
+              1134,
+              422
+            ],
+            [
+              1137,
+              424
+            ],
+            [
+              1140,
+              424
+            ],
+            [
+              1143,
+              425
+            ],
+            [
+              1145,
+              427
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "wujun",
+          "points": [
+            [
+              1145,
+              427
+            ],
+            [
+              1142,
+              456
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "廣陵按長江北岸接駁建業與吳縣方向，沿用既有長江河道。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35",
+          "https://zh.wikisource.org/wiki/三國志/卷02"
+        ]
+      }
+    },
+    {
+      "id": "chaisang:qichun:river",
+      "from": "chaisang",
+      "to": "qichun",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          115.86,
+          29.78
+        ],
+        [
+          115.32,
+          30.1
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:qichun:chaisang",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "qichun"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "chaisang",
+          "points": [
+            [
+              892,
+              552
+            ],
+            [
+              895,
+              547
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:qichun:chaisang",
+          "river_id": "yangtze",
+          "points": [
+            [
+              895,
+              547
+            ],
+            [
+              892,
+              547
+            ],
+            [
+              889,
+              547
+            ],
+            [
+              886,
+              547
+            ],
+            [
+              883,
+              547
+            ],
+            [
+              880,
+              547
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "qichun",
+          "points": [
+            [
+              880,
+              547
+            ],
+            [
+              874,
+              512
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "柴桑以長江南岸港點接入同一主河道，往鄱陽經彭蠡湖口。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35",
+          "https://zh.wikisource.org/wiki/三國志/卷35",
+          "https://zh.wikisource.org/wiki/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "chaisang:lujiang:river",
+      "from": "chaisang",
+      "to": "lujiang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          115.86,
+          29.78
+        ],
+        [
+          116.22,
+          29.76
+        ],
+        [
+          117.1,
+          30.8
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:chaisang:pengli",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "chaisang"
+        },
+        {
+          "reach_id": "yangtze:pengli:lujiang",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "chaisang"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "chaisang",
+          "points": [
+            [
+              892,
+              552
+            ],
+            [
+              895,
+              547
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:chaisang:pengli",
+          "river_id": "yangtze",
+          "points": [
+            [
+              895,
+              547
+            ],
+            [
+              898,
+              547
+            ],
+            [
+              901,
+              545
+            ],
+            [
+              904,
+              545
+            ],
+            [
+              907,
+              543
+            ],
+            [
+              910,
+              543
+            ],
+            [
+              913,
+              542
+            ],
+            [
+              916,
+              541
+            ],
+            [
+              919,
+              541
+            ],
+            [
+              922,
+              541
+            ],
+            [
+              925,
+              541
+            ],
+            [
+              927,
+              543
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:pengli:lujiang",
+          "river_id": "yangtze",
+          "points": [
+            [
+              927,
+              543
+            ],
+            [
+              928,
+              540
+            ],
+            [
+              931,
+              537
+            ],
+            [
+              934,
+              535
+            ],
+            [
+              937,
+              535
+            ],
+            [
+              940,
+              533
+            ],
+            [
+              943,
+              533
+            ],
+            [
+              946,
+              530
+            ],
+            [
+              949,
+              527
+            ],
+            [
+              952,
+              526
+            ],
+            [
+              955,
+              523
+            ],
+            [
+              958,
+              522
+            ],
+            [
+              961,
+              519
+            ],
+            [
+              964,
+              516
+            ],
+            [
+              965,
+              513
+            ],
+            [
+              966,
+              510
+            ],
+            [
+              968,
+              507
+            ],
+            [
+              968,
+              504
+            ],
+            [
+              968,
+              502
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "lujiang",
+          "points": [
+            [
+              968,
+              502
+            ],
+            [
+              925,
+              454
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "柴桑以長江南岸港點接入同一主河道，往鄱陽經彭蠡湖口。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35",
+          "https://zh.wikisource.org/wiki/三國志/卷35",
+          "https://zh.wikisource.org/wiki/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "chaisang:poyang:river",
+      "from": "chaisang",
+      "to": "poyang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          115.86,
+          29.78
+        ],
+        [
+          116.22,
+          29.76
+        ],
+        [
+          116.2,
+          29
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:chaisang:pengli",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "chaisang"
+        },
+        {
+          "reach_id": "pengli:poyang:yangtze",
+          "river_id": "pengli_out",
+          "name_tc": "彭蠡出口",
+          "name_ja": "彭蠡の出口",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "poyang"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "chaisang",
+          "points": [
+            [
+              892,
+              552
+            ],
+            [
+              895,
+              547
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:chaisang:pengli",
+          "river_id": "yangtze",
+          "points": [
+            [
+              895,
+              547
+            ],
+            [
+              898,
+              547
+            ],
+            [
+              901,
+              545
+            ],
+            [
+              904,
+              545
+            ],
+            [
+              907,
+              543
+            ],
+            [
+              910,
+              543
+            ],
+            [
+              913,
+              542
+            ],
+            [
+              916,
+              541
+            ],
+            [
+              919,
+              541
+            ],
+            [
+              922,
+              541
+            ],
+            [
+              925,
+              541
+            ],
+            [
+              927,
+              543
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "pengli:poyang:yangtze",
+          "river_id": "pengli_out",
+          "points": [
+            [
+              927,
+              543
+            ],
+            [
+              926,
+              545
+            ],
+            [
+              928,
+              548
+            ],
+            [
+              930,
+              551
+            ],
+            [
+              930,
+              554
+            ],
+            [
+              932,
+              557
+            ],
+            [
+              934,
+              560
+            ],
+            [
+              934,
+              563
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "poyang",
+          "points": [
+            [
+              934,
+              563
+            ],
+            [
+              969,
+              568
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "柴桑以長江南岸港點接入同一主河道，往鄱陽經彭蠡湖口。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35",
+          "https://ctext.org/text.pl?if=gb&node=570600",
+          "https://zh.wikisource.org/wiki/三國志/卷35",
+          "https://zh.wikisource.org/wiki/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "xicheng:hanzhong:river",
+      "from": "xicheng",
+      "to": "hanzhong",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          109.03,
+          32.72
+        ],
+        [
+          107,
+          33
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "han:hanzhong:xicheng",
+          "river_id": "han",
+          "name_tc": "漢水",
+          "name_ja": "漢水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "hanzhong"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "xicheng",
+          "points": [
+            [
+              475,
+              427
+            ],
+            [
+              475,
+              444
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "han:hanzhong:xicheng",
+          "river_id": "han",
+          "points": [
+            [
+              475,
+              444
+            ],
+            [
+              472,
+              443
+            ],
+            [
+              469,
+              442
+            ],
+            [
+              466,
+              441
+            ],
+            [
+              463,
+              441
+            ],
+            [
+              460,
+              440
+            ],
+            [
+              457,
+              439
+            ],
+            [
+              454,
+              439
+            ],
+            [
+              451,
+              439
+            ],
+            [
+              448,
+              439
+            ],
+            [
+              445,
+              438
+            ],
+            [
+              442,
+              438
+            ],
+            [
+              439,
+              438
+            ],
+            [
+              436,
+              438
+            ],
+            [
+              433,
+              439
+            ],
+            [
+              430,
+              439
+            ],
+            [
+              427,
+              439
+            ],
+            [
+              424,
+              439
+            ],
+            [
+              421,
+              439
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "hanzhong",
+          "points": [
+            [
+              421,
+              439
+            ],
+            [
+              422,
+              438
+            ],
+            [
+              422,
+              436
+            ],
+            [
+              423,
+              435
+            ],
+            [
+              423,
+              434
+            ],
+            [
+              424,
+              433
+            ],
+            [
+              423,
+              432
+            ],
+            [
+              423,
+              431
+            ],
+            [
+              421,
+              429
+            ],
+            [
+              421,
+              411
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "西城位於漢水沿線。上庸在堵水一帶，採從城址陸路到漢水的接駁，未把堵水全程設為軍用航道。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷40",
+          "https://zh.wikisource.org/wiki/水經注/27"
+        ]
+      }
+    },
+    {
+      "id": "xicheng:shangyong:river",
+      "from": "xicheng",
+      "to": "shangyong",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          109.03,
+          32.72
+        ],
+        [
+          110.43,
+          32.82
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "han:xicheng:shangyong",
+          "river_id": "han",
+          "name_tc": "漢水",
+          "name_ja": "漢水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "xicheng"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "xicheng",
+          "points": [
+            [
+              475,
+              427
+            ],
+            [
+              475,
+              444
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "han:xicheng:shangyong",
+          "river_id": "han",
+          "points": [
+            [
+              475,
+              444
+            ],
+            [
+              478,
+              445
+            ],
+            [
+              481,
+              445
+            ],
+            [
+              484,
+              446
+            ],
+            [
+              487,
+              447
+            ],
+            [
+              490,
+              447
+            ],
+            [
+              493,
+              448
+            ],
+            [
+              496,
+              449
+            ],
+            [
+              499,
+              449
+            ],
+            [
+              502,
+              449
+            ],
+            [
+              505,
+              449
+            ],
+            [
+              508,
+              449
+            ],
+            [
+              511,
+              451
+            ],
+            [
+              514,
+              451
+            ],
+            [
+              517,
+              451
+            ],
+            [
+              520,
+              451
+            ],
+            [
+              523,
+              451
+            ],
+            [
+              526,
+              451
+            ],
+            [
+              529,
+              450
+            ],
+            [
+              532,
+              450
+            ],
+            [
+              535,
+              450
+            ],
+            [
+              538,
+              450
+            ],
+            [
+              541,
+              450
+            ],
+            [
+              544,
+              451
+            ],
+            [
+              547,
+              451
+            ],
+            [
+              550,
+              452
+            ],
+            [
+              553,
+              453
+            ],
+            [
+              556,
+              453
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "shangyong",
+          "points": [
+            [
+              556,
+              453
+            ],
+            [
+              561,
+              441
+            ],
+            [
+              560,
+              427
+            ],
+            [
+              557,
+              416
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "西城位於漢水沿線。上庸在堵水一帶，採從城址陸路到漢水的接駁，未把堵水全程設為軍用航道。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷40",
+          "https://zh.wikisource.org/wiki/水經注/27"
+        ]
+      }
+    },
+    {
+      "id": "shangyong:xincheng:river",
+      "from": "shangyong",
+      "to": "xincheng",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          110.43,
+          32.82
+        ],
+        [
+          110.75,
+          32.03
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "han:shangyong:xincheng",
+          "river_id": "han",
+          "name_tc": "漢水",
+          "name_ja": "漢水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "shangyong"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "shangyong",
+          "points": [
+            [
+              557,
+              416
+            ],
+            [
+              560,
+              427
+            ],
+            [
+              561,
+              441
+            ],
+            [
+              556,
+              453
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "han:shangyong:xincheng",
+          "river_id": "han",
+          "points": [
+            [
+              556,
+              453
+            ],
+            [
+              559,
+              453
+            ],
+            [
+              562,
+              452
+            ],
+            [
+              565,
+              452
+            ],
+            [
+              568,
+              452
+            ],
+            [
+              571,
+              452
+            ],
+            [
+              574,
+              453
+            ],
+            [
+              577,
+              453
+            ],
+            [
+              580,
+              453
+            ],
+            [
+              583,
+              453
+            ],
+            [
+              586,
+              453
+            ],
+            [
+              589,
+              454
+            ],
+            [
+              592,
+              454
+            ],
+            [
+              595,
+              454
+            ],
+            [
+              598,
+              454
+            ],
+            [
+              601,
+              454
+            ],
+            [
+              604,
+              454
+            ],
+            [
+              605,
+              455
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "xincheng",
+          "points": [
+            [
+              605,
+              455
+            ],
+            [
+              610,
+              427
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "西城位於漢水沿線。上庸在堵水一帶，採從城址陸路到漢水的接駁，未把堵水全程設為軍用航道。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷40",
+          "https://zh.wikisource.org/wiki/水經注/27"
+        ]
+      }
+    },
+    {
+      "id": "yiling:yidu:river",
+      "from": "yiling",
+      "to": "yidu",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          111.28,
+          30.71
+        ],
+        [
+          111.45,
+          30.39
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:yiling:yidu",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "yiling"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "yiling",
+          "points": [
+            [
+              614,
+              487
+            ],
+            [
+              610,
+              501
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:yiling:yidu",
+          "river_id": "yangtze",
+          "points": [
+            [
+              610,
+              501
+            ],
+            [
+              613,
+              501
+            ],
+            [
+              616,
+              500
+            ],
+            [
+              619,
+              500
+            ],
+            [
+              622,
+              500
+            ],
+            [
+              625,
+              500
+            ],
+            [
+              628,
+              500
+            ],
+            [
+              631,
+              500
+            ],
+            [
+              634,
+              500
+            ],
+            [
+              637,
+              500
+            ],
+            [
+              640,
+              500
+            ],
+            [
+              643,
+              501
+            ],
+            [
+              646,
+              501
+            ],
+            [
+              648,
+              502
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "yidu",
+          "points": [
+            [
+              648,
+              502
+            ],
+            [
+              647,
+              472
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "峽江水線沿長江主幹。西陵、宜都、巴東及吳建平分用各地接岸點；晉同名郡另有沿革。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35",
+          "https://zh.wikisource.org/wiki/水經注/34",
+          "https://zh.wikisource.org/wiki/宋書/卷37"
+        ]
+      }
+    },
+    {
+      "id": "yiling:jianping:river",
+      "from": "yiling",
+      "to": "jianping",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          111.28,
+          30.71
+        ],
+        [
+          109.89,
+          31.07
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:jianping:yiling",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "jianping"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "yiling",
+          "points": [
+            [
+              614,
+              487
+            ],
+            [
+              610,
+              501
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:jianping:yiling",
+          "river_id": "yangtze",
+          "points": [
+            [
+              610,
+              501
+            ],
+            [
+              607,
+              501
+            ],
+            [
+              604,
+              502
+            ],
+            [
+              601,
+              503
+            ],
+            [
+              598,
+              503
+            ],
+            [
+              595,
+              503
+            ],
+            [
+              592,
+              503
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "jianping",
+          "points": [
+            [
+              592,
+              503
+            ],
+            [
+              595,
+              514
+            ],
+            [
+              594,
+              526
+            ],
+            [
+              592,
+              536
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "峽江水線沿長江主幹。西陵、宜都、巴東及吳建平分用各地接岸點；晉同名郡另有沿革。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35",
+          "https://zh.wikisource.org/wiki/水經注/34",
+          "https://zh.wikisource.org/wiki/宋書/卷37"
+        ]
+      }
+    },
+    {
+      "id": "yiling:nanjun:river",
+      "from": "yiling",
+      "to": "nanjun",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          111.28,
+          30.71
+        ],
+        [
+          111.45,
+          30.39
+        ],
+        [
+          112.25,
+          30.3
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:yiling:yidu",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "yiling"
+        },
+        {
+          "reach_id": "yangtze:yidu:nanjun",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "yiling"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "yiling",
+          "points": [
+            [
+              614,
+              487
+            ],
+            [
+              610,
+              501
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:yiling:yidu",
+          "river_id": "yangtze",
+          "points": [
+            [
+              610,
+              501
+            ],
+            [
+              613,
+              501
+            ],
+            [
+              616,
+              500
+            ],
+            [
+              619,
+              500
+            ],
+            [
+              622,
+              500
+            ],
+            [
+              625,
+              500
+            ],
+            [
+              628,
+              500
+            ],
+            [
+              631,
+              500
+            ],
+            [
+              634,
+              500
+            ],
+            [
+              637,
+              500
+            ],
+            [
+              640,
+              500
+            ],
+            [
+              643,
+              501
+            ],
+            [
+              646,
+              501
+            ],
+            [
+              648,
+              502
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:yidu:nanjun",
+          "river_id": "yangtze",
+          "points": [
+            [
+              648,
+              502
+            ],
+            [
+              651,
+              502
+            ],
+            [
+              654,
+              505
+            ],
+            [
+              656,
+              508
+            ],
+            [
+              657,
+              511
+            ],
+            [
+              660,
+              514
+            ],
+            [
+              663,
+              517
+            ],
+            [
+              665,
+              520
+            ],
+            [
+              666,
+              523
+            ],
+            [
+              668,
+              526
+            ],
+            [
+              671,
+              529
+            ],
+            [
+              674,
+              530
+            ],
+            [
+              677,
+              530
+            ],
+            [
+              680,
+              530
+            ],
+            [
+              683,
+              530
+            ],
+            [
+              686,
+              530
+            ],
+            [
+              689,
+              530
+            ],
+            [
+              691,
+              532
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "nanjun",
+          "points": [
+            [
+              691,
+              532
+            ],
+            [
+              691,
+              503
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "峽江水線沿長江主幹。西陵、宜都、巴東及吳建平分用各地接岸點；晉同名郡另有沿革。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35",
+          "https://zh.wikisource.org/wiki/水經注/34",
+          "https://zh.wikisource.org/wiki/宋書/卷37"
+        ]
+      }
+    },
+    {
+      "id": "jianping:badong:river",
+      "from": "jianping",
+      "to": "badong",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          109.89,
+          31.07
+        ],
+        [
+          109.57,
+          31.03
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:badong:jianping",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "badong"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "jianping",
+          "points": [
+            [
+              592,
+              536
+            ],
+            [
+              594,
+              526
+            ],
+            [
+              595,
+              514
+            ],
+            [
+              592,
+              503
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:badong:jianping",
+          "river_id": "yangtze",
+          "points": [
+            [
+              592,
+              503
+            ],
+            [
+              589,
+              503
+            ],
+            [
+              586,
+              503
+            ],
+            [
+              583,
+              503
+            ],
+            [
+              580,
+              505
+            ],
+            [
+              577,
+              505
+            ],
+            [
+              574,
+              505
+            ],
+            [
+              571,
+              506
+            ],
+            [
+              568,
+              507
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "badong",
+          "points": [
+            [
+              568,
+              507
+            ],
+            [
+              555,
+              476
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "峽江水線沿長江主幹。西陵、宜都、巴東及吳建平分用各地接岸點；晉同名郡另有沿革。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35",
+          "https://zh.wikisource.org/wiki/水經注/34",
+          "https://zh.wikisource.org/wiki/宋書/卷37"
+        ]
+      }
+    },
+    {
+      "id": "hengyang:changsha:river",
+      "from": "hengyang",
+      "to": "changsha",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          112.6,
+          27.66
+        ],
+        [
+          112.97,
+          28.24
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "xiang:hengyang:changsha",
+          "river_id": "xiang",
+          "name_tc": "湘水（含洞庭出口）",
+          "name_ja": "湘水（洞庭出口を含む）",
+          "speed_key": "xiang",
+          "distance_km": 1,
+          "downstream_from": "hengyang"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "hengyang",
+          "points": [
+            [
+              716,
+              623
+            ],
+            [
+              704,
+              624
+            ],
+            [
+              689,
+              625
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "xiang:hengyang:changsha",
+          "river_id": "xiang",
+          "points": [
+            [
+              689,
+              625
+            ],
+            [
+              689,
+              622
+            ],
+            [
+              690,
+              619
+            ],
+            [
+              691,
+              616
+            ],
+            [
+              691,
+              613
+            ],
+            [
+              692,
+              610
+            ],
+            [
+              693,
+              607
+            ],
+            [
+              693,
+              604
+            ],
+            [
+              695,
+              601
+            ],
+            [
+              695,
+              598
+            ],
+            [
+              696,
+              595
+            ],
+            [
+              697,
+              592
+            ],
+            [
+              697,
+              589
+            ],
+            [
+              699,
+              586
+            ],
+            [
+              699,
+              583
+            ],
+            [
+              701,
+              580
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "changsha",
+          "points": [
+            [
+              701,
+              580
+            ],
+            [
+              716,
+              580
+            ],
+            [
+              727,
+              577
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "衡陽郡治湘南與湘東郡治酃縣都連接湘水河谷。兩城接岸道路沿用既有湘水主幹。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/38",
+          "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnux22fnsn_304"
+        ]
+      }
+    },
+    {
+      "id": "hengyang:xiangdong:river",
+      "from": "hengyang",
+      "to": "xiangdong",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          112.6,
+          27.66
+        ],
+        [
+          112.64,
+          26.9
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "xiang:xiangdong:hengyang",
+          "river_id": "xiang",
+          "name_tc": "湘水（含洞庭出口）",
+          "name_ja": "湘水（洞庭出口を含む）",
+          "speed_key": "xiang",
+          "distance_km": 1,
+          "downstream_from": "xiangdong"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "hengyang",
+          "points": [
+            [
+              716,
+              623
+            ],
+            [
+              704,
+              624
+            ],
+            [
+              689,
+              625
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "xiang:xiangdong:hengyang",
+          "river_id": "xiang",
+          "points": [
+            [
+              689,
+              625
+            ],
+            [
+              689,
+              628
+            ],
+            [
+              688,
+              631
+            ],
+            [
+              687,
+              634
+            ],
+            [
+              687,
+              637
+            ],
+            [
+              687,
+              640
+            ],
+            [
+              687,
+              643
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "xiangdong",
+          "points": [
+            [
+              687,
+              643
+            ],
+            [
+              695,
+              638
+            ],
+            [
+              707,
+              638
+            ],
+            [
+              727,
+              643
+            ],
+            [
+              750,
+              649
+            ],
+            [
+              772,
+              656
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "衡陽郡治湘南與湘東郡治酃縣都連接湘水河谷。兩城接岸道路沿用既有湘水主幹。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/38",
+          "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnux22fnsn_304"
+        ]
+      }
+    },
+    {
+      "id": "xiangdong:lingling:river",
+      "from": "xiangdong",
+      "to": "lingling",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          112.64,
+          26.9
+        ],
+        [
+          111.61,
+          26.21
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "xiang:lingling:xiangdong",
+          "river_id": "xiang",
+          "name_tc": "湘水（含洞庭出口）",
+          "name_ja": "湘水（洞庭出口を含む）",
+          "speed_key": "xiang",
+          "distance_km": 1,
+          "downstream_from": "lingling"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "xiangdong",
+          "points": [
+            [
+              772,
+              656
+            ],
+            [
+              750,
+              649
+            ],
+            [
+              727,
+              643
+            ],
+            [
+              707,
+              638
+            ],
+            [
+              695,
+              638
+            ],
+            [
+              687,
+              643
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "xiang:lingling:xiangdong",
+          "river_id": "xiang",
+          "points": [
+            [
+              687,
+              643
+            ],
+            [
+              687,
+              646
+            ],
+            [
+              687,
+              649
+            ],
+            [
+              687,
+              652
+            ],
+            [
+              687,
+              655
+            ],
+            [
+              687,
+              658
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "lingling",
+          "points": [
+            [
+              687,
+              658
+            ],
+            [
+              656,
+              655
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "衡陽郡治湘南與湘東郡治酃縣都連接湘水河谷。兩城接岸道路沿用既有湘水主幹。具體港點與轉運位置為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/38",
+          "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnux22fnsn_304"
+        ]
       }
     }
   ],
@@ -37797,7 +41189,7 @@
   "method": "4px ocean-connected sea mask and A-star; smooth display follows sea cells. Approximate game ports, not identified historical harbours. Distances use separate geographic marine waypoints, never art pixels.",
   "river_network": {
     "schema": "tk2-river-network-compiled-v1",
-    "source_sha256": "db2692e80ae313dd835da3a50a4e41d9d8be11a14379bf5bb9195dc07a5be527",
-    "reach_count": 49
+    "source_sha256": "1e63a1200f8d443353d2b3adb6e974e6a5caf225181acf430a1ba1dbff1e2e6c",
+    "reach_count": 57
   }
 }

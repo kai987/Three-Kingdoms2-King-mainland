@@ -134,7 +134,7 @@ class PlacementCompletionTests(unittest.TestCase):
                 self.assertEqual(active, set(catalog.data['initial_owners']))
                 self.assertEqual('xindu' in active, year >= 208)
                 names = city_names(catalog, *date)
-                self.assertEqual(names['hepu'], '合浦' if year < 228 else '珠官')
+                self.assertEqual(names['hepu'], '珠官' if (228, 1) <= date < (258, 10) else '合浦')
                 if 'xindu' in active:
                     self.assertEqual(names['xindu'], '新都')
                 badong = '固陵' if 216 <= year < 221 else '鱼复' if year < 201 or 214 <= year < 216 else '巴东'

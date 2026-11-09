@@ -1,4 +1,6 @@
 """Faction diplomacy, captives and treaties in the ten-day campaign."""
+from copy import deepcopy
+
 from . import command_books, logistics, officer_relations, treasures
 from .errors import GameError
 from .officers import deserialize_officer_ref, parse_officer_ref, ref_sort_key, recruitment_loyalty
@@ -143,14 +145,17 @@ def _return_city(game, state, cities):
     return next((city for city in cities if game._city_occupancy(state, city) < game.catalog.rules.city_officer_capacity), None)
 
 
+def faction_power(state, cities):
+    return sum(1000 + city.reserves + sum(state.officers[i].troops for i in city.roster.officer_ids)
+               for city in cities)
+
+
 def _can_surrender(state, score, cities, enemy):
     if score < 20:
         return False
-    def power(holdings):
-        return sum(1000 + city.reserves + sum(state.officers[i].troops for i in city.roster.officer_ids)
-                   for city in holdings)
     ratio = 2 if score >= FRIENDLY else 3
-    return len(cities) >= ratio * len(enemy) and power(cities) >= ratio * power(enemy)
+    return (len(cities) >= ratio * len(enemy)
+            and faction_power(state, cities) >= ratio * faction_power(state, enemy))
 
 
 def _options(game, state, owner, target, own, other):
@@ -181,10 +186,13 @@ def _options(game, state, owner, target, own, other):
 
 
 def view(game, state):
-    result = dict(max_turns=MAX_TURNS, can_command=False, cities=[], targets=[])
     if state is None or state.player not in game.catalog.factions or state.phase != 'city':
-        return result
-    owner = state.player
+        return dict(max_turns=MAX_TURNS, can_command=False, cities=[], targets=[])
+    return command_options(game, state, state.player)
+
+
+def command_options(game, state, owner):
+    result = dict(max_turns=MAX_TURNS, can_command=False, cities=[], targets=[])
     own = _holdings(state, owner)
     if not own:
         return result
@@ -208,6 +216,15 @@ def view(game, state):
     return result
 
 
+def gift_gain(resource, amount, intellect, virtue):
+    weight = 3 * amount if resource == 'treasure' else amount // LIMITS[resource][1]
+    return min(25, max(1, weight) + (intellect + virtue) // 60)
+
+
+def can_recover(score, intellect, virtue):
+    return score + (intellect + virtue) // 5 >= 65
+
+
 def _goodwill(state, city, envoy, target, other, score, payload):
     kind, amount = payload['resource'], payload['amount']
     if type(kind) is not str or kind not in LIMITS or type(amount) is not int or not 1 <= amount <= LIMITS[kind][0]:
@@ -226,8 +243,7 @@ def _goodwill(state, city, envoy, target, other, score, payload):
             raise GameError('資源不足，或對方沒有足夠的庫存空間。')
         setattr(city, kind, getattr(city, kind)-amount)
         setattr(dest, kind, getattr(dest, kind)+amount)
-    gift_weight = amount // LIMITS[kind][1] if kind != 'treasure' else 3*amount
-    gain = min(25, max(1, gift_weight) + (envoy.profile.intellect+envoy.profile.virtue)//60)
+    gain = gift_gain(kind, amount, envoy.profile.intellect, envoy.profile.virtue)
     return _change_relation(state, city.owner, target, gain + score - relation(state, city.owner, target))
 
 
@@ -241,7 +257,7 @@ def _return_prisoner(game, state, owner, target, envoy, own, score, payload):
     if row is None or home is None:
         raise GameError('請選擇對方扣留的本方武將並保留接收空位。')
     officer = state.officers[ident]
-    if score + (envoy.profile.intellect+envoy.profile.virtue)//5 < 65:
+    if not can_recover(score, envoy.profile.intellect, envoy.profile.virtue):
         return False, officer.person_id
     home.roster.officer_ids.append(ident)
     officer.faction_id = owner
@@ -283,7 +299,9 @@ def execute(game, state, payload, owner):
     if type(action) is not str or action not in PARAMETERS or set(payload) != {'action','city','envoy','target'} | PARAMETERS[action]:
         raise GameError('外交指令參數無效。')
     city_id, target = payload['city'], payload['target']
-    if (state.phase != 'city' or type(city_id) is not str or city_id not in state.cities
+    ai_turn = state.phase == 'ai' and owner != state.player
+    player_turn = state.phase == 'city' and owner == state.player
+    if (not (ai_turn or player_turn) or type(city_id) is not str or city_id not in state.cities
             or state.cities[city_id].owner != owner or owner not in game.catalog.factions
             or owner in state.extension['pending_succession']
             or type(target) is not str or target == owner or target not in game.catalog.factions):
@@ -301,8 +319,8 @@ def execute(game, state, payload, owner):
     option = _options(game, state, owner, target, own, other)
     if not option['actions'][action]:
         raise GameError('目前外交感情或戰局條件不符合。')
-    command_books.spend(state, city, 'diplomacy')
-    state.extension['officer_actions'][str(ident)] = state.turn
+    command_books.require(state, owner, 'diplomacy')
+    target_name = game.faction_name(state, target)
     score, success, duration, person, attack_city = option['score'], True, 0, None, None
     if action == 'goodwill':
         score = _goodwill(state, city, envoy, target, other, score, payload)
@@ -321,15 +339,24 @@ def execute(game, state, payload, owner):
             enemy=state.cities[attack_city].owner, until=state.turn+REQUEST_TURNS,
             after_march=state.extension['travel']['counter'])
         state.extension['ai_strategy'].pop(target, None)
+    elif ai_turn:
+        # An AI turn can try another order after a rejection. Surrender may
+        # return several columns or convoys before finding one that cannot dock.
+        staged = deepcopy(state)
+        _accept_surrender(game, staged, owner, target, _holdings(staged, target))
+        vars(state).update(vars(staged))
     else:
         _accept_surrender(game, state, owner, target, other)
+    command_books.spend(state, state.cities[city_id], 'diplomacy')
+    state.extension['officer_actions'][str(ident)] = state.turn
     result = '達成' if success else '遭拒'
     names = {'goodwill':'親善','alliance':'同盟','return_captives':'歸還俘虜',
              'request_attack':'請求攻擊','surrender':'勸告投降'}
-    game._note(state, f'{game.person_name(state, ident)}向{game.faction_name(state, target)}提出{names[action]}，結果：{result}。')
+    game._note(state, f'{game.person_name(state, ident)}向{target_name}提出{names[action]}，結果：{result}。')
     game._emit_event(state, 'diplomacy_result', person_ids=list(dict.fromkeys([envoy.person_id]+([person] if person else []))),
         city_ids=[city_id]+([attack_city] if attack_city else []), factions=[owner,target],
-        details=dict(action=action, success=success, score=score, duration=duration), audience='player')
+        details=dict(action=action, success=success, score=score, duration=duration),
+        audience='world' if ai_turn else 'player')
 
 
 def validate(game, state):

@@ -106,6 +106,10 @@ def build():
     spec = json.loads(raw)
     shared = json.loads((ROOT / 'game/config/campaigns/shared.json').read_text())['catalog']
     positions = {row['id']: row['position'] for row in shared['cities']}
+    expansion = json.loads((ROOT / 'game/config/campaigns/city-expansion-map.json').read_text())['cities']
+    if positions.keys() & expansion.keys():
+        raise ValueError('Expansion city positions overlap the base city IDs')
+    positions.update({key: row['position'] for key, row in expansion.items()})
     routes = compile_network(spec, positions)
     return dict(schema='tk2-river-network-compiled-v1', source_sha256=sha256(raw).hexdigest(),
                 reach_count=len(spec['reaches']), routes=routes)

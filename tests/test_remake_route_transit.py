@@ -221,10 +221,13 @@ class HistoricalTransitTests(unittest.TestCase):
         files = sorted((ROOT/'game/data/campaigns').glob('*.json'))
         files = [path for path in files if path.stem != 'index']
         self.assertEqual(len(files), 29)
+        legacy = json.loads((ROOT/'game/config/campaigns/shared.json').read_text())['catalog']['cities']
+        legacy_ids = {city['id'] for city in legacy}
         for path in files:
             data = json.loads(path.read_text())
             with self.subTest(scenario=path.stem):
-                self.assertEqual(digest({city['id']: city['position'] for city in data['cities']}), POSITIONS_SHA)
+                self.assertEqual(digest({city['id']: city['position'] for city in data['cities']
+                                         if city['id'] in legacy_ids}), POSITIONS_SHA)
                 self.assertEqual(digest(data['travel_hazards']), HAZARDS_SHA)
 
 

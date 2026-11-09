@@ -1,0 +1,1030 @@
+{
+  "schema": "tk2-city-expansion-openings-v1",
+  "scenarios": {
+    "mainland184-02": {
+      "owners": {
+        "hefei": "neutral",
+        "guangling": "neutral",
+        "chaisang": "neutral",
+        "xicheng": "neutral",
+        "shangyong": "neutral",
+        "yiling": "neutral"
+      },
+      "garrisons": {
+        "hefei": [],
+        "guangling": [],
+        "chaisang": [],
+        "xicheng": [],
+        "shangyong": [],
+        "yiling": []
+      }
+    },
+    "mainland188-06": {
+      "owners": {
+        "hefei": "neutral",
+        "guangling": "neutral",
+        "chaisang": "neutral",
+        "xicheng": "neutral",
+        "shangyong": "neutral",
+        "yiling": "neutral"
+      },
+      "garrisons": {
+        "hefei": [],
+        "guangling": [],
+        "chaisang": [],
+        "xicheng": [],
+        "shangyong": [],
+        "yiling": []
+      }
+    },
+    "mainland190-01": {
+      "owners": {
+        "hefei": "neutral",
+        "guangling": "zhang_chao",
+        "chaisang": "neutral",
+        "xicheng": "neutral",
+        "shangyong": "neutral",
+        "yiling": "liu_biao"
+      },
+      "garrisons": {
+        "hefei": [],
+        "guangling": [],
+        "chaisang": [],
+        "xicheng": [],
+        "shangyong": [],
+        "yiling": [
+          "san14-candidate-0324"
+        ]
+      }
+    },
+    "mainland191-10": {
+      "owners": {
+        "hefei": "neutral",
+        "guangling": "zhang_chao",
+        "chaisang": "neutral",
+        "xicheng": "neutral",
+        "shangyong": "neutral",
+        "yiling": "liu_biao"
+      },
+      "garrisons": {
+        "hefei": [],
+        "guangling": [],
+        "chaisang": [],
+        "xicheng": [],
+        "shangyong": [],
+        "yiling": [
+          "san14-candidate-0324"
+        ]
+      }
+    },
+    "mainland194-06": {
+      "owners": {
+        "hefei": "yuan_shu",
+        "guangling": "tao_qian",
+        "chaisang": "neutral",
+        "xicheng": "zhang_lu",
+        "shangyong": "zhang_lu",
+        "yiling": "liu_biao"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0379"
+        ],
+        "guangling": [
+          "san14-candidate-0409"
+        ],
+        "chaisang": [],
+        "xicheng": [
+          "san14-candidate-0869"
+        ],
+        "shangyong": [
+          "san14-candidate-0862"
+        ],
+        "yiling": [
+          "san14-candidate-0324"
+        ]
+      }
+    },
+    "mainland196-06": {
+      "owners": {
+        "hefei": "yuan_shu",
+        "guangling": "shu",
+        "chaisang": "hua_xin",
+        "xicheng": "zhang_lu",
+        "shangyong": "zhang_lu",
+        "yiling": "liu_biao"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0219"
+        ],
+        "guangling": [
+          "san14-candidate-0683"
+        ],
+        "chaisang": [],
+        "xicheng": [
+          "san14-candidate-0869"
+        ],
+        "shangyong": [
+          "san14-candidate-0862"
+        ],
+        "yiling": [
+          "san14-candidate-0324"
+        ]
+      }
+    },
+    "mainland197-07": {
+      "owners": {
+        "hefei": "lubu",
+        "guangling": "lubu",
+        "chaisang": "hua_xin",
+        "xicheng": "zhang_lu",
+        "shangyong": "zhang_lu",
+        "yiling": "liu_biao"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0254"
+        ],
+        "guangling": [
+          "san14-candidate-0456"
+        ],
+        "chaisang": [],
+        "xicheng": [
+          "san14-candidate-0869"
+        ],
+        "shangyong": [
+          "san14-candidate-0862"
+        ],
+        "yiling": [
+          "san14-candidate-0324"
+        ]
+      }
+    },
+    "mainland198-03": {
+      "owners": {
+        "hefei": "yuan_shu",
+        "guangling": "wei",
+        "chaisang": "hua_xin",
+        "xicheng": "zhang_lu",
+        "shangyong": "zhang_lu",
+        "yiling": "liu_biao"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0574"
+        ],
+        "guangling": [
+          "san14-candidate-0683"
+        ],
+        "chaisang": [],
+        "xicheng": [
+          "san14-candidate-0869"
+        ],
+        "shangyong": [
+          "san14-candidate-0862"
+        ],
+        "yiling": [
+          "san14-candidate-0324"
+        ]
+      },
+      "attested_garrisons": {
+        "guangling": [
+          "san14-candidate-0683"
+        ]
+      },
+      "transfers": {
+        "san14-candidate-0683": "shu"
+      }
+    },
+    "mainland200-01": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "zhang_lu",
+        "shangyong": "zhang_lu",
+        "yiling": "liu_biao"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0956"
+        ],
+        "guangling": [
+          "san14-candidate-0683"
+        ],
+        "chaisang": [
+          "san14-candidate-0379"
+        ],
+        "xicheng": [
+          "san14-candidate-0869"
+        ],
+        "shangyong": [
+          "san14-candidate-0862"
+        ],
+        "yiling": [
+          "san14-candidate-0324"
+        ]
+      },
+      "attested_garrisons": {
+        "hefei": [
+          "san14-candidate-0956"
+        ],
+        "guangling": [
+          "san14-candidate-0683"
+        ]
+      },
+      "transfers": {
+        "san14-candidate-0683": "shu"
+      }
+    },
+    "mainland201-05": {
+      "owners": {
+        "hefei": "yuan_shao",
+        "guangling": "yuan_shao",
+        "chaisang": "wu",
+        "xicheng": "zhang_lu",
+        "shangyong": "zhang_lu",
+        "yiling": "liu_biao"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0534"
+        ],
+        "guangling": [
+          "san14-candidate-0984"
+        ],
+        "chaisang": [
+          "san14-candidate-0379"
+        ],
+        "xicheng": [
+          "san14-candidate-0869"
+        ],
+        "shangyong": [
+          "san14-candidate-0862"
+        ],
+        "yiling": [
+          "san14-candidate-0324"
+        ]
+      }
+    },
+    "mainland202-06": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "zhang_lu",
+        "shangyong": "zhang_lu",
+        "yiling": "liu_biao"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0956"
+        ],
+        "guangling": [
+          "san14-candidate-0450"
+        ],
+        "chaisang": [
+          "san14-candidate-0379"
+        ],
+        "xicheng": [
+          "san14-candidate-0597"
+        ],
+        "shangyong": [
+          "san14-candidate-0876"
+        ],
+        "yiling": [
+          "san14-candidate-0324"
+        ]
+      },
+      "attested_garrisons": {
+        "hefei": [
+          "san14-candidate-0956"
+        ]
+      }
+    },
+    "mainland207-09": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "zhang_lu",
+        "shangyong": "zhang_lu",
+        "yiling": "liu_biao"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0956"
+        ],
+        "guangling": [
+          "san14-candidate-0842"
+        ],
+        "chaisang": [
+          "san14-candidate-0379"
+        ],
+        "xicheng": [
+          "san14-candidate-0869"
+        ],
+        "shangyong": [
+          "san14-candidate-0862"
+        ],
+        "yiling": [
+          "san14-candidate-0324"
+        ]
+      },
+      "attested_garrisons": {
+        "hefei": [
+          "san14-candidate-0956"
+        ]
+      }
+    },
+    "mainland208-10": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "zhang_lu",
+        "shangyong": "zhang_lu",
+        "yiling": "wei"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0962"
+        ],
+        "guangling": [
+          "san14-candidate-0446"
+        ],
+        "chaisang": [
+          "san14-candidate-0703"
+        ],
+        "xicheng": [
+          "san14-candidate-0869"
+        ],
+        "shangyong": [
+          "san14-candidate-0862"
+        ],
+        "yiling": [
+          "san14-candidate-0442"
+        ]
+      }
+    },
+    "mainland209-06": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "zhang_lu",
+        "shangyong": "zhang_lu",
+        "yiling": "wei"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0446"
+        ],
+        "guangling": [
+          "san14-candidate-0618"
+        ],
+        "chaisang": [
+          "san14-candidate-0379"
+        ],
+        "xicheng": [
+          "san14-candidate-0869"
+        ],
+        "shangyong": [
+          "san14-candidate-0862"
+        ],
+        "yiling": [
+          "san14-candidate-0814"
+        ]
+      }
+    },
+    "mainland210-11": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "wu",
+        "shangyong": "wei",
+        "yiling": "wu"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0124"
+        ],
+        "guangling": [
+          "san14-candidate-0092"
+        ],
+        "chaisang": [
+          "san14-candidate-0997"
+        ],
+        "xicheng": [
+          "san14-candidate-0572"
+        ],
+        "shangyong": [
+          "san14-candidate-0517"
+        ],
+        "yiling": [
+          "san14-candidate-0891"
+        ]
+      }
+    },
+    "mainland211-07-tongguan": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "zhang_lu",
+        "shangyong": "zhang_lu",
+        "yiling": "shu"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0016"
+        ],
+        "guangling": [
+          "san14-candidate-0102"
+        ],
+        "chaisang": [
+          "san14-candidate-0997"
+        ],
+        "xicheng": [
+          "san14-candidate-0869"
+        ],
+        "shangyong": [
+          "san14-candidate-0862"
+        ],
+        "yiling": [
+          "san14-candidate-0801"
+        ]
+      }
+    },
+    "mainland212-06": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "zhang_lu",
+        "shangyong": "zhang_lu",
+        "yiling": "shu"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0579"
+        ],
+        "guangling": [
+          "san14-candidate-0089"
+        ],
+        "chaisang": [
+          "san14-candidate-0997"
+        ],
+        "xicheng": [
+          "san14-candidate-0869"
+        ],
+        "shangyong": [
+          "san14-candidate-0862"
+        ],
+        "yiling": [
+          "san14-candidate-0801"
+        ]
+      }
+    },
+    "mainland212-12": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "zhang_lu",
+        "shangyong": "zhang_lu",
+        "yiling": "shu"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0962"
+        ],
+        "guangling": [
+          "san14-candidate-0814"
+        ],
+        "chaisang": [
+          "san14-candidate-0997"
+        ],
+        "xicheng": [
+          "san14-candidate-0869"
+        ],
+        "shangyong": [
+          "san14-candidate-0862"
+        ],
+        "yiling": [
+          "san14-candidate-0801"
+        ]
+      }
+    },
+    "mainland215-08": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "wei",
+        "shangyong": "wei",
+        "yiling": "shu"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0663",
+          "san14-candidate-0913",
+          "san14-candidate-0102"
+        ],
+        "guangling": [
+          "san14-candidate-0450"
+        ],
+        "chaisang": [
+          "san14-candidate-0997"
+        ],
+        "xicheng": [
+          "san14-candidate-0944"
+        ],
+        "shangyong": [
+          "san14-candidate-0407"
+        ],
+        "yiling": [
+          "san14-candidate-0801"
+        ]
+      },
+      "attested_garrisons": {
+        "hefei": [
+          "san14-candidate-0663",
+          "san14-candidate-0913",
+          "san14-candidate-0102"
+        ]
+      }
+    },
+    "mainland217-07": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "wei",
+        "shangyong": "wei",
+        "yiling": "shu"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0663",
+          "san14-candidate-0102"
+        ],
+        "guangling": [
+          "san14-candidate-0672"
+        ],
+        "chaisang": [
+          "san14-candidate-0496"
+        ],
+        "xicheng": [
+          "san14-candidate-0796"
+        ],
+        "shangyong": [
+          "san14-candidate-0814"
+        ],
+        "yiling": [
+          "san14-candidate-0801"
+        ]
+      }
+    },
+    "mainland219-07": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "shu",
+        "shangyong": "shu",
+        "yiling": "shu"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0663"
+        ],
+        "guangling": [
+          "san14-candidate-0450"
+        ],
+        "chaisang": [
+          "san14-candidate-0373"
+        ],
+        "xicheng": [
+          "san14-candidate-0455"
+        ],
+        "shangyong": [
+          "san14-candidate-0463"
+        ],
+        "yiling": [
+          "san14-candidate-0652"
+        ]
+      },
+      "attested_garrisons": {
+        "xicheng": [
+          "san14-candidate-0455"
+        ],
+        "shangyong": [
+          "san14-candidate-0463"
+        ]
+      },
+      "transfers": {
+        "san14-candidate-0455": "wei",
+        "san14-candidate-0463": "wei"
+      }
+    },
+    "mainland221-07": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "wei",
+        "shangyong": "wei",
+        "yiling": "wu"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0842"
+        ],
+        "guangling": [
+          "san14-candidate-0450"
+        ],
+        "chaisang": [
+          "san14-candidate-0496"
+        ],
+        "xicheng": [
+          "san14-candidate-0455"
+        ],
+        "shangyong": [
+          "san14-candidate-0814"
+        ],
+        "yiling": [
+          "san14-candidate-0902"
+        ]
+      },
+      "attested_garrisons": {
+        "xicheng": [
+          "san14-candidate-0455"
+        ],
+        "yiling": [
+          "san14-candidate-0902"
+        ]
+      }
+    },
+    "mainland225-07": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "wei",
+        "shangyong": "wei",
+        "yiling": "wu"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0842"
+        ],
+        "guangling": [
+          "san14-candidate-0450"
+        ],
+        "chaisang": [
+          "san14-candidate-0496"
+        ],
+        "xicheng": [
+          "san14-candidate-0455"
+        ],
+        "shangyong": [
+          "san14-candidate-0962"
+        ],
+        "yiling": [
+          "san14-candidate-0902"
+        ]
+      },
+      "attested_garrisons": {
+        "xicheng": [
+          "san14-candidate-0455"
+        ]
+      }
+    },
+    "mainland227-02": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "wei",
+        "shangyong": "wei",
+        "yiling": "wu"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0842"
+        ],
+        "guangling": [
+          "san14-candidate-0450"
+        ],
+        "chaisang": [
+          "san14-candidate-0496"
+        ],
+        "xicheng": [
+          "san14-candidate-0455"
+        ],
+        "shangyong": [
+          "san14-candidate-0796"
+        ],
+        "yiling": [
+          "san14-candidate-0902"
+        ]
+      },
+      "attested_garrisons": {
+        "xicheng": [
+          "san14-candidate-0455"
+        ],
+        "yiling": [
+          "san14-candidate-0902"
+        ]
+      }
+    },
+    "mainland234-02": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "wei",
+        "shangyong": "wei",
+        "yiling": "wu"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0842"
+        ],
+        "guangling": [
+          "san14-candidate-0450"
+        ],
+        "chaisang": [
+          "san14-candidate-0496"
+        ],
+        "xicheng": [
+          "san14-candidate-0682"
+        ],
+        "shangyong": [
+          "san14-candidate-0814"
+        ],
+        "yiling": [
+          "san14-candidate-0838"
+        ]
+      },
+      "attested_garrisons": {
+        "yiling": [
+          "san14-candidate-0838"
+        ]
+      }
+    },
+    "mainland235-01": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "wei",
+        "shangyong": "wei",
+        "yiling": "wu"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0842"
+        ],
+        "guangling": [
+          "san14-candidate-0450"
+        ],
+        "chaisang": [
+          "san14-candidate-0496"
+        ],
+        "xicheng": [
+          "san14-candidate-0814"
+        ],
+        "shangyong": [
+          "san14-candidate-0374"
+        ],
+        "yiling": [
+          "san14-candidate-0838"
+        ]
+      }
+    },
+    "mainland238-01": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "wei",
+        "shangyong": "wei",
+        "yiling": "wu"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0842"
+        ],
+        "guangling": [
+          "san14-candidate-0682"
+        ],
+        "chaisang": [
+          "san14-candidate-0496"
+        ],
+        "xicheng": [
+          "san14-candidate-0980"
+        ],
+        "shangyong": [
+          "san14-candidate-0374"
+        ],
+        "yiling": [
+          "san14-candidate-0838"
+        ]
+      },
+      "attested_garrisons": {
+        "yiling": [
+          "san14-candidate-0838"
+        ]
+      }
+    },
+    "mainland249-01": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "wei",
+        "shangyong": "wei",
+        "yiling": "wu",
+        "changli": "wei",
+        "pingyang": "wei"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0077"
+        ],
+        "guangling": [
+          "san14-candidate-0374"
+        ],
+        "chaisang": [
+          "san14-candidate-0900"
+        ],
+        "xicheng": [
+          "san14-candidate-0682"
+        ],
+        "shangyong": [
+          "san14-candidate-0068"
+        ],
+        "yiling": [
+          "san14-candidate-0833"
+        ],
+        "changli": [
+          "san14-candidate-0152"
+        ],
+        "pingyang": [
+          "san14-candidate-0049"
+        ]
+      },
+      "attested_garrisons": {
+        "chaisang": [
+          "san14-candidate-0900"
+        ],
+        "yiling": [
+          "san14-candidate-0833"
+        ]
+      }
+    },
+    "mainland263-05": {
+      "owners": {
+        "hefei": "wei",
+        "guangling": "wei",
+        "chaisang": "wu",
+        "xicheng": "wei",
+        "shangyong": "wei",
+        "yiling": "wu",
+        "changli": "wei",
+        "pingyang": "wei",
+        "hengyang": "wu",
+        "xiangdong": "wu",
+        "jianping": "wu"
+      },
+      "garrisons": {
+        "hefei": [
+          "san14-candidate-0650"
+        ],
+        "guangling": [
+          "san14-candidate-0421"
+        ],
+        "chaisang": [
+          "san14-candidate-0965"
+        ],
+        "xicheng": [
+          "san14-candidate-0313"
+        ],
+        "shangyong": [
+          "san14-candidate-0242"
+        ],
+        "yiling": [
+          "san14-candidate-0833"
+        ],
+        "changli": [
+          "san14-candidate-0139"
+        ],
+        "pingyang": [
+          "san14-candidate-0052"
+        ],
+        "hengyang": [
+          "san14-candidate-0540"
+        ],
+        "xiangdong": [
+          "san14-candidate-0436"
+        ],
+        "jianping": [
+          "san14-candidate-0425"
+        ]
+      },
+      "attested_garrisons": {
+        "yiling": [
+          "san14-candidate-0833"
+        ]
+      }
+    }
+  },
+  "notes": {
+    "hefei": {
+      "basis": "合肥為漢縣。袁術時的開局依淮南勢力配置，劉馥約200年受曹操任命入合肥建州治，200年開局採年界配置，確月待考。215年張遼、樂進、李典均據合肥。張特253年守的是合肥新城，263年續駐為本作前線配置。假想開局依原劇本淮南態勢。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/後漢書/卷112",
+        "https://zh.wikisource.org/zh-hant/三國志/卷15#劉馥",
+        "https://zh.wikisource.org/zh-hant/三國志/卷17#張遼",
+        "https://zh.wikisource.org/zh-hant/三國志/卷04#齊王"
+      ]
+    },
+    "guangling": {
+      "basis": "廣陵為漢郡縣。190、191開局歸廣陵太守張超，其本人與臧洪仍駐既有東海軍營代理。194、196依徐州交接配置。陳登於呂布使許後由曹操任廣陵太守，198、200開局改屬曹操；所據射陽視作廣陵戰區。魏後續歸屬參照225年曹丕臨江。假想劇本依原定徐州形勢。 190及191年的廣陵開局空防，保留張超與臧洪在原開局的東海配置。",
+      "sources": [
+        "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnutqm68u5_21",
+        "https://zh.wikisource.org/zh-hant/三國志/卷07#呂布",
+        "https://zh.wikisource.org/zh-hant/三國志/卷02#文帝"
+      ]
+    },
+    "chaisang": {
+      "basis": "柴桑是漢代豫章郡舊縣。196至198年按本作豫章華歆配置，孫策取豫章後歸孫氏。208年孫權在柴桑，仍保留既有都城與君主駐地。陸抗246年與諸葛恪換屯柴桑，249年依其在柴桑任期配置。 華歆期為區域歸屬，柴桑開局空防以保留華歆與劉壹在豫章。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/後漢書/卷112",
+        "https://zh.wikisource.org/zh-hant/三國志/卷13#華歆",
+        "https://zh.wikisource.org/zh-hant/三國志/卷35#諸葛亮",
+        "https://zh.wikisource.org/zh-hant/三國志/卷58#陸抗"
+      ]
+    },
+    "xicheng": {
+      "basis": "早期以漢西城縣表示。張魯時段依漢中—上庸地方關係配置；曹操取漢中後至219年蜀平三郡前列曹軍區域。219年七月按申儀受劉備命為西城太守配置；221年起申儀轉魏興太守屯洵口，西城節點兼作該郡區域代理。申儀因孟達事件被召入朝後，以同勢力其他合適駐將分防。蜀亡前夕歸魏。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷40#劉封",
+        "https://zh.wikisource.org/zh-hant/華陽國志/卷二#魏興郡"
+      ]
+    },
+    "shangyong": {
+      "basis": "上庸舊縣與房陵分立。漢末申耽聚眾而與張魯通，後歸曹操。219年七月按申耽降劉備而仍領上庸配置。孟達降魏後屬魏，郡制有分合；申耽降魏後徙居南陽，此後不列為上庸的已證駐將。 後期分駐不改既有房陵出征據點。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷40#劉封",
+        "https://zh.wikisource.org/zh-hant/華陽國志/卷二#上庸郡"
+      ]
+    },
+    "yiling": {
+      "basis": "夷陵為漢南郡舊縣，劉表時歸荊州。208年十月赤壁開局在曹軍一側；其後歷史開局按荊州西段歸劉備，219年末孫吳奪荊州後歸吳。221年陸遜督夷陵戰事，222年改西陵。229年步騭接替陸遜督西陵，247年步協繼其所領。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/後漢書/卷112",
+        "https://zh.wikisource.org/zh-hant/三國志/卷47#吳主",
+        "https://zh.wikisource.org/zh-hant/三國志/卷52#步騭",
+        "https://zh.wikisource.org/zh-hant/三國志/卷58#陸遜"
+      ]
+    },
+    "changli": {
+      "basis": "244年九月曹魏置昌黎縣，249及263開局均歸魏。遼東將領分守是區域配置，未認作昌黎令。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷04#齊王"
+      ]
+    },
+    "pingyang": {
+      "basis": "247年五月曹魏分河東北部置平陽郡，249及263開局均歸魏。採河東及其鄰區將領補防，未認作平陽太守。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷04#齊王"
+      ]
+    },
+    "hengyang": {
+      "basis": "257年二月孫吳從長沙西部分置衡陽郡，263開局歸吳。分駐湘水防線的人選為本作配置。",
+      "sources": [
+        "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnux22fnsn_304",
+        "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_41779"
+      ]
+    },
+    "xiangdong": {
+      "basis": "257年二月孫吳從長沙東部分置湘東郡，263開局歸吳。分駐湘水防線的人選為本作配置。",
+      "sources": [
+        "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnux22fnsn_304",
+        "https://zh.wikisource.org/wiki/宋書/卷37"
+      ]
+    },
+    "jianping": {
+      "basis": "吳孫休260年分宜都立建平，設郡確月未載；263開局歸吳。晉另有建平都尉，275年升郡。建平的分駐將領為三峽沿線區域配置。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/宋書/卷37",
+        "https://zh.wikisource.org/zh-hant/三國志/卷58#陸抗"
+      ]
+    }
+  }
+}

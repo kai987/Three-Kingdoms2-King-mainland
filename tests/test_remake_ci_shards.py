@@ -79,7 +79,7 @@ class CampaignCiShardTests(unittest.TestCase):
         self.assertIn('backend: [python, rust]', rules)
         self.assertIn('shard: [1, 2, 3, 4, 5, 6]', rules)
         self.assertIn('--shards 6', rules)
-        self.assertIn('timeout-minutes: 20', rules)
+        self.assertIn('timeout-minutes: ${{ matrix.shard == 2 && 30 || 20 }}', rules)
 
     def test_loader_retains_standard_module_hooks_and_source_imports(self):
         with tempfile.TemporaryDirectory() as directory, patch.object(sys, 'path', sys.path[:]):

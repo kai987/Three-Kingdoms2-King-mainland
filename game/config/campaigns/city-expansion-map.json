@@ -1,0 +1,15 @@
+{
+  "cities": {
+    "hefei": {"position": [990, 416], "coordinates": [117.25, 31.88], "terrain": "plain"},
+    "guangling": {"position": [1097, 387], "coordinates": [119.42, 32.41], "terrain": "plain"},
+    "chaisang": {"position": [892, 552], "coordinates": [115.82, 29.65], "terrain": "plain"},
+    "xicheng": {"position": [475, 427], "coordinates": [109.02, 32.70], "terrain": "mountain"},
+    "shangyong": {"position": [557, 416], "coordinates": [110.23, 32.19], "terrain": "mountain"},
+    "yiling": {"position": [614, 487], "coordinates": [111.30, 30.70], "terrain": "mountain"},
+    "changli": {"position": [1138, 57], "coordinates": [120.92, 41.18], "terrain": "plain"},
+    "pingyang": {"position": [690, 273], "coordinates": [111.46, 36.08], "terrain": "plain"},
+    "hengyang": {"position": [716, 623], "coordinates": [112.62, 27.66], "terrain": "plain"},
+    "xiangdong": {"position": [772, 656], "coordinates": [112.66, 26.88], "terrain": "plain"},
+    "jianping": {"position": [592, 536], "coordinates": [109.88, 31.08], "terrain": "mountain"}
+  }
+}

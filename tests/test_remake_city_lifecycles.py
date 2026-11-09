@@ -130,7 +130,9 @@ class CityLifecycleTests(unittest.TestCase):
         # Exact game boundaries are explicit even where the source gives only
         # a year. October/December there are authored dates, not historical claims.
         boundaries={'wuchang':(221,4),'linhai':(257,2),'linchuan':(257,2),
-                    'jianan':(260,10),'wuxing':(266,12)}
+                    'jianan':(260,10),'wuxing':(266,12),'changli':(244,9),
+                    'pingyang':(247,5),'hengyang':(257,2),'xiangdong':(257,2),
+                    'jianping':(260,1)}
         for city,(year,month) in boundaries.items():
             with self.subTest(city=city):
                 rule=catalog.data['city_foundings'][city]

@@ -21,8 +21,8 @@ class BattlefieldCityBindings(unittest.TestCase):
         spec = self.bindings
         cities = {row['id'] for row in self.shared['cities']}
         self.assertEqual(len(cities), 115)
-        self.assertEqual(set(spec['cities']), cities)
-        self.assertEqual(spec['city_count'], 115)
+        self.assertLessEqual(cities, set(spec['cities']))
+        self.assertEqual(spec['city_count'], 126)
         self.assertEqual(set(spec['templates']), {f'original-{index:02d}' for index in range(30)})
         self.assertEqual({row['map_id'] for row in spec['cities'].values()}, set(spec['templates']))
         for city, row in spec['cities'].items():
@@ -59,6 +59,9 @@ class BattlefieldCityBindings(unittest.TestCase):
                          ('original-27', 'same_label_association'))
         self.assertEqual(choices['bajun']['kind'], 'regional_reuse')
         self.assertEqual(choices['yiyang']['kind'], 'regional_reuse')
+        self.assertEqual((choices['hengyang']['map_id'], choices['hengyang']['kind']),
+                         ('original-22', 'same_label_association'))
+        self.assertEqual(choices['guiyang']['kind'], 'regional_reuse')
         self.assertIn('章陵', choices['yiyang']['reason_tc'])
         self.assertIn('不等同', choices['xiping']['reason_tc'])
         for city in ('yizhou', 'zhuya'):

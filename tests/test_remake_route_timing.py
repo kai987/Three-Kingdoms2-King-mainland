@@ -250,8 +250,9 @@ class FullCatalogRouteTimingTests(unittest.TestCase):
             compiled = read('game/data/campaigns/'+scenario['id'].removeprefix('mainland')+'.json')
             expected_links = original['links']+[[r['from'], r['to']] for r in navigation['land_roads']]
             self.assertEqual(compiled['links'], expected_links, scenario['id'])
-            self.assertEqual(compiled['city_coordinates'], original['city_coordinates'])
-            self.assertEqual(compiled['cities'], original['cities'])
+            self.assertEqual({city: compiled['city_coordinates'][city] for city in original['city_coordinates']},
+                             original['city_coordinates'])
+            self.assertEqual(compiled['cities'][:len(original['cities'])], original['cities'])
             self.assertEqual(compiled['travel_rules']['geometry_sha256'], fingerprint)
             for key in ('speeds', 'detours', 'embark_days'):
                 self.assertEqual(compiled['travel_rules'][key], original['travel_rules'][key])

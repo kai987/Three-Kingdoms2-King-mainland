@@ -275,8 +275,8 @@ class CivilStaffEventTests(unittest.TestCase):
     def test_monthly_salary_summary_can_cover_the_whole_faction_in_one_event(self):
         campaign, state = self.fixture()
         emit(campaign, state, 'staff_salary', city_ids=['home'], factions=['shu'], details=dict(
-            amount=1725, paid=1720, bonus=dict(gold=230, grain=200, reserves=80),
-            counts=dict(staff=345, total_unpaid=1, cities=115)))
+            amount=62370, paid=62365, bonus=dict(gold=230, grain=200, reserves=80),
+            counts=dict(staff=12474, total_unpaid=1, cities=126)))
         validate_events(campaign, state)
         self.assertEqual(len(state.extension['events']['items']), 1)
 

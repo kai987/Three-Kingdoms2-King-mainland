@@ -74,6 +74,11 @@ Yinping, rainy/dry Ziwu and sea storm survival fractions remain 1/3, 50/100,
 80/100 and the seed-specific 11/100 respectively. Python and native Rust must
 reproduce the complete new goldens and load one another's unmodified saves.
 
+The eight controlled cases now load `march-catalog-before-266-expansion.json.gz`,
+the exact 115-city `217-07.json` from `a815d338830f6f68e5b92d9592ba447c428a4e35`.
+The test pins its decompressed SHA-256 and verifies the existing goldens with
+the current engine. Natural campaign replays load the current 126-city catalog.
+
 ## 捨命一擊接入前的單挑向量
 
 `duel-pre-desperate-baseline.json`由凍結的`eea539c`程式擷取，記錄8個種子×4種既有招式的完整狀態雜湊、亂數與回執。兩方體力80，避免觸發新增的低體力AI捨命選擇；新招式沒有被任何一方選中時，這些既有操作應保持逐項一致。

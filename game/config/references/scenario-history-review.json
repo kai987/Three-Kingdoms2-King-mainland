@@ -660,7 +660,7 @@
           "current_after": 1860
         }
       ],
-      "initial_soldier_total": 194760,
+      "initial_soldier_total": 198982,
       "source_initial_soldier_total": 193730,
       "soldier_total_basis": "193730 rawcanonical;194760 afterthe existingdate-awarecitysizetransformation; the300 troop-to-reservechangeispreservedinbothdomains."
     },
@@ -1046,7 +1046,7 @@
       "removed_factions": [
         "ou_xing"
       ],
-      "initial_soldier_total": 187860
+      "initial_soldier_total": 192082
     },
     {
       "id": "mainland190-01",
@@ -2320,7 +2320,7 @@
         "qiao": "wei",
         "chenliu": "zhang_miao"
       },
-      "initial_soldier_total": 223570
+      "initial_soldier_total": 227792
     },
     {
       "id": "mainland191-10",
@@ -3529,7 +3529,7 @@
         "dongping": "bao_xin",
         "longxi": "song_jian"
       },
-      "initial_soldier_total": 236450
+      "initial_soldier_total": 240672
     },
     {
       "id": "mainland194-06",
@@ -4773,7 +4773,7 @@
         "longxi": "song_jian",
         "hongnong": "zhang_ji"
       },
-      "initial_soldier_total": 232740
+      "initial_soldier_total": 236857
     },
     {
       "id": "mainland196-06",
@@ -5587,7 +5587,7 @@
         "longxi": "song_jian",
         "hongnong": "zhang_ji"
       },
-      "initial_soldier_total": 229210
+      "initial_soldier_total": 233327
     },
     {
       "id": "mainland198-03",
@@ -6316,7 +6316,7 @@
         "longxi": "song_jian",
         "donghai": "zang_ba"
       },
-      "initial_soldier_total": 232880
+      "initial_soldier_total": 236922
     },
     {
       "id": "mainland200-01",
@@ -7295,7 +7295,7 @@
         "linhe": "neutral",
         "longxi": "song_jian"
       },
-      "initial_soldier_total": 249250
+      "initial_soldier_total": 253827
     },
     {
       "id": "mainland202-06",
@@ -8238,7 +8238,7 @@
         "linhe": "neutral",
         "longxi": "song_jian"
       },
-      "initial_soldier_total": 251350
+      "initial_soldier_total": 255927
     },
     {
       "id": "mainland207-09",
@@ -9997,7 +9997,7 @@
         "linhe": "wu_ju",
         "longxi": "song_jian"
       },
-      "initial_soldier_total": 264930
+      "initial_soldier_total": 269507
     },
     {
       "id": "mainland208-10",
@@ -11662,7 +11662,7 @@
         "linhe": "wu_ju",
         "longxi": "song_jian"
       },
-      "initial_soldier_total": 273570
+      "initial_soldier_total": 277622
     },
     {
       "id": "mainland212-12",
@@ -13669,7 +13669,7 @@
         "wudu": "neutral",
         "yinping": "neutral"
       },
-      "initial_soldier_total": 279400
+      "initial_soldier_total": 283540
     },
     {
       "id": "mainland211-07-tongguan",
@@ -14519,7 +14519,7 @@
         "yinping": "neutral",
         "longxi": "song_jian"
       },
-      "initial_soldier_total": 289000
+      "initial_soldier_total": 293290
     },
     {
       "id": "mainland215-08",
@@ -14713,7 +14713,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 282930
+      "initial_soldier_total": 287262
     },
     {
       "id": "mainland219-07",
@@ -14911,7 +14911,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 281640
+      "initial_soldier_total": 285367
     },
     {
       "id": "mainland221-07",
@@ -15068,7 +15068,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 281870
+      "initial_soldier_total": 285907
     },
     {
       "id": "mainland225-07",
@@ -15376,7 +15376,7 @@
       "owner_expectations": {
         "zangke": "nanman"
       },
-      "initial_soldier_total": 271350
+      "initial_soldier_total": 275517
     },
     {
       "id": "mainland227-02",
@@ -15544,7 +15544,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 281150
+      "initial_soldier_total": 285630
     },
     {
       "id": "mainland234-02",
@@ -15758,7 +15758,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 273780
+      "initial_soldier_total": 278260
     },
     {
       "id": "mainland238-01",
@@ -16033,7 +16033,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 272620
+      "initial_soldier_total": 277122
     },
     {
       "id": "mainland249-01",
@@ -16223,7 +16223,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 261520
+      "initial_soldier_total": 267562
     },
     {
       "id": "mainland263-05",
@@ -16480,7 +16480,7 @@
         "jiuzhen": "lu_xing",
         "rinan": "lu_xing"
       },
-      "initial_soldier_total": 227800
+      "initial_soldier_total": 235455
     },
     {
       "id": "mainland217-07",
@@ -16695,7 +16695,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 283620
+      "initial_soldier_total": 288125
     }
   ],
   "limits": [
@@ -17492,7 +17492,7 @@
         "本假想劇本保留遊戲／演義把兗州刺史劉岱與曹軍同名同字將領合併的例外；不得把它作為刺史192年後史實降曹的證據。史實劇本則按192年退出原ID。",
         "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
       ],
-      "initial_soldier_total": 227180
+      "initial_soldier_total": 231147
     },
     {
       "id": "mainland201-05",
@@ -17768,7 +17768,7 @@
         "本假想劇本保留遊戲／演義把兗州刺史劉岱與曹軍同名同字將領合併的例外；不得把它作為刺史192年後史實降曹的證據。史實劇本則按192年退出原ID。",
         "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
       ],
-      "initial_soldier_total": 245350
+      "initial_soldier_total": 249927
     },
     {
       "id": "mainland209-06",
@@ -18133,7 +18133,7 @@
         "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
         "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
       ],
-      "initial_soldier_total": 273870
+      "initial_soldier_total": 277772
     },
     {
       "id": "mainland210-11",
@@ -18525,7 +18525,7 @@
         "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
         "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
       ],
-      "initial_soldier_total": 270570
+      "initial_soldier_total": 274472
     },
     {
       "id": "mainland212-06",
@@ -18815,7 +18815,7 @@
         "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
         "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
       ],
-      "initial_soldier_total": 285400
+      "initial_soldier_total": 289690
     }
   ]
 }

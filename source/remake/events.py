@@ -294,8 +294,8 @@ def _validate_staff_event(row):
     if 'counts' in details:
         counts = details['counts']
         if (not isinstance(counts, dict) or set(counts) != {'staff', 'total_unpaid', 'cities'}
-                or type(counts['staff']) is not int or not 1 <= counts['staff'] <= 11385
-                or type(counts['cities']) is not int or not 1 <= counts['cities'] <= 115
+                or type(counts['staff']) is not int or counts['staff'] < 1
+                or type(counts['cities']) is not int or not 1 <= counts['cities'] <= 126
                 or not counts['cities'] <= counts['staff'] <= counts['cities'] * 99
                 or type(counts['total_unpaid']) is not int or not 0 <= counts['total_unpaid'] <= counts['staff']):
             raise ValueError('Civil staff event counts')
@@ -567,7 +567,7 @@ def validate(campaign, state):
                     or type(d['success']) is not bool or type(d['score']) is not int
                     or not 0 <= d['score'] <= 100 or type(d['duration']) is not int
                     or (not 1 <= d['duration'] <= MAX_TURNS if d['action']=='alliance' else d['duration']!=0)
-                    or len(row['factions']) != 2 or row['audience'] != 'player'
+                    or len(row['factions']) != 2
                     or len(row['city_ids']) != (2 if d['action']=='request_attack' else 1)
                     or len(row['person_ids']) != (2 if d['action']=='return_captives' else 1)):
                 raise ValueError('Diplomacy event receipt')

@@ -36,6 +36,11 @@ SONG_OPENINGS = {
 }
 SONG_IF_OPENINGS = {'mainland197-07', 'mainland201-05', 'mainland209-06',
                     'mainland210-11', 'mainland212-06'}
+ORIGINAL_184_SOLDIERS = 194760
+EARLY_EXPANSION_RESERVES = {
+    'hefei': 510, 'guangling': 630, 'chaisang': 510,
+    'xicheng': 792, 'shangyong': 790, 'yiling': 990,
+}
 # These are the 57 earlier Longxi relocations. Six Han Sui retinue placements
 # are subsequently corrected to independent Jincheng; the earlier relocation
 # record stays as provenance. Keep IDs: names are not unique identities.
@@ -181,9 +186,17 @@ class SongJianLuXingTests(unittest.TestCase):
         self.assertIsNone(state.officers[165].faction_id)
         self.assertEqual(state.officers[165].troops, 0)
         self.assertEqual(state.extension['free_locations']['165'], 'jincheng')
-        self.assertEqual(state.soldiers['initial'], 194760)
+        expansion_reserves = {city: state.cities[city].reserves for city in EARLY_EXPANSION_RESERVES}
+        self.assertEqual(expansion_reserves, EARLY_EXPANSION_RESERVES)
+        for city in expansion_reserves:
+            self.assertEqual(state.cities[city].owner, 'neutral')
+            self.assertEqual(state.cities[city].roster.officer_ids, [])
+        self.assertEqual(sum(c.reserves for city, c in state.cities.items() if city not in expansion_reserves)
+                         + sum(o.troops for o in state.officers.values()), ORIGINAL_184_SOLDIERS)
+        expected_total = ORIGINAL_184_SOLDIERS + sum(EARLY_EXPANSION_RESERVES.values())
+        self.assertEqual(state.soldiers['initial'], expected_total)
         self.assertEqual(sum(c.reserves for c in state.cities.values())
-                         + sum(o.troops for o in state.officers.values()), 194760)
+                         + sum(o.troops for o in state.officers.values()), expected_total)
         self.assertEqual(len(game.catalog.data['initial_officers']), 135)
         self.assertEqual(len(game.catalog.data['initial_free_officers']), 156)
         game.validate(state)
@@ -380,7 +393,8 @@ class SongJianLuXingTests(unittest.TestCase):
                          {'song_jian', 'bian_zhang'})
         self.assertEqual(len(rows['mainland184-02']['scheduled_faction_foundings']), 2)
         self.assertEqual(len(rows['mainland184-02']['scheduled_faction_coups']), 1)
-        self.assertEqual(rows['mainland184-02']['initial_soldier_total'], 194760)
+        self.assertEqual(rows['mainland184-02']['initial_soldier_total'],
+                         ORIGINAL_184_SOLDIERS + sum(EARLY_EXPANSION_RESERVES.values()))
         adaptations = report['fictional_adaptations']
         self.assertEqual({row['id'] for row in adaptations}, SONG_IF_OPENINGS)
         self.assertTrue(all(row['fictional'] for row in adaptations))
