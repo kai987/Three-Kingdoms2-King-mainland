@@ -187,6 +187,12 @@ class GeneratedOfficerTests(unittest.TestCase):
         definition = game.person_definition(game.state, ident)
         officer = deepcopy(game.state.officers[ident])
         roster = CityRoster('nanjun', [ident], game.catalog.rules)
+        unlimited = advance_year([definition], {ident: officer}, [roster],
+            definition.death_year, definition.death_year + 1, natural_deaths=False)
+        self.assertEqual(unlimited, ())
+        self.assertTrue(officer.alive)
+        self.assertEqual(officer.troops, 321)
+        self.assertEqual(roster.officer_ids, [ident])
         records = advance_year([definition], {ident: officer}, [roster],
             definition.death_year, definition.death_year + 1)
         self.assertFalse(officer.alive)

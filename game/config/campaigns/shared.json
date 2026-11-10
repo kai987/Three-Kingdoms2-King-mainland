@@ -55305,14 +55305,6 @@
         "basis": "year_known_month_unspecified_january_game_boundary",
         "source": "https://zh.wikisource.org/wiki/晉書/卷014"
       },
-      "wuchang": {
-        "year": 221,
-        "month": 4,
-        "parent": "jiangxia",
-        "resource_divisor": 4,
-        "precision": "attested_annal_month",
-        "date_note": "221年四月置郡、改名；本作按此开放，八月筑城不重复新增节点。"
-      },
       "linhai": {
         "year": 257,
         "month": 2,
@@ -55330,12 +55322,13 @@
         "date_note": "257年二月置临川郡；此前地区由豫章表示。"
       },
       "jianan": {
-        "year": 260,
-        "month": 10,
+        "year": 196,
+        "month": 1,
         "parent": "kuaiji",
         "resource_divisor": 4,
-        "precision": "attested_year_game_month",
-        "date_note": "史料载260年置郡，未载确月；本作约定260年10月开放，不能当成史实十月设郡。"
+        "precision": "local_chronicle_year_game_month",
+        "date_note": "建安初置縣，地方沿革採196年，確月待考，本作以1月開放。",
+        "source": "https://mzt.fj.gov.cn/ztzl/xczmxd/dmwh/202408/t20240826_6506583.htm"
       },
       "wuxing": {
         "year": 266,

@@ -425,6 +425,13 @@ test('recovery callback waits for title Start',async({page},testInfo)=>{
 
 test('observer speed changes cadence without resuming a pause and city counts follow ownership',async({page})=>{
  await opening(page);
+ const lifespan=page.locator('#lifespan');
+ await expect(lifespan).toHaveAccessibleName('武將壽命');
+ await expect(lifespan).toHaveValue('historical');
+ await lifespan.selectOption('none');
+ await page.locator('#scenario').selectOption('mainland217-07');
+ await expect(lifespan).toHaveValue('none');
+ await page.locator('#scenario').selectOption('mainland184-02');
  await page.clock.install({time:new Date('2026-01-01T00:00:00Z')});
  await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
  await page.locator('#begin-observation').press('Enter');
@@ -439,21 +446,34 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  await expect(status).toHaveAttribute('data-observer-state','playing');
  const openingSave=await tacticalSave(page);
  expect(openingSave.state.player).toBe('observer');
+ expect(openingSave.state.extension.lifespan).toBe('none');
  const openingTurn=openingSave.state.turn;
  const readCityCounts=async save=>{
   const owned=Object.values(save.state.cities).reduce((counts,city)=>{
    if(city.owner!=='neutral')counts[city.owner]=(counts[city.owner]||0)+1;
    return counts;
   },{});
-  const shown=await ledger.locator('tbody tr').evaluateAll(rows=>Object.fromEntries(rows.map(row=>[
-   row.dataset.factionResources,row.querySelector('[data-faction-cities]')?.textContent
-  ])));
+  const rows=await ledger.locator('tbody tr').evaluateAll(rows=>rows.map(row=>({
+   faction:row.dataset.factionResources,
+   count:Number(row.querySelector('[data-faction-cities]')?.textContent),
+   base:row.querySelector('[data-faction-base]')?.dataset.cityId
+  })));
+  const sorted=rows.map(row=>row.count);
+  expect(sorted).toEqual([...sorted].sort((a,b)=>b-a));
+  const shown=Object.fromEntries(rows.map(row=>[row.faction,row.count]));
+  const declared=await page.evaluate(()=>Object.fromEntries(view.catalog.factions.map(row=>[row.id,row.city])));
   expect(Object.keys(shown)).toEqual(expect.arrayContaining(Object.keys(owned)));
-  for(const [faction,count] of Object.entries(shown))expect(count,faction).toBe(String(owned[faction]||0));
+  for(const {faction,count,base} of rows){
+   expect(count,faction).toBe(owned[faction]||0);
+   if(!count)expect(base).toBe('');
+   else if(save.state.cities[declared[faction]]?.owner===faction)expect(base).toBe(declared[faction]);
+   else expect(save.state.cities[base]?.owner).toBe(faction);
+  }
   return shown;
  };
  await ledger.locator('summary').press('Enter');
  await expect(ledger.getByRole('columnheader',{name:'城池數',exact:true})).toBeVisible();
+ await expect(ledger.getByRole('columnheader',{name:'本據',exact:true})).toBeVisible();
  const openingCounts=await readCityCounts(openingSave);
  const finishTurn=async expected=>{
   await expect.poll(turn).toBe(expected);
@@ -492,6 +512,7 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  await expect(speed.locator('option')).toHaveText(['低速','標準','高速']);
  await expect(speed).toHaveValue('normal');
  await expect(ledger.getByRole('columnheader',{name:'都市数',exact:true})).toBeVisible();
+ await expect(ledger.getByRole('columnheader',{name:'本拠',exact:true})).toBeVisible();
  await page.locator('#utility-menu summary').press('Enter');
  await page.clock.runFor(3600);
  expect(await tacticalSave(page)).toEqual(paused);
@@ -504,6 +525,12 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  await expectNextAfter(1800,openingTurn+3);
  await toggle.press('Enter');
  await expect(status).toHaveAttribute('data-observer-state','paused');
+ const resumed=await tacticalSave(page);
+ expect(resumed.state.extension.lifespan).toBe('none');
+ await page.locator('#load').press('Enter');
+ await page.locator('#save-file').setInputFiles({name:'observer-lifespan.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(resumed))});
+ await expect(page.locator('#dialog')).toBeHidden();await page.clock.runFor(180);await waitIdle(page);
+ expect(await tacticalSave(page)).toEqual(resumed);
  expect(errors.get(page)).toEqual([]);
 });
 
@@ -827,7 +854,7 @@ test('city size labels and the report adapt to available space while retaining m
  const labels=page.locator('#map-labels'),names=page.locator('[data-city-label]');
  await expect(labels).toHaveAttribute('data-label-mode','major');
  const majorCount=await names.count();
- for(const [mode,count] of [['giant',4],['large',10],['all',116],['none',0],['major',majorCount]]){
+ for(const [mode,count] of [['giant',4],['large',10],['all',118],['none',0],['major',majorCount]]){
   await labels.click();await expect(labels).toHaveAttribute('data-label-mode',mode);await expect(names).toHaveCount(count);
  }
  await labels.click();await labels.click();

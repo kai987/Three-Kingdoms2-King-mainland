@@ -151,6 +151,7 @@ def build(source, positions):
         if not identity or identity in repair_ids or not cities or any(c not in centers for c in cities):
             raise ValueError('Invalid reviewed road corridor')
         repair_ids.add(identity)
+        waypoints = set()
         for row in repair['strokes']:
             index, radius = row['index'], row['radius']
             points = [_point(p) for p in row['points']]
@@ -163,6 +164,11 @@ def build(source, positions):
                 # A joining branch must reach the trunk, rather than its
                 # rounded-off control point. Shared sections are drawn once.
                 junctions.update((points[0], points[-1]))
+                waypoints.update(points[1:-1])
+        stops = {_point(point) for point in repair.get('intermediate_stops', [])}
+        if stops - waypoints:
+            raise ValueError('A reviewed intermediate stop must be on the repaired road')
+        junctions.update(stops)
     # Dynamic branches can meet an interior point of a native stroke. The
     # exact reviewed vertex must be a true subpath end in the timing graph,
     # even when no city anchor or corridor edit otherwise changes that stroke.

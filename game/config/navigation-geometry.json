@@ -880,92 +880,6 @@
       ]
     },
     {
-      "from": "changli",
-      "to": "liaodong",
-      "mode": "land",
-      "terrain": "plain",
-      "history": {
-        "classification": "authorial_regional_historical_city_corridor",
-        "is_proven_direct_Han_road": false,
-        "basis": "《三國志·齊王芳紀》記遼東屬國置昌黎縣。《晉書·地理志》列昌黎與遼東、遼西，據其相鄰區域配置沿岸與支谷道路。具體折點與渡河位置為遊戲地圖校準。",
-        "source": "https://zh.wikisource.org/wiki/晉書/卷014#平州"
-      },
-      "draw": [
-        {
-          "mode": "land",
-          "points": [
-            [
-              1138,
-              57
-            ],
-            [
-              1154,
-              60
-            ],
-            [
-              1170,
-              65
-            ],
-            [
-              1183,
-              73
-            ],
-            [
-              1194,
-              78
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "from": "changli",
-      "to": "liaoxi",
-      "mode": "land",
-      "terrain": "plain",
-      "history": {
-        "classification": "authorial_regional_historical_city_corridor",
-        "is_proven_direct_Han_road": false,
-        "basis": "《三國志·齊王芳紀》記遼東屬國置昌黎縣。《晉書·地理志》列昌黎與遼東、遼西，據其相鄰區域配置沿岸與支谷道路。具體折點與渡河位置為遊戲地圖校準。",
-        "source": "https://zh.wikisource.org/wiki/晉書/卷014#平州"
-      },
-      "draw": [
-        {
-          "mode": "land",
-          "points": [
-            [
-              1138,
-              57
-            ],
-            [
-              1122,
-              60
-            ],
-            [
-              1109,
-              63
-            ],
-            [
-              1092,
-              76
-            ],
-            [
-              1077,
-              92
-            ],
-            [
-              1067,
-              109
-            ],
-            [
-              1061,
-              121
-            ]
-          ]
-        }
-      ]
-    },
-    {
       "from": "pingyang",
       "to": "hedong",
       "mode": "land",
@@ -1171,6 +1085,183 @@
             [
               730,
               671
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "yingchuan",
+      "to": "xiangyang",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《晉書·庾亮傳》記襄陽北接宛、許。遊戲以直達陸路概括許地向南通襄陽的區域聯繫，折點為地圖校準。",
+        "source": "https://www.shidianguji.com/book/SK0712/chapter/1kfjj4yfy4efu"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              776,
+              351
+            ],
+            [
+              775,
+              363
+            ],
+            [
+              773,
+              374
+            ],
+            [
+              768,
+              386
+            ],
+            [
+              766,
+              394
+            ],
+            [
+              764,
+              403
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "taiyuan",
+      "to": "pingyang",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《水經注》汾水條記太原晉陽與平陽一帶同在汾水流域。遊戲以谷地通道連接兩城，折點為地圖校準。",
+        "source": "https://zh.wikisource.org/zh-hant/水經注/06"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              731,
+              181
+            ],
+            [
+              720,
+              189
+            ],
+            [
+              710,
+              194
+            ],
+            [
+              705,
+              200
+            ],
+            [
+              709,
+              210
+            ],
+            [
+              713,
+              218
+            ],
+            [
+              710,
+              229
+            ],
+            [
+              702,
+              240
+            ],
+            [
+              696,
+              248
+            ],
+            [
+              695,
+              257
+            ],
+            [
+              692,
+              265
+            ],
+            [
+              690,
+              273
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "poyang",
+      "to": "jianan",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·賀齊傳》記討漢興經餘汗。鄱陽與餘汗同屬豫章，本作以鄱陽節點表示豫章東部通往建安的山路。",
+        "source": "https://ctext.org/text.pl?if=gb&node=604484"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              969,
+              568
+            ],
+            [
+              982,
+              576
+            ],
+            [
+              993,
+              583
+            ],
+            [
+              1005,
+              581
+            ],
+            [
+              1017,
+              582
+            ],
+            [
+              1024,
+              588
+            ],
+            [
+              1022,
+              599
+            ],
+            [
+              1032,
+              607
+            ],
+            [
+              1045,
+              611
+            ],
+            [
+              1061,
+              612
+            ],
+            [
+              1072,
+              615
+            ],
+            [
+              1080,
+              618
             ]
           ]
         }

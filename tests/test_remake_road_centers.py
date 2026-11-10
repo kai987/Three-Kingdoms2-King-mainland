@@ -188,7 +188,17 @@ class RoadCenterBuilderTests(unittest.TestCase):
         rows = {row['index']: row for row in result['changes']}
         repairs = {repair['id']: repair for repair in result['corridor_repairs']}
         self.assertEqual(set(repairs), {'dongping-changyi', 'jinan-linzi', 'shanggu-ji',
-                                        'hongnong-luoyang', 'jiyin-qiao-changyi'})
+                                        'hongnong-luoyang', 'jiyin-qiao-changyi',
+                                        'liaoxi-changli-liaodong'})
+        coastal = rows[260]
+        self.assertEqual(coastal['new_points'][0], positions['liaoxi'])
+        self.assertEqual(coastal['new_points'][-1], positions['liaodong'])
+        expansion = json.loads((ROOT / 'game/config/campaigns/city-expansion-map.json').read_text())
+        stop = ' '.join(map(str, expansion['cities']['changli']['position']))
+        self.assertEqual(coastal['new_d'].count('L' + stop + 'M' + stop), 1)
+        self.assertNotIn('Q' + stop, coastal['new_d'])
+        roads = json.loads((ROOT / 'game/config/route-corridors.json').read_text())['land_connections']
+        self.assertFalse(any('changli' in (row['from'], row['to']) for row in roads))
         centered = {tuple(node): positions[hub['city']] for hub in source['hubs']
                     for node in hub['nodes_to_collapse']}
         centered.update({tuple(point): positions[row['city']]

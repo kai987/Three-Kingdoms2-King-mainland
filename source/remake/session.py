@@ -49,6 +49,20 @@ def faction_officer_counts(catalog, state=None):
     return {key:len(people) for key,people in members.items()}
 
 
+def preview_city_history(catalog):
+    """Keep map hints and island summaries. The city endpoint serves full evidence."""
+    result = {}
+    for city, history in catalog.data.get('city_history', {}).items():
+        hints = {key: history[key] for key in ('neutral_label', 'summary_i18n', 'detail_ja', 'chronology')
+                 if key in history}
+        basis = history.get('opening', {}).get('basis')
+        if basis:
+            hints['opening'] = {'basis': basis}
+        if hints:
+            result[city] = hints
+    return result
+
+
 class CampaignSession:
     def __init__(self, paths, *, initial_scenario=None):
         catalogs=[Catalog(path) for path in paths]
@@ -138,7 +152,7 @@ class CampaignSession:
                                            'regional_roads':c.data.get('regional_roads',[]),
                                            'river_routes':c.data.get('river_routes',[]),
                                            'city_label_offsets':c.data.get('city_label_offsets',{}),
-                                           'city_history':c.data.get('city_history',{}),
+                                           'city_history':preview_city_history(c),
                                            'faction_resources':faction_resources(c),
                                            'faction_officers':faction_officer_counts(c),
                                            'faction_colors':faction_colors(c),

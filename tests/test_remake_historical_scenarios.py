@@ -56,7 +56,13 @@ JINGNAN = {
 
 def expansion_material(data):
     plan = json.loads((ROOT / 'game/config/campaigns/city-expansion-openings.json').read_text())
-    opened = plan['scenarios'][data['id']]['owners']
+    opened = set(plan['scenarios'][data['id']]['owners'])
+    # These baselines predate opening the old county seats. Their existing
+    # late-game stocks were already counted at the original opening dates.
+    date = (data['start_year'], data['start_month'])
+    for city, former_opening in (('wuchang', (221, 4)), ('jianan', (260, 10))):
+        if city in data['active_cities'] and date < former_opening:
+            opened.add(city)
     return tuple(sum(data['initial_city_resources'][city][field] for city in opened)
                  for field in ('gold', 'grain', 'reserves'))
 

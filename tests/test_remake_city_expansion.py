@@ -40,6 +40,7 @@ class CityExpansionTests(unittest.TestCase):
             for scenario in cls.entries
         }
         cls.plan = read('game/config/campaigns/city-expansion-openings.json')['scenarios']
+        cls.chronology = read('game/config/campaigns/city-chronology-openings.json')
 
     def start(self, scenario, faction=None):
         catalog = self.catalogs[scenario]
@@ -63,18 +64,20 @@ class CityExpansionTests(unittest.TestCase):
                 self.assertEqual(set(plan['owners']), expected)
                 game = self.start(scenario)
                 state = game.state
-                self.assertEqual(set(state.cities), set(original['active_cities']) | expected)
+                reviewed_owners = {key: owner for key, owner in self.chronology['owners'][scenario].items()
+                                   if owner is not None}
+                self.assertEqual(set(state.cities), set(original['active_cities']) | expected | reviewed_owners.keys())
                 self.assertEqual(set(state.cities), set(catalog.active_city_ids(*date)))
                 self.assertEqual(set(catalog.map_cities), set(legacy) | ADDITIONS)
                 self.assertEqual({key: catalog.map_cities[key]['position'] for key in legacy}, legacy)
                 self.assertEqual({key: catalog.data['city_coordinates'][key] for key in legacy},
                                  self.shared['city_coordinates'])
-                self.assertEqual({key: state.cities[key].owner for key in original['active_cities']},
-                                 original['initial_owners'])
+                legacy_owners = original['initial_owners'] | reviewed_owners
+                self.assertEqual({key: state.cities[key].owner for key in legacy_owners}, legacy_owners)
                 for field in ('initial_city_resources', 'city_income'):
                     self.assertEqual({key: catalog.data[field][key] for key in legacy}, original[field])
                 self.assertEqual({key: state.cities[key].owner for key in expected}, plan['owners'])
-                for city in expected:
+                for city in expected | reviewed_owners.keys() | {'gaoliang', 'xiping'}:
                     self.assertTrue(set(game._neighbors(city, state)).intersection(state.cities), city)
                     self.assertTrue(game._city_occupancy(state, state.cities[city]) <= 99, city)
                     if state.cities[city].owner == 'neutral':
@@ -86,6 +89,36 @@ class CityExpansionTests(unittest.TestCase):
                         self.assertEqual(officer.faction_id, state.cities[city].owner)
                         self.assertTrue(officer.alive)
                 self.assertEqual(state.rng.draws, 0)
+
+    def test_reviewed_old_county_roads_owners_and_historical_garrisons(self):
+        for scenario, city, owner, people in [
+            ('mainland184-02', 'wuchang', 'neutral', ()),
+            ('mainland196-06', 'jianan', 'wang_lang', ()),
+            ('mainland208-10', 'wuchang', 'wu', ('0303',)),
+            ('mainland234-02', 'wuchang', 'wu', ('0902',)),
+            ('mainland238-01', 'wuchang', 'wu', ('0902',)),
+            ('mainland249-01', 'wuchang', 'wu', ('0430', '0985')),
+        ]:
+            with self.subTest(scenario=scenario, city=city):
+                game = self.start(scenario)
+                state = game.state
+                self.assertEqual(state.cities[city].owner, owner)
+                people = {'san14-candidate-' + person for person in people}
+                self.assertEqual({state.officers[i].person_id for i in state.cities[city].roster.officer_ids}, people)
+                self.assertEqual({p['person_id'] for p in game.catalog.data['city_history'][city]['garrisons']}, people)
+        for chapter, origin, destination, mode in [
+            ('mainland184-02', 'jiangxia', 'wuchang', 'land'),
+            ('mainland184-02', 'qichun', 'wuchang', 'river'),
+            ('mainland196-06', 'poyang', 'jianan', 'land'),
+            ('mainland217-07', 'xindu', 'jianan', 'land'),
+            ('mainland263-05', 'linhai', 'jianan', 'land'),
+        ]:
+            with self.subTest(chapter=chapter, origin=origin, destination=destination):
+                game = self.start(chapter)
+                quote = game._travel_path(game.state, origin, destination, game.state.cities[origin].owner,
+                                          mode, adjacent=True)
+                self.assertEqual(quote['path'], [origin, destination])
+                self.assertGreater(quote['days'], 0)
 
     def test_primary_source_garrisons_and_late_ownership(self):
         for scenario, city, owner, people in [
@@ -135,7 +168,8 @@ class CityExpansionTests(unittest.TestCase):
                 ('hefei', 'danyang', 'land'), ('guangling', 'danyang', 'river'),
                 ('chaisang', 'qichun', 'river'), ('xicheng', 'hanzhong', 'river'),
                 ('shangyong', 'xincheng', 'land'), ('yiling', 'yidu', 'river'),
-                ('changli', 'liaodong', 'land'), ('pingyang', 'hedong', 'land'),
+                ('yingchuan', 'xiangyang', 'land'), ('taiyuan', 'pingyang', 'land'),
+                ('pingyang', 'hedong', 'land'),
                 ('hengyang', 'changsha', 'river'), ('xiangdong', 'hengyang', 'river'),
                 ('jianping', 'badong', 'river'),
             ]:
@@ -157,6 +191,31 @@ class CityExpansionTests(unittest.TestCase):
                         self.assertEqual(quote['path'], [source, target])
                         self.assertEqual(quote['modes'], ['river'])
                         self.assertIsNone(quote['routes'][0]['hazard'])
+
+    def test_liaoxi_coast_has_one_corridor_and_uses_changli_only_when_active(self):
+        trunk = 'liaodong:liaoxi:land'
+        for scenario, stops in [('mainland238-01', ['liaoxi']),
+                                ('mainland249-01', ['changli', 'liaoxi'])]:
+            with self.subTest(scenario=scenario), using_backend('python'):
+                game = self.start(scenario)
+                state = game.state
+                # Find exactly the playable sections of the single painted road.
+                coast = [route for route in game._known_routes(state)
+                         if route.get('parent_route') == trunk]
+                chain = ['liaodong', *stops]
+                self.assertEqual([(route['from'], route['to']) for route in coast],
+                                 list(zip(chain, chain[1:])))
+                self.assertTrue(all('draw' not in route for route in coast))
+                self.assertEqual(len([route for route in game.catalog.data['travel_routes']
+                                      if route['id'] == trunk]), 1)
+                owner = state.cities['liaodong'].owner
+                self.assertTrue(game._travel_path(state, 'liaodong', stops[0], owner,
+                                                  'land', adjacent=True))
+                self.assertEqual(bool(game._travel_path(state, 'liaodong', 'liaoxi', owner,
+                                                       'land', adjacent=True)), len(stops) == 1)
+                self.assertEqual(bool(game._travel_path(state, 'taiyuan', 'pingyang',
+                                                       state.cities['taiyuan'].owner,
+                                                       'land', adjacent=True)), len(stops) > 1)
 
 
 if __name__ == '__main__':

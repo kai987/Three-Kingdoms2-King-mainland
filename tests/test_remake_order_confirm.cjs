@@ -51,7 +51,7 @@ function fixture(){
  // Exercise the shipped command gate, not merely the overlay helper.
  const app=fs.readFileSync(require.resolve('../game/app.js'),'utf8'),body=app.slice(app.indexOf('async function command('),app.indexOf('\nfunction openDialog('));
  let resolve,requests=0,invalidations=0;const gate=new Promise(done=>{resolve=done;});
- const ctx={busy:false,view:{revision:9,game:{turn:1}},audioOutcome:null,battleScene:null,gameEvents:null,
+ const ctx={busy:false,observerYearSaving:false,view:{revision:9,game:{turn:1}},audioOutcome:null,battleScene:null,gameEvents:null,
   confirmOrderCommand:()=>gate,localAutosave:{status:()=>({state:'saved'}),invalidate(){invalidations++;}},
   notice(){},setBusy(value){ctx.busy=value;},render(){},gameAudio:{play(){}},setTimeout:fn=>fn(),request:async()=>{requests++;return{revision:10,game:{turn:1}};}};
  vm.createContext(ctx);vm.runInContext(body,ctx);const rejected=ctx.command('recruit',{city:'chengdu'});assert.equal(requests,0);assert.equal(invalidations,0);assert.equal(ctx.busy,false);resolve(false);assert.equal(await rejected,false);assert.equal(requests,0);assert.equal(invalidations,0);

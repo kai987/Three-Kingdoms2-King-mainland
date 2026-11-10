@@ -71,11 +71,12 @@ class SharedRiverNetwork(unittest.TestCase):
             catalog = json.loads(path.read_text())
             active = set(catalog['active_cities'])
             for city, row in bypasses.items():
-                if city not in active and {row['from'], row['to']} <= active:
+                if {row['from'], row['to']} <= active and (city not in active or city == 'wuchang'):
                     route = next(route for route in self.compiled['routes']
                                  if (route['from'], route['to']) == (row['from'], row['to']))
                     self.assertEqual([part['reach_id'] for part in route['draw'][1:-1]], row['reaches'])
                     reached[city] += 1
+            self.assertIn('wuchang', active)
         self.assertTrue(all(reached[city] > 0 for city in bypasses))
         early = json.loads((ROOT / 'game/data/campaigns/207-09.json').read_text())
         self.assertNotIn('yidu', early['active_cities'])

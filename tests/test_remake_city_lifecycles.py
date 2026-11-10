@@ -10,6 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign,Catalog,digest
 from remake import civil_staff, domestic, facilities, logistics, treasures, city_development
+from remake.map_presentation import city_names
 from campaign_fixtures import advance_month as advance_calendar_month
 
 
@@ -30,12 +31,15 @@ def advance_month(game):
 
 
 class CityLifecycleTests(unittest.TestCase):
-    def fixture(self,month=10):
+    def fixture(self, month=10, *, retirement_month=None):
         # A controlled fixture moves the existing future node to an imminent
         # month. It tests scheduling, not a new historical claim about新兴.
         data=json.loads((ROOT/'game/data/campaigns/207-09.json').read_text())
         data['id']='month-opening-fixture'
         data['city_foundings']['xinxing'].update(year=207,month=month)
+        if retirement_month is not None:
+            data['city_retirements']['xinxing'] = dict(
+                year=207, month=retirement_month, parent='taiyuan', scope='scenario_opening_only')
         directory=tempfile.TemporaryDirectory();self.addCleanup(directory.cleanup)
         path=Path(directory.name)/'fixture.json'
         path.write_text(json.dumps(data,ensure_ascii=False))
@@ -125,12 +129,90 @@ class CityLifecycleTests(unittest.TestCase):
         self.assertIn('xindu', game.view()['catalog']['active_cities'])
         game.validate(game.state)
 
+    def test_new_opening_cannot_recreate_a_retired_city_at_month_rollover(self):
+        late = self.start(self.fixture(8, retirement_month=9))
+        self.assertNotIn('xinxing', late.state.cities)
+        advance_month(late)
+        self.assertNotIn('xinxing', late.state.cities)
+        late.validate(late.state)
+
+        early = self.start(self.fixture(10, retirement_month=11))
+        advance_month(early)
+        self.assertIn('xinxing', early.state.cities)
+        advance_month(early)
+        self.assertIn('xinxing', early.state.cities)
+        early.validate(early.state)
+
+    def test_all_opening_maps_match_recorded_foundings_and_withdrawals(self):
+        data_dir = ROOT/'game/data/campaigns'
+        index = json.loads((data_dir/'index.json').read_text())
+        foundings = {'xindu': (208, 1), 'yidu': (208, 9), 'xinxing': (215, 1),
+                     'changli': (244, 9), 'pingyang': (247, 5),
+                     'linhai': (257, 2), 'linchuan': (257, 2), 'hengyang': (257, 2),
+                     'xiangdong': (257, 2), 'jianping': (260, 1), 'jianan': (196, 1),
+                     'wuxing': (266, 12)}
+        old_counties = {'hefei', 'guangling', 'chaisang', 'xicheng', 'shangyong', 'yiling',
+                        'wenshan', 'yinping', 'dangqu', 'linhe', 'tianshui', 'xiping', 'fanyang',
+                        'wuchang', 'gaoliang'}
+        self.assertEqual(len(index['catalogs']), 29)
+        for path in index['catalogs']:
+            catalog = Catalog(data_dir/Path(path).name)
+            date = (catalog.data['start_year'], catalog.data['start_month'])
+            active = set(catalog.data['active_cities'])
+            with self.subTest(scenario=catalog.data['id']):
+                self.assertEqual(active, set(catalog.active_city_ids(*date)))
+                self.assertEqual(active, set(catalog.data['initial_owners']))
+                self.assertLessEqual({row['city'] for row in catalog.data['initial_officers']}, active)
+                self.assertLessEqual(old_counties, active)
+                self.assertEqual('yiyang' in active, date < (240, 1))
+                for city, founding in foundings.items():
+                    alternate_xindu = city == 'xindu' and date in ((197, 7), (201, 5))
+                    self.assertEqual(city in active, alternate_xindu or date >= founding, city)
+                names = city_names(catalog, *date)
+                for city, (boundary, early, late) in {
+                    'wenshan': ((215, 1), '綿虒道', '汶山'),
+                    'yinping': ((229, 1), '陰平道', '陰平'),
+                    'tianshui': ((228, 1), '漢陽', '天水'),
+                    'xiping': ((214, 1), '西平亭', '西平'),
+                    'fanyang': ((224, 1), '涿县', '范阳'),
+                    'wuchang': ((221, 4), '鄂县', '武昌'),
+                    'jianan': ((260, 10), '建安县', '建安'),
+                }.items():
+                    if city in active:
+                        self.assertEqual(names[city], late if date >= boundary else early, city)
+                self.assertEqual(names['gaoliang'], '高凉')
+
+    def test_early_county_opening_and_renames_at_live_calendar_boundaries(self):
+        early = Catalog(ROOT/'game/data/campaigns/184-02.json')
+        self.assertIn('wuchang', early.active_city_ids(184, 2))
+        self.assertNotIn('jianan', early.active_city_ids(195, 12))
+        self.assertIn('jianan', early.active_city_ids(196, 1))
+        for city, previous, next_date, first_name, second_name in (
+            ('wuchang', (221, 3), (221, 4), '鄂县', '武昌'),
+            ('xiping', (213, 12), (214, 1), '西平亭', '西平'),
+            ('jianan', (260, 9), (260, 10), '建安县', '建安'),
+        ):
+            with self.subTest(city=city):
+                self.assertIn(city, early.active_city_ids(*previous))
+                self.assertIn(city, early.active_city_ids(*next_date))
+                self.assertEqual(city_names(early, *previous)[city], first_name)
+                self.assertEqual(city_names(early, *next_date)[city], second_name)
+
+    def test_former_wu_cities_change_names_after_the_fall_of_wu(self):
+        catalog = Catalog(ROOT/'game/data/campaigns/263-05.json')
+        for date, yiling, xindu in [((280, 1), '西陵', '新都'), ((280, 3), '西陵', '新都'),
+                                    ((280, 4), '夷陵', '新安')]:
+            with self.subTest(date=date):
+                self.assertLessEqual({'yiling', 'xindu'}, set(catalog.active_city_ids(*date)))
+                names = city_names(catalog, *date)
+                self.assertEqual((names['yiling'], names['xindu']), (yiling, xindu))
+
     def test_current_dated_city_boundaries_match_calendar_and_roundtrip(self):
         catalog=Catalog(ROOT/'game/data/campaigns/207-09.json')
         # Exact game boundaries are explicit even where the source gives only
         # a year. October/December there are authored dates, not historical claims.
-        boundaries={'wuchang':(221,4),'linhai':(257,2),'linchuan':(257,2),
-                    'jianan':(260,10),'wuxing':(266,12),'changli':(244,9),
+        boundaries={'linhai':(257,2),'linchuan':(257,2),
+                    'jianan':(196,1),'wuxing':(266,12),'changli':(244,9),
                     'pingyang':(247,5),'hengyang':(257,2),'xiangdong':(257,2),
                     'jianping':(260,1)}
         for city,(year,month) in boundaries.items():

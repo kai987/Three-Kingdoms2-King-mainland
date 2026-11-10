@@ -12,12 +12,12 @@
   "yiling": {
     "names": [
       {"from_date": [1, 1], "to_date": [222, 12], "name": "夷陵"},
-      {"from_date": [223, 1], "to_date": [279, 12], "name": "西陵"},
-      {"from_date": [280, 1], "name": "夷陵"}
+      {"from_date": [223, 1], "to_date": [280, 3], "name": "西陵"},
+      {"from_date": [280, 4], "name": "夷陵"}
     ],
-    "detail": "夷陵是漢代舊縣，與本作臨江／宜都節點的夷道分開。孫權於222年改名西陵，280年晉平吳後復稱夷陵。本作於222年過後切換西陵，晉代復名採280年年界。",
-    "detail_ja": "夷陵は漢代の県で、本作の臨江／宜都に当たる夷道とは別の地点です。222年に孫権が西陵と改称し、280年の晋による呉の平定後に夷陵へ戻りました。本作では222年の終了後と280年の年初に切り替えます。",
-    "sources": ["https://zh.wikisource.org/wiki/三國志/卷47", "https://zh.wikisource.org/wiki/宋書/卷37"]
+    "detail": "夷陵是漢代舊縣，與本作臨江／宜都節點的夷道分開。孫權於222年改名西陵，本作自次年正月顯示。晉於280年三月平吳，同年復稱夷陵。史料未載復名確月，本作在平吳後的四月切換。",
+    "detail_ja": "夷陵は漢代の県で、本作の臨江／宜都に当たる夷道とは別の地点です。222年に孫権が西陵と改称したため、本作では翌年の正月から表示します。晋が280年3月に呉を平定し、同年に夷陵へ戻りました。復名の月は不詳のため、本作では平定後の4月に切り替えます。",
+    "sources": ["https://zh.wikisource.org/wiki/三國志/卷47", "https://zh.wikisource.org/wiki/宋書/卷37", "https://www.shidianguji.com/zh/book/LS0005/chapter/LS0005_26"]
   },
   "xicheng": {
     "names": [
@@ -28,15 +28,94 @@
     "detail_ja": "西城は漢中の旧県です。曹魏は221年に申儀を魏興太守とし、郡治は一時、洵口に置かれました。蜀の滅亡後に郡治が西城へ戻り、本作では264年の年初から魏興と表示します。",
     "sources": ["https://zh.wikisource.org/wiki/華陽國志/卷二#魏興郡"]
   },
+  "wenshan": {
+    "names": [
+      {"from_date": [1, 1], "to_date": [214, 12], "name": "綿虒道"},
+      {"from_date": [215, 1], "name": "汶山"}
+    ],
+    "detail": "節點約在漢代綿虒道一帶。汶山郡在漢代曾數次置廢。劉備平蜀後再置汶山郡，綿虒為其治所。本作以215年初切換郡名，確月未載。",
+    "detail_ja": "地点は漢代の綿虒道付近です。汶山郡は漢代に設置と廃止を繰り返し、劉備が益州を平定した後に再置され、綿虒が郡治となりました。月は不詳のため、本作では215年の年初に郡名へ切り替えます。",
+    "sources": ["https://zh.wikisource.org/wiki/後漢書/卷113#益州", "https://zh.wikisource.org/wiki/三國志/卷39#陳震", "https://www.shidianguji.com/book/CADAL02030991/chapter/1lmngzo3x27n2"]
+  },
+  "yinping": {
+    "names": [
+      {"from_date": [1, 1], "to_date": [228, 12], "name": "陰平道"},
+      {"from_date": [229, 1], "name": "陰平"}
+    ],
+    "detail": "陰平道是東漢廣漢屬國下的縣級建置。陰平郡始置年代有異說，《三國志》記229年蜀攻取陰平郡，本作以該年作郡名顯示界線。",
+    "detail_ja": "陰平道は後漢の広漢属国に属した県級の行政区です。陰平郡の設置年には諸説があり、本作では『三国志』に蜀が同郡を攻略したとある229年を表示の境とします。",
+    "sources": ["https://zh.wikisource.org/wiki/後漢書/卷113#益州", "https://zh.wikisource.org/wiki/三國志/卷33"]
+  },
+  "linhe": {
+    "detail": "東漢已有蒼梧郡臨賀縣。226年孫吳從蒼梧分置臨賀郡，沿用縣名，地圖繼續顯示臨賀。",
+    "detail_ja": "後漢の蒼梧郡に臨賀県がありました。226年に呉が蒼梧郡を分けて同名の臨賀郡を置いた後も、地図の表示は臨賀です。",
+    "sources": ["https://zh.wikisource.org/wiki/後漢書/卷113#交州", "https://zh.wikisource.org/wiki/元和郡縣圖志/卷37"]
+  },
+  "tianshui": {
+    "names": [
+      {"from_date": [1, 1], "to_date": [227, 12], "name": "漢陽"},
+      {"from_date": [228, 1], "name": "天水"}
+    ],
+    "detail": "節點對應冀縣。東漢74年改天水郡為漢陽郡。《三國志》記228年祁山戰事時稱天水，本作採228年初作顯示界線。復名年代諸書有異。",
+    "detail_ja": "地点は冀県です。後漢は74年に天水郡を漢陽郡に改称しました。復名の時期は史料に異同があり、本作では『三国志』が祁山の戦いで天水と記した228年の年初に表示を切り替えます。",
+    "sources": ["https://zh.wikisource.org/wiki/後漢書/卷113#涼州", "https://zh.wikisource.org/wiki/三國志/卷17#張郃"]
+  },
+  "xiping": {
+    "names": [
+      {"from_date": [1, 1], "to_date": [213, 12], "name": "西平亭"},
+      {"from_date": [214, 1], "name": "西平"}
+    ],
+    "detail": "節點在今西寧一帶，早期用舊據點名西平亭。《三國志》載214年韓遂敗走西平，本作以214年初作城名切換界線。《通典》記建安中置西平郡，《水經注》記曹魏黃初中，設郡年份仍有異說。麴演見於215年西平、金城諸將的記載，遊戲以西平為其在野所在地。",
+    "detail_ja": "現在の西寧一帯の拠点です。初期は旧拠点名の西平亭と表示します。『三国志』は214年に韓遂が敗れて西平へ逃れたと記すため、本作は214年の年初を都市名表示の切替時期とします。西平郡の設置には、建安年間とする『通典』と魏の黄初年間とする『水経注』の異説があります。215年の記事に西平・金城の将として見える麹演は、本作では西平の在野武将です。",
+    "sources": ["https://zh.wikisource.org/wiki/三國志/卷01", "https://zh.wikisource.org/zh-hans/通典/卷174#西平郡", "https://www.shidianguji.com/book/NGJ89241199900895314051/chapter/1luvi0m35ksv8"]
+  },
+  "wuchang": {
+    "names": [
+      {"from_date": [1, 1], "to_date": [221, 3], "name": "鄂县"},
+      {"from_date": [221, 4], "name": "武昌"}
+    ],
+    "kind": "han_county_later_commandery",
+    "founding": null,
+    "detail": "今鄂州的鄂縣是東漢江夏郡舊縣。208年孫權破黃祖後胡綜任鄂長，《江表傳》也記劉備曾屯鄂縣樊口。221年四月孫權由公安遷都鄂縣、改名武昌，八月築城。各劇本依當時政局配置，戰役中改名沿用原城。",
+    "detail_ja": "現在の鄂州市にあった鄂県は、後漢の江夏郡の県です。208年に孫権が黄祖を破った後、胡綜が鄂県の長となり、『江表伝』には劉備が鄂県の樊口に駐屯したともあります。221年4月に孫権が公安から遷都して武昌と改称し、8月に築城しました。シナリオでは各時点の情勢に応じて配置し、進行中の戦役では同じ都市の表示名を切り替えます。",
+    "sources": ["https://zh.wikisource.org/zh-hant/後漢書/卷112#江夏郡", "https://zh.wikisource.org/wiki/三國志/卷47", "https://ctext.org/text.pl?if=gb&node=604605", "https://zh.wikisource.org/wiki/三國志/卷32#先主_劉備", "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34528", "https://zh.wikisource.org/wiki/三國志/卷58#陸遜", "https://zh.wikisource.org/wiki/三國志/卷64#諸葛恪"]
+  },
+  "jianan": {
+    "names": [
+      {"from_date": [196, 1], "to_date": [260, 9], "name": "建安县"},
+      {"from_date": [260, 10], "name": "建安"}
+    ],
+    "kind": "han_county_later_commandery",
+    "founding": {"year": 196, "month": 1, "precision": "local_chronicle_year_game_month", "note": "建安初置縣，地方沿革採196年，確月待考，本作以1月開放。"},
+    "detail": "建安初分侯官北鄉置建安縣，今福建建甌。地方沿革採196年，確月未載，本作自196年初開放。203年賀齊進兵建安立都尉府。260年孫吳分會稽南部置建安郡，本作以當年10月作顯示界線。",
+    "detail_ja": "建安初年に侯官県の北部を分けて建安県が置かれました。現在の福建省建甌市に当たります。地方沿革に従い196年とし、月は不詳のため本作では年初に開放します。203年に賀斉が建安へ進軍して都尉府を置きました。260年に呉が会稽郡の南部を分けて建安郡を置き、本作では同年10月から郡名を表示します。",
+    "sources": ["https://zh.wikisource.org/wiki/讀史方輿紀要/卷九十七", "https://mzt.fj.gov.cn/ztzl/xczmxd/dmwh/202408/t20240826_6506583.htm", "https://ctext.org/text.pl?if=gb&node=604484", "https://zh.wikisource.org/wiki/三國志/卷48"]
+  },
+  "gaoliang": {
+    "detail": "節點依CHGIS座標對應今廣東陽江陽東大八的漢高涼縣，漢屬合浦郡。孫吳另置安寧縣於今陽江西白沙，兩處相距約24公里。《宋書》記高涼郡初治思平，郡治另有考證。錢博於220年任高涼西部都尉，遊戲配置為區域駐防。",
+    "detail_ja": "CHGISの座標に基づき、現在の広東省陽江市陽東区大八にあった漢の高涼県を示します。漢代は合浦郡に属しました。呉が別に置いた安寧県は陽江西方の白沙付近で、約24km離れています。『宋書』は高涼郡の最初の郡治を思平と記します。220年に高涼西部都尉となった銭博の駐屯地は、本作の地域配置です。",
+    "sources": ["https://zh.wikisource.org/zh-hant/後漢書/卷113#交州", "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_42300", "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_42301", "https://zh.wikisource.org/zh-hant/宋書/卷38#廣州", "https://ctext.org/text.pl?if=gb&node=604506"]
+  },
+  "fanyang": {
+    "names": [
+      {"from_date": [1, 1], "to_date": [223, 12], "name": "涿县"},
+      {"from_date": [224, 1], "name": "范阳"}
+    ],
+    "detail": "節點在東漢涿郡治所涿縣。當時的范陽縣與涿縣分立。曹魏改涿郡為范陽郡，本作依CHGIS考證自224年初顯示郡名。",
+    "detail_ja": "地点は後漢の涿郡の郡治・涿県です。当時の范陽県は涿県とは別の県でした。魏が涿郡を范陽郡へ改称した年代はCHGISの考証に従い、本作では224年の年初から郡名を表示します。",
+    "sources": ["https://zh.wikisource.org/wiki/後漢書/卷113#幽州", "https://zh.wikisource.org/wiki/晉書/卷014#幽州", "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_87304"]
+  },
   "xindu": {
     "names": [
-      {"from_date": [208, 1], "name": "新都"}
+      {"from_date": [208, 1], "to_date": [280, 3], "name": "新都"},
+      {"from_date": [280, 4], "name": "新安"}
     ],
-    "detail": "節點定位在新都郡治始新。建安十三年（208年），孫權從歙縣析置始新縣並設新都郡；早期屬歙縣境內，尚無此處的獨立縣城。1月是本作按建置年開放的界線，史料未載確月。",
-    "detail_ja": "地点は新都郡の郡治・始新です。建安13年（208年）に孫権が歙県を分けて始新県と新都郡を設けました。それ以前は歙県の一部でした。設置月は記録されていないため、本作では1月に開放します。",
+    "detail": "節點定位在新都郡治始新。建安十三年（208年），孫權從歙縣析置始新縣並設新都郡。本作自該年1月開放。西晉於280年改新都郡為新安郡，始新仍為治所。改名確月未載，本作自平吳後的四月切換。",
+    "detail_ja": "地点は新都郡の郡治・始新です。208年に孫権が歙県を分けて始新県と新都郡を設け、本作では同年1月に開放します。西晋は280年に新都郡を新安郡と改称し、郡治は始新のままでした。改称月は不詳のため、本作では呉平定後の4月に切り替えます。",
     "sources": [
       "https://www.shidianguji.com/zh/book/LS0004/chapter/1kview8bnwn4c",
-      "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_32221"
+      "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_32221",
+      "https://zh.wikisource.org/wiki/宋書/卷35#揚州"
     ]
   },
   "badong": {

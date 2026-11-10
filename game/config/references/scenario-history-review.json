@@ -660,7 +660,7 @@
           "current_after": 1860
         }
       ],
-      "initial_soldier_total": 198982,
+      "initial_soldier_total": 200302,
       "source_initial_soldier_total": 193730,
       "soldier_total_basis": "193730 rawcanonical;194760 afterthe existingdate-awarecitysizetransformation; the300 troop-to-reservechangeispreservedinbothdomains."
     },
@@ -1046,7 +1046,7 @@
       "removed_factions": [
         "ou_xing"
       ],
-      "initial_soldier_total": 192082
+      "initial_soldier_total": 193402
     },
     {
       "id": "mainland190-01",
@@ -2320,7 +2320,7 @@
         "qiao": "wei",
         "chenliu": "zhang_miao"
       },
-      "initial_soldier_total": 227792
+      "initial_soldier_total": 229112
     },
     {
       "id": "mainland191-10",
@@ -3529,7 +3529,7 @@
         "dongping": "bao_xin",
         "longxi": "song_jian"
       },
-      "initial_soldier_total": 240672
+      "initial_soldier_total": 241992
     },
     {
       "id": "mainland194-06",
@@ -4773,7 +4773,7 @@
         "longxi": "song_jian",
         "hongnong": "zhang_ji"
       },
-      "initial_soldier_total": 236857
+      "initial_soldier_total": 238177
     },
     {
       "id": "mainland196-06",
@@ -5587,7 +5587,7 @@
         "longxi": "song_jian",
         "hongnong": "zhang_ji"
       },
-      "initial_soldier_total": 233327
+      "initial_soldier_total": 235567
     },
     {
       "id": "mainland198-03",
@@ -6316,7 +6316,7 @@
         "longxi": "song_jian",
         "donghai": "zang_ba"
       },
-      "initial_soldier_total": 236922
+      "initial_soldier_total": 239162
     },
     {
       "id": "mainland200-01",
@@ -7295,7 +7295,7 @@
         "linhe": "neutral",
         "longxi": "song_jian"
       },
-      "initial_soldier_total": 253827
+      "initial_soldier_total": 256327
     },
     {
       "id": "mainland202-06",
@@ -8238,7 +8238,7 @@
         "linhe": "neutral",
         "longxi": "song_jian"
       },
-      "initial_soldier_total": 255927
+      "initial_soldier_total": 258427
     },
     {
       "id": "mainland207-09",
@@ -9997,7 +9997,7 @@
         "linhe": "wu_ju",
         "longxi": "song_jian"
       },
-      "initial_soldier_total": 269507
+      "initial_soldier_total": 272007
     },
     {
       "id": "mainland208-10",
@@ -11644,6 +11644,22 @@
           ],
           "certainty": "attested_identity_explicit_game_lifetime_and_region",
           "name": "公仇称"
+        },
+        {
+          "person_id": "san14-candidate-0303",
+          "name": "胡综",
+          "before": {
+            "faction": "wu",
+            "city": "xindu",
+            "status": "serving"
+          },
+          "faction": "wu",
+          "city": "wuchang",
+          "certainty": "primary_text_attested_county_post",
+          "note": "鄂縣開放後按《胡綜傳》所載討黃祖後任鄂長調駐，節點沿用內部武昌ID。",
+          "source_urls": [
+            "https://ctext.org/text.pl?if=gb&node=604605"
+          ]
         }
       ],
       "notes": [
@@ -11662,7 +11678,7 @@
         "linhe": "wu_ju",
         "longxi": "song_jian"
       },
-      "initial_soldier_total": 277622
+      "initial_soldier_total": 279822
     },
     {
       "id": "mainland212-12",
@@ -13669,7 +13685,7 @@
         "wudu": "neutral",
         "yinping": "neutral"
       },
-      "initial_soldier_total": 283540
+      "initial_soldier_total": 285970
     },
     {
       "id": "mainland211-07-tongguan",
@@ -14519,7 +14535,7 @@
         "yinping": "neutral",
         "longxi": "song_jian"
       },
-      "initial_soldier_total": 293290
+      "initial_soldier_total": 295720
     },
     {
       "id": "mainland215-08",
@@ -14713,7 +14729,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 287262
+      "initial_soldier_total": 289692
     },
     {
       "id": "mainland219-07",
@@ -14911,7 +14927,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 285367
+      "initial_soldier_total": 287557
     },
     {
       "id": "mainland221-07",
@@ -15068,7 +15084,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 285907
+      "initial_soldier_total": 287127
     },
     {
       "id": "mainland225-07",
@@ -15376,7 +15392,7 @@
       "owner_expectations": {
         "zangke": "nanman"
       },
-      "initial_soldier_total": 275517
+      "initial_soldier_total": 276737
     },
     {
       "id": "mainland227-02",
@@ -15544,7 +15560,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 285630
+      "initial_soldier_total": 286850
     },
     {
       "id": "mainland234-02",
@@ -15758,7 +15774,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 278260
+      "initial_soldier_total": 279480
     },
     {
       "id": "mainland238-01",
@@ -16033,7 +16049,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 277122
+      "initial_soldier_total": 278402
     },
     {
       "id": "mainland249-01",
@@ -16223,7 +16239,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 267562
+      "initial_soldier_total": 268842
     },
     {
       "id": "mainland263-05",
@@ -16695,7 +16711,7 @@
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
       "owner_expectations": {},
-      "initial_soldier_total": 288125
+      "initial_soldier_total": 290555
     }
   ],
   "limits": [
@@ -17492,7 +17508,7 @@
         "本假想劇本保留遊戲／演義把兗州刺史劉岱與曹軍同名同字將領合併的例外；不得把它作為刺史192年後史實降曹的證據。史實劇本則按192年退出原ID。",
         "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
       ],
-      "initial_soldier_total": 231147
+      "initial_soldier_total": 233387
     },
     {
       "id": "mainland201-05",
@@ -17768,7 +17784,7 @@
         "本假想劇本保留遊戲／演義把兗州刺史劉岱與曹軍同名同字將領合併的例外；不得把它作為刺史192年後史實降曹的證據。史實劇本則按192年退出原ID。",
         "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
       ],
-      "initial_soldier_total": 249927
+      "initial_soldier_total": 252427
     },
     {
       "id": "mainland209-06",
@@ -18133,7 +18149,7 @@
         "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
         "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
       ],
-      "initial_soldier_total": 277772
+      "initial_soldier_total": 279972
     },
     {
       "id": "mainland210-11",
@@ -18525,7 +18541,7 @@
         "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
         "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
       ],
-      "initial_soldier_total": 274472
+      "initial_soldier_total": 276672
     },
     {
       "id": "mainland212-06",
@@ -18815,7 +18831,7 @@
         "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
         "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
       ],
-      "initial_soldier_total": 289690
+      "initial_soldier_total": 292120
     }
   ]
 }

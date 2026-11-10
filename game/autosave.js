@@ -104,6 +104,7 @@
    if(state.state==='saving')return text('正在自動儲存……','自動保存中……');
    if(state.state==='error')return text('自動儲存未完成，戰役仍可繼續。請手動下載存檔。','自動保存できませんでした。戦役は続行できます。手動でセーブファイルを保存してください。');
    if(state.latest)return text('已自動儲存：','自動保存済み：')+label(state.latest)+(state.reduced?text('（空間不足，保留較少恢復點）','（空き容量不足のため復元ポイントを削減）'):'');
+   if(getView()?.game?.player==='observer')return text('觀戰跨年時自動儲存，僅保留在此瀏覽器。','観戦中は年が変わるたび、このブラウザーだけに自動保存します。');
    return text('每旬結束、戰鬥結算後自動儲存，僅保留在此瀏覽器。','旬の終了・戦闘結果の確定後に、このブラウザーだけに自動保存します。');
   }
   function statusHtml(){return `<span class="small" data-autosave-status data-l10n-native="${locale()}" role="status" aria-live="polite">${escape(statusText())}</span>`;}

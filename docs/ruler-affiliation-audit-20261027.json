@@ -2,10 +2,10 @@
   "schema": "tk2-ruler-affiliation-audit-v1",
   "review_revision": "2026-10-27",
   "base_commit": "69a6e8f01239159b91e150637f888278af3b7a88",
-  "review_sha256": "63a8e40fa89bc0fa69a6956bb7aca7d4ff2a90f4f0dbf6eaad1f423a283882cc",
-  "presentation_sha256": "2688b6b0375b9fbfd2b1f49952745363a8d8744be5c988c170eda047fc3785ca",
-  "locale_sha256": "5f79bc85e588b539426980de13a9654dbd326700477d28936c8abe32a6336b3a",
-  "japanese_sha256": "2000590ddd3d0de0077c340db9155fd09a39fbaf735058a0db8802f3f58d4793",
+  "review_sha256": "ff18b71c61a2a78c5a31041d7782fb03568d8bc1a44e6e9f96df6e62c1e76c11",
+  "presentation_sha256": "4bccf4bf174e6b3f61115af6029b36c87d3db7cbb8d7a56db852071550cd2855",
+  "locale_sha256": "6a04e2c27b05da8bb29b2acd9cdc7f3a092c0ed35479bf8dfa456311f35efd18",
+  "japanese_sha256": "16128708ed8e4d1db8d80adce761a10212492027443665ef6e622aee4ece8f1e",
   "baseline_serving_non_ruler_reviews": 283,
   "pool": [
     {
@@ -1511,9 +1511,9 @@
         }
       ],
       "material": {
-        "gold": 151559,
-        "grain": 534580,
-        "soldiers": 198982
+        "gold": 153009,
+        "grain": 539605,
+        "soldiers": 200302
       },
       "placement_counts": {
         "reference_classes": {
@@ -1605,7 +1605,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -1637,7 +1637,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -1656,7 +1656,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -1666,7 +1666,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -1700,7 +1700,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -1710,7 +1710,7 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
         "jianan": "建安",
@@ -1735,7 +1735,7 @@
         "bian_zhang",
         "song_jian"
       ],
-      "catalog_sha256": "6b77693be0d506720523235e15a5f5a7c2b41465f4bbe8987c65028019354b05"
+      "catalog_sha256": "909141c33f3697e656b6ad32875c7e7454b63487fa766737a5d746312a7f76ca"
     },
     {
       "id": "mainland188-06",
@@ -1759,7 +1759,7 @@
           "person_id": "san14-candidate-0736",
           "name": "董卓",
           "city": "tianshui",
-          "city_name": "天水"
+          "city_name": "漢陽"
         },
         {
           "id": "han",
@@ -2438,7 +2438,7 @@
           "name": "张绣",
           "runtime_id": 624,
           "ruler": false,
-          "city_name": "天水"
+          "city_name": "漢陽"
         },
         {
           "status": "serving",
@@ -2472,7 +2472,7 @@
           "name": "张济",
           "runtime_id": 637,
           "ruler": false,
-          "city_name": "天水"
+          "city_name": "漢陽"
         },
         {
           "status": "serving",
@@ -2600,7 +2600,7 @@
           "name": "董卓",
           "runtime_id": 735,
           "ruler": true,
-          "city_name": "天水"
+          "city_name": "漢陽"
         },
         {
           "status": "chronology_excluded",
@@ -2680,7 +2680,7 @@
           "name": "李傕",
           "runtime_id": 892,
           "ruler": false,
-          "city_name": "天水"
+          "city_name": "漢陽"
         },
         {
           "status": "serving",
@@ -2891,9 +2891,9 @@
         }
       ],
       "material": {
-        "gold": 151559,
-        "grain": 534580,
-        "soldiers": 192082
+        "gold": 153009,
+        "grain": 539605,
+        "soldiers": 193402
       },
       "placement_counts": {
         "reference_classes": {
@@ -3061,7 +3061,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -3093,7 +3093,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -3112,7 +3112,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -3122,7 +3122,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -3156,7 +3156,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -3166,7 +3166,7 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
         "jianan": "建安",
@@ -3188,7 +3188,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "f127baf0b5462a5bbb9b6cd89a43cf62f721be7b0ef5ff3d1397afa3abc3d5fc"
+      "catalog_sha256": "fd9c5bd3382a0f59363a9e48c4e03ab27efcb86da322f5f44d776366d9923e9a"
     },
     {
       "id": "mainland190-01",
@@ -4444,9 +4444,9 @@
         }
       ],
       "material": {
-        "gold": 147270,
-        "grain": 509954,
-        "soldiers": 227792
+        "gold": 148790,
+        "grain": 515179,
+        "soldiers": 229112
       },
       "placement_counts": {
         "reference_classes": {
@@ -4968,7 +4968,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -5000,7 +5000,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -5019,7 +5019,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -5029,7 +5029,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -5063,7 +5063,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -5073,7 +5073,7 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
         "jianan": "建安",
@@ -5095,7 +5095,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "543a91c1b347d2fdfc3fdbe15ece7f4afe4805bd63ce5dd7a61acf9c922a936d"
+      "catalog_sha256": "22b1feb3f29156b2e29310b8bdb8c2e1e1ba77af42c534bb7e3ec96b5dccba3c"
     },
     {
       "id": "mainland191-10",
@@ -6319,9 +6319,9 @@
         }
       ],
       "material": {
-        "gold": 145280,
-        "grain": 502804,
-        "soldiers": 240672
+        "gold": 146800,
+        "grain": 508029,
+        "soldiers": 241992
       },
       "placement_counts": {
         "reference_classes": {
@@ -6426,7 +6426,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -6458,7 +6458,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -6477,7 +6477,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -6487,7 +6487,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -6521,7 +6521,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -6531,7 +6531,7 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
         "jianan": "建安",
@@ -6553,7 +6553,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "707648dd0db8c8cf096b443b0c59d7e90627f04b6bb7758540c115b4e85e0453"
+      "catalog_sha256": "2545d8960aa39b2d581f655cc673a3318a9ad1c704de38b947302b9c5dc6c666"
     },
     {
       "id": "mainland194-06",
@@ -7514,7 +7514,7 @@
           "name": "马超",
           "runtime_id": 768,
           "ruler": false,
-          "city_name": "天水"
+          "city_name": "漢陽"
         },
         {
           "status": "serving",
@@ -7776,9 +7776,9 @@
         }
       ],
       "material": {
-        "gold": 142975,
-        "grain": 495116,
-        "soldiers": 236857
+        "gold": 144495,
+        "grain": 500341,
+        "soldiers": 238177
       },
       "placement_counts": {
         "reference_classes": {
@@ -8124,7 +8124,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -8156,7 +8156,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -8175,7 +8175,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -8185,7 +8185,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -8219,7 +8219,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -8229,7 +8229,7 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
         "jianan": "建安",
@@ -8251,7 +8251,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "2c3f017f5f27fe303ba7c13750c66cd9ec043a7800c16f7ded706ec4020b5ae6"
+      "catalog_sha256": "e814333ecbbfe816c34aeccfdc57b5023691766f75b438ebf0c69870d7a6518a"
     },
     {
       "id": "mainland196-06",
@@ -9196,7 +9196,7 @@
           "name": "马超",
           "runtime_id": 768,
           "ruler": false,
-          "city_name": "天水"
+          "city_name": "漢陽"
         },
         {
           "status": "serving",
@@ -9458,9 +9458,9 @@
         }
       ],
       "material": {
-        "gold": 140755,
-        "grain": 486541,
-        "soldiers": 233327
+        "gold": 143195,
+        "grain": 495016,
+        "soldiers": 235567
       },
       "placement_counts": {
         "reference_classes": {
@@ -9721,7 +9721,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -9753,7 +9753,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -9772,7 +9772,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -9782,7 +9782,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -9816,7 +9816,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -9826,10 +9826,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "葭萌",
         "fuxian": "涪县",
@@ -9848,7 +9848,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "3f31fe154f71d5acc6a2f304491cdea18179e77d259dfee9c74812bc7e3284b9"
+      "catalog_sha256": "444f4fd7deffed91f5401e824c342245130f6135e7e412b5f1dda372f90f07e8"
     },
     {
       "id": "mainland197-07",
@@ -10798,7 +10798,7 @@
           "name": "马超",
           "runtime_id": 768,
           "ruler": false,
-          "city_name": "天水"
+          "city_name": "漢陽"
         },
         {
           "status": "serving",
@@ -11063,9 +11063,9 @@
         }
       ],
       "material": {
-        "gold": 141765,
-        "grain": 491466,
-        "soldiers": 231147
+        "gold": 144205,
+        "grain": 499941,
+        "soldiers": 233387
       },
       "placement_counts": {
         "reference_classes": {
@@ -11577,7 +11577,7 @@
       "chronology": [],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -11609,7 +11609,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -11628,7 +11628,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -11638,7 +11638,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -11672,7 +11672,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -11682,10 +11682,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "葭萌",
         "fuxian": "涪县",
@@ -11704,7 +11704,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "6d4b963ebbd3f46cd07929c7e10f8a9e6a487b39ac5f102ab23ef40683014c93"
+      "catalog_sha256": "241850f98e19a7783c61da913dc5e87ad2d90b3e989f091d14bd1501bc50ab8d"
     },
     {
       "id": "mainland198-03",
@@ -12631,7 +12631,7 @@
           "name": "马超",
           "runtime_id": 768,
           "ruler": false,
-          "city_name": "天水"
+          "city_name": "漢陽"
         },
         {
           "status": "serving",
@@ -12893,9 +12893,9 @@
         }
       ],
       "material": {
-        "gold": 141775,
-        "grain": 491466,
-        "soldiers": 236922
+        "gold": 144215,
+        "grain": 499941,
+        "soldiers": 239162
       },
       "placement_counts": {
         "reference_classes": {
@@ -13303,7 +13303,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -13335,7 +13335,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -13354,7 +13354,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -13364,7 +13364,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -13398,7 +13398,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -13408,10 +13408,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "葭萌",
         "fuxian": "涪县",
@@ -13430,7 +13430,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "af8174e9229f129bdad33e636aa19c46d92a42e6066dad8bfcfb054b57f1ccc2"
+      "catalog_sha256": "c06fc9cfb890d49d3e080fcd35ed62ae5dd852b3ca12fffd1143ee46ad1c8cad"
     },
     {
       "id": "mainland200-01",
@@ -14317,7 +14317,7 @@
           "name": "马超",
           "runtime_id": 768,
           "ruler": false,
-          "city_name": "天水"
+          "city_name": "漢陽"
         },
         {
           "status": "serving",
@@ -14581,9 +14581,9 @@
         }
       ],
       "material": {
-        "gold": 152615,
-        "grain": 541281,
-        "soldiers": 253827
+        "gold": 155275,
+        "grain": 550656,
+        "soldiers": 256327
       },
       "placement_counts": {
         "reference_classes": {
@@ -14728,7 +14728,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -14760,7 +14760,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -14779,7 +14779,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -14789,7 +14789,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -14823,7 +14823,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -14833,10 +14833,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "葭萌",
         "fuxian": "涪县",
@@ -14855,7 +14855,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "990664bbb22245963395f01890a2677bb6f71c439bf75dce55d553ac204d0528"
+      "catalog_sha256": "88627dec3eaebe8ba2c4235185f588176651633de2519281de35d4c81551a95a"
     },
     {
       "id": "mainland201-05",
@@ -16010,9 +16010,9 @@
         }
       ],
       "material": {
-        "gold": 152615,
-        "grain": 541281,
-        "soldiers": 249927
+        "gold": 155275,
+        "grain": 550656,
+        "soldiers": 252427
       },
       "placement_counts": {
         "reference_classes": {
@@ -16046,7 +16046,7 @@
       "chronology": [],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -16078,7 +16078,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -16097,7 +16097,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -16107,7 +16107,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -16141,7 +16141,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -16151,10 +16151,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "葭萌",
         "fuxian": "涪县",
@@ -16173,7 +16173,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "e464e39b18e7a1d71c78baf010d7b693d57e0972436ea434ff9dc73bbe6ce061"
+      "catalog_sha256": "f4fcccf5bc03b6a2d73851055121d4554f11636fc55243c330af7513b7b7d2f2"
     },
     {
       "id": "mainland202-06",
@@ -17068,7 +17068,7 @@
           "name": "马超",
           "runtime_id": 768,
           "ruler": false,
-          "city_name": "天水"
+          "city_name": "漢陽"
         },
         {
           "status": "serving",
@@ -17332,9 +17332,9 @@
         }
       ],
       "material": {
-        "gold": 152615,
-        "grain": 541281,
-        "soldiers": 255927
+        "gold": 155275,
+        "grain": 550656,
+        "soldiers": 258427
       },
       "placement_counts": {
         "reference_classes": {
@@ -17474,7 +17474,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -17506,7 +17506,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -17525,7 +17525,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -17535,7 +17535,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -17569,7 +17569,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -17579,10 +17579,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "葭萌",
         "fuxian": "涪县",
@@ -17601,7 +17601,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "27b312d41068230af32837820605bdac26f7b5089b0a409290d820dec9f721d4"
+      "catalog_sha256": "d60a7aa8eb7ec05eb3286a892bf21e5f77d1d764fd948563c68d03f1512e6732"
     },
     {
       "id": "mainland207-09",
@@ -18483,7 +18483,7 @@
           "name": "马超",
           "runtime_id": 768,
           "ruler": false,
-          "city_name": "天水"
+          "city_name": "漢陽"
         },
         {
           "status": "serving",
@@ -18747,9 +18747,9 @@
         }
       ],
       "material": {
-        "gold": 157855,
-        "grain": 565056,
-        "soldiers": 269507
+        "gold": 160515,
+        "grain": 574431,
+        "soldiers": 272007
       },
       "placement_counts": {
         "reference_classes": {
@@ -18968,7 +18968,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -19000,7 +19000,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -19019,7 +19019,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -19029,7 +19029,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -19063,7 +19063,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -19073,10 +19073,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "葭萌",
         "fuxian": "涪县",
@@ -19095,7 +19095,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "195a2fb4d0b90c3f20d0dec8a629777999602bdff6a6b89321a195cf1ac76806"
+      "catalog_sha256": "8e9c6ce122d0cbfc8da733bc4115185d4c4f7bcb02572fe34cf9bc98daf63b39"
     },
     {
       "id": "mainland208-10",
@@ -20244,9 +20244,9 @@
         }
       ],
       "material": {
-        "gold": 152127,
-        "grain": 536336,
-        "soldiers": 277622
+        "gold": 154307,
+        "grain": 543411,
+        "soldiers": 279822
       },
       "placement_counts": {
         "reference_classes": {
@@ -20422,7 +20422,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -20454,7 +20454,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -20473,7 +20473,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -20483,7 +20483,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -20517,7 +20517,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -20527,10 +20527,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "葭萌",
         "fuxian": "涪县",
@@ -20549,7 +20549,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "96ee40d1d31c54307803a0e8a6ceabbac5f4e45b4f9e4a41b9eb333717083c80"
+      "catalog_sha256": "a1e1f4d348f7e04410c0b48fff47c9d200785d5c36bfa420b3892425518c2f83"
     },
     {
       "id": "mainland209-06",
@@ -21403,7 +21403,7 @@
           "name": "马超",
           "runtime_id": 768,
           "ruler": false,
-          "city_name": "天水"
+          "city_name": "漢陽"
         },
         {
           "status": "serving",
@@ -21662,9 +21662,9 @@
         }
       ],
       "material": {
-        "gold": 152127,
-        "grain": 536336,
-        "soldiers": 277772
+        "gold": 154307,
+        "grain": 543411,
+        "soldiers": 279972
       },
       "placement_counts": {
         "reference_classes": {
@@ -21701,7 +21701,7 @@
       "chronology": [],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -21733,7 +21733,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -21752,7 +21752,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -21762,7 +21762,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -21796,7 +21796,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -21806,10 +21806,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "葭萌",
         "fuxian": "涪县",
@@ -21828,7 +21828,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "c8993c352657ca42ef5f75c507e133ccbe50fcf2848a949afc312c566d4b070e"
+      "catalog_sha256": "bd2100f4e49927e79702f6ae3633c1b0d25a36205f3b2bc5f383c032b73ac1e4"
     },
     {
       "id": "mainland210-11",
@@ -22935,9 +22935,9 @@
         }
       ],
       "material": {
-        "gold": 152127,
-        "grain": 536336,
-        "soldiers": 274472
+        "gold": 154307,
+        "grain": 543411,
+        "soldiers": 276672
       },
       "placement_counts": {
         "reference_classes": {
@@ -23031,7 +23031,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -23063,7 +23063,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -23082,7 +23082,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -23092,7 +23092,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -23126,7 +23126,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -23136,10 +23136,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "葭萌",
         "fuxian": "涪县",
@@ -23158,7 +23158,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "0be7a78f55ffed5aff698f2c65aa09081a0d55484db6ee1c332a793ddb48f82f"
+      "catalog_sha256": "d30d9dd1b2d052f8a9f4e011cb4445c9e2864e2194e21eefe3a26077c4f6799b"
     },
     {
       "id": "mainland211-07-tongguan",
@@ -24270,9 +24270,9 @@
         }
       ],
       "material": {
-        "gold": 161217,
-        "grain": 564560,
-        "soldiers": 293290
+        "gold": 163697,
+        "grain": 572610,
+        "soldiers": 295720
       },
       "placement_counts": {
         "reference_classes": {
@@ -24458,7 +24458,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -24490,7 +24490,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -24509,7 +24509,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -24519,7 +24519,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -24553,7 +24553,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -24563,10 +24563,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "葭萌",
         "fuxian": "涪县",
@@ -24585,7 +24585,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "5bfe975aa239e193cc691dc3481031e7abdf598b448a1fa758f51c33ce6020fd"
+      "catalog_sha256": "1bfbabddbff5178763c06eec74901a5c378a0d417eb6557c14e627c59533ee1e"
     },
     {
       "id": "mainland212-06",
@@ -25151,7 +25151,7 @@
           "name": "臧霸",
           "runtime_id": 524,
           "ruler": false,
-          "city_name": "阴平"
+          "city_name": "陰平道"
         },
         {
           "status": "serving",
@@ -25701,9 +25701,9 @@
         }
       ],
       "material": {
-        "gold": 161217,
-        "grain": 564560,
-        "soldiers": 289690
+        "gold": 163697,
+        "grain": 572610,
+        "soldiers": 292120
       },
       "placement_counts": {
         "reference_classes": {
@@ -25796,7 +25796,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -25828,7 +25828,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -25847,7 +25847,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -25857,7 +25857,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -25891,7 +25891,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -25901,10 +25901,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "葭萌",
         "fuxian": "涪县",
@@ -25923,7 +25923,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "f53b77a0d7fb4b705022aa559114102e41d42913603ae099448bfe048bc80808"
+      "catalog_sha256": "7da8933190a6d508bc069145a2fbff8b2f7e42ea4b209bb0b7095bcb3a036d29"
     },
     {
       "id": "mainland212-12",
@@ -27026,9 +27026,9 @@
         }
       ],
       "material": {
-        "gold": 161217,
-        "grain": 564560,
-        "soldiers": 283540
+        "gold": 163697,
+        "grain": 572610,
+        "soldiers": 285970
       },
       "placement_counts": {
         "reference_classes": {
@@ -27158,7 +27158,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -27190,7 +27190,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -27209,7 +27209,7 @@
         "daifang": "带方",
         "zitong": "梓潼",
         "guanghan": "雒城",
-        "wenshan": "汶山",
+        "wenshan": "綿虒道",
         "baxi": "阆中",
         "qianwei": "犍为",
         "jiangyang": "江阳",
@@ -27219,7 +27219,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -27253,7 +27253,7 @@
         "shangdang": "上党",
         "xiangyang": "襄阳",
         "zhuya": "朱崖",
-        "xiping": "西平",
+        "xiping": "西平亭",
         "zhangye": "张掖",
         "jiuquan": "酒泉",
         "dunhuang": "敦煌",
@@ -27263,10 +27263,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "葭萌",
         "fuxian": "涪县",
@@ -27285,7 +27285,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "a00b80e2f9ee5d4631a820b21283dd24d9505c3aedf32e36337c5931776f635e"
+      "catalog_sha256": "2ac2a445deba8f4df0964a0eef3372419db5f82526232137ef24a50127df442d"
     },
     {
       "id": "mainland215-08",
@@ -27471,7 +27471,7 @@
           "name": "华歆",
           "runtime_id": 90,
           "ruler": false,
-          "city_name": "阴平"
+          "city_name": "陰平道"
         },
         {
           "status": "dead",
@@ -28366,9 +28366,9 @@
         }
       ],
       "material": {
-        "gold": 162097,
-        "grain": 569710,
-        "soldiers": 287262
+        "gold": 164577,
+        "grain": 577760,
+        "soldiers": 289692
       },
       "placement_counts": {
         "reference_classes": {
@@ -28527,7 +28527,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -28559,7 +28559,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -28588,7 +28588,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -28632,10 +28632,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "汉寿",
         "fuxian": "涪县",
@@ -28654,7 +28654,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "35b8a70ad3ca914c5912164a5ebfc9bfef33ccc8f0985619166d807b14508d2b"
+      "catalog_sha256": "ede443d2b9c214c3a9810cc77ca2ef17a9572997a72fc5c43545d89c7543354d"
     },
     {
       "id": "mainland217-07",
@@ -29737,9 +29737,9 @@
         }
       ],
       "material": {
-        "gold": 162397,
-        "grain": 568742,
-        "soldiers": 288125
+        "gold": 164877,
+        "grain": 576792,
+        "soldiers": 290555
       },
       "placement_counts": {
         "reference_classes": {
@@ -29946,7 +29946,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -29978,7 +29978,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -30007,7 +30007,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -30051,10 +30051,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "汉寿",
         "fuxian": "涪县",
@@ -30073,7 +30073,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "909b20f60826882d0968f655edeccfd894dfa190bd2995262240529615e5eeb5"
+      "catalog_sha256": "2837854e611c601958f754235cfb1dfa2a86416f5a1a44d90d1b72b0fa579e29"
     },
     {
       "id": "mainland219-07",
@@ -30242,7 +30242,7 @@
           "name": "王朗",
           "runtime_id": 79,
           "ruler": false,
-          "city_name": "阴平"
+          "city_name": "陰平道"
         },
         {
           "status": "serving",
@@ -30537,7 +30537,7 @@
           "name": "曹叡",
           "runtime_id": 500,
           "ruler": false,
-          "city_name": "阴平"
+          "city_name": "陰平道"
         },
         {
           "status": "chronology_excluded",
@@ -31158,9 +31158,9 @@
         }
       ],
       "material": {
-        "gold": 155371,
-        "grain": 538185,
-        "soldiers": 285367
+        "gold": 157511,
+        "grain": 545185,
+        "soldiers": 287557
       },
       "placement_counts": {
         "reference_classes": {
@@ -31304,7 +31304,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -31336,7 +31336,7 @@
         "xincheng": "房陵",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -31365,7 +31365,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -31409,10 +31409,10 @@
         "qinghe": "甘陵",
         "yanmen": "雁门",
         "xinxing": "新兴",
-        "wuchang": "武昌",
+        "wuchang": "鄂县",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "汉寿",
         "fuxian": "涪县",
@@ -31431,7 +31431,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "1a13c4fcd1b675793d2c6573a635bd56ea75637bf1af73854360171bfe9e7d39"
+      "catalog_sha256": "90b74d8aa5920caa5c7a5538e139d2833a854ff730ef0927fe198d2f7b7f4a82"
     },
     {
       "id": "mainland221-07",
@@ -31617,7 +31617,7 @@
           "name": "华歆",
           "runtime_id": 90,
           "ruler": false,
-          "city_name": "阴平"
+          "city_name": "陰平道"
         },
         {
           "status": "scenario_excluded",
@@ -32512,9 +32512,9 @@
         }
       ],
       "material": {
-        "gold": 170672,
-        "grain": 580405,
-        "soldiers": 285907
+        "gold": 171792,
+        "grain": 584155,
+        "soldiers": 287127
       },
       "placement_counts": {
         "reference_classes": {
@@ -32681,7 +32681,7 @@
       ],
       "city_names": {
         "liaodong": "襄平",
-        "fanyang": "范阳",
+        "fanyang": "涿县",
         "taiyuan": "晋阳",
         "qi": "临淄",
         "wei": "邺",
@@ -32713,7 +32713,7 @@
         "xincheng": "新城",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -32742,7 +32742,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -32789,7 +32789,7 @@
         "wuchang": "武昌",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "汉寿",
         "fuxian": "涪县",
@@ -32808,7 +32808,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "3fd9f375fb4987478146f196387b7a360f35df38d7fc06aeabb1a6deb4ac1861"
+      "catalog_sha256": "983f105798307bb17b28db94c4296032c63fc42eb8af41112a048cd260ccfd59"
     },
     {
       "id": "mainland225-07",
@@ -33277,7 +33277,7 @@
           "name": "曹叡",
           "runtime_id": 500,
           "ruler": false,
-          "city_name": "阴平"
+          "city_name": "陰平道"
         },
         {
           "status": "chronology_excluded",
@@ -33890,9 +33890,9 @@
         }
       ],
       "material": {
-        "gold": 172925,
-        "grain": 590336,
-        "soldiers": 275517
+        "gold": 174045,
+        "grain": 594086,
+        "soldiers": 276737
       },
       "placement_counts": {
         "reference_classes": {
@@ -34047,7 +34047,7 @@
         "xincheng": "新城",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -34076,7 +34076,7 @@
         "zangke": "牂牁",
         "jianning": "味县",
         "xinggu": "宛温县",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -34123,7 +34123,7 @@
         "wuchang": "武昌",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "汉寿",
         "fuxian": "涪县",
@@ -34142,7 +34142,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "a274c47bed6b8b18f2f4ada34f0facb5ab2ed18729253f4fbd6516466740c01d"
+      "catalog_sha256": "5464642f5ee927c161c4ce5e4ba51e6862bb3e4a3e5b5c2ad11c5f750233d5a3"
     },
     {
       "id": "mainland227-02",
@@ -35210,9 +35210,9 @@
         }
       ],
       "material": {
-        "gold": 174130,
-        "grain": 585336,
-        "soldiers": 285630
+        "gold": 175250,
+        "grain": 589086,
+        "soldiers": 286850
       },
       "placement_counts": {
         "reference_classes": {
@@ -35448,7 +35448,7 @@
         "xincheng": "新城",
         "nanyang": "宛城",
         "bohai": "南皮",
-        "tianshui": "天水",
+        "tianshui": "漢陽",
         "lujiang": "庐江",
         "guiyang": "桂阳",
         "beihai": "北海",
@@ -35477,7 +35477,7 @@
         "zangke": "牂牁",
         "jianning": "建宁",
         "xinggu": "兴古",
-        "yinping": "阴平",
+        "yinping": "陰平道",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -35524,7 +35524,7 @@
         "wuchang": "武昌",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "汉寿",
         "fuxian": "涪县",
@@ -35543,7 +35543,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "5038b26cbc1bf2fabe77cc0d2553109d949c203da466413b0a4984d2ef721877"
+      "catalog_sha256": "3aad5a1ba5ef7928a8a444cb6809d597c3d3e598d171049705e5e8037f2fc804"
     },
     {
       "id": "mainland234-02",
@@ -36605,9 +36605,9 @@
         }
       ],
       "material": {
-        "gold": 174890,
-        "grain": 587161,
-        "soldiers": 278260
+        "gold": 176010,
+        "grain": 590911,
+        "soldiers": 279480
       },
       "placement_counts": {
         "reference_classes": {
@@ -36834,7 +36834,7 @@
         "zangke": "牂牁",
         "jianning": "建宁",
         "xinggu": "兴古",
-        "yinping": "阴平",
+        "yinping": "陰平",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -36881,7 +36881,7 @@
         "wuchang": "武昌",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "汉寿",
         "fuxian": "涪县",
@@ -36900,7 +36900,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "e8ac58d127da30c1be82c67e7e8dcdf481ddf82cd7229de1a52e320d38b2dd7a"
+      "catalog_sha256": "85945f491591a91328ed0653e5dc3a733b37413855aeaee0a8fb774240589207"
     },
     {
       "id": "mainland235-01",
@@ -37956,9 +37956,9 @@
         }
       ],
       "material": {
-        "gold": 181377,
-        "grain": 630967,
-        "soldiers": 280122
+        "gold": 182657,
+        "grain": 635592,
+        "soldiers": 281402
       },
       "placement_counts": {
         "reference_classes": {
@@ -38074,7 +38074,7 @@
         "zangke": "牂牁",
         "jianning": "建宁",
         "xinggu": "兴古",
-        "yinping": "阴平",
+        "yinping": "陰平",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -38121,7 +38121,7 @@
         "wuchang": "武昌",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "汉寿",
         "fuxian": "涪县",
@@ -38140,7 +38140,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "5310db19d5a0be9f816935b14a21cf8fab22d16117f23b6d4e188c7810cc88c4"
+      "catalog_sha256": "579ee875e02b3824c82e2f8c2b4f7994c9c2f1afb2f61b99b632136f06f2d244"
     },
     {
       "id": "mainland238-01",
@@ -39202,9 +39202,9 @@
         }
       ],
       "material": {
-        "gold": 181377,
-        "grain": 630967,
-        "soldiers": 277122
+        "gold": 182657,
+        "grain": 635592,
+        "soldiers": 278402
       },
       "placement_counts": {
         "reference_classes": {
@@ -39431,7 +39431,7 @@
         "zangke": "牂牁",
         "jianning": "建宁",
         "xinggu": "兴古",
-        "yinping": "阴平",
+        "yinping": "陰平",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -39478,7 +39478,7 @@
         "wuchang": "武昌",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "汉寿",
         "fuxian": "涪县",
@@ -39497,7 +39497,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "b3e59835d61e7c9d699db2d7a530ca01ade219eb0aa317555324003bde4b2b4b"
+      "catalog_sha256": "5f53002d34826756a4dd1adf4a0470576d0905710e97c3e5babb20027e29fd4b"
     },
     {
       "id": "mainland249-01",
@@ -40550,9 +40550,9 @@
         }
       ],
       "material": {
-        "gold": 190667,
-        "grain": 656767,
-        "soldiers": 267562
+        "gold": 191997,
+        "grain": 661567,
+        "soldiers": 268842
       },
       "placement_counts": {
         "reference_classes": {
@@ -40814,7 +40814,7 @@
         "zangke": "牂牁",
         "jianning": "建宁",
         "xinggu": "兴古",
-        "yinping": "阴平",
+        "yinping": "陰平",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -40861,7 +40861,7 @@
         "wuchang": "武昌",
         "linhai": "临海",
         "linchuan": "临川",
-        "jianan": "建安",
+        "jianan": "建安县",
         "wuxing": "吴兴",
         "jiameng": "汉寿",
         "fuxian": "涪县",
@@ -40880,7 +40880,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "9ab011eec1033c37a156e5edc6061b1f50fc5c25fd82bd0e8604a3f463beb204"
+      "catalog_sha256": "82eff8fa3322038dcc72b033ec711b74b897707c0667a150ad66df73143ddc6e"
     },
     {
       "id": "mainland263-05",
@@ -42118,7 +42118,7 @@
         "zangke": "牂牁",
         "jianning": "建宁",
         "xinggu": "兴古",
-        "yinping": "阴平",
+        "yinping": "陰平",
         "fuling": "涪陵",
         "xindu": "新都",
         "poyang": "鄱阳",
@@ -42184,7 +42184,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "03b3d5567e196cdd05bd9f7dacdcbdcfc91c8ec344ff84015e6c7f57599068e3"
+      "catalog_sha256": "e2cdb04868e6eca95fcd4408debd3ee3f50d420e691ab7dc425bde97906e6462"
     }
   ]
 }
