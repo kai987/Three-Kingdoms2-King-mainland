@@ -28,6 +28,7 @@ CASES = {
     'middle': dict(scenario='217-07', faction='wei', turns=144),
     'late': dict(scenario='263-05', faction='wu', turns=72),
 }
+POLICY = 'defensive-administrator-v4-han-personnel-first'
 
 
 class HeadlessCampaign(Campaign):
@@ -201,10 +202,15 @@ class Replay:
                 key=lambda i: (-state.officers[i].profile.martial_strength, ref_sort_key(i)))
             post = domestic.appointments(state, state.player)
             if post['civil'] != civil or post['military'] != military or not post['policy']['recruit_enabled']:
+                # In the Han continuity leg, fill the thin early garrisons
+                # before spending shared command books on their transports.
+                task_order = (['personnel', 'transport', 'recruit']
+                    if game.catalog.data['id'] == 'mainland184-02' and state.player == 'han'
+                    else ['transport', 'personnel', 'recruit'])
                 self.command('set_domestic', faction=state.player, civil=civil, military=military,
                     policy=dict(auto_recruit=True, auto_persuade=True, min_chance=20,
                         recruit_enabled=True, training_enabled=True, reserve_target=2000, recruit_budget=100,
-                        task_order=['transport', 'personnel', 'recruit']))
+                        task_order=task_order))
         game, state = self.game, self.game.state
         post = domestic.appointments(state, state.player)
         if not domestic._present(game, state, home, post.get('military')):
@@ -402,7 +408,7 @@ def main(argv=None):
         parser.error('--turns must be between 1 and 360')
     if any(not 1 <= seed <= 0xffffffff for seed in args.seeds):
         parser.error('seeds must be between 1 and 2^32-1')
-    report = dict(schema='tk2-campaign-soak-v2', policy='defensive-administrator-v3-shared-order-defense', cases=[], failures=[])
+    report = dict(schema='tk2-campaign-soak-v2', policy=POLICY, cases=[], failures=[])
     started = time.monotonic()
     for case in args.case:
         for seed in args.seeds:

@@ -21,7 +21,7 @@ soak = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(soak)
 
 SCHEMA = 'tk2-campaign-soak-execution-v1'
-POLICY = 'defensive-administrator-v3-shared-order-defense'
+POLICY = soak.POLICY
 SEEDS = (3, 2026)
 EXECUTIONS = tuple((case, seed, backend)
     for case in soak.CASES for seed in SEEDS
