@@ -594,12 +594,12 @@ test('phantom seals only movement with bilingual counts, actual contact, daily e
  const [cast,restricted,expiry]=rows,proof=[];
  await load(page,cast.save,'controlled-phantom-cast.json');
  await page.locator(`[data-actor="${cast.actor}"]`).click();await page.locator(`[data-target="${cast.target}"]`).click();
- const original=await read(page);await control(page,'tactic');await page.locator('#tactic-choice').selectOption('2');
+ const original=await read(page,false);await control(page,'tactic');await page.locator('#tactic-choice').selectOption('2');
  const forecast=page.locator('#tactic-effect-preview .tactic-effect-forecast:visible');
  await expect(forecast).toHaveAttribute('data-tactic-success',String(cast.preview.success_percent));
  await expect(forecast).toContainText('仍可攻擊或施計');await page.locator('#dialog-language').selectOption('ja');
  await expect(forecast).toContainText('固定の行動不能ターン数ではありません');expect(await save(page)).toEqual(original.save);
- await page.locator('#confirm-tactic').click();const castResult=await animation(page);
+ await page.locator('#confirm-tactic').click();const castResult=await animation(page,{withView:false});
  expect(castResult.save.state.rng.draws-original.save.state.rng.draws).toBe(1);
  expect(castResult.save.state.battle.extended.tactical.points.attackers).toBe(original.save.state.battle.extended.tactical.points.attackers-4);
  expect(castResult.save.state.battle.extended.conditions.units[String(cast.target)]).toEqual({kind:'phantom',remaining:3});
@@ -627,7 +627,7 @@ test('phantom seals only movement with bilingual counts, actual contact, daily e
  await expect(page.locator('#battle-move')).toBeDisabled();expect(await save(page)).toEqual(locked.save,'Keyboard movement cannot bypass phantom');
  await evidence(page,testInfo,'phantom-locked-but-can-attack-ja');
  await control(page,'tactic');await page.locator('#tactic-choice').selectOption('0');await expect(page.locator('#confirm-tactic')).toBeEnabled();await page.locator('#confirm-tactic').click();
- const recast=await animation(page);expect(recast.save.state.battle.extended.conditions.units[String(restricted.actor)].remaining).toBe(3);
+ const recast=await animation(page,{withView:false});expect(recast.save.state.battle.extended.conditions.units[String(restricted.actor)].remaining).toBe(3);
  expect(recast.save.state.battle.extended.tactical.points.defenders).toBe(locked.save.state.battle.extended.tactical.points.defenders-6);
  await control(page,'attack');await idle(page);const contact=await save(page);
  expect(contact.state.battle.extended.siege).toBeTruthy();expect(contact.state.battle.extended.conditions.units[String(restricted.actor)].remaining).toBe(3);
@@ -635,7 +635,7 @@ test('phantom seals only movement with bilingual counts, actual contact, daily e
 
  await load(page,expiry.save,'controlled-phantom-expiry.json');
  await page.locator(`[data-actor="${expiry.actor}"]`).click();await expect(page.locator(`[data-actor="${expiry.actor}"] [data-phantom-count="1"]`)).toBeVisible();
- const beforeExpiry=await read(page);await control(page,'battle-wait');const expired=await animation(page);
+ const beforeExpiry=await read(page,false);await control(page,'battle-wait');const expired=await animation(page);
  expect(expired.save.state.battle.round).toBe(beforeExpiry.save.state.battle.round+1);expect(expired.save.state.rng).toEqual(beforeExpiry.save.state.rng);
  expect(expired.save.state.battle.extended.conditions).toEqual({schema:'tk2-battle-conditions-v1',day:expired.save.state.battle.round,units:{}});
  expect(expired.view.catalog.battle_tactical.actors[String(expiry.actor)].reachable.length).toBeGreaterThan(0);
