@@ -10,6 +10,11 @@ on:
         description: Run every regression group
         type: boolean
         default: true
+      browser_shards:
+        description: Benchmark browser shards per device
+        type: choice
+        options: ['2', '3']
+        default: '2'
   schedule:
     # Daily full regression at 03:00 Japan time; verification only.
     - cron: '0 18 * * *'
@@ -28,3 +33,4 @@ jobs:
     uses: ./.github/workflows/web-checks.yml
     with:
       force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+      browser_shards: ${{ github.event_name == 'workflow_dispatch' && inputs.browser_shards || '2' }}

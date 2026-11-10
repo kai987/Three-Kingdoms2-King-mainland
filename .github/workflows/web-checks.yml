@@ -2,6 +2,9 @@ name: Shared Web campaign verification
 on:
   workflow_call:
     inputs:
+      browser_shards:
+        type: string
+        default: '2'
       force_full:
         type: boolean
         default: false
@@ -13,6 +16,7 @@ permissions:
   actions: read
   deployments: read
 env:
+  TK2_BROWSER_SHARD_COUNT: ${{ inputs.browser_shards }}
   PYTHONDONTWRITEBYTECODE: '1'
   RUSTUP_TOOLCHAIN: '1.93.0'
 jobs:
@@ -419,7 +423,7 @@ jobs:
       fail-fast: false
       matrix:
         project: [desktop-chromium, touch-chromium]
-        shard: [1, 2]
+        shard: ${{ fromJSON(inputs.browser_shards == '3' && '[1,2,3]' || '[1,2]') }}
     env:
       TK2_TEST_PLAN: build/ci/test-plan.json
     steps:

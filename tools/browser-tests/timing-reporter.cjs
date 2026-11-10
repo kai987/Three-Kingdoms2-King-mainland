@@ -14,7 +14,7 @@ class TimingReporter{
  }
  onEnd(result){
   const project=process.env.BROWSER_PROJECT,index=process.env.BROWSER_SHARD;
-  if(project!==undefined&&!shards.PROJECTS.includes(project)||index!==undefined&&!/^[12]$/.test(index))throw Error('Invalid browser timing artifact identity');
+  if(project!==undefined&&!shards.PROJECTS.includes(project)||index!==undefined&&!(String(Number(index))===index&&Number.isInteger(Number(index))&&Number(index)>=1&&Number(index)<=shards.COUNT))throw Error('Invalid browser timing artifact identity');
   const folder=path.resolve(this.outputDir);fs.mkdirSync(folder,{recursive:true});
   const name=project&&index?`${project}-shard-${index}.json`:'local.json';
   const data={schema:'tk2-browser-case-timings-v1',commit:process.env.GITHUB_SHA||null,project:project||null,shard:index?Number(index):null,started_at:this.started,status:result.status,cases:[...this.rows.values()]};

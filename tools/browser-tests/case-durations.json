@@ -113,11 +113,5 @@
       "opening-catalog-first": 146194,
       "opening-catalog-second": 84103
     }
-  },
-  "shard_cost_multipliers": {
-    "touch-chromium": [
-      1000,
-      1000
-    ]
   }
 }

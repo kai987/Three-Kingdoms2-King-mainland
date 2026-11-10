@@ -6,12 +6,12 @@ import {mkdirSync,writeFileSync} from 'node:fs';
 import scopes from './scope.cjs';
 import shards from './case-shards.cjs';
 const [project,rawIndex,...extra]=process.argv.slice(2),index=Number(rawIndex);
-assert(shards.PROJECTS.includes(project)&&/^[12]$/.test(rawIndex),'usage: run-shard.mjs device 1|2 [--list]');
+assert(shards.PROJECTS.includes(project)&&rawIndex===String(index)&&Number.isInteger(index)&&index>=1&&index<=shards.COUNT,'usage: run-shard.mjs device shard [--list]');
 assert(extra.length===0||extra.length===1&&extra[0]==='--list','Unknown shard runner arguments');
 const selection=scopes.loadBrowserScope(),bin=shards.selectedShard(selection,project,index);
 console.error(JSON.stringify({project,shard:index,estimated_ms:bin.estimated_ms,cases:bin.cases.map(row=>row.id),unmeasured:bin.unmeasured}));
 if(!bin.cases.length){
- console.error('Selected scope has no cases in this bin; coverage remains checked across both bins.');
+ console.error('Selected scope has no cases in this bin; coverage remains checked across all bins.');
  if(!extra.length){const folder=fileURLToPath(new URL('../../build/browser-timings/',import.meta.url));mkdirSync(folder,{recursive:true});writeFileSync(folder+project+'-shard-'+index+'.json',JSON.stringify({schema:'tk2-browser-case-timings-v1',commit:process.env.GITHUB_SHA||null,project,shard:index,started_at:new Date().toISOString(),status:'passed',cases:[]},null,2)+'\n');}
  process.exit(0);
 }

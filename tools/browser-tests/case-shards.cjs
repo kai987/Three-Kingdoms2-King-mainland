@@ -2,7 +2,9 @@
  * Timing baselines are reviewed repository data, not downloaded executable input. */
 'use strict';
 const fs=require('node:fs'),path=require('node:path');
-const PROJECTS=Object.freeze(['desktop-chromium','touch-chromium']),COUNT=2;
+const {OPENING_CASES}=require('./scope.cjs');
+const PROJECTS=Object.freeze(['desktop-chromium','touch-chromium']),COUNT=Number(process.env.TK2_BROWSER_SHARD_COUNT??'2');
+if(![2,3].includes(COUNT))throw Error('Unsupported browser shard count');
 const BASELINE=JSON.parse(fs.readFileSync(path.join(__dirname,'case-durations.json'),'utf8'));
 function validateBaseline(value){
  if(value?.schema!=='tk2-browser-duration-baseline-v1'||!value.projects||typeof value.projects!=='object'||Array.isArray(value.projects))throw Error('Unknown browser duration baseline');
@@ -32,7 +34,10 @@ function partition(cases,project,{baseline=BASELINE,count=COUNT}={}){
   if(!/^[a-z][a-z0-9-]+$/.test(row.id)||typeof row.title!=='string'||!row.title)throw Error('Invalid selected browser case');
   // Compare projected completion, allowing a measured slower runner to take
   // less work. Equal multipliers retain the original desktop membership.
-  const next=[...bins].sort((a,b)=>(a.estimated_ms+cost(row,a))-(b.estimated_ms+cost(row,b))||a.index-b.index)[0];
+  // Run the two scenario-opening batches independently when there are two or more bins.
+  const candidates=count>1&&OPENING_CASES.includes(row.id)
+   ?bins.filter(bin=>!bin.cases.some(test=>OPENING_CASES.includes(test.id))):bins;
+  const next=[...candidates].sort((a,b)=>(a.estimated_ms+cost(row,a))-(b.estimated_ms+cost(row,b))||a.index-b.index)[0];
   next.cases.push(row);next.estimated_ms+=cost(row,next);if(!measured(row.id))next.unmeasured.push(row.id);
  }
  // Keep discovery/replay order stable inside each bin; scheduling weights do

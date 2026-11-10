@@ -1,4 +1,4 @@
-/* Ask the pinned Playwright runner to prove that both CI shards together
+/* Ask the pinned Playwright runner to prove that all CI shards together
  * retain every selected acceptance case exactly once for this device. */
 import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
