@@ -184,11 +184,25 @@ async function tacticalOpening(page){
 async function tacticalApproach(page,{touch=false,preferred=null,max=18}={}){
  const trace=[];
  for(let step=0;step<max;step++){
-  const state=await tacticalRead(page),b=state.view.game.battle,board=state.view.catalog.battle_tactical;expect(state.view.game.phase).toBe('battle');
-  const own=b.attacker===state.view.game.player?'attackers':'defenders';
+  // The settled UI already holds the real Worker command's tactical view.
+  // Route with that view and independently read the Worker again at contact.
+  const {battle:b,board,phase,player}=await page.evaluate(()=>({
+   battle:view.game.battle,board:view.catalog.battle_tactical,phase:view.game.phase,player:view.game.player,
+  }));
+  expect(phase).toBe('battle');
+  const own=b.attacker===player?'attackers':'defenders';
   const rows=Object.entries(board.actors).filter(([,row])=>row.can_act),canContact=row=>row.attack_targets.length&&board.points[own]>board.attack_cost,
    direct=rows.find(([id,row])=>(preferred===null||String(preferred)===id)&&canContact(row))||rows.find(([,row])=>canContact(row));
-  if(direct){const[id,row]=direct;console.log('tactical contact',page.viewportSize().width,{round:b.round,actor:id,target:row.attack_targets[0],points:board.points});await tacticalCell(page,b.extended.tactical.positions[id],touch);await page.locator(`[data-target="${row.attack_targets[0]}"]`).click();return{state,actor:Number.isNaN(Number(id))?id:Number(id),target:row.attack_targets[0],trace};}
+  if(direct){
+   const state=await tacticalRead(page),[id,row]=direct;
+   expect(state.view.game.battle).toEqual(b);
+   expect(state.save.state.battle).toEqual(b);
+   expect(state.view.catalog.battle_tactical).toEqual(board);
+   console.log('tactical contact',page.viewportSize().width,{round:b.round,actor:id,target:row.attack_targets[0],points:board.points});
+   await tacticalCell(page,b.extended.tactical.positions[id],touch);
+   await page.locator(`[data-target="${row.attack_targets[0]}"]`).click();
+   return{state,actor:Number.isNaN(Number(id))?id:Number(id),target:row.attack_targets[0],trace};
+  }
   const foe=own==='attackers'?'defenders':'attackers',enemies=b[foe].filter(unit=>unit.troops>0&&b.extended.support[unit.id].health>0);
   const choices=[];
   for(const[id,row]of rows){
@@ -2241,8 +2255,8 @@ test('city-specific battlefield keeps both armies visible and supports real batt
 });
 
 test('authoritative tactical movement, shared points and contact attacks persist with a missing battlefield image',async({page},testInfo)=>{
- // The measured touch flow needs ~243s, including nine successful rich reads.
- // Preserve every control/assertion and the 30s action/expect limits.
+ // The earlier touch run took ~243s. Keep the CI budget for runner variance
+ // and retain the existing 30s action/expect limits.
  test.setTimeout(300_000);
  const touch=testInfo.project.name==='touch-chromium',initial=await tacticalOpening(page),b=initial.view.game.battle,board=initial.view.catalog.battle_tactical;
  expect(board.schema).toBe('tk2-battle-tactical-view-v1');expect(b.extended.tactical.schema).toBe('tk2-battle-tactical-v1');expect(board.grid).toEqual({columns:31,rows:19,tile_size:16});
