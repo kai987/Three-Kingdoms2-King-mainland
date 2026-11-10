@@ -75,6 +75,8 @@ class LateRulerReviewTests(unittest.TestCase):
             (ROOT / 'game/config/campaigns/people.json').read_text())['people']
         cls.expansion = json.loads(
             (ROOT / 'game/config/campaigns/city-expansion-openings.json').read_text())['scenarios']
+        cls.chronology = json.loads(
+            (ROOT / 'game/config/campaigns/city-chronology-openings.json').read_text())['owners']
         cls.temp = tempfile.TemporaryDirectory(prefix='tk2-late-rulers-')
         cls.catalogs = {}
 
@@ -159,7 +161,10 @@ class LateRulerReviewTests(unittest.TestCase):
                     row['troops'] for row in initial.values() if row['city'] == 'liaodong'))
                 actual = (sum(city.reserves for city in game.state.cities.values())
                           + sum(officer.troops for officer in game.state.officers.values()))
-                new_cities = self.expansion[catalog.data['id']]['owners']
+                scenario = catalog.data['id']
+                opened_counties = {city for city, owner in self.chronology[scenario].items()
+                                   if owner is not None}
+                new_cities = self.expansion[scenario]['owners'].keys() | opened_counties
                 added_reserves = sum(catalog.data['initial_city_resources'][city]['reserves']
                                      for city in new_cities)
                 self.assertEqual(actual, expected['soldiers'] + added_reserves)
