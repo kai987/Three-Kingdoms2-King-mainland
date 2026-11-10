@@ -9,24 +9,26 @@ for(const project of weighted.PROJECTS){
  const first=weighted.partition(selection.selectedCases,project),second=weighted.partition([...selection.selectedCases].reverse(),project);
  assert.deepEqual(first.map(bin=>bin.cases.map(row=>row.id).sort()),second.map(bin=>bin.cases.map(row=>row.id).sort()),'Input ordering cannot change weighted bin membership');
  const ids=first.flatMap(bin=>bin.cases.map(row=>row.id));assert.equal(new Set(ids).size,ids.length);assert.deepEqual([...ids].sort(),selection.selectedCases.map(row=>row.id).sort());
- assert(first.every(bin=>bin.cases.filter(row=>scopes.OPENING_CASES.includes(row.id)).length===1),'The two full opening batches must run on different shards');
+ assert(first.every(bin=>bin.cases.filter(row=>scopes.OPENING_CASES.includes(row.id)).length<=1),'The two full opening batches must run on different shards');
  const peak=Math.max(...first.map(bin=>bin.estimated_ms)),floor=Math.min(...first.map(bin=>bin.estimated_ms));assert(peak-floor<120000,'Measured full-suite bins should be within the explicit default case budget');
  assert(first.every(bin=>bin.cases.every(row=>new RegExp(weighted.grep(bin.cases)).test('p file '+row.title))));
- const tiny=weighted.partition(selection.selectedCases.slice(0,1),project);assert.equal(tiny[0].cases.length,1);assert.equal(tiny[1].cases.length,0);assert(!new RegExp(weighted.grep([])).test(selection.selectedCases[0].title));
+ const tiny=weighted.partition(selection.selectedCases.slice(0,1),project);
+ assert.equal(tiny[0].cases.length,1);assert(tiny.slice(1).every(bin=>bin.cases.length===0));
+ assert(!new RegExp(weighted.grep([])).test(selection.selectedCases[0].title));
 }
 const fresh={id:'new-case-without-history',title:'A new acceptance case with (punctuation) and $ data'};
 const newBin=weighted.partition([fresh],'desktop-chromium')[0];assert.deepEqual(newBin.unmeasured,[fresh.id]);assert.equal(newBin.estimated_ms,120000);assert(new RegExp(weighted.grep([fresh])).test(fresh.title));assert(!new RegExp(weighted.grep([fresh])).test('A new acceptance case with punctuation and $ data'));
 assert.equal(weighted.partition([{id:'constructor',title:'A valid registry ID that is also an inherited property'}],'desktop-chromium')[0].estimated_ms,120000);
 for(const mutate of [b=>b.projects={x:{}},b=>b.default_duration_ms=0,b=>b.projects['desktop-chromium']['bad/key']=30,b=>b.projects['touch-chromium']['new-id']=-1]){const bad=clone(weighted.BASELINE);mutate(bad);assert.throws(()=>weighted.validateBaseline(bad));}
 for(const costs of [null,[],{'unknown-device':[1000,1280]},{'touch-chromium':[1000]},{'touch-chromium':[1000,0]},{'touch-chromium':[1000,1280.5]},{'touch-chromium':[1000,2001]}]){const bad=clone(weighted.BASELINE);bad.shard_cost_multipliers=costs;assert.throws(()=>weighted.validateBaseline(bad));}
-const unequal=clone(weighted.BASELINE);unequal.shard_cost_multipliers={'touch-chromium':[1000,2000]};
-const equalCases=Array.from({length:6},(_,i)=>({id:`timed-case-${i}`,title:`Synthetic independent acceptance case ${i}`}));
+const unequal=clone(weighted.BASELINE);unequal.shard_cost_multipliers={'touch-chromium':[1000,1000,2000]};
+const equalCases=Array.from({length:10},(_,i)=>({id:`timed-case-${i}`,title:`Synthetic independent acceptance case ${i}`}));
 unequal.projects['touch-chromium']=Object.fromEntries(equalCases.map(row=>[row.id,10000]));
 const balanced=weighted.partition(equalCases,'touch-chromium',{baseline:unequal});
-assert.deepEqual(balanced.map(bin=>bin.cases.length),[4,2],'A twice-as-slow runner needs less work, not half the reference cost');
-assert.deepEqual(balanced.map(bin=>bin.estimated_ms),[40000,40000]);
+assert.deepEqual(balanced.map(bin=>bin.cases.length),[4,4,2],'A twice-as-slow runner needs less work, not half the reference cost');
+assert(balanced.every(bin=>bin.estimated_ms===40000));
 assert.deepEqual(balanced.flatMap(bin=>bin.cases.map(row=>row.id)).sort(),equalCases.map(row=>row.id).sort());
-assert.throws(()=>weighted.partition(equalCases,'touch-chromium',{baseline:unequal,count:3}),'Measured slot costs cannot silently spread to unmeasured slots');
+assert.throws(()=>weighted.partition(equalCases,'touch-chromium',{baseline:unequal,count:2}),'Measured slot costs cannot silently spread to unmeasured slots');
 const equalCosts=clone(weighted.BASELINE);delete equalCosts.shard_cost_multipliers;
 assert.deepEqual(weighted.partition(selection.selectedCases,'desktop-chromium'),weighted.partition(selection.selectedCases,'desktop-chromium',{baseline:equalCosts}),'Touch calibration cannot change desktop membership');
 assert.throws(()=>weighted.partition(selection.selectedCases,'other-browser'));assert.throws(()=>weighted.selectedShard(selection,'desktop-chromium',0));
