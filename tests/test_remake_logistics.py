@@ -5,6 +5,7 @@ import json
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / 'source'), str(ROOT / 'tests')]
@@ -143,6 +144,90 @@ class LogisticsTests(unittest.TestCase):
         self.assertEqual(finished['catalog']['observer_winner'], 'shu')
         self.assertEqual(game.state.phase, 'finished')
         self.assertEqual(len(game.state.settled_battles), 1)
+
+    def front_supply_game(self, *, keep_only_two_in_rear=False):
+        data = transport_catalog(rear=True).data
+        data['initial_city_resources']['xiangyang'].update(gold=5000, grain=10000, reserves=1000)
+        data['initial_city_resources']['nanjun'].update(gold=250, grain=450, reserves=0)
+        data['initial_officers'].extend(dict(row, troops=2000, ruler=False)
+                                        for row in data['initial_free_officers'])
+        data['initial_free_officers'] = []
+        if keep_only_two_in_rear:
+            officers = [row for row in data['initial_officers'] if row['city'] == 'xiangyang'
+                        and not row['ruler']]
+            for row in officers[:2]:
+                row['city'] = 'nanjun'
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'rear-supply.json'
+            path.write_text(json.dumps(data, ensure_ascii=False))
+            game = Campaign(Catalog(path))
+        game.command('new', dict(faction='observer', seed=2026, difficulty='normal'), 0)
+        self.assertEqual([c.id for c in logistics._fronts(game, game.state, 'shu')], ['nanjun'])
+        return game
+
+    def test_observer_sends_rear_gold_and_grain_before_recruitment(self):
+        game = self.front_supply_game()
+        front = game.state.cities['nanjun']
+        before = front.gold, front.grain
+        dispatch = logistics.dispatch
+        payments = []
+
+        def record_dispatch(campaign, state, payload, owner):
+            source = state.cities[payload['source']]
+            gold, grain = source.gold, source.grain
+            books = command_books.remaining(state, owner)
+            row = dispatch(campaign, state, payload, owner)
+            if owner == 'shu':
+                payments.append(row['id'])
+                orders = state.extension['command_books']['factions'][owner]['orders']
+                self.assertNotIn('recruit', [order['kind'] for order in orders])
+                self.assertEqual(orders[-1], dict(city=source.id, kind='dispatch_transport', cost=1))
+                self.assertEqual(command_books.remaining(state, owner), books - 1)
+                self.assertEqual(source.gold, gold - row['cargo']['gold'])
+                self.assertEqual(source.grain, grain - row['cargo']['grain']
+                                 - row['journeys'][0]['supply']['loaded'])
+                self.assertGreaterEqual(source.gold, logistics.DEFAULT_POLICY['reserve_gold'])
+                self.assertGreaterEqual(source.grain, logistics.DEFAULT_POLICY['reserve_grain'])
+            return row
+
+        with patch.object(logistics, 'dispatch', side_effect=record_dispatch):
+            game.command('observe_turn', {}, game.revision)
+        reports = [row for row in game.state.extension['logistics']['reports'] if row['owner'] == 'shu']
+        self.assertEqual([row['kind'] for row in reports],
+                         ['transport_departed', 'transport_arrived', 'transport_returned'])
+        departure, arrival, returned = reports
+        self.assertEqual(payments, [returned['details']['convoy_id']])
+        self.assertEqual(returned['details']['reason'], 'escort_return')
+        for row in (departure, arrival):
+            self.assertEqual((row['source'], row['target']), ('xiangyang', 'nanjun'))
+            self.assertEqual(payments, [row['details']['convoy_id']])
+            self.assertGreater(row['details']['gold'], 0)
+            self.assertGreater(row['details']['grain'], 0)
+        self.assertEqual(departure['details']['gold'], arrival['details']['gold'])
+        front = game.state.cities['nanjun']
+        self.assertGreater(front.gold, before[0])
+        self.assertGreater(front.grain, before[1])
+        self.assertFalse(game.state.settled_battles)
+        convoy, = game.state.extension['logistics']['convoys']
+        self.assertEqual(convoy['status'], 'returning')
+        escort, = convoy['officers']
+        saved = game.export_save()
+        restored = Campaign(game.catalog)
+        restored.load_save(saved, 0)
+        self.assertEqual(restored.export_save(), saved)
+        restored.command('observe_turn', {}, restored.revision)
+        self.assertNotIn(escort, logistics.marching_ids(restored.state))
+        self.assertIn(escort, restored.state.cities['xiangyang'].roster.officer_ids)
+        self.assertTrue(any(row['details']['convoy_id'] == convoy['id']
+                            and row['details']['reason'] == 'returned'
+                            for row in restored.state.extension['logistics']['reports']))
+
+    def test_observer_keeps_rear_garrison_even_when_front_resources_are_low(self):
+        game = self.front_supply_game(keep_only_two_in_rear=True)
+        rear = game.state.cities['xiangyang']
+        self.assertEqual(len(rear.roster.officer_ids), logistics.DEFAULT_POLICY['reserve_officers'])
+        game.command('observe_turn', {}, game.revision)
+        self.assertFalse([row for row in game.state.extension['logistics']['reports'] if row['owner'] == 'shu'])
 
     def test_actual_dispatch_arrival_cargo_and_personnel_are_conserved(self):
         game = self.game()

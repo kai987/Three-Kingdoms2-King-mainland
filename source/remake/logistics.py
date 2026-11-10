@@ -643,13 +643,26 @@ def attack_grain_shortage(state, target, required_grain):
 
 def dispatch_attack_grain(game, state, target, required_grain, *, protected_officers=(), max_turns=None):
     """Send grain for a specific AI sortie using the ordinary convoy service."""
+    return dispatch_ai_supply(game, state, target, 0, required_grain,
+                              protected_officers=protected_officers, max_turns=max_turns)
+
+
+def supply_shortages(state, target, gold_goal, grain_goal):
+    inbound = _inbound(state, target.id)
+    return (max(0, gold_goal - target.gold - inbound['gold']),
+            max(0, grain_goal - target.grain - inbound['grain']))
+
+
+def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_officers=(),
+                       max_turns=None, require_return=False):
+    """Choose an eligible rear escort and move real cargo through the shared order."""
     owner = target.owner
     if ('logistics' not in state.extension or state.phase != 'ai' or owner == state.player
             or not command_books.can_spend(state, owner, 'dispatch_transport')):
         return False
-    shortage = attack_grain_shortage(state, target, required_grain)
+    gold_need, grain_need = supply_shortages(state, target, gold_goal, grain_goal)
     pool = _pool(state)
-    if not shortage or pool['next_id'] > 1000000:
+    if not (gold_need or grain_need) or pool['next_id'] > 1000000:
         return False
 
     active_origins = {row['source'] for row in pool['convoys']}
@@ -657,7 +670,7 @@ def dispatch_attack_grain(game, state, target, required_grain, *, protected_offi
                   if row['kind'] == 'attack' and row['owner'] != owner
                   and not historical_campaigns.allied(state, owner, row['owner'])}
     protected = set(protected_officers)
-    target_room = LIMIT - target.grain - _inbound(state, target.id)['grain']
+    grain_room = LIMIT - target.grain - _inbound(state, target.id)['grain']
     engines, candidates = {}, []
     for source in state.cities.values():
         if (source.owner != owner or source.id == target.id or source.id in active_origins
@@ -666,10 +679,14 @@ def dispatch_attack_grain(game, state, target, required_grain, *, protected_offi
         row = pool['cities'][source.id]
         policy = row['policy']
         if (not policy['enabled'] or policy['target_city'] not in (None, target.id)
-                or row['last_dispatch_turn'] == state.turn or not policy['max_grain']
+                or row['last_dispatch_turn'] == state.turn
                 or source.gold < policy['reserve_gold'] or source.reserves < policy['reserve_reserves']
-                or source.grain <= policy['reserve_grain']
+                or source.grain < policy['reserve_grain']
                 or _present_count(game, state, source) <= policy['reserve_officers']):
+            continue
+        gold = min(gold_need, policy['max_gold'], source.gold - policy['reserve_gold'])
+        grain = min(policy['max_grain'], grain_room, source.grain - policy['reserve_grain'])
+        if not gold and not (grain_need and grain > 0):
             continue
         escorts = [ident for ident in _eligible(game, state, source) if ident not in protected]
         if not escorts:
@@ -689,23 +706,37 @@ def dispatch_attack_grain(game, state, target, required_grain, *, protected_offi
         if max_turns is not None and quote['turns'] > max_turns:
             continue
         rations = _rations(state, quote, [escort], _empty_cargo())
-        capacity = min(policy['max_grain'], source.grain - policy['reserve_grain'] - rations,
-                       target_room)
-        if capacity > 0:
-            candidates.append((capacity < shortage, quote['days'], -min(capacity, shortage),
-                               source.id, mode, escort, capacity))
+        if source.grain - rations < policy['reserve_grain']:
+            continue
+        grain = min(grain, source.grain - policy['reserve_grain'] - rations)
+        if gold or (grain_need and grain > 0):
+            delivered = min(grain, grain_need)
+            coverage = (gold * 100 // max(1, gold_need)
+                        + delivered * 100 // max(1, grain_need))
+            # A useful shipment next turn can beat a full load many turns away.
+            # A sortie with a specific ration requirement still favors a full load.
+            priority = (-(coverage * 100 // quote['turns']) if require_return
+                        else int(gold < gold_need or delivered < grain_need))
+            candidates.append((priority, quote['days'], -coverage, -delivered,
+                               source.id, mode, escort, gold, grain))
     if not candidates:
         return False
 
-    _, _, _, source_id, mode, escort, capacity = min(candidates, key=lambda row: row[:4])
-    source = state.cities[source_id]
-    policy = pool['cities'][source_id]['policy']
-    selected = _safe_quote(game, state, target, source, policy)
-    return_rations = _rations(state, selected[1], [escort], _empty_cargo()) if selected else 0
-    cargo = dict(_empty_cargo(), grain=min(capacity, shortage + return_rations))
-    dispatch(game, state, dict(source=source_id, target=target.id, officers=[escort],
-                               cargo=cargo, route_mode=mode), owner)
-    return True
+    for _, _, _, _, source_id, mode, escort, gold, grain in sorted(candidates):
+        source = state.cities[source_id]
+        selected = _safe_quote(game, state, target, source, pool['cities'][source_id]['policy'])
+        if require_return and (selected is None or max_turns is not None
+                               and selected[1]['turns'] > max_turns):
+            continue
+        return_rations = _rations(state, selected[1], [escort], _empty_cargo()) if selected else 0
+        cargo = dict(_empty_cargo(), gold=gold,
+                     grain=min(grain, grain_need + return_rations) if grain_need else 0)
+        if require_return and target.grain + cargo['grain'] < return_rations:
+            continue
+        dispatch(game, state, dict(source=source_id, target=target.id, officers=[escort],
+                                   cargo=cargo, route_mode=mode), owner)
+        return True
+    return False
 
 
 def _auto_transfer_city(game,state,city_id):
@@ -744,6 +775,8 @@ def prepare_ai(game, state, owner):
             policy = _pool(state)['cities'][key]['policy']
             policy['enabled'] = key not in fronts
             policy['allow_sea'] = policy['allow_special'] = False
+            policy['max_gold'] = max(policy['max_gold'], 2000)
+            policy['max_grain'] = max(policy['max_grain'], 5000)
 
 
 def auto_dispatch(game, state, owner):

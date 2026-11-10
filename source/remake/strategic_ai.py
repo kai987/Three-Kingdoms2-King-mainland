@@ -25,6 +25,7 @@ class StrategicAI:
         self.quotes = {}
         self.neighbor_ids = {}
         self.support_checked = set()
+        self.front_supply_checked = set()
         holdings = Counter(city.owner for city in state.cities.values() if city.owner != 'neutral')
         # Let both sides concentrate on the remaining fronts once the map
         # has consolidated. Earlier campaigns retain their wider priorities.
@@ -313,6 +314,42 @@ class StrategicAI:
         plans[owner] = current
         return current
 
+    def support_frontline(self, owner, plan):
+        """Provision a threatened border before spending books on routine work."""
+        if 'logistics' not in self.state.extension or owner in self.front_supply_checked:
+            return
+        pending = [order for order in plan['orders'] if order['march_id'] is None]
+        due = sum(order['departure_turn'] <= self.state.turn for order in pending)
+        if command_books.remaining(self.state, owner) <= due:
+            return
+        self.front_supply_checked.add(owner)
+
+        from . import logistics
+        from .battle_supply import BUDGET_DAYS
+
+        requests = []
+        sources = {order['source'] for order in pending}
+        for city in logistics._fronts(self.game, self.state, owner):
+            if not self.available(city):
+                continue
+            ids = self.defenders(city)
+            troops = sum(self.state.officers[ident].troops for ident in ids)
+            # Stock one full battle plus two turns of movement for a large army.
+            grain_goal = max(3000, required_grain(troops, len(ids), BUDGET_DAYS + 20))
+            gold_goal = 1500
+            gold, grain = logistics.supply_shortages(self.state, city, gold_goal, grain_goal)
+            if gold >= 100 or grain >= 300:
+                shortage = gold * 100 // gold_goal + grain * 100 // grain_goal
+                requests.append((city.id not in sources, -shortage, city.id, gold_goal, grain_goal))
+
+        protected = {ident for order in pending for ident in order['officers']}
+        protected.add(self.state.extension['leaders'].get(owner))
+        for _, _, key, gold, grain in sorted(requests):
+            if logistics.dispatch_ai_supply(self.game, self.state, self.state.cities[key], gold, grain,
+                                            protected_officers=protected, require_return=True,
+                                            max_turns=self.settings['max_route_turns']):
+                return
+
     def support_endgame(self, owner, plan):
         """Fund or reinforce one viable front while no attack is ready."""
         if not self.endgame or plan['orders'] or not self.budget or owner in self.support_checked:
@@ -559,8 +596,10 @@ def run(campaign, state, payload):
             if not command_books.can_spend(state, city.owner):
                 break
             ai.prepare(city)
-            if not ai.depart(city,plan) and not ai.reinforce(city,plan):
-                if 'domestic' not in x:
+            if not ai.depart(city,plan):
+                ai.support_frontline(city.owner, plan)
+                if (command_books.can_spend(state, city.owner) and not ai.reinforce(city,plan)
+                        and 'domestic' not in x):
                     ai.personnel_or_recruit(city)
             if state.phase != 'ai':
                 return
