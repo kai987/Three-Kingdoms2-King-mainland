@@ -282,6 +282,92 @@ class ScopePlanTests(unittest.TestCase):
                 # the next one: each case has its own exact published baseline.
                 self.repo.base = head
 
+    def test_campaign_map_artwork_selects_map_without_full_rules(self):
+        for path in ('game/assets/map.png', 'game/assets/map-basin.png', 'game/assets/map-campaign.png',
+                     'game/assets/map-clean.png', 'game/assets/map-road-centers.png',
+                     'game/assets/map-western-range.png', 'game/config/terrain-art.json',
+                     'game/map-source/approved-western-range-art.png',
+                     'game/map-source/road-centers-render.json', 'game/map-source/terrain-art-render.json'):
+            with self.subTest(path=path):
+                head = self.changed(path)
+                result = self.repo.plan(event_name='push', ref='refs/heads/main')
+                self.assertEqual(result['mode'], 'scoped', result['reasons'])
+                self.assertEqual(set(result['groups']), PLAN.BASE_GROUPS | {'map'})
+                self.assertEqual(result['python_groups'], ['global'])
+                self.assertTrue(result['web'] and result['publish'])
+                self.assertFalse(any(result[field] for field in ('native', 'rules', 'soak', 'resupply')))
+                self.repo.base = head
+
+    def map_source_fixture(self):
+        names = ('map.png', 'map-basin.png', 'map-campaign.png', 'map-clean.png',
+                 'map-navigation.png', 'map-road-centers.png')
+        for name in names:
+            self.repo.write('game/assets/' + name, name + '\n')
+        pins = {name: self.repo.sha('game/assets/' + name) for name in names}
+        source = dict(schema='tk2-map-source-v1', approved_asset_sha256=pins,
+                      anchors=dict(map_sha256=pins['map.png'], positions={'city': [1, 2]}),
+                      presentation=dict(background_sha256=pins['map-basin.png'],
+                                        campaign_background_sha256=pins['map-campaign.png']))
+        self.repo.write(PLAN.MAP_SOURCE, source)
+        geometry = self.repo.read('game/config/route-geometry.json')
+        geometry['sources'][PLAN.MAP_SOURCE] = self.repo.sha(PLAN.MAP_SOURCE)
+        self.repo.write('game/config/route-geometry.json', geometry)
+        self.repo.base = self.repo.save('Approved map sources and route fingerprint')
+        return source, geometry
+
+    def test_map_repaint_with_exact_pin_and_route_fingerprints_stays_scoped(self):
+        source, geometry = self.map_source_fixture()
+        for name in ('map-basin.png', 'map-road-centers.png'):
+            path = 'game/assets/' + name
+            self.repo.write(path, 'Updated visual pixels\n')
+            source['approved_asset_sha256'][name] = self.repo.sha(path)
+        source['presentation']['background_sha256'] = source['approved_asset_sha256']['map-basin.png']
+        self.repo.write(PLAN.MAP_SOURCE, source)
+        geometry['sources'][PLAN.MAP_SOURCE] = self.repo.sha(PLAN.MAP_SOURCE)
+        self.repo.write('game/config/route-geometry.json', geometry)
+        catalog_path = 'game/data/campaigns/217-07.json'
+        catalog = self.repo.read(catalog_path)
+        catalog['travel_rules']['geometry_sha256'] = self.repo.sha('game/config/route-geometry.json')
+        head = self.changed(catalog_path, catalog)
+        result = self.repo.plan(head)
+        self.assertEqual(result['mode'], 'scoped', result['reasons'])
+        self.assertEqual(set(result['groups']), PLAN.BASE_GROUPS | {'map', 'scenarios'})
+        self.assertEqual(result['python_groups'], ['global', 'scenarios', 'compat'])
+        self.assertTrue(result['native'])
+        self.assertFalse(result['rules'] or result['soak'])
+        self.assertIn('Route source fingerprints only; retain global artifact and save compatibility checks',
+                      result['reasons'])
+
+        # A real route change or coordinate edit cannot ride the same repaint.
+        geometry['routes'].append(2)
+        self.changed('game/config/route-geometry.json', geometry)
+        self.assertTrue(self.repo.plan()['full'])
+        self.repo.git('reset', '--hard', head)
+        source['anchors']['positions']['city'] = [3, 4]
+        self.changed(PLAN.MAP_SOURCE, source)
+        self.assertTrue(self.repo.plan()['full'])
+
+    def test_stale_map_artwork_pin_and_unknown_or_authoritative_assets_keep_full_checks(self):
+        source, _ = self.map_source_fixture()
+        self.repo.write('game/assets/map-road-centers.png', 'Repaint\n')
+        source['approved_asset_sha256']['map-road-centers.png'] = '0' * 64
+        self.changed(PLAN.MAP_SOURCE, source)
+        result = self.repo.plan()
+        self.assertTrue(result['full'])
+        self.assertTrue(any('Map bitmap fingerprint differs from changed pixels' in reason
+                            for reason in result['reasons']))
+
+        for path in ('game/assets/map-navigation.png', 'game/assets/city-positions.json',
+                     'game/map-source/hydrology-ground.png', 'game/assets/map-unknown.png',
+                     'game/map-source/unknown.png', 'source/remake/campaign.py'):
+            with self.subTest(path=path):
+                self.repo.git('reset', '--hard', self.repo.base)
+                self.repo.write('game/assets/map-western-range.png', 'Repaint\n')
+                self.changed(path)
+                result = self.repo.plan()
+                self.assertTrue(all(result[field] for field in ('full', 'native', 'rules', 'soak')),
+                                result['reasons'])
+
     def assert_soldier_action_scope(self, result, *, publish=False):
         self.assertEqual(result['mode'], 'scoped', result['reasons'])
         self.assertEqual(set(result['groups']), PLAN.BASE_GROUPS | {'battle'})

@@ -89,6 +89,24 @@ CHECKPOINT_INPUTS = {
     'tools/campaign-checkpoints/run.py', 'tools/campaign-checkpoints/replay_saved.py',
     'tools/campaign-checkpoints/parallel_saved.py', 'tests/test_remake_natural_checkpoints.py',
 }
+MAP_SOURCE = 'game/config/map-source.json'
+MAP_ART_PINS = {'map.png', 'map-basin.png', 'map-campaign.png', 'map-clean.png', 'map-road-centers.png'}
+MAP_ART_REFERENCES = {
+    'map.png': ('anchors', 'map_sha256'),
+    'map-basin.png': ('presentation', 'background_sha256'),
+    'map-campaign.png': ('presentation', 'campaign_background_sha256'),
+}
+MAP_ART_INPUTS = {'game/assets/' + name for name in MAP_ART_PINS} | {
+    'game/assets/map-western-range.png', 'game/config/terrain-art.json',
+    'game/map-source/approved-western-range-art.png',
+    'game/map-source/road-centers-render.json', 'game/map-source/terrain-art-render.json',
+}
+MAP_GEOMETRY_INPUTS = {
+    'game/assets/city-positions.json', 'game/assets/map-navigation.png',
+    'game/map-source/historic-water.svg', 'game/map-source/hydrology-ground.png',
+    'game/map-source/road-ground.png', 'game/map-source/sea-shadow.svg',
+    'game/map-source/terrain-under-water.png', 'game/map-source/water-render.json',
+}
 SHARED_SCENARIO_FIELDS = {
     'rules', 'cities', 'links', 'world', 'city_coordinates', 'added_city_ids',
     'travel_rules', 'travel_routes', 'travel_hazards', 'sea_routes', 'sea_links',
@@ -206,7 +224,35 @@ def rule_overrides(source):
                   updates.get(key), key in removals) for key in SHARED_SCENARIO_FIELDS}
 
 
-def fingerprint_only(repo, base, head, path, source_paths):
+def map_art_pins_only(repo, base, head, changed):
+    """Allow verified bitmap hashes without allowing map geometry or metadata edits."""
+    before, after = (document(repo, revision, MAP_SOURCE) for revision in (base, head))
+    if any(not isinstance(value, dict) or value.get('schema') != 'tk2-map-source-v1'
+           for value in (before, after)):
+        raise Uncertain('Unknown approved map source schema')
+    allowed = (('approved_asset_sha256',), *MAP_ART_REFERENCES.values())
+    if stripped(before, *allowed) != stripped(after, *allowed):
+        return False
+    old, new = before.get('approved_asset_sha256'), after.get('approved_asset_sha256')
+    if not isinstance(old, dict) or not isinstance(new, dict) or old.keys() != new.keys():
+        return False
+    touched = {name for name in old if old[name] != new[name]}
+    if not touched or not touched <= MAP_ART_PINS:
+        return False
+    for name, (section, field) in MAP_ART_REFERENCES.items():
+        if any(name not in pins or not isinstance(value.get(section), dict)
+               or value[section].get(field) != pins[name]
+               for value, pins in ((before, old), (after, new))):
+            return False
+    for name in touched:
+        path = 'game/assets/' + name
+        if (path not in changed or old[name] != hashlib.sha256(blob(repo, base, path)).hexdigest()
+                or new[name] != hashlib.sha256(blob(repo, head, path)).hexdigest()):
+            raise Uncertain('Map bitmap fingerprint differs from changed pixels: ' + path)
+    return True
+
+
+def fingerprint_only(repo, base, head, path, fingerprint_sources):
     before, after = document(repo, base, path), document(repo, head, path)
     if path == 'game/config/route-geometry.json':
         if stripped(before, ('sources',)) != stripped(after, ('sources',)):
@@ -217,7 +263,7 @@ def fingerprint_only(repo, base, head, path, source_paths):
         if old.keys() != new.keys():
             return False
         touched = {key for key in old.keys() | new.keys() if old.get(key) != new.get(key)}
-        if not touched or not touched <= source_paths:
+        if not touched or not touched <= fingerprint_sources:
             return False
         for name in touched:
             if name in new and new[name] != hashlib.sha256(blob(repo, head, name)).hexdigest():
@@ -269,6 +315,9 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
         if not head_map:
             raise Uncertain('Unrecognized head scenario index')
         source_paths = {path for path in changed if SCENARIO.fullmatch(path)}
+        fingerprint_sources = source_paths.copy()
+        if MAP_SOURCE in changed and map_art_pins_only(repo, resolved_base, resolved_head, changed):
+            fingerprint_sources.add(MAP_SOURCE)
         for path in source_paths:
             recognized = False
             source_values = []
@@ -306,7 +355,7 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
                 derived_catalogs.append(path)
                 groups.add('scenarios')
             elif path == 'game/config/route-geometry.json':
-                if fingerprint_only(repo, resolved_base, resolved_head, path, source_paths):
+                if fingerprint_only(repo, resolved_base, resolved_head, path, fingerprint_sources):
                     groups.update(('map', 'scenarios'))
                     native = True
                     reasons.append('Route source fingerprints only; retain global artifact and save compatibility checks')
@@ -333,12 +382,18 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
                 groups.add('scenarios')
                 reasons.append('Historical decision ledger; retain global report consistency checks')
             elif path in ('game/assets/map-bridges.json', 'game/assets/map-presentation.json'):
-                if fingerprint_only(repo, resolved_base, resolved_head, path, source_paths):
+                if fingerprint_only(repo, resolved_base, resolved_head, path, fingerprint_sources):
                     reasons.append('Generated map catalog fingerprints only')
                     groups.add('map')
                 else:
                     groups.update(('map', 'scenarios'))
                     reasons.append('Shared map presentation changed: ' + path)
+            elif path in MAP_ART_INPUTS or (path == MAP_SOURCE and path in fingerprint_sources):
+                groups.add('map')
+                reasons.append('Campaign map artwork or verified render fingerprints: ' + path)
+            elif path in MAP_GEOMETRY_INPUTS:
+                full = True
+                reasons.append('Authoritative campaign map or navigation input: ' + path)
             elif (path in ('game/config/battlefield-city-bindings.json',
                            'game/assets/battlefields/index.json')
                   or path.startswith('tools/battlefields/')
