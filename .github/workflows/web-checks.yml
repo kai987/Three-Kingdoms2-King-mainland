@@ -150,9 +150,8 @@ jobs:
     needs: [scope, native-rules]
     if: needs.scope.outputs.rules == 'true' && needs.scope.outputs.reuse != 'true'
     runs-on: ubuntu-latest
-    # The expanded 217 and 263 office replays share shard 2. The Python job
-    # exhausted 20 minutes and the Rust job finished with 21 seconds to spare.
-    timeout-minutes: ${{ matrix.shard == 2 && 30 || 20 }}
+    # The longest measured module (the 217 and 263 office replays) starts shard 1.
+    timeout-minutes: ${{ matrix.shard == 1 && 30 || 20 }}
     strategy:
       fail-fast: false
       matrix:
@@ -185,7 +184,14 @@ jobs:
       - name: Campaign behavior with ${{ matrix.backend }} marching, shard ${{ matrix.shard }}/6
         env:
           TEST_SHARD: ${{ matrix.shard }}
-        run: python -B tools/ci/run_campaign_tests.py --shard "$TEST_SHARD" --shards 6
+        run: python -B tools/ci/run_campaign_tests.py --shard "$TEST_SHARD" --shards 6 --timings build/ci/campaign-timings.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: campaign-timings-${{ matrix.backend }}-${{ matrix.shard }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: build/ci/campaign-timings.json
+          if-no-files-found: ignore
+          retention-days: 7
   campaign-soak-replay:
     needs: [scope, native-rules]
     if: needs.scope.outputs.soak == 'true' && needs.scope.outputs.reuse != 'true'

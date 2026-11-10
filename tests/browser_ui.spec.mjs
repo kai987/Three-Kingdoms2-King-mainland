@@ -1469,7 +1469,7 @@ test('a stale local API menu warns without restarting or changing its campaign',
  expect(errors.get(page)).toEqual([]);
 });
 
-test('all 29 real Worker openings keep preview and live initial health and faction-scoped loyalty aligned',async({page},testInfo)=>{
+async function verifyOpeningBatch(page,testInfo,batchId){
  test.setTimeout(600_000);
  const people=JSON.parse(await readFile(new URL('../game/config/campaigns/people.json',import.meta.url),'utf8')).people;
  const known=[['san14-candidate-0952',78,99],['san14-candidate-0521',82,96],
@@ -1490,7 +1490,7 @@ test('all 29 real Worker openings keep preview and live initial health and facti
  await opening(page);
  const availableScenarios=await page.locator('#scenario option').evaluateAll(rows=>rows.map(row=>row.value));
  expect(availableScenarios).toHaveLength(29);
- const scenarios=browserScopes.selectScenarioIds(availableScenarios,browserScope);
+ const scenarios=browserScopes.selectOpeningScenarioIds(availableScenarios,browserScope,batchId);
  await testInfo.attach('opening-scenario-scope',{body:Buffer.from(JSON.stringify({full:browserScope.full,scenario_ids:scenarios},null,2)),contentType:'application/json'});
  let checkedServing=0,checkedFree=0,expectedServing=0,expectedFree=0;
  for(const scenario of scenarios){
@@ -1630,8 +1630,16 @@ test('all 29 real Worker openings keep preview and live initial health and facti
  // Historical affiliation reviews legitimately change memberships; each live
  // Worker opening must retain the complete authored roster without omissions.
  expect(checkedServing).toBe(expectedServing);expect(checkedFree).toBe(expectedFree);
- await historyScreenshot(page,testInfo,'all-29-initial-stat-openings');
+ await historyScreenshot(page,testInfo,`${batchId}-initial-stat-openings`);
  expect(errors.get(page)).toEqual([]);
+}
+
+test('first batch of real Worker openings keeps preview and live initial stats aligned',async({page},testInfo)=>{
+ await verifyOpeningBatch(page,testInfo,'opening-catalog-first');
+});
+
+test('second batch of real Worker openings keeps preview and live initial stats aligned',async({page},testInfo)=>{
+ await verifyOpeningBatch(page,testInfo,'opening-catalog-second');
 });
 
 test('officer encyclopedia distinguishes initial body, remake cap and contextual loyalty in both languages',async({page},testInfo)=>{
