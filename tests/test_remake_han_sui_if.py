@@ -109,6 +109,7 @@ class HanSuiIfTests(unittest.TestCase):
         cls.sources = {row['id']: sources / row['file']
                        for row in json.loads((sources / 'index.json').read_text())['scenarios']}
         cls.expansion = json.loads((sources / 'city-expansion-openings.json').read_text())['scenarios']
+        cls.chronology = json.loads((sources / 'city-chronology-openings.json').read_text())['owners']
         canonical = json.loads((ROOT / 'game/config/campaigns/people.json').read_text())
         cls.base_order = canonical['order'][:1030]
         cls.base_ids = set(cls.base_order)
@@ -121,6 +122,11 @@ class HanSuiIfTests(unittest.TestCase):
         source = json.loads(self.sources[data['id']].read_text())
         old = apply_patch(self.shared, source['overrides'])
         plan = self.expansion[data['id']]
+        opened_counties = {city for city, owner in self.chronology[data['id']].items()
+                           if owner is not None}
+        additions = plan['owners'].keys() | opened_counties
+        original_cities = [city for city in data['active_cities'] if city not in additions]
+        self.assertEqual(original_cities, old['active_cities'])
         approved = {pid: city for city, people in plan['garrisons'].items() for pid in people}
         old_locations = {row['person_id']: row['city'] for row in old['initial_officers']}
         rows = []
@@ -130,8 +136,7 @@ class HanSuiIfTests(unittest.TestCase):
                 self.assertEqual(row['city'], approved[pid], pid)
                 row = dict(row, city=old_locations[pid])
             rows.append(row)
-        return dict(data, active_cities=[city for city in data['active_cities']
-                                       if city not in plan['owners']], initial_officers=rows)
+        return dict(data, active_cities=original_cities, initial_officers=rows)
 
     def legacy_attributes(self, data):
         """Restore only explicitly reviewed death-year fields for the f65 hash.

@@ -40,6 +40,7 @@ ORIGINAL_184_SOLDIERS = 194760
 EARLY_EXPANSION_RESERVES = {
     'hefei': 510, 'guangling': 630, 'chaisang': 510,
     'xicheng': 792, 'shangyong': 790, 'yiling': 990,
+    'wuchang': 1320,  # E County is present in the 184 opening.
 }
 # These are the 57 earlier Longxi relocations. Six Han Sui retinue placements
 # are subsequently corrected to independent Jincheng; the earlier relocation
