@@ -61,6 +61,13 @@ def validate_plan(plan, head=None):
         raise ValueError('Scenario IDs require a browser scenario group')
     if set(python_groups) & {'scenarios', 'compat'} and not plan['native']:
         raise ValueError('Scenario data and save compatibility require the native reference')
+    if 'pr_reuse' in plan:
+        reuse = plan['pr_reuse']
+        if (not plan['publish'] or not isinstance(reuse, dict)
+                or set(reuse) != {'number', 'run_id', 'attempt', 'head', 'tree'}
+                or any(type(reuse[key]) is not int or reuse[key] < 1 for key in ('number', 'run_id', 'attempt'))
+                or any(not SHA.fullmatch(str(reuse[key])) for key in ('head', 'tree'))):
+            raise ValueError('Invalid PR verification provenance')
     return plan
 
 
@@ -87,7 +94,10 @@ def verify_jobs(plan, needs):
         raise ValueError('Missing or unregistered verification jobs')
     for name, required in expected.items():
         result = needs[name].get('result')
-        if required and result != 'success':
+        if required and plan.get('pr_reuse') and name != 'web-build':
+            if result != 'skipped':
+                raise ValueError(f'Expected a reused result for {name}: {result}')
+        elif required and result != 'success':
             raise ValueError(f'Required job {name} did not succeed: {result}')
         if not required and result not in ('skipped', 'success'):
             raise ValueError(f'Unexpected unsuccessful job {name}: {result}')
@@ -135,8 +145,13 @@ def summary(plan):
              'Scenarios: ' + (', '.join(f'`{value}`' for value in plan['scenario_ids']) or 'global checks / group defaults'),
              f'Publication requested: `{str(plan["publish"]).lower()}`', '',
              '| Job | Required |', '| --- | --- |']
-    lines.extend(f'| {name} | {"yes" if run else "not needed for this scope"} |'
-                 for name, run in required.items())
+    reuse = plan.get('pr_reuse')
+    for name, run in required.items():
+        result = ('verified in PR' if reuse and name != 'web-build' else 'yes') if run else 'not needed for this scope'
+        lines.append(f'| {name} | {result} |')
+    if reuse:
+        lines += ['', f'Reused PR #{reuse["number"]}, run `{reuse["run_id"]}` attempt `{reuse["attempt"]}`.',
+                  f'Tested merge: `{reuse["head"]}`. Shared source tree: `{reuse["tree"]}`.']
     # JSON fencing escapes filenames as data rather than rendering their Markdown.
     explanation = json.dumps({'base': plan.get('base'), 'reasons': plan.get('reasons', []),
                               'changed_files': plan.get('changed_files', [])},
@@ -187,6 +202,7 @@ def main(argv=None):
         for key in FLAGS:
             print(f'{key}={str(plan[key]).lower()}')
         print(f'mode={plan["mode"]}')
+        print(f'reuse={str("pr_reuse" in plan).lower()}')
     elif args.command == 'summary':
         print(summary(plan))
     elif args.command == 'docs':

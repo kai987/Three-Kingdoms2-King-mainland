@@ -29,6 +29,7 @@ jobs:
       soak: ${{ steps.plan.outputs.soak }}
       resupply: ${{ steps.plan.outputs.resupply }}
       publish: ${{ steps.plan.outputs.publish }}
+      reuse: ${{ steps.plan.outputs.reuse }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -38,7 +39,6 @@ jobs:
         with:
           python-version: '3.13'
       - name: Select required checks from cumulative source changes
-        id: plan
         env:
           GH_TOKEN: ${{ github.token }}
           FORCE_FULL: ${{ inputs.force_full }}
@@ -49,6 +49,34 @@ jobs:
           if [ "$FORCE_FULL" = true ]; then args+=(--force-full); fi
           if [ "$PUBLISH_REQUESTED" = true ]; then args+=(--publish); fi
           python -B tools/ci/plan.py --head "$GITHUB_SHA" --event-name "$GITHUB_EVENT_NAME" --event-path "$GITHUB_EVENT_PATH" --repository "$GITHUB_REPOSITORY" "${args[@]}" > build/ci/test-plan.json
+      - name: Find successful verification of the merged pull request
+        id: pr
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !inputs.force_full
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B tools/ci/pr_reuse.py find --plan build/ci/test-plan.json --candidate build/ci/pr-candidate.json
+      - name: Download only the successful PR attempt's receipt
+        id: receipt
+        if: steps.pr.outputs.run_id != ''
+        continue-on-error: true
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: pr-proof-${{ steps.pr.outputs.run_id }}-attempt-${{ steps.pr.outputs.attempt }}
+          path: build/ci/pr-proof
+          github-token: ${{ github.token }}
+          run-id: ${{ steps.pr.outputs.run_id }}
+      - name: Validate PR evidence and finalize required jobs
+        id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_LOOKUP: ${{ steps.pr.outcome }}
+          PR_DOWNLOAD: ${{ steps.receipt.outcome }}
+        run: |
+          if [ "$PR_LOOKUP" = success ]; then
+            args=()
+            if [ "$PR_DOWNLOAD" = success ]; then args+=(--proof build/ci/pr-proof/receipt.json); fi
+            python -B tools/ci/pr_reuse.py decide --plan build/ci/test-plan.json --candidate build/ci/pr-candidate.json "${args[@]}"
+          fi
           python -B tools/ci/gate.py outputs --plan build/ci/test-plan.json --head "$GITHUB_SHA" >> "$GITHUB_OUTPUT"
           python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -79,7 +107,7 @@ jobs:
         run: python -B tools/ci/gate.py docs --plan build/ci/test-plan.json --head "$GITHUB_SHA"
   native-rules:
     needs: scope
-    if: needs.scope.outputs.native == 'true'
+    if: needs.scope.outputs.native == 'true' && needs.scope.outputs.reuse != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -120,7 +148,7 @@ jobs:
           retention-days: 3
   campaign-rules:
     needs: [scope, native-rules]
-    if: needs.scope.outputs.rules == 'true'
+    if: needs.scope.outputs.rules == 'true' && needs.scope.outputs.reuse != 'true'
     runs-on: ubuntu-latest
     # The expanded 217 and 263 office replays share shard 2. The Python job
     # exhausted 20 minutes and the Rust job finished with 21 seconds to spare.
@@ -160,7 +188,7 @@ jobs:
         run: python -B tools/ci/run_campaign_tests.py --shard "$TEST_SHARD" --shards 6
   campaign-soak-replay:
     needs: [scope, native-rules]
-    if: needs.scope.outputs.soak == 'true'
+    if: needs.scope.outputs.soak == 'true' && needs.scope.outputs.reuse != 'true'
     runs-on: ubuntu-latest
     # The full 144-turn Rust replay exceeded 20 minutes on the measured runner.
     # Keep every turn and seed; budget the complete replay instead of trimming it.
@@ -206,7 +234,7 @@ jobs:
           retention-days: 7
   campaign-soak:
     needs: [scope, campaign-soak-replay]
-    if: always() && needs.scope.outputs.soak == 'true'
+    if: always() && needs.scope.outputs.soak == 'true' && needs.scope.outputs.reuse != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -235,7 +263,7 @@ jobs:
           retention-days: 7
   source-and-browser:
     needs: scope
-    if: needs.scope.outputs.web == 'true'
+    if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
@@ -295,6 +323,7 @@ jobs:
     needs: [scope, native-rules]
     if: >-
       always() && !cancelled() && needs.scope.result == 'success' &&
+      needs.scope.outputs.reuse != 'true' &&
       needs.scope.outputs.mode == 'scoped' &&
       (needs.scope.outputs.native != 'true' || needs.native-rules.result == 'success')
     runs-on: ubuntu-latest
@@ -376,7 +405,7 @@ jobs:
           retention-days: 7
   browser-ui:
     needs: [scope, web-build]
-    if: needs.scope.outputs.web == 'true'
+    if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
     runs-on: ubuntu-latest
     # Allow for runner variability in the full touch suite with the expanded map.
     timeout-minutes: ${{ matrix.project == 'touch-chromium' && 40 || 35 }}
@@ -437,7 +466,7 @@ jobs:
           retention-days: 7
   resupply-ui:
     needs: scope
-    if: needs.scope.outputs.resupply == 'true'
+    if: needs.scope.outputs.resupply == 'true' && needs.scope.outputs.reuse != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -481,25 +510,25 @@ jobs:
           python -B tools/ci/gate.py verify --plan build/ci/test-plan.json --needs build/ci/needs.json --head "$GITHUB_SHA"
           python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
-        if: needs.scope.outputs.web == 'true'
+        if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
         with:
           node-version: '24'
       - name: Collect the exact commit's browser timings
-        if: needs.scope.outputs.web == 'true'
+        if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           pattern: browser-timing-*-shard-*-${{ github.sha }}
           path: build/browser-timings
           merge-multiple: true
       - name: Verify complete timing coverage and report measured shard costs
-        if: needs.scope.outputs.web == 'true'
+        if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
         env:
           TK2_TEST_PLAN: build/ci/test-plan.json
         run: |
           node tools/browser-tests/aggregate-timings.mjs build/browser-timings --head "$GITHUB_SHA"
           cat build/browser-timings/summary.md >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        if: needs.scope.outputs.web == 'true'
+        if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
         with:
           name: browser-timing-summary-${{ github.sha }}
           path: build/browser-timings
@@ -524,5 +553,16 @@ jobs:
           path: build/web
           overwrite: true
           include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+      - name: Record the verified PR source tree and coverage
+        if: github.event_name == 'pull_request' && needs.scope.outputs.web == 'true'
+        run: python -B tools/ci/pr_reuse.py receipt --plan build/ci/test-plan.json --proof build/ci/receipt.json
+      - name: Upload PR verification receipt
+        if: github.event_name == 'pull_request' && needs.scope.outputs.web == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: pr-proof-${{ github.run_id }}-attempt-${{ github.run_attempt }}
+          path: build/ci/receipt.json
           if-no-files-found: error
           retention-days: 7
