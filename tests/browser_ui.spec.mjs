@@ -854,7 +854,7 @@ test('city size labels and the report adapt to available space while retaining m
  const labels=page.locator('#map-labels'),names=page.locator('[data-city-label]');
  await expect(labels).toHaveAttribute('data-label-mode','major');
  const majorCount=await names.count();
- for(const [mode,count] of [['giant',4],['large',10],['all',116],['none',0],['major',majorCount]]){
+ for(const [mode,count] of [['giant',4],['large',10],['all',118],['none',0],['major',majorCount]]){
   await labels.click();await expect(labels).toHaveAttribute('data-label-mode',mode);await expect(names).toHaveCount(count);
  }
  await labels.click();await labels.click();
