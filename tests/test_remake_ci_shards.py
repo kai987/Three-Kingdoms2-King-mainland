@@ -42,6 +42,22 @@ class CampaignCiShardTests(unittest.TestCase):
         for index in range(3):
             self.assertEqual(sorted(groups[index] + groups[index + 3]), complete[index::3])
 
+    def test_weighted_partitions_keep_all_files_and_reduce_each_backend_tail(self):
+        complete = runner.discover_files()
+        for backend in runner.BACKENDS:
+            durations = runner.load_durations(backend)
+            old = runner.partition_files(complete)
+            new = runner.partition_files(complete, durations=durations)
+            self.assertEqual(new, runner.partition_files(reversed(complete), durations=durations))
+            self.assertEqual(sorted(path for group in new for path in group), complete)
+            def longest(groups):
+                return max(sum(durations.get(path, runner.UNMEASURED_MS) for path in group) for group in groups)
+            self.assertLess(longest(new), longest(old))
+            self.assertIn(max(durations, key=durations.get), new[0])
+            unmeasured = ROOT / 'tests/test_remake_new_unmeasured.py'
+            future = runner.partition_files([*complete, unmeasured], durations=durations)
+            self.assertEqual(sum(unmeasured in group for group in future), 1)
+
     def test_partition_contract_rejects_changed_count_duplicates_and_empty_shards(self):
         complete = runner.discover_files()
         for count in (1, 3, 4, 5, 7):
@@ -79,7 +95,7 @@ class CampaignCiShardTests(unittest.TestCase):
         self.assertIn('backend: [python, rust]', rules)
         self.assertIn('shard: [1, 2, 3, 4, 5, 6]', rules)
         self.assertIn('--shards 6', rules)
-        self.assertIn('timeout-minutes: ${{ matrix.shard == 2 && 30 || 20 }}', rules)
+        self.assertIn('timeout-minutes: ${{ matrix.shard == 1 && 30 || 20 }}', rules)
 
     def test_loader_retains_standard_module_hooks_and_source_imports(self):
         with tempfile.TemporaryDirectory() as directory, patch.object(sys, 'path', sys.path[:]):
@@ -94,10 +110,12 @@ class CampaignCiShardTests(unittest.TestCase):
                               'def load_tests(loader, tests, pattern):\n'
                               ' return tests\n')
             try:
-                suite = runner.load_suite([module], tests, source)
+                timings = {}
+                suite = runner.load_suite([module], tests, source, timings=timings)
                 self.assertEqual(suite.countTestCases(), 1)
                 result = unittest.TextTestRunner(stream=io.StringIO()).run(suite)
                 self.assertTrue(result.wasSuccessful())
+                self.assertGreater(timings['tests/test_remake_ci_loader_fixture.py'], 0)
             finally:
                 sys.modules.pop('test_remake_ci_loader_fixture', None)
                 sys.modules.pop('ci_shard_source_marker', None)

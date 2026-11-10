@@ -12,7 +12,7 @@ function load(value,options={}){
 }
 try{
  const full=scopes.loadBrowserScope({planPath:''});
- assert.equal(full.full,true);assert.equal(full.selectedCases.length,45);
+ assert.equal(full.full,true);assert.equal(full.selectedCases.length,46);
  assert.deepEqual(new Set(scopes.readCaseTitles(source)),new Set(scopes.CASE_REGISTRY.cases.map(row=>row.title)));
  const union=new Set();
  for(const group of scopes.CANONICAL_GROUPS){
@@ -33,7 +33,7 @@ try{
  for(const id of [...expected,'battle-layout','battle-movement','soldier-orders','battle-siege']){
   assert(soldierIds.has(id),'Soldier animation media retains real boot, field and castle coverage: '+id);
  }
- for(const id of ['opening-catalog','person-encyclopedia','recruitment','ruler-succession-display']){
+ for(const id of [...scopes.OPENING_CASES,'person-encyclopedia','recruitment','ruler-succession-display']){
   assert(!soldierIds.has(id),'Soldier animation media excludes unrelated opening and people loops: '+id);
  }
  for(const id of ['soldier-orders','battle-siege']){
@@ -52,12 +52,26 @@ try{
   assert.equal(boot.grep.test('touch-chromium browser_ui.spec.mjs '+row.title),expected.includes(row.id));
  }
  const local=load(plan(['scenarios'],['mainland184-02'],{schema:'shared-plan',head:'opaque-provenance',web:{enabled:true}}));
- assert.deepEqual(local.selectedCases.map(row=>row.id),['observer-speed','opening-catalog','first-session-guide']);
+ assert.deepEqual(local.selectedCases.map(row=>row.id),['observer-speed','opening-catalog-first','first-session-guide']);
  assert.deepEqual(scopes.selectScenarioIds(known,local),['mainland184-02'],'A local scenario plan cannot silently expand the deep opening loop to all 29');
  assert.deepEqual(scopes.selectScenarioIds(known,full),known);
  const historical=load(plan(['scenarios'],['mainland188-06']));
- assert.deepEqual(historical.selectedCases.map(row=>row.id),['han-sui-shu','opening-catalog']);
+ assert.deepEqual(historical.selectedCases.map(row=>row.id),['han-sui-shu','opening-catalog-first']);
  assert.deepEqual(scopes.selectScenarioIds(known,historical),['mainland188-06']);
+ const openingBatches=scopes.OPENING_CASES.map(id=>scopes.selectOpeningScenarioIds(known,full,id));
+ assert.deepEqual(openingBatches.map(batch=>batch.length),[18,11]);
+ assert.deepEqual([...openingBatches.flat()].sort(),[...known].sort());
+ assert.deepEqual(scopes.selectOpeningScenarioIds(known,local,'opening-catalog-first'),['mainland184-02']);
+ assert.throws(()=>scopes.selectOpeningScenarioIds(known,local,'opening-catalog-second'),/outside the selected test scope/);
+ const mixed=load(plan(['scenarios'],['mainland184-02','mainland263-05']));
+ assert.deepEqual(scopes.OPENING_CASES.map(id=>scopes.selectOpeningScenarioIds(known,mixed,id)),[['mainland184-02'],['mainland263-05']]);
+ assert.throws(()=>scopes.selectOpeningScenarioIds(known.filter(id=>id!=='mainland263-05'),local,'opening-catalog-first'),/real opening menu differs/);
+ const duplicateBatch=JSON.parse(JSON.stringify(scopes.CASE_REGISTRY));
+ const [first,second]=scopes.OPENING_CASES.map(id=>duplicateBatch.cases.find(row=>row.id===id));
+ second.scenario_ids[0]=first.scenario_ids[0];
+ assert.throws(()=>load(plan(['boot']),{registry:duplicateBatch}),/opening batch scenarios must be a nonempty unique string array/);
+ second.scenario_ids.shift();
+ assert.throws(()=>load(plan(['boot']),{registry:duplicateBatch}),/cover every canonical scenario/);
  assert.throws(()=>scopes.selectScenarioIds(known.filter(id=>id!=='mainland184-02'),local),/absent from the real menu/);
  assert.throws(()=>load(plan(['not-a-group'])),/unknown groups/);
  assert.throws(()=>load(plan(['scenarios'],['mainland999-01'])),/unknown scenario_ids/);
@@ -75,5 +89,5 @@ try{
  assert.throws(()=>scopes.loadBrowserScope({planPath:broken}),/cannot read plan JSON/);
  const cli=spawnSync(process.execPath,[path.join(__dirname,'../tools/browser-tests/scope.cjs'),'--plan',broken],{encoding:'utf8'});
  assert.notEqual(cli.status,0);assert(cli.stderr.includes('Browser test scope:'));
- console.log('browser scopes: all 45 cases registered before grep, full/group union, initial guide with bounded boot/audio, soldier media field/castle coverage, scenario-local deep openings, opaque plan provenance and fail-closed unknown/empty/invalid plans passed');
+ console.log('browser scopes: all 46 cases registered, both opening batches cover 29 exactly once, scenario-local intersections, full/group union, scoped media and fail-closed invalid plans passed');
 }finally{fs.rmSync(directory,{recursive:true,force:true});}

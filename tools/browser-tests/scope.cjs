@@ -4,6 +4,7 @@ const fs=require('node:fs'),path=require('node:path');
 const ROOT=path.resolve(__dirname,'../..');
 const CANONICAL_GROUPS=Object.freeze(['boot','audio','map','scenarios','people','economy','logistics','battle','cloud','save']);
 const CASE_REGISTRY=JSON.parse(fs.readFileSync(path.join(__dirname,'cases.json'),'utf8'));
+const OPENING_CASES=Object.freeze(['opening-catalog-first','opening-catalog-second']);
 const SOURCE_FILES=Object.freeze(['tests/browser_ui.spec.mjs','tests/browser_soldier_ui.spec.mjs']);
 function acceptanceSource(root=ROOT){return SOURCE_FILES.map(file=>fs.readFileSync(path.join(root,file),'utf8')).join('\n');}
 const fail=message=>{throw new Error('Browser test scope: '+message);};
@@ -49,6 +50,14 @@ function validateRegistry(source,{registry=CASE_REGISTRY,scenarioIds=knownScenar
  const actual=readCaseTitles(source);
  for(const title of actual)if(!titles.has(title))fail('unregistered acceptance case '+JSON.stringify(title));
  for(const title of titles)if(!actual.includes(title))fail('registry case missing from source '+JSON.stringify(title));
+ const openingIds=[];
+ for(const id of OPENING_CASES){
+  const batch=registry.cases.find(row=>row.id===id);
+  if(batch?.scenario_scope!=='fixed'||!batch.scenario_ids.length)fail('missing fixed opening batch '+id);
+  openingIds.push(...batch.scenario_ids);
+ }
+ strings(openingIds,'opening batch scenarios',{allowed:scenarioIds,nonempty:true});
+ if(openingIds.length!==scenarioIds.length)fail('opening batches must cover every canonical scenario');
  return registry.cases;
 }
 function validatePlan(plan,scenarioIds=knownScenarioIds()){
@@ -73,6 +82,15 @@ function selectScenarioIds(available,selection){
  const selected=requested.length?available.filter(id=>requested.includes(id)):[...available];
  if(!selected.length)fail('opening scenario selection is empty');return selected;
 }
+function selectOpeningScenarioIds(available,selection,batchId){
+ const batch=selection.selectedCases.find(row=>row.id===batchId);
+ if(!OPENING_CASES.includes(batchId)||!batch)fail('opening batch is outside the selected test scope');
+ const selected=selectScenarioIds(available,selection);
+ if(available.length!==selection.scenarioIds.length||available.some(id=>!selection.scenarioIds.includes(id)))fail('real opening menu differs from canonical scenarios');
+ const scenarios=selected.filter(id=>batch.scenario_ids.includes(id));
+ if(!scenarios.length)fail('opening batch has no selected scenarios: '+batchId);
+ return scenarios;
+}
 function loadBrowserScope({planPath=process.env.TK2_TEST_PLAN,root=ROOT,source,registry=CASE_REGISTRY}={}){
  const scenarioIds=knownScenarioIds(root);
  // Validate every source case before selecting a grep. Even CLI --grep cannot
@@ -89,7 +107,7 @@ function loadBrowserScope({planPath=process.env.TK2_TEST_PLAN,root=ROOT,source,r
  const grep=new RegExp('(?:'+selectedCases.map(row=>'\\b'+escape(row.title)+'$').join('|')+')');
  return{plan,full:plan.full,selectedCases,scenarioIds,grep};
 }
-module.exports={CANONICAL_GROUPS,CASE_REGISTRY,SOURCE_FILES,acceptanceSource,knownScenarioIds,readCaseTitles,validateRegistry,validatePlan,selectCases,selectScenarioIds,loadBrowserScope};
+module.exports={CANONICAL_GROUPS,CASE_REGISTRY,OPENING_CASES,SOURCE_FILES,acceptanceSource,knownScenarioIds,readCaseTitles,validateRegistry,validatePlan,selectCases,selectScenarioIds,selectOpeningScenarioIds,loadBrowserScope};
 if(require.main===module){
  try{
   const args=process.argv.slice(2);if(args.length&&!(args.length===2&&args[0]==='--plan'))fail('usage: node scope.cjs [--plan path.json]');

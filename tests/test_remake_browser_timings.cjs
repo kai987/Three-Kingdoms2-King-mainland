@@ -9,6 +9,7 @@ for(const project of weighted.PROJECTS){
  const first=weighted.partition(selection.selectedCases,project),second=weighted.partition([...selection.selectedCases].reverse(),project);
  assert.deepEqual(first.map(bin=>bin.cases.map(row=>row.id).sort()),second.map(bin=>bin.cases.map(row=>row.id).sort()),'Input ordering cannot change weighted bin membership');
  const ids=first.flatMap(bin=>bin.cases.map(row=>row.id));assert.equal(new Set(ids).size,ids.length);assert.deepEqual([...ids].sort(),selection.selectedCases.map(row=>row.id).sort());
+ assert(first.every(bin=>bin.cases.filter(row=>scopes.OPENING_CASES.includes(row.id)).length===1),'The two full opening batches must run on different shards');
  const peak=Math.max(...first.map(bin=>bin.estimated_ms)),floor=Math.min(...first.map(bin=>bin.estimated_ms));assert(peak-floor<120000,'Measured full-suite bins should be within the explicit default case budget');
  assert(first.every(bin=>bin.cases.every(row=>new RegExp(weighted.grep(bin.cases)).test('p file '+row.title))));
  const tiny=weighted.partition(selection.selectedCases.slice(0,1),project);assert.equal(tiny[0].cases.length,1);assert.equal(tiny[1].cases.length,0);assert(!new RegExp(weighted.grep([])).test(selection.selectedCases[0].title));

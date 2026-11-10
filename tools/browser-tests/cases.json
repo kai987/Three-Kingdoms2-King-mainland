@@ -223,16 +223,59 @@
       "scenario_scope": "catalog"
     },
     {
-      "id": "opening-catalog",
-      "title": "all 29 real Worker openings keep preview and live initial health and faction-scoped loyalty aligned",
+      "id": "opening-catalog-first",
+      "title": "first batch of real Worker openings keeps preview and live initial stats aligned",
       "groups": [
         "scenarios",
         "people",
         "economy",
         "save"
       ],
-      "scenario_ids": [],
-      "scenario_scope": "selected"
+      "scenario_ids": [
+        "mainland184-02",
+        "mainland188-06",
+        "mainland190-01",
+        "mainland191-10",
+        "mainland194-06",
+        "mainland196-06",
+        "mainland198-03",
+        "mainland200-01",
+        "mainland202-06",
+        "mainland207-09",
+        "mainland208-10",
+        "mainland211-07-tongguan",
+        "mainland212-12",
+        "mainland215-08",
+        "mainland217-07",
+        "mainland219-07",
+        "mainland221-07",
+        "mainland225-07"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "opening-catalog-second",
+      "title": "second batch of real Worker openings keeps preview and live initial stats aligned",
+      "groups": [
+        "scenarios",
+        "people",
+        "economy",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland227-02",
+        "mainland234-02",
+        "mainland238-01",
+        "mainland249-01",
+        "mainland263-05",
+        "mainland197-07",
+        "mainland201-05",
+        "mainland209-06",
+        "mainland210-11",
+        "mainland212-06",
+        "mainland235-01"
+      ],
+      "scenario_scope": "fixed"
     },
     {
       "id": "person-encyclopedia",
