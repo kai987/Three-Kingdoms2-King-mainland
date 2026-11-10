@@ -431,10 +431,10 @@ test('field soldier formations expose ten hundred-person teams and replay actual
 test('successful battlefield conversion immediately enables an eleventh friendly officer and empty-castle occupation wins',async({page},testInfo)=>{
  const converted=fixture('conversion'),occupation=fixture('occupation'),touch=testInfo.project.name==='touch-chromium';
  await opening(page);await load(page,converted.save,'controlled-seeded-live-conversion.json');
- const before=await read(page),battle=before.save.state.battle;
+ const before=await read(page,false),battle=before.save.state.battle;
  expect(battle.attackers).toHaveLength(10);expect(battle.defenders).toHaveLength(10);
  await page.locator(`[data-actor="${converted.actor}"]`).click();await page.locator(`[data-target="${converted.target}"]`).click();await control(page,'tactic');
- await page.locator('#tactic-choice').selectOption('8');expect((await read(page)).save).toEqual(before.save);
+ await page.locator('#tactic-choice').selectOption('8');expect(await save(page)).toEqual(before.save);
  await page.locator('#confirm-tactic').click();let current=await animation(page),after=current.save.state.battle;
  expect(after.attackers).toHaveLength(11);expect(after.defenders).toHaveLength(9);
  expect(after.attackers.find(unit=>unit.id===converted.target).troops).toBe(converted.target_troops);
@@ -450,18 +450,18 @@ test('successful battlefield conversion immediately enables an eleventh friendly
  const available=current.save.state.battle.extended.tactical.points.attackers;
  const route=current.view.catalog.battle_tactical.actors[String(converted.target)].reachable
   .filter(point=>point.cost>0&&point.cost<available).sort((a,b)=>a.cost-b.cost||a.y-b.y||a.x-b.x)[0];
- expect(route).toBeTruthy();const beforeMove=current.save;await cell(page,route,touch);await control(page,'battle-move');current=await animation(page);
+ expect(route).toBeTruthy();const beforeMove=current.save;await cell(page,route,touch);await control(page,'battle-move');current=await animation(page,{withView:false});
  expect(current.save.state.battle.extended.tactical.positions[converted.target]).toEqual({x:route.x,y:route.y});expect(current.save.state.rng).toEqual(beforeMove.state.rng);
  expect(current.save.state.battle.extended.tactical.points.attackers).toBe(beforeMove.state.battle.extended.tactical.points.attackers-route.cost);
  await load(page,current.save,'controlled-live-conversion-roundtrip.json');await evidence(page,testInfo,'eleventh-officer-usable-after-conversion');
  const convertedSave=current.save;await load(page,occupation.save,'controlled-empty-enemy-castle.json');
- const prior=await read(page);expect(prior.save.state.battle.defenders.some(unit=>unit.troops>0)).toBe(true);
- await page.locator(`[data-actor="${occupation.actor}"]`).click();await cell(page,occupation.cell,touch);await control(page,'battle-move');current=await animation(page);
+ const prior=await read(page,false);expect(prior.save.state.battle.defenders.some(unit=>unit.troops>0)).toBe(true);
+ await page.locator(`[data-actor="${occupation.actor}"]`).click();await cell(page,occupation.cell,touch);await control(page,'battle-move');current=await animation(page,{withView:false});
  expect(current.save.state.phase).toBe('result');expect(current.save.state.battle.outcome).toBe('victory');expect(current.save.state.battle.extended.occupation).toEqual({actor:occupation.actor,side:'attackers',...occupation.cell});
  expect(current.save.state.battle.defenders).toEqual(prior.save.state.battle.defenders);expect(current.save.state.rng).toEqual(prior.save.state.rng);
  expect(current.save.state.battle.extended.tactical.points.attackers).toBe(prior.save.state.battle.extended.tactical.points.attackers-occupation.cost);
  await evidence(page,testInfo,'empty-castle-occupation-victory');await control(page,'settle');await idle(page);await dismissEvents(page);
- const settled=await read(page);expect(settled.save.state.cities.danyang.owner).toBe('wei');
+ const settled=await read(page,false);expect(settled.save.state.cities.danyang.owner).toBe('wei');
  await attach(testInfo,'battle-conversion-occupation-proof',{conversion_seed:converted.selected_seed,leader_virtue:converted.leader_virtue,expected_loyalty:converted.expected_loyalty,conversion:convertedSave,occupation:current.save,settled_owner:settled.save.state.cities.danyang.owner});
  expect(pageErrors.get(page)).toEqual([]);
 });
@@ -479,16 +479,16 @@ test('native battlefield hospital rice shop and weapon shop use the current cell
   if(kind==='hospital')await page.locator('#battle-facility-treat').click();
   if(kind==='market'){
    const batches=page.locator('#battle-facility-batches');await batches.fill(String(quote.trade.max_batches+999));await expect(batches).toHaveValue(String(quote.trade.max_batches));
-   await batches.fill('1');expect((await read(page)).save).toEqual(before.save,'Rice-shop quantities and previews never spend money or RNG');await page.locator('#battle-facility-buy-grain').click();
+   await batches.fill('1');expect(await save(page)).toEqual(before.save,'Rice-shop quantities and previews never spend money or RNG');await page.locator('#battle-facility-buy-grain').click();
   }
   if(kind==='armory'){
    merchandise=quote.stock.weapon.find(item=>item.eligible&&item.price<=quote.gold);expect(merchandise).toBeTruthy();
    await page.locator('#battle-facility-slot').selectOption('weapon');await page.locator('#battle-facility-item').selectOption(String(merchandise.id));
-   expect((await read(page)).save).toEqual(before.save,'Equipment selection and prices remain read-only until purchase');await page.locator('#battle-facility-buy-equipment').click();
+   expect(await save(page)).toEqual(before.save,'Equipment selection and prices remain read-only until purchase');await page.locator('#battle-facility-buy-equipment').click();
   }
   await idle(page);
   if(await page.locator('#dialog').isVisible())await page.keyboard.press('Escape');
-  await expect(page.locator('#dialog')).toBeHidden();await dismissEvents(page);const current=await read(page);
+  await expect(page.locator('#dialog')).toBeHidden();await dismissEvents(page);const current=await read(page,false);
   expect(current.save.state.battle.extended.tactical).toEqual(before.save.state.battle.extended.tactical,'Village services do not spend tactical movement or move an officer');expect(current.save.state.extension.command_books).toEqual(before.save.state.extension.command_books,'Battlefield services do not spend strategic books');
   if(kind==='hospital'){
    expect(current.save.state.cities[payer].gold).toBe(before.save.state.cities[payer].gold-quote.medical_gold);expect(current.save.state.battle.extended.support[value.actor].health).toBeGreaterThan(before.save.state.battle.extended.support[value.actor].health);expect(current.save.state.battle.extended.support[value.actor].health).toBeLessThanOrEqual(quote.max_health);expect(current.save.state.rng.draws-before.save.state.rng.draws).toBe(1);
@@ -650,11 +650,11 @@ test('chain applies independent connected water counts with bilingual movement-o
  const [cast,restricted,expiry]=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_chain_fixture.py',import.meta.url).pathname],{encoding:'utf8',maxBuffer:16*1024*1024,timeout:90_000})),proof=[];
  const restrictedCount=restricted.counts[restricted.targets.indexOf(String(restricted.target))];expect([4,5]).toContain(restrictedCount);
  await load(page,cast.save,'controlled-chain-cast.json');await page.locator(`[data-actor="${cast.actor}"]`).click();await page.locator(`[data-target="${cast.target}"]`).click();
- const before=await read(page);await control(page,'tactic');await page.locator('#tactic-choice').selectOption('10');
+ const before=await read(page,false);await control(page,'tactic');await page.locator('#tactic-choice').selectOption('10');
  const forecast=page.locator('#tactic-effect-preview .tactic-effect-forecast:visible');
  await expect(forecast).toContainText('3 支水上敵隊各自抽取計數 4–5');await expect(forecast).toContainText('陸地敵隊只傳遞連通');
  await page.locator('#dialog-language').selectOption('ja');await expect(forecast).toContainText('陸上の敵は接続を伝えるだけ');expect(await save(page)).toEqual(before.save);
- await page.locator('#confirm-tactic').click();const after=await animation(page);
+ await page.locator('#confirm-tactic').click();const after=await animation(page,{withView:false});
  expect(after.save.state.rng.draws-before.save.state.rng.draws).toBe(4);
  expect(after.save.state.battle.extended.tactical.points.attackers).toBe(before.save.state.battle.extended.tactical.points.attackers-9);
  for(const [index,id]of cast.targets.entries()){
@@ -676,11 +676,11 @@ test('chain applies independent connected water counts with bilingual movement-o
  await locale(page,'ja');await expect(page.locator('.battle-move-reason')).toContainText('連環により移動できません');
  await page.locator(`[data-actor="${restricted.target}"]`).focus();await page.keyboard.press('ArrowRight');await page.keyboard.press('Enter');expect(await save(page)).toEqual(locked.save);
  await evidence(page,testInfo,'chain-locked-attack-enabled-ja');
- await control(page,'tactic');await page.locator('#tactic-choice').selectOption('0');await expect(page.locator('#confirm-tactic')).toBeEnabled();await page.locator('#confirm-tactic').click();const fire=await animation(page);
+ await control(page,'tactic');await page.locator('#tactic-choice').selectOption('0');await expect(page.locator('#confirm-tactic')).toBeEnabled();await page.locator('#confirm-tactic').click();const fire=await animation(page,{withView:false});
  expect(fire.save.state.battle.extended.conditions.units[String(restricted.target)]).toEqual({kind:'chain',remaining:restrictedCount});
  await control(page,'attack');await idle(page);const contact=await save(page);expect(contact.state.battle.extended.siege).toBeTruthy();expect(contact.state.battle.extended.conditions.units[String(restricted.target)]).toEqual({kind:'chain',remaining:restrictedCount});proof.push({kind:'restricted',attack:true,tactic:true,own_lock_preserved:true});
  await load(page,expiry.save,'controlled-chain-expiry.json');await expect(page.locator(`[data-target="${expiry.target}"] [data-chain-count="1"]`)).toBeVisible();
- const expiryBefore=await read(page);await control(page,'battle-wait');const expired=await animation(page);
+ const expiryBefore=await read(page,false);await control(page,'battle-wait');const expired=await animation(page,{withView:false});
  expect(expired.save.state.battle.round).toBe(expiryBefore.save.state.battle.round+1);expect(expired.save.state.rng).toEqual(expiryBefore.save.state.rng);expect(expired.save.state.battle.extended.conditions.units[String(expiry.target)]).toBeUndefined();
  await expect(page.locator(`[data-target="${expiry.target}"] [data-chain-count]`)).toHaveCount(0);
  await load(page,expired.save,'chain-expired-roundtrip.json');expect(await save(page)).toEqual(expired.save);proof.push({kind:'expiry',rng_unchanged:true,round:expired.save.state.battle.round});
@@ -695,9 +695,9 @@ test('qimen targets enemies with daily losses and experience, bilingual receipts
  // rather than couple presentation checks to the old seed's duration.
  const castCount=restricted.count;expect(castCount).toBeGreaterThanOrEqual(6);expect(castCount).toBeLessThanOrEqual(9);
  await load(page,cast.save,'controlled-qimen-cast.json');await page.locator(`[data-actor="${cast.actor}"]`).click();await page.locator(`[data-target="${cast.target}"]`).click();
- const before=await read(page);await control(page,'tactic');await page.locator('#tactic-choice').selectOption('15');
+ const before=await read(page,false);await control(page,'tactic');await page.locator('#tactic-choice').selectOption('15');
  const forecast=page.locator('#tactic-effect-preview .tactic-effect-forecast:visible');await expect(forecast).toContainText('最後一次也損兵');await page.locator('#dialog-language').selectOption('ja');await expect(forecast).toContainText('自軍の盾ではなく');expect(await save(page)).toEqual(before.save);
- await page.locator('#confirm-tactic').click();const castResult=await animation(page);
+ await page.locator('#confirm-tactic').click();const castResult=await animation(page,{withView:false});
  expect(castResult.save.state.rng.draws-before.save.state.rng.draws).toBe(2);expect(castResult.save.state.battle.extended.tactical.points.attackers).toBe(before.save.state.battle.extended.tactical.points.attackers-10);
  expect(castResult.save.state.battle.extended.conditions.units[String(cast.target)]).toEqual({kind:'qimen',remaining:castCount});
  expect(castResult.save.state.battle.extended.support).toEqual(before.save.state.battle.extended.support);expect(castResult.save.state.battle.attackers).toEqual(before.save.state.battle.attackers);expect(castResult.save.state.battle.defenders).toEqual(before.save.state.battle.defenders);
@@ -705,10 +705,10 @@ test('qimen targets enemies with daily losses and experience, bilingual receipts
  await load(page,restricted.save,'controlled-qimen-restricted.json');await page.locator(`[data-actor="${restricted.locked_actor}"]`).click();await page.locator(`[data-target="${restricted.enemy}"]`).click();const locked=await read(page);
  await expect(page.locator('#battle-move')).toBeDisabled();await expect(page.locator('#attack')).toBeEnabled();await expect(page.locator('#duel')).toBeEnabled();expect(locked.view.catalog.battle_tactical.actors[String(restricted.locked_actor)].reachable).toEqual([]);
  await locale(page,'ja');await expect(page.locator('.battle-move-reason')).toContainText('奇門遁甲により移動できません');await page.locator(`[data-actor="${restricted.locked_actor}"]`).focus();await page.keyboard.press('ArrowRight');await page.keyboard.press('Enter');expect(await save(page)).toEqual(locked.save);await evidence(page,testInfo,'qimen-enemy-lock-no-self-shield-ja');
- await control(page,'tactic');await page.locator('#tactic-choice').selectOption('0');await page.locator('#confirm-tactic').click();const fire=await animation(page);expect(fire.save.state.battle.extended.conditions.units[String(restricted.locked_actor)].remaining).toBe(castCount);
+ await control(page,'tactic');await page.locator('#tactic-choice').selectOption('0');await page.locator('#confirm-tactic').click();const fire=await animation(page,{withView:false});expect(fire.save.state.battle.extended.conditions.units[String(restricted.locked_actor)].remaining).toBe(castCount);
  await control(page,'attack');await idle(page);expect((await save(page)).state.battle.extended.siege).toBeTruthy();proof.push({kind:'restricted',attack:true,tactic:true,own_counter_preserved:true});
  for(const row of[daily,expiry]){
-  await load(page,row.save,'controlled-qimen-'+row.kind+'.json');const prior=await read(page);await control(page,'battle-wait');const result=await animation(page),expected=row.expected_daily;
+  await load(page,row.save,'controlled-qimen-'+row.kind+'.json');const prior=await read(page,false);await control(page,'battle-wait');const result=await animation(page,{withView:false}),expected=row.expected_daily;
   expect(result.save.state.rng).toEqual(expected.rng);expect(result.save.state.battle.round).toBe(expected.round);expect(result.save.state.officers[String(row.actor)].experience).toBe(expected.experience);expect(result.save.state.officers[String(row.actor)].tier).toBe(expected.tier);
   expect(result.save.state.officers[String(row.actor)].profile).toEqual(prior.save.state.officers[String(row.actor)].profile);expect(result.save.state.soldiers).toEqual(prior.save.state.soldiers);
   const receipt=result.save.state.extension.events.items.at(-1).details;expect(receipt).toEqual({tactic:15,success:true,condition:'qimen',qimen_phase:'daily',qimen_ticks:expected.rows,experience_id:String(row.actor),experience_gain:expected.experience_gain});
@@ -749,10 +749,10 @@ test('manual deployment places sequentially in native zones with zero-cost check
  for(let i=0;i<2;i++){await control(page,'battle-place-confirm');await idle(page);}
  const ready=await read(page);expect(ready.save.state.battle.extended.placement.confirmed).toBe(3);expect(ready.view.catalog.battle_tactical.placement.pending).toBe(false);expect(domain(ready.save)).toEqual(domain(before.save));await expect(page.locator('#battle-place-confirm')).toHaveCount(0);await expect(page.locator('#battle-wait')).toBeEnabled();
  proof.push({kind:'attacker',future_does_not_occupy:true,next_default:first.save.state.battle.extended.tactical.positions[String(attacker.expected_next.actor)],resource_domain_unchanged:true,autosave:true});
- await load(page,defender.save,'real-arrival-defender-placement.json');const defenseBefore=await read(page);await expect(page.locator('[data-placement-total]')).toHaveAttribute('data-placement-total','10');
- await expect(page.locator('#stage')).toContainText('相手は武力と陣型に応じて配置済み');await cell(page,defender.terrain_cells['3'],testInfo.project.name.startsWith('touch'));await control(page,'battle-place-confirm');await idle(page);const water=await read(page);
+ await load(page,defender.save,'real-arrival-defender-placement.json');const defenseBefore=await read(page,false);await expect(page.locator('[data-placement-total]')).toHaveAttribute('data-placement-total','10');
+ await expect(page.locator('#stage')).toContainText('相手は武力と陣型に応じて配置済み');await cell(page,defender.terrain_cells['3'],testInfo.project.name.startsWith('touch'));await control(page,'battle-place-confirm');await idle(page);const water=await read(page,false);
  expect(water.save.state.battle.extended.tactical.positions[String(defender.actor)]).toEqual(defender.terrain_cells['3']);expect(domain(water.save)).toEqual(domain(defenseBefore.save));await evidence(page,testInfo,'manual-defender-commander-water-ja');proof.push({kind:'defender',commander_left_camp:true,water_legal:true,ai_has_not_acted:true});
- await load(page,last.save,'real-defender-last-placement.json');await expect(page.locator('[data-placement-progress]')).toHaveAttribute('data-placement-progress','9');const lastBefore=await read(page);await control(page,'battle-place-confirm');const started=await animation(page);
+ await load(page,last.save,'real-defender-last-placement.json');await expect(page.locator('[data-placement-progress]')).toHaveAttribute('data-placement-progress','9');const lastBefore=await read(page,false);await control(page,'battle-place-confirm');const started=await animation(page,{withView:false});
  expect(started.save.state.battle.extended.placement.confirmed).toBe(10);expect(started.save.state.battle.round).toBe(1);expect(started.save.state.battle.extended.supply.days).toBe(0);expect(started.save.state.battle.extended.tactical.side).toBe('defenders');expect(started.save.state.battle.extended.tactical.passed.attackers).toBe(true);expect(started.save.state.battle.extended.tactical.points.attackers).toBeLessThan(lastBefore.save.state.battle.extended.tactical.points.attackers);
  await expect(page.locator('#battle-place-confirm')).toHaveCount(0);await expect(page.locator('#battle-wait')).toBeEnabled();await load(page,started.save,'completed-placement-ready-battle.json');expect(await save(page)).toEqual(started.save);proof.push({kind:'defender_last',first_attacker_ai_ran:true,round:1,food_days:0});
  await attach(testInfo,'manual-deployment-proof',proof);expect(pageErrors.get(page)).toEqual([]);
@@ -774,7 +774,7 @@ test('native AI deployment keeps commanders and grouped martial order while shar
   if(row.side==='defenders')await evidence(page,testInfo,'ai-grouped-defender-native-tc');
   await locale(page,'ja');await expect(page.locator('[data-ai-deployment]')).toContainText('武力と陣型');expect(await save(page)).toEqual(before.save);
   if(row.side==='attackers')await evidence(page,testInfo,'ai-grouped-attacker-native-ja');
-  await control(page,'battle-place-confirm');await idle(page);const after=await read(page);
+  await control(page,'battle-place-confirm');await idle(page);const after=await read(page,false);
   expect(domain(after.save)).toEqual(domain(before.save));expect(after.save.state.battle.extended.auto_deployment).toEqual(before.save.state.battle.extended.auto_deployment);
   for(const id of row.order)expect(after.save.state.battle.extended.tactical.positions[id]).toEqual(row.expected[id]);
   await load(page,after.save,'partial-manual-with-frozen-ai.json');expect(await save(page)).toEqual(after.save);
@@ -782,7 +782,7 @@ test('native AI deployment keeps commanders and grouped martial order while shar
  }
  const legacy=rows[0].legacy;await load(page,legacy,'controlled-previous-ordered-defaults.json');const previous=await read(page);
  expect(previous.view.catalog.battle_tactical.auto_deployment).toBeNull();await expect(page.locator('[data-ai-deployment]')).toHaveAttribute('data-ai-deployment','legacy');
- expect(await save(page)).toEqual(legacy);await control(page,'battle-place-confirm');await idle(page);const continued=await read(page);
+ expect(await save(page)).toEqual(legacy);await control(page,'battle-place-confirm');await idle(page);const continued=await read(page,false);
  expect(continued.save.state.battle.extended.auto_deployment).toBeUndefined();
  for(const unit of legacy.state.battle.defenders)expect(continued.save.state.battle.extended.tactical.positions[String(unit.id)]).toEqual(legacy.state.battle.extended.tactical.positions[String(unit.id)]);
  expect(domain(continued.save)).toEqual(domain(legacy));proof.push({kind:'controlled_legacy_pending',not_retrofitted:true});
