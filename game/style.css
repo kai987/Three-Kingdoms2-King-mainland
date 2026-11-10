@@ -477,7 +477,8 @@ scrollbar-gutter:stable
 #inspector.setup-menu{display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden;gap:12px}
 .setup-content{display:flex;flex-direction:column;gap:12px;min-height:0;overflow:auto;padding-right:4px;scrollbar-gutter:stable}
 .setup-content>*{flex-shrink:0}
-.setup-fields{display:grid;grid-template-columns:minmax(0,2fr) minmax(100px,1fr);gap:12px}
+.setup-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.setup-scenario{grid-column:1/-1}
 #inspector.setup-menu>.actions{margin:0;padding-top:12px;border-top:2px solid #000;grid-template-columns:1fr 1fr}
 #inspector.setup-menu>.actions>:only-child{grid-column:1/-1}
 #inspector.setup-menu>.actions:has(#begin-observation)>#cancel-setup{grid-column:1/-1}
@@ -1071,7 +1072,7 @@ stroke-dasharray:7 3
 .faction-ledger-scroll{overflow:auto;max-height:280px;margin-top:10px;min-width:0;max-width:100%}
 .faction-ledger table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
 .faction-ledger th,.faction-ledger td{padding:6px 4px;border-bottom:1px solid #000;text-align:right;white-space:nowrap}
-.faction-ledger th:first-child{text-align:left}
+.faction-ledger th:first-child,.faction-ledger th.ledger-base,.faction-ledger td[data-faction-base]{text-align:left}
 .ledger-swatch{margin-right:6px;vertical-align:-1px}
 .marches{border-top:3px double #000;margin-top:20px;padding-top:8px;font-size:15px;overflow-wrap:anywhere}
 .marches h3{font-size:18px;margin:4px 0 12px}.marches p{margin:10px 0}

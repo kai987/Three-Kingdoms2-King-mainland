@@ -24,7 +24,7 @@ from .difficulty import DIFFICULTIES, catalog_choices, get_settings
 from .events import empty as empty_events, emit as emit_event, transition as record_events, validate as validate_events
 from .officers import (OFFICER_TROOP_CAP, CityRoster, GameRules, OfficerProfile, PersonDefinition,
                        RuntimeOfficer, YearState, advance_year, experience_tier,
-                       initialize_officer, integer, year_state, is_generated_ref,
+                       initialize_officer, integer, is_generated_ref,
                        parse_officer_ref, deserialize_officer_ref, ref_sort_key, appearance_values)
 
 
@@ -246,7 +246,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             row['search_blocked_reason'] = reason
         return result
 
-    def _new(self, faction, seed, difficulty='normal'):
+    def _new(self, faction, seed, difficulty='normal', lifespan='historical'):
         from . import dated_events
         if not isinstance(faction, str) or (
                 faction != observer.SEAT and faction not in {f['id'] for f in dated_events.visible_factions(self.catalog)}):
@@ -254,6 +254,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         integer(seed, 1, 0xffffffff, 'seed')
         if not isinstance(difficulty, str) or difficulty not in DIFFICULTIES:
             raise GameError('请选择简单、普通或困难难度。')
+        if lifespan not in ('historical', 'none'):
+            raise GameError('操作参数无效。')
         d = self.catalog.data
         resources, troops = self.catalog.opening_garrisons
         state = CampaignState(faction, seed, SeedRng(seed), d['start_year'], d['start_month'], d['start_year'])
@@ -275,6 +277,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         state.soldiers['initial'] = sum(c.reserves for c in state.cities.values()) + sum(o.troops for o in state.officers.values())
         self._initialize_expansion(state)
         state.extension.update(difficulty=difficulty, ai_strategy={}, events=empty_events())
+        if lifespan == 'none':
+            state.extension['lifespan'] = lifespan
         state.extension['travel'] = dict(counter=0, marches=[], battle_arrival=False, discovered=[])
         state.extension['civil_staff'] = civil_staff.empty(self, state)
         state.extension['domestic'] = domestic.empty(self,state)
@@ -311,8 +315,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             from . import dated_events
             from . import troop_types
             state = self.state
-            available = sum(year_state(p, state.year) == YearState.AVAILABLE for p in self.catalog.definitions.values()) if state else None
             travel = self._travel_view(state)
+            expanded = self._expanded_catalog_view(state)
+            available = sum(row['year_state'] == YearState.AVAILABLE.value for row in expanded['library']) if state else None
             alliances = historical_campaigns.alliances(state)
             return {'revision': self.revision, 'game': self.to_dict(),
                     'catalog': {'title': self.catalog.data['title'], 'factions': dated_events.visible_factions(self.catalog,state),
@@ -330,7 +335,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'notes': self.catalog.data['design_notes'], 'library_count': len(self.catalog.definitions),
                                 'year_available': available,
                                 **({'non_aggression': alliances} if alliances else {}),
-                                **self._expanded_catalog_view(state), **travel,
+                                **expanded, **travel,
                                 'civil_staff': self._civil_staff_view(state),
                                 'diplomacy': diplomacy.view(self, state),
                                 'domestic':domestic.view(self,state),
@@ -364,7 +369,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             with presentation.capture(self) as scenes:
                 before = self.to_dict()
                 if kind == 'new':
-                    candidate = self._new(payload.get('faction'), payload.get('seed'), payload.get('difficulty', 'normal'))
+                    candidate = self._new(payload.get('faction'), payload.get('seed'),
+                                          payload.get('difficulty', 'normal'), payload.get('lifespan', 'historical'))
                 else:
                     if self.state is None:
                         raise GameError('请先选择势力。')
@@ -614,7 +620,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         domestic.synchronize(self,state)
         if state.year > state.calendar_cursor:
             events = advance_year(self.all_person_definitions(state), state.officers,
-                                  [c.roster for c in state.cities.values()], state.calendar_cursor, state.year)
+                                  [c.roster for c in state.cities.values()], state.calendar_cursor, state.year,
+                                  natural_deaths=state.extension.get('lifespan') != 'none')
             count = 0
             for event in events:
                 key = f'{event["event"]}:{event["person_id"]}:{event["year"]}'
@@ -833,7 +840,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 raise ValueError('experience/alive')
             if officer.faction_id is not None and officer.faction_id not in {*self.catalog.factions, 'neutral'}:
                 raise ValueError('unknown faction')
-            if officer.faction_id is not None and year_state(self.person_definition(state, ident), state.year) not in {YearState.AVAILABLE, YearState.DEATH_YEAR_REVIEW}:
+            if (officer.faction_id is not None
+                    and self._runtime_year_state(state, self.person_definition(state, ident))
+                    not in {YearState.AVAILABLE, YearState.DEATH_YEAR_REVIEW}):
                 raise ValueError('officer annual membership')
             if ident not in seen and (officer.faction_id is not None or officer.troops != 0):
                 raise ValueError('unassigned officer ownership/troops')
@@ -852,12 +861,13 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             for kind, year in (('birth', p.birth_year), ('service_eligible', p.service_year)):
                 if year is not None and self.catalog.data['start_year'] < year <= state.calendar_cursor:
                     expected_events.add(f'{kind}:{p.person_id}:{year}')
-        for ident, officer in state.officers.items():
-            p = self.person_definition(state, ident)
-            if p.death_year is not None and self.catalog.data['start_year'] < p.death_year + 1 <= state.calendar_cursor:
-                expected_events.add(f'remove_after_death_year:{p.person_id}:{p.death_year + 1}')
-                if officer.alive:
-                    raise ValueError('historically retired officer revived')
+        if state.extension.get('lifespan') != 'none':
+            for ident, officer in state.officers.items():
+                p = self.person_definition(state, ident)
+                if p.death_year is not None and self.catalog.data['start_year'] < p.death_year + 1 <= state.calendar_cursor:
+                    expected_events.add(f'remove_after_death_year:{p.person_id}:{p.death_year + 1}')
+                    if officer.alive:
+                        raise ValueError('historically retired officer revived')
         if set(state.year_events) != expected_events:
             raise ValueError('committed annual event cursor')
         if not isinstance(state.log, list) or len(state.log) > 200 or any(not isinstance(t, str) or len(t) > 500 for t in state.log):

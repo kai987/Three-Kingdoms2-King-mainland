@@ -97,23 +97,24 @@ class PersonDefinition:
             raise ValueError('Chronology order requires review; never silently repair')
 
 
-def year_state(person: PersonDefinition, year: int) -> YearState:
+def year_state(person: PersonDefinition, year: int, *, ignore_death=False) -> YearState:
     """A year-qualified person is not automatically recruited or assigned a city.
 
     Unknown months in the death year remain a separate review category. Known
     exclusion (unborn/dead) wins over another missing date; availability requires
     all three dates. An exact scenario may resolve the annual boundary separately.
+    Unlimited lifespan ignores death dates only when checking existing officers.
     """
     integer(year, 1, 400, 'year')
     if person.birth_year is not None and year < person.birth_year:
         return YearState.NOT_BORN
-    if person.death_year is not None and year > person.death_year:
+    if not ignore_death and person.death_year is not None and year > person.death_year:
         return YearState.DEAD
     if person.service_year is not None and year < person.service_year:
         return YearState.NOT_APPEARED
     if None in (person.birth_year, person.service_year, person.death_year):
         return YearState.UNKNOWN
-    if year == person.death_year:
+    if not ignore_death and year == person.death_year:
         return YearState.DEATH_YEAR_REVIEW
     return YearState.AVAILABLE
 
@@ -380,7 +381,7 @@ def select_deployment(city: CityRoster, selected: Iterable[int], officers: Mappi
 
 
 def advance_year(people: Iterable[PersonDefinition], officers: Mapping[int, RuntimeOfficer],
-                 cities: Iterable[CityRoster], previous_year: int, next_year: int):
+                 cities: Iterable[CityRoster], previous_year: int, next_year: int, *, natural_deaths=True):
     """Apply sourced year events without auto-recruiting or reviving anyone.
 
     Death-year membership remains a review boundary; absent an exact scenario
@@ -420,7 +421,7 @@ def advance_year(people: Iterable[PersonDefinition], officers: Mapping[int, Runt
             if value is not None and previous_year < value <= next_year:
                 events.append({'year': value, 'event': key, 'person_id': person.person_id})
     deaths = [ident for ident, o in officers.items()
-              if year_state(by_person[o.person_id], next_year) == YearState.DEAD
+              if natural_deaths and year_state(by_person[o.person_id], next_year) == YearState.DEAD
               and (o.alive or previous_year < by_person[o.person_id].death_year + 1 <= next_year)]
     for ident in deaths:
         officer = officers[ident]

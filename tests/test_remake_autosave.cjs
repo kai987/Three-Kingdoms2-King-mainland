@@ -16,14 +16,14 @@ const tick=()=>new Promise(resolve=>setImmediate(resolve));
 const app=fs.readFileSync(require.resolve('../game/app.js'),'utf8');
 const commandSource=app.slice(app.indexOf('async function command('),app.indexOf('\nfunction openDialog('));
 const loadSource=app.slice(app.indexOf('async function loadSave('),app.indexOf('\nfunction confirmAutosave('));
-function integration({pending=false,rejected=false,nextGame=game(),phase='city'}={}){
+function integration({pending=false,rejected=false,previousGame=game(),nextGame=game(),phase='city',saveGate}={}){
  const captured=[],requests=[],errors=[],invalidations=[],restored=[];
- const before={revision:8,catalog:{scenario_id:'test',title:'入蜀爭奪戰'},game:{...game(),phase}},next={...before,revision:9,game:nextGame};
- const context={busy:false,view:before,audioOutcome:null,battleScene:null,gameEvents:null,setupPreview:{},selectedCity:'old',actor:1,target:2,confirmOrderCommand:async()=>true,
+ const before={revision:8,catalog:{scenario_id:'test',title:'入蜀爭奪戰'},game:{...previousGame,phase}},next={...before,revision:9,game:nextGame};
+ const context={busy:false,observerYearSaving:false,view:before,audioOutcome:null,battleScene:null,gameEvents:null,setupPreview:{},selectedCity:'old',actor:1,target:2,confirmOrderCommand:async()=>true,
   clearDialogueFeedback(){},setObserverPlaying(){},SaveTransfer:require('../game/save-transfer.js'),gameAudio:{play(){}},render(){},notice(message,error){if(error)errors.push(message);},
   setBusy(value){context.busy=value;},setTimeout(fn){fn();return 1;},dialog:{close(){restored.push('close');}},
   request:async(path,body,settings)=>{requests.push({path,body,settings});if(rejected)throw Error('Rejected');return next;},
-  localAutosave:{status:()=>({state:pending?'saving':'saved'}),invalidate(){invalidations.push(true);},checkpoint(reason){assert.equal(context.busy,false,'Snapshots start after the campaign command is unlocked');captured.push(reason);return Promise.resolve({ok:true});}}
+  localAutosave:{status:()=>({state:pending?'saving':'saved'}),invalidate(){invalidations.push(true);},checkpoint(reason){assert.equal(context.busy,false,'Snapshots start after the campaign command is unlocked');captured.push(reason);return saveGate?.promise||Promise.resolve({ok:true});}}
  };
  vm.createContext(context);vm.runInContext(commandSource+'\n'+loadSource,context);
  return {context,captured,requests,errors,invalidations,restored,before,next};
@@ -104,6 +104,18 @@ function integration({pending=false,rejected=false,nextGame=game(),phase='city'}
  const failedResume=integration({pending:true,rejected:true});assert.equal(await failedResume.context.command('allocate'),false);assert.deepEqual(failedResume.captured,['progress']);assert.equal(failedResume.context.view,failedResume.before,'A failed command only retries its previously pending progress');
  const busyCommand=integration();busyCommand.context.busy=true;assert.equal(await busyCommand.context.command('new'),false);assert.deepEqual(busyCommand.captured,[]);assert.equal(busyCommand.requests.length,0);assert.equal(busyCommand.invalidations.length,0);
  const loaded=integration();assert(await loaded.context.loadSave(original));assert.deepEqual(loaded.captured,['load']);assert.equal(loaded.requests[0].path,'/api/load');assert.equal(loaded.requests[0].body,'{"save":'+original+',"revision":8}');assert.equal(loaded.context.view,loaded.next);
+ const observerDecember={...game(35),player:'observer',month:12,day:21};
+ const observerJanuary={...observerDecember,turn:36,year:212,month:1,day:1};
+ const gate=deferred(),annual=integration({previousGame:observerDecember,nextGame:observerJanuary,saveGate:gate});
+ const advance=annual.context.command('observe_turn');await tick();
+ assert.deepEqual(annual.captured,['observer-year']);assert.equal(annual.context.observerYearSaving,true);
+ assert.equal(await annual.context.command('observe_turn'),false,'The next observed turn waits for the annual snapshot');
+ assert.equal(await annual.context.loadSave(original),false,'A concurrent restore cannot discard an annual snapshot');
+ gate.resolve({ok:true});assert.equal(await advance,true);assert.equal(annual.context.observerYearSaving,false);
+ for(const [kind,nextGame] of [['new',observerJanuary],['observe_turn',{...observerJanuary,turn:37,day:11}],['observe_turn',{...observerJanuary,turn:37,phase:'finished'}]]){
+  const f=integration({previousGame:observerJanuary,nextGame});assert(await f.context.command(kind));assert.deepEqual(f.captured,[],kind+' in the same observed year');
+ }
+ const observerLoad=integration({nextGame:observerJanuary});assert(await observerLoad.context.loadSave(original));assert.deepEqual(observerLoad.captured,[]);
  const rejectedLoad=integration({rejected:true});assert.equal(await rejectedLoad.context.loadSave(original),false);assert.deepEqual(rejectedLoad.captured,[]);assert.equal(rejectedLoad.context.view,rejectedLoad.before);assert.equal(rejectedLoad.restored.length,0);
  const interruptedLoad=integration({pending:true,rejected:true});assert.equal(await interruptedLoad.context.loadSave(original),false);assert.deepEqual(interruptedLoad.captured,['progress']);assert.equal(interruptedLoad.context.view,interruptedLoad.before);
  const staleLoad=integration();assert.equal(await staleLoad.context.loadSave(original,()=>false),false);assert.deepEqual(staleLoad.captured,[]);assert.equal(staleLoad.requests.length,0);assert.equal(staleLoad.invalidations.length,0);

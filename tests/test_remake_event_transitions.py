@@ -16,6 +16,7 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, GameError
 from remake import civil_staff, domestic, facilities, logistics, march_supply, treasures, city_development
 from campaign_fixtures import controlled_catalog
+from campaign_dated_fixtures import dated_catalog
 
 
 def catalog_with(change):
@@ -36,9 +37,9 @@ def catalog_with(change):
         return Catalog(path)
 
 
-def start(catalog, faction='shu', seed=2026):
+def start(catalog, faction='shu', seed=2026, **options):
     game = Campaign(catalog)
-    game.command('new', dict(faction=faction, seed=seed), 0)
+    game.command('new', dict(faction=faction, seed=seed, **options), 0)
     return game
 
 
@@ -150,6 +151,65 @@ class CampaignEventTransitionTests(unittest.TestCase):
         self.assertEqual(events(game, 'officer_death'), death)
         self.assertEqual(events(game, 'succession'), succession)
         game.validate(game.state)
+
+    def test_no_lifespan_preserves_existing_people_without_reviving_opening_deaths(self):
+        ruler, local, retired = ('san14-candidate-0952', 'san14-candidate-0002', 'san14-candidate-0003')
+
+        def change(data):
+            data['start_month'] = 12
+            people = {row['person_id']: row for row in data['people']}
+            people[ruler]['death_year'] = 217
+            people[local].update(birth_year=190, service_year=210, death_year=217)
+            people[retired].update(birth_year=190, service_year=210, death_year=216)
+            next(row for row in data['initial_officers'] if row['person_id'] == ruler)['resolve_death_year'] = True
+            data['initial_free_officers'] = [dict(person_id=local, city='xiangyang', resolve_death_year=True)]
+            data['appearance_locations'][retired] = 'xiangyang'
+            data['appearance_windows'][retired] = [dict(start=[217, 12], end=[218, 12], city='xiangyang')]
+
+        catalog = catalog_with(change)
+        normal = start(catalog)
+        self.assertEqual(normal.export_save(), start(catalog, lifespan='historical').export_save())
+        self.assertNotIn('lifespan', normal.state.extension)
+        legacy = Campaign(catalog)
+        legacy.load_save(normal.export_save(), 0)
+        self.assertEqual(legacy.export_save(), normal.export_save())
+
+        game = start(catalog, lifespan='none')
+        leader, recruit, absent = (catalog.ids[pid] for pid in (ruler, local, retired))
+        opening_troops = game.state.officers[leader].troops
+        for _ in range(3):
+            tick(game)
+        self.assertEqual((game.state.year, game.state.month), (218, 1))
+        self.assertEqual(game.state.extension['leaders']['shu'], leader)
+        self.assertTrue(game.state.officers[leader].alive)
+        self.assertEqual(game.state.officers[leader].troops, opening_troops)
+        view = game.view()['catalog']
+        self.assertIn(recruit, view['recruitable']['xiangyang'])
+        library = {row['id']: row for row in view['library']}
+        self.assertEqual(library[leader]['year_state'], 'available')
+        self.assertEqual(library[recruit]['year_state'], 'available')
+        self.assertEqual(library[absent]['year_state'], 'dead')
+        self.assertEqual(view['year_available'], sum(row['year_state'] == 'available' for row in library.values()))
+        self.assertNotIn(absent, game.state.officers)
+        self.assertFalse(events(game, 'officer_death'))
+        self.assertFalse(any(key.startswith('remove_after_death_year:') for key in game.state.year_events))
+        saved = game.export_save()
+        loaded = Campaign(catalog)
+        loaded.load_save(saved, 0)
+        self.assertEqual(loaded.state.extension['lifespan'], 'none')
+        self.assertEqual(loaded.export_save(), saved)
+        with self.assertRaises(GameError):
+            loaded.command('new', dict(faction='shu', seed=2026, lifespan='invalid'), loaded.revision)
+        self.assertEqual(loaded.export_save(), saved)
+
+    def test_no_lifespan_does_not_cancel_dated_execution(self):
+        game = start(dated_catalog('retirement'), lifespan='none')
+        person = 'historical-song-jian'
+        for _ in range(3):
+            tick(game)
+        self.assertFalse(game.state.officers[game.catalog.ids[person]].alive)
+        self.assertIn(person, game.state.extension['dated_events']['retirements'])
+        self.assertEqual([row['person_ids'] for row in events(game, 'officer_death')], [[person]])
 
     def test_no_heir_ends_real_faction_and_player_defeat_only_for_that_player(self):
         ruler = 'san14-candidate-0124'

@@ -78,6 +78,14 @@ class ExpandedCampaign:
             state.extension['free_locations'][str(ident)] = city
             self._note(state, f'{person.name}已到登场年代，在{self.catalog.map_cities[city]["name"]}待访。')
 
+    def _runtime_year_state(self, state, person):
+        # Existing officers can outlive their normal window, but an opening
+        # never gains people who had already died in an earlier year.
+        ignore_death = (state.extension.get('lifespan') == 'none'
+                        and person.death_year is not None
+                        and person.death_year >= self.catalog.data['start_year'])
+        return year_state(person, state.year, ignore_death=ignore_death)
+
     def _neighbors(self, city, state=None):
         from .route_hazards import route_allowed
         neighbors=set()
@@ -98,7 +106,8 @@ class ExpandedCampaign:
     def _free_candidates(self, state, city):
         near = {city.id} | {k for k in self._neighbors(city.id,state) if k in state.cities and state.cities[k].owner in {city.owner, 'neutral'}}
         return [i for i, o in state.officers.items() if o.alive and o.faction_id is None
-                and year_state(self.person_definition(state, i),state.year) in {YearState.AVAILABLE, YearState.DEATH_YEAR_REVIEW}
+                and self._runtime_year_state(state, self.person_definition(state, i))
+                in {YearState.AVAILABLE, YearState.DEATH_YEAR_REVIEW}
                 and state.extension['free_locations'].get(str(i)) in near]
 
     def _recruit_officer(self, state, payload):
@@ -986,7 +995,8 @@ class ExpandedCampaign:
             officer=state.officers.get(ident) if state else None
             library.append({'id':ident,'person_id':person.person_id,'name':person.name,'birth':person.birth_year,
                             'service':person.service_year,'death':person.death_year,'missing':list(profile.missing),
-                            'year_state':year_state(person,state.year if state else self.catalog.data['start_year']).value,
+                            'year_state':(self._runtime_year_state(state, person) if officer and officer.alive
+                                else year_state(person, state.year if state else self.catalog.data['start_year'])).value,
                             'faction':officer.faction_id if officer else None,'alive':officer.alive if officer else None,
                             'location':state.extension['free_locations'].get(str(ident)) if state else self.catalog.data['appearance_locations'].get(person.person_id),
                             **({'prisoner':dict(prisoners[str(ident)])} if str(ident) in prisoners else {}),
@@ -1016,6 +1026,9 @@ class ExpandedCampaign:
         if dated_events.enabled(self.catalog):fields.add('dated_events')
         if historical_campaigns.RECEIPTS in x:fields.add(historical_campaigns.RECEIPTS)
         if 'diplomacy' in x:fields.add('diplomacy')
+        if 'lifespan' in x:
+            if x['lifespan'] != 'none':raise ValueError('Invalid lifespan mode')
+            fields.add('lifespan')
         if not isinstance(x,dict) or set(x)!=fields:raise ValueError('expanded state fields')
         dated_events.validate_state(self,state)
         historical_campaigns.validate_state(self.catalog,state)
@@ -1028,7 +1041,7 @@ class ExpandedCampaign:
         for ident,o in state.officers.items():
             if (o.alive and o.faction_id is None and str(ident) not in x['free_locations']
                     and str(ident) not in prisoners):raise ValueError('unlocated free officer')
-            if o.alive and year_state(self.person_definition(state, ident),state.year) not in {YearState.AVAILABLE,YearState.DEATH_YEAR_REVIEW}:raise ValueError('unborn or retired free officer')
+            if o.alive and self._runtime_year_state(state, self.person_definition(state, ident)) not in {YearState.AVAILABLE,YearState.DEATH_YEAR_REVIEW}:raise ValueError('unborn or retired free officer')
         for key,turn in x['officer_actions'].items():
             if deserialize_officer_ref(key,self.catalog.rules) not in state.officers:raise ValueError('officer action identity')
             integer(turn,1,state.turn,'officer action turn')

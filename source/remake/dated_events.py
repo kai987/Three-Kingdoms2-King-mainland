@@ -3,7 +3,7 @@
 The calendar changes existing state only: no new people, resources or RNG.
 Player recruitment and city ownership take precedence over a historical script.
 """
-from .officers import OFFICER_TROOP_CAP, YearState, year_state
+from .officers import OFFICER_TROOP_CAP, YearState
 from . import officer_relations
 
 FOUNDING_FIELDS = {'id','faction','date','city','cities','ruler','members','required_owner',
@@ -120,7 +120,7 @@ def _local_free(game, state, pid, city):
     return (officer is not None and officer.alive and officer.faction_id is None
             and officer.health > 0 and officer.troops == 0
             and state.extension['free_locations'].get(str(officer.runtime_id)) == city
-            and year_state(game.person_definition(state, officer.runtime_id), state.year)
+            and game._runtime_year_state(state, game.person_definition(state, officer.runtime_id))
             in {YearState.AVAILABLE, YearState.DEATH_YEAR_REVIEW})
 
 
