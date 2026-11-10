@@ -1260,11 +1260,11 @@
         }
       ],
       "material": {
-        "gold": 151559,
-        "grain": 534580,
-        "soldiers": 198982
+        "gold": 153009,
+        "grain": 539605,
+        "soldiers": 200302
       },
-      "owners_sha256": "98debd6f087ab1dfcf8861f36bfca9f80babb0e0dcdfc432793f0380be98d032",
+      "owners_sha256": "bf714184a4a2daf04013b242e58219be579c288304316326a09497e3f5275439",
       "faction_rulers_sha256": "ef63e6399185a4c8d23a1889cdc7185eca24eebc692e3726d0729952452b0344",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。",
@@ -2010,11 +2010,11 @@
         }
       ],
       "material": {
-        "gold": 151559,
-        "grain": 534580,
-        "soldiers": 192082
+        "gold": 153009,
+        "grain": 539605,
+        "soldiers": 193402
       },
-      "owners_sha256": "81d2b560d3bb106f131b444ddb171dfce47cf24d0a16b41cc2dfeb98dfaca558",
+      "owners_sha256": "42a8a858daab4bd4fbc769ca62c379ead4e06289b3e31a563d5243a2e638e239",
       "faction_rulers_sha256": "b4933aa7dcd307bd58331ee257cea9a180678dac857305d312b2c81111311658",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。",
@@ -2928,11 +2928,11 @@
         }
       ],
       "material": {
-        "gold": 147270,
-        "grain": 509954,
-        "soldiers": 227792
+        "gold": 148790,
+        "grain": 515179,
+        "soldiers": 229112
       },
-      "owners_sha256": "dd5a9220494a8e1109d7f36785c4e6e822cfd311359b8c6aeddf197b7a5ef8a3",
+      "owners_sha256": "884ce0965504b52f99db48b1e3354023f152d1ed903de2a9859aaab56515249d",
       "faction_rulers_sha256": "a9bfe3eca27c9197264371f8ac363dd3b5f7fe8a370e260022bd5b5d403873e6",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。",
@@ -3753,11 +3753,11 @@
         }
       ],
       "material": {
-        "gold": 145280,
-        "grain": 502804,
-        "soldiers": 240672
+        "gold": 146800,
+        "grain": 508029,
+        "soldiers": 241992
       },
-      "owners_sha256": "2fc37135449f3e7c949a2b5601485ec151a3da762cc3658c5e10410f04e60a0a",
+      "owners_sha256": "6a9841808b80e6506faa3c061edbe46d070a0c768978c62e2ea69faeaf7d3135",
       "faction_rulers_sha256": "9e43334e7bb3d84ca3d658a49f3ba19bd409ad3de3eebeed8d414724b4306d43",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。",
@@ -4488,11 +4488,11 @@
         }
       ],
       "material": {
-        "gold": 142975,
-        "grain": 495116,
-        "soldiers": 236857
+        "gold": 144495,
+        "grain": 500341,
+        "soldiers": 238177
       },
-      "owners_sha256": "466cbdcd14680e500c01e7f40f5f195417e6a099992ba0683ead9fe9c38acd74",
+      "owners_sha256": "04411825cb3930090e4dec95d095810ca9d7da3a905d557ec195e5caf9234273",
       "faction_rulers_sha256": "5befbfe4a7421f33a1a6182b0ce08a4d2642574cd15cc683620e76bc578e77d4",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。",
@@ -5208,11 +5208,11 @@
         }
       ],
       "material": {
-        "gold": 140755,
-        "grain": 486541,
-        "soldiers": 233327
+        "gold": 143195,
+        "grain": 495016,
+        "soldiers": 235567
       },
-      "owners_sha256": "8978a6bf36ea279945ff5e9566f2bde11afd78f63a3e09205d3bac5e8d87015b",
+      "owners_sha256": "854b2b443eaf7c5308a103cd15307164bb1f1bb1593f6bfb7ca04f87b152abe6",
       "faction_rulers_sha256": "32d406b3a2334cf6d360e40970623f11d896476dd404429061a5b450ada7beb7",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。",
@@ -5925,11 +5925,11 @@
         }
       ],
       "material": {
-        "gold": 141765,
-        "grain": 491466,
-        "soldiers": 231147
+        "gold": 144205,
+        "grain": 499941,
+        "soldiers": 233387
       },
-      "owners_sha256": "4e1e51d1d0f080f8b6d605b01845a2d3f004ad7e38969bff55e3ccce960aa30e",
+      "owners_sha256": "b52220633f476989402d26d8b0c1bbe35d4bcc3464852f0e8ee462e6cd5fad33",
       "faction_rulers_sha256": "f92fecd0138c0b8225f14a349ac7f6d683dcaf9c9f7903a3ff03f8925e099ccc",
       "notes": [
         "皇帝呂布的袁術軍／帝位繼承前提保留；孫香隨原袁軍改編僅本作假想，不聲稱史實投呂布。其餘臧霸與華歆配下按已標任職回推。"
@@ -6715,11 +6715,11 @@
         }
       ],
       "material": {
-        "gold": 141775,
-        "grain": 491466,
-        "soldiers": 236922
+        "gold": 144215,
+        "grain": 499941,
+        "soldiers": 239162
       },
-      "owners_sha256": "f4886f4b1a8d91a4e28485c9676e3052c4bea29c84c03ae6eb63d5e6637584e2",
+      "owners_sha256": "7b9985737edff1f3d3f4e7ca97d6158f5567279f8c6da06ea9e1d08b98fa4131",
       "faction_rulers_sha256": "ef80aa6ff5949ea0c7dc0951d13cf908d623b0e45bf0bca482fa956504b35d18",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。",
@@ -7386,11 +7386,11 @@
         }
       ],
       "material": {
-        "gold": 152615,
-        "grain": 541281,
-        "soldiers": 253827
+        "gold": 155275,
+        "grain": 550656,
+        "soldiers": 256327
       },
-      "owners_sha256": "e9d8cf4fe73b82d5c7ac14989a47af07839f0db7bfa129c9fb33bcada5b975f4",
+      "owners_sha256": "e83512fca18fa9225f45994b4cbf1c3b2e4886c23181df56ad98cb7707e9acbd",
       "faction_rulers_sha256": "fac3e812503f82e9c49d85b3072709bc0ec23de11dea7fb6f66acca4d676eab9",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。",
@@ -8033,11 +8033,11 @@
         }
       ],
       "material": {
-        "gold": 152615,
-        "grain": 541281,
-        "soldiers": 249927
+        "gold": 155275,
+        "grain": 550656,
+        "soldiers": 252427
       },
-      "owners_sha256": "44731aa2d4e5cbba7728db60dbc0010cc7542d32947432ae477bf03333405f61",
+      "owners_sha256": "798cc3ece4739ff85bdc86ccee6946e10e328c949eeebfc3c8a07ea5ff06d097",
       "faction_rulers_sha256": "9bc6e36a96349a37627d183857f52f18e37acb94582974f02e780eeffae4f7b7",
       "notes": [
         "袁紹勝官渡的假想前提保留；此年尚存的曹軍仍可接納既有任職人物，新駐城為遊戲編組，非官方逐人原表。"
@@ -8703,11 +8703,11 @@
         }
       ],
       "material": {
-        "gold": 152615,
-        "grain": 541281,
-        "soldiers": 255927
+        "gold": 155275,
+        "grain": 550656,
+        "soldiers": 258427
       },
-      "owners_sha256": "9ac62b3f97c259c3a3b2d745537421ce085a0900dcf51805d498cddf9117a217",
+      "owners_sha256": "c5530a38d4c76299b552722dd6bdf26ca581a47bbd8360780d54505e1cfb075d",
       "faction_rulers_sha256": "d5df5f8d57c56459a2d423649bb0b481709fa31bb4eb3f83f40215726e601679",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。",
@@ -9413,11 +9413,11 @@
         }
       ],
       "material": {
-        "gold": 157855,
-        "grain": 565056,
-        "soldiers": 269507
+        "gold": 160515,
+        "grain": 574431,
+        "soldiers": 272007
       },
-      "owners_sha256": "73afd192127d80c468f1e8f915163b5db0e29fef7fe0ab4a681759eb37f228ed",
+      "owners_sha256": "d47f391862b98e47a01ef3ae72cb48a410a53d267ebe6db33bf0c77b8349d5e7",
       "faction_rulers_sha256": "6f8e45b565441c7d7ae1981973c740047fe417bd0c7696700a698d362e1d5dbd",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。",
@@ -10162,11 +10162,11 @@
         }
       ],
       "material": {
-        "gold": 152127,
-        "grain": 536336,
-        "soldiers": 277622
+        "gold": 154307,
+        "grain": 543411,
+        "soldiers": 279822
       },
-      "owners_sha256": "4fb7e2b95386d420553a656defacbc994a9bd187f849e2cd0a2296f60e52413b",
+      "owners_sha256": "75c478d6e42a535adc9a5ccc73391ac6232013d0c7c3d0c282c3e2ea9f4637eb",
       "faction_rulers_sha256": "346d1ddeaee30c6e7c176b8a9af225f30d8a19e296965a2a3ed85336a8185464",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。"
@@ -10804,11 +10804,11 @@
         }
       ],
       "material": {
-        "gold": 152127,
-        "grain": 536336,
-        "soldiers": 277772
+        "gold": 154307,
+        "grain": 543411,
+        "soldiers": 279972
       },
-      "owners_sha256": "436b866b9b5f16665f58161010d8d0f86601ddb149c696443211ce4cce0691af",
+      "owners_sha256": "ea94226cbf3ee073231005ad5f9d70ef01b0860ee07454d99ccf98ea9c854682",
       "faction_rulers_sha256": "bafc1947682d63116c3f0a1abc06a116c2d95ef65c8bee48f31aa09f19bd7c91",
       "notes": [
         "志在千里及使用者指定的臨江歸曹前提保留；韓遂與宋建仍獨立，新配下按所列有限仕履推定，不重新裁分領土。"
@@ -11447,11 +11447,11 @@
         }
       ],
       "material": {
-        "gold": 152127,
-        "grain": 536336,
-        "soldiers": 274472
+        "gold": 154307,
+        "grain": 543411,
+        "soldiers": 276672
       },
-      "owners_sha256": "5e6116383c76be5e5eec275febbf111e6f84d65a3e7b2ff481b42d4b69035379",
+      "owners_sha256": "165c300901d7a93e61125cdf2dbbbf27a692217a429d74cc18c1f1d73b3fa4a0",
       "faction_rulers_sha256": "267ef81e82354d3709d2594524d5fedd1ace08605bf4fc6281b81d0993ad4d56",
       "notes": [
         "天下二分計中孫權接收劉璋／張魯的假想前提保留；不把這兩君主及軍隊按真實歷史強拆，也不將被指定的生存例外取消。"
@@ -12113,11 +12113,11 @@
         }
       ],
       "material": {
-        "gold": 161217,
-        "grain": 564560,
-        "soldiers": 293290
+        "gold": 163697,
+        "grain": 572610,
+        "soldiers": 295720
       },
-      "owners_sha256": "6970b6fb8e57c5cb1fc00d03a6eaccee52e87704b8e35237dc6e5cc1bccff3cb",
+      "owners_sha256": "4d6634b7f57ebb50ed8df150c8ecd3ab3fb6a1df20af3273b81ed8d6d0e7f90b",
       "faction_rulers_sha256": "a666d46bd25f4303ce0e53ac3fa3047570ee7fc8f925d7d8f0f3bd6e1a6cbcef",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。"
@@ -12774,11 +12774,11 @@
         }
       ],
       "material": {
-        "gold": 161217,
-        "grain": 564560,
-        "soldiers": 289690
+        "gold": 163697,
+        "grain": 572610,
+        "soldiers": 292120
       },
-      "owners_sha256": "ed7b41f5e56369e1820d867006f08e2c7d98e36fd716ecbb61777a7e5413ecc2",
+      "owners_sha256": "99a8f17ffdf237181c9763b1fce1f149788529b09007fab5a8f099f466792f6c",
       "faction_rulers_sha256": "fff6ce3c9ca4367347fa120cb5c15294ed217ecd9d79cfd9828d6a5534d752b4",
       "notes": [
         "錦馬超飛翔的聯軍勝利前提保留；史實215仍活的程銀可納馬氏聯軍編組，不聲稱真實212臣屬或官方逐將原配。未無條件復活其他史實戰死將。"
@@ -13505,11 +13505,11 @@
         }
       ],
       "material": {
-        "gold": 161217,
-        "grain": 564560,
-        "soldiers": 283540
+        "gold": 163697,
+        "grain": 572610,
+        "soldiers": 285970
       },
-      "owners_sha256": "8985c9112d3df77d78910f8d7b49e54db9da3020e4d85c46bfbe8e81664bb688",
+      "owners_sha256": "cdbe8cf3f8546ce0fdcb3b151381ab9608f1ea3b96f6fdb14f1abcd437951ffb",
       "faction_rulers_sha256": "dc5f4ad21c350c2455518e753e1f0281d46b6082c02a2c469bce78194e8f1fb1",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。"
@@ -14206,11 +14206,11 @@
         }
       ],
       "material": {
-        "gold": 162097,
-        "grain": 569710,
-        "soldiers": 287262
+        "gold": 164577,
+        "grain": 577760,
+        "soldiers": 289692
       },
-      "owners_sha256": "5a76ed08456d9af9d66d5ad4e4abbdf04f7e22f68fc707559a8b453c416c6e3d",
+      "owners_sha256": "464a32215389614dfe2239f707ae63e025220d6af45179cd6aff7defa3346ae2",
       "faction_rulers_sha256": "cfe491bc52ae2428f1645ef45381f58aafecc1bbf57a1bdc087b749984606123",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。"
@@ -14884,11 +14884,11 @@
         }
       ],
       "material": {
-        "gold": 162397,
-        "grain": 568742,
-        "soldiers": 288125
+        "gold": 164877,
+        "grain": 576792,
+        "soldiers": 290555
       },
-      "owners_sha256": "5a76ed08456d9af9d66d5ad4e4abbdf04f7e22f68fc707559a8b453c416c6e3d",
+      "owners_sha256": "464a32215389614dfe2239f707ae63e025220d6af45179cd6aff7defa3346ae2",
       "faction_rulers_sha256": "cfe491bc52ae2428f1645ef45381f58aafecc1bbf57a1bdc087b749984606123",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。"
@@ -15563,11 +15563,11 @@
         }
       ],
       "material": {
-        "gold": 155371,
-        "grain": 538185,
-        "soldiers": 285367
+        "gold": 157511,
+        "grain": 545185,
+        "soldiers": 287557
       },
-      "owners_sha256": "1e7296cea145123d0b1df71e26963247f64404191d8e12d05ce6a7fbe070b658",
+      "owners_sha256": "4dbfff06ddcb2b21de03781efe28b6131cc9792ee819b10a25a27c127bca575d",
       "faction_rulers_sha256": "cfe491bc52ae2428f1645ef45381f58aafecc1bbf57a1bdc087b749984606123",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。"
@@ -16264,11 +16264,11 @@
         }
       ],
       "material": {
-        "gold": 170672,
-        "grain": 580405,
-        "soldiers": 285907
+        "gold": 171792,
+        "grain": 584155,
+        "soldiers": 287127
       },
-      "owners_sha256": "474e1cabe5dcc2b0f05eca5c2b20a03b133960e77dc1794d162eff0d32998820",
+      "owners_sha256": "eb439914409b9ffee7ebe227d37f7be2a15bf5726b564cd0ea8ffbbcf0e5dbac",
       "faction_rulers_sha256": "54354a95d5e3fa8bba196e9627c91a1d27f978373ad57113156d494722adebee",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。"
@@ -16997,11 +16997,11 @@
         }
       ],
       "material": {
-        "gold": 172925,
-        "grain": 590336,
-        "soldiers": 275517
+        "gold": 174045,
+        "grain": 594086,
+        "soldiers": 276737
       },
-      "owners_sha256": "e4c836415c50c5ea55404685fcd2685f5674ab321b51a7d886f8a62a887c0924",
+      "owners_sha256": "f91dd84ab6a68d8f05a0daadc5c78e99ec841e0eb5ae24ca35bc0cdfaceae5de",
       "faction_rulers_sha256": "be667ef9f21920ec6a858103907e5915ad70790124b6247d322eb6e67757fc5f",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。"
@@ -17677,11 +17677,11 @@
         }
       ],
       "material": {
-        "gold": 174130,
-        "grain": 585336,
-        "soldiers": 285630
+        "gold": 175250,
+        "grain": 589086,
+        "soldiers": 286850
       },
-      "owners_sha256": "519e9762aeaae487bc38b67bfa616fbf60e58d3b5f82dc5e361664260a1eb290",
+      "owners_sha256": "5c4fcecfdbd6cd59d76dcde84aca3b3089e687fc6fad283be922e99bc9583bcc",
       "faction_rulers_sha256": "a39b47059b45388e7266309f408d6ef76f5a2707d76297324a956c3bf10b87e2",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。"
@@ -18312,11 +18312,11 @@
         }
       ],
       "material": {
-        "gold": 174890,
-        "grain": 587161,
-        "soldiers": 278260
+        "gold": 176010,
+        "grain": 590911,
+        "soldiers": 279480
       },
-      "owners_sha256": "b2fc81dcd43224005a8e654c2cf8529e56c5d84e2827b0617a57776f32f74891",
+      "owners_sha256": "46f850468355e715baf10296298b206009cef55acda6283d0d3491c40b21b35b",
       "faction_rulers_sha256": "88d7a40c90e365122ab673e2696dd09b2cc3e87c6ff7b8a1a18a6a7feb1210c7",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。"
@@ -18900,11 +18900,11 @@
         }
       ],
       "material": {
-        "gold": 181377,
-        "grain": 630967,
-        "soldiers": 280122
+        "gold": 182657,
+        "grain": 635592,
+        "soldiers": 281402
       },
-      "owners_sha256": "78135f901774ab1979f9cb00cedacede75ef03d65de4acd68f9e53e249d24a49",
+      "owners_sha256": "e5784fe9c8e37a1fa05d9a7b437a337c38712c71e22a0088ebdbe0798c90323f",
       "faction_rulers_sha256": "88d7a40c90e365122ab673e2696dd09b2cc3e87c6ff7b8a1a18a6a7feb1210c7",
       "notes": [
         "秋風越的諸葛亮延壽前提保留；公孫恭被拘束與遼東府署新增具名臣屬分開，不因假想諸葛生存而任意改動全員生死。"
@@ -19516,11 +19516,11 @@
         }
       ],
       "material": {
-        "gold": 181377,
-        "grain": 630967,
-        "soldiers": 277122
+        "gold": 182657,
+        "grain": 635592,
+        "soldiers": 278402
       },
-      "owners_sha256": "b2fc81dcd43224005a8e654c2cf8529e56c5d84e2827b0617a57776f32f74891",
+      "owners_sha256": "46f850468355e715baf10296298b206009cef55acda6283d0d3491c40b21b35b",
       "faction_rulers_sha256": "88d7a40c90e365122ab673e2696dd09b2cc3e87c6ff7b8a1a18a6a7feb1210c7",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。"
@@ -20102,11 +20102,11 @@
         }
       ],
       "material": {
-        "gold": 190667,
-        "grain": 656767,
-        "soldiers": 267562
+        "gold": 191997,
+        "grain": 661567,
+        "soldiers": 268842
       },
-      "owners_sha256": "7ad7ba5f54054f14179d58f91bc417b2145c0c87e14c1439d7e997ab934742ed",
+      "owners_sha256": "b9d2470236cef521ffd24c3b4796aae3f026a00e1e9b91e5409790b18bd8b843",
       "faction_rulers_sha256": "9ecd312834ea40823cd656781e0d70833dbee8d89759266d74355adaaeeed70f",
       "notes": [
         "具名臣屬的史料關係與既有遊戲駐將分開；未列逐人變更者不表示已考定其每月所在。"

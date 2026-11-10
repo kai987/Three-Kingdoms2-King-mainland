@@ -101,6 +101,70 @@ def apply_patch(base, patch):
     return result
 
 
+def relocate_opening_officer(data, officer, city_id, owner, basis):
+    person_id = officer['person_id']
+    officer['city'] = city_id
+    era = data['era_assignments'][person_id]
+    era.update(city=city_id, faction=owner, placement_basis=basis)
+    if isinstance(era.get('posting_reference'), dict):
+        era['posting_reference'].update(city=city_id, faction=owner, basis=basis)
+    era['appearance_plan']['city'] = city_id
+    data['appearance_locations'][person_id] = city_id
+
+
+def apply_city_chronology(data, review, people_by_id):
+    """Resolve established sites and reviewed opening posts before expanding the board."""
+    scenario = data['id']
+    date = (data['start_year'], data['start_month'])
+    factions = {row['id'] for row in data['factions']} | {'neutral'}
+    for city, owner in review['owners'][scenario].items():
+        founding = data['city_foundings'].get(city)
+        active = founding is None or date >= (founding['year'], founding['month'])
+        if active != (owner is not None) or (active and owner not in factions):
+            raise ValueError(f'{scenario}: invalid reviewed opening for {city}')
+        if active:
+            if city not in data['active_cities']:
+                data['active_cities'].append(city)
+            data['initial_owners'][city] = owner
+        history = data['city_history'][city]
+        history['opening'] = dict(
+            owner=owner, sources=history['sources'],
+            basis=('fictional_scenario_adaptation' if data['main_scenario']['group'] == 'if'
+                   else 'reviewed_regional_opening') if active else 'not_yet_open',
+            note=('按本開局的區域控制與已知任職配置。' if active else founding['date_note']))
+
+    serving = {row['person_id']: row for row in data['initial_officers']}
+    posted = review['garrisons'].get(scenario, {})
+    seen = set()
+    for city, people in posted.items():
+        owner = data['initial_owners'][city]
+        for person in people:
+            officer = serving.get(person)
+            if (person in seen or not officer or officer.get('ruler') or owner == 'neutral'
+                    or data['initial_owners'][officer['city']] != owner):
+                raise ValueError(f'{scenario}: invalid reviewed post {person} at {city}')
+            seen.add(person)
+            relocate_opening_officer(data, officer, city, owner, 'attested_expansion_post')
+
+    free = {row['person_id']: row for row in data.get('initial_free_officers', [])}
+    for person, city in review['free_locations'].get(scenario, {}).items():
+        if person not in free or city not in data['initial_owners']:
+            raise ValueError(f'{scenario}: invalid local free officer {person} at {city}')
+        relocate_opening_officer(data, free[person], city, None, 'reviewed_local_presence')
+        for window in data.get('appearance_windows', {}).get(person, []):
+            if tuple(window['start']) <= date <= tuple(window['end']):
+                window['city'] = city
+
+    for city in ('wuchang', 'jianan', 'xiping', 'gaoliang'):
+        if city not in data['initial_owners']:
+            continue
+        data['city_history'][city]['garrisons'] = [
+            dict(person_id=person, name=people_by_id[person]['name'],
+                 basis=('attested_expansion_post' if person in seen else
+                        'retained_faction_ruler_seat' if row.get('ruler') else 'expansion_regional_defence'))
+            for person, row in serving.items() if row['city'] == city]
+
+
 def apply_city_expansion(data, locations, opening, notes, people_by_id):
     """Append reviewed cities without editing the inherited map or IF overrides."""
     date = data['start_year'], data['start_month']
@@ -169,14 +233,8 @@ def apply_city_expansion(data, locations, opening, notes, people_by_id):
                     raise ValueError(f'{data["id"]}: unreviewed garrison transfer of {person_id}')
                 transfers.add(person_id)
             seen.add(person_id)
-            officer['city'] = city_id
-            era = data['era_assignments'][person_id]
             basis = 'attested_expansion_post' if person_id in named_posts else 'expansion_regional_defence'
-            era.update(city=city_id, faction=owners[city_id], placement_basis=basis)
-            if isinstance(era.get('posting_reference'), dict):
-                era['posting_reference'].update(city=city_id, faction=owners[city_id], basis=basis)
-            era['appearance_plan']['city'] = city_id
-            data['appearance_locations'][person_id] = city_id
+            relocate_opening_officer(data, officer, city_id, owners[city_id], basis)
             history['garrisons'].append(dict(
                 person_id=person_id, name=people_by_id[person_id]['name'], basis=basis))
     if transfers != set(moves):
@@ -247,12 +305,19 @@ def load_sources(*, timing=True):
     san14_abilities = read('game/config/references/san14-abilities.json')
     city_scale_rules = read('game/config/city-scale-rules.json')
     city_name_rules = read('game/config/city-name-rules.json')
+    city_chronology = read('game/config/campaigns/city-chronology-openings.json')
     expansion_map = read('game/config/campaigns/city-expansion-map.json')['cities']
     expansion_openings = read('game/config/campaigns/city-expansion-openings.json')
     canonical_index = read('game/config/campaigns/index.json')
+    scenario_ids = {row['id'] for row in canonical_index['scenarios']}
+    if (city_chronology.get('schema') != 'tk2-city-chronology-openings-v1'
+            or set(city_chronology['owners']) != scenario_ids
+            or any(set(row) != {'wuchang', 'jianan'} for row in city_chronology['owners'].values())
+            or (set(city_chronology['garrisons']) | set(city_chronology['free_locations'])) - scenario_ids):
+        raise ValueError('Incomplete reviewed city chronology')
     if (expansion_openings.get('schema') != 'tk2-city-expansion-openings-v1'
             or set(expansion_map) != set(EXPANSION_CITIES)
-            or set(expansion_openings['scenarios']) != {row['id'] for row in canonical_index['scenarios']}
+            or set(expansion_openings['scenarios']) != scenario_ids
             or set(expansion_openings['notes']) != set(EXPANSION_CITIES)):
         raise ValueError('Incomplete reviewed historical city expansion')
     original_identities = read('game/config/portrait-identity-map.json')
@@ -289,10 +354,11 @@ def load_sources(*, timing=True):
         for city, rule in city_name_rules.items():
             history = data['city_history'].setdefault(city, {})
             history.update(deepcopy(rule), sources=[*rule['sources'], *history.get('sources', [])])
-        apply_opening_sizes(data, city_scale_rules)
         current_people = apply_patch(persons, source.get('people_overrides', {}))
         if set(current_people) != set(order):
             raise ValueError('A campaign may not add or remove canonical person identities')
+        apply_city_chronology(data, city_chronology, current_people)
+        apply_opening_sizes(data, city_scale_rules)
         apply_city_expansion(data, expansion_map, expansion_openings['scenarios'][entry['id']],
                              expansion_openings['notes'], current_people)
         original_people = validate_original_virtue(current_people, original_stats, original_identities)

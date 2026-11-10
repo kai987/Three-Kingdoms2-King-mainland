@@ -619,13 +619,17 @@ async function showCityInformation(id){
   const c=data.city,naming=view.catalog.map_presentation.city_names[id],history=c.history,troops=c.officers.reduce((n,o)=>n+o.troops,0);
   const rows=c.officers.map(o=>`<tr><td><span class="officer-identity">${portraitHtml(o.id,'roster',false,o.person_id,o.name)}<span>${escapeHtml(o.name)}</span></span>${typeof GameEquipment!=='undefined'?GameEquipment.render(o.equipment,{id:o.id,locale:GameI18n.locale,bilingual:true,compact:true}):''}</td><td>${o.troops}</td><td>${o.martial_strength}</td><td>${o.intellect}</td><td>${o.virtue}</td><td>${GameOfficerChoices.loyalty(o,{isRuler:o.is_ruler===true})}</td><td>${GameOfficerChoices.experience(o.experience)}</td><td>${o.health??'—'}</td></tr>`).join('');
   const garrisonLabels={attested_yanmen_post_227:'史料任职',attested_expansion_post:'史料任职',reviewed_SAN14_source_city_to_board:'攻略驻城参考',retained_faction_ruler_seat:'君主营地'};
+  const garrisons=history?.garrisons;
+  let garrisonHistory='';
+  if(garrisons?.length)garrisonHistory=`<p>开局驻防：${garrisons.map(g=>`${escapeHtml(g.name)}（${garrisonLabels[g.basis]||'区域防务调配'}）`).join('、')}</p>`;
+  else if(garrisons)garrisonHistory='<p>未虚构初始郡守，驻防名册暂空，可在战役中调将或招募。</p>';
   const historySources=(history?.sources||[]).map((source,i)=>{const url=typeof source==='string'?source:source?.url,label=typeof source==='object'&&source?.note?source.note:`参考资料${i+1}`;return typeof url==='string'&&url?`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`:`<span>${escapeHtml(label)}</span>`;}).join(' · ');
   openDialog(title,`<div class="city-information" data-inspected-city="${id}" data-information-mode="${preview?'preview':'live'}">
    <p class="small">${preview?'剧本开局预览':'当前战役'} · ${GameCalendar.text({...data,day:data.day??1})}</p>
    <p class="city-information-owner">归属：${escapeHtml(c.owner==='neutral'&&history?.neutral_label?history.neutral_label:c.owner_name)}</p>
    ${history?.summary_i18n?`<div class="city-island-status" data-island-status="${id}"><p data-locale-only="zh-Hant" data-l10n-native="zh-Hant">${escapeHtml(history.summary_i18n['zh-Hant'])}</p><p data-locale-only="ja" data-l10n-native="ja">${escapeHtml(history.summary_i18n.ja)}</p></div>`:''}
    ${naming?.detail?`<p class="small">${escapeHtml(naming.detail)}</p>`:''}
-   ${history?`<details class="scenario-notes city-history"><summary>年代与开局归属依据</summary>${sourceEvidence(`<p>${escapeHtml(history.detail)}</p><p>${escapeHtml(history.opening?.note||'')}</p>${historySources}`,history.detail_ja||'都市の年代・開始時所属について、史料の記録と本作の配置設定を区別しています。詳細な根拠と資料の精度は原資料で確認できます。')}<p>驻将按攻略参考、君主营地和同势力防务调配安排；史料任职会单独注明，不代表所有驻将均为史实郡守。</p>${history.garrisons?.length?`<p>开局驻防：${history.garrisons.map(g=>`${escapeHtml(g.name)}（${garrisonLabels[g.basis]||'区域防务调配'}）`).join('、')}</p>`:'<p>未虚构初始郡守，驻防名册暂空，可在战役中调将或招募。</p>'}</details>`:''}
+   ${history?`<details class="scenario-notes city-history"><summary>年代与开局归属依据</summary>${sourceEvidence(`<p>${escapeHtml(history.detail)}</p><p>${escapeHtml(history.opening?.note||'')}</p>${historySources}`,history.detail_ja||'都市の年代・開始時所属について、史料の記録と本作の配置設定を区別しています。詳細な根拠と資料の精度は原資料で確認できます。')}<p>驻将按攻略参考、君主营地和同势力防务调配安排；史料任职会单独注明，不代表所有驻将均为史实郡守。</p>${garrisonHistory}</details>`:''}
    <p class="small">${escapeHtml(c.profile?.label||'旧版城市')} · 地形：${{plain:'平地',mountain:'山地',water:'水地'}[c.terrain]||'未配置'}</p>
    ${cityEconomyNote(c.profile)}
    ${!preview&&typeof GameDomestic!=='undefined'?GameDomestic.summary(view,id):''}

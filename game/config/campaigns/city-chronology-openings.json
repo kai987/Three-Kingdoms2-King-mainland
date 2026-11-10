@@ -1,0 +1,45 @@
+{
+  "schema": "tk2-city-chronology-openings-v1",
+  "owners": {
+    "mainland184-02": {"wuchang": "neutral", "jianan": null},
+    "mainland188-06": {"wuchang": "neutral", "jianan": null},
+    "mainland190-01": {"wuchang": "liu_biao", "jianan": null},
+    "mainland191-10": {"wuchang": "liu_biao", "jianan": null},
+    "mainland194-06": {"wuchang": "liu_biao", "jianan": null},
+    "mainland196-06": {"wuchang": "liu_biao", "jianan": "wang_lang"},
+    "mainland197-07": {"wuchang": "liu_biao", "jianan": "wang_lang"},
+    "mainland198-03": {"wuchang": "liu_biao", "jianan": "wu"},
+    "mainland200-01": {"wuchang": "liu_biao", "jianan": "wu"},
+    "mainland201-05": {"wuchang": "liu_biao", "jianan": "wu"},
+    "mainland202-06": {"wuchang": "liu_biao", "jianan": "wu"},
+    "mainland207-09": {"wuchang": "liu_biao", "jianan": "wu"},
+    "mainland208-10": {"wuchang": "wu", "jianan": "wu"},
+    "mainland209-06": {"wuchang": "wu", "jianan": "wu"},
+    "mainland210-11": {"wuchang": "wu", "jianan": "wu"},
+    "mainland211-07-tongguan": {"wuchang": "wu", "jianan": "wu"},
+    "mainland212-06": {"wuchang": "wu", "jianan": "wu"},
+    "mainland212-12": {"wuchang": "wu", "jianan": "wu"},
+    "mainland215-08": {"wuchang": "wu", "jianan": "wu"},
+    "mainland217-07": {"wuchang": "wu", "jianan": "wu"},
+    "mainland219-07": {"wuchang": "wu", "jianan": "wu"},
+    "mainland221-07": {"wuchang": "wu", "jianan": "wu"},
+    "mainland225-07": {"wuchang": "wu", "jianan": "wu"},
+    "mainland227-02": {"wuchang": "wu", "jianan": "wu"},
+    "mainland234-02": {"wuchang": "wu", "jianan": "wu"},
+    "mainland235-01": {"wuchang": "wu", "jianan": "wu"},
+    "mainland238-01": {"wuchang": "wu", "jianan": "wu"},
+    "mainland249-01": {"wuchang": "wu", "jianan": "wu"},
+    "mainland263-05": {"wuchang": "wu", "jianan": "wu"}
+  },
+  "garrisons": {
+    "mainland208-10": {"wuchang": ["san14-candidate-0303"]},
+    "mainland234-02": {"wuchang": ["san14-candidate-0902"]},
+    "mainland238-01": {"wuchang": ["san14-candidate-0902"]},
+    "mainland249-01": {"wuchang": ["san14-candidate-0430", "san14-candidate-0985"]}
+  },
+  "free_locations": {
+    "mainland215-08": {"san14-candidate-0190": "xiping"},
+    "mainland217-07": {"san14-candidate-0190": "xiping"},
+    "mainland219-07": {"san14-candidate-0190": "xiping"}
+  }
+}

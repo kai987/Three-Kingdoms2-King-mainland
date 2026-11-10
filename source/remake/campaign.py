@@ -586,8 +586,10 @@ class Campaign(TravelCampaign, ExpandedCampaign):
 
     def _open_dated_cities(self, state):
         """Split an existing actual territory; do not replay historical conquest."""
+        active = set(self.catalog.active_city_ids(state.year, state.month))
         for key, rule in self.catalog.data.get('city_foundings', {}).items():
-            if (state.year,state.month) < (rule['year'],rule.get('month',1)) or key in state.cities: continue
+            if key in state.cities or key not in active:
+                continue
             parent = state.cities[rule['parent']]
             resources = {}
             for field in ('gold','grain','reserves'):

@@ -35,7 +35,8 @@ class MapPresentationTests(unittest.TestCase):
         self.assertEqual({k:names[k] for k in expected},expected)
         self.assertEqual(s.game.catalog.map_cities['shujun']['name'],'蜀郡')
         self.assertEqual(s.game.catalog.map_cities['danyang']['name'],'丹阳')
-        self.assertEqual(names['fanyang'],'范阳') # Not the蓟 city node.
+        self.assertEqual(names['fanyang'],'涿县')
+        self.assertEqual(city_names(s.game.catalog,224)['fanyang'],'范阳')
         self.assertEqual(names['yizhou'],'夷洲')
         for year,expected_name in ((190,'秣陵'),(211,'秣陵'),(212,'建业'),(238,'建业')):
             self.assertEqual(city_names(s.game.catalog,year)['danyang'],expected_name)

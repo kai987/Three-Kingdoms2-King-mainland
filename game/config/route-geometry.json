@@ -3,20 +3,20 @@
   "policy": "Existing logical legs only. Actual rendered SVG curves; no straight-line fallback. Land city_sections identify exact intermediate city stops; runtime must enforce active-city transit. Geographic conversion belongs to the campaign compiler.",
   "sources": {
     "game/build_route_geometry.cjs": "ed8b7be184253d72832d0f14284a401b8252056aac2e14ec913e12a80847bef6",
-    "game/build_campaigns.py": "73e2ea19bf7a4211fe315a0c84932c5488e37aa2bbcc13cb91be44fe3bcdeca4",
-    "game/config/road-centers.json": "a04ca9cef98a750cef41ce2ba0420b44253e95d0b5209f45e11abcbd4cd8d958",
-    "game/road_centers.py": "199a2d197ed4ef3b10b3a58e212d367e661442aeaf9602128ca31c5651ae7c4a",
-    "game/config/navigation-geometry.json": "f141e25569a83dd1672d2a7eded640c014021c2ebde66e41188463fa16d6f497",
-    "game/config/route-corridors.json": "dc6508465752212c878efafd726e8d814c82fd177b34b07d7d2c1f4ac0b2e97a",
+    "game/build_campaigns.py": "ba2966d0fcfa388ce34efcf6c46e694b9731e88d9460360434b89f9bc65ae862",
+    "game/config/road-centers.json": "80b5cb839ffa60f9e134ba1631c220e3e1de4b0d56e7fc70c449bbe374d0dd33",
+    "game/road_centers.py": "16e16ab039fe15605f27d9e46df18ad945014b2aec9f5dd9eb4e9df32f74cdea",
+    "game/config/navigation-geometry.json": "9147bf30d926cc7dfa3822addbe95675fd89fcf80da579c6b47edbaa374c5425",
+    "game/config/route-corridors.json": "288b590a6d17826182fb63b50cc1ecb638d422454c5d01fa99b18cc8a66579c9",
     "game/road_history.py": "4513459c4f635d2b617d6e04d87207fb987bcfe3a87b6168c4228dbd104c18d6",
     "game/config/road-history.json": "5350706e4e1f430fc6cc1382f23db412fc881326914ff546466ea834a11ad35e",
     "game/build_navigation_geometry.cjs": "5a8b8606934b10d02c6f078388e50aad8b41ae7092f9a3dd4625e3ab02c13cda",
     "game/config/river-network.json": "1e63a1200f8d443353d2b3adb6e974e6a5caf225181acf430a1ba1dbff1e2e6c",
     "game/river_network.py": "e36b6777d1a1d35f53222960639b3031e915f57670ee8257145397e4dbe1529c",
-    "game/config/map-source.json": "985184752922d81e183293b0aaaf592fe6f510eb4b14b3f062fbc6fd76282a00",
+    "game/config/map-source.json": "5640fa94500ee3ee2fe6f3936c19bf3bd6232c6f534e499196fcea414aa2789d",
     "game/app.js": "35d7ec8aa5056b75674f9dc16e343498a348041cc36112cbc32253ad35c59585",
     "game/config/route-render-source.json": "c5047ab0f7f8bef5ccd1f511778d051c7522e125d432718a59ee3805f469ecea",
-    "game/config/campaigns/shared.json": "d4cb66621914e64ed05bd3f4f452ba8fba274c46804b72ba54f963e9787c7884",
+    "game/config/campaigns/shared.json": "d7cb110ccbfe237c84cd9d05c9550dbea4f70a09a3d99b2f74760eae72b2f4be",
     "game/config/campaigns/city-expansion-map.json": "504f65d69d347dfea175adb2bb710da0d3a00bf9149b47e902e9864422b9587f",
     "game/config/campaigns/city-expansion-openings.json": "8e98a4722e6a7b10a0a71aaef2463a8cbd38c955d26c7f51954751986d0b75cd",
     "game/config/campaigns/index.json": "0b5095ca8de43f8201f979d88d289015da7536e5b3795a2ca8cc519e555699d3",
@@ -50,7 +50,7 @@
     "game/config/campaigns/scenarios/249-01.json": "64558bceaf1d7a46b379298cc1878fcd28c939cf4d43626b699fc752e0024eb5",
     "game/config/campaigns/scenarios/263-05.json": "55d7ae7e7df531d9fa71cffb1b85057b4203509efd6d1734201dc150a711b078"
   },
-  "input_geometry_sha256": "2c2153db9e3903f5a778e3c38cbf14eb9b18d63806330cdfa9480cc11b3af8d3",
+  "input_geometry_sha256": "f74ad60bc39dc78c2011fa08292a2048b1a1339cc21ea272b63454bc90682732",
   "routes": {
     "anding:fufeng:land": {
       "from": "anding",
@@ -8016,12 +8016,16 @@
             1061,
             121
           ],
-          "d": "M1194 78L1176.32 73.92Q1168 72 1159.5272716228 70.9409089528497L1112.93050089042 65.1163126113029Q1104 64 1097.22680974764 69.9265414708167L1078.77319025236 86.0734585291833Q1072 92 1068.80811189292 100.41497773686L1061 121",
-          "length_px": 163.305862,
+          "d": "M1194 78L1186.52 74.6Q1183 73 1179.70699948975 70.9735381475377L1174.16 67.56Q1170 65 1165.36607293972 63.4553576465732L1159.8 61.6Q1155 60 1150.01734552296 59.1207080334632L1138 57M1138 57L1125.29119206923 59.1181346551278Q1120 60 1114.88 61.6L1109.12 63.4Q1104 65 1099.6513727423 68.1406752416687L1091.76 73.84Q1086 78 1081.27959323787 83.3104576074007L1075.12 90.24Q1070 96 1067.38961759175 103.251062245128L1061 121",
+          "length_px": 167.867382,
           "chord_px": 139.778396,
           "pieces": [
             {
-              "d": "M1061 121L1068.80811189292 100.41497773686Q1072 92 1078.77319025236 86.0734585291833L1097.22680974764 69.9265414708167Q1104 64 1112.93050089042 65.1163126113029L1159.5272716228 70.9409089528497Q1168 72 1176.32 73.92L1194 78",
+              "d": "M1138 57L1150.01734552296 59.1207080334632Q1155 60 1159.8 61.6L1165.36607293972 63.4553576465732Q1170 65 1174.16 67.56L1179.70699948975 70.9735381475377Q1183 73 1186.52 74.6L1194 78",
+              "reverse": true
+            },
+            {
+              "d": "M1061 121L1067.38961759175 103.251062245128Q1070 96 1075.12 90.24L1081.27959323787 83.3104576074007Q1086 78 1091.76 73.84L1099.6513727423 68.1406752416687Q1104 65 1109.12 63.4L1114.88 61.6Q1120 60 1125.29119206923 59.1181346551278L1138 57",
               "reverse": true
             }
           ]
@@ -8030,7 +8034,7 @@
       "city_sections": [
         {
           "from": "liaodong",
-          "to": "liaoxi",
+          "to": "changli",
           "parts": [
             {
               "mode": "land",
@@ -8039,15 +8043,41 @@
                 78
               ],
               "end": [
+                1138,
+                57
+              ],
+              "d": "M1194 78L1186.52 74.6Q1183 73 1179.70699948975 70.9735381475377L1174.16 67.56Q1170 65 1165.36607293972 63.4553576465732L1159.8 61.6Q1155 60 1150.01734552296 59.1207080334632L1138 57",
+              "length_px": 60.350285,
+              "chord_px": 59.808026,
+              "pieces": [
+                {
+                  "d": "M1138 57L1150.01734552296 59.1207080334632Q1155 60 1159.8 61.6L1165.36607293972 63.4553576465732Q1170 65 1174.16 67.56L1179.70699948975 70.9735381475377Q1183 73 1186.52 74.6L1194 78",
+                  "reverse": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "from": "changli",
+          "to": "liaoxi",
+          "parts": [
+            {
+              "mode": "land",
+              "start": [
+                1138,
+                57
+              ],
+              "end": [
                 1061,
                 121
               ],
-              "d": "M1194 78L1176.32 73.92Q1168 72 1159.5272716228 70.9409089528497L1112.93050089042 65.1163126113029Q1104 64 1097.22680974764 69.9265414708167L1078.77319025236 86.0734585291833Q1072 92 1068.80811189292 100.41497773686L1061 121",
-              "length_px": 163.305862,
-              "chord_px": 139.778396,
+              "d": "M1138 57L1125.29119206923 59.1181346551278Q1120 60 1114.88 61.6L1109.12 63.4Q1104 65 1099.6513727423 68.1406752416687L1091.76 73.84Q1086 78 1081.27959323787 83.3104576074007L1075.12 90.24Q1070 96 1067.38961759175 103.251062245128L1061 121",
+              "length_px": 107.517097,
+              "chord_px": 100.124922,
               "pieces": [
                 {
-                  "d": "M1061 121L1068.80811189292 100.41497773686Q1072 92 1078.77319025236 86.0734585291833L1097.22680974764 69.9265414708167Q1104 64 1112.93050089042 65.1163126113029L1159.5272716228 70.9409089528497Q1168 72 1176.32 73.92L1194 78",
+                  "d": "M1061 121L1067.38961759175 103.251062245128Q1070 96 1075.12 90.24L1081.27959323787 83.3104576074007Q1086 78 1091.76 73.84L1099.6513727423 68.1406752416687Q1104 65 1109.12 63.4L1114.88 61.6Q1120 60 1125.29119206923 59.1181346551278L1138 57",
                   "reverse": true
                 }
               ]
@@ -15421,116 +15451,6 @@
         }
       ]
     },
-    "changli:liaodong:land": {
-      "from": "changli",
-      "to": "liaodong",
-      "mode": "land",
-      "parts": [
-        {
-          "mode": "land",
-          "start": [
-            1138,
-            57
-          ],
-          "end": [
-            1194,
-            78
-          ],
-          "d": "M1138 57L1146 58.5Q1154 60 1162 62.5Q1170 65 1176.5 69Q1183 73 1188.5 75.5L1194 78",
-          "length_px": 60.270485,
-          "chord_px": 59.808026,
-          "pieces": [
-            {
-              "d": "M1138 57L1146 58.5Q1154 60 1162 62.5Q1170 65 1176.5 69Q1183 73 1188.5 75.5L1194 78",
-              "reverse": false
-            }
-          ]
-        }
-      ],
-      "city_sections": [
-        {
-          "from": "changli",
-          "to": "liaodong",
-          "parts": [
-            {
-              "mode": "land",
-              "start": [
-                1138,
-                57
-              ],
-              "end": [
-                1194,
-                78
-              ],
-              "d": "M1138 57L1146 58.5Q1154 60 1162 62.5Q1170 65 1176.5 69Q1183 73 1188.5 75.5L1194 78",
-              "length_px": 60.270485,
-              "chord_px": 59.808026,
-              "pieces": [
-                {
-                  "d": "M1138 57L1146 58.5Q1154 60 1162 62.5Q1170 65 1176.5 69Q1183 73 1188.5 75.5L1194 78",
-                  "reverse": false
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "changli:liaoxi:land": {
-      "from": "changli",
-      "to": "liaoxi",
-      "mode": "land",
-      "parts": [
-        {
-          "mode": "land",
-          "start": [
-            1138,
-            57
-          ],
-          "end": [
-            1061,
-            121
-          ],
-          "d": "M1138 57L1130 58.5Q1122 60 1115.5 61.5Q1109 63 1100.5 69.5Q1092 76 1084.5 84Q1077 92 1072 100.5Q1067 109 1064 115L1061 121",
-          "length_px": 105.70089,
-          "chord_px": 100.124922,
-          "pieces": [
-            {
-              "d": "M1138 57L1130 58.5Q1122 60 1115.5 61.5Q1109 63 1100.5 69.5Q1092 76 1084.5 84Q1077 92 1072 100.5Q1067 109 1064 115L1061 121",
-              "reverse": false
-            }
-          ]
-        }
-      ],
-      "city_sections": [
-        {
-          "from": "changli",
-          "to": "liaoxi",
-          "parts": [
-            {
-              "mode": "land",
-              "start": [
-                1138,
-                57
-              ],
-              "end": [
-                1061,
-                121
-              ],
-              "d": "M1138 57L1130 58.5Q1122 60 1115.5 61.5Q1109 63 1100.5 69.5Q1092 76 1084.5 84Q1077 92 1072 100.5Q1067 109 1064 115L1061 121",
-              "length_px": 105.70089,
-              "chord_px": 100.124922,
-              "pieces": [
-                {
-                  "d": "M1138 57L1130 58.5Q1122 60 1115.5 61.5Q1109 63 1100.5 69.5Q1092 76 1084.5 84Q1077 92 1072 100.5Q1067 109 1064 115L1061 121",
-                  "reverse": false
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
     "pingyang:hedong:land": {
       "from": "pingyang",
       "to": "hedong",
@@ -15798,6 +15718,171 @@
               "pieces": [
                 {
                   "d": "M772 656L767 659.5Q762 663 755 665.5Q748 668 743 668.5Q738 669 734 670L730 671",
+                  "reverse": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "yingchuan:xiangyang:land": {
+      "from": "yingchuan",
+      "to": "xiangyang",
+      "mode": "land",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            776,
+            351
+          ],
+          "end": [
+            764,
+            403
+          ],
+          "d": "M776 351L775.5 357Q775 363 774 368.5Q773 374 770.5 380Q768 386 767 390Q766 394 765 398.5L764 403",
+          "length_px": 53.612907,
+          "chord_px": 53.366656,
+          "pieces": [
+            {
+              "d": "M776 351L775.5 357Q775 363 774 368.5Q773 374 770.5 380Q768 386 767 390Q766 394 765 398.5L764 403",
+              "reverse": false
+            }
+          ]
+        }
+      ],
+      "city_sections": [
+        {
+          "from": "yingchuan",
+          "to": "xiangyang",
+          "parts": [
+            {
+              "mode": "land",
+              "start": [
+                776,
+                351
+              ],
+              "end": [
+                764,
+                403
+              ],
+              "d": "M776 351L775.5 357Q775 363 774 368.5Q773 374 770.5 380Q768 386 767 390Q766 394 765 398.5L764 403",
+              "length_px": 53.612907,
+              "chord_px": 53.366656,
+              "pieces": [
+                {
+                  "d": "M776 351L775.5 357Q775 363 774 368.5Q773 374 770.5 380Q768 386 767 390Q766 394 765 398.5L764 403",
+                  "reverse": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "taiyuan:pingyang:land": {
+      "from": "taiyuan",
+      "to": "pingyang",
+      "mode": "land",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            731,
+            181
+          ],
+          "end": [
+            690,
+            273
+          ],
+          "d": "M731 181L725.5 185Q720 189 715 191.5Q710 194 707.5 197Q705 200 707 205Q709 210 711 214Q713 218 711.5 223.5Q710 229 706 234.5Q702 240 699 244Q696 248 695.5 252.5Q695 257 693.5 261Q692 265 691 269L690 273",
+          "length_px": 111.298485,
+          "chord_px": 100.722391,
+          "pieces": [
+            {
+              "d": "M731 181L725.5 185Q720 189 715 191.5Q710 194 707.5 197Q705 200 707 205Q709 210 711 214Q713 218 711.5 223.5Q710 229 706 234.5Q702 240 699 244Q696 248 695.5 252.5Q695 257 693.5 261Q692 265 691 269L690 273",
+              "reverse": false
+            }
+          ]
+        }
+      ],
+      "city_sections": [
+        {
+          "from": "taiyuan",
+          "to": "pingyang",
+          "parts": [
+            {
+              "mode": "land",
+              "start": [
+                731,
+                181
+              ],
+              "end": [
+                690,
+                273
+              ],
+              "d": "M731 181L725.5 185Q720 189 715 191.5Q710 194 707.5 197Q705 200 707 205Q709 210 711 214Q713 218 711.5 223.5Q710 229 706 234.5Q702 240 699 244Q696 248 695.5 252.5Q695 257 693.5 261Q692 265 691 269L690 273",
+              "length_px": 111.298485,
+              "chord_px": 100.722391,
+              "pieces": [
+                {
+                  "d": "M731 181L725.5 185Q720 189 715 191.5Q710 194 707.5 197Q705 200 707 205Q709 210 711 214Q713 218 711.5 223.5Q710 229 706 234.5Q702 240 699 244Q696 248 695.5 252.5Q695 257 693.5 261Q692 265 691 269L690 273",
+                  "reverse": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "poyang:jianan:land": {
+      "from": "poyang",
+      "to": "jianan",
+      "mode": "land",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            969,
+            568
+          ],
+          "end": [
+            1080,
+            618
+          ],
+          "d": "M969 568L975.5 572Q982 576 987.5 579.5Q993 583 999 582Q1005 581 1011 581.5Q1017 582 1020.5 585Q1024 588 1023 593.5Q1022 599 1027 603Q1032 607 1038.5 609Q1045 611 1053 611.5Q1061 612 1066.5 613.5Q1072 615 1076 616.5L1080 618",
+          "length_px": 132.076706,
+          "chord_px": 121.741529,
+          "pieces": [
+            {
+              "d": "M969 568L975.5 572Q982 576 987.5 579.5Q993 583 999 582Q1005 581 1011 581.5Q1017 582 1020.5 585Q1024 588 1023 593.5Q1022 599 1027 603Q1032 607 1038.5 609Q1045 611 1053 611.5Q1061 612 1066.5 613.5Q1072 615 1076 616.5L1080 618",
+              "reverse": false
+            }
+          ]
+        }
+      ],
+      "city_sections": [
+        {
+          "from": "poyang",
+          "to": "jianan",
+          "parts": [
+            {
+              "mode": "land",
+              "start": [
+                969,
+                568
+              ],
+              "end": [
+                1080,
+                618
+              ],
+              "d": "M969 568L975.5 572Q982 576 987.5 579.5Q993 583 999 582Q1005 581 1011 581.5Q1017 582 1020.5 585Q1024 588 1023 593.5Q1022 599 1027 603Q1032 607 1038.5 609Q1045 611 1053 611.5Q1061 612 1066.5 613.5Q1072 615 1076 616.5L1080 618",
+              "length_px": 132.076706,
+              "chord_px": 121.741529,
+              "pieces": [
+                {
+                  "d": "M969 568L975.5 572Q982 576 987.5 579.5Q993 583 999 582Q1005 581 1011 581.5Q1017 582 1020.5 585Q1024 588 1023 593.5Q1022 599 1027 603Q1032 607 1038.5 609Q1045 611 1053 611.5Q1061 612 1066.5 613.5Q1072 615 1076 616.5L1080 618",
                   "reverse": false
                 }
               ]
@@ -29983,10 +30068,10 @@
   },
   "audit": {
     "catalogs": 29,
-    "input_routes": 452,
-    "compiled_routes": 452,
-    "graph_nodes": 166,
-    "graph_strokes": 254,
+    "input_routes": 453,
+    "compiled_routes": 453,
+    "graph_nodes": 167,
+    "graph_strokes": 256,
     "unmatched": [],
     "shared_city_pass_through": [
       {
@@ -30099,6 +30184,13 @@
         "id": "jiujiang:yuzhang:land",
         "via": [
           "lujiang"
+        ],
+        "policy": "Logical transit required at each active city; inactive city sites remain continuous road junctions"
+      },
+      {
+        "id": "liaodong:liaoxi:land",
+        "via": [
+          "changli"
         ],
         "policy": "Logical transit required at each active city; inactive city sites remain continuous road junctions"
       },

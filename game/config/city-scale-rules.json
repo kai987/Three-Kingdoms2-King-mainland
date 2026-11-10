@@ -15,6 +15,7 @@
     "kuaiji": {"source_tier": "normal", "tier": "large"},
     "chenliu": {"source_tier": "large", "tier": "normal"},
     "shujun": {"source_tier": "large", "tier": "giant"},
+    "wuchang": {"source_tier": "large", "tier": "normal", "changes": [{"from_date": [221, 4], "tier": "large"}]},
     "danyang": {
       "source_tier": "large", "tier": "large",
       "changes": [{"from_date": [240, 1], "tier": "giant"}]
