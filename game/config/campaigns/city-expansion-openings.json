@@ -199,7 +199,7 @@
     },
     "mainland200-01": {
       "owners": {
-        "hefei": "wei",
+        "hefei": "neutral",
         "guangling": "wei",
         "chaisang": "wu",
         "xicheng": "zhang_lu",
@@ -207,9 +207,7 @@
         "yiling": "liu_biao"
       },
       "garrisons": {
-        "hefei": [
-          "san14-candidate-0956"
-        ],
+        "hefei": [],
         "guangling": [
           "san14-candidate-0683"
         ],
@@ -227,9 +225,6 @@
         ]
       },
       "attested_garrisons": {
-        "hefei": [
-          "san14-candidate-0956"
-        ],
         "guangling": [
           "san14-candidate-0683"
         ]
@@ -945,12 +940,13 @@
   },
   "notes": {
     "hefei": {
-      "basis": "合肥為漢縣。袁術時的開局依淮南勢力配置，劉馥約200年受曹操任命入合肥建州治，200年開局採年界配置，確月待考。215年張遼、樂進、李典均據合肥。張特253年守的是合肥新城，263年續駐為本作前線配置。假想開局依原劇本淮南態勢。",
+      "basis": "合肥為漢縣。袁術時的開局依淮南勢力配置，劉馥在200年嚴象死後受曹操任命，入合肥空城建州治。200年正月開局先列空城，任命確月待考。215年張遼、樂進、李典均據合肥。張特253年守的是合肥新城，263年續駐為本作前線配置。假想開局依原劇本淮南態勢。",
       "sources": [
         "https://zh.wikisource.org/wiki/後漢書/卷112",
         "https://zh.wikisource.org/zh-hant/三國志/卷15#劉馥",
         "https://zh.wikisource.org/zh-hant/三國志/卷17#張遼",
-        "https://zh.wikisource.org/zh-hant/三國志/卷04#齊王"
+        "https://zh.wikisource.org/zh-hant/三國志/卷04#齊王",
+        "https://ancient-china-books.github.io/zizhitongjian/OEBPS/Text/6207.html"
       ]
     },
     "guangling": {

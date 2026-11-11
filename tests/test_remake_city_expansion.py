@@ -121,8 +121,14 @@ class CityExpansionTests(unittest.TestCase):
                 self.assertGreater(quote['days'], 0)
 
     def test_primary_source_garrisons_and_late_ownership(self):
+        guandu = self.start('mainland200-01')
+        self.assertEqual(guandu.state.cities['hefei'].owner, 'neutral')
+        self.assertEqual(guandu.state.cities['hefei'].roster.officer_ids, [])
+        liu_fu = guandu.catalog.ids['san14-candidate-0956']
+        self.assertEqual(guandu.state.officers[liu_fu].faction_id, 'wei')
+        self.assertIn(liu_fu, guandu.state.cities['runan'].roster.officer_ids)
         for scenario, city, owner, people in [
-            ('mainland200-01', 'hefei', 'wei', ('0956',)),
+            ('mainland202-06', 'hefei', 'wei', ('0956',)),
             ('mainland215-08', 'hefei', 'wei', ('0663', '0913', '0102')),
             ('mainland219-07', 'xicheng', 'shu', ('0455',)),
             ('mainland219-07', 'shangyong', 'shu', ('0463',)),

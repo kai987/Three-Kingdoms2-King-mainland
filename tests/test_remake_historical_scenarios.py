@@ -232,6 +232,22 @@ class HistoricalScenarioTests(unittest.TestCase):
                     self.assertEqual(city.owner, faction)
                     self.assertIn(ident, city.roster.officer_ids)
 
+    def test_guandu_liu_bei_starts_at_xiaopei_while_guan_yu_guards_xiapi(self):
+        game = self.game('200-01', 'shu')
+        self.assertEqual(game.catalog.factions['shu']['city'], 'qiao')
+        self.assert_ruler(game, 'shu', 'san14-candidate-0952')
+        for city, faction, person_id in (
+            ('qiao', 'shu', 'san14-candidate-0952'),
+            ('xiapi', 'shu', 'san14-candidate-0147'),
+            ('jiyin', 'wei', 'san14-candidate-0971'),
+            ('yingchuan', 'wei', 'san14-candidate-0999'),
+        ):
+            with self.subTest(city=city):
+                ident = game.catalog.ids[person_id]
+                self.assertEqual(game.state.cities[city].owner, faction)
+                self.assertEqual(game.state.officers[ident].faction_id, faction)
+                self.assertIn(ident, game.state.cities[city].roster.officer_ids)
+
     def test_defeated_xu_gong_remains_alive_and_unaligned_in_wu(self):
         person_id = 'san14-candidate-0211'
         for chapter in ('196-06', '198-03', '200-01'):

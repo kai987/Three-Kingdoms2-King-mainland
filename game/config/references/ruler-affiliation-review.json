@@ -9730,7 +9730,7 @@
         {
           "id": "shu",
           "person_id": "san14-candidate-0952",
-          "city": "xiapi"
+          "city": "qiao"
         },
         {
           "id": "wu",
@@ -10488,13 +10488,17 @@
         {
           "status": "serving",
           "faction": "shu",
-          "city": "xiapi",
+          "city": "qiao",
           "person_id": "san14-candidate-0952",
           "review_level": "structural_existing_ruler",
           "disposition": "already_independent_at_opening",
-          "note": "本行覆蓋全候選池的當前配置；已獨立、在野、未登場或已退出者不是本輪「在他勢力普通任職」的疑似項。不據本行宣稱全部生卒月與任官駐城均經原典重新證實。",
-          "source_urls": [],
-          "certainty": "structural_scope_only"
+          "note": "依《先主傳》《關羽傳》，以曹操東征前為官渡劇本開局。劉備回小沛，關羽守下邳。沿用本作譙郡節點代理小沛，未移動城址。",
+          "source_urls": [
+            "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnuw0vwny3_198",
+            "https://zh.wikisource.org/wiki/三國志/卷36#關羽",
+            "https://zh.wikisource.org/wiki/三國志/卷01"
+          ],
+          "certainty": "attested_ruler_location_map_proxy"
         },
         {
           "status": "serving",
@@ -10609,6 +10613,28 @@
             "https://zh.wikisource.org/wiki/資治通鑑/卷061"
           ],
           "certainty": "primary_text_chronology"
+        },
+        {
+          "person_id": "san14-candidate-0952",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "xiapi",
+            "ruler": true
+          },
+          "after": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "qiao",
+            "ruler": true
+          },
+          "note": "依《先主傳》《關羽傳》，以曹操東征前為官渡劇本開局。劉備回小沛，關羽守下邳。沿用本作譙郡節點代理小沛，未移動城址。",
+          "certainty": "attested_ruler_location_map_proxy",
+          "source_urls": [
+            "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnuw0vwny3_198",
+            "https://zh.wikisource.org/wiki/三國志/卷36#關羽",
+            "https://zh.wikisource.org/wiki/三國志/卷01"
+          ]
         }
       ],
       "chronology": [

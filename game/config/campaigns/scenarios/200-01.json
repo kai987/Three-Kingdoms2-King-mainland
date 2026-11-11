@@ -28,7 +28,7 @@
           "id": "shu",
           "name": "刘备势力",
           "captain": "刘备",
-          "city": "xiapi",
+          "city": "qiao",
           "color": "#4c7650",
           "initial_officers": 12
         },
@@ -2212,7 +2212,7 @@
         },
         {
           "person_id": "san14-candidate-0952",
-          "city": "xiapi",
+          "city": "qiao",
           "troops": 300,
           "ruler": true,
           "resolve_death_year": false
@@ -2261,7 +2261,7 @@
         },
         {
           "person_id": "san14-candidate-0971",
-          "city": "qiao",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2317,7 +2317,7 @@
         },
         {
           "person_id": "san14-candidate-0999",
-          "city": "qiao",
+          "city": "yingchuan",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2991,7 +2991,9 @@
         "優先同年月SAN14攻略表及原典生涯窗口；其餘依本人既有年代／區域記錄推定，駐軍再按來源城及邊境容量均衡分配。",
         "未來人物到達出仕窗口才以在野待訪，不強迫在遊玩中改投歷史勢力；已登場身分不重複生成、不復活。",
         "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
-        "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。"
+        "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+        "依《先主傳》《關羽傳》，以曹操東征前為官渡劇本開局。劉備回小沛，關羽守下邳。沿用本作譙郡節點代理小沛，未移動城址。 梁習與路招保留曹操勢力與兵力，分駐濟陰及許縣。",
+        "合肥保留舊縣，正月開局暫為空城。《劉馥傳》記嚴象死後劉馥才進入合肥立治，同年稍後歸曹。"
       ]
     },
     "update": {
@@ -3068,7 +3070,8 @@
           "linhe": "neutral",
           "nanhai": "shi_xie",
           "gaoliang": "shi_xie",
-          "hepu": "shi_xie"
+          "hepu": "shi_xie",
+          "qiao": "shu"
         },
         "delete": [
           "yidu",
@@ -3399,13 +3402,13 @@
           "san14-candidate-0939": "wei",
           "san14-candidate-0944": "nanjun",
           "san14-candidate-0950": "lingling",
-          "san14-candidate-0952": "xiapi",
+          "san14-candidate-0952": "qiao",
           "san14-candidate-0955": "lingling",
           "san14-candidate-0959": "changsha",
           "san14-candidate-0960": "yan",
           "san14-candidate-0962": "shanyang",
           "san14-candidate-0968": "runan",
-          "san14-candidate-0971": "qiao",
+          "san14-candidate-0971": "jiyin",
           "san14-candidate-0974": "wujun",
           "san14-candidate-0975": "xincheng",
           "san14-candidate-0976": "wuling",
@@ -3417,7 +3420,7 @@
           "san14-candidate-0986": "danyang",
           "san14-candidate-0988": "lujiang",
           "san14-candidate-0993": "yan",
-          "san14-candidate-0999": "qiao",
+          "san14-candidate-0999": "yingchuan",
           "san14-candidate-0002": "hanzhong",
           "san14-candidate-0003": "jingzhao",
           "san14-candidate-0006": "beihai",
@@ -25480,13 +25483,13 @@
           },
           "san14-candidate-0952": {
             "set": {
-              "city": "xiapi"
+              "city": "qiao"
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "origin": "xiapi",
-                  "city": "xiapi"
+                  "origin": "qiao",
+                  "city": "qiao"
                 }
               },
               "appearance_plan": {
@@ -25495,7 +25498,17 @@
                     200,
                     1
                   ],
-                  "city": "xiapi"
+                  "city": "qiao"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "note": "依《先主傳》《關羽傳》，以曹操東征前為官渡劇本開局。劉備回小沛，關羽守下邳。沿用本作譙郡節點代理小沛，未移動城址。",
+                  "source_urls": [
+                    "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnuw0vwny3_198",
+                    "https://zh.wikisource.org/wiki/三國志/卷36#關羽",
+                    "https://zh.wikisource.org/wiki/三國志/卷01"
+                  ]
                 }
               }
             }
@@ -25996,15 +26009,13 @@
           },
           "san14-candidate-0971": {
             "set": {
-              "city": "qiao",
+              "city": "jiyin",
               "placement_basis": "historical_review_20261025",
               "membership_revision": {
                 "basis": "authorial_garrison_relocation",
-                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "note": "梁習仍屬曹操。濟陰為本作駐防安排，參照其曾任乘氏令，任官月份未詳。",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷16",
-                  "https://zh.wikisource.org/wiki/華陽國志/卷二"
+                  "https://zh.wikisource.org/wiki/三國志/卷15#梁習"
                 ]
               },
               "scenario_membership_basis": "authorial_garrison_relocation"
@@ -26012,7 +26023,7 @@
             "update": {
               "posting_reference": {
                 "set": {
-                  "city": "qiao",
+                  "city": "jiyin",
                   "basis": "reviewed_regional_or_novel_posting",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷01",
@@ -26034,7 +26045,7 @@
                     200,
                     1
                   ],
-                  "city": "qiao",
+                  "city": "jiyin",
                   "basis": "authorial_garrison_relocation"
                 }
               },
@@ -26042,11 +26053,9 @@
                 "set": {
                   "basis": "historical_review_20261025",
                   "historical_certainty": "authorial_garrison_relocation",
-                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "note": "梁習仍屬曹操。濟陰為本作駐防安排，參照其曾任乘氏令，任官月份未詳。",
                   "source_urls": [
-                    "https://zh.wikisource.org/wiki/三國志/卷01",
-                    "https://zh.wikisource.org/wiki/三國志/卷16",
-                    "https://zh.wikisource.org/wiki/華陽國志/卷二"
+                    "https://zh.wikisource.org/wiki/三國志/卷15#梁習"
                   ],
                   "reference_date": [
                     200,
@@ -26875,23 +26884,23 @@
           },
           "san14-candidate-0999": {
             "set": {
-              "city": "qiao"
+              "city": "yingchuan"
             },
             "update": {
               "posting_reference": {
                 "set": {
                   "origin": "yingchuan",
-                  "city": "qiao"
+                  "city": "yingchuan"
                 }
               },
               "placement_review": {
                 "set": {
                   "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
-                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
+                    "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnuw0vwny3_198",
+                    "https://zh.wikisource.org/wiki/三國志/卷01"
                   ],
-                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。"
+                  "note": "路招隨朱靈返回曹操一方；許縣為本作調防安排。"
                 }
               },
               "appearance_plan": {
@@ -26900,7 +26909,7 @@
                     200,
                     1
                   ],
-                  "city": "qiao"
+                  "city": "yingchuan"
                 }
               }
             }
@@ -28457,7 +28466,7 @@
       "main_scenario": {
         "set": {
           "title": "官渡之战",
-          "summary": "官渡之战：使用已发布的本作年代配置，采用30人城池容量。",
+          "summary": "官渡之戰開局取曹操東征前：劉備據小沛為本據，關羽守下邳。",
           "historical_review": {
             "revision": "2026-10-25",
             "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
@@ -28475,7 +28484,8 @@
               "cangwu",
               "gaoliang",
               "linhe",
-              "longxi"
+              "longxi",
+              "qiao"
             ],
             "all_city_months_independently_attested": false,
             "local_map_proxies": {
@@ -28489,6 +28499,17 @@
                 "early_opening": false,
                 "fictional_adaptation": false,
                 "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。"
+              },
+              "qiao": {
+                "display_name": "小沛",
+                "represents": [
+                  "東漢沛縣方向的劉備據點"
+                ],
+                "original_node": "qiao",
+                "whole_commandery_control_claimed": false,
+                "early_opening": false,
+                "fictional_adaptation": false,
+                "note": "依《先主傳》《關羽傳》，以曹操東征前為官渡劇本開局。劉備回小沛，關羽守下邳。沿用本作譙郡節點代理小沛，未移動城址。"
               }
             },
             "song_jian_lifetime_setup": {
