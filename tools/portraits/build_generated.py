@@ -26,7 +26,7 @@ from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from supplement_redraw import PLAN as REDRAW_PLAN, bake as bake_redraw
-from retainer_assets import append_retainer_assets
+from retainer_assets import EARLY_SHU_PLAN, append_retainer_assets
 
 ROOT = Path(__file__).resolve().parents[2]
 PLAN = ROOT / 'art/portraits/plan.json'
@@ -325,6 +325,9 @@ def build(check=False):
     supplements = [append_supplement(entries, outputs, atlases, used_hashes, path) for path in SUPPLEMENTS]
     retainers = append_retainer_assets(ROOT, entries, outputs, atlases, used_hashes,
                                        prepare_atlas=prepare_atlas, bake_cell=bake_cell)
+    early_shu = append_retainer_assets(ROOT, entries, outputs, atlases, used_hashes,
+                                       prepare_atlas=prepare_atlas, bake_cell=bake_cell,
+                                       plan_path=EARLY_SHU_PLAN)
     manifest = dict(schema='tk2-generated-portraits-v1', count=len(entries), unique_pixel_images=len(used_hashes),
                     native_size=list(SIZE), source='imagegen_new_pixel_art',
                     art_direction_basis='authorial_game_art_not_historical_likeness',
@@ -336,6 +339,8 @@ def build(check=False):
                     by_person_id=entries)
     if retainers is not None:
         manifest['retainer_plan'] = retainers
+    if early_shu is not None:
+        manifest['additional_retainer_plans'] = [early_shu]
     outputs[MANIFEST] = (json.dumps(manifest, ensure_ascii=False, indent=2) + '\n').encode()
     if DESTINATION.exists():
         extra = set(DESTINATION.glob('*.png')) - set(outputs)

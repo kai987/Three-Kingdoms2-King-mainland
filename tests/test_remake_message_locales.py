@@ -73,15 +73,15 @@ class MessageLocaleTests(unittest.TestCase):
         self.assertEqual(translate('諸葛亮向孙权提出歸還俘虜，結果：遭拒。', self.data),
                          '諸葛亮が孫権に「捕虜返還」を提案。結果：拒否。')
 
-    def test_all1052_officer_identities_keep_the_name_crosswalk(self):
-        self.assertEqual(len(self.catalog['people']), 1052)
+    def test_all1056_officer_identities_keep_the_name_crosswalk(self):
+        self.assertEqual(len(self.catalog['people']), 1056)
         ids = set()
         for person in self.catalog['people']:
             ids.add(person['person_id'])
             japanese = person['ability_source']['source_name']
             self.assertEqual(translate(person['name'], self.data), japanese)
             self.assertEqual(translate(japanese, self.data), japanese)
-        self.assertEqual(len(ids), 1052)
+        self.assertEqual(len(ids), 1056)
         self.assertEqual(translate('乐𬘭', self.data), '楽綝')
         self.assertEqual(translate('马云𫘧', self.data), '馬雲騄')
         for source, target in {'宋建':'宋建', '吕兴':'呂興', '唐谱':'唐譜', '李统':'李統'}.items():

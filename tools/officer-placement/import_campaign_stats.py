@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[2]
 PEOPLE_PATH = ROOT / 'game/config/campaigns/people.json'
 REFERENCE_PATH = ROOT / 'game/config/references/cnblogs-officer-stats.json'
 SAN14_PATH = ROOT / 'game/config/references/san14-abilities.json'
+SAN14_DLC_PATH = ROOT / 'game/config/references/san14-dlc-abilities.json'
 ROM_PATH = ROOT / 'game/config/references/original-officer-stats.json'
 REPORT_PATH = ROOT / 'docs/officer-stat-changes-v1.json'
 CSV_PATH = ROOT / 'docs/officer-stat-changes-v1.csv'
@@ -301,8 +302,12 @@ def apply_policy(pool, reference):
             value = min(require_integer(charisma, 1, 100, 'SAN14 charisma'), 99)
             status, basis, configuration = ('san14_charisma',
                 'SAN14.charisma; max99 compatibility scale', 'SAN14_charisma_conversion')
-            sources = [dict(reference='game/config/references/san14-abilities.json', person_id=pid,
-                            field='charisma', source_url=person['ability_source']['source_url'])]
+            provenance = person['ability_source']
+            source = dict(reference=provenance.get('reference', str(SAN14_PATH.relative_to(ROOT))),
+                          person_id=pid, field='charisma')
+            if 'source_url' in provenance:
+                source['source_url'] = provenance['source_url']
+            sources = [source]
             rationale = '使用者指定將本作德對應既有SAN14魅力；保留來源值，100按本作相容上限轉為99。這是遊戲屬性映射，不是歷史道德評判。'
         else:
             value = 60
@@ -412,7 +417,8 @@ def csv_report(report):
 def import_stats(source_zip=None):
     pool = load(PEOPLE_PATH)
     san14 = load(SAN14_PATH)
-    expected_abilities = {r['person_id']: r['stats'] for r in san14['abilities']}
+    san14_dlc = load(SAN14_DLC_PATH)
+    expected_abilities = {r['person_id']: r['stats'] for r in san14['abilities'] + san14_dlc['abilities']}
     actual_abilities = {pid: person['profile']['source_stats']
                         for pid, person in pool['people'].items()
                         if person['profile']['source_stats'].get('charisma') is not None}
@@ -427,7 +433,7 @@ def import_stats(source_zip=None):
     report = make_report(updated, reference)
     if (set(updated['people']) != set(pool['people'])
             or updated['order'] != pool['order']
-            or report['summary']['san14_charisma'] != 1000):
+            or report['summary']['san14_charisma'] != len(expected_abilities)):
         raise ValueError('Campaign-person or SAN14 coverage changed')
     return updated, reference, report
 

@@ -1631,7 +1631,7 @@
         },
         {
           "person_id": "san14-candidate-0656",
-          "city": "xiapi",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2993,7 +2993,8 @@
         "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
         "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
         "依《先主傳》《關羽傳》，以曹操東征前為官渡劇本開局。劉備回小沛，關羽守下邳。沿用本作譙郡節點代理小沛，未移動城址。 梁習與路招保留曹操勢力與兵力，分駐濟陰及許縣。",
-        "合肥保留舊縣，正月開局暫為空城。《劉馥傳》記嚴象死後劉馥才進入合肥立治，同年稍後歸曹。"
+        "合肥保留舊縣，正月開局暫為空城。《劉馥傳》記嚴象死後劉馥才進入合肥立治，同年稍後歸曹。",
+        "《三國志·先主傳》記劉備回小沛、關羽守下邳，裴注引《吳歷》記張飛隨劉備前往小沛收兵。據此配置張飛於本劇本開局駐小沛。"
       ]
     },
     "update": {
@@ -3295,7 +3296,7 @@
           "san14-candidate-0645": "wujun",
           "san14-candidate-0652": "wuling",
           "san14-candidate-0654": "wuling",
-          "san14-candidate-0656": "xiapi",
+          "san14-candidate-0656": "qiao",
           "san14-candidate-0658": "nanyang",
           "san14-candidate-0663": "chenliu",
           "san14-candidate-0665": "nanjun",
@@ -18838,13 +18839,30 @@
           },
           "san14-candidate-0656": {
             "set": {
-              "city": "xiapi"
+              "city": "qiao",
+              "placement_basis": "historical_guandu_xiaopei_opening",
+              "membership_revision": {
+                "basis": "historical_guandu_xiaopei_opening",
+                "note": "《三國志·先主傳》記劉備回小沛、關羽守下邳，裴注引《吳歷》記張飛隨劉備前往小沛收兵。據此配置張飛於本劇本開局駐小沛。",
+                "source_urls": [
+                  "https://ctext.org/dictionary.pl?chapter=257508&if=gb&sid=1160&trid=3908086",
+                  "https://zh.wikisource.org/wiki/三國志/卷32",
+                  "https://zh.wikisource.org/wiki/三國志/卷36#張飛"
+                ]
+              }
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "origin": "xiapi",
-                  "city": "xiapi"
+                  "origin": "qiao",
+                  "city": "qiao",
+                  "basis": "historical_guandu_xiaopei_opening",
+                  "source_urls": [
+                    "https://ctext.org/dictionary.pl?chapter=257508&if=gb&sid=1160&trid=3908086",
+                    "https://zh.wikisource.org/wiki/三國志/卷32",
+                    "https://zh.wikisource.org/wiki/三國志/卷36#張飛"
+                  ],
+                  "historical_certainty": "annotated_biography_with_opening_station_inference"
                 }
               },
               "appearance_plan": {
@@ -18853,7 +18871,25 @@
                     200,
                     1
                   ],
-                  "city": "xiapi"
+                  "city": "qiao",
+                  "basis": "historical_guandu_xiaopei_opening"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "historical_guandu_xiaopei_opening",
+                  "note": "《三國志·先主傳》記劉備回小沛、關羽守下邳，裴注引《吳歷》記張飛隨劉備前往小沛收兵。據此配置張飛於本劇本開局駐小沛。",
+                  "source_urls": [
+                    "https://ctext.org/dictionary.pl?chapter=257508&if=gb&sid=1160&trid=3908086",
+                    "https://zh.wikisource.org/wiki/三國志/卷32",
+                    "https://zh.wikisource.org/wiki/三國志/卷36#張飛"
+                  ],
+                  "reference_date": [
+                    200,
+                    1
+                  ],
+                  "reference_scenario": "mainland200-01",
+                  "historical_certainty": "annotated_biography_with_opening_station_inference"
                 }
               }
             }
@@ -28466,7 +28502,7 @@
       "main_scenario": {
         "set": {
           "title": "官渡之战",
-          "summary": "官渡之戰開局取曹操東征前：劉備據小沛為本據，關羽守下邳。",
+          "summary": "官渡之戰開局取曹操東征前：劉備與張飛據小沛，關羽守下邳。",
           "historical_review": {
             "revision": "2026-10-25",
             "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",

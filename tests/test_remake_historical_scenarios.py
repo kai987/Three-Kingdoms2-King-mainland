@@ -232,17 +232,83 @@ class HistoricalScenarioTests(unittest.TestCase):
                     self.assertEqual(city.owner, faction)
                     self.assertIn(ident, city.roster.officer_ids)
 
-    def test_guandu_liu_bei_starts_at_xiaopei_while_guan_yu_guards_xiapi(self):
+    def test_196_liu_bei_has_four_additional_retainers_at_xiapi(self):
+        game = self.game('196-06', 'shu')
+        city = game.state.cities['xiapi']
+        self.assertEqual(game.catalog.factions['shu']['city'], 'xiapi')
+        self.assertEqual(city.owner, 'shu')
+        abilities = {
+            'historical-xiahou-bo': (78, 53, 65),
+            'historical-xue-yong': (75, 68, 77),
+            'historical-yuan-chen': (73, 51, 75),
+            'historical-liu-yan-shu': (41, 70, 75),
+        }
+        for person_id, stats in abilities.items():
+            with self.subTest(person=person_id):
+                ident = game.catalog.ids[person_id]
+                officer = game.state.officers[ident]
+                self.assertIn(ident, city.roster.officer_ids)
+                self.assertEqual(officer.faction_id, 'shu')
+                self.assertTrue(officer.alive)
+                self.assertEqual((officer.profile.martial_strength, officer.profile.intellect,
+                                  officer.profile.virtue), stats)
+
+    def test_early_shu_retainers_follow_dated_openings_and_death_boundaries(self):
+        last_opening = {
+            'historical-xiahou-bo': (200, 1),
+            'historical-xue-yong': (238, 1),
+            'historical-yuan-chen': (238, 1),
+            'historical-liu-yan-shu': (234, 2),
+        }
+        for scenario, catalog in self.catalogs.items():
+            date = (catalog.data['start_year'], catalog.data['start_month'])
+            serving = {row['person_id']: row for row in catalog.data['initial_officers']}
+            for person_id, latest in last_opening.items():
+                with self.subTest(scenario=scenario, person=person_id):
+                    if not (196, 6) <= date <= latest:
+                        self.assertNotIn(person_id, serving)
+                        self.assertFalse(catalog.data['appearance_windows'][person_id])
+                        continue
+                    city = catalog.factions['shu']['city']
+                    if person_id == 'historical-liu-yan-shu':
+                        if date[0] in (215, 217, 219):
+                            city = 'badong'
+                        elif date == (227, 2):
+                            city = 'hanzhong'
+                    if person_id == 'historical-yuan-chen' and date >= (227, 2):
+                        city = 'hanzhong'
+                    self.assertEqual(serving[person_id]['city'], city)
+                    self.assertEqual(catalog.data['initial_owners'][city], 'shu')
+                    assignment = catalog.data['era_assignments'][person_id]
+                    self.assertEqual((assignment['faction'], assignment['city']), ('shu', city))
+                    self.assertEqual(catalog.data['appearance_locations'][person_id], city)
+        for person_id in last_opening:
+            chronology = self.people[person_id]['chronology_design']
+            self.assertEqual(chronology['historical_death_year'],
+                             234 if person_id == 'historical-liu-yan-shu' else None)
+        for chapter, person_id, city in (
+            ('200-01', 'historical-xiahou-bo', 'qiao'),
+            ('234-02', 'historical-liu-yan-shu', 'shujun'),
+            ('238-01', 'historical-yuan-chen', 'hanzhong'),
+        ):
+            with self.subTest(chapter=chapter):
+                game = self.game(chapter, 'shu')
+                ident = game.catalog.ids[person_id]
+                self.assertTrue(game.state.officers[ident].alive)
+                self.assertIn(ident, game.state.cities[city].roster.officer_ids)
+
+    def test_guandu_liu_bei_and_zhang_fei_start_at_xiaopei_while_guan_yu_guards_xiapi(self):
         game = self.game('200-01', 'shu')
         self.assertEqual(game.catalog.factions['shu']['city'], 'qiao')
         self.assert_ruler(game, 'shu', 'san14-candidate-0952')
         for city, faction, person_id in (
             ('qiao', 'shu', 'san14-candidate-0952'),
+            ('qiao', 'shu', 'san14-candidate-0656'),
             ('xiapi', 'shu', 'san14-candidate-0147'),
             ('jiyin', 'wei', 'san14-candidate-0971'),
             ('yingchuan', 'wei', 'san14-candidate-0999'),
         ):
-            with self.subTest(city=city):
+            with self.subTest(city=city, person=person_id):
                 ident = game.catalog.ids[person_id]
                 self.assertEqual(game.state.cities[city].owner, faction)
                 self.assertEqual(game.state.officers[ident].faction_id, faction)
@@ -373,7 +439,7 @@ class EarlyIndependentRulerTests(unittest.TestCase):
         '188-06': (147640, 520075, 187860),
         '190-01': (143240, 495475, 223570),
         '194-06': (139030, 480975, 232740),
-        '196-06': (136810, 472400, 229210),
+        '196-06': (136810, 472400, 230410),
         '197-07': (137820, 477325, 227180),
         '198-03': (137830, 477325, 232880),
     }
@@ -830,11 +896,11 @@ class Nanzhong225SetupTests(unittest.TestCase):
 
     def test_other_garrisons_and_total_membership_are_preserved_without_duplicates(self):
         game = self.game()
-        self.assertEqual(len(self.catalog.data['initial_officers']), 313)
+        self.assertEqual(len(self.catalog.data['initial_officers']), 316)
         self.assertEqual(len(self.catalog.data['initial_free_officers']), 79)
         self.assertEqual(Counter(o.faction_id for o in game.state.officers.values()
                                  if o.faction_id),
-                         dict(wei=127, shu=79, wu=78, nanman=16, shi_xie=7, gongsun=6))
+                         dict(wei=127, shu=82, wu=78, nanman=16, shi_xie=7, gongsun=6))
         for faction, metadata in self.catalog.factions.items():
             self.assertEqual(metadata['initial_officers'], sum(
                 o.faction_id == faction for o in game.state.officers.values()))
@@ -855,7 +921,7 @@ class Nanzhong225SetupTests(unittest.TestCase):
             for ident in city.roster.officer_ids:
                 self.assertEqual(game.state.officers[ident].faction_id, city.owner)
             stationed.extend(city.roster.officer_ids)
-        self.assertEqual(len(stationed), 313)
+        self.assertEqual(len(stationed), 316)
         self.assertEqual(len(stationed), len(set(stationed)))
         self.assertEqual(max(len(c.roster.officer_ids) for c in game.state.cities.values()),
                          self.catalog.data['coverage']['planned_max_city_roster'])
@@ -867,7 +933,7 @@ class Nanzhong225SetupTests(unittest.TestCase):
         self.assertEqual(self.catalog.definitions['san14-candidate-0769'].death_year, 222)
         chengdu = game.state.cities['shujun']
         self.assertEqual(chengdu.reserves + sum(game.state.officers[i].troops
-            for i in chengdu.roster.officer_ids), 5090 + sum(
+            for i in chengdu.roster.officer_ids), 4190 + sum(
             row['troops'] for row in self.catalog.data['initial_officers'] if row['city'] == 'shujun'))
         self.assertEqual(game.state.soldiers['initial'],
                          271350 + expansion_material(self.catalog.data)[2])

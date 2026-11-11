@@ -22,6 +22,7 @@ HEX = re.compile(r'^[0-9a-f]{64}$')
 ASSET = re.compile(r'^/assets/portraits/(?:original/[0-9]{3}|generated/[a-z0-9-]+)\.png$')
 ENHANCED_ASSET = re.compile(r'^/assets/portraits/enhanced/[a-z0-9-]+\.png$')
 RETAINER_PLAN = 'art/portraits/retainer-additions-v1/plan.json'
+RETAINER_PLANS = (RETAINER_PLAN, 'art/portraits/early-shu-v1/plan.json')
 RETAINER_METHOD = 'retainer_authored_source_direct128_fixed_palette'
 RETAINER_PALETTE = {
     (0, 0, 0, 0), (0, 0, 0, 255), (108, 46, 7, 255), (142, 56, 0, 255),
@@ -147,7 +148,7 @@ def enhanced_records(data, primary):
     enhanced, retainer_cache, retainer_hashes = {}, {}, set()
     previous_hashes = {row.get('pixel_sha256') for row in rows.values()
                        if isinstance(row, dict) and isinstance(row.get('provenance'), dict)
-                       and row['provenance'].get('retainer_plan') != RETAINER_PLAN}
+                       and row['provenance'].get('retainer_plan') not in RETAINER_PLANS}
     for person_id, row in rows.items():
         if person_id not in primary:
             raise ValueError('Unknown enhanced portrait person')
@@ -169,7 +170,7 @@ def enhanced_records(data, primary):
             raise ValueError('Enhanced portrait source/person binding mismatch: ' + person_id)
         if row.get('method') != 'identity_preserving_pixel_enhancement' or not isinstance(row.get('provenance'), dict):
             raise ValueError('Enhanced portrait must state its enhancement provenance')
-        if (source.get('retainer_plan') == RETAINER_PLAN
+        if (source.get('retainer_plan') in RETAINER_PLANS
                 and (row.get('rendering') != 'redrawn128'
                      or row['provenance'].get('base_method') != RETAINER_METHOD)):
             raise ValueError('Retainer enhanced portrait must retain its direct128 source method')
@@ -304,9 +305,10 @@ def retainer_retained(path, expected=None, *, directory='art/portraits/retainer-
     return raw
 
 
-def retainer_plan(cache):
-    if 'plan' not in cache:
-        raw = retainer_retained(RETAINER_PLAN, cache=cache)
+def retainer_plan(cache, plan_path):
+    key = ('plan', plan_path)
+    if key not in cache:
+        raw = retainer_retained(plan_path, directory=str(Path(plan_path).parent), cache=cache)
         plan = json.loads(raw)
         if (plan.get('schema') != 'tk2-retainer-portrait-additions-v1'
                 or plan.get('native_size') != [32, 40] or plan.get('enhanced_size') != [128, 160]
@@ -319,18 +321,18 @@ def retainer_plan(cache):
                     or person['person_id'] in people):
                 raise ValueError('Invalid or repeated retainer portrait identity')
             people[person['person_id']] = person
-        cache.update(plan=(plan, sha(raw), people))
-    return cache['plan']
+        cache[key] = (plan, sha(raw), people)
+    return cache[key]
 
 
-def retainer_records(kind, cache):
-    key = ('records', kind)
+def retainer_records(kind, cache, plan_path):
+    key = ('records', kind, plan_path)
     if key not in cache:
-        _, plan_hash, people = retainer_plan(cache)
-        path = str(Path(RETAINER_PLAN).parent / (kind + '-records.json'))
-        data = json.loads(retainer_retained(path, cache=cache))
+        _, plan_hash, people = retainer_plan(cache, plan_path)
+        path = str(Path(plan_path).parent / (kind + '-records.json'))
+        data = json.loads(retainer_retained(path, directory=str(Path(plan_path).parent), cache=cache))
         if (data.get('schema') != f'tk2-retainer-portrait-{kind}-records-v1'
-                or data.get('plan') != RETAINER_PLAN or data.get('plan_sha256') != plan_hash
+                or data.get('plan') != plan_path or data.get('plan_sha256') != plan_hash
                 or not isinstance(data.get('people'), dict) or set(data['people']) != set(people)
                 or type(data.get('count')) is not int or data['count'] != len(people)):
             raise ValueError('Retainer portrait archive records differ from its plan')
@@ -340,13 +342,16 @@ def retainer_records(kind, cache):
 
 def retainer_binding(person_id, binding, cache):
     """Check native attribution, geometry, plan identity and retained compatibility file."""
-    _, plan_hash, planned = retainer_plan(cache)
+    plan_path = binding.get('retainer_plan')
+    if plan_path not in RETAINER_PLANS:
+        raise ValueError('Unknown retainer portrait plan')
+    _, plan_hash, planned = retainer_plan(cache, plan_path)
     person = planned.get(person_id)
-    if (not isinstance(person, dict) or binding.get('retainer_plan') != RETAINER_PLAN
+    if (not isinstance(person, dict)
             or binding.get('retainer_plan_sha256') != plan_hash
             or binding.get('name') != person.get('name')
             or binding.get('gender_design') != person.get('art_gender_design')
-            or binding != retainer_records('native', cache).get(person_id)):
+            or binding != retainer_records('native', cache, plan_path).get(person_id)):
         raise ValueError('Retainer native identity or archive binding differs')
     atlas, single = person.get('source_atlas'), person.get('source_path')
     if bool(atlas) == bool(single):
@@ -356,7 +361,7 @@ def retainer_binding(person_id, binding, cache):
     if not isinstance(expected_hash, str) or not HEX.fullmatch(expected_hash):
         raise ValueError('Retainer authored source needs a pinned hash')
     raw = retainer_retained(relative, expected_hash,
-                            directory='art/portraits/source-atlases' if atlas else str(Path(RETAINER_PLAN).parent),
+                            directory='art/portraits/source-atlases' if atlas else str(Path(plan_path).parent),
                             cache=cache)
     if len(raw) < 33 or raw[:8] != b'\x89PNG\r\n\x1a\n' or not relative.endswith('.png'):
         raise ValueError('Retainer authored source is not a PNG')
@@ -444,32 +449,34 @@ def retainer_binding(person_id, binding, cache):
             or not isinstance(fitted, list) or len(fitted) != 4 or any(type(v) is not int for v in fitted)
             or not 0 < fitted[0] < fitted[2] < 32 or not 0 < fitted[1] < fitted[3] < 40):
         raise ValueError('Retainer source or native envelope is clipped')
-    archive = str(Path(RETAINER_PLAN).parent / 'native-32x40' / (person_id + '.png'))
-    archive_raw = retainer_retained(archive, binding['png_sha256'], cache=cache)
+    archive = str(Path(plan_path).parent / 'native-32x40' / (person_id + '.png'))
+    archive_raw = retainer_retained(archive, binding['png_sha256'],
+                                   directory=str(Path(plan_path).parent), cache=cache)
     if sha(png_pixels(archive_raw, NATIVE)[1]) != binding['rgba_sha256']:
         raise ValueError('Retainer native compatibility archive pixels differ')
     if 'prompt' in person or 'prompt_sha256' in person:
         prompt_hash = person.get('prompt_sha256')
         if not isinstance(prompt_hash, str) or not HEX.fullmatch(prompt_hash):
             raise ValueError('Retainer prompt needs a pinned hash')
-        retainer_retained(person.get('prompt'), prompt_hash, cache=cache)
+        retainer_retained(person.get('prompt'), prompt_hash, directory=str(Path(plan_path).parent), cache=cache)
     return person, raw, dimensions, box
 
 
 def validate_retainer_redrawn(person_id, row, source, pixels, cache=None):
     """Validate direct authored detail independently of the immutable HD-v2 study."""
     cache = {} if cache is None else cache
-    if source.get('retainer_plan') != RETAINER_PLAN:
+    plan_path = source.get('retainer_plan')
+    if plan_path not in RETAINER_PLANS:
         raise ValueError('Retainer HD portrait lacks a native retainer identity')
-    binding = retainer_records('native', cache).get(person_id)
+    binding = retainer_records('native', cache, plan_path).get(person_id)
     if (not isinstance(binding, dict) or binding.get('path') != source.get('path')
             or binding.get('png_sha256') != source.get('png_sha256')):
         raise ValueError('Retainer HD portrait native source differs')
     person, authored, dimensions, box = retainer_binding(person_id, binding, cache)
     proof = row['provenance']
-    if (row != retainer_records('enhanced', cache).get(person_id)
+    if (row != retainer_records('enhanced', cache, plan_path).get(person_id)
             or proof.get('base_method') != RETAINER_METHOD
-            or proof.get('retainer_plan') != RETAINER_PLAN
+            or proof.get('retainer_plan') != plan_path
             or proof.get('retainer_plan_sha256') != binding['retainer_plan_sha256']
             or proof.get('source_cell_box') != box
             or proof.get('native_fitted_box') != binding['native_fitted_box']):
@@ -483,7 +490,7 @@ def validate_retainer_redrawn(person_id, row, source, pixels, cache=None):
             raise ValueError('Retainer enhanced source attribution differs')
     if 'prompt' in person and any(proof.get(key) != person.get(key) for key in ('prompt', 'prompt_sha256')):
         raise ValueError('Retainer enhanced prompt binding differs')
-    directory = str(Path(RETAINER_PLAN).parent) + '/'
+    directory = str(Path(plan_path).parent) + '/'
     crop_path = directory + 'source-crops/' + person_id + '.png'
     archive_path = directory + 'native-32x40/' + person_id + '.png'
     if (proof.get('retained_source_crop') != crop_path or proof.get('native_archive') != archive_path
@@ -492,7 +499,7 @@ def validate_retainer_redrawn(person_id, row, source, pixels, cache=None):
     crop_hash = proof.get('retained_source_crop_sha256')
     if not isinstance(crop_hash, str) or not HEX.fullmatch(crop_hash):
         raise ValueError('Retainer source crop needs a pinned hash')
-    crop_raw = retainer_retained(crop_path, crop_hash, cache=cache)
+    crop_raw = retainer_retained(crop_path, crop_hash, directory=directory, cache=cache)
     width, height = box[2] - box[0], box[3] - box[1]
     crop_pixels = png_pixels(crop_raw, (width, height))[1]
     if width < 96 or height < 128 or sha(crop_pixels) != proof.get('retained_source_crop_rgba_sha256'):
@@ -609,13 +616,15 @@ def build():
     if set(new) != set(people) - set(bound):
         raise ValueError('New portrait coverage must exactly match unbound stable identities')
     output, source_atlases, used_cells, retainer_cache = {}, {}, set(), {}
-    retainer_originals = set()
-    if (ROOT / RETAINER_PLAN).exists():
-        _, _, planned = retainer_plan(retainer_cache)
-        retainer_originals = {pid for pid, person in planned.items()
-                             if person.get('source_kind') == 'original_portrait_redraw'}
-        if not retainer_originals <= set(bound):
-            raise ValueError('Retainer original redraw has no reviewed original identity')
+    retainer_originals = {}
+    for plan_path in RETAINER_PLANS:
+        if (ROOT / plan_path).exists():
+            _, _, planned = retainer_plan(retainer_cache, plan_path)
+            for pid, person in planned.items():
+                if person.get('source_kind') == 'original_portrait_redraw':
+                    if pid not in bound or pid in retainer_originals:
+                        raise ValueError('Retainer original redraw lacks a unique reviewed original identity')
+                    retainer_originals[pid] = plan_path
     visible_colors = {tuple(value[:3]) for value in originals['palette']['rgba']}
     for person_id, person in people.items():
         if person_id in bound:
@@ -624,7 +633,7 @@ def build():
             item = dict(validated_originals[original_id], kind='nes_original', original_id=original_id,
                         source='pinned_ROM_static_frame0', original_transcribed_name=identity['transcribed_name'])
             if person_id in retainer_originals:
-                binding = retainer_records('native', retainer_cache)[person_id]
+                binding = retainer_records('native', retainer_cache, retainer_originals[person_id])[person_id]
                 if binding.get('native_original_id') != original_id:
                     raise ValueError('Retainer original redraw binds another original identity')
                 retainer_binding(person_id, binding, retainer_cache)
@@ -642,7 +651,7 @@ def build():
                 raise ValueError('New portrait departs from the original visible palette')
             if any(pixels[i] not in (0, 255) for i in range(3, len(pixels), 4)):
                 raise ValueError('New portrait contains non-native partial transparency')
-            if source.get('retainer_plan') == RETAINER_PLAN:
+            if source.get('retainer_plan') in RETAINER_PLANS:
                 retainer_binding(person_id, source, retainer_cache)
                 cell = (source['original_source_path'], source.get('cell_index', 'single'))
                 if cell in used_cells:

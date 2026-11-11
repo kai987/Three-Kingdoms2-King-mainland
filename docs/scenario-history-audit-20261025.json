@@ -2,8 +2,8 @@
   "schema": "tk2-scenario-history-audit-v1",
   "review_revision": "2026-11-08",
   "review_file": "game/config/references/scenario-history-review.json",
-  "review_sha256": "7c79156e5ae16da383d6b96166113e3484524dd7d8a73cd3f90d45bc1229280e",
-  "presentation_sha256": "75d0899512fce72b919023d9da2717b44bad789b3e9d3d4062458058e785d38b",
+  "review_sha256": "1dd4f2fb0b91b9a22615912a07853a766506f777d5b99bbbb645b60f53aa82e4",
+  "presentation_sha256": "05163db78220914ccf8fd357e27966a03695889386523776da279a501d64f752",
   "scope": "Regional review and current-data consistency, not a complete attested city/month prefect list or a SAN14 export.",
   "boundary_definition": "Different opening owners connected by links, sea_links or travel_routes; each unordered city pair is listed once. These are network borders, not geographic administrative boundary polygons.",
   "historical_count": 23,
@@ -22,12 +22,12 @@
     "scheduled_faction_foundings": 2,
     "scheduled_faction_coups": 1,
     "boundary_links": 1477,
-    "opening_officers": 8847,
+    "opening_officers": 8897,
     "new_factions": 43,
     "city_changes": 109,
-    "officer_changes": 791,
+    "officer_changes": 796,
     "city_change_records": 111,
-    "officer_change_records": 826
+    "officer_change_records": 831
   },
   "fictional_adaptation_summary": {
     "cities": 583,
@@ -36,7 +36,7 @@
     "scheduled_faction_foundings": 0,
     "scheduled_faction_coups": 0,
     "boundary_links": 379,
-    "opening_officers": 2174,
+    "opening_officers": 2190,
     "new_factions": 13,
     "city_changes": 14,
     "officer_changes": 102,
@@ -171,7 +171,7 @@
       "title": "184年2月 · 黄巾之乱",
       "title_ja": "184年2月 · 黄巾之乱",
       "catalog_file": "game/data/campaigns/184-02.json",
-      "catalog_sha256": "215ce533fa43fd6f857bf626444f46ca364ba588f75f1df5eab757886fdc4941",
+      "catalog_sha256": "f60bec8a5a6b19d6cd8be55d28004725169d585108009d7d8284ac5332bca88d",
       "factions": [
         {
           "id": "ding_yuan",
@@ -5604,7 +5604,7 @@
       "title": "188年6月 · 漢朝搖搖欲墜",
       "title_ja": "揺らぐ漢朝",
       "catalog_file": "game/data/campaigns/188-06.json",
-      "catalog_sha256": "c989d96269f4050ceee3e1e70e08d8d9f89b040adde79c587eed69d122af97aa",
+      "catalog_sha256": "f3463e49d20f95458ab6e83091ae1131803927b809dcdebe57a739e05b5cc124",
       "factions": [
         {
           "id": "ding_yuan",
@@ -11236,7 +11236,7 @@
       "title": "190年1月 · 反董卓联盟",
       "title_ja": "190年1月 · 反董卓联盟",
       "catalog_file": "game/data/campaigns/190-01.json",
-      "catalog_sha256": "e6a7c2d39d1a4e4032aa138eba77f964918a727edb669974764d62be45a16f0d",
+      "catalog_sha256": "cd8f2999fed043cd0515951914a5d36ba4c3e5887173eebc5cb3eb75054630d7",
       "factions": [
         {
           "id": "bao_xin",
@@ -19058,7 +19058,7 @@
       "title": "191年10月 · 二袁的意图",
       "title_ja": "191年10月 · 二袁的意图",
       "catalog_file": "game/data/campaigns/191-10.json",
-      "catalog_sha256": "e41715a5b625475de9f92b0d807fd71e827c9cab83786b62708ff77d9a51ca1f",
+      "catalog_sha256": "505aff1997bba6d993d3bb61e8a0527e91f88c4f822a948ebb3436975610dc32",
       "factions": [
         {
           "id": "bao_xin",
@@ -26921,7 +26921,7 @@
       "title": "194年6月 · 群雄割据",
       "title_ja": "194年6月 · 群雄割据",
       "catalog_file": "game/data/campaigns/194-06.json",
-      "catalog_sha256": "9649eaf2f0e48482deb2cb5766c26c8420e74072d07a870d2cde51cb66888f4a",
+      "catalog_sha256": "756d5bde4e117406ee1ca392f59abb983a61a10ba1111a7b605a333d599dc3d8",
       "factions": [
         {
           "id": "gongsun",
@@ -35055,7 +35055,7 @@
       "title": "196年6月 · 曹操得勢",
       "title_ja": "曹操の台頭",
       "catalog_file": "game/data/campaigns/196-06.json",
-      "catalog_sha256": "29b175a845a7c1da563bf3bd3af011f364afc88f4a4904036196962fe4696cb4",
+      "catalog_sha256": "4ed68bb4a45b32d08e3df6c8d8eaecaead90895373fcfe5c0841fa513792141b",
       "factions": [
         {
           "id": "gongsun",
@@ -35172,7 +35172,7 @@
           "city": "xiapi",
           "city_name": "下邳",
           "city_count": 3,
-          "officer_count": 13
+          "officer_count": 17
         },
         {
           "id": "song_jian",
@@ -35260,7 +35260,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 235567,
+      "initial_soldier_total": 236767,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -37968,6 +37968,16 @@
           "city_name": "长沙"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "xiapi",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "下邳"
+        },
+        {
           "person_id": "historical-liu-yi-yuzhang",
           "name": "刘壹",
           "status": "serving",
@@ -38008,6 +38018,16 @@
           "city_name": "寿春"
         },
         {
+          "person_id": "historical-xiahou-bo",
+          "name": "夏侯博",
+          "status": "serving",
+          "faction": "shu",
+          "city": "xiapi",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "下邳"
+        },
+        {
           "person_id": "historical-xu-xi",
           "name": "徐翕",
           "status": "free",
@@ -38018,6 +38038,16 @@
           "city_name": "东海"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "xiapi",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "下邳"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "serving",
@@ -38026,6 +38056,16 @@
           "ruler": false,
           "appearance_basis": "explicit_serving",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "xiapi",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "下邳"
         },
         {
           "person_id": "historical-zhao-chong",
@@ -42485,6 +42525,22 @@
           "name": "公仇称"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "before": {
+            "faction": null,
+            "city": null,
+            "status": "not_in_pool"
+          },
+          "faction": "shu",
+          "city": "xiapi",
+          "certainty": "authorial_opening_posting_with_biographical_sources",
+          "note": "《三國志・劉琰傳》載劉備在豫州時辟劉琰為從事。入仕年月未載，196年下邳為本作配置。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷40#劉琰"
+          ]
+        },
+        {
           "person_id": "historical-liu-yi-yuzhang",
           "status": "serving",
           "faction": "hua_xin",
@@ -42538,6 +42594,22 @@
           "name": "孙香"
         },
         {
+          "person_id": "historical-xiahou-bo",
+          "name": "夏侯博",
+          "before": {
+            "faction": null,
+            "city": null,
+            "status": "not_in_pool"
+          },
+          "faction": "shu",
+          "city": "xiapi",
+          "certainty": "authorial_opening_posting_with_biographical_sources",
+          "note": "《三國志・武帝紀》載曹操於200年東征擒劉備將夏侯博。196年隨劉備在下邳開局為本作配置。",
+          "source_urls": [
+            "https://www.shidianguji.com/zh/mid-page/7459508839818493961"
+          ]
+        },
+        {
           "person_id": "historical-xu-xi",
           "status": "free",
           "faction": null,
@@ -42550,6 +42622,22 @@
           "name": "徐翕"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "before": {
+            "faction": null,
+            "city": null,
+            "status": "not_in_pool"
+          },
+          "faction": "shu",
+          "city": "xiapi",
+          "certainty": "authorial_opening_posting_with_biographical_sources",
+          "note": "《蜀典》引《氏族略》載薛永在父親薛蘭遇害後投奔劉備，後任蜀郡太守。入仕年月未載，196年下邳為本作配置。",
+          "source_urls": [
+            "https://www.shidianguji.com/zh/book/7505734818018099250/chapter/1lgz3ctxbj57f"
+          ]
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "status": "serving",
           "faction": "gongsun",
@@ -42560,6 +42648,23 @@
           ],
           "certainty": "primary_named_office_with_explicit_opening_date_and_region_inference",
           "name": "阳仪"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "before": {
+            "faction": null,
+            "city": null,
+            "status": "not_in_pool"
+          },
+          "faction": "shu",
+          "city": "xiapi",
+          "certainty": "authorial_opening_posting_with_biographical_sources",
+          "note": "《三國志・李嚴傳》注引諸葛亮公文列袁綝為前將軍、都亭侯，《華陽國志》載其後任征西將軍。196年提早在劉備麾下登場為本作配置。",
+          "source_urls": [
+            "https://www.shidianguji.com/zh/mid-page/7559333946384023579",
+            "https://zh.wikisource.org/wiki/華陽國志/卷七"
+          ]
         },
         {
           "person_id": "historical-zhao-chong",
@@ -43135,7 +43240,7 @@
       "title": "198年3月 · 呂布討伐戰",
       "title_ja": "呂布討伐戦",
       "catalog_file": "game/data/campaigns/198-03.json",
-      "catalog_sha256": "352018686e94a2b6c77f866771716003ad287dea95b3e11fc8e279cca6437d7b",
+      "catalog_sha256": "e71196f840ee93776d7291aec6875b640894f600da2540e7d4eaa3bd25e4fc96",
       "factions": [
         {
           "id": "gongsun",
@@ -43234,7 +43339,7 @@
           "city": "qiao",
           "city_name": "小沛",
           "city_count": 1,
-          "officer_count": 11
+          "officer_count": 15
         },
         {
           "id": "song_jian",
@@ -45923,6 +46028,16 @@
           "city_name": "长沙"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "qiao",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "小沛"
+        },
+        {
           "person_id": "historical-liu-yi-yuzhang",
           "name": "刘壹",
           "status": "serving",
@@ -45973,6 +46088,16 @@
           "city_name": "汝南"
         },
         {
+          "person_id": "historical-xiahou-bo",
+          "name": "夏侯博",
+          "status": "serving",
+          "faction": "shu",
+          "city": "qiao",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "小沛"
+        },
+        {
           "person_id": "historical-xu-xi",
           "name": "徐翕",
           "status": "serving",
@@ -45983,6 +46108,16 @@
           "city_name": "东海"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "qiao",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "小沛"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "serving",
@@ -45991,6 +46126,16 @@
           "ruler": false,
           "appearance_basis": "explicit_serving",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "qiao",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "小沛"
         },
         {
           "person_id": "historical-zhao-chong",
@@ -51045,7 +51190,7 @@
       "title": "200年1月 · 官渡之战",
       "title_ja": "200年1月 · 官渡之战",
       "catalog_file": "game/data/campaigns/200-01.json",
-      "catalog_sha256": "5984c3550b5a058210af7d1c2a3dcc611a9f5569b9bf63fe4094761e319f9e9b",
+      "catalog_sha256": "67e1a424de1aafd083479267a5a9416d71c3a34c345096d2dd7f526709380aad",
       "factions": [
         {
           "id": "gongsun",
@@ -51108,7 +51253,7 @@
           "city": "qiao",
           "city_name": "小沛",
           "city_count": 2,
-          "officer_count": 11
+          "officer_count": 15
         },
         {
           "id": "song_jian",
@@ -53351,6 +53496,16 @@
           "city_name": "长沙"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "qiao",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "小沛"
+        },
+        {
           "person_id": "historical-liu-yi-yuzhang",
           "name": "刘壹",
           "status": "free",
@@ -53391,6 +53546,16 @@
           "city_name": "许县"
         },
         {
+          "person_id": "historical-xiahou-bo",
+          "name": "夏侯博",
+          "status": "serving",
+          "faction": "shu",
+          "city": "qiao",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "小沛"
+        },
+        {
           "person_id": "historical-xu-xi",
           "name": "徐翕",
           "status": "serving",
@@ -53401,6 +53566,16 @@
           "city_name": "许县"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "qiao",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "小沛"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "serving",
@@ -53409,6 +53584,16 @@
           "ruler": false,
           "appearance_basis": "explicit_serving",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "qiao",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "小沛"
         },
         {
           "person_id": "historical-zhao-chong",
@@ -56185,10 +56370,10 @@
           "name": "张飞",
           "status": "serving",
           "faction": "shu",
-          "city": "xiapi",
+          "city": "qiao",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "下邳"
+          "city_name": "小沛"
         },
         {
           "person_id": "san14-candidate-0663",
@@ -58248,6 +58433,23 @@
           ]
         },
         {
+          "person_id": "san14-candidate-0656",
+          "name": "张飞",
+          "before": {
+            "faction": "shu",
+            "city": "xiapi",
+            "status": "serving"
+          },
+          "faction": "shu",
+          "city": "qiao",
+          "certainty": "attested_companion_regional_opening_proxy",
+          "note": "《三國志・先主傳》載劉備還小沛、關羽守下邳，裴注引《吳歷》敘張飛隨劉備到小沛收兵，裴松之對該段離曹經過有異議。張飛的戰前駐點為本作配置，沿用小沛的譙郡代理節點。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷32#先主_劉備",
+            "https://zh.wikisource.org/wiki/三國志/卷36#關羽"
+          ]
+        },
+        {
           "person_id": "san14-candidate-0703",
           "name": "程普",
           "before": {
@@ -58537,7 +58739,7 @@
       "title": "202年6月 · 河北爭亂",
       "title_ja": "河北争乱",
       "catalog_file": "game/data/campaigns/202-06.json",
-      "catalog_sha256": "1ee6cc72eda026b43b3468b165be1562c77426d9b8a9d5c9d88c15cb462f439e",
+      "catalog_sha256": "95383a73c471c56e395abbfd2583a44bf9f8181889c8b885c33f3fc9f14cd3f6",
       "factions": [
         {
           "id": "gao_gan",
@@ -58609,7 +58811,7 @@
           "city": "yiyang",
           "city_name": "章陵",
           "city_count": 1,
-          "officer_count": 17
+          "officer_count": 20
         },
         {
           "id": "song_jian",
@@ -60952,6 +61154,16 @@
           "city_name": "长沙"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "yiyang",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "章陵"
+        },
+        {
           "person_id": "historical-liu-yi-yuzhang",
           "name": "刘壹",
           "status": "free",
@@ -61002,6 +61214,16 @@
           "city_name": "许县"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "yiyang",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "章陵"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "serving",
@@ -61010,6 +61232,16 @@
           "ruler": false,
           "appearance_basis": "explicit_serving",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "yiyang",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "章陵"
         },
         {
           "person_id": "historical-zhao-chong",
@@ -66073,7 +66305,7 @@
       "title": "207年9月 · 三顾茅庐",
       "title_ja": "207年9月 · 三顾茅庐",
       "catalog_file": "game/data/campaigns/207-09.json",
-      "catalog_sha256": "2301b89c78112a5ff85d675bbea1ffaec84a1b994284f1b7a87f7e788f5ed991",
+      "catalog_sha256": "9bdc00d34f47563c17c7dbb52c0c0a45ceb5681f6e49f2b77a7b2062429f746e",
       "factions": [
         {
           "id": "gongsun",
@@ -66136,7 +66368,7 @@
           "city": "yiyang",
           "city_name": "章陵",
           "city_count": 1,
-          "officer_count": 18
+          "officer_count": 21
         },
         {
           "id": "song_jian",
@@ -68152,6 +68384,16 @@
           "city_name": "苍梧"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "yiyang",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "章陵"
+        },
+        {
           "person_id": "historical-liu-yi-yuzhang",
           "name": "刘壹",
           "status": "free",
@@ -68222,6 +68464,16 @@
           "city_name": "北海"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "yiyang",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "章陵"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "free",
@@ -68230,6 +68482,16 @@
           "ruler": false,
           "appearance_basis": "explicit_free",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "yiyang",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "章陵"
         },
         {
           "person_id": "historical-zhao-chong",
@@ -74171,7 +74433,7 @@
       "title": "208年10月 · 赤壁之战",
       "title_ja": "208年10月 · 赤壁之战",
       "catalog_file": "game/data/campaigns/208-10.json",
-      "catalog_sha256": "3432de6d1a2d328a0991710d9345b892f15d767af09c7e44c6fc97b052ea6e84",
+      "catalog_sha256": "f9e82d6e5a03e293b2a0af3cd924f99c9871f59998ca2b5dc1c6008dcd69b3ba",
       "factions": [
         {
           "id": "gongsun",
@@ -74252,7 +74514,7 @@
           "city": "jiangxia",
           "city_name": "江夏",
           "city_count": 1,
-          "officer_count": 51
+          "officer_count": 54
         },
         {
           "id": "song_jian",
@@ -76376,6 +76638,16 @@
           "city_name": "苍梧"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "jiangxia",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "江夏"
+        },
+        {
           "person_id": "historical-liu-yi-yuzhang",
           "name": "刘壹",
           "status": "free",
@@ -76446,6 +76718,16 @@
           "city_name": "北海"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "jiangxia",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "江夏"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "free",
@@ -76454,6 +76736,16 @@
           "ruler": false,
           "appearance_basis": "explicit_free",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "jiangxia",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "江夏"
         },
         {
           "person_id": "historical-zhao-chong",
@@ -82451,7 +82743,7 @@
       "title": "211年7月 · 潼關之戰",
       "title_ja": "潼関の戦い",
       "catalog_file": "game/data/campaigns/211-07-tongguan.json",
-      "catalog_sha256": "c6d1b2c2bb69e0d554792383a616d08504443838d898037d8418ab95b3e18169",
+      "catalog_sha256": "3fd866c946465c76e5c997b75cf51e3855ced5c3753f210d77b156cc840b5106",
       "factions": [
         {
           "id": "gongsun",
@@ -82505,7 +82797,7 @@
           "city": "nanjun",
           "city_name": "江陵",
           "city_count": 7,
-          "officer_count": 64
+          "officer_count": 67
         },
         {
           "id": "song_jian",
@@ -84348,6 +84640,16 @@
       ],
       "opening_officers": [
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "nanjun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "江陵"
+        },
+        {
           "person_id": "historical-liu-yi-yuzhang",
           "name": "刘壹",
           "status": "free",
@@ -84408,6 +84710,16 @@
           "city_name": "北海"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "nanjun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "江陵"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "free",
@@ -84416,6 +84728,16 @@
           "ruler": false,
           "appearance_basis": "explicit_free",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "nanjun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "江陵"
         },
         {
           "person_id": "san14-candidate-0002",
@@ -89511,7 +89833,7 @@
       "title": "212年12月 · 入蜀爭奪戰",
       "title_ja": "入蜀争奪戦",
       "catalog_file": "game/data/campaigns/212-12.json",
-      "catalog_sha256": "5339adc9d0ba15853586eb93c53785b75eb479a2eb8dd0236adf2cd2c5e9f8a6",
+      "catalog_sha256": "4bbb1f09a101605320c425fb1fcf4619b16dc0c5ba99a2ea940a59b7a2e3e655",
       "factions": [
         {
           "id": "gongsun",
@@ -89556,7 +89878,7 @@
           "city": "fuxian",
           "city_name": "涪县",
           "city_count": 9,
-          "officer_count": 65
+          "officer_count": 68
         },
         {
           "id": "song_jian",
@@ -91382,6 +91704,16 @@
           "city_name": "蓟"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "fuxian",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "涪县"
+        },
+        {
           "person_id": "historical-liu-yi-yuzhang",
           "name": "刘壹",
           "status": "free",
@@ -91442,6 +91774,16 @@
           "city_name": "北海"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "fuxian",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "涪县"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "free",
@@ -91450,6 +91792,16 @@
           "ruler": false,
           "appearance_basis": "explicit_free",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "fuxian",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "涪县"
         },
         {
           "person_id": "san14-candidate-0002",
@@ -97583,7 +97935,7 @@
       "title": "215年8月 · 合淝之戰",
       "title_ja": "合肥の戦い",
       "catalog_file": "game/data/campaigns/215-08.json",
-      "catalog_sha256": "dffb235279abc0b4e9bd449c198cca98ffa9a3f760de65b49ccb0232e3bf80aa",
+      "catalog_sha256": "a0c8e8546eaa85acede65812e2e19c1b0d845e088361433ec7731cc2bfce9891",
       "factions": [
         {
           "id": "gongsun",
@@ -97610,7 +97962,7 @@
           "city": "shujun",
           "city_name": "成都",
           "city_count": 27,
-          "officer_count": 112
+          "officer_count": 115
         },
         {
           "id": "wei",
@@ -99012,6 +99364,16 @@
       ],
       "opening_officers": [
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "badong",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "鱼复"
+        },
+        {
           "person_id": "historical-mao-hui",
           "name": "毛晖",
           "status": "serving",
@@ -99052,6 +99414,16 @@
           "city_name": "北海"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "free",
@@ -99060,6 +99432,16 @@
           "ruler": false,
           "appearance_basis": "explicit_free",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
         },
         {
           "person_id": "san14-candidate-0005",
@@ -103389,7 +103771,7 @@
       "title": "217年7月 · 汉中争夺战",
       "title_ja": "217年7月 · 汉中争夺战",
       "catalog_file": "game/data/campaigns/217-07.json",
-      "catalog_sha256": "6879347981cdb87a10292825606a2135dbf987c8c41eb5ee36e460ee18f72ead",
+      "catalog_sha256": "f42417ae790a30bfc5821bb73ce9c5d6499d0ee22aa9eeb0a379084a8d51098c",
       "factions": [
         {
           "id": "gongsun",
@@ -103416,7 +103798,7 @@
           "city": "shujun",
           "city_name": "成都",
           "city_count": 27,
-          "officer_count": 114
+          "officer_count": 117
         },
         {
           "id": "wei",
@@ -104838,6 +105220,16 @@
           "city_name": "蓟"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "badong",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "固陵"
+        },
+        {
           "person_id": "historical-mao-hui",
           "name": "毛晖",
           "status": "serving",
@@ -104878,6 +105270,16 @@
           "city_name": "北海"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "free",
@@ -104886,6 +105288,16 @@
           "ruler": false,
           "appearance_basis": "explicit_free",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
         },
         {
           "person_id": "san14-candidate-0001",
@@ -109276,7 +109688,7 @@
       "title": "219年7月 · 关羽包围网",
       "title_ja": "219年7月 · 关羽包围网",
       "catalog_file": "game/data/campaigns/219-07.json",
-      "catalog_sha256": "60b6bb65d52215b4780bad1168b097de3a0509c83a4982ef720d778a63a146d6",
+      "catalog_sha256": "c6d9d3fe5c134289fc32f66f55f1ad832428ee517cad6839a6d596672ed75592",
       "factions": [
         {
           "id": "gongsun",
@@ -109303,7 +109715,7 @@
           "city": "shujun",
           "city_name": "成都",
           "city_count": 31,
-          "officer_count": 122
+          "officer_count": 125
         },
         {
           "id": "wei",
@@ -110726,6 +111138,16 @@
           "city_name": "蓟"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "badong",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "固陵"
+        },
+        {
           "person_id": "historical-mao-hui",
           "name": "毛晖",
           "status": "serving",
@@ -110766,6 +111188,16 @@
           "city_name": "北海"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "free",
@@ -110774,6 +111206,16 @@
           "ruler": false,
           "appearance_basis": "explicit_free",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
         },
         {
           "person_id": "san14-candidate-0001",
@@ -115237,7 +115679,7 @@
       "title": "221年7月 · 夷陵前夕",
       "title_ja": "221年7月 · 夷陵前夕",
       "catalog_file": "game/data/campaigns/221-07.json",
-      "catalog_sha256": "fa2bb0c4b9dc83339d04eca3eb9846038c603dd96e853abf5bdbb3385f8f483f",
+      "catalog_sha256": "7990b036ac4e3a04c26cc20de19aeb03a271cb5031ad22a62e033efb517662ed",
       "factions": [
         {
           "id": "gongsun",
@@ -115264,7 +115706,7 @@
           "city": "shujun",
           "city_name": "成都",
           "city_count": 23,
-          "officer_count": 104
+          "officer_count": 107
         },
         {
           "id": "wei",
@@ -116683,6 +117125,16 @@
       ],
       "opening_officers": [
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
+        },
+        {
           "person_id": "historical-qian-bo-cangwu",
           "name": "钱博",
           "status": "serving",
@@ -116701,6 +117153,26 @@
           "ruler": false,
           "appearance_basis": "explicit_serving",
           "city_name": "北海"
+        },
+        {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
         },
         {
           "person_id": "san14-candidate-0001",
@@ -120903,7 +121375,7 @@
       "title": "225年7月 · 征伐南蠻",
       "title_ja": "南蛮征伐",
       "catalog_file": "game/data/campaigns/225-07.json",
-      "catalog_sha256": "5e460fa7a444a363bca5115a62caccd3de348833669c492e12dea629a5f316a2",
+      "catalog_sha256": "6c194d11508f95b5341750e26c2b3c44e8800952aaf4f7647d503cc582f10e48",
       "factions": [
         {
           "id": "gongsun",
@@ -120939,7 +121411,7 @@
           "city": "shujun",
           "city_name": "成都",
           "city_count": 19,
-          "officer_count": 79
+          "officer_count": 82
         },
         {
           "id": "wei",
@@ -122463,6 +122935,16 @@
           "city_name": "巴东"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
+        },
+        {
           "person_id": "historical-qian-bo-cangwu",
           "name": "钱博",
           "status": "serving",
@@ -122471,6 +122953,26 @@
           "ruler": false,
           "appearance_basis": "explicit_serving",
           "city_name": "高凉"
+        },
+        {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
         },
         {
           "person_id": "san14-candidate-0001",
@@ -126674,7 +127176,7 @@
       "title": "227年2月 · 出师表",
       "title_ja": "227年2月 · 出师表",
       "catalog_file": "game/data/campaigns/227-02.json",
-      "catalog_sha256": "177178962b8c854a14ee6a30917a586084b68f4e66ec58736035becaf3ced328",
+      "catalog_sha256": "9f0b448cc49b7f15a49f5d7f63a0aa2adb8c2263d25b16467186c717a41ee8ff",
       "factions": [
         {
           "id": "gongsun",
@@ -126692,7 +127194,7 @@
           "city": "shujun",
           "city_name": "成都",
           "city_count": 23,
-          "officer_count": 86
+          "officer_count": 89
         },
         {
           "id": "wei",
@@ -128079,6 +128581,16 @@
           "city_name": "巴东"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "hanzhong",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "汉中"
+        },
+        {
           "person_id": "historical-qian-bo-cangwu",
           "name": "钱博",
           "status": "serving",
@@ -128087,6 +128599,26 @@
           "ruler": false,
           "appearance_basis": "explicit_serving",
           "city_name": "高凉"
+        },
+        {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "hanzhong",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "汉中"
         },
         {
           "person_id": "san14-candidate-0004",
@@ -131870,7 +132402,7 @@
       "title": "234年2月 · 秋風五丈原",
       "title_ja": "秋風五丈原",
       "catalog_file": "game/data/campaigns/234-02.json",
-      "catalog_sha256": "8a26257ebc391ff7eee3fc1721f41a7f4587c01d7375b85cad8fa86d588b99b8",
+      "catalog_sha256": "5031b9511b0b9a4c6198c3fe6e02d1109c789a4b6a3ad257ea40bd94a02ee48d",
       "factions": [
         {
           "id": "gongsun",
@@ -131888,7 +132420,7 @@
           "city": "shujun",
           "city_name": "成都",
           "city_count": 25,
-          "officer_count": 85
+          "officer_count": 88
         },
         {
           "id": "wei",
@@ -133227,6 +133759,16 @@
           "city_name": "襄平"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
+        },
+        {
           "person_id": "historical-liu-yuan-liaodong",
           "name": "柳远",
           "status": "serving",
@@ -133265,6 +133807,26 @@
           "ruler": false,
           "appearance_basis": "explicit_serving",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "hanzhong",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "汉中"
         },
         {
           "person_id": "san14-candidate-0004",
@@ -136584,7 +137146,7 @@
       "title": "238年1月 · 征讨辽东",
       "title_ja": "238年1月 · 征讨辽东",
       "catalog_file": "game/data/campaigns/238-01.json",
-      "catalog_sha256": "79dafcc90d20dc9131764e062b1ff065029f36a7abb0e983b4757f2445dc37a3",
+      "catalog_sha256": "e828584312dcd845be589d385f41e0e5ddb63e6a47dd6ffd7dae69a726159b60",
       "factions": [
         {
           "id": "gongsun",
@@ -136602,7 +137164,7 @@
           "city": "shujun",
           "city_name": "成都",
           "city_count": 25,
-          "officer_count": 78
+          "officer_count": 80
         },
         {
           "id": "wei",
@@ -138039,6 +138601,26 @@
           "ruler": false,
           "appearance_basis": "explicit_serving",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "shujun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "成都"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "hanzhong",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "汉中"
         },
         {
           "person_id": "san14-candidate-0004",
@@ -141259,7 +141841,7 @@
       "title": "249年1月 · 正始之变",
       "title_ja": "249年1月 · 正始之变",
       "catalog_file": "game/data/campaigns/249-01.json",
-      "catalog_sha256": "4d39918404857844d840b338e5839ee12c95a38960d39ceb467bc9baf26f0c1d",
+      "catalog_sha256": "247ae1f01e48c379a8fd5594e273bef9ba72899bf12fab559fa02880c2f36f65",
       "factions": [
         {
           "id": "shu",
@@ -145499,7 +146081,7 @@
       "title": "263年5月 · 蜀漢滅亡",
       "title_ja": "蜀漢の滅亡",
       "catalog_file": "game/data/campaigns/263-05.json",
-      "catalog_sha256": "42f39638191c696c6d686fce7844814c328970da9c62f72670713e7995013f08",
+      "catalog_sha256": "d8d0ddde6e6673a6764a106e981de6533a137f472698592b9e64f2cde2bfa8c3",
       "factions": [
         {
           "id": "lu_xing",
@@ -149007,7 +149589,7 @@
       "title": "197年7月 · 皇帝呂布",
       "title_ja": "皇帝呂布",
       "catalog_file": "game/data/campaigns/197-07.json",
-      "catalog_sha256": "dba3221055830cc42bdb010cc2558bbb757295688ba5a936353c505d9b649e1a",
+      "catalog_sha256": "a3f6a4b3d004c83e19e5c7428e8e03210462315b5d4b2f23c1faa08c02e685e7",
       "factions": [
         {
           "id": "gongsun",
@@ -149124,7 +149706,7 @@
           "city": "qiao",
           "city_name": "小沛",
           "city_count": 1,
-          "officer_count": 11
+          "officer_count": 15
         },
         {
           "id": "song_jian",
@@ -151907,6 +152489,16 @@
           "city_name": "长沙"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "qiao",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "小沛"
+        },
+        {
           "person_id": "historical-liu-yi-yuzhang",
           "name": "刘壹",
           "status": "serving",
@@ -151957,6 +152549,16 @@
           "city_name": "寿春"
         },
         {
+          "person_id": "historical-xiahou-bo",
+          "name": "夏侯博",
+          "status": "serving",
+          "faction": "shu",
+          "city": "qiao",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "小沛"
+        },
+        {
           "person_id": "historical-xu-xi",
           "name": "徐翕",
           "status": "serving",
@@ -151967,6 +152569,16 @@
           "city_name": "东海"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "qiao",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "小沛"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "serving",
@@ -151975,6 +152587,16 @@
           "ruler": false,
           "appearance_basis": "explicit_serving",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "qiao",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "小沛"
         },
         {
           "person_id": "historical-zhao-chong",
@@ -157100,7 +157722,7 @@
       "title": "201年5月 · 華北霸者・袁紹",
       "title_ja": "華北の覇者・袁紹",
       "catalog_file": "game/data/campaigns/201-05.json",
-      "catalog_sha256": "c0a07e3f896ebfde8168828ea6e32e275737baf1e11fa0bece858766d9f0b9e2",
+      "catalog_sha256": "7ec581e4e4827deb99e6a65a136014fb1ecc9fc13a414d2bd2fd14c85e08bd48",
       "factions": [
         {
           "id": "gongsun",
@@ -157163,7 +157785,7 @@
           "city": "yingchuan",
           "city_name": "许县",
           "city_count": 2,
-          "officer_count": 12
+          "officer_count": 15
         },
         {
           "id": "song_jian",
@@ -159229,6 +159851,16 @@
           "city_name": "长沙"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "yingchuan",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "许县"
+        },
+        {
           "person_id": "historical-liu-yi-yuzhang",
           "name": "刘壹",
           "status": "free",
@@ -159279,6 +159911,16 @@
           "city_name": "宛城"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "yingchuan",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "许县"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "serving",
@@ -159287,6 +159929,16 @@
           "ruler": false,
           "appearance_basis": "explicit_serving",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "yingchuan",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "许县"
         },
         {
           "person_id": "historical-zhao-chong",
@@ -163716,7 +164368,7 @@
       "title": "209年6月 · 志在千里",
       "title_ja": "志在千里",
       "catalog_file": "game/data/campaigns/209-06.json",
-      "catalog_sha256": "5affb979cc4c2f920309b5ae8e64542cc2bc457618867e55dee98792346142c4",
+      "catalog_sha256": "353860330ec9edb039e3d3d07e9785e47cf602294616c32c84485b12cdfe8011",
       "factions": [
         {
           "id": "gongsun",
@@ -163770,7 +164422,7 @@
           "city": "lingling",
           "city_name": "零陵",
           "city_count": 3,
-          "officer_count": 66
+          "officer_count": 69
         },
         {
           "id": "song_jian",
@@ -165620,6 +166272,16 @@
           "city_name": "苍梧"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "lingling",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "零陵"
+        },
+        {
           "person_id": "historical-liu-yi-yuzhang",
           "name": "刘壹",
           "status": "free",
@@ -165690,6 +166352,16 @@
           "city_name": "北海"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "lingling",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "零陵"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "free",
@@ -165698,6 +166370,16 @@
           "ruler": false,
           "appearance_basis": "explicit_free",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "lingling",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "零陵"
         },
         {
           "person_id": "historical-zhao-chong",
@@ -170292,7 +170974,7 @@
       "title": "210年11月 · 二分天下之計",
       "title_ja": "天下二分計",
       "catalog_file": "game/data/campaigns/210-11.json",
-      "catalog_sha256": "74b66e451633358537c36d324e2bfcf872ac116a6b8b03ea6ef1f1b9a3c20c09",
+      "catalog_sha256": "f20246f9793507a1704f0dfd87220e59431e6a9c046068953e5927ca870a408a",
       "factions": [
         {
           "id": "gongsun",
@@ -170337,7 +171019,7 @@
           "city": "changsha",
           "city_name": "长沙",
           "city_count": 4,
-          "officer_count": 89
+          "officer_count": 92
         },
         {
           "id": "song_jian",
@@ -172112,6 +172794,16 @@
           "city_name": "苍梧"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "changsha",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "长沙"
+        },
+        {
           "person_id": "historical-liu-yi-yuzhang",
           "name": "刘壹",
           "status": "free",
@@ -172182,6 +172874,16 @@
           "city_name": "北海"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "changsha",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "长沙"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "free",
@@ -172190,6 +172892,16 @@
           "ruler": false,
           "appearance_basis": "explicit_free",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "changsha",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "长沙"
         },
         {
           "person_id": "san14-candidate-0002",
@@ -176868,7 +177580,7 @@
       "title": "212年6月 · 錦馬超展翅高飛",
       "title_ja": "錦馬超飛翔",
       "catalog_file": "game/data/campaigns/212-06.json",
-      "catalog_sha256": "bb94c2fb84f01120d506153470ba6d72936eb9b7b38478d65bbeecb4c91cbb1a",
+      "catalog_sha256": "7934911e6bd185c1799d410406884265d44da96e5962e3716fc32af500d0a053",
       "factions": [
         {
           "id": "cao_zhang",
@@ -176931,7 +177643,7 @@
           "city": "nanjun",
           "city_name": "江陵",
           "city_count": 8,
-          "officer_count": 72
+          "officer_count": 75
         },
         {
           "id": "song_jian",
@@ -178948,6 +179660,16 @@
           "city_name": "涿县"
         },
         {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "status": "serving",
+          "faction": "shu",
+          "city": "nanjun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "江陵"
+        },
+        {
           "person_id": "historical-liu-yi-yuzhang",
           "name": "刘壹",
           "status": "free",
@@ -179008,6 +179730,16 @@
           "city_name": "北海"
         },
         {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "status": "serving",
+          "faction": "shu",
+          "city": "nanjun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "江陵"
+        },
+        {
           "person_id": "historical-yang-yi-liaodong",
           "name": "阳仪",
           "status": "free",
@@ -179016,6 +179748,16 @@
           "ruler": false,
           "appearance_basis": "explicit_free",
           "city_name": "襄平"
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "status": "serving",
+          "faction": "shu",
+          "city": "nanjun",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "江陵"
         },
         {
           "person_id": "san14-candidate-0002",

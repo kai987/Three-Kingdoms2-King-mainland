@@ -21,6 +21,7 @@ from PIL import Image, ImageOps
 from supplement_redraw import PALETTE
 
 PLAN = 'art/portraits/retainer-additions-v1/plan.json'
+EARLY_SHU_PLAN = 'art/portraits/early-shu-v1/plan.json'
 SCHEMA = 'tk2-retainer-portrait-additions-v1'
 NATIVE_SIZE = (32, 40)
 ENHANCED_SIZE = (128, 160)
@@ -162,7 +163,7 @@ def direct_hd(source, visible, native):
 
 
 def append_retainer_assets(root, entries, outputs, atlases, used_hashes, *,
-                           prepare_atlas, bake_cell):
+                           prepare_atlas, bake_cell, plan_path=PLAN):
     """Preflight optional additions, then append their reproducible output bytes.
 
     Existing entries, HD records and output files are never modified. An error
@@ -170,9 +171,9 @@ def append_retainer_assets(root, entries, outputs, atlases, used_hashes, *,
     the approved old build remains byte-for-byte reproducible.
     """
     root = Path(root).resolve()
-    if not (root / PLAN).exists():
+    if not (root / plan_path).exists():
         return None
-    _, plan_raw = retained(root, PLAN)
+    _, plan_raw = retained(root, plan_path)
     plan = json.loads(plan_raw)
     if (plan.get('schema') != SCHEMA or plan.get('native_size') != list(NATIVE_SIZE)
             or plan.get('enhanced_size') != list(ENHANCED_SIZE)
@@ -200,7 +201,7 @@ def append_retainer_assets(root, entries, outputs, atlases, used_hashes, *,
     # A repeat build can read its previously published additions. Only bindings
     # owned by this exact plan are replaceable; an unrelated ID is a collision.
     for pid in planned_ids & previous_hd.keys():
-        if previous_hd[pid].get('provenance', {}).get('retainer_plan') != PLAN:
+        if previous_hd[pid].get('provenance', {}).get('retainer_plan') != plan_path:
             raise ValueError('Retainer enhanced portrait collides with an existing identity')
     old_hd = {pid: row for pid, row in previous_hd.items() if pid not in planned_ids}
     hd_hashes = {row['pixel_sha256'] for row in old_hd.values()}
@@ -218,7 +219,7 @@ def append_retainer_assets(root, entries, outputs, atlases, used_hashes, *,
         if kind != 'original_portrait_redraw' and any(key.startswith('native_original_') for key in person):
             raise ValueError('Generated retainer portrait cannot bind an original native')
         relative = atlas_path or single_path
-        directory = 'art/portraits/source-atlases' if atlas_path else str(Path(PLAN).parent)
+        directory = 'art/portraits/source-atlases' if atlas_path else str(Path(plan_path).parent)
         source_path, source_raw = retained(root, relative, person.get('source_sha256'), directory=directory)
         if not isinstance(person.get('source_sha256'), str):
             raise ValueError('Retainer portrait source needs a pinned SHA256')
@@ -313,7 +314,7 @@ def append_retainer_assets(root, entries, outputs, atlases, used_hashes, *,
             source_meta.update(source_path=relative, source_sha256=digest(source_raw))
             new_atlases.append(dict(id=pid, path=relative, sha256=digest(source_raw),
                                    size=list(image.size), art_gender_design=person['art_gender_design'],
-                                   source_type='single_authored_portrait', retainer_plan=PLAN))
+                                   source_type='single_authored_portrait', retainer_plan=plan_path))
         source_paths.add(relative)
         if kind != 'original_portrait_redraw':
             if native['rgba_sha256'] in used_hashes | new_hashes:
@@ -326,12 +327,12 @@ def append_retainer_assets(root, entries, outputs, atlases, used_hashes, *,
         if digest(pixels) in hd_hashes:
             raise ValueError('Retainer enhanced pixels duplicate an existing identity')
         hd_hashes.add(digest(pixels))
-        crop_path = f'art/portraits/retainer-additions-v1/source-crops/{pid}.png'
+        crop_path = str(Path(plan_path).parent / 'source-crops' / (pid + '.png'))
         crop_png = encode_png(crop.tobytes(), crop.size)
         native_path = (person['native_original_path'].removeprefix('game')
                        if kind == 'original_portrait_redraw' else f'/assets/portraits/generated/{pid}.png')
-        native_archive = f'art/portraits/retainer-additions-v1/native-32x40/{pid}.png'
-        provenance = dict(base_method=METHOD, retainer_plan=PLAN, retainer_plan_sha256=digest(plan_raw),
+        native_archive = str(Path(plan_path).parent / 'native-32x40' / (pid + '.png'))
+        provenance = dict(base_method=METHOD, retainer_plan=plan_path, retainer_plan_sha256=digest(plan_raw),
                           **source_meta, retained_source_crop=crop_path,
                           retained_source_crop_sha256=digest(crop_png),
                           retained_source_crop_rgba_sha256=digest(crop.tobytes()),
@@ -347,7 +348,7 @@ def append_retainer_assets(root, entries, outputs, atlases, used_hashes, *,
             provenance['reuse_notice'] = REUSE_NOTICE
         if 'prompt' in person or 'prompt_sha256' in person:
             retained(root, person.get('prompt'), person.get('prompt_sha256'),
-                     directory=str(Path(PLAN).parent))
+                     directory=str(Path(plan_path).parent))
             if not isinstance(person.get('prompt_sha256'), str):
                 raise ValueError('Retainer source prompt needs a pinned SHA256')
             provenance.update(prompt=person['prompt'], prompt_sha256=person['prompt_sha256'])
@@ -357,7 +358,7 @@ def append_retainer_assets(root, entries, outputs, atlases, used_hashes, *,
                                 source='pinned_ROM_static_frame0' if kind == 'original_portrait_redraw' else 'imagegen_new_pixel_art',
                                 art_direction_basis='authorial_game_art_not_historical_likeness',
                                 gender_design=person['art_gender_design'], name=person['name'],
-                                retainer_plan=PLAN, retainer_plan_sha256=digest(plan_raw),
+                                retainer_plan=plan_path, retainer_plan_sha256=digest(plan_raw),
                                 native_kind='nes_original' if kind == 'original_portrait_redraw' else 'generated',
                                 **source_meta, **{key: native[key] for key in (
                                     'opaque_pixels', 'source_cell_box', 'declared_grid_cell_box',
@@ -378,17 +379,20 @@ def append_retainer_assets(root, entries, outputs, atlases, used_hashes, *,
         new_outputs[root / native_archive] = native['png']
 
     hd['people'] = dict(old_hd, **new_hd)
+    retained_sources = [row['provenance']['original_source_path'] for row in hd['people'].values()
+                        if row.get('provenance', {}).get('base_method') == METHOD]
     hd['counts'].update(people=len(hd['people']),
                         source_unique=len({row['pixel_sha256'] for row in hd['people'].values()}),
-                        retainer_people=len(new_hd), retainer_source_images=len(source_paths))
+                        retainer_people=len(retained_sources),
+                        retainer_source_images=len(set(retained_sources)))
     hd['processing']['retainer_mode'] = METHOD
     new_outputs[hd_file] = json_bytes(hd)
-    records_dir = root / Path(PLAN).parent
+    records_dir = root / Path(plan_path).parent
     new_outputs[records_dir / 'native-records.json'] = json_bytes(dict(
-        schema='tk2-retainer-portrait-native-records-v1', plan=PLAN, plan_sha256=digest(plan_raw),
+        schema='tk2-retainer-portrait-native-records-v1', plan=plan_path, plan_sha256=digest(plan_raw),
         count=len(native_bindings), native_size=list(NATIVE_SIZE), people=native_bindings))
     new_outputs[records_dir / 'enhanced-records.json'] = json_bytes(dict(
-        schema='tk2-retainer-portrait-enhanced-records-v1', plan=PLAN, plan_sha256=digest(plan_raw),
+        schema='tk2-retainer-portrait-enhanced-records-v1', plan=plan_path, plan_sha256=digest(plan_raw),
         count=len(new_hd), size=list(ENHANCED_SIZE), people=new_hd))
     collision = set(new_outputs) & set(outputs)
     collision.discard(hd_file)
@@ -398,6 +402,6 @@ def append_retainer_assets(root, entries, outputs, atlases, used_hashes, *,
     outputs.update(new_outputs)
     atlases.extend(new_atlases)
     used_hashes.update(new_hashes)
-    return dict(path=PLAN, sha256=digest(plan_raw), count=len(native_bindings),
+    return dict(path=plan_path, sha256=digest(plan_raw), count=len(native_bindings),
                 generated_count=len(new_entries), original_count=len(native_bindings) - len(new_entries),
                 source_images=len(source_paths), method=METHOD)

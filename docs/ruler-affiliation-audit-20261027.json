@@ -2,10 +2,10 @@
   "schema": "tk2-ruler-affiliation-audit-v1",
   "review_revision": "2026-10-27",
   "base_commit": "69a6e8f01239159b91e150637f888278af3b7a88",
-  "review_sha256": "f08544edef0e339e265cb3baff1259e2db7bd381d6939a2a45563b2abdf01969",
-  "presentation_sha256": "75d0899512fce72b919023d9da2717b44bad789b3e9d3d4062458058e785d38b",
+  "review_sha256": "fb38ef837fad2783b70ac326f3496bfb45f322b274a8d062c7f5bc0aa65efdba",
+  "presentation_sha256": "05163db78220914ccf8fd357e27966a03695889386523776da279a501d64f752",
   "locale_sha256": "6a04e2c27b05da8bb29b2acd9cdc7f3a092c0ed35479bf8dfa456311f35efd18",
-  "japanese_sha256": "16128708ed8e4d1db8d80adce761a10212492027443665ef6e622aee4ece8f1e",
+  "japanese_sha256": "06da4fd57f8e2f5643361cef4c11fb937b18d9143a68b68b94ca6fd74e8a729b",
   "baseline_serving_non_ruler_reviews": 283,
   "pool": [
     {
@@ -1522,7 +1522,7 @@
           "bounded_pre_founding_free_projection": 1,
           "authorial_garrison_relocation": 14,
           "authorial_pre_revolt_region_proxy": 5,
-          "explicit_scenario_scope": 3,
+          "explicit_scenario_scope": 7,
           "attested_identity_explicit_game_lifetime_and_region": 22
         },
         "bases": {
@@ -1535,7 +1535,7 @@
           "retained_explicit_scenario_ruler": 8,
           "user_requested_bian_zhang_conditional_liangzhou_revolt": 4,
           "user_requested_local_song_jian_before_184_11": 1,
-          "explicit_scenario_scope": 3
+          "explicit_scenario_scope": 7
         }
       },
       "corrections": [],
@@ -1735,7 +1735,7 @@
         "bian_zhang",
         "song_jian"
       ],
-      "catalog_sha256": "215ce533fa43fd6f857bf626444f46ca364ba588f75f1df5eab757886fdc4941"
+      "catalog_sha256": "f60bec8a5a6b19d6cd8be55d28004725169d585108009d7d8284ac5332bca88d"
     },
     {
       "id": "mainland188-06",
@@ -2908,7 +2908,7 @@
           "primary_local_family_force_with_regional_proxy": 1,
           "bounded_hometown_proxy_not_proven_188_follower": 1,
           "authorial_lifetime_region_proxy": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 10,
           "attested_identity_explicit_game_lifetime_and_region": 22
         },
         "bases": {
@@ -2924,7 +2924,7 @@
           "user_reviewed_188_independent_ma_teng": 3,
           "retainer_affiliation_review_20261027": 26,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6
+          "explicit_scenario_scope": 10
         }
       },
       "corrections": [
@@ -3188,7 +3188,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "c989d96269f4050ceee3e1e70e08d8d9f89b040adde79c587eed69d122af97aa"
+      "catalog_sha256": "f3463e49d20f95458ab6e83091ae1131803927b809dcdebe57a739e05b5cc124"
     },
     {
       "id": "mainland190-01",
@@ -4462,7 +4462,7 @@
           "romance_compatibility_only": 1,
           "explicit_regional_proxy": 1,
           "authorial_lifetime_region_proxy": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 10,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 4,
           "attested_identity_explicit_game_lifetime_and_region": 18
         },
@@ -4479,7 +4479,7 @@
           "same_date_SAN14_recorded_death": 21,
           "authorial_garrison_relocation_for_song_jian_longxi": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6
+          "explicit_scenario_scope": 10
         }
       },
       "corrections": [
@@ -5095,7 +5095,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "e6a7c2d39d1a4e4032aa138eba77f964918a727edb669974764d62be45a16f0d"
+      "catalog_sha256": "cd8f2999fed043cd0515951914a5d36ba4c3e5887173eebc5cb3eb75054630d7"
     },
     {
       "id": "mainland191-10",
@@ -6336,7 +6336,7 @@
           "primary_relationship_transfer_year_bounded_game_inference": 1,
           "explicit_regional_proxy": 1,
           "authorial_lifetime_region_proxy": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 10,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 4,
           "attested_identity_explicit_game_lifetime_and_region": 18
         },
@@ -6356,7 +6356,7 @@
           "authored_bounded_snapshot_continuity": 4,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6
+          "explicit_scenario_scope": 10
         }
       },
       "corrections": [],
@@ -6553,7 +6553,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "e41715a5b625475de9f92b0d807fd71e827c9cab83786b62708ff77d9a51ca1f"
+      "catalog_sha256": "505aff1997bba6d993d3bb61e8a0527e91f88c4f822a948ebb3436975610dc32"
     },
     {
       "id": "mainland194-06",
@@ -7792,7 +7792,7 @@
           "primary_refuge_relation_without_attested_office": 1,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 10,
           "attested_identity_explicit_game_lifetime_and_region": 18,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 4
         },
@@ -7811,7 +7811,7 @@
           "authorial_region_placement": 4,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6
+          "explicit_scenario_scope": 10
         }
       },
       "corrections": [
@@ -8251,7 +8251,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "9649eaf2f0e48482deb2cb5766c26c8420e74072d07a870d2cde51cb66888f4a"
+      "catalog_sha256": "756d5bde4e117406ee1ca392f59abb983a61a10ba1111a7b605a333d599dc3d8"
     },
     {
       "id": "mainland196-06",
@@ -9460,7 +9460,7 @@
       "material": {
         "gold": 143195,
         "grain": 495016,
-        "soldiers": 235567
+        "soldiers": 236767
       },
       "placement_counts": {
         "reference_classes": {
@@ -9476,6 +9476,7 @@
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
+          "attested_identity_user_requested_opening_post": 4,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -9494,7 +9495,8 @@
           "authorial_region_placement": 4,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6
+          "explicit_scenario_scope": 6,
+          "user_requested_196_shu_opening": 4
         }
       },
       "corrections": [
@@ -9848,7 +9850,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "29b175a845a7c1da563bf3bd3af011f364afc88f4a4904036196962fe4696cb4"
+      "catalog_sha256": "4ed68bb4a45b32d08e3df6c8d8eaecaead90895373fcfe5c0841fa513792141b"
     },
     {
       "id": "mainland197-07",
@@ -11079,6 +11081,7 @@
           "authorial_region_proxy": 2,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
+          "fictional_scenario_adaptation": 4,
           "attested_identity_explicit_game_lifetime_and_region": 16,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 5,
           "fictional_inherited_yuan_army_affiliation_mapping": 1
@@ -11098,7 +11101,8 @@
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6
+          "explicit_scenario_scope": 6,
+          "reviewed_early_shu_retainer_opening": 4
         }
       },
       "corrections": [
@@ -11704,7 +11708,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "dba3221055830cc42bdb010cc2558bbb757295688ba5a936353c505d9b649e1a"
+      "catalog_sha256": "a3f6a4b3d004c83e19e5c7428e8e03210462315b5d4b2f23c1faa08c02e685e7"
     },
     {
       "id": "mainland198-03",
@@ -12911,6 +12915,7 @@
           "primary_separate_tribal_leader_regional_proxy": 1,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
+          "historical_career_with_opening_station_inference": 4,
           "attested_identity_explicit_game_lifetime_and_region": 16,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 6
         },
@@ -12925,7 +12930,8 @@
           "authorial_garrison_relocation_for_song_jian_longxi": 4,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6
+          "explicit_scenario_scope": 6,
+          "reviewed_early_shu_retainer_opening": 4
         }
       },
       "corrections": [
@@ -13430,7 +13436,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "352018686e94a2b6c77f866771716003ad287dea95b3e11fc8e279cca6437d7b"
+      "catalog_sha256": "e71196f840ee93776d7291aec6875b640894f600da2540e7d4eaa3bd25e4fc96"
     },
     {
       "id": "mainland200-01",
@@ -14591,15 +14597,17 @@
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 822,
+          "authorial_region_placement": 821,
           "game_reference": 167,
           "primary_text_affiliation": 2,
           "authorial_garrison_relocation": 28,
           "regional_primary_mapping": 1,
           "bounded_regional_inference": 1,
+          "annotated_biography_with_opening_station_inference": 1,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
+          "historical_career_with_opening_station_inference": 4,
           "attested_identity_explicit_game_lifetime_and_region": 18,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 4
         },
@@ -14607,17 +14615,19 @@
           "person_specific_future_free_appearance": 443,
           "same_date_SAN14_guide_free_location": 4,
           "same_date_SAN14_guide_affiliation": 4,
-          "retained_reviewed_opening_membership": 245,
+          "retained_reviewed_opening_membership": 244,
           "same_date_SAN14_recorded_death": 159,
           "retained_person_specific_free_location": 111,
           "historical_review_20261025": 28,
           "retained_explicit_scenario_ruler": 10,
           "historical_city_owner_relocation_authorial_garrison": 11,
+          "historical_guandu_xiaopei_opening": 1,
           "authorial_garrison_relocation_for_song_jian_longxi": 4,
           "ruler_affiliation_review_20261027": 2,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 6,
+          "reviewed_early_shu_retainer_opening": 4,
           "retainer_affiliation_review_20261027": 22
         }
       },
@@ -14882,7 +14892,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "5984c3550b5a058210af7d1c2a3dcc611a9f5569b9bf63fe4094761e319f9e9b"
+      "catalog_sha256": "67e1a424de1aafd083479267a5a9416d71c3a34c345096d2dd7f526709380aad"
     },
     {
       "id": "mainland201-05",
@@ -16048,7 +16058,8 @@
           "authorial_if_independent_faction_mapping": 3,
           "authorial_garrison_relocation": 3,
           "authorial_if_lifetime_region_proxy": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 7,
+          "fictional_scenario_adaptation": 3,
           "attested_identity_explicit_game_lifetime_and_region": 18,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 4
         },
@@ -16065,7 +16076,8 @@
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 7,
+          "reviewed_early_shu_retainer_opening": 3,
           "retainer_affiliation_review_20261027": 22
         }
       },
@@ -16200,7 +16212,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "c0a07e3f896ebfde8168828ea6e32e275737baf1e11fa0bece858766d9f0b9e2"
+      "catalog_sha256": "7ec581e4e4827deb99e6a65a136014fb1ecc9fc13a414d2bd2fd14c85e08bd48"
     },
     {
       "id": "mainland202-06",
@@ -17372,7 +17384,8 @@
           "regional_primary_mapping": 1,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 7,
+          "historical_career_with_opening_station_inference": 3,
           "attested_identity_explicit_game_lifetime_and_region": 18,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 4
         },
@@ -17386,7 +17399,8 @@
           "ruler_affiliation_review_20261027": 2,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 7,
+          "reviewed_early_shu_retainer_opening": 3,
           "retainer_affiliation_review_20261027": 22
         }
       },
@@ -17628,7 +17642,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "1ee6cc72eda026b43b3468b165be1562c77426d9b8a9d5c9d88c15cb462f439e"
+      "catalog_sha256": "95383a73c471c56e395abbfd2583a44bf9f8181889c8b885c33f3fc9f14cd3f6"
     },
     {
       "id": "mainland207-09",
@@ -18792,7 +18806,8 @@
           "primary_text_chronology": 2,
           "primary_fugitive_guest_with_month_uncertainty": 1,
           "authorial_lifetime_region_proxy": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 7,
+          "historical_career_with_opening_station_inference": 3,
           "attested_identity_explicit_game_lifetime_and_region": 16,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 6
         },
@@ -18812,7 +18827,8 @@
           "retainer_affiliation_review_20261027": 23,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6
+          "explicit_scenario_scope": 7,
+          "reviewed_early_shu_retainer_opening": 3
         }
       },
       "corrections": [
@@ -19122,7 +19138,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "2301b89c78112a5ff85d675bbea1ffaec84a1b994284f1b7a87f7e788f5ed991"
+      "catalog_sha256": "9bdc00d34f47563c17c7dbb52c0c0a45ceb5681f6e49f2b77a7b2062429f746e"
     },
     {
       "id": "mainland208-10",
@@ -20290,7 +20306,8 @@
           "bounded_local_career_inference": 1,
           "bounded_regional_inference": 1,
           "authorial_lifetime_region_proxy": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 7,
+          "historical_career_with_opening_station_inference": 3,
           "attested_identity_explicit_game_lifetime_and_region": 16,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 6
         },
@@ -20313,7 +20330,8 @@
           "authorial_garrison_relocation_for_song_jian_longxi": 4,
           "authored_bounded_snapshot_continuity": 1,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 7,
+          "reviewed_early_shu_retainer_opening": 3,
           "retainer_affiliation_review_20261027": 22
         }
       },
@@ -20576,7 +20594,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "3432de6d1a2d328a0991710d9345b892f15d767af09c7e44c6fc97b052ea6e84"
+      "catalog_sha256": "f9e82d6e5a03e293b2a0af3cd924f99c9871f59998ca2b5dc1c6008dcd69b3ba"
     },
     {
       "id": "mainland209-06",
@@ -21701,7 +21719,8 @@
           "bounded_career_inference": 168,
           "authorial_garrison_relocation": 4,
           "authorial_if_lifetime_region_proxy": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 7,
+          "fictional_scenario_adaptation": 3,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -21720,7 +21739,8 @@
           "authorial_garrison_relocation_for_song_jian_longxi": 4,
           "authored_bounded_snapshot_continuity": 1,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 7,
+          "reviewed_early_shu_retainer_opening": 3,
           "retainer_affiliation_review_20261027": 22
         }
       },
@@ -21855,7 +21875,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "5affb979cc4c2f920309b5ae8e64542cc2bc457618867e55dee98792346142c4"
+      "catalog_sha256": "353860330ec9edb039e3d3d07e9785e47cf602294616c32c84485b12cdfe8011"
     },
     {
       "id": "mainland210-11",
@@ -22975,7 +22995,8 @@
           "bounded_authorial_estimate": 2,
           "authorial_garrison_relocation": 6,
           "authorial_if_lifetime_region_proxy": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 7,
+          "fictional_scenario_adaptation": 3,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -22994,7 +23015,8 @@
           "authorial_garrison_relocation_for_song_jian_longxi": 6,
           "authored_bounded_snapshot_continuity": 1,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 7,
+          "reviewed_early_shu_retainer_opening": 3,
           "retainer_affiliation_review_20261027": 22
         }
       },
@@ -23185,7 +23207,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "74b66e451633358537c36d324e2bfcf872ac116a6b8b03ea6ef1f1b9a3c20c09"
+      "catalog_sha256": "f20246f9793507a1704f0dfd87220e59431e6a9c046068953e5927ca870a408a"
     },
     {
       "id": "mainland211-07-tongguan",
@@ -24313,7 +24335,8 @@
           "primary_text_chronology": 2,
           "bounded_local_career_inference": 1,
           "authorial_lifetime_region_proxy": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 7,
+          "historical_career_with_opening_station_inference": 3,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -24327,7 +24350,8 @@
           "ruler_affiliation_review_20261027": 4,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 7,
+          "reviewed_early_shu_retainer_opening": 3,
           "retainer_affiliation_review_20261027": 22
         }
       },
@@ -24612,7 +24636,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "c6d1b2c2bb69e0d554792383a616d08504443838d898037d8418ab95b3e18169"
+      "catalog_sha256": "3fd866c946465c76e5c997b75cf51e3855ced5c3753f210d77b156cc840b5106"
     },
     {
       "id": "mainland212-06",
@@ -25741,7 +25765,8 @@
           "bounded_authorial_estimate": 2,
           "fictional_victory_affiliation_and_authorial_city_proxy": 1,
           "authorial_if_lifetime_region_proxy": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 7,
+          "fictional_scenario_adaptation": 3,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -25760,7 +25785,8 @@
           "retained_explicit_scenario_ruler": 8,
           "retainer_affiliation_review_20261027": 23,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6
+          "explicit_scenario_scope": 7,
+          "reviewed_early_shu_retainer_opening": 3
         }
       },
       "corrections": [
@@ -25950,7 +25976,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "bb94c2fb84f01120d506153470ba6d72936eb9b7b38478d65bbeecb4c91cbb1a"
+      "catalog_sha256": "7934911e6bd185c1799d410406884265d44da96e5962e3716fc32af500d0a053"
     },
     {
       "id": "mainland212-12",
@@ -27072,7 +27098,8 @@
           "annotated_biography_fugitive_region_proxy": 1,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
-          "explicit_scenario_scope": 6,
+          "explicit_scenario_scope": 7,
+          "historical_career_with_opening_station_inference": 3,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -27093,7 +27120,8 @@
           "authorial_garrison_relocation_for_song_jian_longxi": 1,
           "ruler_affiliation_review_20261027": 3,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
-          "explicit_scenario_scope": 6
+          "explicit_scenario_scope": 7,
+          "reviewed_early_shu_retainer_opening": 3
         }
       },
       "corrections": [
@@ -27312,7 +27340,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "5339adc9d0ba15853586eb93c53785b75eb479a2eb8dd0236adf2cd2c5e9f8a6"
+      "catalog_sha256": "4bbb1f09a101605320c425fb1fcf4619b16dc0c5ba99a2ea940a59b7a2e3e655"
     },
     {
       "id": "mainland215-08",
@@ -28405,7 +28433,8 @@
           "annotated_biography_fugitive_region_proxy": 1,
           "primary_text_chronology": 2,
           "attested_submission_bounded_career_station_continuity": 1,
-          "explicit_scenario_scope": 7,
+          "explicit_scenario_scope": 8,
+          "historical_career_with_opening_station_inference": 3,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -28419,7 +28448,8 @@
           "authored_nearby_historical_roster_inference": 18,
           "ruler_affiliation_review_20261027": 3,
           "authorial_region_placement": 2,
-          "explicit_scenario_scope": 7
+          "explicit_scenario_scope": 8,
+          "reviewed_early_shu_retainer_opening": 3
         }
       },
       "corrections": [
@@ -28681,7 +28711,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "dffb235279abc0b4e9bd449c198cca98ffa9a3f760de65b49ccb0232e3bf80aa"
+      "catalog_sha256": "a0c8e8546eaa85acede65812e2e19c1b0d845e088361433ec7731cc2bfce9891"
     },
     {
       "id": "mainland217-07",
@@ -29779,7 +29809,8 @@
           "post_attestation_career_and_station_inference": 1,
           "primary_text_chronology": 2,
           "attested_submission_bounded_career_station_continuity": 1,
-          "explicit_scenario_scope": 7,
+          "explicit_scenario_scope": 8,
+          "historical_career_with_opening_station_inference": 3,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -29796,7 +29827,8 @@
           "bounded_career_inference": 6,
           "retainer_affiliation_review_20261027": 25,
           "authorial_region_placement": 2,
-          "explicit_scenario_scope": 7
+          "explicit_scenario_scope": 8,
+          "reviewed_early_shu_retainer_opening": 3
         }
       },
       "corrections": [
@@ -30100,7 +30132,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "6879347981cdb87a10292825606a2135dbf987c8c41eb5ee36e460ee18f72ead"
+      "catalog_sha256": "f42417ae790a30bfc5821bb73ce9c5d6499d0ee22aa9eeb0a379084a8d51098c"
     },
     {
       "id": "mainland219-07",
@@ -31199,7 +31231,8 @@
           "post_attestation_career_and_station_inference": 1,
           "primary_text_chronology": 2,
           "attested_submission_bounded_career_station_continuity": 1,
-          "explicit_scenario_scope": 7,
+          "explicit_scenario_scope": 8,
+          "historical_career_with_opening_station_inference": 3,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -31218,7 +31251,8 @@
           "ruler_affiliation_review_20261027": 4,
           "retained_explicit_scenario_ruler": 4,
           "retainer_affiliation_review_20261027": 25,
-          "explicit_scenario_scope": 7
+          "explicit_scenario_scope": 8,
+          "reviewed_early_shu_retainer_opening": 3
         }
       },
       "corrections": [
@@ -31458,7 +31492,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "60b6bb65d52215b4780bad1168b097de3a0509c83a4982ef720d778a63a146d6"
+      "catalog_sha256": "c6d9d3fe5c134289fc32f66f55f1ad832428ee517cad6839a6d596672ed75592"
     },
     {
       "id": "mainland221-07",
@@ -32553,7 +32587,8 @@
           "primary_text_alive_by_year_authorial_city_proxy": 1,
           "post_attestation_career_and_station_inference": 1,
           "attested_submission_bounded_career_station_continuity": 1,
-          "explicit_scenario_scope": 7,
+          "explicit_scenario_scope": 8,
+          "historical_career_with_opening_station_inference": 3,
           "attested_identity_explicit_game_lifetime_and_region": 20,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 1,
           "attested_office_with_bounded_career_and_city_proxy": 1
@@ -32573,7 +32608,8 @@
           "ruler_affiliation_review_20261027": 3,
           "authored_bounded_source_snapshot_continuity": 4,
           "retained_chronology_or_explicit_exclusion": 2,
-          "explicit_scenario_scope": 7
+          "explicit_scenario_scope": 8,
+          "reviewed_early_shu_retainer_opening": 3
         }
       },
       "corrections": [
@@ -32835,7 +32871,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "fa2bb0c4b9dc83339d04eca3eb9846038c603dd96e853abf5bdbb3385f8f483f"
+      "catalog_sha256": "7990b036ac4e3a04c26cc20de19aeb03a271cb5031ad22a62e033efb517662ed"
     },
     {
       "id": "mainland225-07",
@@ -33932,7 +33968,8 @@
           "primary_service_with_station_and_lifetime_inference": 1,
           "post_attestation_career_and_station_inference": 1,
           "attested_submission_bounded_career_station_continuity": 1,
-          "explicit_scenario_scope": 7,
+          "explicit_scenario_scope": 8,
+          "historical_career_with_opening_station_inference": 3,
           "attested_identity_explicit_game_lifetime_and_region": 21,
           "attested_office_with_bounded_career_and_city_proxy": 1
         },
@@ -33950,7 +33987,8 @@
           "retained_explicit_scenario_ruler": 6,
           "ruler_affiliation_review_20261027": 4,
           "user_requested_225_nanzhong_merge": 3,
-          "explicit_scenario_scope": 7
+          "explicit_scenario_scope": 8,
+          "reviewed_early_shu_retainer_opening": 3
         }
       },
       "corrections": [
@@ -34169,7 +34207,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "5e460fa7a444a363bca5115a62caccd3de348833669c492e12dea629a5f316a2"
+      "catalog_sha256": "6c194d11508f95b5341750e26c2b3c44e8800952aaf4f7647d503cc582f10e48"
     },
     {
       "id": "mainland227-02",
@@ -35250,7 +35288,8 @@
           "primary_service_with_station_and_lifetime_inference": 1,
           "post_attestation_career_and_station_inference": 1,
           "attested_submission_bounded_career_station_continuity": 1,
-          "explicit_scenario_scope": 7,
+          "explicit_scenario_scope": 8,
+          "historical_career_with_opening_station_inference": 3,
           "attested_identity_explicit_game_lifetime_and_region": 21,
           "attested_office_with_bounded_career_and_city_proxy": 1
         },
@@ -35265,7 +35304,8 @@
           "ruler_affiliation_review_20261027": 5,
           "retainer_affiliation_review_20261027": 25,
           "retained_chronology_or_explicit_exclusion": 2,
-          "explicit_scenario_scope": 7
+          "explicit_scenario_scope": 8,
+          "reviewed_early_shu_retainer_opening": 3
         }
       },
       "corrections": [
@@ -35570,7 +35610,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "177178962b8c854a14ee6a30917a586084b68f4e66ec58736035becaf3ced328"
+      "catalog_sha256": "9f0b448cc49b7f15a49f5d7f63a0aa2adb8c2263d25b16467186c717a41ee8ff"
     },
     {
       "id": "mainland234-02",
@@ -36645,7 +36685,8 @@
           "primary_text_chronology": 5,
           "primary_text_hostage_unavailable": 1,
           "attested_submission_bounded_career_station_continuity": 1,
-          "explicit_scenario_scope": 7,
+          "explicit_scenario_scope": 8,
+          "historical_career_with_opening_station_inference": 3,
           "attested_identity_explicit_game_lifetime_and_region": 17,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 5
         },
@@ -36663,7 +36704,8 @@
           "retained_explicit_scenario_ruler": 4,
           "ruler_affiliation_review_20261027": 7,
           "retainer_affiliation_review_20261027": 23,
-          "explicit_scenario_scope": 7
+          "explicit_scenario_scope": 8,
+          "reviewed_early_shu_retainer_opening": 3
         }
       },
       "corrections": [
@@ -36927,7 +36969,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "8a26257ebc391ff7eee3fc1721f41a7f4587c01d7375b85cad8fa86d588b99b8"
+      "catalog_sha256": "5031b9511b0b9a4c6198c3fe6e02d1109c789a4b6a3ad257ea40bd94a02ee48d"
     },
     {
       "id": "mainland235-01",
@@ -37993,7 +38035,8 @@
           "game_reference": 2,
           "bounded_career_inference": 108,
           "primary_text_captivity": 1,
-          "explicit_scenario_scope": 7,
+          "explicit_scenario_scope": 9,
+          "fictional_scenario_adaptation": 2,
           "attested_identity_explicit_game_lifetime_and_region": 17,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 5
         },
@@ -38008,7 +38051,8 @@
           "retained_person_specific_free_location": 12,
           "retained_explicit_scenario_ruler": 4,
           "ruler_affiliation_review_20261027": 1,
-          "explicit_scenario_scope": 7,
+          "explicit_scenario_scope": 9,
+          "reviewed_early_shu_retainer_opening": 2,
           "retainer_affiliation_review_20261027": 22
         }
       },
@@ -38167,7 +38211,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "219b6a7cc664b910f1818a40f2239039e506821e3c06229d8009a30d6b4257c6"
+      "catalog_sha256": "afe0e4192850d6df7be71f65480a18357cc495045ef7166a6d7c555b936e80a1"
     },
     {
       "id": "mainland238-01",
@@ -39241,7 +39285,8 @@
           "primary_text_captivity": 1,
           "primary_text_chronology": 5,
           "primary_text_hostage_unavailable": 1,
-          "explicit_scenario_scope": 7,
+          "explicit_scenario_scope": 9,
+          "historical_career_with_opening_station_inference": 2,
           "attested_identity_explicit_game_lifetime_and_region": 11,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 11
         },
@@ -39259,7 +39304,8 @@
           "retained_explicit_scenario_ruler": 4,
           "ruler_affiliation_review_20261027": 7,
           "authorial_region_placement": 2,
-          "explicit_scenario_scope": 7,
+          "explicit_scenario_scope": 9,
+          "reviewed_early_shu_retainer_opening": 2,
           "retainer_affiliation_review_20261027": 22
         }
       },
@@ -39524,7 +39570,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "79dafcc90d20dc9131764e062b1ff065029f36a7abb0e983b4757f2445dc37a3"
+      "catalog_sha256": "e828584312dcd845be589d385f41e0e5ddb63e6a47dd6ffd7dae69a726159b60"
     },
     {
       "id": "mainland249-01",
@@ -40587,7 +40633,7 @@
           "authorial_region_placement": 314,
           "bounded_career_inference": 2,
           "primary_text_chronology": 5,
-          "explicit_scenario_scope": 7,
+          "explicit_scenario_scope": 11,
           "attested_identity_explicit_game_lifetime_and_region": 22
         },
         "bases": {
@@ -40601,7 +40647,7 @@
           "ruler_affiliation_review_20261027": 5,
           "retained_explicit_scenario_ruler": 3,
           "retained_chronology_or_explicit_exclusion": 2,
-          "explicit_scenario_scope": 7,
+          "explicit_scenario_scope": 11,
           "retainer_affiliation_review_20261027": 22
         }
       },
@@ -40907,7 +40953,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "4d39918404857844d840b338e5839ee12c95a38960d39ceb467bc9baf26f0c1d"
+      "catalog_sha256": "247ae1f01e48c379a8fd5594e273bef9ba72899bf12fab559fa02880c2f36f65"
     },
     {
       "id": "mainland263-05",
@@ -41975,7 +42021,7 @@
           "bounded_career_inference": 1,
           "primary_text_chronology": 5,
           "primary_text_deposed_unavailable": 1,
-          "explicit_scenario_scope": 4,
+          "explicit_scenario_scope": 8,
           "primary_text_month_regional_mapping": 1,
           "authorial_retinue_window": 1,
           "office_seat_mapping_if_canonical_id_matches": 1,
@@ -41989,7 +42035,7 @@
           "bounded_career_inference": 1,
           "ruler_affiliation_review_20261027": 6,
           "retained_explicit_scenario_ruler": 3,
-          "explicit_scenario_scope": 4,
+          "explicit_scenario_scope": 8,
           "primary_lu_xing_revolt_month": 1,
           "authorial_lu_xing_retinue_window": 1,
           "retainer_affiliation_review_20261027": 23
@@ -42211,7 +42257,7 @@
         "jianping": "建平"
       },
       "dormant_factions": [],
-      "catalog_sha256": "42f39638191c696c6d686fce7844814c328970da9c62f72670713e7995013f08"
+      "catalog_sha256": "d8d0ddde6e6673a6764a106e981de6533a137f472698592b9e64f2cde2bfa8c3"
     }
   ]
 }

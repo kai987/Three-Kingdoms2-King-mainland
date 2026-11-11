@@ -46660,6 +46660,135 @@
           "status": "excluded",
           "basis": "explicit_scenario_scope"
         }
+      },
+      "historical-xiahou-bo": {
+        "source_status": "historical_named_supplement",
+        "source_ruler": null,
+        "source_city": null,
+        "status": "scenario_excluded",
+        "year_state": "scenario_excluded",
+        "faction": null,
+        "city": null,
+        "reason": "本開局不在已設定的出場期間。",
+        "death_year_resolved": false,
+        "planning_complete": true,
+        "placement_basis": "explicit_scenario_scope",
+        "posting_reference": null,
+        "membership_revision": null,
+        "placement_review": {
+          "basis": "explicit_scenario_scope",
+          "source_urls": [
+            "https://www.shidianguji.com/zh/mid-page/7459508839818493961"
+          ],
+          "note": "本開局超出已設定的出場範圍；配置依據見人物史料與後續劇本配屬表。",
+          "reference_date": null,
+          "reference_scenario": null,
+          "historical_certainty": "explicit_scenario_scope"
+        },
+        "appearance_plan": {
+          "start": null,
+          "end": null,
+          "city": null,
+          "status": "scenario_excluded",
+          "basis": "explicit_scenario_scope"
+        }
+      },
+      "historical-xue-yong": {
+        "source_status": "historical_named_supplement",
+        "source_ruler": null,
+        "source_city": null,
+        "status": "scenario_excluded",
+        "year_state": "scenario_excluded",
+        "faction": null,
+        "city": null,
+        "reason": "本開局不在已設定的出場期間。",
+        "death_year_resolved": false,
+        "planning_complete": true,
+        "placement_basis": "explicit_scenario_scope",
+        "posting_reference": null,
+        "membership_revision": null,
+        "placement_review": {
+          "basis": "explicit_scenario_scope",
+          "source_urls": [
+            "https://www.shidianguji.com/zh/book/7505734818018099250/chapter/1lgz3ctxbj57f"
+          ],
+          "note": "本開局超出已設定的出場範圍；配置依據見人物史料與後續劇本配屬表。",
+          "reference_date": null,
+          "reference_scenario": null,
+          "historical_certainty": "explicit_scenario_scope"
+        },
+        "appearance_plan": {
+          "start": null,
+          "end": null,
+          "city": null,
+          "status": "scenario_excluded",
+          "basis": "explicit_scenario_scope"
+        }
+      },
+      "historical-yuan-chen": {
+        "source_status": "historical_named_supplement",
+        "source_ruler": null,
+        "source_city": null,
+        "status": "scenario_excluded",
+        "year_state": "scenario_excluded",
+        "faction": null,
+        "city": null,
+        "reason": "本開局不在已設定的出場期間。",
+        "death_year_resolved": false,
+        "planning_complete": true,
+        "placement_basis": "explicit_scenario_scope",
+        "posting_reference": null,
+        "membership_revision": null,
+        "placement_review": {
+          "basis": "explicit_scenario_scope",
+          "source_urls": [
+            "https://www.shidianguji.com/zh/mid-page/7559333946384023579",
+            "https://zh.wikisource.org/wiki/華陽國志/卷七"
+          ],
+          "note": "本開局超出已設定的出場範圍；配置依據見人物史料與後續劇本配屬表。",
+          "reference_date": null,
+          "reference_scenario": null,
+          "historical_certainty": "explicit_scenario_scope"
+        },
+        "appearance_plan": {
+          "start": null,
+          "end": null,
+          "city": null,
+          "status": "scenario_excluded",
+          "basis": "explicit_scenario_scope"
+        }
+      },
+      "historical-liu-yan-shu": {
+        "source_status": "historical_named_supplement",
+        "source_ruler": null,
+        "source_city": null,
+        "status": "scenario_excluded",
+        "year_state": "scenario_excluded",
+        "faction": null,
+        "city": null,
+        "reason": "本開局不在已設定的出場期間。",
+        "death_year_resolved": false,
+        "planning_complete": true,
+        "placement_basis": "explicit_scenario_scope",
+        "posting_reference": null,
+        "membership_revision": null,
+        "placement_review": {
+          "basis": "explicit_scenario_scope",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷40#劉琰"
+          ],
+          "note": "本開局超出已設定的出場範圍；配置依據見人物史料與後續劇本配屬表。",
+          "reference_date": null,
+          "reference_scenario": null,
+          "historical_certainty": "explicit_scenario_scope"
+        },
+        "appearance_plan": {
+          "start": null,
+          "end": null,
+          "city": null,
+          "status": "scenario_excluded",
+          "basis": "explicit_scenario_scope"
+        }
       }
     },
     "main_scenario": {
@@ -100159,7 +100288,11 @@
       "historical-li-tong-jiaozhi": [],
       "historical-beigong-boyu": [],
       "historical-li-wenhou": [],
-      "historical-bian-zhang": []
+      "historical-bian-zhang": [],
+      "historical-xiahou-bo": [],
+      "historical-xue-yong": [],
+      "historical-yuan-chen": [],
+      "historical-liu-yan-shu": []
     },
     "placement_completion": {
       "schema": "tk2-placement-completion-v1",

@@ -115,10 +115,12 @@ class HanSuiIfTests(unittest.TestCase):
         cls.base_ids = set(cls.base_order)
         cls.base_snapshot = dict(order=cls.base_order,
                                  people={pid: canonical['people'][pid] for pid in cls.base_order})
-        cls.new_ids = set(canonical['order'][1030:])
+        cls.retainer_review_ids = set(canonical['order'][:cls.review['person_count']])
+        cls.new_ids = cls.retainer_review_ids - cls.base_ids
+        cls.later_retainer_ids = set(canonical['order']) - cls.retainer_review_ids
 
     def pre_expansion_board(self, data):
-        """Apply the frozen Han Sui oracles to their original board domain."""
+        """Project the opening onto the board and roster covered by the frozen review."""
         source = json.loads(self.sources[data['id']].read_text())
         old = apply_patch(self.shared, source['overrides'])
         plan = self.expansion[data['id']]
@@ -130,13 +132,21 @@ class HanSuiIfTests(unittest.TestCase):
         approved = {pid: city for city, people in plan['garrisons'].items() for pid in people}
         old_locations = {row['person_id']: row['city'] for row in old['initial_officers']}
         rows = []
+        resources = dict(data['initial_city_resources'])
         for row in data['initial_officers']:
             pid = row['person_id']
+            if pid in self.later_retainer_ids:
+                city = row['city']
+                if city in original_cities:
+                    stock = resources.get(city, data['initial_resources'])
+                    resources[city] = dict(stock, reserves=stock['reserves'] + row['troops'])
+                continue
             if pid in approved:
                 self.assertEqual(row['city'], approved[pid], pid)
                 row = dict(row, city=old_locations[pid])
             rows.append(row)
-        return dict(data, active_cities=original_cities, initial_officers=rows)
+        return dict(data, active_cities=original_cities, initial_officers=rows,
+                    initial_city_resources=resources)
 
     def legacy_attributes(self, data):
         """Restore only explicitly reviewed death-year fields for the f65 hash.
@@ -306,7 +316,8 @@ class HanSuiIfTests(unittest.TestCase):
             self.assertIn(person_id, {row['person_id'] for row in data['initial_free_officers']})
         attributes = {row['person_id']: {key: row[key] for key in
                       ('runtime_id', 'birth_year', 'service_year', 'death_year',
-                       'profile', 'initialization')} for row in data['people']}
+                       'profile', 'initialization')} for row in data['people']
+                      if row['person_id'] in self.retainer_review_ids}
         self.assertEqual(digest(attributes),
                          '891d0f3e935fb65d53d48918aeeaf2483113d430eb49d13d9c95b6cb277b5546')
         self.assertEqual(digest(self.legacy_attributes(data)),
@@ -445,7 +456,8 @@ class HanSuiIfTests(unittest.TestCase):
                 self.assertEqual(digest(other), baseline[7])
                 attributes = {row['person_id']: {key: row[key] for key in
                               ('runtime_id', 'birth_year', 'service_year', 'death_year',
-                               'profile', 'initialization')} for row in data['people']}
+                               'profile', 'initialization')} for row in data['people']
+                              if row['person_id'] in self.retainer_review_ids}
                 self.assertEqual(digest(attributes), baseline[8])
                 old = PRE_RETAINER_BASELINES[chapter]
                 legacy_other = [row for row in self.legacy_garrisons(data)

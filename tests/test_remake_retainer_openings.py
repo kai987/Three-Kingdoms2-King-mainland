@@ -83,8 +83,8 @@ class RetainerOpeningTests(unittest.TestCase):
 
     def test_append_only_ids_preserve_every_released_person_and_all29_plans(self):
         self.assertEqual(len(self.sources), 29)
-        self.assertEqual(len(self.people), 1052)
-        self.assertEqual(tuple(self.pool['order'][1030:]), NEW_IDS)
+        self.assertEqual(len(self.people), 1056)
+        self.assertEqual(tuple(self.pool['order'][1030:1052]), NEW_IDS)
         self.assertEqual([self.people[pid]['runtime_id'] for pid in NEW_IDS], list(range(1031, 1053)))
         before = self.pool['order'][:1030]
         frozen = dict(order=before, people={pid: self.people[pid] for pid in before})

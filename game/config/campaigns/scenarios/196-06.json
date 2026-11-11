@@ -118,7 +118,7 @@
           "city": "xiapi",
           "name": "刘备势力",
           "color": "#786985",
-          "initial_officers": 13
+          "initial_officers": 17
         },
         {
           "id": "gongsun",
@@ -2240,6 +2240,34 @@
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
+        },
+        {
+          "person_id": "historical-xiahou-bo",
+          "city": "xiapi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "historical-xue-yong",
+          "city": "xiapi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "city": "xiapi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "historical-liu-yan-shu",
+          "city": "xiapi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
         }
       ],
       "design_notes": [
@@ -2261,7 +2289,8 @@
         "優先同年月SAN14攻略表及原典生涯窗口；其餘依本人既有年代／區域記錄推定，駐軍再按來源城及邊境容量均衡分配。",
         "未來人物到達出仕窗口才以在野待訪，不強迫在遊玩中改投歷史勢力；已登場身分不重複生成、不復活。",
         "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
-        "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。"
+        "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+        "196年6月劇本依《三國志14》DLC實機截圖，將夏侯博、薛永、袁綝、劉琰配置在劉備的下邳，以武力、智力、魅力對應本作武、知、德。袁綝現存可考的官職晚於此劇本。"
       ],
       "initial_free_officers": [
         {
@@ -4173,7 +4202,11 @@
           "historical-heng-yi-cangwu": "cangwu",
           "historical-qian-bo-cangwu": "cangwu",
           "historical-gongchou-cheng": "changsha",
-          "historical-sun-xiang": "jiujiang"
+          "historical-sun-xiang": "jiujiang",
+          "historical-xiahou-bo": "xiapi",
+          "historical-xue-yong": "xiapi",
+          "historical-yuan-chen": "xiapi",
+          "historical-liu-yan-shu": "xiapi"
         }
       },
       "faction_rulers": {
@@ -37870,6 +37903,249 @@
               "basis": "retainer_affiliation_review_20261027"
             },
             "scenario_membership_basis": "retainer_affiliation_review_20261027"
+          },
+          "historical-xiahou-bo": {
+            "source_status": "serving",
+            "source_ruler": "劉備",
+            "source_city": "下邳",
+            "status": "serving",
+            "year_state": "available",
+            "faction": "shu",
+            "city": "xiapi",
+            "reason": "《三國志·武帝紀》記建安五年曹操東擊劉備，生擒其將夏侯博。此後行蹤及生卒不詳。196年6月加入劉備並駐下邳為指定劇本配置。",
+            "death_year_resolved": false,
+            "planning_complete": true,
+            "placement_basis": "user_requested_196_shu_opening",
+            "posting_reference": {
+              "person_id": "historical-xiahou-bo",
+              "faction": "shu",
+              "city": "xiapi",
+              "basis": "user_requested_196_shu_opening",
+              "source_urls": [
+                "https://www.shidianguji.com/zh/mid-page/7459508839818493961"
+              ],
+              "historical_certainty": "attested_identity_user_requested_opening_post",
+              "reference": "game/config/references/san14-dlc-abilities.json"
+            },
+            "membership_revision": {
+              "basis": "user_requested_196_shu_opening",
+              "note": "《三國志·武帝紀》記建安五年曹操東擊劉備，生擒其將夏侯博。此後行蹤及生卒不詳。196年6月加入劉備並駐下邳為指定劇本配置。",
+              "source_urls": [
+                "https://www.shidianguji.com/zh/mid-page/7459508839818493961"
+              ],
+              "reference": "game/config/references/san14-dlc-abilities.json"
+            },
+            "placement_review": {
+              "basis": "user_requested_196_shu_opening",
+              "source_urls": [
+                "https://www.shidianguji.com/zh/mid-page/7459508839818493961"
+              ],
+              "note": "《三國志·武帝紀》記建安五年曹操東擊劉備，生擒其將夏侯博。此後行蹤及生卒不詳。196年6月加入劉備並駐下邳為指定劇本配置。",
+              "reference_date": [
+                196,
+                6
+              ],
+              "reference_scenario": "mainland196-06",
+              "historical_certainty": "attested_identity_user_requested_opening_post",
+              "reference": "game/config/references/san14-dlc-abilities.json"
+            },
+            "appearance_plan": {
+              "start": [
+                196,
+                6
+              ],
+              "end": [
+                200,
+                1
+              ],
+              "city": "xiapi",
+              "status": "serving",
+              "basis": "user_requested_196_shu_opening"
+            },
+            "scenario_membership_basis": "user_requested_196_shu_opening"
+          },
+          "historical-xue-yong": {
+            "source_status": "serving",
+            "source_ruler": "劉備",
+            "source_city": "下邳",
+            "status": "serving",
+            "year_state": "available",
+            "faction": "shu",
+            "city": "xiapi",
+            "reason": "《蜀典》引《氏族略》記薛永字茂長，父薛蘭遭曹操所殺後依劉備，後任蜀郡太守。未記歸附確切年月及生卒。196年6月駐下邳為指定劇本配置。",
+            "death_year_resolved": false,
+            "planning_complete": true,
+            "placement_basis": "user_requested_196_shu_opening",
+            "posting_reference": {
+              "person_id": "historical-xue-yong",
+              "faction": "shu",
+              "city": "xiapi",
+              "basis": "user_requested_196_shu_opening",
+              "source_urls": [
+                "https://www.shidianguji.com/zh/book/7505734818018099250/chapter/1lgz3ctxbj57f"
+              ],
+              "historical_certainty": "attested_identity_user_requested_opening_post",
+              "reference": "game/config/references/san14-dlc-abilities.json"
+            },
+            "membership_revision": {
+              "basis": "user_requested_196_shu_opening",
+              "note": "《蜀典》引《氏族略》記薛永字茂長，父薛蘭遭曹操所殺後依劉備，後任蜀郡太守。未記歸附確切年月及生卒。196年6月駐下邳為指定劇本配置。",
+              "source_urls": [
+                "https://www.shidianguji.com/zh/book/7505734818018099250/chapter/1lgz3ctxbj57f"
+              ],
+              "reference": "game/config/references/san14-dlc-abilities.json"
+            },
+            "placement_review": {
+              "basis": "user_requested_196_shu_opening",
+              "source_urls": [
+                "https://www.shidianguji.com/zh/book/7505734818018099250/chapter/1lgz3ctxbj57f"
+              ],
+              "note": "《蜀典》引《氏族略》記薛永字茂長，父薛蘭遭曹操所殺後依劉備，後任蜀郡太守。未記歸附確切年月及生卒。196年6月駐下邳為指定劇本配置。",
+              "reference_date": [
+                196,
+                6
+              ],
+              "reference_scenario": "mainland196-06",
+              "historical_certainty": "attested_identity_user_requested_opening_post",
+              "reference": "game/config/references/san14-dlc-abilities.json"
+            },
+            "appearance_plan": {
+              "start": [
+                196,
+                6
+              ],
+              "end": [
+                242,
+                12
+              ],
+              "city": "xiapi",
+              "status": "serving",
+              "basis": "user_requested_196_shu_opening"
+            },
+            "scenario_membership_basis": "user_requested_196_shu_opening"
+          },
+          "historical-yuan-chen": {
+            "source_status": "serving",
+            "source_ruler": "劉備",
+            "source_city": "下邳",
+            "status": "serving",
+            "year_state": "available",
+            "faction": "shu",
+            "city": "xiapi",
+            "reason": "《三國志·李嚴傳》裴注引諸葛亮公文，記231年袁綝為前將軍、都亭侯。《華陽國志·劉後主志》記237年為征西將軍。早期仕履及生卒不詳。196年6月加入劉備並駐下邳為指定劇本配置。",
+            "death_year_resolved": false,
+            "planning_complete": true,
+            "placement_basis": "user_requested_196_shu_opening",
+            "posting_reference": {
+              "person_id": "historical-yuan-chen",
+              "faction": "shu",
+              "city": "xiapi",
+              "basis": "user_requested_196_shu_opening",
+              "source_urls": [
+                "https://www.shidianguji.com/zh/mid-page/7559333946384023579",
+                "https://zh.wikisource.org/wiki/華陽國志/卷七"
+              ],
+              "historical_certainty": "attested_identity_user_requested_opening_post",
+              "reference": "game/config/references/san14-dlc-abilities.json"
+            },
+            "membership_revision": {
+              "basis": "user_requested_196_shu_opening",
+              "note": "《三國志·李嚴傳》裴注引諸葛亮公文，記231年袁綝為前將軍、都亭侯。《華陽國志·劉後主志》記237年為征西將軍。早期仕履及生卒不詳。196年6月加入劉備並駐下邳為指定劇本配置。",
+              "source_urls": [
+                "https://www.shidianguji.com/zh/mid-page/7559333946384023579",
+                "https://zh.wikisource.org/wiki/華陽國志/卷七"
+              ],
+              "reference": "game/config/references/san14-dlc-abilities.json"
+            },
+            "placement_review": {
+              "basis": "user_requested_196_shu_opening",
+              "source_urls": [
+                "https://www.shidianguji.com/zh/mid-page/7559333946384023579",
+                "https://zh.wikisource.org/wiki/華陽國志/卷七"
+              ],
+              "note": "《三國志·李嚴傳》裴注引諸葛亮公文，記231年袁綝為前將軍、都亭侯。《華陽國志·劉後主志》記237年為征西將軍。早期仕履及生卒不詳。196年6月加入劉備並駐下邳為指定劇本配置。",
+              "reference_date": [
+                196,
+                6
+              ],
+              "reference_scenario": "mainland196-06",
+              "historical_certainty": "attested_identity_user_requested_opening_post",
+              "reference": "game/config/references/san14-dlc-abilities.json"
+            },
+            "appearance_plan": {
+              "start": [
+                196,
+                6
+              ],
+              "end": [
+                245,
+                12
+              ],
+              "city": "xiapi",
+              "status": "serving",
+              "basis": "user_requested_196_shu_opening"
+            },
+            "scenario_membership_basis": "user_requested_196_shu_opening"
+          },
+          "historical-liu-yan-shu": {
+            "source_status": "serving",
+            "source_ruler": "劉備",
+            "source_city": "下邳",
+            "status": "serving",
+            "year_state": "available",
+            "faction": "shu",
+            "city": "xiapi",
+            "reason": "《三國志·劉琰傳》記劉琰字威碩，劉備在豫州時辟為從事，入蜀後任固陵太守，建興十二年（234年）被處死。生年及辟為從事的確切年月不詳。196年6月駐下邳為指定劇本配置。",
+            "death_year_resolved": false,
+            "planning_complete": true,
+            "placement_basis": "user_requested_196_shu_opening",
+            "posting_reference": {
+              "person_id": "historical-liu-yan-shu",
+              "faction": "shu",
+              "city": "xiapi",
+              "basis": "user_requested_196_shu_opening",
+              "source_urls": [
+                "https://zh.wikisource.org/wiki/三國志/卷40#劉琰"
+              ],
+              "historical_certainty": "attested_identity_user_requested_opening_post",
+              "reference": "game/config/references/san14-dlc-abilities.json"
+            },
+            "membership_revision": {
+              "basis": "user_requested_196_shu_opening",
+              "note": "《三國志·劉琰傳》記劉琰字威碩，劉備在豫州時辟為從事，入蜀後任固陵太守，建興十二年（234年）被處死。生年及辟為從事的確切年月不詳。196年6月駐下邳為指定劇本配置。",
+              "source_urls": [
+                "https://zh.wikisource.org/wiki/三國志/卷40#劉琰"
+              ],
+              "reference": "game/config/references/san14-dlc-abilities.json"
+            },
+            "placement_review": {
+              "basis": "user_requested_196_shu_opening",
+              "source_urls": [
+                "https://zh.wikisource.org/wiki/三國志/卷40#劉琰"
+              ],
+              "note": "《三國志·劉琰傳》記劉琰字威碩，劉備在豫州時辟為從事，入蜀後任固陵太守，建興十二年（234年）被處死。生年及辟為從事的確切年月不詳。196年6月駐下邳為指定劇本配置。",
+              "reference_date": [
+                196,
+                6
+              ],
+              "reference_scenario": "mainland196-06",
+              "historical_certainty": "attested_identity_user_requested_opening_post",
+              "reference": "game/config/references/san14-dlc-abilities.json"
+            },
+            "appearance_plan": {
+              "start": [
+                196,
+                6
+              ],
+              "end": [
+                234,
+                12
+              ],
+              "city": "xiapi",
+              "status": "serving",
+              "basis": "user_requested_196_shu_opening"
+            },
+            "scenario_membership_basis": "user_requested_196_shu_opening"
           }
         }
       },

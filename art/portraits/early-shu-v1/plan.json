@@ -1,0 +1,99 @@
+{
+  "schema": "tk2-retainer-portrait-additions-v1",
+  "native_size": [
+    32,
+    40
+  ],
+  "enhanced_size": [
+    128,
+    160
+  ],
+  "source": "Four imagegen-authored game portraits, cropped without resampling from a single two-by-two atlas. Designs are not claimed historical likenesses.",
+  "generated_atlas_sha256": "a9e7061d2fe9cac5df4c71a60f7c8c81565da236ee6a9d8f31c37760694ccd83",
+  "people": [
+    {
+      "person_id": "historical-xiahou-bo",
+      "name": "夏侯博",
+      "art_gender_design": "male",
+      "source_kind": "imagegen_new_pixel_art",
+      "source_path": "art/portraits/early-shu-v1/source/historical-xiahou-bo.png",
+      "source_size": [
+        599,
+        656
+      ],
+      "source_sha256": "d0d75364a2cadfcfac0a53ee6599bf04850c44712f6fa7bd91d8e02973577706",
+      "source_matte": "black",
+      "source_atlas_crop_box": [
+        0,
+        0,
+        599,
+        656
+      ],
+      "prompt": "art/portraits/early-shu-v1/prompt.txt",
+      "prompt_sha256": "662a7933412c23a9464b7f217a73c81b1f78de85b1ab88011d7169327b33ebb7"
+    },
+    {
+      "person_id": "historical-xue-yong",
+      "name": "薛永",
+      "art_gender_design": "male",
+      "source_kind": "imagegen_new_pixel_art",
+      "source_path": "art/portraits/early-shu-v1/source/historical-xue-yong.png",
+      "source_size": [
+        600,
+        656
+      ],
+      "source_sha256": "18fff76a600dc5dec25a27fd85a1b5594c9b21fe3d0ca7a15c9571ed7cb42abe",
+      "source_matte": "black",
+      "source_atlas_crop_box": [
+        599,
+        0,
+        1199,
+        656
+      ],
+      "prompt": "art/portraits/early-shu-v1/prompt.txt",
+      "prompt_sha256": "662a7933412c23a9464b7f217a73c81b1f78de85b1ab88011d7169327b33ebb7"
+    },
+    {
+      "person_id": "historical-yuan-chen",
+      "name": "袁綝",
+      "art_gender_design": "male",
+      "source_kind": "imagegen_new_pixel_art",
+      "source_path": "art/portraits/early-shu-v1/source/historical-yuan-chen.png",
+      "source_size": [
+        599,
+        656
+      ],
+      "source_sha256": "b8c7e5a3256876b5cc7755cb86a6e5982df66aa2ec211237684ba477d5f7cfd4",
+      "source_matte": "black",
+      "source_atlas_crop_box": [
+        0,
+        656,
+        599,
+        1312
+      ],
+      "prompt": "art/portraits/early-shu-v1/prompt.txt",
+      "prompt_sha256": "662a7933412c23a9464b7f217a73c81b1f78de85b1ab88011d7169327b33ebb7"
+    },
+    {
+      "person_id": "historical-liu-yan-shu",
+      "name": "刘琰",
+      "art_gender_design": "male",
+      "source_kind": "imagegen_new_pixel_art",
+      "source_path": "art/portraits/early-shu-v1/source/historical-liu-yan-shu.png",
+      "source_size": [
+        600,
+        656
+      ],
+      "source_sha256": "7535f7fdf9df42fa1c9c402ff6f8f6aa10aeda913302908ab3b5f6cdbabfa44c",
+      "source_matte": "black",
+      "source_atlas_crop_box": [
+        599,
+        656,
+        1199,
+        1312
+      ],
+      "prompt": "art/portraits/early-shu-v1/prompt.txt",
+      "prompt_sha256": "662a7933412c23a9464b7f217a73c81b1f78de85b1ab88011d7169327b33ebb7"
+    }
+  ]
+}

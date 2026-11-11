@@ -1052,7 +1052,11 @@
     "historical-heng-yi-cangwu",
     "historical-qian-bo-cangwu",
     "historical-gongchou-cheng",
-    "historical-sun-xiang"
+    "historical-sun-xiang",
+    "historical-xiahou-bo",
+    "historical-xue-yong",
+    "historical-yuan-chen",
+    "historical-liu-yan-shu"
   ],
   "people": {
     "san14-candidate-0001": {
@@ -136387,6 +136391,554 @@
           "dimensions": null,
           "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
           "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-xiahou-bo": {
+      "person_id": "historical-xiahou-bo",
+      "name": "夏侯博",
+      "runtime_id": 1053,
+      "birth_year": 174,
+      "service_year": 196,
+      "death_year": 200,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 《三國志·武帝紀》記建安五年曹操東擊劉備，生擒其將夏侯博。此後行蹤及生卒不詳。196年6月加入劉備並駐下邳採DLC配置。生年不詳，174年為本作年齡估值。200年為生涯最後記錄與本作退場界線。",
+      "chronology_design": {
+        "birth_year": 174,
+        "service_year": 196,
+        "death_year": 200,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 200,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "user_requested_scenario_opening_not_first_historical_service",
+          "death_year": "last_attested_capture_as_game_exit_boundary"
+        },
+        "basis": "《三國志·武帝紀》記建安五年曹操東擊劉備，生擒其將夏侯博。此後行蹤及生卒不詳。196年6月加入劉備並駐下邳採DLC配置。生年不詳，174年為本作年齡估值。200年為生涯最後記錄與本作退場界線。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 78,
+        "intellect": 53,
+        "virtue": 65,
+        "terrain_affinity": 0,
+        "source_stats": {
+          "leadership": 72,
+          "martial_strength": 78,
+          "intellect": 53,
+          "politics": 36,
+          "charisma": 65
+        },
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "SAN14.martial_strength; max99 compatibility scale",
+          "intellect": "SAN14.intellect; max99 compatibility scale",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "SAN14.charisma; max99 compatibility scale"
+        }
+      },
+      "aliases": [
+        "夏侯博"
+      ],
+      "virtue_design": {
+        "person_id": "historical-xiahou-bo",
+        "name": "夏侯博",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "san14_charisma",
+        "virtue": 65,
+        "source_charisma": 65,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "使用者指定將本作德對應既有SAN14魅力；保留來源值，100按本作相容上限轉為99。這是遊戲屬性映射，不是歷史道德評判。",
+        "sources": [
+          {
+            "reference": "game/config/references/san14-dlc-abilities.json",
+            "person_id": "historical-xiahou-bo",
+            "field": "charisma"
+          }
+        ]
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "SAN14_charisma_conversion",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "san14_dlc_user_screenshot",
+        "source_urls": [
+          "https://www.shidianguji.com/zh/mid-page/7459508839818493961"
+        ],
+        "notes": "《三國志·武帝紀》記建安五年曹操東擊劉備，生擒其將夏侯博。此後行蹤及生卒不詳。196年6月加入劉備並駐下邳為指定劇本配置。《三國志14》196年6月DLC實機截圖所示武力、智力及魅力，對應本作武、知及德。體力、忠誠預設為80，適性沿用本作角色配置。",
+        "source_name": "夏侯博",
+        "reference": "game/config/references/san14-dlc-abilities.json"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物採用《三國志14》196年6月DLC實機截圖的五維；此為接入時的本作初始設定快照。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 78,
+          "intellect": 53,
+          "virtue": 65,
+          "terrain_affinity": 0,
+          "source_stats": {
+            "leadership": 72,
+            "martial_strength": 78,
+            "intellect": 53,
+            "politics": 36,
+            "charisma": 65
+          },
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "SAN14.martial_strength; max99 compatibility scale",
+            "intellect": "SAN14.intellect; max99 compatibility scale",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "SAN14.charisma; max99 compatibility scale"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "SAN14_charisma_conversion",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-xiahou-bo",
+          "name": "夏侯博",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "san14_charisma",
+          "virtue": 65,
+          "source_charisma": 65,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "使用者指定將本作德對應既有SAN14魅力；保留來源值，100按本作相容上限轉為99。這是遊戲屬性映射，不是歷史道德評判。",
+          "sources": [
+            {
+              "reference": "game/config/references/san14-dlc-abilities.json",
+              "person_id": "historical-xiahou-bo",
+              "field": "charisma"
+            }
+          ]
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-xue-yong": {
+      "person_id": "historical-xue-yong",
+      "name": "薛永",
+      "runtime_id": 1054,
+      "birth_year": 174,
+      "service_year": 196,
+      "death_year": 242,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 《蜀典》引《氏族略》記薛永字茂長，父薛蘭遭曹操所殺後依劉備，後任蜀郡太守。未記歸附確切年月及生卒。196年6月駐下邳為指定劇本配置。生年不詳，174年為本作年齡估值。卒年不詳，242年為本作壽命估界。",
+      "chronology_design": {
+        "birth_year": 174,
+        "service_year": 196,
+        "death_year": 242,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": null,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "user_requested_scenario_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "《蜀典》引《氏族略》記薛永字茂長，父薛蘭遭曹操所殺後依劉備，後任蜀郡太守。未記歸附確切年月及生卒。196年6月駐下邳為指定劇本配置。生年不詳，174年為本作年齡估值。卒年不詳，242年為本作壽命估界。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 75,
+        "intellect": 68,
+        "virtue": 77,
+        "terrain_affinity": 0,
+        "source_stats": {
+          "leadership": 76,
+          "martial_strength": 75,
+          "intellect": 68,
+          "politics": 66,
+          "charisma": 77
+        },
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "SAN14.martial_strength; max99 compatibility scale",
+          "intellect": "SAN14.intellect; max99 compatibility scale",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "SAN14.charisma; max99 compatibility scale"
+        }
+      },
+      "aliases": [
+        "薛永",
+        "薛茂長"
+      ],
+      "virtue_design": {
+        "person_id": "historical-xue-yong",
+        "name": "薛永",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "san14_charisma",
+        "virtue": 77,
+        "source_charisma": 77,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "使用者指定將本作德對應既有SAN14魅力；保留來源值，100按本作相容上限轉為99。這是遊戲屬性映射，不是歷史道德評判。",
+        "sources": [
+          {
+            "reference": "game/config/references/san14-dlc-abilities.json",
+            "person_id": "historical-xue-yong",
+            "field": "charisma"
+          }
+        ]
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "SAN14_charisma_conversion",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "san14_dlc_user_screenshot",
+        "source_urls": [
+          "https://www.shidianguji.com/zh/book/7505734818018099250/chapter/1lgz3ctxbj57f"
+        ],
+        "notes": "《蜀典》引《氏族略》記薛永字茂長，父薛蘭遭曹操所殺後依劉備，後任蜀郡太守。未記歸附確切年月及生卒。196年6月駐下邳為指定劇本配置。《三國志14》196年6月DLC實機截圖所示武力、智力及魅力，對應本作武、知及德。體力、忠誠預設為80，適性沿用本作角色配置。",
+        "source_name": "薛永",
+        "reference": "game/config/references/san14-dlc-abilities.json"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物採用《三國志14》196年6月DLC實機截圖的五維；此為接入時的本作初始設定快照。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 75,
+          "intellect": 68,
+          "virtue": 77,
+          "terrain_affinity": 0,
+          "source_stats": {
+            "leadership": 76,
+            "martial_strength": 75,
+            "intellect": 68,
+            "politics": 66,
+            "charisma": 77
+          },
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "SAN14.martial_strength; max99 compatibility scale",
+            "intellect": "SAN14.intellect; max99 compatibility scale",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "SAN14.charisma; max99 compatibility scale"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "SAN14_charisma_conversion",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "san14_charisma",
+          "virtue": 77,
+          "source_charisma": 77,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "使用者指定將本作德對應既有SAN14魅力；保留來源值，100按本作相容上限轉為99。這是遊戲屬性映射，不是歷史道德評判。",
+          "sources": [
+            {
+              "reference": "game/config/references/san14-dlc-abilities.json",
+              "person_id": "historical-xue-yong",
+              "field": "charisma"
+            }
+          ]
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-yuan-chen": {
+      "person_id": "historical-yuan-chen",
+      "name": "袁綝",
+      "runtime_id": 1055,
+      "birth_year": 174,
+      "service_year": 196,
+      "death_year": 245,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 《三國志·李嚴傳》裴注引諸葛亮公文，記231年袁綝為前將軍、都亭侯。《華陽國志·劉後主志》記237年為征西將軍。早期仕履及生卒不詳。196年6月加入劉備並駐下邳為指定劇本配置。生年不詳，174年為本作年齡估值。卒年不詳，245年為本作壽命估界。",
+      "chronology_design": {
+        "birth_year": 174,
+        "service_year": 196,
+        "death_year": 245,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 237,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "user_requested_scenario_opening_not_first_historical_service",
+          "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
+        },
+        "basis": "《三國志·李嚴傳》裴注引諸葛亮公文，記231年袁綝為前將軍、都亭侯。《華陽國志·劉後主志》記237年為征西將軍。早期仕履及生卒不詳。196年6月加入劉備並駐下邳為指定劇本配置。生年不詳，174年為本作年齡估值。卒年不詳，245年為本作壽命估界。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 73,
+        "intellect": 51,
+        "virtue": 75,
+        "terrain_affinity": 2,
+        "source_stats": {
+          "leadership": 74,
+          "martial_strength": 73,
+          "intellect": 51,
+          "politics": 50,
+          "charisma": 75
+        },
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "SAN14.martial_strength; max99 compatibility scale",
+          "intellect": "SAN14.intellect; max99 compatibility scale",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "SAN14.charisma; max99 compatibility scale"
+        }
+      },
+      "aliases": [
+        "袁綝"
+      ],
+      "virtue_design": {
+        "person_id": "historical-yuan-chen",
+        "name": "袁綝",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "san14_charisma",
+        "virtue": 75,
+        "source_charisma": 75,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "使用者指定將本作德對應既有SAN14魅力；保留來源值，100按本作相容上限轉為99。這是遊戲屬性映射，不是歷史道德評判。",
+        "sources": [
+          {
+            "reference": "game/config/references/san14-dlc-abilities.json",
+            "person_id": "historical-yuan-chen",
+            "field": "charisma"
+          }
+        ]
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "SAN14_charisma_conversion",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "san14_dlc_user_screenshot",
+        "source_urls": [
+          "https://www.shidianguji.com/zh/mid-page/7559333946384023579",
+          "https://zh.wikisource.org/wiki/華陽國志/卷七"
+        ],
+        "notes": "《三國志·李嚴傳》裴注引諸葛亮公文，記231年袁綝為前將軍、都亭侯。《華陽國志·劉後主志》記237年為征西將軍。早期仕履及生卒不詳。196年6月加入劉備並駐下邳為指定劇本配置。《三國志14》196年6月DLC實機截圖所示武力、智力及魅力，對應本作武、知及德。體力、忠誠預設為80，適性沿用本作角色配置。",
+        "source_name": "袁綝",
+        "reference": "game/config/references/san14-dlc-abilities.json"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物採用《三國志14》196年6月DLC實機截圖的五維；此為接入時的本作初始設定快照。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 73,
+          "intellect": 51,
+          "virtue": 75,
+          "terrain_affinity": 2,
+          "source_stats": {
+            "leadership": 74,
+            "martial_strength": 73,
+            "intellect": 51,
+            "politics": 50,
+            "charisma": 75
+          },
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "SAN14.martial_strength; max99 compatibility scale",
+            "intellect": "SAN14.intellect; max99 compatibility scale",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "SAN14.charisma; max99 compatibility scale"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "SAN14_charisma_conversion",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "san14_charisma",
+          "virtue": 75,
+          "source_charisma": 75,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "使用者指定將本作德對應既有SAN14魅力；保留來源值，100按本作相容上限轉為99。這是遊戲屬性映射，不是歷史道德評判。",
+          "sources": [
+            {
+              "reference": "game/config/references/san14-dlc-abilities.json",
+              "person_id": "historical-yuan-chen",
+              "field": "charisma"
+            }
+          ]
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-liu-yan-shu": {
+      "person_id": "historical-liu-yan-shu",
+      "name": "刘琰",
+      "runtime_id": 1056,
+      "birth_year": 166,
+      "service_year": 196,
+      "death_year": 234,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 《三國志·劉琰傳》記劉琰字威碩，劉備在豫州時辟為從事，入蜀後任固陵太守，建興十二年（234年）被處死。生年及辟為從事的確切年月不詳。196年6月駐下邳為指定劇本配置。生年不詳，166年為本作年齡估值。",
+      "chronology_design": {
+        "birth_year": 166,
+        "service_year": 196,
+        "death_year": 234,
+        "historical_birth_year": null,
+        "historical_death_year": 234,
+        "last_attested_year": 234,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "user_requested_scenario_opening_not_first_historical_service",
+          "death_year": "historical_attested_year"
+        },
+        "basis": "《三國志·劉琰傳》記劉琰字威碩，劉備在豫州時辟為從事，入蜀後任固陵太守，建興十二年（234年）被處死。生年及辟為從事的確切年月不詳。196年6月駐下邳為指定劇本配置。生年不詳，166年為本作年齡估值。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 41,
+        "intellect": 70,
+        "virtue": 75,
+        "terrain_affinity": 0,
+        "source_stats": {
+          "leadership": 36,
+          "martial_strength": 41,
+          "intellect": 70,
+          "politics": 64,
+          "charisma": 75
+        },
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "SAN14.martial_strength; max99 compatibility scale",
+          "intellect": "SAN14.intellect; max99 compatibility scale",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "SAN14.charisma; max99 compatibility scale"
+        }
+      },
+      "aliases": [
+        "刘琰",
+        "劉琰",
+        "劉威碩"
+      ],
+      "virtue_design": {
+        "person_id": "historical-liu-yan-shu",
+        "name": "刘琰",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "san14_charisma",
+        "virtue": 75,
+        "source_charisma": 75,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "使用者指定將本作德對應既有SAN14魅力；保留來源值，100按本作相容上限轉為99。這是遊戲屬性映射，不是歷史道德評判。",
+        "sources": [
+          {
+            "reference": "game/config/references/san14-dlc-abilities.json",
+            "person_id": "historical-liu-yan-shu",
+            "field": "charisma"
+          }
+        ]
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "SAN14_charisma_conversion",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "san14_dlc_user_screenshot",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷40#劉琰"
+        ],
+        "notes": "《三國志·劉琰傳》記劉琰字威碩，劉備在豫州時辟為從事，入蜀後任固陵太守，建興十二年（234年）被處死。生年及辟為從事的確切年月不詳。196年6月駐下邳為指定劇本配置。《三國志14》196年6月DLC實機截圖所示武力、智力及魅力，對應本作武、知及德。體力、忠誠預設為80，適性沿用本作角色配置。",
+        "source_name": "劉琰",
+        "reference": "game/config/references/san14-dlc-abilities.json"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物採用《三國志14》196年6月DLC實機截圖的五維；此為接入時的本作初始設定快照。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 41,
+          "intellect": 70,
+          "virtue": 75,
+          "terrain_affinity": 0,
+          "source_stats": {
+            "leadership": 36,
+            "martial_strength": 41,
+            "intellect": 70,
+            "politics": 64,
+            "charisma": 75
+          },
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "SAN14.martial_strength; max99 compatibility scale",
+            "intellect": "SAN14.intellect; max99 compatibility scale",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "SAN14.charisma; max99 compatibility scale"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "SAN14_charisma_conversion",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "san14_charisma",
+          "virtue": 75,
+          "source_charisma": 75,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "使用者指定將本作德對應既有SAN14魅力；保留來源值，100按本作相容上限轉為99。這是遊戲屬性映射，不是歷史道德評判。",
+          "sources": [
+            {
+              "reference": "game/config/references/san14-dlc-abilities.json",
+              "person_id": "historical-liu-yan-shu",
+              "field": "charisma"
+            }
+          ]
         },
         "initialization": null
       },

@@ -92,7 +92,7 @@ class RetainerAuditNegativeTests(unittest.TestCase):
     def setUp(self):
         self.canonical, self.data, self.review = fixture()
         self.decision = self.review['scenarios'][0]
-        self.constants = patch.multiple(AUDIT, EXPECTED_BASE_PEOPLE=3, EXPECTED_PEOPLE=4,
+        self.constants = patch.multiple(AUDIT, EXPECTED_BASE_PEOPLE=3, FROZEN_RETAINER_PEOPLE=4, EXPECTED_PEOPLE=4,
             EXPECTED_SCENARIOS=1, EXPECTED_HISTORICAL=1, EXPECTED_FICTIONAL=0,
             EXPECTED_SCOPE=2, FIRST_NEW_RUNTIME=4)
         self.constants.start()
@@ -309,7 +309,7 @@ class RealRetainerAuditIntegrationTests(unittest.TestCase):
             self.skipTest('Authored retainer reference not yet installed')
         report = AUDIT.build_report()
         self.assertEqual(report['summary']['scenarios'], 29)
-        self.assertEqual(report['summary']['people'], 1052)
+        self.assertEqual(report['summary']['people'], 1056)
         self.assertEqual(report['summary']['new_people'], 22)
         self.assertEqual(report['summary']['historical'], 23)
         self.assertEqual(report['summary']['fictional'], 6)

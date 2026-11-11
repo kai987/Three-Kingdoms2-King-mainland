@@ -1,0 +1,76 @@
+{
+  "schema": "san14-user-supplied-dlc-abilities-v1",
+  "count": 4,
+  "source": {
+    "kind": "user_supplied_ingame_screenshots",
+    "game": "三國志14",
+    "scenario": "曹操得勢",
+    "date": [
+      196,
+      6
+    ],
+    "basis": "使用者提供的DLC實機武將能力與所屬截圖。數字與所屬為該劇本的遊戲設定。"
+  },
+  "abilities": [
+    {
+      "person_id": "historical-xiahou-bo",
+      "name": "夏侯博",
+      "source_name": "夏侯博",
+      "source_ruler": "劉備",
+      "source_city": "下邳",
+      "personalities": ["一騎", "昂揚", "堅守", "一心", "不屈"],
+      "stats": {
+        "leadership": 72,
+        "martial_strength": 78,
+        "intellect": 53,
+        "politics": 36,
+        "charisma": 65
+      }
+    },
+    {
+      "person_id": "historical-xue-yong",
+      "name": "薛永",
+      "source_name": "薛永",
+      "source_ruler": "劉備",
+      "source_city": "下邳",
+      "personalities": ["使役", "再起", "振興", "豪傑", "潛在"],
+      "stats": {
+        "leadership": 76,
+        "martial_strength": 75,
+        "intellect": 68,
+        "politics": 66,
+        "charisma": 77
+      }
+    },
+    {
+      "person_id": "historical-yuan-chen",
+      "name": "袁綝",
+      "source_name": "袁綝",
+      "source_ruler": "劉備",
+      "source_city": "下邳",
+      "personalities": ["使役", "昂揚", "召募", "豪傑", "不屈"],
+      "stats": {
+        "leadership": 74,
+        "martial_strength": 73,
+        "intellect": 51,
+        "politics": 50,
+        "charisma": 75
+      }
+    },
+    {
+      "person_id": "historical-liu-yan-shu",
+      "name": "刘琰",
+      "source_name": "劉琰",
+      "source_ruler": "劉備",
+      "source_city": "下邳",
+      "personalities": ["特使", "論客", "調配", "浪費", "酒瘋"],
+      "stats": {
+        "leadership": 36,
+        "martial_strength": 41,
+        "intellect": 70,
+        "politics": 64,
+        "charisma": 75
+      }
+    }
+  ]
+}
