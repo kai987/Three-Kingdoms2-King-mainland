@@ -1137,11 +1137,11 @@ function personStatus(p){
 function showLibrary(){
  if(!view.catalog.library)return notice('请进入扩展战役查看人物配置状态。');
  const total=view.catalog.library.length;
- openDialog(`${total}人武将库`,`<p>${view.catalog.coverage.configured_profiles}人属性齐全，${view.catalog.coverage.pending_profiles}人待配置。德按《三国志14》魅力转换；没有魅力资料者按指定默认60。开局体力与忠诚分别注明来源和适用范围。点击姓名查看评分依据与本年代驻城安排。</p>${libraryEntrySummary(view.catalog.library,view.game)}<div class="library-tools"><input id="library-search" aria-label="检索武将" placeholder="姓名、别名或人物编号"><select id="library-filter" aria-label="人物筛选"><option value="all">全部${total}人</option>${libraryEntryOptions(isObserver()?null:view.game?.player)}</select></div><div id="library-results"></div>${view.catalog.library.some(p=>p.chronology_design?.death_year===null)?'<p class="small">＊为本作退场年，并非已知卒年；新增人物的估计年代可查看来源。</p>':''}<div class="library-tools"><button id="library-prev">上一页</button><span id="library-count"></span><button id="library-next">下一页</button></div>`,`<button data-cancel>返回战役</button>${view.game&&view.catalog.civil_staff&&!setupPreview?'<button id="library-staff">地方文吏名册</button>':''}`);
+ openDialog(`${total}人武将库`,`<p>${view.catalog.coverage.configured_profiles}人属性齐全，${view.catalog.coverage.pending_profiles}人待配置。德按《三国志14》魅力转换；没有魅力资料者按指定默认60。开局体力与忠诚分别注明来源和适用范围。点击姓名查看评分依据与本年代驻城安排。</p>${libraryEntrySummary(view.catalog.library,view.game)}<div class="library-tools"><input id="library-search" aria-label="检索武将" placeholder="姓名、别名或人物编号"><select id="library-filter" aria-label="人物筛选"><option value="all">全部${total}人</option>${libraryEntryOptions(isObserver()?null:view.game?.player)}</select></div><div id="library-results"></div>${view.catalog.library.some(p=>p.chronology_design?.historical_death_year===null)?'<p class="small">＊为本作退场年，并非已知卒年；新增人物的估计年代可查看来源。</p>':''}<div class="library-tools"><button id="library-prev">上一页</button><span id="library-count"></span><button id="library-next">下一页</button></div>`,`<button data-cancel>返回战役</button>${view.game&&view.catalog.civil_staff&&!setupPreview?'<button id="library-staff">地方文吏名册</button>':''}`);
  if($('#library-staff'))$('#library-staff').onclick=()=>staffInterface()?.openRegistry();
  let page=0;
  const draw=()=>{const q=$('#library-search').value.trim(),filter=$('#library-filter').value;const people=view.catalog.library.filter(p=>(!q||[p.name,p.person_id,...p.aliases].some(s=>[s,GameI18n.t(s,'zh-Hant'),GameI18n.t(s,'ja')].some(label=>label.includes(q))))&&libraryFilterMatches(p,filter,view.game?.player));const max=Math.max(0,Math.ceil(people.length/12)-1);page=Math.min(page,max);
- $('#library-results').innerHTML=`<table class="library-table"><thead><tr><th>武将</th><th>生/仕/卒</th><th>武/知/德</th><th>经</th><th>状态</th></tr></thead><tbody>${people.slice(page*12,(page+1)*12).map(p=>`<tr><td><span class="officer-identity">${portraitHtml(p.id,'library',false,p.person_id,p.name)}<button class="person-detail" data-person="${p.id}">${escapeHtml(p.name)}</button></span></td><td>${p.birth}/${p.service}/${p.death}${p.chronology_design?.death_year===null?'＊':''}</td><td>${p.martial??'待填'}/${p.intellect??'待填'}/${p.virtue??'待填'}${p.virtue_design?.status==='configured_default'?'（默认）':''}</td><td>${GameOfficerChoices.experience(view.game?.officers?.[p.id]?.experience)}</td><td>${personStatus(p)}</td></tr>`).join('')}</tbody></table>`;
+ $('#library-results').innerHTML=`<table class="library-table"><thead><tr><th>武将</th><th>生/仕/卒</th><th>武/知/德</th><th>经</th><th>状态</th></tr></thead><tbody>${people.slice(page*12,(page+1)*12).map(p=>`<tr><td><span class="officer-identity">${portraitHtml(p.id,'library',false,p.person_id,p.name)}<button class="person-detail" data-person="${p.id}">${escapeHtml(p.name)}</button></span></td><td>${p.birth}/${p.service}/${p.death}${p.chronology_design?.historical_death_year===null?'＊':''}</td><td>${p.martial??'待填'}/${p.intellect??'待填'}/${p.virtue??'待填'}${p.virtue_design?.status==='configured_default'?'（默认）':''}</td><td>${GameOfficerChoices.experience(view.game?.officers?.[p.id]?.experience)}</td><td>${personStatus(p)}</td></tr>`).join('')}</tbody></table>`;
  dialog.querySelectorAll('[data-person]').forEach(el=>el.onclick=()=>showPerson(Number(el.dataset.person)));
  $('#library-count').textContent=`${people.length}人 · ${page+1}/${max+1}页`;$('#library-prev').disabled=page===0;$('#library-next').disabled=page===max;};
  $('#library-search').oninput=$('#library-filter').onchange=()=>{page=0;draw();};$('#library-prev').onclick=()=>{page--;draw();};$('#library-next').onclick=()=>{page++;draw();};draw();
@@ -1156,8 +1156,9 @@ function personPlacementEvidence(assignment){
  if(!review&&!plan)return '';
  const sources=[...new Set((Array.isArray(review?.source_urls)?review.source_urls:[]).map(sourceReference).filter(Boolean))];
  const date=(value,language)=>Array.isArray(value)&&value.length===2&&Number.isInteger(value[0])&&value[0]>0&&Number.isInteger(value[1])&&value[1]>=1&&value[1]<=12?`${value[0]}年${value[1]}月`:language==='ja'?'未確定':'待考';
- const categories={game_reference:['公開遊戲配置參考','公開ゲームの配置資料を参考にした設定'],bounded_career_inference:['有年代界限的生涯推定','年代を限定した経歴に基づく推定'],authorial_region_placement:['本作區域防務配置','本作独自の地域・防衛配置']};
- const statuses={serving:['開局在籍','開始時に仕官中'],free:['開局在野','開始時に在野'],future_free:['到期於歸城在野待訪','登場期間に指定都市で在野となり、登用を待つ'],excluded:['本劇本不登場','本シナリオでは登場しない']};
+ const categories={game_reference:['公開遊戲配置參考','公開ゲームの配置資料を参考にした設定'],bounded_career_inference:['有年代界限的生涯推定','年代を限定した経歴に基づく推定'],authorial_region_placement:['本作區域防務配置','本作独自の地域・防衛配置'],historical_career_with_opening_station_inference:['依史料仕履推定開局駐地','史料上の経歴をもとに開始時の駐屯先を推定'],fictional_scenario_adaptation:['假想劇本配置','仮想シナリオの配置']};
+ const excluded=['本劇本不登場','本シナリオでは登場しない'];
+ const statuses={serving:['開局在籍','開始時に仕官中'],free:['開局在野','開始時に在野'],future_free:['到期於歸城在野待訪','登場期間に指定都市で在野となり、登用を待つ'],excluded,scenario_excluded:excluded};
  return ['zh-Hant','ja'].map(language=>{
   const ja=language==='ja',index=ja?1:0,heading=ja?'配置根拠と初登場の予定':'歸城依據與首次登場安排';
   const category=(categories[review?.historical_certainty]||['本作歸城複核','本作の配置確認'])[index];
@@ -1192,9 +1193,23 @@ function showPerson(id){
  const p=view.catalog.library.find(x=>x.id===id),a=p.era_assignment;
  const runtime=view.game?.officers?.[id],experience=GameOfficerChoices.experience(runtime?.experience);
  const current=view.game?Object.values(view.game.cities).find(c=>c.roster.officer_ids.includes(id))?.id:null;
- const abilityNote=p.ability_source?.kind==='historical_authorial_game_design'?'武知为参考生涯的本作设计值，并非《三国志14》原始能力。年代含游戏估计，详见来源。':'武知来自第三方SAN14数值转写，年代为来源游戏设定。';
+ const abilityKind=p.ability_source?.kind;
+ const abilityNote={
+  historical_authorial_game_design:'武知为参考生涯的本作设计值，并非《三国志14》原始能力。年代含游戏估计，详见来源。',
+  san14_dlc_user_screenshot:'武、知、德来自《三国志14》196年6月DLC的武力、智力、魅力。生卒年代含本作估计。'
+ }[abilityKind]||'武知来自第三方SAN14数值转写，年代为来源游戏设定。';
  const sourceLinks=(p.ability_source?.source_urls||[]).filter(url=>typeof url==='string'&&url.startsWith('https://')).map(url=>`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">查看人物史料</a>`).join(' · ');
- const abilityEvidence=p.ability_source?.kind==='historical_authorial_game_design'?sourceEvidence(`<p>${escapeHtml(p.ability_source.notes||'事迹参考与本作能力设计。')}</p>${sourceLinks?`<p>${sourceLinks}</p>`:''}`,'能力は事績を参考にした独自設定です。年代の一部はゲーム用の推定です。採用根拠と出典は原資料で確認できます。'):'';
+ let abilityEvidence='';
+ if(abilityKind==='historical_authorial_game_design'){
+  abilityEvidence=sourceEvidence(`<p>${escapeHtml(p.ability_source.notes||'事迹参考与本作能力设计。')}</p>${sourceLinks?`<p>${sourceLinks}</p>`:''}`,'能力は事績を参考にした独自設定です。年代の一部はゲーム用の推定です。採用根拠と出典は原資料で確認できます。');
+ }
+ if(abilityKind==='san14_dlc_user_screenshot'){
+  const year=p.chronology_design?.historical_death_year;
+  const dates=year===null
+   ?battleText(`史實卒年不詳。選擇史實壽命時，武將於${p.death}年結束後退場。`,`史実の没年は不詳です。寿命設定が「史実」の場合は${p.death}年の終了後に退場します。`)
+   :battleText(`史料記載卒年為${year}年，月份不詳。`,`史料上の没年は${year}年で、月は不詳です。`);
+  abilityEvidence=`<p>${dates}</p>${sourceLinks?`<p>${sourceLinks}</p>`:''}`;
+ }
  const pendingNote=p.alive==null?{pending_capacity:'本剧本所属势力的城内容量不足，本人尚未加入战局，不计入在籍人数。',scenario_excluded:'本剧本明确设为不登场，不会在后续月份自动加入。',pending_history:'本剧本的所属或驻城尚待考证，未自动加入战局。',pending_faction:'本剧本尚未接入所属势力，未自动加入战局。'}[a?.status]:null;
  openDialog(`${p.name} · 人物配置`,`<div class="person-profile-head">${portraitHtml(id,'detail',true,p.person_id,p.name)}<div class="person-profile-summary"><p>武 ${p.martial??'待填'} / 知 ${p.intellect??'待填'} / 德 ${p.virtue??'待考'} / <span>经</span> ${experience}。</p></div></div>${typeof GameEquipment!=='undefined'?(runtime?GameEquipment.summary(view,id,{locale:GameI18n.locale,bilingual:true}):GameEquipment.render(p.equipment,{id:p.id,locale:GameI18n.locale,bilingual:true})):''}${initialStatDescription(p,runtime)}${p.study_gain?`<p class="small" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">目前知 ${p.intellect}＝開局來源知 ${p.base_intellect}＋本局學問所成長 ${p.study_gain}；學習不會改寫人物來源資料。</p><p class="small" data-locale-only="ja" data-l10n-native="ja">現在の知 ${p.intellect}＝開始時の知 ${p.base_intellect}＋この戦役の学問所の成長 ${p.study_gain}。人物の出典データは書き換えません。</p>`:''}${runtime?sourceEvidence(`<p>经 ${experience} · 原始经验 ${runtime.experience} · 经验等级 ${runtime.tier}。经沿用原版显示规则：原始经验每50点显示1；战斗等级单独按经验门槛判定。</p>`,`経 ${experience}・累積経験値 ${runtime.experience}・経験段階 ${runtime.tier}。原作と同じく累積経験値50点を「経」1として表示し、戦闘の段階は別の経験値境界で判定します。`):''}<p>${abilityNote}</p>${abilityEvidence}${pendingNote?`<p class="person-entry-status">${pendingNote}</p>`:''}${virtueDescription(p)}${a?.placement_review||a?.appearance_plan?personPlacementEvidence(a):''}${p.alive?`<p>当前战局：${escapeHtml(p.faction?faction(p.faction):'在野')} · ${escapeHtml(cityName(current||p.location||'待归城'))}</p>`:''}`,'<button id="back-library">返回武将库</button><button data-cancel>返回战役</button>');
  if(typeof GameDialogue!=='undefined'){

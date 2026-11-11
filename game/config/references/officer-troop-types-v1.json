@@ -38,29 +38,29 @@
   "source_files": {
     "game/config/references/original-officer-stats.json": "11ab9fbfe6852d2d8e59a400e7fd62b59281506b224acef141d2690e4a769032",
     "game/config/references/cnblogs-officer-stats.json": "fee9b0e47615f676c25bea80900bdb60896a193253f4eb8e4a9c4e3ed8605fef",
-    "game/config/campaigns/people.json": "356d26fa396b2b20c64ca1c6bdec9c3ba12881d6f9f5f5fdd291524086ef1baa",
-    "game/config/campaigns/shared.json": "d7cb110ccbfe237c84cd9d05c9550dbea4f70a09a3d99b2f74760eae72b2f4be"
+    "game/config/campaigns/people.json": "67e43eb1723321a92a5d17a11fce9ff06ad917cc42154e5147b6324af6f0af26",
+    "game/config/campaigns/shared.json": "a0dbe54a23e95a4457001f4fa32fd4bfeeb5ab17609f3257551117a824ff83ed"
   },
   "counts": {
-    "people": 1052,
+    "people": 1056,
     "sources": {
       "design_region_inference": 265,
       "design_trait_inference": 7,
-      "fallback_design": 525,
+      "fallback_design": 528,
       "original_table_transcription": 9,
-      "retained_design": 25,
+      "retained_design": 26,
       "verified_original_rom": 221
     },
     "effective_codes": {
-      "0": 634,
+      "0": 637,
       "1": 212,
-      "2": 206
+      "2": 207
     },
     "changed_from_baseline": 376,
     "original_records": 237,
     "bound_original": 221
   },
-  "records_sha256": "e989d332aa9b2b4045dcbd503c07bc8a8177833f3674ea13291f010b61ee3d44",
+  "records_sha256": "d004b7b45a0dc096e85f8ee1ed60facf35714456dd98e06a08a2932f8abb32b4",
   "records": {
     "historical-beigong-boyu": {
       "person_id": "historical-beigong-boyu",
@@ -408,6 +408,16 @@
       "basis_tc": "資料不足，保留既有軍種設定。",
       "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
     },
+    "historical-liu-yan-shu": {
+      "person_id": "historical-liu-yan-shu",
+      "name": "刘琰",
+      "base_code": 0,
+      "code": 0,
+      "source_kind": "fallback_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "資料不足，保留既有軍種設定。",
+      "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
     "historical-liu-yi-yuzhang": {
       "person_id": "historical-liu-yi-yuzhang",
       "name": "刘壹",
@@ -563,9 +573,29 @@
       "basis_tc": "資料不足，保留既有軍種設定。",
       "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
     },
+    "historical-xiahou-bo": {
+      "person_id": "historical-xiahou-bo",
+      "name": "夏侯博",
+      "base_code": 0,
+      "code": 0,
+      "source_kind": "fallback_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "資料不足，保留既有軍種設定。",
+      "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
     "historical-xu-xi": {
       "person_id": "historical-xu-xi",
       "name": "徐翕",
+      "base_code": 0,
+      "code": 0,
+      "source_kind": "fallback_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "資料不足，保留既有軍種設定。",
+      "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
+    "historical-xue-yong": {
+      "person_id": "historical-xue-yong",
+      "name": "薛永",
       "base_code": 0,
       "code": 0,
       "source_kind": "fallback_design",
@@ -582,6 +612,16 @@
       "reference": "game/config/campaigns/people.json",
       "basis_tc": "資料不足，保留既有軍種設定。",
       "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
+    "historical-yuan-chen": {
+      "person_id": "historical-yuan-chen",
+      "name": "袁綝",
+      "base_code": 2,
+      "code": 2,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
     },
     "historical-zhao-chong": {
       "person_id": "historical-zhao-chong",

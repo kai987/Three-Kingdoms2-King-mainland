@@ -96,7 +96,7 @@ class PlacementCompletionTests(unittest.TestCase):
                 self.assertNotIn('content_generation', data)
                 self.assertEqual(catalog.rules.city_officer_capacity, 99)
                 self.assertEqual(catalog.rules.battle_officers_per_side, 10)
-                self.assertEqual(len(data['people']), 1052)
+                self.assertEqual(len(data['people']), 1056)
                 for key in shared_board:
                     self.assertEqual(data[key], stable.data[key], key)
                 foundings = dict(stable.data['city_foundings'])

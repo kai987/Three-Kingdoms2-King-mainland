@@ -1,0 +1,49 @@
+{
+  "schema": "tk2-early-shu-openings-v1",
+  "after": [196, 6],
+  "people": {
+    "historical-xiahou-bo": {
+      "last_opening": [200, 1],
+      "sources": [
+        "https://www.shidianguji.com/zh/mid-page/7459508839818493961"
+      ],
+      "note": "《三國志·武帝紀》記夏侯博為劉備將，200年曹操東征時被生擒，此後行蹤與卒年不詳。小沛為東征前隨軍駐地的本作推定。"
+    },
+    "historical-xue-yong": {
+      "last_opening": [238, 1],
+      "sources": [
+        "https://zh.wikisource.org/wiki/北史/卷036",
+        "https://www.shidianguji.com/zh/book/7505734818018099250/chapter/1lgz3ctxbj57f"
+      ],
+      "note": "《北史·薛聰傳》記薛永隨劉備入蜀，《蜀典》引《氏族略》記其官至蜀郡太守。前期隨劉備軍府，取得成都後配置於成都。任命確年、後期在任與卒年不詳。"
+    },
+    "historical-yuan-chen": {
+      "last_opening": [238, 1],
+      "sources": [
+        "https://www.shidianguji.com/zh/mid-page/7559333946384023579",
+        "https://zh.wikisource.org/wiki/華陽國志/卷七"
+      ],
+      "note": "231年見任蜀漢前將軍、都亭侯，237年見任征西將軍。早年延續196年DLC配屬，後期以漢中作北方軍府代理，具體駐地與卒年不詳。",
+      "stations": {
+        "mainland227-02": "hanzhong",
+        "mainland234-02": "hanzhong",
+        "mainland235-01": "hanzhong",
+        "mainland238-01": "hanzhong"
+      }
+    },
+    "historical-liu-yan-shu": {
+      "last_opening": [234, 2],
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷40#劉琰",
+        "https://www.shidianguji.com/zh/book/HY6772/chapter/1kumn1cupw1e3"
+      ],
+      "note": "劉備在豫州時辟劉琰為從事，定益州後任固陵太守，以巴東作地圖代理。後主時隨諸葛亮，227年以漢中作軍府代理，232年奉命還成都。234年正月胡氏入宮，經月離宮後案發，確切處刑月份不詳。本作配置二月上旬仍在成都，之後按234年卒的年度界線退場。",
+      "stations": {
+        "mainland215-08": "badong",
+        "mainland217-07": "badong",
+        "mainland219-07": "badong",
+        "mainland227-02": "hanzhong"
+      }
+    }
+  }
+}

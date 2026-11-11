@@ -5570,6 +5570,71 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
+        },
+        {
+          "person_id": "historical-xiahou-bo",
+          "name": "夏侯博",
+          "before": {
+            "faction": null,
+            "city": null,
+            "status": "not_in_pool"
+          },
+          "faction": "shu",
+          "city": "xiapi",
+          "certainty": "authorial_opening_posting_with_biographical_sources",
+          "note": "《三國志・武帝紀》載曹操於200年東征擒劉備將夏侯博。196年隨劉備在下邳開局為本作配置。",
+          "source_urls": [
+            "https://www.shidianguji.com/zh/mid-page/7459508839818493961"
+          ]
+        },
+        {
+          "person_id": "historical-xue-yong",
+          "name": "薛永",
+          "before": {
+            "faction": null,
+            "city": null,
+            "status": "not_in_pool"
+          },
+          "faction": "shu",
+          "city": "xiapi",
+          "certainty": "authorial_opening_posting_with_biographical_sources",
+          "note": "《蜀典》引《氏族略》載薛永在父親薛蘭遇害後投奔劉備，後任蜀郡太守。入仕年月未載，196年下邳為本作配置。",
+          "source_urls": [
+            "https://www.shidianguji.com/zh/book/7505734818018099250/chapter/1lgz3ctxbj57f"
+          ]
+        },
+        {
+          "person_id": "historical-yuan-chen",
+          "name": "袁綝",
+          "before": {
+            "faction": null,
+            "city": null,
+            "status": "not_in_pool"
+          },
+          "faction": "shu",
+          "city": "xiapi",
+          "certainty": "authorial_opening_posting_with_biographical_sources",
+          "note": "《三國志・李嚴傳》注引諸葛亮公文列袁綝為前將軍、都亭侯，《華陽國志》載其後任征西將軍。196年提早在劉備麾下登場為本作配置。",
+          "source_urls": [
+            "https://www.shidianguji.com/zh/mid-page/7559333946384023579",
+            "https://zh.wikisource.org/wiki/華陽國志/卷七"
+          ]
+        },
+        {
+          "person_id": "historical-liu-yan-shu",
+          "name": "刘琰",
+          "before": {
+            "faction": null,
+            "city": null,
+            "status": "not_in_pool"
+          },
+          "faction": "shu",
+          "city": "xiapi",
+          "certainty": "authorial_opening_posting_with_biographical_sources",
+          "note": "《三國志・劉琰傳》載劉備在豫州時辟劉琰為從事。入仕年月未載，196年下邳為本作配置。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷40#劉琰"
+          ]
         }
       ],
       "notes": [
@@ -5587,7 +5652,7 @@
         "longxi": "song_jian",
         "hongnong": "zhang_ji"
       },
-      "initial_soldier_total": 235567
+      "initial_soldier_total": 236767
     },
     {
       "id": "mainland198-03",
@@ -7350,6 +7415,23 @@
           "source_urls": [
             "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnuw0vwny3_198",
             "https://zh.wikisource.org/wiki/三國志/卷01"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0656",
+          "name": "张飞",
+          "before": {
+            "faction": "shu",
+            "city": "xiapi",
+            "status": "serving"
+          },
+          "faction": "shu",
+          "city": "qiao",
+          "certainty": "attested_companion_regional_opening_proxy",
+          "note": "《三國志・先主傳》載劉備還小沛、關羽守下邳，裴注引《吳歷》敘張飛隨劉備到小沛收兵，裴松之對該段離曹經過有異議。張飛的戰前駐點為本作配置，沿用小沛的譙郡代理節點。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷32#先主_劉備",
+            "https://zh.wikisource.org/wiki/三國志/卷36#關羽"
           ]
         }
       ],

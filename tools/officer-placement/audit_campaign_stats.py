@@ -111,6 +111,7 @@ def audit():
     people_path = ROOT / 'game/config/campaigns/people.json'
     source_path = ROOT / 'game/config/references/cnblogs-officer-stats.json'
     abilities_path = ROOT / 'game/config/references/san14-abilities.json'
+    dlc_abilities_path = ROOT / 'game/config/references/san14-dlc-abilities.json'
     relationship_path = ROOT / 'game/config/references/officer-relations-v1.json'
     relationship_policy = read(relationship_path)
     check(relationship_policy['schema'] == 'tk2-officer-relations-v1'
@@ -118,13 +119,18 @@ def audit():
     people = read(people_path)['people']
     reference = read(source_path)
     sources = {row['person_id']: row for row in reference['records'] if row['person_id']}
-    abilities = {row['person_id']: row['stats'] for row in read(abilities_path)['abilities']}
+    original_abilities = {row['person_id']: row['stats'] for row in read(abilities_path)['abilities']}
+    dlc_abilities = {row['person_id']: row['stats'] for row in read(dlc_abilities_path)['abilities']}
+    check(len(original_abilities) == 1000 and len(dlc_abilities) == 4
+          and not (original_abilities.keys() & dlc_abilities.keys()),
+          'Unexpected SAN14 base or supplemental DLC coverage')
+    abilities = original_abilities | dlc_abilities
     check(len(index['catalogs']) == 29, 'Expected 29 current scenarios')
-    check(len(people) == 1052 and len(abilities) == 1000 and len(sources) == 224
+    check(len(people) == 1056 and len(sources) == 224
           and set(abilities) <= set(people) and set(sources) <= set(people),
           'Unexpected factual reference coverage')
     check(len(set(people) - set(abilities)) == 52
-          and len(set(people) - set(sources)) == 828,
+          and len(set(people) - set(sources)) == 832,
           'Unexpected charisma/initial-health default coverage')
     session = CampaignSession([ROOT / 'game/data' / name for name in index['catalogs']])
     source_index = read(ROOT / 'game/config/campaigns/index.json')
@@ -169,6 +175,9 @@ def audit():
                   scenario_id + ': incorrect charisma/default virtue: ' + pid)
             check(person['profile']['source_stats'] == canonical_person['profile']['source_stats'],
                   scenario_id + ': source abilities changed: ' + pid)
+            if pid in abilities:
+                check(person['profile']['source_stats'] == abilities[pid],
+                      scenario_id + ': source abilities differ from the SAN14 reference: ' + pid)
             check(person['initialization']['health'] == health
                   and person['profile']['health_max'] == max(prior_cap, health),
                   scenario_id + ': incorrect independent health/cap policy: ' + pid)
@@ -182,7 +191,8 @@ def audit():
             else:
                 check(person['initialization']['source_loyalty'] is None,
                       scenario_id + ': unbound source incorrectly applied: ' + pid)
-        check((charisma_count, fallback_count) == (1000, len(people) - 1000), scenario_id + ': virtue coverage changed')
+        check((charisma_count, fallback_count) == (len(abilities), len(people) - len(abilities)),
+              scenario_id + ': virtue coverage changed')
         player = next(iter(catalog.factions))
         session.command('new', dict(scenario=scenario_id, faction=player, seed=SEED), session.revision)
         game, state = session.game, session.game.state
@@ -318,6 +328,8 @@ def audit():
             cnblogs_archive_sha256=reference['source']['archive_sha256'],
             cnblogs_factual_records_sha256=reference['source']['factual_records_sha256'],
             san14='game/config/references/san14-abilities.json',
+            san14_dlc=dlc_abilities_path.relative_to(ROOT).as_posix(),
+            san14_dlc_sha256=hashlib.sha256(dlc_abilities_path.read_bytes()).hexdigest(),
             officer_relations='game/config/references/officer-relations-v1.json',
             officer_relations_sha256=hashlib.sha256(relationship_path.read_bytes()).hexdigest()),
         summary=dict(totals), scenarios=scenarios)

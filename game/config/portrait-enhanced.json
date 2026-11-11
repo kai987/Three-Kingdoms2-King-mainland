@@ -10,11 +10,11 @@
     "rgba_sha256": "914d8a6b6744eb8cc2e5470d789044bed6b311c9e673a4c93b7660c8370f9d51"
   },
   "counts": {
-    "people": 1052,
-    "source_unique": 1011,
+    "people": 1056,
+    "source_unique": 1015,
     "atlas_count": 19,
-    "retainer_people": 22,
-    "retainer_source_images": 7
+    "retainer_people": 26,
+    "retainer_source_images": 11
   },
   "processing": {
     "mode": "imagegen_atlas_color_studies_with_original_material_masks",
@@ -39538,6 +39538,254 @@
         },
         "prompt": "art/portraits/retainer-additions-v1/prompts/historical-sun-xiang.txt",
         "prompt_sha256": "678051cbe20392d278a5b77849d76890941ea9330e93775019b87249055fd6de"
+      }
+    },
+    "historical-xiahou-bo": {
+      "path": "/assets/portraits/enhanced/historical-xiahou-bo.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-xiahou-bo.png",
+      "source_sha256": "fc21d42c90a33ccea85b82ffe22e7c235877757ec5c562538b5ea4bbe2357dae",
+      "sha256": "b9b5bfd688ed285338e7cad9924a2ad478a6bc7d94771a0227bb663773851e62",
+      "pixel_sha256": "9a0af74d4f4029c6a3b742070c349b524e88dcd0eba67604ef2ad2f9c9c91dbf",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "retainer_authored_source_direct128_fixed_palette",
+        "retainer_plan": "art/portraits/early-shu-v1/plan.json",
+        "retainer_plan_sha256": "25cd5fbbb2ba88cba26b5f9f28bbb9a885867a05590ef91390721db2c110594d",
+        "original_source_path": "art/portraits/early-shu-v1/source/historical-xiahou-bo.png",
+        "original_source_sha256": "d0d75364a2cadfcfac0a53ee6599bf04850c44712f6fa7bd91d8e02973577706",
+        "source_size": [
+          599,
+          656
+        ],
+        "source_matte": "black",
+        "source_origin": "new_retained_imagegen_source",
+        "source_path": "art/portraits/early-shu-v1/source/historical-xiahou-bo.png",
+        "source_sha256": "d0d75364a2cadfcfac0a53ee6599bf04850c44712f6fa7bd91d8e02973577706",
+        "retained_source_crop": "art/portraits/early-shu-v1/source-crops/historical-xiahou-bo.png",
+        "retained_source_crop_sha256": "d0d75364a2cadfcfac0a53ee6599bf04850c44712f6fa7bd91d8e02973577706",
+        "retained_source_crop_rgba_sha256": "a29fed193bede60b86a7c9123c27d51205c829f7a3c93d1d1a6d3eb0d63952b0",
+        "source_cell_box": [
+          0,
+          0,
+          599,
+          656
+        ],
+        "source_visible_box": [
+          113,
+          96,
+          554,
+          619
+        ],
+        "native_fitted_box": [
+          1,
+          3,
+          31,
+          39
+        ],
+        "native_archive": "art/portraits/early-shu-v1/native-32x40/historical-xiahou-bo.png",
+        "native_archive_sha256": "fc21d42c90a33ccea85b82ffe22e7c235877757ec5c562538b5ea4bbe2357dae",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 14,
+          "changedPixels": 4132,
+          "nearest4xExact": false,
+          "nonUniformBlocks4x4": 633
+        },
+        "prompt": "art/portraits/early-shu-v1/prompt.txt",
+        "prompt_sha256": "662a7933412c23a9464b7f217a73c81b1f78de85b1ab88011d7169327b33ebb7"
+      }
+    },
+    "historical-xue-yong": {
+      "path": "/assets/portraits/enhanced/historical-xue-yong.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-xue-yong.png",
+      "source_sha256": "7d63b36d8ab4e9794b25bc2afe3f9de89f63aaaaad36d28a7dc0bf986e21aac1",
+      "sha256": "c18045e3bf49116982d5d3cbbc8919f242d1a9687c13ee60ce6a987490155ec0",
+      "pixel_sha256": "a34b93d93fa8b69eb5c76553d1c1f0d3d1fca9cdea9083f23af88fe70ae09ae6",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "retainer_authored_source_direct128_fixed_palette",
+        "retainer_plan": "art/portraits/early-shu-v1/plan.json",
+        "retainer_plan_sha256": "25cd5fbbb2ba88cba26b5f9f28bbb9a885867a05590ef91390721db2c110594d",
+        "original_source_path": "art/portraits/early-shu-v1/source/historical-xue-yong.png",
+        "original_source_sha256": "18fff76a600dc5dec25a27fd85a1b5594c9b21fe3d0ca7a15c9571ed7cb42abe",
+        "source_size": [
+          600,
+          656
+        ],
+        "source_matte": "black",
+        "source_origin": "new_retained_imagegen_source",
+        "source_path": "art/portraits/early-shu-v1/source/historical-xue-yong.png",
+        "source_sha256": "18fff76a600dc5dec25a27fd85a1b5594c9b21fe3d0ca7a15c9571ed7cb42abe",
+        "retained_source_crop": "art/portraits/early-shu-v1/source-crops/historical-xue-yong.png",
+        "retained_source_crop_sha256": "18fff76a600dc5dec25a27fd85a1b5594c9b21fe3d0ca7a15c9571ed7cb42abe",
+        "retained_source_crop_rgba_sha256": "078246f7cbd54af1b7132153183416cacca2d3693c53347f9617135999d05913",
+        "source_cell_box": [
+          0,
+          0,
+          600,
+          656
+        ],
+        "source_visible_box": [
+          46,
+          96,
+          486,
+          619
+        ],
+        "native_fitted_box": [
+          1,
+          3,
+          31,
+          39
+        ],
+        "native_archive": "art/portraits/early-shu-v1/native-32x40/historical-xue-yong.png",
+        "native_archive_sha256": "7d63b36d8ab4e9794b25bc2afe3f9de89f63aaaaad36d28a7dc0bf986e21aac1",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 14,
+          "changedPixels": 2864,
+          "nearest4xExact": false,
+          "nonUniformBlocks4x4": 499
+        },
+        "prompt": "art/portraits/early-shu-v1/prompt.txt",
+        "prompt_sha256": "662a7933412c23a9464b7f217a73c81b1f78de85b1ab88011d7169327b33ebb7"
+      }
+    },
+    "historical-yuan-chen": {
+      "path": "/assets/portraits/enhanced/historical-yuan-chen.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-yuan-chen.png",
+      "source_sha256": "fca2690454f4f35ba0785cf851fb15e4cd6cc756a6abaf3bc0c127f5089b47f7",
+      "sha256": "91031cbbdc8516b085daea0e4f3cfcba45951f8b9ab8e80595cde5125b74850f",
+      "pixel_sha256": "676836fa71de3061b58ea0127540e01786028c1d3fc998cf532b12113221b0d1",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "retainer_authored_source_direct128_fixed_palette",
+        "retainer_plan": "art/portraits/early-shu-v1/plan.json",
+        "retainer_plan_sha256": "25cd5fbbb2ba88cba26b5f9f28bbb9a885867a05590ef91390721db2c110594d",
+        "original_source_path": "art/portraits/early-shu-v1/source/historical-yuan-chen.png",
+        "original_source_sha256": "b8c7e5a3256876b5cc7755cb86a6e5982df66aa2ec211237684ba477d5f7cfd4",
+        "source_size": [
+          599,
+          656
+        ],
+        "source_matte": "black",
+        "source_origin": "new_retained_imagegen_source",
+        "source_path": "art/portraits/early-shu-v1/source/historical-yuan-chen.png",
+        "source_sha256": "b8c7e5a3256876b5cc7755cb86a6e5982df66aa2ec211237684ba477d5f7cfd4",
+        "retained_source_crop": "art/portraits/early-shu-v1/source-crops/historical-yuan-chen.png",
+        "retained_source_crop_sha256": "b8c7e5a3256876b5cc7755cb86a6e5982df66aa2ec211237684ba477d5f7cfd4",
+        "retained_source_crop_rgba_sha256": "8f68bc1e413db06f07cf649c3b7400662b8bcc43036e89fbe0ad2b1af97a3cc0",
+        "source_cell_box": [
+          0,
+          0,
+          599,
+          656
+        ],
+        "source_visible_box": [
+          113,
+          36,
+          554,
+          574
+        ],
+        "native_fitted_box": [
+          1,
+          2,
+          31,
+          39
+        ],
+        "native_archive": "art/portraits/early-shu-v1/native-32x40/historical-yuan-chen.png",
+        "native_archive_sha256": "fca2690454f4f35ba0785cf851fb15e4cd6cc756a6abaf3bc0c127f5089b47f7",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 15,
+          "changedPixels": 4139,
+          "nearest4xExact": false,
+          "nonUniformBlocks4x4": 649
+        },
+        "prompt": "art/portraits/early-shu-v1/prompt.txt",
+        "prompt_sha256": "662a7933412c23a9464b7f217a73c81b1f78de85b1ab88011d7169327b33ebb7"
+      }
+    },
+    "historical-liu-yan-shu": {
+      "path": "/assets/portraits/enhanced/historical-liu-yan-shu.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-liu-yan-shu.png",
+      "source_sha256": "7b9a6fa8f454f0cd50db602c0e04be5c660d502cd5e96af9882adf476a1e86a2",
+      "sha256": "659d848db6c701f11e451cb3bfd38d9f7b76615cc45ae15095836349ab9c6cef",
+      "pixel_sha256": "76236d43ae59f30cf8e78c25ef210007f044cf168151527dd3b34a2b978e0867",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "retainer_authored_source_direct128_fixed_palette",
+        "retainer_plan": "art/portraits/early-shu-v1/plan.json",
+        "retainer_plan_sha256": "25cd5fbbb2ba88cba26b5f9f28bbb9a885867a05590ef91390721db2c110594d",
+        "original_source_path": "art/portraits/early-shu-v1/source/historical-liu-yan-shu.png",
+        "original_source_sha256": "7535f7fdf9df42fa1c9c402ff6f8f6aa10aeda913302908ab3b5f6cdbabfa44c",
+        "source_size": [
+          600,
+          656
+        ],
+        "source_matte": "black",
+        "source_origin": "new_retained_imagegen_source",
+        "source_path": "art/portraits/early-shu-v1/source/historical-liu-yan-shu.png",
+        "source_sha256": "7535f7fdf9df42fa1c9c402ff6f8f6aa10aeda913302908ab3b5f6cdbabfa44c",
+        "retained_source_crop": "art/portraits/early-shu-v1/source-crops/historical-liu-yan-shu.png",
+        "retained_source_crop_sha256": "7535f7fdf9df42fa1c9c402ff6f8f6aa10aeda913302908ab3b5f6cdbabfa44c",
+        "retained_source_crop_rgba_sha256": "44ab512bef124e2aec56bfe0f814a4616a567b2656489ca32ac0d662cf108f8f",
+        "source_cell_box": [
+          0,
+          0,
+          600,
+          656
+        ],
+        "source_visible_box": [
+          47,
+          36,
+          486,
+          574
+        ],
+        "native_fitted_box": [
+          1,
+          2,
+          31,
+          39
+        ],
+        "native_archive": "art/portraits/early-shu-v1/native-32x40/historical-liu-yan-shu.png",
+        "native_archive_sha256": "7b9a6fa8f454f0cd50db602c0e04be5c660d502cd5e96af9882adf476a1e86a2",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 16,
+          "changedPixels": 3323,
+          "nearest4xExact": false,
+          "nonUniformBlocks4x4": 525
+        },
+        "prompt": "art/portraits/early-shu-v1/prompt.txt",
+        "prompt_sha256": "662a7933412c23a9464b7f217a73c81b1f78de85b1ab88011d7169327b33ebb7"
       }
     }
   }

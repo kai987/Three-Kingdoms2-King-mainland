@@ -147,8 +147,10 @@ class RetainerPortraitTests(unittest.TestCase):
         self.assertEqual(summary['generated_count'], len(self.generated_ids))
         self.assertEqual(summary['original_count'], len(self.ids - self.generated_ids))
         self.assertEqual(summary['method'], METHOD)
-        self.assertEqual(len(self.native), 810 + len(self.generated_ids))
-        self.assertEqual(len(self.enhanced), 1030 + len(self.ids))
+        self.assertEqual(sum(row.get('retainer_plan') in (None, PLAN)
+                             for row in self.native.values()), 810 + len(self.generated_ids))
+        self.assertEqual(sum(row.get('provenance', {}).get('retainer_plan') in (None, PLAN)
+                             for row in self.enhanced.values()), 1030 + len(self.ids))
         for person in self.plan['people']:
             pid = person['person_id']
             with self.subTest(person_id=pid):
@@ -287,7 +289,7 @@ class RetainerPortraitTests(unittest.TestCase):
         forged = deepcopy(self.bindings[pid])
         forged['native_original_id'] = (forged['native_original_id'] + 1) % 237
         records = dict(self.bindings, **{pid: forged})
-        cache = {('records', 'native'): records}
+        cache = {('records', 'native', PLAN): records}
         with self.assertRaisesRegex(ValueError, 'original portrait identity differs'):
             decoder.retainer_binding(pid, forged, cache)
 
@@ -316,12 +318,13 @@ class RetainerPortraitTests(unittest.TestCase):
         pixels = png(asset(row['path']), (128, 160))[2]
         cache = {}
         decoder.validate_retainer_redrawn(pid, row, self.bindings[pid], pixels, cache)
-        original_records = cache[('records', 'enhanced')]
+        record_key = ('records', 'enhanced', PLAN)
+        original_records = cache[record_key]
         for key, wrong in (('changedPixels', 0), ('paletteSize', 4), ('nonUniformBlocks4x4', 0)):
             with self.subTest(field=key):
                 forged = deepcopy(row)
                 forged['provenance']['qa'][key] = wrong
-                cache[('records', 'enhanced')] = dict(original_records, **{pid: forged})
+                cache[record_key] = dict(original_records, **{pid: forged})
                 with self.assertRaisesRegex(ValueError, 'misreported authored detail'):
                     decoder.validate_retainer_redrawn(pid, forged, self.bindings[pid], pixels, cache)
 

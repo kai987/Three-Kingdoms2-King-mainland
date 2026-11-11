@@ -112,6 +112,31 @@ def relocate_opening_officer(data, officer, city_id, owner, basis):
     data['appearance_locations'][person_id] = city_id
 
 
+def summarize_placement(data):
+    """Count effective placements after the shared and scenario sources are merged."""
+    people = len(data['people'])
+    officers = data['initial_officers']
+    serving = len(officers)
+    eras = data['era_assignments']
+    reviews = [era['placement_review'] for era in eras.values()]
+    future = sum(era['appearance_plan']['status'] in ('future_free', 'future')
+                 for era in eras.values())
+    by_city = Counter(row['city'] for row in officers)
+    by_faction = Counter(data['initial_owners'][row['city']] for row in officers)
+    for faction in data['factions']:
+        faction['initial_officers'] = by_faction[faction['id']]
+    data['officer_count'] = people
+    data['coverage'].update(
+        library=people, configured_profiles=people, health_configured=people,
+        affinity_configured=people, placement_plans=len(eras), future_plans=future,
+        initial_serving=serving, planned_serving=serving, planned_max_city_roster=max(by_city.values(), default=0),
+        initial_free=len(data['initial_free_officers']))
+    data['placement_completion'].update(
+        people=people, future_plans=future,
+        reference_classes=dict(Counter(review['historical_certainty'] for review in reviews)),
+        bases=dict(Counter(review['basis'] for review in reviews)))
+
+
 def apply_city_chronology(data, review, people_by_id):
     """Resolve established sites and reviewed opening posts before expanding the board."""
     scenario = data['id']
@@ -239,11 +264,61 @@ def apply_city_expansion(data, locations, opening, notes, people_by_id):
                 person_id=person_id, name=people_by_id[person_id]['name'], basis=basis))
     if transfers != set(moves):
         raise ValueError(f'{data["id"]}: unused expansion transfers')
-    roster = Counter(row['city'] for row in officers.values())
-    data['coverage']['planned_max_city_roster'] = max(roster.values(), default=0)
-    by_faction = Counter(data['initial_owners'][row['city']] for row in officers.values())
-    for faction, row in factions.items():
-        row['initial_officers'] = by_faction[faction]
+
+
+def apply_early_shu_openings(data, opening, people):
+    """Assign later reviewed retinue openings and move their men from local reserves."""
+    date = data['start_year'], data['start_month']
+    if date <= tuple(opening['after']):
+        return
+    scenario = data['id']
+    shu = next((faction for faction in data['factions'] if faction['id'] == 'shu'), None)
+    fictional = data['main_scenario']['group'] == 'if'
+    active = set(data['active_cities'])
+    serving = {row['person_id'] for row in data['initial_officers']}
+    free = {row['person_id'] for row in data['initial_free_officers']}
+    for person_id, review in opening['people'].items():
+        last = tuple(review['last_opening'])
+        if date > last:
+            continue
+        if shu is None:
+            raise ValueError(f'{scenario}: reviewed early Shu retainer has no faction')
+        city = review.get('stations', {}).get(scenario, shu['city'])
+        if (city not in active or data['initial_owners'][city] != 'shu'
+                or person_id in serving or person_id in free):
+            raise ValueError(f'{scenario}: invalid opening post for {person_id} at {city}')
+        resources = data['initial_city_resources'][city]
+        troops = 300
+        if resources['reserves'] < troops:
+            raise ValueError(f'{scenario}: {city} has insufficient reserves for {person_id}')
+        resources['reserves'] -= troops
+        person = people[person_id]
+        resolve = date[0] == person['death_year']
+        if not person['service_year'] <= date[0] <= person['death_year']:
+            raise ValueError(f'{scenario}: opening post is outside the lifespan of {person_id}')
+        data['initial_officers'].append(dict(
+            person_id=person_id, city=city, troops=troops, ruler=False, resolve_death_year=resolve))
+        note = review['note']
+        basis = 'reviewed_early_shu_retainer_opening'
+        certainty = 'historical_career_with_opening_station_inference'
+        if fictional:
+            note += '本篇為假想劇本，按劇本內劉備或蜀漢勢力的城池配置。'
+            certainty = 'fictional_scenario_adaptation'
+        sources = review['sources']
+        data['era_assignments'][person_id] = dict(
+            source_status='historical_named_supplement', source_ruler=None, source_city=None,
+            status='serving', year_state='available', faction='shu', city=city,
+            reason=note, death_year_resolved=resolve, planning_complete=True,
+            placement_basis=basis, scenario_membership_basis=basis,
+            posting_reference=dict(person_id=person_id, faction='shu', city=city,
+                                   basis=basis, source_urls=sources, historical_certainty=certainty),
+            membership_revision=dict(basis=basis, note=note, source_urls=sources),
+            placement_review=dict(basis=basis, source_urls=sources, note=note,
+                                  reference_date=list(date), reference_scenario=scenario,
+                                  historical_certainty=certainty),
+            appearance_plan=dict(start=list(date), end=list(last), city=city,
+                                 status='serving', basis=basis))
+        data['appearance_locations'][person_id] = city
 
 
 def apply_navigation_sources(data, navigation):
@@ -303,13 +378,16 @@ def load_sources(*, timing=True):
     original_stats = read('game/config/references/original-officer-stats.json')
     public_stats = read('game/config/references/cnblogs-officer-stats.json')
     san14_abilities = read('game/config/references/san14-abilities.json')
+    san14_dlc_abilities = read('game/config/references/san14-dlc-abilities.json')
     city_scale_rules = read('game/config/city-scale-rules.json')
     city_name_rules = read('game/config/city-name-rules.json')
     city_chronology = read('game/config/campaigns/city-chronology-openings.json')
     expansion_map = read('game/config/campaigns/city-expansion-map.json')['cities']
     expansion_openings = read('game/config/campaigns/city-expansion-openings.json')
+    early_shu_openings = read('game/config/campaigns/early-shu-openings.json')
     canonical_index = read('game/config/campaigns/index.json')
-    scenario_ids = {row['id'] for row in canonical_index['scenarios']}
+    scenario_dates = {row['id']: (row['year'], row['month']) for row in canonical_index['scenarios']}
+    scenario_ids = set(scenario_dates)
     if (city_chronology.get('schema') != 'tk2-city-chronology-openings-v1'
             or set(city_chronology['owners']) != scenario_ids
             or any(set(row) != {'wuchang', 'jianan'} for row in city_chronology['owners'].values())
@@ -327,6 +405,18 @@ def load_sources(*, timing=True):
         raise ValueError('Unknown canonical campaign source schema')
     order, persons = people['order'], people['people']
     validate_public_reference(public_stats, persons)
+    dlc_people = {row['person_id'] for row in san14_dlc_abilities['abilities']}
+    last_early_opening = tuple(early_shu_openings['after'])
+    if (early_shu_openings.get('schema') != 'tk2-early-shu-openings-v1'
+            or last_early_opening not in scenario_dates.values()
+            or set(early_shu_openings['people']) != dlc_people
+            or dlc_people - set(persons)
+            or any(tuple(review['last_opening']) not in scenario_dates.values()
+                   or any(scenario not in scenario_dates
+                          or not last_early_opening < scenario_dates[scenario] <= tuple(review['last_opening'])
+                          for scenario in review.get('stations', {}))
+                   for review in early_shu_openings['people'].values())):
+        raise ValueError('Incomplete reviewed early Shu retainer openings')
     if len(order) < 1023 or len(set(order)) != len(order) or set(order) != set(persons):
         raise ValueError('The canonical pool must retain the released identities and unique additions')
     # The released pool has an intentional runtime hole at1005. New people are
@@ -361,13 +451,15 @@ def load_sources(*, timing=True):
         apply_opening_sizes(data, city_scale_rules)
         apply_city_expansion(data, expansion_map, expansion_openings['scenarios'][entry['id']],
                              expansion_openings['notes'], current_people)
+        apply_early_shu_openings(data, early_shu_openings, current_people)
         original_people = validate_original_virtue(current_people, original_stats, original_identities)
-        stat_counts = validate_campaign_stats(current_people, public_stats, san14_abilities)
+        stat_counts = validate_campaign_stats(current_people, public_stats, san14_abilities, san14_dlc_abilities)
         data['coverage'].update(
             virtue=f"SAN14 charisma for{stat_counts['charisma']} people; explicit default60 for{stat_counts['default']} missing sources",
             original_virtue_profiles=0, retained_original_reference_profiles=len(original_people),
-            san14_charisma_profiles=stat_counts['charisma'],
-            default_virtue_profiles=stat_counts['default'], history_designs_total=0,
+            san14_charisma_profiles=stat_counts['charisma'], san14_abilities=stat_counts['charisma'],
+            default_virtue_profiles=stat_counts['default'], new_historical_people=stat_counts['default'],
+            history_designs_total=0,
             original_initial_health_profiles=stat_counts['original_health'],
             initialization_policy='tk2-officer-initialization-v1')
         old_note = '追加人物的武、知、體力與適性為本作設計值；未具充分德行記錄者沿用用戶指定德60。'
@@ -407,6 +499,7 @@ def load_sources(*, timing=True):
             raise ValueError('Campaign person override changes an identity')
         if set(data['era_assignments']) != set(order):
             raise ValueError('Every person requires a scenario placement plan')
+        summarize_placement(data)
         seen_ids.add(data['id'])
         catalogs.append(data)
     if index['default'] not in seen_ids:

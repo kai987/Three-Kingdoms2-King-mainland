@@ -104,12 +104,17 @@ class CampaignStatPolicyTests(unittest.TestCase):
         cls.people = read('game/config/campaigns/people.json')['people']
         cls.reference = read('game/config/references/cnblogs-officer-stats.json')
         cls.rows = {row['person_id']: row for row in cls.reference['records'] if row['person_id'] is not None}
-        cls.abilities = {row['person_id']: row['stats']
+        cls.base_abilities = {row['person_id']: row['stats']
             for row in read('game/config/references/san14-abilities.json')['abilities']}
+        cls.dlc_abilities = {row['person_id']: row['stats']
+            for row in read('game/config/references/san14-dlc-abilities.json')['abilities']}
+        cls.abilities = cls.base_abilities | cls.dlc_abilities
 
-    def test_all1000_charisma_values_win_and_only52_missing_values_use60(self):
-        self.assertEqual(len(self.people), 1052)
-        self.assertEqual(len(self.abilities), 1000)
+    def test_base_and_dlc_charisma_values_win_and_only52_missing_values_use60(self):
+        self.assertEqual(len(self.people), 1056)
+        self.assertEqual(len(self.base_abilities), 1000)
+        self.assertEqual(len(self.dlc_abilities), 4)
+        self.assertEqual(len(self.abilities), 1004)
         missing = set(self.people) - set(self.abilities)
         self.assertEqual(len(missing), 52)
         for pid, person in self.people.items():
@@ -121,7 +126,7 @@ class CampaignStatPolicyTests(unittest.TestCase):
                 self.assertIn('initialization', prior)
                 if pid in self.abilities:
                     source = self.abilities[pid]
-                    self.assertEqual(person['profile']['source_stats']['charisma'], source['charisma'])
+                    self.assertEqual(person['profile']['source_stats'], source)
                     self.assertEqual(person['profile']['virtue'], min(99, source['charisma']))
                     self.assertEqual(person['virtue_design']['status'], 'san14_charisma')
                     for field in ('martial_strength', 'intellect'):
@@ -199,7 +204,7 @@ class CampaignStatPolicyTests(unittest.TestCase):
                     self.assertEqual(appearance_values(profile, policy, faction_id=side)['loyalty'], source['value'])
         self.assertGreater(numeric_contexts, 0)
         self.assertGreater(ruler_markers, 0)
-        self.assertEqual(unmatched, 828)
+        self.assertEqual(unmatched, 832)
 
     def test_offline_validator_rejects_old_virtue_and_forged_source_initialization(self):
         officer_stat_sources.validate_campaign_stats(self.people, self.reference)

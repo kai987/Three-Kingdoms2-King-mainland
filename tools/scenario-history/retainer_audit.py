@@ -29,7 +29,8 @@ PEOPLE = ROOT / 'game/config/campaigns/people.json'
 REPORT_JSON = ROOT / 'docs/retainer-affiliation-audit-20261027.json'
 REPORT_MD = ROOT / 'docs/retainer-affiliation-audit-20261027.md'
 EXPECTED_BASE_PEOPLE = 1030
-EXPECTED_PEOPLE = 1052
+FROZEN_RETAINER_PEOPLE = 1052
+EXPECTED_PEOPLE = 1056
 EXPECTED_SCENARIOS = 29
 EXPECTED_HISTORICAL = 23
 EXPECTED_FICTIONAL = 6
@@ -64,23 +65,23 @@ def check_people(canonical, review):
     require(len(order) == EXPECTED_PEOPLE and len(set(order)) == len(order)
             and set(order) == set(people), 'Canonical person count/identity differs')
     require(review.get('base_person_count') == EXPECTED_BASE_PEOPLE
-            and review.get('person_count') == EXPECTED_PEOPLE,
+            and review.get('person_count') == FROZEN_RETAINER_PEOPLE,
             'Frozen person count differs')
     base_order = order[:EXPECTED_BASE_PEOPLE]
     snapshot = dict(order=base_order, people={pid: people[pid] for pid in base_order})
     require(digest(snapshot) == review.get('base_people_snapshot_sha256'),
             'Released 1030-person objects/order changed from frozen snapshot')
     additions = indexed(review.get('new_people'), 'person_id', 'New people')
-    require(len(additions) == EXPECTED_PEOPLE - EXPECTED_BASE_PEOPLE
-            and set(additions) == set(order[EXPECTED_BASE_PEOPLE:]),
+    require(len(additions) == FROZEN_RETAINER_PEOPLE - EXPECTED_BASE_PEOPLE
+            and set(additions) == set(order[EXPECTED_BASE_PEOPLE:FROZEN_RETAINER_PEOPLE]),
             'New person identities differ from frozen append list')
     runtime_ids = [people[pid].get('runtime_id') for pid in order]
     require(all(type(value) is int for value in runtime_ids)
             and len(set(runtime_ids)) == len(runtime_ids),
             'Canonical runtime identities are invalid/duplicated')
     require(runtime_ids[EXPECTED_BASE_PEOPLE:] == list(range(
-                FIRST_NEW_RUNTIME, FIRST_NEW_RUNTIME + len(additions))),
-            'New runtime identities must append 1031..1052 without renumbering')
+                FIRST_NEW_RUNTIME, FIRST_NEW_RUNTIME + len(order) - EXPECTED_BASE_PEOPLE)),
+            'New runtime identities must append consecutively without renumbering')
     for pid in order:
         require(people[pid].get('person_id') == pid,
                 'Canonical person identity mismatch: ' + str(pid))

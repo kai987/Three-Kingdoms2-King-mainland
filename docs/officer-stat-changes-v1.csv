@@ -1051,3 +1051,7 @@ historical-heng-yi-cangwu,衡毅,60,60,0,configured_default,,80,80,80,80,0,expli
 historical-qian-bo-cangwu,钱博,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
 historical-gongchou-cheng,公仇称,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
 historical-sun-xiang,孙香,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
+historical-xiahou-bo,夏侯博,65,65,0,san14_charisma,65,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
+historical-xue-yong,薛永,77,77,0,san14_charisma,77,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
+historical-yuan-chen,袁綝,75,75,0,san14_charisma,75,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
+historical-liu-yan-shu,刘琰,75,75,0,san14_charisma,75,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80

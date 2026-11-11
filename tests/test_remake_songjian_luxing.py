@@ -107,7 +107,7 @@ class SongJianLuXingTests(unittest.TestCase):
 
     def test_seven_new_identities_keep_1024_to_1030_without_reusing_wei_li_tong(self):
         catalog = self.catalogs['mainland263-05']
-        self.assertEqual(len(catalog.ids), 1052)
+        self.assertEqual(len(catalog.ids), 1056)
         self.assertEqual(len(catalog.ids), len(self.data['mainland263-05']['era_assignments']))
         self.assertEqual(len(set(catalog.ids.values())), len(catalog.ids))
         self.assertNotIn(1005, catalog.by_id)

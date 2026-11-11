@@ -56,7 +56,7 @@ def validate_original_virtue(people, reference, identities):
     return bound
 
 
-def validate_campaign_stats(people, reference, abilities=None):
+def validate_campaign_stats(people, reference, abilities=None, dlc_abilities=None):
     """Offline builds fail if an era override changes the new common policy.
 
     The public source is retained as numerical facts with row-level provenance;
@@ -83,6 +83,15 @@ def validate_campaign_stats(people, reference, abilities=None):
     ability_by_id = {row['person_id']: row['stats'] for row in (abilities or {}).get('abilities', [])}
     if abilities is not None and len(ability_by_id) != 1000:
         raise ValueError('SAN14 ability reference coverage differs')
+    if dlc_abilities is not None:
+        dlc_by_id = {row['person_id']: row['stats'] for row in dlc_abilities['abilities']}
+        if (abilities is None
+                or dlc_abilities['schema'] != 'san14-user-supplied-dlc-abilities-v1'
+                or dlc_abilities['count'] != len(dlc_by_id)
+                or len(dlc_abilities['abilities']) != len(dlc_by_id)
+                or set(ability_by_id) & set(dlc_by_id)):
+            raise ValueError('SAN14 DLC ability reference coverage differs')
+        ability_by_id.update(dlc_by_id)
     sourced = defaults = 0
     for pid, person in people.items():
         profile = person['profile']
@@ -93,7 +102,7 @@ def validate_campaign_stats(people, reference, abilities=None):
         if any(profile[key] != old['profile'][key] for key in
                ('martial_strength', 'intellect', 'terrain_affinity', 'source_stats')):
             raise ValueError('Unrequested officer ability changed: ' + pid)
-        if abilities is not None and pid in ability_by_id and raw != ability_by_id[pid]:
+        if abilities is not None and raw != ability_by_id.get(pid, {}):
             raise ValueError('SAN14 source abilities differ: ' + pid)
         charisma = raw.get('charisma')
         design = person.get('virtue_design') or {}
@@ -133,6 +142,6 @@ def validate_campaign_stats(people, reference, abilities=None):
             raise ValueError('Original loyalty source differs: ' + pid)
         typed = OfficerProfile(**profile)
         appearance_values(typed, initial)
-    if (sourced, defaults) != (1000, len(people) - 1000):
+    if abilities is not None and sourced != len(ability_by_id):
         raise ValueError('Current charisma/default policy coverage differs')
     return dict(charisma=sourced, default=defaults, original_health=len(matched))

@@ -66,7 +66,7 @@ class DelegationReplayTests(unittest.TestCase):
         full = Campaign.view(game)
         self.assertEqual(full['revision'], game.revision)
         self.assertEqual(full['game'], game.to_dict())
-        self.assertEqual(len(full['catalog']['library']), 1052)
+        self.assertEqual(len(full['catalog']['library']), 1056)
         self.assertEqual(full['catalog']['command_books'], command_books.view(game, state))
         metadata = full['catalog']['officer_troop_types']['officers']
         self.assertEqual(set(metadata), {str(i) for i in state.officers})
@@ -417,7 +417,7 @@ class DelegationReplayTests(unittest.TestCase):
             self.assertTrue(self.staff_battles, 'A generated officer must enter and act in a real arrival battle')
             self.assertGreater(final.officers[self.generated].experience, 0)
             self.assertNotIn(self.generated, catalog.by_id)
-            self.assertEqual(len(catalog.definitions), 1052)
+            self.assertEqual(len(catalog.definitions), 1056)
         if filename == '184-02.json':
             self.assertTrue(self.reappointed_military,
                 'Real persuasion must be followed by a legal replacement military appointment')
