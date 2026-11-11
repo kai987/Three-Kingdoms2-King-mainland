@@ -1,4 +1,5 @@
 """Playable 266-map additions in historical and hypothetical campaign openings."""
+from collections import Counter
 import json
 from pathlib import Path
 import sys
@@ -41,6 +42,7 @@ class CityExpansionTests(unittest.TestCase):
         }
         cls.plan = read('game/config/campaigns/city-expansion-openings.json')['scenarios']
         cls.chronology = read('game/config/campaigns/city-chronology-openings.json')
+        cls.shu_openings = read('game/config/campaigns/early-shu-openings.json')
 
     def start(self, scenario, faction=None):
         catalog = self.catalogs[scenario]
@@ -74,6 +76,17 @@ class CityExpansionTests(unittest.TestCase):
                                  self.shared['city_coordinates'])
                 legacy_owners = original['initial_owners'] | reviewed_owners
                 self.assertEqual({key: state.cities[key].owner for key in legacy_owners}, legacy_owners)
+                reserve_transfers = Counter()
+                if date > tuple(self.shu_openings['after']):
+                    for person, posting in self.shu_openings['people'].items():
+                        if date <= tuple(posting['last_opening']):
+                            city = posting.get('stations', {}).get(scenario, catalog.factions['shu']['city'])
+                            row = next(row for row in catalog.data['initial_officers']
+                                       if row['person_id'] == person)
+                            self.assertEqual((row['city'], row['troops']), (city, 300))
+                            reserve_transfers[city] += 300
+                for city, troops in reserve_transfers.items():
+                    original['initial_city_resources'][city]['reserves'] -= troops
                 for field in ('initial_city_resources', 'city_income'):
                     self.assertEqual({key: catalog.data[field][key] for key in legacy}, original[field])
                 self.assertEqual({key: state.cities[key].owner for key in expected}, plan['owners'])

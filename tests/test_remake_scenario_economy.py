@@ -1,4 +1,5 @@
 """Current dated stocks, income and live territorial-resource conservation."""
+from collections import Counter
 from copy import deepcopy
 import json
 from pathlib import Path
@@ -42,12 +43,22 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         cls.expansion_cities = read('game/config/campaigns/city-expansion-map.json')['cities']
         cls.retainer_review = {row['id']: row for row in read(
             'game/config/references/retainer-affiliation-review.json')['scenarios']}
+        shu_openings = read('game/config/campaigns/early-shu-openings.json')
+        cls.shu_reserve_debits = {}
         cls.catalogs = {}
         for path in cls.index['catalogs']:
             catalog = Catalog(ROOT / 'game/data' / path)
             date = catalog.data['start_year'], catalog.data['start_month']
             key = date + (catalog.data['scenario_variant'],) if catalog.data.get('scenario_variant') else date
             cls.catalogs[key] = catalog
+            scenario = catalog.data['id']
+            debits = Counter()
+            if date > tuple(shu_openings['after']):
+                for posting in shu_openings['people'].values():
+                    if date <= tuple(posting['last_opening']):
+                        city = posting.get('stations', {}).get(scenario, catalog.factions['shu']['city'])
+                        debits[city] += 300
+            cls.shu_reserve_debits[scenario] = debits
 
     def opening_transfers(self, data, city):
         """Explicit reserve transactions, in their two reviewed stage orders."""
@@ -63,6 +74,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         Each stage's transactions must form an exact chronological chain.
         """
         stocks = dict(data['initial_city_resources'][city])
+        stocks['reserves'] += self.shu_reserve_debits[data['id']][city]
         for transfer in reversed(self.opening_transfers(data, city)):
             for field in ('actual_before', 'actual_after', 'actual_delta', 'raw_before', 'raw_after'):
                 self.assertIs(type(transfer[field]), int, (data['id'], city, field))
@@ -156,7 +168,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                                 self.assertGreaterEqual(value, 0)
                                 if value == 0 and key not in self.expansion_cities:
                                     self.assertGreater(baseline['reserves'], 0)
-                                    self.assertTrue(any(transfer['actual_delta'] < 0
+                                    self.assertTrue(self.shu_reserve_debits[data['id']][key] > 0 or any(transfer['actual_delta'] < 0
                                         and transfer['actual_after'] == 0
                                         for transfer in self.opening_transfers(data, key)),
                                         (date, key, 'zero reserves need a reviewed exhaustion receipt'))
