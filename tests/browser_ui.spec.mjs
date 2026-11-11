@@ -1485,6 +1485,12 @@ test('a stale local API menu warns without restarting or changing its campaign',
 
 async function verifyOpeningBatch(page,testInfo,batchId){
  test.setTimeout(600_000);
+ const expectWhitePortrait=async(image,personId)=>{
+  const path=new URL(`assets/portraits/white/${personId}.png`,page.url()).pathname;
+  await image.scrollIntoViewIfNeeded();
+  await expect.poll(()=>image.evaluate(node=>node.complete&&node.currentSrc
+   ?[new URL(node.currentSrc).pathname,node.naturalWidth,node.naturalHeight]:null)).toEqual([path,512,640]);
+ };
  const people=JSON.parse(await readFile(new URL('../game/config/campaigns/people.json',import.meta.url),'utf8')).people;
  const known=[['san14-candidate-0952',78,99],['san14-candidate-0521',82,96],
   ['san14-candidate-0656',99,44],['san14-candidate-0147',97,94]];
@@ -1557,7 +1563,7 @@ async function verifyOpeningBatch(page,testInfo,batchId){
    const portrait=page.locator('#setup-summary [data-portrait-person]');
    await expect(portrait).toHaveAttribute('data-portrait-person',personId);
    await expect(portrait).toHaveAttribute('data-portrait-name',catalog.factions.find(row=>row.id===side).captain);
-   await expect.poll(()=>portrait.locator('img').evaluate(image=>image.complete&&image.naturalWidth===128&&image.naturalHeight===160)).toBe(true);
+   await expectWhitePortrait(portrait.locator('img'),personId);
    await page.locator('#utility-menu summary').click();await page.locator('#language').selectOption('ja');
    await expect(portrait).toHaveAttribute('data-portrait-person',personId);
    const rulerName={song_jian:'宋建',nanman:'孟獲',lu_xing:'呂興',gongsun:'公孫淵'}[side];
@@ -1614,7 +1620,7 @@ async function verifyOpeningBatch(page,testInfo,batchId){
    assert.equal(live.loyalty,officer.loyalty,`${scenario}/${officer.person_id} preview-live loyalty`);
   }
   if(scenario==='mainland238-01'){
-   // New retainers must be commandable people, with their bound 128×160
+   // New retainers must be commandable people, with their bound white
    // portrait in the actual detail dialog, not merely reference-file rows.
    const roster=saved.state.cities.liaodong.roster.officer_ids;
    expect(roster).toHaveLength(13);
@@ -1630,7 +1636,7 @@ async function verifyOpeningBatch(page,testInfo,batchId){
    await details.click();await expect(page.locator('#dialog-title')).toContainText('王建');
    const portrait=page.locator('#dialog [data-portrait-person="historical-wang-jian-liaodong"] img');
    await expect(portrait).toBeVisible();
-   await expect.poll(()=>portrait.evaluate(image=>image.complete&&image.naturalWidth===128&&image.naturalHeight===160)).toBe(true);
+   await expectWhitePortrait(portrait,'historical-wang-jian-liaodong');
    await historyScreenshot(page,testInfo,'238-new-retainer-original-wang-jian-tc');
    await page.locator('#dialog-language').selectOption('ja');
    await expect(portrait).toBeVisible();await historyScreenshot(page,testInfo,'238-new-retainer-original-wang-jian-ja');
