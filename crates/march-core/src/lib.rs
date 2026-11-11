@@ -179,7 +179,11 @@ fn execute(request: &Value) -> Result<Value> {
 /// Execute one parsed request, returning the stable JSON success/error envelope.
 pub fn run(request: &Value) -> Value {
     match execute(request) {
-        Ok(value) => json!({"ok": true, "value": value}),
+        // Move the completed batch into its envelope before encoding it.
+        Ok(value) => Value::Object(serde_json::Map::from_iter([
+            ("ok".into(), Value::Bool(true)),
+            ("value".into(), value),
+        ])),
         Err(error) => json!({"ok": false, "error": error}),
     }
 }

@@ -4,7 +4,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('nod
 const source=fs.readFileSync(require.resolve('../game/app.js'),'utf8');
 const start=source.indexOf('const routeModes='),end=source.indexOf('function factionResources(',start);
 assert(start>=0&&end>start,'Exercise the actual app route controls, not a copied implementation');
-const controlsSource=source.slice(start,end)+'\nglobalThis.routeControls={routeModeSelect,travelQuote,availableRouteModes,routeOptionLabel,syncRouteModes};';
+const controlsSource=source.slice(start,end)+'\nglobalThis.routeControls={routeModeSelect,travelQuote,routeOptionLabel,syncRouteModes};';
 const routeOptions=require('../game/route-options.js');
 const clone=value=>JSON.parse(JSON.stringify(value));
 function freeze(value){if(value&&typeof value==='object'){for(const item of Object.values(value))freeze(item);Object.freeze(value);}return value;}

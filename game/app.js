@@ -69,8 +69,8 @@ const capacity=()=>view.catalog.rules.city_officer_capacity;
 const marching=()=>new Set([...(view.game?.extension?.travel?.marches||[]).flatMap(r=>r.officers),...(view.catalog.logistics?.marching_officers||[])]);
 const routeModes=()=>['fastest','land',...(view.catalog.river_routes?.length?['river']:[]),...(view.catalog.travel_hazards?['special','sea','explore']:[])];
 const routeModeSelect=(mode='fastest')=>`<div class="route-choice"><label class="field" id="route-field">行军路线<select id="route-mode" data-exploring="${mode==='explore'}"></select></label><p class="small" id="route-unavailable" hidden>没有已知的可用路线。</p><button type="button" id="route-explore" aria-pressed="false" hidden>探索未知航路</button></div>`;
-const travelQuote=(source,target,mode='fastest')=>(MarchCore.quotesFor(view)??view.catalog.travel_quotes)?.[`${source}:${target}:${mode}`];
-const availableRouteModes=(source,target)=>routeModes().filter(mode=>travelQuote(source,target,mode));
+const routeQuotes=()=>MarchCore.quotesFor(view)??view.catalog.travel_quotes??null;
+const travelQuote=(source,target,mode='fastest',quotes=routeQuotes())=>quotes?.[`${source}:${target}:${mode}`];
 function routeOptionLabel(option,count){
  const type={land:'陆路',sea:'海路',mixed:'海陆并用',river:'内河水路',river_sea:'海河并用'}[option.kind],number=count>1&&option.kindCount>1?option.indexWithinKind:'';
  const title=option.mode==='explore'?`未知航路探索（${type}）`:option.shortest?`最短日数${count>1||option.kind!=='land'?`（${type}${number}）`:''}`:`${type}${number}`;
@@ -81,7 +81,8 @@ function syncRouteModes(source,target,preferred='fastest'){
  const pair=`${source}:${target}`;
  if(select.dataset.routePair&&select.dataset.routePair!==pair)select.dataset.exploring='false';
  select.dataset.routePair=pair;
- const quotes=Object.fromEntries(availableRouteModes(source,target).map(mode=>[mode,travelQuote(source,target,mode)]));
+ const currentQuotes=routeQuotes();
+ const quotes=Object.fromEntries(routeModes().map(mode=>[mode,travelQuote(source,target,mode,currentQuotes)]).filter(([,quote])=>quote));
  const choices=GameRouteOptions.build(quotes,{preferred,exploring:select.dataset.exploring==='true'});
  select.dataset.exploring=String(choices.exploring);
  select.innerHTML=choices.options.map(option=>`<option value="${option.mode}" data-route-kind="${option.kind}">${escapeHtml(routeOptionLabel(option,choices.options.length))}</option>`).join('');
@@ -819,7 +820,17 @@ function cityCommandPanel(city,key,body){return `<div class="city-command-panel 
 function renderCity(){
  const game=view.game,city=game.cities[selectedCity],owned=city.owner===game.player;
  const available=city.roster.officer_ids.filter(i=>!officerUnavailable(i)),fighters=available.filter(i=>game.officers[i].troops>0);
- const noDepartureFood=fighters.every(i=>view.catalog.travel_rules?Object.values(game.cities).filter(isDepartureTarget).every(c=>city.grain<departureBudget(city,c.id,[i])):city.grain<Math.max(1,Math.floor(game.officers[i].troops/25)));
+ let noDepartureFood=false;
+ if(owned&&fighters.length){
+  if(view.catalog.travel_rules){
+   const quotes=routeQuotes(),modes=routeModes();
+   const routes=Object.values(game.cities).filter(isDepartureTarget).flatMap(target=>
+    modes.map(mode=>travelQuote(city.id,target.id,mode,quotes)).filter(Boolean));
+   noDepartureFood=fighters.every(id=>routes.every(quote=>city.grain<marchGrain([id],quote)));
+  }else{
+   noDepartureFood=fighters.every(id=>city.grain<Math.max(1,Math.floor(game.officers[id].troops/25)));
+  }
+ }
  const scale=view.catalog.city_profiles[city.id],income=view.catalog.city_income[city.id],naming=view.catalog.map_presentation.city_names[city.id],training=view.catalog.domestic?.cities?.[city.id]?.morale;
  const unavailable=`<p class="small city-command-unavailable">${cityCommandText('非本方城池，無法執行都市命令。','自勢力の都市ではないため、都市の命令は実行できません。')}</p>`;
  const panels={
@@ -906,7 +917,12 @@ function allocate(city,preferred=null,flow=null){
 }
 
 function actionTargetCities(kind,city){
- if(kind==='depart')return Object.values(view.game.cities).filter(c=>isDepartureTarget(c)&&(view.catalog.travel_hazards?availableRouteModes(city.id,c.id).length:view.catalog.links.some(e=>e.includes(city.id)&&e.includes(c.id)))).map(c=>c.id);
+ if(kind==='depart'){
+  const modes=view.catalog.travel_hazards?routeModes():null,quotes=modes?routeQuotes():null;
+  return Object.values(view.game.cities).filter(c=>isDepartureTarget(c)&&(modes
+   ?modes.some(mode=>travelQuote(city.id,c.id,mode,quotes))
+   :view.catalog.links.some(e=>e.includes(city.id)&&e.includes(c.id)))).map(c=>c.id);
+ }
  const free=new Set((view.catalog.recruitable?.[city.id]||[]).map(i=>view.game.extension.free_locations[i]));
  const enemy=new Set(view.catalog.persuadable?.[city.id]||[]);
  return Object.values(view.game.cities).filter(c=>free.has(c.id)||c.roster.officer_ids.some(i=>enemy.has(i))).map(c=>c.id);
@@ -963,7 +979,9 @@ function marchSupplyRuleHtml(){
 function marchGrain(ids,quote){return GameMarchSupply.estimate(view.game.officers,ids,quote,0,view.game.cities,view.game.cities[quote.path?.[0]]?.owner??view.game.player);}
 function departureBudget(city,destination,ids){
  if(!view.catalog.travel_rules)return Math.max(1,Math.floor(ids.reduce((sum,id)=>sum+view.game.officers[id].troops,0)/25));
- return Math.min(Infinity,...availableRouteModes(city.id,destination).map(mode=>marchGrain(ids,travelQuote(city.id,destination,mode))));
+ const quotes=routeQuotes();
+ const routes=routeModes().map(mode=>travelQuote(city.id,destination,mode,quotes)).filter(Boolean);
+ return Math.min(Infinity,...routes.map(quote=>marchGrain(ids,quote)));
 }
 function departure(city,targetCity=null){
  const targets=actionTargetCities('depart',city).filter(id=>!targetCity||id===targetCity).map(id=>view.game.cities[id]);

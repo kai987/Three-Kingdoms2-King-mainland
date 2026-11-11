@@ -87,13 +87,15 @@ class ExpandedCampaign:
         return year_state(person, state.year, ignore_death=ignore_death)
 
     def _neighbors(self, city, state=None):
-        from .route_hazards import route_allowed
+        from .route_hazards import _python_route_allowed
+        # Neighbor scans only need the directional predicate. Keep this cheap
+        # check on the host instead of serializing the same rules for each edge.
         neighbors=set()
         routes=self._known_routes(state)
         for route in routes:
             if city not in (route['from'],route['to']):continue
             target=route['to'] if city==route['from'] else route['from']
-            if route_allowed(self.catalog.data,route,city,target):neighbors.add(target)
+            if _python_route_allowed(self.catalog.data,route,city,target):neighbors.add(target)
         return sorted(neighbors)
 
     def _personnel_actor(self, state, city, ident):

@@ -13,8 +13,8 @@
   [...(view.game.extension?.travel?.discovered||[])].sort(),alliesOf(view)
  ]):null;
  function createMarchCore({workerFactory=()=>new Worker(root.GamePaths?.asset('/march-worker.js')||'/march-worker.js'),fetcher=(...args)=>fetch(...args),timeout=30000}={}){
-  let worker=null,failed=false,sequence=0,key=null,quotes=null,pendingUpdate=null,engine='idle',lastError=null;
-  const requests=new Map(),contexts=new Map(),subscribers=new Set();
+  let worker=null,failed=false,sequence=0,key=null,quotes=null,pendingUpdate=null,engine='idle',lastError=null,updateGeneration=0;
+  const requests=new Map(),contexts=new Map(),batches=new Map(),subscribers=new Set();
   function stop(error){
    failed=true;engine='fallback';lastError=String(error?.message||error);quotes=null;
    worker?.terminate();worker=null;
@@ -64,10 +64,20 @@
    }
    return pending;
   }
+  function batchFor(batchKey,contextId,{cities,year,month,discovered,player}){
+   const existing=batches.get(batchKey);
+   if(existing?.contextId===contextId)return existing.result;
+   const batch={contextId,result:call({op:'batch',context:contextId,cities,year,month,discovered,player}).finally(()=>{
+    if(batches.get(batchKey)===batch)batches.delete(batchKey);
+   })};
+   batches.set(batchKey,batch);
+   return batch.result;
+  }
   function update(view){
    const next=stateKey(view);
    if(next===key)return pendingUpdate||Promise.resolve();
-   key=next;quotes=null;
+   const generation=++updateGeneration;
+   key=next;quotes=null;pendingUpdate=null;
    if(!next){engine=failed?'fallback':'idle';return Promise.resolve();}
    if(failed)return Promise.resolve();
    engine='loading';
@@ -78,9 +88,11 @@
    pendingUpdate=(async()=>{
     try{
      const contextId=await context(snapshot.scenario,snapshot.geometry);
-     if(key!==next)return;
-     const result=await call({op:'batch',context:contextId,cities:snapshot.cities,year:snapshot.year,month:snapshot.month,discovered:snapshot.discovered,player:snapshot.player});
-     if(key!==next)return;
+     if(failed||generation!==updateGeneration||contextId===null)return;
+     // A view may return to these exact road inputs while its batch is still
+     // running. Reuse that request and publish it from the latest update only.
+     const result=await batchFor(next,contextId,snapshot);
+     if(failed||generation!==updateGeneration)return;
      quotes=result;engine='wasm';
      for(const notify of subscribers)notify();
     }catch(error){stop(error);}
