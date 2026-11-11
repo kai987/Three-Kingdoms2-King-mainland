@@ -142,18 +142,22 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
  assert.equal(shipped.by_runtime_id['1044'],'historical-wang-jian-liaodong');
  assert.equal(shipped.people['historical-wang-jian-liaodong'].kind,'nes_original');
  assert.equal(shipped.people['historical-wang-jian-liaodong'].original_id,11);
- for(const[pid,row]of allGenerated){
-  const expected=row.refined||row.enhanced;
-  assert.deepEqual(released.asset(pid),{...expected,enhanced:true},pid);
+ for(const[pid,row]of Object.entries(shipped.people)){
+  assert.deepEqual(row.white,{path:`/assets/portraits/white/${pid}.png`,width:512,height:640},pid);
+  assert.deepEqual(released.asset(pid),{...row.white,enhanced:true},pid);
  }
  const refinedPeople=Object.keys(shipped.people).filter(pid=>shipped.people[pid].refined).sort();
  assert.deepEqual(refinedPeople,['historical-liu-yan-shu','historical-xiahou-bo','historical-xue-yong','historical-yuan-chen']);
  const xue='historical-xue-yong',xueRow=shipped.people[xue];
- assert(released.html(xue,'薛永',{size:'detail',source:true}).includes('512×640輪廓細化'));
+ assert(released.html(xue,'薛永',{size:'detail',source:true}).includes('512×640白底'));
  i18n.locale='ja';
- assert(released.html(xue,'薛永',{size:'detail',source:true}).includes('512×640輪郭調整'));
+ assert(released.html(xue,'薛永',{size:'detail',source:true}).includes('512×640白背景'));
  i18n.locale='zh-Hant';
  assert.equal(released.failAsset(xue,shipped.people['historical-yuan-chen'].refined.path),false);
+ assert.equal(released.failAsset(xue,shipped.people['historical-yuan-chen'].white.path),false);
+ assert(released.failAsset(xue,xueRow.white.path));
+ assert.equal(released.asset(xue).path,xueRow.refined.path);
+ assert(released.html(xue,'薛永',{source:true}).includes('512×640輪廓細化'));
  assert(released.failAsset(xue,xueRow.refined.path));
  assert.equal(released.asset(xue).path,xueRow.enhanced.path);
  assert(released.html(xue,'薛永',{source:true}).includes('128×160補繪'));
@@ -162,19 +166,23 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
  assert.equal(released.asset(xue).width,32);
  assert.throws(()=>validIndex({...shipped,people:{[xue]:{...xueRow,refined:{...xueRow.refined,path:shipped.people['historical-yuan-chen'].refined.path}}}}));
  assert.throws(()=>validIndex({...shipped,people:{[xue]:{...xueRow,refined:{...xueRow.refined,width:128}}}}));
+ assert.throws(()=>validIndex({...shipped,people:{[xue]:{...xueRow,white:{...xueRow.white,path:shipped.people['historical-yuan-chen'].white.path}}}}));
+ assert.throws(()=>validIndex({...shipped,people:{[xue]:{...xueRow,white:{...xueRow.white,width:128}}}}));
  const appendedCatalog={library:additions.map(pid=>({id:peoplePool.people[pid].runtime_id,person_id:pid,name:peoplePool.people[pid].name}))};
  for(const[at,pid]of additions.entries()){
   const runtime=1024+at;assert.equal(peoplePool.people[pid].runtime_id,runtime);
   assert.equal(shipped.by_runtime_id[String(runtime)],pid);assert.equal(released.personId(appendedCatalog,runtime),pid);
-  assert.equal(released.asset(pid).path,`/assets/portraits/enhanced/${pid}.png`);
+  assert.equal(released.asset(pid).path,`/assets/portraits/white/${pid}.png`);
   const visible=released.html(pid,peoplePool.people[pid].name,{source:true});
   assert(visible.includes(`data-portrait-person="${pid}"`));
-  assert(visible.includes('128×160'));assert(visible.includes('非史實容貌'));assert(!visible.includes('4倍放大'));
+  assert(visible.includes('512×640白底'));assert(visible.includes('非史實容貌'));assert(!visible.includes('4倍放大'));
   assert.equal(shipped.people[pid].enhanced.rendering,'redrawn128');
   assert.equal(shipped.people[pid].kind,'generated');assert.equal(shipped.people[pid].original_id,null);
  }
  i18n.locale='ja';
  const redrawnJapanese=released.html(additions[0],'宋建',{source:true});
- assert(redrawnJapanese.includes('128×160'));assert(redrawnJapanese.includes('史実の容貌ではありません'));assert(!redrawnJapanese.includes('4倍拡大'));
+ assert(redrawnJapanese.includes('512×640白背景'));assert(redrawnJapanese.includes('史実の容貌ではありません'));assert(!redrawnJapanese.includes('4倍拡大'));
+ assert(released.failAsset(additions[0],shipped.people[additions[0]].white.path));
+ assert.equal(released.asset(additions[0]).path,shipped.people[additions[0]].enhanced.path);
  console.log('portraits: stable IDs, original/generated provenance, enhanced variants and native error fallback, strict paths/dimensions, single index load, locale-only refresh, missing assets and read-only roster/profile/battle/duel views passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

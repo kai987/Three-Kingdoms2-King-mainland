@@ -20,11 +20,12 @@
      (Object.prototype.hasOwnProperty.call(variant,'rendering')&&!['nearest4x','redrawn128'].includes(variant.rendering)))throw new Error('Invalid enhanced portrait entry');
     entry.enhanced=Object.freeze({path:variant.path,width:variant.width,height:variant.height,...(variant.rendering?{rendering:variant.rendering}:{})});
    }
-   if(Object.prototype.hasOwnProperty.call(row,'refined')){
-    const variant=row.refined;
+   for(const kind of ['refined','white']){
+    if(!Object.prototype.hasOwnProperty.call(row,kind))continue;
+    const variant=row[kind];
     if(!entry.enhanced||!/^[a-z0-9-]{1,128}$/.test(id)||!variant||typeof variant!=='object'||Array.isArray(variant)||
-      variant.path!==`/assets/portraits/refined/${id}.png`||variant.width!==512||variant.height!==640)throw new Error('Invalid refined portrait entry');
-    entry.refined=Object.freeze({path:variant.path,width:variant.width,height:variant.height});
+      variant.path!==`/assets/portraits/${kind}/${id}.png`||variant.width!==512||variant.height!==640)throw new Error(`Invalid ${kind} portrait entry`);
+    entry[kind]=Object.freeze({path:variant.path,width:variant.width,height:variant.height});
    }
    people[id]=Object.freeze(entry);
   }
@@ -53,12 +54,13 @@
   function entry(id){return typeof id==='string'?(generated.get(id)||index?.people[id]||null):null;}
   function selectedAsset(row){
    if(!row)return null;
-   const variant=[row.refined,row.enhanced].find(item=>item&&!failedPaths.has(item.path));
+   const variant=[row.white,row.refined,row.enhanced].find(item=>item&&!failedPaths.has(item.path));
    if(variant)return{...variant,enhanced:true};
    return failedPaths.has(row.path)?null:{path:row.path,width:row.width||index?.width||32,height:row.height||index?.height||40,enhanced:false};
   }
   function asset(id){return selectedAsset(entry(id));}
-  function failAsset(id,path){const row=entry(id);if(!row||typeof path!=='string'||![row.path,row.enhanced?.path,row.refined?.path].includes(path))return false;failedPaths.add(path);refresh();return true;}
+  const assetPaths=row=>[row.path,row.enhanced?.path,row.refined?.path,row.white?.path];
+  function failAsset(id,path){const row=entry(id);if(!row||typeof path!=='string'||!assetPaths(row).includes(path))return false;failedPaths.add(path);refresh();return true;}
   function civilAsset(key){
    if(!/^clerk-[123]$/.test(key||''))return null;
    const enhanced=`/assets/civil-staff/enhanced/${key}.png`,native=`/assets/civil-staff/${key}.png`;
@@ -71,6 +73,9 @@
   }
   function description(row,asset=null){
    if(!row)return text(status==='idle'||status==='loading'?'肖像準備中':'肖像待補',status==='idle'||status==='loading'?'肖像を準備中':'肖像は未設定です');
+   if(row.white&&asset?.path===row.white.path)return row.kind==='nes_original'
+    ?text('原版像素肖像・512×640白底','原作のドット肖像・512×640白背景')
+    :text('新增繪製像素肖像・512×640白底・非史實容貌','新規制作のドット肖像・512×640白背景・史実の容貌ではありません');
    if(row.refined&&asset?.path===row.refined.path)return text('新增繪製像素肖像・512×640輪廓細化・非史實容貌','新規制作のドット肖像・512×640輪郭調整・史実の容貌ではありません');
    const enhanced=asset?.enhanced;
    if(enhanced&&row.enhanced?.rendering==='nearest4x')return text('新增繪製像素肖像・4倍放大・非史實容貌','新規制作のドット肖像・4倍拡大・史実の容貌ではありません');
@@ -115,7 +120,7 @@
    const frame=image.closest?.('[data-portrait-person]'),row=entry(frame?.dataset?.portraitPerson);
    if(!row)return;
    const attempted=image.getAttribute?.('src')||selectedAsset(row)?.path;
-   const canonical=[row.path,row.enhanced?.path,row.refined?.path].find(path=>typeof path==='string'&&(path===attempted||displayedPath(path)===attempted));
+   const canonical=assetPaths(row).find(path=>typeof path==='string'&&(path===attempted||displayedPath(path)===attempted));
    if(!canonical)return;
    failAsset(frame.dataset.portraitPerson,canonical);
   }

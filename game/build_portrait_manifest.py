@@ -19,6 +19,7 @@ ENHANCED = (128, 160)
 REFINED = (512, 640)
 ENHANCED_CONFIG = 'game/config/portrait-enhanced.json'
 REFINED_CONFIG = 'game/config/portrait-refined.json'
+WHITE_CONFIG = 'game/config/portrait-white.json'
 ENHANCED_REFERENCE = 'art/portraits/hd-samples/zhuge-liang-preserved-v8/portrait-128x160.png'
 HEX = re.compile(r'^[0-9a-f]{64}$')
 ASSET = re.compile(r'^/assets/portraits/(?:original/[0-9]{3}|generated/[a-z0-9-]+)\.png$')
@@ -33,6 +34,7 @@ RETAINER_PALETTE = {
     (255, 214, 162, 255), (255, 235, 204, 255), (188, 189, 185, 255),
     (226, 226, 222, 255), (255, 255, 255, 255),
 }
+WHITE_PALETTE = (RETAINER_PALETTE - {(0, 0, 0, 0)}) | {(248, 240, 220, 255)}
 
 
 def read(path):
@@ -90,21 +92,22 @@ def png_pixels(raw, expected_size=NATIVE):
         if kind > 4:
             raise ValueError('Unknown PNG row filter')
         row = bytearray(scanlines[offset + 1:offset + 1 + stride])
-        for x in range(stride):
-            left = row[x - channels] if x >= channels else 0
-            up = previous[x]
-            corner = previous[x - channels] if x >= channels else 0
-            if kind == 1:
-                row[x] = (row[x] + left) & 255
-            elif kind == 2:
-                row[x] = (row[x] + up) & 255
-            elif kind == 3:
-                row[x] = (row[x] + (left + up) // 2) & 255
-            elif kind == 4:
-                prediction = left + up - corner
-                distances = abs(prediction - left), abs(prediction - up), abs(prediction - corner)
-                nearest = left if distances[0] <= distances[1] and distances[0] <= distances[2] else up if distances[1] <= distances[2] else corner
-                row[x] = (row[x] + nearest) & 255
+        if kind:
+            for x in range(stride):
+                left = row[x - channels] if x >= channels else 0
+                up = previous[x]
+                corner = previous[x - channels] if x >= channels else 0
+                if kind == 1:
+                    row[x] = (row[x] + left) & 255
+                elif kind == 2:
+                    row[x] = (row[x] + up) & 255
+                elif kind == 3:
+                    row[x] = (row[x] + (left + up) // 2) & 255
+                elif kind == 4:
+                    prediction = left + up - corner
+                    distances = abs(prediction - left), abs(prediction - up), abs(prediction - corner)
+                    nearest = left if distances[0] <= distances[1] and distances[0] <= distances[2] else up if distances[1] <= distances[2] else corner
+                    row[x] = (row[x] + nearest) & 255
         previous = row
         if channels == 4:
             output.extend(row)
@@ -244,6 +247,46 @@ def refined_records(data, enhanced):
             raise ValueError('Refined portrait lacks finer pixel detail')
         refined[person_id] = dict(path=f'/assets/portraits/refined/{person_id}.png', width=width, height=height)
     return refined
+
+
+def white_records(data, people, enhanced, refined):
+    """Verify the optional white edition against each person's retained source."""
+    if (not isinstance(data, dict) or data.get('schema') != 'tk2-white-portraits-v1'
+            or (data.get('width'), data.get('height')) != REFINED
+            or not isinstance(data.get('people'), dict) or set(data['people']) != set(people)):
+        raise ValueError('White portrait manifest must cover the complete roster')
+    directory = ROOT / 'game/assets/portraits/white'
+    allowed = {struct.unpack('=I', bytes(color))[0] for color in WHITE_PALETTE}
+    white = bytes((255, 255, 255, 255))
+    width, height = REFINED
+    white_row = white * width
+    output = {}
+    for person_id, row in data['people'].items():
+        previous = enhanced.get(person_id, {})
+        best = refined.get(person_id, {})
+        source_hash = best.get('png_sha256', previous.get('sha256'))
+        if (not re.fullmatch(r'[a-z0-9-]{1,128}', person_id) or not isinstance(row, dict)
+                or not source_hash or row.get('source_sha256') != source_hash
+                or row.get('method') not in ('approved_redraw', 'white_matte_contour',
+                                             'targeted_redraw', 'targeted_repair')):
+            raise ValueError('White portrait source/person binding differs: ' + person_id)
+        asset = directory / (person_id + '.png')
+        if directory.is_symlink() or asset.is_symlink() or not asset.is_file():
+            raise ValueError('White portrait is missing or outside its asset directory: ' + person_id)
+        raw = asset.read_bytes()
+        _, pixels = png_pixels(raw, REFINED)
+        if sha(raw) != row.get('png_sha256') or sha(pixels) != row.get('rgba_sha256'):
+            raise ValueError('White portrait hash differs: ' + person_id)
+        colors = set(memoryview(pixels).cast('I'))
+        if not 5 <= len(colors) <= 16 or not colors <= allowed:
+            raise ValueError('White portrait must be opaque and retain the pixel palette: ' + person_id)
+        if (pixels[:width * 4] != white_row or pixels[-width * 4:] != white_row
+                or any(pixels[y * width * 4:y * width * 4 + 4] != white
+                       or pixels[(y + 1) * width * 4 - 4:(y + 1) * width * 4] != white
+                       for y in range(height))):
+            raise ValueError('White portrait margin is not white: ' + person_id)
+        output[person_id] = dict(path=f'/assets/portraits/white/{person_id}.png', width=width, height=height)
+    return output
 
 
 def validate_redrawn(person_id, row, source, pixels):
@@ -728,10 +771,17 @@ def build():
         for person_id, variant in enhanced_records(enhanced_data, output).items():
             output[person_id]['enhanced'] = variant
         sources['portrait-enhanced.json'] = sha((ROOT / ENHANCED_CONFIG).read_bytes())
+    refined_data = {}
     if (ROOT / REFINED_CONFIG).is_file():
-        for person_id, variant in refined_records(read(REFINED_CONFIG), enhanced_data.get('people', {})).items():
+        refined_data = read(REFINED_CONFIG)
+        for person_id, variant in refined_records(refined_data, enhanced_data.get('people', {})).items():
             output[person_id]['refined'] = variant
         sources['portrait-refined.json'] = sha((ROOT / REFINED_CONFIG).read_bytes())
+    if (ROOT / WHITE_CONFIG).is_file():
+        for person_id, variant in white_records(read(WHITE_CONFIG), output, enhanced_data.get('people', {}),
+                                                refined_data.get('people', {})).items():
+            output[person_id]['white'] = variant
+        sources['portrait-white.json'] = sha((ROOT / WHITE_CONFIG).read_bytes())
     result = dict(schema='tk2-portraits-v1', width=32, height=40, display_background='#000000',
         identity_policy='stable_person_id; no ordinal or similarity matching; saves and released catalogs unchanged',
         generated_likeness_policy='new game art, not claimed historical likeness or an original NES portrait',

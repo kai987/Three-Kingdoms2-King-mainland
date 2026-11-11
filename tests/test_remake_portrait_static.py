@@ -15,7 +15,7 @@ class PortraitStaticTests(unittest.TestCase):
     def prepare(self, directory, people):
         here = Path(directory) / 'game'
         base = here / 'assets/portraits'
-        for folder in ('original', 'generated', 'enhanced', 'refined', 'evidence'):
+        for folder in ('original', 'generated', 'enhanced', 'refined', 'white', 'evidence'):
             (base / folder).mkdir(parents=True)
         (base / 'index.json').write_text(json.dumps(dict(schema='tk2-portraits-v1', people=people)))
         return here, base
@@ -84,6 +84,23 @@ class PortraitStaticTests(unittest.TestCase):
             assets = serve.portrait_static_assets(here)
             self.assertTrue({base_path, enhanced_path} <= assets.keys())
             self.assertFalse(any(path.startswith('/assets/portraits/refined/') for path in assets))
+
+    def test_white_routes_work_without_an_older_refined_variant(self):
+        with tempfile.TemporaryDirectory() as directory:
+            native = '/assets/portraits/generated/person-1.png'
+            enhanced = '/assets/portraits/enhanced/person-1.png'
+            white = '/assets/portraits/white/person-1.png'
+            row = dict(path=native, enhanced=dict(path=enhanced, width=128, height=160),
+                       white=dict(path=white, width=512, height=640))
+            here, base = self.prepare(directory, {'person-1': row})
+            for folder in ('generated', 'enhanced', 'white'):
+                (base / folder / 'person-1.png').write_bytes(b'portrait PNG fixture')
+            self.assertTrue({native, enhanced, white} <= serve.portrait_static_assets(here).keys())
+            row['white']['path'] = '/assets/portraits/white/person-2.png'
+            (base / 'index.json').write_text(json.dumps(dict(schema='tk2-portraits-v1', people={'person-1': row})))
+            assets = serve.portrait_static_assets(here)
+            self.assertTrue({native, enhanced} <= assets.keys())
+            self.assertFalse(any(path.startswith('/assets/portraits/white/') for path in assets))
 
     def test_enhanced_paths_cannot_cross_people_or_escape_exact_png_route(self):
         paths = ['/assets/portraits/enhanced/person-2.png',
