@@ -5,14 +5,17 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('nod
 const source=fs.readFileSync(require.resolve('../game/app.js'),'utf8');
 const home={id:'home',owner:'wei',roster:{officer_ids:[1]}},ally={id:'ally',owner:'wei',roster:{officer_ids:[]}},enemy={id:'enemy',owner:'wu',roster:{officer_ids:[4]}},blocked={id:'blocked',owner:'shu',roster:{officer_ids:[5]}},empty={id:'empty',owner:'neutral',roster:{officer_ids:[]}};
 const view={revision:7,catalog:{travel_hazards:true,recruitable:{home:[2,3]},persuadable:{home:[4]}},game:{phase:'city',player:'wei',cities:{home,ally,enemy,blocked,empty},extension:{free_locations:{2:'home',3:'empty'},rng:123},officers:{}}};
+view.catalog.travel_quotes={'home:enemy:land':{days:3},'home:empty:land':{days:5}};
 commandBookFixture.attach(view);
 let scrolls=0,focuses=0,renders=0,opened=[],notices=[];
-const context={view,mapAction:null,busy:false,availableRouteModes:(from,to)=>['enemy','empty'].includes(to)?['land']:[],
+const context={view,mapAction:null,busy:false,MarchCore:{quotesFor:()=>null},
  notice:(text='',error=false)=>notices.push({text,error}),renderMap:()=>renders++,GameI18n:{apply(){}},cityName:String,
  $:()=>({getBoundingClientRect:()=>({top:-600,bottom:-240}),scrollIntoView:()=>scrolls++}),window:{innerHeight:844},document:{querySelector:()=>({focus:()=>focuses++})},
  departure:(city,id)=>opened.push(['depart',city.id,id]),recruitOfficer:(city,id)=>opened.push(['recruit',city.id,id])};
 context.hasCommandBook=kind=>commandBookFixture.api.can(view,kind);context.commandBookReason=kind=>commandBookFixture.api.reason(view,kind);
-vm.createContext(context);vm.runInContext(source.slice(source.indexOf('function actionTargetCities('),source.indexOf('function departure(')),context);
+vm.createContext(context);
+vm.runInContext(source.slice(source.indexOf('const routeModes='),source.indexOf('function factionResources(')),context);
+vm.runInContext(source.slice(source.indexOf('function actionTargetCities('),source.indexOf('function departure(')),context);
 const same=value=>JSON.parse(JSON.stringify(value)),snapshot=JSON.stringify(view);
 assert.deepEqual(same(context.actionTargetCities('depart',home)),['enemy','empty']);
 assert.deepEqual(same(context.actionTargetCities('recruit',home)),['home','enemy','empty'],'Recruitment uses actual locations and the backend-authorized enemy IDs');
