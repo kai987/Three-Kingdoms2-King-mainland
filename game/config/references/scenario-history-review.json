@@ -6475,6 +6475,29 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
+        },
+        {
+          "city": "qiao",
+          "before": "wei",
+          "owner": "shu",
+          "certainty": "attested_ruler_location_map_proxy",
+          "note": "依《先主傳》《關羽傳》，以曹操東征前為官渡劇本開局。劉備回小沛，關羽守下邳。沿用本作譙郡節點代理小沛，未移動城址。",
+          "source_urls": [
+            "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnuw0vwny3_198",
+            "https://zh.wikisource.org/wiki/三國志/卷36#關羽",
+            "https://zh.wikisource.org/wiki/三國志/卷01"
+          ]
+        },
+        {
+          "city": "hefei",
+          "before": "wei",
+          "owner": "neutral",
+          "certainty": "attested_sequence_opening_interpretation",
+          "note": "嚴象被殺後劉馥才受命進入合肥空城。正月開局不提前配置劉馥與曹軍。",
+          "source_urls": [
+            "https://ctext.org/text.pl?if=gb&node=602622",
+            "https://ancient-china-books.github.io/zizhitongjian/OEBPS/Text/6207.html"
+          ]
         }
       ],
       "officer_changes": [
@@ -7277,6 +7300,57 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷60#賀齊"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0952",
+          "name": "刘备",
+          "before": {
+            "faction": "shu",
+            "city": "xiapi",
+            "status": "serving"
+          },
+          "faction": "shu",
+          "city": "qiao",
+          "certainty": "attested_ruler_location_map_proxy",
+          "note": "依《先主傳》《關羽傳》，以曹操東征前為官渡劇本開局。劉備回小沛，關羽守下邳。沿用本作譙郡節點代理小沛，未移動城址。",
+          "source_urls": [
+            "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnuw0vwny3_198",
+            "https://zh.wikisource.org/wiki/三國志/卷36#關羽",
+            "https://zh.wikisource.org/wiki/三國志/卷01"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0971",
+          "name": "梁习",
+          "before": {
+            "faction": "wei",
+            "city": "qiao",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "梁習仍屬曹操。濟陰為本作駐防安排，參照其曾任乘氏令，任官月份未詳。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷15#梁習"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0999",
+          "name": "路招",
+          "before": {
+            "faction": "wei",
+            "city": "qiao",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "yingchuan",
+          "certainty": "authorial_garrison_relocation",
+          "note": "路招隨朱靈返回曹操一方；許縣為本作調防安排。",
+          "source_urls": [
+            "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnuw0vwny3_198",
+            "https://zh.wikisource.org/wiki/三國志/卷01"
+          ]
         }
       ],
       "notes": [
@@ -7293,7 +7367,10 @@
         "cangwu": "neutral",
         "gaoliang": "shi_xie",
         "linhe": "neutral",
-        "longxi": "song_jian"
+        "longxi": "song_jian",
+        "qiao": "shu",
+        "xiapi": "shu",
+        "hefei": "neutral"
       },
       "initial_soldier_total": 256327
     },
