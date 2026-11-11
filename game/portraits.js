@@ -20,6 +20,12 @@
      (Object.prototype.hasOwnProperty.call(variant,'rendering')&&!['nearest4x','redrawn128'].includes(variant.rendering)))throw new Error('Invalid enhanced portrait entry');
     entry.enhanced=Object.freeze({path:variant.path,width:variant.width,height:variant.height,...(variant.rendering?{rendering:variant.rendering}:{})});
    }
+   if(Object.prototype.hasOwnProperty.call(row,'refined')){
+    const variant=row.refined;
+    if(!entry.enhanced||!/^[a-z0-9-]{1,128}$/.test(id)||!variant||typeof variant!=='object'||Array.isArray(variant)||
+      variant.path!==`/assets/portraits/refined/${id}.png`||variant.width!==512||variant.height!==640)throw new Error('Invalid refined portrait entry');
+    entry.refined=Object.freeze({path:variant.path,width:variant.width,height:variant.height});
+   }
    people[id]=Object.freeze(entry);
   }
   return Object.freeze({schema:value.schema,width:value.width,height:value.height,people:Object.freeze(people)});
@@ -47,11 +53,12 @@
   function entry(id){return typeof id==='string'?(generated.get(id)||index?.people[id]||null):null;}
   function selectedAsset(row){
    if(!row)return null;
-   if(row.enhanced&&!failedPaths.has(row.enhanced.path))return{...row.enhanced,enhanced:true};
+   const variant=[row.refined,row.enhanced].find(item=>item&&!failedPaths.has(item.path));
+   if(variant)return{...variant,enhanced:true};
    return failedPaths.has(row.path)?null:{path:row.path,width:row.width||index?.width||32,height:row.height||index?.height||40,enhanced:false};
   }
   function asset(id){return selectedAsset(entry(id));}
-  function failAsset(id,path){const row=entry(id);if(!row||(path!==row.path&&path!==row.enhanced?.path))return false;failedPaths.add(path);refresh();return true;}
+  function failAsset(id,path){const row=entry(id);if(!row||typeof path!=='string'||![row.path,row.enhanced?.path,row.refined?.path].includes(path))return false;failedPaths.add(path);refresh();return true;}
   function civilAsset(key){
    if(!/^clerk-[123]$/.test(key||''))return null;
    const enhanced=`/assets/civil-staff/enhanced/${key}.png`,native=`/assets/civil-staff/${key}.png`;
@@ -62,8 +69,10 @@
    const value=civilAsset(key),title=language==='ja'?'架空の文吏・共用ドット肖像':'架空文吏・共用像素肖像',name=i18n?.t?i18n.t(String(rawName||''),language):String(rawName||'');
    return value?`<img data-civil-portrait="${escape(key)}" data-civil-name="${escape(rawName||'')}" class="${className}" src="${escape(root.GamePaths?.asset(value.path)||value.path)}" width="${value.width}" height="${value.height}" alt="${escape(name?name+'・'+title:title)}" loading="lazy" decoding="async">`:`<span class="${className} civil-staff-placeholder" role="img" aria-label="${escape(title)}">吏</span>`;
   }
-  function description(row,enhanced=false){
+  function description(row,asset=null){
    if(!row)return text(status==='idle'||status==='loading'?'肖像準備中':'肖像待補',status==='idle'||status==='loading'?'肖像を準備中':'肖像は未設定です');
+   if(row.refined&&asset?.path===row.refined.path)return text('新增繪製像素肖像・512×640輪廓細化・非史實容貌','新規制作のドット肖像・512×640輪郭調整・史実の容貌ではありません');
+   const enhanced=asset?.enhanced;
    if(enhanced&&row.enhanced?.rendering==='nearest4x')return text('新增繪製像素肖像・4倍放大・非史實容貌','新規制作のドット肖像・4倍拡大・史実の容貌ではありません');
    if(enhanced&&row.enhanced?.rendering==='redrawn128')return text('新增繪製像素肖像・128×160補繪・非史實容貌','新規制作のドット肖像・128×160描き直し・史実の容貌ではありません');
    if(row.fictional)return enhanced?text('架空武將・共用像素肖像・明暗強化','架空の武将・共通ドット肖像・陰影強化'):text('架空武將・共用原版像素肖像','架空の武将・共通の原作ドット肖像');
@@ -76,7 +85,7 @@
    const alt=available?`${name}${text('的肖像','の肖像')}`:`${name} · ${missing}`;
    const image=available?`<img data-portrait-image src="${escape(root.GamePaths?.asset(asset.path)||asset.path)}" width="${width}" height="${height}" alt="${escape(alt)}" loading="lazy" decoding="async" draggable="false">`:
     `<span class="portrait-placeholder" role="img" aria-label="${escape(alt)}"><span aria-hidden="true">？</span></span>`;
-   return `<span class="portrait-frame">${image}</span>${source?`<span class="portrait-source" data-l10n-native="${locale()}">${escape(available?description(row,asset.enhanced):missing)}</span>`:''}`;
+   return `<span class="portrait-frame">${image}</span>${source?`<span class="portrait-source" data-l10n-native="${locale()}">${escape(available?description(row,asset):missing)}</span>`:''}`;
   }
   function html(id,name,{size='roster',source=false}={}){
    if(!SIZES.has(size))size='roster';
@@ -106,7 +115,7 @@
    const frame=image.closest?.('[data-portrait-person]'),row=entry(frame?.dataset?.portraitPerson);
    if(!row)return;
    const attempted=image.getAttribute?.('src')||selectedAsset(row)?.path;
-   const canonical=[row.path,row.enhanced?.path].find(path=>typeof path==='string'&&(path===attempted||displayedPath(path)===attempted));
+   const canonical=[row.path,row.enhanced?.path,row.refined?.path].find(path=>typeof path==='string'&&(path===attempted||displayedPath(path)===attempted));
    if(!canonical)return;
    failAsset(frame.dataset.portraitPerson,canonical);
   }

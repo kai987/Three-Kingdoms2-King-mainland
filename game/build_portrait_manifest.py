@@ -16,7 +16,9 @@ import zlib
 ROOT = Path(__file__).resolve().parents[1]
 NATIVE = (32, 40)
 ENHANCED = (128, 160)
+REFINED = (512, 640)
 ENHANCED_CONFIG = 'game/config/portrait-enhanced.json'
+REFINED_CONFIG = 'game/config/portrait-refined.json'
 ENHANCED_REFERENCE = 'art/portraits/hd-samples/zhuge-liang-preserved-v8/portrait-128x160.png'
 HEX = re.compile(r'^[0-9a-f]{64}$')
 ASSET = re.compile(r'^/assets/portraits/(?:original/[0-9]{3}|generated/[a-z0-9-]+)\.png$')
@@ -210,6 +212,38 @@ def enhanced_records(data, primary):
         if 'rendering' in row:
             enhanced[person_id]['rendering'] = row['rendering']
     return enhanced
+
+
+def refined_records(data, enhanced):
+    """Bind a finer redraw to the verified 128×160 portrait of the same person."""
+    if (not isinstance(data, dict) or data.get('schema') != 'tk2-refined-portraits-v1'
+            or not isinstance(data.get('people'), dict)):
+        raise ValueError('Invalid refined portrait manifest')
+    directory = ROOT / 'game/assets/portraits/refined'
+    refined = {}
+    for person_id, row in data['people'].items():
+        if (not re.fullmatch(r'[a-z0-9-]{1,128}', person_id) or person_id not in enhanced
+                or not isinstance(row, dict) or row.get('source_sha256') != enhanced[person_id]['sha256']):
+            raise ValueError('Refined portrait source/person binding differs')
+        asset = directory / (person_id + '.png')
+        if directory.is_symlink() or asset.is_symlink() or not asset.is_file():
+            raise ValueError('Refined portrait asset is missing or outside its asset directory')
+        raw = asset.read_bytes()
+        size, pixels = png_pixels(raw, REFINED)
+        if sha(raw) != row.get('png_sha256') or sha(pixels) != row.get('rgba_sha256'):
+            raise ValueError('Refined portrait hash differs')
+        colors = {tuple(pixels[i:i + 4]) for i in range(0, len(pixels), 4)}
+        if not 5 <= len(colors) <= 16 or not colors <= RETAINER_PALETTE:
+            raise ValueError('Refined portrait must retain the game pixel palette')
+        width, height = size
+        pixel_values = memoryview(pixels).cast('I')
+        detail = sum(len({pixel_values[(y + dy) * width + x + dx]
+                          for dy in range(4) for dx in range(4)}) > 1
+                     for y in range(0, height, 4) for x in range(0, width, 4))
+        if detail < 20:
+            raise ValueError('Refined portrait lacks finer pixel detail')
+        refined[person_id] = dict(path=f'/assets/portraits/refined/{person_id}.png', width=width, height=height)
+    return refined
 
 
 def validate_redrawn(person_id, row, source, pixels):
@@ -688,10 +722,16 @@ def build():
         raise ValueError('Generated portraits contain duplicate pixel images; review the source cells')
     sources = {name: sha((ROOT / 'game/config' / name).read_bytes()) for name in
                ('portrait-identity-map.json', 'portrait-originals.json', 'portrait-generated.json')}
+    enhanced_data = {}
     if (ROOT / ENHANCED_CONFIG).is_file():
-        for person_id, variant in enhanced_records(read(ENHANCED_CONFIG), output).items():
+        enhanced_data = read(ENHANCED_CONFIG)
+        for person_id, variant in enhanced_records(enhanced_data, output).items():
             output[person_id]['enhanced'] = variant
         sources['portrait-enhanced.json'] = sha((ROOT / ENHANCED_CONFIG).read_bytes())
+    if (ROOT / REFINED_CONFIG).is_file():
+        for person_id, variant in refined_records(read(REFINED_CONFIG), enhanced_data.get('people', {})).items():
+            output[person_id]['refined'] = variant
+        sources['portrait-refined.json'] = sha((ROOT / REFINED_CONFIG).read_bytes())
     result = dict(schema='tk2-portraits-v1', width=32, height=40, display_background='#000000',
         identity_policy='stable_person_id; no ordinal or similarity matching; saves and released catalogs unchanged',
         generated_likeness_policy='new game art, not claimed historical likeness or an original NES portrait',

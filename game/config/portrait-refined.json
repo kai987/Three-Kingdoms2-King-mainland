@@ -1,0 +1,25 @@
+{
+  "schema": "tk2-refined-portraits-v1",
+  "people": {
+    "historical-xiahou-bo": {
+      "source_sha256": "b9b5bfd688ed285338e7cad9924a2ad478a6bc7d94771a0227bb663773851e62",
+      "png_sha256": "463b135fafd3642c3cdafd5abcb4782d1fca57161f684b60890026057f2af028",
+      "rgba_sha256": "564e82dfba0ce081c8ba735a5012922f99c461f9a9feef6bcd183339ee4b807b"
+    },
+    "historical-xue-yong": {
+      "source_sha256": "c18045e3bf49116982d5d3cbbc8919f242d1a9687c13ee60ce6a987490155ec0",
+      "png_sha256": "1cb23fd1ec7dc0c980dbaafd4dee7d86552a1aeb3b1a901c04accb828f2cbdd0",
+      "rgba_sha256": "68543331d90b4229e6d2176450209d0e9446438bc89cca52808b566894ee0ca7"
+    },
+    "historical-yuan-chen": {
+      "source_sha256": "91031cbbdc8516b085daea0e4f3cfcba45951f8b9ab8e80595cde5125b74850f",
+      "png_sha256": "e807beec87e0f4aaea494596acd2e145baca3023cb8b8a95fd528ae687766cce",
+      "rgba_sha256": "19ffcfef0edbe5676c6c5813f7378f930ba49a70c0b5cde82d005619af21c003"
+    },
+    "historical-liu-yan-shu": {
+      "source_sha256": "659d848db6c701f11e451cb3bfd38d9f7b76615cc45ae15095836349ab9c6cef",
+      "png_sha256": "7c1e3371bf96d867720125457ac0495f624eed4e92c7e1035a5b466e7f3f713b",
+      "rgba_sha256": "910f66ecca4f42653ba92c78d7d8b65ddfa60801af64e8c172cc7800eb9f565b"
+    }
+  }
+}

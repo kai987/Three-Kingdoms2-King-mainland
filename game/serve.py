@@ -446,17 +446,18 @@ def portrait_static_assets(here=HERE):
         if target.parent.is_symlink() or target.is_symlink():
             continue
         static[path] = (path.lstrip('/'), 'image/png')
-        enhanced = row.get('enhanced')
-        if (not isinstance(enhanced, dict) or enhanced.get('width') != 128 or enhanced.get('height') != 160 or
-                re.fullmatch(r'[A-Za-z0-9_-]+', person_id) is None):
+        if re.fullmatch(r'[A-Za-z0-9_-]+', person_id) is None:
             continue
-        enhanced_path = enhanced.get('path')
-        if enhanced_path != f'/assets/portraits/enhanced/{person_id}.png':
-            continue
-        target = root / enhanced_path.lstrip('/')
-        if target.parent.is_symlink() or target.is_symlink():
-            continue
-        static[enhanced_path] = (enhanced_path.lstrip('/'), 'image/png')
+        for kind, width, height in (('enhanced', 128, 160), ('refined', 512, 640)):
+            variant = row.get(kind)
+            expected = f'/assets/portraits/{kind}/{person_id}.png'
+            if (not isinstance(variant, dict) or variant.get('width') != width
+                    or variant.get('height') != height or variant.get('path') != expected):
+                break
+            target = root / expected.lstrip('/')
+            if target.parent.is_symlink() or target.is_symlink():
+                break
+            static[expected] = (expected.lstrip('/'), 'image/png')
     return static
 
 
