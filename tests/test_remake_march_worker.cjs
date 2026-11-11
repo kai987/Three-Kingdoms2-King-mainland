@@ -46,6 +46,16 @@ const makeView=revision=>({revision,catalog:{scenario_id:'same-catalog',travel_r
  const missing=createMarchCore({fetcher:async()=>({ok:true,json:async()=>({})}),workerFactory:()=>{throw new Error('Worker unavailable');}});await missing.update(v1);assert.equal(missing.status.engine,'fallback');
  const badWorker=new Worker(),bad=createMarchCore({workerFactory:()=>badWorker,fetcher:async()=>({ok:true,json:async()=>({})})});const broken=bad.update(v1);await tick();badWorker.reply(0,'bad core',false);await broken;assert.equal(bad.status.engine,'fallback');assert(badWorker.terminated);
  const timedWorker=new Worker(),timed=createMarchCore({workerFactory:()=>timedWorker,fetcher:async()=>({ok:true,json:async()=>({})}),timeout:5});await timed.update(v1);assert.equal(timed.status.engine,'fallback');assert(timedWorker.terminated);
+ const sharedWorker=new Worker(),shared=createMarchCore({workerFactory:()=>sharedWorker,fetcher:async()=>({ok:true,json:async()=>({})})});
+ let sharedNotices=0;shared.subscribe(()=>sharedNotices++);
+ const originalBatch=shared.update(v1);await tick();sharedWorker.reply(0,17);await tick();
+ const interveningBatch=shared.update(v2);await tick();
+ const sameInputs=shared.update(makeView(3));await tick();
+ assert.equal(sharedWorker.sent.length,3,'Returning to matching road inputs reuses the pending batch');
+ sharedWorker.reply(2,{'a:b:fastest':{days:8}});await interveningBatch;
+ assert.equal(shared.quotesFor(v1),null);assert.equal(sharedNotices,0);
+ sharedWorker.reply(1,{'a:b:fastest':{days:7}});await Promise.all([originalBatch,sameInputs]);
+ assert.equal(shared.quotesFor(v1)['a:b:fastest'].days,7);assert.equal(sharedNotices,1);
  class AutoWorker extends Worker{postMessage(message){super.postMessage(message);const index=this.sent.length-1;queueMicrotask(()=>this.reply(index,message.request.op==='register'?index+1:message.request.op==='unregister'?true:{}));}}
  const routeWorker=new AutoWorker(),routeUrls=[],routeAdapter=createMarchCore({workerFactory:()=>routeWorker,fetcher:async url=>{routeUrls.push(url);return{ok:true,json:async()=>({})};}});
  const routeBase=makeView(1);routeBase.game.extension.travel.discovered=['seen-route','another-route'];await routeAdapter.update(routeBase);
@@ -105,5 +115,5 @@ const makeView=revision=>({revision,catalog:{scenario_id:'same-catalog',travel_r
  assert.equal(JSON.stringify(nextGeometry),unchanged,'Geometry invalidation preserves game state and RNG');
  const returnToFirst=revised.update(firstGeometry);await tick();assert.equal(revisedWorker.sent[4].request.context,101);
  revisedWorker.reply(4,{});await returnToFirst;assert.equal(revisedUrls.length,2,'An existing immutable geometry graph can still be reused');
- console.log('march Worker: road-input quote caching, read-only snapshots, month/ownership/active-city/discovery/player/geometry invalidation, bounded LRU/context disposal, pending eviction, stale batches/previews, empty routes, unsupported/error/timeout fallbacks passed');
+ console.log('march Worker: road-input quote caching, in-flight batch reuse, read-only snapshots, month/ownership/active-city/discovery/player/geometry invalidation, bounded LRU/context disposal, pending eviction, stale batches/previews, empty routes, unsupported/error/timeout fallbacks passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

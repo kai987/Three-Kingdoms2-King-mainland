@@ -1,5 +1,6 @@
 use crate::{field, hazards, number, numeric, string, Result};
 use serde_json::{json, Map, Value};
+use std::borrow::Borrow;
 use std::cmp::Ordering;
 use std::collections::{BTreeMap, BTreeSet, BinaryHeap};
 
@@ -50,7 +51,7 @@ fn discovered(request: &Value) -> Result<BTreeSet<&str>> {
     }
 }
 
-fn known_routes<'a>(data: &'a Value, request: &Value) -> Result<Vec<&'a Value>> {
+fn known_routes<'a>(data: &'a Value, request: &Value, active: &Cities) -> Result<Vec<&'a Value>> {
     let mut declared: Vec<_> = rows(data, "travel_routes")?.iter().collect();
     let found = discovered(request)?;
     for row in rows(data, "exploration_routes")? {
@@ -58,7 +59,6 @@ fn known_routes<'a>(data: &'a Value, request: &Value) -> Result<Vec<&'a Value>> 
             declared.push(row);
         }
     }
-    let active = Cities::read(request)?;
     let year = request.get("year").and_then(Value::as_i64);
     let month = request.get("month").and_then(Value::as_i64).unwrap_or(1);
     let mut result = vec![];
@@ -184,28 +184,27 @@ fn python_equal(a: &Value, b: &Value) -> bool {
     }
 }
 
-#[derive(Clone)]
-struct Entry {
+struct Entry<Leg> {
     days: f64,
     distance: f64,
     city: String,
     serial: u64,
     path: Vec<String>,
-    legs: Vec<Value>,
+    legs: Vec<Leg>,
 }
 
-impl PartialEq for Entry {
+impl<Leg> PartialEq for Entry<Leg> {
     fn eq(&self, other: &Self) -> bool {
         self.cmp(other) == Ordering::Equal
     }
 }
-impl Eq for Entry {}
-impl PartialOrd for Entry {
+impl<Leg> Eq for Entry<Leg> {}
+impl<Leg> PartialOrd for Entry<Leg> {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         Some(self.cmp(other))
     }
 }
-impl Ord for Entry {
+impl<Leg> Ord for Entry<Leg> {
     fn cmp(&self, other: &Self) -> Ordering {
         // BinaryHeap is a max heap; reverse Python heapq's complete key.
         other
@@ -217,7 +216,7 @@ impl Ord for Entry {
     }
 }
 
-fn initial(source: &str) -> BinaryHeap<Entry> {
+fn initial<Leg>(source: &str) -> BinaryHeap<Entry<Leg>> {
     BinaryHeap::from([Entry {
         days: 0.0,
         distance: 0.0,
@@ -232,19 +231,19 @@ fn can_transit(owner: Option<&Value>, player: &Value) -> bool {
     owner.is_some_and(|owner| owner == player || owner.as_str() == Some("neutral"))
 }
 
-fn enqueue(
-    queue: &mut BinaryHeap<Entry>,
-    current: &Entry,
+fn enqueue<Leg: Borrow<Value> + Clone>(
+    queue: &mut BinaryHeap<Entry<Leg>>,
+    current: &Entry<Leg>,
     target: &str,
-    leg: Value,
+    leg: Leg,
     serial: &mut u64,
 ) -> Result<()> {
     let mut path = current.path.clone();
     path.push(target.into());
     let mut legs = current.legs.clone();
-    let days = current.days + number(field(&leg, "days")?, "Invalid route days")?;
-    let distance =
-        current.distance + number(field(&leg, "distance_km")?, "Invalid route distance")?;
+    let (leg_days, leg_distance) = score(leg.borrow())?;
+    let days = current.days + leg_days;
+    let distance = current.distance + leg_distance;
     if !days.is_finite() || !distance.is_finite() {
         return Err("Route total is too large".into());
     }
@@ -261,11 +260,12 @@ fn enqueue(
     Ok(())
 }
 
-fn quote(path: &[String], legs: &[Value]) -> Result<Value> {
+fn quote<Leg: Borrow<Value>>(path: &[String], legs: &[Leg]) -> Result<Value> {
     let (mut days, mut distance) = (0.0, 0.0);
     let mut whole_days = true;
     let mut modes = BTreeSet::new();
     for leg in legs {
+        let leg = leg.borrow();
         let d = field(leg, "days")?;
         let km = field(leg, "distance_km")?;
         days += number(d, "Invalid route days")?;
@@ -278,13 +278,13 @@ fn quote(path: &[String], legs: &[Value]) -> Result<Value> {
     let rounded: f64 = format!("{distance:.1}")
         .parse()
         .map_err(|_| "Invalid route distance")?;
-    Ok(
-        json!({"path":path,"routes":legs,"days":numeric(days, whole_days)?,
+    let mut quote = json!({"path":path,"days":numeric(days, whole_days)?,
         "months":numeric((days / 30.0).ceil().max(1.0), true)?,
         "turns":numeric((days / 10.0).ceil().max(1.0), true)?,
         "distance_km":numeric(rounded, true)?,
-        "grain_per_officer":5 * legs.len(),"modes":modes}),
-    )
+        "grain_per_officer":5 * legs.len(),"modes":modes});
+    quote["routes"] = Value::Array(legs.iter().map(|leg| leg.borrow().clone()).collect());
+    Ok(quote)
 }
 
 fn score(leg: &Value) -> Result<(f64, f64)> {
@@ -294,12 +294,15 @@ fn score(leg: &Value) -> Result<(f64, f64)> {
     ))
 }
 
-fn best(legs: Vec<Value>, with_id: bool) -> Result<Option<Value>> {
-    let mut winner: Option<(Value, f64, f64, String)> = None;
+fn best<Leg: Borrow<Value>>(
+    legs: impl IntoIterator<Item = Leg>,
+    with_id: bool,
+) -> Result<Option<Leg>> {
+    let mut winner: Option<(Leg, f64, f64, String)> = None;
     for leg in legs {
-        let (days, distance) = score(&leg)?;
+        let (days, distance) = score(leg.borrow())?;
         let id = if with_id {
-            string(&leg, "id")?.to_owned()
+            string(leg.borrow(), "id")?.to_owned()
         } else {
             String::new()
         };
@@ -338,7 +341,7 @@ pub(crate) fn path(data: &Value, request: &Value) -> Result<Value> {
     {
         return Ok(Value::Null);
     }
-    let routes = known_routes(data, request)?;
+    let routes = known_routes(data, request, &cities)?;
     let month = request.get("month").unwrap_or(&Value::Null);
     if ["river", "sea", "special", "explore"].contains(&mode) {
         let mut candidates = vec![];
@@ -435,12 +438,12 @@ fn special(leg: &Value) -> bool {
         .is_some_and(|kind| ["yinping", "ziwu_rain", "ziwu_dry"].contains(&kind))
 }
 
-fn insert_direct(
+fn insert_direct<'a>(
     quotes: &mut Map<String, Value>,
     source: &str,
     target: &str,
     mode: &str,
-    options: Vec<Value>,
+    options: impl IntoIterator<Item = &'a Value>,
 ) -> Result<()> {
     if let Some(leg) = best(options, false)? {
         quotes.insert(
@@ -458,7 +461,7 @@ pub(crate) fn batch(data: &Value, request: &Value) -> Result<Value> {
     if cities.order.is_empty() {
         return Ok(Value::Object(quotes));
     }
-    let routes = known_routes(data, request)?;
+    let routes = known_routes(data, request, &cities)?;
     let month = request.get("month").unwrap_or(&Value::Null);
     let mut adjacency: BTreeMap<String, Vec<Value>> =
         cities.order.iter().map(|id| (id.clone(), vec![])).collect();
@@ -527,7 +530,9 @@ pub(crate) fn batch(data: &Value, request: &Value) -> Result<Value> {
                         {
                             continue;
                         }
-                        enqueue(&mut queue, &current, target, leg.clone(), &mut serial)?;
+                        // The batch owns each evaluated direction once. Search
+                        // entries borrow those legs until a quote is emitted.
+                        enqueue(&mut queue, &current, target, leg, &mut serial)?;
                     }
                 }
             }
@@ -538,15 +543,11 @@ pub(crate) fn batch(data: &Value, request: &Value) -> Result<Value> {
                 .filter(|target| cities.owners.get(*target) != Some(player))
                 .collect();
             for target in targets {
-                let options = legs
-                    .iter()
-                    .filter(|leg| {
-                        leg.get("to").and_then(Value::as_str) == Some(target)
-                            && (mode != "land"
-                                || leg.get("mode").and_then(Value::as_str) == Some("land"))
-                    })
-                    .cloned()
-                    .collect();
+                let options = legs.iter().filter(|leg| {
+                    leg.get("to").and_then(Value::as_str) == Some(target)
+                        && (mode != "land"
+                            || leg.get("mode").and_then(Value::as_str) == Some("land"))
+                });
                 insert_direct(&mut quotes, source, target, mode, options)?;
             }
         }
@@ -568,9 +569,7 @@ pub(crate) fn batch(data: &Value, request: &Value) -> Result<Value> {
                 let options = legs
                     .iter()
                     .filter(suitable)
-                    .filter(|leg| leg.get("to").and_then(Value::as_str) == Some(target))
-                    .cloned()
-                    .collect();
+                    .filter(|leg| leg.get("to").and_then(Value::as_str) == Some(target));
                 insert_direct(&mut quotes, source, target, mode, options)?;
             }
         }
