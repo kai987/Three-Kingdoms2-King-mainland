@@ -3,7 +3,7 @@
   "review_revision": "2026-10-27",
   "base_commit": "69a6e8f01239159b91e150637f888278af3b7a88",
   "review_sha256": "f08544edef0e339e265cb3baff1259e2db7bd381d6939a2a45563b2abdf01969",
-  "presentation_sha256": "4bccf4bf174e6b3f61115af6029b36c87d3db7cbb8d7a56db852071550cd2855",
+  "presentation_sha256": "75d0899512fce72b919023d9da2717b44bad789b3e9d3d4062458058e785d38b",
   "locale_sha256": "6a04e2c27b05da8bb29b2acd9cdc7f3a092c0ed35479bf8dfa456311f35efd18",
   "japanese_sha256": "16128708ed8e4d1db8d80adce761a10212492027443665ef6e622aee4ece8f1e",
   "baseline_serving_non_ruler_reviews": 283,
