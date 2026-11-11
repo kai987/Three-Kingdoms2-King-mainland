@@ -143,9 +143,25 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
  assert.equal(shipped.people['historical-wang-jian-liaodong'].kind,'nes_original');
  assert.equal(shipped.people['historical-wang-jian-liaodong'].original_id,11);
  for(const[pid,row]of allGenerated){
-  const display=released.asset(pid);assert.equal(display.enhanced,true,pid);
-  assert.equal(display.path,row.enhanced.path,pid);assert.equal(display.width,128,pid);assert.equal(display.height,160,pid);
+  const expected=row.refined||row.enhanced;
+  assert.deepEqual(released.asset(pid),{...expected,enhanced:true},pid);
  }
+ const refinedPeople=Object.keys(shipped.people).filter(pid=>shipped.people[pid].refined).sort();
+ assert.deepEqual(refinedPeople,['historical-liu-yan-shu','historical-xiahou-bo','historical-xue-yong','historical-yuan-chen']);
+ const xue='historical-xue-yong',xueRow=shipped.people[xue];
+ assert(released.html(xue,'薛永',{size:'detail',source:true}).includes('512×640輪廓細化'));
+ i18n.locale='ja';
+ assert(released.html(xue,'薛永',{size:'detail',source:true}).includes('512×640輪郭調整'));
+ i18n.locale='zh-Hant';
+ assert.equal(released.failAsset(xue,shipped.people['historical-yuan-chen'].refined.path),false);
+ assert(released.failAsset(xue,xueRow.refined.path));
+ assert.equal(released.asset(xue).path,xueRow.enhanced.path);
+ assert(released.html(xue,'薛永',{source:true}).includes('128×160補繪'));
+ assert(released.failAsset(xue,xueRow.enhanced.path));
+ assert.equal(released.asset(xue).path,xueRow.path);
+ assert.equal(released.asset(xue).width,32);
+ assert.throws(()=>validIndex({...shipped,people:{[xue]:{...xueRow,refined:{...xueRow.refined,path:shipped.people['historical-yuan-chen'].refined.path}}}}));
+ assert.throws(()=>validIndex({...shipped,people:{[xue]:{...xueRow,refined:{...xueRow.refined,width:128}}}}));
  const appendedCatalog={library:additions.map(pid=>({id:peoplePool.people[pid].runtime_id,person_id:pid,name:peoplePool.people[pid].name}))};
  for(const[at,pid]of additions.entries()){
   const runtime=1024+at;assert.equal(peoplePool.people[pid].runtime_id,runtime);

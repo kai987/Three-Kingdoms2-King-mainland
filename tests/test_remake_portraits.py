@@ -253,6 +253,8 @@ class PortraitReleaseTests(unittest.TestCase):
         config, raw = {'fixture': 'optional enhanced manifest'}, b'{"fixture":"optional enhanced manifest"}'
 
         def exists(path):
+            if path == ROOT / builder.REFINED_CONFIG:
+                return False
             return present if path == config_path else original_is_file(path)
 
         def contents(path):
