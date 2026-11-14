@@ -1,30 +1,84 @@
 name: Web campaign checks
+run-name: 217 native batch quote A/B on one runner
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
-    inputs:
-      force_full:
-        description: Run every regression group
-        type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
 
 permissions:
   contents: read
   actions: read
-  deployments: read
-
-concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
 
 jobs:
-  verify:
-    uses: ./.github/workflows/web-checks.yml
-    with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+  profile-217:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    env:
+      BASELINE_REF: 19f7fb683e5d0b7a6c479b33937749de77aba642
+      OPTIMIZED_REF: f209f357d551e0a6c78a279609dd93d7f394fb86
+      MARCH_CORE_BACKEND: python
+      PYTHONHASHSEED: '0'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - name: Fetch the native library from the previous 217 profile
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: native-reference-5be2f6c50556cc515ca708d491a210756c828623
+          path: build
+          github-token: ${{ github.token }}
+          run-id: '43612359143'
+      - name: Restore and identify the common replay inputs
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD^)" = "$OPTIMIZED_REF"
+          test "$(git rev-parse "$OPTIMIZED_REF^")" = "$BASELINE_REF"
+          tar -xf build/native-reference.tar -C build
+          sha256sum build/march-core/libmarch_core.so game/data/campaigns/217-07.json tests/test_remake_delegation_replay.py
+          mkdir -p build/profile-217
+      - name: Check batch cache invalidation and fresh return objects
+        run: MARCH_CORE_BACKEND=rust python -B -m unittest discover -s tests -p test_remake_march_core.py -k test_batch_reuses
+      - name: Trial 1 baseline
+        run: |
+          git show "$BASELINE_REF:source/remake/march_core.py" > source/remake/march_core.py
+          python -B -u .github/benchmarks/profile-217-batch.py baseline "$BASELINE_REF" > build/profile-217/1-baseline.json
+      - name: Trial 2 optimized
+        run: |
+          git show "$OPTIMIZED_REF:source/remake/march_core.py" > source/remake/march_core.py
+          python -B -u .github/benchmarks/profile-217-batch.py optimized "$OPTIMIZED_REF" > build/profile-217/2-optimized.json
+      - name: Trial 3 baseline
+        run: |
+          git show "$BASELINE_REF:source/remake/march_core.py" > source/remake/march_core.py
+          python -B -u .github/benchmarks/profile-217-batch.py baseline "$BASELINE_REF" > build/profile-217/3-baseline.json
+      - name: Trial 4 optimized
+        run: |
+          git show "$OPTIMIZED_REF:source/remake/march_core.py" > source/remake/march_core.py
+          python -B -u .github/benchmarks/profile-217-batch.py optimized "$OPTIMIZED_REF" > build/profile-217/4-optimized.json
+      - name: Verify same inputs, assertions, and all 180 ordered views
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          trials = [json.loads(path.read_text()) for path in sorted(Path('build/profile-217').glob('*.json'))]
+          assert [trial['variant'] for trial in trials] == ['baseline', 'optimized'] * 2
+          def compare(trial):
+              return (trial['input_hashes'],
+                      [(row['site'], row['output']) for row in trial['views']],
+                      trial['save_export_sequence_sha256'], trial['restored_save_and_rng_sequence_sha256'],
+                      {key: value for key, value in trial['proof'].items() if key != 'elapsed_seconds'})
+          assert len(trials[0]['views']) == 180
+          assert all(compare(trial) == compare(trials[0]) for trial in trials)
+          print('All four trials matched all 180 ordered full views, saves and RNG checks.')
+          PY
+      - name: Keep the raw batch and replay timings
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: replay-217-batch-ab-${{ github.run_id }}
+          path: build/profile-217/*.json
+          if-no-files-found: warn
