@@ -110,8 +110,9 @@ async function tacticalSoldierRound(page){
  await tacticalControl(page,'siege-step');
  await expect.poll(()=>page.evaluate(async previous=>{const r=await fetch('/api/save'),s=(await r.json()).state,b=s.battle;return !b?.extended?.siege||!!b.extended.duel||b.extended.siege.round>previous;},round)).toBe(true);
  const committed=await tacticalSave(page);await tacticalSettle(page);
- expect(await tacticalSave(page)).toEqual(committed,'Playing or skipping a committed soldier round cannot apply its damage or RNG twice');
- return {save:await tacticalSave(page)};
+ const settled=await tacticalSave(page);
+ expect(settled).toEqual(committed,'Playing or skipping a committed soldier round cannot apply its damage or RNG twice');
+ return {save:settled};
 }
 async function tacticalSoldierExchange(page,{bothSides=false,anySide=false,testInfo=null,label='soldier-contact'}={}){
  const opened={save:await tacticalSave(page)},battle=opened.save.state.battle,pending=battle.extended.siege;
@@ -2253,10 +2254,10 @@ test('city-specific battlefield keeps both armies visible and supports real batt
  const beforeContact=await read();await command('attack');await waitIdle(page);const pending=await read();
  await expect(scene).toHaveAttribute('data-battle-scene-mode',pending.state.battle.extended.siege.mode==='field'?'field-formation':'siege-formation');await expect(canvas).toHaveJSProperty('width',1024);await expect(canvas).toHaveJSProperty('height',960);
  expect(pending.state.rng).toEqual(beforeContact.state.rng);expect(pending.state.battle.attackers).toEqual(beforeContact.state.battle.attackers);expect(pending.state.battle.defenders).toEqual(beforeContact.state.battle.defenders);
- const committed=(await tacticalSoldierExchange(page,{testInfo,label:'battle-native-soldier-contact'})).save;
+ const {save:committed,view:updated}=await tacticalSoldierExchange(page,{testInfo,label:'battle-native-soldier-contact'});
  expect(committed.state.battle.extended.tactical.points).toEqual(pending.state.battle.extended.tactical.points,'The complete soldier encounter uses only the original attack payment');
- await expect(canvas).toHaveJSProperty('width',1984);await expect(canvas).toHaveJSProperty('height',1536);const updated=await tacticalRead(page),survivor=updated.view.game.battle.attackers.find(unit=>String(unit.id)===String(contact.actor));if(survivor?.troops>0)await expect(page.locator(`[data-actor="${contact.actor}"]`)).toBeEnabled();
- const snapshot=await read(),download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');expect(JSON.parse(raw)).toEqual(snapshot);
+ await expect(canvas).toHaveJSProperty('width',1984);await expect(canvas).toHaveJSProperty('height',1536);const survivor=updated.game.battle.attackers.find(unit=>String(unit.id)===String(contact.actor));if(survivor?.troops>0)await expect(page.locator(`[data-actor="${contact.actor}"]`)).toBeEnabled();
+ const snapshot=committed,download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');expect(JSON.parse(raw)).toEqual(snapshot);
  await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'battle-acceptance.json',mimeType:'application/json',buffer:Buffer.from(raw)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();expect(await read()).toEqual(snapshot);
  await expect(canvas).toHaveJSProperty('width',1984);await expect(page.locator('[data-battle-skip]')).toBeHidden();
  await testInfo.attach('battle-layout-and-assets',{body:Buffer.from(JSON.stringify({geometry,fields},null,2)),contentType:'application/json'});

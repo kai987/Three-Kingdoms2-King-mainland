@@ -4,6 +4,7 @@ import io
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import tempfile
@@ -92,8 +93,14 @@ class CampaignCiShardTests(unittest.TestCase):
         self.assertIn('exactly 6', result.stderr)
         workflow = (ROOT / '.github/workflows/web-checks.yml').read_text()
         rules = workflow.split('  campaign-rules:\n', 1)[1].split('  campaign-soak-replay:\n', 1)[0]
-        self.assertIn('backend: [python, rust]', rules)
-        self.assertIn('shard: [1, 2, 3, 4, 5, 6]', rules)
+        entries = re.findall(r'^ +- \{backend: (\w+), shard: (\d+)\}$', rules, re.MULTILINE)
+        expected = [
+            (backend, str(shard))
+            for backend in runner.BACKENDS
+            for shard in range(1, runner.SHARD_COUNT + 1)
+        ]
+        self.assertCountEqual(entries, expected)
+        self.assertIn('      max-parallel: 8\n', rules)
         self.assertIn('--shards 6', rules)
         self.assertIn('timeout-minutes: ${{ matrix.shard == 1 && 30 || 20 }}', rules)
 

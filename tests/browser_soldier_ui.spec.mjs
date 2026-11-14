@@ -66,8 +66,9 @@ async function animation(page,{withView=true}={}){
   try{await skip.click({timeout:1000});}catch(error){if(await skip.isVisible())throw error;}
  }
  await idle(page);await dismissEvents(page);
- expect(await save(page)).toEqual(committed,'Animation completion or Skip cannot resolve another hit or draw extra random numbers');
- return read(page,withView);
+ const settled=await read(page,withView);
+ expect(settled.save).toEqual(committed,'Animation completion or Skip cannot resolve another hit or draw extra random numbers');
+ return settled;
 }
 async function waitSoldierReplay(page){
  // Poll on Node's real time while stepping only the presentation clock: two
@@ -241,7 +242,7 @@ async function busySoldierToolbarReplay(page,testInfo,value,expected){
  const committed=await save(page);expect(committed).toEqual(expected);
  const layouts=await compactSoldierToolbarEvidence(page,testInfo,value.mode,'busy',{advanceClock:true});
  await expect(scene.locator('[data-battle-skip]')).toBeVisible();expect(await save(page)).toEqual(committed);
- await page.clock.resume();await animation(page,{withView:false});expect(await save(page)).toEqual(committed);
+ await page.clock.resume();expect((await animation(page,{withView:false})).save).toEqual(committed);
  return {independent_public_command_replay:true,start_rng:value.save.state.rng,committed_rng:committed.state.rng,
   equals_original_committed_save:true,layouts};
 }
@@ -329,7 +330,7 @@ async function attackCycleEvidence(page,testInfo,kind='attack-cycles'){
  }
  expect(committed.save.state.rng.draws-initial.save.state.rng.draws).toBe(2);
  expect(await save(page)).toEqual(committed.save,'Sampling forty visible poses never changes the committed result or RNG');
- await page.clock.resume();await animation(page,{withView:false});expect(await save(page)).toEqual(committed.save);
+ await page.clock.resume();expect((await animation(page,{withView:false})).save).toEqual(committed.save);
  await expect(scene).toHaveAttribute('data-soldier-label-mode','troops');
  await load(page,committed.save,'four-frame-actual-result-roundtrip.json');
  await expect(scene).toHaveAttribute('data-soldier-label-mode','kind');
@@ -420,7 +421,7 @@ test('field soldier formations expose ten hundred-person teams and replay actual
   // property. Natural campaign movement tests also allow one-sided losses.
   for(const side of ['attackers','defenders'])expect(committed.save.state.battle[side].reduce((sum,u)=>sum+u.troops,0)).toBeLessThan(initial.save.state.battle[side].reduce((sum,u)=>sum+u.troops,0),'Both actual armies take soldier damage in this controlled reciprocal-contact case');
   expect(committed.save.state.rng.draws-initial.save.state.rng.draws).toBe(2,'Each side rolls its native attack base once, never one roll per rendered hit');
-  await page.clock.resume();await animation(page,{withView:false});expect(await save(page)).toEqual(committed.save);
+  await page.clock.resume();expect((await animation(page,{withView:false})).save).toEqual(committed.save);
   await evidence(page,testInfo,'soldier-piece-counts-and-orders-'+language);proof.push({language,before_rng:initial.save.state.rng,after_rng:committed.save.state.rng,events:active.events});
  }
  proof.push({stage:'both-palettes-four-frame-melee-and-ranged',...await attackCycleEvidence(page,testInfo)});
@@ -518,7 +519,7 @@ test('fire arrows burn carried grain and conversion loyalty gates stay actionabl
   if(kind==='fire')await expect(forecast).toContainText('携行兵糧');
   expect(await save(page)).toEqual(before.save,'Forecast and language changes do not roll effects or spend points');
   await evidence(page,testInfo,'original-tactic-preview-'+kind);
-  await page.locator('#confirm-tactic').click();const after=await animation(page),prior=before.save.state,next=after.save.state;
+  await page.locator('#confirm-tactic').click();const after=await animation(page,{withView:false}),prior=before.save.state,next=after.save.state;
   expect(next.rng.draws-prior.rng.draws).toBe(kind==='fire'?2:kind==='conversion71'?0:1);
   expect(next.battle.extended.tactical.points.attackers).toBe(prior.battle.extended.tactical.points.attackers-before.view.catalog.battle_tactical.tactic_costs[value.tactic]);
   for(const city of Object.keys(prior.cities))expect(next.cities[city].grain).toBe(prior.cities[city].grain,'Tactics do not debit distant city warehouses');
@@ -559,7 +560,7 @@ test('arrival-based deployment uses paired native zones and preserves old battle
   const current=await read(page),board=current.view.catalog.battle_tactical;
   const destination=[...board.actors[String(value.actor)].reachable].sort((a,b)=>a.cost-b.cost||a.y-b.y||a.x-b.x)[0];
   expect(destination).toBeTruthy();await cell(page,destination,testInfo.project.name==='touch-chromium');await control(page,'battle-move');
-  const moved=await animation(page);
+  const moved=await animation(page,{withView:false});
   expect(moved.save.state.battle.extended.tactical.positions[String(value.actor)]).toEqual({x:destination.x,y:destination.y});
   expect(moved.save.state.battle.extended.deployment).toEqual(value.provenance);
   expect(moved.save.state.battle.extended.tactical.points.attackers).toBe(current.save.state.battle.extended.tactical.points.attackers-destination.cost);
@@ -809,7 +810,7 @@ test('general tactic forecasts share native distance and tier rules without draw
    }
   }
   await evidence(page,testInfo,'general-distance-'+row.distance+'-ja');
-  await page.locator('#confirm-tactic').click();const after=await animation(page);
+  await page.locator('#confirm-tactic').click();const after=await animation(page,{withView:false});
   expect(after.save.state.rng).toEqual(row.expected_rng);expect(after.save.state.battle.extended.tactical.points.attackers).toBe(before.save.state.battle.extended.tactical.points.attackers-4);
   expect(after.save.state.extension.events.items.at(-1).details.success).toBe(row.expected_success);
   expect(after.save.state.battle.extended.conditions?.units?.[String(row.target)]?.remaining??0).toBe(row.expected_success?3:0);

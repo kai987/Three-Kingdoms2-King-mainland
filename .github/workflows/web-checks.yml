@@ -157,8 +157,20 @@ jobs:
       max-parallel: 8
       fail-fast: false
       matrix:
-        backend: [python, rust]
-        shard: [1, 2, 3, 4, 5, 6]
+        # Order by median job duration from 43587811813, 43589716807 and 43591423363.
+        include:
+          - {backend: python, shard: 1}
+          - {backend: rust, shard: 1}
+          - {backend: rust, shard: 3}
+          - {backend: rust, shard: 6}
+          - {backend: rust, shard: 5}
+          - {backend: python, shard: 4}
+          - {backend: rust, shard: 4}
+          - {backend: python, shard: 2}
+          - {backend: rust, shard: 2}
+          - {backend: python, shard: 3}
+          - {backend: python, shard: 5}
+          - {backend: python, shard: 6}
     env:
       MARCH_CORE_BACKEND: ${{ matrix.backend }}
     steps:
