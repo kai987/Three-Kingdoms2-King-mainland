@@ -150,14 +150,14 @@ jobs:
     needs: [scope, native-rules]
     if: needs.scope.outputs.rules == 'true' && needs.scope.outputs.reuse != 'true'
     runs-on: ubuntu-latest
-    # The longest measured module (the 217 and 263 office replays) starts shard 1.
+    # Shard 1 starts with the longest independent replay (217).
     timeout-minutes: ${{ matrix.shard == 1 && 30 || 20 }}
     strategy:
       # Leave runner capacity for browser shards while the build finishes.
       max-parallel: 8
       fail-fast: false
       matrix:
-        # Order by median job duration from 43587811813, 43589716807 and 43591423363.
+        # Keep the first eight lanes aligned with campaign-durations.json start estimates.
         include:
           - {backend: python, shard: 1}
           - {backend: rust, shard: 1}

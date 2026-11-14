@@ -70,9 +70,16 @@ class CampaignCiShardTests(unittest.TestCase):
             runner.partition_files(complete[:5])
 
     def test_list_only_cli_has_no_unlisted_or_duplicate_files(self):
-        expected = [path.relative_to(ROOT).as_posix() for path in runner.discover_files()]
+        files = runner.discover_files()
+        expected = [path.relative_to(ROOT).as_posix() for path in files
+                    if path.relative_to(ROOT).as_posix() != runner.DELEGATION_REPLAY]
+        expected_replays = set(runner.read_duration_config(runner.DURATIONS)['replay_cases']['python'])
+        long_replays = {name for name in expected_replays
+                        if name.startswith(('DelegationReplayTests.test_217_',
+                                            'DelegationReplayTests.test_263_'))}
+        self.assertEqual(len(long_replays), 2)
         for backend in ('python', 'rust'):
-            records = []
+            records, replays, long_shards = [], [], set()
             for index in range(1, 7):
                 result = subprocess.run([sys.executable, '-B', str(RUNNER), '--shard', str(index),
                                          '--shards', '6', '--list-only'],
@@ -81,9 +88,14 @@ class CampaignCiShardTests(unittest.TestCase):
                 record = json.loads(result.stdout)
                 self.assertEqual((record['backend'], record['shard'], record['shards']), (backend, index, 6))
                 self.assertEqual(record['file_count'], len(record['files']))
+                self.assertEqual(record['all_file_count'], len(files))
                 records.extend(record['files'])
+                replays.extend(record['replay_cases'])
+                if long_replays.intersection(record['replay_cases']):
+                    long_shards.add(index)
             self.assertEqual(sorted(records), expected)
-            self.assertEqual(len(records), len(set(records)))
+            self.assertCountEqual(replays, expected_replays)
+            self.assertEqual(len(long_shards), 2)
 
     def test_cli_and_workflow_enforce_the_same_six_shard_contract(self):
         result = subprocess.run([sys.executable, '-B', str(RUNNER), '--shard', '1',
@@ -126,6 +138,38 @@ class CampaignCiShardTests(unittest.TestCase):
             finally:
                 sys.modules.pop('test_remake_ci_loader_fixture', None)
                 sys.modules.pop('ci_shard_source_marker', None)
+
+
+        # Exercise split discovery as well as the unchanged whole-module loader.
+        with tempfile.TemporaryDirectory() as directory, patch.object(sys, 'path', sys.path[:]):
+            root = Path(directory)
+            module = 'test_remake_ci_replay_fixture'
+            name = f'{module}.py'
+            (root / name).write_text('import unittest\n'
+                                     'class DelegationReplayTests(unittest.TestCase):\n'
+                                     ' def test_first(self): self.fail("Another shard owns this case")\n'
+                                     ' def test_second(self): self.assertTrue(True)\n')
+            first = 'DelegationReplayTests.test_first'
+            second = 'DelegationReplayTests.test_second'
+            with patch.object(runner, 'DELEGATION_REPLAY', f'tests/{name}'):
+                try:
+                    timings = {}
+                    suite = runner.load_suite([], root, root, replay_cases=[second],
+                                              expected_replays=[first, second], replay_timings=timings)
+                    self.assertEqual(suite.countTestCases(), 1)
+                    result = unittest.TextTestRunner(stream=io.StringIO()).run(suite)
+                    self.assertTrue(result.wasSuccessful())
+                    self.assertEqual(set(timings), {second})
+                    with self.assertRaisesRegex(ValueError, 'inventory differs'):
+                        runner.load_suite([], root, root, replay_cases=[second],
+                                          expected_replays=[second])
+                    case_class = sys.modules[module].DelegationReplayTests
+                    with patch.object(case_class, 'setUpClass', classmethod(lambda cls: None)):
+                        with self.assertRaisesRegex(ValueError, 'share class fixtures'):
+                            runner.load_suite([], root, root, replay_cases=[second],
+                                              expected_replays=[first, second])
+                finally:
+                    sys.modules.pop(module, None)
 
 
 if __name__ == '__main__':
