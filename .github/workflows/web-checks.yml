@@ -334,6 +334,10 @@ jobs:
       (needs.scope.outputs.native != 'true' || needs.native-rules.result == 'success')
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        lane: [modules-1, modules-2, catalogs]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -342,11 +346,13 @@ jobs:
         with:
           python-version: '3.13'
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        if: matrix.lane != 'catalogs'
         with:
           node-version: '24'
           cache: npm
           cache-dependency-path: tools/web-runtime/package-lock.json
       - name: Install pinned runtime for the selected release-boundary tests
+        if: matrix.lane != 'catalogs'
         run: npm ci --prefix tools/web-runtime --ignore-scripts
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
@@ -360,16 +366,18 @@ jobs:
       - name: Restore the same native reference
         if: needs.scope.outputs.native == 'true'
         run: tar -xf build/native-reference.tar -C build
-      - name: Global contracts and affected domains or scenarios
-        # Real catalog replays and save compatibility compare both backends
-        # internally; the unrelated global metadata suite only needs one pass.
-        run: python -B tools/ci/run_scoped_tests.py --plan build/ci/test-plan.json --backend python --report build/ci/scoped-report.json
+      - name: Run the selected module shard or catalog checks
+        # Save compatibility and campaign smoke compare both real backends internally.
+        env:
+          SCOPED_LANE: ${{ matrix.lane }}
+        run: python -B tools/ci/run_scoped_tests.py --plan build/ci/test-plan.json --backend python --lane "$SCOPED_LANE" --report build/ci/scoped-report.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
-          name: scoped-report-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          name: scoped-report-${{ matrix.lane }}-${{ github.sha }}
           path: build/ci/scoped-report.json
-          if-no-files-found: ignore
+          overwrite: true
+          if-no-files-found: error
           retention-days: 7
   web-build:
     needs: scope
@@ -515,6 +523,15 @@ jobs:
           python -c 'import os,pathlib;pathlib.Path("build/ci/needs.json").write_text(os.environ["JOB_RESULTS"])'
           python -B tools/ci/gate.py verify --plan build/ci/test-plan.json --needs build/ci/needs.json --head "$GITHUB_SHA"
           python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
+      - name: Collect scoped Python reports from this run
+        if: needs.scope.outputs.mode == 'scoped' && needs.scope.outputs.reuse != 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: scoped-report-*-${{ github.sha }}
+          path: build/scoped-reports
+      - name: Verify complete scoped module and catalog coverage
+        if: needs.scope.outputs.mode == 'scoped' && needs.scope.outputs.reuse != 'true'
+        run: python -B tools/ci/run_scoped_tests.py --plan build/ci/test-plan.json --backend python --verify-reports build/scoped-reports
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
         with:

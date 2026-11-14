@@ -72,6 +72,15 @@ class ScopedRunnerTests(unittest.TestCase):
         self.assertNotIn('tests/test_remake_march_save_compat.py',execution['files'])
         self.assertNotIn('tests/test_remake_ci_scoped_runner.py',execution['files'])
 
+    def test_portrait_scope_runs_the_portrait_suite_with_global_contracts(self):
+        registry, _ = shards.load_registry()
+        value = plan(groups=['boot', 'cloud', 'portraits'], python_groups=['global', 'portraits'])
+        execution = scoped.execution_plan(value, registry)
+        global_modules = {name for name, row in registry['modules'].items() if row['tier'] == 'global'}
+        self.assertEqual(set(execution['files']), global_modules | {'tests/test_remake_portraits.py'})
+        self.assertEqual(execution['scenario_ids'], [])
+        self.assertFalse(execution['native_required'])
+
     def test_selected_scenario_retains_save_hash_oracles_without_pure_vector_matrix(self):
         registry,_=shards.load_registry()
         selected=plan(native=True,groups=['boot','save','cloud','scenarios'],python_groups=['global','scenarios','compat'],scenario_ids=['mainland194-06'])
@@ -86,6 +95,18 @@ class ScopedRunnerTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'native artifact'):scoped.execution_plan(broken,registry)
         broken=deepcopy(selected);broken['scenario_ids']=['mainland999-01']
         with self.assertRaisesRegex(ValueError,'Unknown current scenario'):scoped.execution_plan(broken,registry)
+
+    def test_july_225_scope_runs_its_roster_regressions(self):
+        registry, _ = shards.load_registry()
+        july_225 = plan(native=True, groups=['boot', 'cloud', 'scenarios'],
+                        python_groups=['global', 'scenarios', 'compat'],
+                        scenario_ids=['mainland225-07'])
+        module = 'tests/test_remake_nanzhong_225_setup.py'
+        relevant = scoped.execution_plan(july_225, registry)
+        self.assertIn(module, relevant['files'])
+        self.assertNotIn('tests/test_remake_historical_scenarios.py', relevant['files'])
+        unrelated = scoped.execution_plan(dict(july_225, scenario_ids=['mainland227-02']), registry)
+        self.assertNotIn(module, unrelated['files'])
 
     def test_full_plan_delegates_every_original_file_in_all_twelve_unfiltered_invocations(self):
         registry,_=shards.load_registry()
@@ -123,6 +144,73 @@ class ScopedRunnerTests(unittest.TestCase):
             self.assertEqual(document['backends'],['python']);self.assertEqual(document['global_catalog_count'],29)
             self.assertNotIn('scenario_smoke',document)
             self.assertNotIn('scenarios',document['python_groups'])
+
+    def test_scoped_matrix_partitions_every_selected_module_and_keeps_campaigns_in_catalog_lane(self):
+        registry, _ = shards.load_registry()
+        selected = plan(native=True, groups=['map', 'scenarios'],
+                        python_groups=['global', 'scenarios', 'compat'],
+                        scenario_ids=['mainland194-06', 'mainland225-07'])
+        for scope in (plan(), selected):
+            with self.subTest(scenarios=scope['scenario_ids']):
+                original = scoped.execution_plan(scope, registry, backend='python')
+                first, second, catalog = [scoped.execution_plan(scope, registry, backend='python', lane=lane)
+                                          for lane in scoped.SCOPED_LANES]
+                self.assertCountEqual(first['files'] + second['files'], original['files'])
+                self.assertEqual(first['scenario_ids'], [])
+                self.assertEqual(second['scenario_ids'], [])
+                self.assertEqual(first['backends'], ['python'])
+                self.assertEqual(second['backends'], ['python'])
+                self.assertEqual(catalog['files'], [])
+                self.assertEqual(catalog['backends'], [])
+                self.assertEqual(catalog['scenario_ids'], original['scenario_ids'])
+                self.assertGreater(first['estimated_ms'], 0)
+                self.assertGreater(second['estimated_ms'], 0)
+
+    def test_scoped_report_gate_rejects_missing_module_or_cross_backend_coverage(self):
+        registry, registry_sha = shards.load_registry()
+        selected = plan(head='a' * 40, native=True, groups=['scenarios'],
+                        python_groups=['global', 'scenarios', 'compat'],
+                        scenario_ids=['mainland225-07'])
+        identities, _ = scoped.inventory()
+        with tempfile.TemporaryDirectory() as folder:
+            reports = Path(folder)
+            paths = {}
+            documents = {}
+            for lane in scoped.SCOPED_LANES:
+                report = scoped.execution_plan(selected, registry, backend='python', lane=lane)
+                report.update(status='passed', registry_sha256=registry_sha)
+                if lane == 'catalogs':
+                    report['global_catalog_checks'] = dict(status='passed', catalog_count=len(identities),
+                                                           catalogs=[dict(id=ident) for ident in identities])
+                    report['selected_source_checks'] = dict(status='passed', scenario_ids=selected['scenario_ids'])
+                    report['scenario_smoke'] = [dict(id='mainland225-07', backends=['python', 'rust'],
+                                                    turns=3, cross_backend_save_checks=4)]
+                else:
+                    report['module_runs'] = [dict(backend='python', cases=1, errors=0, failures=0, skipped=0,
+                                                  module_ms=dict.fromkeys(report['files'], 1))]
+                directory = reports / f'scoped-report-{lane}-{selected["head"]}'
+                directory.mkdir()
+                paths[lane] = directory / 'scoped-report.json'
+                documents[lane] = report
+                paths[lane].write_text(json.dumps(report))
+
+            scoped.verify_scoped_reports(selected, registry, registry_sha, reports, backend='python')
+            bad_module = deepcopy(documents['modules-1'])
+            del bad_module['module_runs'][0]['module_ms'][bad_module['files'][0]]
+            paths['modules-1'].write_text(json.dumps(bad_module))
+            with self.assertRaisesRegex(ValueError, 'Incomplete unittest execution'):
+                scoped.verify_scoped_reports(selected, registry, registry_sha, reports, backend='python')
+            paths['modules-1'].write_text(json.dumps(documents['modules-1']))
+
+            bad_catalog = deepcopy(documents['catalogs'])
+            bad_catalog['scenario_smoke'][0]['backends'] = ['python']
+            paths['catalogs'].write_text(json.dumps(bad_catalog))
+            with self.assertRaisesRegex(ValueError, 'Incomplete selected scenario coverage'):
+                scoped.verify_scoped_reports(selected, registry, registry_sha, reports, backend='python')
+            paths['catalogs'].unlink()
+            paths['catalogs'].parent.rmdir()
+            with self.assertRaisesRegex(ValueError, 'Missing or unexpected scoped CI reports'):
+                scoped.verify_scoped_reports(selected, registry, registry_sha, reports, backend='python')
 
     def test_all_current_catalog_ids_and_references_are_cheaply_validated(self):
         result=scoped.global_catalog_checks()

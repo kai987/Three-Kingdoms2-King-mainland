@@ -19,7 +19,7 @@ import time
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'source'))
-from remake import command_books, logistics
+from remake import command_books, historical_campaigns, logistics
 from remake.campaign import Catalog, digest
 from remake.march_core import using_backend
 from remake.strategic_ai import StrategicAI
@@ -151,7 +151,8 @@ class BalanceReplay(soak.Replay):
                 if city.owner != state.player:
                     continue
                 for target in planner.neighbors(city):
-                    if target.owner == state.player:
+                    if (target.owner == state.player
+                            or historical_campaigns.allied(state, city.owner, target.owner)):
                         continue
                     option = planner.attack_option(city, target)
                     if not option:

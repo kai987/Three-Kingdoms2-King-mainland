@@ -15,6 +15,8 @@ SCHEMA = 'tk2-pr-verification-v1'
 WORKFLOW = '.github/workflows/remake.yml'
 PROOF_KEYS = ('mode', *[key for key in FLAGS if key != 'publish'],
               'groups', 'python_groups', 'scenario_ids', 'removed_scenario_ids')
+RECEIPT_PLAN_KEYS = ('schema', 'head', 'publish', *PROOF_KEYS)
+MAX_RECEIPT_BYTES = 64 * 1024
 LOOKUP_ERRORS = (OSError, ValueError, RuntimeError, TypeError, KeyError,
                  AttributeError, subprocess.SubprocessError)
 
@@ -81,8 +83,10 @@ def receipt(repo, plan, repository, number, feature, run_id, attempt):
     if (not plan['web'] or plan['publish'] or not REPOSITORY.fullmatch(repository or '')
             or not all(positive(value) for value in (number, run_id, attempt)) or not sha(feature)):
         raise ValueError('Invalid pull request verification receipt')
+    # The separate test-plan artifact retains the full diff and planning reasons.
+    scope = {key: plan[key] for key in RECEIPT_PLAN_KEYS if key in plan}
     return dict(schema=SCHEMA, repository=repository, number=number, feature=feature,
-                run_id=run_id, attempt=attempt, tree=tree(repo, plan['head']), plan=plan)
+                run_id=run_id, attempt=attempt, tree=tree(repo, plan['head']), plan=scope)
 
 
 def verify(repo, plan, candidate, proof, *, api=gh_api):
@@ -142,7 +146,7 @@ def main():
         try:
             if not args.proof:
                 raise ValueError('Missing verification receipt')
-            if Path(args.proof).stat().st_size > 64 * 1024:
+            if Path(args.proof).stat().st_size > MAX_RECEIPT_BYTES:
                 raise ValueError('Oversized verification receipt')
             plan['pr_reuse'] = verify(repo, plan, read_json(args.candidate), read_json(args.proof))
         except LOOKUP_ERRORS as error:

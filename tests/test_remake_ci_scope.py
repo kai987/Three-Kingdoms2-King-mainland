@@ -368,6 +368,54 @@ class ScopePlanTests(unittest.TestCase):
                 self.assertTrue(all(result[field] for field in ('full', 'native', 'rules', 'soak')),
                                 result['reasons'])
 
+    def test_white_portraits_keep_specialized_checks_without_campaign_replays(self):
+        for path in ('game/assets/portraits/index.json',
+                     'game/assets/portraits/white/san14-candidate-0898.png',
+                     'game/config/portrait-white.json',
+                     'tools/portraits/white-individual-redraws.json',
+                     'art/portraits/hd-samples/zhuge-liang-preserved-v6/portrait-128x160.png',
+                     'docs/portrait-enhancement.md'):
+            self.repo.write(path, 'portrait update\n')
+        self.repo.save()
+        result = self.repo.plan(event_name='push', ref='refs/heads/main')
+        self.assertEqual(result['mode'], 'scoped', result['reasons'])
+        self.assertEqual(set(result['groups']), PLAN.BASE_GROUPS | {'portraits'})
+        self.assertEqual(result['python_groups'], ['global', 'portraits'])
+        self.assertEqual(result['scenario_ids'], [])
+        self.assertTrue(result['publish'])
+        self.assertFalse(any(result[key] for key in ('native', 'rules', 'soak', 'resupply')))
+
+    def test_portrait_studies_alone_do_not_publish_and_shared_inputs_remain_full(self):
+        self.changed('art/portraits/hd-samples/zhuge-liang-v1/prompt.txt')
+        result = self.repo.plan(event_name='push', ref='refs/heads/main')
+        self.assertEqual(result['mode'], 'scoped')
+        self.assertIn('portraits', result['groups'])
+        self.assertFalse(result['publish'])
+        for path in ('source/remake/campaign.py', 'game/config/portrait-new.json',
+                     'game/build_portrait_manifest.py',
+                     'art/portraits/hd-samples/zhuge-liang-preserved-v6/new-tool.cjs',
+                     'art/portraits/hd-samples/zhuge-liang-preserved-v8/portrait-128x160.png'):
+            with self.subTest(path=path):
+                self.repo.git('reset', '--hard', self.repo.base)
+                self.repo.write('game/assets/portraits/white/san14-candidate-0898.png', 'portrait\n')
+                self.changed(path)
+                result = self.repo.plan()
+                self.assertTrue(all(result[key] for key in ('full', 'native', 'rules', 'soak')),
+                                result['reasons'])
+
+    def test_portraits_do_not_displace_mixed_scenario_checks(self):
+        self.repo.write('game/config/portrait-white.json', '{}\n')
+        path = 'game/config/campaigns/scenarios/194-06.json'
+        scenario = self.repo.read(path)
+        scenario['overrides']['set']['title'] = 'New reviewed title'
+        self.changed(path, scenario)
+        result = self.repo.plan()
+        self.assertEqual(result['mode'], 'scoped', result['reasons'])
+        self.assertEqual(set(result['groups']), PLAN.BASE_GROUPS | {'scenarios', 'people', 'portraits'})
+        self.assertEqual(result['python_groups'], ['global', 'scenarios', 'compat', 'portraits'])
+        self.assertEqual(result['scenario_ids'], ['mainland194-06'])
+        self.assertTrue(result['native'])
+
     def assert_soldier_action_scope(self, result, *, publish=False):
         self.assertEqual(result['mode'], 'scoped', result['reasons'])
         self.assertEqual(set(result['groups']), PLAN.BASE_GROUPS | {'battle'})
