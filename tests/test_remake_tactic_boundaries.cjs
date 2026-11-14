@@ -21,13 +21,18 @@ for terrain in ('plain','mountain','water'):
     game._start_expanded_battle(game.state,source,destination,[actor])
     base=deepcopy(game.state)
     for variant in ('normal','no_points','stunned','small_army','existing_ambush'):
+        variant_state=deepcopy(base)
+        b=variant_state.battle
+        if variant=='no_points':b['extended']['tactical']['points']['attackers']=0
+        if variant=='stunned':b['extended']['support'][str(actor)]['stunned']=1
+        if variant=='small_army':b['attackers'][0]['troops']=99
+        if variant=='existing_ambush':b['extended']['ambush']={'actor':actor}
+        # The pre-command view already contains quotes for every tactic.
+        game.state=variant_state
+        quote=game.view()['catalog']['battle_tactical']
         for tid,tactic in enumerate(TACTICS):
-            game.state=deepcopy(base);b=game.state.battle
-            if variant=='no_points':b['extended']['tactical']['points']['attackers']=0
-            if variant=='stunned':b['extended']['support'][str(actor)]['stunned']=1
-            if variant=='small_army':b['attackers'][0]['troops']=99
-            if variant=='existing_ambush':b['extended']['ambush']={'actor':actor}
-            snapshot=deepcopy(b);quote=game.view()['catalog']['battle_tactical'];reason=''
+            game.state=deepcopy(variant_state);b=game.state.battle
+            snapshot=deepcopy(b);reason=''
             try:game._tactic(game.state,{'battle_id':b['id'],'actor':actor,'target':b['defenders'][0]['id'],'tactic':tid})
             except GameError as exc:reason=str(exc)
             rows.append(dict(terrain=terrain,variant=variant,actor=actor,battle=snapshot,target=b['defenders'][0]['id'],quote=quote,tactic=dict(id=tid,cost=tactic[1],effect=tactic[2]),reason=reason))
