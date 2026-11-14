@@ -1,30 +1,243 @@
 name: Web campaign checks
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
-    inputs:
-      force_full:
-        description: Run every regression group
-        type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
 
 permissions:
   contents: read
-  actions: read
-  deployments: read
 
-concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
+env:
+  SOURCE_SHA: 011535ccab33e4ca6cfeb6db1aaca83b2ca0cd4d
+  BASELINE_SHA: 107e823813015ad036b3baaa16699c89dd23339b
+  PYTHONDONTWRITEBYTECODE: '1'
+  MARCH_CORE_BACKEND: python
 
 jobs:
-  verify:
-    uses: ./.github/workflows/web-checks.yml
-    with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      content_sha256: ${{ steps.identity.outputs.content_sha256 }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: tools/web-runtime/package-lock.json
+      - run: npm ci --prefix tools/web-runtime --ignore-scripts
+      - name: Build one shared web artifact
+        id: identity
+        run: |
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          GITHUB_SHA="$SOURCE_SHA" python -B game/build_web.py --output build/web
+          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$SOURCE_SHA")
+          printf 'content_sha256=%s\n' "$content" >> "$GITHUB_OUTPUT"
+      - name: Verify real WASM and CPU parity
+        run: node tests/browser_engine_smoke.mjs build/web
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: shared-web
+          path: build/web
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+
+  browser:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [baseline, optimized]
+        project: [desktop-chromium, touch-chromium]
+        shard: [1, 2, 3]
+    env:
+      VARIANT: ${{ matrix.variant }}
+      PROJECT: ${{ matrix.project }}
+      SHARD: ${{ matrix.shard }}
+      CONTENT_SHA: ${{ needs.build.outputs.content_sha256 }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          fetch-depth: 2
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - uses: ./.github/actions/browser-tools
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: shared-web
+          path: build/web
+      - name: Verify shared artifact and select shard weights
+        run: |
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test "$(git rev-parse HEAD^)" = "$BASELINE_SHA"
+          python -B tools/ci/gate.py artifact --root build/web --head "$SOURCE_SHA" --content-sha256 "$CONTENT_SHA"
+          if [[ "$VARIANT" == baseline ]]; then
+            git show "$BASELINE_SHA:tools/browser-tests/case-durations.json" > tools/browser-tests/case-durations.json
+          fi
+          git diff --exit-code -- game source crates art
+          sha256sum tools/browser-tests/case-durations.json
+      - name: Verify the Playwright partition
+        run: node tools/browser-tests/verify-shards.mjs "$PROJECT"
+      - name: Run the Playwright shard
+        run: GITHUB_SHA="$SOURCE_SHA" node tools/browser-tests/run-shard.mjs "$PROJECT" "$SHARD"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: timings-${{ matrix.variant }}-${{ matrix.project }}-${{ matrix.shard }}
+          path: build/browser-timings/${{ matrix.project }}-shard-${{ matrix.shard }}.json
+          if-no-files-found: error
+          retention-days: 7
+
+  tactics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          fetch-depth: 2
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '24'
+      - name: Compare both implementations on this runner
+        run: |
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test "$(git rev-parse HEAD^)" = "$BASELINE_SHA"
+          mkdir -p build/tactics-ab
+          git show "$BASELINE_SHA:tests/test_remake_tactic_boundaries.cjs" > build/tactics-ab/baseline.cjs
+          node <<'JS'
+          const assert = require('node:assert/strict');
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const Module = require('node:module');
+          const {createHash} = require('node:crypto');
+          const candidate = path.resolve('tests/test_remake_tactic_boundaries.cjs');
+          const files = {baseline: 'build/tactics-ab/baseline.cjs', optimized: candidate};
+          const marker = 'const rows=JSON.parse(output.stdout)';
+          const results = [];
+          let reference;
+          for (const variant of ['baseline', 'optimized', 'optimized', 'baseline']) {
+            const source = fs.readFileSync(files[variant], 'utf8');
+            assert.equal(source.split(marker).length, 2);
+            const file = path.resolve('build/tactics-ab', `records-${results.length + 1}.json`);
+            const captured = `fs.writeFileSync(${JSON.stringify(file)},output.stdout);\n` + marker;
+            const test = new Module(candidate, module);
+            test.filename = candidate;
+            test.paths = Module._nodeModulePaths(path.dirname(candidate));
+            const start = performance.now();
+            test._compile(source.replace(marker, captured), candidate);
+            const milliseconds = Math.round(performance.now() - start);
+            const raw = fs.readFileSync(file);
+            reference ??= raw;
+            assert(raw.equals(reference), 'Tactic case records changed');
+            const rows = JSON.parse(raw);
+            const count = rows.length;
+            assert.equal(count, 240);
+            assert.equal(new Set(rows.map(row => JSON.stringify([row.terrain, row.variant, row.tactic.id]))).size, 240);
+            const sha256 = createHash('sha256').update(raw).digest('hex');
+            const result = {variant, milliseconds, cases: count, sha256};
+            console.log(JSON.stringify(result));
+            results.push(result);
+          }
+          fs.writeFileSync('build/tactics-ab/results.json', JSON.stringify({commit: process.env.SOURCE_SHA, records_identical: true, results}, null, 2) + '\n');
+          JS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: tactics-ab
+          path: build/tactics-ab/results.json
+          if-no-files-found: error
+          retention-days: 7
+
+  compare:
+    needs: [build, browser, tactics]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CONTENT_SHA: ${{ needs.build.outputs.content_sha256 }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          fetch-depth: 2
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '24'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: timings-*
+          path: build/ab-reports
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: tactics-ab
+          path: build/tactics-ab
+      - name: Require identical case coverage in both variants
+        run: |
+          mkdir -p build/ab-summary
+          for variant in optimized baseline; do
+            if [[ "$variant" == baseline ]]; then
+              git show "$BASELINE_SHA:tools/browser-tests/case-durations.json" > tools/browser-tests/case-durations.json
+            fi
+            report_dir="build/ab-summary/$variant"
+            mkdir "$report_dir"
+            for project in desktop-chromium touch-chromium; do
+              for shard in 1 2 3; do
+                cp "build/ab-reports/timings-$variant-$project-$shard/$project-shard-$shard.json" "$report_dir/"
+              done
+            done
+            node tools/browser-tests/aggregate-timings.mjs "$report_dir" --head "$SOURCE_SHA"
+          done
+          node <<'JS'
+          const assert = require('node:assert/strict');
+          const fs = require('node:fs');
+          const read = name => JSON.parse(fs.readFileSync(name, 'utf8'));
+          const before = read('build/ab-summary/baseline/summary.json');
+          const after = read('build/ab-summary/optimized/summary.json');
+          const tactics = read('build/tactics-ab/results.json');
+          const coverage = summary => summary.cases.map(({project, id, title, attempts}) => {
+            assert.equal(attempts.length, 1);
+            assert.equal(attempts[0].status, 'passed');
+            return JSON.stringify([project, id, title]);
+          }).sort();
+          assert.equal(before.commit, process.env.SOURCE_SHA);
+          assert.equal(after.commit, before.commit);
+          assert.equal(tactics.commit, before.commit);
+          assert.equal(tactics.records_identical, true);
+          assert.equal(before.selected_cases, 46);
+          assert.equal(after.selected_cases, 46);
+          assert.equal(before.executions, 92);
+          assert.equal(after.executions, 92);
+          assert.deepEqual(coverage(before), coverage(after));
+          const evidence = {
+            commit: before.commit,
+            identical_browser_artifact: process.env.CONTENT_SHA,
+            browser_cases_per_device: before.selected_cases,
+            browser_executions_per_variant: before.executions,
+            browser_case_coverage_identical: true,
+            tactics
+          };
+          console.log(JSON.stringify(evidence, null, 2));
+          fs.writeFileSync('build/ab-summary/coverage.json', JSON.stringify(evidence, null, 2) + '\n');
+          JS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: browser-and-tactics-ab-evidence
+          path: build/ab-summary
+          if-no-files-found: error
+          retention-days: 30
