@@ -38,7 +38,6 @@ jobs:
       - name: Find the original verified PR attempt
         env:
           GH_TOKEN: ${{ github.token }}
-          GITHUB_SHA: ${{ env.RELEASE_SHA }}
         run: |
           test "$(git rev-parse HEAD^)" = "$BASE_SHA"
           python - <<'PY'
@@ -50,13 +49,12 @@ jobs:
           original = plan.pop('pr_reuse')
           assert original['run_id'] == int(os.environ['PR_RUN'])
           assert original['number'] == 33 and original['attempt'] == 1
-          (folder / 'recorded-reuse.json').write_text(json.dumps(original))
           (folder / 'replayed-plan.json').write_text(json.dumps(plan))
           event = {'ref': 'refs/heads/main', 'after': os.environ['RELEASE_SHA'],
                    'before': os.environ['BASE_SHA'], 'forced': False}
           (folder / 'push.json').write_text(json.dumps(event))
           PY
-          GITHUB_EVENT_PATH="$PWD/inputs/push.json" python -B tools/ci/pr_reuse.py find --plan inputs/replayed-plan.json --candidate inputs/pr-candidate.json
+          GITHUB_SHA="$RELEASE_SHA" GITHUB_EVENT_PATH="$PWD/inputs/push.json" python -B tools/ci/pr_reuse.py find --plan inputs/replayed-plan.json --candidate inputs/pr-candidate.json
           test -s inputs/pr-candidate.json
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
@@ -68,9 +66,8 @@ jobs:
         id: verify
         env:
           GH_TOKEN: ${{ github.token }}
-          GITHUB_SHA: ${{ env.RELEASE_SHA }}
         run: |
-          python -B tools/ci/pr_reuse.py decide --plan inputs/replayed-plan.json --candidate inputs/pr-candidate.json --proof inputs/receipt.json
+          GITHUB_SHA="$RELEASE_SHA" python -B tools/ci/pr_reuse.py decide --plan inputs/replayed-plan.json --candidate inputs/pr-candidate.json --proof inputs/receipt.json
           cmp <(jq -Sc . inputs/test-plan.json) <(jq -Sc . inputs/replayed-plan.json)
           python -B tools/ci/gate.py outputs --plan inputs/replayed-plan.json --head "$RELEASE_SHA" >> "$GITHUB_OUTPUT"
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RELEASE_RUN/jobs?per_page=100" > inputs/jobs.json
