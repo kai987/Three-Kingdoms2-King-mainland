@@ -25,6 +25,7 @@ _attempted = False
 _load_error = None
 _contexts = OrderedDict()
 _calls = 0
+_last_batch = None
 
 
 class CoreUnavailable(RuntimeError):
@@ -92,9 +93,13 @@ def enabled():
     return available
 
 
-def _call(lib, request):
+def _encode_request(request, *, sort_keys=False):
+    return json.dumps(request, ensure_ascii=False, allow_nan=False, sort_keys=sort_keys,
+                      separators=(',', ':')).encode()
+
+
+def _call_bytes(lib, raw):
     global _calls
-    raw = json.dumps(request, ensure_ascii=False, allow_nan=False, separators=(',', ':')).encode()
     if len(raw) > 0xffffffff:
         raise ValueError('March request too large')
     source = lib.march_alloc(len(raw))
@@ -108,15 +113,38 @@ def _call(lib, request):
         length = lib.march_result_len()
         if not result or not length:
             raise CoreUnavailable('March core returned no result')
-        reply = json.loads(ctypes.string_at(result, length))
+        reply = ctypes.string_at(result, length)
         _calls += 1
     finally:
         if result:
             lib.march_free(result, length)
         lib.march_free(source, len(raw))
+    return reply
+
+
+def _decode_reply(raw):
+    reply = json.loads(raw)
     if not reply.get('ok'):
         raise ValueError(reply.get('error', 'March calculation failed'))
     return reply['value']
+
+
+def _call(lib, request):
+    return _decode_reply(_call_bytes(lib, _encode_request(request)))
+
+
+def _batch(lib, data, payload):
+    global _last_batch
+    # Include the live configuration in the request so edits also bypass any
+    # previously registered graph. Keep only one large response.
+    request = _encode_request(dict(payload, data=config_for(data), op='batch'), sort_keys=True)
+    if _last_batch is not None and request == _last_batch[0]:
+        # Decode a fresh object so callers cannot mutate the cached response.
+        return _decode_reply(_last_batch[1])
+    response = _call_bytes(lib, request)
+    result = _decode_reply(response)
+    _last_batch = (request, response)
+    return result
 
 
 def invoke(operation, *, data=None, **payload):
@@ -125,6 +153,8 @@ def invoke(operation, *, data=None, **payload):
         raise CoreUnavailable('Native march core is disabled')
     with _lock:
         lib = _load()
+        if operation == 'batch' and data is not None:
+            return _batch(lib, data, payload)
         if data is not None and operation in ('allowed', 'evaluate_leg', 'route_allowed'):
             # These public helpers accept mutable dictionaries. Send their small
             # rule/coordinate inputs directly, so edits between calls are visible;
