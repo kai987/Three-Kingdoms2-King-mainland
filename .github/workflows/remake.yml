@@ -1,27 +1,60 @@
 name: Web campaign checks
-run-name: Campaign shard A/B - ${{ inputs.variant }}
+run-name: 217 replay profile on one runner
 
 on:
   workflow_dispatch:
-    inputs:
-      variant:
-        description: Campaign partition to evaluate
-        type: choice
-        options: [baseline, optimized]
-        default: baseline
-      candidate_run:
-        description: Baseline run supplying the byte-identical browser candidate
-        type: string
 
 permissions:
   contents: read
   actions: read
-  deployments: read
 
 jobs:
-  verify:
-    uses: ./.github/workflows/web-checks.yml
-    with:
-      force_full: true
-      campaign_baseline: ${{ inputs.variant == 'baseline' }}
-      candidate_run: ${{ inputs.candidate_run }}
+  profile-217:
+    runs-on: ubuntu-latest
+    timeout-minutes: 85
+    env:
+      MARCH_CORE_BACKEND: python
+      PYTHONHASHSEED: '0'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '24'
+      - name: Install pinned runtime for shard discovery
+        run: npm ci --prefix tools/web-runtime --ignore-scripts
+      - name: Fetch the checked native library from the original baseline
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: native-reference-5be2f6c50556cc515ca708d491a210756c828623
+          path: build
+          github-token: ${{ github.token }}
+          run-id: '43612359143'
+      - name: Restore and identify the common replay inputs
+        run: |
+          set -euo pipefail
+          tar -xf build/native-reference.tar -C build
+          sha256sum build/march-core/libmarch_core.so game/data/campaigns/217-07.json tests/test_remake_delegation_replay.py
+          python -V
+          lscpu
+      - name: Alternate the two shard configurations on this runner
+        run: |
+          set -euo pipefail
+          mkdir -p build/profile-217
+          trial=0
+          for variant in baseline optimized baseline optimized; do
+            trial=$((trial + 1))
+            printf 'Trial %d %s\n' "$trial" "$variant"
+            python -B -u .github/benchmarks/profile-217.py "$variant" | tee "build/profile-217/$trial-$variant.json"
+          done
+      - name: Keep raw trial timings and replay evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: replay-217-profile-${{ github.run_id }}
+          path: build/profile-217/*.json
+          if-no-files-found: warn
