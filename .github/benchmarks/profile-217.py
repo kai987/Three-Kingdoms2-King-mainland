@@ -125,7 +125,7 @@ class CheckpointJSON:
         return fn(*args, **kwargs)
 
 
-def trial(variant):
+def trial(variant, view_profile=None):
     case, context = select_case(variant)
     replay = importlib.import_module(MODULE)
     campaign = replay.Campaign
@@ -138,8 +138,10 @@ def trial(variant):
             timings.wrap('save_export', campaign.export_save, timings.save_identity)))
         patches.enter_context(patch.object(campaign, 'load_save',
             timings.wrap('save_restore', campaign.load_save, timings.restore_identity)))
-        patches.enter_context(patch.object(campaign, 'view',
-            timings.wrap('full_view', campaign.view)))
+        view = timings.wrap('full_view', campaign.view)
+        if view_profile is not None:
+            view = view_profile.capture(view)
+        patches.enter_context(patch.object(campaign, 'view', view))
         patches.enter_context(patch.object(replay, 'json',
             CheckpointJSON(timings, replay.DelegationReplayTests.checkpoint.__code__)))
         # The existing test emits the result after its final assertions.

@@ -1,5 +1,5 @@
 name: Web campaign checks
-run-name: 217 replay profile on one runner
+run-name: 217 full-view profile on one runner
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ permissions:
 jobs:
   profile-217:
     runs-on: ubuntu-latest
-    timeout-minutes: 85
+    timeout-minutes: 50
     env:
       MARCH_CORE_BACKEND: python
       PYTHONHASHSEED: '0'
@@ -41,20 +41,35 @@ jobs:
           sha256sum build/march-core/libmarch_core.so game/data/campaigns/217-07.json tests/test_remake_delegation_replay.py
           python -V
           lscpu
-      - name: Alternate the two shard configurations on this runner
+      - name: Record reference views and original replay assertions
         run: |
           set -euo pipefail
           mkdir -p build/profile-217
-          trial=0
-          for variant in baseline optimized baseline optimized; do
-            trial=$((trial + 1))
-            printf 'Trial %d %s\n' "$trial" "$variant"
-            python -B -u .github/benchmarks/profile-217.py "$variant" | tee "build/profile-217/$trial-$variant.json"
-          done
-      - name: Keep raw trial timings and replay evidence
+          python -B -u .github/benchmarks/profile-217-view.py reference > build/profile-217/reference.json
+      - name: Time all full-view call sites and modules on the same runner
+        run: |
+          set -euo pipefail
+          python -B -u .github/benchmarks/profile-217-view.py detailed > build/profile-217/detailed.json
+      - name: Verify identical ordered views
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          folder = Path('build/profile-217')
+          left, right = (json.loads((folder / f'{mode}.json').read_text())
+                         for mode in ('reference', 'detailed'))
+          fields = ('index', 'site', 'turn', 'phase', 'battle', 'view_sha256')
+          def sequence(result):
+              return [tuple(row[key] for key in fields) for row in result['views']]
+          assert sequence(left) == sequence(right)
+          assert len(left['views']) == 180
+          print('All 180 full-view outputs match in order.')
+          PY
+      - name: Keep per-view raw timings and replay evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: replay-217-profile-${{ github.run_id }}
+          name: replay-217-view-profile-${{ github.run_id }}
           path: build/profile-217/*.json
           if-no-files-found: warn
