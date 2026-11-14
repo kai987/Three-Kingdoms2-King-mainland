@@ -19,7 +19,7 @@ import sys
 
 SCHEMA = 'tk2-test-plan-v1'
 GROUPS = ('boot', 'audio', 'map', 'scenarios', 'people', 'economy',
-          'logistics', 'battle', 'cloud', 'save')
+          'logistics', 'battle', 'cloud', 'save', 'portraits')
 BASE_GROUPS = {'boot', 'cloud'}
 INDEX = 'game/config/campaigns/index.json'
 SCENARIO = re.compile(r'game/config/campaigns/scenarios/([0-9]{3})-([0-9]{2})(?:-([a-z][a-z0-9]*(?:-[a-z0-9]+)*))?\.json\Z')
@@ -84,6 +84,17 @@ PRESENTATION_TESTS = {
     'tests/test_remake_tutorial.cjs': set(GROUPS),
     'tests/test_remake_i18n_runtime.cjs': set(GROUPS),
 }
+PORTRAIT_CONFIG = 'game/config/portrait-white.json'
+PORTRAIT_LEDGER = 'tools/portraits/white-individual-redraws.json'
+PORTRAIT_INDEX = 'game/assets/portraits/index.json'
+PORTRAIT_RELEASE_PNG = re.compile(
+    r'game/assets/portraits/(?:white|refined|enhanced)/[a-z0-9-]{1,128}\.png\Z')
+PORTRAIT_STUDY = re.compile(
+    r'art/portraits/hd-samples/zhuge-liang-(?:preserved-)?v[1-9][0-9]*/'
+    r'(?:build\.cjs|comparison\.(?:html|png)|manifest\.json|prompt\.txt|'
+    r'(?:edit-reference|generation-source|original-hat-reference|'
+    r'(?:(?:edge-refined|refined|nearest|original-nearest|portrait)-128x160))\.png)\Z')
+SHARED_PORTRAIT_REFERENCE = 'art/portraits/hd-samples/zhuge-liang-preserved-v8/portrait-128x160.png'
 BENCHMARK_INPUTS = {'tools/campaign-balance/run.py', 'tests/test_remake_campaign_balance.py'}
 CHECKPOINT_INPUTS = {
     'tools/campaign-checkpoints/run.py', 'tools/campaign-checkpoints/replay_saved.py',
@@ -273,6 +284,15 @@ def fingerprint_only(repo, base, head, path, fingerprint_sources):
     return stripped(before, key) == stripped(after, key)
 
 
+def portrait_study(path):
+    return path != SHARED_PORTRAIT_REFERENCE and PORTRAIT_STUDY.fullmatch(path) is not None
+
+
+def portrait_input(path):
+    return (path in (PORTRAIT_CONFIG, PORTRAIT_LEDGER, PORTRAIT_INDEX)
+            or PORTRAIT_RELEASE_PNG.fullmatch(path) is not None or portrait_study(path))
+
+
 def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
               ref=None, force_full=False, publish=False):
     """Return a JSON-only plan; no remote operations or file writes occur here."""
@@ -280,6 +300,7 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
     reference = ref or event.get('ref', '')
     reasons, changed, selected, groups = [], [], set(), set(BASE_GROUPS)
     full, native, resupply = bool(force_full or event_name == 'schedule'), False, False
+    portrait_checks = False
     resolved_head, resolved_base = str(head or ''), None
     base_map, head_map, rows = {}, {}, []
     if full:
@@ -336,6 +357,7 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
             if len(source_values) == 2 and rule_overrides(source_values[0]) != rule_overrides(source_values[1]):
                 full = True
                 reasons.append('Local scenario overrides shared board or rule contracts: ' + path)
+        portrait_only = all(docs_path(path) or portrait_input(path) for path in changed)
         derived_catalogs = []
         for path in changed:
             if docs_path(path):
@@ -412,6 +434,12 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
             elif path in BATTLE_ENHANCEMENT_INPUTS or BATTLE_ENHANCEMENT_SOURCE.fullmatch(path):
                 groups.update(('battle', 'people'))
                 reasons.append('Duel appearance, artwork source or packing regression; retain canonical image checks: ' + path)
+            elif portrait_input(path):
+                portrait_checks = True
+                groups.add('portraits')
+                if not portrait_only:
+                    groups.update(('people', 'scenarios'))
+                reasons.append('Portrait assets, white manifest or art provenance: ' + path)
             elif path in PRESENTATION_TESTS:
                 groups.update(PRESENTATION_TESTS[path])
                 reasons.append('Explicit presentation regression: ' + path)
@@ -536,16 +564,20 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
     # fail closed above and mixed runtime/rule changes retain normal gates.
     nonruntime_source = lambda path: bool(SOLDIER_COMBAT_SOURCE.fullmatch(path)
                                          or BATTLE_ENHANCEMENT_SOURCE.fullmatch(path)
+                                         or portrait_study(path) or path == PORTRAIT_LEDGER
                                          or path in BENCHMARK_INPUTS or path in CHECKPOINT_INPUTS)
     if (not full and any(nonruntime_source(path) for path in changed)
             and all(docs_path(path) or nonruntime_source(path) for path in changed)):
         should_publish = False
         reasons.append('Only artwork/observation sources/documentation changed; no runtime publication')
+    python_scope = ['global', 'scenarios', 'compat'] if native else ['global']
+    if portrait_checks:
+        python_scope.append('portraits')
     return dict(schema=SCHEMA, head=resolved_head, base=resolved_base,
                 mode='full' if full else 'scoped', full=full, docs_only=False,
                 web=True, native=native, rules=full, soak=full, resupply=resupply,
                 groups=[name for name in GROUPS if name in groups],
-                python_groups=['all'] if full else ['global', 'scenarios', 'compat'] if native else ['global'],
+                python_groups=['all'] if full else python_scope,
                 scenario_ids=sorted(selected), affected_scenario_ids=affected,
                 removed_scenario_ids=removed, publish=bool(should_publish),
                 reasons=list(dict.fromkeys(reasons)), changed_files=changed)

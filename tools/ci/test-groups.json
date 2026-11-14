@@ -513,6 +513,15 @@
         "boot"
       ]
     },
+    "tests/test_remake_nanzhong_225_setup.py": {
+      "tier": "related",
+      "groups": [
+        "scenarios"
+      ],
+      "scenario_ids": [
+        "mainland225-07"
+      ]
+    },
     "tests/test_remake_neutral_transfers.py": {
       "tier": "related",
       "groups": [
@@ -568,7 +577,8 @@
     "tests/test_remake_portraits.py": {
       "tier": "related",
       "groups": [
-        "people"
+        "people",
+        "portraits"
       ]
     },
     "tests/test_remake_retainer_audit.py": {

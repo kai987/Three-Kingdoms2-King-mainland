@@ -121,6 +121,7 @@ python3 -B tools/campaign-soak/run.py \
 | 單挑外觀設定、已登記的第一／二版原畫與提示詞、打包工具及對應回歸 | `boot,battle,people,cloud`與全局輕量檢查，保留PNG／雜湊／完整邊界／原圖保護／雙語與實際裝備綁定；只改原畫或提示詞不發布 |
 | `tools/campaign-balance/run.py`及其固定的短測試 | 全局契約與小型控制fixture測試、啟動相關檢查；不執行長時間平衡觀測或全戰役矩陣，專用工具變更不發布遊戲 |
 | 中途保存的`run.py`、`replay_saved.py`、`parallel_saved.py`及固定短測試 | 全局、原生參照、217年存檔互換性及短helper檢查；僅改登記工具／說明時不發布、不自動執行完整戰役；未知工具仍回退全量 |
+| 白底肖像清單、逐人重繪台帳及專用肖像素材 | 檢查人物與來源綁定、PNG／RGBA雜湊、色盤、尺寸與白邊，執行肖像專項Python及既有JS測試，並在桌面／觸控Chromium核對全29個真實開局和人物名鑑。僅更改台帳、研究稿或說明時不發布。 |
 | 全局`app.js`、共用樣式或語言入口 | 全局輕量校驗、完整瀏覽器組；不因純UI改動執行規則矩陣及跨年AI |
 | 單個`scenarios/*.json`的獨立開局資料 | 全29劇本身份／引用校驗、指定ID的生成位元組與真實開局、3旬正常命令、完整存檔／RNG雙後端對照、相關歷史及瀏覽器用例 |
 | 共享武將／城池／道路／規則、遊戲構建器、CI基礎設施 | 完整驗證；劇本內覆寫公共規則也不視為局部開局變更 |
@@ -135,7 +136,11 @@ Python與瀏覽器分別使用[`test-groups.json`](../tools/ci/test-groups.json)
 
 main推送以[上次實際成功部署](../tools/ci/published_base.py)的commit為基準，確認`github-pages`有效success狀態、同倉庫main、Pages工作流、成功的deploy工作及精確發布步驟；不使用`HEAD^`或僅看工作流綠燈。新推送因此包含尚未發布的累積改動，即使前一輪CI被取消也不會漏測。PR使用與目標分支的merge-base；新增／刪除／改ID讀取前後索引，不能只由檔名猜測。
 
-`tools/ci/run_scoped_tests.py --plan PATH --list-only`只輸出選中的模組／劇本，不載入戰役或執行測試；去掉`--list-only`執行對應檢查，`--report PATH`保存結果。以下建立本機完整計畫，不要求查詢遠端部署：
+`tools/ci/run_scoped_tests.py --plan PATH --list-only`只輸出選中的模組／劇本，不載入戰役或執行測試。去掉`--list-only`執行對應檢查，`--report PATH`保存結果。
+
+局部CI依[`campaign-durations.json`](../tools/ci/campaign-durations.json)的模組實測時間分成兩片並行執行，另有一組執行全目錄檢查、重建受影響劇本及雙後端回放。最終閘門核對三份報告與計畫和提交一致，並確認每個選中的模組只執行一次。本機加上`--backend python --lane modules-1`、`--lane modules-2`或`--lane catalogs`即可查看或執行對應的一組。
+
+以下建立本機完整計畫，不要求查詢遠端部署。
 
 ```sh
 mkdir -p build/ci

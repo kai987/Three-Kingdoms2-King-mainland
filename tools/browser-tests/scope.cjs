@@ -2,7 +2,7 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path');
 const ROOT=path.resolve(__dirname,'../..');
-const CANONICAL_GROUPS=Object.freeze(['boot','audio','map','scenarios','people','economy','logistics','battle','cloud','save']);
+const CANONICAL_GROUPS=Object.freeze(['boot','audio','map','scenarios','people','economy','logistics','battle','cloud','save','portraits']);
 const CASE_REGISTRY=JSON.parse(fs.readFileSync(path.join(__dirname,'cases.json'),'utf8'));
 const OPENING_CASES=Object.freeze(['opening-catalog-first','opening-catalog-second']);
 const SOURCE_FILES=Object.freeze(['tests/browser_ui.spec.mjs','tests/browser_soldier_ui.spec.mjs']);

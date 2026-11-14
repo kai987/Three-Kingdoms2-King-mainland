@@ -21,6 +21,10 @@ try{
  }
  assert.deepEqual(union,new Set(full.selectedCases.map(row=>row.id)),'The canonical groups cover the same complete suite as full mode');
  assert.deepEqual(load(plan([...scopes.CANONICAL_GROUPS])).selectedCases.map(row=>row.id),full.selectedCases.map(row=>row.id),'A shared app change requesting all groups retains every full-suite case');
+ const portraits=load(plan(['portraits']));
+ assert.deepEqual(portraits.selectedCases.map(row=>row.id),[...scopes.OPENING_CASES,'person-encyclopedia']);
+ const portraitOpenings=scopes.OPENING_CASES.flatMap(id=>scopes.selectOpeningScenarioIds(known,portraits,id));
+ assert.deepEqual([...portraitOpenings].sort(),[...known].sort());
  const boot=load(plan(['boot'])),audio=load(plan(['audio']));
  const audioExpected=['title-cover','recovery-title','dialogs-save','boot-retry'],expected=[...audioExpected,'first-session-guide'];
  assert.deepEqual(boot.selectedCases.map(row=>row.id),expected);assert.deepEqual(audio.selectedCases.map(row=>row.id),audioExpected);

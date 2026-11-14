@@ -229,7 +229,8 @@
         "scenarios",
         "people",
         "economy",
-        "save"
+        "save",
+        "portraits"
       ],
       "scenario_ids": [
         "mainland184-02",
@@ -260,7 +261,8 @@
         "scenarios",
         "people",
         "economy",
-        "save"
+        "save",
+        "portraits"
       ],
       "scenario_ids": [
         "mainland227-02",
@@ -281,7 +283,8 @@
       "id": "person-encyclopedia",
       "title": "officer encyclopedia distinguishes initial body, remake cap and contextual loyalty in both languages",
       "groups": [
-        "people"
+        "people",
+        "portraits"
       ],
       "scenario_ids": [
         "mainland217-07"

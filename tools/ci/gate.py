@@ -10,7 +10,7 @@ import sys
 from urllib.parse import unquote, urlsplit
 
 GROUPS = frozenset(('boot', 'audio', 'map', 'scenarios', 'people', 'economy',
-                    'logistics', 'battle', 'cloud', 'save'))
+                    'logistics', 'battle', 'cloud', 'save', 'portraits'))
 FLAGS = ('full', 'docs_only', 'web', 'native', 'rules', 'soak', 'resupply', 'publish')
 JOBS = ('docs-check', 'source-and-browser', 'native-rules', 'scoped-tests',
         'campaign-rules', 'campaign-soak', 'web-build', 'browser-ui', 'resupply-ui')
@@ -41,7 +41,7 @@ def validate_plan(plan, head=None):
         raise ValueError('Invalid scenario identities')
     if (not isinstance(python_groups, list) or any(not isinstance(value, str) for value in python_groups)
             or len(set(python_groups)) != len(python_groups)
-            or not set(python_groups) <= {'global', 'scenarios', 'compat', 'all'}):
+            or not set(python_groups) <= {'global', 'scenarios', 'compat', 'portraits', 'all'}):
         raise ValueError('Invalid Python scope groups')
     if plan['docs_only'] != (plan['mode'] == 'docs') or plan['full'] != (plan['mode'] == 'full'):
         raise ValueError('Contradictory plan mode')
@@ -57,6 +57,8 @@ def validate_plan(plan, head=None):
         raise ValueError('Rules and cross-backend replays require the native reference')
     if plan['mode'] == 'scoped' and ('global' not in python_groups or 'all' in python_groups):
         raise ValueError('Scoped Python checks must retain the global contracts')
+    if 'portraits' in python_groups and 'portraits' not in groups:
+        raise ValueError('Portrait Python checks require the browser portrait group')
     if scenarios and 'scenarios' not in groups:
         raise ValueError('Scenario IDs require a browser scenario group')
     if set(python_groups) & {'scenarios', 'compat'} and not plan['native']:

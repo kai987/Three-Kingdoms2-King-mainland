@@ -3,8 +3,10 @@
 
 List mode reads inventories only. Scoped mode validates every current catalog's
 identity/references, then runs registered related modules and selected real
-three-turn campaigns. Full mode delegates unchanged discovery to the existing
-six-shard runner for both arithmetic backends, with no test-name filtering.
+three-turn campaigns. CI can run those catalog checks alongside two weighted
+module shards and verify all three reports at the gate. Full mode delegates
+unchanged discovery to the existing six-shard runner for both arithmetic
+backends, with no test-name filtering.
 """
 from __future__ import annotations
 import argparse
@@ -29,6 +31,8 @@ if str(ROOT) not in sys.path:sys.path.insert(0,str(ROOT))
 from tools.ci import run_campaign_tests as runner
 
 SCENARIO_ID=re.compile(r'mainland[0-9]{3}-[0-9]{2}(?:-[a-z][a-z0-9]*(?:-[a-z0-9]+)*)?\Z')
+MODULE_LANES = ('modules-1', 'modules-2')
+SCOPED_LANES = (*MODULE_LANES, 'catalogs')
 
 def read(path):return json.loads(Path(path).read_text(encoding='utf-8'))
 def require(condition,message):
@@ -107,10 +111,19 @@ def resolve_backends(plan,choice=None):
         choice=(configured if configured in('python','rust')else'both')if plan['full']or plan['native']else'python'
     return ['python','rust']if choice=='both'else[choice]
 
-def execution_plan(plan,registry,*,backend=None,shard=None,shards=None,root=ROOT):
+def scoped_module_partitions(modules, backends):
+    timings = [runner.load_durations(backend) for backend in backends]
+    weights = {name: sum(table.get(ROOT / name, runner.UNMEASURED_MS) for table in timings)
+               for name in modules}
+    return runner.partition_modules(modules, len(MODULE_LANES), durations=weights), weights
+
+
+def execution_plan(plan,registry,*,backend=None,shard=None,shards=None,lane=None,root=ROOT):
     identities,_=inventory(root);validate_plan(plan,identities)
     require((shard is None)==(shards is None),'--shard and --shards must be provided together')
     require(shard is None or plan['full'],'Shard arguments are only accepted for full discovery')
+    require(lane is None or lane in SCOPED_LANES and plan['mode']=='scoped',
+            'Scoped CI lanes require a scoped plan')
     if shard is not None:
         require(shards==runner.SHARD_COUNT,f'Full CI requires exactly {runner.SHARD_COUNT} campaign shards per backend')
         runner.select_shard([],shard,shards)
@@ -123,11 +136,59 @@ def execution_plan(plan,registry,*,backend=None,shard=None,shards=None,root=ROOT
         count=runner.SHARD_COUNT
         invocations=[dict(backend=b,argv=[sys.executable,'-B',str(root/'tools/ci/run_campaign_tests.py'),'--shard',str(i),'--shards',str(count)])for b in backends for i in shard_ids]
     else:invocations=[]
-    return dict(schema='tk2-ci-python-execution-v1',mode=plan['mode'],status='planned',groups=plan['groups'],python_groups=python_groups(plan),
+    execution = dict(schema='tk2-ci-python-execution-v1',mode=plan['mode'],status='planned',groups=plan['groups'],python_groups=python_groups(plan),
         backends=[]if plan['mode']=='docs'else backends,files=modules,file_count=len(modules),
         global_catalog_count=len(identities),scenario_ids=sorted(identities)if plan['full']else plan['scenario_ids']if 'scenarios'in python_groups(plan)else[],
         full_invocations=invocations,shard=shard,shards=runner.SHARD_COUNT if plan['full']else None,native_required=bool(plan['full']or plan['native']),
         removed_scenario_ids=plan.get('removed_scenario_ids',[]))
+    if lane in MODULE_LANES:
+        partitions, weights = scoped_module_partitions(modules, backends)
+        selected = partitions[MODULE_LANES.index(lane)]
+        execution.update(files=selected, file_count=len(selected), scenario_ids=[],
+                         estimated_ms=sum(weights[name] for name in selected))
+    if lane == 'catalogs':
+        execution.update(files=[], file_count=0, backends=[])
+    if lane is not None:
+        execution.update(lane=lane, head=plan.get('head'))
+    return execution
+
+
+def verify_scoped_reports(plan, registry, registry_sha256, reports, *, backend=None, root=ROOT):
+    require(plan.get('mode') == 'scoped' and plan.get('head'),
+            'Scoped reports require a scoped plan with a commit identity')
+    expected = {f'scoped-report-{lane}-{plan["head"]}' for lane in SCOPED_LANES}
+    require({path.name for path in reports.iterdir()} == expected,
+            'Missing or unexpected scoped CI reports')
+    current_ids, _ = inventory(root)
+    for lane in SCOPED_LANES:
+        report = read(reports / f'scoped-report-{lane}-{plan["head"]}' / 'scoped-report.json')
+        execution = execution_plan(plan, registry, backend=backend, lane=lane, root=root)
+        require(report.get('status') == 'passed' and report.get('registry_sha256') == registry_sha256 and
+                all(report.get(key) == value for key, value in execution.items() if key != 'status'),
+                f'Scoped CI report does not match the planned work for {lane}')
+        if lane in MODULE_LANES:
+            runs = report.get('module_runs', [])
+            require([run['backend'] for run in runs] == execution['backends'] and
+                    all(run['cases'] > 0 and not any(run[key] for key in ('failures', 'errors', 'skipped'))
+                        and set(run['module_ms']) == set(execution['files'])
+                        and all(type(ms) is int and ms > 0 for ms in run['module_ms'].values())
+                        for run in runs), f'Incomplete unittest execution in scoped CI report {lane}')
+        else:
+            catalog = report.get('global_catalog_checks', {})
+            require(catalog.get('status') == 'passed' and catalog.get('catalog_count') == len(current_ids) and
+                    sorted(row['id'] for row in catalog.get('catalogs', [])) == sorted(current_ids),
+                    'Incomplete global catalog coverage in scoped CI report')
+            ids = execution['scenario_ids']
+            smoke = report.get('scenario_smoke', [])
+            if ids:
+                require(report.get('selected_source_checks') == dict(status='passed', scenario_ids=ids) and
+                        [row['id'] for row in smoke] == ids and
+                        all(row['backends'] == ['python', 'rust'] and row['turns'] == 3 and
+                            row['cross_backend_save_checks'] == 4 for row in smoke),
+                        'Incomplete selected scenario coverage in scoped CI report')
+            else:
+                require('selected_source_checks' not in report and not smoke,
+                        'Unexpected selected scenarios in scoped CI report')
 
 def global_catalog_checks(root=ROOT):
     """Raw JSON only: all current IDs, references and stable runtime identities."""
@@ -257,8 +318,10 @@ def validate_required_result(outcome,backend):
 def run(plan,execution,*,root=ROOT):
     result=deepcopy(execution);started=time.monotonic();result['status']='running'
     if plan['mode']=='docs':result.update(status='skipped',elapsed_seconds=0);return result
-    result['global_catalog_checks']=global_catalog_checks(root)
-    if execution['native_required']or'rust'in execution['backends']:
+    lane = execution.get('lane')
+    if lane not in MODULE_LANES:
+        result['global_catalog_checks'] = global_catalog_checks(root)
+    if (execution['native_required'] and lane not in MODULE_LANES) or 'rust' in execution['backends']:
         sys.path.insert(0,str(root/'source'))
         from remake.march_core import invoke,using_backend
         with using_backend('rust'):invoke('allocate',troops=[1],numerator=1,denominator=1)
@@ -272,32 +335,47 @@ def run(plan,execution,*,root=ROOT):
         files=[root/name for name in execution['files']]
         for backend in execution['backends']:
             with backend_environment(backend):
-                suite=runner.load_suite(files,root/'tests',root/'source')
+                timings = {} if lane in MODULE_LANES else None
+                suite=runner.load_suite(files,root/'tests',root/'source',timings=timings)
                 outcome=unittest.TextTestRunner(verbosity=2,stream=sys.stdout).run(suite)
-                result.setdefault('module_runs',[]).append(dict(backend=backend,cases=outcome.testsRun,failures=len(outcome.failures),errors=len(outcome.errors),skipped=len(outcome.skipped)))
+                details = dict(backend=backend, cases=outcome.testsRun, failures=len(outcome.failures),
+                               errors=len(outcome.errors), skipped=len(outcome.skipped))
+                if timings is not None:
+                    details['module_ms'] = timings
+                result.setdefault('module_runs', []).append(details)
                 validate_required_result(outcome,backend)
-        if 'scenarios'in python_groups(plan):
-            result['selected_source_checks']=check_selected_sources(plan['scenario_ids'],root)
+        scenario_ids = execution['scenario_ids']
+        if scenario_ids:
+            result['selected_source_checks']=check_selected_sources(scenario_ids,root)
             # A scenario-local run always checks both actual arithmetic adapters,
             # even when a caller restricted related-module execution to one backend.
-            result['scenario_smoke']=scenario_smoke(plan['scenario_ids'],('python','rust'),root=root)
+            result['scenario_smoke']=scenario_smoke(scenario_ids,('python','rust'),root=root)
     result.update(status='passed',elapsed_seconds=round(time.monotonic()-started,3));return result
 
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--plan',type=Path,required=True)
     parser.add_argument('--list-only',action='store_true');parser.add_argument('--report',type=Path)
     parser.add_argument('--backend',choices=['python','rust','both']);parser.add_argument('--shard',type=int);parser.add_argument('--shards',type=int)
+    actions = parser.add_mutually_exclusive_group()
+    actions.add_argument('--lane', choices=SCOPED_LANES, help='Run one scoped CI lane')
+    actions.add_argument('--verify-reports', type=Path, help='Verify all scoped CI lane artifacts')
     args=parser.parse_args(argv)
     try:
         registry,registry_sha=runner.load_registry();plan=read(args.plan)
-        execution=execution_plan(plan,registry,backend=args.backend,shard=args.shard,shards=args.shards)
+        if args.verify_reports:
+            require(not any((args.list_only, args.report, args.shard is not None, args.shards is not None)),
+                    'Report verification does not run or list tests')
+            verify_scoped_reports(plan, registry, registry_sha, args.verify_reports, backend=args.backend)
+            print('All scoped module shards and catalog checks passed for ' + plan['head'])
+            return 0
+        execution=execution_plan(plan,registry,backend=args.backend,shard=args.shard,shards=args.shards,lane=args.lane)
         execution.update(registry_sha256=registry_sha,all_file_count=len(registry['modules']))
         print(json.dumps(execution,ensure_ascii=False,sort_keys=True),flush=True)
         result=execution if args.list_only else run(plan,execution)
         if args.report:
             args.report.parent.mkdir(parents=True,exist_ok=True);args.report.write_text(json.dumps(result,ensure_ascii=False,sort_keys=True,indent=2)+'\n')
         return 0
-    except (ValueError,OSError,RuntimeError,AssertionError,subprocess.CalledProcessError)as error:
+    except (ValueError,OSError,RuntimeError,AssertionError,KeyError,TypeError,subprocess.CalledProcessError)as error:
         if args.report:
             failure=dict(execution if 'execution'in locals()else {},status='failed',error=str(error))
             args.report.parent.mkdir(parents=True,exist_ok=True);args.report.write_text(json.dumps(failure,ensure_ascii=False,sort_keys=True,indent=2)+'\n')

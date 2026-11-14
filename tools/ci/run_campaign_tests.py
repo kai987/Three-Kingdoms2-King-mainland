@@ -19,7 +19,7 @@ TESTS = ROOT / 'tests'
 SOURCE = ROOT / 'source'
 REGISTRY = ROOT / 'tools/ci/test-groups.json'
 DURATIONS = ROOT / 'tools/ci/campaign-durations.json'
-GROUPS = frozenset(('boot', 'audio', 'map', 'scenarios', 'people', 'economy', 'logistics', 'battle', 'cloud', 'save'))
+GROUPS = frozenset(('boot', 'audio', 'map', 'scenarios', 'people', 'economy', 'logistics', 'battle', 'cloud', 'save', 'portraits'))
 TIERS = frozenset(('global', 'related', 'compatibility', 'full'))
 SHARD_COUNT = 6
 BACKENDS = ('python', 'rust')
@@ -87,10 +87,8 @@ def load_durations(backend, path=DURATIONS):
     return {ROOT / path: ms for path, ms in timings.items()}
 
 
-def partition_files(files, shards=SHARD_COUNT, *, durations=None):
-    """Validate the closed CI partition before any test module is imported."""
-    if shards != SHARD_COUNT:
-        raise ValueError(f'Full CI requires exactly {SHARD_COUNT} campaign shards per backend')
+def partition_modules(files, shards, *, durations=None):
+    """Validate a closed partition before any test module is imported."""
     complete = list(files)
     if len(complete) != len(set(complete)):
         raise ValueError('Duplicate campaign test file in the shard inventory')
@@ -108,6 +106,12 @@ def partition_files(files, shards=SHARD_COUNT, *, durations=None):
     if any(not group for group in groups) or len(flattened) != len(complete) or set(flattened) != set(complete):
         raise ValueError('Campaign shards must be nonempty and cover every registered file exactly once')
     return groups
+
+
+def partition_files(files, shards=SHARD_COUNT, *, durations=None):
+    if shards != SHARD_COUNT:
+        raise ValueError(f'Full CI requires exactly {SHARD_COUNT} campaign shards per backend')
+    return partition_modules(files, shards, durations=durations)
 
 
 class TimedModule(unittest.TestSuite):

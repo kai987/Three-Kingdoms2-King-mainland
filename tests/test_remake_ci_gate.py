@@ -170,6 +170,22 @@ class PRVerificationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             gate.validate_plan(dict(value, publish=False))
 
+    def test_large_portrait_diff_keeps_the_receipt_small_and_reusable(self):
+        paths = [f'game/assets/portraits/white/san14-candidate-{index:04}.png'
+                 for index in range(1, 1057)]
+        pr_plan = dict(self.release, head=self.tested, publish=False, changed_files=paths,
+                       removed_scenario_ids=[], reasons=['Portrait asset: ' + name for name in paths])
+        self.assertGreater(len(json.dumps(pr_plan).encode()), pr_reuse.MAX_RECEIPT_BYTES)
+        proof = pr_reuse.receipt(self.root, pr_plan, 'kai987/game', 3, 'f' * 40, 30, 2)
+        proof_path = self.root / 'receipt.json'
+        pr_reuse.write(proof_path, proof)
+        self.assertLess(proof_path.stat().st_size, 1024)
+        self.assertEqual(set(proof['plan']), set(pr_reuse.RECEIPT_PLAN_KEYS))
+        self.assertEqual(pr_plan['changed_files'], paths)
+        evidence = pr_reuse.verify(self.root, dict(self.release, removed_scenario_ids=[]),
+                                   self.candidate, gate.read_json(proof_path), api=lambda _: self.commit)
+        self.assertEqual(evidence['tree'], self.tree)
+
     def test_scope_tree_run_attempt_and_tested_merge_parents_must_match(self):
         for proof, commit in (
                 (dict(self.proof, tree='d' * 40), self.commit),

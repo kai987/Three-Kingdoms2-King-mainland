@@ -637,6 +637,32 @@ def filtered_png(filter_kind):
 
 
 class PortraitIntegrityTests(unittest.TestCase):
+    def test_white_redraw_ledger_has_known_people_and_valid_hash_records(self):
+        ledger = read('tools/portraits/white-individual-redraws.json')
+        people = read('game/config/campaigns/people.json')['people']
+        portraits = read('game/config/portrait-white.json')['people']
+
+        def check_record(record):
+            self.assertIsInstance(record, dict)
+            for key in ('reference_sha256', 'study_sha256'):
+                self.assertIsInstance(record.get(key), str, key)
+            for key, value in record.items():
+                with self.subTest(field=key):
+                    if key.endswith('_sha256'):
+                        self.assertIsInstance(value, str)
+                        self.assertIsNotNone(builder.HEX.fullmatch(value), value)
+                    else:
+                        check_record(value)
+
+        self.assertIsInstance(ledger, dict)
+        self.assertTrue(ledger)
+        for person_id, row in ledger.items():
+            with self.subTest(person_id=person_id):
+                self.assertIn(person_id, people)
+                self.assertIn(person_id, portraits)
+                self.assertEqual(portraits[person_id]['method'], 'targeted_redraw')
+                check_record(row)
+
     def test_supported_png_filter_encodings_produce_identical_native_pixels(self):
         for kind in range(5):
             with self.subTest(png_filter=kind):

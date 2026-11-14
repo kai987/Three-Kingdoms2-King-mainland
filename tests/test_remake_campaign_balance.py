@@ -62,6 +62,23 @@ class CampaignBalanceTests(unittest.TestCase):
             self.assertGreater(replay.game.state.extension['travel']['counter'], 0)
             self.assertTrue(all(row['owner'] == 'shu' for row in replay.game.state.extension['travel']['marches']))
 
+    def test_offensive_policy_skips_allied_targets_and_still_attacks_neutral_cities(self):
+        with using_backend('python'):
+            replay = balance.BalanceReplay(controlled_catalog(), settings('offensive'))
+            city = replay.game.state.cities['xiangyang']
+            replay.command('diplomacy', action='alliance', target='wei', duration=12,
+                           city=city.id, envoy=city.roster.officer_ids[-1])
+            attack_option = balance.StrategicAI.attack_option
+            with patch.object(balance.StrategicAI, 'attack_option', autospec=True,
+                              side_effect=attack_option) as options:
+                replay.attack()
+
+            targets = [call.args[2] for call in options.call_args_list]
+            self.assertEqual({target.owner for target in targets}, {'neutral'})
+            self.assertEqual(replay.commands['depart'], 1)
+            marches = replay.game.state.extension['travel']['marches']
+            self.assertEqual([march['target'] for march in marches], ['nanjun'])
+
     def test_transport_policy_is_an_ordinary_office_policy_not_a_free_cargo_grant(self):
         with using_backend('python'):
             replay = balance.BalanceReplay(controlled_catalog(), settings('transport'))
