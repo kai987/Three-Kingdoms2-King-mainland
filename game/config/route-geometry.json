@@ -42,13 +42,13 @@
     "game/config/campaigns/scenarios/217-07.json": "e4c59f082887ecb79885b309a23a9c54b2cf2289f1ce34e6aae490d8c898e140",
     "game/config/campaigns/scenarios/219-07.json": "d2eea0acb5df4ddcef49d6504671a55db87967d8b9db1e3ad170d4942fd05c0c",
     "game/config/campaigns/scenarios/221-07.json": "bbfcde4ff5b432b07086569fc1280d450f987feaad769f41df0ac825ee621ed9",
-    "game/config/campaigns/scenarios/225-07.json": "c6ad5b157322479c960e5d4a14176c91fb94b007b8171769c1916e74ccde90cc",
-    "game/config/campaigns/scenarios/227-02.json": "a663981b5b3324046e1a897b63401b248c158b67f162800189a6a9239ccaee4a",
-    "game/config/campaigns/scenarios/234-02.json": "2c1ac76639a296d0cda90854f5d1e532daa67457d025d335aea04ea1228c1b66",
-    "game/config/campaigns/scenarios/235-01.json": "473375485490debcce0ae2d720ef497f6be60abe57896b00d08aee92fc3cdc3a",
-    "game/config/campaigns/scenarios/238-01.json": "3922c2af529aa52a0661f41e38b55a60642f4c599e5f7e815709e7fa72eb4e01",
-    "game/config/campaigns/scenarios/249-01.json": "6b1e6b45879b7ee5198c9ccabc754d71cc6222c218e71bf6fcd5eb32d2939ac4",
-    "game/config/campaigns/scenarios/263-05.json": "3cd4d27cd0ded417113525a4a74d06e3120ef56dd6e2845b7df45343f63f8ccd"
+    "game/config/campaigns/scenarios/225-07.json": "efdcebebcc4657c1a75cd62ad3209be81ba706e80db19c5a685c0273f07f67e5",
+    "game/config/campaigns/scenarios/227-02.json": "e7311334bb576d162c243ffe7326d36bad12ebc2f92ca62b8613bcab029ab09d",
+    "game/config/campaigns/scenarios/234-02.json": "54b02947f7b92e2bbd0f4c37e34165c999aca1a38a5c89130101271ba3a47732",
+    "game/config/campaigns/scenarios/235-01.json": "9e25c38a6424da6c301e788c37be5c74a0673b04d1b065eabd7c1d8ff2d95425",
+    "game/config/campaigns/scenarios/238-01.json": "226d60fd4467df7a9247cbb65ef31703d01942265c215117d2a49b31ae0de48c",
+    "game/config/campaigns/scenarios/249-01.json": "64558bceaf1d7a46b379298cc1878fcd28c939cf4d43626b699fc752e0024eb5",
+    "game/config/campaigns/scenarios/263-05.json": "55d7ae7e7df531d9fa71cffb1b85057b4203509efd6d1734201dc150a711b078"
   },
   "input_geometry_sha256": "f74ad60bc39dc78c2011fa08292a2048b1a1339cc21ea272b63454bc90682732",
   "routes": {

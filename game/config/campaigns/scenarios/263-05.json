@@ -991,13 +991,6 @@
           "resolve_death_year": false
         },
         {
-          "person_id": "san14-candidate-0898",
-          "city": "wujun",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
           "person_id": "san14-candidate-0899",
           "city": "wuling",
           "troops": 300,
@@ -1446,6 +1439,11 @@
         {
           "person_id": "san14-candidate-0873",
           "city": "taiyuan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0898",
+          "city": "wujun",
           "resolve_death_year": false
         },
         {
@@ -31901,37 +31899,19 @@
               "source_status": "free",
               "source_city": null,
               "year_state": "available",
-              "placement_basis": "authorial_lu_yusheng_wu_opening",
-              "status": "serving",
-              "scenario_membership_basis": "authorial_lu_yusheng_wu_opening",
-              "source_snapshot": "mainland249-01-v11",
-              "faction": "wu",
-              "city": "wujun",
-              "reason": "陸鬱生為吳郡陸氏陸績之女。原典記其嫁吳郡張白；本作配為孫吳吳城開局武將，屬遊戲設定。",
-              "membership_revision": {
-                "basis": "authorial_lu_yusheng_wu_opening",
-                "note": "陸鬱生為吳郡陸氏陸績之女。原典記其嫁吳郡張白；本作配為孫吳吳城開局武將，屬遊戲設定。",
-                "source_urls": [
-                  "https://sangokushi-fun.com/sangokushi14/bushou-14/data1410898/",
-                  "https://zh.wikisource.org/wiki/三國志/卷57"
-                ]
-              }
+              "placement_basis": "retimed_source_free_location_not_attested_post",
+              "status": "free",
+              "scenario_membership_basis": "retimed_source_free_location_not_attested_post",
+              "source_snapshot": "mainland249-01-v11"
             },
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "authorial_lu_yusheng_wu_opening",
+                  "basis": "retained_person_specific_free_location",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/bushou-14/data1410898/",
-                    "https://zh.wikisource.org/wiki/三國志/卷57"
+                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ra-line/"
                   ],
-                  "note": "陸鬱生為吳郡陸氏陸績之女。原典記其嫁吳郡張白；本作配為孫吳吳城開局武將，屬遊戲設定。",
-                  "reference_date": [
-                    263,
-                    5
-                  ],
-                  "reference_scenario": "mainland263-05",
-                  "historical_certainty": "authorial_region_placement"
+                  "note": "沿用本篇已配置在野狀態及人物所在地，非新增歷史退仕判斷。"
                 }
               },
               "appearance_plan": {
@@ -31940,8 +31920,7 @@
                     263,
                     5
                   ],
-                  "status": "serving",
-                  "basis": "authorial_lu_yusheng_wu_opening"
+                  "status": "free"
                 }
               }
             }
@@ -39966,7 +39945,7 @@
           "wujun": {
             "set": {
               "grain": 5025,
-              "reserves": 1170
+              "reserves": 1320
             }
           },
           "wuling": {

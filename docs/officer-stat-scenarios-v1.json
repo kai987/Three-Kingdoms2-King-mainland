@@ -18,10 +18,10 @@
   },
   "summary": {
     "cities": 3384,
-    "serving": 8988,
+    "serving": 8981,
     "rulers": 320,
-    "ordinary_serving": 8668,
-    "free": 2418,
+    "ordinary_serving": 8661,
+    "free": 2425,
     "total_instantiated": 11406,
     "initial_health_changed": 2919,
     "health_cap_increased": 1237,
@@ -29,12 +29,12 @@
     "source_context_applied": 1561,
     "source_context_mismatch_defaults": 995,
     "source_ruler_marker_nonruler_defaults": 18,
-    "no_source_loyalty_defaults": 6094,
+    "no_source_loyalty_defaults": 6087,
     "relationship_matches": 405,
     "relationship_exceptions": 15,
     "relationship_loyalty_increased": 311,
     "preview_cities_checked": 3384,
-    "preview_officers_checked": 8988
+    "preview_officers_checked": 8981
   },
   "scenarios": [
     {
@@ -207,7 +207,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "d836b3c83b38cdf973f87b471324ec4d1233dbdd1a0ee9fd978c4c6a384e6e80",
+      "opening_save_sha256": "c20ec2ccdc8661ad97f1650024c4cd76c9890e2b531dd1fe4359538f15a0635a",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -1455,7 +1455,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "4707d2134b4b97a7a592173b4c9a3ef5f01abfd00bcda8b07944c64125bbd337",
+      "opening_save_sha256": "25d58c481424b5de8ec2518adf343543fe2ea67cf80245ed4ce78adcd1dae575",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -3057,7 +3057,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "b5c39aa72e58c4794877bb131db4ae37e5babea1e4ce47a3e49867da2aeea930",
+      "opening_save_sha256": "7e7b6c51997588de6f24ff9133a4eba7905b6886d9a54b2c7cc0fc53553f4fc3",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -5187,7 +5187,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "ef7ecf0bb1f17599989ba6ea569bb2ef843efbf466629b188d6f0250c82cee49",
+      "opening_save_sha256": "c0e0b94654419f6a8fe83a0e91f2ee084736c324729a1642454758197fa0fee7",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -7388,7 +7388,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "6cf7bc2552a720725e38bb91851a8a1290a133ec96fef435e47eeef80093525c",
+      "opening_save_sha256": "c1a434e888731f508f4e2dc69c5d5ef38e2a7d3dcfb4ae053bea3eeee222d9d6",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -9702,7 +9702,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "4068b49789562f25da31fc859ea7ce000ac1978d66a9bba262104b859695d383",
+      "opening_save_sha256": "b8a2325c92984735022e67f137e081e537037efb9c164797ef67edc152e3318d",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -12216,7 +12216,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "5499dfb9c03e1950ae6a1412cb9439a93750bc3654abea90454e3cdfa55aa5e2",
+      "opening_save_sha256": "098f7f01a7c2eca3697ee5ff6f9842a94dbaa1784ee3d9004e5d2c6967022eb8",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -14777,7 +14777,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "1d2b99bcfef1bb3e95568f180cc0ee10fdbfa702e2ac609ea128d1275ce77f5a",
+      "opening_save_sha256": "c9dd17e1513327640a9b6531ce76be91207aa4e76970061fd2979e4c421e4f8c",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -17416,7 +17416,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "fe304e93f8c1f852fcb10c132c6cfd068be79a1cb1d70d6c21aed1287f0208aa",
+      "opening_save_sha256": "341e3e7edff54d3ab84db61ad57e022d823345d6e6afda1157d285e6710399ca",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -19989,7 +19989,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "d9097ab3eb6f307c95ffed58280740242749c1b4f9a5b822d8ccd42464a169c6",
+      "opening_save_sha256": "176fd605d9ced9b08e825ff8b0ba0996503d0936d35a8f7f75ded70dcb904bb8",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -22612,7 +22612,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "2e16cdebf34a7f99302defa4e54e2ed8fb3e9656b43fe7cb06510481de648c67",
+      "opening_save_sha256": "78b8f4846cf0d3f356e81aef3eb60ac2f594f533dc34b7c62a58912aa83675cc",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -25182,7 +25182,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "75ed9b79b27911ae3e2f88afe32aedd430a33bbc9da30037b8fe38d6cd2a6ecd",
+      "opening_save_sha256": "2569324cb437e051abc51adddb01c7d373856f85f78d0913f5d5d34167d3b55c",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -27854,7 +27854,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "d4ffb074d2ee1a44386c42b655680664d559a50244bc8416c33e6a3176e5d038",
+      "opening_save_sha256": "82f6a440fbe53748fea04cdc731d84a78b7147791a32a8cdf0883d73614cd934",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -30310,7 +30310,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "ec5688d8e22c6c44df1e004b68a199ea893385f381d4e319bc2550d8628364ac",
+      "opening_save_sha256": "d9eff4e428a424b29f9c64edb4261bfce389000dce3bf7fb166968e032673fca",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -32817,7 +32817,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "f43edf3837c518694d880032a41784d8a3af7312afaf1ea3cc32001bea6ea072",
+      "opening_save_sha256": "d4e7a2abb904f9ba9e7f3777c04e4b226cd033b5a077e7193a752e4da045ae6e",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -35406,7 +35406,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "0c26784c74972af67a778ac010084288714834e2fc7d3230f2b3bdd9b15c3ac2",
+      "opening_save_sha256": "34e58ac62659072eb7d2d59be2377617474e7566077281297a6a508e11f1b058",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -37876,7 +37876,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "55ce4138688771ca6978d91461eddedc9ebc629fdb79a69d8a5708de39c2ae92",
+      "opening_save_sha256": "f73fadd2b6642daab1c04873bb48881250cd0c1ba6f2f15517243713405a4515",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -40320,7 +40320,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "384fd7645fba0228143fc85031a407fc80e5635560cd92ee73447dd99fca5f49",
+      "opening_save_sha256": "e8d58164b3bbbe0938eb73a0e5879f570e2876e9d2b3fbc7e4ca38417549747a",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -42723,7 +42723,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "104d653e991c660f54175982aa9ea8214d157d80147ab49deda5537addea51bf",
+      "opening_save_sha256": "90c26372816139f1c757fdeecadb156ea6353f8b267270cab3191728309bc0ff",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -45080,7 +45080,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "89d137f27e6ef695b7fa2871a02ba35e0c51209cef731f441da255af9bc57665",
+      "opening_save_sha256": "db70a54361adfddad9eeaeb9038481640129138a5817f61b4381d5f4fd161a00",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -47356,7 +47356,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "e418fa3598a22542d5966d75f1c5819f459dbcb88c3ee3435b065dfe0dd5fbc5",
+      "opening_save_sha256": "145ff0632dc3ead44608670a13db6c8cae478096409cdde9dd3374fdf9a1332a",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -49644,7 +49644,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "739c12b48a78802e415463c8e2afd23ede7f1b7f2af9657897f6b267bfff5451",
+      "opening_save_sha256": "399ef1c5469ee9398e0d026c6761e2aaff773a93bc9c80bc4ac471e05aea2987",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -51350,10 +51350,10 @@
       "player": "wei",
       "seed": 2026,
       "cities": 118,
-      "serving": 317,
+      "serving": 316,
       "rulers": 6,
-      "ordinary_serving": 311,
-      "free": 78,
+      "ordinary_serving": 310,
+      "free": 79,
       "total_instantiated": 395,
       "initial_health_changed": 87,
       "health_cap_increased": 42,
@@ -51361,7 +51361,7 @@
       "source_context_applied": 38,
       "source_context_mismatch_defaults": 46,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 227,
+      "no_source_loyalty_defaults": 226,
       "relationship_matches": 3,
       "relationship_exceptions": 2,
       "relationship_loyalty_increased": 1,
@@ -51372,7 +51372,7 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 118,
-      "preview_officers_checked": 317,
+      "preview_officers_checked": 316,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -51512,7 +51512,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "e2025b5763535c31d96156cfc0a6b71facbc78f9b5be4b73169359eeba3ddc2a",
+      "opening_save_sha256": "a57388bc51c4d3f86f5229419b1629d5903340455caa6b6b0cf9752b63902936",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -52935,10 +52935,10 @@
       "player": "wei",
       "seed": 2026,
       "cities": 118,
-      "serving": 330,
+      "serving": 329,
       "rulers": 4,
-      "ordinary_serving": 326,
-      "free": 37,
+      "ordinary_serving": 325,
+      "free": 38,
       "total_instantiated": 367,
       "initial_health_changed": 77,
       "health_cap_increased": 38,
@@ -52946,7 +52946,7 @@
       "source_context_applied": 33,
       "source_context_mismatch_defaults": 45,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 248,
+      "no_source_loyalty_defaults": 247,
       "relationship_matches": 1,
       "relationship_exceptions": 0,
       "relationship_loyalty_increased": 1,
@@ -52957,7 +52957,7 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 118,
-      "preview_officers_checked": 330,
+      "preview_officers_checked": 329,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -53097,7 +53097,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "50df1ee43e35babf83bd1f0306a73a0e0b9209dcaf3f4cb4a0af27611b45fb92",
+      "opening_save_sha256": "f3d452ec1c54244c006d352cf2de3122c08c2b49c434e3c19a8eb0ddaf5928b4",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -54364,10 +54364,10 @@
       "player": "wei",
       "seed": 2026,
       "cities": 118,
-      "serving": 304,
+      "serving": 303,
       "rulers": 4,
-      "ordinary_serving": 300,
-      "free": 17,
+      "ordinary_serving": 299,
+      "free": 18,
       "total_instantiated": 321,
       "initial_health_changed": 56,
       "health_cap_increased": 24,
@@ -54375,7 +54375,7 @@
       "source_context_applied": 24,
       "source_context_mismatch_defaults": 32,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 244,
+      "no_source_loyalty_defaults": 243,
       "relationship_matches": 1,
       "relationship_exceptions": 0,
       "relationship_loyalty_increased": 1,
@@ -54386,7 +54386,7 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 118,
-      "preview_officers_checked": 304,
+      "preview_officers_checked": 303,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -54526,7 +54526,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "1ecab81a156e71b297ad735d8244077ecd7ff1da818a0f9e5f17c66d591e593d",
+      "opening_save_sha256": "0aa2e80d344c31ee91560f8e132ba985be62475cecc7e7a24dfdf756c1993561",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -55457,10 +55457,10 @@
       "player": "wei",
       "seed": 2026,
       "cities": 118,
-      "serving": 302,
+      "serving": 301,
       "rulers": 4,
-      "ordinary_serving": 298,
-      "free": 17,
+      "ordinary_serving": 297,
+      "free": 18,
       "total_instantiated": 319,
       "initial_health_changed": 55,
       "health_cap_increased": 22,
@@ -55468,7 +55468,7 @@
       "source_context_applied": 23,
       "source_context_mismatch_defaults": 32,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 243,
+      "no_source_loyalty_defaults": 242,
       "relationship_matches": 1,
       "relationship_exceptions": 0,
       "relationship_loyalty_increased": 1,
@@ -55479,7 +55479,7 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 118,
-      "preview_officers_checked": 302,
+      "preview_officers_checked": 301,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -55549,7 +55549,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "e895b095551eef34437dc9af1cd80c26fbe02ebcae1c5c2e318d8d83603fa86a",
+      "opening_save_sha256": "3af1faab2a766670b33f077c3ed21fba195dd165c7589c2f137b0401edede421",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -56464,10 +56464,10 @@
       "player": "wei",
       "seed": 2026,
       "cities": 118,
-      "serving": 296,
+      "serving": 295,
       "rulers": 4,
-      "ordinary_serving": 292,
-      "free": 14,
+      "ordinary_serving": 291,
+      "free": 15,
       "total_instantiated": 310,
       "initial_health_changed": 46,
       "health_cap_increased": 18,
@@ -56475,7 +56475,7 @@
       "source_context_applied": 21,
       "source_context_mismatch_defaults": 24,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 247,
+      "no_source_loyalty_defaults": 246,
       "relationship_matches": 3,
       "relationship_exceptions": 0,
       "relationship_loyalty_increased": 3,
@@ -56486,7 +56486,7 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 118,
-      "preview_officers_checked": 296,
+      "preview_officers_checked": 295,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -56626,7 +56626,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "a4d21dd08027c6964b1f583ea3d0fee306ca1c5cd5389679c870a3d3cc773e45",
+      "opening_save_sha256": "97009c6a2cbec32a4e55c8d2b408b65cd9ca663627880047cfbca51b37abf840",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -57443,10 +57443,10 @@
       "player": "wei",
       "seed": 2026,
       "cities": 119,
-      "serving": 242,
+      "serving": 241,
       "rulers": 3,
-      "ordinary_serving": 239,
-      "free": 40,
+      "ordinary_serving": 238,
+      "free": 41,
       "total_instantiated": 282,
       "initial_health_changed": 26,
       "health_cap_increased": 12,
@@ -57454,7 +57454,7 @@
       "source_context_applied": 11,
       "source_context_mismatch_defaults": 14,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 214,
+      "no_source_loyalty_defaults": 213,
       "relationship_matches": 4,
       "relationship_exceptions": 0,
       "relationship_loyalty_increased": 4,
@@ -57465,7 +57465,7 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 119,
-      "preview_officers_checked": 242,
+      "preview_officers_checked": 241,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -57605,7 +57605,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "81172400f6f720fe77a1f643da7a870e5a9970a556d07f43168ed4f4a81d6dcc",
+      "opening_save_sha256": "aef45735fea36f8184ddee98ee0a9f745baa3a3f85f56e09c9fa0ba8e6aa8cb9",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -58125,10 +58125,10 @@
       "player": "wei",
       "seed": 2026,
       "cities": 124,
-      "serving": 158,
+      "serving": 157,
       "rulers": 4,
-      "ordinary_serving": 154,
-      "free": 33,
+      "ordinary_serving": 153,
+      "free": 34,
       "total_instantiated": 191,
       "initial_health_changed": 7,
       "health_cap_increased": 3,
@@ -58136,7 +58136,7 @@
       "source_context_applied": 3,
       "source_context_mismatch_defaults": 5,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 146,
+      "no_source_loyalty_defaults": 145,
       "relationship_matches": 2,
       "relationship_exceptions": 0,
       "relationship_loyalty_increased": 2,
@@ -58147,7 +58147,7 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 124,
-      "preview_officers_checked": 158,
+      "preview_officers_checked": 157,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -58287,7 +58287,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "5c290343bd016128f13aa71f29bf3bde780d8e416211e8b5d6ecfb01c8af759f",
+      "opening_save_sha256": "57a5298b0b236383cfa65bc0521c1f4b33d8b0479596587dd141cbc1f6874f62",
       "changed_people": [
         {
           "person_id": "san14-candidate-0348",
