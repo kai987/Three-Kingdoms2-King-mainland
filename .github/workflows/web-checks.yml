@@ -2,6 +2,9 @@ name: Shared Web campaign verification
 on:
   workflow_call:
     inputs:
+      reserve_browser_capacity:
+        type: boolean
+        default: false
       force_full:
         type: boolean
         default: false
@@ -153,6 +156,7 @@ jobs:
     # The longest measured module (the 217 and 263 office replays) starts shard 1.
     timeout-minutes: ${{ matrix.shard == 1 && 30 || 20 }}
     strategy:
+      max-parallel: ${{ inputs.reserve_browser_capacity && 8 || 12 }}
       fail-fast: false
       matrix:
         backend: [python, rust]
@@ -200,6 +204,7 @@ jobs:
     # Keep every turn and seed; budget the complete replay instead of trimming it.
     timeout-minutes: 40
     strategy:
+      max-parallel: ${{ inputs.reserve_browser_capacity && 4 || 8 }}
       fail-fast: false
       matrix:
         include:

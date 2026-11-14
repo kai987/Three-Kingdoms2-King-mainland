@@ -1,18 +1,12 @@
 name: Web campaign checks
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
     inputs:
-      force_full:
-        description: Run every regression group
+      reserve_browser_capacity:
+        description: Limit the parallel backend jobs while comparing browser queue time
         type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
+        default: false
 
 permissions:
   contents: read
@@ -27,4 +21,5 @@ jobs:
   verify:
     uses: ./.github/workflows/web-checks.yml
     with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+      force_full: true
+      reserve_browser_capacity: ${{ inputs.reserve_browser_capacity }}
