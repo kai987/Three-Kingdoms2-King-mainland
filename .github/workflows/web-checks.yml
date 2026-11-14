@@ -2,6 +2,11 @@ name: Shared Web campaign verification
 on:
   workflow_call:
     inputs:
+      browser_weight_baseline:
+        type: boolean
+        default: false
+      candidate_run:
+        type: string
       force_full:
         type: boolean
         default: false
@@ -320,6 +325,14 @@ jobs:
           python game/build_message_locales.py
           python game/build_locales.py
           git diff --exit-code -- game/data game/assets game/locales
+      - name: Select the browser timing weights for this run
+        env:
+          BASELINE: ${{ inputs.browser_weight_baseline }}
+        run: |
+          if [ "$BASELINE" = true ]; then
+            cp .github/benchmarks/browser-case-durations-before.json tools/browser-tests/case-durations.json
+          fi
+          sha256sum tools/browser-tests/case-durations.json
       - name: Browser scripts and interaction checks
         run: |
           for file in game/*.js; do node --check "$file"; done
@@ -462,10 +475,20 @@ jobs:
         with:
           name: candidate-web-${{ github.sha }}
           path: build/web
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.candidate_run || github.run_id }}
       - name: Require the exact immutable candidate
         env:
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
         run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+      - name: Select the browser timing weights for this run
+        env:
+          BASELINE: ${{ inputs.browser_weight_baseline }}
+        run: |
+          if [ "$BASELINE" = true ]; then
+            cp .github/benchmarks/browser-case-durations-before.json tools/browser-tests/case-durations.json
+          fi
+          sha256sum tools/browser-tests/case-durations.json
       - name: Show the selected scope and execute actual browser controls
         env:
           BROWSER_PROJECT: ${{ matrix.project }}
@@ -564,6 +587,14 @@ jobs:
           pattern: browser-timing-*-shard-*-${{ github.sha }}
           path: build/browser-timings
           merge-multiple: true
+      - name: Select the browser timing weights for this run
+        env:
+          BASELINE: ${{ inputs.browser_weight_baseline }}
+        run: |
+          if [ "$BASELINE" = true ]; then
+            cp .github/benchmarks/browser-case-durations-before.json tools/browser-tests/case-durations.json
+          fi
+          sha256sum tools/browser-tests/case-durations.json
       - name: Verify complete timing coverage and report measured shard costs
         if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
         env:
