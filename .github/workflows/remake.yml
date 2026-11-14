@@ -1,30 +1,27 @@
 name: Web campaign checks
+run-name: Full CI A/B - ${{ inputs.variant }}
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
     inputs:
-      force_full:
-        description: Run every regression group
-        type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
+      variant:
+        description: Workflow and test harness variant
+        type: choice
+        options: [baseline, optimized]
+        default: baseline
+      candidate_run:
+        description: Baseline run supplying the byte-identical browser candidate
+        type: string
 
 permissions:
   contents: read
   actions: read
   deployments: read
 
-concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
-
 jobs:
   verify:
     uses: ./.github/workflows/web-checks.yml
     with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+      force_full: true
+      optimize_tail: ${{ inputs.variant == 'optimized' }}
+      candidate_run: ${{ inputs.candidate_run }}

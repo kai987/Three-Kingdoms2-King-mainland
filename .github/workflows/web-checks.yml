@@ -2,6 +2,11 @@ name: Shared Web campaign verification
 on:
   workflow_call:
     inputs:
+      optimize_tail:
+        type: boolean
+        default: false
+      candidate_run:
+        type: string
       force_full:
         type: boolean
         default: false
@@ -156,27 +161,14 @@ jobs:
       # Leave runner capacity for browser shards while the build finishes.
       max-parallel: 8
       fail-fast: false
-      matrix:
-        # Order by median job duration from 43587811813, 43589716807 and 43591423363.
-        include:
-          - {backend: python, shard: 1}
-          - {backend: rust, shard: 1}
-          - {backend: rust, shard: 3}
-          - {backend: rust, shard: 6}
-          - {backend: rust, shard: 5}
-          - {backend: python, shard: 4}
-          - {backend: rust, shard: 4}
-          - {backend: python, shard: 2}
-          - {backend: rust, shard: 2}
-          - {backend: python, shard: 3}
-          - {backend: python, shard: 5}
-          - {backend: python, shard: 6}
+      matrix: ${{ fromJSON(inputs.optimize_tail && '{"include":[{"backend":"python","shard":1},{"backend":"rust","shard":1},{"backend":"rust","shard":3},{"backend":"rust","shard":6},{"backend":"rust","shard":5},{"backend":"python","shard":4},{"backend":"rust","shard":4},{"backend":"python","shard":2},{"backend":"rust","shard":2},{"backend":"python","shard":3},{"backend":"python","shard":5},{"backend":"python","shard":6}]}' || '{"backend":["python","rust"],"shard":[1,2,3,4,5,6]}') }}
     env:
       MARCH_CORE_BACKEND: ${{ matrix.backend }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
+          fetch-depth: 2
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
@@ -194,7 +186,9 @@ jobs:
           name: native-reference-${{ github.sha }}
           path: build
       - name: Restore this run's checked native reference
-        run: tar -xf build/native-reference.tar -C build
+        run: |
+          tar -xf build/native-reference.tar -C build
+          git show ac8936d109e1a12d960cb6cd86cd95380efce45e:.github/workflows/web-checks.yml > .github/workflows/web-checks.yml
       - name: Campaign behavior with ${{ matrix.backend }} marching, shard ${{ matrix.shard }}/6
         env:
           TEST_SHARD: ${{ matrix.shard }}
@@ -450,6 +444,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
+          fetch-depth: 3
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
@@ -462,10 +457,21 @@ jobs:
         with:
           name: candidate-web-${{ github.sha }}
           path: build/web
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.candidate_run || github.run_id }}
       - name: Require the exact immutable candidate
         env:
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
         run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+      - name: Prepare test harness and collect matching save and RNG checkpoints
+        env:
+          OPTIMIZED: ${{ inputs.optimize_tail }}
+        run: |
+          if [ "$OPTIMIZED" != true ]; then
+            git show f1c9691efceba269cec633e42b6c13ed33cc9e92:tests/browser_ui.spec.mjs > tests/browser_ui.spec.mjs
+            git show f1c9691efceba269cec633e42b6c13ed33cc9e92:tests/browser_soldier_ui.spec.mjs > tests/browser_soldier_ui.spec.mjs
+          fi
+          python -B tools/ci/instrument_battle_ab.py
       - name: Show the selected scope and execute actual browser controls
         env:
           BROWSER_PROJECT: ${{ matrix.project }}
@@ -492,6 +498,13 @@ jobs:
           path: |
             build/browser-results
             build/browser-report
+          if-no-files-found: ignore
+          retention-days: 7
+      - name: Retain battle save and RNG checkpoints
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: battle-proof-${{ matrix.project }}-${{ matrix.shard }}-${{ github.sha }}
+          path: build/battle-ab-proof
           if-no-files-found: ignore
           retention-days: 7
   resupply-ui:
