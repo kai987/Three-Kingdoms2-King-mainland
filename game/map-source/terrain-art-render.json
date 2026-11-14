@@ -12,7 +12,7 @@
     "game/build_terrain_art.py": "7ad3ae0ab3d4432fe0d65307ae8e7a10e3c0bf77904f399c311ffd695a9d885b",
     "game/config/campaigns/shared.json": "a0dbe54a23e95a4457001f4fa32fd4bfeeb5ab17609f3257551117a824ff83ed",
     "game/config/road-centers.json": "80b5cb839ffa60f9e134ba1631c220e3e1de4b0d56e7fc70c449bbe374d0dd33",
-    "game/config/route-geometry.json": "463e1c99c4900a11d88cd0dda6da7328890dce0196e0364ffbfafb327dd92ebd",
+    "game/config/route-geometry.json": "e8ae0d83912a2a225c5ae19f58683963cfdec2ce315326719dc68a31714518c6",
     "game/config/terrain-art.json": "4687cb65416c651f94722df5a79337cedff84484e4c3eb51920ada968d56c45b",
     "game/config/water-corrections.json": "5af4c359db943d38bfae0f9b32de4e9fc751ae024a69a41334a2abe8506c3e2e",
     "game/map-source/approved-western-range-art.png": "50f7a296a2b476591b9a4cefd371b7317290489628baa266444c4a4fce3d06b1",
