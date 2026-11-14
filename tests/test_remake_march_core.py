@@ -452,6 +452,42 @@ class MarchNativeParityTests(unittest.TestCase):
                 self.assertEqual(invoke('allocate', data=data, troops=[1, 1, 1], numerator=1, denominator=3), [1, 0, 0])
             self.assertLessEqual(adapter.backend_status()['contexts'], 128)
 
+    def test_batch_reuses_only_equal_requests_and_returns_independent_quotes(self):
+        from remake import march_core as adapter
+
+        data = synthetic_config()
+        cities = [dict(id=key, owner='friendly') for key in ('s', 'a', 'b', 't')]
+        request = dict(cities=cities, year=217, month=7, discovered=[], player='friendly')
+        with using_backend('rust'), patch.object(adapter, '_last_batch', None), patch.object(
+                adapter, '_call_bytes', wraps=adapter._call_bytes) as abi:
+            first = invoke('batch', data=data, **request)
+            expected = canonical(first)
+            first['s:t:fastest']['routes'][0]['provenance']['keep'].clear()
+            copied = dict(reversed(deepcopy(data).items()))
+            self.assertEqual(canonical(invoke('batch', data=copied, **request)), expected)
+            self.assertEqual(abi.call_count, 1)
+
+            for field, value in (('month', 8), ('year', 218), ('player', 'other'),
+                                 ('discovered', ['explore:a:b']),
+                                 ('cities', [dict(row, owner='other') if row['id'] == 't'
+                                             else row for row in cities])):
+                with self.subTest(field=field):
+                    changed = dict(request, **{field: value})
+                    count = abi.call_count
+                    actual = invoke('batch', data=data, **changed)
+                    self.assertEqual(abi.call_count, count + 1)
+                    self.assertEqual(canonical(dict(ok=True, value=actual)),
+                                     canonical(reference(dict(op='batch', **changed), data)))
+                    self.assertEqual(canonical(invoke('batch', data=data, **request)), expected)
+                    self.assertEqual(abi.call_count, count + 2)
+
+            for leg in data['travel_routes']:
+                leg['provenance']['keep'] = ['revised']
+            changed = dict(ok=True, value=invoke('batch', data=data, **request))
+            self.assertEqual(abi.call_count, 12)
+            self.assertNotEqual(canonical(changed['value']), expected)
+            self.assertEqual(canonical(changed), canonical(reference(dict(op='batch', **request), data)))
+
     def test_mutable_pure_helper_inputs_refresh_without_mutating_or_caching_them(self):
         data = synthetic_config()
         raw = data['travel_routes'][0]
