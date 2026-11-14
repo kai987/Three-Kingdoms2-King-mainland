@@ -153,6 +153,8 @@ jobs:
     # The longest measured module (the 217 and 263 office replays) starts shard 1.
     timeout-minutes: ${{ matrix.shard == 1 && 30 || 20 }}
     strategy:
+      # Leave runner capacity for browser shards while the build finishes.
+      max-parallel: 8
       fail-fast: false
       matrix:
         backend: [python, rust]
@@ -200,6 +202,8 @@ jobs:
     # Keep every turn and seed; budget the complete replay instead of trimming it.
     timeout-minutes: 40
     strategy:
+      # Leave runner capacity for browser shards while the build finishes.
+      max-parallel: 4
       fail-fast: false
       matrix:
         include:
