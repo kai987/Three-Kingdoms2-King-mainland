@@ -76,7 +76,29 @@ async function setTroops(page,value){
  await expect(page.locator('#allocation-troops')).toHaveValue(String(value));
  await expect(page.locator('#dialog')).toBeVisible();
 }
-async function tacticalRead(page){return page.evaluate(async()=>{const[a,b]=await Promise.all([fetch('/api/save'),fetch('/api/state')]);if(!a.ok||!b.ok)throw Error('Tactical inspection failed');const value=await b.json();return{save:await a.json(),view:value.view||value};});}
+async function tacticalRead(page,placementStage){
+ return page.evaluate(async stage=>{
+  const [saveResponse,stateResponse]=await Promise.all([fetch('/api/save'),fetch('/api/state')]);
+  if(!saveResponse.ok||!stateResponse.ok)throw Error('Tactical inspection failed');
+  const value=await stateResponse.json(),view=value.view||value,save=await saveResponse.json();
+  if(!stage)return {save,view};
+
+  // Keep the save intact and return only the state fields used by the placement checks.
+  const board=view.catalog.battle_tactical;
+  const {pending,confirmed,total}=board.placement;
+  if(stage==='before')return {save,view:{catalog:{battle_tactical:{placement:{pending,confirmed,total}}}}};
+
+  const {player,battle}=view.game;
+  const {attacker,attackers,defenders}=battle;
+  const {schema,positions}=battle.extended.tactical;
+  const roster=units=>units.map(({id,martial,troops})=>({id,martial,troops}));
+  const actors=Object.fromEntries(Object.entries(board.actors).map(([id,{reachable,attack_targets}])=>[id,{reachable,attack_targets}]));
+  return {save,view:{
+   game:{player,battle:{attacker,attackers:roster(attackers),defenders:roster(defenders),extended:{tactical:{schema,positions}}}},
+   catalog:{battle_tactical:{schema:board.schema,grid:board.grid,points:board.points,actors,placement:{pending}}},
+  }};
+ },placementStage);
+}
 async function tacticalSave(page){return page.evaluate(async()=>{const response=await fetch('/api/save');if(!response.ok)throw Error('Tactical raw save inspection failed');return response.json();});}
 async function tacticalDismiss(page){
  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
@@ -160,7 +182,7 @@ async function tacticalOpening(page){
  await expect(page.locator('[data-battle-scene]')).toHaveAttribute('data-battle-scene-mode','tactical');
  // The tactical scene also hosts sequential pre-battle placement. Complete
  // its real visible confirmations before exercising combat-only controls.
- const before=await tacticalRead(page),placement=before.view.catalog.battle_tactical.placement;
+ const before=await tacticalRead(page,'before'),placement=before.view.catalog.battle_tactical.placement;
  expect(placement.pending).toBe(true);expect(placement.confirmed).toBe(0);
  expect(placement.total).toBeGreaterThan(0);expect(placement.total).toBeLessThanOrEqual(10);
  // A full state view includes expensive derived catalog previews. Each intermediate
@@ -172,7 +194,7 @@ async function tacticalOpening(page){
   saved=await tacticalSave(page);
   expect(saved.state.battle.extended.placement.confirmed).toBe(index+1);
  }
- const current=await tacticalRead(page);
+ const current=await tacticalRead(page,'after');
  expect(current.save).toEqual(saved,'Reading the completed tactical preview cannot commit another action');
  expect(current.view.catalog.battle_tactical.placement.pending).toBe(false);
  await expect(page.locator('#battle-place-confirm')).toHaveCount(0);
