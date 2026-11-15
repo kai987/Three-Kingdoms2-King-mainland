@@ -703,12 +703,45 @@ test('dialogs, language, limits, save/load and automatic recovery use the real c
  const restoredDownload=page.waitForEvent('download');await page.locator('#save').click();
  const restored=await readFile(await(await restoredDownload).path(),'utf8');
  expect(restored).toBe(baseline);
+
+ // Only the browser-copy write fails. The actual download must still contain the raw save.
+ await page.evaluate(()=>{
+  const original=Storage.prototype.setItem;
+  Storage.prototype.setItem=function(key,value){
+   if(key!=='three-kingdoms-save')return original.call(this,key,value);
+   Storage.prototype.setItem=original;
+   throw new DOMException('Storage quota reached','QuotaExceededError');
+  };
+ });
+ const quotaDownload=page.waitForEvent('download');
+ await page.locator('#save').click();
+ expect(await readFile(await(await quotaDownload).path(),'utf8')).toBe(baseline);
+ await expect(page.locator('#notice')).toHaveText('JSONファイルのダウンロードを開始しました。このブラウザーには保存できませんでした。');
+ expect(await page.evaluate(()=>localStorage.getItem('three-kingdoms-save'))).toBe(baseline);
+
+ // Re-sign the unchanged campaign state for a different catalog using the save format's JSON rules.
+ const olderSave=execFileSync('python3',['-B','-c',`
+import hashlib, json, sys
+save = json.load(sys.stdin)
+save.pop('checksum')
+save['catalog_sha256'] = '1' * 64
+canonical = json.dumps(save, ensure_ascii=False, sort_keys=True, separators=(',', ':'))
+save['checksum'] = hashlib.sha256(canonical.encode()).hexdigest()
+print(json.dumps(save, ensure_ascii=False))
+`],{input:baseline,encoding:'utf8'});
  await page.locator('#load').click();
- await page.locator('#save-file').setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from('{}')});
- await expect(page.locator('#notice')).not.toBeEmpty();
+ await page.locator('#dialog-language').selectOption('ja');
+ const fileInput=page.locator('#save-file'),loadError=page.locator('#load-save-error');
+ await fileInput.setInputFiles({name:'older.json',mimeType:'application/json',buffer:Buffer.from(olderSave)});
+ await expect(loadError).toBeVisible();
+ await expect(loadError).toContainText('現在のシナリオの版と互換性がありません');
+ await waitIdle(page);
+ const tamperedSave=JSON.parse(olderSave);
+ tamperedSave.checksum='0'.repeat(64);
+ await fileInput.setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(tamperedSave))});
+ await expect(loadError).toContainText('破損しているか、形式が正しくありません');
  await expect(page.locator('#notice')).toHaveClass(/\berror\b/);
- await expect(page.locator('#dialog')).toBeVisible();
- await expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);
+ await waitIdle(page);
  await closeDialog(page);
  const rejectedDownload=page.waitForEvent('download');await page.locator('#save').click();
  expect(await readFile(await(await rejectedDownload).path(),'utf8')).toBe(baseline);

@@ -512,7 +512,7 @@ def static_file_bytes(here, name):
 
 
 def make_handler(game, cloud_config, cloud_csp, static, audit=None, here=HERE):
-    from remake.errors import GameError
+    from remake.errors import GameError, INVALID_SAVE_MESSAGE
 
     class Handler(BaseHTTPRequestHandler):
         # Every response closes its connection, including rejections with unread bodies.
@@ -684,7 +684,9 @@ def make_handler(game, cloud_config, cloud_csp, static, audit=None, here=HERE):
             except GameError as exc:
                 self.send(exc.status, {'error': str(exc)})
             except (ValueError, TypeError, KeyError, RecursionError):
-                self.send(400, {'error': '输入或存档不符合当前规则，进度未改变。'})
+                message = (INVALID_SAVE_MESSAGE if self.path == '/api/load' else
+                           '输入或存档不符合当前规则，进度未改变。')
+                self.send(400, {'error': message})
             except (ConnectionError, TimeoutError):
                 pass
             except Exception:

@@ -235,6 +235,33 @@ class BrowserRuntimeTests(unittest.TestCase):
                 self.assertIs(self.runtime.session.game, game)
                 self.assertEqual(self.snapshot(), before)
 
+    def test_intact_old_save_and_corrupt_save_have_different_errors(self):
+        self.start()
+        before = self.snapshot()
+        active = self.runtime.session.game
+        identity = self.identities[1]
+        old_catalog = json.loads(Path(self.paths[identity]).read_bytes())
+        old_catalog['title'] += '・旧版'
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'old.json'
+            path.write_text(json.dumps(old_catalog, ensure_ascii=False), encoding='utf-8')
+            old_session = CampaignSession([path])
+            old_session.command('new', dict(faction='shu', seed=7), 0)
+            old = old_session.export_save()
+
+        corrupt = deepcopy(old)
+        corrupt['state']['seed'] += 1
+        corrupt_scenario = dict(old, scenario='unknown')
+        for save, error in (
+                (old, '此存档与当前剧本版本不兼容。请使用创建存档时的游戏版本。'),
+                (corrupt, '存档无效，当前进度未改变。'),
+                (corrupt_scenario, '存档无效，当前进度未改变。')):
+            with self.subTest(error=error, scenario=save['scenario']):
+                status, result = self.request('/api/load', dict(save=save, revision=active.revision))
+                self.assertEqual((status, result), (400, {'error': error}))
+                self.assertIs(self.runtime.session.game, active)
+                self.assertEqual(self.snapshot(), before)
+
     def test_unknown_paths_methods_and_query_ambiguity_are_rejected(self):
         self.start()
         before = self.snapshot()

@@ -19,6 +19,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
+from remake.campaign import digest
+
 spec = importlib.util.spec_from_file_location('tk2_http_transport', ROOT / 'game/serve.py')
 transport = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(transport)
@@ -412,10 +414,29 @@ class HTTPGameIntegrationTests(unittest.TestCase):
                     revision = json.loads(body)['revision']
                     status, _, save = exchange(port, path='/api/save')
                     self.assertEqual(status, 200)
-                    rng = json.loads(save)['state']['rng']
+                    saved = json.loads(save)
+                    rng = saved['state']['rng']
                     self.assertEqual(exchange(port, path='/api/save', headers={'Accept-Encoding': 'gzip'})[2], save)
                     for invalid in (b'{"save":NaN,"revision":1}', b'{"save":{},"save":{},"revision":1}', b'{"save":{},"revision":1}'):
-                        self.assertEqual(exchange(port, 'POST', '/api/load', invalid, {'Content-Type': 'application/json'})[0], 400)
+                        status, _, body = exchange(port, 'POST', '/api/load', invalid,
+                                                   {'Content-Type': 'application/json'})
+                        self.assertEqual((status, json.loads(body)),
+                                         (400, {'error': '存档无效，当前进度未改变。'}))
+                        self.assertEqual(exchange(port, path='/api/save')[2], save)
+                    old = {key: value for key, value in saved.items() if key != 'checksum'}
+                    old['catalog_sha256'] = '0' * 64
+                    old['checksum'] = digest(old)
+                    invalid_hash = dict(old, catalog_sha256='invalid')
+                    del invalid_hash['checksum']
+                    invalid_hash['checksum'] = digest(invalid_hash)
+                    for payload, error in (
+                            (old, '此存档与当前剧本版本不兼容。请使用创建存档时的游戏版本。'),
+                            (dict(old, checksum=saved['checksum']), '存档无效，当前进度未改变。'),
+                            (invalid_hash, '存档无效，当前进度未改变。')):
+                        request = json.dumps({'save': payload, 'revision': revision}, ensure_ascii=False).encode()
+                        status, _, body = exchange(port, 'POST', '/api/load', request,
+                                                   {'Content-Type': 'application/json'})
+                        self.assertEqual((status, json.loads(body)), (400, {'error': error}))
                         self.assertEqual(exchange(port, path='/api/save')[2], save)
                     load_body = b'{"save":' + save + b',"revision":' + str(revision).encode() + b'}'
                     status, _, body = exchange(port, 'POST', '/api/load', load_body, {'Content-Type': 'application/json'})
