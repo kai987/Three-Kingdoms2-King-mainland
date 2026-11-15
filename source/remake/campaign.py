@@ -18,7 +18,7 @@ from . import diplomacy, historical_campaigns, observer
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
-from .city_economy import income_at
+from .city_economy import frontier_maintenance, income_at
 from .starting_garrisons import resolve as resolve_opening_garrisons
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
 from .events import empty as empty_events, emit as emit_event, transition as record_events, validate as validate_events
@@ -652,6 +652,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 city.gold += income['gold']
                 city.grain += income['grain']
                 domestic.add_reserves(self,state,city,income['reserves'],recruited=True)
+        frontier_maintenance(self,state)
         existing = set(state.officers)
         self._spawn_eligible(state)
         for ident, officer in state.officers.items():

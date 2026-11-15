@@ -89,6 +89,16 @@ async function weightedTransferChecks(){
  assert.equal((element('#inspector').innerHTML.match(/role="tab" /g)||[]).length,4);
  assert(element('#inspector').innerHTML.includes('id="city-command-tab-army" data-city-command-group="army" role="tab" aria-controls="city-command-panel-army" aria-selected="true" tabindex="0"'),'Army is the default active, keyboard reachable group');
  for(const key of ['city','warehouse','town'])assert(new RegExp(`id="city-command-panel-${key}"[^>]* hidden`).test(element('#inspector').innerHTML),'Inactive command panels stay present and hidden');
+ context.GameI18n.t=text=>text;
+ context.view.catalog.frontier_outposts={home:{monthly_maintenance:15,sponsor_city:'away'}};
+ context.view.catalog.city_profiles={home:{kind:'frontier_outpost'}};
+ context.renderCity();
+ assert.match(element('#inspector').innerHTML,/city-command-overview">邊塞據點/);
+ assert.match(element('#inspector').innerHTML,/data-frontier-outpost[^>]*>.*每月資金與兵糧收入皆為 0。away負擔每月維護費 15（資金）。/);
+ delete context.view.catalog.frontier_outposts;
+ context.view.catalog.city_profiles={};
+ context.renderCity();
+ assert(!element('#inspector').innerHTML.includes('data-frontier-outpost'),'A restored commandery uses the regular city inspector');
  const originalCatalog={...context.view.catalog},iconCalls=[],visits=[];
  Object.assign(context.view.catalog,{scenario_id:'test-campaign',facilities:{},treasury:{},domestic:{},civil_staff:{}});
  context.view.game.seed=2026;

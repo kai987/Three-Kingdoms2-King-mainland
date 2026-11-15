@@ -257,7 +257,7 @@ def _validate_supply_event(row):
         raise ValueError('March retreat receipt')
 
 
-def _validate_staff_event(row):
+def _validate_staff_event(row, city_count):
     """Staff snapshots remain independent of historical person references.
 
     A declined or expired candidate need not remain in the current registry;
@@ -295,7 +295,7 @@ def _validate_staff_event(row):
         counts = details['counts']
         if (not isinstance(counts, dict) or set(counts) != {'staff', 'total_unpaid', 'cities'}
                 or type(counts['staff']) is not int or counts['staff'] < 1
-                or type(counts['cities']) is not int or not 1 <= counts['cities'] <= 126
+                or type(counts['cities']) is not int or not 1 <= counts['cities'] <= city_count
                 or not counts['cities'] <= counts['staff'] <= counts['cities'] * 99
                 or type(counts['total_unpaid']) is not int or not 0 <= counts['total_unpaid'] <= counts['staff']):
             raise ValueError('Civil staff event counts')
@@ -547,7 +547,7 @@ def validate(campaign, state):
         if row['kind']=='tactic':
             _validate_tactic_event(row)
         if row['kind'] in STAFF_KINDS:
-            _validate_staff_event(row)
+            _validate_staff_event(row, len(campaign.catalog.map_cities))
         if row['kind'] in SUPPLY_KINDS:
             _validate_supply_event(row)
         if row['kind'] in TREASURY_DETAILS:

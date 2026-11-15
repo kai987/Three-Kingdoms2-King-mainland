@@ -713,11 +713,18 @@ class FrozenRulerAuditNegativeTests(unittest.TestCase):
                                           decision if decision is not None else deepcopy(self.decision),
                                           self.pool, self.presentation)
 
+    def expected_material(self):
+        stocks = [self.data['initial_city_resources'][city] for city in ('shuofang', 'wuyuan', 'yunzhong')]
+        gold, grain, soldiers = (sum(city[field] for city in stocks) for field in ('gold', 'grain', 'reserves'))
+        frozen = self.decision['material']
+        return dict(gold=frozen['gold'] + gold, grain=frozen['grain'] + grain,
+                    soldiers=frozen['soldiers'] + soldiers)
+
     def test_accepted_snapshot_matches_the_frozen_decision(self):
         result = self.check_copy()
         self.assertEqual(result['id'], 'mainland194-06')
         self.assertEqual(len(result['people']), 67)
-        self.assertEqual(result['material'], self.decision['material'])
+        self.assertEqual(result['material'], self.expected_material())
 
     def test_noncanonical_captain_is_rejected(self):
         data = deepcopy(self.data)
@@ -798,7 +805,7 @@ class FrozenRulerAuditNegativeTests(unittest.TestCase):
         data = deepcopy(self.data)
         inactive = next(city for city in data['initial_city_resources'] if city not in data['active_cities'])
         data['initial_city_resources'][inactive]['reserves'] += 100
-        self.assertEqual(self.check_copy(data)['material'], self.decision['material'])
+        self.assertEqual(self.check_copy(data)['material'], self.expected_material())
 
     def test_reviewed_lifetime_and_its_evidence_basis_cannot_silently_drift(self):
         person_id = 'san14-candidate-0782'  # Fan Chou: killed in195, not192.

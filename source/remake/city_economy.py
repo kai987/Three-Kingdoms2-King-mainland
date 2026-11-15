@@ -1,10 +1,13 @@
-"""Shared city-size arithmetic for authored openings and live calendar views.
+"""City production and frontier upkeep for authored openings and live turns.
 
-City tiers are gameplay settings, not historical measurements.  A live size
-change affects future production only; this module never touches city stocks,
-officers, ownership, the soldier ledger or random-number generators.
+City sizes and production are gameplay settings. Only committed frontier
+maintenance debits city stocks.
 """
 from copy import deepcopy
+from heapq import heappop, heappush
+
+from .route_hazards import route_allowed
+from .route_network import effective
 
 
 FIELDS = ('gold', 'grain', 'reserves')
@@ -32,11 +35,21 @@ def tier_at(data, city_id, year, month):
     return tier
 
 
+def frontier_outpost_at(data, city_id, year, month):
+    rule = data.get('frontier_outposts', {}).get(city_id)
+    if rule is None or (year, month) < tuple(rule['from_date']):
+        return None
+    end = rule.get('to_date')
+    return rule if end is None or (year, month) < tuple(end) else None
+
+
 def profile_at(data, city_id, year, month):
     """Return an independent current-date profile, keeping dated provenance."""
     profile = deepcopy(data.get('city_profiles', {}).get(city_id, {}))
     tier = tier_at(data, city_id, year, month)
     profile.update(tier=tier, label=TIER_LABELS[tier])
+    if frontier_outpost_at(data, city_id, year, month) is not None:
+        profile.update(kind='frontier_outpost', label='边塞据点')
     return profile
 
 
@@ -47,6 +60,8 @@ def profiles_at(data, year, month):
 
 def income_at(data, city_id, year, month):
     """Scale opening production directly, never repeatedly compound rounds."""
+    if frontier_outpost_at(data, city_id, year, month) is not None:
+        return dict.fromkeys(FIELDS, 0)
     income = data.get('city_income', {}).get(city_id)
     if income is None:
         return None
@@ -61,6 +76,101 @@ def income_at(data, city_id, year, month):
 def incomes_at(data, year, month):
     return {city_id: income_at(data, city_id, year, month)
             for city_id in data.get('city_income', {})}
+
+
+def _frontier_sponsor(data, city_id, rule, owners, routes, outposts):
+    owner = owners[city_id]
+    if owner == 'neutral':
+        return None
+    preferences = [key for key in rule['supply_cities']
+                   if owners.get(key) == owner and key not in outposts]
+    adjacent = {}
+    for route in routes:
+        source, target = route['from'], route['to']
+        if owners.get(source) != owner or owners.get(target) != owner:
+            continue
+        adjacent.setdefault(source, []).append((target, route))
+        adjacent.setdefault(target, []).append((source, route))
+
+    # Search backward from the outpost to find routes that a rear city can
+    # actually use to reach it. The search also supplies a nearest fallback.
+    queue, visited = [(0, city_id)], set()
+    nearest = None
+    while queue:
+        days, here = heappop(queue)
+        if here in visited:
+            continue
+        visited.add(here)
+        if here not in outposts:
+            if not preferences or here == preferences[0]:
+                return here
+            nearest = nearest or here
+        for previous, route in adjacent.get(here, ()):
+            if previous not in visited and route_allowed(data, route, previous, here):
+                heappush(queue, (days + route['days'], previous))
+    return next((key for key in preferences if key in visited), nearest)
+
+
+def frontier_outposts_view(data, state=None):
+    """Resolve current or opening maintenance without changing city stocks."""
+    ids = data.get('frontier_outposts', {})
+    if not ids:
+        return {}
+    if state is None:
+        year, month = data['start_year'], data['start_month']
+        owners = {key: data['initial_owners'][key] for key in data['active_cities']}
+    else:
+        year, month = state.year, state.month
+        owners = {key: city.owner for key, city in state.cities.items()}
+    outposts = {key: rule for key in sorted(ids) if key in owners
+                if (rule := frontier_outpost_at(data, key, year, month)) is not None}
+    if not outposts:
+        return {}
+    roads = [route for route in effective(data['travel_routes'], owners, year, month)
+             if route['mode'] == 'land']
+    return {key: dict(monthly_maintenance=rule['upkeep_gold'],
+                      sponsor_city=_frontier_sponsor(
+                          data, key, rule, owners, roads, outposts))
+            for key, rule in outposts.items()}
+
+
+def frontier_maintenance(game, state):
+    """Settle facilities from rear-city gold and rations from local stock."""
+    outposts = frontier_outposts_view(game.catalog.data, state)
+    if not outposts:
+        return
+    from .domestic import _garrison_troops
+    from .map_presentation import city_names
+    from .march_supply import cost as ration_cost
+
+    names = city_names(game.catalog, state.year, state.month)
+    battling = {unit['id'] for side in ('attackers', 'defenders')
+                for unit in state.battle[side]} if state.battle else set()
+    days = game.catalog.data['calendar_rules']['month_days']
+    for key, row in outposts.items():
+        outpost = state.cities[key]
+        if outpost.owner == 'neutral':
+            continue
+        troops = _garrison_troops(game, state, outpost, exclude=battling)
+        ration = ration_cost(troops, 0, days)
+        fed = min(ration, outpost.grain)
+        outpost.grain -= fed
+        cost = row['monthly_maintenance']
+        sponsor = state.cities.get(row['sponsor_city'])
+        if sponsor is not None:
+            paid = min(cost, sponsor.gold)
+            sponsor.gold -= paid
+        if outpost.owner != state.player:
+            continue
+        if sponsor is None:
+            note = f'{names[key]}未连通己方郡城，{cost}金维护费未支付。'
+        else:
+            unpaid = f'，尚缺{cost - paid}金' if paid < cost else ''
+            note = f'{names[sponsor.id]}为{names[key]}支付维护费{paid}金{unpaid}。'
+        if ration:
+            shortfall = f'，粮草尚缺{ration - fed}' if fed < ration else ''
+            note += f'驻军消耗{fed}粮{shortfall}。'
+        game._note(state, note)
 
 
 def opening_development(data, city_id, tier):

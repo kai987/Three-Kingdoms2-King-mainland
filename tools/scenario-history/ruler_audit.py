@@ -33,6 +33,7 @@ REPORT_MD = ROOT / 'docs/ruler-affiliation-audit-20261027.md'
 EXPECTED_SCENARIOS = 29
 EXPECTED_POOL = 67
 EXPECTED_PEOPLE = 1056
+HETAO_EXPANSION_CITIES = frozenset(('shuofang', 'wuyuan', 'yunzhong'))
 LOCATION_FIELDS = ('status', 'faction', 'city')
 STATE_FIELDS = (*LOCATION_FIELDS, 'ruler')
 
@@ -127,6 +128,11 @@ def material_totals(data, active):
                 grain=sum(row['grain'] for row in stocks),
                 soldiers=sum(row['reserves'] for row in stocks)
                 + sum(row['troops'] for row in data['initial_officers']))
+
+
+def frozen_material_totals(data, active):
+    """Exclude later Hetao city stocks while still counting all carried troops."""
+    return material_totals(data, active - HETAO_EXPANSION_CITIES)
 
 
 def check_catalog(data, decision, pool, presentation):
@@ -237,7 +243,7 @@ def check_catalog(data, decision, pool, presentation):
                          ruler=pid in ruler_ids, city_name=names.get(era.get('city'))))
 
     material = material_totals(data, active)
-    require(decision.get('material') == material,
+    require(decision.get('material') == frozen_material_totals(data, active),
             ident + ': gold/grain/soldier totals differ from frozen pre-change material')
     corrections = decision.get('corrections', [])
     require(isinstance(corrections, list), ident + ': correction list required')
@@ -355,7 +361,8 @@ def build_report(reference_path=REFERENCE, catalog_dir=CATALOG_DIR):
                 pool=list(sorted(pool.values(), key=lambda row: row['runtime_id'])),
                 summary=dict(counts), limits=review['limits'], sources=review.get('sources', {}),
                 scope='Frozen ruler affiliation decisions and global structural checks; not full biographical or monthly-garrison historical certification.',
-                material_definition='Active-city gold and grain; soldiers are active-city reserves plus initial_officers carried troops. Free officers carry zero opening troops.',
+                material_definition=('Opening totals include all active-city stocks and carried troops. '
+                    'The frozen comparison excludes opening stocks at the three later Hetao sites.'),
                 conversion=conversion, scenarios=results)
 
 
@@ -405,6 +412,7 @@ def markdown(report):
         f'開幕の君主名・人物ID・本拠都市・所有者・君主フラグ、全{EXPECTED_PEOPLE}人の配置根拠集計、資源の保存を別々に検証します。'
         '184年2月の後日起兵する勢力は定義があっても開幕君主に数えず、既定の条件付き起兵処理を維持します。'
         '資金・兵糧は開放都市だけ、兵員は開放都市の予備兵と在籍武将の帯兵の合計です。'
+        '表には現行の全開放都市を集計し、固定レビューとの照合では後から追加された河套三都市の初期備蓄を除きます。'
         '在野化するときの帯兵は予備兵へ返し、兵員総数を増減させません。', '',
         '## 29本の照合結果', '',
         '| 年月 | 種別 | シナリオ | 開幕勢力 | 人物候補 | 修正 | 資金 / 兵糧 / 兵員 |',

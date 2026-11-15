@@ -22,7 +22,9 @@ class BattlefieldCityBindings(unittest.TestCase):
         cities = {row['id'] for row in self.shared['cities']}
         self.assertEqual(len(cities), 115)
         self.assertLessEqual(cities, set(spec['cities']))
-        self.assertEqual(spec['city_count'], 126)
+        expansion = set(read('game/config/campaigns/city-expansion-map.json')['cities'])
+        self.assertEqual(set(spec['cities']), cities | expansion)
+        self.assertEqual(spec['city_count'], len(cities | expansion))
         self.assertEqual(set(spec['templates']), {f'original-{index:02d}' for index in range(30)})
         self.assertEqual({row['map_id'] for row in spec['cities'].values()}, set(spec['templates']))
         for city, row in spec['cities'].items():

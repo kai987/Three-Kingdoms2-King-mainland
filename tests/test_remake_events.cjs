@@ -344,8 +344,10 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  }
  assert(validEvent(transport));assert(validEvent(work));for(const bad of [{convoy_id:0},{gold:-1},{lost:1.5},{reason:'<script>'},{unknown:1}])assert(!validEvent({...transport,details:{...transport.details,...bad}}));
  const training=fixture([work]),trainingBefore=JSON.stringify(work);for(const locale of ['zh-Hant','ja']){training.i18n.locale=locale;const message=training.events.description(work);assert(message.includes(locale==='ja'?'練度の成果は150':'訓練度成果150'));assert(!message.includes('士氣'));assert(!message.includes('士気'));}assert.equal(JSON.stringify(work),trainingBefore,'Renaming historical training reports preserves their saved numerical details');
- assert(validEvent({...work,details:{...work.details,cities:126,morale:12600}}));
- assert(!validEvent({...work,details:{...work.details,cities:127}}));assert(!validEvent({...work,details:{...work.details,reason:'unknown'}}));
+ const frontierWork={...work,details:{...work.details,cities:129,morale:12900}};
+ assert(validEvent(frontierWork,129));assert(!validEvent(frontierWork,126));
+ assert(!validEvent({...frontierWork,details:{...frontierWork.details,morale:12901}},129));
+ assert(!validEvent({...work,details:{...work.details,reason:'unknown'}}));
  assert.deepEqual(groupRows([transport,{...transport,id:9},work]).map(g=>g.length),[2,1]);
  for(const kind of ['march_resupplied','march_starvation','march_retreat']){
   const sample=supplyRow(20,kind);assert(validEvent(sample));
@@ -380,6 +382,10 @@ function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  assert(!validEvent({...salary,details:{...salary.details,paid:6}}));assert(!validEvent({...salary,details:{...salary.details,bonus:{gold:0,grain:0,reserves:-1}}}));
  assert(!validEvent({...salary,details:{...salary.details,paid:1}}));assert(!validEvent({...salary,details:{...salary.details,counts:{staff:1,total_unpaid:0,cities:1}}}));
  assert(validEvent({...salary,details:{amount:62370,paid:62365,bonus:{gold:230,grain:200,reserves:80},counts:{staff:12474,total_unpaid:1,cities:126}}}));
+ const frontierStaff={...salary,details:{amount:63855,paid:63850,bonus:{gold:230,grain:200,reserves:80},counts:{staff:12771,total_unpaid:1,cities:129}}};
+ const frontierView=view([frontierWork,frontierStaff]);
+ assert.deepEqual(eventRows({...frontierView,catalog:{...catalog,cities:Array(129)}}).map(event=>event.id),[frontierWork.id,frontierStaff.id].sort((a,b)=>a-b));
+ assert.deepEqual(eventRows(frontierView),[],'Aggregate reports must fit the current board');
  assert.deepEqual(groupRows([staffRow(1),salary,staffRow(3),staffRow(4,'staff_candidate',{turn:2})]).map(g=>g.map(e=>e.id)),[[1,3],[2],[4]],'Interleaved staff events share one same-turn scene per kind');
  const staff=fixture(),staffView=view([staffRow(1),salary,staffRow(3,'staff_candidate',{factions:['wei'],audience:'player'}),staffRow(4,'staff_candidate',{details:{...staffRow(4).details,staff_id:'clerk-000002',name:'周平',portrait:'clerk-2'}})]);
  const staffBefore=JSON.stringify(staffView);staff.events.observe(staffView,{newGame:true});staff.drain();assert.deepEqual(staff.events.snapshot().active,[1,4]);assert.deepEqual(staff.events.snapshot().pending,[[2]],'Remote AI staff events never interrupt this player, even with a broad audience');

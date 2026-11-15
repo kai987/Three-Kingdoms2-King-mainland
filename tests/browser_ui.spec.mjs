@@ -893,8 +893,13 @@ test('city size labels and the report adapt to available space while retaining m
  const labels=page.locator('#map-labels'),names=page.locator('[data-city-label]');
  await expect(labels).toHaveAttribute('data-label-mode','major');
  const majorCount=await names.count();
- for(const [mode,count] of [['giant',4],['large',10],['all',118],['none',0],['major',majorCount]]){
+ const activeCityCount=await page.locator('#world-map .city-hit[data-city]').count();
+ for(const [mode,count] of [['giant',4],['large',10],['all',activeCityCount],['none',0],['major',majorCount]]){
   await labels.click();await expect(labels).toHaveAttribute('data-label-mode',mode);await expect(names).toHaveCount(count);
+  if(mode==='all'){
+   for(const city of ['shuofang','wuyuan','yunzhong'])
+    await expect(page.locator(`[data-city-label="${city}"]`)).toHaveCount(1);
+  }
  }
  await labels.click();await labels.click();
  await page.locator('#scenario').selectOption('mainland225-07');
@@ -2560,7 +2565,7 @@ test.describe('first-session assistance',()=>{
  test('initial language, compact previews and optional three-turn guidance preserve real commands',async({page},testInfo)=>{
   await opening(page);await expect(page.locator('html')).toHaveAttribute('lang','ja');
   const boot=await page.evaluate(async()=>{const r=await fetch(new URL('runtime/engine-manifest.json',location.href));return (await r.json()).previews;});
-  // The 126-city catalog adds opening ownership and garrison data to this bundle.
+  // The catalog adds opening ownership and garrison data to this bundle.
   expect(boot.encoding).toBe('gzip');expect(boot.bytes).toBeLessThan(3*1024*1024+32*1024);
   await expect(page.locator('#scenario')).toHaveValue('mainland184-02');await page.locator('input[name=faction][value=han]').check();await page.locator('#begin').click();await waitIdle(page);await tacticalDismiss(page);
   const raw=()=>page.evaluate(async()=>{const r=await fetch('/api/save');return r.json();});

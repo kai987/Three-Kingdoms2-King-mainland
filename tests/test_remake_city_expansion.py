@@ -14,10 +14,13 @@ from remake.map_presentation import city_names
 from remake.march_core import using_backend
 
 
-OLD_COUNTIES = {'hefei', 'guangling', 'chaisang', 'xicheng', 'shangyong', 'yiling'}
+ALWAYS_ACTIVE_ADDITIONS = {
+    'hefei', 'guangling', 'chaisang', 'xicheng', 'shangyong', 'yiling',
+    'shuofang', 'wuyuan', 'yunzhong',
+}
 FOUNDINGS = {'changli': (244, 9), 'pingyang': (247, 5), 'hengyang': (257, 2),
              'xiangdong': (257, 2), 'jianping': (260, 1)}
-ADDITIONS = OLD_COUNTIES | FOUNDINGS.keys()
+ADDITIONS = ALWAYS_ACTIVE_ADDITIONS | FOUNDINGS.keys()
 
 
 def read(path):
@@ -61,7 +64,7 @@ class CityExpansionTests(unittest.TestCase):
                 source = read('game/config/campaigns/' + self.entries[scenario]['file'])
                 original = apply_patch(self.shared, source.get('overrides', {}))
                 apply_opening_sizes(original, self.city_scale)
-                expected = OLD_COUNTIES | {city for city, opening in FOUNDINGS.items() if opening <= date}
+                expected = ALWAYS_ACTIVE_ADDITIONS | {city for city, opening in FOUNDINGS.items() if opening <= date}
                 plan = self.plan[scenario]
                 self.assertEqual(set(plan['owners']), expected)
                 game = self.start(scenario)

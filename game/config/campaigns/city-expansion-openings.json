@@ -8,7 +8,10 @@
         "chaisang": "neutral",
         "xicheng": "neutral",
         "shangyong": "neutral",
-        "yiling": "neutral"
+        "yiling": "neutral",
+        "shuofang": "han",
+        "wuyuan": "han",
+        "yunzhong": "han"
       },
       "garrisons": {
         "hefei": [],
@@ -16,7 +19,10 @@
         "chaisang": [],
         "xicheng": [],
         "shangyong": [],
-        "yiling": []
+        "yiling": [],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland188-06": {
@@ -26,7 +32,10 @@
         "chaisang": "neutral",
         "xicheng": "neutral",
         "shangyong": "neutral",
-        "yiling": "neutral"
+        "yiling": "neutral",
+        "shuofang": "neutral",
+        "wuyuan": "neutral",
+        "yunzhong": "neutral"
       },
       "garrisons": {
         "hefei": [],
@@ -34,7 +43,10 @@
         "chaisang": [],
         "xicheng": [],
         "shangyong": [],
-        "yiling": []
+        "yiling": [],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland190-01": {
@@ -44,7 +56,10 @@
         "chaisang": "neutral",
         "xicheng": "neutral",
         "shangyong": "neutral",
-        "yiling": "liu_biao"
+        "yiling": "liu_biao",
+        "shuofang": "neutral",
+        "wuyuan": "neutral",
+        "yunzhong": "neutral"
       },
       "garrisons": {
         "hefei": [],
@@ -54,7 +69,10 @@
         "shangyong": [],
         "yiling": [
           "san14-candidate-0324"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland191-10": {
@@ -64,7 +82,10 @@
         "chaisang": "neutral",
         "xicheng": "neutral",
         "shangyong": "neutral",
-        "yiling": "liu_biao"
+        "yiling": "liu_biao",
+        "shuofang": "neutral",
+        "wuyuan": "neutral",
+        "yunzhong": "neutral"
       },
       "garrisons": {
         "hefei": [],
@@ -74,7 +95,10 @@
         "shangyong": [],
         "yiling": [
           "san14-candidate-0324"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland194-06": {
@@ -84,7 +108,10 @@
         "chaisang": "neutral",
         "xicheng": "zhang_lu",
         "shangyong": "zhang_lu",
-        "yiling": "liu_biao"
+        "yiling": "liu_biao",
+        "shuofang": "neutral",
+        "wuyuan": "yuan_shao",
+        "yunzhong": "yuan_shao"
       },
       "garrisons": {
         "hefei": [
@@ -102,7 +129,10 @@
         ],
         "yiling": [
           "san14-candidate-0324"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland196-06": {
@@ -112,7 +142,10 @@
         "chaisang": "hua_xin",
         "xicheng": "zhang_lu",
         "shangyong": "zhang_lu",
-        "yiling": "liu_biao"
+        "yiling": "liu_biao",
+        "shuofang": "neutral",
+        "wuyuan": "yuan_shao",
+        "yunzhong": "yuan_shao"
       },
       "garrisons": {
         "hefei": [
@@ -130,7 +163,10 @@
         ],
         "yiling": [
           "san14-candidate-0324"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland197-07": {
@@ -140,7 +176,10 @@
         "chaisang": "hua_xin",
         "xicheng": "zhang_lu",
         "shangyong": "zhang_lu",
-        "yiling": "liu_biao"
+        "yiling": "liu_biao",
+        "shuofang": "neutral",
+        "wuyuan": "yuan_shao",
+        "yunzhong": "yuan_shao"
       },
       "garrisons": {
         "hefei": [
@@ -158,7 +197,10 @@
         ],
         "yiling": [
           "san14-candidate-0324"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland198-03": {
@@ -168,7 +210,10 @@
         "chaisang": "hua_xin",
         "xicheng": "zhang_lu",
         "shangyong": "zhang_lu",
-        "yiling": "liu_biao"
+        "yiling": "liu_biao",
+        "shuofang": "neutral",
+        "wuyuan": "yuan_shao",
+        "yunzhong": "yuan_shao"
       },
       "garrisons": {
         "hefei": [
@@ -186,7 +231,10 @@
         ],
         "yiling": [
           "san14-candidate-0324"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       },
       "attested_garrisons": {
         "guangling": [
@@ -204,7 +252,10 @@
         "chaisang": "wu",
         "xicheng": "zhang_lu",
         "shangyong": "zhang_lu",
-        "yiling": "liu_biao"
+        "yiling": "liu_biao",
+        "shuofang": "neutral",
+        "wuyuan": "yuan_shao",
+        "yunzhong": "yuan_shao"
       },
       "garrisons": {
         "hefei": [],
@@ -222,7 +273,10 @@
         ],
         "yiling": [
           "san14-candidate-0324"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       },
       "attested_garrisons": {
         "guangling": [
@@ -240,7 +294,10 @@
         "chaisang": "wu",
         "xicheng": "zhang_lu",
         "shangyong": "zhang_lu",
-        "yiling": "liu_biao"
+        "yiling": "liu_biao",
+        "shuofang": "neutral",
+        "wuyuan": "yuan_shao",
+        "yunzhong": "yuan_shao"
       },
       "garrisons": {
         "hefei": [
@@ -260,7 +317,10 @@
         ],
         "yiling": [
           "san14-candidate-0324"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland202-06": {
@@ -270,7 +330,10 @@
         "chaisang": "wu",
         "xicheng": "zhang_lu",
         "shangyong": "zhang_lu",
-        "yiling": "liu_biao"
+        "yiling": "liu_biao",
+        "shuofang": "neutral",
+        "wuyuan": "gao_gan",
+        "yunzhong": "gao_gan"
       },
       "garrisons": {
         "hefei": [
@@ -290,7 +353,10 @@
         ],
         "yiling": [
           "san14-candidate-0324"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       },
       "attested_garrisons": {
         "hefei": [
@@ -305,7 +371,10 @@
         "chaisang": "wu",
         "xicheng": "zhang_lu",
         "shangyong": "zhang_lu",
-        "yiling": "liu_biao"
+        "yiling": "liu_biao",
+        "shuofang": "neutral",
+        "wuyuan": "wei",
+        "yunzhong": "wei"
       },
       "garrisons": {
         "hefei": [
@@ -325,7 +394,10 @@
         ],
         "yiling": [
           "san14-candidate-0324"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       },
       "attested_garrisons": {
         "hefei": [
@@ -340,7 +412,10 @@
         "chaisang": "wu",
         "xicheng": "zhang_lu",
         "shangyong": "zhang_lu",
-        "yiling": "wei"
+        "yiling": "wei",
+        "shuofang": "neutral",
+        "wuyuan": "wei",
+        "yunzhong": "wei"
       },
       "garrisons": {
         "hefei": [
@@ -360,7 +435,10 @@
         ],
         "yiling": [
           "san14-candidate-0442"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland209-06": {
@@ -370,7 +448,10 @@
         "chaisang": "wu",
         "xicheng": "zhang_lu",
         "shangyong": "zhang_lu",
-        "yiling": "wei"
+        "yiling": "wei",
+        "shuofang": "neutral",
+        "wuyuan": "wei",
+        "yunzhong": "wei"
       },
       "garrisons": {
         "hefei": [
@@ -390,7 +471,10 @@
         ],
         "yiling": [
           "san14-candidate-0814"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland210-11": {
@@ -400,7 +484,10 @@
         "chaisang": "wu",
         "xicheng": "wu",
         "shangyong": "wei",
-        "yiling": "wu"
+        "yiling": "wu",
+        "shuofang": "neutral",
+        "wuyuan": "wei",
+        "yunzhong": "wei"
       },
       "garrisons": {
         "hefei": [
@@ -420,7 +507,10 @@
         ],
         "yiling": [
           "san14-candidate-0891"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland211-07-tongguan": {
@@ -430,7 +520,10 @@
         "chaisang": "wu",
         "xicheng": "zhang_lu",
         "shangyong": "zhang_lu",
-        "yiling": "shu"
+        "yiling": "shu",
+        "shuofang": "neutral",
+        "wuyuan": "wei",
+        "yunzhong": "wei"
       },
       "garrisons": {
         "hefei": [
@@ -450,7 +543,10 @@
         ],
         "yiling": [
           "san14-candidate-0801"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland212-06": {
@@ -460,7 +556,10 @@
         "chaisang": "wu",
         "xicheng": "zhang_lu",
         "shangyong": "zhang_lu",
-        "yiling": "shu"
+        "yiling": "shu",
+        "shuofang": "neutral",
+        "wuyuan": "cao_zhang",
+        "yunzhong": "wei"
       },
       "garrisons": {
         "hefei": [
@@ -480,7 +579,10 @@
         ],
         "yiling": [
           "san14-candidate-0801"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland212-12": {
@@ -490,7 +592,10 @@
         "chaisang": "wu",
         "xicheng": "zhang_lu",
         "shangyong": "zhang_lu",
-        "yiling": "shu"
+        "yiling": "shu",
+        "shuofang": "neutral",
+        "wuyuan": "wei",
+        "yunzhong": "wei"
       },
       "garrisons": {
         "hefei": [
@@ -510,7 +615,10 @@
         ],
         "yiling": [
           "san14-candidate-0801"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland215-08": {
@@ -520,7 +628,10 @@
         "chaisang": "wu",
         "xicheng": "wei",
         "shangyong": "wei",
-        "yiling": "shu"
+        "yiling": "shu",
+        "shuofang": "neutral",
+        "wuyuan": "neutral",
+        "yunzhong": "neutral"
       },
       "garrisons": {
         "hefei": [
@@ -542,7 +653,10 @@
         ],
         "yiling": [
           "san14-candidate-0801"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       },
       "attested_garrisons": {
         "hefei": [
@@ -559,7 +673,10 @@
         "chaisang": "wu",
         "xicheng": "wei",
         "shangyong": "wei",
-        "yiling": "shu"
+        "yiling": "shu",
+        "shuofang": "neutral",
+        "wuyuan": "neutral",
+        "yunzhong": "neutral"
       },
       "garrisons": {
         "hefei": [
@@ -580,7 +697,10 @@
         ],
         "yiling": [
           "san14-candidate-0801"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland219-07": {
@@ -590,7 +710,10 @@
         "chaisang": "wu",
         "xicheng": "shu",
         "shangyong": "shu",
-        "yiling": "shu"
+        "yiling": "shu",
+        "shuofang": "neutral",
+        "wuyuan": "neutral",
+        "yunzhong": "neutral"
       },
       "garrisons": {
         "hefei": [
@@ -610,7 +733,10 @@
         ],
         "yiling": [
           "san14-candidate-0652"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       },
       "attested_garrisons": {
         "xicheng": [
@@ -632,7 +758,10 @@
         "chaisang": "wu",
         "xicheng": "wei",
         "shangyong": "wei",
-        "yiling": "wu"
+        "yiling": "wu",
+        "shuofang": "neutral",
+        "wuyuan": "neutral",
+        "yunzhong": "neutral"
       },
       "garrisons": {
         "hefei": [
@@ -652,7 +781,10 @@
         ],
         "yiling": [
           "san14-candidate-0902"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       },
       "attested_garrisons": {
         "xicheng": [
@@ -670,7 +802,10 @@
         "chaisang": "wu",
         "xicheng": "wei",
         "shangyong": "wei",
-        "yiling": "wu"
+        "yiling": "wu",
+        "shuofang": "neutral",
+        "wuyuan": "neutral",
+        "yunzhong": "neutral"
       },
       "garrisons": {
         "hefei": [
@@ -690,7 +825,10 @@
         ],
         "yiling": [
           "san14-candidate-0902"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       },
       "attested_garrisons": {
         "xicheng": [
@@ -705,7 +843,10 @@
         "chaisang": "wu",
         "xicheng": "wei",
         "shangyong": "wei",
-        "yiling": "wu"
+        "yiling": "wu",
+        "shuofang": "neutral",
+        "wuyuan": "neutral",
+        "yunzhong": "neutral"
       },
       "garrisons": {
         "hefei": [
@@ -725,7 +866,10 @@
         ],
         "yiling": [
           "san14-candidate-0902"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       },
       "attested_garrisons": {
         "xicheng": [
@@ -743,7 +887,10 @@
         "chaisang": "wu",
         "xicheng": "wei",
         "shangyong": "wei",
-        "yiling": "wu"
+        "yiling": "wu",
+        "shuofang": "neutral",
+        "wuyuan": "neutral",
+        "yunzhong": "neutral"
       },
       "garrisons": {
         "hefei": [
@@ -763,7 +910,10 @@
         ],
         "yiling": [
           "san14-candidate-0838"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       },
       "attested_garrisons": {
         "yiling": [
@@ -778,7 +928,10 @@
         "chaisang": "wu",
         "xicheng": "wei",
         "shangyong": "wei",
-        "yiling": "wu"
+        "yiling": "wu",
+        "shuofang": "wei",
+        "wuyuan": "neutral",
+        "yunzhong": "neutral"
       },
       "garrisons": {
         "hefei": [
@@ -798,7 +951,10 @@
         ],
         "yiling": [
           "san14-candidate-0838"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       }
     },
     "mainland238-01": {
@@ -808,7 +964,10 @@
         "chaisang": "wu",
         "xicheng": "wei",
         "shangyong": "wei",
-        "yiling": "wu"
+        "yiling": "wu",
+        "shuofang": "wei",
+        "wuyuan": "neutral",
+        "yunzhong": "neutral"
       },
       "garrisons": {
         "hefei": [
@@ -828,7 +987,10 @@
         ],
         "yiling": [
           "san14-candidate-0838"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       },
       "attested_garrisons": {
         "yiling": [
@@ -845,7 +1007,10 @@
         "shangyong": "wei",
         "yiling": "wu",
         "changli": "wei",
-        "pingyang": "wei"
+        "pingyang": "wei",
+        "shuofang": "wei",
+        "wuyuan": "neutral",
+        "yunzhong": "neutral"
       },
       "garrisons": {
         "hefei": [
@@ -871,7 +1036,10 @@
         ],
         "pingyang": [
           "san14-candidate-0049"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       },
       "attested_garrisons": {
         "chaisang": [
@@ -894,7 +1062,10 @@
         "pingyang": "wei",
         "hengyang": "wu",
         "xiangdong": "wu",
-        "jianping": "wu"
+        "jianping": "wu",
+        "shuofang": "wei",
+        "wuyuan": "neutral",
+        "yunzhong": "neutral"
       },
       "garrisons": {
         "hefei": [
@@ -929,7 +1100,10 @@
         ],
         "jianping": [
           "san14-candidate-0425"
-        ]
+        ],
+        "shuofang": [],
+        "wuyuan": [],
+        "yunzhong": []
       },
       "attested_garrisons": {
         "yiling": [
@@ -1021,6 +1195,104 @@
         "https://zh.wikisource.org/wiki/宋書/卷37",
         "https://zh.wikisource.org/zh-hant/三國志/卷58#陸抗"
       ]
+    },
+    "shuofang": {
+      "basis": "漢朔方郡在河套西部。本作沿用臨戎舊址，215年正月撤郡後改為邊塞據點，235年正月復置。復置後採用同一地圖節點與後續歸魏的開局，屬遊戲配置。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hans/後漢書/卷113#并州",
+        "https://www.nmgqq.com.cn/quqinggailan/nemenggudashiji/qh/2017-2-16/9787.html",
+        "https://zh.wikisource.org/wiki/三國志/卷01",
+        "https://zh.wikisource.org/wiki/三國志/卷03",
+        "https://ctext.org/wiki.pl?chapter=345396&if=gb",
+        "https://zh.wikisource.org/wiki/晉書/卷014#并州"
+      ],
+      "frontier_outpost": {
+        "from_date": [
+          215,
+          1
+        ],
+        "to_date": [
+          235,
+          1
+        ],
+        "supply_cities": [
+          "anding",
+          "yanmen",
+          "xihe"
+        ],
+        "upkeep_gold": 10
+      },
+      "opening_notes": {
+        "neutral": "東漢末河套西段受邊患及流徙影響，215年又撤朔方郡。未復置前在無可考駐守的開局，按河套地方部眾中立配置。",
+        "wei": "按235年魏明帝復置朔方郡設定。沿用臨戎舊址及後續開局歸魏為本作配置。",
+        "han": "東漢郡國志列為并州屬郡，184年開局以漢廷勢力代表郡府。"
+      },
+      "neutral_label": "河套地方部众（中立）"
+    },
+    "wuyuan": {
+      "basis": "漢五原郡治九原，在今包頭一帶。215年正月撤郡後，以河套九原舊址作為本作邊塞據點。",
+      "sources": [
+        "https://www.nmgqq.com.cn/quqinggailan/nemenggudashiji/qh/2017-2-16/9787.html",
+        "https://zh.wikisource.org/wiki/三國志/卷01",
+        "https://zh.wikisource.org/zh-hans/後漢書/卷113#并州",
+        "https://ctext.org/wiki.pl?chapter=345396&if=gb",
+        "https://zh.wikisource.org/wiki/晉書/卷014#并州",
+        "https://zh.wikisource.org/wiki/三國志/卷15#梁習"
+      ],
+      "frontier_outpost": {
+        "from_date": [
+          215,
+          1
+        ],
+        "supply_cities": [
+          "anding",
+          "yanmen",
+          "xihe"
+        ],
+        "upkeep_gold": 10
+      },
+      "opening_notes": {
+        "neutral": "漢末邊郡受戰亂、流徙影響。沒有足夠依據確認舊址在本劇本由可玩勢力駐守，故按河套地方部眾中立配置。",
+        "han": "東漢郡國志列為并州屬郡，184年開局以漢廷勢力代表郡府。",
+        "yuan_shao": "依本劇本袁紹所領并州北部區域配置；史料可見其部將高幹領并州，舊郡駐軍未詳。",
+        "gao_gan": "袁紹曾令高幹領并州，202年劇本按高幹的晉北勢力範圍配置，舊郡駐軍未詳。",
+        "wei": "曹操平定并州後，梁習安撫邊部並整頓防線。本作依開局所屬的北部防區配置，舊郡駐軍未詳。",
+        "cao_zhang": "212年六月是假想劇本，五原按西河與太原所在的區域劃給曹彰。"
+      },
+      "neutral_label": "河套地方部众（中立）"
+    },
+    "yunzhong": {
+      "basis": "漢雲中郡治雲中，在今托克托縣一帶。215年正月撤郡後，以雲中故城作為本作邊塞據點。",
+      "sources": [
+        "https://www.nmgqq.com.cn/quqinggailan/nemenggudashiji/qh/2017-2-16/9787.html",
+        "https://zh.wikisource.org/wiki/三國志/卷01",
+        "https://zh.wikisource.org/zh-hans/後漢書/卷113#并州",
+        "https://ctext.org/wiki.pl?chapter=345396&if=gb",
+        "https://zh.wikisource.org/wiki/晉書/卷014#并州",
+        "https://zh.wikisource.org/wiki/三國志/卷15#梁習",
+        "https://zh.wikisource.org/wiki/三國志/卷26#牽招"
+      ],
+      "frontier_outpost": {
+        "from_date": [
+          215,
+          1
+        ],
+        "supply_cities": [
+          "yanmen",
+          "xinxing",
+          "xihe",
+          "anding"
+        ],
+        "upkeep_gold": 10
+      },
+      "opening_notes": {
+        "neutral": "漢末邊郡受戰亂、流徙影響。沒有足夠依據確認舊址在本劇本由可玩勢力駐守，故按河套地方部眾中立配置。",
+        "han": "東漢郡國志列為并州屬郡，184年開局以漢廷勢力代表郡府。",
+        "yuan_shao": "依本劇本袁紹所領并州北部區域配置；史料可見其部將高幹領并州，舊郡駐軍未詳。",
+        "gao_gan": "袁紹曾令高幹領并州，202年劇本按高幹的晉北勢力範圍配置，舊郡駐軍未詳。",
+        "wei": "以本劇本雁門一帶所屬的魏方作區域配置。史載曹操平定并州後任梁習整頓邊防，雲中舊郡的駐守情況未詳。"
+      },
+      "neutral_label": "河套地方部众（中立）"
     }
   }
 }

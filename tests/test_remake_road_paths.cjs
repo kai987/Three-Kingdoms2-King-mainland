@@ -86,15 +86,18 @@ assert(!source.includes('<image href="${world.background}"'));
 // Existing owned castles need their outline above roads just as new castles
 // do. Relying on the background outline lets dynamic center-bound paths
 // paint across their black edge. Both masks keep the same native geometry.
-const castleContext={active:[{id:'old',position:[100,200]},{id:'empty',position:[300,400]}],
+const castleContext={active:[{id:'old',position:[100,200]},{id:'empty',position:[300,400]},{id:'outpost',position:[500,600]}],
  owners:{old:'wei',empty:'neutral'},mapPosition:c=>c.position,mapColor:id=>id==='neutral'?'#ffffff':'#0088ff',
+ cityProfiles:{outpost:{kind:'frontier_outpost'}},cityTypeLabel:()=> '邊塞據點',
  focused:null,preview:null,mapAction:null,cityName:id=>id,ownerName:id=>id,escapeHtml:String};
 vm.createContext(castleContext);
 const castleStart=source.indexOf(' const castles=active.map('),castleEnd=source.indexOf(' const extras=',castleStart);
 assert(castleStart>=0&&castleEnd>castleStart);
 vm.runInContext(source.slice(castleStart,castleEnd)+'\nglobalThis.renderedCastles=castles;',castleContext);
 const rendered=castleContext.renderedCastles;
-assert.equal((rendered.match(/class="castle-border"/g)||[]).length,2,'Every city redraws its full outline above roads');
+assert.equal((rendered.match(/class="castle-border"/g)||[]).length,3,'Every city redraws its full outline above roads');
+assert(rendered.includes('data-city-kind="frontier_outpost" aria-label="outpost，邊塞據點，neutral"'));
+assert(rendered.includes('translate(500 600) scale(0.75)'),'A border outpost has a smaller sprite and retains its center');
 assert(rendered.includes('href="#castle-outline-pixels" x="100" y="200" fill="#000"'));
 assert(rendered.includes('href="#castle-outline-pixels" x="300" y="400" fill="#fff"'),'Unowned borders remain pure white');
 assert(rendered.includes('href="#castle-fill-pixels" x="300" y="400" fill="#ffffff"'));

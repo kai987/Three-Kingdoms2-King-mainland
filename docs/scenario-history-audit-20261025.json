@@ -3,7 +3,7 @@
   "review_revision": "2026-11-08",
   "review_file": "game/config/references/scenario-history-review.json",
   "review_sha256": "1dd4f2fb0b91b9a22615912a07853a766506f777d5b99bbbb645b60f53aa82e4",
-  "presentation_sha256": "b9891fb4e26e35f4aa132d29f15f43066fdb1bc6c6ecd50b104d860e66f3d303",
+  "presentation_sha256": "c7d1fe0140986a050ad2e878f328b59d1b632b91f07557806e5f26a4beb7fc87",
   "scope": "Regional review and current-data consistency, not a complete attested city/month prefect list or a SAN14 export.",
   "boundary_definition": "Different opening owners connected by links, sea_links or travel_routes; each unordered city pair is listed once. These are network borders, not geographic administrative boundary polygons.",
   "historical_count": 23,
@@ -16,12 +16,12 @@
     "mainland235-01"
   ],
   "summary": {
-    "cities": 2683,
+    "cities": 2752,
     "factions": 253,
     "future_factions": 2,
     "scheduled_faction_foundings": 2,
     "scheduled_faction_coups": 1,
-    "boundary_links": 1477,
+    "boundary_links": 1519,
     "opening_officers": 8897,
     "new_factions": 43,
     "city_changes": 109,
@@ -30,12 +30,12 @@
     "officer_change_records": 831
   },
   "fictional_adaptation_summary": {
-    "cities": 583,
+    "cities": 598,
     "factions": 63,
     "future_factions": 0,
     "scheduled_faction_foundings": 0,
     "scheduled_faction_coups": 0,
-    "boundary_links": 379,
+    "boundary_links": 390,
     "opening_officers": 2190,
     "new_factions": 13,
     "city_changes": 14,
@@ -171,7 +171,7 @@
       "title": "184年2月 · 黄巾之乱",
       "title_ja": "184年2月 · 黄巾之乱",
       "catalog_file": "game/data/campaigns/184-02.json",
-      "catalog_sha256": "a5d7b2fbefa8c38de173e04ef5b8082aebd3d53e8f907f833382b5fbcfdaa8c3",
+      "catalog_sha256": "7b1cb0c6ccf6cab4301ed65ee01e539bb0ab551ccef57d9bc9e4090a16a259e9",
       "factions": [
         {
           "id": "ding_yuan",
@@ -206,7 +206,7 @@
           "person_id": "san14-candidate-0132",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 4,
+          "city_count": 7,
           "officer_count": 49
         },
         {
@@ -404,7 +404,7 @@
           "current_after": 1860
         }
       ],
-      "initial_soldier_total": 200302,
+      "initial_soldier_total": 202252,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -413,7 +413,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 114,
+      "city_count": 117,
       "city_owners": [
         {
           "city": "anding",
@@ -884,6 +884,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "han",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "ding_yuan",
@@ -936,6 +942,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "han",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -1046,6 +1058,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "han",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "gongsun_zan",
@@ -1139,6 +1157,23 @@
           "cities": [
             "anding",
             "jingzhao"
+          ],
+          "owners": [
+            "dong_zhuo",
+            "han"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
           ],
           "owners": [
             "dong_zhuo",
@@ -2256,6 +2291,23 @@
           "owners": [
             "liu_yan",
             "gongsun_zan"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "yanmen",
+            "yunzhong"
+          ],
+          "owners": [
+            "neutral",
+            "han"
           ],
           "modes": [
             "land"
@@ -5604,7 +5656,7 @@
       "title": "188年6月 · 漢朝搖搖欲墜",
       "title_ja": "揺らぐ漢朝",
       "catalog_file": "game/data/campaigns/188-06.json",
-      "catalog_sha256": "028cedea89bb8014f2c1c74fe1e09283b440fad36b7caf01ac706a8277d00530",
+      "catalog_sha256": "18555afc7da800e5382083c8aa435a411a943c92be1a7df16aac5bf34528fbe2",
       "factions": [
         {
           "id": "ding_yuan",
@@ -5710,7 +5762,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 193402,
+      "initial_soldier_total": 195352,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -5719,7 +5771,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 114,
+      "city_count": 117,
       "city_owners": [
         {
           "city": "anding",
@@ -6190,6 +6242,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "ding_yuan",
@@ -6242,6 +6300,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -6350,6 +6414,12 @@
           "name": "云南",
           "owner": "neutral",
           "neutral_label": null
+        },
+        {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "yuyang",
@@ -11236,7 +11306,7 @@
       "title": "190年1月 · 反董卓联盟",
       "title_ja": "190年1月 · 反董卓联盟",
       "catalog_file": "game/data/campaigns/190-01.json",
-      "catalog_sha256": "6c24fd97b2c07862045ee98340b19104d4d3dc47edd80adcf5a010ae36a88eec",
+      "catalog_sha256": "6ba5216c1c92a7484695f42e79edd7c9d59377f2f8bd08faa815e8942eaefadb",
       "factions": [
         {
           "id": "bao_xin",
@@ -11486,7 +11556,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 229112,
+      "initial_soldier_total": 230907,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -11495,7 +11565,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 114,
+      "city_count": 117,
       "city_owners": [
         {
           "city": "anding",
@@ -11966,6 +12036,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "neutral",
@@ -12018,6 +12094,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -12128,6 +12210,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "gongsun_zan",
@@ -12225,6 +12313,23 @@
           "owners": [
             "ma_teng",
             "dong_zhuo"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -19058,7 +19163,7 @@
       "title": "191年10月 · 二袁的意图",
       "title_ja": "191年10月 · 二袁的意图",
       "catalog_file": "game/data/campaigns/191-10.json",
-      "catalog_sha256": "9d0cec9f3e54a227d9f180a3ffad27e654e9dc405c321756ab2527e773f5905d",
+      "catalog_sha256": "b6671ad871bed6ab0ab877baeaa90c7289400ddf808f23907dc3131138c357f1",
       "factions": [
         {
           "id": "bao_xin",
@@ -19272,7 +19377,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 241992,
+      "initial_soldier_total": 243787,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -19281,7 +19386,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 114,
+      "city_count": 117,
       "city_owners": [
         {
           "city": "anding",
@@ -19752,6 +19857,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "neutral",
@@ -19804,6 +19915,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -19914,6 +20031,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "gongsun_zan",
@@ -20011,6 +20134,23 @@
           "owners": [
             "ma_teng",
             "dong_zhuo"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -26921,7 +27061,7 @@
       "title": "194年6月 · 群雄割据",
       "title_ja": "194年6月 · 群雄割据",
       "catalog_file": "game/data/campaigns/194-06.json",
-      "catalog_sha256": "3805d7f8e1965021f29474d55e21913a0bb2b7d1a75b51f3554bc0417663583e",
+      "catalog_sha256": "ed1a94b30dcdae971b605a018e990ce7ca0c1219bfb63cec0ec78b6b994aecb6",
       "factions": [
         {
           "id": "gongsun",
@@ -27082,7 +27222,7 @@
           "person_id": "san14-candidate-0035",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 16,
+          "city_count": 18,
           "officer_count": 45
         },
         {
@@ -27135,7 +27275,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 238177,
+      "initial_soldier_total": 239972,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -27144,7 +27284,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 114,
+      "city_count": 117,
       "city_owners": [
         {
           "city": "anding",
@@ -27615,6 +27755,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "yuan_shao",
@@ -27667,6 +27813,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "yuan_shao",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -27777,6 +27929,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "yuan_shao",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "gongsun_zan",
@@ -27874,6 +28032,23 @@
           "owners": [
             "ma_teng",
             "li_jue"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -29606,6 +29781,23 @@
           "owners": [
             "liu_zhang",
             "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "neutral",
+            "yuan_shao"
           ],
           "modes": [
             "land"
@@ -35055,7 +35247,7 @@
       "title": "196年6月 · 曹操得勢",
       "title_ja": "曹操の台頭",
       "catalog_file": "game/data/campaigns/196-06.json",
-      "catalog_sha256": "39223cd63587aac87cff2097eb8c4d5b83a712066cb448abb789043ee9542b86",
+      "catalog_sha256": "b56a7ac75065a7a13fa94ce51c148c3f8b3ce5f94687fb1c25d18903c86d4723",
       "factions": [
         {
           "id": "gongsun",
@@ -35216,7 +35408,7 @@
           "person_id": "san14-candidate-0035",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 16,
+          "city_count": 18,
           "officer_count": 46
         },
         {
@@ -35260,7 +35452,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 236767,
+      "initial_soldier_total": 238562,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -35269,7 +35461,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 115,
+      "city_count": 118,
       "city_owners": [
         {
           "city": "anding",
@@ -35746,6 +35938,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "yuan_shao",
@@ -35798,6 +35996,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "yuan_shao",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -35908,6 +36112,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "yuan_shao",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "gongsun_zan",
@@ -36005,6 +36215,23 @@
           "owners": [
             "ma_teng",
             "li_jue"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -37789,6 +38016,23 @@
           "owners": [
             "liu_zhang",
             "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "neutral",
+            "yuan_shao"
           ],
           "modes": [
             "land"
@@ -43240,7 +43484,7 @@
       "title": "198年3月 · 呂布討伐戰",
       "title_ja": "呂布討伐戦",
       "catalog_file": "game/data/campaigns/198-03.json",
-      "catalog_sha256": "6a68feb45d030a2913abb211b6fe297275b5d7429395b521475ef1340143dcc7",
+      "catalog_sha256": "2d63766232a14b0950b7149fb3d864418bd293383c90dc99a0214fddd006b6c0",
       "factions": [
         {
           "id": "gongsun",
@@ -43374,7 +43618,7 @@
           "person_id": "san14-candidate-0035",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 16,
+          "city_count": 18,
           "officer_count": 45
         },
         {
@@ -43427,7 +43671,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 239162,
+      "initial_soldier_total": 240957,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -43436,7 +43680,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 115,
+      "city_count": 118,
       "city_owners": [
         {
           "city": "anding",
@@ -43913,6 +44157,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "yuan_shao",
@@ -43965,6 +44215,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "yuan_shao",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -44075,6 +44331,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "yuan_shao",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "gongsun_zan",
@@ -44172,6 +44434,23 @@
           "owners": [
             "ma_teng",
             "li_jue"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -45869,6 +46148,23 @@
           "owners": [
             "liu_zhang",
             "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "neutral",
+            "yuan_shao"
           ],
           "modes": [
             "land"
@@ -51190,7 +51486,7 @@
       "title": "200年1月 · 官渡之战",
       "title_ja": "200年1月 · 官渡之战",
       "catalog_file": "game/data/campaigns/200-01.json",
-      "catalog_sha256": "ae2a540c79961a7d7b86a8be38a74b893f378a01577bafd03973b1c814ef8b73",
+      "catalog_sha256": "6b60e0717a3d28179683bb9677d6eca0d5fd0909fb31832dcfb350e4697515a5",
       "factions": [
         {
           "id": "gongsun",
@@ -51288,7 +51584,7 @@
           "person_id": "san14-candidate-0035",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 23,
+          "city_count": 25,
           "officer_count": 55
         },
         {
@@ -51305,7 +51601,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 256327,
+      "initial_soldier_total": 258182,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -51314,7 +51610,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 115,
+      "city_count": 118,
       "city_owners": [
         {
           "city": "anding",
@@ -51791,6 +52087,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "yuan_shao",
@@ -51843,6 +52145,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "yuan_shao",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -51953,6 +52261,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "yuan_shao",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "yuan_shao",
@@ -52050,6 +52364,23 @@
           "owners": [
             "ma_teng",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -53334,6 +53665,23 @@
           "owners": [
             "liu_zhang",
             "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "neutral",
+            "yuan_shao"
           ],
           "modes": [
             "land"
@@ -58739,7 +59087,7 @@
       "title": "202年6月 · 河北爭亂",
       "title_ja": "河北争乱",
       "catalog_file": "game/data/campaigns/202-06.json",
-      "catalog_sha256": "f886ef5fe441281f917ac0b7274410af5a2c9795f87157ddaa199b3e694bdaa1",
+      "catalog_sha256": "f583ae51284dd12ad0dcb48080f3dec077e6ed2770afd7e6f4f40e5ad93c1c1b",
       "factions": [
         {
           "id": "gao_gan",
@@ -58747,7 +59095,7 @@
           "person_id": "san14-candidate-0248",
           "city": "taiyuan",
           "city_name": "晋阳",
-          "city_count": 4,
+          "city_count": 6,
           "officer_count": 1
         },
         {
@@ -58881,7 +59229,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 258427,
+      "initial_soldier_total": 260282,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -58890,7 +59238,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 115,
+      "city_count": 118,
       "city_owners": [
         {
           "city": "anding",
@@ -59367,6 +59715,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "gao_gan",
@@ -59419,6 +59773,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "gao_gan",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -59529,6 +59889,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "gao_gan",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "yuan_xi",
@@ -59626,6 +59992,23 @@
           "owners": [
             "ma_teng",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -60995,6 +61378,23 @@
           "owners": [
             "liu_zhang",
             "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "neutral",
+            "gao_gan"
           ],
           "modes": [
             "land"
@@ -66305,7 +66705,7 @@
       "title": "207年9月 · 三顾茅庐",
       "title_ja": "207年9月 · 三顾茅庐",
       "catalog_file": "game/data/campaigns/207-09.json",
-      "catalog_sha256": "8d50db8d06fd0688f5184f89d08709b7b6ab788f201b68696e856ad59fd6de9f",
+      "catalog_sha256": "c11472d38ece5b1060c89d969c9c51e1dcb30f8153de1e4fab32c305d5093e83",
       "factions": [
         {
           "id": "gongsun",
@@ -66385,7 +66785,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 45,
+          "city_count": 47,
           "officer_count": 135
         },
         {
@@ -66420,7 +66820,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 272007,
+      "initial_soldier_total": 273862,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -66429,7 +66829,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 115,
+      "city_count": 118,
       "city_owners": [
         {
           "city": "anding",
@@ -66906,6 +67306,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -66958,6 +67364,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -67068,6 +67480,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "wei",
@@ -67165,6 +67583,23 @@
           "owners": [
             "ma_teng",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -68195,6 +68630,23 @@
           "owners": [
             "liu_zhang",
             "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "neutral",
+            "wei"
           ],
           "modes": [
             "land"
@@ -74433,7 +74885,7 @@
       "title": "208年10月 · 赤壁之战",
       "title_ja": "208年10月 · 赤壁之战",
       "catalog_file": "game/data/campaigns/208-10.json",
-      "catalog_sha256": "e3b7f0434cd05efc554f12a9231c157a6a669b8e2fac256633cc11b4e19b47f3",
+      "catalog_sha256": "74533c07996be9ea6971d8a5a4b2deeaaeb38334d35e484493a005a58055e360",
       "factions": [
         {
           "id": "gongsun",
@@ -74531,7 +74983,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 50,
+          "city_count": 52,
           "officer_count": 171
         },
         {
@@ -74575,7 +75027,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 279822,
+      "initial_soldier_total": 281677,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -74584,7 +75036,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 117,
+      "city_count": 120,
       "city_owners": [
         {
           "city": "anding",
@@ -75061,6 +75513,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -75113,6 +75571,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -75235,6 +75699,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "wei",
@@ -75332,6 +75802,23 @@
           "owners": [
             "ma_teng",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -76484,6 +76971,23 @@
           "owners": [
             "liu_zhang",
             "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "neutral",
+            "wei"
           ],
           "modes": [
             "land"
@@ -82743,7 +83247,7 @@
       "title": "211年7月 · 潼關之戰",
       "title_ja": "潼関の戦い",
       "catalog_file": "game/data/campaigns/211-07-tongguan.json",
-      "catalog_sha256": "5dd7f0cbd718859ac67f77dbec57b3d0d3797e01c61f0b4875fed6743a899e3f",
+      "catalog_sha256": "033742c051a4d381bf4ea5d1cea34e39732290361f006b3c80ecdf6a7a05ec26",
       "factions": [
         {
           "id": "gongsun",
@@ -82814,7 +83318,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 45,
+          "city_count": 47,
           "officer_count": 166
         },
         {
@@ -82840,7 +83344,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 295720,
+      "initial_soldier_total": 297735,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -82849,7 +83353,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 117,
+      "city_count": 120,
       "city_owners": [
         {
           "city": "anding",
@@ -83326,6 +83830,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -83378,6 +83888,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -83500,6 +84016,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "wei",
@@ -83580,6 +84102,23 @@
           "owners": [
             "ma_teng",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -84543,6 +85082,23 @@
           "owners": [
             "liu_zhang",
             "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "neutral",
+            "wei"
           ],
           "modes": [
             "land"
@@ -89833,7 +90389,7 @@
       "title": "212年12月 · 入蜀爭奪戰",
       "title_ja": "入蜀争奪戦",
       "catalog_file": "game/data/campaigns/212-12.json",
-      "catalog_sha256": "61be7b5bfa51445e37b1e69dd243e862c8b624244127716b2e9fd09d4c86756d",
+      "catalog_sha256": "e1a066a40e4e2dd371baff22a4c056bdc635673432e29cbbe0acd71bf62bb3f5",
       "factions": [
         {
           "id": "gongsun",
@@ -89895,7 +90451,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 49,
+          "city_count": 51,
           "officer_count": 160
         },
         {
@@ -89921,7 +90477,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 285970,
+      "initial_soldier_total": 287835,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -89930,7 +90486,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 117,
+      "city_count": 120,
       "city_owners": [
         {
           "city": "anding",
@@ -90407,6 +90963,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -90459,6 +91021,12 @@
           "name": "姑臧",
           "owner": "neutral",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -90581,6 +91149,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "wei",
@@ -90644,6 +91218,23 @@
           "owners": [
             "wei",
             "han_sui"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -91604,6 +92195,23 @@
           "owners": [
             "liu_zhang",
             "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "neutral",
+            "wei"
           ],
           "modes": [
             "land"
@@ -97935,7 +98543,7 @@
       "title": "215年8月 · 合淝之戰",
       "title_ja": "合肥の戦い",
       "catalog_file": "game/data/campaigns/215-08.json",
-      "catalog_sha256": "7c9bf828930d56b2dec3e2783c6998c36eaffb7e037ae6e7442b4cbde728f55d",
+      "catalog_sha256": "8082fc3e09a9db0c9527b6e1c701ffe7f2fce208b4f376384751f0fba0bb0142",
       "factions": [
         {
           "id": "gongsun",
@@ -97996,7 +98604,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 118,
+      "city_count": 121,
       "city_owners": [
         {
           "city": "anding",
@@ -98473,6 +99081,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "临戎",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -98525,6 +99139,12 @@
           "name": "姑臧",
           "owner": "wei",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "九原",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -98653,6 +99273,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中旧城",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "wei",
@@ -98708,6 +99334,23 @@
         }
       ],
       "boundary_links": [
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
         {
           "cities": [
             "badong",
@@ -99352,6 +99995,23 @@
           "owners": [
             "shu",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "yanmen",
+            "yunzhong"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -103771,7 +104431,7 @@
       "title": "217年7月 · 汉中争夺战",
       "title_ja": "217年7月 · 汉中争夺战",
       "catalog_file": "game/data/campaigns/217-07.json",
-      "catalog_sha256": "5543a82af78d2a649606cf14b9741ccf44d4f1b16d2cdec24a00e0f996c91661",
+      "catalog_sha256": "c55e1864fe35750fe0dbd0349b86209895263edb86356c5ff92b0f90fdb1d0c5",
       "factions": [
         {
           "id": "gongsun",
@@ -103832,7 +104492,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 118,
+      "city_count": 121,
       "city_owners": [
         {
           "city": "anding",
@@ -104309,6 +104969,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "临戎",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -104361,6 +105027,12 @@
           "name": "姑臧",
           "owner": "wei",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "九原",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -104489,6 +105161,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中旧城",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "wei",
@@ -104544,6 +105222,23 @@
         }
       ],
       "boundary_links": [
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
         {
           "cities": [
             "badong",
@@ -105188,6 +105883,23 @@
           "owners": [
             "shu",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "yanmen",
+            "yunzhong"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -109688,7 +110400,7 @@
       "title": "219年7月 · 关羽包围网",
       "title_ja": "219年7月 · 关羽包围网",
       "catalog_file": "game/data/campaigns/219-07.json",
-      "catalog_sha256": "9ece1cd828cee2c19a785e0ade4f4acc0396e89b329e2964e1294733337e5acb",
+      "catalog_sha256": "392322131e454a80fae0fd97ea512c0f15d0f0621da18110d1aa86fa4a6b6456",
       "factions": [
         {
           "id": "gongsun",
@@ -109749,7 +110461,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 118,
+      "city_count": 121,
       "city_owners": [
         {
           "city": "anding",
@@ -110226,6 +110938,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "临戎",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -110278,6 +110996,12 @@
           "name": "姑臧",
           "owner": "wei",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "九原",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -110406,6 +111130,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中旧城",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "wei",
@@ -110461,6 +111191,23 @@
         }
       ],
       "boundary_links": [
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
         {
           "cities": [
             "baxi",
@@ -111109,6 +111856,23 @@
           "modes": [
             "land",
             "river"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "yanmen",
+            "yunzhong"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "land"
           ],
           "link_sources": [
             "links",
@@ -115679,7 +116443,7 @@
       "title": "221年7月 · 夷陵前夕",
       "title_ja": "221年7月 · 夷陵前夕",
       "catalog_file": "game/data/campaigns/221-07.json",
-      "catalog_sha256": "196a946129636c522438b66bd5b2aa5a5084f875ada0ad1c3c4fe1349868988d",
+      "catalog_sha256": "8bea2ec6a8584b217d9cd3c27c3b4beb68778ca5a2479e23c3132d7fab477017",
       "factions": [
         {
           "id": "gongsun",
@@ -115740,7 +116504,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 118,
+      "city_count": 121,
       "city_owners": [
         {
           "city": "anding",
@@ -116217,6 +116981,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "临戎",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -116269,6 +117039,12 @@
           "name": "姑臧",
           "owner": "wei",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "九原",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -116397,6 +117173,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中旧城",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "wei",
@@ -116452,6 +117234,23 @@
         }
       ],
       "boundary_links": [
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
         {
           "cities": [
             "badong",
@@ -117113,6 +117912,23 @@
           "owners": [
             "wu",
             "shu"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "yanmen",
+            "yunzhong"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -121375,7 +122191,7 @@
       "title": "225年7月 · 征伐南蠻",
       "title_ja": "南蛮征伐",
       "catalog_file": "game/data/campaigns/225-07.json",
-      "catalog_sha256": "683ee740e52c034c6d3f551716fbf0f398553268d572a8935de0e46be0423a74",
+      "catalog_sha256": "851e252d15c1f5bd1d9f865b690eb206caaf4129813539e147439672d46b044a",
       "factions": [
         {
           "id": "gongsun",
@@ -121445,7 +122261,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 118,
+      "city_count": 121,
       "city_owners": [
         {
           "city": "anding",
@@ -121922,6 +122738,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "临戎",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -121974,6 +122796,12 @@
           "name": "姑臧",
           "owner": "wei",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "九原",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -122102,6 +122930,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中旧城",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "wei",
@@ -122157,6 +122991,23 @@
         }
       ],
       "boundary_links": [
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
         {
           "cities": [
             "badong",
@@ -122869,6 +123720,23 @@
           "owners": [
             "wu",
             "nanman"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "yanmen",
+            "yunzhong"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -127176,7 +128044,7 @@
       "title": "227年2月 · 出师表",
       "title_ja": "227年2月 · 出师表",
       "catalog_file": "game/data/campaigns/227-02.json",
-      "catalog_sha256": "25386ed36a8450718e8f860de8b0312fccf130134477a0fbb64192264ad06e35",
+      "catalog_sha256": "d9fd705ab7930b5ba057a57edb8ffdbb33347d634de2f696b7c3cda936a8c1b5",
       "factions": [
         {
           "id": "gongsun",
@@ -127228,7 +128096,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 118,
+      "city_count": 121,
       "city_owners": [
         {
           "city": "anding",
@@ -127705,6 +128573,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "临戎",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -127757,6 +128631,12 @@
           "name": "姑臧",
           "owner": "wei",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "九原",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -127885,6 +128765,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中旧城",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "wei",
@@ -127940,6 +128826,23 @@
         }
       ],
       "boundary_links": [
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
         {
           "cities": [
             "badong",
@@ -128549,6 +129452,23 @@
           "owners": [
             "wu",
             "shu"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "yanmen",
+            "yunzhong"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -132402,7 +133322,7 @@
       "title": "234年2月 · 秋風五丈原",
       "title_ja": "秋風五丈原",
       "catalog_file": "game/data/campaigns/234-02.json",
-      "catalog_sha256": "7a6b9c2502f0e4ca53785733fd7ecbffc9183438e95eaf4eccd4c053a934efea",
+      "catalog_sha256": "0d08f2e63f9727e16020cbdd01cb8daefc26eaf3e0d351bea5ad08507de2041c",
       "factions": [
         {
           "id": "gongsun",
@@ -132454,7 +133374,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 118,
+      "city_count": 121,
       "city_owners": [
         {
           "city": "anding",
@@ -132931,6 +133851,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "临戎",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -132983,6 +133909,12 @@
           "name": "姑臧",
           "owner": "wei",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "九原",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -133111,6 +134043,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中旧城",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "wei",
@@ -133166,6 +134104,23 @@
         }
       ],
       "boundary_links": [
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
         {
           "cities": [
             "badong",
@@ -133707,6 +134662,23 @@
           "owners": [
             "wu",
             "shu"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "yanmen",
+            "yunzhong"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -137146,7 +138118,7 @@
       "title": "238年1月 · 征讨辽东",
       "title_ja": "238年1月 · 征讨辽东",
       "catalog_file": "game/data/campaigns/238-01.json",
-      "catalog_sha256": "6e1dbcb54e8f348075f86eb1a13e66af52e152cd8eb037d01d95fd0f11914bfa",
+      "catalog_sha256": "2eda5d37d3da7a67c61849d1e906cde9d50ed443ec46525f2ddb38e45729c960",
       "factions": [
         {
           "id": "gongsun",
@@ -137172,7 +138144,7 @@
           "person_id": "san14-candidate-0501",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 59,
+          "city_count": 60,
           "officer_count": 123
         },
         {
@@ -137189,7 +138161,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 278402,
+      "initial_soldier_total": 279192,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -137198,7 +138170,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 118,
+      "city_count": 121,
       "city_owners": [
         {
           "city": "anding",
@@ -137675,6 +138647,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -137727,6 +138705,12 @@
           "name": "姑臧",
           "owner": "wei",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "九原",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -137853,6 +138837,12 @@
           "name": "云南",
           "owner": "shu",
           "neutral_label": null
+        },
+        {
+          "city": "yunzhong",
+          "name": "云中旧城",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "yuyang",
@@ -138428,6 +139418,23 @@
         },
         {
           "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "tianshui",
             "wudu"
           ],
@@ -138451,6 +139458,23 @@
           "owners": [
             "wu",
             "shu"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "yanmen",
+            "yunzhong"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -141841,7 +142865,7 @@
       "title": "249年1月 · 正始之变",
       "title_ja": "249年1月 · 正始之变",
       "catalog_file": "game/data/campaigns/249-01.json",
-      "catalog_sha256": "9ef87a30919b51a1fbc766f66b582080037376f03f9d786198d1db14d439673b",
+      "catalog_sha256": "73def1ac643b1d961fcaa5b8342f8a80a5194b01419d74cb88c10f6932353eee",
       "factions": [
         {
           "id": "shu",
@@ -141858,7 +142882,7 @@
           "person_id": "san14-candidate-0529",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 63,
+          "city_count": 64,
           "officer_count": 113
         },
         {
@@ -141875,7 +142899,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 268842,
+      "initial_soldier_total": 269567,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -141884,7 +142908,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 119,
+      "city_count": 122,
       "city_owners": [
         {
           "city": "anding",
@@ -142373,6 +143397,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -142425,6 +143455,12 @@
           "name": "姑臧",
           "owner": "wei",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "九原",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -142545,6 +143581,12 @@
           "name": "云南",
           "owner": "shu",
           "neutral_label": null
+        },
+        {
+          "city": "yunzhong",
+          "name": "云中旧城",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "yuyang",
@@ -143033,6 +144075,23 @@
         },
         {
           "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "tianshui",
             "wudu"
           ],
@@ -143056,6 +144115,23 @@
           "owners": [
             "wu",
             "shu"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "yanmen",
+            "yunzhong"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -146081,7 +147157,7 @@
       "title": "263年5月 · 蜀漢滅亡",
       "title_ja": "蜀漢の滅亡",
       "catalog_file": "game/data/campaigns/263-05.json",
-      "catalog_sha256": "d5af5ee4817d9932b4c7def2e67938102f369cba82198a8a397e8c68128056b9",
+      "catalog_sha256": "ee83f3510f9e8fe6643c0fcc942d68fee31eb410c9bfe3ced4fbe684422e778d",
       "factions": [
         {
           "id": "lu_xing",
@@ -146107,7 +147183,7 @@
           "person_id": "san14-candidate-0503",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 63,
+          "city_count": 64,
           "officer_count": 73
         },
         {
@@ -146124,7 +147200,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 235455,
+      "initial_soldier_total": 236180,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -146133,7 +147209,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 124,
+      "city_count": 127,
       "city_owners": [
         {
           "city": "anding",
@@ -146646,6 +147722,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -146698,6 +147780,12 @@
           "name": "姑臧",
           "owner": "wei",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "九原",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangdong",
@@ -146824,6 +147912,12 @@
           "name": "云南",
           "owner": "shu",
           "neutral_label": null
+        },
+        {
+          "city": "yunzhong",
+          "name": "云中旧城",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "yuyang",
@@ -147382,6 +148476,23 @@
         },
         {
           "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "tianshui",
             "wudu"
           ],
@@ -147405,6 +148516,23 @@
           "owners": [
             "wu",
             "shu"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "yanmen",
+            "yunzhong"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -149589,7 +150717,7 @@
       "title": "197年7月 · 皇帝呂布",
       "title_ja": "皇帝呂布",
       "catalog_file": "game/data/campaigns/197-07.json",
-      "catalog_sha256": "3337902051c55a8f7bad0ef87fbdc70c6e6c49c32955f7183ab648ed10494576",
+      "catalog_sha256": "61d4be3571d7f5602d9e3e8be19447b00ec50bef8cb03bac45c88d7d742ae027",
       "factions": [
         {
           "id": "gongsun",
@@ -149750,7 +150878,7 @@
           "person_id": "san14-candidate-0035",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 16,
+          "city_count": 18,
           "officer_count": 43
         },
         {
@@ -149794,7 +150922,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 233387,
+      "initial_soldier_total": 235182,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -149803,7 +150931,7 @@
       },
       "fictional": true,
       "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
-      "city_count": 116,
+      "city_count": 119,
       "city_owners": [
         {
           "city": "anding",
@@ -150280,6 +151408,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "yuan_shao",
@@ -150332,6 +151466,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "yuan_shao",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -150448,6 +151588,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "yuan_shao",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "gongsun_zan",
@@ -150545,6 +151691,23 @@
           "owners": [
             "ma_teng",
             "li_jue"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -152313,6 +153476,23 @@
           "modes": [
             "land",
             "river"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "neutral",
+            "yuan_shao"
+          ],
+          "modes": [
+            "land"
           ],
           "link_sources": [
             "links",
@@ -157722,7 +158902,7 @@
       "title": "201年5月 · 華北霸者・袁紹",
       "title_ja": "華北の覇者・袁紹",
       "catalog_file": "game/data/campaigns/201-05.json",
-      "catalog_sha256": "aea242d93bd94583b7e86f393e1a6171580190c130ccf366f41203fc8fe44322",
+      "catalog_sha256": "84c37981679c239aac5e0367af414cef14bfbbc9a764c26fb2931abe86e01481",
       "factions": [
         {
           "id": "gongsun",
@@ -157820,7 +159000,7 @@
           "person_id": "san14-candidate-0035",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 40,
+          "city_count": 42,
           "officer_count": 46
         },
         {
@@ -157837,7 +159017,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 252427,
+      "initial_soldier_total": 254282,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -157846,7 +159026,7 @@
       },
       "fictional": true,
       "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
-      "city_count": 116,
+      "city_count": 119,
       "city_owners": [
         {
           "city": "anding",
@@ -158323,6 +159503,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "yuan_shao",
@@ -158375,6 +159561,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "yuan_shao",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -158491,6 +159683,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "yuan_shao",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "yuan_shao",
@@ -158554,6 +159752,23 @@
           "owners": [
             "ma_teng",
             "han_sui"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -159688,6 +160903,23 @@
           ],
           "owners": [
             "liu_zhang",
+            "yuan_shao"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "neutral",
             "yuan_shao"
           ],
           "modes": [
@@ -164368,7 +165600,7 @@
       "title": "209年6月 · 志在千里",
       "title_ja": "志在千里",
       "catalog_file": "game/data/campaigns/209-06.json",
-      "catalog_sha256": "9b51abed3e7d74529260e63da69ff4b252cb14a1dafdea9d5589feed8ff8a95f",
+      "catalog_sha256": "f943dd1d49771b2ea9cbd3bbfb0fc948072ec4a0c103bf8616ee252048c9b82f",
       "factions": [
         {
           "id": "gongsun",
@@ -164439,7 +165671,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 57,
+          "city_count": 59,
           "officer_count": 165
         },
         {
@@ -164465,7 +165697,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 279972,
+      "initial_soldier_total": 281827,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -164474,7 +165706,7 @@
       },
       "fictional": true,
       "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
-      "city_count": 117,
+      "city_count": 120,
       "city_owners": [
         {
           "city": "anding",
@@ -164951,6 +166183,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -165003,6 +166241,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -165125,6 +166369,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "wei",
@@ -165222,6 +166472,23 @@
           "owners": [
             "ma_teng",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -166100,6 +167367,23 @@
           ],
           "owners": [
             "liu_zhang",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "neutral",
             "wei"
           ],
           "modes": [
@@ -170974,7 +172258,7 @@
       "title": "210年11月 · 二分天下之計",
       "title_ja": "天下二分計",
       "catalog_file": "game/data/campaigns/210-11.json",
-      "catalog_sha256": "04bdee0008e3655a6c23b0afd78491300b925b181cba8be839d6d80eb7050782",
+      "catalog_sha256": "5b299ceda576cdd4dd0016df0932893d9a127eccf39bbc103306c711d4a9d26c",
       "factions": [
         {
           "id": "gongsun",
@@ -171036,7 +172320,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 50,
+          "city_count": 52,
           "officer_count": 165
         },
         {
@@ -171053,7 +172337,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 276672,
+      "initial_soldier_total": 278527,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -171062,7 +172346,7 @@
       },
       "fictional": true,
       "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
-      "city_count": 117,
+      "city_count": 120,
       "city_owners": [
         {
           "city": "anding",
@@ -171539,6 +172823,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "wei",
@@ -171591,6 +172881,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -171713,6 +173009,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "wei",
@@ -171810,6 +173112,23 @@
           "owners": [
             "ma_teng",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -172649,6 +173968,23 @@
           ],
           "owners": [
             "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "neutral",
             "wei"
           ],
           "modes": [
@@ -177580,7 +178916,7 @@
       "title": "212年6月 · 錦馬超展翅高飛",
       "title_ja": "錦馬超飛翔",
       "catalog_file": "game/data/campaigns/212-06.json",
-      "catalog_sha256": "984cb42738c02980b079a75e38b43e0dd53e5720f59f0571583b21bd66b1ace9",
+      "catalog_sha256": "c328db7c814884aedb4afe09f72c3efa12db180a62e24354ca9436e8aec1373f",
       "factions": [
         {
           "id": "cao_zhang",
@@ -177588,7 +178924,7 @@
           "person_id": "san14-candidate-0515",
           "city": "taiyuan",
           "city_name": "晋阳",
-          "city_count": 3,
+          "city_count": 4,
           "officer_count": 4
         },
         {
@@ -177660,7 +178996,7 @@
           "person_id": "san14-candidate-0526",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 41,
+          "city_count": 42,
           "officer_count": 154
         },
         {
@@ -177686,7 +179022,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 292120,
+      "initial_soldier_total": 294135,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -177695,7 +179031,7 @@
       },
       "fictional": true,
       "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
-      "city_count": 117,
+      "city_count": 120,
       "city_owners": [
         {
           "city": "anding",
@@ -178172,6 +179508,12 @@
           "neutral_label": null
         },
         {
+          "city": "shuofang",
+          "name": "朔方",
+          "owner": "neutral",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "taiyuan",
           "name": "晋阳",
           "owner": "cao_zhang",
@@ -178224,6 +179566,12 @@
           "name": "姑臧",
           "owner": "ma_teng",
           "neutral_label": null
+        },
+        {
+          "city": "wuyuan",
+          "name": "五原",
+          "owner": "cao_zhang",
+          "neutral_label": "河套地方部众（中立）"
         },
         {
           "city": "xiangyang",
@@ -178346,6 +179694,12 @@
           "neutral_label": null
         },
         {
+          "city": "yunzhong",
+          "name": "云中",
+          "owner": "wei",
+          "neutral_label": "河套地方部众（中立）"
+        },
+        {
           "city": "yuyang",
           "name": "渔阳",
           "owner": "wei",
@@ -178409,6 +179763,23 @@
           "owners": [
             "ma_teng",
             "han_sui"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "shuofang"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -179537,6 +180908,23 @@
         },
         {
           "cities": [
+            "shuofang",
+            "wuyuan"
+          ],
+          "owners": [
+            "neutral",
+            "cao_zhang"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "taiyuan",
             "yanmen"
           ],
@@ -179628,6 +181016,23 @@
           "owners": [
             "ma_teng",
             "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "wuyuan",
+            "yunzhong"
+          ],
+          "owners": [
+            "cao_zhang",
+            "wei"
           ],
           "modes": [
             "land"

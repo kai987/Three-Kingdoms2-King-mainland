@@ -115,9 +115,13 @@ class SessionPreviewCacheTests(unittest.TestCase):
 
     def test_preview_city_tiers_use_each_catalog_without_copying_economy_metadata(self):
         session=CampaignSession(self.paths)
+        outposts={'mainland217-07':('shuofang','wuyuan','yunzhong'),
+                  'mainland263-05':('wuyuan','yunzhong')}
         for row in session.view()['catalog']['scenarios']:
             expected={key:{'tier':profile['tier']} for key,profile in
                       session.catalogs[row['id']].data['city_profiles'].items()}
+            for city in outposts.get(row['id'],()):
+                expected[city]['kind']='frontier_outpost'
             self.assertEqual(row['city_profiles'],expected,row['id'])
             for tier in ('giant','large'):
                 expected_ids={key for key,profile in expected.items()

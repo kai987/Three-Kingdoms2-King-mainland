@@ -19,7 +19,7 @@ from hashlib import sha256
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'source'))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools/officer-placement'))
-from remake.city_economy import TIER_LABELS, TIER_MULTIPLIERS, apply_opening_sizes
+from remake.city_economy import TIER_LABELS, TIER_MULTIPLIERS, apply_opening_sizes, frontier_outpost_at
 from remake.treasures import RULES as TREASURY_RULES
 from remake.facilities import RULES as FACILITY_RULES
 from remake.equipment import RULES as EQUIPMENT_RULES, build_initials
@@ -48,6 +48,9 @@ EXPANSION_CITIES = {
     'hengyang': ('衡阳', 'changsha'),
     'xiangdong': ('湘东', 'changsha'),
     'jianping': ('建平', 'yidu'),
+    'shuofang': ('朔方', 'anding'),
+    'wuyuan': ('五原', 'xihe'),
+    'yunzhong': ('云中', 'yanmen'),
 }
 HAN_ANNALS = 'https://zh.wikisource.org/wiki/三國志/卷04'
 WU_ANNALS = 'https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnux22fnsn_304'
@@ -193,6 +196,7 @@ def apply_city_chronology(data, review, people_by_id):
 def apply_city_expansion(data, locations, opening, notes, people_by_id):
     """Append reviewed cities without editing the inherited map or IF overrides."""
     date = data['start_year'], data['start_month']
+    outposts = data.setdefault('frontier_outposts', {})
     for city_id, (name, parent) in EXPANSION_CITIES.items():
         loc = locations[city_id]
         data['cities'].append(dict(id=city_id, name=name, position=loc['position'], terrain=loc['terrain']))
@@ -214,6 +218,10 @@ def apply_city_expansion(data, locations, opening, notes, people_by_id):
             for field, value in data['initial_city_resources'][parent].items()}
         data['city_income'][city_id] = {
             field: value // parent_scale for field, value in data['city_income'][parent].items()}
+        if rule := notes[city_id].get('frontier_outpost'):
+            outposts[city_id] = deepcopy(rule)
+            if frontier_outpost_at(data, city_id, *date):
+                data['initial_city_resources'][city_id] = dict.fromkeys(('gold', 'grain', 'reserves'), 0)
         if city_id in EXPANSION_FOUNDINGS:
             year, month, precision, note, source = EXPANSION_FOUNDINGS[city_id]
             data['city_foundings'][city_id] = dict(
@@ -247,6 +255,9 @@ def apply_city_expansion(data, locations, opening, notes, people_by_id):
             note=('按假想劇本的既有勢力格局配置。' if fictional
                   else '有任職史料的駐將單列。其餘按當年勢力範圍及可用人物配置。'),
             sources=history['sources'])
+        if city_id in outposts:
+            history['opening']['note'] = notes[city_id]['opening_notes'][owners[city_id]]
+            history['neutral_label'] = notes[city_id]['neutral_label']
         history['garrisons'] = []
         for person_id in people:
             officer = officers.get(person_id)

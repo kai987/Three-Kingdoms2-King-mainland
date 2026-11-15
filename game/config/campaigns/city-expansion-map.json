@@ -10,6 +10,9 @@
     "pingyang": {"position": [690, 273], "coordinates": [111.46, 36.08], "terrain": "plain"},
     "hengyang": {"position": [716, 623], "coordinates": [112.62, 27.66], "terrain": "plain"},
     "xiangdong": {"position": [772, 656], "coordinates": [112.66, 26.88], "terrain": "plain"},
-    "jianping": {"position": [592, 536], "coordinates": [109.88, 31.08], "terrain": "mountain"}
+    "jianping": {"position": [592, 536], "coordinates": [109.88, 31.08], "terrain": "mountain"},
+    "shuofang": {"position": [410, 97], "coordinates": [107.12, 40.51], "terrain": "plain"},
+    "wuyuan": {"position": [569, 56], "coordinates": [109.81, 40.58], "terrain": "plain"},
+    "yunzhong": {"position": [688, 123], "coordinates": [111.33, 40.53], "terrain": "plain"}
   }
 }

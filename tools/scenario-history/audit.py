@@ -18,7 +18,9 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'source'))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from remake.dated_events import validate_source as validate_dated_source, visible_factions
+from ruler_audit import frozen_material_totals, material_totals
 
 REFERENCE = ROOT / 'game/config/references/scenario-history-review.json'
 REPORT_JSON = ROOT / 'docs/scenario-history-audit-20261025.json'
@@ -361,9 +363,9 @@ def compile_report():
                     and adjustment['after'] - adjustment['before'] == adjustment['returned_initial_troops']
                     and opening.get(pid, {}).get('status') == 'free',
                     ident + ': returned opening troops differ from the reserve adjustment')
-        soldier_total = sum(row['troops'] for row in data['initial_officers']) + sum(
-            data['initial_city_resources'].get(city, data['initial_resources'])['reserves'] for city in active)
-        require('initial_soldier_total' not in decision or decision['initial_soldier_total'] == soldier_total,
+        soldier_total = material_totals(data, active)['soldiers']
+        require('initial_soldier_total' not in decision
+                or decision['initial_soldier_total'] == frozen_material_totals(data, active)['soldiers'],
                 ident + ': opening soldier conservation summary differs')
         evidence_counts = Counter(row['placement_review']['historical_certainty']
                                   for row in data['era_assignments'].values())
@@ -513,6 +515,7 @@ def markdown(report):
         '生成元は [レビュー決定表](../game/config/references/scenario-history-review.json)、'
         '照合結果は [全都市・境界経路・人物のJSON](scenario-history-audit-20261025.json)です。'
         '同じ人物を一度の修正で複数回動かした場合は最後の記録を採用し、都市は最終的な `owner_expectations` と照合します。', '',
+        'JSONの初期兵員総数には河套三都市の予備兵を含め、固定レビューとの照合では後から追加された三都市の初期予備兵を除きます。', '',
         f"今回の記録は追加勢力{summary['new_factions']}件（シナリオごとの組合せ）、都市延べ{summary['city_change_records']}件"
         f"（最終の都市・シナリオ単位{summary['city_changes']}件）、人物延べ{summary['officer_change_records']}件"
         f"（同一シナリオ内の重複整理後{summary['officer_changes']}件）です。"
