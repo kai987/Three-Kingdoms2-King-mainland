@@ -1,7 +1,50 @@
 """Explain a selected city pair with the campaign's current route rules."""
+from functools import lru_cache
+import json
+from pathlib import Path
+
 from . import historical_campaigns
 from .route_hazards import _python_route_allowed as route_allowed
 from .route_network import available
+
+
+@lru_cache(maxsize=1)
+def _route_geometry():
+    path = Path(__file__).resolve().parents[2] / 'game/config/route-geometry.json'
+    return json.loads(path.read_text(encoding='utf-8'))['routes']
+
+
+def _route_segments(data, route, source, target):
+    """Project a quoted leg onto its exact compiled map curves."""
+    parent = route.get('parent_route')
+    geometry = _route_geometry().get(parent or route['id'])
+    if geometry is None:
+        return []
+    if parent:
+        sections = geometry['city_sections']
+        chain = [geometry['from'], *(section['to'] for section in sections)]
+        start, end = chain.index(source), chain.index(target)
+        first, last = sorted((start, end))
+        parts = [part for section in sections[first:last] for part in section['parts']]
+        forward = start < end
+    else:
+        parts = geometry['parts']
+        forward = geometry['from'] == source
+
+    # A water link's access roads have no directional marker. The audited
+    # curves of one-way corridors already follow their permitted direction.
+    one_way = not route_allowed(data, route, target, source)
+    if one_way and not forward:
+        raise ValueError('One-way route geometry runs against the permitted direction')
+    return [dict(mode=part['mode'], d=part['d'], route_id=route['id'],
+                 one_way=one_way and part['mode'] == route['mode'],
+                 **{'from': source, 'to': target})
+            for part in (parts if forward else reversed(parts))]
+
+
+def _quote_segments(data, legs):
+    return [segment for leg in legs
+            for segment in _route_segments(data, leg, leg['from'], leg['to'])]
 
 
 def _route_restrictions(data, routes, state, source, target):
@@ -34,13 +77,15 @@ def _route_restrictions(data, routes, state, source, target):
                     via.reverse()
                 restrictions.append(dict(info, reason='requires_stop', via=via))
             elif not route_allowed(data, candidate, source, target):
-                restrictions.append({**info, 'reason': 'one_way', 'from': target, 'to': source})
+                restrictions.append({**info, 'reason': 'one_way', 'from': target, 'to': source,
+                                     'segments': _route_segments(data, candidate, target, source)})
     return restrictions
 
 
-def _compact_quote(quote, **details):
+def _compact_quote(data, quote, **details):
     return dict(path=quote['path'], days=quote['days'], modes=quote['modes'],
-                route_ids=[route['id'] for route in quote['routes']], **details)
+                route_ids=[route['id'] for route in quote['routes']],
+                segments=_quote_segments(data, quote['routes']), **details)
 
 
 def _pair_quotes(game, state, source, target, direct_routes, *, own_destination):
@@ -58,7 +103,7 @@ def _pair_quotes(game, state, source, target, direct_routes, *, own_destination)
         quote = game._travel_path(state, source, target, state.player, mode,
                                   adjacent=not own_destination)
         if quote:
-            yield _compact_quote(quote, mode=mode)
+            yield _compact_quote(game.catalog.data, quote, mode=mode)
 
 
 def _direct_options(quotes):
@@ -100,7 +145,8 @@ def _staged_attack(game, state, source, target, known):
         if best is None or days < best['days']:
             best = dict(kind='staged_attack', via=via,
                         path=transfer['path'] + attack['path'][1:], days=days,
-                        modes=sorted(set(transfer['modes'] + attack['modes'])))
+                        modes=sorted(set(transfer['modes'] + attack['modes'])),
+                        segments=_quote_segments(data, transfer['routes'] + attack['routes']))
     return best
 
 

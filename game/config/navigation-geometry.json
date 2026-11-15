@@ -1470,6 +1470,57 @@
           ]
         }
       ]
+    },
+    {
+      "from": "qiao",
+      "to": "xiapi",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "以本作小沛／譙郡的區域代理節點經徐州平原至下邳。路線與折點為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/zh-hant/三國志/卷01"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              892,
+              356
+            ],
+            [
+              906,
+              351
+            ],
+            [
+              920,
+              350
+            ],
+            [
+              935,
+              352
+            ],
+            [
+              950,
+              355
+            ],
+            [
+              965,
+              355
+            ],
+            [
+              981,
+              353
+            ],
+            [
+              996,
+              351
+            ]
+          ]
+        }
+      ]
     }
   ],
   "river_routes": [
@@ -13079,6 +13130,260 @@
         ]
       },
       "one_way": true
+    },
+    {
+      "id": "qiao:xiapi:river",
+      "from": "qiao",
+      "to": "xiapi",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          115.77,
+          33.87
+        ],
+        [
+          116.55,
+          32.91
+        ],
+        [
+          116.78,
+          32.6
+        ],
+        [
+          117.89,
+          34.1
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "wo:qiao:huai",
+          "river_id": "wo",
+          "name_tc": "渦水",
+          "name_ja": "渦水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "qiao"
+        },
+        {
+          "reach_id": "huai:wo:jiujiang",
+          "river_id": "huai",
+          "name_tc": "淮水",
+          "name_ja": "淮水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "qiao"
+        },
+        {
+          "reach_id": "huai:jiujiang:xiapi",
+          "river_id": "huai",
+          "name_tc": "淮水",
+          "name_ja": "淮水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "qiao"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "qiao",
+          "points": [
+            [
+              892,
+              356
+            ],
+            [
+              892,
+              366
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "wo:qiao:huai",
+          "river_id": "wo",
+          "points": [
+            [
+              892,
+              366
+            ],
+            [
+              892,
+              370
+            ],
+            [
+              894,
+              374
+            ],
+            [
+              896,
+              378
+            ],
+            [
+              900,
+              382
+            ],
+            [
+              904,
+              386
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "huai:wo:jiujiang",
+          "river_id": "huai",
+          "points": [
+            [
+              904,
+              386
+            ],
+            [
+              907,
+              386
+            ],
+            [
+              910,
+              385
+            ],
+            [
+              913,
+              384
+            ],
+            [
+              916,
+              384
+            ],
+            [
+              919,
+              382
+            ],
+            [
+              922,
+              382
+            ],
+            [
+              925,
+              380
+            ],
+            [
+              928,
+              380
+            ],
+            [
+              931,
+              380
+            ],
+            [
+              934,
+              381
+            ],
+            [
+              937,
+              381
+            ],
+            [
+              940,
+              381
+            ],
+            [
+              943,
+              381
+            ],
+            [
+              945,
+              381
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "huai:jiujiang:xiapi",
+          "river_id": "huai",
+          "points": [
+            [
+              945,
+              381
+            ],
+            [
+              949,
+              381
+            ],
+            [
+              952,
+              381
+            ],
+            [
+              956,
+              380
+            ],
+            [
+              960,
+              380
+            ],
+            [
+              964,
+              378
+            ],
+            [
+              968,
+              378
+            ],
+            [
+              972,
+              378
+            ],
+            [
+              976,
+              379
+            ],
+            [
+              980,
+              379
+            ],
+            [
+              984,
+              379
+            ],
+            [
+              988,
+              379
+            ],
+            [
+              992,
+              379
+            ],
+            [
+              996,
+              379
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "xiapi",
+          "points": [
+            [
+              996,
+              379
+            ],
+            [
+              996,
+              351
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "authorial_regional_huai_si_navigation",
+        "basis": "沿遊戲底圖的渦水、淮水及下邳接岸道路設置雙向水路。小沛沿用譙郡區域代理節點；下邳的歷史水系為沂、泗，此處航線和港點為遊戲地圖概化。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷01",
+          "https://zh.wikisource.org/wiki/水經注/30",
+          "https://zh.wikisource.org/zh-hant/水經注/25"
+        ]
+      }
     }
   ],
   "river_rules": {
@@ -41622,7 +41927,7 @@
   "method": "4px ocean-connected sea mask and A-star; smooth display follows sea cells. Approximate game ports, not identified historical harbours. Distances use separate geographic marine waypoints, never art pixels.",
   "river_network": {
     "schema": "tk2-river-network-compiled-v1",
-    "source_sha256": "8718a93f7e082b92f5c62a7f4269f3cb132ecfb43ace7625b7a5ff388feaaed3",
-    "reach_count": 58
+    "source_sha256": "0a00ca87c616126708df4351e02094ce7575a6b1a4af9c6c3ca3e97fabad4792",
+    "reach_count": 59
   }
 }

@@ -22,7 +22,7 @@ assert(!context.mapBridgeLayer(['<path class="coastal-lane" d="SEA"/>']).include
 assert(!context.mapBridgeLayer(['<path class="river-lane" d="SEA"/>']).includes('data-river-bridge="b2"'),'Sailing along an inland river never requests a bridge');
 assert(!context.mapBridgeLayer([]).includes('data-river-bridge="b2"'),'An inactive dynamic road does not show its bridge');
 context.view.catalog.map_presentation={};assert.equal(context.mapBridgeLayer([]),'','Absent optional metadata retains legacy display');
-assert(app.includes('${regionalRoads}${navigableSeas}${navigableRivers}${bridges}${castles}${labels}'),'Every bridge remains below complete castle sprites');
+assert(app.includes('${regionalRoads}${navigableSeas}${navigableRivers}${bridges}${marchRoutes}${castles}${labels}'),'Every bridge remains below route previews and complete castle sprites');
 const metadata=require('node:path').resolve(__dirname,'../game/assets/map-bridges.json');
 if(fs.existsSync(metadata)){
  const data=JSON.parse(fs.readFileSync(metadata));assert.equal(data.schema,'tk2-map-bridges-v1');assert.deepEqual(data.world,[0,0,1352,1024]);

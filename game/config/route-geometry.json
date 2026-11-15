@@ -6,12 +6,12 @@
     "game/build_campaigns.py": "35ecbdd8909f2f5ba0f25583a7256d938fbfc868d3d4a1d7207eddcb71f10fd8",
     "game/config/road-centers.json": "80b5cb839ffa60f9e134ba1631c220e3e1de4b0d56e7fc70c449bbe374d0dd33",
     "game/road_centers.py": "16e16ab039fe15605f27d9e46df18ad945014b2aec9f5dd9eb4e9df32f74cdea",
-    "game/config/navigation-geometry.json": "c4ce6d8ea09b9c680a1c2ff95416f9506e9e33606d22076c878dbdcba36e0217",
-    "game/config/route-corridors.json": "833ef08b8ae27497ef7673530982f89ac6861c34f960192d88016dfa97eaf96a",
+    "game/config/navigation-geometry.json": "21e5a3996033d34246a7836740494fb5145e50f284094916f5c85d690d556496",
+    "game/config/route-corridors.json": "c0196d115e03078c894311e5387aa09131bb6badd0c4340a4d00371536a3553a",
     "game/road_history.py": "4513459c4f635d2b617d6e04d87207fb987bcfe3a87b6168c4228dbd104c18d6",
     "game/config/road-history.json": "5350706e4e1f430fc6cc1382f23db412fc881326914ff546466ea834a11ad35e",
     "game/build_navigation_geometry.cjs": "5a8b8606934b10d02c6f078388e50aad8b41ae7092f9a3dd4625e3ab02c13cda",
-    "game/config/river-network.json": "8718a93f7e082b92f5c62a7f4269f3cb132ecfb43ace7625b7a5ff388feaaed3",
+    "game/config/river-network.json": "0a00ca87c616126708df4351e02094ce7575a6b1a4af9c6c3ca3e97fabad4792",
     "game/river_network.py": "aea0392c0fd7efe88ff6dc985968f8492009f934ce874adf8a325175eaac7ca7",
     "game/config/map-source.json": "5640fa94500ee3ee2fe6f3936c19bf3bd6232c6f534e499196fcea414aa2789d",
     "game/app.js": "35d7ec8aa5056b75674f9dc16e343498a348041cc36112cbc32253ad35c59585",
@@ -50,7 +50,7 @@
     "game/config/campaigns/scenarios/249-01.json": "6b1e6b45879b7ee5198c9ccabc754d71cc6222c218e71bf6fcd5eb32d2939ac4",
     "game/config/campaigns/scenarios/263-05.json": "3cd4d27cd0ded417113525a4a74d06e3120ef56dd6e2845b7df45343f63f8ccd"
   },
-  "input_geometry_sha256": "6fd982a64fbf58684a054fdfb2f68816b317a411f4ea53e3524cbe4a0b11bcab",
+  "input_geometry_sha256": "74ada4400335a5870711acd113c11b4493e7e1c03579ed39fa107b86a278ef8b",
   "routes": {
     "anding:fufeng:land": {
       "from": "anding",
@@ -16111,6 +16111,61 @@
         }
       ]
     },
+    "qiao:xiapi:land": {
+      "from": "qiao",
+      "to": "xiapi",
+      "mode": "land",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            892,
+            356
+          ],
+          "end": [
+            996,
+            351
+          ],
+          "d": "M892 356L899 353.5Q906 351 913 350.5Q920 350 927.5 351Q935 352 942.5 353.5Q950 355 957.5 355Q965 355 973 354Q981 353 988.5 352L996 351",
+          "length_px": 105.375366,
+          "chord_px": 104.120123,
+          "pieces": [
+            {
+              "d": "M892 356L899 353.5Q906 351 913 350.5Q920 350 927.5 351Q935 352 942.5 353.5Q950 355 957.5 355Q965 355 973 354Q981 353 988.5 352L996 351",
+              "reverse": false
+            }
+          ]
+        }
+      ],
+      "city_sections": [
+        {
+          "from": "qiao",
+          "to": "xiapi",
+          "parts": [
+            {
+              "mode": "land",
+              "start": [
+                892,
+                356
+              ],
+              "end": [
+                996,
+                351
+              ],
+              "d": "M892 356L899 353.5Q906 351 913 350.5Q920 350 927.5 351Q935 352 942.5 353.5Q950 355 957.5 355Q965 355 973 354Q981 353 988.5 352L996 351",
+              "length_px": 105.375366,
+              "chord_px": 104.120123,
+              "pieces": [
+                {
+                  "d": "M892 356L899 353.5Q906 351 913 350.5Q920 350 927.5 351Q935 352 942.5 353.5Q950 355 957.5 355Q965 355 973 354Q981 353 988.5 352L996 351",
+                  "reverse": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "jiangyang:bajun:river": {
       "from": "jiangyang",
       "to": "bajun",
@@ -20832,6 +20887,113 @@
           "pieces": [
             {
               "d": "M428 112L410 97",
+              "reverse": false
+            }
+          ]
+        }
+      ]
+    },
+    "qiao:xiapi:river": {
+      "from": "qiao",
+      "to": "xiapi",
+      "mode": "river",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            892,
+            356
+          ],
+          "end": [
+            892,
+            366
+          ],
+          "d": "M892 356L892 366",
+          "length_px": 10,
+          "chord_px": 10,
+          "pieces": [
+            {
+              "d": "M892 356L892 366",
+              "reverse": false
+            }
+          ]
+        },
+        {
+          "mode": "river",
+          "start": [
+            892,
+            366
+          ],
+          "end": [
+            904,
+            386
+          ],
+          "d": "M892 366L892 368Q892 370 893 372Q894 374 895 376Q896 378 898 380Q900 382 902 384L904 386",
+          "length_px": 24.139816,
+          "chord_px": 23.323808,
+          "pieces": [
+            {
+              "d": "M892 366L892 368Q892 370 893 372Q894 374 895 376Q896 378 898 380Q900 382 902 384L904 386",
+              "reverse": false
+            }
+          ]
+        },
+        {
+          "mode": "river",
+          "start": [
+            904,
+            386
+          ],
+          "end": [
+            945,
+            381
+          ],
+          "d": "M904 386L905.5 386Q907 386 908.5 385.5Q910 385 911.5 384.5Q913 384 914.5 384Q916 384 917.5 383Q919 382 920.5 382Q922 382 923.5 381Q925 380 926.5 380Q928 380 929.5 380Q931 380 932.5 380.5Q934 381 935.5 381Q937 381 938.5 381Q940 381 941.5 381Q943 381 944 381L945 381",
+          "length_px": 42.218582,
+          "chord_px": 41.303753,
+          "pieces": [
+            {
+              "d": "M904 386L905.5 386Q907 386 908.5 385.5Q910 385 911.5 384.5Q913 384 914.5 384Q916 384 917.5 383Q919 382 920.5 382Q922 382 923.5 381Q925 380 926.5 380Q928 380 929.5 380Q931 380 932.5 380.5Q934 381 935.5 381Q937 381 938.5 381Q940 381 941.5 381Q943 381 944 381L945 381",
+              "reverse": false
+            }
+          ]
+        },
+        {
+          "mode": "river",
+          "start": [
+            945,
+            381
+          ],
+          "end": [
+            996,
+            379
+          ],
+          "d": "M945 381L947 381Q949 381 950.5 381Q952 381 954 380.5Q956 380 958 380Q960 380 962 379Q964 378 966 378Q968 378 970 378Q972 378 974 378.5Q976 379 978 379Q980 379 982 379Q984 379 986 379Q988 379 990 379Q992 379 994 379L996 379",
+          "length_px": 51.490021,
+          "chord_px": 51.039201,
+          "pieces": [
+            {
+              "d": "M945 381L947 381Q949 381 950.5 381Q952 381 954 380.5Q956 380 958 380Q960 380 962 379Q964 378 966 378Q968 378 970 378Q972 378 974 378.5Q976 379 978 379Q980 379 982 379Q984 379 986 379Q988 379 990 379Q992 379 994 379L996 379",
+              "reverse": false
+            }
+          ]
+        },
+        {
+          "mode": "land",
+          "start": [
+            996,
+            379
+          ],
+          "end": [
+            996,
+            351
+          ],
+          "d": "M996 379L996 351",
+          "length_px": 28,
+          "chord_px": 28,
+          "pieces": [
+            {
+              "d": "M996 379L996 351",
               "reverse": false
             }
           ]
@@ -30355,10 +30517,10 @@
   },
   "audit": {
     "catalogs": 29,
-    "input_routes": 458,
-    "compiled_routes": 458,
+    "input_routes": 460,
+    "compiled_routes": 460,
     "graph_nodes": 167,
-    "graph_strokes": 256,
+    "graph_strokes": 257,
     "unmatched": [],
     "shared_city_pass_through": [
       {

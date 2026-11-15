@@ -3,7 +3,7 @@
   "review_revision": "2026-11-08",
   "review_file": "game/config/references/scenario-history-review.json",
   "review_sha256": "1dd4f2fb0b91b9a22615912a07853a766506f777d5b99bbbb645b60f53aa82e4",
-  "presentation_sha256": "197e9cf2397efb522024f47765c45e9595baace5001bb74dfa26e4e1043fbf4d",
+  "presentation_sha256": "49dd5aa185e9a054087ce3ff5f3e014b4c804208aaf60216853d4615609731f2",
   "scope": "Regional review and current-data consistency, not a complete attested city/month prefect list or a SAN14 export.",
   "boundary_definition": "Different opening owners connected by links, sea_links or travel_routes; each unordered city pair is listed once. These are network borders, not geographic administrative boundary polygons.",
   "historical_count": 23,
@@ -21,7 +21,7 @@
     "future_factions": 2,
     "scheduled_faction_foundings": 2,
     "scheduled_faction_coups": 1,
-    "boundary_links": 1539,
+    "boundary_links": 1545,
     "opening_officers": 8897,
     "new_factions": 43,
     "city_changes": 109,
@@ -35,7 +35,7 @@
     "future_factions": 0,
     "scheduled_faction_foundings": 0,
     "scheduled_faction_coups": 0,
-    "boundary_links": 395,
+    "boundary_links": 396,
     "opening_officers": 2190,
     "new_factions": 13,
     "city_changes": 14,
@@ -171,7 +171,7 @@
       "title": "184年2月 · 黄巾之乱",
       "title_ja": "184年2月 · 黄巾之乱",
       "catalog_file": "game/data/campaigns/184-02.json",
-      "catalog_sha256": "5087b9570c0f718906b632084959fa381b7a9b10a4e6e6fa7fc570a1a1fbe724",
+      "catalog_sha256": "5bfbc2dfb24f9f43cfa51989658f7038ea2acada009bbd3920a79a2b36bd12fb",
       "factions": [
         {
           "id": "ding_yuan",
@@ -2106,6 +2106,24 @@
           ],
           "modes": [
             "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "qiao",
+            "xiapi"
+          ],
+          "owners": [
+            "yellow_turban",
+            "wu"
+          ],
+          "modes": [
+            "land",
+            "river"
           ],
           "link_sources": [
             "links",
@@ -5672,7 +5690,7 @@
       "title": "188年6月 · 漢朝搖搖欲墜",
       "title_ja": "揺らぐ漢朝",
       "catalog_file": "game/data/campaigns/188-06.json",
-      "catalog_sha256": "15e4da1dc60a1f53db9d4b885de7a0f21e023e00870054284f07eba599fb964c",
+      "catalog_sha256": "4635bf86b9ba7510cd9285f26f9b06aca89947aa184e06395f9c9a660d97e6f6",
       "factions": [
         {
           "id": "ding_yuan",
@@ -11338,7 +11356,7 @@
       "title": "190年1月 · 反董卓联盟",
       "title_ja": "190年1月 · 反董卓联盟",
       "catalog_file": "game/data/campaigns/190-01.json",
-      "catalog_sha256": "fe237141ff0335ee4c9ece205dabe7a2e48574224b87052c77244a95cb0bbb81",
+      "catalog_sha256": "0ad3a8f93c565329379c0e4f791e245882cd8ea022f9082e4740ccbbc658cb4a",
       "factions": [
         {
           "id": "bao_xin",
@@ -13903,6 +13921,24 @@
           ],
           "modes": [
             "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "qiao",
+            "xiapi"
+          ],
+          "owners": [
+            "wei",
+            "tao_qian"
+          ],
+          "modes": [
+            "land",
+            "river"
           ],
           "link_sources": [
             "links",
@@ -19211,7 +19247,7 @@
       "title": "191年10月 · 二袁的意图",
       "title_ja": "191年10月 · 二袁的意图",
       "catalog_file": "game/data/campaigns/191-10.json",
-      "catalog_sha256": "3e3ebdba5455c846bcc8688933868a0fba2a269f5163c652b24f667d15530e6b",
+      "catalog_sha256": "8d335ebf7244d6db29e16189b44f4a2403d2bb4f19ba35bf79384b85d966a46e",
       "factions": [
         {
           "id": "bao_xin",
@@ -21671,6 +21707,24 @@
           ],
           "modes": [
             "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "qiao",
+            "xiapi"
+          ],
+          "owners": [
+            "neutral",
+            "tao_qian"
+          ],
+          "modes": [
+            "land",
+            "river"
           ],
           "link_sources": [
             "links",
@@ -27125,7 +27179,7 @@
       "title": "194年6月 · 群雄割据",
       "title_ja": "194年6月 · 群雄割据",
       "catalog_file": "game/data/campaigns/194-06.json",
-      "catalog_sha256": "98cae5f4543a7daf4d1145efdd8b5f0d140dbbc9fd24ce902737382202e121ba",
+      "catalog_sha256": "e39e1ab0e6ff5e1fcb3b0f6f9bfe71b517c91a28ce4ff3c4838534584797a395",
       "factions": [
         {
           "id": "gongsun",
@@ -29709,6 +29763,24 @@
           ],
           "modes": [
             "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "qiao",
+            "xiapi"
+          ],
+          "owners": [
+            "shu",
+            "tao_qian"
+          ],
+          "modes": [
+            "land",
+            "river"
           ],
           "link_sources": [
             "links",
@@ -35327,7 +35399,7 @@
       "title": "196年6月 · 曹操得勢",
       "title_ja": "曹操の台頭",
       "catalog_file": "game/data/campaigns/196-06.json",
-      "catalog_sha256": "b09db388ef4a9b8c660d3020ca692d314aec4e14e4d9305801f6d2b30bd5b09e",
+      "catalog_sha256": "572ccbd960e8e8d73d74a3e07ed48ec4199f31a0da15f5c68570a494522619bb",
       "factions": [
         {
           "id": "gongsun",
@@ -37943,6 +38015,24 @@
           ],
           "modes": [
             "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "qiao",
+            "xiapi"
+          ],
+          "owners": [
+            "lubu",
+            "shu"
+          ],
+          "modes": [
+            "land",
+            "river"
           ],
           "link_sources": [
             "links",
@@ -43580,7 +43670,7 @@
       "title": "198年3月 · 呂布討伐戰",
       "title_ja": "呂布討伐戦",
       "catalog_file": "game/data/campaigns/198-03.json",
-      "catalog_sha256": "dbfbe5b31dbed418ed10cabfabf904df114390f0397a673089c4ba4becfdc8e7",
+      "catalog_sha256": "6e655dbeccd400f5f3276d36d98576f58250b9d327ebbe2647816c9debe7a0ab",
       "factions": [
         {
           "id": "gongsun",
@@ -46091,6 +46181,24 @@
           ],
           "modes": [
             "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "qiao",
+            "xiapi"
+          ],
+          "owners": [
+            "shu",
+            "lubu"
+          ],
+          "modes": [
+            "land",
+            "river"
           ],
           "link_sources": [
             "links",
@@ -51598,7 +51706,7 @@
       "title": "200年1月 · 官渡之战",
       "title_ja": "200年1月 · 官渡之战",
       "catalog_file": "game/data/campaigns/200-01.json",
-      "catalog_sha256": "cb8385e03b4f9563be4553c49a0a5e6dedc9f679c8cb5b7669b5adfaaa04969e",
+      "catalog_sha256": "6b0524b845d6b1db98d9d8dbfc90e24b0868e13b94deda0ba0f85e291bbadf70",
       "factions": [
         {
           "id": "gongsun",
@@ -59215,7 +59323,7 @@
       "title": "202年6月 · 河北爭亂",
       "title_ja": "河北争乱",
       "catalog_file": "game/data/campaigns/202-06.json",
-      "catalog_sha256": "f5bef997c412540c935d0e20c4529d5f2cdf19ca75c55d8437113395b93c3482",
+      "catalog_sha256": "2a3958fe8db983af113fd7b04a6d3aae67cbc513200b9b3b60c71f7b90b4d795",
       "factions": [
         {
           "id": "gao_gan",
@@ -66849,7 +66957,7 @@
       "title": "207年9月 · 三顾茅庐",
       "title_ja": "207年9月 · 三顾茅庐",
       "catalog_file": "game/data/campaigns/207-09.json",
-      "catalog_sha256": "46c84005630751db5f6a7a860df5301d8e38697685ab7c7af7118ed921079c95",
+      "catalog_sha256": "140cf21e9595dd7834b803cbb76b35e3bf598fcef0ffbeda412783a60050f5b1",
       "factions": [
         {
           "id": "gongsun",
@@ -75045,7 +75153,7 @@
       "title": "208年10月 · 赤壁之战",
       "title_ja": "208年10月 · 赤壁之战",
       "catalog_file": "game/data/campaigns/208-10.json",
-      "catalog_sha256": "3a83a9f5be80b952d2b39f02d45e12f11ccc87f3ed565e15f8171d761ad6aaab",
+      "catalog_sha256": "a9953d83983eb4b02ab2e32b5105c57a24cf7de32652c8fb6c95abce89723c95",
       "factions": [
         {
           "id": "gongsun",
@@ -83423,7 +83531,7 @@
       "title": "211年7月 · 潼關之戰",
       "title_ja": "潼関の戦い",
       "catalog_file": "game/data/campaigns/211-07-tongguan.json",
-      "catalog_sha256": "44db1bf2c46b931b10c5c52143381dc3c6b8645ed9a6df31b54cfea8b98029ac",
+      "catalog_sha256": "51d4259848a3d290c3216997e2f7eb336d0453e25969511f77cbeb8e4fde630a",
       "factions": [
         {
           "id": "gongsun",
@@ -90581,7 +90689,7 @@
       "title": "212年12月 · 入蜀爭奪戰",
       "title_ja": "入蜀争奪戦",
       "catalog_file": "game/data/campaigns/212-12.json",
-      "catalog_sha256": "be8683c18abeef1265fec291924e8bd58792cd732ea2fb1ad1a150a1fc44052b",
+      "catalog_sha256": "2660c90a60c9236eb125964830f02795c3bc9a3e4ca29860fce36321b867d52c",
       "factions": [
         {
           "id": "gongsun",
@@ -98751,7 +98859,7 @@
       "title": "215年8月 · 合淝之戰",
       "title_ja": "合肥の戦い",
       "catalog_file": "game/data/campaigns/215-08.json",
-      "catalog_sha256": "6782f0bd8d0ad3fd371cba9b4efdf68198b15423e52c50433dd380e350e7377d",
+      "catalog_sha256": "117e43281744cf9b348376f29095f9c08bdb2a42980b586a143ce397e547e4ca",
       "factions": [
         {
           "id": "gongsun",
@@ -104655,7 +104763,7 @@
       "title": "217年7月 · 汉中争夺战",
       "title_ja": "217年7月 · 汉中争夺战",
       "catalog_file": "game/data/campaigns/217-07.json",
-      "catalog_sha256": "719807ba5767d000eaedfd8276b25548f6105dd8b3c9634d9e55481ee8548e52",
+      "catalog_sha256": "e4c682c92b7518d0d106449cd84735c2506a9f089d220795306d8c427827bbc0",
       "factions": [
         {
           "id": "gongsun",
@@ -110640,7 +110748,7 @@
       "title": "219年7月 · 关羽包围网",
       "title_ja": "219年7月 · 关羽包围网",
       "catalog_file": "game/data/campaigns/219-07.json",
-      "catalog_sha256": "d91eec3376899f7090b09d31095fac462456952e4f8546927af836e02e0d4fa4",
+      "catalog_sha256": "f6101c404a7913460484149ef7a8bf0fe5ca55f31d2360ac36b9f8691c59d356",
       "factions": [
         {
           "id": "gongsun",
@@ -116699,7 +116807,7 @@
       "title": "221年7月 · 夷陵前夕",
       "title_ja": "221年7月 · 夷陵前夕",
       "catalog_file": "game/data/campaigns/221-07.json",
-      "catalog_sha256": "1112d009ed2e98e83c69c9322d7530b29b22062aa3f652d3cf33f5e89a6ba8c9",
+      "catalog_sha256": "57234c74b84df705e48e144a559203b5c0011e950814ba2bf14035505b4c122a",
       "factions": [
         {
           "id": "gongsun",
@@ -122463,7 +122571,7 @@
       "title": "225年7月 · 征伐南蠻",
       "title_ja": "南蛮征伐",
       "catalog_file": "game/data/campaigns/225-07.json",
-      "catalog_sha256": "d273a7d175fed7720a40ea788b1171333d4345132612ef37b305c3f7932649e3",
+      "catalog_sha256": "62e35758cac92fdf1a209b2ac018f24dab91f1939a9b1b86d556e47fbd9a09de",
       "factions": [
         {
           "id": "gongsun",
@@ -128332,7 +128440,7 @@
       "title": "227年2月 · 出师表",
       "title_ja": "227年2月 · 出师表",
       "catalog_file": "game/data/campaigns/227-02.json",
-      "catalog_sha256": "5aca7bcf9feaa1e899d6cca50b3d85902b478ad885825b145b62545985265e19",
+      "catalog_sha256": "b6bc23d26bec7e22ec83658ea040174bba8c09ef2132b5355297e86e8d0cb961",
       "factions": [
         {
           "id": "gongsun",
@@ -133626,7 +133734,7 @@
       "title": "234年2月 · 秋風五丈原",
       "title_ja": "秋風五丈原",
       "catalog_file": "game/data/campaigns/234-02.json",
-      "catalog_sha256": "d90afaceb1b1094c8dc3aa5f233a83698bf5ba857bc4c491ee108e790302faa4",
+      "catalog_sha256": "e61c0a1a593b2a72ee0980b3da1bbf050bc96b461246a5993c6905dd55ca3aeb",
       "factions": [
         {
           "id": "gongsun",
@@ -138438,7 +138546,7 @@
       "title": "238年1月 · 征讨辽东",
       "title_ja": "238年1月 · 征讨辽东",
       "catalog_file": "game/data/campaigns/238-01.json",
-      "catalog_sha256": "371fa4458c211d9564287dc7c03ad5dcf75aac0ce4168152aaf4e99b801cd4ba",
+      "catalog_sha256": "b305206a23d0e8229084185d65ad3babff883de772a98c849ac39e6956ba20a5",
       "factions": [
         {
           "id": "gongsun",
@@ -143185,7 +143293,7 @@
       "title": "249年1月 · 正始之变",
       "title_ja": "249年1月 · 正始之变",
       "catalog_file": "game/data/campaigns/249-01.json",
-      "catalog_sha256": "196b4f1feca42a2de6cda4a2d5ad88244b4bbfbb8ae8cc1cc501f7b6676c7f14",
+      "catalog_sha256": "179b8ec7113d4a19be72cba580c280b66a8d1fa34da8e8cecea32270ecb82c81",
       "factions": [
         {
           "id": "shu",
@@ -147477,7 +147585,7 @@
       "title": "263年5月 · 蜀漢滅亡",
       "title_ja": "蜀漢の滅亡",
       "catalog_file": "game/data/campaigns/263-05.json",
-      "catalog_sha256": "4dcb146eb0f24d08ac97ddd88349559b868e17f9b3695a4e734e3265bdd185d9",
+      "catalog_sha256": "fc8fe851d8a9ef09b9a163fd70852a86010548d2af1607dcb8066fda2ef1b544",
       "factions": [
         {
           "id": "lu_xing",
@@ -151037,7 +151145,7 @@
       "title": "197年7月 · 皇帝呂布",
       "title_ja": "皇帝呂布",
       "catalog_file": "game/data/campaigns/197-07.json",
-      "catalog_sha256": "c7c8f5b7b8d22987af478e882e2e0fa3322abba0b750462e4600c2355b255727",
+      "catalog_sha256": "b4d718b3ca8796a004edc42d188fddf1241656bf7a71973edc8eeb10dbbe6ec3",
       "factions": [
         {
           "id": "gongsun",
@@ -153657,6 +153765,24 @@
           ],
           "modes": [
             "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "qiao",
+            "xiapi"
+          ],
+          "owners": [
+            "shu",
+            "lubu"
+          ],
+          "modes": [
+            "land",
+            "river"
           ],
           "link_sources": [
             "links",
@@ -159238,7 +159364,7 @@
       "title": "201年5月 · 華北霸者・袁紹",
       "title_ja": "華北の覇者・袁紹",
       "catalog_file": "game/data/campaigns/201-05.json",
-      "catalog_sha256": "ba1468e0db4237cb153ef8514c3f2e5172fb9cbfd13bd2e1f5939e8c3b794f4c",
+      "catalog_sha256": "5a307214da6f99a639b9f258b3ca683ac2017df2a83f3ec2c719cc70cdb7624f",
       "factions": [
         {
           "id": "gongsun",
@@ -165952,7 +166078,7 @@
       "title": "209年6月 · 志在千里",
       "title_ja": "志在千里",
       "catalog_file": "game/data/campaigns/209-06.json",
-      "catalog_sha256": "58865e97f6ab452c0c54c0feb1ac0994b01223e641cda2cfb660370bc8d2baab",
+      "catalog_sha256": "644a32440f462e35840261b8fdaebfa8c6f272861e7f740a1b36434e9307f740",
       "factions": [
         {
           "id": "gongsun",
@@ -172626,7 +172752,7 @@
       "title": "210年11月 · 二分天下之計",
       "title_ja": "天下二分計",
       "catalog_file": "game/data/campaigns/210-11.json",
-      "catalog_sha256": "2863c552ec14ae6958774bf9ad6bfc92a844a6ad6401b1b9dafdd0f17fd65165",
+      "catalog_sha256": "8933c273a49a7f66723ebc04e01337e190ba44b2246a042bcc623a46c55eeffa",
       "factions": [
         {
           "id": "gongsun",
@@ -179300,7 +179426,7 @@
       "title": "212年6月 · 錦馬超展翅高飛",
       "title_ja": "錦馬超飛翔",
       "catalog_file": "game/data/campaigns/212-06.json",
-      "catalog_sha256": "124c47afd4eefd959ff2fe10d7e0685a8d10a475798ad70586eddc36802753da",
+      "catalog_sha256": "63c8ffa3006bc8b09a00497923e57ee668445ea02ff0ae25960ca8c7cdb19ca5",
       "factions": [
         {
           "id": "cao_zhang",

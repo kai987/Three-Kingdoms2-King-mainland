@@ -10,6 +10,9 @@ from remake.browser_runtime import BrowserRuntime
 from remake.session import CampaignSession
 
 
+GEOMETRY = json.loads((ROOT / 'game/config/route-geometry.json').read_text())['routes']
+
+
 def opening(chapter, faction):
     path = ROOT / 'game/data/campaigns' / f'{chapter}.json'
     session = CampaignSession([path])
@@ -22,36 +25,84 @@ def preview(session, source, target):
     return session.preview_march(source, target, str(session.revision))
 
 
+def quote_details(row):
+    return {key: value for key, value in row.items() if key != 'segments'}
+
+
 class MarchPreviewTests(unittest.TestCase):
+    def test_xiaopei_and_xiapi_offer_land_and_river_in_both_directions(self):
+        for faction, source, target, river_days in (
+            ('shu', 'qiao', 'xiapi', 10), ('lubu', 'xiapi', 'qiao', 21),
+        ):
+            with self.subTest(source=source, target=target):
+                session = opening('198-03', faction)
+                result = preview(session, source, target)
+                self.assertEqual((result['status'], result['restrictions'], result['detour']),
+                                 ('available', [], None))
+                self.assertCountEqual([row['mode'] for row in result['options']], ['land', 'river'])
+                for option in result['options']:
+                    mode = option['mode']
+                    route_id = f'qiao:xiapi:{mode}'
+                    self.assertEqual(option['path'], [source, target])
+                    self.assertEqual(option['route_ids'], [route_id])
+                    self.assertEqual(option['days'], {'land': 8, 'river': river_days}[mode])
+
+                    geometry = GEOMETRY[route_id]
+                    parts = geometry['parts'] if source == geometry['from'] else reversed(geometry['parts'])
+                    self.assertIn(mode, [segment['mode'] for segment in option['segments']])
+                    self.assertEqual(option['segments'], [
+                        dict(mode=part['mode'], d=part['d'], route_id=route_id, one_way=False,
+                             **{'from': source, 'to': target}) for part in parts])
+
     def test_one_way_yellow_river_uses_only_the_downstream_leg(self):
         early = opening('188-06', 'han_sui')
         downstream = preview(early, 'jincheng', 'shuofang')
         self.assertEqual(downstream['status'], 'available')
-        self.assertEqual(downstream['options'], [dict(mode='river', days=15, modes=['river'],
-            path=['jincheng', 'shuofang'], route_ids=['jincheng:shuofang:river'])])
+        self.assertEqual([quote_details(row) for row in downstream['options']],
+            [dict(mode='river', days=15, modes=['river'],
+                  path=['jincheng', 'shuofang'], route_ids=['jincheng:shuofang:river'])])
+        river_id = 'jincheng:shuofang:river'
+        segments = downstream['options'][0]['segments']
+        self.assertEqual(segments, [
+            dict(mode=part['mode'], d=part['d'], route_id=river_id,
+                 one_way=part['mode'] == 'river', **{'from': 'jincheng', 'to': 'shuofang'})
+            for part in GEOMETRY[river_id]['parts']])
         self.assertEqual(downstream['restrictions'], [])
 
         late = opening('235-01', 'wei')
         upstream = preview(late, 'shuofang', 'jincheng')
         self.assertEqual(upstream['status'], 'own_city')
         self.assertEqual(upstream['options'], [])
-        self.assertIn(dict(reason='one_way', mode='river', route_id='jincheng:shuofang:river',
-                           **{'from': 'jincheng', 'to': 'shuofang'}), upstream['restrictions'])
+        self.assertEqual([quote_details(row) for row in upstream['restrictions']],
+            [dict(reason='one_way', mode='river', route_id=river_id,
+                  **{'from': 'jincheng', 'to': 'shuofang'})])
+        self.assertEqual(upstream['restrictions'][0]['segments'], segments,
+                         'The blocked route shows its permitted direction, even when inspecting upstream')
         self.assertEqual(upstream['detour']['kind'], 'transfer')
         self.assertEqual(upstream['detour']['path'], ['shuofang', 'anding', 'jincheng'])
         self.assertEqual(upstream['detour']['days'], 72)
+        self.assertEqual(upstream['detour']['segments'], [
+            dict(mode='land', d=GEOMETRY[route_id]['parts'][0]['d'], route_id=route_id,
+                 one_way=False, **{'from': source, 'to': target})
+            for route_id, source, target in (
+                ('anding:shuofang:land', 'shuofang', 'anding'),
+                ('anding:jincheng:land', 'anding', 'jincheng'))])
 
     def test_attack_can_stage_from_a_reachable_owned_city(self):
         session = opening('235-01', 'wei')
         result = preview(session, 'anding', 'wuyuan')
         self.assertEqual(result['status'], 'no_direct_route')
         self.assertEqual(result['options'], [])
-        self.assertEqual(result['detour'], dict(kind='staged_attack', via='shuofang',
+        self.assertEqual(quote_details(result['detour']), dict(kind='staged_attack', via='shuofang',
             path=['anding', 'shuofang', 'wuyuan'], modes=['land'], days=53))
+        self.assertEqual([(row['from'], row['to']) for row in result['detour']['segments']],
+                         [('anding', 'shuofang'), ('shuofang', 'wuyuan')])
         exploration = preview(session, 'bohai', 'liaodong')
         self.assertEqual(exploration['status'], 'available')
         self.assertEqual([(item['mode'], item['days']) for item in exploration['options']],
                          [('explore', 75)])
+        self.assertEqual([row['mode'] for row in exploration['options'][0]['segments']],
+                         ['land', 'sea', 'land'])
 
     def test_diplomacy_blocks_an_otherwise_adjacent_target(self):
         session = opening('208-10', 'shu')
@@ -64,7 +115,9 @@ class MarchPreviewTests(unittest.TestCase):
         result = preview(session, 'shujun', 'yinping')
         self.assertEqual((result['status'], result['options']), ('no_direct_route', []))
         self.assertIn(dict(reason='one_way', mode='land', route_id='yinping:shujun:land',
-                           **{'from': 'yinping', 'to': 'shujun'}), result['restrictions'])
+                           **{'from': 'yinping', 'to': 'shujun'}),
+                      [quote_details(row) for row in result['restrictions']])
+        self.assertTrue(result['restrictions'][0]['segments'][0]['one_way'])
         self.assertEqual(result['detour']['path'], ['shujun', 'guanghan', 'yinping'])
 
     def test_settled_city_requires_stopping_on_the_road(self):
@@ -75,6 +128,9 @@ class MarchPreviewTests(unittest.TestCase):
                          [('requires_stop', ['julu'])])
         self.assertEqual(result['detour']['path'], ['anping', 'julu', 'zhao'])
         self.assertEqual(result['detour']['days'], 8)
+        sections = GEOMETRY['anping:wei:land']['city_sections']
+        self.assertEqual([row['d'] for row in result['detour']['segments']],
+                         [section['parts'][0]['d'] for section in sections[:2]])
 
     def test_temporarily_closed_and_not_yet_open_corridors(self):
         session = opening('207-09', 'wei')
