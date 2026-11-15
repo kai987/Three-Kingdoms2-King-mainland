@@ -9,6 +9,7 @@ import unittest
 
 from test_remake_historical_scenarios import ROOT, expansion_material
 from remake.campaign import Campaign, Catalog
+from remake.starting_garrisons import mobilize_reserves
 
 
 class Nanzhong225SetupTests(unittest.TestCase):
@@ -130,11 +131,21 @@ class Nanzhong225SetupTests(unittest.TestCase):
         self.assertNotIn(ma_chao, game.state.officers)
         self.assertEqual(self.catalog.definitions['san14-candidate-0769'].death_year, 222)
         chengdu = game.state.cities['shujun']
+        roster = [row for row in self.catalog.data['initial_officers'] if row['city'] == 'shujun']
+        old_stocks, old_troops = mobilize_reserves(self.catalog)
+        _, opening_troops = self.catalog.opening_garrisons
+        old_chengdu = 4190 + sum(row['troops'] for row in roster)
+        self.assertEqual(old_stocks['shujun']['reserves']
+                         + sum(old_troops[row['person_id']] for row in roster), old_chengdu)
+        chengdu_reinforcement = sum(opening_troops[row['person_id']] - old_troops[row['person_id']]
+                                    for row in roster)
         self.assertEqual(chengdu.reserves + sum(game.state.officers[i].troops
-            for i in chengdu.roster.officer_ids), 4190 + sum(
-            row['troops'] for row in self.catalog.data['initial_officers'] if row['city'] == 'shujun'))
+            for i in chengdu.roster.officer_ids), old_chengdu + chengdu_reinforcement)
+        old_total = 271350 + expansion_material(self.catalog.data)[2]
+        self.assertEqual(sum(row['reserves'] for row in old_stocks.values())
+                         + sum(old_troops.values()), old_total)
         self.assertEqual(game.state.soldiers['initial'],
-                         271350 + expansion_material(self.catalog.data)[2])
+                         old_total + sum(opening_troops.values()) - sum(old_troops.values()))
         before = game.to_dict()
         game._spawn_eligible(game.state)
         game.validate(game.state)

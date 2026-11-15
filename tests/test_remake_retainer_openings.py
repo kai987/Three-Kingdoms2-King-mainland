@@ -17,6 +17,7 @@ sys.path.insert(0, str(ROOT / 'game'))
 from build_campaigns import load_sources
 from remake.campaign import Campaign, Catalog, canonical
 from remake.session import CampaignSession, faction_officer_counts
+from remake.starting_garrisons import mobilize_reserves
 
 
 NEW_IDS = (
@@ -193,9 +194,15 @@ class RetainerOpeningTests(unittest.TestCase):
                     expected['soldiers'] += stock['reserves']
                 self.assertEqual(sum(c.gold for c in game.state.cities.values()), expected['gold'])
                 self.assertEqual(sum(c.grain for c in game.state.cities.values()), expected['grain'])
-                soldiers = sum(c.reserves for c in game.state.cities.values()) + sum(
-                    o.troops for o in game.state.officers.values() if o.faction_id is not None)
-                self.assertEqual(soldiers, expected['soldiers'])
+                stocks, mobilized = mobilize_reserves(catalog)
+                _, opening = catalog.opening_garrisons
+                reserves = sum(c.reserves for c in game.state.cities.values())
+                self.assertEqual(reserves, sum(stock['reserves'] for stock in stocks.values()))
+                self.assertEqual(reserves + sum(mobilized.values()), expected['soldiers'])
+                soldiers = reserves + sum(o.troops for o in game.state.officers.values()
+                                          if o.faction_id is not None)
+                self.assertEqual(soldiers, expected['soldiers'] + sum(opening.values()) - sum(mobilized.values()))
+                self.assertEqual(game.state.soldiers, dict(initial=soldiers, recruited=0, lost=0))
                 initial = {catalog.ids[r['person_id']] for key in ('initial_officers', 'initial_free_officers')
                            for r in catalog.data[key]}
                 self.assertEqual(set(game.state.officers), initial)

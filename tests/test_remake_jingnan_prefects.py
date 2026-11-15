@@ -194,7 +194,7 @@ class JingnanPrefectTests(unittest.TestCase):
         self.assertEqual(len(colors), len(set(colors)))
         for index, color in enumerate(colors):
             for other in colors[index + 1:]:
-                self.assertGreaterEqual(color_distance(color, other), 29)
+                self.assertGreaterEqual(color_distance(color, other), .14)
         self.assertEqual(self.data['initial_owners']['yidu'], 'wei')
 
 

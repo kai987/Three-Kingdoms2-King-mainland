@@ -465,7 +465,7 @@ test('recovery callback waits for title Start',async({page},testInfo)=>{
 
 test('observer speed changes cadence without resuming a pause and city counts follow ownership',async({page})=>{
  await opening(page);
- const hanResources=/金\s*13,?190\s*·\s*兵糧\s*43,?124\s*·\s*預備兵\s*8,?763\s*·\s*兵士\s*19,?587\s*·\s*現役\s*49/;
+ const hanResources=/金\s*13,?190\s*·\s*兵糧\s*43,?124\s*·\s*預備兵\s*8,?763\s*·\s*兵士\s*23,?484\s*·\s*現役\s*49/;
  const openingResources=page.locator('.faction-choice [data-faction-resources="han"]');
  const openingSummary=page.locator('#setup-summary');
  for(const resources of [openingResources,openingSummary]){
@@ -523,7 +523,7 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  await expect(headers).toHaveText(['勢力','都市','本據','現役','兵士','金','兵糧','預備兵'],{useInnerText:true});
  const han=ledger.locator('tr[data-faction-resources="han"]');
  await expect(han.locator('[data-faction-officers]')).toHaveText('49');
- await expect(han.locator('[data-faction-troops]')).toHaveText(/^19,?587$/);
+ await expect(han.locator('[data-faction-troops]')).toHaveText(/^23,?484$/);
  const checkLedgerColumns=async()=>{
   const columns=await headers.evaluateAll(nodes=>nodes.map(node=>({
    width:node.getBoundingClientRect().width,padding:getComputedStyle(node).paddingInline
@@ -1802,6 +1802,7 @@ async function verifyOpeningBatch(page,testInfo,batchId){
   await expect(page.locator('#map-date')).toHaveAttribute('datetime',`${String(catalog.start_year).padStart(4,'0')}-${String(catalog.start_month).padStart(2,'0')}-01`);
   expect(Object.keys(saved.state.cities).sort()).toEqual([...catalog.active_cities].sort());
   const mapOwners=await page.locator('#world-map .city-hit').evaluateAll(nodes=>Object.fromEntries(nodes.map(node=>[node.dataset.city,node.dataset.owner])));
+  let initialSoldiers=0;
   for(const city of previews){
    const live=saved.state.cities[city.id],resources=catalog.initial_city_resources?.[city.id]||catalog.initial_resources;
    const authored=catalog.initial_officers.filter(officer=>officer.city===city.id);
@@ -1809,8 +1810,11 @@ async function verifyOpeningBatch(page,testInfo,batchId){
    expect(live.owner).toBe(catalog.initial_owners[city.id]);
    for(const key of ['gold','grain'])expect(live[key],`${scenario}/${city.id} initial ${key}`).toBe(resources[key]);
    expect(live.reserves).toBe(city.reserves);
-   expect(live.reserves+officers.reduce((sum,officer)=>sum+officer.troops,0)).toBe(
+   expect(live.reserves).toBeLessThanOrEqual(resources.reserves);
+   const citySoldiers=live.reserves+officers.reduce((sum,officer)=>sum+officer.troops,0);
+   expect(citySoldiers,`${scenario}/${city.id} original manpower plus active reinforcements`).toBeGreaterThanOrEqual(
     resources.reserves+authored.reduce((sum,officer)=>sum+officer.troops,0));
+   initialSoldiers+=citySoldiers;
    expect(officers.map(officer=>officer.person_id).sort()).toEqual(authored.map(officer=>officer.person_id).sort());
    expect(Object.fromEntries(officers.map(officer=>[officer.person_id,officer.troops]))).toEqual(
     Object.fromEntries(city.officers.map(officer=>[officer.person_id,officer.troops])));
@@ -1818,6 +1822,7 @@ async function verifyOpeningBatch(page,testInfo,batchId){
    for(const key of ['land','industry','population','governance'])expect(development[key]).toBe(city.city_development[key]);
    expect(mapOwners[city.id],`${scenario}/${city.id} visible map ownership`).toBe(live.owner);
   }
+  expect(saved.state.soldiers).toEqual({initial:initialSoldiers,recruited:0,lost:0});
   const liveOfficers=Object.values(saved.state.officers);
   expect(liveOfficers.filter(officer=>officer.faction_id).map(officer=>officer.person_id).sort()).toEqual(servingPeople);
   expect(liveOfficers.filter(officer=>!officer.faction_id).map(officer=>officer.person_id).sort()).toEqual(freePeople);

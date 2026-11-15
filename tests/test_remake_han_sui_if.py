@@ -19,6 +19,7 @@ sys.path.insert(0, str(ROOT / 'game'))
 from build_campaigns import apply_patch
 from remake.campaign import Catalog
 from remake.session import CampaignSession
+from remake.starting_garrisons import mobilize_reserves
 
 
 HAN_SUI = 'san14-candidate-0166'
@@ -375,9 +376,17 @@ class HanSuiIfTests(unittest.TestCase):
                 self.assertEqual({row['person_id'] for row in city['officers'] if row['is_ruler']},
                                  {HAN_SUI})
                 troops = sum(row['troops'] for row in city['officers'])
-                authored_reserves = self.catalogs[chapter].data['initial_city_resources']['jincheng']['reserves']
-                self.assertGreater(troops, 900)
-                self.assertEqual(troops + city['reserves'], 900 + authored_reserves)
+                catalog = self.catalogs[chapter]
+                authored_reserves = catalog.data['initial_city_resources']['jincheng']['reserves']
+                old_stocks, old_troops = mobilize_reserves(catalog)
+                old_garrison = sum(old_troops[pid] for pid in MEMBERS)
+                self.assertEqual(old_garrison + old_stocks['jincheng']['reserves'],
+                                 900 + authored_reserves)
+                self.assertGreater(old_garrison, 900)
+                self.assertEqual(city['reserves'], old_stocks['jincheng']['reserves'])
+                _, opening_troops = catalog.opening_garrisons
+                self.assertEqual(troops, sum(opening_troops[pid] for pid in MEMBERS))
+                self.assertGreater(troops, old_garrison)
                 self.assertEqual(preview['faction_resources']['han_sui'],
                                  dict(cities=1, troops=troops, **{field: city[field]
                                       for field in ('gold', 'grain', 'reserves')}))

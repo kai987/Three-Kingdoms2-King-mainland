@@ -1,5 +1,6 @@
 """Scenario swatches are readable display data, never historical/save edits."""
 from copy import deepcopy
+from itertools import combinations
 import json
 from pathlib import Path
 import sys
@@ -8,7 +9,7 @@ import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
-from remake.map_presentation import color_distance,color_lab,faction_colors
+from remake.map_presentation import color_distance,color_oklab,faction_colors
 from remake.session import CampaignSession
 
 
@@ -39,12 +40,17 @@ class FactionPaletteTests(unittest.TestCase):
             for color in fills:
                 # Avoid pale fills resembling neutral and dark ones merging
                 # into the unmodified black pixel border.
-                self.assertGreaterEqual(color_lab(color)[0],35,identity)
-                self.assertGreaterEqual(color_distance(color,'#ffffff'),30,identity)
-                self.assertGreaterEqual(color_distance(color,'#000000'),30,identity)
-            for i,color in enumerate(fills):
-                for other in fills[i+1:]:
-                    self.assertGreaterEqual(color_distance(color,other),29,identity)
+                self.assertGreaterEqual(color_oklab(color)[0],.43,identity)
+                self.assertGreaterEqual(color_distance(color,'#ffffff'),.15,identity)
+            for first,other in combinations(catalog.factions,2):
+                self.assertGreaterEqual(color_distance(palette[first],palette[other]),.14,
+                                        (identity,first,other,palette[first],palette[other]))
+
+    def test_song_jian_has_clear_contrast_with_dong_zhuo_and_liu_yan(self):
+        # The old pale greens looked alike at castle size even with a distinct RGB value.
+        early=faction_colors(self.catalogs['mainland188-06'])
+        self.assertGreaterEqual(color_distance(early['song_jian'],early['dong_zhuo']),.24)
+        self.assertGreaterEqual(color_distance(early['song_jian'],early['liu_yan']),.20)
 
     def test_faction_colors_remain_stable_across_all_current_scenarios(self):
         colors={}
@@ -80,7 +86,7 @@ class FactionPaletteTests(unittest.TestCase):
                 for other,color in palette.items():
                     if other!=faction:
                         self.assertNotEqual(palette[faction],color,other)
-                        self.assertGreaterEqual(color_distance(palette[faction],color),29,other)
+                        self.assertGreaterEqual(color_distance(palette[faction],color),.14,other)
                 reordered=SimpleNamespace(factions=dict(reversed(list(catalog.factions.items()))))
                 self.assertEqual(faction_colors(reordered),palette)
 
@@ -92,9 +98,8 @@ class FactionPaletteTests(unittest.TestCase):
         self.assertEqual(faction_colors(reversed_catalog),first)
         self.assertEqual(len(set(first.values())),41)
         for identity in identities:
-            self.assertGreaterEqual(color_lab(first[identity])[0],35)
-            self.assertGreaterEqual(color_distance(first[identity],'#ffffff'),30)
-            self.assertGreaterEqual(color_distance(first[identity],'#000000'),30)
+            self.assertGreaterEqual(color_oklab(first[identity])[0],.43)
+            self.assertGreaterEqual(color_distance(first[identity],'#ffffff'),.15)
 
     def test_nanman_is_cyan_and_shu_gold_in_every_current_preview(self):
         current=list(self.catalogs.values())
@@ -105,7 +110,7 @@ class FactionPaletteTests(unittest.TestCase):
                 if key in catalog.factions:self.assertEqual(palette[key],expected,catalog.data['id'])
         palette=faction_colors(self.catalogs['mainland225-07'])
         self.assertEqual(palette['nanman'],'#00e8d8')
-        self.assertGreater(color_distance(palette['nanman'],palette['shu']),100)
+        self.assertGreater(color_distance(palette['nanman'],palette['shu']),.24)
 
     def test_reordering_unknown_factions_and_mutated_result_do_not_change_palette(self):
         catalog=self.catalogs['mainland190-01']

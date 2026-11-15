@@ -18,6 +18,7 @@ sys.path.insert(0, str(ROOT / 'game'))
 from build_campaigns import load_sources
 from remake.campaign import Campaign, Catalog, canonical
 from remake.session import faction_officer_counts
+from remake.starting_garrisons import mobilize_reserves
 
 
 KANG = 'san14-candidate-0264'
@@ -156,9 +157,16 @@ class LateRulerReviewTests(unittest.TestCase):
                     self.assertGreaterEqual(game.state.officers[ident].troops, 300)
                     self.assertIn(ident, game.state.cities['liaodong'].roster.officer_ids)
                 liaodong = game.state.cities['liaodong']
+                roster = [row for row in initial.values() if row['city'] == 'liaodong']
+                old_stocks, old_troops = mobilize_reserves(catalog)
+                _, opening_troops = catalog.opening_garrisons
+                old_liaodong = expected['reserves'] + sum(row['troops'] for row in roster)
+                self.assertEqual(old_stocks['liaodong']['reserves']
+                                 + sum(old_troops[row['person_id']] for row in roster), old_liaodong)
+                liaodong_reinforcement = sum(opening_troops[row['person_id']] - old_troops[row['person_id']]
+                                             for row in roster)
                 self.assertEqual(liaodong.reserves + sum(game.state.officers[i].troops
-                    for i in liaodong.roster.officer_ids), expected['reserves'] + sum(
-                    row['troops'] for row in initial.values() if row['city'] == 'liaodong'))
+                    for i in liaodong.roster.officer_ids), old_liaodong + liaodong_reinforcement)
                 actual = (sum(city.reserves for city in game.state.cities.values())
                           + sum(officer.troops for officer in game.state.officers.values()))
                 scenario = catalog.data['id']
@@ -167,7 +175,10 @@ class LateRulerReviewTests(unittest.TestCase):
                 new_cities = self.expansion[scenario]['owners'].keys() | opened_counties
                 added_reserves = sum(catalog.data['initial_city_resources'][city]['reserves']
                                      for city in new_cities)
-                self.assertEqual(actual, expected['soldiers'] + added_reserves)
+                old_total = expected['soldiers'] + added_reserves
+                self.assertEqual(sum(row['reserves'] for row in old_stocks.values())
+                                 + sum(old_troops.values()), old_total)
+                self.assertEqual(actual, old_total + sum(opening_troops.values()) - sum(old_troops.values()))
                 self.assertEqual(game.state.soldiers,
                                  dict(initial=actual, recruited=0, lost=0))
                 self.assertEqual(faction_officer_counts(catalog)['gongsun'],
