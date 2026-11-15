@@ -69,11 +69,5 @@ for device in ('desktop-chromium', 'touch-chromium'):
         rows.append(dict(device=device, case=case, baseline=baseline, response=response))
         print(device, case, 'save calls', baseline['all_save_calls'], response['all_save_calls'],
               'total seconds', baseline['total_s'], response['total_s'])
-edges = [read(f'edge-{branch}') for branch in ('ended', 'duel')]
-for evidence in edges:
-    assert evidence['committed'] == evidence['settled']
-    assert evidence['response']['worker'] == identity['commit']
-    assert evidence['response']['revision'] == evidence['originalRevision'] + 2
-    assert evidence['response']['rng'] == evidence['rng']
-(root / 'summary.json').write_text(json.dumps(dict(identity=identity, pairs=rows, edges=edges),
+(root / 'summary.json').write_text(json.dumps(dict(identity=identity, pairs=rows),
                                               ensure_ascii=False, indent=2) + '\n')

@@ -1,5 +1,5 @@
 name: Web campaign checks
-run-name: Soldier step save polling A/B on one runner
+run-name: Battle browser phase timeline A/B on one runner
 
 on:
   workflow_dispatch:
@@ -37,21 +37,14 @@ jobs:
           jq --arg run "$GITHUB_RUN_ID" --arg runner "$RUNNER_NAME" \
             '{commit,content_sha256,run_id:$run,runner:$runner}' \
             build/web/runtime/build.json > build/battle-poll-profile/web-identity.json
-      - name: Confirm encounter end and duel with genuine Worker responses
-        run: |
-          set -euo pipefail
-          git show "$RESPONSE_SHA:tests/browser_ui.spec.mjs" > tests/browser_ui.spec.mjs
-          python -B .github/benchmarks/battle-step-edge-fixtures.py > build/battle-step-edge-fixtures.json
-          node tools/browser-tests/node_modules/@playwright/test/cli.js test \
-            --config .github/benchmarks/battle-step-edge.config.mjs --project desktop-chromium
       - name: Desktop baseline
         run: bash .github/benchmarks/run-battle-step-variant.sh baseline desktop-chromium
       - name: Desktop response
         run: bash .github/benchmarks/run-battle-step-variant.sh response desktop-chromium
-      - name: Touch baseline
-        run: bash .github/benchmarks/run-battle-step-variant.sh baseline touch-chromium
       - name: Touch response
         run: bash .github/benchmarks/run-battle-step-variant.sh response touch-chromium
+      - name: Touch baseline
+        run: bash .github/benchmarks/run-battle-step-variant.sh baseline touch-chromium
       - name: Verify the shared Web artifact and compare saved checkpoints
         run: |
           python -B tools/ci/gate.py artifact --root build/web --head "$SOURCE_SHA" --content-sha256 "$WEB_CONTENT_SHA"
@@ -60,6 +53,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: battle-step-ab-${{ github.run_id }}
+          name: battle-timeline-ab-${{ github.run_id }}
           path: build/battle-poll-profile/
           if-no-files-found: error

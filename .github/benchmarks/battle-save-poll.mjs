@@ -10,12 +10,12 @@ const cases = new Map([
 export async function install(page, title) {
   const id = cases.get(title);
   if (!id) throw new Error('The profiling run discovered an unexpected case');
-  profiles.set(page, { id, phases: {}, documents: [], rounds: [] });
+  profiles.set(page, { id, phases: {}, timeline: [], documents: [], rounds: [] });
   await page.addInitScript(() => {
     const NativeWorker = window.Worker;
     const tracked = new WeakMap();
     const profile = {
-      workers: [], saves: [], commands: [], polls: [], round: null, label: null,
+      workers: [], saves: [], commands: [], requests: [], polls: [], replay: [], busy: [], round: null, label: null,
       poll(kind) {
         const entry = {
           kind, round: this.round, started: performance.now(),
@@ -30,6 +30,28 @@ export async function install(page, title) {
         entry.decision = decision;
       },
     };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const stage = document.querySelector('#stage');
+      if (!stage) return;
+      let playing = false;
+      new MutationObserver(() => {
+        const active = !!stage.querySelector('[data-battle-skip]:not([hidden])');
+        if (active !== playing) {
+          playing = active;
+          profile.replay.push({ at: performance.now(), active, round: profile.round,
+            mode: stage.querySelector('[data-battle-scene]')?.dataset.battleSceneMode ?? null });
+        }
+      }).observe(stage, { attributes: true, attributeFilter: ['hidden'], childList: true, subtree: true });
+      let busy = document.body.classList.contains('busy');
+      new MutationObserver(() => {
+        const active = document.body.classList.contains('busy');
+        if (active !== busy) {
+          busy = active;
+          profile.busy.push({ at: performance.now(), active });
+        }
+      }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    }, { once: true });
 
     class ObservedWorker extends NativeWorker {
       constructor(url, options) {
@@ -53,7 +75,8 @@ export async function install(page, title) {
           const entry = pending.get(data.id);
           if (!entry) return;
           pending.delete(data.id);
-          Object.assign(entry, { received, status: data.status, wire: data.body });
+          Object.assign(entry, { received, status: data.status });
+          if (entry.keepWire) entry.wire = data.body;
         });
       }
 
@@ -64,18 +87,18 @@ export async function install(page, title) {
           if (message.path === '/api/save') {
             const poll = profile.label;
             profile.label = null;
-            const entry = { id: message.id, started, kind: poll?.kind ?? 'other', round: profile.round };
+            const entry = { id: message.id, started, kind: poll?.kind ?? 'other', round: profile.round, keepWire: true };
             if (poll) poll.request = message.id;
             profile.saves.push(entry);
             pending.set(message.id, entry);
           }
-          if (message.path === '/api/command' && profile.round !== null) {
-            const { kind, revision } = JSON.parse(message.body);
-            if (kind === 'siege_orders' || kind === 'siege_step') {
-              const entry = { id: message.id, kind, started, inputRevision: revision, round: profile.round };
-              profile.commands.push(entry);
-              pending.set(message.id, entry);
-            }
+          if (['/api/command', '/api/state', '/api/load'].includes(message.path)) {
+            const { kind, revision } = message.path === '/api/command' ? JSON.parse(message.body) : {};
+            const entry = { id: message.id, kind: kind ?? message.path, started, inputRevision: revision,
+              round: profile.round, keepWire: profile.round !== null && ['siege_orders', 'siege_step'].includes(kind) };
+            profile.requests.push(entry);
+            if (entry.keepWire) profile.commands.push(entry);
+            pending.set(message.id, entry);
           }
         }
         return super.postMessage(message, ...options);
@@ -88,7 +111,18 @@ export async function install(page, title) {
 
 export function phase(page, name, started) {
   const state = profiles.get(page);
-  (state.phases[name] ??= []).push(performance.now() - started);
+  const ended = performance.now();
+  (state.phases[name] ??= []).push(ended - started);
+  state.timeline.push({ name, start: performance.timeOrigin + started, end: performance.timeOrigin + ended });
+}
+
+export async function measure(page, name, callback) {
+  const started = performance.now();
+  try {
+    return await callback();
+  } finally {
+    phase(page, name, started);
+  }
 }
 
 export async function beginRound(page) {
@@ -112,12 +146,13 @@ export async function finishRound(page, started, before, committed, settled) {
 }
 
 export async function snapshot(page) {
+  const before = performance.timeOrigin + performance.now();
   const doc = await page.evaluate(() => {
     const profile = window.__battleSaveProfile;
     if (!profile) return null;
     const utf8 = new TextEncoder();
-    const outline = ({ wire, ...row }) => ({ ...row, bytes: wire ? utf8.encode(wire).length : null });
-    const commands = profile.commands.map(({ wire, ...row }) => {
+    const outline = ({ wire, keepWire, ...row }) => ({ ...row, bytes: wire ? utf8.encode(wire).length : null });
+    const commands = profile.commands.map(({ wire, keepWire, ...row }) => {
       const decoded = wire ? JSON.parse(wire) : {};
       const value = decoded.view ?? decoded;
       const game = value.game;
@@ -126,9 +161,15 @@ export async function snapshot(page) {
         battle: battle?.id ?? null, siege: battle?.extended?.siege?.round ?? null,
         duel: !!battle?.extended?.duel, sawGame: !!game, transport: decoded.transport ?? 'full' };
     });
-    return { workers: profile.workers, saves: profile.saves.map(outline), commands, polls: profile.polls };
+    const requests = profile.requests.map(({ wire, keepWire, ...row }) => row);
+    return { workers: profile.workers, saves: profile.saves.map(outline), commands, polls: profile.polls,
+      requests, replay: profile.replay, busy: profile.busy, timeOrigin: performance.timeOrigin,
+      sampledAt: performance.timeOrigin + performance.now() };
   });
-  if (doc) profiles.get(page).documents.push(doc);
+  if (doc) {
+    doc.nodeSample = [before, performance.timeOrigin + performance.now()];
+    profiles.get(page).documents.push(doc);
+  }
 }
 
 export async function record(page, testInfo) {
