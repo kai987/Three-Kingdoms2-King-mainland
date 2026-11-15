@@ -12,13 +12,14 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, canonical
 from remake.dated_events import visible_factions
 from remake import civil_staff, domestic, facilities, logistics, treasures, city_development
-from remake.city_economy import (apply_opening_sizes, income_at, incomes_at,
+from remake.city_economy import (apply_opening_sizes, frontier_outpost_at, income_at, incomes_at,
                                  profile_at, profiles_at, tier_at)
 from remake.officers import OFFICER_TROOP_CAP
 from remake.starting_garrisons import frontier_cities
 from campaign_fixtures import advance_month
 
 FIELDS = ('gold', 'grain', 'reserves')
+HETAO_CITIES = {'shuofang', 'wuyuan', 'yunzhong'}
 
 
 def synchronize(game, state, **options):
@@ -146,12 +147,14 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                     if change:
                         self.assertEqual(change['after']['status'], 'serving')
                         self.assertEqual(row['city'], expansion_garrisons.get(row['person_id'], change['after']['city']))
-                actual_material = dict(
-                    gold=sum(data['initial_city_resources'][city]['gold'] for city in data['active_cities']),
-                    grain=sum(data['initial_city_resources'][city]['grain'] for city in data['active_cities']),
-                    soldiers=sum(data['initial_city_resources'][city]['reserves'] for city in data['active_cities'])
+                # The frozen retainer review predates the Hetao expansion.
+                reviewed_cities = set(data['active_cities']) - HETAO_CITIES
+                reviewed_material = dict(
+                    gold=sum(data['initial_city_resources'][city]['gold'] for city in reviewed_cities),
+                    grain=sum(data['initial_city_resources'][city]['grain'] for city in reviewed_cities),
+                    soldiers=sum(data['initial_city_resources'][city]['reserves'] for city in reviewed_cities)
                              + sum(row['troops'] for row in data['initial_officers']))
-                self.assertEqual(actual_material, frozen['material'])
+                self.assertEqual(reviewed_material, frozen['material'])
                 patterns = {tuple(data['initial_city_resources'][key][field] for field in FIELDS)
                             for key in data['active_cities']}
                 self.assertGreaterEqual(len(patterns), 25)
@@ -159,12 +162,17 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                     key = city['id']
                     stocks = data['initial_city_resources'][key]
                     baseline = self.pre_review_stocks(data, key)
+                    outpost = frontier_outpost_at(data, key, *date[:2]) is not None
+                    if outpost:
+                        self.assertEqual(income_at(data, key, *date[:2]), dict.fromkeys(FIELDS, 0))
                     for values in (stocks, data['city_income'][key]):
                         self.assertEqual(set(values), set(FIELDS))
                         for field, value in values.items():
                             self.assertIs(type(value), int)
                             self.assertLess(value, 100000)
-                            if values is stocks and field == 'reserves':
+                            if values is stocks and outpost:
+                                self.assertEqual(value, 0)
+                            elif values is stocks and field == 'reserves':
                                 self.assertGreaterEqual(value, 0)
                                 if value == 0 and key not in self.expansion_cities:
                                     self.assertGreater(baseline['reserves'], 0)

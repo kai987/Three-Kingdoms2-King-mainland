@@ -869,8 +869,13 @@ test('city size labels and the report adapt to available space while retaining m
  const labels=page.locator('#map-labels'),names=page.locator('[data-city-label]');
  await expect(labels).toHaveAttribute('data-label-mode','major');
  const majorCount=await names.count();
- for(const [mode,count] of [['giant',4],['large',10],['all',118],['none',0],['major',majorCount]]){
+ const activeCityCount=await page.locator('#world-map .city-hit[data-city]').count();
+ for(const [mode,count] of [['giant',4],['large',10],['all',activeCityCount],['none',0],['major',majorCount]]){
   await labels.click();await expect(labels).toHaveAttribute('data-label-mode',mode);await expect(names).toHaveCount(count);
+  if(mode==='all'){
+   for(const city of ['shuofang','wuyuan','yunzhong'])
+    await expect(page.locator(`[data-city-label="${city}"]`)).toHaveCount(1);
+  }
  }
  await labels.click();await labels.click();
  await page.locator('#scenario').selectOption('mainland225-07');

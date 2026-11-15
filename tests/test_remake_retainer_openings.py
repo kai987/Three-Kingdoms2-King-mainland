@@ -184,7 +184,13 @@ class RetainerOpeningTests(unittest.TestCase):
                                for ident in city.roster.officer_ids]
                 self.assertEqual(len(memberships), len(set(memberships)))
                 self.assertTrue(all(len(c.roster.officer_ids) <= 99 for c in game.state.cities.values()))
-                expected = materials[catalog.data['id']]
+                expected = dict(materials[catalog.data['id']])
+                # The retainer review was frozen before the three Hetao locations were added.
+                for city in ('shuofang', 'wuyuan', 'yunzhong'):
+                    stock = catalog.data['initial_city_resources'][city]
+                    expected['gold'] += stock['gold']
+                    expected['grain'] += stock['grain']
+                    expected['soldiers'] += stock['reserves']
                 self.assertEqual(sum(c.gold for c in game.state.cities.values()), expected['gold'])
                 self.assertEqual(sum(c.grain for c in game.state.cities.values()), expected['grain'])
                 soldiers = sum(c.reserves for c in game.state.cities.values()) + sum(
