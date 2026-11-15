@@ -43,21 +43,31 @@ for project in projects:
                 assert (entry['kind'], entry['round']) == (poll['kind'], poll['round'])
                 assert poll['started'] <= entry['started'] <= entry['received'] <= poll['ended']
                 measures[poll['kind']]['read_and_parse_s'] += seconds(poll['ended'] - poll['started'])
-            for action in doc['commands']:
+            orders = {command['round']: command for command in doc['commands'] if command['kind'] == 'siege_orders'}
+            actions = [command for command in doc['commands'] if command['kind'] == 'siege_step']
+            assert len(orders) == len(actions) and len(doc['commands']) == 2 * len(actions)
+            for action in actions:
                 number = action['round']
+                order = orders[number]
                 checkpoint = raw['rounds'][number - 1]
                 before, committed, settled = (checkpoint[key] for key in ('before', 'committed', 'settled'))
                 assert committed == settled and isinstance(committed['rng'], dict)
                 polls = [poll for poll in doc['polls'] if poll['round'] == number and poll['kind'] == 'round-poll']
                 assert polls and [p['decision'] for p in polls] == [False] * (len(polls) - 1) + [True]
-                assert action['status'] == 200
-                advanced = (action['sawGame'] and (action['siege'] is None or action['duel']
-                                                  or action['siege'] > before['siege']))
+                assert action['status'] == order['status'] == 200
+                assert order['received'] <= action['started']
+                def advances(response):
+                    return (response['sawGame']
+                            and (response['siege'] is None or response['duel'] or response['siege'] > before['siege']))
+                advanced = advances(action)
                 revision = action['revision'] == action['inputRevision'] + 1
                 matching = all(action[key] == committed[key] for key in ('battle', 'siege', 'duel', 'rng'))
                 comparisons.append({
                     'round': number, 'polls': len(polls), 'transport': action['transport'],
                     'request_revision': action['inputRevision'], 'response_revision': action['revision'],
+                    'order_request_revision': order['inputRevision'], 'order_response_revision': order['revision'],
+                    'order_response_matches_poll': advances(order),
+                    'order_revision_applied': order['revision'] == order['inputRevision'] + 1 == action['inputRevision'],
                     'response_matches_poll': advanced, 'revision_incremented': revision,
                     'response_matches_committed_save_fields': matching,
                     'response_before_successful_poll_ms': polls[-1]['ended'] - action['received'],

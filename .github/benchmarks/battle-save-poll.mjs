@@ -71,8 +71,8 @@ export async function install(page, title) {
           }
           if (message.path === '/api/command' && profile.round !== null) {
             const { kind, revision } = JSON.parse(message.body);
-            if (kind === 'siege-step') {
-              const entry = { id: message.id, started, inputRevision: revision, round: profile.round };
+            if (kind === 'siege_orders' || kind === 'siege_step') {
+              const entry = { id: message.id, kind, started, inputRevision: revision, round: profile.round };
               profile.commands.push(entry);
               pending.set(message.id, entry);
             }
