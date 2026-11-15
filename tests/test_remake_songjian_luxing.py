@@ -16,6 +16,7 @@ from build_campaigns import load_sources
 from remake.campaign import Campaign, Catalog, canonical
 from remake.map_presentation import city_names
 from remake.session import faction_officer_counts, faction_resources
+from remake.starting_garrisons import mobilize_reserves
 
 
 PEOPLE = {
@@ -182,9 +183,16 @@ class SongJianLuXingTests(unittest.TestCase):
         # Yan Xing is now also a local candidate; his former300 troops return
         # to the same city rather than disappearing or creating soldiers.
         wuwei = state.cities['wuwei']
+        roster = [row for row in game.catalog.data['initial_officers'] if row['city'] == 'wuwei']
+        old_stocks, old_troops = mobilize_reserves(game.catalog)
+        _, opening_troops = game.catalog.opening_garrisons
+        old_wuwei = 1860 + sum(row['troops'] for row in roster)
+        self.assertEqual(old_stocks['wuwei']['reserves']
+                         + sum(old_troops[row['person_id']] for row in roster), old_wuwei)
+        wuwei_reinforcement = sum(opening_troops[row['person_id']] - old_troops[row['person_id']]
+                                  for row in roster)
         self.assertEqual(wuwei.reserves + sum(state.officers[i].troops
-            for i in wuwei.roster.officer_ids), 1860 + sum(
-            row['troops'] for row in game.catalog.data['initial_officers'] if row['city'] == 'wuwei'))
+            for i in wuwei.roster.officer_ids), old_wuwei + wuwei_reinforcement)
         self.assertIsNone(state.officers[165].faction_id)
         self.assertEqual(state.officers[165].troops, 0)
         self.assertEqual(state.extension['free_locations']['165'], 'jincheng')
@@ -194,9 +202,12 @@ class SongJianLuXingTests(unittest.TestCase):
         for city in expansion_reserves:
             self.assertEqual(state.cities[city].owner, 'han' if city in HETAO_184_RESERVES else 'neutral')
             self.assertEqual(state.cities[city].roster.officer_ids, [])
+        self.assertEqual(sum(row['reserves'] for city, row in old_stocks.items() if city not in expansion_reserves)
+                         + sum(old_troops.values()), ORIGINAL_184_SOLDIERS)
+        reinforcement = sum(opening_troops.values()) - sum(old_troops.values())
         self.assertEqual(sum(c.reserves for city, c in state.cities.items() if city not in expansion_reserves)
-                         + sum(o.troops for o in state.officers.values()), ORIGINAL_184_SOLDIERS)
-        expected_total = ORIGINAL_184_SOLDIERS + sum(expected_reserves.values())
+                         + sum(o.troops for o in state.officers.values()), ORIGINAL_184_SOLDIERS + reinforcement)
+        expected_total = ORIGINAL_184_SOLDIERS + sum(expected_reserves.values()) + reinforcement
         self.assertEqual(state.soldiers['initial'], expected_total)
         self.assertEqual(sum(c.reserves for c in state.cities.values())
                          + sum(o.troops for o in state.officers.values()), expected_total)

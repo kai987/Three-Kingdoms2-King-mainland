@@ -375,11 +375,11 @@ class DelegationReplayTests(unittest.TestCase):
         self.configure()
         if filename == '184-02.json':
             # An exposed lone-city faction cannot survive by passing every
-            # turn. Occupy the actual empty neighbouring city using two real
-            # unattached officers, retaining both appointed posts at home.
+            # turn. Liu Bei occupies the empty neighbouring city while Guan Yu
+            # stays at home to defend and replace a defecting military officer.
             self.reinforce_184_guards()
             self.command('depart', source='yan', target='fanyang',
-                         officers=[146, 951], route_mode='land')
+                         officers=[951], route_mode='land')
         if staff:
             candidate = self.games[0].state.extension['civil_staff']['cities']['nanyang']['candidate']
             self.assertIsNotNone(candidate)
@@ -433,9 +433,9 @@ class DelegationReplayTests(unittest.TestCase):
             final_rng=vars(self.games[0].state.rng)), ensure_ascii=False), flush=True)
 
     def test_184_liu_yan_six_turns_are_identical_in_python_and_rust(self):
-        # With the current route network, this seed naturally exercises rival
-        # persuasion, a legal replacement and resumed reserve allocation.
-        self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'), seed=2034)
+        # At current opening strength, this seed yields a natural defection,
+        # a legal replacement and resumed reserve allocation without defeat.
+        self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'), seed=1942955374)
 
     def test_217_wei_six_turns_staff_arrival_combat_and_real_convoys(self):
         self.replay('217-07.json', 'wei', 6, staff=True)

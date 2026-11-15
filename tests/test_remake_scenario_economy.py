@@ -15,7 +15,7 @@ from remake import civil_staff, domestic, facilities, logistics, treasures, city
 from remake.city_economy import (apply_opening_sizes, frontier_outpost_at, income_at, incomes_at,
                                  profile_at, profiles_at, tier_at)
 from remake.officers import OFFICER_TROOP_CAP
-from remake.starting_garrisons import frontier_cities
+from remake.starting_garrisons import frontier_cities, mobilize_reserves
 from campaign_fixtures import advance_month
 
 FIELDS = ('gold', 'grain', 'reserves')
@@ -106,6 +106,8 @@ class DatedScenarioEconomyTests(unittest.TestCase):
 
     def assert_opening_material(self, game):
         data = game.catalog.data
+        mobilized_stocks, mobilized_troops = mobilize_reserves(game.catalog)
+        _, opening_troops = game.catalog.opening_garrisons
         authored = {}
         for row in data['initial_officers']:
             authored.setdefault(row['city'], {})[row['person_id']] = row['troops']
@@ -116,9 +118,12 @@ class DatedScenarioEconomyTests(unittest.TestCase):
             actual = {game.state.officers[i].person_id: game.state.officers[i].troops
                       for i in city.roster.officer_ids}
             self.assertEqual(actual.keys(), opening.keys())
-            self.assertEqual(city.reserves + sum(actual.values()),
+            old_troops = {pid: mobilized_troops[pid] for pid in opening}
+            self.assertEqual(city.reserves, mobilized_stocks[city.id]['reserves'])
+            self.assertEqual(city.reserves + sum(old_troops.values()),
                              stocks['reserves'] + sum(opening.values()))
-            self.assertTrue(all(opening[pid] <= troops <= OFFICER_TROOP_CAP
+            self.assertEqual(actual, {pid: opening_troops[pid] for pid in opening})
+            self.assertTrue(all(opening[pid] <= old_troops[pid] <= troops <= OFFICER_TROOP_CAP
                                 for pid, troops in actual.items()))
             self.assertGreaterEqual(city.reserves, (stocks['reserves'] * 40 + 99) // 100)
 

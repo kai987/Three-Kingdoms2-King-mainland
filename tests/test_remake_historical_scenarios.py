@@ -18,6 +18,7 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog
 from remake.dated_events import visible_factions
 from remake.session import CampaignSession, faction_officer_counts, faction_resources
+from remake.starting_garrisons import mobilize_reserves
 
 
 HAN_SUI_CHAPTERS = (
@@ -654,7 +655,12 @@ class EarlyIndependentRulerTests(unittest.TestCase):
                               sum(officer.troops for officer in game.state.officers.values()))
                     expected = tuple(old + added for old, added in zip(
                         self.ACTIVE_WORLD_BASELINE[chapter], expansion_material(data)))
-                    self.assertEqual(totals, expected)
+                    old_stocks, old_troops = mobilize_reserves(catalog)
+                    self.assertEqual(sum(row['reserves'] for row in old_stocks.values())
+                                     + sum(old_troops.values()), expected[2])
+                    _, opening_troops = catalog.opening_garrisons
+                    reinforcement = sum(opening_troops.values()) - sum(old_troops.values())
+                    self.assertEqual(totals, (*expected[:2], expected[2] + reinforcement))
                     self.assertEqual(game.state.soldiers['initial'], totals[2])
 
     def test_new_local_commands_start_preview_and_restore_without_changing_membership(self):
