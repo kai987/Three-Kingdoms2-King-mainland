@@ -342,6 +342,21 @@
         "map"
       ]
     },
+    "tests/test_remake_frontier_chronology.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_frontier_economy.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "logistics",
+        "scenarios"
+      ]
+    },
     "tests/test_remake_fu_corridor.py": {
       "tier": "related",
       "groups": [
