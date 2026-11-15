@@ -465,6 +465,13 @@ test('recovery callback waits for title Start',async({page},testInfo)=>{
 
 test('observer speed changes cadence without resuming a pause and city counts follow ownership',async({page})=>{
  await opening(page);
+ const hanResources=/金\s*13,?190\s*·\s*兵糧\s*43,?124\s*·\s*預備兵\s*8,?763\s*·\s*兵士\s*19,?587\s*·\s*現役\s*49/;
+ const openingResources=page.locator('.faction-choice [data-faction-resources="han"]');
+ const openingSummary=page.locator('#setup-summary');
+ for(const resources of [openingResources,openingSummary]){
+  await expect(resources).toContainText(hanResources);
+  await expect(resources).not.toContainText('文吏');
+ }
  const lifespan=page.locator('#lifespan');
  await expect(lifespan).toHaveAccessibleName('武將壽命');
  await expect(lifespan).toHaveValue('historical');
@@ -512,8 +519,28 @@ test('observer speed changes cadence without resuming a pause and city counts fo
   return shown;
  };
  await ledger.locator('summary').press('Enter');
- await expect(ledger.getByRole('columnheader',{name:'城池數',exact:true})).toBeVisible();
- await expect(ledger.getByRole('columnheader',{name:'本據',exact:true})).toBeVisible();
+ const headers=ledger.getByRole('columnheader');
+ await expect(headers).toHaveText(['勢力','都市','本據','現役','兵士','金','兵糧','預備兵'],{useInnerText:true});
+ const han=ledger.locator('tr[data-faction-resources="han"]');
+ await expect(han.locator('[data-faction-officers]')).toHaveText('49');
+ await expect(han.locator('[data-faction-troops]')).toHaveText(/^19,?587$/);
+ const checkLedgerColumns=async()=>{
+  const columns=await headers.evaluateAll(nodes=>nodes.map(node=>({
+   width:node.getBoundingClientRect().width,padding:getComputedStyle(node).paddingInline
+  })));
+  const widths=columns.map(column=>column.width);
+  expect(Math.max(...widths)-Math.min(...widths)).toBeLessThanOrEqual(1);
+  const alignments=await ledger.locator('th,td').evaluateAll(
+   cells=>[...new Set(cells.map(cell=>getComputedStyle(cell).textAlign))]
+  );
+  expect(alignments).toEqual(['center']);
+  expect(columns[1].padding).toBe(columns[2].padding);
+  const [cityPadding,basePadding]=await han.locator('[data-faction-cities],[data-faction-base]').evaluateAll(
+   nodes=>nodes.map(node=>getComputedStyle(node).paddingInline)
+  );
+  expect(cityPadding).toBe(basePadding);
+ };
+ await checkLedgerColumns();
  const openingCounts=await readCityCounts(openingSave);
  const finishTurn=async expected=>{
   await expect.poll(turn).toBe(expected);
@@ -551,8 +578,8 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  await expect(speed).toHaveAccessibleName('観戦速度');
  await expect(speed.locator('option')).toHaveText(['低速','標準','高速']);
  await expect(speed).toHaveValue('normal');
- await expect(ledger.getByRole('columnheader',{name:'都市数',exact:true})).toBeVisible();
- await expect(ledger.getByRole('columnheader',{name:'本拠',exact:true})).toBeVisible();
+ await expect(headers).toHaveText(['勢力','都市','本拠','現役','兵士','金','兵糧','予備兵'],{useInnerText:true});
+ await checkLedgerColumns();
  await page.locator('#utility-menu summary').press('Enter');
  await page.clock.runFor(3600);
  expect(await tacticalSave(page)).toEqual(paused);
@@ -1226,6 +1253,13 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
  // opening state; all campaign changes below use visible controls only.
  await opening(page);await expect(page).toHaveTitle('三國·大陸戰役');
  const scenarios=page.locator('#scenario'),marker=id=>page.locator(`#world-map .city-hit[data-city="${id}"]`);
+ const factionFill=async(city,faction)=>{
+  await expect(marker(city)).toHaveAttribute('data-owner',faction);
+  const fill=await marker(city).locator('.castle-fill').getAttribute('fill');
+  await expect(page.locator(`.faction-choice:has(input[value="${faction}"]) .faction-swatch rect`)).toHaveAttribute('fill',fill);
+  expect(fill).not.toBe('#ffffff');
+  return fill;
+ };
  const exportSave=async()=>{
   const download=page.waitForEvent('download');await page.locator('#save').click();
   return JSON.parse(await readFile(await(await download).path(),'utf8'));
@@ -1267,6 +1301,8 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
  for(const city of ['jiameng','fuxian'])await expect(marker(city)).toHaveAttribute('data-owner','shu');
  await expect(marker('danyang')).toHaveAttribute('data-owner','wu');
  await expect(marker('danyang')).toHaveAttribute('aria-label',/建業/);
+ const yiFill=await factionFill('shujun','liu_zhang');
+ expect(yiFill).not.toBe(await factionFill('fuxian','shu'));
  await page.locator('#utility-menu summary').click();await page.locator('#language').selectOption('zh-Hant');
  await expect(page.locator('html')).toHaveAttribute('lang','zh-Hant');
  await expect(scenarios.locator('option:checked')).toContainText('入蜀爭奪戰');
@@ -1275,6 +1311,7 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
  await page.locator('#begin').click();await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
  await waitIdle(page);await dismissHistoryOpening(page);
  await expect(page.locator('#map-date')).toHaveAttribute('datetime','0212-12-01');
+ await expect(marker('shujun').locator('.castle-fill')).toHaveAttribute('fill',yiFill);
  await historyScreenshot(page,testInfo,'shu-december-212-live-tc');
  const shu=await exportSave();expect(shu.scenario).toBe('mainland212-12');expect(shu.state.player).toBe('shu');
  expect([shu.state.year,shu.state.month,shu.state.day]).toEqual([212,12,1]);
@@ -1285,6 +1322,7 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
  // neither an obsolete rebel faction nor a captured capital can persist.
  await page.locator('#main-menu').click();await expect(page.locator('#begin')).toBeEnabled();
  await scenarios.selectOption('mainland188-06');
+ expect(await factionFill('shujun','liu_yan')).toBe(yiFill);
  await expect(page.locator('input[name=faction][value=ou_xing]')).toHaveCount(0);
  const sun=page.locator('input[name=faction][value=sun_jian]');
  await expect(sun).toHaveCount(1);await sun.check();
@@ -1308,6 +1346,7 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
 
  await page.locator('#main-menu').click();await expect(page.locator('#begin')).toBeEnabled();
  await scenarios.selectOption('mainland194-06');await page.locator('input[name=faction][value=wei]').check();
+ expect(await factionFill('shujun','liu_zhang')).toBe(yiFill);
  await expect(marker('jiyin')).toHaveAttribute('data-owner','wei');
  await expect(marker('jiyin')).toHaveAttribute('aria-label',/鄄城/);
  // Zhang Miao's allied army is independently selectable, rather than an
@@ -2635,10 +2674,12 @@ test('succession updates live faction names and ruler portraits while historical
  await expect(page.locator('#event-dialog')).toBeVisible();await expect(page.locator('#event-description')).toContainText(await currentLabel(fixture.selected.name));await tacticalDismiss(page);
  await page.locator('#city-jump').selectOption(fixture.city);
  const identity=page.locator(`[data-current-faction="${fixture.owner}"]`),portrait=identity.locator(`[data-portrait-person="${fixture.selected.person_id}"]`);
+ const castle=page.locator(`#world-map [data-city="${fixture.city}"]`);
  const verifyLive=async()=>{
   const label=await currentLabel(fixture.selected.name);await expect(identity.locator('[data-current-faction-label]')).toContainText(label);await expect(portrait).toBeVisible();await expect(portrait).toHaveAttribute('data-portrait-name',fixture.selected.name);await expect.poll(()=>portrait.locator('img').evaluate(node=>node.complete&&node.naturalWidth>0)).toBe(true);
   await expect(page.locator(`#city-jump option[value="${fixture.city}"]`)).toContainText(label);
-  await expect(page.locator(`#world-map [data-city="${fixture.city}"]`)).toHaveAttribute('aria-label',new RegExp(label));
+  await expect(castle).toHaveAttribute('aria-label',new RegExp(label));
+  await expect(castle.locator('.castle-fill')).toHaveAttribute('fill','#f8b800');
   const ledger=page.locator('.faction-ledger');if(await ledger.getAttribute('open')===null)await ledger.locator('summary').click();await expect(ledger.locator(`[data-faction-resources="${fixture.owner}"] th`)).toContainText(label);
   await(await inspect('#city-information')).click();await expect(page.locator('.city-information-owner')).toContainText(label);await closeDialog(page);
   expect(await tacticalSave(page)).toEqual(after,'Names, portraits, map ownership, city information and bilingual viewing do not modify the save or RNG');

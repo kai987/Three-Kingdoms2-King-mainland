@@ -60,8 +60,6 @@ def profiles_at(data, year, month):
 
 def income_at(data, city_id, year, month):
     """Scale opening production directly, never repeatedly compound rounds."""
-    if frontier_outpost_at(data, city_id, year, month) is not None:
-        return dict.fromkeys(FIELDS, 0)
     income = data.get('city_income', {}).get(city_id)
     if income is None:
         return None
@@ -111,6 +109,13 @@ def _frontier_sponsor(data, city_id, rule, owners, routes, outposts):
     return next((key for key in preferences if key in visited), nearest)
 
 
+def _frontier_upkeep(base, development):
+    if development is None:
+        return base
+    opening = development['baseline']['population']
+    return (base * development['population'] + opening - 1) // opening
+
+
 def frontier_outposts_view(data, state=None):
     """Resolve current or opening maintenance without changing city stocks."""
     ids = data.get('frontier_outposts', {})
@@ -119,16 +124,18 @@ def frontier_outposts_view(data, state=None):
     if state is None:
         year, month = data['start_year'], data['start_month']
         owners = {key: data['initial_owners'][key] for key in data['active_cities']}
+        development = {}
     else:
         year, month = state.year, state.month
         owners = {key: city.owner for key, city in state.cities.items()}
+        development = state.extension.get('city_development', {}).get('cities', {})
     outposts = {key: rule for key in sorted(ids) if key in owners
                 if (rule := frontier_outpost_at(data, key, year, month)) is not None}
     if not outposts:
         return {}
     roads = [route for route in effective(data['travel_routes'], owners, year, month)
              if route['mode'] == 'land']
-    return {key: dict(monthly_maintenance=rule['upkeep_gold'],
+    return {key: dict(monthly_maintenance=_frontier_upkeep(rule['upkeep_gold'], development.get(key)),
                       sponsor_city=_frontier_sponsor(
                           data, key, rule, owners, roads, outposts))
             for key, rule in outposts.items()}

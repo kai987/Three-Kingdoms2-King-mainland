@@ -125,6 +125,8 @@ class Catalog:
             raise ValueError('Current geographic and hazard travel rules are required')
         if self.data.get('calendar_rules') != {'turn_days': 10, 'month_days': 30, 'turn_start_days': [1, 11, 21], 'monthly_settlement': 'month_rollover'}:
             raise ValueError('Current campaigns require fixed ten-day turns')
+        from . import succession
+        self.appearance_year_corrections = succession.apply_appearance_corrections(self.data)
         r = self.data['rules']
         self.rules = GameRules(r['city_officer_capacity'], r['battle_officers_per_side'], r['runtime_capacity'])
         self.by_id, self.definitions, self.profiles = {}, {}, {}
@@ -693,6 +695,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
 
     def _complete_turn(self, state):
         """Commit one fixed ten-day turn and begin the next strategic phase."""
+        from . import succession
+
         state.completed_ai_turns.append(state.turn)
         self._process_march_supply(state,through_turn=state.turn+1)
         state.day += 10
@@ -706,8 +710,10 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             self._monthly_calendar(state)
         state.turn += 1
         if month_changed:
-            from . import dated_events
+            from . import dated_events, succession_depositions
             dated_events.process(self,state)
+            succession.process_ruler_death(self, state)
+            succession_depositions.process(self, state)
         # Annual deaths release their troops to the home city. Remove those
         # officers before a hungry column freezes its next departure manifest.
         self._prune_marches(state)
@@ -727,7 +733,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             state.phase = 'arrivals'
         if state.player != observer.SEAT and (
                 not any(c.owner == state.player for c in state.cities.values())
-                or not any(o.alive and o.faction_id == state.player for o in state.officers.values())):
+                or (not any(o.alive and o.faction_id == state.player for o in state.officers.values())
+                    and succession.preferred_successor(self, state, state.player,
+                        state.extension['leaders'].get(state.player), ()) is None)):
             state.phase = 'finished'
             self._note(state, '本方已无可用驻军，本次演练结束。')
         else:
@@ -783,6 +791,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     cities[key] = City(**row)
                 raw['cities'] = cities
                 candidate = CampaignState(**raw)
+                from .succession import migrate_appearance_receipts
+                migrate_appearance_receipts(self.catalog, candidate)
                 if legacy:
                     command_books.initialize(self, candidate, legacy=True)
                 # Existing current-catalog battles had presentation-only flags.

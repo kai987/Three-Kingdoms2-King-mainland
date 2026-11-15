@@ -155,6 +155,11 @@ class PlacementCompletionTests(unittest.TestCase):
                     assignment = data['era_assignments'][pid]
                     ident = catalog.ids[pid]
                     ys = year_state(definition, date[0])
+                    plan = assignment.get('appearance_plan')
+                    if (ys == YearState.AVAILABLE and assignment['status'] == 'chronology_excluded'
+                            and plan and tuple(plan['start']) > date[:2]):
+                        self.assertNotIn(ident, game.state.officers, (date, definition.name, plan))
+                        continue
                     if ys == YearState.AVAILABLE and assignment['status'] not in EXEMPT_OPENING:
                         self.assertIn(ident, game.state.officers, (date, definition.name, assignment))
                     if ys in (YearState.NOT_BORN, YearState.NOT_APPEARED, YearState.DEAD):

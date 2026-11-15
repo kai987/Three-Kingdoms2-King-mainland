@@ -46,22 +46,27 @@ class FactionPaletteTests(unittest.TestCase):
                 for other in fills[i+1:]:
                     self.assertGreaterEqual(color_distance(color,other),29,identity)
 
-    def test_native_colors_remain_unchanged_when_their_spacing_is_sufficient(self):
-        # Isolate the original native set; the real expanded198 palette is
-        # separately checked above for every faction, including Song Jian and
-        # the newly independent Zang Ba. Neither belongs to this native set.
-        original=SimpleNamespace(factions={key:row for key,row in
-            self.catalogs['mainland198-03'].factions.items()
-            if key not in {'song_jian','zang_ba'}})
-        self.assertEqual(len(original.factions),18)
-        self.assertEqual(faction_colors(original),{
-            'neutral':'#ffffff', 'gongsun':'#009438', 'gongsun_zan':'#f83800',
-            'han_sui':'#b8f818', 'hua_xin':'#008088', 'li_jue':'#d800cc',
-            'liu_biao':'#6844fc', 'liu_zhang':'#00e8d8', 'lubu':'#b8b8f8',
-            'ma_teng':'#fc7460', 'shi_xie':'#e4c490', 'shu':'#f8b800',
-            'wei':'#0078f8', 'wu':'#f85898', 'yuan_shao':'#a868b8',
-            'yuan_shu':'#607c00', 'zhang_lu':'#b8e8b8', 'zhang_xiu':'#b87800',
-            'zhang_yang':'#888888'})
+    def test_faction_colors_remain_stable_across_all_current_scenarios(self):
+        colors={}
+        for scenario,catalog in self.catalogs.items():
+            for faction,color in faction_colors(catalog).items():
+                if faction in colors:
+                    self.assertEqual(color,colors[faction],f'{scenario}/{faction}')
+                colors[faction]=color
+        for predecessor,successor in [('liu_yan','liu_zhang'),('sun_jian','wu'),
+                                      ('zhang_ji','zhang_xiu'),('yuan_shao','yuan_shang')]:
+            self.assertEqual(colors[predecessor],colors[successor],successor)
+        self.assertEqual(colors['liu_yan'],'#00e8d8')
+        self.assertNotEqual(colors['liu_zhang'],colors['shu'])
+        self.assertEqual(len({colors[faction] for faction in ('yuan_shang','yuan_tan','yuan_xi')}),3)
+
+    def test_native_subset_keeps_the_fills_of_the_expanded_scenario(self):
+        full=self.catalogs['mainland198-03']
+        subset=SimpleNamespace(factions={key:row for key,row in full.factions.items()
+                                          if key not in {'song_jian','zang_ba'}})
+        self.assertEqual(len(subset.factions),18)
+        palette=faction_colors(full)
+        self.assertEqual(faction_colors(subset),{key:palette[key] for key in ['neutral',*subset.factions]})
 
     def test_new_zhang_miao_and_zang_ba_have_present_distinct_colors(self):
         for chapter,faction in (('mainland190-01','zhang_miao'),

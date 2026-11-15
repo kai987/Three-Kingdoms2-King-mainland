@@ -24,6 +24,9 @@ REPORT = ROOT / 'docs/officer-stat-scenarios-v1.json'
 SEED = 2026
 CANONICAL_FIELDS = ('person_id', 'runtime_id', 'name', 'birth_year', 'service_year',
                     'death_year', 'chronology_basis')
+# The campaign applies these historical dates after reading the compiled source.
+RUNTIME_SERVICE_YEARS = {'san14-candidate-0570': (223, 221),
+                         'san14-candidate-0578': (253, 252)}
 
 
 def read(path):
@@ -132,13 +135,18 @@ def audit():
     check(len(set(people) - set(abilities)) == 52
           and len(set(people) - set(sources)) == 832,
           'Unexpected charisma/initial-health default coverage')
-    session = CampaignSession([ROOT / 'game/data' / name for name in index['catalogs']])
+    paths = [ROOT / 'game/data' / name for name in index['catalogs']]
+    session = CampaignSession(paths)
     source_index = read(ROOT / 'game/config/campaigns/index.json')
     scenario_sources = {entry['id']: read(ROOT / 'game/config/campaigns' / entry['file'])
                         for entry in source_index['scenarios']}
     scenarios = []
     totals = Counter()
-    for scenario_id, catalog in session.catalogs.items():
+    for path in paths:
+        compiled_catalog = read(path)
+        scenario_id = compiled_catalog['id']
+        catalog = session.catalogs[scenario_id]
+        compiled_people = {person['person_id']: person for person in compiled_catalog['people']}
         data = catalog.data
         check(catalog.rules.city_officer_capacity == 99, scenario_id + ': city capacity changed')
         check(catalog.rules.battle_officers_per_side == 10, scenario_id + ': battle capacity changed')
@@ -151,18 +159,25 @@ def audit():
         charisma_count = fallback_count = 0
         for pid, canonical_person in people.items():
             person = catalog.by_id[catalog.ids[pid]]
+            compiled = compiled_people[pid]
             patch = overrides.get(pid, {})
             check(not (set(patch) - {'set'}), scenario_id + ': unsupported individual override shape')
             expected_identity = {field: patch.get('set', {}).get(field, canonical_person[field])
                                  for field in CANONICAL_FIELDS}
-            check(all(person[field] == expected_identity[field] for field in CANONICAL_FIELDS),
+            check(all(compiled[field] == expected_identity[field] for field in CANONICAL_FIELDS),
                   scenario_id + ': canonical person identity/date mismatch: ' + pid)
+            correction = RUNTIME_SERVICE_YEARS.get(pid)
+            if correction and expected_identity['service_year'] == correction[0]:
+                expected_identity.update(service_year=correction[1],
+                                         chronology_basis='historical_succession_appearance_correction')
+            check(all(person[field] == expected_identity[field] for field in CANONICAL_FIELDS),
+                  scenario_id + ': runtime person identity/date mismatch: ' + pid)
             check(all(person[field] == canonical_person[field]
                       for field in ('person_id', 'runtime_id', 'name')),
                   scenario_id + ': a scenario overrode stable identity: ' + pid)
-            changed_dates = {field: dict(canonical=canonical_person[field], scenario=person[field])
+            changed_dates = {field: dict(canonical=canonical_person[field], scenario=compiled[field])
                              for field in ('birth_year', 'service_year', 'death_year', 'chronology_basis')
-                             if person[field] != canonical_person[field]}
+                             if compiled[field] != canonical_person[field]}
             if changed_dates:
                 date_overrides.append(dict(person_id=pid, name=person['name'], fields=changed_dates))
             source = sources.get(pid)

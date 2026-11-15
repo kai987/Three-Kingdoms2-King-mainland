@@ -91,6 +91,6 @@ const ui=staff.create({document:doc,dialog,i18n,getView:()=>view,cityName:id=>id
  vm.runInContext(source.slice(source.indexOf('function cityOccupancy('),source.indexOf('function officerChoiceText(')),context);
  row.officer_count=98;row.staff_count=1;row.occupancy=99;assert.equal(context.cityOccupancy(view.game.cities.home),99);
  assert(source.includes('full=cityOccupancy(city)>=capacity()'));assert(source.includes('slots=Math.max(0,capacity()-cityOccupancy(view.game.cities[destination]))'));
- assert(source.includes('id="civil-staff"'));assert(source.includes('id="library-staff"'));assert(source.includes('data-faction-staff'));
+ assert(source.includes('id="civil-staff"'));assert(source.includes('id="library-staff"'));
  console.log('civil staff UI: separate identities, zero-officer hiring, immutable inspection, salary/attributes, safe portraits, capacity, bilingual drafts, refusal handling and historical recruitment passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

@@ -297,7 +297,8 @@ class HanSuiIfTests(unittest.TestCase):
             restored.game.validate(restored.game.state)
 
     def test_188_separation_conserves_materials_people_and_other_garrisons(self):
-        data = self.pre_expansion_board(self.catalogs['188-06'].data)
+        compiled = ROOT / 'game/data/campaigns/188-06.json'
+        data = self.pre_expansion_board(json.loads(compiled.read_text()))
         actual = (len(data['initial_officers']), len(data['initial_free_officers']),
                   sum(row['troops'] for row in data['initial_officers']),
                   *(sum(data['initial_city_resources'].get(city, data['initial_resources'])[field]
@@ -378,7 +379,7 @@ class HanSuiIfTests(unittest.TestCase):
                 self.assertGreater(troops, 900)
                 self.assertEqual(troops + city['reserves'], 900 + authored_reserves)
                 self.assertEqual(preview['faction_resources']['han_sui'],
-                                 dict(cities=1, **{field: city[field]
+                                 dict(cities=1, troops=troops, **{field: city[field]
                                       for field in ('gold', 'grain', 'reserves')}))
         self.assertEqual(session.to_dict(), before)
         self.assertIsNone(session.game.state)
@@ -416,7 +417,8 @@ class HanSuiIfTests(unittest.TestCase):
     def test_separation_conserves_materials_stats_and_every_unaffected_garrison(self):
         for chapter, baseline in BASELINES.items():
             with self.subTest(chapter=chapter):
-                data = self.pre_expansion_board(self.catalogs[chapter].data)
+                compiled = ROOT / 'game/data/campaigns' / f'{chapter}.json'
+                data = self.pre_expansion_board(json.loads(compiled.read_text()))
                 actual = (len(data['initial_officers']), len(data['initial_free_officers']),
                           sum(row['troops'] for row in data['initial_officers']),
                           *(sum(data['initial_city_resources'].get(city,

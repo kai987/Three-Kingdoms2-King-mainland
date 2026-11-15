@@ -129,6 +129,7 @@ window.GameI18n=(()=>{
  }
  function eligible(element){return element&&!element.closest('script,style,[contenteditable=true]');}
  function renderedText(source,element){
+  if(element.closest('[data-l10n-literal]'))return source;
   const language=originalLanguage(element);
   return element.closest('[data-l10n-native]')&&!element.closest('[data-l10n-original]')?resourceText(source,language):t(source,language);
  }

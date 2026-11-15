@@ -27,10 +27,8 @@ def city_names(catalog,year,month=1):
 
 
 # Flat, saturated colors keep the native castle pixels legible. White belongs
-# exclusively to neutral cities; do not reuse the old near-white Wei fill.
-# The allocator compares colors in CIELAB instead of accepting duplicate hues
-# or relying on raw RGB distance. The full scenario faction list is the key,
-# so elimination, selection, language switches and reloads never recolor it.
+# exclusively to neutral cities. CIELAB spacing separates factions that share
+# a map, including when a custom scenario needs additional swatches.
 _FACTION_SWATCHES = (
     '#f8b800', '#f85898', '#00e8d8', '#f83800', '#b8f818', '#6844fc',
     '#fc7460', '#58d854', '#3cbcfc', '#d800cc', '#503000', '#005800',
@@ -38,11 +36,71 @@ _FACTION_SWATCHES = (
     '#008088', '#4028a8', '#b87800', '#607c00', '#b8e8b8', '#f8d878',
     '#a868b8', '#009438', '#0078f8', '#940084', '#0078a8', '#e4c490',
 )
-_FACTION_ANCHORS = (
-    ('wei', '#0078f8'), ('shu', '#f8b800'), ('wu', '#f85898'),
-    ('nanman', '#00e8d8'), ('han', '#f83800'),
-    ('yellow_turban', '#f8b800'), ('sun_jian', '#f85898'),
-)
+# These scenarios use different faction IDs for the same power after succession.
+_COLOR_INHERITANCE = {
+    'liu_zhang': 'liu_yan',
+    'sun_jian': 'wu',
+    'yuan_shang': 'yuan_shao',
+    'zhang_xiu': 'zhang_ji',
+}
+
+# Published faction colors are independent of the other factions in an opening.
+# Keep enough perceptual separation for every pair that appears together.
+_FACTION_COLORS = {
+    'bao_xin': '#a868b8',
+    'bian_zhang': '#a868b8',
+    'cao_zhang': '#008088',
+    'ding_yuan': '#009438',
+    'dong_zhuo': '#a0ff80',
+    'gao_gan': '#008088',
+    'gongsun': '#009438',
+    'gongsun_zan': '#008088',
+    'han': '#f83800',
+    'han_fu': '#f83800',
+    'han_sui': '#b8f818',
+    'han_xuan': '#a868b8',
+    'hua_xin': '#a868b8',
+    'jin_xuan': '#008088',
+    'kong_rong': '#20c000',
+    'kong_zhou': '#8040c0',
+    'li_jue': '#f83800',
+    'liu_biao': '#fc7460',
+    'liu_dai': '#b8b8f8',
+    'liu_du': '#f83800',
+    'liu_yan': '#00e8d8',
+    'liu_you': '#b8b8f8',
+    'liu_yu': '#e4c490',
+    'lu_xing': '#009438',
+    'lubu': '#e4c490',
+    'ma_teng': '#d800cc',
+    'nanman': '#00e8d8',
+    'qiao_mao': '#b87800',
+    'shi_xie': '#6844fc',
+    'shu': '#f8b800',
+    'song_jian': '#b8e8b8',
+    'tao_qian': '#607c00',
+    'wang_kuang': '#ffff80',
+    'wang_lang': '#a00080',
+    'wei': '#0078f8',
+    'wu': '#f85898',
+    'wu_ju': '#b8b8f8',
+    'xu_gong': '#b87800',
+    'yellow_turban': '#f8b800',
+    'yuan_shao': '#888888',
+    'yuan_shu': '#3cbcfc',
+    'yuan_tan': '#e4c490',
+    'yuan_xi': '#a868b8',
+    'yuan_yi': '#2060a0',
+    'zang_ba': '#b87800',
+    'zhang_chao': '#a02000',
+    'zhang_chun': '#a868b8',
+    'zhang_ji': '#00ff80',
+    'zhang_lu': '#ffff80',
+    'zhang_miao': '#00ff00',
+    'zhang_yang': '#804040',
+    'zhao_fan': '#607c00',
+}
+_COLOR_PRIORITY = ('wei', 'shu', 'wu', 'nanman', 'han', 'yellow_turban')
 
 
 @lru_cache(maxsize=None)
@@ -81,9 +139,11 @@ def _faction_colors(identities):
     reserved=['#ffffff','#000000']
     def separation(color):
         return min(color_distance(color,other) for other in [*reserved,*chosen.values()])
-    for identity,color in _FACTION_ANCHORS:
-        if identity in identities and color not in chosen.values() and separation(color)>=30:
-            chosen[identity]=color
+    preferred = sorted(identities, key=lambda identity: (identity not in _COLOR_PRIORITY, identity))
+    for identity in preferred:
+        color = _FACTION_COLORS.get(_COLOR_INHERITANCE.get(identity, identity))
+        if color and separation(color) >= 29:
+            chosen[identity] = color
     for identity in identities:
         if identity in chosen:continue
         remaining=[color for color in _FACTION_SWATCHES if color not in chosen.values()

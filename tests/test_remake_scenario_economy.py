@@ -164,7 +164,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                     baseline = self.pre_review_stocks(data, key)
                     outpost = frontier_outpost_at(data, key, *date[:2]) is not None
                     if outpost:
-                        self.assertEqual(income_at(data, key, *date[:2]), dict.fromkeys(FIELDS, 0))
+                        self.assertEqual(income_at(data, key, *date[:2]), data['city_income'][key])
                     for values in (stocks, data['city_income'][key]):
                         self.assertEqual(set(values), set(FIELDS))
                         for field, value in values.items():

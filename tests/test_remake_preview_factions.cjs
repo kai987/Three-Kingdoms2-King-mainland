@@ -7,7 +7,9 @@ const radios=['han','wei','wu'].map((value,index)=>({value,checked:value==='han'
  closest:()=>({getBoundingClientRect:()=>({top:100+index*140,bottom:190+index*140}),closest:()=>list})}));
 const cityElements=['livehome','occupied','capital','empty','unplayable'].map(city=>({dataset:{city},focus(options){assert.deepEqual(Object.keys(options),['preventScroll']);assert(options.preventScroll);}}));
 const factions=[{id:'han',name:'何进',captain:'何进',city:'livehome',ruler_person_id:'san14-candidate-0001'},{id:'wei',name:'曹操',captain:'曹操',city:'capital',ruler_person_id:'san14-candidate-0002'},{id:'wu',name:'孙权',captain:'孙权',city:'occupied',ruler_person_id:'san14-candidate-0003'}];
-const scenario=(year,owners)=>({id:'scenario'+year,year,month:7,factions,initial_owners:owners,faction:'han',focus:'livehome'});
+const scenario=(year,owners)=>({id:'scenario'+year,year,month:7,factions,initial_owners:owners,faction:'han',focus:'livehome',
+ faction_resources:{wei:{gold:year,grain:1000,reserves:300,troops:860},wu:{gold:year,grain:950,reserves:560,troops:1240}},
+ faction_officers:{wei:4,wu:6}});
 const game={player:'han',phase:'city',turn:3,year:184,month:2,day:21,rng:{state:2026,draws:7},cities:{occupied:{owner:'han'},empty:{owner:'wu'}}};
 let renders=0,cityRenders=0,suppressed=false;const information=[],cameraCalls=[],sounds=[];
 const i18n={locale:'zh-Hant'},languageHandlers=[];
@@ -16,7 +18,7 @@ const context={refreshDialogueFeedback(){},refreshPersonnelDialogue(){},setupPre
  GamePortraits:require('../game/portraits.js').create({document:null,i18n}),GameI18n:i18n,
  escapeHtml:value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),
  mapCamera:{x:350,y:250,zoom:3},board:cityElements.map((row,index)=>({id:row.dataset.city,position:[100+index*20,200]})),
- cityName:id=>'城'+id,resourceSummary:(id,preview)=>`钱${preview.year} · ${id}`,
+ cityName:id=>'城'+id,
  $:selector=>selector==='#setup-summary'?summary:cityElements.find(row=>selector===`[data-city="${row.dataset.city}"]`),
  document:{querySelectorAll:selector=>selector==='input[name=faction]'?radios:cityElements,addEventListener:(type,handler)=>{if(type==='game-language-change')languageHandlers.push(handler);}},localAutosave:null,
  renderMap(){renders++;},renderCity(){cityRenders++;},showCityInformation:id=>information.push(id),finishMapAction(){throw Error('Preview cannot execute a map command');},
@@ -24,6 +26,8 @@ const context={refreshDialogueFeedback(){},refreshPersonnelDialogue(){},setupPre
 };
 context.preview=context.setupPreview;context.owners=context.preview.initial_owners;
 vm.createContext(context);
+vm.runInContext(source.slice(source.indexOf('function factionResources('),source.indexOf('function factionBase(')),context);
+vm.runInContext(source.match(/^function battleText\(.*$/m)[0],context);
 vm.runInContext(source.slice(source.indexOf('function previewRulerPortrait('),source.indexOf('function renderMap(')),context);
 vm.runInContext(source.match(/^document\.addEventListener\('game-language-change',.*$/m)[0],context);
 const mapStart=source.indexOf('function renderMap('),chooseStart=source.indexOf(' const choose=(id,inspect=false)=>{',mapStart),chooseEnd=source.indexOf(' const navigationControls=',chooseStart);
@@ -38,10 +42,10 @@ const checked=()=>radios.filter(row=>row.checked).map(row=>row.value);
 // using this scenario's year/month ownership instead of the running campaign.
 cityElements[1].onclick({detail:1});
 assert.equal(context.setupPreview.faction,'wei');assert.equal(context.setupPreview.focus,'occupied');
-assert.deepEqual(checked(),['wei']);assert(summary.textContent.includes('曹操 · 2座城池 · 根据地城capital'));
+assert.deepEqual(checked(),['wei']);assert(summary.textContent.includes('曹操 · 2座都市 · 根據地城capital'));
 assert(summary.innerHTML.includes('class="setup-ruler-portrait"'));assert(summary.innerHTML.includes('data-portrait-person="san14-candidate-0002"'));
 assert(summary.innerHTML.indexOf('setup-ruler-portrait')<summary.innerHTML.indexOf('setup-summary-copy'),'The dated ruler portrait precedes the introduction');
-assert(summary.textContent.includes('钱200 · wei'));assert.deepEqual(information,['occupied']);assert.equal(cityRenders,0);
+assert(summary.textContent.includes('金 200 · 兵糧 1000 · 預備兵 300 · 兵士 860 · 現役 4人'));assert.deepEqual(information,['occupied']);assert.equal(cityRenders,0);
 assert.equal(JSON.stringify(context.mapCamera),camera);assert.deepEqual(cameraCalls,[],'Map clicks retain the current pan/zoom');
 assert.equal(list.scrollTop,70,'Only the faction list scrolls to reveal its checked row');
 
@@ -65,7 +69,7 @@ context.busy=true;context.choosePreviewCity('livehome',true);context.busy=false;
 // Switching scenarios uses the new dated snapshot even when the city key and
 // live campaign owner do not change; selection never uses game.cities owners.
 context.setupPreview=scenario(225,{livehome:'han',capital:'wei',occupied:'wu',empty:'neutral'});context.preview=context.setupPreview;context.owners=context.preview.initial_owners;
-cityElements[1].onclick({detail:1});assert.equal(context.setupPreview.faction,'wu');assert.deepEqual(checked(),['wu']);assert(summary.textContent.includes('孙权 · 1座城池'));assert(summary.textContent.includes('钱225 · wu'));
+cityElements[1].onclick({detail:1});assert.equal(context.setupPreview.faction,'wu');assert.deepEqual(checked(),['wu']);assert(summary.textContent.includes('孙权 · 1座都市'));assert(summary.textContent.includes('金 225 · 兵糧 950 · 預備兵 560 · 兵士 1240 · 現役 6人'));
 assert(summary.innerHTML.includes('data-portrait-person="san14-candidate-0003"'),'Map selection also replaces the ruler portrait');
 assert.equal(context.setPreviewFaction('wei'),true);assert.equal(context.setupPreview.focus,'capital','A radio selection retains its existing capital-focus behavior');assert.deepEqual(checked(),['wei']);
 assert.equal(context.setPreviewFaction('neutral'),false);assert.deepEqual(checked(),['wei']);
@@ -99,7 +103,7 @@ for(const name of ['南中勢力','南中势力','士燮势力']){
  context.setupPreview={...later,factions:[ruler]};
  context.setPreviewFaction('wu');
  assert.equal(context.factionDisplayName(ruler),'孟获');
- assert(summary.innerHTML.includes('<span class="setup-summary-copy">孟获 · '));assert(!summary.textContent.includes(name));
+ assert(summary.textContent.includes('孟获 · '));assert(!summary.textContent.includes(name));
  assert(summary.innerHTML.includes('data-portrait-person="san14-candidate-0845"'));
  assert(summary.innerHTML.includes('data-portrait-name="孟获"'));
 }
