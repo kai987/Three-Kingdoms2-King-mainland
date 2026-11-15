@@ -1,30 +1,57 @@
 name: Web campaign checks
+run-name: Battle save polling profile on one runner
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
-    inputs:
-      force_full:
-        description: Run every regression group
-        type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
 
 permissions:
   contents: read
-  actions: read
-  deployments: read
-
-concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
 
 jobs:
-  verify:
-    uses: ./.github/workflows/web-checks.yml
-    with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+  profile-battle-save-poll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      SOURCE_SHA: af21f4110f0818e2d6d4720639b9fd070abf140d
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - uses: ./.github/actions/browser-tools
+      - name: Build and verify one Web artifact from the common source
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD^)" = "$SOURCE_SHA"
+          git diff --exit-code "$SOURCE_SHA" -- source game tests tools crates
+          npm ci --prefix tools/web-runtime --ignore-scripts
+          GITHUB_SHA="$SOURCE_SHA" python -B game/build_web.py --output build/web
+          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$SOURCE_SHA")
+          printf 'WEB_CONTENT_SHA=%s\n' "$content" >> "$GITHUB_ENV"
+          mkdir -p build/battle-poll-profile
+          jq --arg run "$GITHUB_RUN_ID" --arg runner "$RUNNER_NAME" \
+            '{commit,content_sha256,run_id:$run,runner:$runner}' \
+            build/web/runtime/build.json > build/battle-poll-profile/web-identity.json
+      - name: Instrument only the runner's copy of the test
+        run: |
+          python -B .github/benchmarks/instrument-battle-save-poll.py
+          git diff --check -- tests/browser_ui.spec.mjs
+          git diff -- tests/browser_ui.spec.mjs > build/battle-poll-profile/instrumentation.diff
+      - name: Desktop battle movement and layout
+        run: node .github/benchmarks/run-battle-save-poll.mjs desktop-chromium
+      - name: Touch battle movement and layout
+        run: node .github/benchmarks/run-battle-save-poll.mjs touch-chromium
+      - name: Recheck the unchanged Web artifact and collect measurements
+        run: |
+          python -B tools/ci/gate.py artifact --root build/web --head "$SOURCE_SHA" --content-sha256 "$WEB_CONTENT_SHA"
+          python -B .github/benchmarks/summarize-battle-save-poll.py
+      - name: Upload timings and independent save/RNG evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: battle-save-poll-profile-${{ github.run_id }}
+          path: build/battle-poll-profile/
+          if-no-files-found: error
