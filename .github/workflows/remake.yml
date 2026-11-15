@@ -1,30 +1,65 @@
 name: Web campaign checks
+run-name: Soldier step save polling A/B on one runner
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
-    inputs:
-      force_full:
-        description: Run every regression group
-        type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
 
 permissions:
   contents: read
-  actions: read
-  deployments: read
-
-concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
 
 jobs:
-  verify:
-    uses: ./.github/workflows/web-checks.yml
-    with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+  battle-step-ab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      SOURCE_SHA: a67c5e2dbdb2a3843bb2a1a9de29eee8e18f1a7a
+      RESPONSE_SHA: 4e8159cff1c8a366b19c5770ec03612454ab2e2c
+      MARCH_CORE_BACKEND: python
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 3
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - uses: ./.github/actions/browser-tools
+      - name: Build and verify the shared Web artifact
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse "$RESPONSE_SHA^")" = "$SOURCE_SHA"
+          git diff --exit-code "$SOURCE_SHA" -- source game tools crates
+          npm ci --prefix tools/web-runtime --ignore-scripts
+          GITHUB_SHA="$SOURCE_SHA" python -B game/build_web.py --output build/web
+          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$SOURCE_SHA")
+          printf 'WEB_CONTENT_SHA=%s\n' "$content" >> "$GITHUB_ENV"
+          mkdir -p build/battle-poll-profile
+          jq --arg run "$GITHUB_RUN_ID" --arg runner "$RUNNER_NAME" \
+            '{commit,content_sha256,run_id:$run,runner:$runner}' \
+            build/web/runtime/build.json > build/battle-poll-profile/web-identity.json
+      - name: Confirm encounter end and duel with genuine Worker responses
+        run: |
+          set -euo pipefail
+          git show "$RESPONSE_SHA:tests/browser_ui.spec.mjs" > tests/browser_ui.spec.mjs
+          python -B .github/benchmarks/battle-step-edge-fixtures.py > build/battle-step-edge-fixtures.json
+          node tools/browser-tests/node_modules/@playwright/test/cli.js test \
+            --config .github/benchmarks/battle-step-edge.config.mjs --project desktop-chromium
+      - name: Desktop baseline
+        run: bash .github/benchmarks/run-battle-step-variant.sh baseline desktop-chromium
+      - name: Desktop response
+        run: bash .github/benchmarks/run-battle-step-variant.sh response desktop-chromium
+      - name: Touch baseline
+        run: bash .github/benchmarks/run-battle-step-variant.sh baseline touch-chromium
+      - name: Touch response
+        run: bash .github/benchmarks/run-battle-step-variant.sh response touch-chromium
+      - name: Verify the shared Web artifact and compare saved checkpoints
+        run: |
+          python -B tools/ci/gate.py artifact --root build/web --head "$SOURCE_SHA" --content-sha256 "$WEB_CONTENT_SHA"
+          python -B .github/benchmarks/verify-battle-step-variant.py
+      - name: Upload A/B raw timing and save evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: battle-step-ab-${{ github.run_id }}
+          path: build/battle-poll-profile/
+          if-no-files-found: error

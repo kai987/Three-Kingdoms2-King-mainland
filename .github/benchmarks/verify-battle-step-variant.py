@@ -1,0 +1,79 @@
+"""Check same-run evidence for test-only soldier response synchronization."""
+from collections import Counter
+import json
+from pathlib import Path
+
+root = Path('build/battle-poll-profile')
+
+
+def read(name):
+    return json.loads((root / f'{name}.json').read_text())
+
+
+identity = read('web-identity')
+results = {}
+for variant in ('baseline', 'response'):
+    for device in ('desktop-chromium', 'touch-chromium'):
+        for case in ('battle-movement', 'battle-layout'):
+            data = read(f'{variant}-{device}-{case}')
+            assert (data['variant'], data['project'], data['id'], data['status']) == (variant, device, case, 'passed')
+            assert (data['source'], data['web'], data['runner'], data['runId']) == (
+                identity['commit'], identity['content_sha256'], identity['runner'], identity['run_id'])
+            docs = data['documents']
+            assert len(docs) == (2 if case == 'battle-movement' else 1)
+            workers = [w for doc in docs for w in doc['workers']]
+            assert len(workers) == len(docs)
+            assert all(worker['build'] == identity['commit'] and worker['ready'] > worker['started']
+                       for worker in workers)
+            saves = [row for doc in docs for row in doc['saves']]
+            assert saves and all(row['status'] == 200 and row['bytes'] > 0 for row in saves)
+            counts = Counter(row['kind'] for row in saves)
+            assert bool(counts['round-poll']) == (variant == 'baseline')
+            proof = []
+            for doc in docs:
+                orders = {action['round']: action for action in doc['commands']
+                          if action['kind'] == 'siege_orders'}
+                steps = [action for action in doc['commands'] if action['kind'] == 'siege_step']
+                assert len(orders) == len(steps) and len(doc['commands']) == 2 * len(steps)
+                for reply in steps:
+                    index = reply['round']
+                    order = orders[index]
+                    check = data['rounds'][index - 1]
+                    before, committed, settled = (check[key] for key in ('before', 'committed', 'settled'))
+                    assert order['status'] == reply['status'] == 200 and order['sawGame'] and reply['sawGame']
+                    assert order['revision'] == order['inputRevision'] + 1 == reply['inputRevision']
+                    assert reply['revision'] == reply['inputRevision'] + 1
+                    assert order['siege'] == before['siege'] and not order['duel']
+                    assert reply['siege'] is None or reply['duel'] or reply['siege'] > before['siege']
+                    assert all(reply[key] == committed[key] for key in ('battle', 'siege', 'duel', 'rng'))
+                    assert committed == settled
+                    proof.append({key: check[key] for key in ('before', 'committed', 'settled')})
+            assert proof and len(proof) == len(data['rounds']) == len(data['phases']['commit-wait'])
+            results[variant, device, case] = {
+                'total_s': data['duration'] / 1000,
+                'all_save_calls': len(saves),
+                'save_requests_s': sum(row['received'] - row['started'] for row in saves) / 1000,
+                'poll_calls': counts['round-poll'],
+                'macro_poll_calls': counts['macro-poll'],
+                'commit_wait_s': sum(data['phases']['commit-wait']) / 1000,
+                'proof': proof,
+            }
+
+rows = []
+for device in ('desktop-chromium', 'touch-chromium'):
+    for case in ('battle-movement', 'battle-layout'):
+        baseline = results['baseline', device, case]
+        response = results['response', device, case]
+        assert baseline['proof'] == response['proof']
+        assert baseline['macro_poll_calls'] == response['macro_poll_calls']
+        rows.append(dict(device=device, case=case, baseline=baseline, response=response))
+        print(device, case, 'save calls', baseline['all_save_calls'], response['all_save_calls'],
+              'total seconds', baseline['total_s'], response['total_s'])
+edges = [read(f'edge-{branch}') for branch in ('ended', 'duel')]
+for evidence in edges:
+    assert evidence['committed'] == evidence['settled']
+    assert evidence['response']['worker'] == identity['commit']
+    assert evidence['response']['revision'] == evidence['originalRevision'] + 2
+    assert evidence['response']['rng'] == evidence['rng']
+(root / 'summary.json').write_text(json.dumps(dict(identity=identity, pairs=rows, edges=edges),
+                                              ensure_ascii=False, indent=2) + '\n')
