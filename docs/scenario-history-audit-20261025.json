@@ -3,7 +3,7 @@
   "review_revision": "2026-11-08",
   "review_file": "game/config/references/scenario-history-review.json",
   "review_sha256": "1dd4f2fb0b91b9a22615912a07853a766506f777d5b99bbbb645b60f53aa82e4",
-  "presentation_sha256": "c7d1fe0140986a050ad2e878f328b59d1b632b91f07557806e5f26a4beb7fc87",
+  "presentation_sha256": "197e9cf2397efb522024f47765c45e9595baace5001bb74dfa26e4e1043fbf4d",
   "scope": "Regional review and current-data consistency, not a complete attested city/month prefect list or a SAN14 export.",
   "boundary_definition": "Different opening owners connected by links, sea_links or travel_routes; each unordered city pair is listed once. These are network borders, not geographic administrative boundary polygons.",
   "historical_count": 23,
@@ -21,7 +21,7 @@
     "future_factions": 2,
     "scheduled_faction_foundings": 2,
     "scheduled_faction_coups": 1,
-    "boundary_links": 1519,
+    "boundary_links": 1539,
     "opening_officers": 8897,
     "new_factions": 43,
     "city_changes": 109,
@@ -35,7 +35,7 @@
     "future_factions": 0,
     "scheduled_faction_foundings": 0,
     "scheduled_faction_coups": 0,
-    "boundary_links": 390,
+    "boundary_links": 395,
     "opening_officers": 2190,
     "new_factions": 13,
     "city_changes": 14,
@@ -171,7 +171,7 @@
       "title": "184年2月 · 黄巾之乱",
       "title_ja": "184年2月 · 黄巾之乱",
       "catalog_file": "game/data/campaigns/184-02.json",
-      "catalog_sha256": "7b1cb0c6ccf6cab4301ed65ee01e539bb0ab551ccef57d9bc9e4090a16a259e9",
+      "catalog_sha256": "5087b9570c0f718906b632084959fa381b7a9b10a4e6e6fa7fc570a1a1fbe724",
       "factions": [
         {
           "id": "ding_yuan",
@@ -1938,6 +1938,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "neutral",
+            "han"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -5656,7 +5672,7 @@
       "title": "188年6月 · 漢朝搖搖欲墜",
       "title_ja": "揺らぐ漢朝",
       "catalog_file": "game/data/campaigns/188-06.json",
-      "catalog_sha256": "18555afc7da800e5382083c8aa435a411a943c92be1a7df16aac5bf34528fbe2",
+      "catalog_sha256": "15e4da1dc60a1f53db9d4b885de7a0f21e023e00870054284f07eba599fb964c",
       "factions": [
         {
           "id": "ding_yuan",
@@ -7180,6 +7196,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -11306,7 +11338,7 @@
       "title": "190年1月 · 反董卓联盟",
       "title_ja": "190年1月 · 反董卓联盟",
       "catalog_file": "game/data/campaigns/190-01.json",
-      "catalog_sha256": "6ba5216c1c92a7484695f42e79edd7c9d59377f2f8bd08faa815e8942eaefadb",
+      "catalog_sha256": "fe237141ff0335ee4c9ece205dabe7a2e48574224b87052c77244a95cb0bbb81",
       "factions": [
         {
           "id": "bao_xin",
@@ -13515,6 +13547,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -19163,7 +19211,7 @@
       "title": "191年10月 · 二袁的意图",
       "title_ja": "191年10月 · 二袁的意图",
       "catalog_file": "game/data/campaigns/191-10.json",
-      "catalog_sha256": "b6671ad871bed6ab0ab877baeaa90c7289400ddf808f23907dc3131138c357f1",
+      "catalog_sha256": "3e3ebdba5455c846bcc8688933868a0fba2a269f5163c652b24f667d15530e6b",
       "factions": [
         {
           "id": "bao_xin",
@@ -21302,6 +21350,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -27061,7 +27125,7 @@
       "title": "194年6月 · 群雄割据",
       "title_ja": "194年6月 · 群雄割据",
       "catalog_file": "game/data/campaigns/194-06.json",
-      "catalog_sha256": "ed1a94b30dcdae971b605a018e990ce7ca0c1219bfb63cec0ec78b6b994aecb6",
+      "catalog_sha256": "98cae5f4543a7daf4d1145efdd8b5f0d140dbbc9fd24ce902737382202e121ba",
       "factions": [
         {
           "id": "gongsun",
@@ -29218,6 +29282,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -35247,7 +35327,7 @@
       "title": "196年6月 · 曹操得勢",
       "title_ja": "曹操の台頭",
       "catalog_file": "game/data/campaigns/196-06.json",
-      "catalog_sha256": "b56a7ac75065a7a13fa94ce51c148c3f8b3ce5f94687fb1c25d18903c86d4723",
+      "catalog_sha256": "b09db388ef4a9b8c660d3020ca692d314aec4e14e4d9305801f6d2b30bd5b09e",
       "factions": [
         {
           "id": "gongsun",
@@ -37417,6 +37497,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -43484,7 +43580,7 @@
       "title": "198年3月 · 呂布討伐戰",
       "title_ja": "呂布討伐戦",
       "catalog_file": "game/data/campaigns/198-03.json",
-      "catalog_sha256": "2d63766232a14b0950b7149fb3d864418bd293383c90dc99a0214fddd006b6c0",
+      "catalog_sha256": "dbfbe5b31dbed418ed10cabfabf904df114390f0397a673089c4ba4becfdc8e7",
       "factions": [
         {
           "id": "gongsun",
@@ -45567,6 +45663,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -51486,7 +51598,7 @@
       "title": "200年1月 · 官渡之战",
       "title_ja": "200年1月 · 官渡之战",
       "catalog_file": "game/data/campaigns/200-01.json",
-      "catalog_sha256": "6b60e0717a3d28179683bb9677d6eca0d5fd0909fb31832dcfb350e4697515a5",
+      "catalog_sha256": "cb8385e03b4f9563be4553c49a0a5e6dedc9f679c8cb5b7669b5adfaaa04969e",
       "factions": [
         {
           "id": "gongsun",
@@ -53224,6 +53336,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -59087,7 +59215,7 @@
       "title": "202年6月 · 河北爭亂",
       "title_ja": "河北争乱",
       "catalog_file": "game/data/campaigns/202-06.json",
-      "catalog_sha256": "f583ae51284dd12ad0dcb48080f3dec077e6ed2770afd7e6f4f40e5ad93c1c1b",
+      "catalog_sha256": "f5bef997c412540c935d0e20c4529d5f2cdf19ca75c55d8437113395b93c3482",
       "factions": [
         {
           "id": "gao_gan",
@@ -60954,6 +61082,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -66705,7 +66849,7 @@
       "title": "207年9月 · 三顾茅庐",
       "title_ja": "207年9月 · 三顾茅庐",
       "catalog_file": "game/data/campaigns/207-09.json",
-      "catalog_sha256": "c11472d38ece5b1060c89d969c9c51e1dcb30f8153de1e4fab32c305d5093e83",
+      "catalog_sha256": "46c84005630751db5f6a7a860df5301d8e38697685ab7c7af7118ed921079c95",
       "factions": [
         {
           "id": "gongsun",
@@ -68258,6 +68402,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -74885,7 +75045,7 @@
       "title": "208年10月 · 赤壁之战",
       "title_ja": "208年10月 · 赤壁之战",
       "catalog_file": "game/data/campaigns/208-10.json",
-      "catalog_sha256": "74533c07996be9ea6971d8a5a4b2deeaaeb38334d35e484493a005a58055e360",
+      "catalog_sha256": "3a83a9f5be80b952d2b39f02d45e12f11ccc87f3ed565e15f8171d761ad6aaab",
       "factions": [
         {
           "id": "gongsun",
@@ -76651,6 +76811,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -83247,7 +83423,7 @@
       "title": "211年7月 · 潼關之戰",
       "title_ja": "潼関の戦い",
       "catalog_file": "game/data/campaigns/211-07-tongguan.json",
-      "catalog_sha256": "033742c051a4d381bf4ea5d1cea34e39732290361f006b3c80ecdf6a7a05ec26",
+      "catalog_sha256": "44db1bf2c46b931b10c5c52143381dc3c6b8645ed9a6df31b54cfea8b98029ac",
       "factions": [
         {
           "id": "gongsun",
@@ -84813,6 +84989,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -90389,7 +90581,7 @@
       "title": "212年12月 · 入蜀爭奪戰",
       "title_ja": "入蜀争奪戦",
       "catalog_file": "game/data/campaigns/212-12.json",
-      "catalog_sha256": "e1a066a40e4e2dd371baff22a4c056bdc635673432e29cbbe0acd71bf62bb3f5",
+      "catalog_sha256": "be8683c18abeef1265fec291924e8bd58792cd732ea2fb1ad1a150a1fc44052b",
       "factions": [
         {
           "id": "gongsun",
@@ -91926,6 +92118,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -98543,7 +98751,7 @@
       "title": "215年8月 · 合淝之戰",
       "title_ja": "合肥の戦い",
       "catalog_file": "game/data/campaigns/215-08.json",
-      "catalog_sha256": "8082fc3e09a9db0c9527b6e1c701ffe7f2fce208b4f376384751f0fba0bb0142",
+      "catalog_sha256": "6782f0bd8d0ad3fd371cba9b4efdf68198b15423e52c50433dd380e350e7377d",
       "factions": [
         {
           "id": "gongsun",
@@ -99795,6 +100003,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -104431,7 +104655,7 @@
       "title": "217年7月 · 汉中争夺战",
       "title_ja": "217年7月 · 汉中争夺战",
       "catalog_file": "game/data/campaigns/217-07.json",
-      "catalog_sha256": "c55e1864fe35750fe0dbd0349b86209895263edb86356c5ff92b0f90fdb1d0c5",
+      "catalog_sha256": "719807ba5767d000eaedfd8276b25548f6105dd8b3c9634d9e55481ee8548e52",
       "factions": [
         {
           "id": "gongsun",
@@ -105683,6 +105907,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -110400,7 +110640,7 @@
       "title": "219年7月 · 关羽包围网",
       "title_ja": "219年7月 · 关羽包围网",
       "catalog_file": "game/data/campaigns/219-07.json",
-      "catalog_sha256": "392322131e454a80fae0fd97ea512c0f15d0f0621da18110d1aa86fa4a6b6456",
+      "catalog_sha256": "d91eec3376899f7090b09d31095fac462456952e4f8546927af836e02e0d4fa4",
       "factions": [
         {
           "id": "gongsun",
@@ -111635,6 +111875,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -116443,7 +116699,7 @@
       "title": "221年7月 · 夷陵前夕",
       "title_ja": "221年7月 · 夷陵前夕",
       "catalog_file": "game/data/campaigns/221-07.json",
-      "catalog_sha256": "8bea2ec6a8584b217d9cd3c27c3b4beb68778ca5a2479e23c3132d7fab477017",
+      "catalog_sha256": "1112d009ed2e98e83c69c9322d7530b29b22062aa3f652d3cf33f5e89a6ba8c9",
       "factions": [
         {
           "id": "gongsun",
@@ -117695,6 +117951,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -122191,7 +122463,7 @@
       "title": "225年7月 · 征伐南蠻",
       "title_ja": "南蛮征伐",
       "catalog_file": "game/data/campaigns/225-07.json",
-      "catalog_sha256": "851e252d15c1f5bd1d9f865b690eb206caaf4129813539e147439672d46b044a",
+      "catalog_sha256": "d273a7d175fed7720a40ea788b1171333d4345132612ef37b305c3f7932649e3",
       "factions": [
         {
           "id": "gongsun",
@@ -123503,6 +123775,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -128044,7 +128332,7 @@
       "title": "227年2月 · 出师表",
       "title_ja": "227年2月 · 出师表",
       "catalog_file": "game/data/campaigns/227-02.json",
-      "catalog_sha256": "d9fd705ab7930b5ba057a57edb8ffdbb33347d634de2f696b7c3cda936a8c1b5",
+      "catalog_sha256": "5aca7bcf9feaa1e899d6cca50b3d85902b478ad885825b145b62545985265e19",
       "factions": [
         {
           "id": "gongsun",
@@ -129235,6 +129523,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -133322,7 +133626,7 @@
       "title": "234年2月 · 秋風五丈原",
       "title_ja": "秋風五丈原",
       "catalog_file": "game/data/campaigns/234-02.json",
-      "catalog_sha256": "0d08f2e63f9727e16020cbdd01cb8daefc26eaf3e0d351bea5ad08507de2041c",
+      "catalog_sha256": "d90afaceb1b1094c8dc3aa5f233a83698bf5ba857bc4c491ee108e790302faa4",
       "factions": [
         {
           "id": "gongsun",
@@ -134462,6 +134766,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -138118,7 +138438,7 @@
       "title": "238年1月 · 征讨辽东",
       "title_ja": "238年1月 · 征讨辽东",
       "catalog_file": "game/data/campaigns/238-01.json",
-      "catalog_sha256": "2eda5d37d3da7a67c61849d1e906cde9d50ed443ec46525f2ddb38e45729c960",
+      "catalog_sha256": "371fa4458c211d9564287dc7c03ad5dcf75aac0ce4168152aaf4e99b801cd4ba",
       "factions": [
         {
           "id": "gongsun",
@@ -142865,7 +143185,7 @@
       "title": "249年1月 · 正始之变",
       "title_ja": "249年1月 · 正始之变",
       "catalog_file": "game/data/campaigns/249-01.json",
-      "catalog_sha256": "73def1ac643b1d961fcaa5b8342f8a80a5194b01419d74cb88c10f6932353eee",
+      "catalog_sha256": "196b4f1feca42a2de6cda4a2d5ad88244b4bbfbb8ae8cc1cc501f7b6676c7f14",
       "factions": [
         {
           "id": "shu",
@@ -147157,7 +147477,7 @@
       "title": "263年5月 · 蜀漢滅亡",
       "title_ja": "蜀漢の滅亡",
       "catalog_file": "game/data/campaigns/263-05.json",
-      "catalog_sha256": "ee83f3510f9e8fe6643c0fcc942d68fee31eb410c9bfe3ced4fbe684422e778d",
+      "catalog_sha256": "4dcb146eb0f24d08ac97ddd88349559b868e17f9b3695a4e734e3265bdd185d9",
       "factions": [
         {
           "id": "lu_xing",
@@ -150717,7 +151037,7 @@
       "title": "197年7月 · 皇帝呂布",
       "title_ja": "皇帝呂布",
       "catalog_file": "game/data/campaigns/197-07.json",
-      "catalog_sha256": "61d4be3571d7f5602d9e3e8be19447b00ec50bef8cb03bac45c88d7d742ae027",
+      "catalog_sha256": "c7c8f5b7b8d22987af478e882e2e0fa3322abba0b750462e4600c2355b255727",
       "factions": [
         {
           "id": "gongsun",
@@ -152840,6 +153160,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -158902,7 +159238,7 @@
       "title": "201年5月 · 華北霸者・袁紹",
       "title_ja": "華北の覇者・袁紹",
       "catalog_file": "game/data/campaigns/201-05.json",
-      "catalog_sha256": "84c37981679c239aac5e0367af414cef14bfbbc9a764c26fb2931abe86e01481",
+      "catalog_sha256": "ba1468e0db4237cb153ef8514c3f2e5172fb9cbfd13bd2e1f5939e8c3b794f4c",
       "factions": [
         {
           "id": "gongsun",
@@ -160514,6 +160850,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -165600,7 +165952,7 @@
       "title": "209年6月 · 志在千里",
       "title_ja": "志在千里",
       "catalog_file": "game/data/campaigns/209-06.json",
-      "catalog_sha256": "f943dd1d49771b2ea9cbd3bbfb0fc948072ec4a0c103bf8616ee252048c9b82f",
+      "catalog_sha256": "58865e97f6ab452c0c54c0feb1ac0994b01223e641cda2cfb660370bc8d2baab",
       "factions": [
         {
           "id": "gongsun",
@@ -167080,6 +167432,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -172258,7 +172626,7 @@
       "title": "210年11月 · 二分天下之計",
       "title_ja": "天下二分計",
       "catalog_file": "game/data/campaigns/210-11.json",
-      "catalog_sha256": "5b299ceda576cdd4dd0016df0932893d9a127eccf39bbc103306c711d4a9d26c",
+      "catalog_sha256": "2863c552ec14ae6958774bf9ad6bfc92a844a6ad6401b1b9dafdd0f17fd65165",
       "factions": [
         {
           "id": "gongsun",
@@ -173666,6 +174034,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },
@@ -178916,7 +179300,7 @@
       "title": "212年6月 · 錦馬超展翅高飛",
       "title_ja": "錦馬超飛翔",
       "catalog_file": "game/data/campaigns/212-06.json",
-      "catalog_sha256": "c328db7c814884aedb4afe09f72c3efa12db180a62e24354ca9436e8aec1373f",
+      "catalog_sha256": "124c47afd4eefd959ff2fe10d7e0685a8d10a475798ad70586eddc36802753da",
       "factions": [
         {
           "id": "cao_zhang",
@@ -180594,6 +180978,22 @@
           ],
           "link_sources": [
             "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "shuofang"
+          ],
+          "owners": [
+            "han_sui",
+            "neutral"
+          ],
+          "modes": [
+            "river"
+          ],
+          "link_sources": [
             "travel_routes"
           ]
         },

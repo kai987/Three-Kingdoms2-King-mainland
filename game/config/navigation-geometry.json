@@ -12941,6 +12941,144 @@
           "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnux22fnsn_304"
         ]
       }
+    },
+    {
+      "id": "jincheng:shuofang:river",
+      "from": "jincheng",
+      "to": "shuofang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          104.18,
+          35.8
+        ],
+        [
+          107.22,
+          40.46
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yellow:jincheng:shuofang",
+          "river_id": "yellow",
+          "name_tc": "黃河",
+          "name_ja": "黄河",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "jincheng"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "jincheng",
+          "points": [
+            [
+              278,
+              256
+            ],
+            [
+              292,
+              278
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yellow:jincheng:shuofang",
+          "river_id": "yellow",
+          "points": [
+            [
+              292,
+              278
+            ],
+            [
+              302,
+              277
+            ],
+            [
+              308,
+              269
+            ],
+            [
+              308,
+              264
+            ],
+            [
+              322,
+              250
+            ],
+            [
+              336,
+              243
+            ],
+            [
+              354,
+              222
+            ],
+            [
+              384,
+              208
+            ],
+            [
+              406,
+              187
+            ],
+            [
+              414,
+              166
+            ],
+            [
+              404,
+              149
+            ],
+            [
+              404,
+              142
+            ],
+            [
+              412,
+              131
+            ],
+            [
+              412,
+              126
+            ],
+            [
+              424,
+              119
+            ],
+            [
+              428,
+              112
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "shuofang",
+          "points": [
+            [
+              428,
+              112
+            ],
+            [
+              410,
+              97
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "authorial_downstream_only_yellow_river_game_navigation",
+        "basis": "沿遊戲底圖既有的黃河河道連接金城與朔方，僅開放順流方向。渡點和航程為遊戲地圖校準。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/05",
+          "https://zh.wikisource.org/zh-hant/三國志/卷16"
+        ]
+      },
+      "one_way": true
     }
   ],
   "river_rules": {
@@ -41484,7 +41622,7 @@
   "method": "4px ocean-connected sea mask and A-star; smooth display follows sea cells. Approximate game ports, not identified historical harbours. Distances use separate geographic marine waypoints, never art pixels.",
   "river_network": {
     "schema": "tk2-river-network-compiled-v1",
-    "source_sha256": "1e63a1200f8d443353d2b3adb6e974e6a5caf225181acf430a1ba1dbff1e2e6c",
-    "reach_count": 57
+    "source_sha256": "8718a93f7e082b92f5c62a7f4269f3cb132ecfb43ace7625b7a5ff388feaaed3",
+    "reach_count": 58
   }
 }

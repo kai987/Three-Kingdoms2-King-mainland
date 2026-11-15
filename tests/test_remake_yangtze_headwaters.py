@@ -183,7 +183,7 @@ class YangtzeHeadwatersTests(unittest.TestCase):
             'yangtze:qichun:pengli': ('yangtze:qichun:chaisang', 'yangtze:chaisang:pengli'),
         }
         ports = {'fuxian', 'xicheng', 'shangyong', 'xiangdong', 'hengyang',
-                 'jianping', 'yiling', 'guangling', 'chaisang'}
+                 'jianping', 'yiling', 'guangling', 'chaisang', 'jincheng', 'shuofang'}
         geometry['connections'] = [row for row in geometry['connections']
                                    if not ({row['from'], row['to']} & ports)]
         for port in ports:
@@ -192,7 +192,8 @@ class YangtzeHeadwatersTests(unittest.TestCase):
                 geometry['nodes'].pop(node)
         geometry['nodes'].pop('fu:fuxian')
         geometry['nodes'].pop('jialing:dianjiang')
-        geometry['reaches'] = [row for row in geometry['reaches'] if row['id'] != 'fu:fuxian:dianjiang']
+        added_reaches = {'fu:fuxian:dianjiang', 'yellow:jincheng:shuofang'}
+        geometry['reaches'] = [row for row in geometry['reaches'] if row['id'] not in added_reaches]
         reaches = {row['id']: row for row in geometry['reaches']}
         for original, pieces in splits.items():
             rows = [reaches[key] for key in pieces]
@@ -211,12 +212,12 @@ class YangtzeHeadwatersTests(unittest.TestCase):
                     route[i:i + len(pieces)] = [original]
         self.assertEqual(canonical_sha(geometry), NETWORK_GEOMETRY_SHA)
         self.assertEqual((len(geometry['connections']), len(geometry['reaches'])), (44, 47))
-        self.assertEqual((len(spec['connections']), len(spec['reaches'])), (60, 57))
+        self.assertEqual((len(spec['connections']), len(spec['reaches'])), (61, 58))
         expected_ids = {row.get('id', f"{row['from']}:{row['to']}:river")
                         for row in spec['connections']}
         result = network.build()
-        self.assertEqual(result['reach_count'], 57)
-        self.assertEqual(len(result['routes']), 60)
+        self.assertEqual(result['reach_count'], 58)
+        self.assertEqual(len(result['routes']), 61)
         self.assertEqual({row['id'] for row in result['routes']}, expected_ids)
         self.assertFalse(any(ADDITION in identity for identity in spec['nodes']))
         self.assertFalse(any(ADDITION in row['id'] for row in spec['reaches']))

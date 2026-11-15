@@ -6,13 +6,13 @@
     "game/build_campaigns.py": "35ecbdd8909f2f5ba0f25583a7256d938fbfc868d3d4a1d7207eddcb71f10fd8",
     "game/config/road-centers.json": "80b5cb839ffa60f9e134ba1631c220e3e1de4b0d56e7fc70c449bbe374d0dd33",
     "game/road_centers.py": "16e16ab039fe15605f27d9e46df18ad945014b2aec9f5dd9eb4e9df32f74cdea",
-    "game/config/navigation-geometry.json": "97139c0723485f797efc9277dca04cc81821d66cd6e5295e36c776aa52f23d6c",
+    "game/config/navigation-geometry.json": "c4ce6d8ea09b9c680a1c2ff95416f9506e9e33606d22076c878dbdcba36e0217",
     "game/config/route-corridors.json": "833ef08b8ae27497ef7673530982f89ac6861c34f960192d88016dfa97eaf96a",
     "game/road_history.py": "4513459c4f635d2b617d6e04d87207fb987bcfe3a87b6168c4228dbd104c18d6",
     "game/config/road-history.json": "5350706e4e1f430fc6cc1382f23db412fc881326914ff546466ea834a11ad35e",
     "game/build_navigation_geometry.cjs": "5a8b8606934b10d02c6f078388e50aad8b41ae7092f9a3dd4625e3ab02c13cda",
-    "game/config/river-network.json": "1e63a1200f8d443353d2b3adb6e974e6a5caf225181acf430a1ba1dbff1e2e6c",
-    "game/river_network.py": "e36b6777d1a1d35f53222960639b3031e915f57670ee8257145397e4dbe1529c",
+    "game/config/river-network.json": "8718a93f7e082b92f5c62a7f4269f3cb132ecfb43ace7625b7a5ff388feaaed3",
+    "game/river_network.py": "aea0392c0fd7efe88ff6dc985968f8492009f934ce874adf8a325175eaac7ca7",
     "game/config/map-source.json": "5640fa94500ee3ee2fe6f3936c19bf3bd6232c6f534e499196fcea414aa2789d",
     "game/app.js": "35d7ec8aa5056b75674f9dc16e343498a348041cc36112cbc32253ad35c59585",
     "game/config/route-render-source.json": "c5047ab0f7f8bef5ccd1f511778d051c7522e125d432718a59ee3805f469ecea",
@@ -50,7 +50,7 @@
     "game/config/campaigns/scenarios/249-01.json": "6b1e6b45879b7ee5198c9ccabc754d71cc6222c218e71bf6fcd5eb32d2939ac4",
     "game/config/campaigns/scenarios/263-05.json": "3cd4d27cd0ded417113525a4a74d06e3120ef56dd6e2845b7df45343f63f8ccd"
   },
-  "input_geometry_sha256": "63e1b8dc0bdbe5a36881320d382331bca337682ac0ef7f5478108a4eb3f91e27",
+  "input_geometry_sha256": "6fd982a64fbf58684a054fdfb2f68816b317a411f4ea53e3524cbe4a0b11bcab",
   "routes": {
     "anding:fufeng:land": {
       "from": "anding",
@@ -20771,6 +20771,73 @@
         }
       ]
     },
+    "jincheng:shuofang:river": {
+      "from": "jincheng",
+      "to": "shuofang",
+      "mode": "river",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            278,
+            256
+          ],
+          "end": [
+            292,
+            278
+          ],
+          "d": "M278 256L292 278",
+          "length_px": 26.076809,
+          "chord_px": 26.07681,
+          "pieces": [
+            {
+              "d": "M278 256L292 278",
+              "reverse": false
+            }
+          ]
+        },
+        {
+          "mode": "river",
+          "start": [
+            292,
+            278
+          ],
+          "end": [
+            428,
+            112
+          ],
+          "d": "M292 278L297 277.5Q302 277 305 273Q308 269 308 266.5Q308 264 315 257Q322 250 329 246.5Q336 243 345 232.5Q354 222 369 215Q384 208 395 197.5Q406 187 410 176.5Q414 166 409 157.5Q404 149 404 145.5Q404 142 408 136.5Q412 131 412 128.5Q412 126 418 122.5Q424 119 426 115.5L428 112",
+          "length_px": 235.551025,
+          "chord_px": 214.597297,
+          "pieces": [
+            {
+              "d": "M292 278L297 277.5Q302 277 305 273Q308 269 308 266.5Q308 264 315 257Q322 250 329 246.5Q336 243 345 232.5Q354 222 369 215Q384 208 395 197.5Q406 187 410 176.5Q414 166 409 157.5Q404 149 404 145.5Q404 142 408 136.5Q412 131 412 128.5Q412 126 418 122.5Q424 119 426 115.5L428 112",
+              "reverse": false
+            }
+          ]
+        },
+        {
+          "mode": "land",
+          "start": [
+            428,
+            112
+          ],
+          "end": [
+            410,
+            97
+          ],
+          "d": "M428 112L410 97",
+          "length_px": 23.43075,
+          "chord_px": 23.430749,
+          "pieces": [
+            {
+              "d": "M428 112L410 97",
+              "reverse": false
+            }
+          ]
+        }
+      ]
+    },
     "explore:liaodong:liaoxi:sea": {
       "from": "liaodong",
       "to": "liaoxi",
@@ -30288,8 +30355,8 @@
   },
   "audit": {
     "catalogs": 29,
-    "input_routes": 457,
-    "compiled_routes": 457,
+    "input_routes": 458,
+    "compiled_routes": 458,
     "graph_nodes": 167,
     "graph_strokes": 256,
     "unmatched": [],

@@ -67,6 +67,33 @@ fn river_mode_quotes_direct_water_while_land_stays_land() {
 }
 
 #[test]
+fn one_way_river_blocks_reverse_quotes_with_a_land_alternative() {
+    let mut d = data();
+    d["travel_routes"][0]["one_way"] = json!(true);
+    for segment in d["travel_routes"][0]["river_segments"]
+        .as_array_mut()
+        .unwrap()
+    {
+        segment["downstream_from"] = json!("s");
+    }
+    let raw = &d["travel_routes"][0];
+    let cities = json!([{"id":"s","owner":"p"},{"id":"t","owner":"p"}]);
+    let bulk = value(json!({"op":"batch","data":d,"cities":cities,"month":7,"player":"p"}));
+    assert_eq!(bulk["s:t:river"]["routes"][0]["flow"], "downstream");
+    assert_eq!(bulk["s:t:fastest"]["modes"], json!(["river"]));
+    assert!(bulk.get("t:s:river").is_none());
+    assert_eq!(bulk["t:s:fastest"]["modes"], json!(["land"]));
+    assert!(value(json!({"op":"path","data":d,"cities":cities,"month":7,
+        "owner":"p","source":"t","target":"s","mode":"river"}))
+    .is_null());
+    assert_eq!(
+        run(&json!({"op":"evaluate_leg","data":d,"route":raw,
+            "source":"t","target":"s","month":7}))["error"],
+        "Route does not permit this direction"
+    );
+}
+
+#[test]
 fn river_rounds_aggregate_water_time_once_and_rejects_invalid_flow() {
     let d = data();
     let mut raw = d["travel_routes"][0].clone();

@@ -55,6 +55,9 @@ def compile_network(spec, positions):
         a, b = row['from'], row['to']
         if a not in ports or b not in ports or a == b:
             raise ValueError('Invalid river city connection')
+        one_way = row.get('one_way', False)
+        if type(one_way) is not bool:
+            raise ValueError('River connection one_way must be a boolean')
         identity = row.get('id', f'{a}:{b}:river')
         pair = frozenset((a, b))
         if pair in seen:
@@ -65,6 +68,8 @@ def compile_network(spec, positions):
         geo, segments, references = [deepcopy(nodes[current]['geo'])], [], []
         for directed in row['reaches']:
             reverse = directed.startswith('-')
+            if one_way and reverse:
+                raise ValueError('A one-way river connection must travel downstream')
             reach = reach_by_id[directed[1:] if reverse else directed]
             start, end = (reach['to'], reach['from']) if reverse else (reach['from'], reach['to'])
             if current != start:
@@ -95,9 +100,11 @@ def compile_network(spec, positions):
                 raise ValueError('Invalid reviewed river history')
             history.update(deepcopy(reviewed))
             history['sources'] = list(dict.fromkeys(references + reviewed['sources']))
-        routes.append(dict(id=identity, **{'from': a, 'to': b}, mode='river', terrain='river',
-                           geo=geo, river_segments=segments, draw=draw,
-                           history=history))
+        route = dict(id=identity, **{'from': a, 'to': b}, mode='river', terrain='river',
+                     geo=geo, river_segments=segments, draw=draw, history=history)
+        if one_way:
+            route['one_way'] = True
+        routes.append(route)
     return routes
 
 

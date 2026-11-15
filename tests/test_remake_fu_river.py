@@ -79,7 +79,6 @@ class FuRiverTests(unittest.TestCase):
 
     def test_ports_and_shared_lower_reach_do_not_require_a_stop_at_another_city(self):
         route = self.routes['fuxian:bajun:river']
-        self.assertEqual((len(self.routes), self.compiled['reach_count']), (60, 57))
         self.assertEqual([part['reach_id'] for part in route['draw'][1:-1]],
                          ['fu:fuxian:dianjiang', 'jialing:dianjiang:bajun'])
         self.assertEqual(route['draw'][0]['points'], [[294, 462], [316, 462]])

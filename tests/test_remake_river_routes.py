@@ -97,6 +97,31 @@ class RiverRouteTests(unittest.TestCase):
                 self.assertEqual(quote['flow'], flow)
                 self.assertIsNone(quote['hazard'])
 
+    def test_jincheng_shuofang_yellow_river_is_downstream_only(self):
+        origin, destination = 'jincheng', 'shuofang'
+        route_id = 'jincheng:shuofang:river'
+        for chapter in ('188-06', '225-07', '235-01'):
+            with self.subTest(chapter=chapter):
+                game = Campaign(Catalog(ROOT / f'game/data/campaigns/{chapter}.json'))
+                owner = game.catalog.data['initial_owners'][origin]
+                if owner == 'neutral':
+                    owner = 'wei'
+                game.command('new', dict(faction=owner, seed=2026), 0)
+                args = game.state, origin, destination, owner
+                quote = game._travel_path(*args, 'river', adjacent=True)
+                self.assertIsNotNone(quote)
+                self.assertEqual(quote['path'], [origin, destination])
+                leg, = quote['routes']
+                self.assertEqual(leg['id'], route_id)
+                self.assertEqual(leg['flow'], 'downstream')
+                self.assertIsNone(leg['hazard'])
+                self.assertIn(destination, game._neighbors(origin, game.state))
+                self.assertNotIn(origin, game._neighbors(destination, game.state))
+                self.assertIsNone(game._travel_path(game.state, destination, origin, owner,
+                                                   'river', adjacent=True))
+                self.assertIsNone(game._travel_path(game.state, destination, origin, owner,
+                                                   'fastest', adjacent=True))
+
     def test_land_and_sea_modes_never_take_river_but_fastest_can(self):
         game = self.game(only=True)
         before = game.export_save()

@@ -11,6 +11,7 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / 'game'), str(ROOT / 'source')]
 from river_network import build, compile_network
+from build_portrait_manifest import png_pixels
 from remake.march_core import using_backend
 from remake.route_hazards import evaluate_leg
 
@@ -30,9 +31,9 @@ class SharedRiverNetwork(unittest.TestCase):
         before = deepcopy(spec)
         routes = compile_network(spec, self.positions)
         self.assertEqual(spec, before)
-        self.assertEqual(len(routes), 60)
+        self.assertEqual(len(routes), 61)
         self.assertEqual(len({row['id'] for row in routes}), len(routes))
-        self.assertEqual(self.compiled['reach_count'], 57)
+        self.assertEqual(self.compiled['reach_count'], 58)
         for route in routes:
             self.assertEqual(route['draw'][0]['points'][0], self.positions[route['from']])
             self.assertEqual(route['draw'][-1]['points'][-1], self.positions[route['to']])
@@ -138,14 +139,22 @@ class SharedRiverNetwork(unittest.TestCase):
                 x = round(a[0] + (b[0]-a[0]) * i / count)
                 y = round(a[1] + (b[1]-a[1]) * i / count)
                 water.update((x + dx, y + dy) for dx in range(-2, 3) for dy in range(-2, 3))
+        # The upper Yellow River uses the full approved raster. The extracted
+        # SVG mask has gaps in this section of the already painted river.
+        (width, _), hydrology = png_pixels(
+            (ROOT / 'game/map-source/hydrology-ground.png').read_bytes(), (1352, 1024))
         for reach in self.spec['reaches']:
             for a, b in zip(reach['points'], reach['points'][1:]):
                 count = max(1, ceil(dist(a, b)))
                 for i in range(count + 1):
                     x = round(a[0] + (b[0]-a[0]) * i / count)
                     y = round(a[1] + (b[1]-a[1]) * i / count)
-                    self.assertTrue(any((x+dx, y+dy) in water for dx in range(-1, 2) for dy in range(-1, 2)),
-                                    (reach['id'], (x, y)))
+                    if reach['id'] == 'yellow:jincheng:shuofang':
+                        offset = (y * width + x) * 4
+                        self.assertEqual(hydrology[offset:offset+3], bytes((0, 42, 248)), (x, y))
+                    else:
+                        self.assertTrue(any((x+dx, y+dy) in water for dx in range(-1, 2) for dy in range(-1, 2)),
+                                        (reach['id'], (x, y)))
 
     def test_all_named_segments_survive_python_rust_quotes_without_ocean_weather(self):
         rules = json.loads((ROOT / 'game/config/route-corridors.json').read_text())['river_rules']
@@ -161,6 +170,10 @@ class SharedRiverNetwork(unittest.TestCase):
                 for month in (1, 7):
                     for backend in ('python', 'rust'):
                         with self.subTest(route=raw['id'], source=source, month=month, backend=backend), using_backend(backend):
+                            if raw.get('one_way') and source == raw['to']:
+                                with self.assertRaisesRegex(ValueError, 'does not permit this direction'):
+                                    evaluate_leg(data, raw, source, target, month)
+                                continue
                             quote = evaluate_leg(data, raw, source, target, month)
                         self.assertIsNone(quote['hazard'])
                         for plain, quoted in zip(raw['river_segments'], quote['river_segments']):
@@ -182,6 +195,12 @@ class SharedRiverNetwork(unittest.TestCase):
         bad = deepcopy(self.spec)
         bad['connections'].append(deepcopy(bad['connections'][0]))
         with self.assertRaisesRegex(ValueError, 'Duplicate playable'):
+            compile_network(bad, self.positions)
+        bad = deepcopy(self.spec)
+        connection = next(row for row in bad['connections'] if row.get('one_way'))
+        connection['from'], connection['to'] = connection['to'], connection['from']
+        connection['reaches'] = ['-' + reach for reach in reversed(connection['reaches'])]
+        with self.assertRaisesRegex(ValueError, 'must travel downstream'):
             compile_network(bad, self.positions)
         bad = deepcopy(self.spec)
         bad['connections'][0]['reaches'].reverse()
