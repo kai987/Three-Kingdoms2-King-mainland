@@ -101,6 +101,23 @@ def raw_exchange(port, headers, body=b'', *, method='POST', path='/api/command')
 
 
 class HTTPBoundaryTests(unittest.TestCase):
+    def test_read_only_march_preview_requires_unambiguous_current_query(self):
+        from remake.session import CampaignSession
+
+        game = CampaignSession([ROOT / 'game/data/campaigns/235-01.json'])
+        game.command('new', {'scenario': 'mainland235-01', 'faction': 'wei', 'seed': 2026}, 0)
+        with isolated_server(game) as (server, _, _):
+            port = server.server_address[1]
+            baseline = exchange(port, path='/api/save')[2]
+            route = '/api/march-preview?source=shuofang&target=jincheng'
+            status, _, body = exchange(port, path=f'{route}&revision=1')
+            self.assertEqual(status, 200)
+            self.assertEqual(json.loads(body)['detour']['path'], ['shuofang', 'anding', 'jincheng'])
+            self.assertEqual(exchange(port, path=f'{route}&revision=0')[0], 409)
+            self.assertEqual(exchange(port, path=f'{route}&target=anding&revision=1')[0], 400)
+            self.assertEqual(exchange(port, path=f'{route}&revision=%FF')[0], 400)
+            self.assertEqual(exchange(port, path='/api/save')[2], baseline)
+
     def test_pkce_entry_does_not_log_auth_codes_or_expose_state(self):
         audit = transport.AuditLog()
         with isolated_server(audit=audit) as (server, game, _):

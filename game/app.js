@@ -172,7 +172,15 @@ function watchRouteDialog(refresh){
  const generation=dialogGeneration;
  refreshRouteDialog=()=>{if(dialog.open&&generation===dialogGeneration)refresh();};
 }
-MarchCore.subscribe(()=>refreshRouteDialog?.());
+MarchCore.subscribe(()=>{
+ refreshRouteDialog?.();
+ if(mapAction?.kind!=='depart'||mapAction.revision!==view?.revision)return;
+ const targets=actionTargetCities('depart',view.game.cities[mapAction.source]);
+ if(targets.join(',')!==mapAction.targets.join(',')){
+  mapAction.targets=targets;
+  renderMap();
+ }else renderMapMarchPreview();
+});
 function renderMarches(){
  const rows=view.game?.extension?.travel?.marches||[],observing=isObserver();
  const visible=rows.filter(r=>observing||r.owner===view.game.player);
@@ -564,7 +572,7 @@ function renderMap(){
   const colored=`<use class="castle-fill" href="#castle-fill-pixels"${position} fill="${mapColor(owner)}"/>`;
   const sprite=outpost?`<g transform="translate(${x} ${y}) scale(0.75)">${outline}${colored}</g>`:outline+colored;
   const actionable=mapAction?.targets.includes(c.id);
-  return `<g role="button" tabindex="0" class="city-hit ${owner==='neutral'?'unowned':''} ${focused===c.id?'selected':''} ${preview&&owner===preview.faction?'preview-owned':''} ${mapAction?(actionable?'action-target':'action-unavailable'):''}" data-city="${c.id}" data-owner="${owner}"${outpost?' data-city-kind="frontier_outpost"':''}${mapAction?` data-action-eligible="${!!actionable}"`:''} aria-label="${escapeHtml(cityName(c.id))}，${type?escapeHtml(type)+'，':''}${escapeHtml(ownerName(owner,c.id))}${actionable?'，可选择目标':''}"><title>${escapeHtml(cityName(c.id))} · ${type?escapeHtml(type)+' · ':''}${escapeHtml(ownerName(owner,c.id))}</title>${sprite}<rect class="city-hit-area" x="${x-21}" y="${y-21}" width="42" height="42" fill="transparent"/><rect class="city-outline" x="${x-20}" y="${y-11}" width="40" height="30"/></g>`;
+  return `<g role="button" tabindex="0" class="city-hit ${owner==='neutral'?'unowned':''} ${focused===c.id?'selected':''} ${preview&&owner===preview.faction?'preview-owned':''} ${mapAction?(actionable?'action-target':mapAction.kind==='depart'?'action-inspectable':'action-unavailable'):''}" data-city="${c.id}" data-owner="${owner}"${outpost?' data-city-kind="frontier_outpost"':''}${mapAction?` data-action-eligible="${!!actionable}"`:''} aria-label="${escapeHtml(cityName(c.id))}，${type?escapeHtml(type)+'，':''}${escapeHtml(ownerName(owner,c.id))}${actionable?'，可选择目标':''}"><title>${escapeHtml(cityName(c.id))} · ${type?escapeHtml(type)+' · ':''}${escapeHtml(ownerName(owner,c.id))}</title>${sprite}<rect class="city-hit-area" x="${x-21}" y="${y-21}" width="42" height="42" fill="transparent"/><rect class="city-outline" x="${x-20}" y="${y-11}" width="40" height="30"/></g>`;
  }).join('');
  const extras=preview?.road_additions||view.catalog.road_additions;
  const hazardous=!!(preview?preview.travel_hazards:view.catalog.travel_hazards);
@@ -606,19 +614,31 @@ function renderMap(){
   .map(({city,name,x,y,anchor})=>`<text class="map-city-name" x="${x}" y="${y}" text-anchor="${anchor}" data-city-label="${city.id}" aria-hidden="true">${escapeHtml(name)}</text>`).join('');
  const bridges=mapBridgeLayer([roads,expansionRoads,regionalRoads,navigableSeas,navigableRivers]);
  const labelName={major:'主城',giant:'巨大都市',large:'大都市',all:'全部',none:'关闭'}[cityLabels];
- const toolbar=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''} ${mapAction&&!mapAction.targets.includes(c.id)?'disabled':''}>${escapeHtml(cityName(c.id))} · ${escapeHtml(ownerName(owners[c.id],c.id))}</option>`).join('')}</select></label><button id="map-labels" data-label-mode="${cityLabels}" aria-label="切换城名显示" title="城名：${labelName}"><span class="map-labels-full">城名：${labelName}</span><span class="map-labels-compact">${{major:'名：主',giant:'名：巨',large:'名：大',all:'名：全',none:'名：隐'}[cityLabels]}</span></button></div>`;
+ const toolbar=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''} ${mapAction?.kind==='recruit'&&!mapAction.targets.includes(c.id)?'disabled':''}>${escapeHtml(cityName(c.id))} · ${escapeHtml(ownerName(owners[c.id],c.id))}</option>`).join('')}</select></label><button id="map-labels" data-label-mode="${cityLabels}" aria-label="切换城名显示" title="城名：${labelName}"><span class="map-labels-full">城名：${labelName}</span><span class="map-labels-compact">${{major:'名：主',giant:'名：巨',large:'名：大',all:'名：全',none:'名：隐'}[cityLabels]}</span></button></div>`;
  $('#stage').innerHTML=`<svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs>${spriteDefs}${mountainDefs}<marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker><marker id="oneway-river-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#d4e9ff" stroke="#224888" stroke-width="1"/></marker></defs><image href="${backgroundHref}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${inactiveCastles}${mountainColors}${cityRoadBed}${roads}${expansionRoads}${regionalRoads}${navigableSeas}${navigableRivers}${bridges}${castles}${labels}</svg>
  <div class="map-zoom-controls" role="group" aria-label="地图缩放比例（1–4倍）"><button id="map-zoom-out" aria-label="缩小地图" title="缩小地图">−</button><output id="map-zoom" aria-label="地图缩放比例（1–4倍）">100%</output><button id="map-zoom-in" aria-label="放大地图" title="放大地图">＋</button></div>
  <p id="map-gesture-help" class="visually-hidden">拖动地图；滚轮或双指缩放，范围1到4倍。</p>
  <div class="map-bottom-bar">${toolbar}<time id="map-date" datetime="${GameCalendar.iso(date)}" aria-label="${GameCalendar.text(date)}">${date.year}年<span>${date.month}月${GameCalendar.period(date.day)}</span></time></div>
- ${mapAction?`<div class="map-action-prompt" role="status"><span>${escapeHtml(cityName(mapAction.source))} · ${mapAction.kind==='depart'?'请选择高亮城池出征':'请选择高亮城池招募或劝降'}</span><button id="cancel-map-action">取消选城</button></div>`:''}`;
+ ${mapAction?`<div class="map-action-overlay">
+  <div class="map-action-prompt"><span role="status">${escapeHtml(cityName(mapAction.source))} · ${mapAction.kind==='depart'?cityCommandText('選擇目的地以查看行軍路線','行き先を選んで経路を確認'):'请选择高亮城池招募或劝降'}</span><button id="cancel-map-action">取消选城</button></div>
+  ${mapAction.kind==='depart'?`<section id="map-march-preview" aria-labelledby="map-march-heading" hidden>
+   <h3 id="map-march-heading" tabindex="-1"></h3><div id="map-march-detail" role="status" tabindex="0"></div>
+   <div class="map-march-actions" hidden><button class="primary" id="continue-map-departure" disabled>${battleText('選擇出征武將','出陣する武将を選ぶ')}</button></div>
+  </section>`:''}
+ </div>`:''}`;
  mapRenderCache?.remember($('#world-map'),sceneKey);
  }
  // Refresh handlers even when the SVG is retained: commands replace the game
  // snapshot, so city clicks must read the current phase, owners and board.
  const choose=(id,inspect=false)=>{
   if(busy)return;
-  if(mapAction&&!preview&&game.phase==='city')return finishMapAction(id);
+  if(mapAction&&!preview&&game.phase==='city'){
+   if(mapAction.kind==='depart'&&!inspect){
+    const destination=board.find(c=>c.id===id);
+    if(destination)mapNavigation.focus(...mapPosition(destination),mapCamera?.zoom||1);
+   }
+   return finishMapAction(id,inspect);
+  }
   if(preview){preview.focus=id;setPreviewFaction(owners[id],id,true);}
   else if(isObserver()){selectedCity=id;renderObserver();}
   else{selectedCity=id;if(game.phase==='city'){$('#inspector').scrollTop=0;renderCity();}}
@@ -644,7 +664,8 @@ function renderMap(){
  $('#city-jump').onchange=()=>choose($('#city-jump').value);
  $('#map-labels').onclick=()=>{cityLabels={major:'giant',giant:'large',large:'all',all:'none',none:'major'}[cityLabels];renderMap();};
  if($('#cancel-map-action'))$('#cancel-map-action').onclick=cancelMapAction;
- document.querySelectorAll('[data-city],[data-city-label]').forEach(el=>{const id=el.dataset.city||el.dataset.cityLabel;el.onclick=e=>{if(!mapNavigation.shouldSuppressClick(e)){if(!mapAction||mapAction.targets.includes(id))gameAudio.play('click');choose(id,true);}};el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(!mapAction||mapAction.targets.includes(id))gameAudio.play('click');choose(id,true);}};});
+ document.querySelectorAll('[data-city],[data-city-label]').forEach(el=>{const id=el.dataset.city||el.dataset.cityLabel;el.onclick=e=>{if(!mapNavigation.shouldSuppressClick(e)){if(!mapAction||mapAction.kind==='depart'||mapAction.targets.includes(id))gameAudio.play('click');choose(id,true);}};el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(!mapAction||mapAction.kind==='depart'||mapAction.targets.includes(id))gameAudio.play('click');choose(id,true);}};});
+ if(mapAction?.kind==='depart')renderMapMarchPreview();
 }
 
 async function showCityInformation(id){
@@ -848,12 +869,13 @@ function renderCity(){
    noDepartureFood=fighters.every(id=>city.grain<Math.max(1,Math.floor(game.officers[id].troops/25)));
   }
  }
+ const departUnavailable=!hasCommandBook('depart')||!fighters.length||noDepartureFood;
  const scale=view.catalog.city_profiles[city.id],income=view.catalog.city_income[city.id],naming=view.catalog.map_presentation.city_names[city.id],training=view.catalog.domestic?.cities?.[city.id]?.morale;
  const outpost=view.catalog.frontier_outposts?.[city.id];
  const unavailable=`<p class="small city-command-unavailable">${cityCommandText('非本方城池，無法執行都市命令。','自勢力の都市ではないため、都市の命令は実行できません。')}</p>`;
  const panels={
   city:owned?`${view.catalog.city_development?`<button id="city-development">${cityCommandText('城池開發','都市の開発')}</button>`:''}${view.catalog.facilities?`<button id="city-civic">${cityCommandText('設施整備與防災','施設整備・防災')}</button>`:''}${view.catalog.domestic?`<button id="city-domestic">${cityCommandText('勢力內政委任','勢力の内政担当')}</button>`:''}<button id="recruit-officer" ${(!hasCommandBook('recruit_officer')&&!hasCommandBook('persuade_officer'))||!available.length||cityOccupancy(city)>=capacity()||city.gold<60?'disabled':''}>招募 / 劝降</button>${view.catalog.civil_staff?'<button id="civil-staff">地方文吏</button>':''}`:unavailable,
-  army:owned?`<div class="action-pair"><button id="allocate" class="primary" ${!hasCommandBook('allocate')||!city.roster.officer_ids.some(i=>!marching().has(i))?'disabled':''}>编兵</button><button id="depart" class="primary" ${!hasCommandBook('depart')||!fighters.length||noDepartureFood?'disabled':''}>出征</button></div>${GameCommandBooks.activeAllocation(view,city.id)?`<button id="continue-allocation">${cityCommandText('繼續上次配兵','前回の編制を続ける')}</button>`:''}<div class="action-pair"><button id="transfer" ${!hasCommandBook('transfer')||!available.length?'disabled':''}>调动武将</button><button id="recruit" ${!hasCommandBook('recruit')||city.gold<20||city.grain<30?'disabled':''}>征募预备兵</button></div>`:unavailable,
+  army:owned?`<div class="action-pair"><button id="allocate" class="primary" ${!hasCommandBook('allocate')||!city.roster.officer_ids.some(i=>!marching().has(i))?'disabled':''}>编兵</button><button id="depart"${departUnavailable?'':' class="primary"'}>${departUnavailable?cityCommandText('查看行軍路線','行軍経路を確認'):'出征'}</button></div>${GameCommandBooks.activeAllocation(view,city.id)?`<button id="continue-allocation">${cityCommandText('繼續上次配兵','前回の編制を続ける')}</button>`:''}<div class="action-pair"><button id="transfer" ${!hasCommandBook('transfer')||!available.length?'disabled':''}>调动武将</button><button id="recruit" ${!hasCommandBook('recruit')||city.gold<20||city.grain<30?'disabled':''}>征募预备兵</button></div>`:unavailable,
   warehouse:owned?`${view.catalog.treasury?`<button id="city-treasury">${cityCommandText('寶庫與賞賜','宝庫・褒美')}</button>`:''}${view.catalog.domestic?'<button id="city-logistics">前線支援</button>':''}`:unavailable,
   town:owned?view.catalog.facilities?`<button id="city-facilities">${cityCommandText('進入城內設施','町の施設へ')}</button>`:`<p class="small">${cityCommandText('本城的設施資料尚未提供。','この都市の施設情報は未登録です。')}</p>`:unavailable
  };
@@ -955,23 +977,125 @@ function rejectDepartureTarget(){
 }
 function beginMapAction(kind,city){
  if(busy||view.game?.phase!=='city'||city.owner!==view.game.player)return;
- const commandKind=kind==='depart'?'depart':hasCommandBook('recruit_officer')?'recruit_officer':'persuade_officer';
- if(!hasCommandBook(commandKind))return notice(commandBookReason(commandKind),true);
+ if(kind==='recruit'){
+  const commandKind=hasCommandBook('recruit_officer')?'recruit_officer':'persuade_officer';
+  if(!hasCommandBook(commandKind))return notice(commandBookReason(commandKind),true);
+ }
  const targets=actionTargetCities(kind,city);
- if(!targets.length)return notice(kind==='depart'?'没有可出征的陆路或沿海城池。':'附近暂无可招募的在野武将或可劝降的敌将。可在“人物库”查看年代与配置。');
+ if(kind==='recruit'&&!targets.length)return notice('附近暂无可招募的在野武将或可劝降的敌将。可在“人物库”查看年代与配置。');
  if(kind==='recruit'&&targets.length===1&&targets[0]===city.id){mapAction=null;notice();recruitOfficer(city,city.id);GameI18n.apply();return;}
  mapAction={kind,source:city.id,targets,revision:view.revision};notice();renderMap();GameI18n.apply();
  const stage=$('#stage'),rect=stage.getBoundingClientRect();
  if(rect.top<0||rect.bottom>window.innerHeight)stage.scrollIntoView({block:'center'});
- document.querySelector('.city-hit.action-target')?.focus({preventScroll:true});
+ (document.querySelector('.city-hit.action-target')||$('#city-jump'))?.focus({preventScroll:true});
 }
 function cancelMapAction(){mapAction=null;notice();renderMap();GameI18n.apply();}
-function finishMapAction(id){
+function finishMapAction(id,focusPreview=false){
  const choice=mapAction,city=view.game.cities[choice.source];
+ if(choice.kind==='depart')return inspectMapMarch(id,focusPreview);
  if(!actionTargetCities(choice.kind,city).includes(id))return notice('请选择高亮的可操作城池。',true);
  mapAction=null;notice();renderMap();
- if(choice.kind==='depart')departure(city,id);else recruitOfficer(city,id);
+ recruitOfficer(city,id);
  GameI18n.apply();
+}
+async function inspectMapMarch(id,focusPreview){
+ const choice=mapAction;
+ if(choice?.kind!=='depart'||!view.game.cities[id])return;
+ const selection={id,state:'loading',result:null};
+ choice.selection=selection;
+ renderMapMarchPreview();
+ if(focusPreview)$('#map-march-heading')?.focus({preventScroll:true});
+ const current=()=>mapAction===choice&&choice.selection===selection&&view.revision===choice.revision;
+ try{
+  const query=new URLSearchParams({source:choice.source,target:id,revision:choice.revision});
+  const result=await request('/api/march-preview?'+query);
+  if(!current())return;
+  if(result.source!==choice.source||result.target!==id||result.revision!==choice.revision)throw Error('Unexpected route reply');
+  selection.state='ready';
+  selection.result=result;
+ }catch{
+  if(!current())return;
+  selection.state='error';
+ }
+ renderMapMarchPreview();
+}
+function mapMarchPath(path){
+ return path.map(id=>escapeHtml(cityName(id))).join(' → ');
+}
+function mapMarchMode(quote){
+ if(quote.mode==='explore')return battleText('探索未知航路','未発見の航路を探索');
+ if(quote.mode==='special')return battleText('險道','間道');
+ const labels={land:['陸路','陸路'],river:['內河水路','内陸水路'],sea:['海路','海路']};
+ const modes=quote.modes||[quote.mode],words=modes.map(mode=>labels[mode]).filter(Boolean);
+ return words.length?battleText(words.map(word=>word[0]).join('＋'),words.map(word=>word[1]).join('＋')):battleText('行軍','行軍');
+}
+function mapMarchRestriction(row){
+ const names=locale=>ids=>ids.map(id=>GameI18n.t(cityName(id),locale)).join(' → ');
+ const tc=names('zh-Hant'),ja=names('ja');
+ const date=row.date?`${row.date[0]}年${row.date[1]}月`:'';
+ const phrasing={
+  one_way:()=>battleText(`單向通行（僅限 ${tc([row.from,row.to])}）`,`一方通行（${ja([row.from,row.to])} のみ）`),
+  closed:()=>date?battleText(`目前封閉，預計 ${date} 開放。`,`現在は通行止めです。${date}に再開予定です。`):battleText('目前封閉，無法通行。','現在は通行止めです。'),
+  not_yet_open:()=>battleText(`尚未開通，預計 ${date} 開放。`,`まだ開通していません。${date}に開通予定です。`),
+  requires_stop:()=>battleText(`必須在 ${tc(row.via||[])} 停靠，不能直接通行。`,`${ja(row.via||[])} を経由するため、直行できません。`)
+ };
+ return phrasing[row.reason]?`<li data-march-reason="${escapeHtml(row.reason)}">${mapMarchMode(row)} · ${phrasing[row.reason]()}</li>`:'';
+}
+function mapDepartureBlock(city,id){
+ if(!hasCommandBook('depart'))return battleText('命令書不足，無法出征。','出陣に必要な命令書がありません。');
+ const fighters=city.roster.officer_ids.filter(i=>!officerUnavailable(i,{troops:true}));
+ if(!fighters.length)return battleText('本城沒有可出征的帶兵武將。','この都市に出陣できる部隊がいません。');
+ if(!actionTargetCities('depart',city).includes(id))return battleText('正在準備出征資料。','出陣に必要な経路情報を準備しています。');
+ if(fighters.every(i=>city.grain<departureBudget(city,id,[i])))return battleText('本城的兵糧不足，無法出征。','出陣に必要な兵糧が不足しています。');
+ return '';
+}
+function continueMapDeparture(){
+ const choice=mapAction,selection=choice?.selection;
+ if(busy||choice?.kind!=='depart'||choice.revision!==view.revision||selection?.result?.status!=='available')return;
+ const source=view.game.cities[choice.source];
+ if(mapDepartureBlock(source,selection.id))return;
+ mapAction=null;notice();renderMap();
+ departure(source,selection.id);
+ GameI18n.apply();
+}
+function renderMapMarchPreview(){
+ const pane=$('#map-march-preview'),selection=mapAction?.selection;
+ if(!pane||!selection)return;
+ const {id,state,result}=selection,source=view.game.cities[mapAction.source];
+ const jump=$('#city-jump');
+ if(jump)jump.value=id;
+ $('#world-map .march-preview-target')?.classList.remove('march-preview-target');
+ $(`#world-map [data-city="${id}"]`)?.classList.add('march-preview-target');
+ pane.hidden=false;pane.dataset.state=state;pane.dataset.target=id;
+ const titles={
+  available:()=>battleText('可出征路線','出陣に使える経路'),
+  own_city:()=>battleText('目的地為本方城池，請使用調動武將。','自勢力の都市です。武将の移動を使います。'),
+  non_aggression:()=>battleText('同盟或停戰期間，不能向此城出征。','同盟・停戦中のため、この都市には出陣できません。'),
+  no_direct_route:()=>battleText('目前沒有可直達此城的出征路線。','この都市へ直接出陣できる経路はありません。'),
+  same_city:()=>battleText('出發地與目的地相同。','出発地と同じ都市です。別の都市を選んでください。')
+ };
+ const option=row=>`<li data-march-option="${escapeHtml(row.mode)}"><strong>${mapMarchMode(row)} · ${escapeHtml(row.days)}日</strong><span class="map-march-path">${mapMarchPath(row.path)}</span></li>`;
+ const detour=result?.detour;
+ const detourHeading=detour?.kind==='transfer'?battleText('調動武將的替代路線','武将の移動に使える迂回路'):battleText('經本方城池分段出征','自勢力の都市を経由する出陣案');
+ const detourNote=detour?.kind==='staged_attack'?battleText(
+  `先調動武將至${GameI18n.t(cityName(detour.via),'zh-Hant')}，抵達後另下出征命令。日數為目前估算。`,
+  `${GameI18n.t(cityName(detour.via),'ja')}へ武将を移動させ、到着後に出陣命令を出します。日数は現在の概算です。`):'';
+ const block=result?.status==='available'?mapDepartureBlock(source,id):'';
+ const detail=result?`<p class="map-march-status" data-march-status="${escapeHtml(result.status)}">${titles[result.status]?.()||''}</p>
+  ${result.options.length?`<ul class="map-march-options">${result.options.map(option).join('')}</ul>`:''}
+  ${result.restrictions.length?`<ul class="map-march-restrictions">${result.restrictions.map(mapMarchRestriction).join('')}</ul>`:''}
+  ${detour?`<div data-march-detour="${escapeHtml(detour.kind)}"><strong>${detourHeading} · ${escapeHtml(detour.days)}日</strong><span class="map-march-path">${mapMarchMode(detour)} · ${mapMarchPath(detour.path)}</span>${detourNote?`<span class="map-march-note">${detourNote}</span>`:''}</div>`:''}
+  ${result.status==='own_city'&&!result.options.length&&!detour?`<p class="map-march-note">${battleText('目前沒有可調動武將的路線。','現在は武将の移動に使える経路がありません。')}</p>`:''}
+  ${block?`<p class="map-march-note">${block}</p>`:''}`
+  :state==='loading'?battleText('正在計算行軍路線…','行軍経路を計算しています…'):battleText('無法讀取行軍路線。請重新選擇目的地。','行軍経路を取得できませんでした。行き先を選び直してください。');
+ const heading=$('#map-march-heading'),content=$('#map-march-detail'),next=$('#continue-map-departure');
+ const previousScroll=state==='loading'?0:content.scrollTop;
+ heading.innerHTML=mapMarchPath([source.id,id]);
+ content.innerHTML=detail;
+ content.scrollTop=previousScroll;
+ next.parentElement.hidden=result?.status!=='available';
+ next.disabled=next.parentElement.hidden||!!block||busy;
+ next.onclick=continueMapDeparture;
 }
 function marchStatusHtml(row){
  const s=row.supply,arrived=s?(s.route_days??s.elapsed_days??0)>=row.quote.days:row.arrival_turn<=view.game.turn,

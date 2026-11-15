@@ -30,12 +30,12 @@ function environment(){
   GameCalendar:{text:d=>`${d.year}-${d.month}-${d.day}`,iso:d=>`${d.year}-${d.month}-${d.day}`,period:day=>String(day)},
   $:selector=>selector.startsWith('#')?elements.get(selector.slice(1)):cityElements.find(el=>selector===`[data-city="${el.dataset.city}"]`),
   document:{querySelectorAll:selector=>{assert.equal(selector,'[data-city],[data-city-label]');return cityElements;}},
-  escapeHtml:String,mapPosition:city=>city.position,mapBackgroundHref:value=>value,
+  escapeHtml:String,cityCommandText:text=>text,battleText:text=>text,mapPosition:city=>city.position,mapBackgroundHref:value=>value,
   mapColor:id=>context.view.catalog.map_presentation.colors[id]||'#fff',
   landMapPath:points=>{counts.paths++;return 'M'+points.map(p=>p.join(' ')).join('L');},smoothMapPath:points=>'M'+points.map(p=>p.join(' ')).join('L'),
   mapAccessKey:points=>JSON.stringify(points),mapBridgeLayer:()=>'',setPreviewFaction(){},
   gameAudio:{play(){}},isObserver:()=>context.view.game?.player==='observer',renderObserver(){counts.observer++;},
-  renderCity(){counts.city++;},showCityInformation:id=>counts.information.push(id),finishMapAction(){},cancelMapAction(){},
+  renderCity(){counts.city++;},showCityInformation:id=>counts.information.push(id),finishMapAction(){},cancelMapAction(){},renderMapMarchPreview(){},
   MapNavigation:{attach(svg,{initial,onChange}){
    counts.attaches++;let camera={x:150,y:150,zoom:1,...initial};
    const notify=()=>onChange({...camera});notify();
@@ -96,6 +96,8 @@ invalidates('label mode',()=>context.cityLabels='none');assert(!env.markup().inc
 invalidates('city scale',()=>context.view.catalog.city_profiles.a.tier='normal');
 invalidates('language',()=>context.GameI18n.locale='ja');
 invalidates('city action highlight',()=>context.mapAction={source:'a',kind:'depart',targets:['b']});assert(env.markup().includes('data-action-eligible="true"'));
+const departureMap=elements.get('world-map');context.mapAction.selection={id:'b',state:'ready'};env.render();
+assert.equal(elements.get('world-map'),departureMap,'A route reply retains the map and camera');
 invalidates('action target change',()=>context.mapAction.targets=['a']);
 invalidates('action cancellation',()=>context.mapAction=null);
 invalidates('discovered sea route',()=>context.view.catalog.discovered_routes.push({id:'new',from:'a',to:'b',draw:[{mode:'sea',points:[[100,100],[200,200]]}]}));assert(env.markup().includes('data-discovered-route="new"'));

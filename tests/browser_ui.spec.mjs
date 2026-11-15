@@ -176,6 +176,7 @@ async function tacticalOpening(page){
  const seed=page.locator('#seed');await seed.evaluate(node=>{for(let parent=node.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;});await seed.fill('2026');
  await page.locator('#begin').click();await waitIdle(page);await tacticalDismiss(page);
  await page.locator('#city-jump').selectOption('jiujiang');await clickCityCommand(page,'depart');await page.locator('#city-jump').selectOption('danyang');
+ await page.locator('#continue-map-departure').click();
  await expect(page.locator('#departure-target')).toHaveValue('danyang');const officers=page.locator('input[name=depart-officer]:enabled');expect(await officers.count()).toBeGreaterThanOrEqual(10);
  for(let i=0;i<10;i++)await officers.nth(i).check();await page.locator('#review-departure').click();await page.locator('#confirm-departure').click();await waitIdle(page);await tacticalDismiss(page);
  for(const id of ['end-turn','run-ai','process-arrivals']){await page.locator('#'+id).click();await waitIdle(page);await tacticalDismiss(page);}
@@ -1427,6 +1428,59 @@ test('Jiangxia Changsha offers distinct inland water and land routes through rea
  expect(errors.get(page)).toEqual([]);
 });
 
+test('map march preview shows the downstream route and a usable detour against a one-way restriction',async({page},testInfo)=>{
+ await opening(page);
+ const menu=page.locator('#utility-menu'),scenario=page.locator('#scenario'),cityJump=page.locator('#city-jump');
+ await menu.locator('summary').click();await page.locator('#language').selectOption('ja');await menu.locator('summary').click();
+ const start=async(id,faction,city)=>{
+  await scenario.selectOption(id);
+  await page.locator(`input[name=faction][value="${faction}"]`).check();
+  await page.locator('#begin').click();
+  await expect(page.locator('#end-turn')).toBeEnabled({timeout:90_000});
+  await waitIdle(page);await tacticalDismiss(page);
+  await cityJump.selectOption(city);
+ };
+ const preview=page.locator('#map-march-preview'),dialog=page.locator('#dialog'),continueDeparture=page.locator('#continue-map-departure');
+ await start('mainland188-06','han_sui','jincheng');
+ const forwardSave=await tacticalSave(page);
+ await clickCityCommand(page,'depart');
+ await cityJump.selectOption('shuofang');
+ await expect(preview).toBeVisible();await expect(dialog).toBeHidden();
+ await expect(page.locator('#world-map .march-preview-target')).toHaveAttribute('data-city','shuofang');
+ await expect(preview.locator('[data-march-status="available"]')).toBeVisible();
+ const downstream=preview.locator('[data-march-option]').filter({hasText:/水路/});
+ await expect(downstream).toContainText(/金城.*朔方/);
+ await expect(downstream).toContainText(/15\s*日/);
+ await expect(downstream.locator('.map-march-path')).toBeInViewport({ratio:0.98});
+ expect(await tacticalSave(page)).toEqual(forwardSave,'Inspecting the downstream route does not change the save or RNG');
+ await historyScreenshot(page,testInfo,'march-preview-yellow-river-downstream',{fullPage:false});
+ await continueDeparture.click();
+ await expect(page.locator('#departure-target')).toHaveValue('shuofang');
+ await closeDialog(page);
+
+ await page.locator('#main-menu').click();
+ await start('mainland235-01','wei','shuofang');
+ const reverseSave=await tacticalSave(page);
+ await tacticalControl(page,'city-command-tab-army');
+ await expect(page.locator('#depart')).toHaveAccessibleName('行軍経路を確認');
+ await page.locator('#depart').click();
+ await page.locator('#world-map .city-hit[data-city=jincheng]').press('Enter');
+ await expect(preview).toBeVisible();await expect(dialog).toBeHidden();
+ await expect(page.locator('#world-map .march-preview-target')).toHaveAttribute('data-city','jincheng');
+ await expect(preview.locator('[data-march-reason="one_way"]')).toContainText(/一方通行.*金城.*朔方/);
+ const detour=preview.locator('[data-march-detour="transfer"]');
+ await expect(detour).toContainText(/朔方.*安定.*金城/);
+ await expect(detour).toContainText(/72\s*日/);
+ await expect(page.locator('#continue-map-departure:enabled')).toHaveCount(0);
+ await expect(detour.locator('.map-march-path')).toBeInViewport({ratio:0.98});
+ await historyScreenshot(page,testInfo,'march-preview-yellow-river-detour',{fullPage:false});
+ expect(await tacticalSave(page)).toEqual(reverseSave,'Inspecting a blocked route and detour does not change the save or RNG');
+ await page.locator('#cancel-map-action').click();
+ await expect(preview).toBeHidden();
+ await expect(cityJump).toHaveValue('shuofang');
+ expect(errors.get(page)).toEqual([]);
+});
+
 test('scenario totals and DLC labels stay bilingual while island history remains neutral',async({page},testInfo)=>{
  await opening(page);
  const select=page.locator('#scenario'),counter=page.locator('#scenario-count');
@@ -2631,6 +2685,7 @@ test.describe('first-session assistance',()=>{
   await page.locator('#office-civil').selectOption(officers[0]);await page.locator('#office-military').selectOption(officers[1]);await page.locator('#save-domestic').click();await waitIdle(page);if(await page.locator('#dialog').isVisible())await closeDialog(page);await tacticalDismiss(page);
   await expect(page.locator('#game-tutorial')).toContainText('行軍の見積りを確認する');const quotedBefore=await raw();
   await clickCityCommand(page,'depart');const destination=await page.locator('#world-map .city-hit.action-target').first().getAttribute('data-city');await page.locator('#city-jump').selectOption(destination);
+  await page.locator('#continue-map-departure').click();
   await page.locator('input[name=depart-officer]:enabled').first().check();await page.locator('#review-departure').click();await expect(page.locator('#departure-estimate')).not.toBeEmpty();await expect(page.locator('#game-tutorial')).toContainText('最初の3旬を進める');expect(await raw()).toEqual(quotedBefore);await closeDialog(page);
   await page.locator('#tutorial-end').click();await expect(page.locator('#game-tutorial')).toHaveCount(0);expect(await raw()).toEqual(quotedBefore);
   await page.locator('#utility-menu summary').click();await page.locator('#tutorial').click();await expect(page.locator('#game-tutorial')).toBeVisible();expect(await raw()).toEqual(quotedBefore);
@@ -2673,6 +2728,7 @@ test('original development commands keep pure quotes, real costs and portable sa
  await tacticalDismiss(page);
  await tacticalControl(page,'city-command-tab-army');await page.locator('#depart').click();
  await page.locator('#world-map .city-hit.action-target').first().press('Enter');
+ await page.locator('#continue-map-departure').click();
  await page.locator('input[name=depart-officer]:enabled').first().check();await page.locator('#review-departure').click();
  const budget=page.locator('#departure-battle-grain'),maximum=Number(await budget.getAttribute('max'));
  expect(Number(await budget.inputValue())).toBeGreaterThan(0);await expect(page.locator('#departure-battle-budget')).toContainText(/戦闘用|戰鬥備糧/,{useInnerText:true});

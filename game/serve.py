@@ -603,6 +603,16 @@ def make_handler(game, cloud_config, cloud_csp, static, audit=None, here=HERE):
                 if self.path == '/api/march-status':
                     from remake.march_core import backend_status
                     return self.send(200, backend_status())
+                if urlsplit(self.path).path == '/api/march-preview':
+                    try:
+                        query = parse_qs(urlsplit(self.path).query, keep_blank_values=True,
+                                         strict_parsing=True, max_num_fields=3,
+                                         encoding='utf-8', errors='strict')
+                    except (ValueError, UnicodeError):
+                        raise GameError('查询参数无效。') from None
+                    if set(query) != {'source', 'target', 'revision'} or any(len(v) != 1 for v in query.values()):
+                        raise GameError('查询参数无效。')
+                    return self.send(200, game.preview_march(**{key: value[0] for key, value in query.items()}))
                 if urlsplit(self.path).path == '/api/march-config':
                     try:
                         query = parse_qs(urlsplit(self.path).query, keep_blank_values=True, max_num_fields=1)

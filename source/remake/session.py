@@ -228,6 +228,24 @@ class CampaignSession:
                     history=d.get('city_history',{}).get(city),frontier_outpost=frontier,
                     **stocks[city]))
 
+    def preview_march(self, source, target, revision):
+        """Quote from one player-owned city without spending a command or RNG."""
+        from .march_preview import preview
+
+        with self.lock:
+            if (not isinstance(revision, str) or not 1 <= len(revision) <= 16
+                    or not revision.isascii() or not revision.isdecimal()):
+                raise GameError('查询参数无效。')
+            if int(revision) != self.revision:
+                raise GameError('进度已更新，请重新选择操作。', 409)
+            state = self.game.state
+            if (state is None or not isinstance(source, str) or not isinstance(target, str)
+                    or source not in state.cities or target not in state.cities
+                    or state.cities[source].owner != state.player
+                    or 'travel_rules' not in self.game.catalog.data):
+                raise GameError('查询参数无效。')
+            return preview(self.game, state, source, target, self.revision)
+
     def load_save(self, save, revision):
         with self.lock:
             if type(revision) is not int or revision!=self.revision:raise GameError('进度已更新。',409)

@@ -150,7 +150,9 @@ async function weightedTransferChecks(){
  const remembered=Object.fromEntries(Object.entries(officers).map(([id,o])=>[id,o.health]));
  for(const o of Object.values(officers))o.health=0;
  context.renderCity();
- for(const id of ['depart','recruit-officer','transfer'])assert(new RegExp(`id="${id}"[^>]*disabled`).test(element('#inspector').innerHTML),'No healthy actor: '+id);
+ const unavailableCommands=element('#inspector').innerHTML;
+ for(const id of ['recruit-officer','transfer'])assert(new RegExp(`id="${id}"[^>]*disabled`).test(unavailableCommands),'No healthy actor: '+id);
+ assert.match(unavailableCommands,/id="depart">.*查看行軍路線/,'No healthy actor: the departure slot offers read-only route inspection');
  for(const[id,health]of Object.entries(remembered))officers[id].health=health;
  const gold=home.gold,grain=home.grain;home.gold=0;home.grain=0;context.renderCity();
  assert(/id="recruit" disabled/.test(element('#inspector').innerHTML),'Resource shortage disables reserve recruitment before spending');home.gold=gold;home.grain=grain;

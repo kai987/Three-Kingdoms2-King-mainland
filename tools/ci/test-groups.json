@@ -508,6 +508,13 @@
         "logistics"
       ]
     },
+    "tests/test_remake_march_preview.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "logistics"
+      ]
+    },
     "tests/test_remake_march_save_compat.py": {
       "tier": "compatibility",
       "groups": [

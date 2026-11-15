@@ -198,6 +198,19 @@
       "scenario_scope": "fixed"
     },
     {
+      "id": "map-march-preview",
+      "title": "map march preview shows the downstream route and a usable detour against a one-way restriction",
+      "groups": [
+        "map",
+        "battle"
+      ],
+      "scenario_ids": [
+        "mainland188-06",
+        "mainland235-01"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
       "id": "scenario-labels",
       "title": "scenario totals and DLC labels stay bilingual while island history remains neutral",
       "groups": [
