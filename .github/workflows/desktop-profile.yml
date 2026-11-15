@@ -1,0 +1,62 @@
+name: Profile the pinned desktop shard
+on:
+  workflow_call:
+    inputs:
+      runner-label:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  FROZEN_SOURCE: 6cc4dbe28c9ad829fc3533af2186269a913b473b
+  FROZEN_TREE: 4b0476591d55e37b90b4216eb5da178d49eb0f07
+  FROZEN_WEB_HEAD: 1657e8a0f005678ee8bedc27ff9e3eab089106e8
+  FROZEN_WEB_CONTENT: 0f1f0a94c8b786fb2ce00bf418bb7e7309d41f6d942dedc085ad03eea3dddad8
+  TK2_TEST_PLAN: build/ci/test-plan.json
+
+jobs:
+  desktop-one:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: ./.github/actions/browser-tools
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: candidate-web-${{ env.FROZEN_WEB_HEAD }}
+          path: build/web
+          github-token: ${{ github.token }}
+          run-id: 43703007190
+      - name: Verify the original source tree, candidate and desktop selection
+        run: |
+          test "$(git rev-parse HEAD^)" = "$FROZEN_SOURCE"
+          test "$(git rev-parse 'HEAD^^{tree}')" = "$FROZEN_TREE"
+          git diff --exit-code "$FROZEN_SOURCE" HEAD -- . \
+            ':(exclude).github/workflows/remake.yml' \
+            ':(exclude).github/workflows/desktop-profile.yml' \
+            ':(exclude).github/experiments/profile_desktop_shard.py'
+          python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_WEB_HEAD" --content-sha256 "$FROZEN_WEB_CONTENT"
+          mkdir -p build/ci build/desktop-profile
+          python -B tools/ci/plan.py --head "$GITHUB_SHA" --event-name "$GITHUB_EVENT_NAME" --event-path "$GITHUB_EVENT_PATH" --repository "$GITHUB_REPOSITORY" --force-full > "$TK2_TEST_PLAN"
+          node tools/browser-tests/scope.cjs --plan "$TK2_TEST_PLAN" > build/desktop-profile/browser-scope.json
+          node tools/browser-tests/verify-shards.mjs desktop-chromium
+          git hash-object tests/browser_ui.spec.mjs tools/browser-tests/cases.json tools/browser-tests/case-durations.json
+      - name: Repeat the same desktop shard and sample runner resources
+        run: python -B .github/experiments/profile_desktop_shard.py
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: desktop-profile-${{ inputs.runner-label }}-attempt-${{ github.run_attempt }}
+          path: build/desktop-profile
+          if-no-files-found: error
+          retention-days: 7
