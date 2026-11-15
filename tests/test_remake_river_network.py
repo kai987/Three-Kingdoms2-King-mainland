@@ -31,9 +31,9 @@ class SharedRiverNetwork(unittest.TestCase):
         before = deepcopy(spec)
         routes = compile_network(spec, self.positions)
         self.assertEqual(spec, before)
-        self.assertEqual(len(routes), 61)
+        self.assertEqual(len(routes), 62)
         self.assertEqual(len({row['id'] for row in routes}), len(routes))
-        self.assertEqual(self.compiled['reach_count'], 58)
+        self.assertEqual(self.compiled['reach_count'], 59)
         for route in routes:
             self.assertEqual(route['draw'][0]['points'][0], self.positions[route['from']])
             self.assertEqual(route['draw'][-1]['points'][-1], self.positions[route['to']])
@@ -123,6 +123,16 @@ class SharedRiverNetwork(unittest.TestCase):
         self.assertTrue(group.findall('svg:rect', ns))
         self.assertTrue(all(rect.attrib['fill'] == '#002af8' and rect.attrib['width'] == '2'
                             for rect in group.findall('svg:rect', ns)))
+
+    def test_xiapi_waterway_extends_the_existing_wo_huai_reaches(self):
+        routes = {row['id']: row for row in self.compiled['routes']}
+        wo = routes['qiao:jiujiang:river']
+        xiapi = routes['qiao:xiapi:river']
+        self.assertEqual(xiapi['draw'][:3], wo['draw'][:3])
+        self.assertEqual([part['reach_id'] for part in xiapi['draw'][1:-1]],
+                         ['wo:qiao:huai', 'huai:wo:jiujiang', 'huai:jiujiang:xiapi'])
+        self.assertFalse(xiapi.get('one_way'))
+        self.assertTrue(all(segment['downstream_from'] == 'qiao' for segment in xiapi['river_segments']))
 
     def test_named_river_polylines_stay_on_existing_water_and_never_invent_terrain(self):
         water = set()

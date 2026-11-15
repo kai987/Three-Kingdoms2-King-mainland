@@ -1441,6 +1441,43 @@ test('map march preview shows the downstream route and a usable detour against a
   await cityJump.selectOption(city);
  };
  const preview=page.locator('#map-march-preview'),dialog=page.locator('#dialog'),continueDeparture=page.locator('#continue-map-departure');
+ const overlay=page.locator('#world-map #map-march-routes');
+ const segments=kind=>overlay.locator(`[data-march-map-kind="${kind}"]`);
+ const yellowRiverId='jincheng:shuofang:river';
+ const assertDownriverArrows=async kind=>{
+  const river=segments(kind).filter({has:page.locator('[data-march-one-way]')});
+  await expect(river).toHaveAttribute('data-route-id',yellowRiverId);
+  const arrows=river.locator('path[data-march-one-way]');
+  await expect(arrows.first()).toHaveAttribute('data-from','jincheng');
+  const directions=await arrows.evaluateAll((nodes,id)=>{
+   const reaches=Array.from(document.querySelectorAll(`#world-map path[data-river-route="${id}"]`));
+   // Compare the arrow tangent against the nearest point on the mapped river,
+   // so swapping its SVG coordinates fails even if its labels stay correct.
+   const samples=reaches.flatMap(reach=>{
+    const length=reach.getTotalLength();
+    return Array.from({length:65},(_,index)=>{
+     const position=index*length/64;
+     return {point:reach.getPointAtLength(position),before:reach.getPointAtLength(Math.max(0,position-1)),
+      after:reach.getPointAtLength(Math.min(length,position+1))};
+    });
+   });
+   return nodes.map(arrow=>{
+    const length=arrow.getTotalLength(),from=arrow.getPointAtLength(0),to=arrow.getPointAtLength(length),middle=arrow.getPointAtLength(length/2);
+    const distance=sample=>Math.hypot(sample.point.x-middle.x,sample.point.y-middle.y);
+    const nearest=samples.reduce((best,sample)=>!best||distance(sample)<distance(best)?sample:best,null);
+    const markerId=arrow.getAttribute('marker-end')?.match(/^url\(#(.+)\)$/)?.[1];
+    const point=middle.matrixTransform(arrow.getScreenCTM());
+    // Pointer events pass through the arrow to the map, unless an opaque
+    // control or the preview pane is painted in front of the route.
+    const uncovered=!!document.elementFromPoint(point.x,point.y)?.closest('#world-map');
+    return {from:arrow.dataset.from,to:arrow.dataset.to,orientation:document.getElementById(markerId)?.getAttribute('orient'),
+     downstream:nearest&&(to.x-from.x)*(nearest.after.x-nearest.before.x)+(to.y-from.y)*(nearest.after.y-nearest.before.y)>0,uncovered};
+   });
+  },yellowRiverId);
+  expect(directions.length).toBeGreaterThan(0);
+  for(const direction of directions)expect(direction).toMatchObject({from:'jincheng',to:'shuofang',orientation:'auto',downstream:true});
+  expect(directions.some(direction=>direction.uncovered)).toBe(true);
+ };
  await start('mainland188-06','han_sui','jincheng');
  const forwardSave=await tacticalSave(page);
  await clickCityCommand(page,'depart');
@@ -1452,10 +1489,18 @@ test('map march preview shows the downstream route and a usable detour against a
  await expect(downstream).toContainText(/金城.*朔方/);
  await expect(downstream).toContainText(/15\s*日/);
  await expect(downstream.locator('.map-march-path')).toBeInViewport({ratio:0.98});
+ const availableLine=segments('available').locator('.map-march-line').first();
+ await expect(availableLine).toBeVisible();
+ await expect(segments('detour')).toHaveCount(0);
+ await expect(preview.locator('[data-march-key="available"]').first()).toBeVisible();
+ const availableStroke=await availableLine.evaluate(line=>getComputedStyle(line).stroke);
+ expect(availableStroke).not.toBe('none');
+ await assertDownriverArrows('available');
  expect(await tacticalSave(page)).toEqual(forwardSave,'Inspecting the downstream route does not change the save or RNG');
  await historyScreenshot(page,testInfo,'march-preview-yellow-river-downstream',{fullPage:false});
  await continueDeparture.click();
  await expect(page.locator('#departure-target')).toHaveValue('shuofang');
+ await expect(segments('available')).toHaveCount(0);
  await closeDialog(page);
 
  await page.locator('#main-menu').click();
@@ -1473,8 +1518,24 @@ test('map march preview shows the downstream route and a usable detour against a
  await expect(detour).toContainText(/72\s*日/);
  await expect(page.locator('#continue-map-departure:enabled')).toHaveCount(0);
  await expect(detour.locator('.map-march-path')).toBeInViewport({ratio:0.98});
+ await expect(segments('available')).toHaveCount(0);
+ const detourSegments=segments('detour');
+ await expect(detourSegments).toHaveCount(2);
+ expect(await detourSegments.evaluateAll(rows=>rows.map(row=>[row.dataset.from,row.dataset.to]))).toEqual([
+  ['shuofang','anding'],['anding','jincheng'],
+ ]);
+ const detourLine=detourSegments.locator('.map-march-line').first();
+ await expect(detourLine).toBeVisible();
+ await expect(preview.locator('[data-march-key="detour"]').first()).toBeVisible();
+ const detourStroke=await detourLine.evaluate(line=>getComputedStyle(line).stroke);
+ expect(detourStroke).not.toBe('none');
+ expect(detourStroke).not.toBe(availableStroke);
+ await assertDownriverArrows('restricted');
  await historyScreenshot(page,testInfo,'march-preview-yellow-river-detour',{fullPage:false});
  expect(await tacticalSave(page)).toEqual(reverseSave,'Inspecting a blocked route and detour does not change the save or RNG');
+ await cityJump.selectOption('shuofang');
+ await expect(preview.locator('[data-march-status="same_city"]')).toBeVisible();
+ await expect(overlay.locator('[data-march-map-kind]')).toHaveCount(0);
  await page.locator('#cancel-map-action').click();
  await expect(preview).toBeHidden();
  await expect(cityJump).toHaveValue('shuofang');

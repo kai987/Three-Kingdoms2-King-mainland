@@ -615,17 +615,19 @@ function renderMap(){
  const bridges=mapBridgeLayer([roads,expansionRoads,regionalRoads,navigableSeas,navigableRivers]);
  const labelName={major:'主城',giant:'巨大都市',large:'大都市',all:'全部',none:'关闭'}[cityLabels];
  const toolbar=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''} ${mapAction?.kind==='recruit'&&!mapAction.targets.includes(c.id)?'disabled':''}>${escapeHtml(cityName(c.id))} · ${escapeHtml(ownerName(owners[c.id],c.id))}</option>`).join('')}</select></label><button id="map-labels" data-label-mode="${cityLabels}" aria-label="切换城名显示" title="城名：${labelName}"><span class="map-labels-full">城名：${labelName}</span><span class="map-labels-compact">${{major:'名：主',giant:'名：巨',large:'名：大',all:'名：全',none:'名：隐'}[cityLabels]}</span></button></div>`;
- $('#stage').innerHTML=`<svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs>${spriteDefs}${mountainDefs}<marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker><marker id="oneway-river-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#d4e9ff" stroke="#224888" stroke-width="1"/></marker></defs><image href="${backgroundHref}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${inactiveCastles}${mountainColors}${cityRoadBed}${roads}${expansionRoads}${regionalRoads}${navigableSeas}${navigableRivers}${bridges}${castles}${labels}</svg>
+ const marchMap=mapAction?.kind==='depart',marchRoutes=marchMap?`
+ <defs><marker id="map-march-arrow" viewBox="0 0 12 12" refX="6" refY="6" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M1 1L11 6L1 11L3 6Z" fill="#fff" stroke="#17232e" stroke-width="1.4" stroke-linejoin="round"/></marker></defs>
+ <g id="map-march-routes" aria-hidden="true" pointer-events="none"></g>`:'';
+ const actionPrompt=mapAction?`<div class="map-action-prompt"><span role="status">${escapeHtml(cityName(mapAction.source))} · ${mapAction.kind==='depart'?cityCommandText('選擇目的地以查看行軍路線','行き先を選んで経路を確認'):'请选择高亮城池招募或劝降'}</span><button id="cancel-map-action">取消选城</button></div>`:'';
+ $('#stage').innerHTML=`${marchMap?`${actionPrompt}<div class="march-map-board">`:''}<svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs>${spriteDefs}${mountainDefs}<marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker><marker id="oneway-river-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#d4e9ff" stroke="#224888" stroke-width="1"/></marker></defs><image href="${backgroundHref}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${inactiveCastles}${mountainColors}${cityRoadBed}${roads}${expansionRoads}${regionalRoads}${navigableSeas}${navigableRivers}${bridges}${marchRoutes}${castles}${labels}</svg>
  <div class="map-zoom-controls" role="group" aria-label="地图缩放比例（1–4倍）"><button id="map-zoom-out" aria-label="缩小地图" title="缩小地图">−</button><output id="map-zoom" aria-label="地图缩放比例（1–4倍）">100%</output><button id="map-zoom-in" aria-label="放大地图" title="放大地图">＋</button></div>
  <p id="map-gesture-help" class="visually-hidden">拖动地图；滚轮或双指缩放，范围1到4倍。</p>
  <div class="map-bottom-bar">${toolbar}<time id="map-date" datetime="${GameCalendar.iso(date)}" aria-label="${GameCalendar.text(date)}">${date.year}年<span>${date.month}月${GameCalendar.period(date.day)}</span></time></div>
- ${mapAction?`<div class="map-action-overlay">
-  <div class="map-action-prompt"><span role="status">${escapeHtml(cityName(mapAction.source))} · ${mapAction.kind==='depart'?cityCommandText('選擇目的地以查看行軍路線','行き先を選んで経路を確認'):'请选择高亮城池招募或劝降'}</span><button id="cancel-map-action">取消选城</button></div>
-  ${mapAction.kind==='depart'?`<section id="map-march-preview" aria-labelledby="map-march-heading" hidden>
-   <h3 id="map-march-heading" tabindex="-1"></h3><div id="map-march-detail" role="status" tabindex="0"></div>
-   <div class="map-march-actions" hidden><button class="primary" id="continue-map-departure" disabled>${battleText('選擇出征武將','出陣する武将を選ぶ')}</button></div>
-  </section>`:''}
- </div>`:''}`;
+ ${mapAction&&!marchMap?`<div class="map-action-overlay">${actionPrompt}</div>`:''}
+ ${marchMap?`</div><section id="map-march-preview" aria-labelledby="map-march-heading" hidden>
+  <h3 id="map-march-heading" tabindex="-1"></h3><div id="map-march-detail" role="status" tabindex="0"></div>
+  <div class="map-march-actions" hidden><button class="primary" id="continue-map-departure" disabled>${battleText('選擇出征武將','出陣する武将を選ぶ')}</button></div>
+ </section>`:''}`;
  mapRenderCache?.remember($('#world-map'),sceneKey);
  }
  // Refresh handlers even when the SVG is retained: commands replace the game
@@ -1018,9 +1020,57 @@ async function inspectMapMarch(id,focusPreview){
   selection.state='error';
  }
  renderMapMarchPreview();
+ if(selection.state==='ready')focusMapMarchRoutes();
 }
 function mapMarchPath(path){
  return path.map(id=>escapeHtml(cityName(id))).join(' → ');
+}
+function mapMarchKey(kind,segments){
+ return segments?.length?`<span data-march-key="${kind}" aria-hidden="true"></span>`:'';
+}
+function renderMapMarchRoutes(result){
+ const layer=$('#map-march-routes');
+ if(!layer)return;
+ const groups=[
+  ['restricted',result?.restrictions.filter(row=>row.reason==='one_way')||[]],
+  ['detour',result?.detour?[result.detour]:[]],
+  ['available',result?.options||[]],
+ ];
+ const shapes=[];
+ for(const [kind,routes] of groups){
+  const drawn=new Set();
+  for(const {segments=[]} of routes)for(const segment of segments){
+   if(!segment.d||drawn.has(segment.d))continue;
+   drawn.add(segment.d);
+   const d=escapeHtml(segment.d),from=escapeHtml(segment.from),to=escapeHtml(segment.to);
+   shapes.push(`<g data-march-map-kind="${kind}" data-route-id="${escapeHtml(segment.route_id)}" data-from="${from}" data-to="${to}"${segment.one_way?' data-march-directed':''}>
+    <path class="map-march-line-bed" d="${d}"/><path class="map-march-line" d="${d}"/>
+   </g>`);
+  }
+ }
+ layer.innerHTML=shapes.join('');
+ for(const directed of layer.querySelectorAll('[data-march-directed]')){
+  const line=directed.querySelector('.map-march-line'),length=line.getTotalLength();
+  if(length<=0)continue;
+  const count=Math.min(4,Math.ceil(length/170)),arrows=[];
+  for(let index=0;index<count;index++){
+   const position=length*(index+0.5)/count,delta=Math.min(2,length/4);
+   const tail=line.getPointAtLength(position-delta),tip=line.getPointAtLength(position+delta);
+   arrows.push(`<path class="map-march-arrow" data-march-one-way data-from="${escapeHtml(directed.dataset.from)}" data-to="${escapeHtml(directed.dataset.to)}" d="M${tail.x} ${tail.y}L${tip.x} ${tip.y}" marker-end="url(#map-march-arrow)"/>`);
+  }
+  directed.insertAdjacentHTML('beforeend',arrows.join(''));
+ }
+}
+function focusMapMarchRoutes(){
+ const layer=$('#map-march-routes');
+ if(!layer?.firstElementChild||!mapNavigation||mapCamera.zoom<=1)return;
+ mapNavigation.resize();
+ const bounds=layer.getBBox(),box=$('#world-map').viewBox.baseVal;
+ const padding=Math.min(box.width,box.height)*0.08;
+ if(bounds.x>=box.x+padding&&bounds.y>=box.y+padding&&
+    bounds.x+bounds.width<=box.x+box.width-padding&&bounds.y+bounds.height<=box.y+box.height-padding)return;
+ const zoom=mapCamera.zoom*Math.min(1,box.width/(bounds.width+padding*2),box.height/(bounds.height+padding*2));
+ mapNavigation.focus(bounds.x+bounds.width/2,bounds.y+bounds.height/2,zoom);
 }
 function mapMarchMode(quote){
  if(quote.mode==='explore')return battleText('探索未知航路','未発見の航路を探索');
@@ -1039,7 +1089,7 @@ function mapMarchRestriction(row){
   not_yet_open:()=>battleText(`尚未開通，預計 ${date} 開放。`,`まだ開通していません。${date}に開通予定です。`),
   requires_stop:()=>battleText(`必須在 ${tc(row.via||[])} 停靠，不能直接通行。`,`${ja(row.via||[])} を経由するため、直行できません。`)
  };
- return phrasing[row.reason]?`<li data-march-reason="${escapeHtml(row.reason)}">${mapMarchMode(row)} · ${phrasing[row.reason]()}</li>`:'';
+ return phrasing[row.reason]?`<li data-march-reason="${escapeHtml(row.reason)}">${mapMarchKey('restricted',row.segments)}${mapMarchMode(row)} · ${phrasing[row.reason]()}</li>`:'';
 }
 function mapDepartureBlock(city,id){
  if(!hasCommandBook('depart'))return battleText('命令書不足，無法出征。','出陣に必要な命令書がありません。');
@@ -1067,6 +1117,7 @@ function renderMapMarchPreview(){
  $('#world-map .march-preview-target')?.classList.remove('march-preview-target');
  $(`#world-map [data-city="${id}"]`)?.classList.add('march-preview-target');
  pane.hidden=false;pane.dataset.state=state;pane.dataset.target=id;
+ renderMapMarchRoutes(result);
  const titles={
   available:()=>battleText('可出征路線','出陣に使える経路'),
   own_city:()=>battleText('目的地為本方城池，請使用調動武將。','自勢力の都市です。武将の移動を使います。'),
@@ -1074,7 +1125,7 @@ function renderMapMarchPreview(){
   no_direct_route:()=>battleText('目前沒有可直達此城的出征路線。','この都市へ直接出陣できる経路はありません。'),
   same_city:()=>battleText('出發地與目的地相同。','出発地と同じ都市です。別の都市を選んでください。')
  };
- const option=row=>`<li data-march-option="${escapeHtml(row.mode)}"><strong>${mapMarchMode(row)} · ${escapeHtml(row.days)}日</strong><span class="map-march-path">${mapMarchPath(row.path)}</span></li>`;
+ const option=row=>`<li data-march-option="${escapeHtml(row.mode)}"><strong>${mapMarchKey('available',row.segments)}${mapMarchMode(row)} · ${escapeHtml(row.days)}日</strong><span class="map-march-path">${mapMarchPath(row.path)}</span></li>`;
  const detour=result?.detour;
  const detourHeading=detour?.kind==='transfer'?battleText('調動武將的替代路線','武将の移動に使える迂回路'):battleText('經本方城池分段出征','自勢力の都市を経由する出陣案');
  const detourNote=detour?.kind==='staged_attack'?battleText(
@@ -1084,7 +1135,7 @@ function renderMapMarchPreview(){
  const detail=result?`<p class="map-march-status" data-march-status="${escapeHtml(result.status)}">${titles[result.status]?.()||''}</p>
   ${result.options.length?`<ul class="map-march-options">${result.options.map(option).join('')}</ul>`:''}
   ${result.restrictions.length?`<ul class="map-march-restrictions">${result.restrictions.map(mapMarchRestriction).join('')}</ul>`:''}
-  ${detour?`<div data-march-detour="${escapeHtml(detour.kind)}"><strong>${detourHeading} · ${escapeHtml(detour.days)}日</strong><span class="map-march-path">${mapMarchMode(detour)} · ${mapMarchPath(detour.path)}</span>${detourNote?`<span class="map-march-note">${detourNote}</span>`:''}</div>`:''}
+  ${detour?`<div data-march-detour="${escapeHtml(detour.kind)}"><strong>${mapMarchKey('detour',detour.segments)}${detourHeading} · ${escapeHtml(detour.days)}日</strong><span class="map-march-path">${mapMarchMode(detour)} · ${mapMarchPath(detour.path)}</span>${detourNote?`<span class="map-march-note">${detourNote}</span>`:''}</div>`:''}
   ${result.status==='own_city'&&!result.options.length&&!detour?`<p class="map-march-note">${battleText('目前沒有可調動武將的路線。','現在は武将の移動に使える経路がありません。')}</p>`:''}
   ${block?`<p class="map-march-note">${block}</p>`:''}`
   :state==='loading'?battleText('正在計算行軍路線…','行軍経路を計算しています…'):battleText('無法讀取行軍路線。請重新選擇目的地。','行軍経路を取得できませんでした。行き先を選び直してください。');

@@ -1028,17 +1028,35 @@ font-size:14px
 .map-action-prompt{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:0 6px;border:3px double #000;background:var(--paper);color:#000;font-size:14px;line-height:1.2;pointer-events:auto}
 .map-action-prompt span{min-width:0}
 .map-action-prompt button{flex:none;min-height:24px;padding:0 6px;font-size:14px;line-height:1.2;white-space:nowrap}
-#map-march-preview{display:flex;flex-direction:column;width:min(26rem,calc(100% - 12px));max-height:calc(100% - 92px);margin:4px 6px 0 auto;border:3px double #000;background:var(--paper);color:#000;font-size:14px;line-height:1.4;pointer-events:auto}
+#stage:has(.march-map-board){display:flex;flex-direction:column}
+.march-map-board{position:relative;flex:1;min-height:0}
+#map-march-preview{display:flex;flex-direction:column;max-height:min(190px,42%);border:3px double #000;background:var(--paper);color:#000;font-size:14px;line-height:1.4}
 #map-march-preview[hidden],.map-march-actions[hidden]{display:none}
 #map-march-heading{margin:0;padding:4px 8px;border-bottom:1px solid #40382b;font-size:16px;overflow-wrap:anywhere}
 #map-march-detail{min-height:0;overflow:auto;overscroll-behavior:contain;padding:3px 8px 6px}
 #map-march-detail p{margin:3px 0}
 .map-march-options,.map-march-restrictions{margin:4px 0;padding-left:1.25em}
+.map-march-options{list-style:none;padding-left:0}
 .map-march-restrictions li+li,.map-march-options li+li{margin-top:3px}
 .map-march-path,.map-march-note{display:block;overflow-wrap:anywhere}
 .map-march-note{margin-top:3px}
 .map-march-actions{display:flex;justify-content:flex-end;padding:4px 8px;border-top:1px solid #40382b}
 .map-march-actions button{min-height:32px;padding:2px 8px;font-size:14px}
+#stage{--march-available:#4ee6ed;--march-detour:#ffbc59;--march-restricted:#e9edf2;--march-outline:#17232e}
+[data-march-map-kind=available],[data-march-key=available]{--march-route:var(--march-available);--march-dash:none}
+[data-march-map-kind=detour],[data-march-key=detour]{--march-route:var(--march-detour);--march-dash:8 5}
+[data-march-map-kind=restricted],[data-march-key=restricted]{--march-route:var(--march-restricted);--march-dash:2 6}
+.map-march-line-bed,.map-march-line,.map-march-arrow{fill:none;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round}
+.map-march-line-bed{stroke:var(--march-outline);stroke-width:5.5;stroke-dasharray:var(--march-dash)}
+.map-march-line{stroke:var(--march-route);stroke-width:3;stroke-dasharray:var(--march-dash)}
+[data-march-map-kind=detour] .map-march-line{stroke-width:3.5}
+[data-march-map-kind=restricted] .map-march-line-bed{stroke-width:3.5}
+[data-march-map-kind=restricted] .map-march-line{stroke-width:1.8}
+.map-march-arrow{stroke:transparent;stroke-width:2.5}
+[data-march-key]{display:inline-grid;align-items:center;vertical-align:0.06em;width:1.6em;height:0.55em;padding:0 2px;margin-right:0.5em;border-radius:2px;background:var(--march-outline)}
+[data-march-key]::after{content:'';border-top:2px solid var(--march-route)}
+[data-march-key=detour]::after{border-top-style:dashed}
+[data-march-key=restricted]::after{border-top-style:dotted}
 #world-map .city-hit.action-target .city-outline{fill:#fff3;stroke:#ffff80;stroke-width:4;stroke-dasharray:none;filter:drop-shadow(0 0 2px #000)}
 #world-map .city-hit.march-preview-target .city-outline{fill:#fff4;stroke:#fff;stroke-width:4;stroke-dasharray:3 2;filter:drop-shadow(0 0 2px #000)}
 .city-hit.action-unavailable{cursor:not-allowed}
@@ -1053,11 +1071,16 @@ font-size:14px
  .map-labels-compact{display:inline}
  #map-date{gap:4px;padding:2px 4px;border-width:3px;font-size:14px}
  .map-action-prompt button{min-height:28px}
- #map-march-preview{max-height:calc(100% - 132px);line-height:1.3}
+ #map-march-preview{line-height:1.3}
  #map-march-heading{padding:2px 8px}
  #map-march-detail{padding:2px 8px 4px}
  .map-march-options,.map-march-restrictions{margin:2px 0}
  .map-march-actions{padding:3px 8px}
+}
+@media(max-width:1000px),(max-height:540px){
+ #stage:has(.march-map-board){aspect-ratio:auto}
+ .march-map-board{flex:none;aspect-ratio:1352/1024}
+ #map-march-preview{max-height:190px}
 }
 
 .city-hit .city-outline{

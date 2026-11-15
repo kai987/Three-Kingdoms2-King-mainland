@@ -333,7 +333,11 @@ class WebReleaseArtifact(unittest.TestCase):
                          'game/config/references/officer-troop-types-v1.json',
                          'game/config/references/officer-relations-v1.json'):
                 self.assertIn(name,names,'The actual WASM rules need the original tactical data')
+            route_geometry='game/config/route-geometry.json'
+            self.assertEqual(bundle.read(route_geometry), (ROOT/route_geometry).read_bytes(),
+                             'The browser route preview uses the same audited curves as Python')
             public_rules={'game/config/battlefield-city-bindings.json',
+                          route_geometry,
                           'game/config/references/original-battle-tactics-v1.json',
                           'game/config/references/original-battle-deployment-v1.json',
                           'game/config/references/original-battle-ai-deployment-v1.json',

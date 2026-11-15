@@ -433,10 +433,9 @@ class DelegationReplayTests(unittest.TestCase):
             final_rng=vars(self.games[0].state.rng)), ensure_ascii=False), flush=True)
 
     def test_184_liu_yan_six_turns_are_identical_in_python_and_rust(self):
-        # The revised184 postings and local Han Sui change real AI choices.
-        # Seed2032 naturally exercises rival persuasion, a legal replacement
-        # appointment and resumed allocation without rewriting state or RNG.
-        self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'), seed=2032)
+        # With the current route network, this seed naturally exercises rival
+        # persuasion, a legal replacement and resumed reserve allocation.
+        self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'), seed=2034)
 
     def test_217_wei_six_turns_staff_arrival_combat_and_real_convoys(self):
         self.replay('217-07.json', 'wei', 6, staff=True)

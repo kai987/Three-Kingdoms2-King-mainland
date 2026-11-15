@@ -758,6 +758,16 @@
         107.22,
         40.46
       ]
+    },
+    "huai:xiapi": {
+      "position": [
+        996,
+        379
+      ],
+      "geo": [
+        117.89,
+        34.1
+      ]
     }
   },
   "ports": {
@@ -1668,6 +1678,19 @@
         [
           428,
           112
+        ]
+      ]
+    },
+    "xiapi": {
+      "node": "huai:xiapi",
+      "access": [
+        [
+          996,
+          351
+        ],
+        [
+          996,
+          379
         ]
       ]
     }
@@ -6348,6 +6371,70 @@
           112
         ]
       ]
+    },
+    {
+      "id": "huai:jiujiang:xiapi",
+      "river": "huai",
+      "from": "huai:jiujiang",
+      "to": "huai:xiapi",
+      "points": [
+        [
+          945,
+          381
+        ],
+        [
+          949,
+          381
+        ],
+        [
+          952,
+          381
+        ],
+        [
+          956,
+          380
+        ],
+        [
+          960,
+          380
+        ],
+        [
+          964,
+          378
+        ],
+        [
+          968,
+          378
+        ],
+        [
+          972,
+          378
+        ],
+        [
+          976,
+          379
+        ],
+        [
+          980,
+          379
+        ],
+        [
+          984,
+          379
+        ],
+        [
+          988,
+          379
+        ],
+        [
+          992,
+          379
+        ],
+        [
+          996,
+          379
+        ]
+      ]
     }
   ],
   "connections": [
@@ -6973,6 +7060,22 @@
         "classification": "authorial_downstream_only_yellow_river_game_navigation",
         "basis": "沿遊戲底圖既有的黃河河道連接金城與朔方，僅開放順流方向。渡點和航程為遊戲地圖校準。",
         "sources": []
+      }
+    },
+    {
+      "from": "qiao",
+      "to": "xiapi",
+      "reaches": [
+        "wo:qiao:huai",
+        "huai:wo:jiujiang",
+        "huai:jiujiang:xiapi"
+      ],
+      "history": {
+        "classification": "authorial_regional_huai_si_navigation",
+        "basis": "沿遊戲底圖的渦水、淮水及下邳接岸道路設置雙向水路。小沛沿用譙郡區域代理節點；下邳的歷史水系為沂、泗，此處航線和港點為遊戲地圖概化。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/水經注/25"
+        ]
       }
     }
   ]

@@ -978,6 +978,19 @@
         "basis": "《後漢書·郡國志》將雲中、雁門列於并州，兩地之間為河套東緣通往晉北的區域，本作配置跨山地的連線。",
         "source": "https://zh.wikisource.org/wiki/後漢書/卷113#并州"
       }
+    },
+    {
+      "from": "qiao",
+      "to": "xiapi",
+      "mode": "land",
+      "terrain": "plain",
+      "points": [[892, 356], [906, 351], [920, 350], [935, 352], [950, 355], [965, 355], [981, 353], [996, 351]],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "以本作小沛／譙郡的區域代理節點經徐州平原至下邳。路線與折點為遊戲地圖校準。",
+        "source": "https://zh.wikisource.org/zh-hant/三國志/卷01"
+      }
     }
   ],
   "river_rules": {
