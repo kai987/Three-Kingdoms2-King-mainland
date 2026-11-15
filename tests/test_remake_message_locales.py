@@ -8,6 +8,8 @@ import sys
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'source'))
+from remake.errors import INVALID_SAVE_MESSAGE
 
 
 def translate(text, data):
@@ -47,14 +49,19 @@ class MessageLocaleTests(unittest.TestCase):
 
     def test_all_runtime_game_errors_have_a_japanese_translation(self):
         checked = set()
+        shared_messages = {'INVALID_SAVE_MESSAGE': INVALID_SAVE_MESSAGE}
         for path in (ROOT / 'source/remake').glob('*.py'):
             for node in ast.walk(ast.parse(path.read_text())):
                 if not (isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
-                        and node.func.id == 'GameError' and node.args
-                        and isinstance(node.args[0], ast.Constant)
-                        and isinstance(node.args[0].value, str)):
+                        and node.func.id == 'GameError' and node.args):
                     continue
-                text = node.args[0].value
+                message = node.args[0]
+                if isinstance(message, ast.Constant) and isinstance(message.value, str):
+                    text = message.value
+                elif isinstance(message, ast.Name) and message.id in shared_messages:
+                    text = shared_messages[message.id]
+                else:
+                    continue
                 checked.add(text)
                 self.assertIn(text, self.data['exact'], (str(path), node.lineno, text))
                 self.assertNotEqual(text, translate(text, self.data))
