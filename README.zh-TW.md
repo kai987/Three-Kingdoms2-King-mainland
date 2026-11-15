@@ -1,6 +1,8 @@
 # 三國・大陸戰役
 
-[日本語（主文件）](README.md) · **繁體中文** · [線上遊玩](https://kai987.github.io/Three-Kingdoms2-King-mainland/)
+[日本語（主文件）](README.md) · **繁體中文** · [線上遊玩](https://kai987.github.io/Three-Kingdoms2-King-mainland/) · [武將頭像對比](https://tk2-female-portrait-comparison.huamengdiqidiguo.chatgpt.site/)
+
+頭像對比網站收錄全部 1,056 位武將，可並排查看最初收錄的 32×40 像素頭像與遊戲現用的 512×640 版本，並支援姓名、別名搜尋及放大查看。
 
 94f813e階段的一般14計成功門已閉合原字段意義：050F是操作者、6F02是LEVEL，採距離、知／等級正差與8位元最後符號判斷；玩家和AI三難度共原玩家+10，原AI獨有難度補正、原表棄卻／NMI不搬入。籠絡8、伏兵11、其他傷害與成長不一起修改。該階段本機2,882項雙後端回歸、10筆實際瀏覽器驗收、29劇本各3旬與116次相互存讀、後期seed3正式72旬皆通過。初次失敗及修正測試舊機率／距離假設與交鋒中撤退流程的重跑紀錄保留，不以原CPU或先前階段合格替代。72旬後戰役仍在進行，並非全代表年代／seed長期矩陣或統一終局完成。[公式與來源](docs/general-tactic-success.md) · [日文主文／繁中11項台帳](docs/original-parity-gaps.md)。29劇本各3旬是獨立短smoke，不是長期完整戰役或統一終局。
 
