@@ -1,0 +1,687 @@
+name: Experimental Web campaign runner priority
+on:
+  workflow_call:
+    inputs:
+      pair:
+        type: string
+        required: true
+      force_full:
+        type: boolean
+        default: false
+      publish:
+        type: boolean
+        default: false
+permissions:
+  contents: read
+  actions: read
+  deployments: read
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  RUSTUP_TOOLCHAIN: '1.93.0'
+jobs:
+  scope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      mode: ${{ steps.plan.outputs.mode }}
+      full: ${{ steps.plan.outputs.full }}
+      docs_only: ${{ steps.plan.outputs.docs_only }}
+      web: ${{ steps.plan.outputs.web }}
+      native: ${{ steps.plan.outputs.native }}
+      rules: ${{ steps.plan.outputs.rules }}
+      soak: ${{ steps.plan.outputs.soak }}
+      resupply: ${{ steps.plan.outputs.resupply }}
+      publish: ${{ steps.plan.outputs.publish }}
+      reuse: ${{ steps.plan.outputs.reuse }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - name: Select required checks from cumulative source changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORCE_FULL: ${{ inputs.force_full }}
+          PUBLISH_REQUESTED: ${{ inputs.publish }}
+        run: |
+          mkdir -p build/ci
+          args=()
+          if [ "$FORCE_FULL" = true ]; then args+=(--force-full); fi
+          if [ "$PUBLISH_REQUESTED" = true ]; then args+=(--publish); fi
+          python -B tools/ci/plan.py --head "$GITHUB_SHA" --event-name "$GITHUB_EVENT_NAME" --event-path "$GITHUB_EVENT_PATH" --repository "$GITHUB_REPOSITORY" "${args[@]}" > build/ci/test-plan.json
+      - name: Find successful verification of the merged pull request
+        id: pr
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !inputs.force_full
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -B tools/ci/pr_reuse.py find --plan build/ci/test-plan.json --candidate build/ci/pr-candidate.json
+      - name: Download only the successful PR attempt's receipt
+        id: receipt
+        if: steps.pr.outputs.run_id != ''
+        continue-on-error: true
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: pr-proof-${{ steps.pr.outputs.run_id }}-attempt-${{ steps.pr.outputs.attempt }}
+          path: build/ci/pr-proof
+          github-token: ${{ github.token }}
+          run-id: ${{ steps.pr.outputs.run_id }}
+      - name: Validate PR evidence and finalize required jobs
+        id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_LOOKUP: ${{ steps.pr.outcome }}
+          PR_DOWNLOAD: ${{ steps.receipt.outcome }}
+        run: |
+          if [ "$PR_LOOKUP" = success ]; then
+            args=()
+            if [ "$PR_DOWNLOAD" = success ]; then args+=(--proof build/ci/pr-proof/receipt.json); fi
+            python -B tools/ci/pr_reuse.py decide --plan build/ci/test-plan.json --candidate build/ci/pr-candidate.json "${args[@]}"
+          fi
+          python -B tools/ci/gate.py outputs --plan build/ci/test-plan.json --head "$GITHUB_SHA" >> "$GITHUB_OUTPUT"
+          python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: test-plan-${{ github.sha }}
+          path: build/ci/test-plan.json
+          overwrite: true
+          if-no-files-found: error
+          retention-days: 7
+  docs-check:
+    needs: scope
+    if: needs.scope.outputs.docs_only == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: test-plan-${{ github.sha }}
+          path: build/ci
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - name: Documentation whitespace and repository links
+        run: python -B tools/ci/gate.py docs --plan build/ci/test-plan.json --head "$GITHUB_SHA"
+  native-rules:
+    needs: scope
+    if: needs.scope.outputs.native == 'true' && needs.scope.outputs.reuse != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            crates/march-core/target
+            build/march-core-target
+          key: ${{ runner.os }}-march-rust-1.93.0-${{ hashFiles('crates/march-core/Cargo.lock') }}-${{ hashFiles('crates/march-core/**/*.rs', 'crates/march-core/Cargo.toml', 'game/build_march_core.py') }}
+          restore-keys: ${{ runner.os }}-march-rust-1.93.0-${{ hashFiles('crates/march-core/Cargo.lock') }}-
+      - name: Install pinned marching-core toolchain
+        run: rustup toolchain install 1.93.0 --profile minimal --component clippy,rustfmt --target wasm32-unknown-unknown
+      - name: Rust rules and reproducible native/WASM build
+        run: |
+          cargo fmt --manifest-path crates/march-core/Cargo.toml --check
+          cargo clippy --manifest-path crates/march-core/Cargo.toml --locked --all-targets -- -D warnings
+          cargo test --manifest-path crates/march-core/Cargo.toml --locked
+          python game/build_march_core.py --check
+          node tests/march_wasm_parity.cjs
+      - name: Preserve native executable modes for the dependent parity jobs
+        run: tar -cf build/native-reference.tar -C build march-core
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: native-reference-${{ github.sha }}
+          path: build/native-reference.tar
+          overwrite: true
+          retention-days: 3
+  campaign-first:
+    needs: [scope, native-rules, web-build]
+    if: needs.scope.outputs.full == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      max-parallel: 2
+      fail-fast: false
+      matrix:
+        include:
+          - {backend: python, shard: 1}
+          - {backend: rust, shard: 1}
+    env:
+      MARCH_CORE_BACKEND: ${{ matrix.backend }}
+    steps: &campaign_steps
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: tools/web-runtime/package-lock.json
+      - name: Install the pinned runtime so release-boundary tests cannot skip
+        run: |
+          npm ci --prefix tools/web-runtime --ignore-scripts
+          test -f tools/web-runtime/node_modules/pyodide/package.json
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: native-reference-${{ github.sha }}
+          path: build
+      - name: Restore this run's checked native reference
+        run: tar -xf build/native-reference.tar -C build
+      - name: Campaign behavior with ${{ matrix.backend }} marching, shard ${{ matrix.shard }}/6
+        env:
+          TEST_SHARD: ${{ matrix.shard }}
+        run: python -B tools/ci/run_campaign_tests.py --shard "$TEST_SHARD" --shards 6 --timings build/ci/campaign-timings.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: campaign-timings-${{ matrix.backend }}-${{ matrix.shard }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: build/ci/campaign-timings.json
+          if-no-files-found: ignore
+          retention-days: 7
+  campaign-rules:
+    needs: [scope, native-rules, admit-remaining]
+    if: needs.scope.outputs.rules == 'true' && needs.scope.outputs.reuse != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ matrix.shard == 1 && 30 || 20 }}
+    strategy:
+      # The two first-wave shards and these six slots share the eight-job cap.
+      max-parallel: 6
+      fail-fast: false
+      matrix:
+        # Order by median job duration from 43587811813, 43589716807 and 43591423363.
+        include:
+          - {backend: rust, shard: 3}
+          - {backend: rust, shard: 6}
+          - {backend: rust, shard: 5}
+          - {backend: python, shard: 4}
+          - {backend: rust, shard: 4}
+          - {backend: python, shard: 2}
+          - {backend: rust, shard: 2}
+          - {backend: python, shard: 3}
+          - {backend: python, shard: 5}
+          - {backend: python, shard: 6}
+    env:
+      MARCH_CORE_BACKEND: ${{ matrix.backend }}
+    steps: *campaign_steps
+  campaign-soak-replay:
+    needs: [scope, native-rules, admit-remaining]
+    if: needs.scope.outputs.soak == 'true' && needs.scope.outputs.reuse != 'true'
+    runs-on: ubuntu-latest
+    # The full 144-turn Rust replay exceeded 20 minutes on the measured runner.
+    # Keep every turn and seed; budget the complete replay instead of trimming it.
+    timeout-minutes: 40
+    strategy:
+      # Leave runner capacity for browser shards while the build finishes.
+      max-parallel: 4
+      fail-fast: false
+      matrix:
+        include:
+          - {case: early, seed: 3, backend: both}
+          - {case: early, seed: 2026, backend: both}
+          - {case: middle, seed: 3, backend: python}
+          - {case: middle, seed: 3, backend: rust}
+          - {case: middle, seed: 2026, backend: python}
+          - {case: middle, seed: 2026, backend: rust}
+          - {case: late, seed: 3, backend: both}
+          - {case: late, seed: 2026, backend: both}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: native-reference-${{ github.sha }}
+          path: build
+      - name: Restore this run's checked native reference
+        run: tar -xf build/native-reference.tar -C build
+      - name: Full-duration cross-year campaign execution
+        env:
+          SOAK_CASE: ${{ matrix.case }}
+          SOAK_SEED: ${{ matrix.seed }}
+          SOAK_BACKEND: ${{ matrix.backend }}
+        run: python -B tools/campaign-soak/ci.py fragment --case "$SOAK_CASE" --seed "$SOAK_SEED" --backend "$SOAK_BACKEND" --head "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" --output "build/soak-ci/${SOAK_CASE}-${SOAK_SEED}-${SOAK_BACKEND}.json" --progress
+      - name: Retain replay diagnostics even after failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: campaign-soak-execution-${{ matrix.case }}-${{ matrix.seed }}-${{ matrix.backend }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: build/soak-ci
+          if-no-files-found: ignore
+          retention-days: 7
+  campaign-soak:
+    needs: [scope, campaign-soak-replay]
+    if: always() && needs.scope.outputs.soak == 'true' && needs.scope.outputs.reuse != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: campaign-soak-execution-*-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          merge-multiple: false
+          path: build/soak-ci
+      - name: Require every execution and exact Python/Rust state, save and RNG parity
+        env:
+          EXECUTION_RESULT: ${{ needs.campaign-soak-replay.result }}
+        run: python -B tools/campaign-soak/ci.py merge --input-dir build/soak-ci --execution-result "$EXECUTION_RESULT" --head "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" --output build/soak/merged.json
+      - name: Retain mandatory parity gate diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: campaign-soak-parity-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: build/soak
+          if-no-files-found: ignore
+          retention-days: 7
+  source-and-browser:
+    needs: [scope, admit-remaining]
+    if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      MARCH_CORE_BACKEND: python
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: tools/portraits/requirements.txt
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: tools/cloud-sdk/package-lock.json
+      - name: Current campaign and source builds
+        run: |
+          python tools/officer-placement/import_campaign_stats.py --check
+          python game/build_campaigns.py --check
+          python game/build_terrain_art.py --check
+          python tools/officer-placement/audit_campaign_stats.py --check
+          python tools/scenario-history/audit.py --check
+          python tools/scenario-history/ruler_audit.py --check
+          python tools/scenario-history/retainer_audit.py --check
+          python tools/officer-placement/build_original_equipment.py --check
+          python tools/officer-placement/import_original_stats.py --check
+          python game/build_map_anchors.py
+          python game/build_map_presentation.py
+          python game/build_message_locales.py
+          python game/build_locales.py
+          git diff --exit-code -- game/data game/assets game/locales
+      - name: Browser scripts and interaction checks
+        run: |
+          for file in game/*.js; do node --check "$file"; done
+          for file in tests/test_remake_*.cjs; do node "$file"; done
+      - name: Pinned self-hosted cloud SDK
+        run: |
+          npm ci --prefix tools/cloud-sdk --ignore-scripts
+          npm run check --prefix tools/cloud-sdk
+      - name: Original battle pixels and stable-ID portrait assets
+        run: |
+          python -m pip install -r tools/portraits/requirements.txt
+          python tools/portraits/build_generated.py --check
+          python game/build_portrait_manifest.py --check
+          python tools/battle-original/build.py --check
+          python tools/battlefields/build.py --check
+          node tools/civil-portraits/build.cjs --check
+          node tools/battle-enhancement/build.cjs --check
+      - name: Offline source collector tests and whitespace
+        run: |
+          python -m unittest discover -s tools/officer-placement -p 'test_*.py' -v
+          git diff --check
+  scoped-tests:
+    needs: [scope, native-rules]
+    if: >-
+      always() && !cancelled() && needs.scope.result == 'success' &&
+      needs.scope.outputs.reuse != 'true' &&
+      needs.scope.outputs.mode == 'scoped' &&
+      (needs.scope.outputs.native != 'true' || needs.native-rules.result == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        lane: [modules-1, modules-2, catalogs]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        if: matrix.lane != 'catalogs'
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: tools/web-runtime/package-lock.json
+      - name: Install pinned runtime for the selected release-boundary tests
+        if: matrix.lane != 'catalogs'
+        run: npm ci --prefix tools/web-runtime --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: test-plan-${{ github.sha }}
+          path: build/ci
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        if: needs.scope.outputs.native == 'true'
+        with:
+          name: native-reference-${{ github.sha }}
+          path: build
+      - name: Restore the same native reference
+        if: needs.scope.outputs.native == 'true'
+        run: tar -xf build/native-reference.tar -C build
+      - name: Run the selected module shard or catalog checks
+        # Save compatibility and campaign smoke compare both real backends internally.
+        env:
+          SCOPED_LANE: ${{ matrix.lane }}
+        run: python -B tools/ci/run_scoped_tests.py --plan build/ci/test-plan.json --backend python --lane "$SCOPED_LANE" --report build/ci/scoped-report.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: scoped-report-${{ matrix.lane }}-${{ github.sha }}
+          path: build/ci/scoped-report.json
+          overwrite: true
+          if-no-files-found: error
+          retention-days: 7
+  web-build:
+    needs: scope
+    if: needs.scope.outputs.web == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      content_sha256: ${{ steps.identity.outputs.content_sha256 }}
+    env:
+      MARCH_CORE_BACKEND: python
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: tools/web-runtime/package-lock.json
+      - run: npm ci --prefix tools/web-runtime --ignore-scripts
+      - name: Build the candidate once and retain its identity
+        id: identity
+        run: |
+          python -B game/build_web.py --output build/web
+          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA")
+          printf 'content_sha256=%s\n' "$content" >> "$GITHUB_OUTPUT"
+      - name: Actual WASM campaign and CPU replay parity
+        run: node tests/browser_engine_smoke.mjs build/web
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: candidate-web-${{ github.sha }}
+          path: build/web
+          overwrite: true
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+  browser-ui:
+    needs: [scope, web-build, native-rules]
+    if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
+    runs-on: ubuntu-latest
+    # Allow for runner variability in the full touch suite with the expanded map.
+    timeout-minutes: ${{ matrix.project == 'touch-chromium' && 40 || 35 }}
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [desktop-chromium, touch-chromium]
+        shard: [1, 2, 3]
+    env:
+      TK2_TEST_PLAN: build/ci/test-plan.json
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: ./.github/actions/browser-tools
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: test-plan-${{ github.sha }}
+          path: build/ci
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: candidate-web-${{ github.sha }}
+          path: build/web
+      - name: Require the exact immutable candidate
+        env:
+          CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+      - name: Show the selected scope and execute actual browser controls
+        env:
+          BROWSER_PROJECT: ${{ matrix.project }}
+          BROWSER_SHARD: ${{ matrix.shard }}
+        run: |
+          node tools/browser-tests/scope.cjs --plan "$TK2_TEST_PLAN"
+          node tools/browser-tests/verify-shards.mjs "$BROWSER_PROJECT"
+          node tools/browser-tests/run-shard.mjs "$BROWSER_PROJECT" "$BROWSER_SHARD"
+      - name: Retain bounded per-case timing data
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          # Stable per-commit names let a failed-job retry reuse the reports
+          # from its unchanged successful sibling jobs.
+          name: browser-timing-${{ matrix.project }}-shard-${{ matrix.shard }}-${{ github.sha }}
+          path: build/browser-timings/${{ matrix.project }}-shard-${{ matrix.shard }}.json
+          overwrite: true
+          if-no-files-found: error
+          retention-days: 7
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: browser-${{ matrix.project }}-shard-${{ matrix.shard }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: |
+            build/browser-results
+            build/browser-report
+          if-no-files-found: ignore
+          retention-days: 7
+  resupply-ui:
+    needs: [scope, admit-remaining]
+    if: needs.scope.outputs.resupply == 'true' && needs.scope.outputs.reuse != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: ./.github/actions/browser-tools
+      - name: Segmented supply, courier rendezvous and physical return
+        run: node tools/browser-tests/node_modules/@playwright/test/cli.js test --config tools/browser-tests/resupply.config.mjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: resupply-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: build/resupply-browser-results
+          if-no-files-found: ignore
+          retention-days: 7
+  admit-remaining:
+    needs: [scope, native-rules, web-build]
+    if: needs.scope.outputs.full == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Wait for both runs' browser and long campaign jobs to obtain runners
+        env:
+          GH_TOKEN: ${ github.token }}
+          PAIR: ${ inputs.pair }}
+        run: |
+          set -euo pipefail
+          [[ "$PAIR" =~ ^[a-zA-Z0-9-]{1,64}$ ]]
+          api="repos/$GITHUB_REPOSITORY/actions"
+          case "$GITHUB_REF_NAME" in
+            codex/ci-runner-priority-a) peer_branch=codex/ci-runner-priority-b ;;
+            codex/ci-runner-priority-b) peer_branch=codex/ci-runner-priority-a ;;
+            *) exit 1 ;;
+          esac
+          count_assigned() {
+            gh api "$api/runs/$1/jobs?per_page=100" --jq '
+              [.jobs[]
+               | select(.name | test(" / (browser-ui [(](desktop|touch)-chromium, [1-3][)]|campaign-first [(](python|rust), 1[)])$"))
+               | select((.runner_id // 0) > 0 and .status != "queued")]
+              | length'
+          }
+          peer=
+          previous=
+          for ((i=0; i<90; i++)); do
+            if [[ -z "$peer" ]]; then
+              peer=$(gh api "$api/workflows/remake.yml/runs?head_sha=$GITHUB_SHA&event=workflow_dispatch&per_page=50" |
+                jq -r --arg title "Runner priority $PAIR" --arg branch "$peer_branch" '
+                  [.workflow_runs[] | select(.head_branch == $branch and .display_title == $title)]
+                  | if length == 1 then .[0].id else empty end')
+            fi
+            if [[ -n "$peer" ]]; then
+              own_count=$(count_assigned "$GITHUB_RUN_ID")
+              peer_count=$(count_assigned "$peer")
+              if [[ "$own_count $peer_count" != "$previous" ]]; then
+                printf 'Assigned first-wave runners: runs %s=%s/8, %s=%s/8\n' "$GITHUB_RUN_ID" "$own_count" "$peer" "$peer_count"
+                previous="$own_count $peer_count"
+              fi
+              if [[ "$own_count" == 8 && "$peer_count" == 8 ]]; then
+                printf 'First wave is running in both workflows.\n'
+                exit 0
+              fi
+            fi
+            sleep 4
+          done
+          echo 'Both first waves must obtain runners before remaining work is released.' >&2
+          exit 1
+  gate:
+    needs: [scope, docs-check, native-rules, source-and-browser, scoped-tests, campaign-rules, campaign-soak, web-build, browser-ui, resupply-ui, campaign-first, admit-remaining]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+          # The reused gate reads tools/ci and downloads the tested release.
+          sparse-checkout: >-
+            ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' &&
+                needs.scope.result == 'success' && needs.scope.outputs.reuse == 'true' && '/tools/ci/' || '' }}
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: test-plan-${{ github.sha }}
+          path: build/ci
+      - name: Fail if any required group failed, was cancelled or was skipped
+        env:
+          JOB_RESULTS: ${{ toJSON(needs) }}
+        run: |
+          python - <<'PY_GATE'
+          import json, os
+          from pathlib import Path
+
+          needs = json.loads(os.environ['JOB_RESULTS'])
+          for name in ('campaign-first', 'admit-remaining'):
+              if needs.pop(name)['result'] != 'success':
+                  raise SystemExit(f'Required experimental job failed: {name}')
+          Path('build/ci/needs.json').write_text(json.dumps(needs))
+          PY_GATE
+          python -B tools/ci/gate.py verify --plan build/ci/test-plan.json --needs build/ci/needs.json --head "$GITHUB_SHA"
+          python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
+      - name: Collect scoped Python reports from this run
+        if: needs.scope.outputs.mode == 'scoped' && needs.scope.outputs.reuse != 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: scoped-report-*-${{ github.sha }}
+          path: build/scoped-reports
+      - name: Verify complete scoped module and catalog coverage
+        if: needs.scope.outputs.mode == 'scoped' && needs.scope.outputs.reuse != 'true'
+        run: python -B tools/ci/run_scoped_tests.py --plan build/ci/test-plan.json --backend python --verify-reports build/scoped-reports
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
+        with:
+          node-version: '24'
+      - name: Collect the exact commit's browser timings
+        if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: browser-timing-*-shard-*-${{ github.sha }}
+          path: build/browser-timings
+          merge-multiple: true
+      - name: Verify complete timing coverage and report measured shard costs
+        if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
+        env:
+          TK2_TEST_PLAN: build/ci/test-plan.json
+        run: |
+          node tools/browser-tests/aggregate-timings.mjs build/browser-timings --head "$GITHUB_SHA"
+          cat build/browser-timings/summary.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
+        with:
+          name: browser-timing-summary-${{ github.sha }}
+          path: build/browser-timings
+          overwrite: true
+          if-no-files-found: error
+          retention-days: 7
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        if: needs.scope.outputs.web == 'true'
+        with:
+          name: candidate-web-${{ github.sha }}
+          path: build/web
+      - name: Verify the original candidate after every required check passed
+        if: needs.scope.outputs.web == 'true'
+        env:
+          CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+      - name: Retain the exact tested release
+        if: needs.scope.outputs.web == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: verified-web-${{ github.sha }}
+          path: build/web
+          overwrite: true
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+      - name: Record the verified PR source tree and coverage
+        if: github.event_name == 'pull_request' && needs.scope.outputs.web == 'true'
+        run: python -B tools/ci/pr_reuse.py receipt --plan build/ci/test-plan.json --proof build/ci/receipt.json
+      - name: Upload PR verification receipt
+        if: github.event_name == 'pull_request' && needs.scope.outputs.web == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: pr-proof-${{ github.run_id }}-attempt-${{ github.run_attempt }}
+          path: build/ci/receipt.json
+          if-no-files-found: error
+          retention-days: 7

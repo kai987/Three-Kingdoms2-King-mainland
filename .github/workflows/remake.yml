@@ -1,4 +1,5 @@
 name: Web campaign checks
+run-name: ${ inputs.priority_pair != '' && format('Runner priority {0}', inputs.priority_pair) || 'Web campaign checks' }}
 
 on:
   push:
@@ -6,6 +7,10 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
+      priority_pair:
+        description: Identifier shared by the two experimental dispatches
+        type: string
+        default: ''
       force_full:
         description: Run every regression group
         type: boolean
@@ -25,6 +30,15 @@ concurrency:
 
 jobs:
   verify:
+    if: github.event_name != 'workflow_dispatch' || inputs.priority_pair == ''
     uses: ./.github/workflows/web-checks.yml
     with:
       force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+  verify-priority:
+    if: >-
+      github.event_name == 'workflow_dispatch' && inputs.priority_pair != '' &&
+      (github.ref == 'refs/heads/codex/ci-runner-priority-a' || github.ref == 'refs/heads/codex/ci-runner-priority-b')
+    uses: ./.github/workflows/web-checks-priority.yml
+    with:
+      force_full: true
+      pair: ${ inputs.priority_pair }}
