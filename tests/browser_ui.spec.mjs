@@ -8,6 +8,7 @@ import {execFileSync} from 'node:child_process';
 import assert from 'node:assert/strict';
 import browserScopes from '../tools/browser-tests/scope.cjs';
 import {approveVisibleOrders} from './browser_order_confirm.mjs';
+import {waitForSoldierStep} from './browser_soldier_step_wait.mjs';
 
 const browserScope=browserScopes.loadBrowserScope();
 
@@ -106,9 +107,10 @@ async function tacticalSettle(page,{returnToMacro=false}={}){
  }
 }
 async function tacticalSoldierRound(page){
- const before=await tacticalSave(page),round=before.state.battle.extended.siege.round;
+ const before=await tacticalSave(page),battle=before.state.battle;
+ const revision=await page.evaluate(()=>view.revision);
  await tacticalControl(page,'siege-step');
- await expect.poll(()=>page.evaluate(async previous=>{const r=await fetch('/api/save'),s=(await r.json()).state,b=s.battle;return !b?.extended?.siege||!!b.extended.duel||b.extended.siege.round>previous;},round)).toBe(true);
+ await waitForSoldierStep(page,{battleId:battle.id,round:battle.extended.siege.round,revision});
  const committed=await tacticalSave(page);await tacticalSettle(page);
  const settled=await tacticalSave(page);
  expect(settled).toEqual(committed,'Playing or skipping a committed soldier round cannot apply its damage or RNG twice');
