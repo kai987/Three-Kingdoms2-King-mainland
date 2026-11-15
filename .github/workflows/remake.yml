@@ -1,18 +1,13 @@
 name: Web campaign checks
+run-name: ${{ inputs.legacy_battle && 'Full CI with PR 37 battle tests' || 'Full CI with current battle tests' }}
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
     inputs:
-      force_full:
-        description: Run every regression group
+      legacy_battle:
+        description: Use the battle tests from before PR 41
         type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
+        default: false
 
 permissions:
   contents: read
@@ -20,11 +15,13 @@ permissions:
   deployments: read
 
 concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
+  group: web-checks-${{ github.ref }}-manual
   cancel-in-progress: true
 
 jobs:
   verify:
+    if: github.ref == 'refs/heads/codex/ci-battle-full-ab'
     uses: ./.github/workflows/web-checks.yml
     with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+      force_full: true
+      legacy_battle: ${{ inputs.legacy_battle }}
