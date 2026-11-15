@@ -8,7 +8,7 @@
     "art/map-western-range-v3/manifest.json": "e2ca03db95ea413efe1480af40de92bafe686d6aa1c670db33904b3f89e1bdc1",
     "art/map-western-range-v3/source/road-centers-before-junctions.png": "a5de4d6f09d860a5d0f93479321e4365d5a13c048de38c97c7bbef45ef0336e7",
     "game/assets/map-road-centers.png": "2e5f0a40fd3a196133dd92249fdf6fc75daaa648b1392dfcde5a8f36cdea8198",
-    "game/build_portrait_manifest.py": "f22587fda7eef681b43354157083224269a158bdd3eded6707b976225573c7fd",
+    "game/build_portrait_manifest.py": "99534ed531229159c5e18d0c7ed9fbf10ff8370f495f0d623e3dcb88cd0a991a",
     "game/build_terrain_art.py": "7ad3ae0ab3d4432fe0d65307ae8e7a10e3c0bf77904f399c311ffd695a9d885b",
     "game/config/campaigns/shared.json": "a0dbe54a23e95a4457001f4fa32fd4bfeeb5ab17609f3257551117a824ff83ed",
     "game/config/road-centers.json": "80b5cb839ffa60f9e134ba1631c220e3e1de4b0d56e7fc70c449bbe374d0dd33",

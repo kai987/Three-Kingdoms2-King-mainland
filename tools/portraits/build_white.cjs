@@ -666,6 +666,8 @@ function build(check) {
       let pixels;
       let method;
       const authored = approved.has(id) || targetedRedraws.has(id);
+      const truecolor = individualRedraws[id]?.truecolor_export;
+      const hairRedraw = individualRedraws[id]?.black_hair_redraw;
       try {
         if (authored) {
           png = fs.readFileSync(file);
@@ -673,7 +675,14 @@ function build(check) {
           assert.deepEqual([image.width, image.height], [width, height]);
           verifyWhiteMargin(image.rgba);
           pixels = image.rgba;
-          method = approved.has(id) && !individualRedraws[id] ? 'approved_redraw' : 'targeted_redraw';
+          if (hairRedraw || truecolor) {
+            if (truecolor) assert.equal(generated[id]?.gender_design, 'female');
+            assert.equal(sha(png), (hairRedraw || truecolor).output_sha256, 'Portrait differs from the approved export');
+            for (let offset = 3; offset < pixels.length; offset += 4) assert.equal(pixels[offset], 255);
+            method = hairRedraw ? 'black_hair_redraw' : 'truecolor_redraw';
+          } else {
+            method = approved.has(id) && !individualRedraws[id] ? 'approved_redraw' : 'targeted_redraw';
+          }
         } else if (generated[id]?.source_atlas?.startsWith('art/portraits/source-atlases/')) {
           const record = generated[id];
           const atlasPath = record.source_atlas;
@@ -690,7 +699,7 @@ function build(check) {
           pixels = renderWhite(source);
           method = 'white_matte_contour';
         }
-        const framed = fitPortraitFrame(pixels);
+        const framed = hairRedraw || truecolor ? pixels : fitPortraitFrame(pixels);
         if (!authored) {
           pixels = refineMaterialShading(framed);
           if (inkRepairs[id]) {

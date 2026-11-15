@@ -20,6 +20,8 @@ REFINED = (512, 640)
 ENHANCED_CONFIG = 'game/config/portrait-enhanced.json'
 REFINED_CONFIG = 'game/config/portrait-refined.json'
 WHITE_CONFIG = 'game/config/portrait-white.json'
+WHITE_TRUECOLOR_METHOD = 'truecolor_redraw'
+WHITE_BLACK_HAIR_METHOD = 'black_hair_redraw'
 ENHANCED_REFERENCE = 'art/portraits/hd-samples/zhuge-liang-preserved-v8/portrait-128x160.png'
 HEX = re.compile(r'^[0-9a-f]{64}$')
 ASSET = re.compile(r'^/assets/portraits/(?:original/[0-9]{3}|generated/[a-z0-9-]+)\.png$')
@@ -249,7 +251,7 @@ def refined_records(data, enhanced):
     return refined
 
 
-def white_records(data, people, enhanced, refined):
+def white_records(data, people, enhanced, refined, generated):
     """Verify the optional white edition against each person's retained source."""
     if (not isinstance(data, dict) or data.get('schema') != 'tk2-white-portraits-v1'
             or (data.get('width'), data.get('height')) != REFINED
@@ -260,6 +262,8 @@ def white_records(data, people, enhanced, refined):
     white = bytes((255, 255, 255, 255))
     width, height = REFINED
     white_row = white * width
+    truecolor_ids = {person_id for person_id, record in generated.items()
+                     if record.get('gender_design') == 'female'}
     output = {}
     for person_id, row in data['people'].items():
         previous = enhanced.get(person_id, {})
@@ -268,7 +272,8 @@ def white_records(data, people, enhanced, refined):
         if (not re.fullmatch(r'[a-z0-9-]{1,128}', person_id) or not isinstance(row, dict)
                 or not source_hash or row.get('source_sha256') != source_hash
                 or row.get('method') not in ('approved_redraw', 'white_matte_contour',
-                                             'targeted_redraw', 'targeted_repair')):
+                                             'targeted_redraw', 'targeted_repair', WHITE_TRUECOLOR_METHOD,
+                                             WHITE_BLACK_HAIR_METHOD)):
             raise ValueError('White portrait source/person binding differs: ' + person_id)
         asset = directory / (person_id + '.png')
         if directory.is_symlink() or asset.is_symlink() or not asset.is_file():
@@ -277,9 +282,15 @@ def white_records(data, people, enhanced, refined):
         _, pixels = png_pixels(raw, REFINED)
         if sha(raw) != row.get('png_sha256') or sha(pixels) != row.get('rgba_sha256'):
             raise ValueError('White portrait hash differs: ' + person_id)
-        colors = set(memoryview(pixels).cast('I'))
-        if not 5 <= len(colors) <= 16 or not colors <= allowed:
-            raise ValueError('White portrait must be opaque and retain the pixel palette: ' + person_id)
+        if row['method'] == WHITE_TRUECOLOR_METHOD and person_id not in truecolor_ids:
+            raise ValueError('Female portrait truecolor export is bound to a different person: ' + person_id)
+        if row['method'] in (WHITE_TRUECOLOR_METHOD, WHITE_BLACK_HAIR_METHOD):
+            if pixels[3::4].count(255) != width * height:
+                raise ValueError('Truecolor portrait must remain opaque: ' + person_id)
+        else:
+            colors = set(memoryview(pixels).cast('I'))
+            if not 5 <= len(colors) <= 16 or not colors <= allowed:
+                raise ValueError('White portrait must be opaque and retain the pixel palette: ' + person_id)
         if (pixels[:width * 4] != white_row or pixels[-width * 4:] != white_row
                 or any(pixels[y * width * 4:y * width * 4 + 4] != white
                        or pixels[(y + 1) * width * 4 - 4:(y + 1) * width * 4] != white
@@ -779,7 +790,7 @@ def build():
         sources['portrait-refined.json'] = sha((ROOT / REFINED_CONFIG).read_bytes())
     if (ROOT / WHITE_CONFIG).is_file():
         for person_id, variant in white_records(read(WHITE_CONFIG), output, enhanced_data.get('people', {}),
-                                                refined_data.get('people', {})).items():
+                                                refined_data.get('people', {}), generated['by_person_id']).items():
             output[person_id]['white'] = variant
         sources['portrait-white.json'] = sha((ROOT / WHITE_CONFIG).read_bytes())
     result = dict(schema='tk2-portraits-v1', width=32, height=40, display_background='#000000',

@@ -1,5 +1,6 @@
 """Native portrait assets, exact identity evidence and reproducible provenance."""
 from copy import deepcopy
+from datetime import datetime
 import importlib.util
 import json
 from pathlib import Path
@@ -642,17 +643,30 @@ class PortraitIntegrityTests(unittest.TestCase):
         people = read('game/config/campaigns/people.json')['people']
         portraits = read('game/config/portrait-white.json')['people']
 
-        def check_record(record):
+        def check_record(record, stage=None):
             self.assertIsInstance(record, dict)
-            for key in ('reference_sha256', 'study_sha256'):
-                self.assertIsInstance(record.get(key), str, key)
+            required = ['reference_sha256']
+            if stage != 'complexion_adjustment':
+                required.append('study_sha256')
+            for key in required:
+                self.assertIn(key, record)
             for key, value in record.items():
                 with self.subTest(field=key):
-                    if key.endswith('_sha256'):
+                    if key == 'study_sha256' and stage == 'eye_detail_refinement':
+                        self.assertIsInstance(value, list)
+                        self.assertTrue(value)
+                        for study in value:
+                            self.assertIsNotNone(builder.HEX.fullmatch(study), study)
+                    elif key.endswith('_sha256'):
                         self.assertIsInstance(value, str)
                         self.assertIsNotNone(builder.HEX.fullmatch(value), value)
+                    elif key == 'style_person_id':
+                        self.assertIn(value, people)
+                    elif key == 'generated_at':
+                        self.assertIsNotNone(datetime.fromisoformat(value).tzinfo)
                     else:
-                        check_record(value)
+                        self.assertIsNone(stage, 'Unexpected nested provenance for ' + key)
+                        check_record(value, stage=key)
 
         self.assertIsInstance(ledger, dict)
         self.assertTrue(ledger)
@@ -660,7 +674,16 @@ class PortraitIntegrityTests(unittest.TestCase):
             with self.subTest(person_id=person_id):
                 self.assertIn(person_id, people)
                 self.assertIn(person_id, portraits)
-                self.assertEqual(portraits[person_id]['method'], 'targeted_redraw')
+                portrait = portraits[person_id]
+                if 'black_hair_redraw' in row:
+                    stage, method = 'black_hair_redraw', builder.WHITE_BLACK_HAIR_METHOD
+                elif 'truecolor_export' in row:
+                    stage, method = 'truecolor_export', builder.WHITE_TRUECOLOR_METHOD
+                else:
+                    stage, method = None, 'targeted_redraw'
+                self.assertEqual(portrait['method'], method)
+                if stage:
+                    self.assertEqual(row[stage]['output_sha256'], portrait['png_sha256'])
                 check_record(row)
 
     def test_supported_png_filter_encodings_produce_identical_native_pixels(self):
