@@ -8025,6 +8025,11 @@
       "output_sha256": "e080c9126d4175938bbab319f8381d804001f422fc499cf27988d5229fb1a7d1"
     },
     "black_hair_redraw": {
+      "reference_sha256": "ca676243ddea393edca46fd498d9ea5fdc1d5e5cb4d7948ad126bbba89418ba4",
+      "study_sha256": "38fc6dbd4d531a4914df022aa5ae0edd5f6a73ecb26d69c31c7f77eeff0537a8",
+      "output_sha256": "bb351897d91d3db4dbdac65d01c0c9beb04599bbdd37578c881bb5d4be5c6143"
+    },
+    "black_hair_redraw_initial": {
       "reference_sha256": "e080c9126d4175938bbab319f8381d804001f422fc499cf27988d5229fb1a7d1",
       "study_sha256": "c0cacdb45f1e1e70c6105f2b407217374693604d4c8769743e5369e9e4b76279",
       "output_sha256": "ca676243ddea393edca46fd498d9ea5fdc1d5e5cb4d7948ad126bbba89418ba4"
