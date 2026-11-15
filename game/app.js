@@ -1598,17 +1598,43 @@ $('#faction-diplomacy')?.addEventListener('click',()=>diplomacyInterface()?.open
 $('#restart').onclick=()=>selectFaction();
 $('#save').onclick=async()=>{
  if(busy)return;
- try{const save=await request('/api/save',undefined,{text:true});localStorage.setItem('three-kingdoms-save',save);const blob=new Blob([save],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=GameI18n.t(view.catalog.title)+' '+GameI18n.t('存档')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('进度已保存。可用“读取进度”恢复，也可保留下载的存档文件。');}catch(e){notice(e.message,true);}
+ try{
+  const save=await request('/api/save',undefined,{text:true});
+  let savedInBrowser=true;
+  try{localStorage.setItem('three-kingdoms-save',save);}catch{savedInBrowser=false;}
+  const link=document.createElement('a');
+  link.download=GameI18n.t(view.catalog.title)+' '+GameI18n.t('存档')+'.json';
+  const url=URL.createObjectURL(new Blob([save],{type:'application/json'}));
+  try{
+   link.href=url;
+   link.click();
+  }finally{
+   setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+  notice(savedInBrowser
+   ?'进度已保存。可用“读取进度”恢复，也可保留下载的存档文件。'
+   :'JSON存档已下载，但无法保存到此浏览器。');
+ }catch(e){notice(e.message,true);}
 };
+function showSaveLoadError(message){
+ notice(message,true);
+ const alert=dialog.open&&dialog.querySelector('#load-save-error');
+ if(alert){
+  alert.textContent=message;
+  alert.hidden=false;
+ }
+}
 async function loadSave(save,guard=()=>true){
  if(busy||observerYearSaving||!guard())return false;
+ const alert=dialog.open&&dialog.querySelector('#load-save-error');
+ if(alert)alert.hidden=true;
  clearDialogueFeedback();
  setObserverPlaying(false);
  if(typeof siegeUI!=='undefined')siegeUI?.stop();
  const resumeAutosave=localAutosave?.status().state==='saving';
  localAutosave?.invalidate();let loaded=false;setBusy(true);
  try{view=await request('/api/load',SaveTransfer.loadBody(save,view.revision),{raw:true});if(typeof resetAllocationDialogs==='function')resetAllocationDialogs();if(typeof siegeUI!=='undefined')siegeUI?.reset();battleScene?.reset();if(typeof battleView!=='undefined')battleView?.reset();if(typeof tutorial!=='undefined')tutorial?.loaded();gameEvents?.observe(view,{baseline:true});setupPreview=null;selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');loaded=true;return true;}
- catch(e){notice(e.message,true);return false;}
+ catch(e){showSaveLoadError(e.message);return false;}
  finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);if(view.game?.player!=='observer'&&(loaded||resumeAutosave))void localAutosave?.checkpoint(loaded?'load':'progress');}
 }
 function confirmAutosave(metadata,message){
@@ -1626,10 +1652,10 @@ function confirmAutosave(metadata,message){
 function showLoadDialog(){
  if(busy||observerYearSaving||!view)return;
  let saved=null;try{saved=localStorage.getItem('three-kingdoms-save');}catch{/* Recovery can explain blocked storage without interrupting play. */}
- openDialog('读取进度',`<div class="save-actions"><button id="load-local" ${saved?'':'disabled'}>读取本机保存</button><label class="field" for="save-file">选择存档文件<input id="save-file" type="file" accept=".json,application/json"></label></div><p class="small">存档无效时会保留当前进度。</p>${localAutosave?.statusHtml()||''}${localAutosave?.recoveryHtml()||''}`,'<button data-cancel>取消</button>');
+ openDialog('读取进度',`<div class="save-actions"><button id="load-local" ${saved?'':'disabled'}>读取本机保存</button><label class="field" for="save-file">选择存档文件<input id="save-file" type="file" accept=".json,application/json"></label></div><p id="load-save-error" role="alert" hidden></p><p class="small">存档无效时会保留当前进度。</p>${localAutosave?.statusHtml()||''}${localAutosave?.recoveryHtml()||''}`,'<button data-cancel>取消</button>');
  localAutosave?.bindRecovery(dialog,{confirm:confirmAutosave});
- $('#load-local').onclick=()=>{try{loadSave(saved);}catch{notice('存档无效，当前进度未改变。',true);}};
- $('#save-file').onchange=async()=>{try{const file=$('#save-file').files[0];if(!file)return;if(file.size>2*1024*1024)throw new Error('too large');await loadSave(await file.text());}catch{notice('存档无效，当前进度未改变。',true);}};
+ $('#load-local').onclick=()=>loadSave(saved);
+ $('#save-file').onchange=async()=>{try{const file=$('#save-file').files[0];if(!file)return;if(file.size>2*1024*1024)throw new Error('too large');await loadSave(await file.text());}catch{showSaveLoadError('存档无效，当前进度未改变。');}};
 }
 $('#load').onclick=showLoadDialog;
 const utilityMenu=$('#utility-menu'),utilityTrigger=utilityMenu?.querySelector?.('summary');

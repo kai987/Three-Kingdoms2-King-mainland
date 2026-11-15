@@ -15,7 +15,7 @@ const deferred=()=>{let resolve,reject;const promise=new Promise((yes,no)=>{reso
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
 const app=fs.readFileSync(require.resolve('../game/app.js'),'utf8');
 const commandSource=app.slice(app.indexOf('async function command('),app.indexOf('\nfunction openDialog('));
-const loadSource=app.slice(app.indexOf('async function loadSave('),app.indexOf('\nfunction confirmAutosave('));
+const loadSource=app.slice(app.indexOf('function showSaveLoadError('),app.indexOf('\nfunction confirmAutosave('));
 function integration({pending=false,rejected=false,previousGame=game(),nextGame=game(),phase='city',saveGate}={}){
  const captured=[],requests=[],errors=[],invalidations=[],restored=[];
  const before={revision:8,catalog:{scenario_id:'test',title:'入蜀爭奪戰'},game:{...previousGame,phase}},next={...before,revision:9,game:nextGame};

@@ -1,6 +1,6 @@
 """Atomic scenario switching. Failed new/load requests retain the current game."""
 from threading import RLock
-from .campaign import Campaign, Catalog, GameError
+from .campaign import Campaign, Catalog, GameError, verified_save_content
 from .map_presentation import city_names,presentation,faction_colors
 from .city_economy import frontier_outposts_view,income_at,incomes_at,profile_at,profiles_at
 from .officer_relations import opening_values
@@ -232,7 +232,9 @@ class CampaignSession:
         with self.lock:
             if type(revision) is not int or revision!=self.revision:raise GameError('进度已更新。',409)
             scenario=save.get('scenario') if isinstance(save,dict) else None
-            if not isinstance(scenario,str) or scenario not in self.catalogs:raise GameError('存档所属战役不可用，进度未改变。')
+            if not isinstance(scenario, str) or scenario not in self.catalogs:
+                verified_save_content(save)
+                raise GameError('存档所属战役不可用，进度未改变。')
             candidate=Campaign(self.catalogs[scenario]);candidate.revision=self.revision
             result=candidate.load_save(save,revision)
             self.game=candidate

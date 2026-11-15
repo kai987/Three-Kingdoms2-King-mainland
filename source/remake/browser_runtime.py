@@ -12,6 +12,7 @@ import re
 from urllib.parse import parse_qs, urlsplit
 
 from .campaign import Catalog, GameError
+from .errors import INVALID_SAVE_MESSAGE
 from .json_boundary import DepthLimitError, loads
 from .march_core import config_for, using_backend
 from .session import CampaignSession, DEFAULT_SCENARIO
@@ -161,9 +162,15 @@ class BrowserRuntime:
                         contexts=0, runtime='browser-worker')
         if url.query or '?' in path:
             raise GameError('操作参数无效。')
-        payload = _strict_json(body)
+        loading = url.path == '/api/load'
+        try:
+            payload = _strict_json(body)
+        except (ValueError, RecursionError) as exc:
+            if not loading or isinstance(exc, GameError) and exc.status != 400:
+                raise
+            raise GameError(INVALID_SAVE_MESSAGE) from None
         if not isinstance(payload, dict):
-            raise GameError('操作参数无效。')
+            raise GameError(INVALID_SAVE_MESSAGE if loading else '操作参数无效。')
         if url.path == '/api/command':
             if (set(payload) != {'kind', 'payload', 'revision'}
                     or not isinstance(payload['kind'], str)
@@ -182,10 +189,12 @@ class BrowserRuntime:
         if (set(payload) != {'save', 'revision'}
                 or not isinstance(payload['save'], dict)
                 or type(payload['revision']) is not int):
-            raise GameError('存档或操作参数无效。')
+            raise GameError(INVALID_SAVE_MESSAGE)
         if payload['revision'] != self.session.revision:
             raise GameError('进度已更新，请重新读取。', 409)
-        self._catalog(payload['save'].get('scenario'))
+        scenario = payload['save'].get('scenario')
+        if isinstance(scenario, str) and scenario in self.catalog_paths:
+            self._catalog(scenario)
         return self.session.load_save(payload['save'], payload['revision'])
 
     def dispatch_compact_json(self, path, method='GET', body=None, known=''):

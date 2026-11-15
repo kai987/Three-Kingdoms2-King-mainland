@@ -10,10 +10,11 @@ from functools import cached_property
 import hashlib
 import json
 from pathlib import Path
+import re
 from threading import RLock
 from types import SimpleNamespace
 
-from .errors import GameError
+from .errors import GameError, INVALID_SAVE_MESSAGE
 from . import diplomacy, historical_campaigns, observer
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
 from .campaign_expansion import ExpandedCampaign
@@ -34,6 +35,34 @@ def canonical(value):
 
 def digest(value):
     return hashlib.sha256(canonical(value).encode()).hexdigest()
+
+
+def verified_save_content(payload):
+    """Check the shared save format and integrity before comparing catalogs."""
+    try:
+        if not isinstance(payload, dict) or set(payload) != {
+                'format', 'version', 'catalog_sha256', 'scenario', 'state', 'checksum'}:
+            raise ValueError('save envelope')
+        content = {key: value for key, value in payload.items() if key != 'checksum'}
+        state = content['state']
+        if (content['format'] != 'three-kingdoms-remake-save'
+                or type(content['version']) is not int or content['version'] not in (1, 2)
+                or not isinstance(content['scenario'], str) or not content['scenario']
+                or not isinstance(content['catalog_sha256'], str)
+                or not re.fullmatch(r'[a-f0-9]{64}', content['catalog_sha256'])):
+            raise ValueError('save identity')
+        if (not isinstance(state, dict) or not isinstance(state.get('player'), str)
+                or any(type(state.get(key)) is not int
+                       for key in ('seed', 'year', 'month', 'calendar_cursor'))
+                or any(not isinstance(state.get(key), dict)
+                       for key in ('cities', 'officers', 'rng', 'extension'))
+                or ('command_books' in state['extension']) == (content['version'] == 1)):
+            raise ValueError('save structure')
+        if digest(content) != payload['checksum']:
+            raise ValueError('save checksum')
+        return content
+    except (ValueError, TypeError, OverflowError, RecursionError) as exc:
+        raise GameError(INVALID_SAVE_MESSAGE) from exc
 
 
 @dataclass
@@ -719,20 +748,18 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         with self.lock:
             if type(revision) is not int or revision != self.revision:
                 raise GameError('进度已更新，请重新读取。', 409)
+            content = verified_save_content(payload)
+            if content['scenario'] != self.catalog.data['id']:
+                raise GameError(INVALID_SAVE_MESSAGE)
+            if content['catalog_sha256'] != self.catalog.sha256:
+                raise GameError('此存档与当前剧本版本不兼容。请使用创建存档时的游戏版本。')
             try:
-                if not isinstance(payload, dict) or set(payload) != {'format', 'version', 'catalog_sha256', 'scenario', 'state', 'checksum'}:
-                    raise ValueError('save envelope')
-                content = {k: v for k, v in payload.items() if k != 'checksum'}
-                if content['format'] != 'three-kingdoms-remake-save' or type(content['version']) is not int or content['version'] not in (1, 2) or content['catalog_sha256'] != self.catalog.sha256 or content['scenario'] != self.catalog.data['id'] or digest(content) != payload['checksum']:
-                    raise ValueError('save identity/checksum')
                 raw = deepcopy(content['state'])
                 # The current catalog's existing campaigns acquire the three
                 # new presentation/AI preferences without replaying past events.
                 # Historical catalog IDs/checksums remain unsupported.
                 extension = raw['extension']
                 legacy = content['version'] == 1
-                if ('command_books' in extension) == legacy:
-                    raise ValueError('Save format does not match its strategic-order ledger')
                 extension.setdefault('difficulty', 'normal')
                 extension.setdefault('ai_strategy', {})
                 extension.setdefault('events', empty_events())
@@ -773,7 +800,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 civil_staff.migrate_profiles(self, candidate)
                 self.validate(candidate)
             except (ValueError, TypeError, KeyError, AttributeError, OverflowError) as exc:
-                raise GameError('存档无效，当前进度未改变。') from exc
+                raise GameError(INVALID_SAVE_MESSAGE) from exc
             self.state = candidate
             self.revision += 1
             self.journal.append({'kind': 'load', 'revision': self.revision, 'after_sha256': digest(self.to_dict()), 'rng_draws': candidate.rng.draws})
