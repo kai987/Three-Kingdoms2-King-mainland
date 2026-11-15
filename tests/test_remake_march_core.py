@@ -298,10 +298,14 @@ def vectors(configs):
     for month in (4, 7, 11):
         # Every physical connection, not only routes held by the player's faction.
         for row in data['travel_routes']:
+            request = dict(op='path', config=0, cities=cities, month=month, discovered=[],
+                           source=row['from'], target=row['to'], owner='friendly', adjacent=True)
             for mode in ('fastest', 'land', 'river', 'sea', 'special', 'explore'):
-                request = dict(op='path', config=0, cities=cities, month=month, discovered=[],
-                               source=row['from'], target=row['to'], owner='friendly', mode=mode, adjacent=True)
-                yield f'path:{row["id"]}:{month}:{mode}', request
+                yield f'path:{row["id"]}:{month}:{mode}', dict(request, mode=mode)
+            if row.get('one_way') is True:
+                for mode in ('fastest', row['mode']):
+                    yield f'reverse-path:{row["id"]}:{month}:{mode}', dict(
+                        request, source=row['to'], target=row['from'], mode=mode)
     keys = list(synthetic['city_coordinates'])
     for ownership in (['friendly'] * 4, ['friendly', 'enemy', 'friendly', 'enemy'],
                       ['friendly', 'neutral', 'neutral', 'friendly']):

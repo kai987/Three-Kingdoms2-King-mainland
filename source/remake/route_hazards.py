@@ -23,13 +23,17 @@ def _json_numbers(value):
     return value
 
 
-def _pair(route, source, target):
-    return source != target and {source, target} == {route['from'], route['to']}
+def _matches_direction(route, source, target):
+    if source == target:
+        return False
+    a, b = route['from'], route['to']
+    return (source, target) == (a, b) or (
+        (source, target) == (b, a) and route.get('one_way') is not True)
 
 
 def route_allowed(data, route, source, target):
     """Whether this immutable leg can be traversed in the requested direction."""
-    if not _pair(route, source, target):
+    if not _matches_direction(route, source, target):
         return False
     policy = data['travel_hazards']
     yinping = policy.get('yinping', {})

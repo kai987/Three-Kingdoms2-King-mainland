@@ -4,10 +4,14 @@ use serde_json::{json, Value};
 const RATIO_ERROR: &str = "Survival ratio must be integers with0<=n<=d andd>0";
 const TROOPS_ERROR: &str = "Troop counts must be nonnegative integers";
 
-fn pair(route: &Value, source: &str, target: &str) -> Result<bool> {
+fn matches_direction(route: &Value, source: &str, target: &str) -> Result<bool> {
     let a = string(route, "from")?;
     let b = string(route, "to")?;
-    Ok(source != target && ((source == a && target == b) || (source == b && target == a)))
+    Ok(source != target
+        && ((source == a && target == b)
+            || (source == b
+                && target == a
+                && route.get("one_way").and_then(Value::as_bool) != Some(true))))
 }
 
 fn text<'a>(value: &'a Value, key: &str, default: &'a str) -> Result<&'a str> {
@@ -79,7 +83,7 @@ pub(crate) fn allocate_request(request: &Value) -> Result<Value> {
 }
 
 pub(crate) fn allowed(data: &Value, route: &Value, source: &str, target: &str) -> Result<bool> {
-    if !pair(route, source, target)? {
+    if !matches_direction(route, source, target)? {
         return Ok(false);
     }
     let yinping = &data["travel_hazards"]["yinping"];

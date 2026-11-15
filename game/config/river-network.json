@@ -738,6 +738,26 @@
         112.6,
         27.66
       ]
+    },
+    "yellow:jincheng": {
+      "position": [
+        292,
+        278
+      ],
+      "geo": [
+        104.18,
+        35.8
+      ]
+    },
+    "yellow:shuofang": {
+      "position": [
+        428,
+        112
+      ],
+      "geo": [
+        107.22,
+        40.46
+      ]
     }
   },
   "ports": {
@@ -1622,6 +1642,32 @@
         [
           687,
           643
+        ]
+      ]
+    },
+    "jincheng": {
+      "node": "yellow:jincheng",
+      "access": [
+        [
+          278,
+          256
+        ],
+        [
+          292,
+          278
+        ]
+      ]
+    },
+    "shuofang": {
+      "node": "yellow:shuofang",
+      "access": [
+        [
+          410,
+          97
+        ],
+        [
+          428,
+          112
         ]
       ]
     }
@@ -6230,6 +6276,78 @@
           536
         ]
       ]
+    },
+    {
+      "id": "yellow:jincheng:shuofang",
+      "river": "yellow",
+      "from": "yellow:jincheng",
+      "to": "yellow:shuofang",
+      "points": [
+        [
+          292,
+          278
+        ],
+        [
+          302,
+          277
+        ],
+        [
+          308,
+          269
+        ],
+        [
+          308,
+          264
+        ],
+        [
+          322,
+          250
+        ],
+        [
+          336,
+          243
+        ],
+        [
+          354,
+          222
+        ],
+        [
+          384,
+          208
+        ],
+        [
+          406,
+          187
+        ],
+        [
+          414,
+          166
+        ],
+        [
+          404,
+          149
+        ],
+        [
+          404,
+          142
+        ],
+        [
+          412,
+          131
+        ],
+        [
+          412,
+          126
+        ],
+        [
+          424,
+          119
+        ],
+        [
+          428,
+          112
+        ]
+      ]
     }
   ],
   "connections": [
@@ -6842,6 +6960,19 @@
           "https://zh.wikisource.org/wiki/水經注/38",
           "https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnux22fnsn_304"
         ]
+      }
+    },
+    {
+      "from": "jincheng",
+      "to": "shuofang",
+      "one_way": true,
+      "reaches": [
+        "yellow:jincheng:shuofang"
+      ],
+      "history": {
+        "classification": "authorial_downstream_only_yellow_river_game_navigation",
+        "basis": "沿遊戲底圖既有的黃河河道連接金城與朔方，僅開放順流方向。渡點和航程為遊戲地圖校準。",
+        "sources": []
       }
     }
   ]
