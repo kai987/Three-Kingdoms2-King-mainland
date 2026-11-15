@@ -92,11 +92,14 @@ async function weightedTransferChecks(){
  context.GameI18n.t=text=>text;
  context.view.catalog.frontier_outposts={home:{monthly_maintenance:15,sponsor_city:'away'}};
  context.view.catalog.city_profiles={home:{kind:'frontier_outpost'}};
+ context.view.catalog.city_income={home:{gold:35,grain:90,reserves:17}};
  context.renderCity();
  assert.match(element('#inspector').innerHTML,/city-command-overview">邊塞據點/);
- assert.match(element('#inspector').innerHTML,/data-frontier-outpost[^>]*>.*每月資金與兵糧收入皆為 0。away負擔每月維護費 15（資金）。/);
+ assert.match(element('#inspector').innerHTML,/data-frontier-outpost[^>]*>.*away負擔每月維護費 15（資金）。維護費隨人口變動。/);
+ assert.match(element('#inspector').innerHTML,/city-scale">邊塞據點 · 每月金35 \/ 粮90 \/ 预备兵17/);
  delete context.view.catalog.frontier_outposts;
  context.view.catalog.city_profiles={};
+ context.view.catalog.city_income={};
  context.renderCity();
  assert(!element('#inspector').innerHTML.includes('data-frontier-outpost'),'A restored commandery uses the regular city inspector');
  const originalCatalog={...context.view.catalog},iconCalls=[],visits=[];
@@ -168,6 +171,7 @@ async function weightedTransferChecks(){
  context.view.catalog.scenarios=Array.from({length:29},(_,i)=>({id:`mainland${184+i}-01`,title:`本篇${i+1}`,year:184+i,month:1,cities:115,capacity:99,serving:1,free:0,configured:1023,initial_owners:{home:'wei'},factions:[{id:'wei',city:'home',name:'曹操勢力',captain:'曹操'}],main_scenario:{group:i<23?'custom':'if',fictional:i>=23,summary:'目前本篇配置'}}));
  context.view.catalog.scenario_id=context.view.catalog.scenarios[3].id;
  vm.runInContext(source.slice(source.indexOf("let campaignDifficulty="),source.indexOf("const $=")),context);
+ vm.runInContext(source.slice(source.indexOf('function factionResources('),source.indexOf('function factionBase(')),context);
  vm.runInContext(source.slice(source.indexOf('function selectFaction('),source.indexOf('function renderMap(')),context);
  context.selectFaction();
  const menu=element('#inspector').innerHTML;

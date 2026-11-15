@@ -378,7 +378,7 @@ class HanSuiIfTests(unittest.TestCase):
                 self.assertGreater(troops, 900)
                 self.assertEqual(troops + city['reserves'], 900 + authored_reserves)
                 self.assertEqual(preview['faction_resources']['han_sui'],
-                                 dict(cities=1, **{field: city[field]
+                                 dict(cities=1, troops=troops, **{field: city[field]
                                       for field in ('gold', 'grain', 'reserves')}))
         self.assertEqual(session.to_dict(), before)
         self.assertIsNone(session.game.state)

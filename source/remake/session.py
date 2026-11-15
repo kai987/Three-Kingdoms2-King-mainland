@@ -11,22 +11,41 @@ DEFAULT_SCENARIO = 'mainland184-02'
 
 
 def faction_resources(catalog, state=None):
-    totals={key:dict(gold=0,grain=0,reserves=0,cities=0) for key in catalog.factions}
-    if state:
-        rows=[(city.owner,city) for city in state.cities.values()]
-        for owner,city in rows:
-            if owner not in totals:continue
-            totals[owner]['cities']+=1
-            for field in ('gold','grain','reserves'):totals[owner][field]+=getattr(city,field)
+    """Count city stocks and troops serving under the faction's officers."""
+    totals = {key: dict(gold=0, grain=0, reserves=0, cities=0, troops=0) for key in catalog.factions}
+    if state is not None:
+        for city in state.cities.values():
+            if city.owner not in totals:
+                continue
+            total = totals[city.owner]
+            total['cities'] += 1
+            for field in ('gold', 'grain', 'reserves'):
+                total[field] += getattr(city, field)
+
+        # Officers keep their troops while marching. Deployed troops are
+        # tracked in battle units until the survivors are written back.
+        deployed = {}
+        if state.battle is not None:
+            deployed = {unit['id']: unit['troops'] for side in ('attackers', 'defenders')
+                        for unit in state.battle[side]}
+        for ident, officer in state.officers.items():
+            if officer.alive and officer.faction_id in totals:
+                totals[officer.faction_id]['troops'] += deployed.get(ident, officer.troops)
     else:
-        data=catalog.data
-        stocks,_=catalog.opening_garrisons
+        data = catalog.data
+        stocks, troops = catalog.opening_garrisons
         for key in data['active_cities']:
-            owner=data['initial_owners'][key]
-            if owner not in totals:continue
-            totals[owner]['cities']+=1
-            values=stocks[key]
-            for field in ('gold','grain','reserves'):totals[owner][field]+=values[field]
+            owner = data['initial_owners'][key]
+            if owner not in totals:
+                continue
+            total = totals[owner]
+            total['cities'] += 1
+            for field in ('gold', 'grain', 'reserves'):
+                total[field] += stocks[key][field]
+        for row in data['initial_officers']:
+            owner = data['initial_owners'][row['city']]
+            if owner in totals:
+                totals[owner]['troops'] += troops[row['person_id']]
     return totals
 
 

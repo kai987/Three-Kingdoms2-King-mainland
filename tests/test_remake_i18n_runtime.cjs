@@ -20,6 +20,7 @@ const nativeTC=body.append(new Element('section',{'data-l10n-native':'zh-Hant','
 const nativeTCText=nativeTC.append(new Text('金城 · 金旋 · 劉金 · 花費金50、糧20，預備兵300；黃金甲。'));
 const nativeJA=body.append(new Element('section',{'data-l10n-native':'ja','data-locale-only':'ja','title':'金銭・兵粮・予備兵'}));
 const nativeJAText=nativeJA.append(new Text('金城の金旋へ金50、糧20。予備兵300と黄金甲を確認します。'));
+const literalGold=body.append(new Element('span',{'data-l10n-literal':''})).append(new Text('金 50'));
 const rawLink=body.append(new Element('a',{id:'city-金钱',href:'https://example.invalid/金钱/粮食?gold=100','data-city-id':'金城'}));rawLink.append(new Text('金錢'));
 const all=node=>[node,...(node.children||[]).flatMap(all)];
 const events=[],document={documentElement:html,querySelector:s=>all(html).find(n=>n.nodeType===1&&n.matches(s))||null,querySelectorAll:s=>all(html).filter(n=>n.nodeType===1&&n.matches(s)),createTreeWalker(node){const nodes=all(node).slice(1);let index=0;return{currentNode:node,nextNode(){if(index===nodes.length)return false;this.currentNode=nodes[index++];return true;}};},addEventListener(){},dispatchEvent(e){events.push(e);return true;}};
@@ -106,7 +107,7 @@ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'game/i
  assert.equal(i18n.t('金钱50 · 粮食20 · 预备兵300','ja'),'資金50 · 兵糧20 · 予備兵300');
  assert.equal(i18n.t('金城 · 金旋 · 劉金','zh-Hant'),'金城 · 金旋 · 劉金');
  assert.equal(i18n.t('内河水路：顺流、逆流；长江与湘水（含洞庭出口）。','zh-Hant'),'內河水路：順流、逆流；長江與湘水（含洞庭出口）。');
- for(let n=0;n<2;n++){assert(i18n.setLocale('ja'));assert.equal(heading.data,'セーブ');assert.equal(document.title,'三国志・大陸戦役');assert(i18n.setLocale('zh-Hant'));assert.equal(heading.data,'保存進度');assert.equal(document.title,'三國·大陸戰役');}
+ for(let n=0;n<2;n++){assert(i18n.setLocale('ja'));assert.equal(heading.data,'セーブ');assert.equal(document.title,'三国志・大陸戦役');assert.equal(literalGold.data,'金 50');assert(i18n.setLocale('zh-Hant'));assert.equal(heading.data,'保存進度');assert.equal(document.title,'三國·大陸戰役');assert.equal(literalGold.data,'金 50');}
  assert.equal(nativeTCText.data,'金城 · 金旋 · 劉金 · 花費資金50、兵糧20，預備兵300；黃金甲。');assert.equal(nativeJAText.data,'金城の金旋へ資金50、兵糧20。予備兵300と黄金甲を確認します。');
  assert.equal(rawLink.getAttribute('href'),'https://example.invalid/金钱/粮食?gold=100');assert.equal(rawLink.getAttribute('id'),'city-金钱');assert.equal(rawLink.getAttribute('data-city-id'),'金城');
  const storageBefore=[...storage];assert.equal(i18n.setLocale('zh-CN'),false);assert.equal(i18n.locale,'zh-Hant');assert.deepEqual([...storage],storageBefore);

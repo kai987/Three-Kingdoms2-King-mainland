@@ -899,24 +899,34 @@ class ExpandedCampaign:
         self._reconcile_factions(state)
 
     def _reconcile_factions(self,state):
-        from . import dated_events, diplomacy
+        from . import dated_events, diplomacy, succession
         x=state.extension
         for faction in sorted(self.catalog.factions):
             if dated_events.dormant(self.catalog,state,faction):
                 continue
             alive=[i for i,o in state.officers.items() if o.alive and o.faction_id==faction]
             cities=[c for c in state.cities.values() if c.owner==faction]
-            if not alive or not cities:
+            previous=x['leaders'].get(faction)
+            heir=None
+            if cities and previous not in alive:
+                heir=succession.preferred_successor(self,state,faction,previous,alive)
+                if heir is not None and not succession.admit_nominee(self,state,faction,heir):
+                    heir=None
+            if not cities or (not alive and heir is None):
                 ended_name=self.faction_name(state,faction)
                 for c in cities:c.owner='neutral'
                 x['leaders'][faction]=None
                 x['pending_succession'].pop(faction,None)
                 if faction not in x['ended_factions']:
                     x['ended_factions'].append(faction);self._note(state,f'{ended_name}退出战役。')
-            elif x['leaders'].get(faction) not in alive:
-                candidates=sorted(alive,key=lambda i:(-state.officers[i].profile.virtue,
-                    -state.officers[i].profile.intellect,-state.officers[i].experience,ref_sort_key(i)))
-                previous=x['leaders'].get(faction);leader=candidates[0];x['leaders'][faction]=leader
+            elif previous not in alive:
+                if heir is not None:
+                    candidates=[heir]
+                else:
+                    relatives=succession.family_priorities(state,previous,alive)
+                    candidates=sorted(relatives or alive,key=lambda i:(relatives.get(i,0),-state.officers[i].profile.virtue,
+                        -state.officers[i].profile.intellect,-state.officers[i].experience,ref_sort_key(i)))
+                leader=candidates[0];x['leaders'][faction]=leader
                 old_loyalty=state.officers[leader].loyalty
                 state.officers[leader].loyalty=100
                 if faction==state.player:

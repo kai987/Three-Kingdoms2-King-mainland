@@ -109,6 +109,17 @@ function resourceSummary(id,preview=setupPreview){
  const r=factionResources(id,preview);
  return r?`钱 ${r.gold} · 粮 ${r.grain} · 预备兵 ${r.reserves} · 武将 ${r.officers}人${view.catalog.civil_staff?` · 文吏 ${preview?0:view.catalog.civil_staff.faction_counts?.[id]??0}人`:''}`:'资源资料待载入';
 }
+function setupResourceSummary(id,preview){
+ const r=factionResources(id,preview);
+ if(!r)return '资源资料待载入';
+ return [
+  `<span class="faction-stat" data-l10n-literal>金 ${r.gold}</span>`,
+  `<span class="faction-stat">兵糧 ${r.grain}</span>`,
+  `<span class="faction-stat">預備兵 ${r.reserves}</span>`,
+  `<span class="faction-stat">兵士 ${r.troops??'—'}</span>`,
+  `<span class="faction-stat">現役 ${r.officers}人</span>`,
+ ].join(' · ');
+}
 function factionBase(row){
  const cities=view.game?.cities||{};
  if(cities[row.city]?.owner===row.id)return row.city;
@@ -121,19 +132,19 @@ function factionBase(row){
  return owned.sort((a,b)=>size(b)-size(a)||a.id.localeCompare(b.id))[0]?.id;
 }
 function factionLedger({showCityCount=false}={}){
- const staff=view.catalog.civil_staff;
  const standings=view.catalog.factions.map(f=>({f,r:factionResources(f.id,null)}));
  if(showCityCount)standings.sort((a,b)=>b.r.cities-a.r.cities);
  const rows=standings.map(({f,r})=>{
   const base=showCityCount?factionBase(f):null;
   return `<tr data-faction-resources="${f.id}">
-  <th><svg class="faction-swatch ledger-swatch" width="12" height="12" aria-hidden="true"><rect width="12" height="12" fill="${mapColor(f.id)}"/></svg>${escapeHtml(factionDisplayName(f))}</th>
+  <th scope="row"><svg class="faction-swatch ledger-swatch" width="12" height="12" aria-hidden="true"><rect width="12" height="12" fill="${mapColor(f.id)}"/></svg>${escapeHtml(factionDisplayName(f))}</th>
   ${showCityCount?`<td data-faction-cities="${f.id}">${r.cities}</td><td data-faction-base="${f.id}" data-city-id="${escapeHtml(base||'')}">${base?escapeHtml(cityName(base)):'—'}</td>`:''}<td data-faction-officers="${f.id}">${r.officers}</td>
-  ${staff?`<td data-faction-staff="${f.id}">${staff.faction_counts?.[f.id]??0}</td>`:''}<td>${r.gold}</td><td>${r.grain}</td><td>${r.reserves}</td></tr>`;
+  <td data-faction-troops="${f.id}">${r.troops??'—'}</td><td>${r.gold}</td><td>${r.grain}</td><td>${r.reserves}</td></tr>`;
  }).join('');
  return `<details class="faction-ledger"><summary>各势力资源</summary>
- <p class="small">按当前所属城池合计，不含在途物资及武将带兵。</p><p class="small">武将按当前在籍人数计，含在途；不含在野和已退场人物。</p>
- <div class="faction-ledger-scroll"><table><thead><tr><th>势力</th>${showCityCount?`<th aria-sort="descending">${battleText('城池數','都市数')}</th><th class="ledger-base">${battleText('本據','本拠')}</th>`:''}<th>武将数</th>${staff?'<th>文吏</th>':''}<th>钱</th><th>粮</th><th>预备兵</th></tr></thead><tbody>${rows}</tbody></table></div></details>`;
+ <p class="small">${battleText('物資按目前所屬都市的庫存合計。','物資は現在支配する都市の備蓄を合計しています。')}</p>
+ <p class="small">${battleText('兵士為武將所率的兵力，現役為在籍武將人數。行軍與戰鬥中的人員也計入。','兵士は武将が率いる兵の数、現役は所属武将の人数です。行軍中・戦闘中の部隊も集計に含まれます。')}</p>
+ <div class="faction-ledger-scroll"><table${showCityCount?' class="faction-ledger-with-cities"':''}><thead><tr><th scope="col">势力</th>${showCityCount?`<th scope="col" aria-sort="descending">都市</th><th scope="col" class="ledger-base">${battleText('本據','本拠')}</th>`:''}<th scope="col">現役</th><th scope="col">兵士</th><th scope="col" data-l10n-literal>金</th><th scope="col">兵糧</th><th scope="col">預備兵</th></tr></thead><tbody>${rows}</tbody></table></div></details>`;
 }
 function routeRisk(quote){
  const lines=(quote.routes||[]).filter(r=>r.hazard).map(r=>{
@@ -409,7 +420,7 @@ function selectFaction(){
   <label class="field" for="lifespan">${battleText('武將壽命','武将の寿命')}<select id="lifespan" aria-describedby="lifespan-help">${lifespanOptions}</select></label></div>
   <p id="lifespan-help" class="small">${battleText('選「無」時，武將不會因年齡自然死亡。','「なし」では、武将は加齢による自然死を迎えません。')}</p>
   ${catalogSummary}${catalogWarning}<p class="intro">${option.year}年${option.month}月 · ${option.cities}城 · 每城${option.capacity}人<br>开局在籍${option.serving}人，在野${option.free}人。</p>
-  <div class="choice-list">${option.factions.map(f=>`<label class="faction-choice"><input type="radio" name="faction" value="${f.id}" ${f.id===preferred?'checked':''}><svg class="faction-swatch" width="16" height="16" aria-hidden="true"><rect width="16" height="16" fill="${mapColor(f.id)}"/></svg><span class="faction-choice-body"><span class="faction-choice-heading"><span>${escapeHtml(factionDisplayName(f))}</span><span>${escapeHtml(f.captain)} · ${escapeHtml(cityName(f.city))}</span></span><span class="faction-choice-resources" data-faction-resources="${f.id}">${resourceSummary(f.id,option)}</span></span></label>`).join('')}</div>
+  <div class="choice-list">${option.factions.map(f=>`<label class="faction-choice"><input type="radio" name="faction" value="${f.id}" ${f.id===preferred?'checked':''}><svg class="faction-swatch" width="16" height="16" aria-hidden="true"><rect width="16" height="16" fill="${mapColor(f.id)}"/></svg><span class="faction-choice-body"><span class="faction-choice-heading"><span>${escapeHtml(factionDisplayName(f))}</span><span>${escapeHtml(f.captain)} · ${escapeHtml(cityName(f.city))}</span></span><span class="faction-choice-resources" data-faction-resources="${f.id}">${setupResourceSummary(f.id,option)}</span></span></label>`).join('')}</div>
   <p id="setup-summary" class="small" aria-live="polite"></p><details class="setup-options"><summary><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">進階設定與劇本資料</span><span data-locale-only="ja" data-l10n-native="ja">詳細設定・シナリオ資料</span></summary><details class="difficulty-notes"><summary>游戏难度</summary><p class="small" id="difficulty-help">简单：较少进攻，使用普通攻击；普通：长期目标、双路协同；困难：更积极进攻、三路协同与完整计略评估。各档沿用相同的资源与战斗规则。</p></details>
   ${option.main_scenario?`<details class="scenario-notes"><summary>剧本资料与配置范围</summary>${scenarioKind}<p>${escapeHtml(option.main_scenario.summary)}</p>${scenarioExtra}<p>本作${option.cities}城改编，现有${option.configured}份完整属性。${option.main_scenario.virtue_default_policy?'部分德值按用户指定暂设60，人物库可查评分来源。':''}新年代的部分归属为前后快照推定，未确认者不自动入场。</p>${option.main_scenario.city_chronology_note?`<p class="small">${escapeHtml(option.main_scenario.city_chronology_note)}</p>`:''}${scenarioSource}</details>`:scenarioKind}
   <details class="seed-settings"><summary>随机种子</summary><label class="seed-label" for="seed">随机种子<input id="seed" type="number" min="1" max="4294967295" step="1" value="2026" aria-describedby="seed-help"></label><p id="seed-help" class="small">控制招募、战斗等随机判定；相同种子与操作可重现战局。</p></details></details></div>`;
@@ -464,8 +475,10 @@ function setPreviewFaction(id,focus=null,reveal=false){
  let selected;
  document.querySelectorAll('input[name=faction]').forEach(input=>{input.checked=input.value===chosen.id;if(input.checked)selected=input;});
  const count=Object.values(preview.initial_owners).filter(owner=>owner===chosen.id).length;
- const description=`${factionDisplayName(chosen)} · ${count}座城池 · 根据地${cityName(chosen.city)}。${resourceSummary(chosen.id,preview)}。地图已预览本剧本归属，开始后才建立新战役。`;
- $('#setup-summary').innerHTML=`${previewRulerPortrait(preview,chosen)}<span class="setup-summary-copy">${escapeHtml(description)}</span>`;
+ const base=cityName(chosen.city);
+ const location=battleText(` · ${count}座都市 · 根據地${base}。`,` · ${count}都市 · 本拠${base}。`);
+ const note=battleText('。地圖已預覽本劇本歸屬，開始後才建立新戰役。','。開始時の所属を表示中です。確定すると新しく開始します。');
+ $('#setup-summary').innerHTML=`${previewRulerPortrait(preview,chosen)}<span class="setup-summary-copy">${escapeHtml(factionDisplayName(chosen))}${location}${setupResourceSummary(chosen.id,preview)}${note}</span>`;
  if(reveal&&selected){
   const row=selected.closest('.faction-choice'),list=row?.closest('.choice-list');
   if(list){const item=row.getBoundingClientRect(),box=list.getBoundingClientRect();if(item.top<box.top)list.scrollTop+=item.top-box.top;else if(item.bottom>box.bottom)list.scrollTop+=item.bottom-box.bottom;}
@@ -710,7 +723,7 @@ async function showCityInformation(id){
    ${preview&&c.facilities?`<p class="small" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">開局町等級 ${c.facilities.town}/3 · 防災 ${c.facilities.preparedness}/99 · ${c.facilities.services.map(service=>({hospital:'醫館',market:'市場',school:'學問所',armory:'武器屋'}[service])).join('、')}</p><p class="small" data-locale-only="ja" data-l10n-native="ja">開始時の町 ${c.facilities.town}/3・防災 ${c.facilities.preparedness}/99・${c.facilities.services.map(service=>({hospital:'医館',market:'市場',school:'学問所',armory:'武器屋'}[service])).join('・')}</p>`:''}
    ${preview?`<p class="small"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">寶 ${c.treasure??0}/99</span><span data-locale-only="ja" data-l10n-native="ja">宝 ${c.treasure??0}/99</span></p>`:typeof GameTreasury!=='undefined'?GameTreasury.summary(view,id):''}
    <dl class="resources"><div class="resource-pair"><dt>資金</dt><dd>${c.gold}</dd></div><div class="resource-pair"><dt>兵糧</dt><dd>${c.grain}</dd></div><div class="resource-pair"><dt>預備兵</dt><dd>${c.reserves}</dd></div></dl>
-   ${!c.frontier_outpost&&c.income?`<p class="small">${c.owner==='neutral'?'无主城暂无月收入':`每月金${c.income.gold} / 粮${c.income.grain} / 预备兵${c.income.reserves}`}</p>`:''}
+   ${c.income?`<p class="small">${c.owner==='neutral'?'无主城暂无月收入':`每月金${c.income.gold} / 粮${c.income.grain} / 预备兵${c.income.reserves}`}</p>`:''}
    <p class="city-information-strength">驻城 ${c.officers.length}/${data.capacity}人 · 武将带兵合计 ${troops}</p>
    ${!preview&&typeof GameCivilStaff!=='undefined'?GameCivilStaff.summary(view,id,{locale:GameI18n.locale,cityName,bilingual:true}):''}
    <div class="roster-scroll"><table class="roster-table"><thead><tr><th>武将</th><th>兵</th><th>武</th><th>知</th><th>德</th><th>忠</th><th>经</th><th>体</th></tr></thead><tbody>${rows||'<tr><td colspan="8">暂无驻军</td></tr>'}</tbody></table></div>
@@ -825,7 +838,7 @@ function frontierOutpostNote({monthly_maintenance:fee,sponsor_city:sponsor},owne
   : owner==='neutral'
    ? [`佔領後由後方郡城負擔每月維護費 ${fee}（資金）。`,`占領後は後方の都市が月額維持費 ${fee}（資金）を負担します。`]
    : [`每月維護費 ${fee}（資金），目前無相通的後方郡城。`,`月額維持費 ${fee}（資金）。現在、陸路が通じる後方都市はありません。`];
- return `<p class="small" data-frontier-outpost>${cityCommandText(`每月資金與兵糧收入皆為 0。${payment[0]}駐軍消耗據點庫存的兵糧。`,`毎月の資金・兵糧収入はともに 0 です。${payment[1]}駐屯軍は拠点に備蓄した兵糧を消費します。`)}</p>`;
+ return `<p class="small" data-frontier-outpost>${cityCommandText(`${payment[0]}維護費隨人口變動。駐軍消耗據點庫存的兵糧。`,`${payment[1]}維持費は人口に応じて変動し、駐屯軍は拠点の兵糧を消費します。`)}</p>`;
 }
 function cityCommandKey(city){return JSON.stringify([view.catalog.scenario_id??'',view.game.player,view.game.seed??'',city.id]);}
 function cityCommandGroup(city){return cityCommandGroups.get(cityCommandKey(city))||'army';}
@@ -891,7 +904,7 @@ function renderCity(){
  <details class="city-background"><summary><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">城池背景與收入</span><span data-locale-only="ja" data-l10n-native="ja">都市の背景・収入</span></summary>
  ${city.owner!=='neutral'?`<p class="small faction-total">${escapeHtml(faction(city.owner))}合计：${resourceSummary(city.owner,null)}</p>`:''}
  ${naming?.detail?`<p class="small city-name-detail">${escapeHtml(naming.detail)}</p>`:''}
- ${outpost?'':`<p class="small city-scale">${scale?`${escapeHtml(scale.label)} · ${city.owner==='neutral'?'无主城暂无月收入':`每月金${income.gold} / 粮${income.grain} / 预备兵${income.reserves}`}`:'本城资源资料待载入。'}</p>`}
+ <p class="small city-scale">${scale&&income?`${escapeHtml(cityTypeLabel(scale))} · ${city.owner==='neutral'?'无主城暂无月收入':`每月金${income.gold} / 粮${income.grain} / 预备兵${income.reserves}`}`:'本城资源资料待载入。'}</p>
  ${cityEconomyNote(scale)}</details><div class="city-command-footer actions" id="city-command-footer">${owned?'':'<button id="home">返回本城</button>'}<button id="end-turn">结束本旬</button></div>`;
  bindCityCommandGroups(city);
  $('#city-information').onclick=()=>showCityInformation(city.id);
@@ -1614,8 +1627,8 @@ function renderBattle(){
  restoreBattleView();
 }
 function renderSuccession(){
- const pending=view.game.extension.pending_succession[view.game.player],ids=sortedOfficers(pending.candidates,'virtue');
- $('#inspector').innerHTML=`<div class="inspector-heading"><h2>选择继承人</h2></div><p>君主已退出，请从本方仍存活的武将中选择继承人。历史武将和地方人才均可继承；确认前暂停城池命令。</p><label class="field">继承人<select id="successor-officer">${ids.map(id=>`<option value="${id}" ${id===pending.provisional?'selected':''}>${escapeHtml(officerChoiceText(id,{loyalty:true}))}</option>`).join('')}</select></label><p class="small" id="successor-summary"></p><div class="actions"><button id="choose-successor" class="primary">确认继承</button></div>`;
+ const pending=view.game.extension.pending_succession[view.game.player],ids=pending.candidates;
+ $('#inspector').innerHTML=`<div class="inspector-heading"><h2>选择继承人</h2></div><p>${battleText('君主已退場，依序從符合條件的史定繼承人、在籍血親及其他在籍武將中選擇。請確認繼承後繼續下達都市命令。','君主が退場しました。史実の継承者、所属する血族、その他の所属武将の順で候補が選ばれます。継承を確定すると都市の命令を再開できます。')}</p><label class="field">继承人<select id="successor-officer">${ids.map(id=>`<option value="${id}" ${id===pending.provisional?'selected':''}>${escapeHtml(officerChoiceText(id,{loyalty:true}))}</option>`).join('')}</select></label><p class="small" id="successor-summary"></p><div class="actions"><button id="choose-successor" class="primary">确认继承</button></div>`;
  const update=()=>{$('#successor-summary').textContent=officerChoiceText(GameOfficerChoices.ref($('#successor-officer').value),{loyalty:true});GameI18n.apply();};$('#successor-officer').onchange=update;update();
  $('#choose-successor').onclick=()=>command('choose_successor',{officer:GameOfficerChoices.ref($('#successor-officer').value)});
 }

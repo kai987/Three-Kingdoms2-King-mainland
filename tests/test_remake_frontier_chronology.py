@@ -67,13 +67,11 @@ class FrontierChronologyTests(unittest.TestCase):
                     self.assertEqual(detail['profile'].get('kind') == 'frontier_outpost', outpost)
                     self.assertEqual(bool(detail['frontier_outpost']), outpost)
                     stocks = {field: detail[field] for field in RESOURCE_FIELDS}
+                    self.assertGreater(min(detail['income'].values()), 0)
                     if outpost:
                         zero = dict.fromkeys(RESOURCE_FIELDS, 0)
-                        self.assertEqual(detail['income'], zero)
                         self.assertEqual(stocks, zero)
                     else:
-                        self.assertGreater(detail['income']['gold'], 0)
-                        self.assertGreater(detail['income']['grain'], 0)
                         parent = PARENT_CITIES[city]
                         scale = TIER_MULTIPLIERS[data['city_profiles'][parent]['tier']]
                         self.assertEqual(stocks, {field: data['initial_city_resources'][parent][field] // (2 * scale)
@@ -112,11 +110,9 @@ class FrontierChronologyTests(unittest.TestCase):
                 self.assertEqual((state.year, state.month, state.day), (year, 1, 1))
                 self.assertIs(state.cities['shuofang'], city)
                 self.assertEqual(city.owner, 'shu')
-                if year == 215:
-                    self.assertEqual((city.gold, city.grain), (60, 80))
-                else:
-                    self.assertGreater(city.gold, 60)
-                    self.assertGreater(city.grain, 80)
+                self.assertGreater(city.gold, 60)
+                self.assertGreater(city.grain, 80)
+                self.assertGreater(city.reserves, 0)
                 receipts = [row for row in state.extension['events']['items'] if row['kind'] == 'city_renamed'
                             and row['city_ids'][0] in CITIES]
                 self.assertEqual({row['city_ids'][0]: row['details']['to_name'] for row in receipts}, renamed)

@@ -5,12 +5,15 @@ import json
 from pathlib import Path
 import sys
 import unittest
+from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import SeedRng
 from remake import civil_staff
 from remake.session import CampaignSession,faction_officer_counts,faction_resources
+from remake.view_transport import ViewTransport
+from campaign_fixtures import controlled_catalog
 
 
 class FactionOfficerCountTests(unittest.TestCase):
@@ -35,6 +38,13 @@ class FactionOfficerCountTests(unittest.TestCase):
             self.assertEqual(row['faction_officers'],{side:expected[side] for side in catalog.factions})
             self.assertEqual(sum(row['faction_officers'].values()),row['serving'])
             self.assertLess(row['serving'],len(catalog.definitions))
+            _, troop_plan = catalog.opening_garrisons
+            expected_troops = Counter()
+            for member in catalog.data['initial_officers']:
+                owner = catalog.data['initial_owners'][member['city']]
+                expected_troops[owner] += troop_plan[member['person_id']]
+            for side, resources in row['faction_resources'].items():
+                self.assertEqual(resources['troops'], expected_troops[side], (row['id'], side))
         self.assertIsNone(session.to_dict());self.assertEqual(session.revision,revision)
         self.assertEqual(before,{key:c.data for key,c in session.catalogs.items()})
 
@@ -43,23 +53,72 @@ class FactionOfficerCountTests(unittest.TestCase):
         expected=faction_officer_counts(session.game.catalog)
         self.assertEqual(session.view()['catalog']['faction_officers'],expected)
         self.assertGreater(len(session.game.state.officers),sum(expected.values())) # Free officers are not faction members.
-        for values in faction_resources(session.game.catalog,session.game.state).values():
-            self.assertEqual(set(values),{'gold','grain','reserves','cities'})
+        opening = faction_resources(session.game.catalog)
+        self.assertEqual(session.view()['catalog']['faction_resources'], opening)
+        for values in opening.values():
+            self.assertEqual(set(values), {'gold', 'grain', 'reserves', 'cities', 'troops'})
         session.preview_city('mainland225-07','jianning')
         self.assertEqual(session.export_save(),saved);self.assertEqual(session.game.state.rng,rng)
         session.load_save(saved,session.revision)
         self.assertEqual(session.view()['catalog']['faction_officers'],expected)
+        self.assertEqual(session.view()['catalog']['faction_resources'], opening)
         self.assertEqual(session.export_save(),saved)
 
     def test_in_transit_officers_are_counted_once(self):
-        session=self.session();before=session.view()['catalog']['faction_officers']
+        session=self.session();before=session.view()['catalog']
         ids=session.game.state.cities['shujun'].roster.officer_ids[:2]
         session.command('transfer',dict(source='shujun',target='baxi',officers=ids),session.revision)
         state=session.game.state
         self.assertTrue(set(ids)<=set(state.extension['travel']['marches'][0]['officers']))
         self.assertTrue(set(ids)<=set(state.cities['shujun'].roster.officer_ids))
-        self.assertEqual(session.view()['catalog']['faction_officers'],before)
+        current = session.view()['catalog']
+        self.assertEqual(current['faction_officers'], before['faction_officers'])
+        for side, resources in current['faction_resources'].items():
+            self.assertEqual(resources['troops'], before['faction_resources'][side]['troops'])
         saved=session.export_save();session.view();self.assertEqual(session.export_save(),saved)
+
+    def test_active_troops_follow_allocation_and_live_battle_losses(self):
+        catalog = controlled_catalog()
+        with patch('remake.session.Catalog', return_value=catalog):
+            session = CampaignSession([ROOT/'controlled.json'])
+        transport = ViewTransport()
+        opening = transport.pack(session.view(), catalog.sha256)
+        preview = opening['static_catalog']['scenarios'][0]['faction_resources']
+        initial = session.command('new', dict(faction='shu', seed=2026), 0)['catalog']['faction_resources']
+        self.assertEqual(initial, preview)
+
+        game = session.game
+        source = game.state.cities['xiangyang']
+        actor, second = source.roster.officer_ids[:2]
+        result = session.command('allocate', dict(city=source.id, officer=actor, troops=240), session.revision)
+        allocated = result['catalog']['faction_resources']
+        self.assertEqual(allocated['shu']['troops'], initial['shu']['troops'] + 60)
+        self.assertEqual(allocated['shu']['reserves'], initial['shu']['reserves'] - 60)
+
+        state = game.state
+        game._start_expanded_battle(state, state.cities[source.id], state.cities['nanyang'], [actor, second])
+        battle = state.battle
+        # One routed formation and one damaged formation exercise both zero
+        # and positive live troop counts before their post-battle writeback.
+        routed = battle['attackers'][1]
+        routed['troops'] = 0
+        battle['defenders'][0]['troops'] -= 17
+        game.validate(state)
+        expected = {
+            'shu': allocated['shu']['troops'] - state.officers[routed['id']].troops,
+            'wei': allocated['wei']['troops'] - 17,
+            'wu': allocated['wu']['troops'],
+        }
+        live = transport.pack(session.view(), catalog.sha256, opening['catalog_token'])
+        self.assertNotIn('static_catalog', live)
+        resources = live['view']['catalog']['faction_resources']
+        self.assertEqual({side: row['troops'] for side, row in resources.items()}, expected)
+
+        payload = dict(battle_id=battle['id'])
+        for command in ('retreat', 'settle'):
+            result = session.command(command, payload, session.revision)
+            resources = result['catalog']['faction_resources']
+            self.assertEqual({side: row['troops'] for side, row in resources.items()}, expected)
 
     def test_actual_recruitment_increases_only_the_recruiting_faction(self):
         session=self.session();game=session.game;state=game.state
