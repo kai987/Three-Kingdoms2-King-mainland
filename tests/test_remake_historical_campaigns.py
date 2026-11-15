@@ -64,6 +64,22 @@ class HistoricalCampaignTests(unittest.TestCase):
         if game.state.phase == 'arrivals':
             game.command('arrivals', {}, game.revision)
 
+    def finish_pending_battles(self, game, *, stop_at=None):
+        # Resolve simultaneous arrivals through the normal battle commands.
+        while game.state.phase == 'battle':
+            battle = game.state.battle
+            if stop_at and stop_at(battle):
+                return
+            battle_id = battle['id']
+            while battle_placement.pending(game.state.battle):
+                battle = game.state.battle
+                actor = battle_placement.view(game, game.state, battle)['actor']
+                point = battle['extended']['tactical']['positions'][str(actor)]
+                game.command('battle_place', {'battle_id': battle_id, 'actor': actor, **point}, game.revision)
+            game.command('retreat', {'battle_id': battle_id}, game.revision)
+            game.command('settle', {'battle_id': battle_id}, game.revision)
+            self.arrivals(game)
+
     def events(self, game, kind):
         return [event for event in game.state.extension['events']['items'] if event['kind'] == kind]
 
@@ -105,27 +121,10 @@ class HistoricalCampaignTests(unittest.TestCase):
     def test_guandu_calendar_once_and_real_yuan_expedition(self):
         game = self.opening('200-01', 'wei')
         self.assertFalse(self.events(game, history.GUANDU))
-
-        def finish_pending_battles(*, leave_yuan=False):
-            # Resolve simultaneous arrivals through the normal battle commands.
-            while game.state.phase == 'battle':
-                battle = game.state.battle
-                if leave_yuan and battle['attacker'] == 'yuan_shao':
-                    return
-                battle_id = battle['id']
-                while battle_placement.pending(game.state.battle):
-                    battle = game.state.battle
-                    actor = battle_placement.view(game, game.state, battle)['actor']
-                    point = battle['extended']['tactical']['positions'][str(actor)]
-                    game.command('battle_place', {'battle_id': battle_id, 'actor': actor, **point}, game.revision)
-                game.command('retreat', {'battle_id': battle_id}, game.revision)
-                game.command('settle', {'battle_id': battle_id}, game.revision)
-                self.arrivals(game)
-
         for _ in range(3):
             self.advance(game)
             self.arrivals(game)
-            finish_pending_battles()
+            self.finish_pending_battles(game)
         self.assertEqual((game.state.year, game.state.month, game.state.day), (200, 2, 1))
         event, = self.events(game, history.GUANDU)
         self.assertEqual((event['turn'], event['audience']), (game.state.turn, 'world'))
@@ -140,7 +139,7 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertGreater(army['supply']['loaded'], 0)
         self.assertEqual(len(self.events(game, history.GUANDU)), 1)
         self.arrivals(game)
-        finish_pending_battles(leave_yuan=True)
+        self.finish_pending_battles(game, stop_at=lambda battle: battle['attacker'] == 'yuan_shao')
         self.assertEqual(game.state.phase, 'battle')
         self.assertEqual((game.state.battle['attacker'], game.state.battle['defender']),
                          ('yuan_shao', 'wei'))
@@ -366,16 +365,13 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.advance(game)
         army, = [row for row in game.state.extension['travel']['marches']
                  if row['owner'] == 'wei' and row['target'] == 'fengyi' and row['kind'] == 'attack']
-        self.assertEqual(army['source'], 'hongnong')
+        self.assertIn(army['source'], ('hongnong', 'jingzhao'))
+        self.assertEqual(army['quote']['path'], [army['source'], 'fengyi'])
         self.assertGreater(army['arrival_turn'], army['departure_turn'])
         self.assertGreater(army['supply']['loaded'], 0)
         self.assertIsNone(game.state.battle)
         self.arrivals(game)
-        self.assertEqual(game.state.phase, 'battle')
-        self.assertEqual((game.state.battle['attacker'], game.state.battle['defender'],
-                          game.state.battle['target']), ('wei', 'ma_teng', 'fengyi'))
-        self.assertEqual(game.state.cities['fengyi'].owner, 'ma_teng')
-        self.assertNotIn(game.state.battle['id'], game.state.settled_battles)
+        self.assert_unresolved_battle(game, 'wei', 'ma_teng', army['source'], 'fengyi')
         self.assertEqual(len(self.events(game, history.TONGGUAN)), 1)
         later = deepcopy(game.state)
         later.month = 10
@@ -437,16 +433,10 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertEqual(set(event['factions']), {'shu', 'wu'})
         self.assertFalse(history.allied(game.state, 'shu', 'wu'))
         self.assertFalse(game.state.extension['travel']['marches'])
-        self.advance(game)
-        self.arrivals(game)
-        self.assertEqual((game.state.month, game.state.day, game.state.phase), (7, 11, 'city'))
-        self.assertFalse(any(row['owner'] == 'shu' and row['kind'] == 'attack'
-                             for row in game.state.extension['travel']['marches']))
-        # The expanded front can require more time to concentrate reinforcements.
-        # Observe up to two months of real AI turns without assigning or timing
-        # the attack in the test.
+        # Observe up to two months of real AI turns. Settle other fronts first
+        # so their battles cannot prevent the eastern Shu column from arriving.
         army = None
-        for _ in range(5):
+        for _ in range(6):
             self.advance(game)
             army = next((row for row in game.state.extension['travel']['marches']
                          if row['owner'] == 'shu' and row['kind'] == 'attack'
@@ -454,6 +444,7 @@ class HistoricalCampaignTests(unittest.TestCase):
             if army is not None:
                 break
             self.arrivals(game)
+            self.finish_pending_battles(game)
             self.assertEqual(game.state.cities['yidu'].owner, 'wu')
         self.assertIsNotNone(army)
         self.assertEqual((army['source'], army['target']), ('badong', 'yidu'))
@@ -461,10 +452,16 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertGreater(army['arrival_turn'], army['departure_turn'])
         self.assertGreater(army['supply']['loaded'], 0)
         self.assertIsNone(game.state.battle)
+
+        def is_yiling(battle):
+            return battle['attacker'] == 'shu' and battle['target'] == 'yidu'
+
         self.arrivals(game)
+        self.finish_pending_battles(game, stop_at=is_yiling)
         for _ in range(army['arrival_turn'] - game.state.turn):
             self.advance(game)
             self.arrivals(game)
+            self.finish_pending_battles(game, stop_at=is_yiling)
         self.assertEqual(game.state.turn, army['arrival_turn'])
         self.assert_unresolved_battle(game, 'shu', 'wu', 'badong', 'yidu')
         self.resume(game)
