@@ -2,7 +2,7 @@
   "schema": "tk2-battlefield-city-bindings-v1",
   "library_schema": "tk2-original-battlefields-v1",
   "policy": {
-    "scope": "Explicit original-map associations for the current 115-city map. The same immutable native grid now supplies both the image and authoritative tactical movement classes; regional reuse does not establish an original city identity. Selection never draws RNG or changes strategic geography or city ownership.",
+    "scope": "Explicit original-map associations for every strategic city and outpost. The same immutable native grid now supplies both the image and authoritative tactical movement classes; regional reuse does not establish an original city identity. Selection never draws RNG or changes strategic geography or city ownership.",
     "direct_original": "Reserved for reviewed ROM city-name/identity evidence, recorded as rom_name_verified with an explicit identity_evidence reference. The initial bindings make no such all-name certification.",
     "regional_reuse": "Author-selected original regional template; never advertised as an additional original city-specific map.",
     "unresolved_source_labels": "Keep source spellings 西安阳/予州/永晶 without guessing corrections. Their bindings are regional_reuse and their compact labels use original city numbers.",
@@ -17,7 +17,7 @@
       "role": "Literal source labels only; not a positional join."
     }
   ],
-  "city_count": 126,
+  "city_count": 129,
   "original_map_count": 30,
   "templates": {
     "original-00": {
@@ -987,6 +987,24 @@
       "kind": "same_label_association",
       "reason_tc": "攻略表「衡陽」與本作城名同標籤；原版資料的具體郡治位置仍未獨立確認。",
       "reason_ja": "攻略資料の「衡陽」と本作の都市名が一致します。原作資料が示す郡治の位置は個別に確認できていません。"
+    },
+    "shuofang": {
+      "map_id": "original-02",
+      "kind": "regional_reuse",
+      "reason_tc": "朔方郡及其臨戎舊址以東漢并州為區域參照，共用原版「并州」戰場。",
+      "reason_ja": "朔方郡と臨戎の旧城には、後漢の并州を地域の参照とし、原作「并州」の戦場を共用します。"
+    },
+    "wuyuan": {
+      "map_id": "original-05",
+      "kind": "regional_reuse",
+      "reason_tc": "攻略表把原版第6城記作「西安阳」，《漢書》所載同名縣在五原郡。本作將第6城用作五原的區域戰場模板，原版地名身分仍待確認。",
+      "reason_ja": "攻略資料は原作第6都市を「西安阳」と記し、『漢書』では同名の県が五原郡に属します。本作は第6都市の戦場を五原に流用し、原作地名の同定は保留とします。"
+    },
+    "yunzhong": {
+      "map_id": "original-02",
+      "kind": "regional_reuse",
+      "reason_tc": "雲中故城位於東漢并州北部，共用原版「并州」戰場作為區域模板。",
+      "reason_ja": "雲中の旧城は後漢の并州北部にあり、原作「并州」の戦場を地域用テンプレートとして共用します。"
     }
   }
 }

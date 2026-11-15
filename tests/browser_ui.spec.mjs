@@ -2536,7 +2536,7 @@ test.describe('first-session assistance',()=>{
  test('initial language, compact previews and optional three-turn guidance preserve real commands',async({page},testInfo)=>{
   await opening(page);await expect(page.locator('html')).toHaveAttribute('lang','ja');
   const boot=await page.evaluate(async()=>{const r=await fetch(new URL('runtime/engine-manifest.json',location.href));return (await r.json()).previews;});
-  // The 126-city catalog adds opening ownership and garrison data to this bundle.
+  // The catalog adds opening ownership and garrison data to this bundle.
   expect(boot.encoding).toBe('gzip');expect(boot.bytes).toBeLessThan(3*1024*1024+32*1024);
   await expect(page.locator('#scenario')).toHaveValue('mainland184-02');await page.locator('input[name=faction][value=han]').check();await page.locator('#begin').click();await waitIdle(page);await tacticalDismiss(page);
   const raw=()=>page.evaluate(async()=>{const r=await fetch('/api/save');return r.json();});

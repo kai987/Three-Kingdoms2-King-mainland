@@ -17,7 +17,7 @@
     "officer_relations_sha256": "c309e4ca0798949e7f691e0e15bad321d80070454978441d524767763775ad23"
   },
   "summary": {
-    "cities": 3384,
+    "cities": 3471,
     "serving": 8988,
     "rulers": 320,
     "ordinary_serving": 8668,
@@ -33,7 +33,7 @@
     "relationship_matches": 405,
     "relationship_exceptions": 15,
     "relationship_loyalty_increased": 311,
-    "preview_cities_checked": 3384,
+    "preview_cities_checked": 3471,
     "preview_officers_checked": 8988
   },
   "scenarios": [
@@ -44,7 +44,7 @@
       "month": 2,
       "player": "han",
       "seed": 2026,
-      "cities": 114,
+      "cities": 117,
       "serving": 135,
       "rulers": 9,
       "ordinary_serving": 126,
@@ -66,7 +66,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 114,
+      "preview_cities_checked": 117,
       "preview_officers_checked": 135,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -207,7 +207,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "d836b3c83b38cdf973f87b471324ec4d1233dbdd1a0ee9fd978c4c6a384e6e80",
+      "opening_save_sha256": "5d4aa0b54244f39686746d80b3d41b91b6d407e0276915cac6eee058ae588d87",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -1292,7 +1292,7 @@
       "month": 6,
       "player": "han",
       "seed": 2026,
-      "cities": 114,
+      "cities": 117,
       "serving": 109,
       "rulers": 11,
       "ordinary_serving": 98,
@@ -1314,7 +1314,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 114,
+      "preview_cities_checked": 117,
       "preview_officers_checked": 109,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -1455,7 +1455,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "4707d2134b4b97a7a592173b4c9a3ef5f01abfd00bcda8b07944c64125bbd337",
+      "opening_save_sha256": "3f36b87c236bbd065d3271ea7922765ba10829114f6596688b204dc10896e3a3",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -2894,7 +2894,7 @@
       "month": 1,
       "player": "dong_zhuo",
       "seed": 2026,
-      "cities": 114,
+      "cities": 117,
       "serving": 256,
       "rulers": 27,
       "ordinary_serving": 229,
@@ -2916,7 +2916,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 114,
+      "preview_cities_checked": 117,
       "preview_officers_checked": 256,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -3057,7 +3057,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "b5c39aa72e58c4794877bb131db4ae37e5babea1e4ce47a3e49867da2aeea930",
+      "opening_save_sha256": "76b0be61b6aa47b87e2b6dbd839f634617d060f5b14ef20b25f9faffa36fd88b",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -5024,7 +5024,7 @@
       "month": 10,
       "player": "dong_zhuo",
       "seed": 2026,
-      "cities": 114,
+      "cities": 117,
       "serving": 304,
       "rulers": 23,
       "ordinary_serving": 281,
@@ -5046,7 +5046,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 114,
+      "preview_cities_checked": 117,
       "preview_officers_checked": 304,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -5187,7 +5187,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "ef7ecf0bb1f17599989ba6ea569bb2ef843efbf466629b188d6f0250c82cee49",
+      "opening_save_sha256": "4432a327466b6fa2bb366c37cb1a940e01063745dbc344e92e206136268c4ff3",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -7225,7 +7225,7 @@
       "month": 6,
       "player": "yuan_shao",
       "seed": 2026,
-      "cities": 114,
+      "cities": 117,
       "serving": 294,
       "rulers": 23,
       "ordinary_serving": 271,
@@ -7247,7 +7247,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 114,
+      "preview_cities_checked": 117,
       "preview_officers_checked": 294,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -7388,7 +7388,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "6cf7bc2552a720725e38bb91851a8a1290a133ec96fef435e47eeef80093525c",
+      "opening_save_sha256": "a87e905e21ebd1388d7627c0f5568efd914d17bd862a593c2ec9cdb53670a00f",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -9525,7 +9525,7 @@
       "month": 6,
       "player": "yuan_shao",
       "seed": 2026,
-      "cities": 115,
+      "cities": 118,
       "serving": 282,
       "rulers": 22,
       "ordinary_serving": 260,
@@ -9547,7 +9547,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 115,
+      "preview_cities_checked": 118,
       "preview_officers_checked": 282,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -9702,7 +9702,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "4068b49789562f25da31fc859ea7ce000ac1978d66a9bba262104b859695d383",
+      "opening_save_sha256": "a082c632ae1ab28e0eae9cc97afc21f338421c69a4f8fd7f86bdf1d883755048",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -12137,7 +12137,7 @@
       "month": 7,
       "player": "yuan_shao",
       "seed": 2026,
-      "cities": 116,
+      "cities": 119,
       "serving": 279,
       "rulers": 22,
       "ordinary_serving": 257,
@@ -12159,7 +12159,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 116,
+      "preview_cities_checked": 119,
       "preview_officers_checked": 279,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -12216,7 +12216,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "5499dfb9c03e1950ae6a1412cb9439a93750bc3654abea90454e3cdfa55aa5e2",
+      "opening_save_sha256": "916cb8aaf1c6e1c89937bf0f844221262f0635b80516687cf2af5fb23d34c86b",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -14600,7 +14600,7 @@
       "month": 3,
       "player": "yuan_shao",
       "seed": 2026,
-      "cities": 115,
+      "cities": 118,
       "serving": 296,
       "rulers": 20,
       "ordinary_serving": 276,
@@ -14622,7 +14622,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 115,
+      "preview_cities_checked": 118,
       "preview_officers_checked": 296,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -14777,7 +14777,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "1d2b99bcfef1bb3e95568f180cc0ee10fdbfa702e2ac609ea128d1275ce77f5a",
+      "opening_save_sha256": "fa0e211b77c01a4502a88f4792cc9cdf0096d839c6e2c4af2de94ac76743207f",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -17253,7 +17253,7 @@
       "month": 1,
       "player": "yuan_shao",
       "seed": 2026,
-      "cities": 115,
+      "cities": 118,
       "serving": 310,
       "rulers": 12,
       "ordinary_serving": 298,
@@ -17275,7 +17275,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 115,
+      "preview_cities_checked": 118,
       "preview_officers_checked": 310,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -17416,7 +17416,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "fe304e93f8c1f852fcb10c132c6cfd068be79a1cb1d70d6c21aed1287f0208aa",
+      "opening_save_sha256": "8a8f3cb3aa0a67aca62104f60c81f6f26c871a0516cc27d9683ede7b38e9fafe",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -19924,7 +19924,7 @@
       "month": 5,
       "player": "yuan_shao",
       "seed": 2026,
-      "cities": 116,
+      "cities": 119,
       "serving": 297,
       "rulers": 12,
       "ordinary_serving": 285,
@@ -19946,7 +19946,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 116,
+      "preview_cities_checked": 119,
       "preview_officers_checked": 297,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -19989,7 +19989,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "d9097ab3eb6f307c95ffed58280740242749c1b4f9a5b822d8ccd42464a169c6",
+      "opening_save_sha256": "18d36b3db453a3d19aedc9d34141c6be3a87626e6db62d86947966aa305e836e",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -22449,7 +22449,7 @@
       "month": 6,
       "player": "wei",
       "seed": 2026,
-      "cities": 115,
+      "cities": 118,
       "serving": 316,
       "rulers": 15,
       "ordinary_serving": 301,
@@ -22471,7 +22471,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 115,
+      "preview_cities_checked": 118,
       "preview_officers_checked": 316,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -22612,7 +22612,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "2e16cdebf34a7f99302defa4e54e2ed8fb3e9656b43fe7cb06510481de648c67",
+      "opening_save_sha256": "861ddd41b3207d1dfd7fe788db25c16ec76d6a620cbe58109144bb63e42a0a66",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -25019,7 +25019,7 @@
       "month": 9,
       "player": "wei",
       "seed": 2026,
-      "cities": 115,
+      "cities": 118,
       "serving": 353,
       "rulers": 12,
       "ordinary_serving": 341,
@@ -25041,7 +25041,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 115,
+      "preview_cities_checked": 118,
       "preview_officers_checked": 353,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -25182,7 +25182,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "75ed9b79b27911ae3e2f88afe32aedd430a33bbc9da30037b8fe38d6cd2a6ecd",
+      "opening_save_sha256": "3ebb4a1774b8ec9ee2b480588f0173eaab208851fbe9254a12795e52827963bf",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -27635,7 +27635,7 @@
       "month": 10,
       "player": "wei",
       "seed": 2026,
-      "cities": 117,
+      "cities": 120,
       "serving": 395,
       "rulers": 15,
       "ordinary_serving": 380,
@@ -27657,7 +27657,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 117,
+      "preview_cities_checked": 120,
       "preview_officers_checked": 395,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -27854,7 +27854,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "d4ffb074d2ee1a44386c42b655680664d559a50244bc8416c33e6a3176e5d038",
+      "opening_save_sha256": "26821ea55b02c476cdaff6f379269cb80ee0ff6f3ca48ed1d470ddabf3a12934",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -30245,7 +30245,7 @@
       "month": 6,
       "player": "wei",
       "seed": 2026,
-      "cities": 117,
+      "cities": 120,
       "serving": 395,
       "rulers": 10,
       "ordinary_serving": 385,
@@ -30267,7 +30267,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 117,
+      "preview_cities_checked": 120,
       "preview_officers_checked": 395,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -30310,7 +30310,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "ec5688d8e22c6c44df1e004b68a199ea893385f381d4e319bc2550d8628364ac",
+      "opening_save_sha256": "6471d15e544e1ab2f5d0c9430c53f9d2f00e132b848fefa8cbdeedd40447297e",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -32724,7 +32724,7 @@
       "month": 11,
       "player": "wei",
       "seed": 2026,
-      "cities": 117,
+      "cities": 120,
       "serving": 384,
       "rulers": 8,
       "ordinary_serving": 376,
@@ -32746,7 +32746,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 117,
+      "preview_cities_checked": 120,
       "preview_officers_checked": 384,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -32817,7 +32817,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "f43edf3837c518694d880032a41784d8a3af7312afaf1ea3cc32001bea6ea072",
+      "opening_save_sha256": "558fd1b1d683e312d44d30e3505112eff4483d302f9334eaabebd20d38beb544",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -35201,7 +35201,7 @@
       "month": 7,
       "player": "wei",
       "seed": 2026,
-      "cities": 117,
+      "cities": 120,
       "serving": 393,
       "rulers": 10,
       "ordinary_serving": 383,
@@ -35223,7 +35223,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 117,
+      "preview_cities_checked": 120,
       "preview_officers_checked": 393,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -35406,7 +35406,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "0c26784c74972af67a778ac010084288714834e2fc7d3230f2b3bdd9b15c3ac2",
+      "opening_save_sha256": "cf6d89d37ee2699cc706f564ceaba88393593b4ae54b6bae824677fca34c8fbe",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -37797,7 +37797,7 @@
       "month": 6,
       "player": "wei",
       "seed": 2026,
-      "cities": 117,
+      "cities": 120,
       "serving": 385,
       "rulers": 11,
       "ordinary_serving": 374,
@@ -37819,7 +37819,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 117,
+      "preview_cities_checked": 120,
       "preview_officers_checked": 385,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -37876,7 +37876,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "55ce4138688771ca6978d91461eddedc9ebc629fdb79a69d8a5708de39c2ae92",
+      "opening_save_sha256": "ad8a3a5393cfbf0db6e2267945500f8ecbca943308600ceec7966459f25a31c0",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -40101,7 +40101,7 @@
       "month": 12,
       "player": "wei",
       "seed": 2026,
-      "cities": 117,
+      "cities": 120,
       "serving": 366,
       "rulers": 9,
       "ordinary_serving": 357,
@@ -40123,7 +40123,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 117,
+      "preview_cities_checked": 120,
       "preview_officers_checked": 366,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -40320,7 +40320,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "384fd7645fba0228143fc85031a407fc80e5635560cd92ee73447dd99fca5f49",
+      "opening_save_sha256": "5c5959704c86f123b9569fa328ec4155016467c31c34370b79ac3d18b77d5e9c",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -42560,7 +42560,7 @@
       "month": 8,
       "player": "wei",
       "seed": 2026,
-      "cities": 118,
+      "cities": 121,
       "serving": 368,
       "rulers": 5,
       "ordinary_serving": 363,
@@ -42582,7 +42582,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 118,
+      "preview_cities_checked": 121,
       "preview_officers_checked": 368,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -42723,7 +42723,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "104d653e991c660f54175982aa9ea8214d157d80147ab49deda5537addea51bf",
+      "opening_save_sha256": "205461f10adb6d03bdf931ab85a0a609afc97a9cb479824a15675288f915524a",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -44917,7 +44917,7 @@
       "month": 7,
       "player": "wei",
       "seed": 2026,
-      "cities": 118,
+      "cities": 121,
       "serving": 372,
       "rulers": 5,
       "ordinary_serving": 367,
@@ -44939,7 +44939,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 118,
+      "preview_cities_checked": 121,
       "preview_officers_checked": 372,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -45080,7 +45080,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "89d137f27e6ef695b7fa2871a02ba35e0c51209cef731f441da255af9bc57665",
+      "opening_save_sha256": "e9a307902c00f8e58f00749f9b93fb5131da5b4188a34d9b427798db992be48b",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -47193,7 +47193,7 @@
       "month": 7,
       "player": "wei",
       "seed": 2026,
-      "cities": 118,
+      "cities": 121,
       "serving": 394,
       "rulers": 5,
       "ordinary_serving": 389,
@@ -47215,7 +47215,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 118,
+      "preview_cities_checked": 121,
       "preview_officers_checked": 394,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -47356,7 +47356,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "e418fa3598a22542d5966d75f1c5819f459dbcb88c3ee3435b065dfe0dd5fbc5",
+      "opening_save_sha256": "ed542ba360d69adc20ca90b329ae49a31ad773de77b79c312d2191c606f687de",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -49481,7 +49481,7 @@
       "month": 7,
       "player": "wei",
       "seed": 2026,
-      "cities": 118,
+      "cities": 121,
       "serving": 356,
       "rulers": 5,
       "ordinary_serving": 351,
@@ -49503,7 +49503,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 118,
+      "preview_cities_checked": 121,
       "preview_officers_checked": 356,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -49644,7 +49644,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "739c12b48a78802e415463c8e2afd23ede7f1b7f2af9657897f6b267bfff5451",
+      "opening_save_sha256": "56396a3783c9e912c56ba4d7b13dfdf91170f830a996888391a2a598c58eece3",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -51349,7 +51349,7 @@
       "month": 7,
       "player": "wei",
       "seed": 2026,
-      "cities": 118,
+      "cities": 121,
       "serving": 317,
       "rulers": 6,
       "ordinary_serving": 311,
@@ -51371,7 +51371,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 118,
+      "preview_cities_checked": 121,
       "preview_officers_checked": 317,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -51512,7 +51512,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "e2025b5763535c31d96156cfc0a6b71facbc78f9b5be4b73169359eeba3ddc2a",
+      "opening_save_sha256": "c3641fcbc99a749b8df240649569c0ca4a7a4e549eb687d321f194adcd2e9601",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -52934,7 +52934,7 @@
       "month": 2,
       "player": "wei",
       "seed": 2026,
-      "cities": 118,
+      "cities": 121,
       "serving": 330,
       "rulers": 4,
       "ordinary_serving": 326,
@@ -52956,7 +52956,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 118,
+      "preview_cities_checked": 121,
       "preview_officers_checked": 330,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -53097,7 +53097,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "50df1ee43e35babf83bd1f0306a73a0e0b9209dcaf3f4cb4a0af27611b45fb92",
+      "opening_save_sha256": "9f5de40dd833e2c9d13f5971fc76aa17f19f55428290c6e118a23e3b6ce71476",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -54363,7 +54363,7 @@
       "month": 2,
       "player": "wei",
       "seed": 2026,
-      "cities": 118,
+      "cities": 121,
       "serving": 304,
       "rulers": 4,
       "ordinary_serving": 300,
@@ -54385,7 +54385,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 118,
+      "preview_cities_checked": 121,
       "preview_officers_checked": 304,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -54526,7 +54526,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "1ecab81a156e71b297ad735d8244077ecd7ff1da818a0f9e5f17c66d591e593d",
+      "opening_save_sha256": "4ccd546347da91c95eb8c98044d02c4ab4e404de4baccf951693d96dc90d589d",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -55456,7 +55456,7 @@
       "month": 1,
       "player": "wei",
       "seed": 2026,
-      "cities": 118,
+      "cities": 121,
       "serving": 302,
       "rulers": 4,
       "ordinary_serving": 298,
@@ -55478,7 +55478,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 118,
+      "preview_cities_checked": 121,
       "preview_officers_checked": 302,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -55549,7 +55549,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "e895b095551eef34437dc9af1cd80c26fbe02ebcae1c5c2e318d8d83603fa86a",
+      "opening_save_sha256": "234c506084c3e4e114c60da625d2ee609e83ee798d9c7c19cb1b2c8e32bc0d90",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -56463,7 +56463,7 @@
       "month": 1,
       "player": "wei",
       "seed": 2026,
-      "cities": 118,
+      "cities": 121,
       "serving": 296,
       "rulers": 4,
       "ordinary_serving": 292,
@@ -56485,7 +56485,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 118,
+      "preview_cities_checked": 121,
       "preview_officers_checked": 296,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -56626,7 +56626,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "a4d21dd08027c6964b1f583ea3d0fee306ca1c5cd5389679c870a3d3cc773e45",
+      "opening_save_sha256": "c38f8f7cc654fbd0ffd8f0d592efe5e01b7c8bbe719037f0fdb7668e4f2a4ec1",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -57442,7 +57442,7 @@
       "month": 1,
       "player": "wei",
       "seed": 2026,
-      "cities": 119,
+      "cities": 122,
       "serving": 242,
       "rulers": 3,
       "ordinary_serving": 239,
@@ -57464,7 +57464,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 119,
+      "preview_cities_checked": 122,
       "preview_officers_checked": 242,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -57605,7 +57605,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "81172400f6f720fe77a1f643da7a870e5a9970a556d07f43168ed4f4a81d6dcc",
+      "opening_save_sha256": "010552e243717111ac93cf89d9cde0528c201efcd2519a3e1355dc23b72739c8",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -58124,7 +58124,7 @@
       "month": 5,
       "player": "wei",
       "seed": 2026,
-      "cities": 124,
+      "cities": 127,
       "serving": 158,
       "rulers": 4,
       "ordinary_serving": 154,
@@ -58146,7 +58146,7 @@
       },
       "city_capacity": 99,
       "battle_capacity": 10,
-      "preview_cities_checked": 124,
+      "preview_cities_checked": 127,
       "preview_officers_checked": 158,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
@@ -58287,7 +58287,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "5c290343bd016128f13aa71f29bf3bde780d8e416211e8b5d6ecfb01c8af759f",
+      "opening_save_sha256": "fcbe72258ffe9f03fbcab5de287aa2f9b387ec7b09dc6cfba94aea5baf94503f",
       "changed_people": [
         {
           "person_id": "san14-candidate-0348",

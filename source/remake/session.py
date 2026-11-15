@@ -2,7 +2,7 @@
 from threading import RLock
 from .campaign import Campaign, Catalog, GameError
 from .map_presentation import city_names,presentation,faction_colors
-from .city_economy import profiles_at,incomes_at
+from .city_economy import frontier_outposts_view,income_at,incomes_at,profile_at,profiles_at
 from .officer_relations import opening_values
 from .dated_events import visible_factions
 
@@ -106,6 +106,7 @@ class CampaignSession:
         month=date.month if self.game.state else date['start_month']
         result['catalog']['city_profiles']=profiles_at(self.game.catalog.data,year,month)
         result['catalog']['city_income']=incomes_at(self.game.catalog.data,year,month)
+        result['catalog']['frontier_outposts']=frontier_outposts_view(self.game.catalog.data,self.game.state)
         if self.game.state:
             from .facilities import adjusted_income
             from . import city_development
@@ -145,7 +146,8 @@ class CampaignSession:
                                            'active_cities':list(c.data['active_cities']),
                                            'city_names':city_names(c,c.data['start_year'],c.data['start_month']),
                                            'map_cities':list(c.map_cities.values()),
-                                           'city_profiles':{key:{'tier':profile['tier']} for key,profile in c.data.get('city_profiles',{}).items()},
+                                           'city_profiles':{key:{field:profile[field] for field in ('tier','kind') if field in profile}
+                                               for key,profile in profiles_at(c.data,c.data['start_year'],c.data['start_month']).items()},
                                            'world':c.data.get('world'),
                                            'road_additions':c.data.get('road_additions',[]),
                                            'added_city_ids':c.data.get('added_city_ids',[]),
@@ -217,11 +219,13 @@ class CampaignSession:
                 damage=0,services=['hospital','market']+(['school','armory'] if town>=2 else []))
             history=d.get('city_history',{}).get(city,{})
             neutral_name=history.get('neutral_label') or ('地方汉郡（中立）' if history.get('opening',{}).get('basis')=='unmapped_local_han_administration' else '无主')
+            frontier=frontier_outposts_view(d).get(city)
             return dict(scenario=scenario,title=d['title'],year=d['start_year'],month=d['start_month'],
                 capacity=c.rules.city_officer_capacity,
                 city=dict(id=city,owner=owner,treasure=treasure,facilities=facilities,city_development=opening_view(c,city),owner_name=c.factions[owner]['name'] if owner!='neutral' else neutral_name,
                     terrain=c.map_cities[city].get('terrain'),officers=officers,
-                    profile=d.get('city_profiles',{}).get(city),income=d.get('city_income',{}).get(city),history=d.get('city_history',{}).get(city),
+                    profile=profile_at(d,city,d['start_year'],d['start_month']),income=income_at(d,city,d['start_year'],d['start_month']),
+                    history=d.get('city_history',{}).get(city),frontier_outpost=frontier,
                     **stocks[city]))
 
     def load_save(self, save, revision):

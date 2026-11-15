@@ -274,11 +274,19 @@ class CivilStaffEventTests(unittest.TestCase):
 
     def test_monthly_salary_summary_can_cover_the_whole_faction_in_one_event(self):
         campaign, state = self.fixture()
+        campaign.catalog.map_cities.update({
+            f'city-{index}': None for index in range(128)})
+        cities = len(campaign.catalog.map_cities)
+        staff = cities * 99
+        amount = staff * 5
         emit(campaign, state, 'staff_salary', city_ids=['home'], factions=['shu'], details=dict(
-            amount=62370, paid=62365, bonus=dict(gold=230, grain=200, reserves=80),
-            counts=dict(staff=12474, total_unpaid=1, cities=126)))
+            amount=amount, paid=amount-5, bonus=dict(gold=230, grain=200, reserves=80),
+            counts=dict(staff=staff, total_unpaid=1, cities=cities)))
         validate_events(campaign, state)
         self.assertEqual(len(state.extension['events']['items']), 1)
+        state.extension['events']['items'][0]['details']['counts']['cities'] += 1
+        with self.assertRaisesRegex(ValueError, 'Civil staff event counts'):
+            validate_events(campaign, state)
 
     def test_staff_executed_historical_recruitment_emits_one_safe_success_or_failure(self):
         for success in (False, True):

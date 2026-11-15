@@ -3,11 +3,11 @@
   "policy": "Existing logical legs only. Actual rendered SVG curves; no straight-line fallback. Land city_sections identify exact intermediate city stops; runtime must enforce active-city transit. Geographic conversion belongs to the campaign compiler.",
   "sources": {
     "game/build_route_geometry.cjs": "ed8b7be184253d72832d0f14284a401b8252056aac2e14ec913e12a80847bef6",
-    "game/build_campaigns.py": "7c96a480ad7d1f18d920174925350a45dca8467ea2b30b052330675542195f13",
+    "game/build_campaigns.py": "35ecbdd8909f2f5ba0f25583a7256d938fbfc868d3d4a1d7207eddcb71f10fd8",
     "game/config/road-centers.json": "80b5cb839ffa60f9e134ba1631c220e3e1de4b0d56e7fc70c449bbe374d0dd33",
     "game/road_centers.py": "16e16ab039fe15605f27d9e46df18ad945014b2aec9f5dd9eb4e9df32f74cdea",
-    "game/config/navigation-geometry.json": "9147bf30d926cc7dfa3822addbe95675fd89fcf80da579c6b47edbaa374c5425",
-    "game/config/route-corridors.json": "288b590a6d17826182fb63b50cc1ecb638d422454c5d01fa99b18cc8a66579c9",
+    "game/config/navigation-geometry.json": "97139c0723485f797efc9277dca04cc81821d66cd6e5295e36c776aa52f23d6c",
+    "game/config/route-corridors.json": "833ef08b8ae27497ef7673530982f89ac6861c34f960192d88016dfa97eaf96a",
     "game/road_history.py": "4513459c4f635d2b617d6e04d87207fb987bcfe3a87b6168c4228dbd104c18d6",
     "game/config/road-history.json": "5350706e4e1f430fc6cc1382f23db412fc881326914ff546466ea834a11ad35e",
     "game/build_navigation_geometry.cjs": "5a8b8606934b10d02c6f078388e50aad8b41ae7092f9a3dd4625e3ab02c13cda",
@@ -17,8 +17,8 @@
     "game/app.js": "35d7ec8aa5056b75674f9dc16e343498a348041cc36112cbc32253ad35c59585",
     "game/config/route-render-source.json": "c5047ab0f7f8bef5ccd1f511778d051c7522e125d432718a59ee3805f469ecea",
     "game/config/campaigns/shared.json": "a0dbe54a23e95a4457001f4fa32fd4bfeeb5ab17609f3257551117a824ff83ed",
-    "game/config/campaigns/city-expansion-map.json": "504f65d69d347dfea175adb2bb710da0d3a00bf9149b47e902e9864422b9587f",
-    "game/config/campaigns/city-expansion-openings.json": "2e23b6e192c15e90401a34fa8db0b00b5daa32146c876a5e8bbc7f72d71a0617",
+    "game/config/campaigns/city-expansion-map.json": "122f34ed1de5681dac955fd3812f7d4d668800587898b54024be1c79c39678b8",
+    "game/config/campaigns/city-expansion-openings.json": "e9b1fb2bc466f20fd93ca7a29ec619d4f993ad67aaf3e48bb1e02b74a0e03d9a",
     "game/config/campaigns/index.json": "0b5095ca8de43f8201f979d88d289015da7536e5b3795a2ca8cc519e555699d3",
     "game/config/campaigns/scenarios/184-02.json": "e90a2ddd9430c27ff2dea268e5751329aec3fbfcbc0d442ec7cda3f85fcc9521",
     "game/config/campaigns/scenarios/188-06.json": "ec1b9974d9054e67fdf58f89b602ebcf8395dae085cf9d687ca01d7b2ed1a4b7",
@@ -50,7 +50,7 @@
     "game/config/campaigns/scenarios/249-01.json": "6b1e6b45879b7ee5198c9ccabc754d71cc6222c218e71bf6fcd5eb32d2939ac4",
     "game/config/campaigns/scenarios/263-05.json": "3cd4d27cd0ded417113525a4a74d06e3120ef56dd6e2845b7df45343f63f8ccd"
   },
-  "input_geometry_sha256": "f74ad60bc39dc78c2011fa08292a2048b1a1339cc21ea272b63454bc90682732",
+  "input_geometry_sha256": "63e1b8dc0bdbe5a36881320d382331bca337682ac0ef7f5478108a4eb3f91e27",
   "routes": {
     "anding:fufeng:land": {
       "from": "anding",
@@ -15891,6 +15891,226 @@
         }
       ]
     },
+    "anding:shuofang:land": {
+      "from": "anding",
+      "to": "shuofang",
+      "mode": "land",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            434,
+            270
+          ],
+          "end": [
+            410,
+            97
+          ],
+          "d": "M434 270L426 261Q418 252 409 244.5Q400 237 389.5 231Q379 225 373.5 216Q368 207 375 193.5Q382 180 386 167Q390 154 390.5 141.5Q391 129 394.5 120.5Q398 112 404 104.5L410 97",
+          "length_px": 209.759872,
+          "chord_px": 174.656806,
+          "pieces": [
+            {
+              "d": "M434 270L426 261Q418 252 409 244.5Q400 237 389.5 231Q379 225 373.5 216Q368 207 375 193.5Q382 180 386 167Q390 154 390.5 141.5Q391 129 394.5 120.5Q398 112 404 104.5L410 97",
+              "reverse": false
+            }
+          ]
+        }
+      ],
+      "city_sections": [
+        {
+          "from": "anding",
+          "to": "shuofang",
+          "parts": [
+            {
+              "mode": "land",
+              "start": [
+                434,
+                270
+              ],
+              "end": [
+                410,
+                97
+              ],
+              "d": "M434 270L426 261Q418 252 409 244.5Q400 237 389.5 231Q379 225 373.5 216Q368 207 375 193.5Q382 180 386 167Q390 154 390.5 141.5Q391 129 394.5 120.5Q398 112 404 104.5L410 97",
+              "length_px": 209.759872,
+              "chord_px": 174.656806,
+              "pieces": [
+                {
+                  "d": "M434 270L426 261Q418 252 409 244.5Q400 237 389.5 231Q379 225 373.5 216Q368 207 375 193.5Q382 180 386 167Q390 154 390.5 141.5Q391 129 394.5 120.5Q398 112 404 104.5L410 97",
+                  "reverse": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "shuofang:wuyuan:land": {
+      "from": "shuofang",
+      "to": "wuyuan",
+      "mode": "land",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            410,
+            97
+          ],
+          "end": [
+            569,
+            56
+          ],
+          "d": "M410 97L418 93Q426 89 438.5 84Q451 79 463 72Q475 65 485 59.5Q495 54 506 52.5Q517 51 527.5 52.5Q538 54 544.5 55.5Q551 57 560 56.5L569 56",
+          "length_px": 169.644897,
+          "chord_px": 164.201096,
+          "pieces": [
+            {
+              "d": "M410 97L418 93Q426 89 438.5 84Q451 79 463 72Q475 65 485 59.5Q495 54 506 52.5Q517 51 527.5 52.5Q538 54 544.5 55.5Q551 57 560 56.5L569 56",
+              "reverse": false
+            }
+          ]
+        }
+      ],
+      "city_sections": [
+        {
+          "from": "shuofang",
+          "to": "wuyuan",
+          "parts": [
+            {
+              "mode": "land",
+              "start": [
+                410,
+                97
+              ],
+              "end": [
+                569,
+                56
+              ],
+              "d": "M410 97L418 93Q426 89 438.5 84Q451 79 463 72Q475 65 485 59.5Q495 54 506 52.5Q517 51 527.5 52.5Q538 54 544.5 55.5Q551 57 560 56.5L569 56",
+              "length_px": 169.644897,
+              "chord_px": 164.201096,
+              "pieces": [
+                {
+                  "d": "M410 97L418 93Q426 89 438.5 84Q451 79 463 72Q475 65 485 59.5Q495 54 506 52.5Q517 51 527.5 52.5Q538 54 544.5 55.5Q551 57 560 56.5L569 56",
+                  "reverse": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "wuyuan:yunzhong:land": {
+      "from": "wuyuan",
+      "to": "yunzhong",
+      "mode": "land",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            569,
+            56
+          ],
+          "end": [
+            688,
+            123
+          ],
+          "d": "M569 56L577.5 60.5Q586 65 596.5 70.5Q607 76 617 81Q627 86 636.5 91Q646 96 653 97.5Q660 99 667 103.5Q674 108 681 115.5L688 123",
+          "length_px": 137.883392,
+          "chord_px": 136.565003,
+          "pieces": [
+            {
+              "d": "M569 56L577.5 60.5Q586 65 596.5 70.5Q607 76 617 81Q627 86 636.5 91Q646 96 653 97.5Q660 99 667 103.5Q674 108 681 115.5L688 123",
+              "reverse": false
+            }
+          ]
+        }
+      ],
+      "city_sections": [
+        {
+          "from": "wuyuan",
+          "to": "yunzhong",
+          "parts": [
+            {
+              "mode": "land",
+              "start": [
+                569,
+                56
+              ],
+              "end": [
+                688,
+                123
+              ],
+              "d": "M569 56L577.5 60.5Q586 65 596.5 70.5Q607 76 617 81Q627 86 636.5 91Q646 96 653 97.5Q660 99 667 103.5Q674 108 681 115.5L688 123",
+              "length_px": 137.883392,
+              "chord_px": 136.565003,
+              "pieces": [
+                {
+                  "d": "M569 56L577.5 60.5Q586 65 596.5 70.5Q607 76 617 81Q627 86 636.5 91Q646 96 653 97.5Q660 99 667 103.5Q674 108 681 115.5L688 123",
+                  "reverse": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "yunzhong:yanmen:land": {
+      "from": "yunzhong",
+      "to": "yanmen",
+      "mode": "land",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            688,
+            123
+          ],
+          "end": [
+            738,
+            101
+          ],
+          "d": "M688 123L694 121.5Q700 120 708 120.5Q716 121 721 116.5Q726 112 732 106.5L738 101",
+          "length_px": 57.267273,
+          "chord_px": 54.626001,
+          "pieces": [
+            {
+              "d": "M688 123L694 121.5Q700 120 708 120.5Q716 121 721 116.5Q726 112 732 106.5L738 101",
+              "reverse": false
+            }
+          ]
+        }
+      ],
+      "city_sections": [
+        {
+          "from": "yunzhong",
+          "to": "yanmen",
+          "parts": [
+            {
+              "mode": "land",
+              "start": [
+                688,
+                123
+              ],
+              "end": [
+                738,
+                101
+              ],
+              "d": "M688 123L694 121.5Q700 120 708 120.5Q716 121 721 116.5Q726 112 732 106.5L738 101",
+              "length_px": 57.267273,
+              "chord_px": 54.626001,
+              "pieces": [
+                {
+                  "d": "M688 123L694 121.5Q700 120 708 120.5Q716 121 721 116.5Q726 112 732 106.5L738 101",
+                  "reverse": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "jiangyang:bajun:river": {
       "from": "jiangyang",
       "to": "bajun",
@@ -30068,8 +30288,8 @@
   },
   "audit": {
     "catalogs": 29,
-    "input_routes": 453,
-    "compiled_routes": 453,
+    "input_routes": 457,
+    "compiled_routes": 457,
     "graph_nodes": 167,
     "graph_strokes": 256,
     "unmatched": [],

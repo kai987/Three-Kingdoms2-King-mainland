@@ -9,6 +9,7 @@ import re
 
 from .errors import GameError
 from . import command_books, historical_campaigns
+from .city_economy import FIELDS, frontier_outpost_at
 from .officers import (OfficerProfile, PersonDefinition, initialize_officer,
                        is_generated_ref, year_state, YearState)
 
@@ -275,7 +276,9 @@ def _expire(campaign, state, city, row, reason, *, cooldown=True):
     _emit(campaign, state, 'staff_expired', city, person=person, reason=reason)
 
 
-def _base_income(campaign, city_id):
+def _base_income(campaign, city_id, state):
+    if frontier_outpost_at(campaign.catalog.data, city_id, state.year, state.month) is not None:
+        return dict.fromkeys(FIELDS, 0)
     rules = campaign.catalog.data['rules']
     return campaign.catalog.data.get('city_income', {}).get(city_id,
         dict(gold=rules.get('monthly_gold_income', 0), grain=rules.get('monthly_grain_income', 0), reserves=0))
@@ -301,7 +304,7 @@ def _payroll(campaign, state):
                 person['working'] = False
             continue
         paid = 0
-        base = _base_income(campaign, key)
+        base = _base_income(campaign, key, state)
         contributions = dict(gold=0, grain=0, reserves=0)
         for person in employees:
             if city.gold < RULES['monthly_salary']:

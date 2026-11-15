@@ -30,6 +30,10 @@ if(fs.existsSync(metadata)){
  assert(data.audit.route_bridges['bajun:zangke']?.length>0,'Zangke–Jiangzhou river crossing has a bridge');
  assert(data.audit.route_bridges['fuling:zangke']?.length>0,'Zangke–Fuling river crossing has a bridge');
  assert(data.audit.route_bridges['changsha:jiangxia']?.length>0,'Jiangxia–Changsha land crossing has a bridge');
+ const crossings=data.audit.route_bridges;
+ assert.equal(crossings['anding:shuofang']?.length,1,'Anding–Shuofang crosses the Yellow River once');
+ for(const road of ['shuofang:wuyuan','wuyuan:yunzhong','yanmen:yunzhong'])
+  assert.deepEqual(crossings[road],[],'The northern frontier road stays out of the river');
  assert(data.audit.baked_bridges>0);assert(data.audit.dynamic_bridge_paths>0);
 }
 console.log('map bridges: exact water runs/banks, curved paths, harbour exclusions, shared crossings, native bridge style, active land roads and castles above bridges passed');

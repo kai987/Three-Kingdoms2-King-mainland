@@ -19,8 +19,8 @@ from types import SimpleNamespace
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from ruler_audit import (city_names, date_parts, indexed, is_fictional,
-                         material_totals, read, require, text, urls)
+from ruler_audit import (HETAO_EXPANSION_CITIES, city_names, date_parts, frozen_material_totals,
+                         indexed, is_fictional, material_totals, read, require, text, urls)
 from remake.dated_events import validate_source, visible_factions
 
 REFERENCE = ROOT / 'game/config/references/retainer-affiliation-review.json'
@@ -217,7 +217,10 @@ def check_catalog(data, decision, canonical_people, order, scope, presentation=N
     require(set(data['faction_rulers']) == set(factions), label + 'faction/ruler definitions differ')
     require(all(data['initial_owners'].get(city) in {*visible, 'neutral'} for city in active),
             label + 'unknown/dormant active-city owner')
-    require(digest(data['initial_owners']) == decision.get('owners_sha256'),
+    # The frozen retainer review predates these independent map additions.
+    reviewed_owners = {city: owner for city, owner in data['initial_owners'].items()
+                       if city not in HETAO_EXPANSION_CITIES}
+    require(digest(reviewed_owners) == decision.get('owners_sha256'),
             label + 'frozen city owners differ')
     require(digest(data['faction_rulers']) == decision.get('faction_rulers_sha256'),
             label + 'frozen faction ruler identities differ')
@@ -319,7 +322,8 @@ def check_catalog(data, decision, canonical_people, order, scope, presentation=N
         require(coverage['new_historical_people'] == len(people)-charisma,
                 label + 'coverage counter is stale: new_historical_people')
     material = material_totals(data, active)
-    require(decision.get('material') == material, label + 'active-world material conservation differs')
+    require(decision.get('material') == frozen_material_totals(data, active),
+            label + 'active-world material conservation differs')
 
     changes = indexed(decision.get('changes'), 'person_id', ident + ' reviewed changes')
     change_rows = []
@@ -401,7 +405,8 @@ def build_report(reference_path=REFERENCE, catalog_dir=CATALOG_DIR, people_path=
             '宋建など、史料に配下の実名が残らない勢力へ架空の歴史人物を補充しません。',
             '追加人物の徳60・忠80は本作の設定値です。初期体力は王建のみ原表42、ほか21人は80、回復上限は全員80です。'
             '王建の原表忠59は所属文脈が空のため公孫氏への忠には適用せず、原表徳41も徳60を覆しません。']),
-        material_definition='開放都市の資金・兵糧、予備兵と在籍武将の帯兵合計。基準は固定レビューの変更前総量。',
+        material_definition=('開放都市の資金・兵糧、予備兵と在籍武将の帯兵の合計を表示します。'
+                             '固定レビューとの照合では後から追加された河套三都市の初期備蓄を除きます。'),
         stat_policy='追加人物はSAN14魅力の出典がないため徳60。初期体力は王建のみ原表cnblogs-line-0229の42、'
                     'ほかは80、回復上限は全員80。王建の原表忠59は所属対象が空なので公孫氏臣としても忠80。'
                     '196年登場・249年寿命や原表徳41は保持資料であり、史実年代や本作徳へ転用しない。',
@@ -432,7 +437,7 @@ def markdown(report):
         '`--check` は入力と資料を一切変更せずバイト単位で照合します。変更前欄は固定証拠であり再生成しません。', '',
         '## 留保と共通ルール', '']
     lines += ['- ' + str(note) for note in report['limits']]
-    lines += ['', report['stat_policy'], '', '資源保存の定義：' + report['material_definition'], '', '## 追加人物', '',
+    lines += ['', report['stat_policy'], '', report['material_definition'], '', '## 追加人物', '',
         '| 人物 / 固定ID | 実行時ID | 生年 / 登場年 / 退出年 | 根拠と留保 |', '| --- | ---: | --- | --- |']
     for person in report['new_people']:
         values = (f"{person['name']} (`{person['person_id']}`)", person['runtime_id'],
@@ -443,7 +448,7 @@ def markdown(report):
         lines += ['', f"## {row['date'][0]}年{row['date'][1]}月・{row['title']}（{'仮想' if row['fictional'] else '史実'}）", '']
         lines += ['- ' + note for note in row['notes']]
         material = row['material']
-        lines += ['', f"保存総量：資金{material['gold']}・兵糧{material['grain']}・兵員{material['soldiers']}。", '',
+        lines += ['', f"開幕の総量は資金{material['gold']}・兵糧{material['grain']}・兵員{material['soldiers']}です。", '',
             '| 勢力 / 君主 | 本拠 | 配下（君主を含む） | 判定と留保 |', '| --- | --- | --- | --- |']
         for faction in row['factions']:
             values = (f"{faction['id']} / {faction['captain']}" + ('〔後日起兵〕' if faction['dormant'] else ''),

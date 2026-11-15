@@ -1266,6 +1266,210 @@
           ]
         }
       ]
+    },
+    {
+      "from": "anding",
+      "to": "shuofang",
+      "mode": "land",
+      "terrain": "desert",
+      "history": {
+        "classification": "authorial_regional_frontier_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《水經注》由富平沿河追述渾懷障和朔方臨戎故城。本作為河套西端補給配置安定至臨戎的區域通路，陸路位置參照本作黃河地形。",
+        "source": "https://zh.wikisource.org/wiki/水經注/03"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              434,
+              270
+            ],
+            [
+              418,
+              252
+            ],
+            [
+              400,
+              237
+            ],
+            [
+              379,
+              225
+            ],
+            [
+              368,
+              207
+            ],
+            [
+              382,
+              180
+            ],
+            [
+              390,
+              154
+            ],
+            [
+              391,
+              129
+            ],
+            [
+              398,
+              112
+            ],
+            [
+              410,
+              97
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "shuofang",
+      "to": "wuyuan",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_frontier_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《水經注》敘黃河北屈東流先過朔方郡諸故城，再東行至五原郡九原附近，本作按黃河北彎兩地位置加設陸路。",
+        "source": "https://zh.wikisource.org/wiki/水經注/03"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              410,
+              97
+            ],
+            [
+              426,
+              89
+            ],
+            [
+              451,
+              79
+            ],
+            [
+              475,
+              65
+            ],
+            [
+              495,
+              54
+            ],
+            [
+              517,
+              51
+            ],
+            [
+              538,
+              54
+            ],
+            [
+              551,
+              57
+            ],
+            [
+              569,
+              56
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "wuyuan",
+      "to": "yunzhong",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_regional_frontier_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《水經注》敘河水經五原郡的河陰、九原後至雲中郡諸縣，本作以此區域毗鄰配置陸路。",
+        "source": "https://zh.wikisource.org/wiki/水經注/03"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              569,
+              56
+            ],
+            [
+              586,
+              65
+            ],
+            [
+              607,
+              76
+            ],
+            [
+              627,
+              86
+            ],
+            [
+              646,
+              96
+            ],
+            [
+              660,
+              99
+            ],
+            [
+              674,
+              108
+            ],
+            [
+              688,
+              123
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "yunzhong",
+      "to": "yanmen",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_regional_frontier_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《後漢書·郡國志》將雲中、雁門列於并州，兩地之間為河套東緣通往晉北的區域，本作配置跨山地的連線。",
+        "source": "https://zh.wikisource.org/wiki/後漢書/卷113#并州"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              688,
+              123
+            ],
+            [
+              700,
+              120
+            ],
+            [
+              716,
+              121
+            ],
+            [
+              726,
+              112
+            ],
+            [
+              738,
+              101
+            ]
+          ]
+        }
+      ]
     }
   ],
   "river_routes": [

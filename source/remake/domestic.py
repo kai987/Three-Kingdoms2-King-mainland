@@ -10,6 +10,7 @@ from copy import deepcopy
 
 from .errors import GameError
 from . import command_books
+from .city_economy import frontier_outpost_at
 from .officers import OFFICER_TROOP_CAP, parse_officer_ref
 
 SCHEMA = 'tk2-domestic-v2'
@@ -651,7 +652,8 @@ def finish_faction_turn(game, state, owner, *, automatic=True):
         if row['income_month'] != _month(state):
             row.update(income_month=_month(state), income_points=0)
         ident = post['civil']
-        if ident is not None and _present(game, state, city, ident):
+        if (ident is not None and frontier_outpost_at(game.catalog.data, key, state.year, state.month) is None
+                and _present(game, state, city, ident)):
             duty = 1 if state.extension['officer_actions'].get(str(ident)) == state.turn else 2
             row['income_points'] = min(594, row['income_points'] + state.officers[ident].profile.intellect * duty)
         # Active jobs, including explicitly configured reserve transports, have

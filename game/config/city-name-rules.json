@@ -170,5 +170,36 @@
       "https://www.shidianguji.com/zh/book/NGJ8924119990165161591/chapter/1lvcsj4uf1w73",
       "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_45532"
     ]
+  },
+  "shuofang": {
+    "names": [
+      {"from_date": [1, 1], "to_date": [214, 12], "name": "朔方"},
+      {"from_date": [215, 1], "to_date": [234, 12], "name": "临戎"},
+      {"from_date": [235, 1], "name": "朔方"}
+    ],
+    "announce_name_changes": true,
+    "detail": "215年正月撤朔方郡，本作以臨戎舊址設邊塞據點。235年正月魏明帝復置朔方郡，遊戲在同一節點恢復郡城。",
+    "detail_ja": "215年正月に朔方郡が廃止され、本作では臨戎の旧址を辺境拠点とします。235年正月に魏の明帝が朔方郡を再置したため、同じ地点を郡城に戻します。",
+    "sources": ["https://zh.wikisource.org/wiki/三國志/卷01", "https://zh.wikisource.org/wiki/三國志/卷03"]
+  },
+  "wuyuan": {
+    "names": [
+      {"from_date": [1, 1], "to_date": [214, 12], "name": "五原"},
+      {"from_date": [215, 1], "name": "九原"}
+    ],
+    "announce_name_changes": true,
+    "detail": "215年正月撤五原郡，本作以河套九原舊址設邊塞據點。新興郡所治的九原位於今山西忻州一帶。",
+    "detail_ja": "215年正月に五原郡が廃止され、本作では河套の九原の旧址を辺境拠点とします。新興郡の郡治だった九原は、現在の山西省忻州付近にあります。",
+    "sources": ["https://zh.wikisource.org/wiki/三國志/卷01", "https://www.nmgqq.com.cn/quqinggailan/nemenggudashiji/qh/2017-2-16/9787.html"]
+  },
+  "yunzhong": {
+    "names": [
+      {"from_date": [1, 1], "to_date": [214, 12], "name": "云中"},
+      {"from_date": [215, 1], "name": "云中旧城"}
+    ],
+    "announce_name_changes": true,
+    "detail": "215年正月撤雲中郡，本作以今托克托縣一帶的雲中故城設邊塞據點。",
+    "detail_ja": "215年正月に雲中郡が廃止され、本作では現在のトクト県付近にある雲中の旧城を辺境拠点とします。",
+    "sources": ["https://zh.wikisource.org/wiki/三國志/卷01", "https://www.nmgqq.com.cn/quqinggailan/nemenggudashiji/qh/2017-2-16/9787.html"]
   }
 }

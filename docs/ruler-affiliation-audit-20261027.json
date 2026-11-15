@@ -3,9 +3,9 @@
   "review_revision": "2026-10-27",
   "base_commit": "69a6e8f01239159b91e150637f888278af3b7a88",
   "review_sha256": "fb38ef837fad2783b70ac326f3496bfb45f322b274a8d062c7f5bc0aa65efdba",
-  "presentation_sha256": "b9891fb4e26e35f4aa132d29f15f43066fdb1bc6c6ecd50b104d860e66f3d303",
-  "locale_sha256": "6a04e2c27b05da8bb29b2acd9cdc7f3a092c0ed35479bf8dfa456311f35efd18",
-  "japanese_sha256": "06da4fd57f8e2f5643361cef4c11fb937b18d9143a68b68b94ca6fd74e8a729b",
+  "presentation_sha256": "c7d1fe0140986a050ad2e878f328b59d1b632b91f07557806e5f26a4beb7fc87",
+  "locale_sha256": "a6ffd1e9ff8935566776660e9d70291e7bb1478f0207db61bab2797e0015d5cf",
+  "japanese_sha256": "dffe411beb172670cbf805a32eafa2faa32f74e908a733995fcab0d116efb6f3",
   "baseline_serving_non_ruler_reviews": 283,
   "pool": [
     {
@@ -367,7 +367,7 @@
   ],
   "sources": {},
   "scope": "Frozen ruler affiliation decisions and global structural checks; not full biographical or monthly-garrison historical certification.",
-  "material_definition": "Active-city gold and grain; soldiers are active-city reserves plus initial_officers carried troops. Free officers carry zero opening troops.",
+  "material_definition": "Opening totals include all active-city stocks and carried troops. The frozen comparison excludes opening stocks at the three later Hetao sites.",
   "scenarios": [
     {
       "id": "mainland184-02",
@@ -1511,9 +1511,9 @@
         }
       ],
       "material": {
-        "gold": 153009,
-        "grain": 539605,
-        "soldiers": 200302
+        "gold": 154439,
+        "grain": 543554,
+        "soldiers": 202252
       },
       "placement_counts": {
         "reference_classes": {
@@ -1729,13 +1729,16 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [
         "bian_zhang",
         "song_jian"
       ],
-      "catalog_sha256": "a5d7b2fbefa8c38de173e04ef5b8082aebd3d53e8f907f833382b5fbcfdaa8c3"
+      "catalog_sha256": "7b1cb0c6ccf6cab4301ed65ee01e539bb0ab551ccef57d9bc9e4090a16a259e9"
     },
     {
       "id": "mainland188-06",
@@ -2891,9 +2894,9 @@
         }
       ],
       "material": {
-        "gold": 153009,
-        "grain": 539605,
-        "soldiers": 193402
+        "gold": 154439,
+        "grain": 543554,
+        "soldiers": 195352
       },
       "placement_counts": {
         "reference_classes": {
@@ -3185,10 +3188,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "028cedea89bb8014f2c1c74fe1e09283b440fad36b7caf01ac706a8277d00530"
+      "catalog_sha256": "18555afc7da800e5382083c8aa435a411a943c92be1a7df16aac5bf34528fbe2"
     },
     {
       "id": "mainland190-01",
@@ -4444,9 +4450,9 @@
         }
       ],
       "material": {
-        "gold": 148790,
-        "grain": 515179,
-        "soldiers": 229112
+        "gold": 150070,
+        "grain": 518965,
+        "soldiers": 230907
       },
       "placement_counts": {
         "reference_classes": {
@@ -5092,10 +5098,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "6c24fd97b2c07862045ee98340b19104d4d3dc47edd80adcf5a010ae36a88eec"
+      "catalog_sha256": "6ba5216c1c92a7484695f42e79edd7c9d59377f2f8bd08faa815e8942eaefadb"
     },
     {
       "id": "mainland191-10",
@@ -6319,9 +6328,9 @@
         }
       ],
       "material": {
-        "gold": 146800,
-        "grain": 508029,
-        "soldiers": 241992
+        "gold": 148080,
+        "grain": 511815,
+        "soldiers": 243787
       },
       "placement_counts": {
         "reference_classes": {
@@ -6550,10 +6559,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "9d0cec9f3e54a227d9f180a3ffad27e654e9dc405c321756ab2527e773f5905d"
+      "catalog_sha256": "b6671ad871bed6ab0ab877baeaa90c7289400ddf808f23907dc3131138c357f1"
     },
     {
       "id": "mainland194-06",
@@ -7776,9 +7788,9 @@
         }
       ],
       "material": {
-        "gold": 144495,
-        "grain": 500341,
-        "soldiers": 238177
+        "gold": 145775,
+        "grain": 504127,
+        "soldiers": 239972
       },
       "placement_counts": {
         "reference_classes": {
@@ -8248,10 +8260,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "3805d7f8e1965021f29474d55e21913a0bb2b7d1a75b51f3554bc0417663583e"
+      "catalog_sha256": "ed1a94b30dcdae971b605a018e990ce7ca0c1219bfb63cec0ec78b6b994aecb6"
     },
     {
       "id": "mainland196-06",
@@ -9458,9 +9473,9 @@
         }
       ],
       "material": {
-        "gold": 143195,
-        "grain": 495016,
-        "soldiers": 236767
+        "gold": 144400,
+        "grain": 498502,
+        "soldiers": 238562
       },
       "placement_counts": {
         "reference_classes": {
@@ -9847,10 +9862,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "39223cd63587aac87cff2097eb8c4d5b83a712066cb448abb789043ee9542b86"
+      "catalog_sha256": "b56a7ac75065a7a13fa94ce51c148c3f8b3ce5f94687fb1c25d18903c86d4723"
     },
     {
       "id": "mainland197-07",
@@ -11065,9 +11083,9 @@
         }
       ],
       "material": {
-        "gold": 144205,
-        "grain": 499941,
-        "soldiers": 233387
+        "gold": 145410,
+        "grain": 503427,
+        "soldiers": 235182
       },
       "placement_counts": {
         "reference_classes": {
@@ -11705,10 +11723,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "3337902051c55a8f7bad0ef87fbdc70c6e6c49c32955f7183ab648ed10494576"
+      "catalog_sha256": "61d4be3571d7f5602d9e3e8be19447b00ec50bef8cb03bac45c88d7d742ae027"
     },
     {
       "id": "mainland198-03",
@@ -12897,9 +12918,9 @@
         }
       ],
       "material": {
-        "gold": 144215,
-        "grain": 499941,
-        "soldiers": 239162
+        "gold": 145420,
+        "grain": 503427,
+        "soldiers": 240957
       },
       "placement_counts": {
         "reference_classes": {
@@ -13433,10 +13454,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "6a68feb45d030a2913abb211b6fe297275b5d7429395b521475ef1340143dcc7"
+      "catalog_sha256": "2d63766232a14b0950b7149fb3d864418bd293383c90dc99a0214fddd006b6c0"
     },
     {
       "id": "mainland200-01",
@@ -14591,9 +14615,9 @@
         }
       ],
       "material": {
-        "gold": 155275,
-        "grain": 550656,
-        "soldiers": 256327
+        "gold": 156580,
+        "grain": 554292,
+        "soldiers": 258182
       },
       "placement_counts": {
         "reference_classes": {
@@ -14889,10 +14913,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "ae2a540c79961a7d7b86a8be38a74b893f378a01577bafd03973b1c814ef8b73"
+      "catalog_sha256": "6b60e0717a3d28179683bb9677d6eca0d5fd0909fb31832dcfb350e4697515a5"
     },
     {
       "id": "mainland201-05",
@@ -16047,9 +16074,9 @@
         }
       ],
       "material": {
-        "gold": 155275,
-        "grain": 550656,
-        "soldiers": 252427
+        "gold": 156580,
+        "grain": 554292,
+        "soldiers": 254282
       },
       "placement_counts": {
         "reference_classes": {
@@ -16209,10 +16236,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "aea242d93bd94583b7e86f393e1a6171580190c130ccf366f41203fc8fe44322"
+      "catalog_sha256": "84c37981679c239aac5e0367af414cef14bfbbc9a764c26fb2931abe86e01481"
     },
     {
       "id": "mainland202-06",
@@ -17371,9 +17401,9 @@
         }
       ],
       "material": {
-        "gold": 155275,
-        "grain": 550656,
-        "soldiers": 258427
+        "gold": 156580,
+        "grain": 554292,
+        "soldiers": 260282
       },
       "placement_counts": {
         "reference_classes": {
@@ -17639,10 +17669,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "f886ef5fe441281f917ac0b7274410af5a2c9795f87157ddaa199b3e694bdaa1"
+      "catalog_sha256": "f583ae51284dd12ad0dcb48080f3dec077e6ed2770afd7e6f4f40e5ad93c1c1b"
     },
     {
       "id": "mainland207-09",
@@ -18788,9 +18821,9 @@
         }
       ],
       "material": {
-        "gold": 160515,
-        "grain": 574431,
-        "soldiers": 272007
+        "gold": 161820,
+        "grain": 578067,
+        "soldiers": 273862
       },
       "placement_counts": {
         "reference_classes": {
@@ -19135,10 +19168,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "8d50db8d06fd0688f5184f89d08709b7b6ab788f201b68696e856ad59fd6de9f"
+      "catalog_sha256": "c11472d38ece5b1060c89d969c9c51e1dcb30f8153de1e4fab32c305d5093e83"
     },
     {
       "id": "mainland208-10",
@@ -20287,9 +20323,9 @@
         }
       ],
       "material": {
-        "gold": 154307,
-        "grain": 543411,
-        "soldiers": 279822
+        "gold": 155612,
+        "grain": 547047,
+        "soldiers": 281677
       },
       "placement_counts": {
         "reference_classes": {
@@ -20591,10 +20627,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "e3b7f0434cd05efc554f12a9231c157a6a669b8e2fac256633cc11b4e19b47f3"
+      "catalog_sha256": "74533c07996be9ea6971d8a5a4b2deeaaeb38334d35e484493a005a58055e360"
     },
     {
       "id": "mainland209-06",
@@ -21707,9 +21746,9 @@
         }
       ],
       "material": {
-        "gold": 154307,
-        "grain": 543411,
-        "soldiers": 279972
+        "gold": 155612,
+        "grain": 547047,
+        "soldiers": 281827
       },
       "placement_counts": {
         "reference_classes": {
@@ -21872,10 +21911,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "9b51abed3e7d74529260e63da69ff4b252cb14a1dafdea9d5589feed8ff8a95f"
+      "catalog_sha256": "f943dd1d49771b2ea9cbd3bbfb0fc948072ec4a0c103bf8616ee252048c9b82f"
     },
     {
       "id": "mainland210-11",
@@ -22982,9 +23024,9 @@
         }
       ],
       "material": {
-        "gold": 154307,
-        "grain": 543411,
-        "soldiers": 276672
+        "gold": 155612,
+        "grain": 547047,
+        "soldiers": 278527
       },
       "placement_counts": {
         "reference_classes": {
@@ -23204,10 +23246,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "04bdee0008e3655a6c23b0afd78491300b925b181cba8be839d6d80eb7050782"
+      "catalog_sha256": "5b299ceda576cdd4dd0016df0932893d9a127eccf39bbc103306c711d4a9d26c"
     },
     {
       "id": "mainland211-07-tongguan",
@@ -24319,9 +24364,9 @@
         }
       ],
       "material": {
-        "gold": 163697,
-        "grain": 572610,
-        "soldiers": 295720
+        "gold": 165052,
+        "grain": 576634,
+        "soldiers": 297735
       },
       "placement_counts": {
         "reference_classes": {
@@ -24633,10 +24678,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "5dd7f0cbd718859ac67f77dbec57b3d0d3797e01c61f0b4875fed6743a899e3f"
+      "catalog_sha256": "033742c051a4d381bf4ea5d1cea34e39732290361f006b3c80ecdf6a7a05ec26"
     },
     {
       "id": "mainland212-06",
@@ -25752,9 +25800,9 @@
         }
       ],
       "material": {
-        "gold": 163697,
-        "grain": 572610,
-        "soldiers": 292120
+        "gold": 165052,
+        "grain": 576634,
+        "soldiers": 294135
       },
       "placement_counts": {
         "reference_classes": {
@@ -25973,10 +26021,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "984cb42738c02980b079a75e38b43e0dd53e5720f59f0571583b21bd66b1ace9"
+      "catalog_sha256": "c328db7c814884aedb4afe09f72c3efa12db180a62e24354ca9436e8aec1373f"
     },
     {
       "id": "mainland212-12",
@@ -27079,9 +27130,9 @@
         }
       ],
       "material": {
-        "gold": 163697,
-        "grain": 572610,
-        "soldiers": 285970
+        "gold": 165052,
+        "grain": 576634,
+        "soldiers": 287835
       },
       "placement_counts": {
         "reference_classes": {
@@ -27337,10 +27388,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "五原",
+        "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "61be7b5bfa51445e37b1e69dd243e862c8b624244127716b2e9fd09d4c86756d"
+      "catalog_sha256": "e1a066a40e4e2dd371baff22a4c056bdc635673432e29cbbe0acd71bf62bb3f5"
     },
     {
       "id": "mainland215-08",
@@ -28708,10 +28762,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "临戎",
+        "wuyuan": "九原",
+        "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "7c9bf828930d56b2dec3e2783c6998c36eaffb7e037ae6e7442b4cbde728f55d"
+      "catalog_sha256": "8082fc3e09a9db0c9527b6e1c701ffe7f2fce208b4f376384751f0fba0bb0142"
     },
     {
       "id": "mainland217-07",
@@ -30129,10 +30186,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "临戎",
+        "wuyuan": "九原",
+        "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "5543a82af78d2a649606cf14b9741ccf44d4f1b16d2cdec24a00e0f996c91661"
+      "catalog_sha256": "c55e1864fe35750fe0dbd0349b86209895263edb86356c5ff92b0f90fdb1d0c5"
     },
     {
       "id": "mainland219-07",
@@ -31489,10 +31549,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "临戎",
+        "wuyuan": "九原",
+        "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "9ece1cd828cee2c19a785e0ade4f4acc0396e89b329e2964e1294733337e5acb"
+      "catalog_sha256": "392322131e454a80fae0fd97ea512c0f15d0f0621da18110d1aa86fa4a6b6456"
     },
     {
       "id": "mainland221-07",
@@ -32868,10 +32931,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "临戎",
+        "wuyuan": "九原",
+        "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "196a946129636c522438b66bd5b2aa5a5084f875ada0ad1c3c4fe1349868988d"
+      "catalog_sha256": "8bea2ec6a8584b217d9cd3c27c3b4beb68778ca5a2479e23c3132d7fab477017"
     },
     {
       "id": "mainland225-07",
@@ -34205,10 +34271,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "临戎",
+        "wuyuan": "九原",
+        "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "683ee740e52c034c6d3f551716fbf0f398553268d572a8935de0e46be0423a74"
+      "catalog_sha256": "851e252d15c1f5bd1d9f865b690eb206caaf4129813539e147439672d46b044a"
     },
     {
       "id": "mainland227-02",
@@ -35609,10 +35678,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "临戎",
+        "wuyuan": "九原",
+        "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "25386ed36a8450718e8f860de8b0312fccf130134477a0fbb64192264ad06e35"
+      "catalog_sha256": "d9fd705ab7930b5ba057a57edb8ffdbb33347d634de2f696b7c3cda936a8c1b5"
     },
     {
       "id": "mainland234-02",
@@ -36969,10 +37041,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "临戎",
+        "wuyuan": "九原",
+        "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "7a6b9c2502f0e4ca53785733fd7ecbffc9183438e95eaf4eccd4c053a934efea"
+      "catalog_sha256": "0d08f2e63f9727e16020cbdd01cb8daefc26eaf3e0d351bea5ad08507de2041c"
     },
     {
       "id": "mainland235-01",
@@ -38028,9 +38103,9 @@
         }
       ],
       "material": {
-        "gold": 182657,
-        "grain": 635592,
-        "soldiers": 281402
+        "gold": 183217,
+        "grain": 637192,
+        "soldiers": 282192
       },
       "placement_counts": {
         "reference_classes": {
@@ -38212,10 +38287,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "九原",
+        "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "2e39f75cd3b4138e4d8513c968b8cb538dcc8d2335bf1e0ac6973d6036ffb574"
+      "catalog_sha256": "e4ff67019d37be5bfba00c2bfa29c82d5488ec49e3819d93243120d1a4996c6c"
     },
     {
       "id": "mainland238-01",
@@ -39277,9 +39355,9 @@
         }
       ],
       "material": {
-        "gold": 182657,
-        "grain": 635592,
-        "soldiers": 278402
+        "gold": 183217,
+        "grain": 637192,
+        "soldiers": 279192
       },
       "placement_counts": {
         "reference_classes": {
@@ -39572,10 +39650,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "九原",
+        "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "6e1dbcb54e8f348075f86eb1a13e66af52e152cd8eb037d01d95fd0f11914bfa"
+      "catalog_sha256": "2eda5d37d3da7a67c61849d1e906cde9d50ed443ec46525f2ddb38e45729c960"
     },
     {
       "id": "mainland249-01",
@@ -40628,9 +40709,9 @@
         }
       ],
       "material": {
-        "gold": 191997,
-        "grain": 661567,
-        "soldiers": 268842
+        "gold": 192532,
+        "grain": 663242,
+        "soldiers": 269567
       },
       "placement_counts": {
         "reference_classes": {
@@ -40956,10 +41037,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "九原",
+        "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "9ef87a30919b51a1fbc766f66b582080037376f03f9d786198d1db14d439673b"
+      "catalog_sha256": "73def1ac643b1d961fcaa5b8342f8a80a5194b01419d74cb88c10f6932353eee"
     },
     {
       "id": "mainland263-05",
@@ -42017,9 +42101,9 @@
         }
       ],
       "material": {
-        "gold": 181144,
-        "grain": 609285,
-        "soldiers": 235455
+        "gold": 181654,
+        "grain": 610735,
+        "soldiers": 236180
       },
       "placement_counts": {
         "reference_classes": {
@@ -42261,10 +42345,13 @@
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
-        "jianping": "建平"
+        "jianping": "建平",
+        "shuofang": "朔方",
+        "wuyuan": "九原",
+        "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "d5af5ee4817d9932b4c7def2e67938102f369cba82198a8a397e8c68128056b9"
+      "catalog_sha256": "ee83f3510f9e8fe6643c0fcc942d68fee31eb410c9bfe3ced4fbe684422e778d"
     }
   ]
 }
