@@ -1462,8 +1462,8 @@ test('map march preview shows the downstream route and a usable detour against a
  await start('mainland235-01','wei','shuofang');
  const reverseSave=await tacticalSave(page);
  await tacticalControl(page,'city-command-tab-army');
- await expect(page.locator('#depart')).toBeDisabled();
- await page.locator('#inspect-march-routes').click();
+ await expect(page.locator('#depart')).toHaveAccessibleName('行軍経路を確認');
+ await page.locator('#depart').click();
  await page.locator('#world-map .city-hit[data-city=jincheng]').press('Enter');
  await expect(preview).toBeVisible();await expect(dialog).toBeHidden();
  await expect(page.locator('#world-map .march-preview-target')).toHaveAttribute('data-city','jincheng');
