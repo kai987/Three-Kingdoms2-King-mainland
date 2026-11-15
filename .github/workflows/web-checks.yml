@@ -169,11 +169,11 @@ jobs:
           - {backend: rust, shard: 3}
           - {backend: rust, shard: 6}
           - {backend: rust, shard: 5}
-          - {backend: python, shard: 4}
+          - {backend: python, shard: 3}
           - {backend: rust, shard: 4}
           - {backend: python, shard: 2}
           - {backend: rust, shard: 2}
-          - {backend: python, shard: 3}
+          - {backend: python, shard: 4}
           - {backend: python, shard: 5}
           - {backend: python, shard: 6}
     env:
