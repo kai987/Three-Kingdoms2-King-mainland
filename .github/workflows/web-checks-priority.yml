@@ -539,8 +539,8 @@ jobs:
     steps:
       - name: Wait for both runs' browser and long campaign jobs to obtain runners
         env:
-          GH_TOKEN: ${ github.token }}
-          PAIR: ${ inputs.pair }}
+          GH_TOKEN: ${{ github.token }}
+          PAIR: ${{ inputs.pair }}
         run: |
           set -euo pipefail
           [[ "$PAIR" =~ ^[a-zA-Z0-9-]{1,64}$ ]]

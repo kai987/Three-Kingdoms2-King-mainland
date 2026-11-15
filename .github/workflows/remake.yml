@@ -1,5 +1,5 @@
 name: Web campaign checks
-run-name: ${ inputs.priority_pair != '' && format('Runner priority {0}', inputs.priority_pair) || 'Web campaign checks' }}
+run-name: ${{ inputs.priority_pair != '' && format('Runner priority {0}', inputs.priority_pair) || 'Web campaign checks' }}
 
 on:
   push:
@@ -41,4 +41,4 @@ jobs:
     uses: ./.github/workflows/web-checks-priority.yml
     with:
       force_full: true
-      pair: ${ inputs.priority_pair }}
+      pair: ${{ inputs.priority_pair }}
