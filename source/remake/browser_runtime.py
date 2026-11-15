@@ -23,7 +23,7 @@ MAX_BODY_BYTES = 2 * 1024 * 1024
 MAX_CATALOGS = 2
 IDENTIFIER = re.compile(r'[a-z0-9][a-z0-9_-]{0,79}')
 GET_PATHS = frozenset(('/api/state', '/api/city-preview', '/api/march-config',
-                       '/api/march-status', '/api/save'))
+                       '/api/march-status', '/api/march-preview', '/api/save'))
 POST_PATHS = frozenset(('/api/command', '/api/load'))
 COMMANDS = frozenset(('new', 'persuade_officer', 'recruit_officer', 'transfer',
                      'tactic', 'duel_start', 'duel_action', 'allocate', 'allocation_close', 'recruit',
@@ -152,6 +152,9 @@ class BrowserRuntime:
             if url.path == '/api/march-config':
                 args = self._query(url, ('scenario',))
                 return config_for(self._catalog(args['scenario']).data)
+            if url.path == '/api/march-preview':
+                args = self._query(url, ('source', 'target', 'revision'))
+                return self.session.preview_march(**args)
             if url.query or '?' in path:
                 raise GameError('查询参数无效。')
             if url.path == '/api/state':
