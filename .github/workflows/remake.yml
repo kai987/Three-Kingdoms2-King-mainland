@@ -1,30 +1,182 @@
-name: Web campaign checks
-
+name: Scope checkout comparison
+run-name: Scope checkout A/B (${{ inputs.sample }})
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
     inputs:
-      force_full:
-        description: Run every regression group
-        type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
+      sample:
+        type: string
+        description: Name of the paired timing sample
+        required: true
 
 permissions:
   contents: read
   actions: read
   deployments: read
 
-concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  SCOPE_SOURCE: e60d16a3aa439c49f7de6ef192554dada4f9c6db
+  SCOPE_BASE: ae2d38221d880f089d4553e6a241d18dc748155f
 
 jobs:
-  verify:
-    uses: ./.github/workflows/web-checks.yml
-    with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+  scope:
+    if: github.ref == 'refs/heads/codex/ci-scope-sparse-profile'
+    name: scope (${{ matrix.event }}, ${{ matrix.checkout }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        event: [schedule, pull_request, merge]
+        checkout: [complete, tools-ci]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ env.SCOPE_SOURCE }}
+          fetch-depth: 0
+          persist-credentials: false
+          sparse-checkout: ${{ matrix.checkout == 'tools-ci' && '/tools/ci/' || '' }}
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - name: Select required checks from cumulative source changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SAMPLE_EVENT: ${{ matrix.event }}
+        run: |
+          mkdir -p build/ci
+          args=()
+          case "$SAMPLE_EVENT" in
+            schedule)
+              printf '{"schedule":"0 18 * * *"}\n' > build/ci/event.json
+              event=schedule
+              ref=refs/heads/main
+              args+=(--force-full)
+              ;;
+            pull_request)
+              printf '{"pull_request":{"base":{"sha":"%s"}}}\n' "$SCOPE_BASE" > build/ci/event.json
+              event=pull_request
+              ref=refs/pull/48/merge
+              ;;
+            merge)
+              printf '{"ref":"refs/heads/main","after":"%s","before":"%s","forced":false}\n' "$SCOPE_SOURCE" "$SCOPE_BASE" > build/ci/event.json
+              # Use the deployed base captured in PR #48's successful main plan.
+              event=push
+              ref=refs/heads/main
+              args+=(--base "$SCOPE_BASE")
+              ;;
+            *) exit 2 ;;
+          esac
+          python -B tools/ci/plan.py --head "$SCOPE_SOURCE" --event-name "$event" --event-path build/ci/event.json --ref "$ref" --repository "$GITHUB_REPOSITORY" "${args[@]}" > build/ci/test-plan.json
+      - name: Find successful verification of the merged pull request
+        id: pr
+        if: matrix.event == 'merge'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          GITHUB_SHA="$SCOPE_SOURCE" GITHUB_EVENT_PATH="$PWD/build/ci/event.json" python -B tools/ci/pr_reuse.py find --plan build/ci/test-plan.json --candidate build/ci/pr-candidate.json
+      - name: Download only the successful PR attempt's receipt
+        id: receipt
+        if: steps.pr.outputs.run_id != ''
+        continue-on-error: true
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: pr-proof-${{ steps.pr.outputs.run_id }}-attempt-${{ steps.pr.outputs.attempt }}
+          path: build/ci/pr-proof
+          github-token: ${{ github.token }}
+          run-id: ${{ steps.pr.outputs.run_id }}
+      - name: Validate PR evidence and finalize required jobs
+        id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_LOOKUP: ${{ steps.pr.outcome }}
+          PR_DOWNLOAD: ${{ steps.receipt.outcome }}
+        run: |
+          if [ "$PR_LOOKUP" = success ]; then
+            args=()
+            if [ "$PR_DOWNLOAD" = success ]; then args+=(--proof build/ci/pr-proof/receipt.json); fi
+            GITHUB_SHA="$SCOPE_SOURCE" python -B tools/ci/pr_reuse.py decide --plan build/ci/test-plan.json --candidate build/ci/pr-candidate.json "${args[@]}"
+          fi
+          python -B tools/ci/gate.py outputs --plan build/ci/test-plan.json --head "$SCOPE_SOURCE" > build/ci/gate-outputs.txt
+          cat build/ci/gate-outputs.txt >> "$GITHUB_OUTPUT"
+          python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload the scope result
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scope-plan-${{ matrix.event }}-${{ matrix.checkout }}
+          path: build/ci/test-plan.json
+          if-no-files-found: error
+          retention-days: 7
+      - name: Check history, worktree and failure fallback
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SAMPLE_EVENT: ${{ matrix.event }}
+          SAMPLE_CHECKOUT: ${{ matrix.checkout }}
+        run: |
+          python -B - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+
+          def git(*args, **options):
+              return subprocess.check_output(['git', *args], **options)
+
+          head, base = os.environ['SCOPE_SOURCE'], os.environ['SCOPE_BASE']
+          assert git('rev-parse', 'HEAD', text=True).strip() == head
+          assert git('rev-parse', '--is-shallow-repository', text=True).strip() == 'false'
+          git('merge-base', '--is-ancestor', base, head)
+          all_paths = {os.fsdecode(p) for p in git('ls-files', '-z').split(b'\0') if p}
+          physical = {p for p in all_paths if Path(p).exists() or Path(p).is_symlink()}
+          expected = {p for p in all_paths if p.startswith('tools/ci/')}
+          if os.environ['SAMPLE_CHECKOUT'] == 'tools-ci':
+              assert physical == expected, sorted(physical - expected)
+          else:
+              assert physical == all_paths, sorted(all_paths - physical)
+          index = 'game/config/campaigns/index.json'
+          assert json.loads(git('show', f'{head}:{index}'))['scenarios']
+          rules = git('show', f'{head}:.github/workflows/web-checks.yml', text=True)
+          assert 'max-parallel: 8' in rules
+          config = subprocess.run(['git', 'config', '--get', 'remote.origin.partialclonefilter'], capture_output=True, text=True)
+          meta = {
+              'head': head, 'tree': git('rev-parse', 'HEAD^{tree}', text=True).strip(),
+              'history_count': int(git('rev-list', '--count', 'HEAD')),
+              'tracked_count': len(all_paths), 'materialized_count': len(physical),
+              'materialized_outside_ci': len(physical - expected),
+              'partial_clone_filter': config.stdout.strip() or None,
+              'outside_ci_blobs': {p:git('rev-parse', f'HEAD:{p}', text=True).strip() for p in (
+                  index, 'tools/browser-tests/cases.json', 'tools/browser-tests/case-durations.json')},
+          }
+          Path('build/ci/checkout-evidence.json').write_text(json.dumps(meta, indent=2)+'\n')
+          PY
+          if [ "$SAMPLE_EVENT" = merge ]; then
+            cp build/ci/test-plan.json build/ci/fallback-plan.json
+            python -B - <<'PY'
+          import json
+          from pathlib import Path
+          plan = Path('build/ci/fallback-plan.json')
+          data = json.loads(plan.read_text())
+          assert data.pop('pr_reuse') == {
+              'number': 48, 'run_id': 43754098033, 'attempt': 1,
+              'head': '2bd7d818744657dbc31f713748e240a87de7a0a9',
+              'tree': '53ddf244a8580aaf0dfb8554ad59ec86faf031c9',
+          }
+          plan.write_text(json.dumps(data)+'\n')
+          original = json.loads(Path('build/ci/pr-proof/receipt.json').read_text())
+          original['tree'] = '0' * 40
+          Path('build/ci/rejected-receipt.json').write_text(json.dumps(original)+'\n')
+          PY
+            GITHUB_SHA="$SCOPE_SOURCE" python -B tools/ci/pr_reuse.py decide --plan build/ci/fallback-plan.json --candidate build/ci/pr-candidate.json --proof build/ci/rejected-receipt.json
+            python -B tools/ci/gate.py outputs --plan build/ci/fallback-plan.json --head "$SCOPE_SOURCE" > build/ci/fallback-outputs.txt
+            grep -Fx 'reuse=false' build/ci/fallback-outputs.txt
+            grep -Fx 'full=true' build/ci/fallback-outputs.txt
+          fi
+      - name: Upload checkout and verification evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scope-details-${{ matrix.event }}-${{ matrix.checkout }}
+          path: |
+            build/ci/*.json
+            build/ci/*.txt
+            build/ci/pr-proof/receipt.json
+          if-no-files-found: error
+          retention-days: 7
