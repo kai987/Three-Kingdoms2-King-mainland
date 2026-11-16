@@ -1,18 +1,15 @@
-name: Web campaign checks
+name: Browser sparse checkout full CI experiment
+run-name: Browser checkout experiment (${{ inputs.checkout_mode }})
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
     inputs:
-      force_full:
-        description: Run every regression group
-        type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
+      checkout_mode:
+        description: Checkout used by the six browser shards
+        type: choice
+        required: true
+        options: [full, sparse]
+        default: full
 
 permissions:
   contents: read
@@ -20,11 +17,13 @@ permissions:
   deployments: read
 
 concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
+  group: browser-checkout-experiment-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   verify:
+    if: github.ref == 'refs/heads/codex/ci-browser-sparse-checkout-ab'
     uses: ./.github/workflows/web-checks.yml
     with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+      force_full: true
+      checkout_mode: ${{ inputs.checkout_mode }}

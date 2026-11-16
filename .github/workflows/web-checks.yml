@@ -5,6 +5,9 @@ on:
       force_full:
         type: boolean
         default: false
+      checkout_mode:
+        type: string
+        default: full
       publish:
         type: boolean
         default: false
@@ -15,6 +18,23 @@ permissions:
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   RUSTUP_TOOLCHAIN: '1.93.0'
+  FROZEN_SOURCE: a7e78fb0f47d3b688ce0e20d5e0323fda6e351de
+  FROZEN_BASE: 797daa23e9652409473137e792f18dba5f9ca7bd
+  FROZEN_WEB_RUN: '43943390243'
+  FROZEN_WEB_ARTIFACT: '14264111567'
+  FROZEN_WEB_ARCHIVE_DIGEST: sha256:2f66aabdd6975ff6a7d78656e6a7aaa40a221dc8e079d0582eed2c443bbd4a14
+  FROZEN_WEB_CONTENT: 80023c1f2eb95669c88eeb5cc384456cd8407ad601d34c67cc14ee96d1d9ccf3
+  BROWSER_SPARSE_PATHS: |
+    /.gitignore
+    /.github/actions/browser-tools/
+    /tests/
+    /tools/browser-tests/
+    /tools/ci/
+    /source/
+    /game/config/
+    /game/data/
+    /game/assets/map-presentation.json
+    /game/assets/battlefields/index.json
 jobs:
   scope:
     runs-on: ubuntu-latest
@@ -33,6 +53,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.FROZEN_SOURCE }}
           fetch-depth: 0
           persist-credentials: false
           sparse-checkout: /tools/ci/
@@ -46,11 +67,14 @@ jobs:
           FORCE_FULL: ${{ inputs.force_full }}
           PUBLISH_REQUESTED: ${{ inputs.publish }}
         run: |
+          test "$(git rev-parse HEAD)" = "$FROZEN_SOURCE"
+          test "$FORCE_FULL" = true
+          test "$PUBLISH_REQUESTED" = false
           mkdir -p build/ci
           args=()
           if [ "$FORCE_FULL" = true ]; then args+=(--force-full); fi
           if [ "$PUBLISH_REQUESTED" = true ]; then args+=(--publish); fi
-          python -B tools/ci/plan.py --head "$GITHUB_SHA" --event-name "$GITHUB_EVENT_NAME" --event-path "$GITHUB_EVENT_PATH" --repository "$GITHUB_REPOSITORY" "${args[@]}" > build/ci/test-plan.json
+          python -B tools/ci/plan.py --base "$FROZEN_BASE" --head "$FROZEN_SOURCE" --event-name "$GITHUB_EVENT_NAME" --event-path "$GITHUB_EVENT_PATH" --repository "$GITHUB_REPOSITORY" "${args[@]}" > build/ci/test-plan.json
       - name: Find successful verification of the merged pull request
         id: pr
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !inputs.force_full
@@ -79,11 +103,11 @@ jobs:
             if [ "$PR_DOWNLOAD" = success ]; then args+=(--proof build/ci/pr-proof/receipt.json); fi
             python -B tools/ci/pr_reuse.py decide --plan build/ci/test-plan.json --candidate build/ci/pr-candidate.json "${args[@]}"
           fi
-          python -B tools/ci/gate.py outputs --plan build/ci/test-plan.json --head "$GITHUB_SHA" >> "$GITHUB_OUTPUT"
+          python -B tools/ci/gate.py outputs --plan build/ci/test-plan.json --head "$FROZEN_SOURCE" >> "$GITHUB_OUTPUT"
           python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: test-plan-${{ github.sha }}
+          name: test-plan-${{ env.FROZEN_SOURCE }}
           path: build/ci/test-plan.json
           overwrite: true
           if-no-files-found: error
@@ -96,17 +120,18 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.FROZEN_SOURCE }}
           fetch-depth: 0
           persist-credentials: false
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: test-plan-${{ github.sha }}
+          name: test-plan-${{ env.FROZEN_SOURCE }}
           path: build/ci
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
       - name: Documentation whitespace and repository links
-        run: python -B tools/ci/gate.py docs --plan build/ci/test-plan.json --head "$GITHUB_SHA"
+        run: python -B tools/ci/gate.py docs --plan build/ci/test-plan.json --head "$FROZEN_SOURCE"
   native-rules:
     needs: scope
     if: needs.scope.outputs.native == 'true' && needs.scope.outputs.reuse != 'true'
@@ -115,6 +140,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.FROZEN_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -144,7 +170,7 @@ jobs:
         run: tar -cf build/native-reference.tar -C build march-core
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: native-reference-${{ github.sha }}
+          name: native-reference-${{ env.FROZEN_SOURCE }}
           path: build/native-reference.tar
           overwrite: true
           retention-days: 3
@@ -178,6 +204,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.FROZEN_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -193,7 +220,7 @@ jobs:
           test -f tools/web-runtime/node_modules/pyodide/package.json
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: native-reference-${{ github.sha }}
+          name: native-reference-${{ env.FROZEN_SOURCE }}
           path: build
       - name: Restore this run's checked native reference
         run: tar -xf build/native-reference.tar -C build
@@ -204,7 +231,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
-          name: campaign-timings-${{ matrix.backend }}-${{ matrix.shard }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          name: campaign-timings-${{ matrix.backend }}-${{ matrix.shard }}-${{ env.FROZEN_SOURCE }}-attempt-${{ github.run_attempt }}
           path: build/ci/campaign-timings.json
           if-no-files-found: ignore
           retention-days: 7
@@ -232,13 +259,14 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.FROZEN_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: native-reference-${{ github.sha }}
+          name: native-reference-${{ env.FROZEN_SOURCE }}
           path: build
       - name: Restore this run's checked native reference
         run: tar -xf build/native-reference.tar -C build
@@ -247,12 +275,12 @@ jobs:
           SOAK_CASE: ${{ matrix.case }}
           SOAK_SEED: ${{ matrix.seed }}
           SOAK_BACKEND: ${{ matrix.backend }}
-        run: python -B tools/campaign-soak/ci.py fragment --case "$SOAK_CASE" --seed "$SOAK_SEED" --backend "$SOAK_BACKEND" --head "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" --output "build/soak-ci/${SOAK_CASE}-${SOAK_SEED}-${SOAK_BACKEND}.json" --progress
+        run: python -B tools/campaign-soak/ci.py fragment --case "$SOAK_CASE" --seed "$SOAK_SEED" --backend "$SOAK_BACKEND" --head "$FROZEN_SOURCE" --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" --output "build/soak-ci/${SOAK_CASE}-${SOAK_SEED}-${SOAK_BACKEND}.json" --progress
       - name: Retain replay diagnostics even after failure
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: campaign-soak-execution-${{ matrix.case }}-${{ matrix.seed }}-${{ matrix.backend }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          name: campaign-soak-execution-${{ matrix.case }}-${{ matrix.seed }}-${{ matrix.backend }}-${{ env.FROZEN_SOURCE }}-attempt-${{ github.run_attempt }}
           path: build/soak-ci
           if-no-files-found: ignore
           retention-days: 7
@@ -264,24 +292,25 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.FROZEN_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          pattern: campaign-soak-execution-*-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          pattern: campaign-soak-execution-*-${{ env.FROZEN_SOURCE }}-attempt-${{ github.run_attempt }}
           merge-multiple: false
           path: build/soak-ci
       - name: Require every execution and exact Python/Rust state, save and RNG parity
         env:
           EXECUTION_RESULT: ${{ needs.campaign-soak-replay.result }}
-        run: python -B tools/campaign-soak/ci.py merge --input-dir build/soak-ci --execution-result "$EXECUTION_RESULT" --head "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" --output build/soak/merged.json
+        run: python -B tools/campaign-soak/ci.py merge --input-dir build/soak-ci --execution-result "$EXECUTION_RESULT" --head "$FROZEN_SOURCE" --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" --output build/soak/merged.json
       - name: Retain mandatory parity gate diagnostics
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: campaign-soak-parity-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          name: campaign-soak-parity-${{ env.FROZEN_SOURCE }}-attempt-${{ github.run_attempt }}
           path: build/soak
           if-no-files-found: ignore
           retention-days: 7
@@ -295,6 +324,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.FROZEN_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -359,6 +389,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.FROZEN_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -374,12 +405,12 @@ jobs:
         run: npm ci --prefix tools/web-runtime --ignore-scripts
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: test-plan-${{ github.sha }}
+          name: test-plan-${{ env.FROZEN_SOURCE }}
           path: build/ci
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         if: needs.scope.outputs.native == 'true'
         with:
-          name: native-reference-${{ github.sha }}
+          name: native-reference-${{ env.FROZEN_SOURCE }}
           path: build
       - name: Restore the same native reference
         if: needs.scope.outputs.native == 'true'
@@ -392,7 +423,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
-          name: scoped-report-${{ matrix.lane }}-${{ github.sha }}
+          name: scoped-report-${{ matrix.lane }}-${{ env.FROZEN_SOURCE }}
           path: build/ci/scoped-report.json
           overwrite: true
           if-no-files-found: error
@@ -409,6 +440,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.FROZEN_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -419,17 +451,39 @@ jobs:
           cache: npm
           cache-dependency-path: tools/web-runtime/package-lock.json
       - run: npm ci --prefix tools/web-runtime --ignore-scripts
-      - name: Build the candidate once and retain its identity
+      - name: Rebuild the candidate and check reproducibility
+        run: |
+          test "$(git rev-parse HEAD)" = "$FROZEN_SOURCE"
+          GITHUB_SHA="$FROZEN_SOURCE" python -B game/build_web.py --output build/rebuilt-web
+          python -B tools/ci/gate.py artifact --root build/rebuilt-web --head "$FROZEN_SOURCE" --content-sha256 "$FROZEN_WEB_CONTENT"
+      - name: Pin the exact previously verified Web archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$FROZEN_WEB_ARTIFACT" \
+            --jq '[.name,.workflow_run.id,.digest,.expired]|@tsv' > "$RUNNER_TEMP/frozen-web.tsv"
+          test "$(cut -f1 "$RUNNER_TEMP/frozen-web.tsv")" = "verified-web-$FROZEN_SOURCE"
+          test "$(cut -f2 "$RUNNER_TEMP/frozen-web.tsv")" = "$FROZEN_WEB_RUN"
+          test "$(cut -f3 "$RUNNER_TEMP/frozen-web.tsv")" = "$FROZEN_WEB_ARCHIVE_DIGEST"
+          test "$(cut -f4 "$RUNNER_TEMP/frozen-web.tsv")" = false
+          cat "$RUNNER_TEMP/frozen-web.tsv"
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: verified-web-${{ env.FROZEN_SOURCE }}
+          run-id: ${{ env.FROZEN_WEB_RUN }}
+          github-token: ${{ github.token }}
+          path: build/web
+      - name: Verify the immutable Web artifact against the rebuilt release
         id: identity
         run: |
-          python -B game/build_web.py --output build/web
-          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA")
+          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_SOURCE" --content-sha256 "$FROZEN_WEB_CONTENT")
+          cmp build/web/runtime/build.json build/rebuilt-web/runtime/build.json
           printf 'content_sha256=%s\n' "$content" >> "$GITHUB_OUTPUT"
       - name: Actual WASM campaign and CPU replay parity
         run: node tests/browser_engine_smoke.mjs build/web
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: candidate-web-${{ github.sha }}
+          name: candidate-web-${{ env.FROZEN_SOURCE }}
           path: build/web
           overwrite: true
           include-hidden-files: true
@@ -450,29 +504,89 @@ jobs:
       TK2_TEST_PLAN: build/ci/test-plan.json
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        env:
+          GIT_TRACE2_EVENT: ${{ runner.temp }}/browser-checkout.jsonl
         with:
+          ref: ${{ env.FROZEN_SOURCE }}
           persist-credentials: false
+          sparse-checkout: ${{ inputs.checkout_mode == 'sparse' && env.BROWSER_SPARSE_PATHS || '' }}
+          sparse-checkout-cone-mode: false
+      - name: Record Git fetch and working tree materialization
+        if: always()
+        env:
+          CHECKOUT_MODE: ${{ inputs.checkout_mode }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from datetime import datetime
+          from pathlib import Path
+
+          trace = Path(os.environ['RUNNER_TEMP']) / 'browser-checkout.jsonl'
+          pending = {}
+          commands = []
+          if trace.is_file():
+              for line in trace.read_text().splitlines():
+                  row = json.loads(line)
+                  if row['event'] == 'start':
+                      args = iter(row['argv'][1:])
+                      for arg in args:
+                          if arg == '-c':
+                              next(args, None)
+                          elif not arg.startswith('-'):
+                              if arg in {'fetch', 'checkout', 'read-tree'}:
+                                  pending[row['sid']] = (arg, row['time'])
+                              break
+                  elif row['event'] == 'exit' and row['sid'] in pending:
+                      kind, start = pending.pop(row['sid'])
+                      end = row['time']
+                      elapsed = (datetime.fromisoformat(end) - datetime.fromisoformat(start)).total_seconds()
+                      commands.append(dict(kind=kind, start=start, end=end, ms=round(elapsed * 1000)))
+          print('BROWSER_CHECKOUT_TIMING ' + json.dumps(dict(mode=os.environ['CHECKOUT_MODE'], commands=commands)))
+          PY
+      - name: Check source and sparse browser inputs
+        env:
+          CHECKOUT_MODE: ${{ inputs.checkout_mode }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$FROZEN_SOURCE"
+          test -f tests/browser_ui.spec.mjs
+          test -f tests/browser_soldier_ui.spec.mjs
+          test -f tests/browser_static_server.mjs
+          test -f game/config/references/officer-relations-v1.json
+          test -f game/data/campaigns/index.json
+          test -f game/assets/battlefields/index.json
+          test -f game/assets/map-presentation.json
+          if [ "$CHECKOUT_MODE" = sparse ]; then
+            test "$(git sparse-checkout list)" = "$(printf '%s' "$BROWSER_SPARSE_PATHS")"
+            test ! -e art
+            test ! -e game/assets/portraits
+          else
+            test "$CHECKOUT_MODE" = full
+            test -d art
+            test -d game/assets/portraits
+          fi
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
       - uses: ./.github/actions/browser-tools
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: test-plan-${{ github.sha }}
+          name: test-plan-${{ env.FROZEN_SOURCE }}
           path: build/ci
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: candidate-web-${{ github.sha }}
+          name: candidate-web-${{ env.FROZEN_SOURCE }}
           path: build/web
       - name: Require the exact immutable candidate
         env:
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
-        run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_SOURCE" --content-sha256 "$CONTENT_SHA"
       - name: Show the selected scope and execute actual browser controls
         env:
           BROWSER_PROJECT: ${{ matrix.project }}
           BROWSER_SHARD: ${{ matrix.shard }}
         run: |
+          export GITHUB_SHA="$FROZEN_SOURCE"
           node tools/browser-tests/scope.cjs --plan "$TK2_TEST_PLAN"
           node tools/browser-tests/verify-shards.mjs "$BROWSER_PROJECT"
           node tools/browser-tests/run-shard.mjs "$BROWSER_PROJECT" "$BROWSER_SHARD"
@@ -482,7 +596,7 @@ jobs:
         with:
           # Stable per-commit names let a failed-job retry reuse the reports
           # from its unchanged successful sibling jobs.
-          name: browser-timing-${{ matrix.project }}-shard-${{ matrix.shard }}-${{ github.sha }}
+          name: browser-timing-${{ matrix.project }}-shard-${{ matrix.shard }}-${{ env.FROZEN_SOURCE }}
           path: build/browser-timings/${{ matrix.project }}-shard-${{ matrix.shard }}.json
           overwrite: true
           if-no-files-found: error
@@ -490,7 +604,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
-          name: browser-${{ matrix.project }}-shard-${{ matrix.shard }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          name: browser-${{ matrix.project }}-shard-${{ matrix.shard }}-${{ env.FROZEN_SOURCE }}-attempt-${{ github.run_attempt }}
           path: |
             build/browser-results
             build/browser-report
@@ -504,6 +618,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.FROZEN_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -514,7 +629,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
-          name: resupply-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          name: resupply-${{ env.FROZEN_SOURCE }}-attempt-${{ github.run_attempt }}
           path: build/resupply-browser-results
           if-no-files-found: ignore
           retention-days: 7
@@ -526,6 +641,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.FROZEN_SOURCE }}
           persist-credentials: false
           # The reused gate reads tools/ci and downloads the tested release.
           sparse-checkout: >-
@@ -537,20 +653,20 @@ jobs:
           python-version: '3.13'
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: test-plan-${{ github.sha }}
+          name: test-plan-${{ env.FROZEN_SOURCE }}
           path: build/ci
       - name: Fail if any required group failed, was cancelled or was skipped
         env:
           JOB_RESULTS: ${{ toJSON(needs) }}
         run: |
           python -c 'import os,pathlib;pathlib.Path("build/ci/needs.json").write_text(os.environ["JOB_RESULTS"])'
-          python -B tools/ci/gate.py verify --plan build/ci/test-plan.json --needs build/ci/needs.json --head "$GITHUB_SHA"
+          python -B tools/ci/gate.py verify --plan build/ci/test-plan.json --needs build/ci/needs.json --head "$FROZEN_SOURCE"
           python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
       - name: Collect scoped Python reports from this run
         if: needs.scope.outputs.mode == 'scoped' && needs.scope.outputs.reuse != 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          pattern: scoped-report-*-${{ github.sha }}
+          pattern: scoped-report-*-${{ env.FROZEN_SOURCE }}
           path: build/scoped-reports
       - name: Verify complete scoped module and catalog coverage
         if: needs.scope.outputs.mode == 'scoped' && needs.scope.outputs.reuse != 'true'
@@ -563,7 +679,7 @@ jobs:
         if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          pattern: browser-timing-*-shard-*-${{ github.sha }}
+          pattern: browser-timing-*-shard-*-${{ env.FROZEN_SOURCE }}
           path: build/browser-timings
           merge-multiple: true
       - name: Verify complete timing coverage and report measured shard costs
@@ -571,12 +687,12 @@ jobs:
         env:
           TK2_TEST_PLAN: build/ci/test-plan.json
         run: |
-          node tools/browser-tests/aggregate-timings.mjs build/browser-timings --head "$GITHUB_SHA"
+          node tools/browser-tests/aggregate-timings.mjs build/browser-timings --head "$FROZEN_SOURCE"
           cat build/browser-timings/summary.md >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
         with:
-          name: browser-timing-summary-${{ github.sha }}
+          name: browser-timing-summary-${{ env.FROZEN_SOURCE }}
           path: build/browser-timings
           overwrite: true
           if-no-files-found: error
@@ -584,18 +700,18 @@ jobs:
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         if: needs.scope.outputs.web == 'true'
         with:
-          name: candidate-web-${{ github.sha }}
+          name: candidate-web-${{ env.FROZEN_SOURCE }}
           path: build/web
       - name: Verify the original candidate after every required check passed
         if: needs.scope.outputs.web == 'true'
         env:
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
-        run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_SOURCE" --content-sha256 "$CONTENT_SHA"
       - name: Retain the exact tested release
         if: needs.scope.outputs.web == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: verified-web-${{ github.sha }}
+          name: verified-web-${{ env.FROZEN_SOURCE }}
           path: build/web
           overwrite: true
           include-hidden-files: true
