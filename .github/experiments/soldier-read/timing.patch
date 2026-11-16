@@ -1,0 +1,26 @@
+diff --git a/tests/browser_soldier_ui.spec.mjs b/tests/browser_soldier_ui.spec.mjs
+index 9f1dc0d1..4516d097 100644
+--- a/tests/browser_soldier_ui.spec.mjs
++++ b/tests/browser_soldier_ui.spec.mjs
+@@ -6,6 +6,7 @@
+ import {test,expect} from '../tools/browser-tests/node_modules/@playwright/test/index.mjs';
+ import {execFileSync} from 'node:child_process';
+ import {writeFile} from 'node:fs/promises';
++import {observeOpeningWorker,readOpening} from '../.github/experiments/soldier-read/probe.mjs';
+
+ const fixtures=new Map(),pageErrors=new WeakMap();
+ function fixture(kind){
+@@ -343,11 +344,12 @@ async function attackCycleEvidence(page,testInfo,kind='attack-cycles'){
+
+ test('field soldier formations expose ten hundred-person teams and replay actual individual orders without extra damage',async({page},testInfo)=>{
+  const macro=fixture('field'),contact=fixture('contact'),touch=testInfo.project.name==='touch-chromium',proof=[];
++ await observeOpeningWorker(page);
+  await page.clock.install();await opening(page);await load(page,macro.save);
+  const scene=page.locator('[data-battle-scene]');await expect(scene).toHaveAttribute('data-battle-scene-mode','tactical');
+  await expect(scene.locator('[data-soldier-label-toggle]')).toBeHidden();
+  await expect(scene).toHaveAttribute('data-tactical-marker-style','original-native-atlas');
+- const before=await read(page),markers=JSON.parse(await scene.getAttribute('data-battle-markers'));
++ const before=await readOpening(page,testInfo),markers=JSON.parse(await scene.getAttribute('data-battle-markers'));
+  const types=before.view.catalog.officer_troop_types,battle=before.save.state.battle;
+  expect(types.schema).toBe('tk2-officer-troop-types-view-v1');expect(types.rules_version).toBe('officer-troop-types-v1');
+  expect(markers.length).toBe(before.save.state.battle.attackers.length+before.save.state.battle.defenders.length);
