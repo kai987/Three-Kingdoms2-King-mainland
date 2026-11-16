@@ -24,11 +24,11 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          fetch-depth: 2
+          fetch-depth: 3
           persist-credentials: false
       - name: Use the original source and isolate profiling scripts
         run: |
-          test "$(git rev-parse HEAD^)" = "$FROZEN_SOURCE"
+          git merge-base --is-ancestor "$FROZEN_SOURCE" HEAD
           git diff --exit-code "$FROZEN_SOURCE" HEAD -- . ':!.github/workflows/remake.yml' ':!.github/experiments/revision-profile'
           cp -R .github/experiments/revision-profile "$RUNNER_TEMP/"
           git switch --detach "$FROZEN_SOURCE"

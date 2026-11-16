@@ -127,8 +127,7 @@ export async function prepareRevisionProfile(page,testInfo) {
       await worker.send('Debugger.enable');
       const {breakpointId,locations}=await worker.send('Debugger.setBreakpointByUrl',{
         urlRegex:'/browser-engine-worker\\.js',
-        lineNumber:121,
-        condition:"message.path === '/api/march-status'",
+        lineNumber:113,
       });
       assert.ok(locations.length,'Pinned Worker breakpoint did not resolve');
       let timer;
@@ -136,13 +135,18 @@ export async function prepareRevisionProfile(page,testInfo) {
         timer=setTimeout(()=>reject(Error('Worker did not pause on the read-only handshake')),15_000);
         worker.onPause(resolve);
       });
-      const handshake=page.evaluate(async()=>{
-        const response=await fetch('/api/march-status');
-        if(!response.ok)throw Error('Worker inspection handshake failed');
-        return response.json();
-      });
-      handshake.catch(()=>{});
       try {
+        await page.evaluate(()=>{
+          globalThis.__tk2RevisionPage.handshake=new Promise((resolve,reject)=>{
+            setTimeout(async()=>{
+              try {
+                const response=await fetch('/api/march-status');
+                if(!response.ok)throw Error('Worker inspection handshake failed');
+                resolve(await response.json());
+              } catch(error) { reject(error); }
+            },0);
+          });
+        });
         const frame=(await paused).callFrames[0];
         const result=await worker.send('Debugger.evaluateOnCallFrame',{
           callFrameId:frame.callFrameId, expression:`(${code})(py,${JSON.stringify(python)})`,
@@ -156,7 +160,7 @@ export async function prepareRevisionProfile(page,testInfo) {
         await worker.send('Debugger.resume').catch(()=>{});
         await worker.send('Debugger.disable');
       }
-      marchStatus=await handshake;
+      marchStatus=await page.evaluate(()=>globalThis.__tk2RevisionPage.handshake);
     },
     revision:()=>read(false),
     async finish() {
