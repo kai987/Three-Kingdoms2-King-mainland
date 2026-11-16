@@ -93,6 +93,27 @@ class EastJiangCompiledTests(unittest.TestCase):
     def setUpClass(cls):
         cls.data = read('game/data/campaigns/217-07.json')
 
+    def test_parallel_eastern_approaches_share_exact_trunks(self):
+        roads = {(row['from'], row['to']): row for row in self.data['regional_roads']}
+        xiapi = roads['xiapi', 'danyang']['draw'][0]['points']
+        guangling = roads['guangling', 'xiapi']['draw'][-1]['points']
+        self.assertEqual(xiapi, list(reversed(guangling)))
+        qichun = roads['chaisang', 'qichun']['draw']
+        yuzhang = roads['chaisang', 'yuzhang']['draw']
+        self.assertEqual(qichun[0]['points'], yuzhang[0]['points'])
+
+        beds = read('game/config/road-centers.json')['corridor_repairs']
+        strokes = {stroke['index']: stroke['points'] for bed in beds
+                   for stroke in bed['strokes']}
+        self.assertEqual(roads['qiao', 'runan']['draw'][-1]['points'], strokes[172][-2:])
+        self.assertEqual(list(reversed(qichun[-1]['points'])), strokes[197])
+        ports = read('game/config/river-network.json')['ports']
+        self.assertEqual(ports['qichun']['access'][:2], strokes[197])
+        self.assertEqual(ports['yuzhang']['access'][:3], strokes[216])
+        self.assertEqual(ports['poyang']['access'][:2], list(reversed(strokes[225][-2:])))
+        self.assertEqual(strokes[205], [])
+        self.assertEqual(strokes[207], [])
+
     def test_donghai_uses_xiapi_and_cannot_march_through_hostile_xiapi(self):
         travel = travel_for(self.data)
         for backend in ('python', 'rust'):

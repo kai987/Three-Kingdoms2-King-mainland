@@ -4,7 +4,7 @@ const commandBookFixture=require('./fixtures/command-books.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const source=fs.readFileSync(require.resolve('../game/app.js'),'utf8');
 const home={id:'home',owner:'wei',grain:100,roster:{officer_ids:[1]}},ally={id:'ally',owner:'wei',roster:{officer_ids:[]}},enemy={id:'enemy',owner:'wu',roster:{officer_ids:[4]}},blocked={id:'blocked',owner:'shu',roster:{officer_ids:[5]}},empty={id:'empty',owner:'neutral',roster:{officer_ids:[]}};
-const view={revision:7,catalog:{travel_hazards:true,recruitable:{home:[2,3]},persuadable:{home:[4]}},game:{phase:'city',player:'wei',cities:{home,ally,enemy,blocked,empty},extension:{free_locations:{2:'home',3:'empty'},rng:123},officers:{1:{troops:100}}}};
+const view={revision:7,catalog:{rules:{battle_officers_per_side:10},travel_hazards:true,recruitable:{home:[2,3]},persuadable:{home:[4]}},game:{phase:'city',player:'wei',cities:{home,ally,enemy,blocked,empty},extension:{free_locations:{2:'home',3:'empty'},rng:123},officers:{1:{troops:100}}}};
 view.catalog.travel_quotes={'home:enemy:land':{days:3},'home:empty:land':{days:5}};
 commandBookFixture.attach(view);
 let scrolls=0,focuses=0,renders=0,opened=[],notices=[];
@@ -30,10 +30,13 @@ context.request=async path=>{
 context.hasCommandBook=kind=>commandBookFixture.api.can(view,kind);context.commandBookReason=kind=>commandBookFixture.api.reason(view,kind);
 vm.createContext(context);
 vm.runInContext(source.slice(source.indexOf('const routeModes='),source.indexOf('function factionResources(')),context);
-vm.runInContext(source.slice(source.indexOf('function actionTargetCities('),source.indexOf('function departure(')),context);
+vm.runInContext(source.slice(source.indexOf('function departureLimit('),source.indexOf('function departure(')),context);
 async function test(){
  const same=value=>JSON.parse(JSON.stringify(value)),snapshot=JSON.stringify(view);
  assert.deepEqual(same(context.actionTargetCities('depart',home)),['enemy','empty']);
+ view.catalog.allied_attacks={enemy:{remaining:0}};
+ assert.deepEqual(same(context.actionTargetCities('depart',home)),['empty'],'A full allied attack has no free slots');
+ delete view.catalog.allied_attacks;
  assert.deepEqual(same(context.actionTargetCities('recruit',home)),['home','enemy','empty'],'Recruitment uses actual locations and the backend-authorized enemy IDs');
  context.beginMapAction('depart',home);assert.equal(opened.length,0);assert.equal(scrolls,1);assert.equal(focuses,1);assert.equal(context.mapAction.source,'home');
  await context.finishMapAction('blocked');assert.equal(opened.length,0);assert.match(detail.innerHTML,/no_direct_route/);assert(next.parentElement.hidden);

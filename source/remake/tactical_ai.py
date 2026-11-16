@@ -70,7 +70,7 @@ def tactic_reason(state, battle, actor, target, own, foe, terrain, tactic):
         return '该部队受扰乱，不能施计；可执行普通行动恢复。'
     if effect=='surrender':
         from .battle_allegiance import reason
-        failure=reason(state,battle,target,own)
+        failure=reason(state,battle,target,own,actor=actor)
         if failure:return failure
     if 'tactical' in battle['extended']:
         from . import battle_grid
@@ -346,7 +346,7 @@ def _tactic_value(state, battle, actor, target, own, foe, terrain, tactic, attac
 
 
 def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
-               depth=1, responding=False, used=None, game=None):
+               depth=1, responding=False, used=None, game=None, allowed_actors=None):
     """Enumerate real unit/target/tactic choices; ties are stable numeric IDs."""
     from .battle_placement import pending
     if pending(battle):return []
@@ -354,7 +354,8 @@ def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
         return []
     if 'tactical' in battle['extended']:
         return _grid_candidates(state, battle, own, foe, terrain, tactics,
-            damage_percent=damage_percent, depth=depth, responding=responding, game=game)
+            damage_percent=damage_percent, depth=depth, responding=responding, game=game,
+            allowed_actors=allowed_actors)
     spent = set(() if responding else battle['used'] if used is None else used)
     friends, enemies = _active(battle, own), _active(battle, foe)
     # Damage averages are reused by every tactic score; the candidate search
@@ -397,7 +398,7 @@ def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
 
 
 def choose_action(state, battle, own, foe, terrain, tactics, *, settings=None,
-                  damage_percent=32, responding=False, used=None, game=None):
+                  damage_percent=32, responding=False, used=None, game=None, allowed_actors=None):
     from .battle_placement import pending
     if pending(battle):return None
     settings = settings or {}
@@ -405,7 +406,7 @@ def choose_action(state, battle, own, foe, terrain, tactics, *, settings=None,
         return dict(kind='wait',actor=None,target=None,tactic=None,score=0)
     rows = candidates(state, battle, own, foe, terrain, tactics,
                       damage_percent=damage_percent, depth=settings.get('tactic_depth', 1),
-                      responding=responding, used=used, game=game)
+                      responding=responding, used=used, game=game, allowed_actors=allowed_actors)
     if 'tactical' in battle['extended']:
         if not rows:
             return None
@@ -432,7 +433,8 @@ def choose_action(state, battle, own, foe, terrain, tactics, *, settings=None,
     return ordinary
 
 
-def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percent, depth, responding,game=None):
+def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percent, depth, responding,
+                     game=None, allowed_actors=None):
     """Same legal effects, plus deterministic paths to contact; no RNG lookahead."""
     from . import battle_grid as grid
     row = battle['extended']['tactical']
@@ -446,6 +448,8 @@ def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percen
     attack = lambda a, t: averages[(a['id'], t['id'])]
     rows = []
     for actor in friends:
+        if allowed_actors is not None and actor['id'] not in allowed_actors:
+            continue
         support = _support(battle, actor)
         from . import battle_services
         service=battle_services.ai_action(game,state,battle,actor,own) if game is not None else None

@@ -3,9 +3,9 @@
   "review_revision": "2026-10-27",
   "base_commit": "69a6e8f01239159b91e150637f888278af3b7a88",
   "review_sha256": "fb38ef837fad2783b70ac326f3496bfb45f322b274a8d062c7f5bc0aa65efdba",
-  "presentation_sha256": "49dd5aa185e9a054087ce3ff5f3e014b4c804208aaf60216853d4615609731f2",
-  "locale_sha256": "44fdba4bb5e00633f9917c2289715746b90900d073b74405dae67debede8c3d3",
-  "japanese_sha256": "20ac8f51fd47d28a4dbd774e19184cbd2dd0d56c5114c7ef2821d068a1976c3b",
+  "presentation_sha256": "8ab67aea65f34e44cc9701776fca7437a9641f328403ce968ddab374200e5efc",
+  "locale_sha256": "93cb4078a6d58ca18c6e1616a598fc3ee272b0a2e74ee078009ee8b78133d14b",
+  "japanese_sha256": "4d943b1be861eb8f553dc64c2df25bc0c2bd006438c92058f976be13b6ccfaba",
   "baseline_serving_non_ruler_reviews": 283,
   "pool": [
     {
@@ -1738,7 +1738,7 @@
         "bian_zhang",
         "song_jian"
       ],
-      "catalog_sha256": "5bfbc2dfb24f9f43cfa51989658f7038ea2acada009bbd3920a79a2b36bd12fb"
+      "catalog_sha256": "c1c4fe114492b0c9c50117250550f2688dd835547ea5555ba9ccb6b320bfc206"
     },
     {
       "id": "mainland188-06",
@@ -3194,7 +3194,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "4635bf86b9ba7510cd9285f26f9b06aca89947aa184e06395f9c9a660d97e6f6"
+      "catalog_sha256": "9fb3f08206c94eed7f71cb7c864873f3cabbbfed73a917cee069da6fb5f25c61"
     },
     {
       "id": "mainland190-01",
@@ -5104,7 +5104,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "0ad3a8f93c565329379c0e4f791e245882cd8ea022f9082e4740ccbbc658cb4a"
+      "catalog_sha256": "12615eb03716bd10a20bfa2f1556b2d38b9b5c0599bdeded9ec2f283e013da0b"
     },
     {
       "id": "mainland191-10",
@@ -6565,7 +6565,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "8d335ebf7244d6db29e16189b44f4a2403d2bb4f19ba35bf79384b85d966a46e"
+      "catalog_sha256": "90b2d0bbdd558c808a6f70afa0b7608c67abf9398d4129f1a41ae6d0ce0c15d0"
     },
     {
       "id": "mainland194-06",
@@ -8266,7 +8266,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "e39e1ab0e6ff5e1fcb3b0f6f9bfe71b517c91a28ce4ff3c4838534584797a395"
+      "catalog_sha256": "b94c9138d401b3300ea88e39c1605196db96cfb8a6d5c249ed308c6c700b2f6b"
     },
     {
       "id": "mainland196-06",
@@ -9868,7 +9868,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "572ccbd960e8e8d73d74a3e07ed48ec4199f31a0da15f5c68570a494522619bb"
+      "catalog_sha256": "2a48c63fc989e576fe035638ad6d5332256af5212dd0f8eabb270eeda6ea4848"
     },
     {
       "id": "mainland197-07",
@@ -11729,7 +11729,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "b4d718b3ca8796a004edc42d188fddf1241656bf7a71973edc8eeb10dbbe6ec3"
+      "catalog_sha256": "42a49ff6226d6dbd479fb07be378e59b96a8276626b443e111cd2315bfe61edd"
     },
     {
       "id": "mainland198-03",
@@ -13460,7 +13460,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "6e655dbeccd400f5f3276d36d98576f58250b9d327ebbe2647816c9debe7a0ab"
+      "catalog_sha256": "f014ff0a6b7e83103409b73a43aea7929e13bcd235ce6616ad58a01d6827299b"
     },
     {
       "id": "mainland200-01",
@@ -14919,7 +14919,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "6b0524b845d6b1db98d9d8dbfc90e24b0868e13b94deda0ba0f85e291bbadf70"
+      "catalog_sha256": "9a190894712a097ad517eeaf50d2cdb6af93da6c91c6043893f6296164204c0d"
     },
     {
       "id": "mainland201-05",
@@ -16242,7 +16242,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "5a307214da6f99a639b9f258b3ca683ac2017df2a83f3ec2c719cc70cdb7624f"
+      "catalog_sha256": "2b7cb7b403fea2344d4d0c7b0520cb8584e6ff9c6840a9800013bb97fab65374"
     },
     {
       "id": "mainland202-06",
@@ -17675,7 +17675,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "2a3958fe8db983af113fd7b04a6d3aae67cbc513200b9b3b60c71f7b90b4d795"
+      "catalog_sha256": "6a09eb43078ca6ff9763c58ebb664af40119ff519e718375a1e84510542caa92"
     },
     {
       "id": "mainland207-09",
@@ -19174,7 +19174,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "140cf21e9595dd7834b803cbb76b35e3bf598fcef0ffbeda412783a60050f5b1"
+      "catalog_sha256": "adcd18a5ce81393c98e95b2340f94136d557b9f752ef67fb3f33ed4dcf360995"
     },
     {
       "id": "mainland208-10",
@@ -20633,7 +20633,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "a9953d83983eb4b02ab2e32b5105c57a24cf7de32652c8fb6c95abce89723c95"
+      "catalog_sha256": "6a0be07796556c4ab719af13903b11c62a05ac6008fced4faf46668ea261269a"
     },
     {
       "id": "mainland209-06",
@@ -21917,7 +21917,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "644a32440f462e35840261b8fdaebfa8c6f272861e7f740a1b36434e9307f740"
+      "catalog_sha256": "f824e063fe8d06e726059508066c6b2f012cde727e49410ab878ef148dbb57f0"
     },
     {
       "id": "mainland210-11",
@@ -23252,7 +23252,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "8933c273a49a7f66723ebc04e01337e190ba44b2246a042bcc623a46c55eeffa"
+      "catalog_sha256": "1d511c9b2ffdce2c580ae2fdce598cff83d4f007387125634445721664db4142"
     },
     {
       "id": "mainland211-07-tongguan",
@@ -24684,7 +24684,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "51d4259848a3d290c3216997e2f7eb336d0453e25969511f77cbeb8e4fde630a"
+      "catalog_sha256": "0dd871caad281de20535abe9b50f3726a03e439dff166de3f8ec25626a146f25"
     },
     {
       "id": "mainland212-06",
@@ -26027,7 +26027,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "63c8ffa3006bc8b09a00497923e57ee668445ea02ff0ae25960ca8c7cdb19ca5"
+      "catalog_sha256": "45b1e46951c14879648414162a34503f07d0854b34cf570c7a85db4316fffd2b"
     },
     {
       "id": "mainland212-12",
@@ -27394,7 +27394,7 @@
         "yunzhong": "云中"
       },
       "dormant_factions": [],
-      "catalog_sha256": "2660c90a60c9236eb125964830f02795c3bc9a3e4ca29860fce36321b867d52c"
+      "catalog_sha256": "f95b84b453d1522f4550685253fe6acc7e061f526a02ff2a600b4d60fc85a771"
     },
     {
       "id": "mainland215-08",
@@ -28768,7 +28768,7 @@
         "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "117e43281744cf9b348376f29095f9c08bdb2a42980b586a143ce397e547e4ca"
+      "catalog_sha256": "7fb36ae9351710bbfa97ba084b9bfd55761bc3328c71f7bd190bdeb6756f2b63"
     },
     {
       "id": "mainland217-07",
@@ -30192,7 +30192,7 @@
         "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "e4c682c92b7518d0d106449cd84735c2506a9f089d220795306d8c427827bbc0"
+      "catalog_sha256": "aa3b66b965ad6f775b017973f86593c805616597c3c01525b2574a1ec1277e01"
     },
     {
       "id": "mainland219-07",
@@ -31555,7 +31555,7 @@
         "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "f6101c404a7913460484149ef7a8bf0fe5ca55f31d2360ac36b9f8691c59d356"
+      "catalog_sha256": "cd2381d40e0b37440195fd65b87cbdd2280e0616cb3e685fa221215e72f33353"
     },
     {
       "id": "mainland221-07",
@@ -32937,7 +32937,7 @@
         "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "57234c74b84df705e48e144a559203b5c0011e950814ba2bf14035505b4c122a"
+      "catalog_sha256": "c3f9edc1e52b43b8d648f0f10c94de9b732601169141dd2cb1f7295e9438b169"
     },
     {
       "id": "mainland225-07",
@@ -34277,7 +34277,7 @@
         "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "62e35758cac92fdf1a209b2ac018f24dab91f1939a9b1b86d556e47fbd9a09de"
+      "catalog_sha256": "83bc07ff59b54f4d4b766f01f4797908a9f8b1c0e064fc3c47bc56e11f0ebc48"
     },
     {
       "id": "mainland227-02",
@@ -35684,7 +35684,7 @@
         "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "b6bc23d26bec7e22ec83658ea040174bba8c09ef2132b5355297e86e8d0cb961"
+      "catalog_sha256": "ad9ac03120f96c48583761382404313ba06a214c93afe9b60f6480a3fee621f0"
     },
     {
       "id": "mainland234-02",
@@ -37047,7 +37047,7 @@
         "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "e61c0a1a593b2a72ee0980b3da1bbf050bc96b461246a5993c6905dd55ca3aeb"
+      "catalog_sha256": "7544367f220e6a6f6aa6f7ffeb593b71347248e35e5ecfab21cd3f4c0cc298f6"
     },
     {
       "id": "mainland235-01",
@@ -38293,7 +38293,7 @@
         "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "c0f67b532700c2287758a1e3fd1ab84be26b447a6b1ed1c40a2d0c24889f0695"
+      "catalog_sha256": "819578f9d2a714e4e9151ef20f37a29d28204d2599ee408612ec2d8bdae18176"
     },
     {
       "id": "mainland238-01",
@@ -39656,7 +39656,7 @@
         "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "b305206a23d0e8229084185d65ad3babff883de772a98c849ac39e6956ba20a5"
+      "catalog_sha256": "dc3fae554a74f759c8b3e7ae91ee71a0ed738ef43c476911b2aeec050abbc424"
     },
     {
       "id": "mainland249-01",
@@ -41043,7 +41043,7 @@
         "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "179b8ec7113d4a19be72cba580c280b66a8d1fa34da8e8cecea32270ecb82c81"
+      "catalog_sha256": "1a73a53ba2f6ed980132e841a4248b2b927e190f83897a4ec3011becf396d2c0"
     },
     {
       "id": "mainland263-05",
@@ -42351,7 +42351,7 @@
         "yunzhong": "云中旧城"
       },
       "dormant_factions": [],
-      "catalog_sha256": "fc8fe851d8a9ef09b9a163fd70852a86010548d2af1607dcb8066fda2ef1b544"
+      "catalog_sha256": "327b81cbc7e463f49d0694ed6afa8b192c1bdb0649eb61abbc47294ecdc7206d"
     }
   ]
 }

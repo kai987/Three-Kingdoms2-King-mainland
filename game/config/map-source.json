@@ -8,7 +8,7 @@
     "map-clean.png": "bbe033c944ba1547ca12c7d0cbd50d930c8a49befce5fbcc767cf5afbfc77c7e",
     "map-navigation.png": "3cf81b31f08fe73ff5f9acd7627e009de9e4250664088c2d7cfc54f31bd2f683",
     "map.png": "30946ef6877db09f7fb44c7d0cfe729614983613619095428ff3a270c0881edd",
-    "map-road-centers.png": "2e5f0a40fd3a196133dd92249fdf6fc75daaa648b1392dfcde5a8f36cdea8198"
+    "map-road-centers.png": "a13c227efe5fa0e94a571a221f2a3cf704ec4116ddcbb3550d5f7d0cd1768738"
   },
   "native_castle_sprite": {
     "sourceRect": [
@@ -895,55 +895,49 @@
           "阴平",
           "成都"
         ],
-        "shared_prefix": [
+        "new_branch": [
           [
             250,
             402
           ],
           [
-            260,
-            408
+            231,
+            406
           ],
           [
-            258,
-            418
-          ],
-          [
-            264,
+            218,
             412
           ],
           [
-            272,
+            207,
             420
           ],
           [
-            244,
-            448
-          ]
-        ],
-        "new_branch": [
-          [
-            244,
-            448
+            200,
+            431
           ],
           [
-            238,
-            456
+            196,
+            447
           ],
           [
-            226,
-            474
+            196,
+            461
           ],
           [
-            216,
-            490
+            199,
+            477
+          ],
+          [
+            205,
+            491
           ],
           [
             214,
             502
           ]
         ],
-        "drawing_policy": "Reuse the existing Yinping-Wenshan northern approach; paint only the branch after its junction, no parallel duplicate."
+        "drawing_policy": "Follow the reviewed westward curve directly from Yinping to Chengdu. Crossing the existing east-west road does not add a city stop."
       }
     ],
     "expansion_connections": [

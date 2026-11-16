@@ -189,7 +189,8 @@ class RoadCenterBuilderTests(unittest.TestCase):
         repairs = {repair['id']: repair for repair in result['corridor_repairs']}
         self.assertEqual(set(repairs), {'dongping-changyi', 'jinan-linzi', 'shanggu-ji',
                                         'hongnong-luoyang', 'jiyin-qiao-changyi',
-                                        'liaoxi-changli-liaodong'})
+                                        'liaoxi-changli-liaodong', 'lingling-eastern-fork',
+                                        'runan-northeast-fork', 'qichun-chaisang-poyang-shared-trunks'})
         coastal = rows[260]
         self.assertEqual(coastal['new_points'][0], positions['liaoxi'])
         self.assertEqual(coastal['new_points'][-1], positions['liaodong'])
@@ -384,9 +385,12 @@ class RoadCenterBuilderTests(unittest.TestCase):
             self.assertTrue(rows[index]['deleted'],index)
         self.assertEqual(rows[119]['new_points'], [[682,322],[688,334],positions['henan']])
         secret_branch = json.loads((ROOT/'game/config/map-source.json').read_text())['presentation']['added_land_roads'][0]
-        self.assertEqual(secret_branch['new_branch'][0],[244,448])
-        self.assertIn('L244 448M244 448',rows[10]['new_d'])
-        self.assertNotIn('Q244 448',rows[10]['new_d'])
+        western_curve = secret_branch['new_branch']
+        self.assertEqual((western_curve[0], western_curve[-1]),
+                         (positions['yinping'], positions['shujun']))
+        self.assertLess(min(point[0] for point in western_curve), positions['shujun'][0])
+        self.assertTrue(all(a[1] < b[1] for a, b in zip(western_curve, western_curve[1:])))
+        self.assertNotIn('L244 448M244 448', rows[10]['new_d'])
 
 
 if __name__ == '__main__':

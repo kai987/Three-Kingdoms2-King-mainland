@@ -1,5 +1,6 @@
 """Authentic integer formulas, pure reads and paid shared city development."""
 from copy import deepcopy
+from dataclasses import replace
 from pathlib import Path
 import json
 import sys
@@ -12,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'source'))
 sys.path.insert(0, str(ROOT/'tests'))
 from remake import city_development as development, command_books
-from remake import domestic
+from remake import domestic, treasures
 from remake.errors import GameError
 from remake.campaign import Campaign, Catalog
 from remake.city_economy import income_at
@@ -81,6 +82,41 @@ class DevelopmentTests(unittest.TestCase):
         self.assertEqual(state.events[-1]['kind'], 'city_developed')
         self.assertEqual(command_books.remaining(state, 'one'), 2)
         development.validate(game, state)
+
+    def test_governor_bonus_rates_appointment_and_all_development_quotes(self):
+        game, state = setup()
+        state.extension['treasury'] = treasures.empty(game, state)
+        governor = state.officers[1]
+        profile = governor.profile
+        for intellect, bonus in ((59, 0), (60, 5), (74, 5), (75, 10), (89, 10),
+                                 (90, 11), (91, 12), (98, 19), (99, 20)):
+            with self.subTest(intellect=intellect):
+                governor.profile = replace(profile, intellect=intellect)
+                offer = development.quote(game, state, 'capital', 3, 'develop_land')
+                self.assertEqual(offer['governor_bonus_percent'], bonus)
+        governor.profile = profile
+
+        state.officers[5].profile = replace(state.officers[5].profile, intellect=99)
+        treasures.set_governor(game, state, dict(city='capital', officer=5), 'one')
+        for kind, minimum, maximum in (('develop_land', 19, 46), ('develop_industry', 19, 46),
+                                        ('develop_population', 900, 2200)):
+            with self.subTest(kind=kind):
+                state.rng = SequenceRng([4, 7])
+                saved = deepcopy(state)
+                offer = development.view(game, state)['cities']['capital']['actor_quotes']['1'][kind]
+                self.assertEqual(state, saved)
+                self.assertEqual(offer['intellect'], 90)
+                self.assertEqual(offer['governor_bonus_percent'], 20)
+                self.assertEqual((offer['gain_min'], offer['gain_max']), (minimum, maximum))
+                result = development.execute(game, state, dict(city='capital', actor=1, kind=kind), 'one')
+                self.assertEqual((result['gain'], result['gold'], state.rng.draws), (maximum, 26, 2))
+
+        city = state.extension['city_development']['cities']['capital']
+        city['population'] = development.LIMITS['population'] - 100
+        capped = development.quote(game, state, 'capital', 1, 'develop_population')
+        self.assertEqual((capped['gain_min'], capped['gain_max']), (100, 100))
+        state.extension['travel']['marches'] = [dict(officers=[5])]
+        self.assertEqual(development.quote(game, state, 'capital', 1, 'develop_land')['governor_bonus_percent'], 11)
 
     def test_quote_extrema_equal_exhaustive_effects_for_every_intellect_and_cap_boundary(self):
         game, state = setup()
@@ -214,6 +250,16 @@ class DevelopmentTests(unittest.TestCase):
                 self.assertEqual(row['cooldown'], 0)
                 self.assertEqual(state.rng.draws, 2)
 
+    def test_population_loss_at_cap_retains_valid_partial_hundred(self):
+        game, state = setup()
+        row = state.extension['city_development']['cities']['capital']
+        row.update(population=1_999_999, governance=19)
+        state.month += 1
+        state.rng = SequenceRng([0, 0])
+        result, = development.month_rollover(game, state)
+        self.assertEqual((result['population_loss'], row['population']), (499_600, 1_500_399))
+        development.validate(game, state)
+
     def test_chance_strict_boundary_and_neutral_or_stable_no_draw(self):
         for governance, threshold in ((49, 5), (39, 10), (29, 30), (19, 50)):
             game, state = setup()
@@ -266,7 +312,7 @@ class DevelopmentTests(unittest.TestCase):
         development.synchronize(game, state)
         self.assertEqual((row['owner'], row['land'], row['population'], row['governance']), ('two', 900, 987600, 31))
         development.validate(game, state)
-        for key, value in (('population', 999901), ('population', 12345), ('land', True), ('cooldown', 7),
+        for key, value in (('population', 2_000_000), ('population', 12345), ('land', True), ('cooldown', 7),
                            ('baseline', dict(row['baseline'], governance=99))):
             candidate = deepcopy(state)
             candidate.extension['city_development']['cities']['capital'][key] = value
@@ -277,6 +323,23 @@ class DevelopmentTests(unittest.TestCase):
 
 
 class DevelopmentCampaignTests(unittest.TestCase):
+    def test_development_reaches_exact_population_cap_and_round_trips_save(self):
+        catalog = Catalog(ROOT/'game/data/campaigns/217-07.json')
+        game = Campaign(catalog)
+        game.state = game._new('shu', 2026)
+        ledger = game.state.extension['city_development']['cities']
+        ledger['shujun']['population'] = 1_999_900
+        offer = development.quote(game, game.state, 'shujun', 439, 'develop_population')
+        self.assertEqual((offer['gain_min'], offer['gain_max']), (99, 99))
+        game.command('develop_population', dict(city='shujun', actor=439), 0)
+        saved = game.export_save()
+        event = next(row for row in saved['state']['extension']['events']['items'] if row['kind'] == 'city_developed')
+        self.assertEqual((event['details']['before'], event['details']['after'], event['details']['gain']),
+                         (1_999_900, 1_999_999, 99))
+        restored = Campaign(catalog)
+        restored.load_save(json.loads(json.dumps(saved)), 0)
+        self.assertEqual(restored.export_save(), saved)
+
     def test_legacy_city_development_save_keeps_progress_and_income_baseline(self):
         path = ROOT/'game/data/campaigns/221-07.json'
         catalog = Catalog(path)

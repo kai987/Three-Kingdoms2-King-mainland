@@ -6,7 +6,8 @@ conquests, consume random numbers, or acknowledge/advance a game from the UI.
 from copy import deepcopy
 import re
 from . import historical_campaigns, observer
-from .battle_supply import DENOMINATOR, MAX_BATTLE_DAILY_UNITS
+from .battle_supply import COALITION_LIMIT, DENOMINATOR, MAX_BATTLE_DAILY_UNITS
+from .city_development import LIMITS as DEVELOPMENT_LIMITS, POPULATION_UNIT, valid_population
 from .dated_events import FOUNDING_TROOP_TARGET
 from .officers import OFFICER_TROOP_CAP, ref_sort_key, is_generated_ref
 
@@ -62,7 +63,7 @@ DETAILS = {
     'faction_coup_skipped': {'coup_id','reason','released_troops'},
     **{kind: set() for kind in historical_campaigns.EVENT_FACTIONS},
     'battle_started': {'battle_id', 'attacker', 'defender'},
-    'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered'},
+    'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered', 'coalition'},
     'duel_started': set(), 'duel_result': {'result'},
     'tactic': {'tactic','success','affected_side','grain_before','grain_after','grain_loss',
                'success_percent','target_loyalty','guaranteed_failure','condition','condition_count','condition_counts',
@@ -84,6 +85,37 @@ DETAILS = {
     'domestic_report': {'gold','grain','reserves','morale','cities','reason'},
     'diplomacy_result': {'action','success','score','duration'},
 }
+
+
+def _validate_coalition_result(campaign, row):
+    from .allied_assault import RESOURCES
+    from .march_supply import LIMIT as STOCK_LIMIT
+    from .officers import BATTLE_OFFICERS_PER_SIDE
+
+    details = row['details']
+    result = details['coalition']
+    if (details.get('outcome') != 'victory' or not isinstance(result, dict)
+            or set(result) != {'captor', 'ally', 'troops', 'shares', 'returns'}
+            or len(row['factions']) != 2):
+        raise ValueError('Allied assault result fields')
+    captor, ally = result['captor'], result['ally']
+    if (not isinstance(captor, str) or not isinstance(ally, str)
+            or captor == ally or not {captor, ally} <= set(campaign.catalog.factions)
+            or row['factions'][0] not in {captor, ally} or row['factions'][1] in {captor, ally}):
+        raise ValueError('Allied assault result factions')
+    troops, shares, returns = (result[key] for key in ('troops', 'shares', 'returns'))
+    max_troops = BATTLE_OFFICERS_PER_SIDE * OFFICER_TROOP_CAP
+    if (not isinstance(troops, list) or len(troops) != 2
+            or any(type(qty) is not int or not 0 <= qty <= max_troops for qty in troops)
+            or sum(troops) > max_troops
+            or not isinstance(shares, list) or len(shares) != 2
+            or any(not isinstance(share, dict) or set(share) != set(RESOURCES)
+                   or any(type(qty) is not int or not 0 <= qty <= STOCK_LIMIT for qty in share.values())
+                   for share in shares)
+            or not isinstance(returns, list) or len(returns) > BATTLE_OFFICERS_PER_SIDE
+            or any(not isinstance(city, str) or city not in campaign.catalog.map_cities for city in returns)
+            or len(set(returns)) != len(returns)):
+        raise ValueError('Allied assault result units or stocks')
 
 
 def _validate_equipment_event(row):
@@ -165,15 +197,16 @@ def _validate_city_development_event(row):
         return type(d[key]) is int and low <= d[key] <= high
     if kind == 'city_developed':
         population = d['development'] == 'population'
-        cap = 999900 if population else 999
+        cap = DEVELOPMENT_LIMITS['population'] if population else DEVELOPMENT_LIMITS['land']
         valid=(d['development'] in ('land','industry','population')
             and row['person_ids']==[d['actor']] and number('gold',10,26) and d['gold']%2==0
             and all(number(key,0,cap) for key in ('before','after','gain'))
             and d['after']-d['before']==d['gain']
             and all(number(key,0,100) for key in ('governance_before','governance_after')))
         if valid:
-            unit = 100 if population else 1
-            valid=(all(d[key]%unit==0 for key in ('before','after','gain'))
+            unit = POPULATION_UNIT if population else 1
+            valid=((not population or (valid_population(d['before']) and valid_population(d['after'])
+                                        and (d['gain'] % unit == 0 or d['after'] == cap)))
                 and d['governance_after']==min(100,d['governance_before']+1+(d['gain']//unit>=31))
                 and (d['gain']>0 or d['governance_after']>d['governance_before']))
     else:
@@ -182,10 +215,10 @@ def _validate_city_development_event(row):
         active=loss_fields.get(d['category']) if isinstance(d['category'],str) else None
         valid=(not row['person_ids'] and number('governance',0,49) and active is not None
             and all(number(key,0,100000000 if key in ('gold_loss','grain_loss') else
-                999900 if key=='population_loss' else 999)
+                DEVELOPMENT_LIMITS['population'] if key=='population_loss' else DEVELOPMENT_LIMITS['land'])
                 and (key in active or d[key]==0) for key in
                 ('gold_loss','grain_loss','population_loss','land_loss','industry_loss'))
-            and d['population_loss']%100==0)
+            and d['population_loss'] % POPULATION_UNIT == 0)
     if not valid:
         raise ValueError('City development event receipt')
 
@@ -360,9 +393,10 @@ def _validate_tactic_event(row):
                 raise ValueError('Tactic chain target snapshot')
             seen.add(item['id'])
     elif d['tactic']==5:
+        maximum = COALITION_LIMIT if d.get('affected_side') == 'attackers' else 100000000
         if (extra!={'affected_side','grain_before','grain_after','grain_loss'}
                 or d['affected_side'] not in {'attackers','defenders'}
-                or any(type(d[key]) is not int or not 0 <= d[key] <= 100000000
+                or any(type(d[key]) is not int or not 0 <= d[key] <= maximum
                        for key in ('grain_before','grain_after','grain_loss'))
                 or d['grain_before']-d['grain_after']!=d['grain_loss']
                 or not d['success'] and d['grain_loss']!=0):
@@ -528,8 +562,9 @@ def validate(campaign, state):
                 raise ValueError('Campaign event references')
         if row['audience'] not in {'player', 'world'} or not isinstance(row['details'], dict) or not set(row['details']) <= DETAILS[row['kind']]:
             raise ValueError('Campaign event payload')
+        coalition_receipt = row['kind'] == 'battle_result' and 'coalition' in row['details']
         def value_ok(value, depth=0):
-            if depth > 3:
+            if depth > (4 if coalition_receipt else 3):
                 return False
             if value is None or type(value) is bool:
                 return True
@@ -558,6 +593,8 @@ def validate(campaign, state):
             _validate_city_development_event(row)
         if row['kind']=='battle_supply_exhausted':
             _validate_battle_supply_event(row)
+        if coalition_receipt:
+            _validate_coalition_result(campaign, row)
         if row['kind']=='equipment_acquired':
             _validate_equipment_event(row)
         if row['kind']=='diplomacy_result':

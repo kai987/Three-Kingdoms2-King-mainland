@@ -115,6 +115,59 @@ class CampaignEventTransitionTests(unittest.TestCase):
         self.assertEqual(events(loaded, 'new_year'), new_year)
         self.assertEqual(events(loaded, 'officer_appeared'), appearance)
 
+    def test_future_ruler_child_appears_at_the_actual_friendly_city_when_needed(self):
+        ruler, child = 'san14-candidate-0952', 'san14-candidate-0945'
+        opening_child = 'san14-candidate-0924'
+        cases = (
+            ('after_transfer', 'nanyang', 1, 'nanjun'),
+            ('authored_city_is_friendly', 'xiangyang', 1, 'xiangyang'),
+            ('reached_city_at_month_boundary', 'nanyang', 10, 'nanjun'),
+            ('between_cities_at_month_boundary', 'nanyang', 30, 'nanyang'),
+        )
+        for case, authored, days, expected in cases:
+            with self.subTest(case=case):
+                def change(data):
+                    data['start_month'] = 12
+                    data['initial_owners']['nanjun'] = 'shu'
+                    people = {row['person_id']: row for row in data['people']}
+                    people[child].update(birth_year=200, service_year=218, death_year=256)
+                    people[opening_child].update(birth_year=198, service_year=217, death_year=260)
+                    data['initial_free_officers'].append(dict(person_id=opening_child, city='nanyang'))
+                    data['appearance_locations'][child] = authored
+                    data['appearance_windows'][child] = [dict(start=[218, 1], end=[256, 12], city=authored)]
+                    route = next(row for row in data['travel_routes'] if row['to'] == 'nanjun')
+                    route.update(distance_km=30*days, land_km=30*days, days=days)
+
+                game = start(catalog_with(change))
+                ident = game.catalog.ids[child]
+                self.assertNotIn(ident, game.state.officers)
+                move = dict(source='xiangyang', target='nanjun',
+                            officers=[game.catalog.ids[ruler]], route_mode='land')
+                if case in ('after_transfer', 'authored_city_is_friendly'):
+                    game.command('transfer', move, game.revision)
+                    tick(game)
+                    game.command('arrivals', {}, game.revision)
+                    tick(game)
+                else:
+                    tick(game)
+                    tick(game)
+                    game.command('transfer', move, game.revision)
+
+                self.assertNotIn(ident, game.state.officers)
+                tick(game)
+                self.assertEqual((game.state.year, game.state.month, game.state.day), (218, 1, 1))
+                self.assertIsNone(game.state.officers[ident].faction_id)
+                free = game.state.extension['free_locations']
+                self.assertEqual(free[str(ident)], expected)
+                self.assertEqual(free[str(game.catalog.ids[opening_child])], 'nanyang')
+                self.assertEqual([row['city_ids'] for row in events(game, 'officer_appeared')
+                                  if row['person_ids'] == [child]], [[expected]])
+                self.assertEqual(game.catalog.data['appearance_windows'][child][0]['city'], authored)
+                saved = game.export_save()
+                loaded = Campaign(game.catalog)
+                loaded.load_save(saved, 0)
+                self.assertEqual(loaded.export_save(), saved)
+
     def test_ruler_death_releases_real_troops_and_records_the_actual_successor(self):
         ruler = 'san14-candidate-0952'
         def change(data):

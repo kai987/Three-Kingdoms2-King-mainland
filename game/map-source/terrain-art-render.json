@@ -7,18 +7,18 @@
     "art/map-western-range-v2/manifest.json": "ac7d98decd6e80e9d5574aeb12a90ffc7f8deaa36203b31260dcca15b459ec34",
     "art/map-western-range-v3/manifest.json": "e2ca03db95ea413efe1480af40de92bafe686d6aa1c670db33904b3f89e1bdc1",
     "art/map-western-range-v3/source/road-centers-before-junctions.png": "a5de4d6f09d860a5d0f93479321e4365d5a13c048de38c97c7bbef45ef0336e7",
-    "game/assets/map-road-centers.png": "2e5f0a40fd3a196133dd92249fdf6fc75daaa648b1392dfcde5a8f36cdea8198",
+    "game/assets/map-road-centers.png": "a13c227efe5fa0e94a571a221f2a3cf704ec4116ddcbb3550d5f7d0cd1768738",
     "game/build_portrait_manifest.py": "99534ed531229159c5e18d0c7ed9fbf10ff8370f495f0d623e3dcb88cd0a991a",
     "game/build_terrain_art.py": "7ad3ae0ab3d4432fe0d65307ae8e7a10e3c0bf77904f399c311ffd695a9d885b",
-    "game/config/campaigns/shared.json": "a0dbe54a23e95a4457001f4fa32fd4bfeeb5ab17609f3257551117a824ff83ed",
-    "game/config/road-centers.json": "80b5cb839ffa60f9e134ba1631c220e3e1de4b0d56e7fc70c449bbe374d0dd33",
-    "game/config/route-geometry.json": "6ca3c9a092be57683efd1349b69704f21d520e1537e489dd4f7e27b3fac6f55d",
+    "game/config/campaigns/shared.json": "8b72140f0839d023542b7938cd9f9d038cb59f9c0897da4099c9cb4520e52405",
+    "game/config/road-centers.json": "b1d6b547e96e7fa93baf711b3a64b3c629ce16bd254ffba66d8f09d4767c82c3",
+    "game/config/route-geometry.json": "2f53d159bd211fa5ee7c1a7b45a24dc19007ffc8e7a19270f8bcaf07fa73b136",
     "game/config/terrain-art.json": "4687cb65416c651f94722df5a79337cedff84484e4c3eb51920ada968d56c45b",
     "game/config/water-corrections.json": "5af4c359db943d38bfae0f9b32de4e9fc751ae024a69a41334a2abe8506c3e2e",
     "game/map-source/approved-western-range-art.png": "50f7a296a2b476591b9a4cefd371b7317290489628baa266444c4a4fce3d06b1",
     "game/map-source/historic-water.svg": "24cf80474725fbcf3b841c9af8bdcdd4fe2c673d5ff212ba9a218a8af358b723",
     "game/map-source/hydrology-ground.png": "11f8373fa8277b1c403c543463425a81d50438d22bb9c25e723f51829f70b9e4",
-    "game/map-source/road-centers-render.json": "4b61aab58cc5219cfe34e58599ec6bc0c48bd2d636486a9030d3e281756b0225",
+    "game/map-source/road-centers-render.json": "89d0b762a1a47d4841e1b92a474ba0f4c69ac3b8b80de0a32233a60cc42e619d",
     "game/map-source/road-ground.png": "ea8cf8ecbb573205b9b3e9ea43c1c15ec61ff5bef3e3d1e699bea75b0d7c08c0",
     "game/map-source/sea-shadow.svg": "207a066255705a6f080ed9196cd75911d7bc16f37dd3a455ad061a5740130f58",
     "game/map-source/terrain-under-water.png": "e0bdfc8406f8ddf6285fdc9cdf929ec2a3ee406600bc403c6d050d22ab0a555c",
@@ -31,14 +31,14 @@
   "approved_asset_rgba_sha256": "5bbd57a0a685f6aa7fea017c1647925487edc35be062f2410c7b82dff10a2617",
   "output": {
     "path": "game/assets/map-western-range.png",
-    "sha256": "dae4cf4bc459c3388f0963d8edd0fdcd80750ccd0a8ba52f10722089aa562017",
-    "rgba_sha256": "4838c0d633af779d9b4f6a5df1a1e88cc0b2169989d5e83f91ed3dc71bba130d"
+    "sha256": "111a3824cf3bbba1d1d8b2bfa47864d0c3ddb6ccc886476e45231762cca08d39",
+    "rgba_sha256": "8cdba9b31813d3872fee017f90a214352db0eb9fde8c6c87d9c798ea7e8606a7"
   },
   "stats": {
     "art_pixels": 63868,
-    "applied_pixels": 62408,
-    "protected_art_pixels": 1460,
-    "protected_pixels": 522780,
+    "applied_pixels": 62250,
+    "protected_art_pixels": 1618,
+    "protected_pixels": 523363,
     "outside_art_pixels_unchanged": 1320580
   }
 }

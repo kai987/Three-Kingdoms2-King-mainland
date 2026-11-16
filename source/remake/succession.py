@@ -6,6 +6,7 @@ The opening roster and save format are independent of this policy.
 from collections import defaultdict
 
 from . import officer_relations
+from .officers import parse_officer_ref
 
 
 def _person(number):
@@ -125,7 +126,8 @@ def _order(faction, ruler, now):
     return _SUCCESSORS.get((faction, ruler), ())
 
 
-def _nominee_city(game, state, faction, ident):
+def nominee_city(game, state, faction, ident):
+    """Return the nominee’s own-faction city if it can admit them."""
     officer = state.officers.get(ident)
     if officer is None or not officer.alive or officer.faction_id is not None:
         return None
@@ -141,7 +143,7 @@ def admit_nominee(game, state, faction, ident):
     officer = state.officers.get(ident)
     if officer is not None and officer.alive and officer.faction_id == faction:
         return True
-    city = _nominee_city(game, state, faction, ident)
+    city = nominee_city(game, state, faction, ident)
     if city is None:
         return False
     state.officers[ident].faction_id = faction
@@ -150,18 +152,48 @@ def admit_nominee(game, state, faction, ident):
     return True
 
 
-def preferred_successor(game, state, faction, previous, alive):
+def historical_order(game, state, faction, previous):
     ruler = state.officers.get(previous)
     if ruler is None:
-        return None
+        return ()
     now = (state.year, state.month)
-    for number, admission in _order(faction, ruler.person_id, now):
-        ident = game.catalog.ids.get(_person(number))
+    return tuple((game.catalog.ids.get(_person(number)), admission)
+                 for number, admission in _order(faction, ruler.person_id, now))
+
+
+def preferred_successor(game, state, faction, previous, alive, *, excluded=()):
+    now = (state.year, state.month)
+    for ident, admission in historical_order(game, state, faction, previous):
+        if ident in excluded:
+            continue
         if ident in alive:
             return ident
-        if admission is not None and now >= admission and _nominee_city(game, state, faction, ident):
+        if admission is not None and now >= admission and nominee_city(game, state, faction, ident):
             return ident
     return None
+
+
+def validate_recruit_offer(game, state, faction, pending):
+    previous = pending['previous']
+    ruler = state.officers.get(previous)
+    recruit = pending['recruit']
+    if (ruler is None or ruler.alive or state.extension['leaders'][faction] != previous
+            or pending['provisional'] is not None or pending['previous_loyalty'] != 0
+            or not isinstance(recruit, dict) or set(recruit) != {'officer', 'city', 'declined'}
+            or not isinstance(recruit['declined'], list)):
+        raise ValueError('Invalid succession recruitment offer')
+    ident = parse_officer_ref(recruit['officer'], game.catalog.rules)
+    declined = [parse_officer_ref(candidate, game.catalog.rules) for candidate in recruit['declined']]
+    now = (state.year, state.month)
+    historical = {candidate for candidate, admission in historical_order(game, state, faction, previous)
+                  if admission is not None and now >= admission}
+    city = nominee_city(game, state, faction, ident)
+    alive = [candidate for candidate, officer in state.officers.items()
+             if officer.alive and officer.faction_id == faction]
+    if (pending['candidates'] != [ident] or city is None or city.id != recruit['city']
+            or len(declined) != len(set(declined)) or not set(declined) <= historical
+            or preferred_successor(game, state, faction, previous, alive, excluded=declined) != ident):
+        raise ValueError('Invalid succession recruitment candidate')
 
 
 # Blood ties not represented by a matching row in the loyalty policy.
@@ -178,20 +210,33 @@ _ADDITIONAL_FAMILY = (
 )
 
 
+_BLOOD_KINDS = {'parent_child', 'sibling', 'uncle_nephew', 'cousin', 'grandparent'}
+
+
+def _family_rows():
+    policy = officer_relations.policy()
+    # The dated loyalty exceptions can still document a real blood relationship.
+    for group in ('records', 'exceptions'):
+        for row in policy[group]:
+            if row['kind'] in _BLOOD_KINDS:
+                yield row['kind'], row['ruler_id'], row['person_id']
+    for kind, first, second in _ADDITIONAL_FAMILY:
+        yield kind, _person(first), _person(second)
+
+
+def parent_child_pairs():
+    """Reviewed directed pairs shared with first-appearance placement."""
+    return sorted({(parent, child) for kind, parent, child in _family_rows() if kind == 'parent_child'})
+
+
 def family_priorities(state, previous, alive):
     """Rank verified blood relatives already serving, regardless of the former ruler's loyalty ties."""
     ruler = state.officers.get(previous)
     if ruler is None:
         return {}
-    policy = officer_relations.policy()
-    # The dated loyalty exceptions can still document a real blood relationship.
-    kinds = {'parent_child', 'sibling', 'uncle_nephew', 'cousin', 'grandparent'}
-    rows = [(row['kind'], row['ruler_id'], row['person_id'])
-            for group in ('records', 'exceptions') for row in policy[group] if row['kind'] in kinds]
-    rows.extend((kind, _person(first), _person(second)) for kind, first, second in _ADDITIONAL_FAMILY)
     parents, children = defaultdict(set), defaultdict(set)
-    ties = {kind: defaultdict(set) for kind in kinds - {'parent_child'}}
-    for kind, first, second in rows:
+    ties = {kind: defaultdict(set) for kind in _BLOOD_KINDS - {'parent_child'}}
+    for kind, first, second in _family_rows():
         if kind == 'parent_child':
             parents[second].add(first)
             children[first].add(second)

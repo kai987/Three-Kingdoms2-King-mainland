@@ -137,10 +137,11 @@ class FactionDomesticTests(unittest.TestCase):
             self.assertEqual(game.export_save(), saved, 'One faction cannot train or earn twice in a旬')
             game._complete_turn(state)
         intellect = state.officers[civil].profile.intellect
+        self.assertEqual(intellect, 99)
         for key in costs:
             base = game.catalog.data['city_income'][key]
             for index, field in enumerate(('gold', 'grain')):
-                bonus = base[field] * 40 * intellect // (100 * 99)
+                bonus = base[field] // 2
                 self.assertEqual(getattr(state.cities[key], field),
                                  initial[key][index] - costs[key][field] + base[field] + bonus)
             self.assertGreater(pool_row := state.extension['domestic']['cities'][key]['morale'], 70)

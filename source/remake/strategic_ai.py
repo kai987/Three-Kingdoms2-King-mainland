@@ -1,7 +1,7 @@
 """Persistent, deterministic campaign planning using ordinary game orders.
 
-Coordinated columns remain separate legal ten-officer armies. Their departure
-dates, rather than edited march receipts, align their existing arrival service.
+Coordinated columns use the ordinary roster and travel limits. Allied columns
+can share one deployment when they reach their common target.
 Planning only reads published state; actual recruitment still owns its RNG roll.
 """
 from collections import Counter, defaultdict
@@ -168,8 +168,11 @@ class StrategicAI:
 
     def attack_option(self, city, target, *, require_grain=True):
         ids = self.army(city, target.id)
+        joint = self.game._allied_attack_info(self.state, target, city.owner)
+        if joint:
+            ids = ids[:joint['remaining']]
         total = sum(self.state.officers[i].troops for i in ids)
-        if total < self.settings['min_attack_troops']:
+        if not ids or total + (joint['troops'] if joint else 0) < self.settings['min_attack_troops']:
             return None
         options = []
         for mode in ('land', 'fastest'):
@@ -223,6 +226,12 @@ class StrategicAI:
         requested = diplomacy.requested_target(self.state, owner)
         if requested in targets:
             return {requested}, requested
+        if self.state.player != owner and historical_campaigns.allied(self.state, self.state.player, owner):
+            support = [key for key in targets
+                       if (joint := self.game._allied_attack_info(self.state, self.state.cities[key], owner))
+                       and joint['faction'] == self.state.player and joint['remaining']]
+            if support:
+                return set(support), min(support)
         return historical_campaigns.priority_targets(self.state, owner, targets)
 
     def objective(self, owner, preferred=None):
@@ -239,6 +248,7 @@ class StrategicAI:
         for key in targets:
             target = self.state.cities[key]
             defend = self.strength(target)
+            joint = self.game._allied_attack_info(self.state, target, owner)
             potential.append((defend, -target.grain, target.id))
             options = [o for city in approaches[key] if command_books.can_spend(self.state, owner, 'depart')
                        and (o := self.attack_option(city, target)) is not None]
@@ -251,7 +261,9 @@ class StrategicAI:
             for size in range(1, limit+1):
                 feasible = []
                 for members in combinations(options[:6], size):
-                    power = sum(o['survivors'] for o in members)
+                    if joint and sum(len(o['officers']) for o in members) > joint['remaining']:
+                        continue
+                    power = sum(o['survivors'] for o in members) + (joint['troops'] if joint else 0)
                     if power < required:
                         continue
                     orders = self.schedule(members)
@@ -414,8 +426,11 @@ class StrategicAI:
                 return True  # Hold this city's column for the agreed arrival.
             target = self.state.cities.get(order['target'])
             ids = order['officers']
+            joint = self.game._allied_attack_info(self.state, target, city.owner) if target else None
+            if joint:
+                ids = ids[:joint['remaining']]
             quote = self.quote(city, target, order['mode'], adjacent=True) if target else None
-            usable = (target and target.owner != city.owner
+            usable = (ids and target and target.owner != city.owner
                       and not historical_campaigns.allied(self.state, city.owner, target.owner)
                       and all(i in self.army(city,target.id) for i in ids))
             if (not usable or not self.safe(quote,ids) or not self.provisioned(city, ids, quote)
@@ -427,6 +442,7 @@ class StrategicAI:
                 order['departure_turn'] = order['arrival_turn']-quote['turns']
                 return True
             self.game._queue_march(self.state, city, target, ids, 'attack', order['mode'])
+            order['officers'] = ids
             order['march_id'] = self.state.extension['travel']['counter']
             self.state.extension['ai_attacks'] += 1
             self.game._report_ai(self.state,city,'attack',target.id)

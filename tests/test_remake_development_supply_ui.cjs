@@ -14,6 +14,7 @@ assert.equal(development.summary(view,'home'),'');
 view.catalog.city_development={cities:{home:{land:150,industry:150,population:50000,governance:70,eligible_actors:[1],actor_quotes:{1:{develop_land:{gold_min:18,gold_max:26,gain_min:17,gain_max:42,governance_gain_min:1,governance_gain_max:2,eligible:true}}}}}};
 assert(development.summary(view,'home').includes('150'));assert(development.summary(view,'home').includes('data-l10n-native="ja"'));
 assert(development.summary(view,'home','ja').includes('統治度'));
+assert(development.summary(view,'home','ja').includes(' / 1999999'));
 assert.equal(development.quote(view,'home',2,'develop_land'),null,'Never invent a quote for a missing actor');
 const listeners=new Map(),elements=new Map();let busy=false,preview=false,submitted=0,resolve;
 view.revision=1;view.catalog.scenario_id='test';view.catalog.names={1:'<bad>'};Object.assign(view.game,{player:'shu',seed:7,turn:1,phase:'city'});view.game.cities.home.gold=100;

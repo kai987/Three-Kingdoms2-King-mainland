@@ -1,15 +1,19 @@
 """Faction-wide strategic orders; views never grant or consume an order.
 
-The owned-city table is read from the user-provided original ROM, bank25
-$A0E4 (file0x320F4). The expanded map retains its maximum of13. The remake's
-already established ten-day turn is the refresh boundary instead of a month.
+The original owned-city table comes from ROM bank25 $A0E4 (file0x320F4).
+The remake starts scaling at four cities and refreshes every ten days.
 """
 from .errors import GameError
 
-SCHEMA = 'tk2-command-books-v1'
+VIEW_SCHEMA = LEGACY_SCHEMA = 'tk2-command-books-v1'
+PREVIOUS_SCHEMA = 'tk2-command-books-v2'
+SCHEMA = 'tk2-command-books-v3'
 TOTAL_BY_CITIES = (0, 3, 3, 3, 4, 5, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9,
                    9, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13)
-MAXIMUM = 13
+PREVIOUS_GROWTH_START = 28
+GROWTH_START = 4
+CAP_CITIES = 42
+MAXIMUM = 40
 COSTS = dict(recruit=1, recruit_officer=1, persuade_officer=1, staff_recruit=1,
              hire_staff=1, depart=1, transfer=1, dispatch_transport=1, diplomacy=1,
              search_treasure=1, reward_officer=1, sell_treasure=1,
@@ -22,10 +26,21 @@ COSTS = dict(recruit=1, recruit_officer=1, persuade_officer=1, staff_recruit=1,
              choose_successor=0, allocation_close=0)
 
 
-def total(cities):
+def total(cities, *, schema=SCHEMA):
     if type(cities) is not int or not 0 <= cities <= 512:
         raise ValueError('Invalid command-book city count')
-    return TOTAL_BY_CITIES[min(cities, 30)]
+    if schema == LEGACY_SCHEMA:
+        return TOTAL_BY_CITIES[min(cities, len(TOTAL_BY_CITIES) - 1)]
+
+    previous = schema == PREVIOUS_SCHEMA
+    start = PREVIOUS_GROWTH_START if previous else GROWTH_START
+    if cities <= start:
+        return TOTAL_BY_CITIES[cities]
+    base = TOTAL_BY_CITIES[start]
+    city_span = CAP_CITIES - start
+    extra_cities = min(cities, CAP_CITIES) - start
+    rounding = 0 if previous else city_span // 2
+    return base + ((MAXIMUM - base) * extra_cities + rounding) // city_span
 
 
 def cost(kind):
@@ -38,16 +53,18 @@ def cost(kind):
 
 def initialize(game, state, *, legacy=False):
     """Opening/turn reset only; one conservative import for current old saves."""
+    schema = LEGACY_SCHEMA if legacy else SCHEMA
     factions = {}
     for owner in sorted(game.catalog.factions):
         if owner == 'neutral':
             continue
         holdings = [c for c in state.cities.values() if c.owner == owner]
-        grant = total(len(holdings))
+        grant = total(len(holdings), schema=schema)
         used = min(grant, sum(c.action_used for c in holdings)) if legacy else 0
         factions[owner] = dict(city_count=len(holdings), city_ids=sorted(c.id for c in holdings), total=grant,
                                legacy_used=used, used=used, orders=[])
-    state.extension['command_books'] = dict(schema=SCHEMA, turn=state.turn, factions=factions)
+    state.extension['command_books'] = dict(
+        schema=schema, turn=state.turn, factions=factions)
 
 
 def remaining(state, owner):
@@ -139,7 +156,7 @@ def view(game, state):
             active = active_allocation(state, owner)
             if active is not None:
                 factions[owner]['allocation_flow'] = active
-    return dict(schema=SCHEMA, turn=state.turn if state else None,
+    return dict(schema=VIEW_SCHEMA, turn=state.turn if state else None,
                 maximum=MAXIMUM, refresh_days=10, allocation_batch='confirm-v1',
                 costs=dict(COSTS), factions=factions)
 
@@ -147,10 +164,11 @@ def view(game, state):
 def validate(game, state):
     pool = state.extension.get('command_books')
     if (not isinstance(pool, dict) or set(pool) != {'schema', 'turn', 'factions'}
-            or pool['schema'] != SCHEMA or type(pool['turn']) is not int
+            or pool['schema'] not in (SCHEMA, PREVIOUS_SCHEMA, LEGACY_SCHEMA) or type(pool['turn']) is not int
             or pool['turn'] != state.turn or not isinstance(pool['factions'], dict)
             or set(pool['factions']) != set(game.catalog.factions) - {'neutral'}):
         raise ValueError('Invalid faction command-book pool')
+    schema = pool['schema']
     snapshot = set()
     for owner, row in pool['factions'].items():
         fields = {'city_count', 'city_ids', 'total', 'legacy_used', 'used', 'orders'}
@@ -160,10 +178,10 @@ def validate(game, state):
                 or any(type(key) is not str or key not in state.cities for key in row['city_ids'])
                 or row['city_ids'] != sorted(set(row['city_ids']))
                 or snapshot.intersection(row['city_ids'])
-                or type(row['total']) is not int or row['total'] != total(row['city_count'])
+                or type(row['total']) is not int or row['total'] != total(row['city_count'], schema=schema)
                 or type(row['legacy_used']) is not int or not 0 <= row['legacy_used'] <= min(row['total'], row['city_count'])
                 or type(row['used']) is not int or not row['legacy_used'] <= row['used'] <= row['total']
-                or not isinstance(row['orders'], list) or len(row['orders']) > MAXIMUM):
+                or not isinstance(row['orders'], list) or len(row['orders']) > row['total']):
             raise ValueError('Invalid faction command-book balance')
         snapshot.update(row['city_ids'])
         used = row['legacy_used']
@@ -189,7 +207,7 @@ def validate(game, state):
             continue
         allocation = row['allocation']
         if (not isinstance(allocation, dict) or set(allocation) != {'serial', 'active'}
-                or type(allocation['serial']) is not int or not 1 <= allocation['serial'] <= MAXIMUM
+                or type(allocation['serial']) is not int or not 1 <= allocation['serial'] <= row['total']
                 or allocation['serial'] != len(tagged)):
             raise ValueError('Invalid allocation flow ledger')
         for serial, order in enumerate(tagged, 1):

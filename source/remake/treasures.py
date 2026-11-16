@@ -60,6 +60,12 @@ def _governor(game, state, city, row=None):
         ref_sort_key(ident))) if eligible else None
 
 
+def current_governor(game, state, city):
+    """Read the effective appointment without changing the treasury ledger."""
+    saved = state.extension.get('treasury', {}).get('cities', {}).get(city.id)
+    return _governor(game, state, city, saved) if saved is not None else None
+
+
 def empty(game, state):
     cities = {}
     for key, city in state.cities.items():

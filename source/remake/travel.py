@@ -218,6 +218,38 @@ class TravelCampaign:
             self._emit_event(state,'route_discovered',city_ids=[row['source'],row['target']],
                 factions=[row['owner']],details={'from':row['source'],'to':row['target']},audience='world')
 
+    @staticmethod
+    def _attack_members(state, row):
+        return [ident for ident in row['officers']
+                if state.officers[ident].troops > 0 and state.officers[ident].health > 0]
+
+    def _allied_attack_rows(self, state, target, owner):
+        if target.owner in ('neutral', owner) or historical_campaigns.allied(state, owner, target.owner):
+            return []
+        columns = [row for row in state.extension['travel']['marches']
+                   if row['kind'] == 'attack' and row['target'] == target.id
+                   and not row['supply']['retreat_requested']
+                   and state.cities[row['source']].owner == row['owner']
+                   and self._attack_members(state, row)]
+        allies = [row for row in columns if row['owner'] not in (owner, target.owner)
+                  and historical_campaigns.allied(state, owner, row['owner'])
+                  and not historical_campaigns.allied(state, row['owner'], target.owner)]
+        if not allies:
+            return []
+        partner = min(allies, key=lambda row: row['id'])['owner']
+        return [row for row in columns if row['owner'] in (owner, partner)]
+
+    def _allied_attack_info(self, state, target, owner):
+        rows = self._allied_attack_rows(state, target, owner)
+        if not rows:
+            return None
+        partner = next(row['owner'] for row in rows if row['owner'] != owner)
+        committed = sum(len(self._attack_members(state, row)) for row in rows)
+        troops = sum(state.officers[ident].troops for row in rows if row['owner'] == partner
+                     for ident in self._attack_members(state, row))
+        return dict(faction=partner, committed=committed, troops=troops,
+                    remaining=max(0, self.catalog.rules.battle_officers_per_side - committed))
+
     def _queue_march(self, state, source, target, ids, kind, mode='fastest', *, battle_grain=None):
         if kind == 'attack' and historical_campaigns.allied(state, source.owner, target.owner):
             raise GameError('同盟期间，不能向盟友出征。')
@@ -227,7 +259,11 @@ class TravelCampaign:
         if not quote: raise GameError('没有满足海陆选择及本方连通条件的路线。')
         if not ids or len(ids) != len(set(ids)) or any(i in self._march_ids(state) for i in ids):
             raise GameError('请选择尚未出发且不重复的武将。')
-        if kind == 'attack': ids = list(select_deployment(source.roster, ids, state.officers))
+        if kind == 'attack':
+            ids = list(select_deployment(source.roster, ids, state.officers))
+            coalition = self._allied_attack_info(state, target, source.owner)
+            if coalition and len(ids) > coalition['remaining']:
+                raise GameError(f'聯軍共用出戰名額，目前只可再派{coalition["remaining"]}名武將。')
         elif self._city_occupancy(state,target)+len(ids)>self.catalog.rules.city_officer_capacity:
             raise GameError('目的城武将容量不足。')
         if mode=='explore' and not sum(state.officers[i].troops for i in ids):
@@ -348,6 +384,124 @@ class TravelCampaign:
                     self._emit_event(state,'march_returned',city_ids=[row['source'],row['target']],
                         factions=[row['owner']],details=dict(march_id=row['id'],reason='origin_changed'))
 
+    def _arrival_weather(self, state, row):
+        if not row['risks'] or self._apply_march_risks(state, row):
+            return True
+        state.extension['travel']['marches'].remove(row)
+        self._note(state,f'行军{row["id"]}遭遇灾害后带兵全损，航行或进军失败；武将返回出发城编制，未发现新航路。')
+        if row['owner'] == state.player:
+            self._emit_event(state,'march_returned',city_ids=[row['source'],row['target']],
+                factions=[row['owner']],details=dict(march_id=row['id'],reason='army_lost'))
+        return False
+
+    def _can_offer_allied_support(self, state, row, target):
+        player = state.player
+        if (row['owner'] == player or row['reason'] != 'outbound'
+                or player in state.extension['pending_succession']
+                or not command_books.can_spend(state, player, 'depart')):
+            return False
+        offer = self._allied_attack_info(state, target, player)
+        if not offer or offer['faction'] != row['owner'] or not offer['remaining']:
+            return False
+
+        from .march_supply import estimate
+
+        marching = self._march_ids(state)
+        nearby = {route['from'] if route['to'] == target.id else route['to']
+                  for route in self._known_routes(state) if target.id in (route['from'], route['to'])}
+        for source_id in sorted(nearby):
+            source = state.cities.get(source_id)
+            if source is None or source.owner != player:
+                continue
+            quote = self._travel_path(state, source_id, target.id, player, adjacent=True)
+            if quote and any(ident not in marching and state.officers[ident].troops > 0
+                             and state.officers[ident].health > 0
+                             and estimate(state, [ident], quote) <= source.grain
+                             for ident in source.roster.officer_ids):
+                return True
+        return False
+
+    def _wait_for_allied_attack(self, state, row, target, *, invite=False):
+        reason = 'allied_support_window' if invite else 'allied_rendezvous'
+        if row['reason'] != reason:
+            city = self.catalog.map_cities[target.id]['name']
+            action = '可從相鄰城池派將支援' if invite else '在城外等待盟友'
+            self._note(state, f'聯軍{row["id"]}已抵達{city}，{action}。')
+        row.update(status='waiting', reason=reason)
+        row['supply']['waiting'] = True
+
+    def _start_arrived_attack(self, state, row, target):
+        from .march_supply import DENOMINATOR, _completion_tick
+
+        marches = state.extension['travel']['marches']
+        ids = self._attack_members(state, row)
+        if not ids:
+            marches.remove(row)
+            return False
+
+        # Select whole columns, prioritizing a real allied participant. An old
+        # save may contain more columns than fit after a new treaty is signed.
+        columns = [row]
+        open_slots = self.catalog.rules.battle_officers_per_side - len(ids)
+        peers = self._allied_attack_rows(state, target, row['owner'])
+        for ally in sorted(peers, key=lambda peer: peer['id']):
+            size = len(self._attack_members(state, ally))
+            if ally['owner'] != row['owner'] and size <= open_slots:
+                columns.append(ally)
+                open_slots -= size
+                break
+        if len(columns) > 1:
+            for peer in sorted(peers, key=lambda candidate: candidate['id']):
+                size = len(self._attack_members(state, peer))
+                if peer not in columns and size <= open_slots:
+                    columns.append(peer)
+                    open_slots -= size
+
+        if any(column['supply']['route_days'] < column['quote']['days'] for column in columns):
+            self._wait_for_allied_attack(state, row, target)
+            return False
+        if len(columns) == 1 and self._can_offer_allied_support(state, row, target):
+            self._wait_for_allied_attack(state, row, target, invite=True)
+            return False
+
+        for peer in columns[1:]:
+            peer['checked_turn'] = state.turn
+        columns = [row, *(peer for peer in columns[1:]
+                          if self._arrival_weather(state, peer) and self._attack_members(state, peer))]
+        if len({column['owner'] for column in columns}) < 2:
+            columns = [row]
+
+        for column in columns:
+            self._discover_march_route(state, column)
+            marches.remove(column)
+
+        primary = row
+        supply = row['supply']
+        coalition = None
+        empty_capture_actor = None
+        if len(columns) > 1:
+            columns.sort(key=lambda col: (_completion_tick(col['supply'], col['quote']['days']), col['id']))
+            empty_capture_actor = self._attack_members(state, columns[0])[0]
+            primary = next((col for col in columns if col['owner'] == state.player), columns[0])
+            sources, provisions = {}, {}
+            for column in columns:
+                for ident in self._attack_members(state, column):
+                    sources[str(ident)] = column['source']
+                grain, credit = (column['supply'][key] for key in ('remaining', 'credit_units'))
+                owner = column['owner']
+                provisions[owner] = provisions.get(owner, 0) + grain * DENOMINATOR + credit
+            grain, credit = divmod(sum(provisions.values()), DENOMINATOR)
+            supply = dict(remaining=grain, credit_units=credit)
+            coalition = dict(sources=sources, provisions=provisions)
+            ids = self._attack_members(state, primary)
+            ids.extend(ident for column in columns if column is not primary
+                       for ident in self._attack_members(state, column))
+
+        self._start_expanded_battle(state, state.cities[primary['source']], target, ids, paid=True,
+            march_supply=supply, arrival_city=primary['quote']['path'][-2], manual_deployment=True,
+            coalition=coalition, empty_capture_actor=empty_capture_actor)
+        return True
+
     def _arrivals(self, state, payload):
         if state.phase != 'arrivals': raise GameError('当前没有待处理的到达事件。')
         historical_campaigns.process(self,state)
@@ -365,13 +519,7 @@ class TravelCampaign:
             ids = row['officers']
             # Once the route has been travelled, its weather applies even if
             # the destination or an intermediate city changed allegiance.
-            if row['risks'] and not self._apply_march_risks(state,row):
-                travel['marches'].remove(row)
-                self._note(state,f'行军{row["id"]}遭遇灾害后带兵全损，航行或进军失败；武将返回出发城编制，未发现新航路。')
-                if row['owner']==state.player:
-                    self._emit_event(state,'march_returned',city_ids=[source.id,target.id],factions=[row['owner']],
-                        details=dict(march_id=row['id'],reason='army_lost'))
-                continue
+            if not self._arrival_weather(state, row): continue
             if row['status']!='returning' and row['kind']=='transfer' and any(
                     not historical_campaigns.transit_allowed(state, row['owner'], state.cities[k].owner)
                     for k in row['quote']['path'][1:-1]):
@@ -410,15 +558,10 @@ class TravelCampaign:
                     self._emit_event(state,'march_arrived',person_ids=[state.officers[i].person_id for i in ids[:1]],
                         city_ids=[source.id,target.id],factions=[row['owner']],details=dict(march_id=row['id'],officers=len(ids)))
             else:
-                travel['marches'].remove(row)
-                ids = [i for i in ids if state.officers[i].troops>0 and state.officers[i].health>0]
-                if not ids: continue
-                self._discover_march_route(state,row)
-                self._start_expanded_battle(state, source, target, ids, paid=True, march_supply=row['supply'],
-                    arrival_city=row['quote']['path'][-2],manual_deployment=True)
+                if not self._start_arrived_attack(state, row, target): continue
                 historical_campaigns.process_battle(self, state)
                 travel['battle_arrival'] = True
-                if state.player in (source.owner, target.owner): return
+                if state.player in (state.battle['attacker'], target.owner): return
                 self._resolve_ai_battle(state)
                 if state.phase == 'finished': return
                 state.phase = 'arrivals'
@@ -455,17 +598,24 @@ class TravelCampaign:
 
     def _travel_view(self, state):
         from .march_core import enabled, invoke, state_input
-        if not enabled():
-            return self._python_travel_view(state)
-        # Reuse metadata construction without a second route search.
-        result = self._python_travel_view(None)
-        if state is not None:
+        rust_enabled = enabled()
+        if rust_enabled:
+            # Reuse metadata construction without a second route search.
+            result = self._python_travel_view(None)
+        else:
+            result = self._python_travel_view(state)
+        if rust_enabled and state is not None:
             discovered = set(state.extension['travel']['discovered'])
             result['discovered_routes'] = [row for row in self.catalog.data.get('exploration_routes', [])
                                            if row['id'] in discovered]
             if state.player != observer.SEAT:
                 result['travel_quotes'] = invoke('batch', data=self.catalog.data,
                                                 **state_input(state, state.player), player=state.player)
+        if state is not None and state.player != observer.SEAT:
+            marches = state.extension['travel'].get('marches', ())
+            targets = {row['target'] for row in marches if row['kind'] == 'attack'}
+            result['allied_attacks'] = {key: offer for key in sorted(targets)
+                if (offer := self._allied_attack_info(state, state.cities[key], state.player)) is not None}
         return result
 
     def _python_travel_view(self, state):
@@ -659,7 +809,8 @@ class TravelCampaign:
                     or row['source']==row['target'] and not returning_trip):
                 raise ValueError('march city')
             if (row['journey_source'] not in state.cities or row['status'] not in {'outbound','waiting','returning'}
-                    or row['reason'] not in {'outbound','shortage','route_blocked','target_changed','no_return_route','resource_full'}
+                    or row['reason'] not in {'outbound','shortage','route_blocked','target_changed','no_return_route',
+                                             'resource_full','allied_rendezvous','allied_support_window'}
                     or not isinstance(row['mission'],dict)
                     or set(row['mission'])!={'source','target','kind','mode','departure_turn','arrival_turn'}
                     or not isinstance(row['history'],list) or len(row['history'])>16):
@@ -736,6 +887,9 @@ class TravelCampaign:
             if quote!=self._quote(path,legs):
                 raise ValueError('march ETA')
             remaining=quote['days']-row['supply']['route_days']
+            if row['reason'] in {'allied_rendezvous','allied_support_window'} and (row['status']!='waiting' or row['kind']!='attack'
+                    or remaining or not row['supply']['waiting']):
+                raise ValueError('Invalid allied attack rendezvous')
             expected_eta=state.turn+max(1,(remaining+9)//10) if remaining else state.turn
             if row['arrival_turn']!=expected_eta:
                 raise ValueError('march progress ETA')

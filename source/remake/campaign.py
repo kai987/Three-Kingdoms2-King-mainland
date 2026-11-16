@@ -444,6 +444,10 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                             'duel_start','duel_action','siege_form','siege_orders','siege_step','siege_withdraw'}:
                         battle_supply.ensure(candidate,candidate.battle)
                     methods[kind](candidate, payload)
+                    if kind == 'arrivals' and candidate.extension['pending_succession'].get(
+                            candidate.player, {}).get('recruit'):
+                        # An arriving transfer can fill the city offering the heir a post.
+                        self._reconcile_factions(candidate)
                     self._synchronize_siege(candidate)
                 city_development.synchronize(self,candidate)
                 record_events(self, self.state, candidate, kind, payload)

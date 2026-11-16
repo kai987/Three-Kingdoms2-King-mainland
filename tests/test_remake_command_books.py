@@ -21,15 +21,58 @@ class CommandBooks(unittest.TestCase):
     def cmd(self, kind, payload=None):
         return self.game.command(kind, payload or {}, self.game.revision)
 
-    def test_original_table_is_exact_and_expanded_map_keeps_the_original_cap(self):
+    def test_original_table_is_exact_and_expanded_map_caps_at_42_cities(self):
         evidence = json.loads((ROOT / 'game/config/references/original-command-books-v1.json').read_text())
-        self.assertEqual(list(books.TOTAL_BY_CITIES), evidence['original_table']['values'])
-        self.assertEqual(books.total(0), 0)
-        self.assertEqual([books.total(n) for n in (1, 3, 4, 5, 6, 8, 9, 13, 17, 20, 24, 28, 30, 115)],
-                         [3, 3, 4, 5, 7, 7, 8, 9, 10, 11, 12, 13, 13, 13])
+        original = evidence['original_table']['values']
+        self.assertEqual(list(books.TOTAL_BY_CITIES), original)
+        self.assertEqual([books.total(n) for n in range(5)], original[:5])
+        self.assertEqual([books.total(n) for n in (5, 10, 13, 14, 20, 30, 32, 33, 40, 41, 42, 43, 115)],
+                         [5, 10, 13, 13, 19, 29, 31, 31, 38, 39, 40, 40, 40])
+        self.assertTrue(all(books.total(n + 1) - books.total(n) in (0, 1) for n in range(4, 42)))
+        self.assertEqual(books.total(115, schema=books.LEGACY_SCHEMA), 13)
+        self.assertEqual(books.total(35, schema=books.PREVIOUS_SCHEMA), 26)
         for invalid in (-1, True, 1.2, '3', 513):
             with self.assertRaises(ValueError):
                 books.total(invalid)
+
+    def test_old_large_faction_balance_survives_load_and_gets_40_next_turn(self):
+        game = Campaign(Catalog(ROOT / 'game/data/campaigns/208-10.json'))
+        game.command('new', dict(faction='wei', seed=2026), 0)
+        city = next(city for city in game.state.cities.values() if city.owner == 'wei')
+        books.spend(game.state, city, 'recruit')
+        current = game.export_save()
+        for schema, wei_remaining in ((books.LEGACY_SCHEMA, 12), (books.PREVIOUS_SCHEMA, 39)):
+            with self.subTest(schema=schema):
+                saved = deepcopy(current)
+                pool = saved['state']['extension']['command_books']
+                self.assertEqual(pool['factions']['wei']['total'], 40)
+                pool['schema'] = schema
+                for row in pool['factions'].values():
+                    row['total'] = books.total(row['city_count'], schema=schema)
+                saved['checksum'] = digest({key: value for key, value in saved.items() if key != 'checksum'})
+
+                view = game.load_save(saved, game.revision)
+                self.assertEqual(game.export_save(), saved)
+                budgets = view['catalog']['command_books']['factions']
+                self.assertEqual(budgets['wei']['remaining'], wei_remaining)
+                self.assertEqual(budgets['wu']['total'], 8)
+                game._complete_turn(game.state)
+                self.assertEqual(books.remaining(game.state, 'wei'), 40)
+                self.assertEqual(books.remaining(game.state, 'wu'), 12)
+                self.assertEqual(game.state.extension['command_books']['schema'], books.SCHEMA)
+
+        city = game.state.cities[city.id]
+        for _ in range(40):
+            books.spend(game.state, city, 'allocate')
+            books.open_allocation(game.state, city)
+        self.assertEqual(books.remaining(game.state, 'wei'), 0)
+        with self.assertRaises(GameError):
+            books.spend(game.state, city, 'allocate')
+        saved = game.export_save()
+        view = game.load_save(saved, game.revision)
+        self.assertEqual(game.export_save(), saved)
+        self.assertEqual(view['catalog']['command_books']['maximum'], 40)
+        self.assertEqual(view['catalog']['command_books']['factions']['wei']['used'], 40)
 
     def test_whole_faction_pool_can_be_spent_repeatedly_in_one_city(self):
         start = deepcopy(self.game.state)

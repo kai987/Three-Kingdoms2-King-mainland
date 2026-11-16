@@ -141,7 +141,7 @@ def initialize(game,state,battle):
             or not all(battle[side] and all(unit['troops'] > 0 for unit in battle[side]) for side in SIDES)):
         return None
     candidate = deepcopy(battle); saved = candidate['extended']
-    sides = [side for side in SIDES if state.player != battle['attacker' if side=='attackers' else 'defender']]
+    sides = [side for side in SIDES if side != battle_grid.player_side(state,battle)]
     if not sides:
         return None
     saved['auto_deployment'] = dict(schema=SCHEMA,sides={side:dict(

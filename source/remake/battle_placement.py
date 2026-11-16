@@ -44,7 +44,8 @@ def _zone(game,battle,side):
     return battle_deployment.placement_zone(game.catalog,battle,battle_grid._field(battle),side)
 
 
-def _initial_ids(battle,side):
+def _initial_ids(state,battle,side):
+    coalition = battle['extended'].get('coalition')
     records = battle['extended'].get('defections',{})
     _require(type(records) is dict,'Invalid placement conversion ledger')
     result = []
@@ -54,8 +55,14 @@ def _initial_ids(battle,side):
             record = records.get(key)
             _require(record is None or isinstance(record,dict) and record.get('original_side') in SIDES,
                      'Invalid placement conversion identity')
-            if (record['original_side'] if record is not None else current) == side:
-                result.append(key)
+            if (record['original_side'] if record is not None else current) != side:
+                continue
+            if coalition and side == 'attackers':
+                city = state.cities.get(coalition['sources'].get(key))
+                _require(city is not None,'Missing allied placement origin')
+                if city.owner != state.player:
+                    continue
+            result.append(key)
     return result
 
 
@@ -64,6 +71,23 @@ def _default(defaults,positions):
     point = next((point for point in defaults if (point['x'],point['y']) not in occupied),None)
     _require(point is not None,'Insufficient original placement candidates')
     return dict(point)
+
+
+def _fixed_positions(game,battle,side,order):
+    other = SIDES[1-SIDES.index(side)]
+    if 'auto_deployment' in battle['extended']:
+        from . import battle_auto_deployment
+        positions = battle_auto_deployment.initial_positions(game,battle,other)
+    else:
+        defaults = _zone(game,battle,other)['defaults']
+        _require(len(defaults) >= len(battle[other]),'Insufficient opposing deployment candidates')
+        positions = {_ident(unit):dict(point) for unit,point in zip(battle[other],defaults)}
+    own_defaults = _zone(game,battle,side)['defaults']
+    for unit in battle[side]:
+        key = _ident(unit)
+        if key not in order:
+            positions[key] = _default(own_defaults,positions)
+    return positions
 
 
 def validate(game,state,battle):
@@ -85,25 +109,23 @@ def validate(game,state,battle):
         'Invalid manual placement fields')
     _require(isinstance(tactical,dict) and isinstance(tactical.get('positions'),dict)
         and 'deployment' in x,'Manual placement requires tactical provenance')
-    side = row['side']; other = SIDES[1-SIDES.index(side)]
+    side = row['side']
     all_ids = [_ident(unit) for current in SIDES for unit in battle[current]]
     _require(len(all_ids) == len(set(all_ids)),'Duplicate manual placement identity')
-    own_ids = _initial_ids(battle,side)
+    own_ids = _initial_ids(state,battle,side)
     _require(len(own_ids) == len(set(own_ids)) and set(row['order']) == set(own_ids),
              'Manual placement initial identities differ')
     zone = _zone(game,battle,side)  # Also checks immutable native provenance.
     if row['confirmed'] == len(row['order']):
         return
-    _require(state.player == battle['attacker' if side == 'attackers' else 'defender'],
-             'Manual placement side is not the player')
+    _require(battle_grid.player_side(state,battle) == side,'Manual placement side is not the player')
     _require(state.phase == 'battle' and type(battle.get('round')) is int and battle['round'] == 1
         and battle.get('outcome') is None and battle.get('used') == []
         and not x.get('defections') and not x.get('siege') and not x.get('duel')
         and not x.get('duel_history') and not x.get('surrenders') and not x.get('occupation')
         and not x.get('ambush') and x.get('withdrawn') is None and 'conditions' not in x,
         'Manual placement is not an untouched first day')
-    _require(row['order'] == [_ident(unit) for unit in battle[side]]
-        and all(1 <= len(battle[key]) <= 10 for key in SIDES),
+    _require(row['order'] == own_ids and all(1 <= len(battle[key]) <= 10 for key in SIDES),
         'Manual placement roster changed before confirmation')
     for current in SIDES:
         for unit in battle[current]:
@@ -123,17 +145,12 @@ def validate(game,state,battle):
         _require(isinstance(x['supply'],dict) and type(x['supply'].get('days')) is int
             and x['supply']['days'] == 0 and x['supply'].get('settlement') is None,
             'Manual placement has consumed battle days')
-    other_ids = [_ident(unit) for unit in battle[other]]
     active_ids = row['order'][:row['confirmed']+1]
     positions = tactical['positions']
-    _require(set(positions) == set(other_ids+active_ids),'Invalid partial placement position identities')
-    if 'auto_deployment' in x:
-        from . import battle_auto_deployment
-        opposing = battle_auto_deployment.initial_positions(game,battle,other)
-    else:
-        opposing = dict(zip(other_ids,_zone(game,battle,other)['defaults']))
-    _require(set(opposing) == set(other_ids) and all(positions[key] == point for key,point in opposing.items()),
-             'Manual placement changed the fixed opposing deployment')
+    fixed = _fixed_positions(game,battle,side,row['order'])
+    _require(set(positions) == set(fixed).union(active_ids),'Invalid partial placement position identities')
+    _require(all(positions[key] == point for key,point in fixed.items()),
+             'Manual placement changed the fixed automatic deployment')
     allowed = {(point['x'],point['y']) for point in zone['cells']}
     seen = set()
     for key,point in positions.items():
@@ -153,22 +170,17 @@ def initialize(game,state,battle):
     if 'placement' in x:
         validate(game,state,battle)
         return x['placement']
-    if ('deployment' not in x or 'tactical' not in x
-            or not all(battle[key] and any(unit['troops'] > 0 for unit in battle[key]) for key in SIDES)
-            or state.player not in (battle['attacker'],battle['defender'])):
+    from .battle_grid import player_side
+    side = player_side(state,battle)
+    if ('deployment' not in x or 'tactical' not in x or side is None
+            or not all(battle[key] and any(unit['troops'] > 0 for unit in battle[key]) for key in SIDES)):
+        return None
+    order = _initial_ids(state,battle,side)
+    if not order:
         return None
     candidate = deepcopy(battle); extension = candidate['extended']
-    side = 'attackers' if battle['attacker'] == state.player else 'defenders'
-    other = SIDES[1-SIDES.index(side)]
-    order = [_ident(unit) for unit in candidate[side]]
     extension['placement'] = dict(schema=SCHEMA,side=side,order=order,confirmed=0)
-    if 'auto_deployment' in extension:
-        from . import battle_auto_deployment
-        positions = battle_auto_deployment.initial_positions(game,candidate,other)
-    else:
-        defaults = _zone(game,candidate,other)['defaults']
-        _require(len(defaults) >= len(candidate[other]),'Insufficient opposing deployment candidates')
-        positions = {_ident(unit):dict(point) for unit,point in zip(candidate[other],defaults)}
+    positions = _fixed_positions(game,candidate,side,order)
     positions[order[0]] = _default(_zone(game,candidate,side)['defaults'],positions)
     extension['tactical']['positions'] = positions
     _validate_grid(game,state,candidate)

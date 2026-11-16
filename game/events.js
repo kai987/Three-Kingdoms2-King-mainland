@@ -1,6 +1,7 @@
 /* Read-only event playback. Acknowledgements never become campaign commands. */
 'use strict';
 (function(root){
+ const CITY_POPULATION_LIMIT=1999999;
  const CHAPTER_TEXT=Object.freeze({
   historical_youzhou_pacification:{
    title:["劉虞出鎮幽州","劉虞、幽州に赴任"],
@@ -171,7 +172,7 @@
   return !!row&&Number.isSafeInteger(row.id)&&row.id>0&&Object.hasOwn(KINDS,row.kind)&&['player','world'].includes(row.audience)&&
    Number.isSafeInteger(row.year)&&row.year>0&&Number.isInteger(row.month)&&row.month>=1&&row.month<=12&&[1,11,21].includes(row.day)&&Number.isSafeInteger(row.turn)&&row.turn>0&&
    ['person_ids','city_ids','factions'].every(key=>Array.isArray(row[key])&&row[key].every(id=>typeof id==='string'&&id.length<=128))&&
-   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row,cityCount))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!CITY_OPERATIONS.has(row.kind)||validCityDevelopmentEvent(row))&&(row.kind!=='battle_supply_exhausted'||validBattleSupplyEvent(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row,cityCount))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(!Object.hasOwn(HISTORICAL_CAMPAIGNS,row.kind)||validHistoricalCampaign(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row))&&(row.kind!=='tactic'||validTacticEvent(row));
+   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row,cityCount))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!CITY_OPERATIONS.has(row.kind)||validCityDevelopmentEvent(row))&&(row.kind!=='battle_supply_exhausted'||validBattleSupplyEvent(row))&&(row.kind!=='battle_result'||!Object.hasOwn(row.details,'coalition')||validCoalitionCapture(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row,cityCount))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(!Object.hasOwn(HISTORICAL_CAMPAIGNS,row.kind)||validHistoricalCampaign(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row))&&(row.kind!=='tactic'||validTacticEvent(row));
  }
  function validDiplomacyEvent(row){
   const d=row.details;
@@ -247,12 +248,25 @@
   const num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max;
   if(row.audience!=='player'||row.city_ids.length!==1||!row.city_ids[0]||row.factions.length!==1||!row.factions[0]||Object.keys(d).sort().join(',')!==fields.sort().join(','))return false;
   if(developed){
-   const unit=d.development==='population'?100:1,cap=unit===100?999900:999;
-   return ['land','industry','population'].includes(d.development)&&typeof d.actor==='string'&&!!d.actor&&JSON.stringify(row.person_ids)===JSON.stringify([d.actor])&&num('gold',10,26)&&d.gold%2===0&&['before','after','gain'].every(key=>num(key,0,cap)&&d[key]%unit===0)&&d.after-d.before===d.gain&&['governance_before','governance_after'].every(key=>num(key,0,100))&&d.governance_after===Math.min(100,d.governance_before+1+(d.gain/unit>=31?1:0))&&(d.gain>0||d.governance_after>d.governance_before);
+   const population=d.development==='population',unit=population?100:1,cap=population?CITY_POPULATION_LIMIT:999;
+   const validGrowth=['before','after','gain'].every(key=>num(key,0,cap))&&d.after-d.before===d.gain
+    &&(!population||(['before','after'].every(key=>[0,cap%unit].includes(d[key]%unit))&&(d.gain%unit===0||d.after===cap)));
+   return ['land','industry','population'].includes(d.development)&&typeof d.actor==='string'&&!!d.actor&&JSON.stringify(row.person_ids)===JSON.stringify([d.actor])&&num('gold',10,26)&&d.gold%2===0&&validGrowth&&['governance_before','governance_after'].every(key=>num(key,0,100))&&d.governance_after===Math.min(100,d.governance_before+1+(d.gain/unit>=31?1:0))&&(d.gain>0||d.governance_after>d.governance_before);
   }
   const categories={population:['population_loss'],resources:['gold_loss','grain_loss'],development:['land_loss','industry_loss']};
   if(row.person_ids.length||!num('governance',0,49)||typeof d.category!=='string'||!Object.hasOwn(categories,d.category))return false;
-  return ['gold_loss','grain_loss','population_loss','land_loss','industry_loss'].every(key=>num(key,0,['gold_loss','grain_loss'].includes(key)?100000000:key==='population_loss'?999900:999)&&(categories[d.category].includes(key)||d[key]===0))&&d.population_loss%100===0;
+  return ['gold_loss','grain_loss','population_loss','land_loss','industry_loss'].every(key=>num(key,0,['gold_loss','grain_loss'].includes(key)?100000000:key==='population_loss'?CITY_POPULATION_LIMIT:999)&&(categories[d.category].includes(key)||d[key]===0))&&d.population_loss%100===0;
+ }
+ function validCoalitionCapture(row){
+  const d=row.details.coalition,num=value=>Number.isSafeInteger(value)&&value>=0;
+  const city=id=>typeof id==='string'&&id.length>0&&id.length<=128;
+  return row.details.outcome==='victory'&&d&&typeof d==='object'&&!Array.isArray(d)&&
+   Object.keys(d).sort().join(',')==='ally,captor,returns,shares,troops'&&
+   city(d.captor)&&city(d.ally)&&d.captor!==d.ally&&
+   Array.isArray(d.troops)&&d.troops.length===2&&d.troops.every(num)&&
+   Array.isArray(d.shares)&&d.shares.length===2&&d.shares.every(share=>share&&
+    Object.keys(share).sort().join(',')==='gold,grain,reserves'&&Object.values(share).every(num))&&
+   Array.isArray(d.returns)&&d.returns.length<=10&&d.returns.every(city)&&new Set(d.returns).size===d.returns.length;
  }
  function validBattleSupplyEvent(row){
   const d=row.details,num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max;
@@ -464,7 +478,15 @@
     case 'battle_result':{
      const outcome={victory:text('攻方獲勝','攻撃側の勝利'),defeat:text('守方獲勝','防御側の勝利'),retreat:text('攻方退卻','攻撃側の撤退')}[d.outcome]||text('戰鬥結束','戦闘終了');
      const summary=text(`${c}：${outcome}。${typeof d.lost==='number'?`合計減員${d.lost}。`:''}`,`${c}：${outcome}。${typeof d.lost==='number'?`兵力損失は合計${d.lost}。`:''}`);
-     return observing?summary:summary+text('請查看戰果與後續部署。','結果と次の配置を確認してください。');
+     const joint=d.coalition;
+     if(!joint||!validCoalitionCapture(row))return observing?summary:summary+text('請查看戰果與後續部署。','結果と次の配置を確認してください。');
+     const participants=names({...row,factions:[joint.captor,joint.ally],city_ids:joint.returns});
+     const capture=text(`${participants.factions[0]}占領${n.cities.at(-1)}。按交戰後雙方士兵數分配城池庫存：`,`${participants.factions[0]}が${n.cities.at(-1)}を占領しました。戦闘後の兵数に応じて都市の備蓄を分配しました。`);
+     const shares=joint.shares.map((share,i)=>text(
+      `${participants.factions[i]}（${joint.troops[i]}兵）分得金${share.gold}、兵糧${share.grain}、預備兵${share.reserves}。`,
+      `${participants.factions[i]}（兵士${joint.troops[i]}）は金${share.gold}、兵糧${share.grain}、予備兵${share.reserves}を受け取りました。`)).join('');
+     const returns=participants.cities.join(text('、','・'));
+     return summary+capture+shares+(returns?text(`${participants.factions[1]}的部隊攜所得物資返回${returns}。`,`${participants.factions[1]}の部隊は分配された物資を携えて${returns}に帰還しました。`):'');
     }
     case 'duel_started':return text(`${p}展開單挑，勝負依招式與武力判定。`,`${p}が一騎討ちに臨みます。技の選択と武力が勝負を左右します。`);
     case 'duel_result':return text(`${p}的單挑已結束。${d.result?label(d.result):'體力與退場結果已結算。'}`,`${p}の一騎討ちが終わりました。${d.result?label(d.result):'体力と退場結果は処理されています。'}`);

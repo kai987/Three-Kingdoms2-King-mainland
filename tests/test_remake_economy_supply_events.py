@@ -44,13 +44,17 @@ class EconomySupplyEventTests(unittest.TestCase):
                 dict(before=999,after=999,gain=0,governance_after=61),
                 dict(governance_before=100,governance_after=100),
                 dict(before=999800,after=999900,gain=100,development='population',
-                    governance_before=99,governance_after=100)]:
+                    governance_before=99,governance_after=100),
+                dict(before=1_999_900, after=1_999_999, gain=99, development='population', governance_after=61),
+                dict(before=1_500_399, after=1_501_199, gain=800, development='population', governance_after=61)]:
             self.check(event('city_developed',{**base,**details}))
         self.reject_details(land,[dict(development='town'),dict(development=[]),
             dict(gold=True),dict(gold=9),dict(gold=11),dict(gold=28),dict(after=991),
             dict(after=1000,gain=50),dict(gain=-1),dict(governance_after=61),
             dict(governance_before=True),dict(actor='other'),dict(extra=1),
             dict(before=999,after=999,gain=0,governance_before=100,governance_after=100),
+            dict(development='population',before=1_999_900,after=2_000_000,gain=100,governance_after=61),
+            dict(development='population',before=1_500_399,after=1_500_600,gain=201,governance_after=61),
             dict(development='population',before=95000,after=95101,gain=101,governance_after=61)])
 
     def test_unrest_only_losses_from_the_committed_category(self):
@@ -63,7 +67,7 @@ class EconomySupplyEventTests(unittest.TestCase):
             self.check({**row,'details':{**base,**change}})
         self.reject_details(row,[dict(category='riot'),dict(category={}),dict(governance=50),
             dict(governance=True),dict(population_loss=401),dict(population_loss=-100),
-            dict(gold_loss=1),dict(population_loss=1000000),dict(extra=1)])
+            dict(gold_loss=1),dict(population_loss=2_000_000),dict(extra=1)])
         with self.assertRaises(ValueError):
             self.check({**row,'person_ids':['person-a']})
 

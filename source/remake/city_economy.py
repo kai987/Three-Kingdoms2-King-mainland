@@ -111,9 +111,10 @@ def _frontier_sponsor(data, city_id, rule, owners, routes, outposts):
 
 def _frontier_upkeep(base, development):
     if development is None:
-        return base
-    opening = development['baseline']['population']
-    return (base * development['population'] + opening - 1) // opening
+        return (3 * base + 1) // 2
+    numerator = 3 * base * development['population']
+    denominator = 2 * development['baseline']['population']
+    return (numerator + denominator - 1) // denominator
 
 
 def frontier_outposts_view(data, state=None):

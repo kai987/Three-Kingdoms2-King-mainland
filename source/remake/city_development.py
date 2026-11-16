@@ -14,7 +14,8 @@ from .officers import ref_sort_key
 
 LEGACY_SCHEMA = 'tk2-city-development-v1'
 SCHEMA = 'tk2-city-development-v2'
-LIMITS = dict(land=999, industry=999, population=999900, governance=100)
+LIMITS = dict(land=999, industry=999, population=1_999_999, governance=100)
+POPULATION_UNIT = 100
 ACTIONS = dict(develop_land='land', develop_industry='industry', develop_population='population')
 DEFAULTS = {tier: dict(land=150*size, industry=150*size,
                        population=50000*size, governance=70)
@@ -44,10 +45,16 @@ def _rules(game):
     return result
 
 
+def valid_population(value):
+    # Hitting the cap can leave a partial hundred, which later changes retain.
+    cap = LIMITS['population']
+    return _int(value, 0, cap) and value % POPULATION_UNIT in (0, cap % POPULATION_UNIT)
+
+
 def _metrics(row):
     if (not isinstance(row, dict) or set(row) != set(LIMITS)
             or any(not _int(row[key], 0, cap) for key, cap in LIMITS.items())
-            or row['population'] % 100):
+            or not valid_population(row['population'])):
         raise ValueError('City development metrics')
 
 
@@ -68,8 +75,8 @@ def opening_view(catalog, city_id, *, legacy=False):
         row.update(opening_development(data, city_id, tier))
     row.update(override)
     _metrics(row)
-    if row['population'] == 0:
-        raise ValueError('City development opening population must be positive')
+    if row['population'] < POPULATION_UNIT:
+        raise ValueError('City development opening population must be at least 100')
     return row
 
 
@@ -145,28 +152,43 @@ def _gold_choices(intellect):
     return tuple(range(start, start+9, 2))
 
 
-def _effect(gold, intellect, roll, field, before):
+def _effect(gold, intellect, roll, field, before, governor_bonus_percent=0):
     units = max(1, (gold*intellect//100)*roll//10)
-    if field == 'population':
-        units = max(1, units//2)*100
-    return min(units, LIMITS[field]-before)
+    population = field == 'population'
+    if population:
+        units = max(1, units//2)
+    units = units * (100 + governor_bonus_percent) // 100
+    gain = units * POPULATION_UNIT if population else units
+    return min(gain, LIMITS[field]-before)
 
 
 def _profile(game, state, actor):
     return game.person_profile(state, actor) if hasattr(game, 'person_profile') else state.officers[actor].profile
 
 
-def _quote(game, state, city, actor, kind, owner):
+def _governor_bonus_percent(game, state, city):
+    from .treasures import current_governor
+    governor = current_governor(game, state, city)
+    if governor is None:
+        return 0
+    intellect = _profile(game, state, governor).intellect
+    if intellect >= 90:
+        return intellect - 79
+    if intellect >= 75:
+        return 10
+    return 5 if intellect >= 60 else 0
+
+
+def _quote(game, state, city, actor, kind, owner, governor_bonus_percent):
     from .facilities import _ready, _resident
     field = ACTIONS[kind]
     row = _row(game, state, city.id)
     officer = state.officers.get(actor)
     intellect = _profile(game, state, actor).intellect if officer is not None else 0
     choices = _gold_choices(intellect)
-    # Integer floors, population halving and the remaining-cap clamp are all
-    # monotone in cost/R. The two corners equal the old40-outcome extrema.
-    gain_min = _effect(choices[0], intellect, 10, field, row[field])
-    gain_max = _effect(choices[-1], intellect, 17, field, row[field])
+    # The rounded bonus and the cap preserve the minimum/maximum corners.
+    gain_min = _effect(choices[0], intellect, 10, field, row[field], governor_bonus_percent)
+    gain_max = _effect(choices[-1], intellect, 17, field, row[field], governor_bonus_percent)
     threshold = 3100 if field == 'population' else 31
     governance = row['governance']
     governance_min = min(100, governance+1+(gain_min >= threshold))-governance
@@ -177,7 +199,7 @@ def _quote(game, state, city, actor, kind, owner):
               'at_capacity' if row[field] == LIMITS[field] and row['governance'] == 100 else
               'command_books' if not command_books.can_spend(state, owner) else
               'gold' if city.gold < choices[-1] else None)
-    return dict(kind=kind, development=field, actor=actor, intellect=intellect,
+    return dict(kind=kind, development=field, actor=actor, intellect=intellect, governor_bonus_percent=governor_bonus_percent,
                 gold_min=choices[0], gold_max=choices[-1], gain_min=gain_min, gain_max=gain_max,
                 governance_gain_min=governance_min, governance_gain_max=governance_max, eligible=reason is None, reason=reason)
 
@@ -190,7 +212,9 @@ def quote(game, state, city_id, actor, kind, owner=None):
         actor = parse_officer_ref(actor, game.catalog.rules)
     except (TypeError, ValueError) as error:
         raise GameError('請選擇有效的本城武將。') from error
-    return _quote(game, state, state.cities[city_id], actor, kind, state.player if owner is None else owner)
+    city = state.cities[city_id]
+    return _quote(game, state, city, actor, kind, state.player if owner is None else owner,
+                  _governor_bonus_percent(game, state, city))
 
 
 def execute(game, state, payload, owner):
@@ -208,7 +232,7 @@ def execute(game, state, payload, owner):
     row = state.extension['city_development']['cities'][city.id]
     field, actor = offer['development'], offer['actor']
     cost = _gold_choices(offer['intellect'])[state.rng.next()%5]
-    gain = _effect(cost, offer['intellect'], 10+state.rng.next()%8, field, row[field])
+    gain = _effect(cost, offer['intellect'], 10+state.rng.next()%8, field, row[field], offer['governor_bonus_percent'])
     before, governance = row[field], row['governance']
     command_books.spend(state, city, payload['kind'])
     city.gold -= cost
@@ -307,8 +331,9 @@ def auto_turn(game, state, owner):
             continue
         actor = min(actors, key=lambda ident: (-_profile(game, state, ident).intellect, ref_sort_key(ident)))
         row = pool['cities'][key]
+        governor_bonus_percent = _governor_bonus_percent(game, state, city)
         for kind, field in ACTIONS.items():
-            offer = quote(game, state, key, actor, kind, owner)
+            offer = _quote(game, state, city, actor, kind, owner, governor_bonus_percent)
             if offer['eligible'] and city.gold-offer['gold_max'] >= rules['ai_gold_floor']:
                 # Cross-products keep ordering deterministic and avoid floats.
                 weakness = row[field]*10000//max(1, row['baseline'][field])
@@ -329,7 +354,9 @@ def view(game, state):
         interactive = city.owner == state.player and state.phase == 'city'
         actors = sorted((ident for ident in city.roster.officer_ids
                          if interactive and _resident(game, state, city, ident, working=True, healthy=True)), key=ref_sort_key)
-        quotes = {str(actor): {kind: _quote(game, state, city, actor, kind, state.player) for kind in ACTIONS} for actor in actors}
+        governor_bonus_percent = _governor_bonus_percent(game, state, city) if actors else 0
+        quotes = {str(actor): {kind: _quote(game, state, city, actor, kind, state.player, governor_bonus_percent)
+                              for kind in ACTIONS} for actor in actors}
         best = min(actors, key=lambda ident: (-_profile(game, state, ident).intellect, ref_sort_key(ident))) if actors else None
         base_income = income_at(game.catalog.data, key, state.year, state.month) or dict(gold=0, grain=0, reserves=0)
         result['cities'][key] = dict(owner=city.owner, **{field: row[field] for field in LIMITS},

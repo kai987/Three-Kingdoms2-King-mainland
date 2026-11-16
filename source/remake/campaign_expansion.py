@@ -52,8 +52,43 @@ class ExpandedCampaign:
         from . import dated_events
         dated_events.initialize(self.catalog, state)
 
+    def _ruler_child_appearance_cities(self, state):
+        """Index living ruler parents and their current friendly cities."""
+        from . import succession
+        from .march_supply import current_city
+
+        leaders = state.extension['leaders']
+        ruler_ids = set(leaders.values()) - {None}
+        locations = {ident: city.id for city in state.cities.values()
+                     for ident in city.roster.officer_ids if ident in ruler_ids}
+        for march in state.extension.get('travel', {}).get('marches', ()):
+            for ident in ruler_ids.intersection(march['officers']):
+                locations[ident] = current_city(march)
+        for convoy in state.extension.get('logistics', {}).get('convoys', ()):
+            for ident in ruler_ids.intersection(convoy['officers']):
+                locations[ident] = current_city(convoy['journeys'][-1])
+
+        rulers = {}
+        for owner, ident in leaders.items():
+            officer = state.officers.get(ident)
+            if officer and officer.alive and officer.faction_id == owner:
+                city = state.cities.get(locations.get(ident))
+                rulers[officer.person_id] = (owner, city.id if city and city.owner == owner else None)
+
+        children = {}
+        for parent, child in succession.parent_child_pairs():
+            if parent in rulers:
+                children.setdefault(child, []).append(rulers[parent])
+        return children
+
     def _spawn_eligible(self, state):
         """Annual eligibility never fills missing stats or revives existing IDs."""
+        from . import dated_events
+
+        ruler_children = self._ruler_child_appearance_cities(state)
+        foundings = state.extension.get('dated_events', {}).get('foundings', {})
+        founding_members = {person_id for rule in dated_events.foundings(self.catalog)
+                            if rule['id'] not in foundings for person_id in rule['members']}
         for ident, row in self.catalog.by_id.items():
             if ident in state.officers or self.catalog.profiles[ident].missing:
                 continue
@@ -69,8 +104,15 @@ class ExpandedCampaign:
                 city = current['city']
                 resolve_death_year = current.get('resolve_death_year') is True
             ys = year_state(person, state.year)
-            if (ys != YearState.AVAILABLE and not (ys == YearState.DEATH_YEAR_REVIEW
-                    and resolve_death_year)) or city not in state.cities:
+            if ys != YearState.AVAILABLE and not (ys == YearState.DEATH_YEAR_REVIEW and resolve_death_year):
+                continue
+            # Named founding events require their local free roster.
+            parents = ruler_children.get(person.person_id)
+            if parents and city in self.catalog.map_cities and person.person_id not in founding_members:
+                authored = state.cities.get(city)
+                if not authored or all(authored.owner != owner for owner, _ in parents):
+                    city = next((home for _, home in parents if home), city)
+            if city not in state.cities:
                 continue
             state.officers[ident] = initialize_officer(person, ident, self.catalog.profiles[ident],
                 **appearance_values(self.catalog.profiles[ident], row.get('initialization')),
@@ -215,9 +257,19 @@ class ExpandedCampaign:
         for ident in ids: self._personnel_actor(state,source,ident)
         self._queue_march(state,source,destination,ids,'transfer',payload.get('route_mode','fastest'))
 
-    def _start_expanded_battle(self,state,source,target,ids,*,paid=False,march_supply=None,arrival_city=None,manual_deployment=False):
+    def _start_expanded_battle(self,state,source,target,ids,*,paid=False,march_supply=None,arrival_city=None,
+                               manual_deployment=False,coalition=None,empty_capture_actor=None):
         if not paid: command_books.require(state, source.owner, 'depart')
-        selected=select_deployment(source.roster,ids,state.officers)
+        if coalition is None:
+            selected=select_deployment(source.roster,ids,state.officers)
+        else:
+            selected=tuple(ids)
+            if (not paid or not 1<=len(selected)<=self.catalog.rules.battle_officers_per_side
+                    or len(set(selected))!=len(selected) or {str(i) for i in selected}!=set(coalition['sources'])):
+                raise ValueError('Invalid coalition deployment')
+            for city_id in set(coalition['sources'].values()):
+                members=[i for i in selected if coalition['sources'][str(i)]==city_id]
+                select_deployment(state.cities[city_id].roster,members,state.officers)
         cost=0 if paid else max(1,sum(state.officers[i].troops for i in selected)//25)
         if not paid and source.grain<cost: raise GameError('出征粮食不足。')
         marching=self._march_ids(state)
@@ -232,6 +284,10 @@ class ExpandedCampaign:
                       'attackers':units(selected),'defenders':units(defenders),'used':[],'round':1,'outcome':None,'supply_cost':cost,
                       'log':[f'{self.catalog.map_cities[source.id]["name"]}向{self.catalog.map_cities[target.id]["name"]}出征。'],
                       'extended':{'support':support,'duel':None,'duel_history':[],'ambush':None,'surrenders':{},'withdrawn':None}}
+        if coalition is not None:
+            state.battle['extended']['coalition']=coalition
+            if not defenders and empty_capture_actor is not None:
+                state.battle['extended']['capture_actor']=empty_capture_actor
         battle_grid.initialize(self,state,state.battle,directional=True,arrival_city=arrival_city)
         if not paid:
             source.grain-=cost
@@ -273,7 +329,9 @@ class ExpandedCampaign:
             self._run_tactical_ai_turn(state)
 
     def _player_sides(self,state):
-        return ('attackers','defenders') if state.battle['attacker']==state.player else ('defenders','attackers')
+        if battle_grid.player_side(state,state.battle)=='attackers':
+            return 'attackers','defenders'
+        return 'defenders','attackers'
 
     def _battle_selection(self,state,payload,*,allow_duel=False):
         b=state.battle
@@ -289,11 +347,13 @@ class ExpandedCampaign:
         modern='tactical' in b['extended']
         if actor is None or target is None or (not modern and actor['id'] in b['used']):
             raise GameError('请选择可行动的本方部队与有效敌军。')
+        if not battle_grid.player_controls(state,b,actor):
+            raise GameError(battle_grid.ALLY_CONTROL_REASON)
         if modern and b['extended']['tactical']['side']!=own:
             raise GameError('目前不是本方的戰術行動階段。')
         return b,actor,target,own,foe
 
-    def _battle_result(self,state):
+    def _battle_result(self,state,*,claimant=None):
         b=state.battle
         battle_conditions.drop_removed(b)
         attacking=any(u['troops']>0 for u in b['attackers'])
@@ -302,7 +362,9 @@ class ExpandedCampaign:
             b['outcome']='retreat';b['log'].append('双方部队均已败退，城池归属不变。')
         elif not defending: b['outcome']='victory'
         elif not any(u['troops']>0 for u in b['attackers']): b['outcome']='defeat'
-        if b['outcome']: state.phase='result';b['extended']['duel']=None
+        if b['outcome']:
+            battle_grid.record_coalition_capture(b,claimant)
+            state.phase='result';b['extended']['duel']=None
         b['log'][:]=b['log'][-80:]
 
     def _counter(self,state,foe,actor):
@@ -365,6 +427,7 @@ class ExpandedCampaign:
         b['used']=[]
         if change['advanced_day']:
             battle_supply.end_day(self,state,b)
+            battle_grid.record_coalition_capture(b)
         if change['timed_out'] and state.phase=='battle':
             b['extended']['withdrawn']='attackers'
             b['outcome']='retreat';state.phase='result'
@@ -385,8 +448,8 @@ class ExpandedCampaign:
                     b['log'].append(f'{self.person_name(state,ident)}的{label}效果消退。')
             if ticks:
                 gain=state.officers[source].experience-old_experience
-                self._battle_result(state)
-                if hasattr(self,'_emit_event') and state.player in (b['attacker'],b['defender']):
+                self._battle_result(state,claimant=source)
+                if hasattr(self,'_emit_event') and battle_grid.player_side(state,b):
                     people=list(dict.fromkeys([state.officers[source].person_id]+[
                         state.officers[deserialize_officer_ref(tick['id'],self.catalog.rules)].person_id for tick in ticks]))
                     self._emit_event(state,'tactic',person_ids=people,city_ids=[b['target']],
@@ -400,8 +463,8 @@ class ExpandedCampaign:
         b['log'][:]=b['log'][-80:]
         return change
 
-    def _run_tactical_ai_turn(self,state):
-        """Run one actual enemy side; every move/attack shares its finite AP."""
+    def _run_tactical_ai_turn(self,state,*,release_allies=False):
+        """Finish the allied handoff and the opposing side within shared AP."""
         from .difficulty import get_settings
         from .tactical_ai import choose_action
         b=state.battle
@@ -410,12 +473,18 @@ class ExpandedCampaign:
         for _ in range(128):  # maximum60 AP, bounded paid facility visits, and pass
             if state.phase!='battle' or b['extended']['duel'] or b['extended'].get('siege'):return
             side=b['extended']['tactical']['side']
-            if side==player_side:return
+            allowed=None
+            if side==player_side:
+                if not release_allies:return
+                allowed={unit['id'] for unit in b[side] if not battle_grid.player_controls(state,b,unit)}
+            else:
+                release_allies=False
             foe='defenders' if side=='attackers' else 'attackers'
             if b['extended']['tactical']['points'][side]<=0:
                 self._end_tactical_side(state);continue
             choice=choose_action(state,b,side,foe,self.catalog.map_cities[b['target']]['terrain'],TACTICS,
-                game=self,settings=get_settings(state),damage_percent=self.catalog.data['rules']['battle_damage_percent'])
+                game=self,settings=get_settings(state),damage_percent=self.catalog.data['rules']['battle_damage_percent'],
+                allowed_actors=allowed)
             if choice is None or choice['kind']=='wait':
                 self._end_tactical_side(state)
             elif not self._perform_battle_action(state,choice,side,foe,finish=False,counter=True):
@@ -423,16 +492,19 @@ class ExpandedCampaign:
             self._battle_result(state)
         raise GameError('敵方戰術行動未能在機動力範圍內結束。')
 
-    def _finish_action(self,state,actor,own,foe,*,respond=True):
+    def _finish_action(self,state,actor,own,foe,*,respond=True,claimant=None):
         b=state.battle
+        if claimant is None and own=='attackers':
+            claimant=actor['id']
         if b['extended'].get('siege'):
             if not b['extended']['duel']:siege.finish_duel(self,state)
             return
         if 'tactical' in b['extended']:
             # used is an activity record, never a per-unit action cap.
-            if own==self._player_sides(state)[0] and actor['id'] not in b['used']:
+            if (own==self._player_sides(state)[0] and battle_grid.player_controls(state,b,actor)
+                    and actor['id'] not in b['used']):
                 b['used'].append(actor['id'])
-            self._battle_result(state)
+            self._battle_result(state,claimant=claimant)
             if state.phase=='battle' and not b['extended']['duel']:
                 if b['extended']['tactical']['points'][own]<=0:
                     self._end_tactical_side(state)
@@ -457,6 +529,8 @@ class ExpandedCampaign:
         ident=parse_officer_ref(payload.get('actor'),self.catalog.rules)
         actor=next((u for u in b[own] if u['id']==ident and u['troops']>0),None)
         if actor is None:raise GameError('請選擇仍可作戰的本方部隊。')
+        if not battle_grid.player_controls(state,b,actor):
+            raise GameError(battle_grid.ALLY_CONTROL_REASON)
         self._execute_battle_move(state,actor,payload.get('x'),payload.get('y'),own,foe,finish=True)
 
     def _execute_battle_move(self,state,actor,x,y,own,foe,*,finish=False):
@@ -479,7 +553,7 @@ class ExpandedCampaign:
             b['log'][:]=b['log'][-80:]
             return quote
         if finish:self._finish_action(state,actor,own,foe)
-        else:self._battle_result(state)
+        else:self._battle_result(state,claimant=actor['id'] if own=='attackers' else None)
         return quote
 
     def _battle_facility(self,state,payload):
@@ -492,8 +566,11 @@ class ExpandedCampaign:
         own,_=self._player_sides(state)
         if b['extended']['tactical']['side']!=own:
             raise GameError('目前不是本方的戰術行動階段。')
-        self._end_tactical_side(state)
-        if state.phase=='battle':self._run_tactical_ai_turn(state)
+        if own=='attackers' and 'coalition' in b['extended']:
+            self._run_tactical_ai_turn(state,release_allies=True)
+        else:
+            self._end_tactical_side(state)
+            if state.phase=='battle':self._run_tactical_ai_turn(state)
 
     def _expanded_attack(self,state,payload):
         b,actor,target,own,foe=self._battle_selection(state,payload)
@@ -520,7 +597,7 @@ class ExpandedCampaign:
         self._trigger_ambush(state,actor,own,counter=counter)
         if modern and context and actor['troops']>0 and not b['extended']['support'][str(actor['id'])]['stunned']:
             siege.begin(self,state,actor,target,context)
-            if state.player not in (b['attacker'],b['defender']):siege.auto(self,state)
+            if not siege.player_engaged(state):siege.auto(self,state)
             return
         receipt_context=({key:context[key]for key in ('fort','map_id','cell')}
                          if context and context.get('mode','siege')=='siege' else None)
@@ -530,8 +607,9 @@ class ExpandedCampaign:
             # defending unit may answer within that same paid encounter; this
             # is not a free whole-side AI action or a recursively paid attack.
             self._contact_retaliation(state,target,actor,foe,siege=receipt_context)
-        if finish:self._finish_action(state,actor,own,foe)
-        else:self._battle_result(state)
+        claimant = actor['id'] if own=='attackers' else target['id']
+        if finish:self._finish_action(state,actor,own,foe,claimant=claimant)
+        else:self._battle_result(state,claimant=claimant)
 
     def _attack_hit(self,state,actor,target,own,*,counter=False,siege=None):
         """One authoritative blow using the same damage/status kernel either way."""
@@ -666,14 +744,14 @@ class ExpandedCampaign:
                     if hp['health']==1:u['troops']=0
                 if effect=='feint':support[str(u['id'])]['stunned']=1
                 b['log'].append(f'{title}命中{self.person_name(state, u["id"])}，损兵{loss}。')
-        if hasattr(self,'_emit_event') and state.player in (b['attacker'],b['defender']):
+        if hasattr(self,'_emit_event') and battle_grid.player_side(state,b):
             self._emit_event(state,'tactic',person_ids=[state.officers[actor['id']].person_id,state.officers[target['id']].person_id],city_ids=[b['target']],
                 factions=[b['attacker'],b['defender']],
                 details={'tactic':tid,'success':success,**effect_details})
         presentation.record(self,state,before,kind='tactic',actor=actor['id'],
             target=target['id'],own=own,counter=counter,tactic=tid,effect='qimen' if modern_qimen else effect,success=success)
         if finish:self._finish_action(state,actor,own,foe,respond=effect!='ambush')
-        else:self._battle_result(state)
+        else:self._battle_result(state,claimant=actor['id'] if own=='attackers' else None)
 
     def _duel_start(self,state,payload):
         b,actor,target,own,foe=self._battle_selection(state,payload)
@@ -826,13 +904,23 @@ class ExpandedCampaign:
         before=presentation.snapshot(self,state)
         b['extended']['duel']=None;b['extended']['withdrawn']=own
         b['outcome']='retreat' if own=='attackers' else 'victory';state.phase='result'
+        battle_grid.record_coalition_capture(b)
         presentation.record(self,state,before,kind='retreat',own=own)
 
     def _expanded_settle(self,state,payload):
-        from . import diplomacy
+        from . import allied_assault, diplomacy
         b=state.battle
         if state.phase!='result' or not b or payload.get('battle_id')!=b['id']:raise GameError('没有待接收的战果。')
         source,target=state.cities[b['source']],state.cities[b['target']];x=b['extended']
+        coalition=x.get('coalition')
+        attackers=set(coalition['provisions'] if coalition else [b['attacker']])
+        participants=attackers|{b['defender']}
+        distribution=None
+        captor=b['attacker']
+        if coalition and b['outcome']=='victory':
+            occupant=allied_assault.capture_actor(state,b)
+            if occupant is not None:
+                captor=state.officers[occupant].faction_id
         if self.catalog.data.get('equipment_rules',{}).get('combat_enabled',True):
             routed=['defenders'] if b['outcome']=='victory' else ['attackers'] if b['outcome']=='defeat' else [x['withdrawn']] if x['withdrawn'] else ['attackers','defenders']
             for side in routed:
@@ -842,7 +930,7 @@ class ExpandedCampaign:
                     loss=equipment.retreat_cost(replace(state.officers[unit['id']],health=hp['health']),state.rng.next()%100)
                     previous_health=hp['health']
                     hp['health']=max(1,hp['health']-loss)
-                    if previous_health>hp['health'] and state.player in (b['attacker'],b['defender']):
+                    if previous_health>hp['health'] and state.player in participants:
                         self._note(state,f'{self.person_name(state,unit["id"])}退却，装备负重消耗体力{previous_health-hp["health"]}。')
         lost=sum(u['start']-u['troops'] for u in b['attackers']+b['defenders'])-sum(x['surrenders'].values())
         if lost<0:raise GameError('战果兵员账本异常。')
@@ -852,7 +940,11 @@ class ExpandedCampaign:
         state.soldiers['lost']+=lost
         diplomacy.battle_relations(self,state,b)
         for key,amount in x['surrenders'].items():
-            ident=deserialize_officer_ref(key,self.catalog.rules);owner_city=target if ident in target.roster.officer_ids else source
+            ident=deserialize_officer_ref(key,self.catalog.rules)
+            if coalition:
+                owner_city=next(city for city in state.cities.values() if ident in city.roster.officer_ids)
+            else:
+                owner_city=target if ident in target.roster.officer_ids else source
             owner_city.reserves+=amount;owner_city.roster.officer_ids.remove(ident)
             o=state.officers[ident];o.faction_id=None;o.loyalty=0;o.troops=0
             state.extension['free_locations'][key]=owner_city.id
@@ -867,29 +959,39 @@ class ExpandedCampaign:
                     home=homes[0];home.roster.officer_ids.append(ident)
                 else:
                     held=(ident in defeated and diplomacy.capture(state,o,city=target.id,
-                          captor=b['attacker'],origin=b['defender']))
+                          captor=captor,origin=b['defender']))
                     target.reserves+=o.troops;o.troops=0;o.faction_id=None;o.loyalty=0
                     if not held:
                         state.extension['free_locations'][str(ident)]=target.id
-            target.roster.officer_ids[:]=selected
+            occupiers=[ident for ident in selected if not coalition or state.officers[ident].faction_id==captor]
+            target.roster.officer_ids[:]=occupiers
             for city in state.cities.values():
                 if city.id!=target.id:
-                    city.roster.officer_ids[:]=[i for i in city.roster.officer_ids if i not in selected]
-            target.owner=b['attacker'];target.action_used=True
-            self._note(state,f'{self.faction_name(state,b["attacker"])}攻占{self.catalog.map_cities[target.id]["name"]}。')
-            self._emit_event(state,'city_captured',person_ids=[state.officers[i].person_id for i in selected[:1]],
-                city_ids=[target.id],factions=[b['attacker'],b['defender']],
+                    city.roster.officer_ids[:]=[ident for ident in city.roster.officer_ids if ident not in occupiers]
+            target.owner=captor;target.action_used=True
+            if coalition:
+                distribution=allied_assault.settle_capture(self,state,b,target,captor,selected)
+                claimants=[occupant] if occupant is not None else occupiers[:1]
+            else:
+                claimants=occupiers[:1]
+            self._note(state,f'{self.faction_name(state,captor)}攻占{self.catalog.map_cities[target.id]["name"]}。')
+            self._emit_event(state,'city_captured',person_ids=[state.officers[i].person_id for i in claimants],
+                city_ids=[target.id],factions=[captor,b['defender']],
                 details=dict(previous_owner=b['defender']),audience='world')
-        battle_supply.settle(self,state,b)
+        coalition_returns={distribution['ally']: distribution['returns']} if distribution else None
+        battle_supply.settle(self,state,b,coalition_returns=coalition_returns)
         state.settled_battles.append(b['id'])
-        incoming=b['attacker']!=state.player
+        incoming=state.player not in attackers
         self._note(state,f'战果已结算，合计损兵{lost}，劝降兵员{sum(x["surrenders"].values())}入城。')
         observing = state.player == observer.SEAT
-        if observing or state.player in (b['attacker'],b['defender']):
+        if observing or state.player in participants:
+            details=dict(battle_id=b['id'],outcome=b['outcome'],lost=lost,surrendered=sum(x['surrenders'].values()))
+            if distribution is not None:
+                details['coalition']=distribution
             self._emit_event(state,'battle_result',city_ids=[b['source'],b['target']],
                 person_ids=[state.officers[u['id']].person_id for u in (b['attackers'][:1]+b['defenders'][:1])],
                 factions=[b['attacker'],b['defender']],
-                details=dict(battle_id=b['id'],outcome=b['outcome'],lost=lost,surrendered=sum(x['surrenders'].values())),
+                details=details,
                 audience='world' if observing else 'player')
         state.battle=None;state.phase='ai' if incoming else 'city'
         travel=state.extension['travel']
@@ -898,7 +1000,7 @@ class ExpandedCampaign:
         self._prune_marches(state)
         self._reconcile_factions(state)
 
-    def _reconcile_factions(self,state):
+    def _reconcile_factions(self,state,*,declined_recruit=None):
         from . import dated_events, diplomacy, succession
         x=state.extension
         for faction in sorted(self.catalog.factions):
@@ -909,9 +1011,26 @@ class ExpandedCampaign:
             previous=x['leaders'].get(faction)
             heir=None
             if cities and previous not in alive:
-                heir=succession.preferred_successor(self,state,faction,previous,alive)
-                if heir is not None and not succession.admit_nominee(self,state,faction,heir):
-                    heir=None
+                pending=x['pending_succession'].get(faction, {})
+                recruit=pending.get('recruit')
+                declined=list(recruit['declined']) if recruit else []
+                if faction==state.player and declined_recruit is not None:
+                    declined.append(declined_recruit)
+                heir=succession.preferred_successor(self,state,faction,previous,alive,excluded=declined)
+                if heir is not None:
+                    city=succession.nominee_city(self,state,faction,heir)
+                    if (city is not None and faction==state.player
+                            and previous in state.officers and not state.officers[previous].alive):
+                        # Preserve the deceased ruler's identity until the player agrees
+                        # to recruit the heir. No serving roster changes while awaiting consent.
+                        offer=dict(officer=heir,city=city.id,declined=declined)
+                        if offer!=recruit:
+                            x['pending_succession'][faction]=dict(previous=previous,candidates=[heir],
+                                provisional=None,previous_loyalty=0,recruit=offer)
+                            self._note(state,f'请确认是否征召{self.person_name(state, heir)}继任君主。')
+                        continue
+                    if not succession.admit_nominee(self,state,faction,heir):
+                        heir=None
             if not cities or (not alive and heir is None):
                 ended_name=self.faction_name(state,faction)
                 for c in cities:c.owner='neutral'
@@ -936,8 +1055,9 @@ class ExpandedCampaign:
                 else:
                     officer_relations.apply_faction(self,state,faction)
                     self._note(state,f'{self.person_name(state, leader)}接任势力主将。')
-        for faction,pending in list(x['pending_succession'].items()):
-            pending['candidates']=[i for i in pending['candidates'] if i in state.officers and state.officers[i].alive and state.officers[i].faction_id==faction]
+        for faction,pending in x['pending_succession'].items():
+            if 'recruit' not in pending:
+                pending['candidates']=[i for i in pending['candidates'] if i in state.officers and state.officers[i].alive and state.officers[i].faction_id==faction]
         diplomacy.synchronize(self,state)
         if state.player == observer.SEAT:
             result = observer.outcome(state)
@@ -975,8 +1095,25 @@ class ExpandedCampaign:
         pending=state.extension['pending_succession'].get(state.player)
         if state.phase!='city' or not pending:
             raise GameError('当前没有待选择的继承君主。')
-        ident=parse_officer_ref(payload.get('officer'),self.catalog.rules)
-        if ident not in pending['candidates'] or not state.officers[ident].alive or state.officers[ident].faction_id!=state.player:
+        recruit=pending.get('recruit')
+        decline='decline_recruit' in payload
+        if (set(payload) not in ({'officer'}, {'officer','decline_recruit'})
+                or (decline and (recruit is None or payload['decline_recruit'] is not True))):
+            raise GameError('继承指令参数无效。')
+        ident=parse_officer_ref(payload['officer'],self.catalog.rules)
+        if recruit is not None:
+            from . import succession
+            city=succession.nominee_city(self,state,state.player,ident)
+            if ident!=recruit['officer'] or city is None or city.id!=recruit['city']:
+                raise GameError('该继承人已无法在己方城池征召。')
+            if decline:
+                self._note(state,f'未征召{self.person_name(state, ident)}继任君主。')
+                self._reconcile_factions(state,declined_recruit=ident)
+                return
+            if not succession.admit_nominee(self,state,state.player,ident):
+                raise GameError('该继承人已无法在己方城池征召。')
+        elif (ident not in pending['candidates'] or not state.officers[ident].alive
+                or state.officers[ident].faction_id!=state.player):
             raise GameError('请选择本方存活的继承人。')
         provisional=pending['provisional']
         if provisional!=ident and provisional in state.officers and state.officers[provisional].faction_id==state.player:
@@ -1034,7 +1171,7 @@ class ExpandedCampaign:
         x=state.extension
         fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events','civil_staff','pending_succession','domestic','logistics','treasury','facilities','equipment','command_books'}
         if 'city_development' in x:fields.add('city_development')
-        from . import dated_events
+        from . import dated_events, succession
         if dated_events.enabled(self.catalog):fields.add('dated_events')
         if historical_campaigns.RECEIPTS in x:fields.add(historical_campaigns.RECEIPTS)
         if 'diplomacy' in x:fields.add('diplomacy')
@@ -1059,7 +1196,10 @@ class ExpandedCampaign:
             integer(turn,1,state.turn,'officer action turn')
         if not isinstance(x['leaders'],dict) or set(x['leaders'])!=set(self.catalog.factions):raise ValueError('leader identities')
         if not isinstance(x['ended_factions'],list) or len(set(x['ended_factions']))!=len(x['ended_factions']) or not set(x['ended_factions'])<=set(self.catalog.factions):raise ValueError('ended factions')
+        pending_succession=x['pending_succession']
+        if not isinstance(pending_succession,dict) or not set(pending_succession)<={state.player}:raise ValueError('pending succession faction')
         for faction,ident in x['leaders'].items():
+            pending=pending_succession.get(faction)
             if dated_events.dormant(self.catalog,state,faction):
                 if (ident is not None or faction in x['ended_factions']
                         or any(c.owner==faction for c in state.cities.values())
@@ -1067,22 +1207,24 @@ class ExpandedCampaign:
                     raise ValueError('Dormant faction already holds people or cities')
             elif faction in x['ended_factions']:
                 if ident is not None or any(c.owner==faction for c in state.cities.values()):raise ValueError('ended faction retains holdings')
-            else:
+            elif not (isinstance(pending,dict) and 'recruit' in pending):
                 self.catalog.rules.officer_id(ident)
                 if ident not in state.officers or not state.officers[ident].alive or state.officers[ident].faction_id!=faction or state.officers[ident].loyalty!=100:raise ValueError('living leader required')
-        if not isinstance(x['pending_succession'],dict) or not set(x['pending_succession'])<={state.player}:raise ValueError('pending succession faction')
-        for faction,pending in x['pending_succession'].items():
-            if (not isinstance(pending,dict) or set(pending)!={'previous','candidates','provisional','previous_loyalty'}
+        succession_fields={'previous','candidates','provisional','previous_loyalty'}
+        for faction,pending in pending_succession.items():
+            if (not isinstance(pending,dict) or set(pending) not in (succession_fields,succession_fields|{'recruit'})
                     or not isinstance(pending['candidates'],list) or not pending['candidates']
-                    or len(pending['candidates'])!=len(set(pending['candidates']))
-                    or pending['provisional']!=x['leaders'][faction]
-                    or any(i not in state.officers or not state.officers[i].alive or state.officers[i].faction_id!=faction for i in pending['candidates'])):raise ValueError('pending succession choices')
+                    or len(pending['candidates'])!=len(set(pending['candidates']))):raise ValueError('pending succession choices')
             integer(pending['previous_loyalty'],0,100,'provisional previous loyalty')
             if pending['previous'] is not None:
                 parse_officer_ref(pending['previous'],self.catalog.rules)
                 if pending['previous'] not in state.officers:raise ValueError('unknown previous ruler')
             for ident in pending['candidates']:
                 parse_officer_ref(ident,self.catalog.rules)
+            if 'recruit' in pending:
+                succession.validate_recruit_offer(self,state,faction,pending)
+            elif (pending['provisional']!=x['leaders'][faction]
+                    or any(i not in state.officers or not state.officers[i].alive or state.officers[i].faction_id!=faction for i in pending['candidates'])):raise ValueError('pending succession choices')
         if x['outcome'] not in {None,'victory','defeat'} or (state.phase=='finished')!=(x['outcome'] is not None):raise ValueError('campaign ending')
         if state.player == observer.SEAT:
             if x['outcome'] != observer.outcome(state):raise ValueError('false observer result')
@@ -1105,12 +1247,14 @@ class ExpandedCampaign:
         if not b:return
         e=b['extended']
         expected={'support','duel','duel_history','ambush','surrenders','withdrawn','tactical'}
-        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation','supply','deployment','conditions','placement','auto_deployment'}:raise ValueError('battle extended fields')
+        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation','supply','deployment','conditions','placement','auto_deployment','coalition','capture_actor'}:raise ValueError('battle extended fields')
         battle_grid.validate(self,state,b)
         battle_conditions.validate(b)
         battle_supply.validate(state,b)
         siege.validate(self,state,b)
         battle_allegiance.validate(self,state,b)
+        if 'coalition' in e:
+            self._validate_battle_coalition(state,b)
         units={u['id']:u for u in b['attackers']+b['defenders']}
         if set(e['support'])!={str(i) for i in units}:raise ValueError('battle support identities')
         for key,s in e['support'].items():
@@ -1137,3 +1281,44 @@ class ExpandedCampaign:
             if units[d['actor']]['troops']<=0 or units[d['target']]['troops']<=0:raise ValueError('duel with routed participant')
             integer(d['round'],1,20,'duel round')
             if not isinstance(d['log'],list) or len(d['log'])>10 or any(not isinstance(v,str) or len(v)>500 for v in d['log']):raise ValueError('duel log')
+
+    def _validate_battle_coalition(self,state,battle):
+        from .march_supply import DENOMINATOR, LIMIT
+
+        ext=battle['extended']
+        coalition=ext['coalition']
+        if (not isinstance(coalition,dict) or set(coalition)!={'sources','provisions'}
+                or not isinstance(coalition['sources'],dict) or not isinstance(coalition['provisions'],dict)):
+            raise ValueError('Invalid coalition battle metadata')
+        sources=coalition['sources']
+        original=[]
+        for side in ('attackers','defenders'):
+            for unit in battle[side]:
+                key=str(unit['id'])
+                defection=ext.get('defections',{}).get(key)
+                if (defection['original_side'] if defection else side)=='attackers':
+                    original.append(key)
+                    if defection and defection['original_city']!=sources.get(key):
+                        raise ValueError('Changed coalition source after battlefield defection')
+        if (set(sources)!=set(original) or len(sources)>self.catalog.rules.battle_officers_per_side
+                or battle['source'] not in sources.values()):
+            raise ValueError('Invalid coalition attack roster')
+        owners=set()
+        for city_id in set(sources.values()):
+            city=state.cities.get(city_id)
+            if not city or battle['target'] not in self._neighbors(city_id,state):
+                raise ValueError('Invalid coalition starting city')
+            owners.add(city.owner)
+        if (len(owners)!=2 or battle['attacker'] not in owners or battle['defender'] in owners
+                or 'neutral' in owners or battle['defender']=='neutral'
+                or not historical_campaigns.allied(state,*sorted(owners))
+                or any(historical_campaigns.allied(state,owner,battle['defender']) for owner in owners)):
+            raise ValueError('Invalid coalition factions')
+        provisions=coalition['provisions']
+        if set(provisions)!=owners or 'supply' not in ext:
+            raise ValueError('Invalid coalition provision owners')
+        for amount in provisions.values():
+            integer(amount,0,(LIMIT*DENOMINATOR+DENOMINATOR-1)*len(sources),'coalition provisions')
+        supply=ext['supply']['sides']['attackers']
+        if sum(provisions.values())!=supply['loaded']*DENOMINATOR+supply['initial_credit']:
+            raise ValueError('Invalid coalition provision balance')

@@ -1,5 +1,6 @@
 """Faction offices, local cost boundaries, saved receipts and automatic targets."""
 from copy import deepcopy
+from dataclasses import replace
 from pathlib import Path
 import json
 import sys
@@ -89,8 +90,8 @@ class DomesticTests(unittest.TestCase):
             domestic.finish_faction_turn(game, game.state, 'shu', automatic=False)
             self.assertEqual(game.export_save(), snapshot)
             game._complete_turn(game.state)
-        bonus = (100 * 40 * intellect // (100 * 99), 300 * 40 * intellect // (100 * 99))
-        self.assertEqual((city.gold, city.grain), (start[0] + 100 + bonus[0], start[1] + 300 + bonus[1]))
+        self.assertEqual(intellect, 99)
+        self.assertEqual((city.gold, city.grain), (start[0] + 150, start[1] + 450))
         snapshot = game.export_save()
         domestic.month_rollover(game, game.state)
         self.assertEqual(game.export_save(), snapshot)
@@ -98,15 +99,76 @@ class DomesticTests(unittest.TestCase):
             if e['kind'] == 'domestic_report' and e['details']['reason'] == 'month']), 1)
         game.validate(game.state)
 
+    def test_civil_income_preview_at_each_threshold_and_mixed_month(self):
+        game = self.game()
+        civil, military = self.appoint(game)
+        state = game.state
+        for intellect, gold, grain in ((30, 2, 7), (58, 4, 14), (59, 5, 15), (60, 5, 15),
+                                      (61, 6, 18), (75, 20, 60), (94, 39, 117), (95, 40, 120), (96, 42, 127),
+                                      (97, 45, 135), (98, 47, 142), (99, 50, 150)):
+            with self.subTest(intellect=intellect):
+                officer = state.officers[civil]
+                officer.profile = replace(officer.profile, intellect=intellect)
+                preview = domestic.view(game, state)['cities']['xiangyang']['monthly_bonus_preview']
+                self.assertEqual(preview, dict(gold=gold, grain=grain))
+
+        self.assertEqual(state.officers[military].profile.intellect, 75)
+        game.command('set_domestic', dict(faction='shu', civil=military, military=civil), game.revision)
+        state = game.state
+        city = state.cities['xiangyang']
+        start = city.gold, city.grain
+        domestic.finish_faction_turn(game, state, 'shu', automatic=False)
+        game._complete_turn(state)
+        saved = game.export_save()
+        game = Campaign(game.catalog)
+        game.load_save(saved, 0)
+        self.assertEqual(game.export_save(), saved)
+
+        game.command('set_domestic', dict(faction='shu', civil=civil, military=military), game.revision)
+        state = game.state
+        state.extension['officer_actions'][str(civil)] = state.turn
+        domestic.finish_faction_turn(game, state, 'shu', automatic=False)
+        game._complete_turn(state)
+        game._complete_turn(state)
+
+        # One full duty at 20%, one half duty at 50%, and one missed duty.
+        city = state.cities['xiangyang']
+        self.assertEqual((city.gold, city.grain), (start[0] + 115, start[1] + 345))
+        self.assertNotIn('income_rate_units', state.extension['domestic']['cities'][city.id])
+
+    def test_midmonth_old_save_keeps_earned_income_then_uses_new_rate(self):
+        for older_rate, gold, grain in ((40, 146, 440), (50, 150, 450)):
+            with self.subTest(older_rate=older_rate):
+                game = self.game()
+                self.appoint(game)
+                state = game.state
+                domestic.finish_faction_turn(game, state, 'shu', automatic=False)
+                for row in state.extension['domestic']['cities'].values():
+                    row.pop('income_rate_units', None)
+                    if older_rate == 50 and row['income_points']:
+                        row['income_extra_units'] = 20 * row['income_points']
+                game._complete_turn(state)
+
+                saved = game.export_save()
+                loaded = Campaign(game.catalog)
+                loaded.load_save(saved, 0)
+                self.assertEqual(loaded.export_save(), saved)
+                state = loaded.state
+                city = state.cities['xiangyang']
+                start = city.gold, city.grain
+                for _ in range(2):
+                    domestic.finish_faction_turn(loaded, state, 'shu', automatic=False)
+                    loaded._complete_turn(state)
+                self.assertEqual((city.gold, city.grain), (start[0] + gold, start[1] + grain))
+
     def test_recruiting_costs_reserve_target_morale_and_training_are_bounded(self):
         game = self.game()
-        _, military = self.appoint(game, dict(recruit_enabled=True, training_enabled=True,
+        self.appoint(game, dict(recruit_enabled=True, training_enabled=True,
             reserve_target=1300, gold_floor=0, grain_floor=0))
         city, row = game.state.cities['xiangyang'], game.state.extension['domestic']['cities']['xiangyang']
-        strength = game.state.officers[military].profile.martial_strength
         quote = domestic.recruitment_preview(game, game.state, city.id)
         self.assertEqual(quote['soldiers'], 100)
-        self.assertEqual(quote['gold'], 20 - strength // 10)
+        self.assertEqual(quote['grain'], 30)
         before = city.gold, city.grain, city.reserves, game.state.soldiers['recruited']
         troops_before = sum(game.state.officers[i].troops for i in city.roster.officer_ids)
         expected_recruited = sum(domestic.recruitment_preview(game, game.state, key)['soldiers']
@@ -127,6 +189,30 @@ class DomesticTests(unittest.TestCase):
         game.state.extension['domestic']['factions']['shu']['policy']['reserve_target'] = 2000
         self.assertEqual(domestic.recruitment_preview(game, game.state, city.id)['soldiers'], 0)
         self.assertGreaterEqual(city.gold, 0); self.assertGreaterEqual(city.grain, 0)
+
+    def test_automatic_recruiting_gold_rates_and_resource_limits(self):
+        game = self.game()
+        _, military = self.appoint(game, dict(recruit_enabled=True, reserve_target=1300,
+                                             gold_floor=0, grain_floor=0))
+        city = game.state.cities['xiangyang']
+        officer = game.state.officers[military]
+        for strength, gold in ((1, 20), (49, 18), (50, 18), (51, 17), (65, 14),
+                               (79, 11), (80, 10), (90, 7), (94, 6), (95, 5),
+                               (96, 4), (97, 3), (98, 1), (99, 0)):
+            with self.subTest(strength=strength):
+                officer.profile = replace(officer.profile, martial_strength=strength)
+                self.assertEqual(domestic.recruitment_preview(game, game.state, city.id),
+                                 dict(soldiers=100, gold=gold, grain=30))
+
+        city.gold = 10
+        officer.profile = replace(officer.profile, martial_strength=51)
+        self.assertEqual(domestic.recruitment_preview(game, game.state, city.id),
+                         dict(soldiers=58, gold=10, grain=18))
+
+        city.gold, city.grain = 0, 9
+        officer.profile = replace(officer.profile, martial_strength=99)
+        self.assertEqual(domestic.recruitment_preview(game, game.state, city.id),
+                         dict(soldiers=30, gold=0, grain=9))
 
     def test_personnel_ranks_real_abilities_and_reuses_actual_fee_and_rng(self):
         game = self.game()
@@ -233,11 +319,15 @@ class DomesticTests(unittest.TestCase):
         saved = game.export_save()
         loaded = Campaign(game.catalog); loaded.load_save(saved, 0)
         self.assertEqual(loaded.export_save(), saved)
-        for change in ('morale', 'income', 'dual', 'receipt', 'policy'):
+        for change in ('morale', 'income', 'income_extra', 'income_rate', 'dual', 'receipt', 'policy'):
             altered = deepcopy(saved)
             row = altered['state']['extension']['domestic']['cities']['xiangyang']
             if change == 'morale': row['morale'] = 101
             elif change == 'income': row['income_points'] = 595
+            elif change == 'income_extra':
+                row.pop('income_rate_units')
+                row['income_extra_units'] = 20 * row['income_points'] + 1
+            elif change == 'income_rate': row['income_rate_units'] += 1
             elif change == 'dual':
                 offices = altered['state']['extension']['domestic']['factions']['shu']
                 offices['military'] = offices['civil']
