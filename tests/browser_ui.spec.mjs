@@ -2645,7 +2645,12 @@ test('command-book confirmations and one paid city allocation flow preserve canc
  const read=()=>page.evaluate(async()=>{const response=await fetch('/api/save');if(!response.ok)throw Error('Save inspection failed');return response.json();});
  const budget=save=>save.state.extension.command_books.factions.shu,active=save=>budget(save).allocation?.active??null;
  const modal=page.locator('#order-confirm-dialog'),initial=await read(),allocations=[];
- const closeFlow=async()=>{await closeDialog(page);await expect.poll(async()=>active(await read())).toBeNull();await waitIdle(page);};
+ const readClosed=()=>page.evaluate(async()=>{
+  const response=await fetch('/api/save');if(!response.ok)throw Error('Save inspection failed');
+  const save=await response.json();
+  return (save.state.extension.command_books.factions.shu.allocation?.active??null)===null;
+ });
+ const closeFlow=async()=>{await closeDialog(page);await expect.poll(readClosed).toBe(true);await waitIdle(page);};
  const accept=async(kind)=>{await expect(modal).toBeVisible();await expect(modal).toHaveAttribute('data-command-book-kind',kind);await expect(modal).toHaveAttribute('data-command-book-cost','1');await modal.locator('#order-confirm-accept').click();await waitIdle(page);await expect(modal).toBeHidden();};
  await clickCityCommand(page,'recruit');await page.locator('#confirm-recruit').click();await expect(modal).toBeVisible();await expect(modal.locator('#order-confirm-message')).toContainText('成都');
  expect(await read()).toEqual(initial,'A payment prompt cannot spend resources, books or RNG before approval');
