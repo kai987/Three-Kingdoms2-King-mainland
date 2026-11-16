@@ -72,7 +72,15 @@ class ScopeGateTests(unittest.TestCase):
         for value in bad:
             with self.subTest(value=value), self.assertRaises(ValueError): gate.validate_plan(value)
         with self.assertRaises(ValueError): gate.validate_plan(plan(), 'c' * 40)
-        gate.validate_plan(plan(groups=sorted(gate.GROUPS), scenario_ids=['mainland194-06']))
+        gate.validate_plan(plan(groups=sorted(gate.GROUPS), scenario_ids=['mainland194-06'],
+                                python_groups=['global', 'event-scenes']))
+
+    def test_scoped_event_backdrops_require_both_groups(self):
+        gate.validate_plan(plan(groups=['boot', 'event-scenes'], python_groups=['global', 'event-scenes']))
+        with self.assertRaises(ValueError):
+            gate.validate_plan(plan(groups=['boot', 'event-scenes']))
+        with self.assertRaises(ValueError):
+            gate.validate_plan(plan(python_groups=['global', 'event-scenes']))
 
     def test_summary_quotes_filenames_and_lists_skipped_groups(self):
         value = plan(changed_files=['`\nmalicious.md'], reasons=['cover change'])

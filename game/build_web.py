@@ -270,6 +270,8 @@ def build(output):
         # rather than an older complete bitmap that hides source-map edits.
         subprocess.run([sys.executable, '-B', str(HERE / 'build_terrain_art.py'), '--check'],
                        cwd=ROOT, check=True, stdout=subprocess.PIPE)
+        subprocess.run([sys.executable, '-B', str(HERE / 'build_portrait_thumbnails.py'), '--check'],
+                       cwd=ROOT, check=True, stdout=subprocess.PIPE)
         assets = {}
         for name, source in static_allowlist().items():
             raw = safe_read(HERE, source)

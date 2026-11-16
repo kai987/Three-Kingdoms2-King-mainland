@@ -5,12 +5,14 @@
  if(typeof module==='object'&&module.exports)module.exports=api;else root.GameMarchSupply=api;
 })(typeof window==='object'?window:globalThis,function(){
  'use strict';
+ const RATION_DENOMINATOR=1000,OFFICER_UNITS=100;
  function requiredGrain(troops,officers,days,reserves=0){
   if([troops,officers,days,reserves].some(n=>!Number.isSafeInteger(n)||n<0))throw new TypeError('Invalid march supply');
-  const units=troops+100*officers+reserves,value=units*days;
-  if(!Number.isSafeInteger(value+999))throw new RangeError('March supply too large');
-  return Math.floor((value+999)/1000);
+  const units=troops+OFFICER_UNITS*officers+reserves,value=units*days;
+  if(!Number.isSafeInteger(value+RATION_DENOMINATOR-1))throw new RangeError('March supply too large');
+  return Math.floor((value+RATION_DENOMINATOR-1)/RATION_DENOMINATOR);
  }
+ const troopCount=(people,ids)=>ids.reduce((sum,id)=>sum+(people[id]?.troops||0),0);
  function initialDays(quote,cities=null,owner=null){
   if(!quote||!Number.isSafeInteger(quote.days)||quote.days<0)throw new TypeError('Invalid march duration');
   if(!cities||owner===null||!Array.isArray(quote.routes)||!Array.isArray(quote.path))return quote.days;
@@ -24,7 +26,34 @@
   return quote.days;
  }
  function estimate(people,ids,quote,reserves=0,cities=null,owner=null){
-  return requiredGrain(ids.reduce((sum,id)=>sum+(people[id]?.troops||0),0),ids.length,initialDays(quote,cities,owner),reserves);
+  return requiredGrain(troopCount(people,ids),ids.length,initialDays(quote,cities,owner),reserves);
+ }
+ function refillForecast(people,ids,quote,loaded,cities,owner){
+  if(!ids.length||!Array.isArray(quote?.routes)||!Array.isArray(quote?.path))return [];
+  const stops=[{city:quote.path[0],day:0}];
+  let day=0;
+  for(const [index,leg] of quote.routes.entries()){
+   day+=leg.days;
+   const city=quote.path[index+1];
+   if(cities[city]?.owner===owner||index===quote.routes.length-1)stops.push({city,day});
+  }
+  const units=troopCount(people,ids)+OFFICER_UNITS*ids.length;
+  const rows=[];
+  let available=loaded*RATION_DENOMINATOR,conditional=false;
+  for(let index=0;index<stops.length-1;index++){
+   const here=stops[index],destination=stops[index+1],days=destination.day-here.day,needed=units*days;
+   if(index>0){
+    const required=Math.max(0,Math.ceil((needed-available)/RATION_DENOMINATOR));
+    const stock=cities[here.city].grain,shortfall=Math.max(0,required-stock);
+    rows.push({city:here.city,next:destination.city,days,stock,required,shortfall,conditional});
+    // Later stops remain useful as a forecast once earlier gaps are covered.
+    available+=required*RATION_DENOMINATOR;
+    conditional=conditional||shortfall>0;
+   }
+   // Grain and the engine's fractional credit share this scaled balance.
+   available-=needed;
+  }
+  return rows;
  }
  function position(quote,routeDays=0){
   const path=quote?.path||[],routes=quote?.routes||[],total=quote?.days||0;
@@ -49,5 +78,5 @@
   }
   return null;
  }
- return Object.freeze({requiredGrain,initialDays,estimate,position,nextStop});
+ return Object.freeze({requiredGrain,initialDays,estimate,refillForecast,position,nextStop});
 });

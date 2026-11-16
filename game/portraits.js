@@ -27,9 +27,12 @@
       variant.path!==`/assets/portraits/${kind}/${id}.png`||variant.width!==512||variant.height!==640)throw new Error(`Invalid ${kind} portrait entry`);
     entry[kind]=Object.freeze({path:variant.path,width:variant.width,height:variant.height});
    }
+   if(entry.white)entry.thumbnail=Object.freeze({path:`/assets/portraits/thumb/${id}.webp`,width:128,height:160});
    people[id]=Object.freeze(entry);
   }
-  return Object.freeze({schema:value.schema,width:value.width,height:value.height,people:Object.freeze(people)});
+  const sourceVersion=value.sources?.['portrait-white.json'];
+  const thumbnailVersion=typeof sourceVersion==='string'&&/^[0-9a-f]{64}$/.test(sourceVersion)?sourceVersion:null;
+  return Object.freeze({schema:value.schema,width:value.width,height:value.height,people:Object.freeze(people),thumbnailVersion});
  }
  function create(options={}){
   const doc=options.document||root.document,i18n=options.i18n||root.GameI18n,fetcher=options.fetch||root.fetch?.bind(root);
@@ -39,6 +42,7 @@
   const text=(tc,ja)=>locale()==='ja'?ja:tc;
   const labelName=value=>i18n?.t?i18n.t(String(value??''),locale()):String(value??'');
   const displayedPath=path=>root.GamePaths?.asset(path)||path;
+  const imageUrl=path=>displayedPath(path)+(path.startsWith('/assets/portraits/thumb/')&&index?.thumbnailVersion?`?v=${index.thumbnailVersion}`:'');
   function personId(catalog,runtimeId){
    if(typeof runtimeId==='string'&&/^clerk-[0-9]{6,12}$/.test(runtimeId))return runtimeId;
    if(!catalog||typeof catalog!=='object'||!Array.isArray(catalog.library))return null;
@@ -52,14 +56,15 @@
     generated.set(person.id,Object.freeze({path:`/assets/civil-staff/${person.portrait}.png`,kind:'generated',fictional:true,width:32,height:40,original_id:null,enhanced:Object.freeze({path:`/assets/civil-staff/enhanced/${person.portrait}.png`,width:128,height:160})}));}
   }
   function entry(id){return typeof id==='string'?(generated.get(id)||index?.people[id]||null):null;}
-  function selectedAsset(row){
+  function selectedAsset(row,size){
    if(!row)return null;
+   if((size==='roster'||size==='library')&&row.thumbnail&&!failedPaths.has(row.thumbnail.path))return{...row.thumbnail,enhanced:true};
    const variant=[row.white,row.refined,row.enhanced].find(item=>item&&!failedPaths.has(item.path));
    if(variant)return{...variant,enhanced:true};
    return failedPaths.has(row.path)?null:{path:row.path,width:row.width||index?.width||32,height:row.height||index?.height||40,enhanced:false};
   }
   function asset(id){return selectedAsset(entry(id));}
-  const assetPaths=row=>[row.path,row.enhanced?.path,row.refined?.path,row.white?.path];
+  const assetPaths=row=>[row.path,row.enhanced?.path,row.refined?.path,row.white?.path,row.thumbnail?.path];
   function failAsset(id,path){const row=entry(id);if(!row||typeof path!=='string'||!assetPaths(row).includes(path))return false;failedPaths.add(path);refresh();return true;}
   function civilAsset(key){
    if(!/^clerk-[123]$/.test(key||''))return null;
@@ -73,6 +78,9 @@
   }
   function description(row,asset=null){
    if(!row)return text(status==='idle'||status==='loading'?'肖像準備中':'肖像待補',status==='idle'||status==='loading'?'肖像を準備中':'肖像は未設定です');
+   if(row.thumbnail&&asset?.path===row.thumbnail.path)return row.kind==='nes_original'
+    ?text('原版像素肖像・128×160縮圖','原作のドット肖像・128×160サムネイル')
+    :text('新增繪製像素肖像・128×160縮圖・非史實容貌','新規制作のドット肖像・128×160サムネイル・史実の容貌ではありません');
    if(row.white&&asset?.path===row.white.path)return row.kind==='nes_original'
     ?text('原版像素肖像・512×640白底','原作のドット肖像・512×640白背景')
     :text('新增繪製像素肖像・512×640白底・非史實容貌','新規制作のドット肖像・512×640白背景・史実の容貌ではありません');
@@ -84,24 +92,24 @@
    if(enhanced)return row.kind==='nes_original'?text('原版像素肖像・明暗強化','原作のドット肖像・陰影強化'):text('新增繪製肖像・明暗強化・非史實容貌','新規制作の肖像・陰影強化・史実の容貌ではありません');
    return row.kind==='nes_original'?text('原版像素肖像','原作のドット肖像'):text('新增繪製肖像・非史實容貌','新規制作の肖像・史実の容貌ではありません');
   }
-  function contents(id,rawName,source){
-   const row=entry(id),asset=selectedAsset(row),available=!!asset,name=labelName(rawName),width=asset?.width||index?.width||32,height=asset?.height||index?.height||40;
+  function contents(id,rawName,source,size){
+   const row=entry(id),asset=selectedAsset(row,size),available=!!asset,name=labelName(rawName),width=asset?.width||index?.width||32,height=asset?.height||index?.height||40;
    const missing=row&&!available?text('肖像載入失敗','肖像を読み込めませんでした'):description(null);
    const alt=available?`${name}${text('的肖像','の肖像')}`:`${name} · ${missing}`;
-   const image=available?`<img data-portrait-image src="${escape(root.GamePaths?.asset(asset.path)||asset.path)}" width="${width}" height="${height}" alt="${escape(alt)}" loading="lazy" decoding="async" draggable="false">`:
+   const image=available?`<img data-portrait-image src="${escape(imageUrl(asset.path))}" width="${width}" height="${height}" alt="${escape(alt)}" loading="lazy" decoding="async" draggable="false">`:
     `<span class="portrait-placeholder" role="img" aria-label="${escape(alt)}"><span aria-hidden="true">？</span></span>`;
    return `<span class="portrait-frame">${image}</span>${source?`<span class="portrait-source" data-l10n-native="${locale()}">${escape(available?description(row,asset):missing)}</span>`:''}`;
   }
   function html(id,name,{size='roster',source=false}={}){
    if(!SIZES.has(size))size='roster';
    const safeId=typeof id==='string'&&personPattern.test(id)?id:'';
-   return `<span class="officer-portrait portrait-${size}" data-portrait-person="${escape(safeId)}" data-portrait-name="${escape(name)}" data-portrait-source="${source?'1':'0'}" data-l10n-native="${locale()}">${contents(safeId,name,source)}</span>`;
+   return `<span class="officer-portrait portrait-${size}" data-portrait-size="${size}" data-portrait-person="${escape(safeId)}" data-portrait-name="${escape(name)}" data-portrait-source="${source?'1':'0'}" data-l10n-native="${locale()}">${contents(safeId,name,source,size)}</span>`;
   }
   function refresh(surface=doc){
    if(!surface?.querySelectorAll)return;
    for(const node of surface.querySelectorAll('[data-portrait-person]')){
     node.setAttribute('data-l10n-native',locale());
-    node.innerHTML=contents(node.dataset.portraitPerson,node.dataset.portraitName,node.dataset.portraitSource==='1');
+    node.innerHTML=contents(node.dataset.portraitPerson,node.dataset.portraitName,node.dataset.portraitSource==='1',node.dataset.portraitSize);
    }
   }
   function imageError(event){
@@ -119,8 +127,8 @@
    if(!image?.hasAttribute?.('data-portrait-image'))return;
    const frame=image.closest?.('[data-portrait-person]'),row=entry(frame?.dataset?.portraitPerson);
    if(!row)return;
-   const attempted=image.getAttribute?.('src')||selectedAsset(row)?.path;
-   const canonical=assetPaths(row).find(path=>typeof path==='string'&&(path===attempted||displayedPath(path)===attempted));
+   const attempted=image.getAttribute?.('src')||selectedAsset(row,frame.dataset.portraitSize)?.path;
+   const canonical=assetPaths(row).find(path=>typeof path==='string'&&(path===attempted||imageUrl(path)===attempted));
    if(!canonical)return;
    failAsset(frame.dataset.portraitPerson,canonical);
   }

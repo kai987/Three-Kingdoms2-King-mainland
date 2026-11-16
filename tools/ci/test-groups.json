@@ -891,10 +891,9 @@
       ]
     },
     "tests/test_remake_web_build.py": {
-      "tier": "full",
+      "tier": "related",
       "groups": [
-        "boot",
-        "save"
+        "event-scenes"
       ]
     },
     "tests/test_remake_yangtze_headwaters.py": {

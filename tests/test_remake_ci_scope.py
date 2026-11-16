@@ -147,6 +147,49 @@ class ScopePlanTests(unittest.TestCase):
                          {'title-cover', 'recovery-title', 'dialogs-save', 'boot-retry', 'first-session-guide'})
         self.assertEqual(len(selection['cases']) * 2, 10)
 
+    def test_registered_event_replacement_selects_asset_checks_and_event_browser_cases(self):
+        path = 'game/assets/event-scenes/drought.webp'
+        self.repo.write('game/serve.py', "EVENT_SCENE_IDS = ('drought',)\n")
+        self.repo.write(path, 'old image')
+        self.repo.base = self.repo.save('Registered backdrop baseline')
+        self.changed(path, 'new image')
+        plan = self.repo.plan(event_name='push', ref='refs/heads/main')
+        self.assertEqual(plan['mode'], 'scoped', plan['reasons'])
+        self.assertEqual(plan['groups'], ['boot', 'cloud', 'event-scenes'])
+        self.assertEqual(plan['python_groups'], ['global', 'event-scenes'])
+        self.assertTrue(plan['web'] and plan['publish'])
+        self.assertFalse(any(plan[field] for field in ('native', 'rules', 'soak', 'resupply')))
+        target = self.repo.path / 'event-plan.json'
+        target.write_text(json.dumps(plan))
+        output = subprocess.check_output(['node', str(ROOT / 'tools/browser-tests/scope.cjs'),
+                                          '--plan', str(target)], cwd=ROOT, text=True)
+        selected = {row['id'] for row in json.loads(output)['cases']}
+        self.assertTrue({'drought','event-backdrop-decoding','dong-zhuo-relocation','liu-bei-three-visits'} <= selected)
+        self.assertFalse({'opening-catalog-first','opening-catalog-second','soldier-orders'} & selected)
+        self.changed('source/remake/events.py', 'rules change')
+        self.assertTrue(self.repo.plan()['full'])
+
+    def test_event_inventory_and_unregistered_replacements_require_full_checks(self):
+        path = 'game/assets/event-scenes/drought.webp'
+        unknown = 'game/assets/event-scenes/unlisted.webp'
+        self.repo.write('game/serve.py', "EVENT_SCENE_IDS = ('drought',)\n")
+        self.repo.write(path, 'old image')
+        self.repo.write(unknown, 'existing but unregistered')
+        self.repo.base = self.repo.save('Backdrop baseline')
+        for kind in ('unregistered', 'addition', 'deletion', 'symlink'):
+            with self.subTest(kind=kind):
+                self.repo.git('reset', '--hard', self.repo.base)
+                if kind=='unregistered':
+                    self.repo.write(unknown, 'replacement')
+                elif kind=='addition':
+                    self.repo.write('game/assets/event-scenes/flood.webp', 'new image')
+                else:
+                    (self.repo.path / path).unlink()
+                    if kind=='symlink':
+                        (self.repo.path / path).symlink_to('unlisted.webp')
+                self.repo.save()
+                self.assertTrue(self.repo.plan()['full'])
+
     def test_scenario_source_and_generated_fingerprints_do_not_widen_gameplay_scope(self):
         path = 'game/config/campaigns/scenarios/194-06.json'
         source = self.repo.read(path)
@@ -257,7 +300,7 @@ class ScopePlanTests(unittest.TestCase):
         self.assertFalse(any(result[field] for field in ('full', 'native', 'rules', 'soak')))
         self.assertEqual(result['scenario_ids'], ['mainland184-02', 'mainland194-06', 'mainland217-07'])
         self.assertTrue(result['resupply'])
-        self.assertEqual(result['python_groups'], ['global'])
+        self.assertEqual(result['python_groups'], ['global', 'event-scenes'])
 
     def test_logistics_ui_selects_resupply_without_native_rule_replay(self):
         self.changed('game/domestic.js')

@@ -1753,14 +1753,17 @@ test('a stale local API menu warns without restarting or changing its campaign',
  expect(errors.get(page)).toEqual([]);
 });
 
+async function expectPortraitVariant(page,image,personId,thumbnail=false){
+ const variant=thumbnail?'thumb':'white',extension=thumbnail?'webp':'png';
+ const path=new URL('assets/portraits/'+variant+'/'+personId+'.'+extension,page.url()).pathname;
+ await image.scrollIntoViewIfNeeded();
+ await expect.poll(()=>image.evaluate(node=>node.complete&&node.currentSrc
+  ?[new URL(node.currentSrc).pathname,node.naturalWidth,node.naturalHeight]:null))
+  .toEqual([path,thumbnail?128:512,thumbnail?160:640]);
+}
+
 async function verifyOpeningBatch(page,testInfo,batchId){
  test.setTimeout(600_000);
- const expectWhitePortrait=async(image,personId)=>{
-  const path=new URL(`assets/portraits/white/${personId}.png`,page.url()).pathname;
-  await image.scrollIntoViewIfNeeded();
-  await expect.poll(()=>image.evaluate(node=>node.complete&&node.currentSrc
-   ?[new URL(node.currentSrc).pathname,node.naturalWidth,node.naturalHeight]:null)).toEqual([path,512,640]);
- };
  const people=JSON.parse(await readFile(new URL('../game/config/campaigns/people.json',import.meta.url),'utf8')).people;
  const known=[['san14-candidate-0952',78,99],['san14-candidate-0521',82,96],
   ['san14-candidate-0656',99,44],['san14-candidate-0147',97,94]];
@@ -1833,7 +1836,7 @@ async function verifyOpeningBatch(page,testInfo,batchId){
    const portrait=page.locator('#setup-summary [data-portrait-person]');
    await expect(portrait).toHaveAttribute('data-portrait-person',personId);
    await expect(portrait).toHaveAttribute('data-portrait-name',catalog.factions.find(row=>row.id===side).captain);
-   await expectWhitePortrait(portrait.locator('img'),personId);
+   await expectPortraitVariant(page,portrait.locator('img'),personId,true);
    await page.locator('#utility-menu summary').click();await page.locator('#language').selectOption('ja');
    await expect(portrait).toHaveAttribute('data-portrait-person',personId);
    const rulerName={song_jian:'宋建',nanman:'孟獲',lu_xing:'呂興',gongsun:'公孫淵'}[side];
@@ -1911,7 +1914,7 @@ async function verifyOpeningBatch(page,testInfo,batchId){
    await details.click();await expect(page.locator('#dialog-title')).toContainText('王建');
    const portrait=page.locator('#dialog [data-portrait-person="historical-wang-jian-liaodong"] img');
    await expect(portrait).toBeVisible();
-   await expectWhitePortrait(portrait,'historical-wang-jian-liaodong');
+   await expectPortraitVariant(page,portrait,'historical-wang-jian-liaodong');
    await historyScreenshot(page,testInfo,'238-new-retainer-original-wang-jian-tc');
    await page.locator('#dialog-language').selectOption('ja');
    await expect(portrait).toBeVisible();await historyScreenshot(page,testInfo,'238-new-retainer-original-wang-jian-ja');
@@ -1951,7 +1954,9 @@ test('officer encyclopedia distinguishes initial body, remake cap and contextual
   ['san14-candidate-0656',99,'98',44],['san14-candidate-0147',97,'99',94]]){
   await page.locator('#library-search').fill(pid);
   await expect(page.locator('.person-detail')).toHaveCount(1);
+  await expectPortraitVariant(page,page.locator('#library-results .portrait-library img'),pid,true);
   await page.locator('.person-detail').click();
+  await expectPortraitVariant(page,page.locator('#dialog .portrait-detail img'),pid);
   const summary=page.locator(`.person-initial-stats[data-initial-stat-source="${pid}"]:visible`);
   await expect(summary.locator('[data-initial-health]')).toHaveText(String(health));
   await expect(summary.locator('[data-source-loyalty]')).toHaveText(sourceLoyalty);
@@ -2868,6 +2873,59 @@ test('an at-large heir in a friendly city requires recruitment consent',async({p
  expect(errors.get(page)).toEqual([]);
 });
 
+test('march preview discloses a downstream depot shortage before moving officers',async({page})=>{
+ const save=execFileSync('python3',['-B',new URL('./browser_march_supply_fixture.py',import.meta.url).pathname],
+  {maxBuffer:2*1024*1024});
+ await opening(page);
+ await page.locator('#load').click();
+ await page.locator('#save-file').setInputFiles({name:'march-preview.json',mimeType:'application/json',buffer:save});
+ await expect(page.locator('#dialog')).toBeHidden();
+ await waitIdle(page);
+ await page.locator('#city-jump').selectOption('shujun');
+ const before=await tacticalSave(page);
+ expect(before.state.cities.guanghan.grain).toBe(0);
+ await clickCityCommand(page,'transfer');
+ await page.locator('#transfer-city').selectOption('nanjun');
+ await page.locator('input[name=transfer-officer][value="370"]').check();
+ const depot=page.locator('[data-march-refill-stop="guanghan"]');
+ await expect(depot).toBeVisible();
+ await expect(depot).toHaveAttribute('data-current-grain','0');
+ const requirement=Number(await depot.getAttribute('data-required-grain'));
+ expect(requirement).toBeGreaterThan(0);
+ await expect(depot).toHaveAttribute('data-grain-shortfall',String(requirement));
+ await page.locator('#dialog-language').selectOption('ja');
+ await expect(depot).toContainText('補給待ち',{useInnerText:true});
+ await expect(page.locator('#confirm-transfer')).toBeEnabled();
+ await closeDialog(page);
+ expect(await tacticalSave(page)).toEqual(before);
+ expect(errors.get(page)).toEqual([]);
+});
+
+test('published event backdrops decode from the verified web build',async({page})=>{
+ await page.goto('./',{waitUntil:'domcontentloaded'});
+ const updates=(browserScope.plan.changed_files??[])
+  .filter(path=>/^game\/assets\/event-scenes\/[a-z0-9-]+\.webp$/.test(path))
+  .map(path=>path.slice('game/'.length));
+ const result=await page.evaluate(async({all,updates})=>{
+  const response=await fetch('./runtime/build.json');
+  if(!response.ok)throw Error('Missing release manifest');
+  const {files}=await response.json();
+  const paths=all||!updates.length?Object.keys(files).filter(path=>path.startsWith('assets/event-scenes/')):updates;
+  const sizes=[];
+  for(let start=0;start<paths.length;start+=8){
+   sizes.push(...await Promise.all(paths.slice(start,start+8).map(async path=>{
+    if(!Object.hasOwn(files,path))throw Error('Event backdrop absent from manifest '+path);
+    const image=new Image();image.src=new URL(path,location.href).href;
+    await image.decode();
+    return [path,image.naturalWidth,image.naturalHeight];
+   })));
+  }
+  return sizes;
+ },{all:browserScope.full,updates});
+ expect(result).toHaveLength(browserScope.full||!updates.length?93:updates.length);
+ for(const [path,width,height]of result)expect(width>height&&height>0,path).toBe(true);
+});
+
 test('Dong Zhuo relocation opens in February 190 with its own bilingual historical scene',async({page},testInfo)=>{
  await opening(page);
  await page.locator('#scenario').selectOption('mainland190-01');
@@ -2967,6 +3025,22 @@ test('Dong Zhuo relocation opens in February 190 with its own bilingual historic
  expect(await tacticalSave(page)).toEqual(saved);
  await historyScreenshot(page,testInfo,'dong-zhuo-relocation-ja',{fullPage:false});
  await tacticalDismiss(page);
+ await page.locator('#utility-menu summary').click();
+ await page.locator('#event-history').click();
+ const history=event.locator('[data-event-history-list]');
+ await expect(history).toBeVisible();
+ const ids=await history.locator('[data-event-history-entry]').evaluateAll(rows=>rows.map(row=>Number(row.dataset.eventHistoryEntry)));
+ expect(ids).toEqual([...ids].sort((a,b)=>b-a));
+ const filter=history.locator('[data-event-history-filter]');
+ await filter.selectOption('historical');
+ const entry=history.locator('[data-event-history-entry="'+receipts(saved)[0].id+'"]');
+ await expect(entry).toBeVisible();
+ await entry.click();
+ await expect(event.locator('[data-event-kind]')).toHaveAttribute('data-event-kind',kind);
+ await event.locator('[data-event-history-back]').click();
+ await expect(filter).toHaveValue('historical');
+ await event.locator('[data-event-history-close]').click();
+ await expect(event).toBeHidden();
  expect(await tacticalSave(page)).toEqual(saved);
  expect(errors.get(page)).toEqual([]);
 });

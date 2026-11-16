@@ -149,6 +149,18 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
  const refinedPeople=Object.keys(shipped.people).filter(pid=>shipped.people[pid].refined).sort();
  assert.deepEqual(refinedPeople,['historical-liu-yan-shu','historical-xiahou-bo','historical-xue-yong','historical-yuan-chen']);
  const xue='historical-xue-yong',xueRow=shipped.people[xue];
+ const thumb=`/assets/portraits/thumb/${xue}.webp`,thumbVersion=shipped.sources['portrait-white.json'];
+ for(const size of ['roster','library']){
+  const listPortrait=released.html(xue,'薛永',{size,source:true});
+  assert(listPortrait.includes(`src="${thumb}?v=${thumbVersion}" width="128" height="160"`));
+  assert(listPortrait.includes('128×160縮圖'));
+ }
+ for(const size of ['detail','battle','duel'])assert(released.html(xue,'薛永',{size}).includes(xueRow.white.path));
+ const thumbnailFrame={dataset:{portraitPerson:xue,portraitSize:'library'}};
+ released.imageError({target:{hasAttribute:key=>key==='data-portrait-image',closest:()=>thumbnailFrame,
+                             getAttribute:key=>key==='src'?`${thumb}?v=${thumbVersion}`:null}});
+ assert(released.html(xue,'薛永',{size:'library'}).includes(xueRow.white.path));
+ assert(!released.html(xue,'薛永',{size:'library'}).includes(thumb));
  assert(released.html(xue,'薛永',{size:'detail',source:true}).includes('512×640白底'));
  i18n.locale='ja';
  assert(released.html(xue,'薛永',{size:'detail',source:true}).includes('512×640白背景'));
@@ -173,14 +185,14 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
   const runtime=1024+at;assert.equal(peoplePool.people[pid].runtime_id,runtime);
   assert.equal(shipped.by_runtime_id[String(runtime)],pid);assert.equal(released.personId(appendedCatalog,runtime),pid);
   assert.equal(released.asset(pid).path,`/assets/portraits/white/${pid}.png`);
-  const visible=released.html(pid,peoplePool.people[pid].name,{source:true});
+  const visible=released.html(pid,peoplePool.people[pid].name,{size:'detail',source:true});
   assert(visible.includes(`data-portrait-person="${pid}"`));
   assert(visible.includes('512×640白底'));assert(visible.includes('非史實容貌'));assert(!visible.includes('4倍放大'));
   assert.equal(shipped.people[pid].enhanced.rendering,'redrawn128');
   assert.equal(shipped.people[pid].kind,'generated');assert.equal(shipped.people[pid].original_id,null);
  }
  i18n.locale='ja';
- const redrawnJapanese=released.html(additions[0],'宋建',{source:true});
+ const redrawnJapanese=released.html(additions[0],'宋建',{size:'detail',source:true});
  assert(redrawnJapanese.includes('512×640白背景'));assert(redrawnJapanese.includes('史実の容貌ではありません'));assert(!redrawnJapanese.includes('4倍拡大'));
  assert(released.failAsset(additions[0],shipped.people[additions[0]].white.path));
  assert.equal(released.asset(additions[0]).path,shipped.people[additions[0]].enhanced.path);

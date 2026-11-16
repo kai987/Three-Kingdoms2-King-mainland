@@ -373,7 +373,8 @@
       "groups": [
         "economy",
         "battle",
-        "save"
+        "save",
+        "event-scenes"
       ],
       "scenario_ids": [
         "mainland217-07"
@@ -500,11 +501,32 @@
       "scenario_scope": "fixed"
     },
     {
+      "id": "march-resupply-preview",
+      "title": "march preview discloses a downstream depot shortage before moving officers",
+      "groups": [
+        "logistics"
+      ],
+      "scenario_ids": [
+        "mainland217-07"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "event-backdrop-decoding",
+      "title": "published event backdrops decode from the verified web build",
+      "groups": [
+        "event-scenes"
+      ],
+      "scenario_ids": [],
+      "scenario_scope": "unbound"
+    },
+    {
       "id": "dong-zhuo-relocation",
       "title": "Dong Zhuo relocation opens in February 190 with its own bilingual historical scene",
       "groups": [
         "people",
-        "scenarios"
+        "scenarios",
+        "event-scenes"
       ],
       "scenario_ids": [
         "mainland190-01"
@@ -517,7 +539,8 @@
       "groups": [
         "people",
         "scenarios",
-        "save"
+        "save",
+        "event-scenes"
       ],
       "scenario_ids": [
         "mainland207-09"

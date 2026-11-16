@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import battle_placement, city_development, civil_staff, facilities, historical_campaigns as history, strategic_ai, treasures
+from remake import battle_placement, city_development, civil_staff, events, facilities, historical_campaigns as history, strategic_ai, treasures
 from remake.historical_chapters import CHAPTERS
 from remake.march_core import using_backend
 from remake.officers import transfer_officers
@@ -935,6 +935,44 @@ class HistoricalCampaignTests(unittest.TestCase):
                     game.load_save(malformed, revision)
                 self.assertEqual(game.export_save(), original)
                 self.assertEqual(game.revision, revision)
+
+    def test_historical_milestones_survive_recent_history_eviction_and_reload(self):
+        game = self.opening('207-09', 'shu')
+        game.command('three_visits', {'visit': 1}, game.revision)
+        game = self.resume(game)
+        prior = game.export_save()['state']['extension']['events']
+        self.assertNotIn('milestones', prior)
+        expected = [row for row in prior['items'] if row['kind'] in events.MILESTONE_KINDS]
+        self.assertEqual([row['kind'] for row in expected],
+                         ['historical_three_visits', 'historical_three_visits_first'])
+
+        for _ in range(events.LIMIT + 2):
+            game._emit_event(game.state, 'new_year', details={'year': game.state.year}, audience='world')
+
+        game.validate(game.state)
+        game = self.resume(game)
+        original = game.export_save()
+        journal = original['state']['extension']['events']
+        self.assertEqual(journal['milestones'], expected)
+        self.assertEqual([row['id'] for row in journal['items']],
+                         list(range(journal['next_id'] - events.LIMIT, journal['next_id'])))
+        self.assertTrue(all(row['kind'] == 'new_year' for row in journal['items']))
+
+        malformed = deepcopy(original)
+        archived = malformed['state']['extension']['events']['milestones']
+        archived.append({**journal['items'][0], 'id': archived[-1]['id'] + 1})
+        malformed.pop('checksum')
+        malformed['checksum'] = digest(malformed)
+        with self.assertRaises(GameError):
+            game.load_save(malformed, game.revision)
+        self.assertEqual(game.export_save(), original)
+
+        legacy = deepcopy(original)
+        legacy['state']['extension']['events'].pop('milestones')
+        legacy.pop('checksum')
+        legacy['checksum'] = digest(legacy)
+        game.load_save(legacy, game.revision)
+        self.assertEqual(game.export_save(), legacy)
 
     def test_third_visit_cannot_recruit_zhuge_liang_from_another_faction(self):
         game = self.opening('207-09', 'shu')
