@@ -1,7 +1,7 @@
 /* Event playback is presentation-only, deduplicated and modal-safe. */
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
-const {create,validEvent,eventRows,campaignKey,groupRows,KINDS,sceneForEvent}=require('../game/events.js');
+const {create,validEvent,eventRows,historyRows,campaignKey,groupRows,KINDS,sceneForEvent}=require('../game/events.js');
 const row=(id,kind='recruit_success',extra={})=>({id,kind,year:190,month:1,day:1,turn:1,person_ids:['person-a'],city_ids:['home'],factions:['shu'],details:{},audience:'player',...extra});
 const staffRow=(id,kind='staff_candidate',extra={})=>row(id,kind,{person_ids:[],audience:'world',details:{staff_id:'clerk-000001',name:'王安',portrait:'clerk-1',reason:'opening'},...extra});
 const supplyRow=(id,kind='march_resupplied',extra={})=>row(id,kind,{details:{unit_kind:'march',unit_id:7,
@@ -18,16 +18,24 @@ class Target{
  constructor(){this.events=new Map();}
  addEventListener(name,fn){if(!this.events.has(name))this.events.set(name,new Set());this.events.get(name).add(fn);}
  removeEventListener(name,fn){this.events.get(name)?.delete(fn);}
- emit(name){for(const fn of this.events.get(name)||[])fn({type:name});}
+ emit(name){const event={type:name,preventDefault(){event.defaultPrevented=true;}};for(const fn of this.events.get(name)||[])fn(event);return event;}
 }
 class Modal extends Target{
- constructor(){super();this.open=false;this.html='';this.shows=0;this.closes=0;this.focuses=0;this.buttons=new Map();}
- set innerHTML(value){this.html=value;this.buttons.clear();for(const selector of ['[data-event-next]','[data-event-skip]','[data-event-visit]'])if(value.includes(selector.slice(1,-1)))this.buttons.set(selector,{onclick:null,focus:()=>{this.focuses++}});}
+ constructor(){super();this.open=false;this.html='';this.shows=0;this.closes=0;this.focuses=0;this.buttons=new Map();this.scrollTop=0;}
+ set innerHTML(value){
+  this.html=value;this.buttons.clear();
+  const controls=['data-event-next','data-event-skip','data-event-visit','data-event-history-filter','data-event-history-close','data-event-history-back','data-language-picker'];
+  controls.push(...[...value.matchAll(/data-event-history-entry="\d+"/g)].map(match=>match[0]));
+  for(const control of controls)if(value.includes(control))this.buttons.set(`[${control}]`,{onclick:null,focus:()=>{this.focuses++;this.focused=control;}});
+ }
  get innerHTML(){return this.html;}
  querySelector(selector){return this.buttons.get(selector)||null;}
  showModal(){this.open=true;this.shows++;}
  close(){this.open=false;this.closes++;this.emit('close');}
 }
+function selectHistory(modal,id){modal.querySelector(`[data-event-history-entry="${id}"]`).onclick();}
+function historyFilter(modal,value){modal.querySelector('[data-event-history-filter]').onchange({target:{value}});}
+function visibleHistoryIds(modal){return [...modal.innerHTML.matchAll(/data-event-history-entry="(\d+)"/g)].map(match=>Number(match[1]));}
 function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
  const modal=new Modal(),parent=new Target(),doc=new Target(),tasks=[],header={textContent:'',setAttribute(k,v){this[k]=v}},i18n={locale:'zh-Hant',t:value=>value};
  doc.querySelector=selector=>selector==='#event-history'?header:null;parent.open=false;
@@ -100,6 +108,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
  assert(!visiting.modal.querySelector('[data-event-visit]'));
  visiting.modal.querySelector('[data-event-next]').onclick();
  visiting.setView(beforeVisit);assert(visiting.events.history());visiting.drain();
+ selectHistory(visiting.modal,1);
  assert(!visiting.modal.querySelector('[data-event-visit]'),'Event history cannot submit visits');
  visiting.events.dispose();
  const alliance=row(1,'diplomacy_result',{factions:['shu','wei'],
@@ -119,6 +128,8 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
  observerDiplomacy.events.observe(observerView,{newGame:true});observerDiplomacy.drain();
  assert(!observerDiplomacy.modal.open,'Routine AI diplomacy does not interrupt observation');
  assert(observerDiplomacy.events.history());observerDiplomacy.drain();
+ assert(!observerDiplomacy.modal.innerHTML.includes('<option value="own"'));
+ selectHistory(observerDiplomacy.modal,1);
  assert(observerDiplomacy.modal.innerHTML.includes('將曹操交還劉備勢力'));
  observerDiplomacy.i18n.locale='ja';observerDiplomacy.doc.emit('game-language-change');
  assert(observerDiplomacy.modal.innerHTML.includes('曹操を劉備勢力に返還'));
@@ -296,6 +307,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
  }
  relocationPlayback.modal.querySelector('[data-event-next]').onclick();relocationPlayback.drain();
  assert(relocationPlayback.events.history());relocationPlayback.drain();
+ selectHistory(relocationPlayback.modal,relocation.id);
  assert(relocationPlayback.modal.innerHTML.includes('金 50000、宝物 93 点、兵糧 100000'),'History renders the amounts credited in the saved receipt');
  assert.equal(JSON.stringify(relocationView),relocationBefore,'Relocation playback leaves amounts in the saved event intact');
  relocationPlayback.events.dispose();
@@ -396,6 +408,27 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
  assert.deepEqual(eventRows({game:{extension:{events:{items:{}}}}}),[]);
  assert.notEqual(campaignKey(view([])),campaignKey(view([],2027)));
  const originalRows=[row(3),row(2),row(1)];const source=JSON.stringify(originalRows);assert.deepEqual(eventRows(view(originalRows)).map(x=>x.id),[1,2,3]);assert.equal(JSON.stringify(originalRows),source);
+ const archived={...relocation,id:1},recent=[row(4),row(7,'march_arrived',{factions:['wei']}),row(8,'battle_started')];
+ const historyView=view(recent),historyFixture=fixture();
+ historyView.game.extension.events.milestones=[archived,{...recent[2]},{...archived}];
+ const historyBytes=JSON.stringify(historyView);
+ assert.deepEqual(historyRows(historyView).map(event=>event.id),[8,7,4,1]);
+ historyFixture.setView(historyView);historyFixture.events.observe(historyView,{baseline:true});historyFixture.drain();
+ assert(historyFixture.events.history());assert(historyFixture.modal.innerHTML.includes('data-event-history-list'));
+ assert.deepEqual(visibleHistoryIds(historyFixture.modal),[8,7,4,1]);
+ historyFilter(historyFixture.modal,'own');assert.deepEqual(visibleHistoryIds(historyFixture.modal),[8,4]);
+ historyFilter(historyFixture.modal,'battle');assert.deepEqual(visibleHistoryIds(historyFixture.modal),[8,7]);
+ historyFilter(historyFixture.modal,'historical');assert.deepEqual(visibleHistoryIds(historyFixture.modal),[1]);
+ selectHistory(historyFixture.modal,1);assertScene(historyFixture.modal.innerHTML,'historical-dong-zhuo-relocation');
+ assert(historyFixture.modal.innerHTML.includes('data-event-relocation-effects'));
+ historyFixture.i18n.locale='ja';historyFixture.doc.emit('game-language-change');assert(historyFixture.modal.innerHTML.includes('一覧へ戻る'));
+ assert(historyFixture.modal.emit('cancel').defaultPrevented,'Escape returns from details to the list');
+ assert.deepEqual(visibleHistoryIds(historyFixture.modal),[1]);assert.equal(historyFixture.modal.focused,'data-event-history-entry="1"');
+ assert.equal(JSON.stringify(historyView),historyBytes);
+ const nextHistoryView=view([...recent,row(9)]);historyFixture.events.observe(nextHistoryView);historyFixture.drain();
+ assert.deepEqual(historyFixture.events.snapshot().pending,[[9]],'A pending campaign notification waits beside read-only history');
+ historyFixture.modal.querySelector('[data-event-history-close]').onclick();historyFixture.drain();
+ assert.deepEqual(historyFixture.events.snapshot().active,[9]);historyFixture.events.dispose();
  assert.deepEqual(groupRows([row(1,'officer_appeared'),row(2,'officer_appeared'),row(3,'officer_death'),row(4,'officer_death',{turn:2})]).map(g=>g.length),[2,1,1]);
  const facilityRows=[
   row(1,'town_developed',{details:{actor:'person-a',from_town:1,to_town:2,gold:200}}),
@@ -465,15 +498,15 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
   assert(visual.modal.innerHTML.includes('原版の挿絵'));assert.deepEqual(visual.events.snapshot(),cursor);
   assert(!visual.modal.innerHTML.includes('尚待核實'));assert(!visual.modal.innerHTML.includes('本作での転用'));
   visual.modal.querySelector('[data-event-next]').onclick();visual.events.observe(state);visual.drain();assert(!visual.modal.open,'Acknowledged art does not repeat');
-  assert(visual.events.history());visual.drain();assert(visual.modal.innerHTML.includes(`data-original-scene="${id}"`));
-  visual.modal.querySelector('[data-event-next]').onclick();assert.equal(JSON.stringify(state),bytes,'Display, locale, acknowledgement and replay preserve resources and RNG');visual.events.dispose();
+  assert(visual.events.history());visual.drain();selectHistory(visual.modal,event.id);assert(visual.modal.innerHTML.includes(`data-original-scene="${id}"`));
+  visual.modal.querySelector('[data-event-history-back]').onclick();assert.equal(JSON.stringify(state),bytes,'Display, locale, acknowledgement and replay preserve resources and RNG');visual.events.dispose();
  }
  assert(artCalls.every(([,locale,className])=>['zh-Hant','ja'].includes(locale)&&className==='event-original-scene'));
  const aiArt={...facilityRows[4],id:9,factions:['wei']},batchedArt=view([facilityRows[3],{...facilityRows[3],id:8},aiArt]),batchedVisual=fixture([],{originalUI});
  const batchBytes=JSON.stringify(batchedArt);batchedVisual.setView(batchedArt);batchedVisual.events.observe(batchedArt,{newGame:true});batchedVisual.drain();
  assert.deepEqual(batchedVisual.events.snapshot().active,[4,8]);assert.deepEqual(batchedVisual.events.snapshot().pending,[]);assert(batchedVisual.modal.innerHTML.includes('共2項'));
  assert.equal((batchedVisual.modal.innerHTML.match(/data-original-scene=/g)||[]).length,1,'Same-kind batches retain a single scene');
- batchedVisual.modal.querySelector('[data-event-next]').onclick();assert(batchedVisual.events.history());batchedVisual.drain();batchedVisual.modal.querySelector('[data-event-next]').onclick();assert(batchedVisual.modal.innerHTML.includes('data-original-scene="armory"'),'AI history uses the same scene mapping');
+ batchedVisual.modal.querySelector('[data-event-next]').onclick();assert(batchedVisual.events.history());batchedVisual.drain();selectHistory(batchedVisual.modal,9);assert(batchedVisual.modal.innerHTML.includes('data-original-scene="armory"'),'AI history uses the same scene mapping');
  assert.equal(JSON.stringify(batchedArt),batchBytes);batchedVisual.events.dispose();
  for(const missing of [undefined,{}, {scene:()=>''}]){
   const fallback=fixture([facilityRows[4]],{originalUI:missing});fallback.events.observe(view([facilityRows[4]]),{newGame:true});fallback.drain();assertScene(fallback.modal.innerHTML,'equipment-bought');fallback.events.dispose();

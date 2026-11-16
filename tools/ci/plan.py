@@ -8,6 +8,7 @@ Main pushes never use event.before or HEAD^ as a deployment baseline.
 from __future__ import annotations
 
 import argparse
+import ast
 from copy import deepcopy
 import hashlib
 import json
@@ -19,12 +20,13 @@ import sys
 
 SCHEMA = 'tk2-test-plan-v1'
 GROUPS = ('boot', 'audio', 'map', 'scenarios', 'people', 'economy',
-          'logistics', 'battle', 'cloud', 'save', 'portraits')
+          'logistics', 'battle', 'cloud', 'save', 'portraits', 'event-scenes')
 BASE_GROUPS = {'boot', 'cloud'}
 INDEX = 'game/config/campaigns/index.json'
 SCENARIO = re.compile(r'game/config/campaigns/scenarios/([0-9]{3})-([0-9]{2})(?:-([a-z][a-z0-9]*(?:-[a-z0-9]+)*))?\.json\Z')
 CATALOG = re.compile(r'game/data/campaigns/([^/]+)\.json\Z')
 SHA = re.compile(r'[a-f0-9]{40}\Z')
+EVENT_SCENE = re.compile(r'game/assets/event-scenes/([a-z0-9]+(?:-[a-z0-9]+)*)\.webp\Z')
 UI = {
     'loading-cover': {'boot', 'audio'}, 'audio': {'boot', 'audio'},
     'browser-engine': set(GROUPS), 'browser-engine-worker': set(GROUPS),
@@ -87,8 +89,10 @@ PRESENTATION_TESTS = {
 PORTRAIT_CONFIG = 'game/config/portrait-white.json'
 PORTRAIT_LEDGER = 'tools/portraits/white-individual-redraws.json'
 PORTRAIT_INDEX = 'game/assets/portraits/index.json'
+PORTRAIT_THUMBNAILS = 'game/config/portrait-thumbnails.json'
 PORTRAIT_RELEASE_PNG = re.compile(
     r'game/assets/portraits/(?:white|refined|enhanced)/[a-z0-9-]{1,128}\.png\Z')
+PORTRAIT_THUMB = re.compile(r'game/assets/portraits/thumb/[a-z0-9-]{1,128}\.webp\Z')
 PORTRAIT_STUDY = re.compile(
     r'art/portraits/hd-samples/zhuge-liang-(?:preserved-)?v[1-9][0-9]*/'
     r'(?:build\.cjs|comparison\.(?:html|png)|manifest\.json|prompt\.txt|'
@@ -210,6 +214,30 @@ def docs_path(path):
                 or path in (SOLDIER_COMBAT_README, 'tools/battle-enhancement/README.md'))
 
 
+def event_scene_replacements(repo, base, head, rows):
+    """Select registered, in-place replacements of regular image files."""
+    candidates = {paths[0] for status, paths in rows if status == 'M' and EVENT_SCENE.fullmatch(paths[0])}
+    if not candidates:
+        return set()
+    server = blob(repo, base, 'game/serve.py')
+    if server != blob(repo, head, 'game/serve.py'):
+        return set()
+    tree = ast.parse(server)
+    declarations = [node.value for node in tree.body if isinstance(node, ast.Assign)
+                    and any(isinstance(target, ast.Name) and target.id == 'EVENT_SCENE_IDS' for target in node.targets)]
+    if len(declarations) != 1:
+        return set()
+    ids = ast.literal_eval(declarations[0])
+    if not isinstance(ids, tuple) or any(not isinstance(name, str) for name in ids) or len(set(ids)) != len(ids):
+        return set()
+    registered = {f'game/assets/event-scenes/{name}.webp' for name in ids}
+    for revision in (base, head):
+        entries = git(repo, 'ls-tree', '-rz', revision, '--', 'game/assets/event-scenes').split(b'\0')
+        regular = {row.split(b'\t', 1)[1].decode() for row in entries if row.startswith(b'100644 blob ')}
+        candidates &= regular
+    return candidates & registered
+
+
 def stripped(data, *paths):
     value = deepcopy(data)
     for path in paths:
@@ -289,8 +317,9 @@ def portrait_study(path):
 
 
 def portrait_input(path):
-    return (path in (PORTRAIT_CONFIG, PORTRAIT_LEDGER, PORTRAIT_INDEX)
-            or PORTRAIT_RELEASE_PNG.fullmatch(path) is not None or portrait_study(path))
+    return (path in (PORTRAIT_CONFIG, PORTRAIT_LEDGER, PORTRAIT_INDEX, PORTRAIT_THUMBNAILS)
+            or PORTRAIT_RELEASE_PNG.fullmatch(path) is not None
+            or PORTRAIT_THUMB.fullmatch(path) is not None or portrait_study(path))
 
 
 def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
@@ -358,6 +387,7 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
                 full = True
                 reasons.append('Local scenario overrides shared board or rule contracts: ' + path)
         portrait_only = all(docs_path(path) or portrait_input(path) for path in changed)
+        scene_replacements = event_scene_replacements(repo, resolved_base, resolved_head, rows)
         derived_catalogs = []
         for path in changed:
             if docs_path(path):
@@ -477,6 +507,9 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
             elif path.startswith('game/assets/audio/'):
                 groups.update(('boot', 'audio'))
                 reasons.append('Original audio asset: ' + path)
+            elif path in scene_replacements:
+                groups.add('event-scenes')
+                reasons.append('Registered event backdrop replacement: ' + path)
             elif path.startswith(('game/assets/battle-', 'game/assets/duel-')):
                 groups.update(('battle', 'people'))
                 reasons.append('Battle artwork: ' + path)
@@ -489,7 +522,8 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
             elif path in DERIVED_REPORTS:
                 groups.add('scenarios')
                 reasons.append('Generated scenario audit; retain global report consistency checks')
-            elif path == 'tests/browser_resupply.spec.mjs' or path == 'tests/browser_resupply_fixture.py':
+            elif path in ('tests/browser_resupply.spec.mjs', 'tests/browser_resupply_fixture.py',
+                          'tests/browser_march_supply_fixture.py'):
                 groups.add('logistics')
                 resupply = True
             elif path in ('tests/browser_soldier_ui.spec.mjs', 'tests/browser_soldier_fixture.py'):
@@ -535,7 +569,7 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
             # Compatibility fixtures use217 even when its identity changed only
             # transitively; a zero-ID backend plan would accidentally omit it.
             selected.add('mainland217-07') if 'mainland217-07' in head_map.values() else selected.update(head_map.values())
-    except (Uncertain, OSError, subprocess.SubprocessError, ValueError, TypeError, KeyError, AttributeError, IndexError) as error:
+    except (Uncertain, OSError, subprocess.SubprocessError, ValueError, TypeError, KeyError, AttributeError, IndexError, SyntaxError) as error:
         full = True
         reasons.append('Fail closed: ' + str(error))
     affected = sorted(selected)
@@ -573,6 +607,8 @@ def make_plan(repo, base, head='HEAD', *, event_name='local', event=None,
     python_scope = ['global', 'scenarios', 'compat'] if native else ['global']
     if portrait_checks:
         python_scope.append('portraits')
+    if 'event-scenes' in groups:
+        python_scope.append('event-scenes')
     return dict(schema=SCHEMA, head=resolved_head, base=resolved_base,
                 mode='full' if full else 'scoped', full=full, docs_only=False,
                 web=True, native=native, rules=full, soak=full, resupply=resupply,

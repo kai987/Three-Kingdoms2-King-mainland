@@ -19,7 +19,8 @@ TESTS = ROOT / 'tests'
 SOURCE = ROOT / 'source'
 REGISTRY = ROOT / 'tools/ci/test-groups.json'
 DURATIONS = ROOT / 'tools/ci/campaign-durations.json'
-GROUPS = frozenset(('boot', 'audio', 'map', 'scenarios', 'people', 'economy', 'logistics', 'battle', 'cloud', 'save', 'portraits'))
+GROUPS = frozenset(('boot', 'audio', 'map', 'scenarios', 'people', 'economy', 'logistics', 'battle', 'cloud', 'save', 'portraits',
+                    'event-scenes'))
 TIERS = frozenset(('global', 'related', 'compatibility', 'full'))
 SHARD_COUNT = 6
 BACKENDS = ('python', 'rust')

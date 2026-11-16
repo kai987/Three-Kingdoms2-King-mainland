@@ -209,6 +209,11 @@
   historical_nanzhong:[2,2,3],historical_liaodong:[2,3,2],
   ...Object.fromEntries(Object.entries(CHAPTER_TEXT).map(([kind,chapter])=>[kind,chapter.counts]))
  });
+ const MILESTONES=new Set([...Object.keys(HISTORICAL_CAMPAIGNS),...Object.keys(THREE_VISITS)]);
+ const HISTORICAL=new Set([...MILESTONES,...FOUNDINGS,...COUPS]);
+ const BATTLE_HISTORY=new Set(['battle_started','battle_result','battle_supply_exhausted','city_captured',
+  'duel_started','duel_result','tactic','ai_campaign','march_weather','march_arrived','march_returned','route_discovered',...SUPPLY]);
+ const HISTORY_FILTERS={all:['全部','すべて'],own:['本方勢力','自勢力'],historical:['史實','史実'],battle:['戰鬥・行軍','戦闘・行軍']};
  const WORLD=new Set(['campaign_start','officer_appeared','officer_death','succession','faction_ended','faction_founded','faction_founding_skipped','faction_coup','faction_coup_skipped',...Object.keys(HISTORICAL_CAMPAIGNS),'city_founded','city_upgraded','city_renamed','city_captured','new_year','campaign_victory','campaign_defeat']);
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const clone=value=>JSON.parse(JSON.stringify(value));
@@ -411,6 +416,14 @@
   const rows=view?.game?.extension?.events?.items,cityCount=view?.catalog?.cities?.length;
   return Array.isArray(rows)?rows.filter(row=>validEvent(row,cityCount)).sort((a,b)=>a.id-b.id):[];
  }
+ function historyRows(view){
+  const rows=new Map(eventRows(view).map(row=>[row.id,row]));
+  const milestones=view?.game?.extension?.events?.milestones;
+  if(Array.isArray(milestones))for(const row of milestones){
+   if(MILESTONES.has(row?.kind)&&!rows.has(row.id)&&validEvent(row,view?.catalog?.cities?.length))rows.set(row.id,row);
+  }
+  return [...rows.values()].sort((a,b)=>b.id-a.id);
+ }
  function automatic(row,player,inlineBattle=false){
   if(player==='observer')return Object.hasOwn(HISTORICAL_CAMPAIGNS,row.kind)||['campaign_victory','campaign_defeat'].includes(row.kind);
   if(row.kind==='tactic'&&inlineBattle)return false;
@@ -429,18 +442,19 @@
   const i18n=options.i18n||root.GameI18n,portraits=options.portraits||root.GamePortraits;
   const schedule=options.schedule||(fn=>root.setTimeout(fn,0)),getView=options.getView||(()=>null),isBusy=options.isBusy||(()=>false),isPreview=options.isPreview||(()=>false);
   let key=null,cursor=0,queue=[],active=null,historyMode=false,view=null,scheduled=false,portraitAttempted=false,shown=0,total=0,disposed=false;
+  let historyFilter='all',historyRow=null,historyScroll=0;
   const locale=()=>i18n?.locale==='ja'?'ja':'zh-Hant',text=(tc,ja)=>locale()==='ja'?ja:tc;
   const label=value=>i18n?.t?i18n.t(String(value??''),locale()):String(value??'');
   function refreshHistoryLabel(){const button=doc?.querySelector?.('#event-history');if(button){button.textContent=text('事件回顧','出来事の記録');button.setAttribute('data-l10n-native',locale());}}
-  function names(row){
-   const catalog=view?.catalog||{},people=new Map((catalog.library||[]).map(p=>[p.person_id,p.name]));
+  function names(row,includePeople=true){
+   const catalog=view?.catalog||{},people=includePeople?new Map((catalog.library||[]).map(p=>[p.person_id,p.name])):null;
    const personName=id=>{const current=Object.entries(view?.game?.officers||{}).find(([,person])=>person.person_id===id);return people.get(id)||(current&&catalog.names?.[current[0]])||text('未具名武將','名前未設定の武将');};
    const monthIndex=([year,month])=>year*12+month,date=monthIndex([row.year,row.month]);
    const cityName=id=>{
     const period=catalog.city_history?.[id]?.names?.find(p=>date>=monthIndex(p.from_date||[p.start??1,1])&&date<=monthIndex(p.to_date||[p.end??9999,12]));
     return period?.name||catalog.cities?.find(c=>c.id===id)?.name||text('未知城池','不明な都市');
    };
-   return {people:row.person_ids.map(id=>label(personName(id))),cities:row.city_ids.map(id=>label(cityName(id))),
+   return {people:includePeople?row.person_ids.map(id=>label(personName(id))):[],cities:row.city_ids.map(id=>label(cityName(id))),
     factions:row.factions.map(id=>{const faction=catalog.factions?.find(f=>f.id===id)||catalog.scheduled_factions?.find(f=>f.id===id);return label(faction?.display_name||faction?.name||(id==='neutral'?text('無主','空白都市'):text('未具名勢力','名前未設定の勢力')));})};
   }
   function description(row){
@@ -716,13 +730,32 @@
    }
    return `<div class="event-art event-art-scene">${backdrop}${people?`<div class="event-people">${people}</div>`:''}</div>`;
   }
-  function render(){
-   if(!active||!modal||disposed)return;
-   const row=active[0],period={1:'上旬',11:'中旬',21:'下旬'}[row.day],count=active.length>1?text(` · 共${active.length}項`,` · ${active.length}件`):'',cities=[...new Set(active.flatMap(e=>names(e).cities))].join(text('、','・'));
+  function eventTitle(row){
+   return row.kind==='tactic'&&row.details.qimen_phase==='daily'?text('奇門日界效果','奇門の日界効果'):text(...KINDS[row.kind]);
+  }
+  function eventDate(row){return `${row.year}年${row.month}月${{1:'上旬',11:'中旬',21:'下旬'}[row.day]}`;}
+  function languagePicker(){
+   return `<label class="language-picker">${text('語言','言語')}<select data-language-picker aria-label="${text('切換語言','言語切替')}"><option value="zh-Hant" ${locale()==='zh-Hant'?'selected':''}>繁體中文</option><option value="ja" ${locale()==='ja'?'selected':''}>日本語</option></select></label>`;
+  }
+  function show(selector){
+   if(!modal.open)modal.showModal();
+   modal.querySelector(selector)?.focus({preventScroll:true});
+  }
+  function render(rows=active){
+   if(!rows||!modal||disposed)return;
+   const row=rows[0],count=rows.length>1?text(` · 共${rows.length}項`,` · ${rows.length}件`):'',cities=[...new Set(rows.flatMap(e=>names(e,false).cities))].join(text('、','・'));
    const dialogue=options.dialogue||root.GameDialogue,progress=view?.catalog?.three_visits;
    const visit=options.onVisit&&!historyMode&&row.kind==='historical_three_visits'&&progress?.can_visit&&progress.next_visit===1
     ? `<button class="primary" data-event-visit autofocus>${text('前往隆中拜訪','隆中へ訪ねる')}</button>` : '';
-   modal.innerHTML=`<div data-event-root data-event-kind="${row.kind}" data-l10n-native="${locale()}"><div class="event-heading"><div><p class="event-kicker">${escape(historyMode?text('事件回顧','出来事の記録'):text('戰役事件','戦役の出来事'))} · ${shown}/${total}</p><h2 id="event-title">${escape(row.kind==='tactic'&&row.details.qimen_phase==='daily'?text('奇門日界效果','奇門の日界効果'):KINDS[row.kind][locale()==='ja'?1:0])}${escape(count)}</h2></div><label class="language-picker">${text('語言','言語')}<select data-language-picker aria-label="${text('切換語言','言語切替')}"><option value="zh-Hant" ${locale()==='zh-Hant'?'selected':''}>繁體中文</option><option value="ja" ${locale()==='ja'?'selected':''}>日本語</option></select></label></div><p class="event-date">${row.year}年${row.month}月${period}${cities?`<span class="event-location"> · ${escape(cities)}</span>`:''}</p>${illustration(active)}<div id="event-description" class="event-description">${active.map(e=>`${relocationEffects(e)}${dialogue?.html&&dialogue?.event?dialogue.html(dialogue.event(e,view,locale(),i18n),{language:locale(),portraits}):''}<p class="event-facts">${escape(description(e))}</p>${historicalIntroduction(e)}`).join('')}</div><div class="dialog-actions event-actions">${visit}${queue.length?`<button data-event-skip>${text('略過本批','この一括表示を終了')}</button>`:''}<button data-event-next${visit?'':' class="primary" autofocus'}>${queue.length?text('下一則','次へ'):text('返回戰役','戦役に戻る')}</button></div></div>`;
+   const kicker=historyMode?text('事件回顧','出来事の記録'):`${text('戰役事件','戦役の出来事')} · ${shown}/${total}`;
+   const actions=historyMode?`<button type="button" class="primary" data-event-history-back>${text('返回事件列表','一覧へ戻る')}</button>`:
+    `${visit}${queue.length?`<button data-event-skip>${text('略過本批','この一括表示を終了')}</button>`:''}<button data-event-next${visit?'':' class="primary" autofocus'}>${queue.length?text('下一則','次へ'):text('返回戰役','戦役に戻る')}</button>`;
+   modal.innerHTML=`<div data-event-root data-event-kind="${row.kind}" data-l10n-native="${locale()}"><div class="event-heading"><div><p class="event-kicker">${escape(kicker)}</p><h2 id="event-title">${escape(eventTitle(row))}${escape(count)}</h2></div>${languagePicker()}</div><p class="event-date">${eventDate(row)}${cities?`<span class="event-location"> · ${escape(cities)}</span>`:''}</p>${illustration(rows)}<div id="event-description" class="event-description">${rows.map(e=>`${relocationEffects(e)}${dialogue?.html&&dialogue?.event?dialogue.html(dialogue.event(e,view,locale(),i18n),{language:locale(),portraits}):''}<p class="event-facts">${escape(description(e))}</p>${historicalIntroduction(e)}`).join('')}</div><div class="dialog-actions event-actions">${actions}</div></div>`;
+   if(historyMode){
+    const back=modal.querySelector('[data-event-history-back]');
+    if(back)back.onclick=backToHistory;
+    show('[data-event-history-back]');return;
+   }
    modal.querySelector('[data-event-next]').onclick=advance;
    if(visit){
     const button=modal.querySelector('[data-event-visit]'),group=active;
@@ -734,19 +767,52 @@
     };
    }
    const skip=modal.querySelector('[data-event-skip]');if(skip)skip.onclick=clear;
-   if(!modal.open)modal.showModal();
-   modal.querySelector(visit?'[data-event-visit]':'[data-event-next]')?.focus({preventScroll:true});
+   show(visit?'[data-event-visit]':'[data-event-next]');
+  }
+  function renderHistory(focus='[data-event-history-filter]'){
+   const player=view?.game?.player,hasFaction=!!player&&player!=='observer';
+   const filters=Object.entries(HISTORY_FILTERS).filter(([id])=>id!=='own'||hasFaction);
+   const rows=historyRows(view).filter(row=>{
+    if(historyFilter==='own')return row.factions.includes(player);
+    if(historyFilter==='historical')return HISTORICAL.has(row.kind);
+    if(historyFilter==='battle')return BATTLE_HISTORY.has(row.kind);
+    return true;
+   });
+   const entries=rows.map(row=>{
+    const {cities,factions}=names(row,false),context=[cities.join(' → '),factions.join(text('、','・'))].filter(Boolean).join(' · ');
+    return `<li><button type="button" data-event-history-entry="${row.id}"><span class="event-history-entry-title">${escape(eventTitle(row))}</span><span class="event-history-entry-context">${eventDate(row)}${context?` · ${escape(context)}`:''}</span></button></li>`;
+   }).join('');
+   modal.innerHTML=`<div data-event-root data-event-history-list data-l10n-native="${locale()}"><div class="event-heading"><h2 id="event-title">${text('事件回顧','出来事の記録')}</h2>${languagePicker()}</div><div class="event-history-tools"><label class="event-history-filter">${text('篩選','絞り込み')}<select data-event-history-filter>${filters.map(([id,caption])=>`<option value="${id}"${id===historyFilter?' selected':''}>${text(...caption)}</option>`).join('')}</select></label><button type="button" data-event-history-close>${text('返回戰役','戦役に戻る')}</button></div>${entries?`<ul class="event-history-entries">${entries}</ul>`:`<p class="event-history-empty" role="status">${text('沒有符合條件的事件。','該当する出来事はありません。')}</p>`}</div>`;
+   const close=modal.querySelector('[data-event-history-close]'),filter=modal.querySelector('[data-event-history-filter]');
+   if(close)close.onclick=closeModal;
+   if(filter)filter.onchange=({target})=>{
+    if(!filters.some(([id])=>id===target.value))return;
+    historyFilter=target.value;historyScroll=0;renderHistory();
+   };
+   for(const row of rows){
+    const button=modal.querySelector(`[data-event-history-entry="${row.id}"]`);
+    if(button)button.onclick=()=>{
+     historyScroll=modal.scrollTop;historyRow=row;
+     if(portraits?.load&&!portraitAttempted){portraitAttempted=true;portraits.load();}
+     render([row]);modal.scrollTop=0;
+    };
+   }
+   show(focus);modal.scrollTop=historyScroll;
+  }
+  function backToHistory(){
+   const focus=`[data-event-history-entry="${historyRow.id}"]`;
+   historyRow=null;renderHistory(focus);
   }
   function blocked(){return !modal||disposed||isBusy()||isPreview()||parent?.open;}
   function pump(){
-   scheduled=false;if(active||!queue.length||blocked())return false;
+   scheduled=false;if(active||historyMode||!queue.length||blocked())return false;
    if(portraits?.load&&!portraitAttempted){portraitAttempted=true;Promise.resolve(portraits.load()).then(requestPump,requestPump);return false;}
    active=queue.shift();shown++;render();return true;
   }
   function requestPump(){if(disposed||scheduled)return;scheduled=true;schedule(pump);}
   function closeModal(){if(modal?.open)modal.close();}
-  function advance(){if(queue.length){active=queue.shift();shown++;render();}else{active=null;historyMode=false;closeModal();}}
-  function clear(){queue=[];active=null;historyMode=false;closeModal();}
+  function advance(){if(queue.length){active=queue.shift();shown++;render();}else{active=null;closeModal();}}
+  function clear(){queue=[];active=null;historyMode=false;historyRow=null;closeModal();}
   function observe(next,{baseline=false,newGame=false}={}){
    const nextKey=campaignKey(next),rows=eventRows(next),latest=rows.at(-1)?.id||0;view=next;refreshHistoryLabel();
    if(baseline||!nextKey||key!==nextKey||latest<cursor||newGame){clear();key=nextKey;cursor=newGame?0:latest;shown=0;total=0;}
@@ -758,14 +824,27 @@
   }
   function history(){
    if(blocked()||modal?.open)return false;
-   view=getView()||view;const rows=eventRows(view);if(!rows.length)return false;
-   clear();queue=groupRows(clone(rows));historyMode=true;shown=0;total=queue.length;requestPump();return true;
+   view=getView()||view;if(!historyRows(view).length)return false;
+   historyMode=true;historyFilter='all';historyRow=null;historyScroll=0;renderHistory();return true;
   }
-  function onCancel(){queue=[];active=null;historyMode=false;}
+  function onCancel(event){
+   if(historyMode){if(historyRow){event.preventDefault();backToHistory();}return;}
+   queue=[];active=null;
+  }
   // Native close events are dispatched later. A previous close must not erase
   // a fresh history/new-game queue created before that event reaches us.
-  function onClose(){if(modal?.open)return;if(active){active=null;queue=[];historyMode=false;}requestPump();}
-  function onLanguage(){refreshHistoryLabel();if(active&&modal?.open)render();}
+  function onClose(){
+   if(modal?.open)return;
+   if(historyMode){historyMode=false;historyRow=null;doc?.querySelector?.('#event-history')?.focus?.();}
+   else if(active){active=null;queue=[];}
+   requestPump();
+  }
+  function onLanguage(){
+   refreshHistoryLabel();if(!modal?.open)return;
+   if(historyMode&&!historyRow){historyScroll=modal.scrollTop;renderHistory('[data-language-picker]');}
+   else if(historyRow){render([historyRow]);modal.querySelector('[data-language-picker]')?.focus({preventScroll:true});}
+   else if(active)render();
+  }
   modal?.addEventListener?.('cancel',onCancel);modal?.addEventListener?.('close',onClose);
   parent?.addEventListener?.('close',requestPump);doc?.addEventListener?.('game-language-change',onLanguage);
   refreshHistoryLabel();
@@ -774,5 +853,5 @@
    dispose(){clear();disposed=true;modal?.removeEventListener?.('cancel',onCancel);modal?.removeEventListener?.('close',onClose);parent?.removeEventListener?.('close',requestPump);doc?.removeEventListener?.('game-language-change',onLanguage);}
   });
  }
- if(typeof module==='object'&&module.exports)module.exports={create,validEvent,eventRows,campaignKey,groupRows,KINDS,sceneForEvent};else root.GameEvents={create};
+ if(typeof module==='object'&&module.exports)module.exports={create,validEvent,eventRows,historyRows,campaignKey,groupRows,KINDS,sceneForEvent};else root.GameEvents={create};
 })(typeof window==='object'?window:globalThis);

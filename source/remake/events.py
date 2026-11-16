@@ -12,6 +12,7 @@ from .dated_events import FOUNDING_TROOP_TARGET
 from .officers import OFFICER_TROOP_CAP, ref_sort_key, is_generated_ref
 
 LIMIT = 100
+MILESTONE_KINDS = frozenset((*historical_campaigns.EVENT_FACTIONS, *three_visits.STAGES))
 STAFF_KINDS = {'staff_candidate', 'staff_hired', 'staff_declined', 'staff_expired',
                'staff_salary', 'staff_allegiance'}
 STAFF_DETAILS = {'staff_id', 'name', 'portrait', 'reason', 'amount', 'paid', 'bonus', 'counts'}
@@ -428,8 +429,12 @@ def emit(campaign, state, kind, *, person_ids=(), city_ids=(), factions=(), deta
         day=state.day, turn=state.turn, person_ids=list(dict.fromkeys(person_ids)),
         city_ids=list(dict.fromkeys(city_ids)), factions=list(dict.fromkeys(factions)),
         details=deepcopy(details or {}), audience=audience)
-    events['items'].append(row)
-    events['items'][:] = events['items'][-LIMIT:]
+    recent = events['items']
+    recent.append(row)
+    if len(recent) > LIMIT:
+        expired = recent.pop(0)
+        if expired['kind'] in MILESTONE_KINDS:
+            events.setdefault('milestones', []).append(expired)
     events['next_id'] += 1
     return row
 
@@ -538,16 +543,19 @@ def transition(campaign, before, after, kind, payload):
 
 def validate(campaign, state):
     events = state.extension['events']
-    if not isinstance(events, dict) or set(events) != {'next_id', 'items'}:
+    if not isinstance(events, dict) or set(events) - {'milestones'} != {'next_id', 'items'}:
         raise ValueError('Campaign event fields')
     if type(events['next_id']) is not int or events['next_id'] < 1:
         raise ValueError('Campaign event counter')
     rows = events['items']
     if not isinstance(rows, list) or len(rows) > LIMIT:
         raise ValueError('Campaign event bound')
+    milestones = events.get('milestones', [])
+    if not isinstance(milestones, list) or len(milestones) > len(MILESTONE_KINDS):
+        raise ValueError('Campaign milestone bound')
     ids = []
     fields = {'id', 'kind', 'year', 'month', 'day', 'turn', 'person_ids', 'city_ids', 'factions', 'details', 'audience'}
-    for row in rows:
+    for row in [*milestones, *rows]:
         if not isinstance(row, dict) or set(row) != fields or row['kind'] not in DETAILS:
             raise ValueError('Campaign event identity')
         ident = row['id']
@@ -685,5 +693,10 @@ def validate(campaign, state):
                     raise ValueError('Domestic/transport event value')
             if not row['city_ids'] or len(row['factions'])!=1:
                 raise ValueError('Domestic/transport event references')
-    if ids != sorted(set(ids)) or ids and ids != list(range(events['next_id']-len(ids), events['next_id'])):
+    recent_ids = ids[len(milestones):]
+    if ids != sorted(set(ids)) or recent_ids != list(range(events['next_id']-len(rows), events['next_id'])):
         raise ValueError('Campaign event sequence')
+    kinds = [row['kind'] for row in [*milestones, *rows] if row['kind'] in MILESTONE_KINDS]
+    if (any(row['kind'] not in MILESTONE_KINDS for row in milestones)
+            or len(kinds) != len(set(kinds)) or milestones and len(rows) != LIMIT):
+        raise ValueError('Campaign milestone sequence')

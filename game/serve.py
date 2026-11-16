@@ -452,7 +452,7 @@ class GameHTTPServer(ThreadingHTTPServer):
 def portrait_static_assets(here=HERE):
     """Register exact presentation URLs, never a browsable asset directory.
 
-    The deployed index fixes the PNG allowlist for this server process. A missing
+    The deployed index fixes the portrait allowlist for this server process. A missing
     or malformed index leaves the frontend's explicit missing-portrait fallback.
     Neither build evidence nor original ROM inputs are exposed.
     """
@@ -495,6 +495,11 @@ def portrait_static_assets(here=HERE):
                     break
                 continue
             static[expected] = (expected.lstrip('/'), 'image/png')
+            if kind == 'white' and re.fullmatch(r'[a-z0-9-]{1,128}', person_id):
+                thumbnail = f'assets/portraits/thumb/{person_id}.webp'
+                small = root / thumbnail
+                if not small.parent.is_symlink() and not small.is_symlink() and small.is_file():
+                    static['/' + thumbnail] = (thumbnail, 'image/webp')
     return static
 
 

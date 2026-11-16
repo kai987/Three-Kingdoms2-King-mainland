@@ -1,4 +1,4 @@
-"""Portrait routes expose only exact index-listed PNGs and public UI assets."""
+"""Portrait routes expose only approved identity-bound images and UI assets."""
 import importlib.util
 import json
 from pathlib import Path
@@ -9,16 +9,69 @@ ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('tk2_game_serve', ROOT / 'game/serve.py')
 serve = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(serve)
+thumb_spec = importlib.util.spec_from_file_location('tk2_portrait_thumbs', ROOT / 'game/build_portrait_thumbnails.py')
+thumbs = importlib.util.module_from_spec(thumb_spec)
+thumb_spec.loader.exec_module(thumbs)
 
 
 class PortraitStaticTests(unittest.TestCase):
     def prepare(self, directory, people):
         here = Path(directory) / 'game'
         base = here / 'assets/portraits'
-        for folder in ('original', 'generated', 'enhanced', 'refined', 'white', 'evidence'):
+        for folder in ('original', 'generated', 'enhanced', 'refined', 'white', 'evidence', 'thumb'):
             (base / folder).mkdir(parents=True)
         (base / 'index.json').write_text(json.dumps(dict(schema='tk2-portraits-v1', people=people)))
         return here, base
+
+    def test_compact_portrait_is_exactly_bound_to_an_indexed_white_portrait(self):
+        native, enhanced, white = ('/assets/portraits/original/000.png',
+                                  '/assets/portraits/enhanced/person-1.png',
+                                  '/assets/portraits/white/person-1.png')
+        row = dict(path=native, white=dict(path=white, width=512, height=640),
+                   enhanced=dict(path=enhanced, width=128, height=160))
+        url = '/assets/portraits/thumb/person-1.webp'
+        with tempfile.TemporaryDirectory() as directory:
+            here, base = self.prepare(directory, {'person-1': row})
+            (base / 'thumb/person-2.webp').write_bytes(b'unlisted')
+            self.assertNotIn(url, serve.portrait_static_assets(here))
+            target = base / 'thumb/person-1.webp'
+            target.symlink_to(base / 'thumb/person-2.webp')
+            self.assertNotIn(url, serve.portrait_static_assets(here))
+            target.unlink()
+            target.write_bytes(b'thumbnail fixture')
+            assets = serve.portrait_static_assets(here)
+            self.assertEqual(assets[url], (url.lstrip('/'), 'image/webp'))
+            self.assertNotIn('/assets/portraits/thumb/person-2.webp', assets)
+            self.assertEqual(serve.static_file_bytes(here, assets[url][0]), b'thumbnail fixture')
+            row['white']['path'] = '/assets/portraits/white/person-2.png'
+            (base / 'index.json').write_text(json.dumps(dict(schema='tk2-portraits-v1', people={'person-1': row})))
+            self.assertNotIn(url, serve.portrait_static_assets(here))
+
+    def test_thumbnail_release_check_requires_the_approved_source_and_exact_webp(self):
+        person_id = 'historical-beigong-boyu'
+        portrait_dir = ROOT / 'game/assets/portraits'
+        source = (portrait_dir / f'white/{person_id}.png').read_bytes()
+        thumbnail = (portrait_dir / f'thumb/{person_id}.webp').read_bytes()
+        self.assertTrue(thumbs.valid_thumbnail(thumbnail))
+        self.assertLess(len(thumbnail), len(source) // 3)
+        index = json.loads((portrait_dir / 'index.json').read_bytes())
+        with tempfile.TemporaryDirectory() as directory:
+            here, base = self.prepare(directory, {person_id: index['people'][person_id]})
+            (base / f'white/{person_id}.png').write_bytes(source)
+            path = base / f'thumb/{person_id}.webp'
+            path.write_bytes(thumbnail)
+            manifest = json.loads((ROOT / 'game' / thumbs.MANIFEST).read_bytes())
+            manifest['people'] = {person_id: manifest['people'][person_id]}
+            (here / 'config').mkdir()
+            (here / thumbs.MANIFEST).write_text(json.dumps(manifest))
+            self.assertEqual(thumbs.build(here, check=True),
+                             dict(portraits=1, source_bytes=len(source), thumbnail_bytes=len(thumbnail)))
+            (base / f'white/{person_id}.png').write_bytes(source + b'changed')
+            with self.assertRaisesRegex(ValueError, 'manifest or inventory is stale'):
+                thumbs.build(here, check=True)
+            path.unlink()
+            with self.assertRaises(FileNotFoundError):
+                thumbs.build(here, check=True)
 
     def test_only_exact_manifest_pngs_join_allowlist(self):
         with tempfile.TemporaryDirectory() as directory:

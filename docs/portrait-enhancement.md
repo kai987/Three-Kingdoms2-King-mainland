@@ -78,7 +78,17 @@ python3 -B -m unittest discover -s tests -p test_remake_retainer_portraits.py
 
 名鑑的1,056名武將都有獨立的512×640白底版。黑底圖集按人物綁定的原始分格重新取樣，使用原始圖集的輪廓與墨線，結合同一人物增強版的面部和服飾色階。去底時用相鄰行的輪廓補合短缺口，再以有限色盤細化斜邊。原版及追加素材沿用各自的底稿，以同樣的輪廓規則保留透明黑所代表的墨線。白底版另存於`game/assets/portraits/white/`。[白底版來源與檔案雜湊](../game/config/portrait-white.json)
 
-遊戲優先載入白底版，缺圖時依序使用同一人物保留的512×640細化版、128×160增強版和32×40原圖。未綁定武將的原版歸檔也保留。以`node tools/portraits/build_white.cjs`重建批次，接著執行`python3 -B game/build_portrait_manifest.py`更新遊戲索引。批次工具直接讀取隨遊戲保留的個別重繪稿。
+武將名冊和名鑑列表使用白底版縮製的128×160無損WebP。人物詳情和戰鬥畫面優先載入512×640白底版。縮圖載入失敗會回到白底版，白底版缺圖時依序使用同一人物的512×640細化版、128×160增強版和32×40原圖。未綁定武將的原版歸檔也保留。
+
+更新肖像後依序重建白底版、遊戲索引及縮圖。縮圖以索引中的人物ID綁定白底原圖，每一筆原圖及縮圖的SHA-256記在[縮圖清單](../game/config/portrait-thumbnails.json)。公開版的建置會核對檔案內容、尺寸及完整性。
+
+```sh
+python3 -m pip install -r tools/portraits/requirements.txt
+node tools/portraits/build_white.cjs
+python3 -B game/build_portrait_manifest.py
+python3 -B game/build_portrait_thumbnails.py
+python3 -B game/build_portrait_thumbnails.py --check
+```
 
 首輪逐人重繪涵蓋武、知、德任一項達75的武將及女將，排除貂蟬與夏侯氏並按人物ID去重，共408人，其中50名為女將。後續先細化夏侯氏，再依同等細節密度逐張細化其餘51名女將，包含貂蟬。每張都以同一人物既有肖像為底稿，保留原有臉型、神態、髮飾、服裝、白底與像素色盤。薛永保留已確認的對稱帽冠及五官，細化服裝。[逐人重繪底稿與新稿的雜湊](../tools/portraits/white-individual-redraws.json)
 

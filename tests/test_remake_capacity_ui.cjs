@@ -31,7 +31,7 @@ async function weightedTransferChecks(){
  for(const to of ['away','full'])for(const [mode,days]of [['fastest',20],['land',20],['sea',30],['explore',20]])quotes[`home:${to}:${mode}`]={days};
  let inputs=[],submitted=null;
  const fixture={GameOfficerChoices:require('../game/officer-choice.js'),GameOfficerSelection:require('../game/officer-selection.js'),
-  GameMarchSupply:require('../game/march-supply.js'),GameI18n:{apply(){}},capacity:()=>3,$:get,
+  GameMarchSupply:require('../game/march-supply.js'),GameI18n:{apply(){},t(name){return name;}},battleText:(tc,ja)=>tc,capacity:()=>3,$:get,
   view:{catalog:{travel_rules:{},rules:{city_officer_capacity:3}},game:{player:'wei',turn:1,officers:people,
    cities:{home:origin,away:destination,full,blocked},extension:{officer_actions:{}}}},
   escapeHtml:String,name:id=>'武将'+id,cityName:String,isRuler:()=>false,marching:()=>new Set(),
@@ -74,6 +74,7 @@ async function weightedTransferChecks(){
  get('#transfer-city').value='blocked';get('#transfer-city').onchange();
  assert.deepEqual(checked(),[]);assert(inputs.every(row=>row.disabled));assert(get('#confirm-transfer').disabled);
  assert.equal(get('#transfer-supply').innerHTML,'','A disconnected destination must clear the previous route\'s loading estimate');
+ assert.equal(get('#transfer-refill-forecast').innerHTML,'','A disconnected destination must clear the refill forecast');
  get('#transfer-city').value='away';get('#transfer-city').onchange();click(1);click(2);
  await get('#confirm-transfer').onclick();assert.equal(submitted.kind,'transfer');assert.deepEqual(Array.from(submitted.payload.officers),[1,2]);
  assert.equal(submitted.payload.route_mode,'fastest');assert.equal(JSON.stringify(fixture.view.game),before,'Weighted selection and confirmation do not change saves or grain before a command response');

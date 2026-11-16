@@ -1242,6 +1242,21 @@ function marchSupplyRuleHtml(){
  return '<p class="small"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">出發只預裝至下一座本方城的口糧，途中由本方城池補給；沿途沒有本方城池時預裝全程。等待也每日耗糧，缺糧會暫停前進並每日損兵1%，連續10日於旬末撤退。可從本方城派運輸隊向在途部隊送糧。兵糧按兵數、隨行人數與實際日數累計取整。</span><span data-locale-only="ja" data-l10n-native="ja" hidden>次の自勢力都市までの兵糧を積み、途中は自勢力の都市から補給します。経由地に自勢力の都市がなければ全行程分を積みます。待機中も毎日消費し、不足時は前進を止め、1日1%の兵を失います。10日連続で不足すると旬末に撤退します。自勢力の都市から行軍部隊へ兵糧を届けられます。兵数・同行人数・実際の日数に基づき累計で切り上げます。</span></p>';
 }
 function marchGrain(ids,quote){return GameMarchSupply.estimate(view.game.officers,ids,quote,0,view.game.cities,view.game.cities[quote.path?.[0]]?.owner??view.game.player);}
+function marchRefillForecastHtml(quote,ids,loaded,owner){
+ if(!quote||!ids.length)return '';
+ const rows=GameMarchSupply.refillForecast(view.game.officers,ids,quote,loaded,view.game.cities,owner);
+ const title=battleText('途中補給預估','途中の補給見通し');
+ if(!rows.length)return `<p class="small" data-march-refill-preview><strong>${title}</strong><br>${battleText('這條路線沒有途中的本方補給城池。','この経路に途中の補給都市はありません。')}</p>`;
+ const stops=rows.map(({city,next,days,stock,required,shortfall,conditional})=>{
+  const name=cityName(city),destination=cityName(next);
+  const route=locale=>`${GameI18n.t(name,locale)} → ${GameI18n.t(destination,locale)}（${days}日）`;
+  const summary=battleText(`${route('zh-Hant')}：現有兵糧${stock}，需補給${required}。`,`${route('ja')}・現在庫 ${stock}・必要な補給 ${required}`);
+  const gap=shortfall?`<br><strong>${battleText(`目前缺${shortfall}糧，部隊可能在此等待補給。`,`現在の在庫では ${shortfall} 不足し、ここで補給待ちになる可能性があります。`)}</strong>`:'';
+  const after=conditional?`<br>${battleText('以上一站能補足兵糧為前提。','手前の不足を補えた場合の見通しです。')}`:'';
+  return `<li data-march-refill-stop="${escapeHtml(city)}" data-current-grain="${stock}" data-required-grain="${required}" data-grain-shortfall="${shortfall}">${summary}${gap}${after}</li>`;
+ }).join('');
+ return `<div class="small" data-march-refill-preview><strong>${title}</strong><ul>${stops}</ul><p>${battleText('按目前兵力、庫存及攜行兵糧估算。途中在本方城池補給。','現在の兵力・在庫・携行兵糧での試算です。途中の補給は自勢力の都市で行います。')}</p></div>`;
+}
 function departureBudget(city,destination,ids){
  if(!view.catalog.travel_rules)return Math.max(1,Math.floor(ids.reduce((sum,id)=>sum+view.game.officers[id].troops,0)/25));
  const quotes=routeQuotes();
@@ -1288,7 +1303,7 @@ function departure(city,targetCity=null){
  const confirm=()=>{
   let battleGrainEdited=false;
   const troops=draft.officers.reduce((n,i)=>n+view.game.officers[i].troops,0),cost=Math.max(1,Math.floor(troops/25)),allied=alliedAttackNote(draft.target);
-  openDialog('出征确认',`<p>${escapeHtml(cityName(city.id))}出发，目标${escapeHtml(cityName(draft.target))}。</p>${allied?`<p class="small" data-allied-attack>${allied}</p>`:''}${commandBookHint('depart')}<p>${draft.officers.map(i=>escapeHtml(officerChoiceText(i))).join('<br>')}，共${troops}兵${view.catalog.travel_rules?'':`，耗粮${cost}`}。</p>${view.catalog.travel_rules?routeModeSelect(draft.route_mode)+'<div id="departure-estimate"></div><p id="departure-supply"></p><label class="field">'+battleText('戰鬥備糧','戦闘用の備糧')+'<span class="departure-provisions-input"><input id="departure-battle-grain" type="number" min="0" step="1" inputmode="numeric"><button type="button" id="departure-battle-grain-max">'+battleText('最大','最大')+'</button></span></label><p id="departure-battle-budget" role="status"></p>'+marchSupplyRuleHtml():''}<p class="small">${view.catalog.travel_rules?'确认后部队进入行军，到达后才战斗。':'确认后才出征。'}现在取消不会扣粮或消耗行动。</p>`,'<button data-cancel>取消出征</button><button id="back-to-pick">返回名单</button><button id="confirm-departure" class="primary">确认出征</button>');
+  openDialog('出征确认',`<p>${escapeHtml(cityName(city.id))}出发，目标${escapeHtml(cityName(draft.target))}。</p>${allied?`<p class="small" data-allied-attack>${allied}</p>`:''}${commandBookHint('depart')}<p>${draft.officers.map(i=>escapeHtml(officerChoiceText(i))).join('<br>')}，共${troops}兵${view.catalog.travel_rules?'':`，耗粮${cost}`}。</p>${view.catalog.travel_rules?routeModeSelect(draft.route_mode)+'<div id="departure-estimate"></div><p id="departure-supply"></p><label class="field">'+battleText('戰鬥備糧','戦闘用の備糧')+'<span class="departure-provisions-input"><input id="departure-battle-grain" type="number" min="0" step="1" inputmode="numeric"><button type="button" id="departure-battle-grain-max">'+battleText('最大','最大')+'</button></span></label><p id="departure-battle-budget" role="status"></p><div id="departure-refill-forecast"></div>'+marchSupplyRuleHtml():''}<p class="small">${view.catalog.travel_rules?'确认后部队进入行军，到达后才战斗。':'确认后才出征。'}现在取消不会扣粮或消耗行动。</p>`,'<button data-cancel>取消出征</button><button id="back-to-pick">返回名单</button><button id="confirm-departure" class="primary">确认出征</button>');
   const refresh=()=>{
    draft.route_mode=syncRouteModes(city.id,draft.target,draft.route_mode);
    const estimate=$('#departure-estimate'),quote=travelQuote(city.id,draft.target,draft.route_mode);
@@ -1302,6 +1317,7 @@ function departure(city,targetCity=null){
     budget.innerHTML=battleText(`首段行軍糧 ${provision.march_grain} + 戰鬥備糧 ${provision.battle_grain} = 裝載 ${loaded}；戰鬥日耗約 ${provision.daily_grain}，可支撐 ${provision.days_supported} 日。`, `最初の区間 ${provision.march_grain} + 戦闘用 ${provision.battle_grain} = 積載 ${loaded}。戦闘の一日消費は約 ${provision.daily_grain}、維持可能 ${provision.days_supported} 日。`)+(!provision.battle_grain?battleText(' 備糧為0時可能在首日斷糧撤退。',' 備糧0では初日に兵糧不足で撤退する可能性があります。'):'');
    }
    $('#departure-supply').innerHTML=quote?marchSupplyHtml({loaded:segmentLoaded,consumed:0,remaining:segmentLoaded,elapsed_days:0}):'';
+   $('#departure-refill-forecast').innerHTML=marchRefillForecastHtml(quote,draft.officers,loaded,city.owner);
    $('#confirm-departure').disabled=!hasCommandBook('depart')||!quote||city.grain<loaded;
    if(quote&&typeof tutorial!=='undefined')tutorial?.routePreview();
    GameI18n.apply();
@@ -1343,7 +1359,7 @@ function transferCity(city){
  const destinations=Object.values(view.game.cities).filter(c=>c.id!==city.id&&c.owner===view.game.player);
  if(!destinations.length)return notice('没有其他本方城池可接收武将。');
  const introduction=view.catalog.travel_rules?`<p><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">可經相通的本方城池、無主城和同盟領地調任。目的城須屬本方，上限${capacity()}人；使用全勢力共用命令書。</span><span data-locale-only="ja" data-l10n-native="ja" hidden>自勢力の都市、空白都市、同盟領を経由して移動できます。目的都市は自勢力、定員${capacity()}人まで。勢力全体で共有する命令書を使います。</span></p>${marchSupplyRuleHtml()}`:`<p>可经过相通的本方城池及无主城，不能穿过敌城；目的城必须属本方。费用为每人每段道路5粮。使用全势力共用命令书，目的城仍最多${capacity()}人。</p>`;
- openDialog('调动武将',`${introduction}${commandBookHint('transfer')}${view.catalog.travel_rules?routeModeSelect()+'<div id="transfer-estimate"></div><p id="transfer-supply"></p>':''}<label class="field">目的城<select id="transfer-city">${destinations.map(c=>`<option value="${c.id}">${escapeHtml(cityName(c.id))} · ${cityOccupancy(c)}/${capacity()}人</option>`).join('')}</select></label><div class="selection-status"><p id="transfer-count" role="status" aria-live="polite"></p><p class="small" id="transfer-reason"></p></div><div class="officer-picker">${sortedOfficers(city.roster.officer_ids).map(i=>`<label><input type="checkbox" name="transfer-officer" value="${i}" ${officerUnavailable(i)?'disabled':''}>${escapeHtml(officerChoiceText(i,{loyalty:true}))}</label>`).join('')}</div>`,'<button data-cancel>取消</button><button id="confirm-transfer" class="primary">确认调动</button>');
+ openDialog('调动武将',`${introduction}${commandBookHint('transfer')}${view.catalog.travel_rules?routeModeSelect()+'<div id="transfer-estimate"></div><p id="transfer-supply"></p><div id="transfer-refill-forecast"></div>':''}<label class="field">目的城<select id="transfer-city">${destinations.map(c=>`<option value="${c.id}">${escapeHtml(cityName(c.id))} · ${cityOccupancy(c)}/${capacity()}人</option>`).join('')}</select></label><div class="selection-status"><p id="transfer-count" role="status" aria-live="polite"></p><p class="small" id="transfer-reason"></p></div><div class="officer-picker">${sortedOfficers(city.roster.officer_ids).map(i=>`<label><input type="checkbox" name="transfer-officer" value="${i}" ${officerUnavailable(i)?'disabled':''}>${escapeHtml(officerChoiceText(i,{loyalty:true}))}</label>`).join('')}</div>`,'<button data-cancel>取消</button><button id="confirm-transfer" class="primary">确认调动</button>');
  let selection,updating=false,limit=0,quote=null;
  const updateEstimate=()=>{
   if(updating)return;updating=true;
@@ -1358,7 +1374,9 @@ function transferCity(city){
    const unarmed=mode==='explore'&&ids.length>0&&!ids.some(id=>view.game.officers[id].troops>0),poor=!!quote&&!available.some(id=>marchGrain([id],quote)<=city.grain);
    selectionStatus('transfer',ids.length,limit,slots===0?'目的城已满，无法再调入武将。':eligible===0?'本城没有可行动的武将。':view.catalog.travel_rules&&!quote?'没有符合条件的路线。':unarmed?'探索航行至少需要一名带兵武将。':poor?'行军粮食不足。':'');
    const estimate=$('#transfer-estimate');if(estimate){estimate.innerHTML=travelEstimate(city.id,destination,mode);previewSurvivors(estimate,quote,ids);}
-   if($('#transfer-supply')){const loaded=quote?marchGrain(ids,quote):0;$('#transfer-supply').innerHTML=quote?marchSupplyHtml({loaded,consumed:0,remaining:loaded,elapsed_days:0}):'';}
+   const loaded=quote?marchGrain(ids,quote):0;
+   if($('#transfer-supply'))$('#transfer-supply').innerHTML=quote?marchSupplyHtml({loaded,consumed:0,remaining:loaded,elapsed_days:0}):'';
+   if($('#transfer-refill-forecast'))$('#transfer-refill-forecast').innerHTML=marchRefillForecastHtml(quote,ids,loaded,city.owner);
    $('#confirm-transfer').disabled=!hasCommandBook('transfer')||ids.length===0||ids.length>limit||unarmed||view.catalog.travel_rules&&(!quote||marchGrain(ids,quote)>city.grain);
    GameI18n.apply();
   }finally{updating=false;}

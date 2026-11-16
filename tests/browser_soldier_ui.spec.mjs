@@ -62,6 +62,21 @@ async function dismissEvents(page){
  }
  await expect(events).toBeHidden();
 }
+async function openBattleHistoryEntry(page,event){
+ const menu=page.locator('#utility-menu');
+ if(await menu.getAttribute('open')===null)await menu.locator('summary').click();
+ await page.locator('#event-history').click();
+ const dialog=page.locator('#event-dialog');
+ await dialog.locator('[data-event-history-filter]').selectOption('battle');
+ await dialog.locator('[data-event-history-entry="'+event.id+'"]').click();
+ await expect(dialog.locator('[data-event-kind]')).toHaveAttribute('data-event-kind',event.kind);
+ return dialog;
+}
+async function closeBattleHistoryEntry(dialog){
+ await dialog.locator('[data-event-history-back]').click();
+ await dialog.locator('[data-event-history-close]').click();
+ await expect(dialog).toBeHidden();
+}
 async function control(page,id){
  const button=page.locator('#'+id),toggle=page.locator('#inspector-toggle');
  if(!await button.isVisible()&&await toggle.isVisible())await toggle.click();
@@ -628,12 +643,11 @@ test('phantom seals only movement with bilingual counts, actual contact, daily e
  await expect(page.locator(`[data-target="${cast.target}"] [data-phantom-count="3"]`)).toBeVisible();
  // The committed illustrated event uses the new count, while acknowledgement
  // and language changes cannot replay the effect or consume another sample.
- const menu=page.locator('#utility-menu');if(await menu.getAttribute('open')===null)await menu.locator('summary').click();
- await page.locator('#event-history').click();await expect(page.locator('#event-dialog')).toBeVisible();
+ const history=await openBattleHistoryEntry(page,castResult.save.state.extension.events.items.at(-1));
  await expect(page.locator('#event-description .event-facts')).toContainText('付与時カウント3');
  await page.locator('#event-dialog [data-language-picker]').selectOption('zh-Hant');await expect(page.locator('#event-description .event-facts')).toContainText('施放時計數3');
  await expect(page.locator('#event-dialog .event-person img').first()).toBeVisible();await evidence(page,testInfo,'phantom-committed-event-tc');
- await dismissEvents(page);expect(await save(page)).toEqual(castResult.save);
+ await closeBattleHistoryEntry(history);expect(await save(page)).toEqual(castResult.save);
  proof.push({kind:'cast',count:3,rng_delta:1,event:castResult.save.state.extension.events.items.at(-1).details});
 
  await load(page,restricted.save,'controlled-phantom-restricted.json');
@@ -684,10 +698,10 @@ test('chain applies independent connected water counts with bilingual movement-o
  expect(after.save.state.battle.extended.conditions.units[String(cast.bridge)]).toBeUndefined();
  expect(after.save.state.battle.extended.support).toEqual(before.save.state.battle.extended.support);
  expect(after.save.state.battle.attackers).toEqual(before.save.state.battle.attackers);expect(after.save.state.battle.defenders).toEqual(before.save.state.battle.defenders);
- const menu=page.locator('#utility-menu');if(await menu.getAttribute('open')===null)await menu.locator('summary').click();await page.locator('#event-history').click();
+ const history=await openBattleHistoryEntry(page,after.save.state.extension.events.items.at(-1));
  await expect(page.locator('#event-description .event-facts')).toContainText('付与時カウント'+cast.counts.join('／'));await page.locator('#event-dialog [data-language-picker]').selectOption('zh-Hant');
  await expect(page.locator('#event-description .event-facts')).toContainText('3支水上敵隊');await expect(page.locator('#event-dialog .event-person img').first()).toBeVisible();
- await evidence(page,testInfo,'chain-independent-water-event-tc');await dismissEvents(page);expect(await save(page)).toEqual(after.save);
+ await evidence(page,testInfo,'chain-independent-water-event-tc');await closeBattleHistoryEntry(history);expect(await save(page)).toEqual(after.save);
  proof.push({kind:'cast',targets:cast.targets,counts:cast.counts,bridge:cast.bridge,draws:4,event:after.save.state.extension.events.items.at(-1).details});
  await load(page,restricted.save,'controlled-chain-restricted.json');await page.locator(`[data-actor="${restricted.target}"]`).click();await page.locator(`[data-target="${restricted.actor}"]`).click();
  const locked=await read(page);await expect(page.locator(`[data-actor="${restricted.target}"] [data-chain-count="${restrictedCount}"]`)).toBeVisible();
@@ -735,8 +749,9 @@ test('qimen targets enemies with daily losses and experience, bilingual receipts
   expect(result.save.state.battle.extended.conditions.units[String(row.target)]).toEqual(expected.count?{kind:'qimen',remaining:expected.count}:undefined);
   expect(result.save.state.battle.extended.conditions.high_order).toEqual(prior.save.state.battle.extended.conditions.high_order);
   if(row.kind==='daily'){
-   const menu=page.locator('#utility-menu');if(await menu.getAttribute('open')===null)await menu.locator('summary').click();await page.locator('#event-history').click();await expect(page.locator('#event-title')).toContainText('奇門の日界効果');await expect(page.locator('#event-description .event-facts')).toContainText('損兵合計'+expected.rows.reduce((sum,tick)=>sum+tick.loss,0));
-   await page.locator('#event-dialog [data-language-picker]').selectOption('zh-Hant');await expect(page.locator('#event-title')).toContainText('奇門日界效果');await expect(page.locator('#event-description .event-facts')).toContainText('增加經驗'+expected.experience_gain);await expect(page.locator('#event-dialog .event-person img').first()).toBeVisible();await evidence(page,testInfo,'qimen-daily-committed-loss-and-xp-tc');await dismissEvents(page);expect(await save(page)).toEqual(result.save);
+   const history=await openBattleHistoryEntry(page,result.save.state.extension.events.items.at(-1));
+   await expect(page.locator('#event-title')).toContainText('奇門の日界効果');await expect(page.locator('#event-description .event-facts')).toContainText('損兵合計'+expected.rows.reduce((sum,tick)=>sum+tick.loss,0));
+   await page.locator('#event-dialog [data-language-picker]').selectOption('zh-Hant');await expect(page.locator('#event-title')).toContainText('奇門日界效果');await expect(page.locator('#event-description .event-facts')).toContainText('增加經驗'+expected.experience_gain);await expect(page.locator('#event-dialog .event-person img').first()).toBeVisible();await evidence(page,testInfo,'qimen-daily-committed-loss-and-xp-tc');await closeBattleHistoryEntry(history);expect(await save(page)).toEqual(result.save);
   }else{
    expect(prior.save.state.battle.defenders.find(u=>u.id===row.target).troops).toBe(0);expect(result.save.state.rng.draws-prior.save.state.rng.draws).toBe(1);await expect(page.locator(`[data-target="${row.target}"] [data-qimen-count]`)).toHaveCount(0);
   }
