@@ -172,8 +172,19 @@ class YangtzeHeadwatersTests(unittest.TestCase):
     def test_new_ports_share_reviewed_reaches_without_changing_legacy_river_lines(self):
         spec = json.loads((ROOT / 'game/config/river-network.json').read_bytes())
         geometry = {key: deepcopy(spec[key]) for key in ('connections', 'nodes', 'ports', 'reaches')}
-        # Invert only approved reach subdivisions. The older digest continues
-        # to catch changes to original water pixels, endpoints and connections.
+        # Undo only the reviewed shared land approaches and reach subdivisions
+        # so the old digest still protects water pixels, endpoints and links.
+        shared_approaches = {
+            'qichun': [[888, 532]],
+            'lingling': [[684, 645]],
+            'yuzhang': [[904, 570], [918, 570]],
+            'poyang': [[946, 569]],
+        }
+        for city, shared in shared_approaches.items():
+            approach = geometry['ports'][city]['access']
+            end = 1 + len(shared)
+            self.assertEqual(approach[1:end], shared)
+            del approach[1:end]
         splits = {
             'jialing:baxi:bajun': ('jialing:baxi:dianjiang', 'jialing:dianjiang:bajun'),
             'han:hanzhong:xincheng': ('han:hanzhong:xicheng', 'han:xicheng:shangyong', 'han:shangyong:xincheng'),
