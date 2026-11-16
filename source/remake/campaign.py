@@ -37,6 +37,10 @@ def digest(value):
     return hashlib.sha256(canonical(value).encode()).hexdigest()
 
 
+def _valid_campaign_id(value):
+    return isinstance(value, str) and re.fullmatch(r'[a-f0-9]{32}', value) is not None
+
+
 def verified_save_content(payload):
     """Check the shared save format and integrity before comparing catalogs."""
     try:
@@ -401,8 +405,13 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             with presentation.capture(self) as scenes:
                 before = self.to_dict()
                 if kind == 'new':
+                    campaign_id = payload.get('campaign_id')
+                    if 'campaign_id' in payload and not _valid_campaign_id(campaign_id):
+                        raise GameError('操作参数无效。')
                     candidate = self._new(payload.get('faction'), payload.get('seed'),
                                           payload.get('difficulty', 'normal'), payload.get('lifespan', 'historical'))
+                    if campaign_id is not None:
+                        candidate.extension['campaign_id'] = campaign_id
                 else:
                     if self.state is None:
                         raise GameError('请先选择势力。')
@@ -823,6 +832,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             return self.view()
 
     def validate(self, state):
+        if 'campaign_id' in state.extension and not _valid_campaign_id(state.extension['campaign_id']):
+            raise ValueError('campaign identity')
         get_settings(state)
         command_books.validate(self, state)
         diplomacy.validate(self, state)

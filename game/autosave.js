@@ -1,25 +1,45 @@
 /* Local recovery points keep engine JSON bytes intact and never upload to cloud. */
 'use strict';
 (function(root){
- const STORAGE_KEY='three-kingdoms-autosaves-v1',MAX_BYTES=2*1024*1024,LIMIT=3;
+ const STORAGE_KEY='three-kingdoms-autosaves-v1',MAX_BYTES=2*1024*1024,LIMIT=3,MAX_STORAGE_BYTES=4*1024*1024;
+ const encoder=new TextEncoder();
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function envelope(raw){
-  if(typeof raw!=='string'||new TextEncoder().encode(raw).length>MAX_BYTES)throw Error('invalid');
+  if(typeof raw!=='string'||encoder.encode(raw).length>MAX_BYTES)throw Error('invalid');
   const value=JSON.parse(raw);
   if(!value||value.format!=='three-kingdoms-remake-save'||![1,2].includes(value.version)||typeof value.scenario!=='string'||!value.scenario||value.scenario.length>160||!value.state||typeof value.state!=='object'||Array.isArray(value.state)||!['catalog_sha256','checksum'].every(key=>typeof value[key]==='string'&&/^[a-f0-9]{64}$/.test(value[key])))throw Error('invalid');
   return value;
  }
+ function campaignKey(scenario,game){
+  const extension=game.extension;
+  const id=extension?.campaign_id;
+  const run=typeof id==='string'&&/^[0-9a-f]{32}$/.test(id)?id:[extension?.difficulty??'normal',extension?.lifespan??'historical'];
+  return JSON.stringify([scenario,game.player,game.seed,run]);
+ }
  function fingerprint(view){
   if(!view?.game)return null;
   const g=view.game;
-  return JSON.stringify([view.revision,view.catalog?.scenario_id,g.seed,g.player,g.year,g.month,g.day,g.turn,g.phase,g.battle?.id]);
+  return JSON.stringify([view.revision,campaignKey(view.catalog?.scenario_id,g),g.year,g.month,g.day,g.turn,g.phase,g.battle?.id]);
  }
  function matches(value,view){
   const a=value.state,b=view.game;
-  return value.scenario===view.catalog?.scenario_id&&['seed','player','year','month','day','turn','phase'].every(key=>a[key]===b[key]);
+  return value.scenario===view.catalog?.scenario_id&&campaignKey(value.scenario,a)===campaignKey(value.scenario,b)&&
+   ['seed','player','year','month','day','turn','phase'].every(key=>a[key]===b[key]);
+ }
+ function retention(entries){
+  const counts=new Map(),kept=[],older=[],latest=[];
+  for(const entry of entries){
+   const count=counts.get(entry.campaign)??0;
+   if(count>=LIMIT)continue;
+   counts.set(entry.campaign,count+1);kept.push(entry);
+   (count?older:latest).push(entry);
+  }
+  // Evict older points first. The candidate is the first of the latest points.
+  return {kept,eviction:[...older.reverse(),...latest.slice(1).reverse()]};
  }
  function create(options={}){
   const getView=options.getView||(()=>null),isBusy=options.isBusy||(()=>false),now=options.now||Date.now;
+  const locks=options.locks??root.navigator?.locks;
   let storage;try{storage=Object.hasOwn(options,'storage')?options.storage:root.localStorage;}catch{storage=null;}
   let epoch=0,serial=0,running=false,queued=null,disposed=false,state={state:'idle',latest:null,retained:0};
   const bindings=new WeakMap();
@@ -28,18 +48,29 @@
   const translate=value=>root.GameI18n?.t?root.GameI18n.t(String(value??''),locale()):String(value??'');
   function read(){
    if(!storage)throw Error('storage');
-   const raw=storage.getItem(STORAGE_KEY);if(!raw)return [];
-   let value;try{value=JSON.parse(raw);}catch{return [];}
-   if(value?.version!==1||!Array.isArray(value.items))return [];
-   return value.items.slice(0,LIMIT).filter(row=>{
-    try{const save=envelope(row.raw);return typeof row.id==='string'&&/^[0-9]+-[0-9]+$/.test(row.id)&&Number.isFinite(row.savedAt)&&row.savedAt>=0&&row.scenario===save.scenario&&typeof row.title==='string'&&row.title.length<=300&&typeof row.reason==='string'&&row.reason.length<=40;}catch{return false;}
-   });
+   const raw=storage.getItem(STORAGE_KEY);
+   const empty={version:0,items:[]};
+   if(!raw)return empty;
+   let value;try{value=JSON.parse(raw);}catch{return empty;}
+   if(![1,2].includes(value?.version)||!Array.isArray(value.items))return empty;
+   const rows=value.version===1?value.items.slice(0,LIMIT):value.items;
+   const ids=new Set(),items=[];
+   for(const row of rows){
+    try{
+     const save=envelope(row.raw);
+     if(typeof row.id!=='string'||!/^[0-9]+-[0-9]+$/.test(row.id)||ids.has(row.id)||!Number.isFinite(row.savedAt)||row.savedAt<0||
+      row.scenario!==save.scenario||typeof row.title!=='string'||row.title.length>300||typeof row.reason!=='string'||row.reason.length>40||
+      (row.faction!==undefined&&(typeof row.faction!=='string'||row.faction.length>160)))continue;
+     ids.add(row.id);items.push({row,game:save.state,campaign:campaignKey(save.scenario,save.state)});
+    }catch{/* A damaged entry does not prevent recovery from the other entries. */}
+   }
+   return {version:value.version,items};
   }
-  function metadata(row){
-   const g=envelope(row.raw).state;
-   return {id:row.id,savedAt:row.savedAt,scenario:row.scenario,title:row.title,reason:row.reason,year:g.year,month:g.month,day:g.day,turn:g.turn,phase:g.phase,player:g.player};
+  function metadata({row,game:g,campaign}){
+   return {id:row.id,savedAt:row.savedAt,scenario:row.scenario,title:row.title,reason:row.reason,
+    faction:row.faction,campaign,year:g.year,month:g.month,day:g.day,turn:g.turn,phase:g.phase,player:g.player};
   }
-  function list(){try{return read().map(metadata);}catch{return [];}}
+  function list(){try{return read().items.map(metadata);}catch{return [];}}
   function notify(value){
    if(disposed)return;
    state={...value};refresh();
@@ -49,6 +80,43 @@
   const initial=list();state={state:initial.length?'saved':'idle',latest:initial[0]||null,retained:initial.length};
   function current(item){return !disposed&&item.token===epoch&&!isBusy()&&fingerprint(getView())===item.fingerprint;}
   function errorKind(error){return error?.name==='QuotaExceededError'||[22,1014].includes(error?.code)?'quota':error?.message==='invalid'?'invalid':'storage';}
+  function store(item,raw,value){
+   if(!current(item))return {ok:false,skipped:'stale'};
+   const {version,items:previous}=read();
+   const game=value.state,campaign=campaignKey(value.scenario,game),latest=previous.find(entry=>entry.campaign===campaign);
+   const duplicate=latest?.row.raw===raw;
+   if(duplicate&&version===2){
+    notify({state:'saved',latest:metadata(latest),retained:previous.length});
+    return {ok:true,skipped:'duplicate'};
+   }
+   let candidate=duplicate?latest:null;
+   if(!candidate){
+    const savedAt=now(),existingIds=new Set(previous.map(entry=>entry.row.id));
+    let id;do{id=String(savedAt)+'-'+String(++serial);}while(existingIds.has(id));
+    const faction=item.view.catalog?.factions?.find(row=>row.id===game.player)?.name;
+    const row={id,savedAt,scenario:value.scenario,title:String(item.view.catalog?.title||value.scenario).slice(0,300),reason:item.reason,raw};
+    if(typeof faction==='string'&&faction)row.faction=faction.slice(0,160);
+    candidate={row,game,campaign};
+   }
+   const {kept,eviction}=retention([candidate,...previous.filter(entry=>!duplicate||entry!==latest)]);
+   const removed=new Set();
+   let lastError;
+   do{
+    const rows=kept.filter(entry=>!removed.has(entry));
+    const serialized=JSON.stringify({version:2,items:rows.map(entry=>entry.row)});
+    if(encoder.encode(serialized).length<=MAX_STORAGE_BYTES){
+     try{
+      // One replacement keeps the previous store intact if the quota write fails.
+      storage.setItem(STORAGE_KEY,serialized);
+      notify({state:'saved',latest:metadata(candidate),retained:rows.length,reduced:removed.size>0});
+      return {ok:true,id:candidate.row.id,retained:rows.length};
+     }catch(error){if(errorKind(error)!=='quota')throw error;lastError=error;}
+    }
+    if(!eviction.length)break;
+    removed.add(eviction.shift());
+   }while(true);
+   throw lastError||Object.assign(Error('recovery store capacity'),{name:'QuotaExceededError'});
+  }
   async function run(item){
    running=true;let result;
    try{
@@ -58,21 +126,7 @@
     if(!current(item)){result={ok:false,skipped:'stale'};return;}
     let value;try{value=envelope(raw);}catch{throw Error('invalid');}
     if(!matches(value,item.view)){result={ok:false,skipped:'stale'};return;}
-    const previous=read();
-    if(previous[0]?.raw===raw){
-     notify({state:'saved',latest:metadata(previous[0]),retained:previous.length});result={ok:true,skipped:'duplicate'};return;
-    }
-    const savedAt=now(),row={id:String(savedAt)+'-'+String(++serial),savedAt,scenario:value.scenario,title:String(item.view.catalog?.title||value.scenario).slice(0,300),reason:item.reason,raw};
-    let rows=[row,...previous].slice(0,LIMIT),lastError;
-    // setItem is atomic: on quota failure the previous recovery points survive.
-    // A smaller retained set can still fit without deleting a manual save.
-    while(rows.length){
-     try{storage.setItem(STORAGE_KEY,JSON.stringify({version:1,items:rows}));lastError=null;break;}
-     catch(error){lastError=error;if(errorKind(error)!=='quota')break;rows=rows.slice(0,-1);}
-    }
-    if(lastError)throw lastError;
-    notify({state:'saved',latest:metadata(row),retained:rows.length,reduced:rows.length<Math.min(LIMIT,previous.length+1)});
-    result={ok:true,id:row.id,retained:rows.length};
+    result=locks?.request?await locks.request(STORAGE_KEY,()=>store(item,raw,value)):store(item,raw,value);
    }catch(error){
     if(current(item))notify({...state,state:'error',error:errorKind(error),reason:item.reason});
     result={ok:false,error:errorKind(error)};
@@ -110,7 +164,17 @@
   function statusHtml(){return `<span class="small" data-autosave-status data-l10n-native="${locale()}" role="status" aria-live="polite">${escape(statusText())}</span>`;}
   function recoveryBody(){
    const rows=list();
-   return `<h3>${text('自動儲存恢復點','自動保存の復元ポイント')}</h3><p class="small">${text('保留最近3份；空間不足時會減少份數。恢復前會再次確認，不會自動覆寫目前戰役或手動存檔。','直近3件を保持し、空き容量が足りない場合は件数を減らします。復元前に確認し、現在の戦役や手動セーブを自動では上書きしません。')}</p>${rows.length?`<div class="save-actions">${rows.map(row=>`<button type="button" data-autosave-recover="${escape(row.id)}">${escape(label(row))}</button>`).join('')}</div>`:`<p class="small">${text('尚無自動儲存恢復點。','自動保存の復元ポイントはまだありません。')}</p>`}<p class="small" data-autosave-recovery-message role="status" aria-live="polite"></p>`;
+   const groups=new Map();
+   for(const row of rows){
+    if(!groups.has(row.campaign))groups.set(row.campaign,[]);
+    groups.get(row.campaign).push(row);
+   }
+   const sections=Array.from(groups.values(),(group,index)=>{
+    const latest=group[0],faction=latest.player==='observer'?text('觀戰','観戦'):translate(latest.faction||latest.player);
+    const title=`${text('戰役','戦役')} ${index+1} · ${translate(latest.title)}${faction?' · '+faction:''}`;
+    return `<fieldset data-autosave-campaign><legend>${escape(title)}</legend><div class="save-actions">${group.map(row=>`<button type="button" data-autosave-recover="${escape(row.id)}">${escape(label(row))}</button>`).join('')}</div></fieldset>`;
+   });
+   return `<h3>${text('自動儲存恢復點','自動保存の復元ポイント')}</h3><p class="small">${text('每個戰役最多保留3份，總容量上限為4 MiB。空間不足時優先保留各戰役最新的恢復點。選擇恢復點後會再次確認。','戦役ごとに最大3件、全体で最大4 MiBを保存します。容量が足りないときは各戦役の最新の復元ポイントを優先します。復元ポイントを選ぶと確認画面が開きます。')}</p>${sections.join('')||`<p class="small">${text('尚無自動儲存恢復點。','自動保存の復元ポイントはまだありません。')}</p>`}<p class="small" data-autosave-recovery-message role="status" aria-live="polite"></p>`;
   }
   function recoveryHtml(){return `<section data-autosave-recovery data-l10n-native="${locale()}">${recoveryBody()}</section>`;}
   function refresh(container=root.document){
@@ -121,7 +185,7 @@
   async function restore(id,{confirm}={}){
    if(disposed||isBusy())return {ok:false,skipped:'busy'};
    const key=fingerprint(getView());let row;
-   try{row=read().find(value=>value.id===id);}catch{return {ok:false,error:'storage'};}
+   try{row=read().items.find(value=>value.row.id===id);}catch{return {ok:false,error:'storage'};}
    if(!row)return {ok:false,error:'missing'};
    // An explicit confirmation is mandatory. The caller owns the visible dialog.
    if(typeof confirm!=='function')return {ok:false,skipped:'unconfirmed'};
@@ -133,7 +197,7 @@
    // Invalidate delayed exports before handing the original bytes to validation.
    invalidate();const restoreEpoch=epoch;
    const loadGuard=()=>!disposed&&!isBusy()&&fingerprint(getView())===key&&epoch===restoreEpoch;
-   try{const loaded=await options.loadRawSave(row.raw,loadGuard);return loaded?{ok:true,id}:{ok:false,error:'load'};}
+   try{const loaded=await options.loadRawSave(row.row.raw,loadGuard);return loaded?{ok:true,id}:{ok:false,error:'load'};}
    catch{return {ok:false,error:'load'};}
   }
   function bindRecovery(container,{confirm}={}){
@@ -152,6 +216,6 @@
   function dispose(){invalidate();disposed=true;}
   return {checkpoint,list,status,statusText,statusHtml,recoveryHtml,bindRecovery,restore,refresh,invalidate,dispose};
  }
- const api={create,STORAGE_KEY,LIMIT};
+ const api={create,STORAGE_KEY,LIMIT,MAX_STORAGE_BYTES};
  if(typeof module==='object'&&module.exports)module.exports=api;else root.GameAutosave=api;
 })(typeof window==='object'?window:globalThis);
