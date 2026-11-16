@@ -1,30 +1,206 @@
-name: Web campaign checks
-
+name: Verify scope against real Pages and PR evidence
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
     inputs:
-      force_full:
-        description: Run every regression group
-        type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
+      tested_head:
+        description: The successful PR plan's tested merge commit
+        type: string
+        required: true
+      pr_run:
+        description: The successful PR Actions run
+        type: string
+        required: true
+      pr_attempt:
+        description: The successful PR Actions attempt
+        type: string
+        required: true
 
 permissions:
   contents: read
   actions: read
   deployments: read
 
-concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  PR_NUMBER: '49'
+  PR_TESTED_HEAD: ${{ inputs.tested_head }}
+  PR_RUN: ${{ inputs.pr_run }}
+  PR_ATTEMPT: ${{ inputs.pr_attempt }}
+  PREVIOUS_MAIN: e60d16a3aa439c49f7de6ef192554dada4f9c6db
+  PREVIOUS_MAIN_RUN: '43756073698'
+  PREVIOUS_PROOF_RUN: '43754098033'
 
 jobs:
-  verify:
-    uses: ./.github/workflows/web-checks.yml
-    with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+  evidence:
+    if: github.ref == 'refs/heads/codex/ci-scope-live-proof'
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.tested_head }}
+          fetch-depth: 0
+          persist-credentials: false
+          sparse-checkout: /tools/ci/
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - name: Read the successful new PR test plan
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: test-plan-${{ inputs.tested_head }}
+          path: build/evidence/pr
+          run-id: ${{ inputs.pr_run }}
+          github-token: ${{ github.token }}
+      - name: Read the successful new PR receipt
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: pr-proof-${{ inputs.pr_run }}-attempt-${{ inputs.pr_attempt }}
+          path: build/evidence/pr
+          run-id: ${{ inputs.pr_run }}
+          github-token: ${{ github.token }}
+      - name: Read the successful historical main plan
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: test-plan-${{ env.PREVIOUS_MAIN }}
+          path: build/evidence/history
+          run-id: ${{ env.PREVIOUS_MAIN_RUN }}
+          github-token: ${{ github.token }}
+      - name: Read the original receipt from the merged PR
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: pr-proof-${{ env.PREVIOUS_PROOF_RUN }}-attempt-1
+          path: build/evidence/history
+          run-id: ${{ env.PREVIOUS_PROOF_RUN }}
+          github-token: ${{ github.token }}
+      - name: Validate active Pages, the new plan and actual PR receipts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python -B - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import subprocess
+          import sys
+
+          sys.path.insert(0, 'tools/ci')
+          from pr_reuse import PROOF_KEYS
+
+          out = Path('build/evidence')
+          tested = os.environ['PR_TESTED_HEAD']
+          main = os.environ['PREVIOUS_MAIN']
+          repo = os.environ['GITHUB_REPOSITORY']
+          number, run, attempt = (int(os.environ[k]) for k in ('PR_NUMBER', 'PR_RUN', 'PR_ATTEMPT'))
+
+          def text(*command, env=None):
+              return subprocess.check_output(command, env=env, text=True)
+
+          def git(*args):
+              return text('git', *args).strip()
+
+          def read(path):
+              return json.loads(path.read_text())
+
+          def save(path, data):
+              path.write_text(json.dumps(data, sort_keys=True, indent=2) + '\n')
+              return path
+
+          def py(script, *args, env=None):
+              return text(sys.executable, '-B', 'tools/ci/' + script + '.py', *map(str, args), env=env)
+
+          def event_file(directory, head, before):
+              return save(directory/'main-event.json', {
+                  'ref': 'refs/heads/main', 'after': head, 'before': before, 'forced': False,
+              })
+
+          def scope_env(directory, head, event):
+              return {**os.environ, 'GITHUB_SHA': head, 'GITHUB_EVENT_PATH': str(event.resolve()),
+                      'GITHUB_OUTPUT': str((directory/'lookup-output.txt').resolve())}
+
+          assert git('rev-parse', 'HEAD') == tested
+          assert git('rev-parse', '--is-shallow-repository') == 'false'
+          assert git('rev-parse', tested+'^1') == main
+          feature = git('rev-parse', tested+'^2')
+          present = [p for p in git('ls-files').splitlines() if Path(p).exists() or Path(p).is_symlink()]
+          assert present and all(p.startswith('tools/ci/') for p in present)
+          assert 'max-parallel: 8' in git('show', tested+':.github/workflows/web-checks.yml')
+          assert json.loads(git('show', tested+':game/config/campaigns/index.json'))['scenarios']
+
+          record = json.loads(text('gh', 'api', f'repos/{repo}/actions/runs/{run}'))
+          assert (record['run_attempt'], record['event'], record['head_sha'], record['conclusion']) == (attempt, 'pull_request', feature, 'success')
+          current_pr = json.loads(text('gh', 'api', f'repos/{repo}/pulls/{number}'))
+          assert not current_pr['merged'] and current_pr['head']['sha'] == feature
+
+          published = json.loads(py('published_base', '--repository', repo, '--head', tested, '--json'))
+          assert published['sha'] == main
+          save(out/'active-deployment.json', published)
+          site = 'https://kai987.github.io/Three-Kingdoms2-King-mainland/runtime/build.json'
+          manifest = json.loads(text('curl', '-fsSL', '--max-time', '20', '--proto', '=https',
+                                     '--proto-redir', '=https', f'{site}?scope-verification={run}'))
+          assert manifest['schema'] == 'tk2-static-build-v1' and manifest['commit'] == published['sha']
+          save(out/'live-manifest-identity.json', {k: manifest[k] for k in ('schema','commit','content_sha256')})
+
+          pr = out/'pr'
+          approved_plan = read(pr/'test-plan.json')
+          actual_receipt = read(pr/'receipt.json')
+          actual_receipt_path = pr/'receipt.json'
+          assert (approved_plan['head'], approved_plan['base'], approved_plan['mode']) == (tested, main, 'full')
+          assert approved_plan['changed_files'] == ['.github/workflows/web-checks.yml']
+          assert not approved_plan['publish'] and 'pr_reuse' not in approved_plan
+          assert (actual_receipt['number'], actual_receipt['run_id'], actual_receipt['attempt']) == (number,run,attempt)
+          assert actual_receipt['tree'] == git('rev-parse', tested+'^{tree}')
+
+          arm = out/'live-plan'
+          arm.mkdir()
+          event = event_file(arm,tested,main)
+          env = scope_env(arm,tested,event)
+          merge_plan = json.loads(py('plan','--head',tested,'--event-name','push','--event-path',event,
+                                     '--ref','refs/heads/main','--repository',repo))
+          assert merge_plan == {**approved_plan, 'publish': True}
+          assert all(merge_plan.get(k)==actual_receipt['plan'].get(k) for k in PROOF_KEYS)
+          plan = save(arm/'test-plan.json',merge_plan)
+          candidate = arm/'lookup-candidate.json'
+          refusal = py('pr_reuse','find','--plan',plan,'--candidate',candidate,env=env)
+          assert not candidate.exists() and 'No unique merged pull request' in refusal
+          (arm/'unmerged-lookup.txt').write_text(refusal)
+
+          # Exercise the verifier with the successful run's actual receipt and ancestry.
+          # Production discovery above still rejects this PR until it is merged.
+          known = save(arm/'candidate-for-verification.json', {
+              'repository': repo, 'number': number, 'feature': feature,
+              'run_id': run, 'attempt': attempt, 'base': main,
+          })
+          py('pr_reuse','decide','--plan',plan,'--candidate',known,'--proof',actual_receipt_path,env=env)
+          expected = {'number':number,'run_id':run,'attempt':attempt,'head':tested,'tree':actual_receipt['tree']}
+          assert read(plan) == {**merge_plan,'pr_reuse':expected}
+          flags = py('gate','outputs','--plan',plan,'--head',tested)
+          assert 'reuse=true' in flags.splitlines()
+          (arm/'gate-outputs.txt').write_text(flags)
+
+          history = out/'history'
+          previous_plan = read(history/'test-plan.json')
+          before = git('rev-parse',main+'^1')
+          event = event_file(history,main,before)
+          env = scope_env(history,main,event)
+          prior_reuse = previous_plan.pop('pr_reuse')
+          plan = save(history/'replayed-plan.json',previous_plan)
+          candidate = history/'lookup-candidate.json'
+          py('pr_reuse','find','--plan',plan,'--candidate',candidate,env=env)
+          assert read(candidate)['run_id']==int(os.environ['PREVIOUS_PROOF_RUN'])
+          py('pr_reuse','decide','--plan',plan,'--candidate',candidate,'--proof',history/'receipt.json',env=env)
+          assert read(plan)=={**previous_plan,'pr_reuse':prior_reuse}
+          print(json.dumps({'active_deployment': published, 'published_content': manifest['content_sha256'],
+                            'checked_out_files': len(present), 'live_plan_equal': True,
+                            'unmerged_lookup_refused': True, 'new_receipt_verified': expected,
+                            'replayed_original_merge_reuse': prior_reuse},sort_keys=True))
+          PY
+      - name: Upload the verified scope evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scope-live-evidence-${{ github.run_attempt }}
+          path: build/evidence
+          retention-days: 7
+          if-no-files-found: error
