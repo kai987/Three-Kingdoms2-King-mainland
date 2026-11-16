@@ -78,6 +78,8 @@ The eight controlled cases now load `march-catalog-before-266-expansion.json.gz`
 the exact 115-city `217-07.json` from `a815d338830f6f68e5b92d9592ba447c428a4e35`.
 The test pins its decompressed SHA-256 and verifies the existing goldens with
 the current engine. Natural campaign replays load the current 126-city catalog.
+The 40-book issuance rule refreshes the 32 complete state and save hashes. The
+frozen march quotes, grain, casualty results, RNG, and format 1 proof still match.
 
 ## 捨命一擊接入前的單挑向量
 
