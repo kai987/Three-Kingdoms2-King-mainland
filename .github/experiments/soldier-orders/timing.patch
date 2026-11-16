@@ -1,0 +1,100 @@
+diff --git a/tests/browser_soldier_ui.spec.mjs b/tests/browser_soldier_ui.spec.mjs
+index 9f1dc0d1..68460c19 100644
+--- a/tests/browser_soldier_ui.spec.mjs
++++ b/tests/browser_soldier_ui.spec.mjs
+@@ -131,23 +131,48 @@ async function combatFrameSample(page,value,manifest){
+   const actor=data.soldierAnimationActor,piece=pieces[actor],index=Number(data.soldierCombatFrame);
+   if(!piece)return null;
+   const action=data.soldierCombatAction,palette=piece.side==='attackers'?'friendly':'enemy';
+-  const row=manifest.types[piece.kind][action][palette],image=new Image();image.src=GamePaths.asset(row.path);await image.decode();
++  // DOM event timestamps use Chromium's monotonic clock, across paused Playwright ticks.
++  const now=()=>new Event('soldier-frame-profile').timeStamp, timings={};
++  const row=manifest.types[piece.kind][action][palette];
++  let start=now();
++  const image=new Image();image.src=GamePaths.asset(row.path);await image.decode();
++  timings.reference_decode=now()-start;
++  start=now();
+   const reference=document.createElement('canvas');reference.width=reference.height=64;
+   const context=reference.getContext('2d',{willReadFrequently:true});context.imageSmoothingEnabled=false;
+   if(palette==='enemy'){context.translate(64,0);context.scale(-1,1);}
+   context.drawImage(image,...row.frames[index].source_rect,0,0,64,64);
+-  const expected=context.getImageData(0,0,64,64).data,canvas=host.querySelector('[data-battle-canvas]');
++  const expected=context.getImageData(0,0,64,64).data;
++  timings.reference_draw_and_read=now()-start;
++  start=now();
++  const canvas=host.querySelector('[data-battle-canvas]');
+   const actual=canvas.getContext('2d').getImageData(piece.x*64,piece.y*64,64,64).data;
++  timings.live_read=now()-start;
++  start=now();
+   let solid=0,different=0;const mismatch=[];
+   for(let n=0;n<actual.length;n+=4)if(expected[n+3]===255){solid++;if(actual[n]!==expected[n]||actual[n+1]!==expected[n+1]||actual[n+2]!==expected[n+2]||actual[n+3]!==255){different++;mismatch.push([n/4%64,Math.floor(n/4/64)]);}}
++  timings.pixel_compare=now()-start;
++  start=now();
+   const crop=document.createElement('canvas');crop.width=crop.height=64;crop.getContext('2d').putImageData(new ImageData(actual,64,64),0,0);
+-  const sha=async bytes=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))).map(byte=>byte.toString(16).padStart(2,'0')).join('');
++  timings.actual_png_canvas=now()-start;
++  const sha=async bytes=>{
++   const start=now();
++   const digest=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))).map(byte=>byte.toString(16).padStart(2,'0')).join('');
++   timings.actual_sha256=now()-start;
++   return digest;
++  };
++  const encode=(canvas,phase)=>{
++   const start=now(), png=canvas.toDataURL('image/png');
++   timings[phase]=now()-start;
++   return png;
++  };
+   return {key:palette+':'+piece.kind+':'+action,actor,kind:piece.kind,action,palette,index,
+    phase:data.soldierCombatPhase,event_index:Number(data.soldierAnimationEvent),source:data.soldierCombatSource,
+    scene_mode:data.battleSceneMode,label_mode:data.soldierLabelMode,canvas_backing:[canvas.width,canvas.height],viewport:[innerWidth,innerHeight],
+    solid_pixels:solid,different_pixels:different,sha256:await sha(actual),presentation_time_ms:performance.now(),
+    mismatch_bbox:mismatch.length?[Math.min(...mismatch.map(p=>p[0])),Math.min(...mismatch.map(p=>p[1])),Math.max(...mismatch.map(p=>p[0]))+1,Math.max(...mismatch.map(p=>p[1]))+1]:null,
+-   reference_png:different?reference.toDataURL('image/png'):null,png:crop.toDataURL('image/png')};
++   reference_png:different?encode(reference,'reference_png'):null,png:encode(crop,'actual_png'),
++   profile:{asset:row.path,rect:row.frames[index].source_rect,timings}};
+  },{pieces:value.pieces,manifest});
+ }
+
+@@ -262,16 +287,29 @@ async function attackCycleEvidence(page,testInfo,kind='attack-cycles'){
+  const initial=await read(page,false),button=page.locator('#siege-step');
+  if(!await button.isVisible())await page.locator('#inspector-toggle').click();await expect(button).toBeEnabled();
+  await page.clock.pauseAt(new Date(await page.evaluate(()=>Date.now())+1000));
++ const readClocks=()=>page.evaluate(()=>({native:new Event('soldier-frame-profile').timeStamp,virtual:performance.now()}));
++ const beforeClockProbe=await readClocks();
++ await new Promise(resolve=>setTimeout(resolve,25));
++ const afterClockProbe=await readClocks();
++ if(afterClockProbe.native<=beforeClockProbe.native||afterClockProbe.virtual!==beforeClockProbe.virtual)
++  throw Error('Native profiling clock did not advance independently of the paused Playwright clock');
+  await button.click({force:true});
+  await waitSoldierReplay(page);
+- const samples=new Map(),overlays=new Map();let committed=null,started=false,busyLabelsChecked=false;
++ const samples=new Map(),overlays=new Map(),profileTicks=[];let committed=null,started=false,busyLabelsChecked=false;
+  // 16 ms ticks are shorter than each37.5 ms phase of a real150 ms event.
+  // Worker RPC remains real; the clock only prevents short frames being lost
+  // to screenshot/IPC latency. Each sample reads the live backing buffer.
+  for(let tick=0;tick<340;tick++){
++  const tickStart=performance.now();
+   await page.clock.runFor(16);
++  const sampleStart=performance.now();
+   const sample=await combatFrameSample(page,value,manifest);
++  const tickProfile={tick,advance_ms:sampleStart-tickStart,evaluate_ms:performance.now()-sampleStart};
++  profileTicks.push(tickProfile);
+   if(sample){
++   tickProfile.sample={...sample.profile,palette:sample.palette,pose:sample.key,index:sample.index,
++    actual_sha256:sample.sha256,solid_pixels:sample.solid_pixels,different_pixels:sample.different_pixels};
++   delete sample.profile;
+    sample.sample_tick=tick;sample.clock_elapsed_ms=(tick+1)*16;
+    started=true;
+    if(!committed)committed=await read(page,false);
+@@ -336,6 +374,11 @@ async function attackCycleEvidence(page,testInfo,kind='attack-cycles'){
+  await expect(scene).toHaveAttribute('data-soldier-label-mode','kind');
+  await evidence(page,testInfo,value.mode+'-four-frame-actions-final-counts');
+  labelProof.compact_busy_replay=await busySoldierToolbarReplay(page,testInfo,value,committed.save);
++ await writeFile(testInfo.outputPath(value.mode+'-soldier-frame-profile.json'),JSON.stringify({
++  mode:value.mode,clock_probe:{before:beforeClockProbe,after:afterClockProbe},ticks:profileTicks,
++  retained_frames:evidenceRows.map(sample=>sample.sample_tick),
++  retained_overlays:[...overlays.values()].map(sample=>sample.sample_tick),
++ }));
+  return {setup:value.setup,mode:value.mode,seed:value.seed,army_troops:value.army_troops,before_rng:initial.save.state.rng,
+   after_rng:committed.save.state.rng,label_mode:{...labelProof,busy_button_and_v:true,skip_preserves:'troops'},soldier_ledger:soldierLedger,events:active.events,
+   overlaid_initial_samples:[...overlays.values()],frames:evidenceRows};

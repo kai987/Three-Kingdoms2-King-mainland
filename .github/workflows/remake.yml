@@ -1,30 +1,59 @@
-name: Web campaign checks
+name: Soldier orders frame profiling
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
-    inputs:
-      force_full:
-        description: Run every regression group
-        type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
 
 permissions:
   contents: read
   actions: read
-  deployments: read
 
-concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
+env:
+  FROZEN_SOURCE: 3dc85091216c4a8cf242c0b74db68536fbaebb46
+  FROZEN_WEB_CONTENT: cefdef35ea30da7ce86531e2047bcea7f5de3d42abcb9218eac97accbe320e10
 
 jobs:
-  verify:
-    uses: ./.github/workflows/web-checks.yml
-    with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+  profile:
+    if: github.ref == 'refs/heads/codex/ci-soldier-orders-profile'
+    name: Profile soldier-orders on one runner
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Confirm source is unchanged outside experiment wiring
+        run: |
+          test "$(git rev-parse HEAD^)" = "$FROZEN_SOURCE"
+          git diff --exit-code "$FROZEN_SOURCE" HEAD -- . ':!.github/workflows/remake.yml' ':!.github/experiments/soldier-orders'
+          git apply --check .github/experiments/soldier-orders/timing.patch
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: ./.github/actions/browser-tools
+      - name: Download the exact candidate from successful main CI
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          run-id: 43818021798
+          github-token: ${{ github.token }}
+          name: candidate-web-${{ env.FROZEN_SOURCE }}
+          path: build/web
+      - name: Verify pinned Web content
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_SOURCE" --content-sha256 "$FROZEN_WEB_CONTENT"
+      - name: Run desktop control
+        run: bash .github/experiments/soldier-orders/run.sh desktop-chromium control
+      - name: Run desktop profile
+        run: bash .github/experiments/soldier-orders/run.sh desktop-chromium profile
+      - name: Run touch profile
+        run: bash .github/experiments/soldier-orders/run.sh touch-chromium profile
+      - name: Run touch control
+        run: bash .github/experiments/soldier-orders/run.sh touch-chromium control
+      - name: Confirm Web content after all four invocations
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_SOURCE" --content-sha256 "$FROZEN_WEB_CONTENT"
+      - name: Upload timings and assertion evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: soldier-orders-profile-${{ github.run_attempt }}
+          path: build/soldier-profile
+          if-no-files-found: warn
