@@ -20,11 +20,11 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          fetch-depth: 2
+          fetch-depth: 3
           persist-credentials: false
       - name: Confirm source is unchanged outside experiment wiring
         run: |
-          test "$(git rev-parse HEAD^)" = "$FROZEN_SOURCE"
+          git merge-base --is-ancestor "$FROZEN_SOURCE" HEAD
           git diff --exit-code "$FROZEN_SOURCE" HEAD -- . ':!.github/workflows/remake.yml' ':!.github/experiments/soldier-orders'
           git apply --check .github/experiments/soldier-orders/timing.patch
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7

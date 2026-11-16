@@ -7,8 +7,8 @@ index 9f1dc0d1..68460c19 100644
    if(!piece)return null;
    const action=data.soldierCombatAction,palette=piece.side==='attackers'?'friendly':'enemy';
 -  const row=manifest.types[piece.kind][action][palette],image=new Image();image.src=GamePaths.asset(row.path);await image.decode();
-+  // DOM event timestamps use Chromium's monotonic clock, across paused Playwright ticks.
-+  const now=()=>new Event('soldier-frame-profile').timeStamp, timings={};
++  // The pinned Playwright clock keeps the original browser performance object.
++  const now=()=>globalThis.__pwClock.builtins.performance.now(), timings={};
 +  const row=manifest.types[piece.kind][action][palette];
 +  let start=now();
 +  const image=new Image();image.src=GamePaths.asset(row.path);await image.decode();
@@ -59,12 +59,12 @@ index 9f1dc0d1..68460c19 100644
   const initial=await read(page,false),button=page.locator('#siege-step');
   if(!await button.isVisible())await page.locator('#inspector-toggle').click();await expect(button).toBeEnabled();
   await page.clock.pauseAt(new Date(await page.evaluate(()=>Date.now())+1000));
-+ const readClocks=()=>page.evaluate(()=>({native:new Event('soldier-frame-profile').timeStamp,virtual:performance.now()}));
++ const readClocks=()=>page.evaluate(()=>({native:globalThis.__pwClock.builtins.performance.now(),virtual:performance.now()}));
 + const beforeClockProbe=await readClocks();
 + await new Promise(resolve=>setTimeout(resolve,25));
 + const afterClockProbe=await readClocks();
 + if(afterClockProbe.native<=beforeClockProbe.native||afterClockProbe.virtual!==beforeClockProbe.virtual)
-+  throw Error('Native profiling clock did not advance independently of the paused Playwright clock');
++  throw Error('Unexpected profiling clocks: '+JSON.stringify({beforeClockProbe,afterClockProbe}));
   await button.click({force:true});
   await waitSoldierReplay(page);
 - const samples=new Map(),overlays=new Map();let committed=null,started=false,busyLabelsChecked=false;
