@@ -5,7 +5,7 @@ conquests, consume random numbers, or acknowledge/advance a game from the UI.
 """
 from copy import deepcopy
 import re
-from . import historical_campaigns, observer
+from . import historical_campaigns, observer, three_visits
 from .battle_supply import COALITION_LIMIT, DENOMINATOR, MAX_BATTLE_DAILY_UNITS
 from .city_development import LIMITS as DEVELOPMENT_LIMITS, POPULATION_UNIT, valid_population
 from .dated_events import FOUNDING_TROOP_TARGET
@@ -62,6 +62,8 @@ DETAILS = {
     'faction_coup': {'coup_id','reason','released_troops'},
     'faction_coup_skipped': {'coup_id','reason','released_troops'},
     **{kind: set() for kind in historical_campaigns.EVENT_FACTIONS},
+    historical_campaigns.DONG_ZHUO_RELOCATION: historical_campaigns.DONG_ZHUO_RELOCATION_DETAILS,
+    **{kind: set() for kind in three_visits.STAGES},
     'battle_started': {'battle_id', 'attacker', 'defender'},
     'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered', 'coalition'},
     'duel_started': set(), 'duel_result': {'result'},
@@ -446,6 +448,8 @@ def transition(campaign, before, after, kind, payload):
         return
     for ident, officer in sorted(after.officers.items(), key=lambda item: ref_sort_key(item[0])):
         previous = before.officers.get(ident)
+        if kind == three_visits.COMMAND and officer.person_id == three_visits.ZHUGE_LIANG:
+            continue  # The Longzhong scene records its own enlistment.
         if previous is None:
             if is_generated_ref(ident):
                 continue  # Hiring already emitted the independent staff snapshot.
@@ -610,6 +614,8 @@ def validate(campaign, state):
                 raise ValueError('Diplomacy event receipt')
         if row['kind'] in historical_campaigns.EVENT_FACTIONS:
             historical_campaigns.validate_event(campaign.catalog,state,row)
+        if row['kind'] in three_visits.STAGES:
+            three_visits.validate_event(campaign.catalog,state,row)
         if row['kind'] in {'faction_founded','faction_founding_skipped'}:
             rules={r['id']:r for r in campaign.catalog.data.get('faction_foundings',[])}
             d=row['details']; rule=rules.get(d.get('founding_id'))
