@@ -72,13 +72,17 @@ try{
   assert.match(battleResult,language==='ja'?/劉備（兵士1000）は金400/:/劉備（1000兵）分得金400/);
   assert.match(battleResult,language==='ja'?/成都に帰還/:/返回成都/);
   describer.dispose();
-  for(const [event,icon] of [[developed,'command-city'],[unrest,'command-city'],[exhausted,'command-warehouse']]){
+  for(const [event,scene] of [[developed,'city-developed'],[unrest,'civil-unrest'],[exhausted,'battle-supply-exhausted']]){
    const modal=new Modal(),tasks=[],doc={addEventListener(){},removeEventListener(){},querySelector(){return null;}};
    let current=clone(base);
    const controller=events.create({i18n,document:doc,modal,parentDialog:{open:false},originalUI,dialogue,getView:()=>current,schedule:fn=>tasks.push(fn)});
    controller.observe(current,{baseline:true});while(tasks.length)tasks.shift()();
    current=clone(base);current.game.extension.events={next_id:2,items:[event]};controller.observe(current);while(tasks.length)tasks.shift()();
-   assert(modal.open);assert(modal.innerHTML.includes(`data-existing-icon="${icon}"`));assert(modal.innerHTML.includes('data-dialogue-exchange'));
+   assert(modal.open);
+   assert(modal.innerHTML.includes(`data-event-scene="${scene}"`));
+   assert(modal.innerHTML.includes(`/assets/event-scenes/${scene}.webp`));
+   assert(!modal.innerHTML.includes('data-existing-icon'));
+   assert(modal.innerHTML.includes('data-dialogue-exchange'));
    const state=JSON.stringify(current);controller.clear();assert(controller.history());while(tasks.length)tasks.shift()();assert.equal(JSON.stringify(current),state);controller.dispose();
   }
  }
@@ -86,4 +90,4 @@ try{
  assert.deepEqual([...dialogue.EVENT_KINDS].sort(),Object.keys(events.KINDS).sort());
  assert.equal(JSON.stringify([developed,unrest,exhausted,traded,jointResult,base]),snapshots);
 }finally{Math.random=random;}
-console.log('economy/supply events: strict snapshots, bilingual outcomes, existing artwork and read-only playback passed');
+console.log('economy/supply events: strict snapshots, bilingual outcomes, dedicated backdrops and read-only playback passed');

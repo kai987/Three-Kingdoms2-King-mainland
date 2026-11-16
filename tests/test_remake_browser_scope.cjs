@@ -12,7 +12,7 @@ function load(value,options={}){
 }
 try{
  const full=scopes.loadBrowserScope({planPath:''});
- assert.equal(full.full,true);assert.equal(full.selectedCases.length,50);
+ assert.equal(full.full,true);assert.equal(full.selectedCases.length,52);
  assert.deepEqual(new Set(scopes.readCaseTitles(source)),new Set(scopes.CASE_REGISTRY.cases.map(row=>row.title)));
  const union=new Set();
  for(const group of scopes.CANONICAL_GROUPS){
@@ -65,6 +65,8 @@ try{
  const historical=load(plan(['scenarios'],['mainland188-06']));
  assert.deepEqual(historical.selectedCases.map(row=>row.id),['han-sui-shu','opening-catalog-first']);
  assert.deepEqual(scopes.selectScenarioIds(known,historical),['mainland188-06']);
+ for(const group of ['people','scenarios'])assert(load(plan([group],['mainland190-01'])).selectedCases.some(row=>row.id==='dong-zhuo-relocation'));
+ assert(!historical.selectedCases.some(row=>row.id==='dong-zhuo-relocation'));
  const openingBatches=scopes.OPENING_CASES.map(id=>scopes.selectOpeningScenarioIds(known,full,id));
  assert.deepEqual(openingBatches.map(batch=>batch.length),[18,11]);
  assert.deepEqual([...openingBatches.flat()].sort(),[...known].sort());
@@ -96,5 +98,5 @@ try{
  assert.throws(()=>scopes.loadBrowserScope({planPath:broken}),/cannot read plan JSON/);
  const cli=spawnSync(process.execPath,[path.join(__dirname,'../tools/browser-tests/scope.cjs'),'--plan',broken],{encoding:'utf8'});
  assert.notEqual(cli.status,0);assert(cli.stderr.includes('Browser test scope:'));
- console.log('browser scopes: all 50 cases registered, both opening batches cover 29 exactly once, scenario-local intersections, full/group union, scoped media and fail-closed invalid plans passed');
+ console.log('browser scopes: all 52 cases registered, both opening batches cover 29 exactly once, scenario-local intersections, full/group union, scoped media and fail-closed invalid plans passed');
 }finally{fs.rmSync(directory,{recursive:true,force:true});}

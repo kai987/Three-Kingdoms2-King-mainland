@@ -5,7 +5,7 @@ remake designs. No original engine, ROM tables or control IR are loaded.
 """
 from dataclasses import replace
 from .errors import GameError
-from . import historical_campaigns, observer
+from . import historical_campaigns, observer, three_visits
 from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services, officer_relations, battle_supply, battle_conditions, battle_placement, battle_auto_deployment
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
@@ -126,7 +126,7 @@ class ExpandedCampaign:
         ignore_death = (state.extension.get('lifespan') == 'none'
                         and person.death_year is not None
                         and person.death_year >= self.catalog.data['start_year'])
-        return year_state(person, state.year, ignore_death=ignore_death)
+        return year_state(three_visits.runtime_definition(state, person), state.year, ignore_death=ignore_death)
 
     def _neighbors(self, city, state=None):
         from .route_hazards import _python_route_allowed
@@ -1174,6 +1174,7 @@ class ExpandedCampaign:
         from . import dated_events, succession
         if dated_events.enabled(self.catalog):fields.add('dated_events')
         if historical_campaigns.RECEIPTS in x:fields.add(historical_campaigns.RECEIPTS)
+        if three_visits.COMMAND in x:fields.add(three_visits.COMMAND)
         if 'diplomacy' in x:fields.add('diplomacy')
         if 'lifespan' in x:
             if x['lifespan'] != 'none':raise ValueError('Invalid lifespan mode')
@@ -1181,6 +1182,7 @@ class ExpandedCampaign:
         if not isinstance(x,dict) or set(x)!=fields:raise ValueError('expanded state fields')
         dated_events.validate_state(self,state)
         historical_campaigns.validate_state(self.catalog,state)
+        three_visits.validate_state(self.catalog,state)
         self._validate_travel(state)
         if not isinstance(x['free_locations'],dict) or not isinstance(x['officer_actions'],dict):raise ValueError('personnel state')
         for key,city in x['free_locations'].items():

@@ -102,6 +102,28 @@ class BattlefieldStaticBoundaries(unittest.TestCase):
                 self.assertEqual(result, expected)
 
 
+class EventSceneStaticBoundaries(unittest.TestCase):
+    def test_event_backdrops_are_shipped_by_both_entry_points(self):
+        static = SERVER.event_scene_static_assets()
+        prefix = 'assets/event-scenes/'
+        published = {name: relative for name, relative in WEB.static_allowlist().items()
+                     if name.startswith(prefix)}
+        expected = {f'{prefix}{name}.webp' for name in SERVER.EVENT_SCENE_IDS}
+        self.assertEqual(published, {name: name for name in expected})
+        self.assertEqual(static, {'/' + name: (name, 'image/webp') for name in expected})
+        self.assertEqual({str(file.relative_to(ROOT / 'game'))
+                          for file in (ROOT / 'game' / prefix).glob('*.webp')}, expected)
+        self.assertEqual(len(expected), 93)
+        hashes = {}
+        for name in sorted(expected):
+            with self.subTest(scene=name):
+                raw = WEB.safe_read(ROOT / 'game', name)
+                self.assertEqual((raw[:4], raw[8:12]), (b'RIFF', b'WEBP'))
+                digest = hashlib.sha256(raw).hexdigest()
+                self.assertNotIn(digest, hashes, f'{name} duplicates {hashes.get(digest)}')
+                hashes[digest] = name
+
+
 class SoldierCombatStaticBoundaries(unittest.TestCase):
     PREFIX = '/assets/soldier-combat-actions-v1/'
 

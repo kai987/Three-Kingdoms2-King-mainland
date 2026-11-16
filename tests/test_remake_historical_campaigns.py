@@ -9,9 +9,9 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
-from remake.campaign import Campaign, Catalog
+from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import battle_placement, civil_staff, historical_campaigns as history
+from remake import battle_placement, city_development, civil_staff, facilities, historical_campaigns as history, strategic_ai, treasures
 from remake.historical_chapters import CHAPTERS
 from remake.march_core import using_backend
 from remake.officers import transfer_officers
@@ -639,8 +639,9 @@ class HistoricalCampaignTests(unittest.TestCase):
             '227-02': 'memorial', '234-02': 'wuzhang',
             '249-01': 'gaopingling', '263-05': 'wei_invades_shu',
         }
-        self.assertEqual(set(CHAPTERS), {f'historical_{name}' for name in scenarios.values()})
-        for scenario, name in scenarios.items():
+        cases = [*scenarios.items(), ('190-01', 'dong_zhuo_relocation')]
+        self.assertEqual(set(CHAPTERS), {f'historical_{name}' for _, name in cases})
+        for scenario, name in cases:
             with self.subTest(scenario=scenario):
                 kind = f'historical_{name}'
                 chapter = CHAPTERS[kind]
@@ -689,6 +690,285 @@ class HistoricalCampaignTests(unittest.TestCase):
                         with patch.dict(game.catalog.data['main_scenario'], group=group):
                             history.process(game, state)
                         self.assertNotIn(kind, state.extension[history.RECEIPTS])
+
+    def test_dong_zhuo_relocation_fires_once_when_january_campaign_reaches_february(self):
+        kind = history.DONG_ZHUO_RELOCATION
+        game = self.opening('190-01', 'dong_zhuo')
+        february = deepcopy(game.state)
+        february.month, february.turn = 2, 4
+        plan = dict(target='henei', created_turn=1, last_turn=3, review_turn=6,
+                    arrival_turn=None, orders=[])
+        february.extension['ai_strategy']['dong_zhuo'] = deepcopy(plan)
+        history.process(game, february)
+        self.assertEqual(february.extension[history.RECEIPTS][kind], 4)
+        self.assertEqual(february.extension['ai_strategy']['dong_zhuo'], plan)
+
+        for _ in range(2):
+            self.assertFalse(self.events(game, kind))
+            self.advance(game)
+            self.arrivals(game)
+            self.finish_pending_battles(game)
+        self.assertFalse(self.events(game, kind))
+
+        legacy = self.resume(game)
+        with patch.object(history, '_relocate_court', return_value={}):
+            self.advance(legacy)
+            self.arrivals(legacy)
+            self.finish_pending_battles(legacy)
+        self.advance(game)
+        self.arrivals(game)
+        self.finish_pending_battles(game)
+
+        event, = self.events(game, kind)
+        self.assertEqual((event['year'], event['month'], event['day']), (190, 2, 1))
+        self.assertEqual(event['person_ids'], ['san14-candidate-0736'])
+        self.assertEqual(event['city_ids'], ['henan', 'jingzhao'])
+        self.assertEqual(event['factions'], ['dong_zhuo'])
+        legacy_event, = self.events(legacy, kind)
+        self.assertEqual(legacy_event['details'], {})
+        moved, lost, loot = (event['details'][field] for field in ('moved', 'lost', 'loot'))
+        old_treasury = legacy.state.extension['treasury']
+        treasure_before = old_treasury['cities']['jingzhao']['treasure']
+        self.assertEqual(loot, dict(gold=50_000, grain=100_000, treasure=99 - treasure_before))
+        for field in ('gold', 'grain', 'population'):
+            if field == 'population':
+                unit = city_development.POPULATION_UNIT
+                new = game.state.extension['city_development']['cities']
+                old = legacy.state.extension['city_development']['cities']
+                source_before, target_before = (old[city][field] for city in event['city_ids'])
+                source_after, target_after = (new[city][field] for city in event['city_ids'])
+            else:
+                unit = 1
+                source_before, target_before = (getattr(legacy.state.cities[city], field) for city in event['city_ids'])
+                source_after, target_after = (getattr(game.state.cities[city], field) for city in event['city_ids'])
+            self.assertEqual(moved[field], source_before * 70 // (100 * unit) * unit)
+            self.assertEqual(lost[field], source_before * 25 // (100 * unit) * unit)
+            self.assertEqual(source_after, source_before - moved[field] - lost[field])
+            self.assertEqual(target_after, target_before + moved[field] + loot.get(field, 0))
+        original_town = legacy.state.extension['facilities']['cities']['henan']
+        damaged_town = game.state.extension['facilities']['cities']['henan']
+        self.assertEqual(damaged_town, dict(original_town, town=1, damage=50))
+        self.assertEqual(event['details']['town_before'], original_town['town'])
+        self.assertEqual(event['details']['damage_before'], original_town['damage'])
+        self.assertEqual(event['details']['town_after'], 1)
+        self.assertEqual(event['details']['damage_after'], 50)
+        for key in event['city_ids']:
+            self.assertEqual(game.state.cities[key].roster.officer_ids,
+                             legacy.state.cities[key].roster.officer_ids)
+            self.assertEqual(game.state.cities[key].reserves, legacy.state.cities[key].reserves)
+        expected_treasury = deepcopy(old_treasury)
+        expected_treasury['cities']['jingzhao']['treasure'] += loot['treasure']
+        expected_treasury['ledger']['found'] += loot['treasure']
+        self.assertEqual(game.state.extension['treasury'], expected_treasury)
+        self.assertEqual(game.export_save()['state']['rng'], legacy.export_save()['state']['rng'])
+        legacy = self.resume(legacy)
+        before_legacy_replay = legacy.export_save()
+        history.process(legacy, legacy.state)
+        self.assertEqual(legacy.export_save(), before_legacy_replay)
+
+        movement_only, = self.events(legacy, kind)
+        movement_only['details'] = {key: value for key, value in event['details'].items() if key != 'loot'}
+        legacy = self.resume(legacy)
+        before_legacy_replay = legacy.export_save()
+        history.process(legacy, legacy.state)
+        self.assertEqual(legacy.export_save(), before_legacy_replay)
+
+        previous_loot, = self.events(legacy, kind)
+        previous_loot['details'] = deepcopy(event['details'])
+        del previous_loot['details']['loot']['grain']
+        legacy = self.resume(legacy)
+        before_legacy_replay = legacy.export_save()
+        history.process(legacy, legacy.state)
+        self.assertEqual(legacy.export_save(), before_legacy_replay)
+        game = self.resume(game)
+
+        # Taking the destination blocks the chapter even while Dong Zhuo holds Luoyang.
+        state = deepcopy(game.state)
+        state.extension[history.RECEIPTS].pop(kind)
+        state.cities['jingzhao'].owner = 'neutral'
+        history.process(game, state)
+        self.assertNotIn(kind, state.extension[history.RECEIPTS])
+
+        self.advance(game)
+        self.arrivals(game)
+        self.finish_pending_battles(game)
+        self.assertEqual(self.events(game, kind), [event])
+
+    def test_dong_zhuo_relocation_caps_transfers_and_validates_saved_amounts(self):
+        kind = history.DONG_ZHUO_RELOCATION
+        game = self.opening('190-01', 'dong_zhuo')
+        state = game.state
+        state.month, state.turn = 2, 4
+        source, destination = state.cities['henan'], state.cities['jingzhao']
+        source.gold, source.grain = 1000, 2371
+        destination.gold, destination.grain = facilities.LIMIT - 23, facilities.LIMIT - 23
+        development = state.extension['city_development']['cities']
+        development['henan']['population'] = 15_999
+        development['jingzhao']['population'] = 1_999_700
+        treasures.debit(state, destination.id, treasures.count(state, destination.id), reason='spent')
+
+        history.process(game, state)
+        event, = self.events(game, kind)
+        self.assertEqual(event['details']['moved'], dict(gold=0, grain=0, population=200))
+        self.assertEqual(event['details']['lost'], dict(gold=250, grain=592, population=3900))
+        self.assertEqual(event['details']['loot'], dict(gold=23, grain=23, treasure=99))
+        self.assertEqual((source.gold, source.grain, development['henan']['population']), (750, 1779, 11_899))
+        self.assertEqual((destination.gold, destination.grain, development['jingzhao']['population']),
+                         (facilities.LIMIT, facilities.LIMIT, 1_999_900))
+        self.assertEqual(treasures.count(state, destination.id), 99)
+        self.assertEqual(state.extension['treasury']['ledger']['found'], 99)
+        self.assertTrue(city_development.valid_population(development['henan']['population']))
+        self.assertTrue(city_development.valid_population(development['jingzhao']['population']))
+        history.validate_event(game.catalog, state, event)
+        for section, field, invalid in (('moved', 'population', 1), ('lost', 'gold', -1),
+                                        ('moved', 'grain', facilities.LIMIT), ('moved', 'gold', True),
+                                        ('loot', 'gold', 50_001), ('loot', 'grain', 100_001),
+                                        ('loot', 'grain', False), ('loot', 'treasure', 100),
+                                        ('loot', 'treasure', True)):
+            with self.subTest(section=section, field=field, value=invalid):
+                forged = deepcopy(event)
+                forged['details'][section][field] = invalid
+                with self.assertRaisesRegex(ValueError, 'Historical campaign event'):
+                    history.validate_event(game.catalog, state, forged)
+        forged = deepcopy(event)
+        forged['details']['moved']['grain'] = facilities.LIMIT - 22
+        forged['details']['lost']['grain'] = 0
+        with self.assertRaisesRegex(ValueError, 'Historical campaign event'):
+            history.validate_event(game.catalog, state, forged)
+
+    def test_three_visits_resolves_in_order_and_resumes_each_saved_stage(self):
+        game = self.opening('207-09', 'shu')
+        person = 'san14-candidate-0440'
+        zhuge_liang = game.catalog.ids[person]
+        self.assertEqual(game.catalog.definitions[person].service_year, 208)
+        self.assertNotIn(zhuge_liang, game.state.officers)
+        self.assertEqual(len(self.events(game, 'historical_three_visits')), 1)
+
+        def offer():
+            before = game.export_save()
+            view = Campaign.view(game)['catalog']['three_visits']
+            self.assertEqual(game.export_save(), before)
+            return view
+
+        def reject(payload, *, revision=None):
+            before = game.export_save()
+            current = game.revision
+            with self.assertRaises(GameError):
+                game.command('three_visits', payload, current if revision is None else revision)
+            self.assertEqual(game.export_save(), before)
+            self.assertEqual(game.revision, current)
+
+        for payload in ({'visit': 2}, {'visit': True}, {}):
+            reject(payload)
+
+        kinds = ('historical_three_visits_first', 'historical_three_visits_second',
+                 'historical_longzhong')
+        for visit, kind in enumerate(kinds, start=1):
+            option = offer()
+            self.assertEqual((option['completed_visits'], option['next_visit'],
+                              option['city'], option['can_visit']), (visit - 1, visit, 'yiyang', True))
+            before = game.export_save()['state']
+            revision, turn = game.revision, game.state.turn
+            game.command('three_visits', {'visit': visit}, revision)
+            self.assertEqual(game.state.extension['three_visits'][-1], {'turn': turn, 'city': 'yiyang'})
+            self.assertEqual(len(game.state.extension['three_visits']), visit)
+            self.assertEqual(game.export_save()['state']['rng'], before['rng'])
+            self.assertEqual(game.state.extension['command_books'], before['extension']['command_books'])
+            event, = self.events(game, kind)
+            self.assertEqual(event['turn'], turn)
+            if visit == 3:
+                self.assertIn(person, event['person_ids'])
+            for later in kinds[visit:]:
+                self.assertFalse(self.events(game, later))
+            reject({'visit': visit}, revision=revision)
+            reject({'visit': visit})
+
+            game = self.resume(game)
+            self.assertEqual(len(self.events(game, kind)), 1)
+            if visit < 3:
+                self.assertNotIn(zhuge_liang, game.state.officers)
+                option = offer()
+                self.assertEqual((option['completed_visits'], option['next_visit']), (visit, visit + 1))
+                self.assertFalse(option['can_visit'])
+                reject({'visit': visit + 1})
+                with patch.object(strategic_ai, '_open_ai_queue'):
+                    self.advance(game)
+                self.arrivals(game)
+
+        self.assertEqual((game.state.year, game.state.month), (207, 9))
+        self.assertEqual(game.state.officers[zhuge_liang].faction_id, 'shu')
+        self.assertEqual([city.id for city in game.state.cities.values()
+                          if zhuge_liang in city.roster.officer_ids], ['yiyang'])
+        self.assertNotIn(str(zhuge_liang), game.state.extension['free_locations'])
+        self.assertEqual(game.state.soldiers, before['soldiers'])
+        option = offer()
+        self.assertEqual((option['completed_visits'], option['next_visit'], option['can_visit']),
+                         (3, None, False))
+        reject({'visit': 4})
+
+    def test_three_visits_rejects_another_faction_and_rehashed_invalid_progress(self):
+        rival = self.opening('207-09', 'wei')
+        self.assertEqual(len(self.events(rival, 'historical_three_visits')), 1)
+        self.assertIsNone(Campaign.view(rival)['catalog']['three_visits'])
+        before = rival.export_save()
+        with self.assertRaises(GameError):
+            rival.command('three_visits', {'visit': 1}, rival.revision)
+        self.assertEqual(rival.export_save(), before)
+
+        game = self.opening('207-09', 'shu')
+        game.command('three_visits', {'visit': 1}, game.revision)
+        original = game.export_save()
+        revision = game.revision
+        for damage in ('future turn', 'unknown city', 'duplicate visit'):
+            with self.subTest(damage=damage):
+                malformed = deepcopy(original)
+                progress = malformed['state']['extension']['three_visits']
+                if damage == 'future turn':
+                    progress[0]['turn'] = game.state.turn + 1
+                elif damage == 'unknown city':
+                    progress[0]['city'] = 'missing-city'
+                else:
+                    progress.append(deepcopy(progress[0]))
+                malformed.pop('checksum')
+                malformed['checksum'] = digest(malformed)
+                with self.assertRaises(GameError):
+                    game.load_save(malformed, revision)
+                self.assertEqual(game.export_save(), original)
+                self.assertEqual(game.revision, revision)
+
+    def test_third_visit_cannot_recruit_zhuge_liang_from_another_faction(self):
+        game = self.opening('207-09', 'shu')
+        person = 'san14-candidate-0440'
+        zhuge_liang = game.catalog.ids[person]
+        for visit in (1, 2):
+            game.command('three_visits', {'visit': visit}, game.revision)
+            with patch.object(strategic_ai, '_open_ai_queue'):
+                self.advance(game)
+            self.arrivals(game)
+        with patch.object(strategic_ai, '_open_ai_queue'):
+            for _ in range(10):
+                self.advance(game)
+                self.arrivals(game)
+        self.assertEqual((game.state.year, game.state.month, game.state.day), (208, 1, 1))
+
+        # Represent a rival recruiting the ordinarily available officer while
+        # Liu Bei is still between visits. Keep the real roster consistent.
+        free_locations = game.state.extension['free_locations']
+        self.assertEqual(free_locations.pop(str(zhuge_liang)), 'xiangyang')
+        rival_city = game.state.cities['xiangyang']
+        self.assertEqual(rival_city.owner, 'liu_biao')
+        rival_city.roster.officer_ids.append(zhuge_liang)
+        officer = game.state.officers[zhuge_liang]
+        officer.faction_id = rival_city.owner
+        officer.loyalty = 80
+        game.validate(game.state)
+
+        before = game.export_save()
+        self.assertFalse(Campaign.view(game)['catalog']['three_visits']['can_visit'])
+        with self.assertRaises(GameError):
+            game.command('three_visits', {'visit': 3}, game.revision)
+        self.assertEqual(game.export_save(), before)
+        self.assertFalse(self.events(game, 'historical_longzhong'))
 
     def test_xiangfan_uses_real_xincheng_route_and_keeps_the_sun_liu_pact(self):
         game = self.opening('219-07', 'shu')

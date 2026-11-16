@@ -2,6 +2,7 @@
 'use strict';
 (function(root){
  const CITY_POPULATION_LIMIT=1999999;
+ const RELOCATION_LOOT_LIMITS={gold:50000,grain:100000,treasure:99};
  const CHAPTER_TEXT=Object.freeze({
   historical_youzhou_pacification:{
    title:["劉虞出鎮幽州","劉虞、幽州に赴任"],
@@ -16,6 +17,14 @@
    front:true,
    text:["關東諸軍推袁紹為盟主，曹操亦起兵響應。河內太守王匡屯兵河陽津，本作以河內通往洛陽的路線呈現這條戰線。王匡軍按當前兵糧與道路進退。","関東の諸軍は袁紹を盟主に推し、曹操も挙兵しました。河内太守の王匡は河陽津に駐兵し、本作では河内から洛陽への経路でこの戦線を表します。王匡軍は兵糧と道の状況に応じて進退を決めます。"],
    sources:[["《三國志》武帝紀","https://zh.wikisource.org/zh-hant/三國志/卷01"],["《三國志》董卓傳","https://zh.wikisource.org/zh-hant/三國志/卷06"]]
+  },
+  historical_dong_zhuo_relocation:{
+   title:["董卓遷都長安","董卓、長安へ遷都"],
+   counts:[1,1,2],
+   front:false,
+   text:["初平元年（190年）二月，董卓因關東諸軍起兵，下令將漢獻帝與朝廷由洛陽遷往長安，迫使洛陽百姓西遷。董卓暫留洛陽，後焚燒宮室。《三國志・董卓傳》相連記述遷都與焚宮，《後漢書・獻帝紀》則把獻帝抵達長安與洛陽宮廟焚毀列於三月。《後漢書・董卓傳》也記載董卓命呂布發掘帝陵及公卿等人的墓葬，取走珍寶。遊戲中，長安另可接收增撥的兵糧。",
+    "初平元年（190年）二月、関東の挙兵を受け、董卓は漢の献帝と朝廷を洛陽から長安へ移すよう命じ、洛陽の住民を西へ移住させました。董卓自身はしばらく洛陽に残り、後に宮殿を焼きました。『三国志』の董卓伝は遷都と焼き討ちを続けて伝え、『後漢書』の献帝紀は献帝の長安到着と洛陽の宮殿・宗廟の焼失を三月に記しています。『後漢書』の董卓伝には、董卓が呂布に歴代皇帝や公卿らの墓を掘らせ、財宝を持ち去ったことも記されています。ゲームでは、長安に兵糧も追加で搬入されます。"],
+   sources:[["《三國志》董卓傳","https://zh.wikisource.org/zh-hant/三國志/卷06#董卓"],["《後漢書》獻帝紀","https://zh.wikisource.org/zh-hant/後漢書/卷9#初平"],["《後漢書》董卓傳","https://zh.wikisource.org/zh-hant/後漢書/卷72#董卓"]]
   },
   historical_sun_jian_jingzhou:{
    title:["孫堅進兵荊州","孫堅、荊州へ進軍"],
@@ -56,7 +65,7 @@
    title:["徐庶薦諸葛亮","徐庶、諸葛亮を推薦"],
    counts:[2,3,2],
    front:false,
-   text:["徐庶向劉備推薦諸葛亮。《三國志》記劉備在新野駐屯時曾三次前往拜訪，請教天下大勢。本作以章陵與襄陽標示荊州的活動範圍，諸葛亮仍依本局登場與招募規則加入。","徐庶が劉備に諸葛亮を推薦した。『三国志』は、劉備が新野に駐屯していた頃に三度訪ね、天下の情勢について教えを請うたと伝える。本作では章陵と襄陽で荊州での活動範囲を示す。諸葛亮はこの戦局の登場・登用ルールに従って加わる。"],
+   text:["徐庶向劉備推薦諸葛亮。《三國志》記載，劉備駐屯新野時曾三次親往拜訪。劉備可從所在城池的「城政」啟程，每旬拜訪一次。","徐庶が劉備に諸葛亮を推薦した。『三国志』には、新野に駐屯していた劉備が自ら三度訪ねたとある。劉備のいる都市の「都市」メニューから、ひと旬に一度訪ねられる。"],
    sources:[["《三國志·諸葛亮傳》","https://zh.wikisource.org/zh-hant/三國志/卷35"],["《三國志·先主傳》","https://zh.wikisource.org/zh-hant/三國志/卷32"]]
   },
   historical_yizhou_campaign:{
@@ -102,8 +111,14 @@
    sources:[["《三國志》陳留王紀","https://zh.wikisource.org/zh-hant/三國志/卷04#陳留王"],["《三國志》鄧艾、鍾會傳","https://zh.wikisource.org/zh-hant/三國志/卷28#鄧艾"]]
   }
  });
+ const THREE_VISITS=Object.freeze({
+  historical_three_visits_first:['初訪隆中','隆中への一訪'],
+  historical_three_visits_second:['再訪隆中','隆中への再訪'],
+  historical_longzhong:['隆中對','隆中対']
+ });
  const KINDS=Object.freeze({
   ...Object.fromEntries(Object.entries(CHAPTER_TEXT).map(([kind,chapter])=>[kind,chapter.title])),
+  ...THREE_VISITS,
   campaign_start:['戰役揭幕','戦役の開幕'],officer_appeared:['武將登場','武将の登場'],
   recruit_success:['登用成功','登用に成功'],recruit_failure:['登用未果','登用を断られました'],
   defection:['武將轉屬','武将の移籍'],officer_death:['武將逝世','武将の死去'],
@@ -143,6 +158,36 @@
   staff_salary:['文吏月俸與成果','文官の俸給と業務成果'],staff_allegiance:['文吏留任','文官の留任'],
   diplomacy_result:['外交結果','外交の結果'],domestic_report:['內政執行摘要','内政の実行報告'],transport_departed:['運輸隊出發','輸送隊の出発'],transport_arrived:['運輸隊抵達','輸送隊の到着'],transport_returned:['運輸隊折返','輸送隊の帰還'],transport_weather:['運輸途中遇險','輸送中の災害']
  });
+ // Each registered kind owns one scene. The established IDs preserve artwork
+ // already drawn for a single event, and disasters choose their own variant.
+ const ESTABLISHED_SCENES=Object.freeze({
+  historical_three_visits:'longzhong-road',
+  historical_three_visits_first:'longzhong-first',
+  historical_three_visits_second:'longzhong-second',
+  historical_longzhong:'longzhong-study',
+  historical_guandu:'guandu',
+  historical_cao_southern_campaign:'red-cliffs',
+  historical_sun_liu_marriage:'wedding',
+  officer_death:'memorial'
+ });
+ const SCENE_ALT=Object.freeze({
+  'longzhong-road':['通往隆中的山間小路','隆中へ続く山道'],
+  'longzhong-first':['隆中草廬的院門','隆中の草庵の門'],
+  'longzhong-second':['再次拜訪的隆中草廬','二度目に訪ねた隆中の草庵'],
+  'longzhong-study':['草廬裡的書案與竹簡','草庵の文机と竹簡'],
+  guandu:['官渡平原的兩軍旌旗','官渡の平原に立つ両軍の旗'],
+  'red-cliffs':['赤壁江面上的戰船','赤壁の川面に並ぶ軍船'],
+  'historical-dong-zhuo-relocation':['洛陽宮城火光下西行的車隊','燃える洛陽の宮城を後に、西へ向かう車列'],
+  wedding:['婚禮堂上的紅幔與燈火','婚礼の広間を飾る赤い幕と灯り'],
+  memorial:['供奉牌位的廳堂','位牌を安置した広間'],
+  flood:['遭洪水淹沒的城郊','洪水に見舞われた町外れ'],
+  drought:['乾旱開裂的田地','干ばつでひび割れた農地']
+ });
+ function sceneForEvent(row){
+  if(!Object.hasOwn(KINDS,row?.kind))return undefined;
+  if(row.kind==='city_disaster')return row.details?.disaster==='flood'?'flood':'drought';
+  return ESTABLISHED_SCENES[row.kind]??row.kind.replaceAll('_','-');
+ }
  const STAFF=new Set(['staff_candidate','staff_hired','staff_declined','staff_expired','staff_salary','staff_allegiance']);
  const OPERATIONS=new Set(['domestic_report','transport_departed','transport_arrived','transport_returned','transport_weather']);
  const FACILITIES=new Set(['town_developed','officer_treated','officer_studied','grain_traded','equipment_bought','prevention_improved','city_disaster']);
@@ -172,7 +217,13 @@
   return !!row&&Number.isSafeInteger(row.id)&&row.id>0&&Object.hasOwn(KINDS,row.kind)&&['player','world'].includes(row.audience)&&
    Number.isSafeInteger(row.year)&&row.year>0&&Number.isInteger(row.month)&&row.month>=1&&row.month<=12&&[1,11,21].includes(row.day)&&Number.isSafeInteger(row.turn)&&row.turn>0&&
    ['person_ids','city_ids','factions'].every(key=>Array.isArray(row[key])&&row[key].every(id=>typeof id==='string'&&id.length<=128))&&
-   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row,cityCount))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!CITY_OPERATIONS.has(row.kind)||validCityDevelopmentEvent(row))&&(row.kind!=='battle_supply_exhausted'||validBattleSupplyEvent(row))&&(row.kind!=='battle_result'||!Object.hasOwn(row.details,'coalition')||validCoalitionCapture(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row,cityCount))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(!Object.hasOwn(HISTORICAL_CAMPAIGNS,row.kind)||validHistoricalCampaign(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row))&&(row.kind!=='tactic'||validTacticEvent(row));
+   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row,cityCount))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!CITY_OPERATIONS.has(row.kind)||validCityDevelopmentEvent(row))&&(row.kind!=='battle_supply_exhausted'||validBattleSupplyEvent(row))&&(row.kind!=='battle_result'||!Object.hasOwn(row.details,'coalition')||validCoalitionCapture(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row,cityCount))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(!Object.hasOwn(HISTORICAL_CAMPAIGNS,row.kind)||validHistoricalCampaign(row))&&(!Object.hasOwn(THREE_VISITS,row.kind)||validThreeVisit(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row))&&(row.kind!=='tactic'||validTacticEvent(row));
+ }
+ function validThreeVisit(row){
+  const {audience,factions,person_ids:people,city_ids:cities,details}=row;
+  return audience==='player'&&factions.length===1&&factions[0]==='shu'&&Object.keys(details).length===0&&
+   people.length===2&&people[0]==='san14-candidate-0952'&&people[1]==='san14-candidate-0440'&&
+   cities.length>=1&&cities.length<=2&&cities.at(-1)==='xiangyang'&&cities.every(id=>id&&id.trim()===id)&&new Set(cities).size===cities.length;
  }
  function validDiplomacyEvent(row){
   const d=row.details;
@@ -186,8 +237,31 @@
  function validHistoricalCampaign(row){
   const validIds=(ids,min,max)=>ids.length>=min&&ids.length<=max&&ids.every(id=>id.length>0&&id.trim()===id)&&new Set(ids).size===ids.length;
   const [factions,people,cities]=HISTORICAL_CAMPAIGNS[row.kind];
-  return row.audience==='world'&&Object.keys(row.details).length===0&&
+  const validDetails=row.kind==='historical_dong_zhuo_relocation'?validDongZhuoRelocation(row):Object.keys(row.details).length===0;
+  return row.audience==='world'&&validDetails&&
    validIds(row.person_ids,people??1,people??4)&&validIds(row.city_ids,cities??1,cities??8)&&validIds(row.factions,factions,factions);
+ }
+ function validDongZhuoRelocation(row){
+  if(row.year!==190||row.month!==2||row.factions[0]!=='dong_zhuo'||row.person_ids[0]!=='san14-candidate-0736'||
+     row.city_ids[0]!=='henan'||row.city_ids[1]!=='jingzhao')return false;
+  const d=row.details,keys=Object.keys(d);
+  if(!keys.length)return true;
+  const inRange=(value,min,max)=>Number.isSafeInteger(value)&&value>=min&&value<=max;
+  const hasLoot=Object.hasOwn(d,'loot'),expectedKeys=`damage_after,damage_before,${hasLoot?'loot,':''}lost,moved,town_after,town_before`;
+  if(keys.sort().join(',')!==expectedKeys||
+     !inRange(d.town_before,1,3)||d.town_after!==1||!inRange(d.damage_before,0,50)||d.damage_after!==50)return false;
+  const {moved,lost,loot}=d,limits={gold:100000000,grain:100000000,population:CITY_POPULATION_LIMIT};
+  if(hasLoot){
+   if(!loot||typeof loot!=='object'||Array.isArray(loot))return false;
+   const lootFields=Object.hasOwn(loot,'grain')?['gold','grain','treasure']:['gold','treasure'];
+   if(Object.keys(loot).sort().join(',')!==lootFields.join(',')||
+      lootFields.some(field=>!inRange(loot[field],0,RELOCATION_LOOT_LIMITS[field])))return false;
+  }
+  return [moved,lost].every(amounts=>amounts&&typeof amounts==='object'&&!Array.isArray(amounts)&&
+   Object.keys(amounts).sort().join(',')==='gold,grain,population'&&amounts.population%100===0&&
+   Object.entries(limits).every(([field,cap])=>inRange(amounts[field],0,cap)))&&
+   Object.entries(limits).every(([field,cap])=>moved[field]+lost[field]<=cap)&&
+   (!hasLoot||(moved.gold+loot.gold<=limits.gold&&moved.grain+(loot.grain??0)<=limits.grain));
  }
  function validTacticEvent(row){
   const d=row.details,base=['tactic','success'],extra=Object.keys(d).filter(k=>!base.includes(k));
@@ -382,6 +456,9 @@
    }
    const n=names(row),p=n.people.join(text('、','・'))||text('武將','武将'),c=n.cities.join(' → ')||text('戰役地圖','戦役地図'),f=n.factions.at(-1)||text('本方','自軍'),d=row.details;
    switch(row.kind){
+    case 'historical_three_visits_first':return text('劉備第一次到隆中，諸葛亮外出未歸。下旬可再訪。','劉備が初めて隆中を訪ねたが、諸葛亮は外出していた。次の旬にまた訪ねられる。');
+    case 'historical_three_visits_second':return text('劉備第二次到隆中，仍未見到諸葛亮，便留下書信。下旬可再訪。','劉備は再び隆中を訪ねたが、諸葛亮に会えず、書状を残した。次の旬にまた訪ねられる。');
+    case 'historical_longzhong':return text(`劉備第三次到隆中，終於見到諸葛亮。兩人議定方略，諸葛亮應邀出仕，已列入${n.cities[0]}的武將名冊。`,`三度目の訪問で、劉備はついに諸葛亮と会った。方略を語り合った後、諸葛亮は招きに応じて仕官し、${n.cities[0]}の武将名簿に加わった。`);
     case 'diplomacy_result':{
      const envoy=n.people[0],prisoner=n.people[1],targetCity=n.cities[1],sender=n.factions[0];
      if(d.action==='goodwill')return text(`${envoy}向${f}送上禮物，外交感情升至${d.score}。`,`${envoy}が${f}に贈り物を届け、外交感情が${d.score}に上がりました。`);
@@ -553,8 +630,34 @@
     default:{const attacker=n.factions[0]||f;return text(`${attacker}正規劃以${c}為目標的${d.coordinated?'多路協同':'進軍'}作戰。計畫可能包含尚未出發的部隊，實際行軍請核對在途名冊。`,`${attacker}が${c}を目標とする${d.coordinated?'複数部隊の連携':'進軍'}作戦を計画しています。未出発の部隊を含む場合があるため、実際の行軍は行軍中の名簿で確認してください。`);}
    }
   }
+  function relocationEffects(row){
+   if(row.kind!=='historical_dong_zhuo_relocation'||!Object.hasOwn(row.details,'moved'))return '';
+   const {moved,lost,loot,town_before,town_after,damage_before,damage_after}=row.details;
+   let lootRow='';
+   if(loot){
+    const hasGrain=Object.hasOwn(loot,'grain'),treasureName=text('寶物','宝物'),treasureUnit=text('件','点');
+    const label=hasGrain?text('長安額外入庫','長安への追加搬入'):text('陵墓所得入長安','陵墓から長安に入った財宝');
+    const amountList=amounts=>[
+     `金 ${amounts.gold}`,`${treasureName} ${amounts.treasure} ${treasureUnit}`,
+     ...(hasGrain?[`兵糧 ${amounts.grain}`]:[])
+    ].join('、');
+    const cappedLoot=Object.entries(loot).some(([field,value])=>value<RELOCATION_LOOT_LIMITS[field]);
+    const capacityNote=cappedLoot?text(
+     `（${amountList(RELOCATION_LOOT_LIMITS)}，按庫存容量入庫）`,
+     `（${amountList(RELOCATION_LOOT_LIMITS)}のうち、保管できる分を収納）`
+    ):'';
+    lootRow=`<div data-relocation-loot><strong>${label}</strong> ${amountList(loot)}${capacityNote}</div>`;
+   }
+   return `<section class="event-facts" data-event-relocation-effects aria-label="${text('遷都結算','遷都の結果')}">
+     <div data-relocation-moved><strong>${text('轉入長安','長安へ移転')}</strong> 金 ${moved.gold}、兵糧 ${moved.grain}、人口 ${moved.population} 人</div>
+     <div data-relocation-lost><strong>${text('洛陽損失','洛陽の損失')}</strong> 金 ${lost.gold}、兵糧 ${lost.grain}、${text('離散','離散者')} ${lost.population} 人</div>
+     ${lootRow}
+     <div data-relocation-facilities><strong>${text('洛陽設施','洛陽の施設')}</strong> ${text(`城町等級 ${town_before} → ${town_after}、災損 ${damage_before} → ${damage_after}`,`町等級 ${town_before} → ${town_after}、被害 ${damage_before} → ${damage_after}`)}</div>
+     <small>${text('以上為遊戲內結算數值。','以上はゲーム内の処理結果です。')}</small>
+    </section>`;
+  }
   function historicalIntroduction(row){
-   const chapter=CHAPTER_TEXT[row.kind];
+   const chapter=row.kind==='historical_longzhong'?CHAPTER_TEXT.historical_three_visits:CHAPTER_TEXT[row.kind];
    if(chapter){
     const links=chapter.sources.map(([label,url])=>`<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${escape(label)}</a>`).join(' · ');
     return `<aside class="event-history"><h3>${text('參考史料','参照史料')}</h3><p class="event-history-sources">${links}</p></aside>`;
@@ -588,49 +691,51 @@
    return `<aside class="event-history" data-event-history="qiao-${row.year}"><h3>${text('史實背景','史実の背景')}</h3><p>${escape(body)}</p><p class="event-history-sources">${text('史料：','史料：')}${sources.map(([tc,ja])=>`<a href="https://zh.wikisource.org/zh-hant/三國志/${tc}" target="_blank" rel="noopener noreferrer">${escape(text(`《三國志》${tc}`,`『三國志』${ja}`))}</a>`).join(' · ')}</p></aside>`;
   }
   function illustration(rows){
-   const row=rows[0],catalog=view?.catalog||{},world=catalog.world||{x:0,y:0,width:1352,height:1024,background:'/assets/map-navigation.png'};
-   const ids=[...new Set(rows.flatMap(e=>[...e.person_ids,...(typeof e.details.actor==='string'?[e.details.actor]:[])]))].slice(0,4);
-   const targetScene=new Set(['battle_started','battle_result','battle_supply_exhausted','tactic','duel_started','duel_result','march_weather','route_discovered','march_arrived','ai_campaign','march_resupplied','march_starvation','march_retreat','historical_sun_liu_marriage','historical_hefei','historical_hanzhong_preparation','historical_hanzhong','historical_liaodong']);
-   const cityIds=(Object.hasOwn(CHAPTER_TEXT,row.kind)||targetScene.has(row.kind))?[...row.city_ids].reverse():row.city_ids;
-   const cityId=cityIds.find(id=>catalog.cities?.some(c=>c.id===id))||catalog.factions?.find(f=>f.id===view?.game?.player)?.city;
-   const city=catalog.cities?.find(c=>c.id===cityId),center=city?.position||[(world.x||0)+world.width/2,(world.y||0)+world.height/2];
-   const background=catalog.map_presentation?.road_center_corrections?.backgrounds?.[world.background]||world.background;
-   const safeBackground=/^\/assets\/map(?:-[a-z-]+)?\.png$/.test(background||'')?background:'/assets/map-navigation.png';
-   const baseBackgroundHref=root.GamePaths?.asset(safeBackground)||safeBackground;
-   const backgroundHref=root.GameMapTerrain?.controller?.resolve(baseBackgroundHref)??baseBackgroundHref;
-   const x=Math.max(world.x||0,Math.min(center[0]-144,(world.x||0)+world.width-288)),y=Math.max(world.y||0,Math.min(center[1]-86,(world.y||0)+world.height-172));
-   const fill=catalog.map_presentation?.castle_fill_pixels||[],outline=catalog.map_presentation?.castle_outline_pixels||[];
-   const sprite=city?[[outline,'#000'],[fill,'#fff']].map(([pixels,color])=>pixels.map(([dx,dy])=>`<rect x="${center[0]+dx}" y="${center[1]+dy}" width="4" height="4" fill="${color}"/>`).join('')).join(''):'';
-   const art=`<svg class="event-map" viewBox="${x} ${y} 288 172" role="img" aria-label="${escape(text('事件所在地圖示意','出来事の場所を示す地図'))}"><image href="${escape(backgroundHref)}" x="${world.x||0}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${sprite}</svg>`;
+   const row=rows[0];
+   const ids=[...new Set(rows.flatMap(e=>{
+    const absent=['historical_three_visits_first','historical_three_visits_second'].includes(e.kind);
+    return [...(absent?e.person_ids.slice(0,1):e.person_ids),...(typeof e.details.actor==='string'?[e.details.actor]:[])];
+   }))].slice(0,4);
    let people=ids.map(id=>{const name=names({...row,person_ids:[id]}).people[0];return portraits?.entry?.(id)?`<figure class="event-person">${portraits.html(id,name,{size:'duel'})}<figcaption>${escape(name)}</figcaption></figure>`:'';}).join('');
    if(STAFF.has(row.kind)){
     const staff=[...new Map(rows.filter(e=>/^clerk-[0-9]{6,12}$/.test(e.details.staff_id||'')&&['clerk-1','clerk-2','clerk-3'].includes(e.details.portrait)).map(e=>[e.details.staff_id,e.details])).values()].slice(0,4);
     people+=staff.map(d=>`<figure class="event-person" data-event-staff="${escape(d.staff_id)}">${portraits?.civilHtml?portraits.civilHtml(d.portrait,d.name,{className:'event-staff-face',locale:locale()}):`<img class="event-staff-face" src="${root.GamePaths?.asset(`/assets/civil-staff/${d.portrait}.png`)||`/assets/civil-staff/${d.portrait}.png`}" width="32" height="40" alt="${escape(text(`${label(d.name)}・架空文吏共用像素肖像`,`${label(d.name)}・架空文官の共通ドット肖像`))}"/>`}<figcaption>${escape(label(d.name))}</figcaption></figure>`).join('');
    }
-   // Artwork only decorates the already committed event. Missing helpers/assets
-   // keep the existing illustration; helpers never receive commands or event data.
-   const originalUI=options.originalUI||root.GameOriginalUI,sceneId={equipment_bought:'armory',grain_traded:'market',treasure_sold:'market',transport_departed:'sortie'}[row.kind];
+   const backdropId=sceneForEvent(row);
+   const [titleTc,titleJa]=KINDS[row.kind];
+   const [backdropTc,backdropJa]=SCENE_ALT[backdropId]||[titleTc+'場景',titleJa+'の場面'];
+   const path=`/assets/event-scenes/${backdropId}.webp`;
+   const backdrop=`<img class="event-scene" data-event-scene="${escape(backdropId)}" src="${escape(root.GamePaths?.asset(path)||path)}" alt="${escape(text(backdropTc,backdropJa))}" decoding="async" draggable="false">`;
+   const originalUI=options.originalUI||root.GameOriginalUI,sceneId={equipment_bought:'armory',grain_traded:'market',transport_departed:'sortie'}[row.kind];
    const scene=sceneId&&typeof originalUI?.scene==='function'?originalUI.scene(sceneId,{locale:locale(),className:'event-original-scene'}):'';
-   const iconId={officer_treated:'facility-hospital',officer_studied:'facility-school',city_developed:'command-city',civil_unrest:'command-city',battle_supply_exhausted:'command-warehouse'}[row.kind];
-   const icon=iconId&&typeof originalUI?.icon==='function'?originalUI.icon(iconId,{locale:locale(),className:'event-original-icon'}):'';
-   if(scene||icon){
-    const captions={equipment_bought:['武具店 · 武具購置','武具店・武具の購入'],grain_traded:['市場 · 米糧交易','市場・兵糧の取引'],treasure_sold:['市場 · 寶物出售','市場・宝の売却'],transport_departed:['運輸隊出發','輸送隊の出発'],officer_treated:['醫館 · 武將療傷','医館・武将の治療'],officer_studied:['學問所 · 武將進修','学問所・武将の学習'],city_developed:['城政 · 都市開發','都市の命令・都市開発'],civil_unrest:['城政 · 統治不穩示意','都市の命令・統治不安定のイメージ'],battle_supply_exhausted:['軍需 · 戰場缺糧示意','軍需・戦場の兵糧不足のイメージ']};
-    const caption=text(...captions[row.kind]);
-    return `<div class="event-art event-art-original original-ui-frame${icon?' event-art-icon':''}" data-event-art="${scene?`scene-${sceneId}`:`icon-${iconId}`}" data-event-art-use="${row.kind==='transport_departed'?'remake-adaptation':'original-context'}"><div class="event-original-stage">${scene||icon}</div>${people?`<div class="event-people">${people}</div>`:''}</div><p class="event-art-caption">${escape(caption)}</p>`;
+   const captions={equipment_bought:['武具店 · 武具購置','武具店・武具の購入'],grain_traded:['市場 · 米糧交易','市場・兵糧の取引'],transport_departed:['運輸隊出發','輸送隊の出発'],officer_treated:['醫館 · 武將療傷','医館・武将の治療'],officer_studied:['學問所 · 學問進修','学問所・武将の学習'],city_developed:['城政 · 都市開發','都市の命令・都市開発'],civil_unrest:['城政 · 統治不穩示意','都市の命令・統治不安定のイメージ'],battle_supply_exhausted:['軍需 · 戰場缺糧示意','軍需・戦場の兵糧不足のイメージ']};
+   if(scene||(!sceneId&&Object.hasOwn(captions,row.kind))){
+    const caption=text(...captions[row.kind]),frame=scene?'event-art-original':'event-art-captioned';
+    const provenance=scene?` data-event-art="scene-${sceneId}" data-event-art-use="${row.kind==='transport_departed'?'remake-adaptation':'original-context'}"`:'';
+    return `<div class="event-art ${frame} original-ui-frame"${provenance}><div class="event-original-stage">${scene||backdrop}</div>${people?`<div class="event-people">${people}</div>`:''}</div><p class="event-art-caption">${escape(caption)}</p>`;
    }
-   const facilityArt=FACILITIES.has(row.kind)?`<svg class="event-facility" viewBox="0 0 40 32" shape-rendering="crispEdges" role="img" aria-label="${escape(text(row.kind==='city_disaster'?'城池災害像素示意':'城內設施像素示意',row.kind==='city_disaster'?'都市災害のドット画':'都市施設のドット画'))}"><path fill="#000" d="M9 9h21v19H9zM4 11h31v4H4zM8 7h23v4H8zM12 3h15v4H12z"/><path fill="#a43b08" d="M8 11h23v3H8zM12 7h15v3H12z"/><path fill="#ffd582" d="M12 15h15v12H12z"/><path fill="#000" d="M17 18h5v10h-5z"/>${row.kind==='city_disaster'?`<path fill="${row.details.disaster==='flood'?'#0088ef':'#dc7212'}" d="M0 23h10v3H0zM8 26h14v3H8zM24 23h16v3H24zM0 29h40v3H0z"/>`:`<path fill="#fff" d="M5 17h5v6H5zM28 17h5v6h-5z"/>`}</svg>`:'';
-   const treasureArt=TREASURY.has(row.kind)?`<svg class="event-treasure" viewBox="0 0 32 28" shape-rendering="crispEdges" role="img" aria-label="${escape(text('寶箱與賞賜金錢示意','宝箱と褒美の資金のイメージ'))}"><path fill="#000" d="M4 3h20v3h3v17H1V6h3z"/><path fill="#aa4b00" d="M4 6h20v14H4z"/><path fill="#ffac20" d="M4 6h20v4H4zM4 13h20v2H4z"/><path fill="#ffdd60" d="M7 6h3v14H7zM18 6h3v14h-3zM12 11h4v6h-4z"/><path fill="#000" d="M21 20h9v6H18v-3h3z"/><path fill="#ffdd60" d="M22 21h6v3h-6zM19 24h9v1h-9z"/></svg>`:'';
-   return `<div class="event-art">${art}${treasureArt}${facilityArt}${people?`<div class="event-people">${people}</div>`:''}</div><p class="event-art-caption">${escape(STAFF.has(row.kind)?text('事件示意：目前地圖與架空文吏共用像素肖像；文吏另建名冊，不占歷史人物身分。','場面イメージ：現在の地図と架空文官の共通ドット肖像。文官は歴史人物とは別の名簿で管理します。'):text('事件示意：目前地圖與武將像素肖像','場面イメージ：現在の地図と武将のドット肖像'))}</p>`;
+   return `<div class="event-art event-art-scene">${backdrop}${people?`<div class="event-people">${people}</div>`:''}</div>`;
   }
   function render(){
    if(!active||!modal||disposed)return;
    const row=active[0],period={1:'上旬',11:'中旬',21:'下旬'}[row.day],count=active.length>1?text(` · 共${active.length}項`,` · ${active.length}件`):'',cities=[...new Set(active.flatMap(e=>names(e).cities))].join(text('、','・'));
-   const dialogue=options.dialogue||root.GameDialogue;
-   modal.innerHTML=`<div data-event-root data-l10n-native="${locale()}"><div class="event-heading"><div><p class="event-kicker">${escape(historyMode?text('事件回顧','出来事の記録'):text('戰役事件','戦役の出来事'))} · ${shown}/${total}</p><h2 id="event-title">${escape(row.kind==='tactic'&&row.details.qimen_phase==='daily'?text('奇門日界效果','奇門の日界効果'):KINDS[row.kind][locale()==='ja'?1:0])}${escape(count)}</h2></div><label class="language-picker">${text('語言','言語')}<select data-language-picker aria-label="${text('切換語言','言語切替')}"><option value="zh-Hant" ${locale()==='zh-Hant'?'selected':''}>繁體中文</option><option value="ja" ${locale()==='ja'?'selected':''}>日本語</option></select></label></div><p class="event-date">${row.year}年${row.month}月${period}${cities?`<span class="event-location"> · ${escape(cities)}</span>`:''}</p>${illustration(active)}<div id="event-description" class="event-description">${active.map(e=>`${dialogue?.html&&dialogue?.event?dialogue.html(dialogue.event(e,view,locale(),i18n),{language:locale(),portraits}):''}<p class="event-facts">${escape(description(e))}</p>${historicalIntroduction(e)}`).join('')}</div><div class="dialog-actions event-actions">${queue.length?`<button data-event-skip>${text('略過本批','この一括表示を終了')}</button>`:''}<button class="primary" data-event-next autofocus>${queue.length?text('下一則','次へ'):text('返回戰役','戦役に戻る')}</button></div></div>`;
+   const dialogue=options.dialogue||root.GameDialogue,progress=view?.catalog?.three_visits;
+   const visit=options.onVisit&&!historyMode&&row.kind==='historical_three_visits'&&progress?.can_visit&&progress.next_visit===1
+    ? `<button class="primary" data-event-visit autofocus>${text('前往隆中拜訪','隆中へ訪ねる')}</button>` : '';
+   modal.innerHTML=`<div data-event-root data-event-kind="${row.kind}" data-l10n-native="${locale()}"><div class="event-heading"><div><p class="event-kicker">${escape(historyMode?text('事件回顧','出来事の記録'):text('戰役事件','戦役の出来事'))} · ${shown}/${total}</p><h2 id="event-title">${escape(row.kind==='tactic'&&row.details.qimen_phase==='daily'?text('奇門日界效果','奇門の日界効果'):KINDS[row.kind][locale()==='ja'?1:0])}${escape(count)}</h2></div><label class="language-picker">${text('語言','言語')}<select data-language-picker aria-label="${text('切換語言','言語切替')}"><option value="zh-Hant" ${locale()==='zh-Hant'?'selected':''}>繁體中文</option><option value="ja" ${locale()==='ja'?'selected':''}>日本語</option></select></label></div><p class="event-date">${row.year}年${row.month}月${period}${cities?`<span class="event-location"> · ${escape(cities)}</span>`:''}</p>${illustration(active)}<div id="event-description" class="event-description">${active.map(e=>`${relocationEffects(e)}${dialogue?.html&&dialogue?.event?dialogue.html(dialogue.event(e,view,locale(),i18n),{language:locale(),portraits}):''}<p class="event-facts">${escape(description(e))}</p>${historicalIntroduction(e)}`).join('')}</div><div class="dialog-actions event-actions">${visit}${queue.length?`<button data-event-skip>${text('略過本批','この一括表示を終了')}</button>`:''}<button data-event-next${visit?'':' class="primary" autofocus'}>${queue.length?text('下一則','次へ'):text('返回戰役','戦役に戻る')}</button></div></div>`;
    modal.querySelector('[data-event-next]').onclick=advance;
+   if(visit){
+    const button=modal.querySelector('[data-event-visit]'),group=active;
+    button.onclick=async()=>{
+     if(active!==group||isBusy()||button.disabled)return;
+     button.disabled=true;
+     if(await options.onVisit(1)){if(active===group)advance();}
+     else if(active===group)render();
+    };
+   }
    const skip=modal.querySelector('[data-event-skip]');if(skip)skip.onclick=clear;
    if(!modal.open)modal.showModal();
-   modal.querySelector('[data-event-next]')?.focus({preventScroll:true});
+   modal.querySelector(visit?'[data-event-visit]':'[data-event-next]')?.focus({preventScroll:true});
   }
   function blocked(){return !modal||disposed||isBusy()||isPreview()||parent?.open;}
   function pump(){
@@ -669,5 +774,5 @@
    dispose(){clear();disposed=true;modal?.removeEventListener?.('cancel',onCancel);modal?.removeEventListener?.('close',onClose);parent?.removeEventListener?.('close',requestPump);doc?.removeEventListener?.('game-language-change',onLanguage);}
   });
  }
- if(typeof module==='object'&&module.exports)module.exports={create,validEvent,eventRows,campaignKey,groupRows,KINDS};else root.GameEvents={create};
+ if(typeof module==='object'&&module.exports)module.exports={create,validEvent,eventRows,campaignKey,groupRows,KINDS,sceneForEvent};else root.GameEvents={create};
 })(typeof window==='object'?window:globalThis);

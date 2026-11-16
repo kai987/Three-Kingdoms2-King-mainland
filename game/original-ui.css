@@ -4,8 +4,8 @@
 :where(.original-ui-scene){width:auto}
 .original-ui-frame{border:4px double var(--ink,#000);background:var(--paper,#ffd4c8)}
 /* Slices stop at the observed inner photograph boundary; its center is not drawn. */
-.event-art-original:not(.event-art-icon){border:0;background:transparent}
-.event-art-original:not(.event-art-icon) .event-original-stage{
+.event-art.event-art-original{border:0;background:transparent}
+.event-art-original .event-original-stage{
  display:block;width:fit-content;max-width:100%;justify-self:center;
  border-style:double;border-color:var(--ink,#000);border-width:15px 18px 16px;
  border-image-source:url('/assets/original-ui/event-decorative-frame-4x.png');

@@ -39,7 +39,7 @@ document.addEventListener('visibilitychange',()=>{
   scheduleObserver();
  }
 });
-const gameEvents=typeof GameEvents==='undefined'?null:GameEvents.create({getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview,parentDialog:dialog});
+const gameEvents=typeof GameEvents==='undefined'?null:GameEvents.create({getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview,parentDialog:dialog,onVisit:submitThreeVisit});
 let audioOutcome=null;
 // Browsers require a real gesture before creating/resuming the audio context.
 for(const type of ['pointerdown','keydown'])document.addEventListener(type,event=>{if(event.isTrusted)void gameAudio.unlock();},{capture:true});
@@ -342,7 +342,7 @@ async function command(kind,payload={}){
    if(kind==='observe_turn'&&view.game.year>previousView.game?.year)checkpoint='observer-year';
   }else if(kind==='new')checkpoint='new';
   else if(kind==='settle'||['result','finished'].includes(view.game?.phase))checkpoint='battle';
-  else if(kind==='battle_place')checkpoint='progress';
+  else if(kind==='battle_place'||kind==='three_visits')checkpoint='progress';
   else if(kind==='end_turn'||previousTurn!==view.game?.turn)checkpoint='turn';
   await scene?.play();
   if(!silentDialogue&&typeof showDialogueFeedback==='function')showDialogueFeedback(kind,payload,dialogueBefore,view);
@@ -891,6 +891,21 @@ function cityCommandTabs(city){
  return `<span id="city-command-label" class="visually-hidden">${cityCommandText('都市命令','都市の命令')}</span><div class="city-command-tabs" role="tablist" aria-orientation="horizontal" aria-labelledby="city-command-label">${cityCommandOrder.map(key=>`<button type="button" id="city-command-tab-${key}" data-city-command-group="${key}" role="tab" aria-controls="city-command-panel-${key}" aria-selected="${selected===key}" tabindex="${selected===key?'0':'-1'}">${typeof GameOriginalUI!=='undefined'?GameOriginalUI.icon('command-'+key,{locale:GameI18n.locale,decorative:true}):''}${cityCommandText(...labels[key])}</button>`).join('')}</div>`;
 }
 function cityCommandPanel(city,key,body){return `<div class="city-command-panel actions" id="city-command-panel-${key}" role="tabpanel" aria-labelledby="city-command-tab-${key}"${cityCommandGroup(city)===key?'':' hidden'}>${body}</div>`;}
+function submitThreeVisit(number){
+ const progress=view?.catalog?.three_visits;
+ if(!progress?.can_visit||progress.next_visit!==number)return false;
+ return command('three_visits',{visit:number});
+}
+function threeVisitsPanel(progress){
+ const {completed_visits:completed,next_visit:next,can_visit:ready,reason}=progress;
+ const status={
+  wait_turn:['本旬已拜訪，下旬可再來。','今旬は訪ねました。次の旬に再訪できます。'],
+  leader_unavailable:['劉備目前無法親自前往。','現在、劉備は自ら訪ねられません。'],
+  city_full:['請先為諸葛亮騰出一個武將名額。','先に諸葛亮のために武将の空きを1名分確保してください。'],
+  zhuge_unavailable:['目前無法在隆中拜見諸葛亮。','現在、隆中で諸葛亮に会うことはできません。']
+ }[reason];
+ return `<p class="small" id="three-visits-status" data-three-visits-progress="${escapeHtml(completed)}"><strong>${cityCommandText(`三顧茅廬 ${completed}/3`,`三顧の礼 ${completed}/3`)}</strong>${status?`<br>${cityCommandText(...status)}`:''}</p>${next===null?'':`<button type="button" id="visit-zhuge-liang" aria-describedby="three-visits-status"${ready?'':' disabled'}>${cityCommandText(`第${next}次拜訪諸葛亮`,`諸葛亮を訪ねる（第${next}回）`)}</button>`}`;
+}
 function renderCity(){
  const game=view.game,city=game.cities[selectedCity],owned=city.owner===game.player;
  const available=city.roster.officer_ids.filter(i=>!officerUnavailable(i)),fighters=available.filter(i=>game.officers[i].troops>0);
@@ -908,9 +923,10 @@ function renderCity(){
  const departUnavailable=!hasCommandBook('depart')||!fighters.length||noDepartureFood;
  const scale=view.catalog.city_profiles[city.id],income=view.catalog.city_income[city.id],naming=view.catalog.map_presentation.city_names[city.id],training=view.catalog.domestic?.cities?.[city.id]?.morale;
  const outpost=view.catalog.frontier_outposts?.[city.id];
+ const visits=view.catalog.three_visits,showVisits=owned&&visits?.city===city.id;
  const unavailable=`<p class="small city-command-unavailable">${cityCommandText('非本方城池，無法執行都市命令。','自勢力の都市ではないため、都市の命令は実行できません。')}</p>`;
  const panels={
-  city:owned?`${view.catalog.city_development?`<button id="city-development">${cityCommandText('城池開發','都市の開発')}</button>`:''}${view.catalog.facilities?`<button id="city-civic">${cityCommandText('設施整備與防災','施設整備・防災')}</button>`:''}${view.catalog.domestic?`<button id="city-domestic">${cityCommandText('勢力內政委任','勢力の内政担当')}</button>`:''}<button id="recruit-officer" ${(!hasCommandBook('recruit_officer')&&!hasCommandBook('persuade_officer'))||!available.length||cityOccupancy(city)>=capacity()||city.gold<60?'disabled':''}>招募 / 劝降</button>${view.catalog.civil_staff?'<button id="civil-staff">地方文吏</button>':''}`:unavailable,
+  city:owned?`${showVisits?threeVisitsPanel(visits):''}${view.catalog.city_development?`<button id="city-development">${cityCommandText('城池開發','都市の開発')}</button>`:''}${view.catalog.facilities?`<button id="city-civic">${cityCommandText('設施整備與防災','施設整備・防災')}</button>`:''}${view.catalog.domestic?`<button id="city-domestic">${cityCommandText('勢力內政委任','勢力の内政担当')}</button>`:''}<button id="recruit-officer" ${(!hasCommandBook('recruit_officer')&&!hasCommandBook('persuade_officer'))||!available.length||cityOccupancy(city)>=capacity()||city.gold<60?'disabled':''}>招募 / 劝降</button>${view.catalog.civil_staff?'<button id="civil-staff">地方文吏</button>':''}`:unavailable,
   army:owned?`<div class="action-pair"><button id="allocate" class="primary" ${!hasCommandBook('allocate')||!city.roster.officer_ids.some(i=>!marching().has(i))?'disabled':''}>编兵</button><button id="depart"${departUnavailable?'':' class="primary"'}>${departUnavailable?cityCommandText('查看行軍路線','行軍経路を確認'):'出征'}</button></div>${GameCommandBooks.activeAllocation(view,city.id)?`<button id="continue-allocation">${cityCommandText('繼續上次配兵','前回の編制を続ける')}</button>`:''}<div class="action-pair"><button id="transfer" ${!hasCommandBook('transfer')||!available.length?'disabled':''}>调动武将</button><button id="recruit" ${!hasCommandBook('recruit')||city.gold<20||city.grain<30?'disabled':''}>征募预备兵</button></div>`:unavailable,
   warehouse:owned?`${view.catalog.treasury?`<button id="city-treasury">${cityCommandText('寶庫與賞賜','宝庫・褒美')}</button>`:''}${view.catalog.domestic?'<button id="city-logistics">前線支援</button>':''}`:unavailable,
   town:owned?view.catalog.facilities?`<button id="city-facilities">${cityCommandText('進入城內設施','町の施設へ')}</button>`:`<p class="small">${cityCommandText('本城的設施資料尚未提供。','この都市の施設情報は未登録です。')}</p>`:unavailable
@@ -928,6 +944,8 @@ function renderCity(){
  <p class="small city-scale">${scale&&income?`${escapeHtml(cityTypeLabel(scale))} · ${city.owner==='neutral'?'无主城暂无月收入':`每月金${income.gold} / 粮${income.grain} / 预备兵${income.reserves}`}`:'本城资源资料待载入。'}</p>
  ${cityEconomyNote(scale)}</details><div class="city-command-footer actions" id="city-command-footer">${owned?'':'<button id="home">返回本城</button>'}<button id="end-turn">结束本旬</button></div>`;
  bindCityCommandGroups(city);
+ const visitButton=showVisits&&$('#visit-zhuge-liang');
+ if(visitButton)visitButton.onclick=()=>submitThreeVisit(visits.next_visit);
  $('#city-information').onclick=()=>showCityInformation(city.id);
  for(const id of city.roster.officer_ids){const button=$('#city-roster-'+id);if(button)button.onclick=()=>{const person=view.catalog.library?.find(p=>String(p.id)===String(id));if(person)showPerson(person.id);else showCityInformation(city.id);};}
  if(owned){$('#allocate').onclick=()=>allocate(city);if($('#continue-allocation'))$('#continue-allocation').onclick=()=>{const flow=GameCommandBooks.activeAllocation(view,city.id);if(flow)allocate(city,null,flow.id);};$('#depart').onclick=()=>beginMapAction('depart',city);$('#recruit').onclick=()=>{openDialog('征募预备兵',`<p>花费20金钱、30粮食，征募100名预备兵。</p>${commandBookHint('recruit')}`,'<button data-cancel>取消</button><button id="confirm-recruit" class="primary">确认征募</button>');$('#confirm-recruit').disabled=!hasCommandBook('recruit');$('#confirm-recruit').onclick=async()=>{if(!hasCommandBook('recruit'))return notice(commandBookReason('recruit'),true);if(await command('recruit',{city:city.id,allocation_flow:true})){const flow=GameCommandBooks.activeAllocation(view,city.id);allocate(view.game.cities[city.id],null,flow?.id??null);}};};}
