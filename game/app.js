@@ -325,6 +325,10 @@ async function command(kind,payload={}){
  setBusy(true);notice();
  try{
   const previousView=view,previousTurn=view.game?.turn,previousOutcome=audioOutcome;
+  if(kind==='new'&&typeof globalThis.crypto?.getRandomValues==='function'){
+   const bytes=globalThis.crypto.getRandomValues(new Uint8Array(16));
+   payload.campaign_id=Array.from(bytes,byte=>byte.toString(16).padStart(2,'0')).join('');
+  }
   view=await request('/api/command',{kind,payload,revision:view.revision});
   if(kind==='new'&&typeof resetAllocationDialogs==='function')resetAllocationDialogs();
   if(kind==='new'&&typeof siegeUI!=='undefined')siegeUI?.reset();

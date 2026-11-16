@@ -10,7 +10,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.browser_runtime import BrowserRuntime, MAX_BODY_BYTES
-from remake.campaign import Catalog
+from remake.campaign import Catalog, digest
 from remake.session import CampaignSession
 from remake.preview_transport import pack as pack_previews
 from campaign_fixtures import controlled_catalog
@@ -100,6 +100,43 @@ class BrowserRuntimeTests(unittest.TestCase):
                                                   revision=self.runtime.session.revision))
         self.assertEqual(status, 200)
         self.assertEqual(self.runtime.dispatch_json('/api/save')['body'], saved)
+
+    def test_optional_campaign_id_round_trips_through_save_and_cached_view(self):
+        legacy = self.start()
+        legacy_save = self.runtime.session.export_save()
+        self.assertNotIn('campaign_id', legacy_save['state']['extension'])
+        payload = dict(scenario=self.identities[0], faction='shu', seed=2026)
+        for ident in ('ab' * 16, 'cd' * 16):
+            request = dict(kind='new', payload=dict(payload, campaign_id=ident),
+                           revision=self.runtime.session.revision)
+            status, new = self.request('/api/command', request)
+            self.assertEqual(status, 200, new)
+            self.assertEqual(new['game']['extension']['campaign_id'], ident)
+            self.assertEqual(new['game']['rng'], legacy['game']['rng'])
+            self.assertEqual(self.runtime.session.export_save()['state']['extension']['campaign_id'], ident)
+            if ident == 'ab' * 16:
+                first_save = self.runtime.session.export_save()
+
+        invalid = deepcopy(first_save)
+        invalid['state']['extension']['campaign_id'] = 'AB' * 16
+        invalid['checksum'] = digest({key: value for key, value in invalid.items() if key != 'checksum'})
+        before = self.snapshot()
+        revision = self.runtime.session.revision
+        for path, request in (
+                ('/api/command', dict(kind='new', payload=dict(payload, campaign_id=None), revision=revision)),
+                ('/api/load', dict(save=invalid, revision=revision))):
+            status, _ = self.request(path, request)
+            self.assertEqual(status, 400)
+            self.assertEqual(self.snapshot(), before)
+
+        for saved in (first_save, legacy_save):
+            status, restored = self.request('/api/load', dict(save=saved, revision=self.runtime.session.revision))
+            self.assertEqual(status, 200, restored)
+            self.assertEqual(self.runtime.session.export_save(), saved)
+            cached = self.runtime.dispatch_json('/api/state', _known='')
+            self.assertEqual(cached['status'], 200)
+            self.assertEqual(json.loads(cached['body'])['view']['game']['extension'],
+                             saved['state']['extension'])
 
     def test_preview_and_march_reads_do_not_draw_rng_or_change_current_game(self):
         self.start()

@@ -787,6 +787,9 @@ font-size:16px
 display:grid;
 gap:12px
 }
+[data-autosave-campaign]{min-width:0;margin:10px 0 0;padding:8px;border:2px solid currentColor}
+[data-autosave-campaign] legend{max-width:100%;overflow-wrap:anywhere}
+[data-autosave-campaign] button{white-space:normal}
 .empty{
 padding:16px
 }

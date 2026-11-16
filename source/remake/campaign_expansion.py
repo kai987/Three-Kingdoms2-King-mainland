@@ -1176,6 +1176,7 @@ class ExpandedCampaign:
         if historical_campaigns.RECEIPTS in x:fields.add(historical_campaigns.RECEIPTS)
         if three_visits.COMMAND in x:fields.add(three_visits.COMMAND)
         if 'diplomacy' in x:fields.add('diplomacy')
+        if 'campaign_id' in x:fields.add('campaign_id')
         if 'lifespan' in x:
             if x['lifespan'] != 'none':raise ValueError('Invalid lifespan mode')
             fields.add('lifespan')
