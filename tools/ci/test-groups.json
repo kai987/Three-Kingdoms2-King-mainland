@@ -16,6 +16,24 @@
         "mainland194-06"
       ]
     },
+    "tests/test_remake_allied_settlement.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "economy",
+        "logistics",
+        "save"
+      ]
+    },
+    "tests/test_remake_allied_travel.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "logistics",
+        "map",
+        "save"
+      ]
+    },
     "tests/test_remake_audio_assets.py": {
       "tier": "global",
       "groups": [
