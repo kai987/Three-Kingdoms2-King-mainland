@@ -1,0 +1,236 @@
+diff --git a/tests/browser_soldier_ui.spec.mjs b/tests/browser_soldier_ui.spec.mjs
+index 9f1dc0d1..4e300821 100644
+--- a/tests/browser_soldier_ui.spec.mjs
++++ b/tests/browser_soldier_ui.spec.mjs
+@@ -6,6 +6,7 @@
+ import {test,expect} from '../tools/browser-tests/node_modules/@playwright/test/index.mjs';
+ import {execFileSync} from 'node:child_process';
+ import {writeFile} from 'node:fs/promises';
++import * as profile from '../.github/experiments/soldier-breakdown/probe.mjs';
+
+ const fixtures=new Map(),pageErrors=new WeakMap();
+ function fixture(kind){
+@@ -20,21 +21,31 @@ test.beforeEach(async({page})=>{
+  page.on('console',message=>{if(message.type()==='error')errors.push(message.text());});
+ });
+ async function opening(page){
++ await profile.documentTimings(page);
++ const start=profile.stamp();
+  await page.goto('./');await expect(page).toHaveTitle(/三國|三国/);
+  await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});
+  await page.locator('#game-loading-start').click();await expect(page.locator('#game-loading-cover')).toBeHidden();
+  await expect(page.locator('#world-map .city-hit')).not.toHaveCount(0);
++ profile.span('opening',start);
+ }
+ async function idle(page){await expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);}
+-async function save(page){return page.evaluate(async()=>{const r=await fetch('/api/save');if(!r.ok)throw Error('Actual soldier save could not be inspected');return r.json();});}
+-async function read(page,withView=true){if(!withView)return {save:await save(page)};return page.evaluate(async()=>{
++async function save(page){return profile.time('state.save',()=>page.evaluate(async()=>{const r=await fetch('/api/save');if(!r.ok)throw Error('Actual soldier save could not be inspected');return r.json();}));}
++async function read(page,withView=true){if(!withView)return {save:await save(page)};return profile.time('state.save-and-view',()=>page.evaluate(async()=>{
+  const [a,b]=await Promise.all([fetch('/api/save'),fetch('/api/state')]);
+  if(!a.ok||!b.ok)throw Error('Actual soldier state could not be inspected');
+  const state=await b.json();return {save:await a.json(),view:state.view||state};
+-});}
++}));}
+ async function load(page,value,name='controlled-soldier-boundary.json'){
+- await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name,mimeType:'application/json',buffer:Buffer.from(JSON.stringify(value))});
+- await idle(page);await expect(page.locator('#dialog')).toBeHidden();expect(await save(page)).toEqual(value);
++ const start=profile.stamp();
++ await profile.time('load.prepare-and-upload',async()=>{
++  await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name,mimeType:'application/json',buffer:Buffer.from(JSON.stringify(value))});
++ },{file:name});
++ await profile.time('load.wait-for-ui',async()=>{await idle(page);await expect(page.locator('#dialog')).toBeHidden();},{file:name});
++ const verify=profile.stamp();
++ expect(await save(page)).toEqual(value);
++ profile.span('load.verify',verify,{file:name});
++ profile.span('load.total',start,{file:name});
+ }
+ async function dismissEvents(page){
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+@@ -60,12 +71,15 @@ async function cell(page,point,touch){
+  if(touch)await canvas.tap({position});else await canvas.click({position});
+ }
+ async function animation(page,{withView=true}={}){
+- await expect.poll(()=>page.evaluate(()=>!document.body.classList.contains('busy')||!!document.querySelector('[data-battle-skip]:not([hidden])')),{timeout:90_000}).toBe(true);
++ await profile.time('animation.wait-for-start-or-idle',()=>expect.poll(()=>page.evaluate(()=>!document.body.classList.contains('busy')||!!document.querySelector('[data-battle-skip]:not([hidden])')),{timeout:90_000}).toBe(true));
+  const committed=await save(page),skip=page.locator('[data-battle-skip]');
+- if(await skip.isVisible()){
+-  try{await skip.click({timeout:1000});}catch(error){if(await skip.isVisible())throw error;}
+- }
+- await idle(page);await dismissEvents(page);
++ await profile.time('animation.skip',async()=>{
++  if(await skip.isVisible()){
++   try{await skip.click({timeout:1000});}catch(error){if(await skip.isVisible())throw error;}
++  }
++ });
++ await profile.time('animation.wait-for-idle',()=>idle(page));
++ await profile.time('animation.dismiss-events',()=>dismissEvents(page));
+  const settled=await read(page,withView);
+  expect(settled.save).toEqual(committed,'Animation completion or Skip cannot resolve another hit or draw extra random numbers');
+  return settled;
+@@ -73,11 +87,11 @@ async function animation(page,{withView=true}={}){
+ async function waitSoldierReplay(page){
+  // Poll on Node's real time while stepping only the presentation clock: two
+  // real Worker RPCs may outlast a tight fixed-count loop of fake16ms ticks.
+- await expect.poll(async()=>{await page.clock.runFor(16);return page.evaluate(()=>battleScene.state().scene==='soldier_step');},
+-  {timeout:30_000,intervals:[20,50,100]}).toBe(true);
++ await profile.time('animation.wait-for-replay',()=>expect.poll(async()=>{await page.clock.runFor(16);return page.evaluate(()=>battleScene.state().scene==='soldier_step');},
++  {timeout:30_000,intervals:[20,50,100]}).toBe(true));
+ }
+ async function evidence(page,testInfo,name){
+- await page.screenshot({path:testInfo.outputPath(name+'.png'),fullPage:true});
++ await profile.time('evidence.screenshot',()=>page.screenshot({path:testInfo.outputPath(name+'.png'),fullPage:true}),{file:name});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ }
+ async function attach(testInfo,name,value){const body=Buffer.from(JSON.stringify(value,null,2));await writeFile(testInfo.outputPath(name+'.json'),body);await testInfo.attach(name,{body,contentType:'application/json'});}
+@@ -126,6 +140,7 @@ async function troopSourceEvidence(page,testInfo,library){
+
+ async function combatFrameSample(page,value,manifest){
+  return page.evaluate(async({pieces,manifest})=>{
++  const real=globalThis.__pwClock.builtins.performance,start=real.now();
+   const host=document.querySelector('[data-battle-scene]'),data=host.dataset;
+   if(data.soldierCombatSource!=='supplemental-4x')return null;
+   const actor=data.soldierAnimationActor,piece=pieces[actor],index=Number(data.soldierCombatFrame);
+@@ -142,12 +157,15 @@ async function combatFrameSample(page,value,manifest){
+   for(let n=0;n<actual.length;n+=4)if(expected[n+3]===255){solid++;if(actual[n]!==expected[n]||actual[n+1]!==expected[n+1]||actual[n+2]!==expected[n+2]||actual[n+3]!==255){different++;mismatch.push([n/4%64,Math.floor(n/4/64)]);}}
+   const crop=document.createElement('canvas');crop.width=crop.height=64;crop.getContext('2d').putImageData(new ImageData(actual,64,64),0,0);
+   const sha=async bytes=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))).map(byte=>byte.toString(16).padStart(2,'0')).join('');
+-  return {key:palette+':'+piece.kind+':'+action,actor,kind:piece.kind,action,palette,index,
++  const sample={key:palette+':'+piece.kind+':'+action,actor,kind:piece.kind,action,palette,index,
+    phase:data.soldierCombatPhase,event_index:Number(data.soldierAnimationEvent),source:data.soldierCombatSource,
+    scene_mode:data.battleSceneMode,label_mode:data.soldierLabelMode,canvas_backing:[canvas.width,canvas.height],viewport:[innerWidth,innerHeight],
+    solid_pixels:solid,different_pixels:different,sha256:await sha(actual),presentation_time_ms:performance.now(),
+    mismatch_bbox:mismatch.length?[Math.min(...mismatch.map(p=>p[0])),Math.min(...mismatch.map(p=>p[1])),Math.max(...mismatch.map(p=>p[0]))+1,Math.max(...mismatch.map(p=>p[1]))+1]:null,
+    reference_png:different?reference.toDataURL('image/png'):null,png:crop.toDataURL('image/png')};
++  globalThis.__soldierProfile.samples.push(sample);
++  sample.soldierProfileBrowserMs=real.now()-start;
++  return sample;
+  },{pieces:value.pieces,manifest});
+ }
+
+@@ -209,14 +227,15 @@ async function compactSoldierToolbarEvidence(page,testInfo,mode,stage,{advanceCl
+    for(const labelMode of ['kind','troops']){
+    const scene=page.locator('[data-battle-scene]');
+    if(await scene.getAttribute('data-soldier-label-mode')!==labelMode)await scene.locator('[data-soldier-label-toggle]').click({force:true});
+-   let previous='';await expect.poll(async()=>{
++   let previous='';const pollStart=profile.stamp();await expect.poll(async()=>{
+     const dimensions=await scene.evaluate(host=>{const bar=host.querySelector('.nes-battle-toolbar').getBoundingClientRect(),canvas=host.querySelector('[data-battle-canvas]').getBoundingClientRect();return [bar.width,bar.height,canvas.width,canvas.height].join(':');});
+     const settled=previous===dimensions;previous=dimensions;return settled;
+    },{timeout:5000,intervals:[50,100,200]}).toBe(true);
++   profile.span('evidence.layout-poll',pollStart,{mode,stage});
+    // Independent busy-layout replay also advances RAF after each resize so
+    // the production journal relocation runs alongside CSS/ResizeObserver.
+    const name=mode+'-'+stage+'-toolbar-'+viewport.width+'x'+viewport.height+'-'+labelMode;
+-   await page.screenshot({path:testInfo.outputPath(name+'.png'),fullPage:true});
++   await profile.time('evidence.screenshot',()=>page.screenshot({path:testInfo.outputPath(name+'.png'),fullPage:true}),{file:name});
+    const row=await page.locator('[data-battle-scene] .nes-battle-toolbar').evaluate(toolbar=>{
+     const box=node=>{const r=node.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,right:r.right,bottom:r.bottom};};
+     return {toolbar:box(toolbar),canvas_css:box(toolbar.closest('[data-battle-scene]').querySelector('[data-battle-canvas]')),children:[...toolbar.children].filter(node=>!node.hidden&&node.getBoundingClientRect().width>0).map(node=>({text:node.textContent,box:box(node)})),document_width:document.documentElement.scrollWidth,viewport_width:innerWidth};
+@@ -234,6 +253,7 @@ async function compactSoldierToolbarEvidence(page,testInfo,mode,stage,{advanceCl
+ }
+
+ async function busySoldierToolbarReplay(page,testInfo,value,expected){
++ const replayStart=profile.stamp();
+  await load(page,value.save,'independent-'+value.mode+'-busy-layout-replay.json');
+  const scene=page.locator('[data-battle-scene]'),button=page.locator('#siege-step');
+  if(!await button.isVisible())await page.locator('#inspector-toggle').click();await expect(button).toBeEnabled();
+@@ -243,12 +263,14 @@ async function busySoldierToolbarReplay(page,testInfo,value,expected){
+  const layouts=await compactSoldierToolbarEvidence(page,testInfo,value.mode,'busy',{advanceClock:true});
+  await expect(scene.locator('[data-battle-skip]')).toBeVisible();expect(await save(page)).toEqual(committed);
+  await page.clock.resume();expect((await animation(page,{withView:false})).save).toEqual(committed);
++ profile.span('replay.independent-total',replayStart,{mode:value.mode});
+  return {independent_public_command_replay:true,start_rng:value.save.state.rng,committed_rng:committed.state.rng,
+   equals_original_committed_save:true,layouts};
+ }
+
+ async function attackCycleEvidence(page,testInfo,kind='attack-cycles'){
+- const value=fixture(kind);
++ const fixtureStart=profile.stamp(),value=fixture(kind);
++ profile.span('fixture',fixtureStart,{fixture:kind});
+  // Browser plugin not available in this session. This uses the repository's
+  // pinned Playwright clock only for RAF presentation, never game state or RNG.
+  // Install before a fresh boot because the renderer captures RAF at creation.
+@@ -262,6 +284,11 @@ async function attackCycleEvidence(page,testInfo,kind='attack-cycles'){
+  const initial=await read(page,false),button=page.locator('#siege-step');
+  if(!await button.isVisible())await page.locator('#inspector-toggle').click();await expect(button).toBeEnabled();
+  await page.clock.pauseAt(new Date(await page.evaluate(()=>Date.now())+1000));
++ const nativeClock=()=>page.evaluate(()=>({real:globalThis.__pwClock.builtins.performance.now(),virtual:performance.now()}));
++ const clockBefore=await nativeClock();
++ await new Promise(resolve=>setTimeout(resolve,25));
++ const clockAfter=await nativeClock();
++ if(clockAfter.real<=clockBefore.real||clockAfter.virtual!==clockBefore.virtual)throw Error('Invalid sampling clocks');
+  await button.click({force:true});
+  await waitSoldierReplay(page);
+  const samples=new Map(),overlays=new Map();let committed=null,started=false,busyLabelsChecked=false;
+@@ -269,8 +296,10 @@ async function attackCycleEvidence(page,testInfo,kind='attack-cycles'){
+  // Worker RPC remains real; the clock only prevents short frames being lost
+  // to screenshot/IPC latency. Each sample reads the live backing buffer.
+  for(let tick=0;tick<340;tick++){
+-  await page.clock.runFor(16);
++  await profile.time('animation.frame-tick',()=>page.clock.runFor(16));
++  const start=profile.stamp();
+   const sample=await combatFrameSample(page,value,manifest);
++  profile.sample(value.mode,tick,sample,start,profile.stamp());
+   if(sample){
+    sample.sample_tick=tick;sample.clock_elapsed_ms=(tick+1)*16;
+    started=true;
+@@ -342,8 +371,14 @@ async function attackCycleEvidence(page,testInfo,kind='attack-cycles'){
+ }
+
+ test('field soldier formations expose ten hundred-person teams and replay actual individual orders without extra damage',async({page},testInfo)=>{
++ profile.begin();
++ profile.section('initial fixtures and boot');
++ const fixtureStart=profile.stamp();
+  const macro=fixture('field'),contact=fixture('contact'),touch=testInfo.project.name==='touch-chromium',proof=[];
++ profile.span('fixture',fixtureStart,{fixture:'field and contact'});
++ await profile.observeWorker(page);
+  await page.clock.install();await opening(page);await load(page,macro.save);
++ profile.section('marker and bilingual troop provenance');
+  const scene=page.locator('[data-battle-scene]');await expect(scene).toHaveAttribute('data-battle-scene-mode','tactical');
+  await expect(scene.locator('[data-soldier-label-toggle]')).toBeHidden();
+  await expect(scene).toHaveAttribute('data-tactical-marker-style','original-native-atlas');
+@@ -373,8 +408,9 @@ test('field soldier formations expose ten hundred-person teams and replay actual
+  expect(await save(page)).toEqual(before.save,'Native atlas loading, inspection and screenshots never migrate saved profiles or draw game RNG');
+  await evidence(page,testInfo,'original-native-tactical-flags');
+  proof.push({stage:'native-marker-atlas',native,types,markers});
+- proof.push({stage:'troop-assignment-source-ui',sources:await troopSourceEvidence(page,testInfo,before.view.catalog.library)});
++ proof.push({stage:'troop-assignment-source-ui',sources:await profile.time('evidence.troop-provenance',()=>troopSourceEvidence(page,testInfo,before.view.catalog.library))});
+  expect(await save(page)).toEqual(before.save,'Viewing troop-type provenance in either language leaves baseline profiles and campaign RNG unchanged');
++ profile.section('macro formation and per-team orders');
+  await cell(page,macro.actor_cell,touch);await cell(page,macro.target_cell,touch);await control(page,'attack');await idle(page);
+  await expect(scene).toHaveAttribute('data-battle-scene-mode','field-formation');
+  let current=await read(page,false),row=current.save.state.battle.extended.siege;
+@@ -394,6 +430,7 @@ test('field soldier formations expose ten hundred-person teams and replay actual
+  await load(page,current.save,'controlled-field-per-team-roundtrip.json');expect(await save(page)).toEqual(current.save);
+  proof.push({stage:'macro-to-field',markers,round:row.round,piece_orders:row.piece_orders,events:row.events});
+  for(const language of ['zh-Hant','ja']){
++  profile.section('controlled contact '+language);
+   await locale(page,language);await load(page,contact.save,'controlled-field-infantry-archer-cavalry-contact.json');
+   await expect(scene).toHaveAttribute('data-battle-scene-mode','field-orders');await expect(page.locator('[data-siege-piece-order]')).toHaveCount(11);
+   const initial=await read(page,false),step=page.locator('#siege-step');
+@@ -404,10 +441,10 @@ test('field soldier formations expose ten hundred-person teams and replay actual
+   expect(await page.evaluate(()=>battleScene.state().scene)).toBe('soldier_step');
+   // Only the presentation clock is paused. Worker commands and their receipt
+   // remain real; IPC/screenshot latency cannot miss this short native replay.
+-  const canvas=page.locator('[data-battle-canvas]'),first=await canvas.evaluate(node=>node.toDataURL('image/png'));
++  const canvas=page.locator('[data-battle-canvas]'),first=await profile.time('evidence.contact-png',()=>canvas.evaluate(node=>node.toDataURL('image/png')));
+   let second=first;
+   for(let frame=0;frame<8&&second===first;frame++){
+-   await page.clock.runFor(80);second=await canvas.evaluate(node=>node.toDataURL('image/png'));
++   await profile.time('animation.frame-tick',()=>page.clock.runFor(80));second=await profile.time('evidence.contact-png',()=>canvas.evaluate(node=>node.toDataURL('image/png')));
+   }
+   expect(second!==first,'Actual committed attack events have visible animation frames').toBe(true);
+   await writeFile(testInfo.outputPath('soldier-animation-'+language+'-a.png'),Buffer.from(first.split(',')[1],'base64'));
+@@ -424,9 +461,12 @@ test('field soldier formations expose ten hundred-person teams and replay actual
+   await page.clock.resume();expect((await animation(page,{withView:false})).save).toEqual(committed.save);
+   await evidence(page,testInfo,'soldier-piece-counts-and-orders-'+language);proof.push({language,before_rng:initial.save.state.rng,after_rng:committed.save.state.rng,events:active.events});
+  }
++ profile.section('field four-frame and layout checks');
+  proof.push({stage:'both-palettes-four-frame-melee-and-ranged',...await attackCycleEvidence(page,testInfo)});
++ profile.section('castle four-frame and layout checks');
+  proof.push({stage:'castle-both-palettes-four-frame-melee-and-ranged',...await attackCycleEvidence(page,testInfo,'siege-cycles')});
+  await attach(testInfo,'actual-soldier-orders-events-and-rng',proof);expect(pageErrors.get(page)).toEqual([]);
++ await profile.finish(page,testInfo);
+ });
+
+ test('successful battlefield conversion immediately enables an eleventh friendly officer and empty-castle occupation wins',async({page},testInfo)=>{
