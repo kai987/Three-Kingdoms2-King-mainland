@@ -1,30 +1,28 @@
-name: Web campaign checks
-
+name: PR 51 desktop shard 2 runner profile
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
-    inputs:
-      force_full:
-        description: Run every regression group
-        type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
 
 permissions:
   contents: read
   actions: read
-  deployments: read
 
 concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
+  group: desktop-profile-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  verify:
-    uses: ./.github/workflows/web-checks.yml
+  repeated:
+    if: github.ref == 'refs/heads/codex/ci-pr51-desktop2-profile'
+    uses: ./.github/workflows/desktop-profile.yml
     with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+      runner-label: first
+  comparison:
+    needs: repeated
+    if: ${{ !cancelled() && github.ref == 'refs/heads/codex/ci-pr51-desktop2-profile' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runner-label: [compare-a, compare-b, compare-c]
+    uses: ./.github/workflows/desktop-profile.yml
+    with:
+      runner-label: ${{ matrix.runner-label }}
