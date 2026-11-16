@@ -590,7 +590,15 @@ jobs:
         env:
           JOB_RESULTS: ${{ toJSON(needs) }}
         run: |
-          python -c 'import os,pathlib;pathlib.Path("build/ci/needs.json").write_text(os.environ["JOB_RESULTS"])'
+          # The experimental parity job was checked above. Keep the production
+          # verifier's required job set unchanged.
+          python - <<'PYNEEDS'
+          import json, os
+          from pathlib import Path
+          results = json.loads(os.environ["JOB_RESULTS"])
+          results.pop("web-wasm-parity")
+          Path("build/ci/needs.json").write_text(json.dumps(results))
+          PYNEEDS
           python -B tools/ci/gate.py verify --plan build/ci/test-plan.json --needs build/ci/needs.json --head "$GITHUB_SHA"
           python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
       - name: Collect scoped Python reports from this run
