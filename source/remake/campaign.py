@@ -15,7 +15,7 @@ from threading import RLock
 from types import SimpleNamespace
 
 from .errors import GameError, INVALID_SAVE_MESSAGE
-from . import diplomacy, historical_campaigns, observer
+from . import diplomacy, historical_campaigns, observer, three_visits
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
@@ -369,6 +369,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 **expanded, **travel,
                                 'civil_staff': self._civil_staff_view(state),
                                 'diplomacy': diplomacy.view(self, state),
+                                'three_visits': three_visits.view(self, state),
                                 'domestic':domestic.view(self,state),
                                 'logistics':logistics.view(self,state,travel_quotes=travel.get('travel_quotes',{})),
                                 'treasury':treasures.view(self,state),
@@ -420,6 +421,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                'end_turn': self._end_turn, 'ai': self._ai, 'arrivals': self._arrivals,
                                'observe_turn': self._observe_turn,
                                'diplomacy': lambda state, payload: diplomacy.execute(self, state, payload, state.player),
+                               three_visits.COMMAND: lambda state, payload: three_visits.execute(self, state, payload),
                                'hire_staff': self._hire_staff, 'reject_staff': self._reject_staff,
                                'staff_recruit': self._staff_recruit, 'choose_successor': self._choose_successor,
                                'set_domestic':self._set_domestic,'set_logistics':self._set_logistics,

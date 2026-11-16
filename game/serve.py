@@ -27,6 +27,32 @@ ORIGINAL_UI_IDS = ('facility-armory', 'facility-hospital', 'facility-market', 'f
                    'equipment-weapon-category', 'equipment-armor-category',
                    'event-armory-interior', 'event-market-interior', 'event-sortie',
                    'event-decorative-frame')
+EVENT_SCENE_IDS = ('ai-campaign', 'battle-result', 'battle-started', 'battle-supply-exhausted',
+                   'campaign-defeat', 'campaign-start', 'campaign-victory', 'city-captured',
+                   'city-developed', 'city-founded', 'city-renamed', 'city-upgraded', 'civil-unrest',
+                   'defection', 'diplomacy-result', 'domestic-report', 'drought', 'duel-result',
+                   'duel-started', 'equipment-acquired', 'equipment-bought', 'faction-coup',
+                   'faction-coup-skipped', 'faction-ended', 'faction-founded',
+                   'faction-founding-skipped', 'flood', 'governor-assigned', 'grain-traded', 'guandu',
+                   'historical-dingjun', 'historical-dong-zhuo-coalition',
+                   'historical-dong-zhuo-relocation', 'historical-gaopingling',
+                   'historical-hanzhong', 'historical-hanzhong-preparation', 'historical-hefei',
+                   'historical-hefei-defense', 'historical-liaodong', 'historical-liyang-campaign',
+                   'historical-memorial', 'historical-nanzhong', 'historical-sun-jian-jingzhou',
+                   'historical-sun-liu-alliance', 'historical-sun-liu-alliance-ended',
+                   'historical-tongguan', 'historical-wei-invades-shu',
+                   'historical-welcome-han-emperor', 'historical-wuzhang', 'historical-xiangfan',
+                   'historical-xiapi-expedition', 'historical-yanzhou-counteroffensive',
+                   'historical-yiling', 'historical-yizhou-campaign', 'historical-youzhou-pacification',
+                   'longzhong-first', 'longzhong-road', 'longzhong-second', 'longzhong-study',
+                   'march-arrived', 'march-resupplied', 'march-retreat', 'march-returned',
+                   'march-starvation', 'march-weather', 'memorial', 'new-year', 'officer-appeared',
+                   'officer-rewarded', 'officer-studied', 'officer-treated', 'prevention-improved',
+                   'recruit-failure', 'recruit-success', 'red-cliffs', 'route-discovered',
+                   'staff-allegiance', 'staff-candidate', 'staff-declined', 'staff-expired',
+                   'staff-hired', 'staff-salary', 'succession', 'tactic', 'town-developed',
+                   'transport-arrived', 'transport-departed', 'transport-returned', 'transport-weather',
+                   'treasure-found', 'treasure-search-failed', 'treasure-sold', 'wedding',)
 MAX_BODY_BYTES = 2 * 1024 * 1024
 AUDIT_LIMITS = {'file_opens': 5000, 'imports': 1024, 'requests': 4096, 'denied_access': 1024}
 
@@ -139,6 +165,13 @@ def equipment_icon_static_assets():
             path = f'assets/equipment-icons/{slot}-{identity}.png'
             result['/' + path] = (path, 'image/png')
     return result
+
+
+def event_scene_static_assets():
+    """Publish the reviewed event backdrops without exposing other artwork."""
+    return {f'/assets/event-scenes/{scene}.webp':
+            (f'assets/event-scenes/{scene}.webp', 'image/webp')
+            for scene in EVENT_SCENE_IDS}
 
 
 def battle_static_assets(here=None):
@@ -828,6 +861,7 @@ def main():
     static.update(civil_portrait_static_assets())
     static.update(audio_effect_static_assets())
     static.update(original_ui_static_assets())
+    static.update(event_scene_static_assets())
     static.update(equipment_icon_static_assets())
     static.update(battle_static_assets())
     static.update(siege_static_assets())

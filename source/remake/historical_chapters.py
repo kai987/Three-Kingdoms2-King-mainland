@@ -3,6 +3,9 @@
 from typing import NamedTuple
 
 
+DONG_ZHUO_RELOCATION = 'historical_dong_zhuo_relocation'
+
+
 class Chapter(NamedTuple):
     start: tuple[int, int]
     end: tuple[int, int]
@@ -36,6 +39,15 @@ CHAPTERS = {
         approaches=('henei',),
         targets=('henan',),
         note='關東諸軍討董卓。',
+    ),
+    DONG_ZHUO_RELOCATION: Chapter(
+        start=(190, 2), end=(190, 2),
+        leaders=(('dong_zhuo', 'san14-candidate-0736'),),
+        holdings=(('henan', 'dong_zhuo'), ('jingzhao', 'dong_zhuo')),
+        officers=(),
+        cities=('henan', 'jingzhao'),
+        people=('san14-candidate-0736',),
+        note='董卓迫漢獻帝遷都長安，洛陽宮室遭焚。',
     ),
     'historical_sun_jian_jingzhou': Chapter(
         start=(191, 10), end=(191, 12),

@@ -500,6 +500,31 @@
       "scenario_scope": "fixed"
     },
     {
+      "id": "dong-zhuo-relocation",
+      "title": "Dong Zhuo relocation opens in February 190 with its own bilingual historical scene",
+      "groups": [
+        "people",
+        "scenarios"
+      ],
+      "scenario_ids": [
+        "mainland190-01"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "liu-bei-three-visits",
+      "title": "Liu Bei can make three visits and recruit Zhuge Liang after restoring a save",
+      "groups": [
+        "people",
+        "scenarios",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland207-09"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
       "id": "soldier-orders",
       "title": "field soldier formations expose ten hundred-person teams and replay actual individual orders without extra damage",
       "groups": [

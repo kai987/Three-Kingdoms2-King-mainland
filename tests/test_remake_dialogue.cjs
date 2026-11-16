@@ -53,6 +53,9 @@ try{
   chapterView.catalog.library.push({person_id,name});
  const chapterSpeakers=[
   ['historical_three_visits',['liu-bei','xu-shu','zhuge-liang'],['xu-shu','liu-bei']],
+  ['historical_three_visits_first',['liu-bei','zhuge-liang'],[undefined,'liu-bei']],
+  ['historical_three_visits_second',['liu-bei','zhuge-liang'],[undefined,'liu-bei']],
+  ['historical_longzhong',['liu-bei','zhuge-liang'],['liu-bei','zhuge-liang','zhuge-liang']],
   ['historical_xiangfan',['guan-yu','cao-ren','liu-bei','cao-cao'],['guan-yu','cao-ren']],
   ['historical_gaopingling',['sima-yi','cao-shuang','cao-fang'],['sima-yi','cao-shuang']]
  ];

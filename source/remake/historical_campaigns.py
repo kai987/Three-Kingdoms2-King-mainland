@@ -1,7 +1,8 @@
 """Conditional historical campaigns and diplomacy."""
 
 from .officers import transfer_officers
-from .historical_chapters import CHAPTERS
+from . import city_development, facilities, treasures
+from .historical_chapters import CHAPTERS, DONG_ZHUO_RELOCATION
 
 GUANDU = 'historical_guandu'
 ALLIANCE = 'historical_sun_liu_alliance'
@@ -19,6 +20,14 @@ LIAODONG = 'historical_liaodong'
 ALLIANCE_ENDED = 'historical_sun_liu_alliance_ended'
 ALLIANCE_CONTINUING = 'sun_liu_continuing_alliance'
 RECEIPTS = 'historical_campaigns'
+DONG_ZHUO_RELOCATION_DETAILS = frozenset(('moved', 'lost', 'town_before', 'town_after',
+                                         'damage_before', 'damage_after', 'loot'))
+_RELOCATION_LOOT = {'gold': 50_000, 'grain': 100_000, 'treasure': 99}
+_RELOCATION_STOCKS = {
+    'gold': (facilities.LIMIT, 1),
+    'grain': (facilities.LIMIT, 1),
+    'population': (city_development.LIMITS['population'], city_development.POPULATION_UNIT),
+}
 
 LEADERS = {
     'wei': 'san14-candidate-0521',     # Cao Cao
@@ -233,16 +242,56 @@ def _marriage_transfer(game, state):
     return source.id, target.id
 
 
+def _relocate_court(state, cities):
+    source, target = (state.cities[city] for city in cities)
+    development = state.extension['city_development']['cities']
+    source_development = development[source.id]
+    target_development = development[target.id]
+    source_stock = dict(gold=source.gold, grain=source.grain,
+                        population=source_development['population'])
+    loot_gold = min(_RELOCATION_LOOT['gold'], max(0, facilities.LIMIT - target.gold))
+    loot_grain = min(_RELOCATION_LOOT['grain'], max(0, facilities.LIMIT - target.grain))
+    treasury = state.extension['treasury']
+    loot_treasure = min(_RELOCATION_LOOT['treasure'],
+                        treasures.RULES['city_cap'] - treasures.count(state, target.id),
+                        treasures.LIMIT - treasury['ledger']['found'])
+    target_stock = dict(gold=target.gold + loot_gold, grain=target.grain + loot_grain,
+                        population=target_development['population'])
+    moved, lost = {}, {}
+    for field, (cap, unit) in _RELOCATION_STOCKS.items():
+        stock = source_stock[field]
+        room = max(0, cap - target_stock[field])
+        moved[field] = min(stock * 70 // 100, room) // unit * unit
+        lost[field] = stock * 25 // (100 * unit) * unit
+
+    treasures.credit(state, target.id, loot_treasure, reason='found')
+    source.gold -= moved['gold'] + lost['gold']
+    source.grain -= moved['grain'] + lost['grain']
+    source_development['population'] -= moved['population'] + lost['population']
+    target.gold += moved['gold'] + loot_gold
+    target.grain += moved['grain'] + loot_grain
+    target_development['population'] += moved['population']
+
+    town = state.extension['facilities']['cities'][source.id]
+    details = dict(moved=moved, lost=lost,
+                   loot=dict(gold=loot_gold, grain=loot_grain, treasure=loot_treasure),
+                   town_before=town['town'], town_after=1,
+                   damage_before=town['damage'], damage_after=facilities.RULES['damage_cap'])
+    town.update(town=details['town_after'], damage=details['damage_after'])
+    return details
+
+
 def _record(game, state, receipts, kind, cities):
+    details = _relocate_court(state, cities) if kind == DONG_ZHUO_RELOCATION else None
     state.extension.setdefault(RECEIPTS, receipts)
     receipts[kind] = state.turn
     factions = EVENT_FACTIONS[kind]
-    # Launched marches retain their original travel receipts.
-    if kind not in BATTLE_STAGES and kind != HANZHONG_PREPARATION:
+    # Battle stages, preparations and the court relocation leave existing plans in place.
+    if kind not in BATTLE_STAGES and kind not in (HANZHONG_PREPARATION, DONG_ZHUO_RELOCATION):
         for owner in factions:
             state.extension['ai_strategy'].pop(owner, None)
     game._emit_event(state, kind, city_ids=cities, factions=factions, audience='world',
-                     person_ids=_event_people(kind))
+                     person_ids=_event_people(kind), details=details)
     game._note(state, NOTES[kind])
 
 
@@ -433,6 +482,39 @@ def validate_state(catalog, state):
         raise ValueError('Historical alliance must precede the marriage')
 
 
+def _valid_relocation_details(details):
+    if details == {}:  # Older saves had a narrative-only event with the same receipt.
+        return True
+    if (not isinstance(details, dict)
+            or details.keys() - {'loot'} != DONG_ZHUO_RELOCATION_DETAILS - {'loot'}):
+        return False
+    town_cap, damage_cap = facilities.RULES['town_cap'], facilities.RULES['damage_cap']
+    if any(type(details[key]) is not int for key in ('town_before', 'town_after',
+                                                    'damage_before', 'damage_after')):
+        return False
+    if not (1 <= details['town_before'] <= town_cap and details['town_after'] == 1
+            and 0 <= details['damage_before'] <= damage_cap and details['damage_after'] == damage_cap):
+        return False
+    moved, lost = details['moved'], details['lost']
+    if any(not isinstance(stock, dict) or stock.keys() != _RELOCATION_STOCKS.keys()
+           for stock in (moved, lost)):
+        return False
+    if not all(type(moved[field]) is int and type(lost[field]) is int
+               and moved[field] >= 0 and lost[field] >= 0
+               and moved[field] + lost[field] <= cap
+               and moved[field] % unit == 0 and lost[field] % unit == 0
+               for field, (cap, unit) in _RELOCATION_STOCKS.items()):
+        return False
+    if 'loot' in details:  # Saved receipts may omit the grain bonus or the entire loot entry.
+        loot = details['loot']
+        if (not isinstance(loot, dict) or loot.keys() - {'grain'} != {'gold', 'treasure'}
+                or any(type(value) is not int or not 0 <= value <= _RELOCATION_LOOT[field]
+                       for field, value in loot.items())):
+            return False
+        return all(moved[field] + loot.get(field, 0) <= facilities.LIMIT for field in ('gold', 'grain'))
+    return True
+
+
 def validate_event(catalog, state, row):
     kind = row['kind']
     turn = state.extension.get(RECEIPTS, {}).get(kind)
@@ -445,7 +527,9 @@ def validate_event(catalog, state, row):
         cities_ok = len(cities) == 2 and cities[0] != cities[1]
     else:
         cities_ok = cities == list(EVENT_CITIES[kind])
-    if (type(turn) is not int or row['turn'] != turn or row['audience'] != 'world' or row['details']
+    details_ok = (_valid_relocation_details(row['details']) if kind == DONG_ZHUO_RELOCATION
+                  else row['details'] == {})
+    if (type(turn) is not int or row['turn'] != turn or row['audience'] != 'world' or not details_ok
             or (row['year'], row['month']) != _turn_date(catalog, turn)
             or row['day'] != 1 + 10 * ((turn - 1) % 3)
             or row['factions'] != list(factions) or not cities_ok
