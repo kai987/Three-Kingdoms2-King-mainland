@@ -612,7 +612,8 @@ class TravelCampaign:
                 result['travel_quotes'] = invoke('batch', data=self.catalog.data,
                                                 **state_input(state, state.player), player=state.player)
         if state is not None and state.player != observer.SEAT:
-            targets = {row['target'] for row in state.extension['travel']['marches'] if row['kind'] == 'attack'}
+            marches = state.extension['travel'].get('marches', ())
+            targets = {row['target'] for row in marches if row['kind'] == 'attack'}
             result['allied_attacks'] = {key: offer for key in sorted(targets)
                 if (offer := self._allied_attack_info(state, state.cities[key], state.player)) is not None}
         return result
