@@ -2681,7 +2681,7 @@ test('command-book confirmations and one paid city allocation flow preserve canc
  for(const ident of ids)current=await distribute(ident,'recruit-continuation');expect(budget(current).used).toBe(1);await closeFlow();
  // A new unpaid draft can be browsed and discarded without even closing a
  // server flow. The current selection and every officer input stay local.
- const revision=()=>page.evaluate(async()=>{const response=await fetch('/api/state');if(!response.ok)throw Error('Revision inspection failed');const body=await response.json();return(body.view||body).revision;});
+ const revision=()=>page.evaluate(async()=>{const response=await fetch('/api/state',{tk2ViewCache:viewCache.token()});if(!response.ok)throw Error('Revision inspection failed');const body=await response.json();return(body.view||body).revision;});
  await openAllocation(page);const untouched=await read(),unpaidRevision=await revision(),discarded=await page.locator('#allocation-officer').inputValue();
  await expect(page.locator('#confirm-allocation')).toBeDisabled();await page.locator('#allocation-troops').fill(String(untouched.state.officers[discarded].troops+1));await page.locator('#allocation-next').click();
  expect(await read()).toEqual(untouched);expect(await revision()).toBe(unpaidRevision);await expect(modal).toBeHidden();await closeDialog(page);await waitIdle(page);
