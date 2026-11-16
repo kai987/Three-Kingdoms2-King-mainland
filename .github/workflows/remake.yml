@@ -8,7 +8,7 @@ permissions:
   actions: read
 
 env:
-  OPTIMIZED_TEST: 7664f10b4dbd95a94e5d6dc9a9f21be6a53930ec
+  OPTIMIZED_TEST: 16cb174fa45efa6a46fd979c9a3789a605858619
   FROZEN_SOURCE: 3dc85091216c4a8cf242c0b74db68536fbaebb46
   FROZEN_WEB_CONTENT: cefdef35ea30da7ce86531e2047bcea7f5de3d42abcb9218eac97accbe320e10
 
@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          fetch-depth: 3
+          fetch-depth: 5
           persist-credentials: false
       - name: Confirm source is unchanged outside experiment wiring
         run: |

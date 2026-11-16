@@ -120,7 +120,10 @@ export async function measureOpening(page, testInfo, read) {
     troopSchema: [types.schema, types.rules_version],
     officers: metadata.markerIds.map(id=>[id, types.officers[id]?.code, types.officers[id]?.base_code, types.officers[id]?.source_kind]),
     attackTargets: [metadata.selected, catalog.battle_tactical.actors[metadata.selected].attack_targets],
-    sources: sourceKinds.map(kind=>[kind,catalog.library.find(p=>p.affinity_source?.source_kind===kind)?.person_id]),
+    sources: sourceKinds.map(kind=>{
+      const row = catalog.library.find(p=>p.affinity_source?.source_kind===kind);
+      return [kind,row?.person_id,row?.affinity];
+    }),
   };
   await writeFile(testInfo.outputPath('soldier-opening-view.json'), JSON.stringify({
     ...timing, ...metadata, assertedView, hashes: {save: sha256(original.save), assertedView: sha256(assertedView)},
