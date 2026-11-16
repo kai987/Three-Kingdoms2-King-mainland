@@ -10174,12 +10174,12 @@
       "width": 2.8
     },
     {
-      "d": "M683.5032120040281 645.837533276705L692.4963544359761 646.1888012637148",
+      "d": "M683.5 645.1785714285714L684 645L692 642L692.5 641.8125",
       "stroke": "#51371e",
       "width": 5.4
     },
     {
-      "d": "M683.5032120040281 645.837533276705L692.4963544359761 646.1888012637148",
+      "d": "M683.5 645.1785714285714L684 645L692 642L692.5 641.8125",
       "stroke": "#e9bf7a",
       "width": 2.8
     },
@@ -10365,6 +10365,44 @@
     }
   ],
   "corridor_repairs": [
+    {
+      "id": "lingling-eastern-fork",
+      "cities": [
+        "lingling",
+        "changsha",
+        "guiyang"
+      ],
+      "reason": "Reuse one eastern approach from Lingling for the port and share the bridge itself between the Changsha and Guiyang roads.",
+      "intermediate_stops": [
+        [684, 645]
+      ],
+      "strokes": [
+        {
+          "index": 115,
+          "points": [
+            [656, 655],
+            [684, 645],
+            [692, 642],
+            [698, 650],
+            [702, 650],
+            [722, 670],
+            [730, 670]
+          ],
+          "radius": 9
+        },
+        {
+          "index": 116,
+          "points": [
+            [692, 642],
+            [732, 628],
+            [756, 608],
+            [756, 604],
+            [742, 590]
+          ],
+          "radius": 9
+        }
+      ]
+    },
     {
       "id": "dongping-changyi",
       "cities": [
@@ -10910,6 +10948,62 @@
             ]
           ],
           "radius": 4
+        }
+      ]
+    },
+    {
+      "id": "runan-northeast-fork",
+      "cities": ["runan", "chenliu", "jiyin", "qiao"],
+      "reason": "Chenliu, Jiyin and Qiao use one northeast approach into Runan, with two successive forks.",
+      "intermediate_stops": [[855, 389], [859, 401]],
+      "strokes": [
+        {
+          "index": 172,
+          "points": [[827, 340], [845.5, 371], [855, 389], [859, 401], [835, 410]],
+          "radius": 6
+        },
+        {
+          "index": 189,
+          "points": [[855, 389], [859.5, 372], [856.5, 364], [865.5, 337], [880, 330]],
+          "radius": 6
+        }
+      ]
+    },
+    {
+      "id": "qichun-chaisang-poyang-shared-trunks",
+      "cities": ["qichun", "yuzhang", "poyang", "lujiang"],
+      "reason": "Qichun and Chaisang reach a single southern fork shared by Yuzhang, Poyang and their landing roads. The old triangle south of Chaisang has no separate road.",
+      "intermediate_stops": [[887, 542], [896, 552], [897, 560], [904, 570], [946, 569]],
+      "strokes": [
+        {
+          "index": 197,
+          "points": [[874, 512], [888, 532]],
+          "radius": 0
+        },
+        {
+          "index": 205,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 206,
+          "points": [[888, 532], [887, 542], [896, 552], [897, 560], [904, 570]],
+          "radius": 0
+        },
+        {
+          "index": 207,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 216,
+          "points": [[904, 579], [904, 570], [918, 570]],
+          "radius": 0
+        },
+        {
+          "index": 225,
+          "points": [[918, 570], [946, 569], [969, 568]],
+          "radius": 0
         }
       ]
     },
@@ -14848,18 +14942,5 @@
       ]
     }
   ],
-  "shared_junctions": [
-    {
-      "id": "yinping-secret-branch",
-      "point": [
-        244,
-        448
-      ],
-      "source_segment_indices": [
-        10
-      ],
-      "reason": "The existing Yinping-Wenshan road meets the Yinping-Chengdu secret branch at this exact saved vertex. Both drawing and timing must end a subpath here instead of rounding past the junction.",
-      "dynamic_source": "game/config/map-source.json:presentation.added_land_roads[0].new_branch[0]"
-    }
-  ]
+  "shared_junctions": []
 }

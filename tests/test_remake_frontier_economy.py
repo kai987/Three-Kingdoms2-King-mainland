@@ -9,6 +9,7 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'source'))
 from campaign_fixtures import advance_month, controlled_catalog
 from remake.campaign import Campaign
+from remake.city_development import LIMITS
 from remake.city_economy import frontier_maintenance, frontier_outposts_view, income_at, profile_at
 from remake.march_supply import cost
 from remake.session import CampaignSession
@@ -49,7 +50,7 @@ class FrontierEconomyTests(unittest.TestCase):
                 self.assertEqual(outpost.gold, outpost_start['gold'] + 35)
                 self.assertEqual(outpost.grain, outpost_start['grain'] + 90 - cost(troops + 17, 0, 30))
                 self.assertEqual(outpost.reserves, outpost_start['reserves'] + 17)
-                self.assertEqual(rear.gold, rear_start['gold'] + 35 - 10)
+                self.assertEqual(rear.gold, rear_start['gold'] + 35 - 15)
                 self.assertEqual(rear.grain, rear_start['grain'] + 90)
                 self.assertEqual(state.soldiers, dict(original['soldiers'], recruited=17))
                 self.assertEqual(sum(state.officers[i].troops for i in outpost.roster.officer_ids), troops)
@@ -73,14 +74,30 @@ class FrontierEconomyTests(unittest.TestCase):
         start = outpost.gold, outpost.grain, outpost.reserves, rear.gold
         advance_month(game)
         self.assertEqual((outpost.gold, outpost.grain, outpost.reserves, rear.gold),
-                         (start[0] + 70, start[1] + 180 - cost(34, 0, 30), start[2] + 34, start[3] + 35 - 20))
-        self.assertEqual(frontier_outposts_view(game.catalog.data, state)[outpost.id]['monthly_maintenance'], 20)
+                         (start[0] + 70, start[1] + 180 - cost(34, 0, 30), start[2] + 34, start[3] + 35 - 30))
+        self.assertEqual(frontier_outposts_view(game.catalog.data, state)[outpost.id]['monthly_maintenance'], 30)
         self.assertEqual(development['baseline']['population'] * 2, development['population'])
         game.validate(state)
         saved = game.export_save()
         restored = Campaign(game.catalog)
         restored.load_save(saved, 0)
         self.assertEqual(restored.export_save(), saved)
+
+    def test_population_fee_rounds_once_and_scales_through_the_population_cap(self):
+        # The outpost starts with 68,500 people.
+        for population, fee in ((68_600, 16), (LIMITS['population'], 438)):
+            with self.subTest(population=population):
+                game = Campaign(frontier_catalog(troops=0))
+                game.command('new', dict(faction='wei', seed=310), 0)
+                state = game.state
+                development = state.extension['city_development']['cities']['nanyang']
+                development['population'] = population
+                game.validate(state)
+                rear = state.cities['nanjun']
+                opening_gold = rear.gold
+                advance_month(game)
+                self.assertEqual(frontier_outposts_view(game.catalog.data, state)['nanyang']['monthly_maintenance'], fee)
+                self.assertEqual(rear.gold, opening_gold + 35 - fee)
 
     def test_sponsor_falls_back_to_reachable_rear_and_limits_payment_to_cash(self):
         game = Campaign(frontier_catalog())
@@ -96,7 +113,7 @@ class FrontierEconomyTests(unittest.TestCase):
         frontier_maintenance(game, state)
         self.assertEqual(rear.gold, 0)
         self.assertEqual((outpost.gold, outpost.grain), (outpost_gold, 0))
-        self.assertIn('尚缺7金', state.log[-1])
+        self.assertIn('尚缺12金', state.log[-1])
         self.assertIn('粮草尚缺', state.log[-1])
 
         route = data['travel_routes'][-1]
@@ -131,7 +148,7 @@ class FrontierEconomyTests(unittest.TestCase):
             path.write_text(json.dumps(data, ensure_ascii=False))
             session = CampaignSession([path])
         income = data['city_income']['nanyang']
-        setup = dict(monthly_maintenance=10, sponsor_city='nanjun')
+        setup = dict(monthly_maintenance=15, sponsor_city='nanjun')
         opening = session.preview_city(data['id'], 'nanyang')['city']
         self.assertEqual(opening['profile']['kind'], 'frontier_outpost')
         self.assertEqual(opening['income'], income)

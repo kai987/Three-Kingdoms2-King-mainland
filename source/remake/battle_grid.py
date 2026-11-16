@@ -22,6 +22,7 @@ ATTACK_COST = 2
 # A direct challenge is a remake shortcut for original contact/挑発, not a
 # separately recovered original tactical command. Exchanges do not charge AP.
 DUEL_COST = ATTACK_COST
+ALLY_CONTROL_REASON = '同盟部隊由盟軍指揮。'
 TACTIC_COSTS = (6, 5, 4, 6, 7, 8, 8, 8, 10, 9, 9, 10, 10, 8, 12, 10)
 DAILY_POINTS = (10, 16, 20, 24, 28, 32, 35, 37, 40, 42)
 POINT_CAPS = (20, 26, 32, 36, 42, 46, 51, 53, 58, 60)
@@ -83,10 +84,37 @@ def _unit(battle, ident):
                  if unit['id'] == ident), (None, None))
 
 
+def player_side(state, battle):
+    coalition = battle['extended'].get('coalition')
+    if state.player == battle['attacker'] or coalition and state.player in coalition['provisions']:
+        return 'attackers'
+    if state.player == battle['defender']:
+        return 'defenders'
+    return None
+
+
+def player_controls(state, battle, unit):
+    if unit is None:
+        return False
+    if 'coalition' in battle['extended']:
+        return state.officers[unit['id']].faction_id == state.player
+    return True
+
+
 def _live(battle, unit):
     support = battle['extended']['support'].get(str(unit['id']), {})
     return (unit['troops'] > 0 and support.get('health', 1) > 0
             and str(unit['id']) not in battle['extended']['surrenders'])
+
+
+def record_coalition_capture(battle, actor=None):
+    extension = battle['extended']
+    if ('coalition' not in extension or 'occupation' in extension
+            or 'capture_actor' in extension or battle['outcome'] != 'victory'):
+        return
+    survivors = [unit['id'] for unit in battle['attackers'] if _live(battle, unit)]
+    if survivors:
+        extension['capture_actor'] = actor if actor in survivors else survivors[0]
 
 
 def _troops(battle, side):
@@ -166,6 +194,13 @@ def validate(game, state, battle):
         battle_deployment.validate_provenance(game.catalog,battle,_field(battle),battle['extended']['deployment'])
     battle_placement.validate(game,state,battle)
     battle_auto_deployment.validate(game,state,battle)
+    if 'capture_actor' in battle['extended']:
+        claimant = battle['extended']['capture_actor']
+        if ('coalition' not in battle['extended'] or battle['outcome'] != 'victory'
+                or 'occupation' in battle['extended']
+                or not any(type(claimant) is type(unit['id']) and claimant == unit['id']
+                           and _live(battle, unit) for unit in battle['attackers'])):
+            raise ValueError('Invalid coalition capture claimant')
     for side in SIDES:
         starts = [unit.get('start') for unit in battle[side]]
         original_starts = [unit.get('start') for current in SIDES for unit in battle[current]
@@ -500,7 +535,7 @@ def view(game, state, battle):
     from .campaign_expansion import TACTICS
     from .tactical_ai import tactic_reason
     row = battle['extended']['tactical']
-    own = 'attackers' if battle['attacker'] == state.player else 'defenders'
+    own = player_side(state, battle) or 'defenders'
     foe = 'defenders' if own == 'attackers' else 'attackers'
     terrain = game.catalog.map_cities[battle['target']]['terrain']
     from . import battle_placement
@@ -510,9 +545,10 @@ def view(game, state, battle):
     placing = bool(placement and placement['pending'])
     actors = {}
     for actor in battle[own]:
-        if placing:
-            actors[str(actor['id'])] = dict(can_act=False,reason=battle_placement.REASON,
-                move_reason=battle_placement.REASON,facility=None,reachable=[],
+        if placing or not player_controls(state, battle, actor):
+            reason = battle_placement.REASON if placing else ALLY_CONTROL_REASON
+            actors[str(actor['id'])] = dict(can_act=False,reason=reason,
+                move_reason=reason,facility=None,reachable=[],
                 attack_targets=[],duel_targets=[],tactic_targets={str(tid):[] for tid in range(len(TACTICS))},
                 attack_reasons={},duel_reasons={},tactic_reasons={},tactic_previews={})
             continue
@@ -550,6 +586,7 @@ def view(game, state, battle):
         camp=dict(zip(('x','y'),_field(battle)['camp'])), facilities=[dict(service) for service in _field(battle).get('services',())],
         maximum_troops=OFFICER_TROOP_CAP, deployment=deepcopy(battle['extended'].get('deployment')),placement=placement,
         auto_deployment=automatic,
+        **({'player_side': own} if 'coalition' in battle['extended'] else {}),
         points=deepcopy(row['points']), caps={side: point_cap(_troops(battle, side)) for side in SIDES},
         can_end=not placing and state.phase == 'battle' and row['side'] == own and not battle['extended']['duel'],
         attack_cost=ATTACK_COST, duel_cost=DUEL_COST, tactic_costs=list(TACTIC_COSTS), actors=actors)

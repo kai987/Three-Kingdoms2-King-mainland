@@ -1,12 +1,13 @@
 /* Original four-formation / four-group orders UI. Drafts never mutate a battle. */
 'use strict';
 (function(root){
+ const battleView=()=>root.GameBattleView||(typeof require==='function'?require('./battle-view.js'):null);
  const KINDS=Object.freeze(['infantry','archer','cavalry','general']);
  const ORDERS=Object.freeze(['advance','retreat','wait','surround']);
  const FORMATIONS=Object.freeze([['長蛇','長蛇'],['雁行','雁行'],['錐行','錐行'],['魚鱗','魚鱗']]);
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function current(view){const row=view?.game?.battle?.extended?.siege;return row?.schema==='tk2-siege-v1'?row:null;}
- function ownSide(view){return view?.game?.battle?.attacker===view?.game?.player?'attackers':'defenders';}
+ function ownSide(view){return battleView()?.playerSide(view)??(view?.game?.battle?.attacker===view?.game?.player?'attackers':'defenders');}
  function create(options={}){
   let key='',draftFormation=0,draftOrders=null,draftPieces=null,selectedPiece=null,automatic=false,timer=null,requesting=false;
   const locale=()=>options.i18n?.locale==='ja'?'ja':'zh-Hant';

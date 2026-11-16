@@ -243,35 +243,9 @@
       "to": "xiapi",
       "mode": "land",
       "terrain": "plain",
-      "points": [
-        [
-          1097,
-          387
-        ],
-        [
-          1076,
-          380
-        ],
-        [
-          1059,
-          374
-        ],
-        [
-          1040,
-          368
-        ],
-        [
-          1020,
-          362
-        ],
-        [
-          1009,
-          358
-        ],
-        [
-          996,
-          351
-        ]
+      "sections": [
+        [[1097, 387], [1076, 380], [1059, 374], [1040, 368], [1029, 364]],
+        [[1029, 364], [1019, 361], [1007, 357], [996, 351]]
       ],
       "history": {
         "classification": "authorial_regional_historical_city_corridor",
@@ -323,27 +297,11 @@
       "to": "qichun",
       "mode": "land",
       "terrain": "plain",
-      "points": [
-        [
-          892,
-          552
-        ],
-        [
-          890,
-          542
-        ],
-        [
-          891,
-          532
-        ],
-        [
-          886,
-          523
-        ],
-        [
-          874,
-          512
-        ]
+      "sections": [
+        [[892, 552], [896, 552]],
+        [[896, 552], [887, 542]],
+        [[887, 542], [888, 532]],
+        [[888, 532], [874, 512]]
       ],
       "history": {
         "classification": "authorial_regional_historical_city_corridor",
@@ -357,23 +315,11 @@
       "to": "yuzhang",
       "mode": "land",
       "terrain": "plain",
-      "points": [
-        [
-          892,
-          552
-        ],
-        [
-          896,
-          562
-        ],
-        [
-          901,
-          571
-        ],
-        [
-          904,
-          579
-        ]
+      "sections": [
+        [[892, 552], [896, 552]],
+        [[896, 552], [897, 560]],
+        [[897, 560], [904, 570]],
+        [[904, 570], [904, 579]]
       ],
       "history": {
         "classification": "authorial_regional_historical_city_corridor",

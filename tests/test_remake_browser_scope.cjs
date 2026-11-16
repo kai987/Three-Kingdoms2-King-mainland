@@ -12,7 +12,7 @@ function load(value,options={}){
 }
 try{
  const full=scopes.loadBrowserScope({planPath:''});
- assert.equal(full.full,true);assert.equal(full.selectedCases.length,47);
+ assert.equal(full.full,true);assert.equal(full.selectedCases.length,50);
  assert.deepEqual(new Set(scopes.readCaseTitles(source)),new Set(scopes.CASE_REGISTRY.cases.map(row=>row.title)));
  const union=new Set();
  for(const group of scopes.CANONICAL_GROUPS){
@@ -96,5 +96,5 @@ try{
  assert.throws(()=>scopes.loadBrowserScope({planPath:broken}),/cannot read plan JSON/);
  const cli=spawnSync(process.execPath,[path.join(__dirname,'../tools/browser-tests/scope.cjs'),'--plan',broken],{encoding:'utf8'});
  assert.notEqual(cli.status,0);assert(cli.stderr.includes('Browser test scope:'));
- console.log('browser scopes: all 47 cases registered, both opening batches cover 29 exactly once, scenario-local intersections, full/group union, scoped media and fail-closed invalid plans passed');
+ console.log('browser scopes: all 50 cases registered, both opening batches cover 29 exactly once, scenario-local intersections, full/group union, scoped media and fail-closed invalid plans passed');
 }finally{fs.rmSync(directory,{recursive:true,force:true});}

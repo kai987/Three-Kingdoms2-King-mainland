@@ -13,7 +13,7 @@ from . import command_books
 from .officers import OFFICER_TROOP_CAP, parse_officer_ref
 
 SCHEMA = 'tk2-domestic-v2'
-RULES = dict(max_income_bonus_percent=40, personnel_gold=60, persuasion_gold=100,
+RULES = dict(max_income_bonus_percent=50, personnel_gold=60, persuasion_gold=100,
              training_initial_morale=70, recruit_morale=50, training_per_1000_gold=1,
              training_per_1000_grain=2, automatic_retry_turns=3)
 DEFAULT_POLICY = dict(auto_recruit=False, auto_persuade=False, priority='best', envoy=None,
@@ -22,6 +22,11 @@ DEFAULT_POLICY = dict(auto_recruit=False, auto_persuade=False, priority='best', 
     gold_floor=100, grain_floor=200, task_order=['personnel', 'recruit', 'transport'])
 _CITY_FIELDS = {'owner', 'morale', 'income_month', 'income_points', 'last_work_turn',
                 'last_auto_turn', 'last_income_month'}
+_CITY_INCOME_FIELDS = {'income_extra_units', 'income_rate_units'}
+_INCOME_DUTIES_PER_MONTH = 6
+_LOW_INCOME_FULL_RATE_INTELLECT = 59
+_INCOME_UNITS_PER_PERCENT = 2 * 99 * _LOW_INCOME_FULL_RATE_INTELLECT
+_RECRUIT_GOLD_RATES = ((1, 50, 20, 18), (51, 79, 17, 11), (80, 94, 10, 6), (95, 99, 5, 0))
 _FACTION_FIELDS = {'civil', 'military', 'policy'}
 _REPORT_FIELDS = {'turn', 'city', 'owner', 'kind', 'details'}
 _REPORT_KINDS = {'income', 'recruit', 'training', 'personnel', 'policy', 'hire_staff', 'allocation'}
@@ -43,6 +48,12 @@ def _month(state):
 def _new_city(state, city):
     return dict(owner=city.owner, morale=70, income_month=_month(state), income_points=0,
                 last_work_turn=0, last_auto_turn=0, last_income_month=_month(state))
+
+
+def _reset_income(row, month):
+    row.update(income_month=month, income_points=0)
+    row.pop('income_rate_units', None)
+    row.pop('income_extra_units', None)
 
 
 def _new_faction():
@@ -122,8 +133,8 @@ def synchronize(game, state):
         if row['owner'] != city.owner:
             # The training degree stays with the garrison. Previous-owner
             # earned income cannot be paid to a conquering faction.
-            row.update(owner=city.owner, income_month=_month(state), income_points=0,
-                       last_income_month=_month(state), last_work_turn=0, last_auto_turn=0)
+            row.update(owner=city.owner, last_income_month=_month(state), last_work_turn=0, last_auto_turn=0)
+            _reset_income(row, _month(state))
     travelling = {str(i) for i in _marching(game, state)}
     battle = state.battle
     if battle:
@@ -277,6 +288,26 @@ def _income(game, city_id, state=None):
     return value
 
 
+def _civil_income_units(intellect):
+    if intellect < 60:
+        return 5 * intellect * (_INCOME_UNITS_PER_PERCENT // _LOW_INCOME_FULL_RATE_INTELLECT)
+    if intellect < 95:
+        return (5 + intellect - 60) * _INCOME_UNITS_PER_PERCENT
+    return (80 + 5 * (intellect - 95)) * (_INCOME_UNITS_PER_PERCENT // 2)
+
+
+def _earned_income_units(row):
+    if 'income_rate_units' in row:
+        return row['income_rate_units']
+    # Earlier saves stored base points, with any high-intellect bonus in units of 1/198%.
+    return (80 * row['income_points'] + row.get('income_extra_units', 0)) * (_INCOME_UNITS_PER_PERCENT // 198)
+
+
+def _income_bonus(base, units):
+    denominator = 100 * _INCOME_UNITS_PER_PERCENT * _INCOME_DUTIES_PER_MONTH
+    return {field: int(base[field]) * units // denominator for field in ('gold', 'grain')}
+
+
 def month_rollover(game, state):
     """After the date advances; add only the previous month's earned bonus."""
     synchronize(game, state)
@@ -287,15 +318,15 @@ def month_rollover(game, state):
         row = _pool(state)['cities'][key]
         if row['last_income_month'] >= current:
             continue
-        points = row['income_points'] if row['income_month'] == current - 1 else 0
-        base = _income(game, key, state)
-        bonus = {field: min(LIMIT - getattr(city, field), int(base[field]) * 40 * points // (100 * 99 * 6))
-                 for field in ('gold', 'grain')}
-        if city.owner == 'neutral':
-            bonus = dict(gold=0, grain=0)
+        units = 0
+        if city.owner != 'neutral' and row['income_month'] == current - 1:
+            units = _earned_income_units(row)
+        bonus = {field: min(LIMIT - getattr(city, field), amount)
+                 for field, amount in _income_bonus(_income(game, key, state), units).items()}
         for field, amount in bonus.items():
             setattr(city, field, getattr(city, field) + amount)
-        row.update(income_month=current, income_points=0, last_income_month=current)
+        _reset_income(row, current)
+        row['last_income_month'] = current
         if any(bonus.values()):
             _report(state, city, 'income', **bonus)
             if city.owner == state.player:
@@ -307,6 +338,15 @@ def month_rollover(game, state):
         game._emit_event(state, 'domestic_report', city_ids=[first_city], factions=[state.player], details=summary)
 
 
+def _recruit_gold_per_100(strength):
+    for lower, upper, high_price, low_price in _RECRUIT_GOLD_RATES:
+        if lower <= strength <= upper:
+            span = upper - lower
+            numerator = high_price * (upper - strength) + low_price * (strength - lower)
+            return (2 * numerator + span) // (2 * span)
+    raise ValueError('Recruitment martial strength')
+
+
 def recruitment_preview(game, state, city_id):
     city, row = state.cities[city_id], _pool(state)['cities'][city_id]
     post = appointments(state, city.owner)
@@ -316,9 +356,10 @@ def recruitment_preview(game, state, city_id):
     strength = state.officers[ident].profile.martial_strength
     available_gold = min(max(0, city.gold - policy['gold_floor']), policy['recruit_budget'])
     available_grain = max(0, city.grain - policy['grain_floor'])
-    unit_gold = 20 - strength // 10
+    unit_gold = _recruit_gold_per_100(strength)
+    gold_capacity = available_gold * 100 // unit_gold if unit_gold else LIMIT
     amount = min(100 + strength, max(0, policy['reserve_target'] - city.reserves),
-                 available_gold * 100 // unit_gold, available_grain * 100 // 30,
+                 gold_capacity, available_grain * 100 // 30,
                  LIMIT - city.reserves)
     return dict(soldiers=amount, gold=(amount * unit_gold + 99) // 100,
                 grain=(amount * 30 + 99) // 100)
@@ -649,11 +690,16 @@ def finish_faction_turn(game, state, owner, *, automatic=True):
                 summary['gold'] += receipt['details']['gold']
                 summary['grain'] += receipt['details']['grain']
         if row['income_month'] != _month(state):
-            row.update(income_month=_month(state), income_points=0)
+            _reset_income(row, _month(state))
         ident = post['civil']
         if ident is not None and _present(game, state, city, ident):
             duty = 1 if state.extension['officer_actions'].get(str(ident)) == state.turn else 2
-            row['income_points'] = min(594, row['income_points'] + state.officers[ident].profile.intellect * duty)
+            intellect = state.officers[ident].profile.intellect
+            points = min(intellect * duty, 99 * _INCOME_DUTIES_PER_MONTH - row['income_points'])
+            if points:
+                row['income_rate_units'] = _earned_income_units(row) + _civil_income_units(intellect) * points // intellect
+                row['income_points'] += points
+                row.pop('income_extra_units', None)
         # Active jobs, including explicitly configured reserve transports, have
         # first claim. Assign only the local remainder before training it.
         allocate_garrison(game, state, key)
@@ -705,7 +751,7 @@ def view(game, state):
             personnel_targets=personnel_targets(game, state, key) if city.owner == state.player else [])
         base = _income(game, key, state)
         intellect = state.officers[row['civil']].profile.intellect if row['civil_active'] else 0
-        row['monthly_bonus_preview'] = {field: int(base[field]) * 40 * intellect // (100 * 99) for field in ('gold', 'grain')}
+        row['monthly_bonus_preview'] = _income_bonus(base, _civil_income_units(intellect) * _INCOME_DUTIES_PER_MONTH)
         result['cities'][key] = row
         if post:
             for field in ('monthly_bonus_preview', 'recruit_preview', 'training_preview'):
@@ -740,9 +786,14 @@ def validate(game, state):
         raise ValueError('Domestic cities')
     for key, city in state.cities.items():
         row = pool['cities'][key]
-        if not isinstance(row, dict) or set(row) != _CITY_FIELDS or row['owner'] != city.owner:
+        if (not isinstance(row, dict) or set(row) - _CITY_INCOME_FIELDS != _CITY_FIELDS
+                or _CITY_INCOME_FIELDS <= row.keys() or row['owner'] != city.owner):
             raise ValueError('Domestic city ledger')
-        if not _integer(row['morale'], 0, 100) or not _integer(row['income_points'], 0, 594):
+        if (not _integer(row['morale'], 0, 100)
+                or not _integer(row['income_points'], 0, 99 * _INCOME_DUTIES_PER_MONTH)
+                or not _integer(row.get('income_extra_units', 0), 0, 20 * row['income_points'])
+                or not _integer(row.get('income_rate_units', 0), 0,
+                                50 * _INCOME_UNITS_PER_PERCENT * row['income_points'] // 99)):
             raise ValueError('Domestic morale/income')
         for field in ('income_month', 'last_income_month'):
             if not _integer(row[field], 0, _month(state)):

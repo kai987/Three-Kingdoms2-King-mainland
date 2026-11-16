@@ -51,12 +51,17 @@ const {chromium}=require('playwright'),root=path.resolve(__dirname,'..');
    points[0]=positions[id];const port=point(ports[id]);if(points.at(-1).some((v,i)=>v!==port[i]))points.push(port);
    access[id]=simplify(points);
   }
-  const land_roads=corridors.land_connections.map(({points,...row})=>{
-   if(points){
+  const land_roads=corridors.land_connections.map(({points,sections,...row})=>{
+   if(points||sections){
     const matches=(a,b)=>a?.length===2&&b?.length===2&&a.every((v,i)=>v===b[i]);
-    if(!matches(points[0],positions[row.from])||!matches(points.at(-1),positions[row.to]))
-     throw Error('Reviewed land corridor must join the city centers: '+row.from+':'+row.to);
-    return {...row,draw:[{mode:'land',points}]};
+    const parts=sections??[points];
+    if((points&&sections)||!Array.isArray(parts)||!parts.length||
+       parts.some((part,i)=>!Array.isArray(part)||part.length<2||
+        part.some(p=>!Array.isArray(p)||p.length!==2||!p.every(Number.isFinite))||
+        (i>0&&!matches(parts[i-1].at(-1),part[0])))||
+       !matches(parts[0][0],positions[row.from])||!matches(parts.at(-1).at(-1),positions[row.to]))
+     throw Error('Reviewed land corridor must join the city centers continuously: '+row.from+':'+row.to);
+    return {...row,draw:parts.map(points=>({mode:'land',points}))};
    }
    const junction=index(row.junction),from=route(index(positions[row.from]),junction,false),to=route(junction,index(positions[row.to]),false);
    from[0]=positions[row.from];to[to.length-1]=positions[row.to];

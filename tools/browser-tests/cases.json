@@ -23,6 +23,18 @@
       "scenario_scope": "unbound"
     },
     {
+      "id": "faction-allies-command-books",
+      "title": "faction resources show current allies and large factions receive 40 command books",
+      "groups": [
+        "scenarios",
+        "economy"
+      ],
+      "scenario_ids": [
+        "mainland208-10"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
       "id": "observer-speed",
       "title": "observer speed changes cadence without resuming a pause and city counts follow ownership",
       "groups": [
@@ -445,6 +457,32 @@
       ],
       "scenario_ids": [
         "mainland208-10"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "allied-attack-coalition",
+      "title": "allied columns share ten attack slots and show the captor, loot and return city",
+      "groups": [
+        "battle",
+        "logistics",
+        "map",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland208-10"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "at-large-successor",
+      "title": "an at-large heir in a friendly city requires recruitment consent",
+      "groups": [
+        "people",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland249-01"
       ],
       "scenario_scope": "fixed"
     },

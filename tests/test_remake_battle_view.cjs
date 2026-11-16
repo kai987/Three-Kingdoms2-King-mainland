@@ -66,4 +66,16 @@ for(const success of [true,false]){
  const speech=sandbox.GameDialogue.command('tactic',{actor:8,tactic:3},before,result);
  assert.equal(speech[1].text.includes('此計未能奏效'),!success);assert.equal(view.commandCue('tactic',{actor:8,tactic:3},before,result),success?'tactic_8d':'error');
 }
+const coalition={catalog:{battle_tactical:{player_side:'attackers'}},game:{
+ player:'wu',officers:{1:{faction_id:'shu'},2:{faction_id:'wu'},3:{faction_id:'wei'}},
+ battle:{id:'battle-1',attacker:'shu',defender:'wei',attackers:[{id:1},{id:2}],defenders:[{id:3}],
+  extended:{coalition:{sources:{1:'home',2:'approach'}}}}}};
+const jointSnapshot=JSON.stringify(coalition);
+assert.equal(view.playerSide(coalition),'attackers','The supporting player is still on the attack side');
+assert.equal(view.canCommandOfficer(coalition,2),true);
+assert.equal(view.canCommandOfficer(coalition,1),false,'An allied unit is friendly without granting command');
+assert.equal(view.canCommandOfficer(coalition,3),false);
+assert.equal(view.playerSide({...coalition,catalog:{}}),'attackers','Saved joint results still orient the supporting faction');
+assert.equal(view.playerSide({game:{...coalition.game,player:'wei'}}),'defenders');
+assert.equal(JSON.stringify(coalition),jointSnapshot);
 console.log('battle view: live canvas/roster/control reuse, keyed ordering, focus/scroll/details, mode/new-battle reset, neutral missing-receipt fallback and shared read-only semantic feedback passed');

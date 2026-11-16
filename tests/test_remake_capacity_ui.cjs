@@ -145,6 +145,25 @@ async function weightedTransferChecks(){
  context.departure(home,'enemy');assert.equal(lastDialog,departureDialog,'An allied destination cannot open a departure dialog');
  delete context.view.catalog.non_aggression;
  await element('#confirm-departure').onclick();assert.equal(lastCommand.kind,'depart');assert.equal(lastCommand.payload.officers.length,10);
+ context.GameI18n.t=String;
+ vm.runInContext(source.slice(source.indexOf('function battleText('),source.indexOf('function battleTactical(')),context);
+ context.view.catalog.allied_attacks={enemy:{faction:'shu',committed:5,remaining:5}};
+ picked=[];context.departure(home,'enemy');
+ assert.match(element('#departure-allied').innerHTML,/5\/10名武將.+可增派5名/);
+ assert.match(element('#departure-count').textContent,/0\/5人/);
+ picked=Array.from({length:6},(_,value)=>({value:String(value)}));element('#review-departure').onclick();
+ assert.equal(lastNotice.error,true);assert.equal(lastDialog.title,'选择出征名单','A six-unit reinforcement would overflow the shared attack roster');
+ picked=picked.slice(0,5);element('#review-departure').onclick();
+ assert.match(lastDialog.body,/data-allied-attack/);
+ const beforeJoin=lastCommand;
+ context.view.catalog.allied_attacks.enemy={faction:'shu',committed:6,remaining:4};
+ await element('#confirm-departure').onclick();assert.equal(lastCommand,beforeJoin,'A stale joint confirmation cannot submit after the available slots shrink');
+ context.view.catalog.allied_attacks.enemy={faction:'shu',committed:5,remaining:5};
+ await element('#confirm-departure').onclick();assert.equal(lastCommand.kind,'depart');assert.equal(lastCommand.payload.officers.length,5);
+ context.view.catalog.allied_attacks.enemy={faction:'shu',committed:10,remaining:0};
+ assert(!context.actionTargetCities('depart',home).includes('enemy'));
+ assert.match(context.mapDepartureBlock(home,'enemy'),/名額已滿/);
+ delete context.view.catalog.allied_attacks;
  assert.equal(JSON.stringify(context.view.game),before,'Rendering and uncommitted confirmation never mutate runtime state');
  // Display reads the supplied capacity, rather than freezing 99 into UI copy.
  context.view.catalog.rules.city_officer_capacity=30;home.roster.officer_ids=home.roster.officer_ids.slice(0,30);

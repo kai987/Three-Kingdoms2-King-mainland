@@ -3,6 +3,8 @@
  * resizing and changing language never submit commands or sample game RNG. */
 'use strict';
 (function(root){
+ const battleView=()=>root.GameBattleView||(typeof require==='function'?require('./battle-view.js'):null);
+ const ownSide=view=>battleView()?.playerSide(view)??(view?.game?.battle?.attacker===view?.game?.player?'attackers':'defenders');
  const WIDTH=256,HEIGHT=240,RESOLUTION_SCALE=4,SCHEMA='tk2-battle-presentation-v1';
  const FIELD_WIDTH=496,FIELD_HEIGHT=304,FIELD_HUD=80;
  const PAPER='#ffd4c8',INK='#000000',ASSET_ROOT='/assets/battle-original/',ENHANCED_ROOT='/assets/battle-enhanced/';
@@ -396,7 +398,7 @@
    if(selected){outline(p.x-8,p.y-8,16,16,'#ffffff');outline(p.x-7,p.y-7,14,14,INK);}
   }
   function paintMap(state,field=null){
-   const b=view.game.battle,own=b.attacker===view.game.player?'attackers':'defenders';
+   const b=view.game.battle,own=ownSide(view);
    const image=field?.image;
    if(field){
     if(image)blit(image,0,0,FIELD_WIDTH,FIELD_HEIGHT);else{rectangle(0,0,FIELD_WIDTH,FIELD_HEIGHT,'#384a2a');for(let x=0;x<=31;x++)line(x*16,0,x*16,FIELD_HEIGHT,'#71815b');for(let y=0;y<=19;y++)line(0,y*16,FIELD_WIDTH,y*16,'#71815b');}
@@ -423,7 +425,7 @@
    for(const u of [...state.units].sort((a,b)=>Number(live(a))-Number(live(b)))){const p=points.get(u.id);if(p)flag(u,p,moving!==null?u.id===moving:u.id===selection.actor||u.id===selection.target,u.side!==own,allowed.some(id=>String(id)===String(u.id)),markers.get(u.id));}
    if(state.outcome){const x=field?(FIELD_WIDTH-116)/2:70,y=field?(FIELD_HEIGHT-30)/2:60;rectangle(x,y,116,30,PAPER);outline(x,y,116,30);label(outcome(state.outcome),x+10,y+10,INK,12);}
   }
-  function outcome(value){const own=view?.game?.battle?.attacker===view?.game?.player;return value==='victory'?(own?text('本方勝利','勝利'):text('城池失守','都市陥落')):value==='defeat'?(own?text('本方敗退','敗北'):text('守城成功','防衛成功')):text('攻方退卻','攻撃側撤退');}
+  function outcome(value){const own=ownSide(view)==='attackers';return value==='victory'?(own?text('本方勝利','勝利'):text('城池失守','都市陥落')):value==='defeat'?(own?text('本方敗退','敗北'):text('守城成功','防衛成功')):text('攻方退卻','攻撃側撤退');}
   function selectedId(state,scene){return scene?.actor??(state.duel?.actor??selection.actor??state.units[0]?.id);}
   function portrait(id,x,y){
    const personId=portraits?.personId?.(view.catalog,id),entry=portraits?.entry?.(personId);let asset=portraits?.asset?portraits.asset(personId):entry,image=imageFor(asset?.path);
@@ -441,7 +443,7 @@
   }
   function fieldHud(state,scene=null){
    rectangle(0,FIELD_HEIGHT,FIELD_WIDTH,FIELD_HUD,PAPER);line(FIELD_WIDTH/2,FIELD_HEIGHT+4,FIELD_WIDTH/2,FIELD_HEIGHT+57,INK);
-   const b=view.game.battle,own=b.attacker===view.game.player?'attackers':'defenders';
+   const b=view.game.battle,own=ownSide(view);
    const moving=scene?.kind==='move'?state.units.find(u=>u.id===scene.actor):null;
    const actor=moving?.side===own?moving:state.units.find(u=>u.id===selection.actor&&u.side===own)||state.units.find(u=>u.side===own),target=moving&&moving.side!==own?moving:state.units.find(u=>u.id===selection.target&&u.side!==own)||state.units.find(u=>u.side!==own);
    for(const [unit,x]of [[actor,0],[target,FIELD_WIDTH/2]]){
@@ -581,7 +583,7 @@
    const image=imageFor(siegeAssets?.assets?.['siege-background-4x']?.path);
    const mirrored=view.game.battle.attackers.some(unit=>unit.id===row.fort);
    if(row.mode==='field')background('plain');else if(image)blit(image,0,0,256,160,mirrored);else rectangle(0,0,256,160,'#9ca8b0');
-   const own=view.game.battle.attacker===view.game.player?'attackers':'defenders',locked=view.game.battle[own].some(unit=>unit.id===row.fort);
+   const own=ownSide(view),locked=view.game.battle[own].some(unit=>unit.id===row.fort);
    const preview=row.stage==='formation'&&!locked&&bounded(selection.siegeFormation,3)?siegeAssets?.tables?.formations?.[selection.siegeFormation]:null;
    for(const unit of row.units||[]){
     if(unit.withdrawn||(unit.kind==='general'?unit.health<=0:unit.troops<=0))continue;
@@ -818,9 +820,10 @@
    const rect=canvas.getBoundingClientRect(),x=(event.clientX-rect.left)*width/rect.width,y=(event.clientY-rect.top)*height/rect.height;if(y>=(field?FIELD_HEIGHT:160))return;
    if(x<0||y<0||x>=width)return;
    const selected={x:Math.floor(x/16),y:Math.floor(y/16)};if(!cell(selected))return;
-   const state=snapshot(view),own=view.game.battle.attacker===view.game.player?'attackers':'defenders',found=state.units.find(unit=>{const p=unitPosition(view,unit.id);return unit.troops>0&&unit.health>0&&p?.x===selected.x&&p?.y===selected.y;});
+   const state=snapshot(view),own=ownSide(view),found=state.units.find(unit=>{const p=unitPosition(view,unit.id);return unit.troops>0&&unit.health>0&&p?.x===selected.x&&p?.y===selected.y;});
    if(tacticalView(view)?.placement?.pending){options.onCell?.(selected);return;}
-   if(found)options.onSelect?.(found.side===own?'actor':'target',found.id);else options.onCell?.(selected);
+   if(found){if(found.side!==own||battleView()?.canCommandOfficer(view,found.id)!==false)options.onSelect?.(found.side===own?'actor':'target',found.id);}
+   else options.onCell?.(selected);
   }
   function mapKeydown(event){
    if(event.defaultPrevented||event.isComposing||event.ctrlKey||event.metaKey||event.altKey||playing||options.canInteract?.()===false||view?.game?.phase!=='battle'||view.game.battle?.extended?.duel||view.game.battle?.extended?.siege||!(tacticalView(view)?.placement?.pending||tacticalView(view)?.actors?.[String(selection.actor)]?.can_act))return;

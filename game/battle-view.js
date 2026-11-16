@@ -3,6 +3,16 @@
 (function(root){
  const TACTIC_FAMILIES=Object.freeze(['88','95','8d','8d','88','88','88','8d','91','95','8d','8d','88','88','88','95']);
  const RECEIPT_KINDS=Object.freeze({tactic:'tactic',duel_start:'duel_start',duel_action:'duel_action',attack:'attack',battle_move:'move',retreat:'retreat'});
+ function playerSide(view){
+  const game=view?.game,battle=game?.battle,side=view?.catalog?.battle_tactical?.player_side;
+  if(side==='attackers'||side==='defenders')return side;
+  const allied=battle?.extended?.coalition&&battle.attackers?.some(unit=>game.officers?.[String(unit.id)]?.faction_id===game.player);
+  return battle?.attacker===game?.player||allied?'attackers':'defenders';
+ }
+ function canCommandOfficer(view,id){
+  const game=view?.game;
+  return !game?.battle?.extended?.coalition||game.officers?.[String(id)]?.faction_id===game.player;
+ }
  function sceneCue(scene){
   if(scene?.kind==='duel_start'&&scene.success===false)return 'duel_refused';
   if(scene?.skipped||scene?.success===false)return 'error';
@@ -90,6 +100,6 @@
   }
   return {render,controls:update,reset(){identity=mode=null;}};
  }
- const api={TACTIC_FAMILIES,sceneCue,resultScene,commandCue,patchChildren,create};
+ const api={TACTIC_FAMILIES,playerSide,canCommandOfficer,sceneCue,resultScene,commandCue,patchChildren,create};
  if(typeof module==='object'&&module.exports)module.exports=api;else root.GameBattleView=Object.freeze(api);
 })(typeof window==='object'?window:globalThis);

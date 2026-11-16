@@ -9,7 +9,6 @@ from .errors import GameError
 from . import battle_grid, equipment, facilities, battle_supply
 from .officers import parse_officer_ref
 
-LIMIT = 100000000
 ACTIONS = {'hospital': 'treat', 'market': 'buy_grain', 'armory': 'buy_equipment'}
 
 
@@ -22,7 +21,10 @@ def _site(battle, actor):
                  if site['x'] == point['x'] and site['y'] == point['y']), None)
 
 
-def _payer(state, battle, side):
+def _payer(state, battle, actor, side):
+    if 'coalition' in battle['extended']:
+        from .battle_allegiance import home_for
+        return state.cities[home_for(battle,actor,side)]
     return state.cities[battle['source' if side == 'attackers' else 'target']]
 
 
@@ -44,7 +46,7 @@ def quote(game, state, battle, actor, side, *, site=None):
     site = _site(battle, actor) if site is None else site
     if site is None:
         return None
-    payer, officer = _payer(state, battle, side), state.officers[actor['id']]
+    payer, officer = _payer(state, battle, actor, side), state.officers[actor['id']]
     hp = battle['extended']['support'][str(actor['id'])]['health']
     grain=battle_supply.available(state,battle,side)
     result = dict(site, payer_city=payer.id, gold=payer.gold, grain=grain,
@@ -54,8 +56,9 @@ def quote(game, state, battle, actor, side, *, site=None):
     if site['kind'] == 'market':
         rate = facilities._rule(game, 'market_buy_rates')[str(_town(state,battle))]
         batch = facilities._rule(game, 'trade_batch_grain')
+        room = battle_supply.pool_limit(battle,side)-grain
         result['trade'] = dict(rate=rate, batch_grain=batch,
-            max_batches=max(0,min(facilities._rule(game,'trade_max_batches'),payer.gold//rate,(LIMIT-grain)//batch)))
+            max_batches=max(0,min(facilities._rule(game,'trade_max_batches'),payer.gold//rate,room//batch)))
     if site['kind'] == 'armory':
         result['stock'] = _stock(state,battle,officer)
     return result
@@ -71,7 +74,9 @@ def execute(game, state, payload, *, side=None):
     except (ValueError,TypeError):
         raise GameError('請選擇有效的戰場武將。') from None
     own, actor = battle_grid._unit(battle, ident)
-    player = 'attackers' if battle['attacker'] == state.player else 'defenders'
+    player = battle_grid.player_side(state,battle) or 'defenders'
+    if side is None and actor is not None and not battle_grid.player_controls(state,battle,actor):
+        raise GameError(battle_grid.ALLY_CONTROL_REASON)
     expected = player if side is None else side
     reason = battle_grid._action_reason(battle, actor, expected)
     if reason:
@@ -83,7 +88,7 @@ def execute(game, state, payload, *, side=None):
     extra = {'batches'} if action == 'buy_grain' else {'slot','item'} if action == 'buy_equipment' else set()
     if set(payload) != {'battle_id','actor','action'} | extra:
         raise GameError('戰場設施操作參數無效。')
-    payer, officer = _payer(state,battle,own), state.officers[ident]
+    payer, officer = _payer(state,battle,actor,own), state.officers[ident]
     people = [officer.person_id]
     if action == 'treat':
         hp = battle['extended']['support'][str(ident)]
@@ -105,7 +110,8 @@ def execute(game, state, payload, *, side=None):
         if type(batches) is not int or not 1 <= batches <= trade['max_batches']:
             raise GameError('兵糧交易數量超出可用金錢或上限。')
         gold, grain = batches*trade['rate'], batches*trade['batch_grain']
-        battle_supply.receive(state,battle,own,grain)
+        contributor=payer.owner if own=='attackers' and 'coalition' in battle['extended'] else None
+        battle_supply.receive(state,battle,own,grain,contributor=contributor)
         payer.gold -= gold
         kind = 'grain_traded'
         details = dict(actor=officer.person_id,direction='buy',batches=batches,grain=grain,gold=gold,rate=trade['rate'],

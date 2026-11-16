@@ -19,26 +19,38 @@ for(const event of [developed,unrest,exhausted,traded]){
 for(const change of [{development:'industry'},
  {before:999,after:999,gain:0,governance_after:61},
  {governance_before:100,governance_after:100},
- {development:'population',before:999800,after:999900,gain:100,governance_before:99,governance_after:100}])assert(events.validEvent({...developed,details:{...developed.details,...change}}));
+ {development:'population',before:999800,after:999900,gain:100,governance_before:99,governance_after:100},
+ {development:'population',before:1999900,after:1999999,gain:99,governance_after:61},
+ {development:'population',before:1500399,after:1501199,gain:800,governance_after:61}])assert(events.validEvent({...developed,details:{...developed.details,...change}}));
 rejectDetails(developed,[{development:'town'},{development:[]},{gold:true},{gold:9},{gold:11},{gold:28},{after:991},{after:1000,gain:50},{gain:-1},{governance_after:61},{governance_before:true},{actor:'other'},{extra:1},
  {before:999,after:999,gain:0,governance_before:100,governance_after:100},
+ {development:'population',before:1999900,after:2000000,gain:100,governance_after:61},
+ {development:'population',before:1500399,after:1500600,gain:201,governance_after:61},
  {development:'population',before:95000,after:95101,gain:101,governance_after:61}]);
 for(const change of [{population_loss:0},{category:'resources',population_loss:0,gold_loss:100,grain_loss:200},{category:'development',population_loss:0,land_loss:40,industry_loss:20}])assert(events.validEvent({...unrest,details:{...unrest.details,...change}}));
-rejectDetails(unrest,[{category:'riot'},{category:{}},{category:'__proto__'},{governance:50},{governance:true},{population_loss:401},{population_loss:-100},{gold_loss:1},{population_loss:1000000},{extra:1}]);
+rejectDetails(unrest,[{category:'riot'},{category:{}},{category:'__proto__'},{governance:50},{governance:true},{population_loss:401},{population_loss:-100},{gold_loss:1},{population_loss:2000000},{extra:1}]);
 assert(events.validEvent({...exhausted,details:{...exhausted.details,side:'defenders',outcome:'victory'}}));
 assert(events.validEvent({...exhausted,details:{...exhausted.details,daily_grain:202,missing_units:202000}}));
 rejectDetails(exhausted,[{battle_id:'battle-0'},{battle_id:'<script>'},{side:'attacker'},{days:0},{days:31},{days:true},{grain:-1},{daily_grain:0},{daily_grain:203},{missing_units:0},{missing_units:10001},{daily_grain:202,missing_units:202001},{outcome:'victory'},{extra:1}]);
 const cityTrade=clone(traded);for(const key of ['battle_id','side','destination'])delete cityTrade.details[key];assert(events.validEvent(cityTrade));
 rejectDetails(traded,[{direction:'sell'},{side:'attackers<script>'},{destination:'city'},{battle_id:'battle-01'},{grain:299},{extra:1}]);
 
-const base={catalog:{scenario_id:'event-test',library:[{person_id:'person-a',name:'劉備'}],cities:[{id:'home',name:'成都',position:[200,300]},{id:'enemy',name:'長安',position:[500,300]}],factions:[{id:'shu',name:'劉備'},{id:'wei',name:'曹操'}],world:{x:0,y:0,width:1352,height:1024,background:'/assets/map-navigation.png'}},game:{seed:1,player:'shu',officers:{0:{person_id:'person-a'}},extension:{leaders:{shu:0},events:{next_id:1,items:[]}}}};
+const jointResult=row('battle_result',{battle_id:'battle-6',outcome:'victory',lost:100,surrendered:0,
+ coalition:{captor:'wu',ally:'shu',troops:[1500,1000],shares:[{gold:600,grain:300,reserves:30},{gold:400,grain:200,reserves:20}],returns:['home']}
+},{city_ids:['home','enemy'],factions:['shu','wei']});
+assert(events.validEvent(jointResult),'A coalition receipt accepts the validated shares and return route');
+for(const change of [{captor:'shu'},{shares:[{gold:-1}]},{troops:[1500]},{returns:['home','home']}]){
+ const invalid=clone(jointResult);Object.assign(invalid.details.coalition,change);
+ assert(!events.validEvent(invalid),'Invalid coalition receipt '+JSON.stringify(change));
+}
+const base={catalog:{scenario_id:'event-test',library:[{person_id:'person-a',name:'劉備'}],cities:[{id:'home',name:'成都',position:[200,300]},{id:'enemy',name:'長安',position:[500,300]}],factions:[{id:'shu',name:'劉備'},{id:'wei',name:'曹操'},{id:'wu',name:'孫権'}],world:{x:0,y:0,width:1352,height:1024,background:'/assets/map-navigation.png'}},game:{seed:1,player:'shu',officers:{0:{person_id:'person-a'}},extension:{leaders:{shu:0},events:{next_id:1,items:[]}}}};
 class Modal{
  constructor(){this.open=false;this.innerHTML='';}
  addEventListener(){}removeEventListener(){}querySelector(){return {focus(){}};}
  showModal(){this.open=true;}close(){this.open=false;}
 }
 const originalUI={icon:id=>`<img data-existing-icon="${id}">`,scene:id=>`<img data-existing-scene="${id}">`};
-const snapshots=JSON.stringify([developed,unrest,exhausted,traded,base]),random=Math.random;
+const snapshots=JSON.stringify([developed,unrest,exhausted,traded,jointResult,base]),random=Math.random;
 Math.random=()=>{throw Error('Event presentation must not draw RNG');};
 try{
  for(const language of ['zh-Hant','ja']){
@@ -55,6 +67,10 @@ try{
   assert(describer.description({...exhausted,details:{...exhausted.details,side:'defenders',outcome:'victory'}}).includes(language==='ja'?'攻撃側が勝利':'攻方獲勝'));
   assert(describer.description(traded).includes(language==='ja'?'都市の兵糧在庫は増えていません':'城內兵糧未增加'));
   assert(dialogue.event(traded,base,language,i18n)[0].text.includes(language==='ja'?'携行分':'隨軍糧隊'));
+  const battleResult=describer.description(jointResult);
+  assert.match(battleResult,language==='ja'?/孫権が長安を占領/:/孫権占領長安/);
+  assert.match(battleResult,language==='ja'?/劉備（兵士1000）は金400/:/劉備（1000兵）分得金400/);
+  assert.match(battleResult,language==='ja'?/成都に帰還/:/返回成都/);
   describer.dispose();
   for(const [event,icon] of [[developed,'command-city'],[unrest,'command-city'],[exhausted,'command-warehouse']]){
    const modal=new Modal(),tasks=[],doc={addEventListener(){},removeEventListener(){},querySelector(){return null;}};
@@ -68,6 +84,6 @@ try{
  }
  for(const action of ['develop_land','develop_industry','develop_population'])assert.equal(dialogue.COMMANDS[action],'event');
  assert.deepEqual([...dialogue.EVENT_KINDS].sort(),Object.keys(events.KINDS).sort());
- assert.equal(JSON.stringify([developed,unrest,exhausted,traded,base]),snapshots);
+ assert.equal(JSON.stringify([developed,unrest,exhausted,traded,jointResult,base]),snapshots);
 }finally{Math.random=random;}
 console.log('economy/supply events: strict snapshots, bilingual outcomes, existing artwork and read-only playback passed');

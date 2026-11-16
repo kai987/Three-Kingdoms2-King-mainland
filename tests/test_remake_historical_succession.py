@@ -1,11 +1,12 @@
 """Historical nominations at a ruler vacancy use actual campaign membership."""
+from copy import deepcopy
 from functools import lru_cache
 from pathlib import Path
 import unittest
 from unittest.mock import patch
 
 from remake import dated_events, strategic_ai, succession
-from remake.campaign import Campaign, Catalog, GameError
+from remake.campaign import Campaign, Catalog, GameError, digest
 
 
 CATALOGS = Path(__file__).resolve().parents[1] / 'game/data/campaigns'
@@ -51,6 +52,18 @@ def transfer_member(game, ident, city_id):
 
 
 class HistoricalSuccessionTests(unittest.TestCase):
+    def assert_pending_recruit(self, game, faction, officer, city):
+        state = game.state
+        pending = state.extension['pending_succession'][faction]
+        self.assertEqual(pending['candidates'], [officer])
+        self.assertIsNone(pending['provisional'])
+        self.assertEqual(pending['recruit'], dict(officer=officer, city=city, declined=[]))
+        self.assertEqual(state.extension['leaders'][faction], pending['previous'])
+        self.assertFalse(state.officers[pending['previous']].alive)
+        self.assertIsNone(state.officers[officer].faction_id)
+        self.assertEqual(state.extension['free_locations'][str(officer)], city)
+        self.assertNotIn(officer, state.cities[city].roster.officer_ids)
+
     def test_wei_shu_and_early_wu_prefer_the_eligible_dynastic_successor(self):
         for date, faction, expected in (
             ('190-01', 'wei', 510),       # Cao Cao's eldest Cao Ang is still alive.
@@ -95,30 +108,40 @@ class HistoricalSuccessionTests(unittest.TestCase):
         self.assertEqual(state.extension['free_locations'][str(heir)], 'henan')
         self.assertEqual(state.cities['henan'].owner, 'wei')
         game._reconcile_factions(state)
-        self.assertEqual(state.extension['pending_succession']['wei']['candidates'], [heir])
-        self.assertEqual(state.officers[heir].faction_id, 'wei')
-        self.assertIn(heir, state.cities['henan'].roster.officer_ids)
+        self.assert_pending_recruit(game, 'wei', heir, 'henan')
         self.assertEqual(state.officers[heir].troops, 0)
 
     def test_historical_free_heir_keeps_a_faction_with_no_other_living_officer(self):
         game = opening('238-01', 'wei')
         state = game.state
         heir = game.catalog.ids[person(529)]
-        state.year, state.month = 240, 1
-        game._monthly_calendar(state)
-        free = state.extension['free_locations']
-        self.assertEqual(free[str(heir)], 'henan')
+        advance_to(game, 239, 12, 21)
+        ruler = state.extension['leaders']['wei']
+        self.assertEqual(state.extension['free_locations'][str(heir)], 'henan')
         for officer in state.officers.values():
-            if officer.alive and officer.faction_id == 'wei':
+            if officer.runtime_id != ruler and officer.alive and officer.faction_id == 'wei':
                 dated_events._retire(game, state, officer.person_id)
+        advance_to(game, 240, 1)
         self.assertFalse(any(officer.alive and officer.faction_id == 'wei'
                              for officer in state.officers.values()))
-        game._reconcile_factions(state)
         self.assertNotIn('wei', state.extension['ended_factions'])
         self.assertEqual(state.cities['henan'].owner, 'wei')
-        self.assertEqual(state.extension['pending_succession']['wei']['candidates'], [heir])
-        self.assertEqual(state.officers[heir].faction_id, 'wei')
-        self.assertNotIn(str(heir), free)
+        self.assert_pending_recruit(game, 'wei', heir, 'henan')
+
+        pending_save = game.export_save()
+        declined = Campaign(game.catalog)
+        declined.load_save(pending_save, 0)
+        declined.command('choose_successor', {'officer': heir, 'decline_recruit': True},
+                         declined.revision)
+        self.assertEqual(declined.state.phase, 'finished')
+        self.assertEqual(declined.state.extension['outcome'], 'defeat')
+        self.assertIsNone(declined.state.officers[heir].faction_id)
+
+        game.command('choose_successor', {'officer': heir}, game.revision)
+        self.assertEqual(game.state.phase, 'city')
+        self.assertEqual(game.state.extension['leaders']['wei'], heir)
+        self.assertEqual(game.state.officers[heir].faction_id, 'wei')
+        self.assertEqual(game.state.cities['henan'].owner, 'wei')
 
     def test_wu_designations_change_in_each_late_opening(self):
         for date, expected in (
@@ -152,9 +175,7 @@ class HistoricalSuccessionTests(unittest.TestCase):
         self.assertEqual(state.extension['free_locations'][str(sun_quan)], expected_city.id)
         expected_city.owner = 'sun_jian'
         vacancy(game, 'sun_jian')
-        self.assertEqual(state.extension['pending_succession']['sun_jian']['candidates'], [sun_quan])
-        self.assertEqual(state.officers[sun_quan].faction_id, 'sun_jian')
-        self.assertIn(sun_quan, expected_city.roster.officer_ids)
+        self.assert_pending_recruit(game, 'sun_jian', sun_quan, expected_city.id)
 
     def test_attested_succession_is_used_by_other_opening_powers(self):
         for date, faction, expected in (
@@ -254,17 +275,15 @@ class HistoricalSuccessionTests(unittest.TestCase):
                 game._reconcile_factions(state)
                 choices = state.extension['pending_succession']['wu']['candidates']
                 if owner == 'wu':
-                    self.assertEqual(choices, [heir])
-                    self.assertEqual(state.officers[heir].faction_id, 'wu')
-                    self.assertNotIn(str(heir), free)
-                    self.assertIn(heir, state.cities[location].roster.officer_ids)
+                    self.assert_pending_recruit(game, 'wu', heir, location)
                 else:
                     self.assertNotIn(heir, choices)
+                    self.assertNotIn('recruit', state.extension['pending_succession']['wu'])
                     self.assertIsNone(state.officers[heir].faction_id)
                     self.assertEqual(free[str(heir)], location)
                 self.assertEqual(state.officers[heir].troops, 0)
 
-    def test_sun_quan_dies_in_april_and_sun_liang_succeeds_in_the_same_turn(self):
+    def test_sun_quan_dies_in_april_and_sun_liang_can_succeed_in_the_same_turn(self):
         for faction in ('wu', 'observer'):
             with self.subTest(faction=faction):
                 game = opening('249-01', faction)
@@ -284,12 +303,51 @@ class HistoricalSuccessionTests(unittest.TestCase):
                         game.command('ai', {'turn': turn}, game.revision)
                 self.assertEqual((game.state.year, game.state.month, game.state.day), (252, 4, 1))
                 self.assertFalse(game.state.officers[father].alive)
-                self.assertEqual(game.state.extension['leaders']['wu'], heir)
                 if faction == 'wu':
-                    pending = game.state.extension['pending_succession']['wu']
-                    self.assertEqual(pending['candidates'], [heir])
+                    self.assert_pending_recruit(game, 'wu', heir, 'danyang')
+                    pending_save = game.export_save()
+                    rejected = Campaign(game.catalog)
+                    rejected.load_save(pending_save, 0)
+                    self.assertEqual(rejected.export_save(), pending_save)
+                    malformed = deepcopy(pending_save)
+                    malformed['state']['extension']['pending_succession']['wu']['recruit']['city'] = 'henan'
+                    malformed.pop('checksum')
+                    malformed['checksum'] = digest(malformed)
+                    with self.assertRaises(GameError):
+                        rejected.load_save(malformed, rejected.revision)
+                    wrong = next(ident for ident, officer in rejected.state.officers.items()
+                                 if officer.alive and officer.faction_id == 'wu')
+                    with self.assertRaises(GameError):
+                        rejected.command('choose_successor', {'officer': wrong}, rejected.revision)
+                    with self.assertRaises(GameError):
+                        rejected.command('end_turn', {}, rejected.revision)
+                    self.assertEqual(rejected.export_save(), pending_save)
+
+                    rejected.command('choose_successor', {'officer': heir, 'decline_recruit': True},
+                                     rejected.revision)
+                    pending = rejected.state.extension['pending_succession']['wu']
+                    self.assertNotIn('recruit', pending)
+                    self.assertNotIn(heir, pending['candidates'])
+                    self.assertTrue(all(rejected.state.officers[ident].faction_id == 'wu'
+                                        for ident in pending['candidates']))
+                    self.assertIsNone(rejected.state.officers[heir].faction_id)
+                    self.assertEqual(rejected.state.extension['free_locations'][str(heir)], 'danyang')
+                    rejected.command('choose_successor', {'officer': pending['candidates'][0]},
+                                     rejected.revision)
+
+                    city = game.state.cities['danyang']
+                    money_and_troops = (city.gold, city.grain, city.reserves)
+                    draws = game.state.rng.draws
                     game.command('choose_successor', {'officer': heir}, game.revision)
+                    city = game.state.cities['danyang']
+                    self.assertEqual((city.gold, city.grain, city.reserves), money_and_troops)
+                    self.assertEqual(game.state.rng.draws, draws)
+                self.assertEqual(game.state.extension['leaders']['wu'], heir)
+                self.assertEqual(game.state.officers[heir].faction_id, 'wu')
+                self.assertNotIn(str(heir), game.state.extension['free_locations'])
+                self.assertNotIn('wu', game.state.extension['pending_succession'])
                 events = [row for row in game.state.extension['events']['items'] if row['kind'] == 'succession']
+                self.assertEqual(sum(row['person_ids'] == [person(578)] for row in events), 1)
                 self.assertEqual(events[-1]['person_ids'], [person(578)])
                 self.assertEqual(events[-1]['details']['previous'], person(553))
 
@@ -302,7 +360,7 @@ class HistoricalSuccessionTests(unittest.TestCase):
         advance_to(game, 221, 11)
         self.assertEqual(game.state.extension['free_locations'][str(heir)], 'danyang')
         vacancy(game, 'wu')
-        self.assertEqual(game.state.extension['pending_succession']['wu']['candidates'], [heir])
+        self.assert_pending_recruit(game, 'wu', heir, 'danyang')
 
     def test_unlimited_lifespan_keeps_sun_quan_on_the_throne(self):
         game = Campaign(scenario('249-01'))
@@ -324,6 +382,8 @@ class HistoricalSuccessionTests(unittest.TestCase):
             self.assertTrue(old_game.state.officers[old_catalog.ids[person(553)]].alive)
             self.assertNotIn(old_catalog.ids[person(578)], old_game.state.officers)
             advance_to(old_game, 253, 1)
+            old_game.command('choose_successor', {'officer': old_catalog.ids[person(578)]},
+                             old_game.revision)
             old_later_save = old_game.export_save()
         father, heir = (old_catalog.ids[person(number)] for number in (553, 578))
         new_game = Campaign(scenario('249-01'))
@@ -332,7 +392,7 @@ class HistoricalSuccessionTests(unittest.TestCase):
         self.assertIn(f'service_eligible:{person(578)}:252', new_game.state.year_events)
         self.assertEqual(new_game.state.extension['leaders']['wu'], father)
         advance_to(new_game, 252, 5)
-        self.assertEqual(new_game.state.extension['pending_succession']['wu']['candidates'], [heir])
+        self.assert_pending_recruit(new_game, 'wu', heir, 'danyang')
         new_game.validate(new_game.state)
         new_game.load_save(old_later_save, new_game.revision)
         self.assertIn(f'service_eligible:{person(578)}:252', new_game.state.year_events)

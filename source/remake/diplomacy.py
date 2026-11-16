@@ -75,9 +75,11 @@ def _rupture_now(state, pair):
 
 
 def battle_relations(game, state, battle):
-    first, second = battle['attacker'], battle['defender']
-    if first in game.catalog.factions and second in game.catalog.factions and first != second:
-        _change_relation(state, first, second, -12)
+    second = battle['defender']
+    attackers = battle.get('extended', {}).get('coalition', {}).get('provisions', (battle['attacker'],))
+    for first in attackers:
+        if first in game.catalog.factions and second in game.catalog.factions and first != second:
+            _change_relation(state, first, second, -12)
 
 
 def capture(state, officer, *, city, captor, origin):

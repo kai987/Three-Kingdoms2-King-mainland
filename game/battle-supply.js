@@ -1,6 +1,7 @@
 /* Pure estimates; authoritative deductions and ledgers live in the campaign engine. */
 (function(root){
  'use strict';
+ const battleView=()=>root.GameBattleView||(typeof require==='function'?require('./battle-view.js'):null);
  const escape=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const text=(locale,tc,ja)=>locale==='ja'?ja:tc;
  function departure(view,source,ids,quote,selected=null){
@@ -15,8 +16,8 @@
  }
  function summary(view,locale='zh-Hant'){
   const ledger=view?.catalog?.battle_supply;if(!ledger)return '';
-  const own=view.game.battle.attacker===view.game.player?'attackers':'defenders',enemy=own==='attackers'?'defenders':'attackers';
-  return `<div class="battle-provisions" data-battle-provisions>${[own,enemy].map((side,i)=>{const r=ledger.sides?.[side];if(!r)return '';return `<p data-battle-supply-side="${side}" data-battle-grain="${escape(r.grain)}">${text(locale,i?'敵軍':'我軍',i?'敵軍':'自軍')} · ${text(locale,'隨軍糧','携行兵糧')} ${r.initialized?escape(r.grain):'—'} · ${text(locale,'日耗','一日消費')} ${escape(r.daily_grain)} · ${text(locale,'可支撐','維持可能')} ${r.initialized?escape(r.days_supported):'—'}${text(locale,'日','日')}</p>`;}).join('')}<small>${text(locale,'雙方行動結束才結算一天，斷糧時撤退；損兵後按實際兵數計算。','双方の行動終了で一日分を消費し、兵糧不足で撤退します。損耗後の実兵数で計算します。')}</small></div>`;
+  const own=battleView()?.playerSide(view)??(view.game.battle.attacker===view.game.player?'attackers':'defenders'),enemy=own==='attackers'?'defenders':'attackers';
+  return `<div class="battle-provisions" data-battle-provisions>${[own,enemy].map((side,i)=>{const r=ledger.sides?.[side];if(!r)return '';return `<p data-battle-supply-side="${side}" data-battle-grain="${escape(r.grain)}">${side==='attackers'&&view.game.battle.extended?.coalition?text(locale,'聯軍','連合軍'):text(locale,i?'敵軍':'我軍',i?'敵軍':'自軍')} · ${text(locale,'隨軍糧','携行兵糧')} ${r.initialized?escape(r.grain):'—'} · ${text(locale,'日耗','一日消費')} ${escape(r.daily_grain)} · ${text(locale,'可支撐','維持可能')} ${r.initialized?escape(r.days_supported):'—'}${text(locale,'日','日')}</p>`;}).join('')}<small>${text(locale,'雙方行動結束才結算一天，斷糧時撤退；損兵後按實際兵數計算。','双方の行動終了で一日分を消費し、兵糧不足で撤退します。損耗後の実兵数で計算します。')}</small></div>`;
  }
  const api=Object.freeze({departure,summary});
  if(typeof module==='object'&&module.exports)module.exports=api;

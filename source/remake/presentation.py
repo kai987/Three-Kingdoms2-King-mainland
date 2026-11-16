@@ -6,6 +6,8 @@ disabled outside the command context and for battles not involving the player.
 from contextlib import contextmanager
 from copy import deepcopy
 
+from .battle_grid import player_side
+
 SCHEMA = 'tk2-battle-presentation-v1'
 # A complete 60-point enemy phase can contain many one-cell moves. Preserve
 # the finite authoritative sequence; the client separately bounds playback.
@@ -30,7 +32,7 @@ def snapshot(campaign, state):
     scenes = getattr(campaign, '_presentation_capture', None)
     battle = state.battle
     if (scenes is None or len(scenes) >= MAX_SCENES or battle is None
-            or state.player not in (battle['attacker'], battle['defender'])):
+            or player_side(state,battle) is None):
         return None
     extended = battle['extended']
     duel = extended['duel']

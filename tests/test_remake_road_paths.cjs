@@ -63,9 +63,9 @@ calls=renderCalls(' const navigableSeas=',' const regionalRoads=',{seaRoutes:[co
 assert.equal(calls.length,2);assert.deepEqual(calls[0].options,{smooth:false,from:'a',to:null});assert.deepEqual(calls[1].options,{smooth:false,from:null,to:'b'});
 calls=renderCalls(' const regionalRoads=',' const offsets=',{preview:{regional_roads:[draws.region]}});
 assert.equal(calls.length,1);assert.deepEqual(calls[0].options,{from:null,to:'b'},'The shared mountain junction is never replaced by the source city');
-const yinping={from:'yinping',to:'shujun',new_branch:[[244,448],[214,502]]};
+const yinping={from:'yinping',to:'shujun',new_branch:[[250,402],[196,447],[214,502]]};
 calls=renderCalls(' const roads=',' const drawnAccess=',{extras:[['yinping','shujun']],view:{catalog:{map_presentation:{added_land_roads:[yinping]}}}});
-assert.deepEqual(calls[0].options,{to:'shujun'},'The Yinping branch starts at a shared junction, not at Yinping itself');
+assert.deepEqual(calls[0],{points:yinping.new_branch,options:{to:'shujun'}},'The one-way path draws the complete westward curve');
 // A presentation-only background alias updates both rendered image layers
 // without rewriting the world object or changing the camera's identity key.
 const world=Object.freeze({x:0,y:0,width:1352,height:1024,background:'/assets/map-navigation.png'}),worldBefore=JSON.stringify(world);
@@ -102,4 +102,4 @@ assert(rendered.includes('href="#castle-outline-pixels" x="100" y="200" fill="#0
 assert(rendered.includes('href="#castle-outline-pixels" x="300" y="400" fill="#fff"'),'Unowned borders remain pure white');
 assert(rendered.includes('href="#castle-fill-pixels" x="300" y="400" fill="#ffffff"'));
 assert(source.includes('${roads}${expansionRoads}${regionalRoads}${navigableSeas}${navigableRivers}${bridges}${marchRoutes}${castles}${labels}'),'All road and preview layers precede complete castle sprites');
-console.log('road paths: semantic endpoints, preview board, native-grid junctions, untouched ports/bypasses/inputs, original draw indices, Yinping junction and presentation-only background alias and complete castles above every road layer passed');
+console.log('road paths: semantic endpoints, preview board, native-grid junctions, untouched ports/bypasses/inputs, original draw indices, westward Yinping road and presentation-only background alias and complete castles above every road layer passed');

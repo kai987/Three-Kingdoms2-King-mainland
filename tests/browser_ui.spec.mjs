@@ -463,11 +463,48 @@ test('recovery callback waits for title Start',async({page},testInfo)=>{
  expect(errors.get(page)).toEqual([]);
 });
 
+test('faction resources show current allies and large factions receive 40 command books',async({page})=>{
+ await opening(page);
+ await page.locator('#scenario').selectOption('mainland208-10');
+ await page.locator('input[name=faction][value=wei]').check();
+ await page.locator('#begin').click();
+ await waitIdle(page);await tacticalDismiss(page);
+
+ const ledger=page.locator('#inspector .faction-ledger');
+ const allies=id=>ledger.locator('[data-faction-allies="'+id+'"]');
+ await ledger.locator('summary').click();
+ await expect(ledger.getByRole('columnheader')).toHaveText(['勢力','都市','同盟','現役','兵士','預備兵','金','兵糧']);
+ await expect(allies('shu')).toHaveText('孫權');
+ await expect(allies('wu')).toHaveText('劉備');
+ await expect(allies('wei')).toHaveText('—');
+
+ await page.locator('#utility-menu summary').click();
+ await page.locator('#faction-diplomacy').click();
+ const diplomacy=page.locator('#dialog [data-diplomacy-dialog]');
+ await expect(diplomacy.locator('[data-command-books]')).toHaveAttribute('data-command-books-remaining','40');
+ await diplomacy.locator('#diplomacy-target').selectOption('wu');
+ await diplomacy.locator('#diplomacy-action').selectOption('alliance');
+ await diplomacy.locator('#diplomacy-duration').fill('3');
+ await page.locator('#diplomacy-submit').click();
+ await expect(diplomacy.locator('[data-command-books]')).toHaveAttribute('data-command-books-remaining','39');
+ await waitIdle(page);
+ await closeDialog(page);
+ await expect(page.locator('#event-dialog')).toBeVisible();
+ await tacticalDismiss(page);
+
+ if(await ledger.getAttribute('open')===null)await ledger.locator('summary').click();
+ await expect(allies('wei')).toHaveText('孫權');
+ await expect(allies('wu')).toHaveText('劉備、曹操');
+ expect(errors.get(page)).toEqual([]);
+});
+
 test('observer speed changes cadence without resuming a pause and city counts follow ownership',async({page})=>{
  await opening(page);
- const hanResources=/金\s*13,?190\s*·\s*兵糧\s*43,?124\s*·\s*預備兵\s*8,?763\s*·\s*兵士\s*23,?484\s*·\s*現役\s*49/;
+ const hanResources=/金\s*13,?190\s*·\s*兵糧\s*43,?124\s*·\s*兵士\s*23,?484\s*·\s*預備兵\s*8,?763\s*·\s*現役\s*49/;
  const openingResources=page.locator('.faction-choice [data-faction-resources="han"]');
  const openingSummary=page.locator('#setup-summary');
+ const openingHan=page.locator('.faction-choice:has(input[value="han"])');
+ await expect(openingHan.locator('.faction-choice-name + .faction-choice-cities')).toHaveText('都市 7');
  for(const resources of [openingResources,openingSummary]){
   await expect(resources).toContainText(hanResources);
   await expect(resources).not.toContainText('文吏');
@@ -520,10 +557,13 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  };
  await ledger.locator('summary').press('Enter');
  const headers=ledger.getByRole('columnheader');
- await expect(headers).toHaveText(['勢力','都市','本據','現役','兵士','金','兵糧','預備兵'],{useInnerText:true});
+ await expect(headers).toHaveText(['勢力','都市','本據','同盟','現役','兵士','預備兵','金','兵糧'],{useInnerText:true});
  const han=ledger.locator('tr[data-faction-resources="han"]');
+ await expect(han.locator('[data-faction-allies]')).toHaveText('—');
  await expect(han.locator('[data-faction-officers]')).toHaveText('49');
+ await expect(han.locator('th + td')).toHaveAttribute('data-faction-cities','han');
  await expect(han.locator('[data-faction-troops]')).toHaveText(/^23,?484$/);
+ await expect(han.locator('[data-faction-troops] + td')).toHaveText(/^8,?763$/);
  const checkLedgerColumns=async()=>{
   const columns=await headers.evaluateAll(nodes=>nodes.map(node=>({
    width:node.getBoundingClientRect().width,padding:getComputedStyle(node).paddingInline
@@ -578,7 +618,7 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  await expect(speed).toHaveAccessibleName('観戦速度');
  await expect(speed.locator('option')).toHaveText(['低速','標準','高速']);
  await expect(speed).toHaveValue('normal');
- await expect(headers).toHaveText(['勢力','都市','本拠','現役','兵士','金','兵糧','予備兵'],{useInnerText:true});
+ await expect(headers).toHaveText(['勢力','都市','本拠','同盟','現役','兵士','予備兵','金','兵糧'],{useInnerText:true});
  await checkLedgerColumns();
  await page.locator('#utility-menu summary').press('Enter');
  await page.clock.runFor(3600);
@@ -1761,7 +1801,7 @@ async function verifyOpeningBatch(page,testInfo,batchId){
    'mainland238-01':['gongsun','san14-candidate-0262','liaodong']
   }[scenario];
   for(const faction of catalog.factions.filter(row=>!row.available_from&&/[势勢]力/.test(row.name))){
-   const label=page.locator(`.faction-choice:has(input[value="${faction.id}"]) .faction-choice-heading>span`).first();
+   const label=page.locator(`.faction-choice:has(input[value="${faction.id}"]) .faction-choice-name`);
    const captain=await page.evaluate(name=>GameI18n.t(name),faction.captain);
    await expect(label).toHaveText(captain);
   }
@@ -2563,7 +2603,7 @@ test('faction command books can all be spent in one city and survive save reload
  const counter=page.locator('#inspector [data-command-books]');
  await page.locator('#city-jump').selectOption('shujun');
  const initial=await read(),total=budget(initial).total;
- expect(total).toBeGreaterThan(1);expect(total).toBeLessThanOrEqual(13);expect(budget(initial).used).toBe(0);
+ expect(budget(initial).city_count).toBe(27);expect(total).toBe(26);expect(budget(initial).used).toBe(0);
  await expect(counter).toHaveAttribute('data-command-books-remaining',String(total));await expect(counter).toHaveAttribute('data-command-books-total',String(total));
  await clickCityCommand(page,'recruit');await expect(page.locator('#dialog [data-command-book-cost]')).toHaveAttribute('data-command-book-cost','1');
  await page.locator('#dialog-language').selectOption('ja');await expect(page.locator('#dialog [data-command-books]')).toContainText('命令書',{useInnerText:true});
@@ -2703,6 +2743,115 @@ test('succession updates live faction names and ruler portraits while historical
  const file=testInfo.outputPath('actual-successor-raw-save.json');await writeFile(file,raw);await testInfo.attach('actual-successor-raw-save',{path:file,contentType:'application/json'});
 });
 
+test('allied columns share ten attack slots and show the captor, loot and return city',async({page},testInfo)=>{
+ const fixture=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_coalition_fixture.py',import.meta.url).pathname],{encoding:'utf8',maxBuffer:4*1024*1024}));
+ await opening(page);
+ const dialog=page.locator('#dialog'),jump=page.locator('#city-jump');
+ const load=async(name,save)=>{
+  await page.locator('#load').click();
+  await page.locator('#save-file').setInputFiles({name,mimeType:'application/json',buffer:Buffer.from(JSON.stringify(save))});
+  await waitIdle(page);await expect(dialog).toBeHidden();
+ };
+ await load('ally-en-route.json',fixture.opening);
+ await jump.selectOption(fixture.source);await clickCityCommand(page,'depart');
+ await jump.selectOption(fixture.target);
+ await expect(page.locator('#map-march-preview [data-allied-attack]')).toContainText(/5\s*\/\s*10/);
+ await page.locator('#continue-map-departure').click();
+ await expect(dialog.locator('#departure-count')).toContainText(/0\s*\/\s*5/);
+ for(const ident of fixture.first)await dialog.locator('input[name=depart-officer][value="'+ident+'"]').check();
+ await expect(dialog.locator('#departure-count')).toContainText(/5\s*\/\s*5/);
+ await expect(dialog.locator('input[name=depart-officer]:enabled:not(:checked)')).toHaveCount(0);
+ await dialog.locator('#review-departure').click();await expect(dialog.locator('[data-allied-attack]')).toBeVisible();
+ await dialog.locator('#confirm-departure').click();await waitIdle(page);await expect(dialog).toBeHidden();await tacticalDismiss(page);
+ const sent=(await tacticalSave(page)).state.extension.travel.marches.filter(row=>row.target===fixture.target&&row.kind==='attack');
+ expect(sent.map(row=>[row.owner,row.officers.length])).toEqual([['shu',5],['wu',5]]);
+
+ await load('coalition-placement.json',fixture.placement);
+ await expect(page.locator('[data-placement-total="5"]')).toBeVisible();
+ await expect(page.locator('[data-placement-roster] [data-battle-unit-faction="shu"]')).toHaveCount(5);
+ await expect(page.locator('[data-placement-roster] [data-battle-unit-faction="wu"]')).toHaveCount(5);
+ await tacticalControl(page,'battle-place-confirm');await waitIdle(page);
+ await expect(page.locator('[data-placement-progress="1"]')).toBeVisible();
+
+ await load('coalition-camp.json',fixture.capture);
+ const troop=page.locator('[data-actor="'+fixture.actor+'"]');
+ if(!await troop.isVisible())await page.locator('.battle-army-menu summary').click();
+ await expect(page.locator('[data-unit-list=friendly] [data-actor]:disabled [data-battle-unit-faction="shu"]')).toHaveCount(5);
+ await troop.click();
+ const start=fixture.capture.state.battle.extended.tactical.positions[fixture.actor],arrow=fixture.camp[0]>start.x?'right':fixture.camp[0]<start.x?'left':fixture.camp[1]>start.y?'down':'up';
+ const move=page.locator('[data-battle-nav="'+arrow+'"]');
+ if(!await move.isVisible()&&await page.locator('#inspector-toggle').isVisible())await page.locator('#inspector-toggle').click();
+ await move.click();await expect(page.locator('#battle-move')).toBeEnabled();
+ await tacticalControl(page,'battle-move');await tacticalSettle(page);
+ await expect(page.locator('[data-coalition-captor="wu"]')).toBeVisible();
+ await tacticalControl(page,'settle');await waitIdle(page);
+ const after=(await tacticalSave(page)).state;
+ expect(after.cities[fixture.target].owner).toBe('wu');
+ expect(after.cities[fixture.target].roster.officer_ids).toEqual(fixture.first);
+ const result=after.extension.events.items.filter(row=>row.kind==='battle_result').at(-1).details.coalition;
+ expect(result).toMatchObject({captor:'wu',ally:'shu',returns:['jiangxia']});
+ expect(result.shares[1].gold).toBe(Math.floor(result.shares.reduce((sum,stock)=>sum+stock.gold,0)*result.troops[1]/(result.troops[0]+result.troops[1])));
+ const news=page.locator('#event-dialog');await expect(news).toBeVisible();
+ for(let i=0;i<8&&!/分得金|受け取りました/.test(await news.innerText());i++)await news.locator('[data-event-next]').click();
+ await expect(news).toContainText(/分得金|受け取りました/);
+ await expect(news).toContainText(/江夏/);
+ await news.locator('.event-facts').scrollIntoViewIfNeeded();
+ await historyScreenshot(page,testInfo,'joint-assault-settlement');
+ expect(errors.get(page)).toEqual([]);
+});
+
+test('an at-large heir in a friendly city requires recruitment consent',async({page},testInfo)=>{
+ const fixture=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_ruler_fixture.py',import.meta.url).pathname,'--at-large'],{encoding:'utf8',maxBuffer:4*1024*1024}));
+ await opening(page);
+ const dialog=page.locator('#dialog'),offer=dialog.locator('[data-recruit-succession]');
+ const load=async save=>{
+  await page.locator('#load').click();
+  await page.locator('#save-file').setInputFiles({name:'at-large-successor.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(save))});
+  await waitIdle(page);
+ };
+ const translated=value=>page.evaluate(text=>GameI18n.t(text),value);
+ await load(fixture.before);
+ const runAi=page.locator('#run-ai');
+ if(!await runAi.isVisible()&&await page.locator('#inspector-toggle').isVisible())await page.locator('#inspector-toggle').click();
+ await runAi.click();await waitIdle(page);
+ const deathNotice=page.locator('#event-dialog');
+ await expect(deathNotice).toBeVisible();
+ await expect(offer).toHaveCount(0);
+ await tacticalDismiss(page);await expect(offer).toBeVisible();
+ await expect(offer).toContainText(await translated(fixture.previous_name),{useInnerText:true});
+ await expect(offer).toContainText(await translated(fixture.officer_name),{useInnerText:true});
+ await expect(offer).toContainText(await page.evaluate(id=>GameI18n.t(cityName(id)),fixture.city),{useInnerText:true});
+ await expect(dialog.locator('#dialog-title')).toHaveText('徵召繼承人',{useInnerText:true});
+ expect(await tacticalSave(page)).toEqual(fixture.save);
+
+ await dialog.locator('#decline-recruit-successor').click();await waitIdle(page);await expect(dialog).toBeHidden();
+ const declined=await tacticalSave(page);
+ expect(declined.state.officers[fixture.officer].faction_id).toBeNull();
+ expect(declined.state.extension.free_locations[fixture.officer]).toBe(fixture.city);
+ expect(declined.state.extension.pending_succession.wu.candidates).not.toContain(fixture.officer);
+
+ await load(fixture.save);
+ await expect(offer).toBeVisible();
+ await dialog.locator('#dialog-language').selectOption('ja');
+ await expect(dialog.locator('#dialog-title')).toHaveText('後継者の登用',{useInnerText:true});
+ await expect(offer).toContainText('在野',{useInnerText:true});
+ await historyScreenshot(page,testInfo,'at-large-heir-recruitment');
+ await page.keyboard.press('Escape');await expect(dialog).toBeHidden();
+ expect(await tacticalSave(page)).toEqual(fixture.save,'Dismissing the dialog leaves recruitment undecided');
+ const reopen=page.locator('#open-recruit-successor');
+ if(!await reopen.isVisible()&&await page.locator('#inspector-toggle').isVisible())await page.locator('#inspector-toggle').click();
+ await reopen.click();await expect(offer).toBeVisible();
+ await dialog.locator('#recruit-successor').click();await waitIdle(page);await expect(dialog).toBeHidden();
+ const confirmed=await tacticalSave(page);
+ expect(confirmed.state.extension.leaders.wu).toBe(fixture.officer);
+ expect(confirmed.state.officers[fixture.officer].faction_id).toBe('wu');
+ expect(confirmed.state.extension.free_locations[fixture.officer]).toBeUndefined();
+ expect(confirmed.state.cities[fixture.city].roster.officer_ids).toContain(fixture.officer);
+ expect(confirmed.state.extension.pending_succession.wu).toBeUndefined();
+ expect(confirmed.state.extension.command_books).toEqual(fixture.save.state.extension.command_books);
+ expect(errors.get(page)).toEqual([]);
+});
+
 test('dialogue exchanges and dated family loyalty remain bilingual without replaying or changing saved state',async({page},testInfo)=>{
  await opening(page);
  await page.locator('#scenario').selectOption('mainland217-07');
@@ -2807,17 +2956,32 @@ test('original development commands keep pure quotes, real costs and portable sa
  await opening(page);await page.locator('#scenario').selectOption('mainland217-07');
  await page.locator('input[name=faction][value=shu]').check();await page.locator('#begin').click();
  await expect(page.locator('#end-turn')).toBeEnabled();await waitIdle(page);await dismissHistoryOpening(page);
+ await page.locator('#city-jump').selectOption('shujun');
+ await tacticalControl(page,'city-command-tab-city');await page.locator('#city-development').click();
+ await expect(page.locator('#development-governor-bonus')).toContainText('+5%');
+ await closeDialog(page);
+ await clickCityCommand(page,'city-treasury');
+ await page.locator('#treasury-governor').selectOption('439');
+ await page.locator('#treasury-set-governor').click();await waitIdle(page);
+ await expect(page.locator('[data-treasury-dialog]')).toBeVisible();
+ await closeDialog(page);await tacticalDismiss(page);
  await tacticalControl(page,'city-command-tab-city');await page.locator('#city-development').click();
  const initial=await tacticalRead(page);
  const id=await page.locator('[data-development-dialog] [data-city-development]').getAttribute('data-city-development');
  expect(initial.view.catalog.city_development.cities[id].population).toBeGreaterThan(0);
+ await expect(page.locator('[data-development-dialog] .development-stats dd').nth(2)).toContainText('/ 1999999');
  await expect(page.locator('#development-quote')).toContainText(/18.?26/);
+ await expect(page.locator('#development-governor-bonus')).toHaveText('太守加成 +20%');
  await page.locator('#dialog-language').selectOption('ja');await expect(page.locator('#dialog-title')).toContainText('都市の開発');
+ await expect(page.locator('#development-governor-bonus')).toHaveText('太守補正 +20%');
  expect(await tacticalSave(page)).toEqual(initial.save,'Language and quote inspection do not change saved data or RNG');
  await closeDialog(page);expect(await tacticalSave(page)).toEqual(initial.save,'Cancelling a development spends nothing');
  for(const [kind,field] of [['develop_land','land'],['develop_industry','industry'],['develop_population','population']]){
   await page.locator('#city-development').click();await page.locator('#development-kind').selectOption(kind);
   const before=await tacticalRead(page),actor=await page.locator('#development-actor').inputValue(),offer=before.view.catalog.city_development.cities[id].actor_quotes[actor][kind];
+  const gainRange=offer.gain_min===offer.gain_max?String(offer.gain_min):`${offer.gain_min}–${offer.gain_max}`;
+  await expect(page.locator('#development-gain')).toHaveText(`補正後の上昇量 ${gainRange}${field==='population'?'人':''}`);
+  if(field==='population')await page.locator('#dialog').screenshot({path:testInfo.outputPath('governor-population-preview.png')});
   await page.locator('#development-confirm').click();await waitIdle(page);
   await expect(page.locator('[data-development-dialog]')).toBeVisible();
   const after=await tacticalSave(page),old=before.save.state,next=after.state;

@@ -7,11 +7,12 @@ Reading/quoting a battle never loads provisions or advances randomness.
 """
 from .errors import GameError
 from .march_supply import DENOMINATOR, OFFICER_UNITS, LIMIT, estimate
-from .officers import MAX_BATTLE_OFFICERS, OFFICER_TROOP_CAP
+from .officers import BATTLE_OFFICERS_PER_SIDE, MAX_BATTLE_OFFICERS, OFFICER_TROOP_CAP
 
 SCHEMA = 'tk2-battle-supply-v1'
 BUDGET_DAYS = 30
 MAX_BATTLE_DAILY_UNITS = MAX_BATTLE_OFFICERS * (OFFICER_TROOP_CAP + OFFICER_UNITS)
+COALITION_LIMIT = BATTLE_OFFICERS_PER_SIDE * (LIMIT + 1) - 1
 SIDES = ('attackers', 'defenders')
 _SIDE_FIELDS = {'owner', 'origin', 'loaded', 'initial_credit', 'received', 'consumed',
                 'remaining', 'credit_units', 'journal'}
@@ -117,20 +118,26 @@ def view(state, battle):
     return result
 
 
-def receive(state, battle, side, grain):
+def pool_limit(battle, side):
+    return COALITION_LIMIT if side == 'attackers' and battle['extended'].get('coalition') else LIMIT
+
+
+def receive(state, battle, side, grain, *, contributor=None):
     supply = ensure(state, battle)
     row = supply['sides'][side]
-    if type(grain) is not int or grain < 0 or row['remaining'] + grain > LIMIT:
+    contributions = battle['extended'].get('coalition', {}).get('provisions') if side == 'attackers' else None
+    if (type(grain) is not int or grain < 0 or row['remaining'] + grain > pool_limit(battle, side)
+            or (contributor is not None if contributions is None else contributor not in contributions)):
         raise ValueError('Invalid battlefield ration delivery')
     if grain:
         row['remaining'] += grain
         row['received'] += grain
-        _receipt(row, 'market', supply['days'], grain)
+        _receipt(row, 'market', supply['days'], grain, contributor=contributor)
 
 
 def destroy(state, battle, side, amount):
     """Saturating fire loss against real carried bags; eaten credit survives."""
-    if side not in SIDES or type(amount) is not int or not 0 <= amount <= LIMIT:
+    if side not in SIDES or type(amount) is not int or not 0 <= amount <= pool_limit(battle, side):
         raise ValueError('Invalid battlefield ration destruction')
     supply = ensure(state, battle)
     if supply['settlement'] is not None:
@@ -143,12 +150,15 @@ def destroy(state, battle, side, amount):
     return actual
 
 
-def _receipt(row, kind, day, grain):
+def _receipt(row, kind, day, grain, *, contributor=None):
     last = row['journal'][-1] if row['journal'] else None
-    if last and last['kind'] == kind and last['day'] == day:
+    if last and last['kind'] == kind and last['day'] == day and last.get('contributor') == contributor:
         last['grain'] += grain
     else:
-        row['journal'].append(dict(kind=kind, day=day, grain=grain))
+        receipt = dict(kind=kind, day=day, grain=grain)
+        if contributor is not None:
+            receipt['contributor'] = contributor
+        row['journal'].append(receipt)
 
 
 def end_day(game, state, battle):
@@ -210,7 +220,36 @@ def _return_city(state, battle, side):
     return sorted(homes, key=lambda city: city.id)[0] if homes else None
 
 
-def settle(game, state, battle):
+def _settle_coalition_grain(state, battle, row, winner_city, returns):
+    """Allocate remaining grain by each faction's contribution to the shared pool."""
+    contributions = dict(battle['extended']['coalition']['provisions'])
+    primary = battle['attacker']
+    ally = next(owner for owner in contributions if owner != primary)
+    for receipt in row['journal']:
+        if receipt['kind'] == 'market':
+            contributions[receipt['contributor']] += receipt['grain'] * DENOMINATOR
+    total = sum(contributions.values())
+    ally_grain = row['remaining'] * contributions[ally] // total if total else 0
+    reports = []
+    for owner, grain in ((primary, row['remaining'] - ally_grain), (ally, ally_grain)):
+        officers = {unit['id'] for unit in battle['attackers']
+                    if state.officers[unit['id']].alive and state.officers[unit['id']].faction_id == owner}
+        homes = [city for city in state.cities.values() if city.owner == owner
+                 and officers.intersection(city.roster.officer_ids)]
+        preferred = (battle['target'],) if winner_city.owner == owner else tuple(returns.get(owner, ()))
+        homes.sort(key=lambda city: (city.id not in preferred, city.id != battle['source'], city.id))
+        destinations = homes or [winner_city]
+        left = grain
+        for city in destinations:
+            stored = min(left, max(0, LIMIT - city.grain))
+            city.grain += stored
+            left -= stored
+        reports.append(dict(side='attackers', owner=owner, city=destinations[0].id,
+                            grain=grain, stored=grain-left, lost=left, credit_units=0))
+    return reports
+
+
+def settle(game, state, battle, *, coalition_returns=None):
     """Move each remaining grain once, after actual officer/city settlement."""
     supply = battle['extended'].get('supply')
     if supply is None:
@@ -219,10 +258,15 @@ def settle(game, state, battle):
         return supply['settlement']
     winner = 'attackers' if battle['outcome'] == 'victory' else 'defenders'
     winner_city = state.cities[battle['target']]
-    winner_owner = battle['attacker' if winner == 'attackers' else 'defender']
+    coalition = battle['extended'].get('coalition')
+    winner_owner = winner_city.owner if coalition else battle['attacker' if winner == 'attackers' else 'defender']
     report = []
     for side in SIDES:
         row = supply['sides'][side]
+        if side == 'attackers' and coalition:
+            report.extend(_settle_coalition_grain(state, battle, row, winner_city, coalition_returns or {}))
+            row['remaining'] = row['credit_units'] = 0
+            continue
         city = _return_city(state, battle, side)
         # A routed force without a returning commander leaves its bags behind.
         if city is None and winner_city.owner == winner_owner:
@@ -237,7 +281,8 @@ def settle(game, state, battle):
         row['remaining'] = row['credit_units'] = 0
     supply['settlement'] = report
     game._note(state, '戰鬥餘糧結算：' + '；'.join(
-        ('攻方' if row['side'] == 'attackers' else '守方') + f'{row["stored"]}入城、{row["lost"]}損失'
+        (game.faction_name(state, row['owner']) if 'owner' in row else
+         ('攻方' if row['side'] == 'attackers' else '守方')) + f'{row["stored"]}入城、{row["lost"]}損失'
         for row in report) + '。')
     return report
 
@@ -267,8 +312,9 @@ def validate(state, battle):
         if (row['owner'] != battle['attacker' if side == 'attackers' else 'defender']
                 or row['origin'] != battle['source' if side == 'attackers' else 'target']):
             raise ValueError('Battle provision owner')
+        limit = pool_limit(battle, side)
         for field in ('loaded','remaining'):
-            integer(row[field], 0, LIMIT)
+            integer(row[field], 0, limit)
         for field in ('received','consumed'):
             integer(row[field], 0, LIMIT*4096)
         for field in ('initial_credit','credit_units'):
@@ -297,17 +343,23 @@ def validate(state, battle):
                 remaining -= used; consumed += used
                 credit = max(0,nutrition-receipt['units']); days += 1
             else:
-                if set(receipt) != {'kind','day','grain'} or receipt.get('kind') not in ('market', 'fire') or receipt['day'] != days:
+                fields = {'kind','day','grain'}
+                if receipt.get('kind') == 'market' and side == 'attackers' and battle['extended'].get('coalition'):
+                    fields.add('contributor')
+                    contributor = receipt.get('contributor')
+                    if not isinstance(contributor, str) or contributor not in battle['extended']['coalition']['provisions']:
+                        raise ValueError('Battle provision contributor')
+                if set(receipt) != fields or receipt.get('kind') not in ('market', 'fire') or receipt['day'] != days:
                     raise ValueError('Battle provision receipt clock')
                 integer(receipt['day'],0,supply['days'])
-                integer(receipt['grain'], 1, LIMIT)
+                integer(receipt['grain'], 1, limit)
                 if receipt['kind'] == 'fire':
                     if receipt['grain'] > remaining:
                         raise ValueError('Battle provision destruction exceeds carried grain')
                     remaining -= receipt['grain']; destroyed += receipt['grain']
                 else:
                     remaining += receipt['grain']; received += receipt['grain']
-                integer(remaining, 0, LIMIT)
+                integer(remaining, 0, limit)
         if (days != supply['days'] or (remaining,credit,consumed,received) !=
                 (row['remaining'],row['credit_units'],row['consumed'],row['received'])
                 or row['loaded']+received != consumed+remaining+destroyed):

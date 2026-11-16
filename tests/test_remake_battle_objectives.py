@@ -164,6 +164,110 @@ class BattleObjectiveTests(unittest.TestCase):
         self.assertEqual(battle_grid.point_cap(20000),60)
 
 
+class CoalitionBattleTests(unittest.TestCase):
+    def ready(self, *, placement=False):
+        from remake import diplomacy, historical_campaigns
+
+        catalog=controlled_catalog()
+        data=catalog.data
+        data['links'].append(['jiangxia','nanyang'])
+        data['travel_routes'].append(dict(id='controlled:jiangxia:nanyang', **{'from':'jiangxia','to':'nanyang'},
+            mode='land',terrain='plain',distance_km=30,land_km=30,sea_km=0,days=1))
+        game=Campaign(catalog)
+        game.state=game._new('shu',2026)
+        state=game.state
+        if not historical_campaigns.allied(state,'shu','wu'):
+            diplomacy._pool(state)['treaties']['shu|wu']=state.turn+12
+        ally=state.extension['leaders']['wu']
+        player=state.extension['leaders']['shu']
+        game._start_expanded_battle(state,state.cities['jiangxia'],state.cities['nanyang'],
+            [ally,player],paid=True,manual_deployment=placement,march_supply=dict(remaining=200,credit_units=0),
+            coalition=dict(sources={str(ally):'jiangxia',str(player):'xiangyang'},
+                           provisions=dict(wu=100000,shu=100000)))
+        game.validate(state)
+        return game,ally,player
+
+    def test_coalition_places_only_the_players_officers(self):
+        game,ally,player=self.ready(placement=True)
+        b=game.state.battle
+        view=game.view()['catalog']['battle_tactical']
+        self.assertEqual(view['player_side'],'attackers')
+        self.assertEqual(view['placement']['total'],1)
+        self.assertEqual(view['placement']['actor'],player)
+        self.assertIn(str(ally),b['extended']['tactical']['positions'])
+        point=b['extended']['tactical']['positions'][str(player)]
+        command(game,'battle_place',battle_id=b['id'],actor=player,**point)
+        board=game.view()['catalog']['battle_tactical']
+        self.assertFalse(board['placement']['pending'])
+        self.assertTrue(board['actors'][str(player)]['can_act'])
+        self.assertFalse(board['actors'][str(ally)]['can_act'])
+        self.assertEqual(board['actors'][str(ally)]['reachable'],[])
+
+    def test_ally_can_occupy_castle_during_handoff_without_player_control(self):
+        game,ally,_=self.ready()
+        b=game.state.battle
+        unit=next(unit for unit in b['attackers'] if unit['id']==ally)
+        camp=battle_grid._field(b)['camp']
+        place(game,b['defenders'][0],(0,18))
+        place(game,unit,(camp[0]-1,camp[1]))
+        before=game.export_save()
+        with self.assertRaisesRegex(GameError,'同盟部隊'):
+            command(game,'battle_move',battle_id=b['id'],actor=ally,x=camp[0],y=camp[1])
+        self.assertEqual(game.export_save(),before)
+        command(game,'battle_wait',battle_id=b['id'])
+        result=game.state.battle
+        self.assertEqual(game.state.phase,'result')
+        self.assertEqual(result['extended']['occupation']['actor'],ally)
+        self.assertGreater(result['defenders'][0]['troops'],0)
+        self.assertEqual(result['outcome'],'victory')
+        restored=Campaign(game.catalog)
+        restored.load_save(game.export_save(),0)
+        self.assertEqual(restored.export_save(),game.export_save())
+        command(game,'settle',battle_id=b['id'])
+        self.assertEqual(game.state.cities[b['target']].owner,'wu')
+        self.assertIn(ally,game.state.cities[b['target']].roster.officer_ids)
+
+    def test_contact_between_other_factions_fights_without_player_input(self):
+        game,ally,_=self.ready()
+        state=game.state
+        battle=state.battle
+        actor=next(unit for unit in battle['attackers'] if unit['id']==ally)
+        target=battle['defenders'][0]
+        arrange_contact(game,actor=actor,target=target)
+        self.assertIsNotNone(battle_grid.encounter_context(battle,actor,target))
+        game._execute_attack(state,actor,target,'attackers','defenders',finish=False)
+        self.assertNotIn('siege',battle['extended'])
+        self.assertIsNone(battle['extended']['duel'])
+        game.validate(state)
+
+    def test_market_charges_the_active_contingent_home_city(self):
+        game,_,player=self.ready()
+        state=game.state
+        battle=state.battle
+        actor=next(unit for unit in battle['attackers'] if unit['id']==player)
+        site=next(row for row in battle_grid._field(battle)['services'] if row['kind']=='market')
+        place(game,actor,(site['x'],site['y']))
+        before=deepcopy(state.cities)
+        offer=battle_services.quote(game,state,battle,actor,'attackers')
+        self.assertEqual(offer['payer_city'],'xiangyang')
+        command(game,'battle_facility',battle_id=battle['id'],actor=player,action='buy_grain',batches=1)
+        state=game.state
+        self.assertEqual(state.cities['xiangyang'].gold,before['xiangyang'].gold-offer['trade']['rate'])
+        self.assertEqual(state.cities['jiangxia'].gold,before['jiangxia'].gold)
+        receipt=state.battle['extended']['supply']['sides']['attackers']['journal'][-1]
+        self.assertEqual(receipt['contributor'],'shu')
+
+    def test_annihilation_records_the_acting_contingents_claim(self):
+        game,ally,player=self.ready()
+        b=game.state.battle
+        for defender in b['defenders']:
+            defender['troops']=0
+        game._battle_result(game.state,claimant=player)
+        self.assertEqual(b['extended']['capture_actor'],player)
+        self.assertNotEqual(b['extended']['capture_actor'],ally)
+        game.validate(game.state)
+
+
 class BattleServiceTests(unittest.TestCase):
     def ready(self,kind,*,side='attackers'):
         game=battle(three_enemies=False);b,a,t,_,_=actors(game)

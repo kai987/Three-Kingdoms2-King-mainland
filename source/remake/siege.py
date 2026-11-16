@@ -114,7 +114,17 @@ def _opposite(side):
 
 
 def _player_side(state):
-    return 'attackers' if state.battle['attacker']==state.player else 'defenders'
+    return battle_grid.player_side(state,state.battle) or 'defenders'
+
+
+def player_engaged(state,row=None):
+    battle=state.battle
+    if battle_grid.player_side(state,battle) is None:
+        return False
+    if 'coalition' not in battle['extended']:
+        return True
+    row=row if row is not None else battle['extended']['siege']
+    return any(state.officers[row[key]].faction_id==state.player for key in ('actor','target'))
 
 
 def _walls(battle, row):
@@ -160,7 +170,7 @@ def begin(game,state,actor,target,context):
              stage='formation',round=1,formations={side:3 for side in SIDES},
              orders={side:{kind:('wait' if _main_id==context['fort'] and kind=='general' else 'advance')for kind in KINDS}
                      for side,_main_id in ((_side(battle,actor['id']),actor['id']),(_side(battle,target['id']),target['id']))},units=[])
-    if state.player in (battle['attacker'],battle['defender']):
+    if player_engaged(state,row):
         row['formations'][_player_side(state)]=None
     _deploy(game,state,row)
     row.update(mode=context.get('mode','siege'),piece_orders={side:{p['id']:row['orders'][side][p['kind']]for p in row['units']if p['side']==side}for side in SIDES},events=[],attack_bases=None)
@@ -174,7 +184,7 @@ def _require(game,state,payload,stages):
     battle=state.battle
     row=(battle or {}).get('extended',{}).get('siege')
     if (state.phase!='battle' or not row or payload.get('battle_id')!=battle['id']
-            or row['stage'] not in stages or battle['extended']['duel']):
+            or row['stage'] not in stages or battle['extended']['duel'] or not player_engaged(state,row)):
         raise GameError('目前不能執行這項攻城操作。')
     return battle,row
 
@@ -227,9 +237,10 @@ def _finish(game,state,row,reason):
     battle['log'][:]=battle['log'][-80:]
     own=_side(battle,row['actor']);foe=_opposite(own)
     actor=next(u for u in battle[own]if u['id']==row['actor'])
-    if state.player in (battle['attacker'],battle['defender']):
-        game._finish_action(state,actor,own,foe)
-    else:game._battle_result(state)
+    claimant=_main(battle,row,'attackers')['id']
+    if player_engaged(state,row):
+        game._finish_action(state,actor,own,foe,claimant=claimant)
+    else:game._battle_result(state,claimant=claimant)
 
 
 def withdraw(game,state,payload):
@@ -506,7 +517,7 @@ def validate(game,state,battle):
     if duel is not None and(row['stage']!='combat'or {duel['actor'],duel['target']}!={row['actor'],row['target']}):raise ValueError('Invalid siege duel')
     if set(row['formations'])!=set(SIDES)or any(v is not None and(type(v)is not int or not 0<=v<=3)for v in row['formations'].values()):raise ValueError('Invalid siege formation')
     player=_player_side(state)
-    if (row['stage']=='formation')!=(row['formations'][player]is None)and state.player in (battle['attacker'],battle['defender']):raise ValueError('Invalid siege formation stage')
+    if (row['stage']=='formation')!=(row['formations'][player]is None)and player_engaged(state,row):raise ValueError('Invalid siege formation stage')
     if any(value is None and(side!=player or row['stage']!='formation')for side,value in row['formations'].items()):raise ValueError('Invalid siege waiting formation')
     if set(row['orders'])!=set(SIDES)or any(not isinstance(o,dict)or set(o)!=set(KINDS)or any(v not in ORDERS for v in o.values())for o in row['orders'].values()):raise ValueError('Invalid siege orders')
     if not isinstance(row['units'],list)or not 4<=len(row['units'])<=22:raise ValueError('Invalid siege pieces')
