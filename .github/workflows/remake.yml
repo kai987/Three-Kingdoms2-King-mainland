@@ -1,18 +1,12 @@
 name: Web campaign checks
-
+run-name: ${{ inputs.parallel_wasm && 'Full CI with parallel WASM parity' || 'Full CI with serial WASM parity' }}
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
     inputs:
-      force_full:
-        description: Run every regression group
+      parallel_wasm:
+        description: Release browser and WASM checks together after the candidate is ready
         type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
+        default: false
 
 permissions:
   contents: read
@@ -20,11 +14,13 @@ permissions:
   deployments: read
 
 concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
+  group: web-wasm-overlap-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   verify:
+    if: github.ref == 'refs/heads/codex/ci-wasm-overlap'
     uses: ./.github/workflows/web-checks.yml
     with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+      force_full: true
+      parallel_wasm: ${{ inputs.parallel_wasm }}

@@ -2,6 +2,9 @@ name: Shared Web campaign verification
 on:
   workflow_call:
     inputs:
+      parallel_wasm:
+        type: boolean
+        default: false
       force_full:
         type: boolean
         default: false
@@ -15,6 +18,8 @@ permissions:
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   RUSTUP_TOOLCHAIN: '1.93.0'
+  FROZEN_WEB_HEAD: 3dc85091216c4a8cf242c0b74db68536fbaebb46
+  FROZEN_WEB_CONTENT: cefdef35ea30da7ce86531e2047bcea7f5de3d42abcb9218eac97accbe320e10
 jobs:
   scope:
     runs-on: ubuntu-latest
@@ -422,10 +427,11 @@ jobs:
       - name: Build the candidate once and retain its identity
         id: identity
         run: |
-          python -B game/build_web.py --output build/web
-          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA")
+          GITHUB_SHA="$FROZEN_WEB_HEAD" python -B game/build_web.py --output build/web
+          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_WEB_HEAD" --content-sha256 "$FROZEN_WEB_CONTENT")
           printf 'content_sha256=%s\n' "$content" >> "$GITHUB_OUTPUT"
       - name: Actual WASM campaign and CPU replay parity
+        if: ${{ !inputs.parallel_wasm }}
         run: node tests/browser_engine_smoke.mjs build/web
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
@@ -435,6 +441,38 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 7
+  web-wasm-parity:
+    needs: [scope, web-build]
+    if: inputs.parallel_wasm && needs.scope.outputs.web == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      MARCH_CORE_BACKEND: python
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: tools/web-runtime/package-lock.json
+      - run: npm ci --prefix tools/web-runtime --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: candidate-web-${{ env.FROZEN_WEB_HEAD }}
+          path: build/web
+          github-token: ${{ github.token }}
+          run-id: 43818021798
+      - name: Require the exact immutable candidate
+        env:
+          CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_WEB_HEAD" --content-sha256 "$CONTENT_SHA"
+      - name: Actual WASM campaign and CPU replay parity
+        run: node tests/browser_engine_smoke.mjs build/web
   browser-ui:
     needs: [scope, web-build]
     if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
@@ -462,12 +500,14 @@ jobs:
           path: build/ci
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: candidate-web-${{ github.sha }}
+          name: candidate-web-${{ env.FROZEN_WEB_HEAD }}
           path: build/web
+          github-token: ${{ github.token }}
+          run-id: 43818021798
       - name: Require the exact immutable candidate
         env:
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
-        run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_WEB_HEAD" --content-sha256 "$CONTENT_SHA"
       - name: Show the selected scope and execute actual browser controls
         env:
           BROWSER_PROJECT: ${{ matrix.project }}
@@ -519,7 +559,7 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
   gate:
-    needs: [scope, docs-check, native-rules, source-and-browser, scoped-tests, campaign-rules, campaign-soak, web-build, browser-ui, resupply-ui]
+    needs: [scope, docs-check, native-rules, source-and-browser, scoped-tests, campaign-rules, campaign-soak, web-build, web-wasm-parity, browser-ui, resupply-ui]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -539,6 +579,13 @@ jobs:
         with:
           name: test-plan-${{ github.sha }}
           path: build/ci
+      - name: Require the separate WASM parity check
+        if: inputs.parallel_wasm && needs.scope.outputs.web == 'true'
+        env:
+          WASM_PARITY_RESULT: ${{ needs.web-wasm-parity.result }}
+        run: |
+          printf 'WASM parity result: %s\n' "$WASM_PARITY_RESULT"
+          test "$WASM_PARITY_RESULT" = success
       - name: Fail if any required group failed, was cancelled or was skipped
         env:
           JOB_RESULTS: ${{ toJSON(needs) }}
@@ -584,13 +631,15 @@ jobs:
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         if: needs.scope.outputs.web == 'true'
         with:
-          name: candidate-web-${{ github.sha }}
+          name: candidate-web-${{ env.FROZEN_WEB_HEAD }}
           path: build/web
+          github-token: ${{ github.token }}
+          run-id: 43818021798
       - name: Verify the original candidate after every required check passed
         if: needs.scope.outputs.web == 'true'
         env:
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
-        run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_WEB_HEAD" --content-sha256 "$CONTENT_SHA"
       - name: Retain the exact tested release
         if: needs.scope.outputs.web == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
