@@ -42,7 +42,7 @@ async function read(page,withView=true,{openingTroopSources}={}){
    return [id,row&&{code:row.code,base_code:row.base_code,source_kind:row.source_kind}];
   }));
   const examples=sourceKinds.map(kind=>library.find(person=>person.affinity_source?.source_kind===kind))
-   .filter(Boolean).map(({person_id,affinity_source})=>({person_id,affinity_source:{source_kind:affinity_source.source_kind}}));
+   .filter(Boolean).map(({person_id,affinity,affinity_source})=>({person_id,affinity,affinity_source:{source_kind:affinity_source.source_kind}}));
   return {save,view:{catalog:{
    officer_troop_types:{schema:types.schema,rules_version:types.rules_version,officers},
    battle_tactical:{actors:{[selected]:{attack_targets:tactical.actors[selected].attack_targets}}},
