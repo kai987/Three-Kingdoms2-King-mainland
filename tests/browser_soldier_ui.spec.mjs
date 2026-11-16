@@ -27,11 +27,29 @@ async function opening(page){
 }
 async function idle(page){await expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);}
 async function save(page){return page.evaluate(async()=>{const r=await fetch('/api/save');if(!r.ok)throw Error('Actual soldier save could not be inspected');return r.json();});}
-async function read(page,withView=true){if(!withView)return {save:await save(page)};return page.evaluate(async()=>{
- const [a,b]=await Promise.all([fetch('/api/save'),fetch('/api/state')]);
- if(!a.ok||!b.ok)throw Error('Actual soldier state could not be inspected');
- const state=await b.json();return {save:await a.json(),view:state.view||state};
-});}
+async function read(page,withView=true,{openingTroopSources}={}){
+ if(!withView)return {save:await save(page)};
+ return page.evaluate(async sourceKinds=>{
+  const [a,b]=await Promise.all([fetch('/api/save'),fetch('/api/state')]);
+  if(!a.ok||!b.ok)throw Error('Actual soldier state could not be inspected');
+  const state=await b.json(),save=await a.json(),view=state.view||state;
+  if(!sourceKinds)return {save,view};
+
+  const host=document.querySelector('[data-battle-scene]'),selected=host.dataset.battleSelectedActor;
+  const {officer_troop_types:types,battle_tactical:tactical,library}=view.catalog;
+  const officers=Object.fromEntries(JSON.parse(host.dataset.battleMarkers).map(marker=>{
+   const id=String(marker.id),row=types.officers[id];
+   return [id,row&&{code:row.code,base_code:row.base_code,source_kind:row.source_kind}];
+  }));
+  const examples=sourceKinds.map(kind=>library.find(person=>person.affinity_source?.source_kind===kind))
+   .filter(Boolean).map(({person_id,affinity_source})=>({person_id,affinity_source:{source_kind:affinity_source.source_kind}}));
+  return {save,view:{catalog:{
+   officer_troop_types:{schema:types.schema,rules_version:types.rules_version,officers},
+   battle_tactical:{actors:{[selected]:{attack_targets:tactical.actors[selected].attack_targets}}},
+   library:examples,
+  }}};
+ },openingTroopSources);
+}
 async function load(page,value,name='controlled-soldier-boundary.json'){
  await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name,mimeType:'application/json',buffer:Buffer.from(JSON.stringify(value))});
  await idle(page);await expect(page.locator('#dialog')).toBeHidden();expect(await save(page)).toEqual(value);
@@ -102,8 +120,9 @@ async function nativeMarkerPixels(page,marker,position){
    actual_sha256:await hash(actual),atlas_frame_sha256:await hash(expected)};
  },{marker,position});
 }
+const troopSourceKinds=['verified_original_rom','original_table_transcription','design_trait_inference','design_region_inference','retained_design','fallback_design'];
 async function troopSourceEvidence(page,testInfo,library){
- const examples=['verified_original_rom','original_table_transcription','design_trait_inference','design_region_inference','retained_design','fallback_design'].map(kind=>library.find(person=>person.affinity_source?.source_kind===kind));
+ const examples=troopSourceKinds.map(kind=>library.find(person=>person.affinity_source?.source_kind===kind));
  expect(examples.every(Boolean)).toBe(true,'Original ROM, transcribed and explicitly designed troop assignments all disclose their provenance');
  const menu=page.locator('#utility-menu');if(await menu.getAttribute('open')===null)await menu.locator('summary').click();
  await page.locator('#library').click();const proof=[];
@@ -347,7 +366,7 @@ test('field soldier formations expose ten hundred-person teams and replay actual
  const scene=page.locator('[data-battle-scene]');await expect(scene).toHaveAttribute('data-battle-scene-mode','tactical');
  await expect(scene.locator('[data-soldier-label-toggle]')).toBeHidden();
  await expect(scene).toHaveAttribute('data-tactical-marker-style','original-native-atlas');
- const before=await read(page),markers=JSON.parse(await scene.getAttribute('data-battle-markers'));
+ const before=await read(page,true,{openingTroopSources:troopSourceKinds}),markers=JSON.parse(await scene.getAttribute('data-battle-markers'));
  const types=before.view.catalog.officer_troop_types,battle=before.save.state.battle;
  expect(types.schema).toBe('tk2-officer-troop-types-view-v1');expect(types.rules_version).toBe('officer-troop-types-v1');
  expect(markers.length).toBe(before.save.state.battle.attackers.length+before.save.state.battle.defenders.length);
