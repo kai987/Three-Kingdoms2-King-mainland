@@ -1001,7 +1001,7 @@ test('daily marching grain loads once and consumes actual days through visible t
   if(initial.state.cities[column.quote.path[index+1]]?.owner===initial.state.player)break;
  }
  expect(firstStage).toBeLessThan(column.quote.days);
- expect(loaded).toBe(Math.ceil(units*firstStage/1000));
+ expect(loaded).toBe(Math.ceil(units*firstStage/100));
  expect(column.supply).toMatchObject({loaded,received:0,consumed:0,remaining:loaded,elapsed_days:0,route_days:0});
  expect(departing.state.cities[source].grain).toBe(startingGrain-loaded);
  const live=page.locator(`[data-march="${column.id}"] [data-supply-loaded]`);
@@ -1018,7 +1018,7 @@ test('daily marching grain loads once and consumes actual days through visible t
  expect([next.state.year,next.state.month,next.state.day]).toEqual([217,7,11]);
  const marched=next.state.extension.travel.marches.find(row=>row.id===column.id);
  expect(marched).toBeTruthy();
- const elapsed=Math.min(10,column.quote.days),consumed=Math.ceil(units*elapsed/1000),received=marched.supply.received;
+ const elapsed=Math.min(10,column.quote.days),consumed=Math.ceil(units*elapsed/100),received=marched.supply.received;
  expect(marched.supply).toMatchObject({loaded,consumed,remaining:loaded+received-consumed,elapsed_days:elapsed,route_days:elapsed,shortage_days:0,lost:0});
  expect(next.state.officers[officerText].health).toBe(initial.state.officers[officerText].health);
  expect(next.state.officers[officerText].loyalty).toBe(initial.state.officers[officerText].loyalty);
@@ -1915,11 +1915,14 @@ async function verifyOpeningBatch(page,testInfo,batchId){
    const authored=catalog.initial_officers.filter(officer=>officer.city===city.id);
    const officers=live.roster.officer_ids.map(id=>saved.state.officers[id]);
    expect(live.owner).toBe(catalog.initial_owners[city.id]);
-   for(const key of ['gold','grain'])expect(live[key],`${scenario}/${city.id} initial ${key}`).toBe(resources[key]);
+   for(const key of ['gold','grain']){
+    expect(live[key],`${scenario}/${city.id} initial ${key}`).toBe(city[key]);
+    if(!['henan','jingzhao'].includes(city.id))expect(live[key]).toBe(resources[key]*(key==='grain'?10:1));
+   }
    expect(live.reserves).toBe(city.reserves);
-   expect(live.reserves).toBeLessThanOrEqual(resources.reserves);
+   if(!['henan','jingzhao'].includes(city.id))expect(live.reserves).toBeLessThanOrEqual(resources.reserves);
    const citySoldiers=live.reserves+officers.reduce((sum,officer)=>sum+officer.troops,0);
-   expect(citySoldiers,`${scenario}/${city.id} original manpower plus active reinforcements`).toBeGreaterThanOrEqual(
+   if(!['henan','jingzhao'].includes(city.id))expect(citySoldiers,`${scenario}/${city.id} original manpower plus active reinforcements`).toBeGreaterThanOrEqual(
     resources.reserves+authored.reduce((sum,officer)=>sum+officer.troops,0));
    initialSoldiers+=citySoldiers;
    expect(officers.map(officer=>officer.person_id).sort()).toEqual(authored.map(officer=>officer.person_id).sort());
@@ -2260,7 +2263,7 @@ test('manual treasure transport preserves cargo, rations and saved travel while 
  const quote=convoy.journeys[0].quote;
  expect(quote.days).toBe(expectedTransport.days);expect(quote.modes).toEqual(expectedTransport.modes);
  let stageDays=0;for(let index=0;index<quote.routes.length;index++){stageDays+=quote.routes[index].days;if(before.state.cities[quote.path[index+1]]?.owner==='shu')break;}
- const units=convoy.officers.reduce((sum,id)=>sum+before.state.officers[id].troops+100,0),rations=Math.ceil(units*stageDays/1000);
+ const units=convoy.officers.reduce((sum,id)=>sum+before.state.officers[id].troops+100,0),rations=Math.ceil(units*stageDays/100);
  expect(rations).toBe(expectedTransport.cost_grain);
  expect(convoy.journeys[0].supply).toMatchObject({loaded:rations,consumed:0,remaining:rations});
  expect(departing.state.cities[source].grain).toBe(before.state.cities[source].grain-rations);

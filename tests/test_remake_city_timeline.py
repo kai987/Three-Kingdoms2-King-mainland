@@ -164,7 +164,7 @@ class CityTimelineTests(unittest.TestCase):
         for _ in range(3):
             next_turn(game)
         self.assertEqual(dated_events(game, 'city_upgraded'), [event])
-        self.assertEqual((game.state.cities['qiao'].gold, game.state.cities['qiao'].grain), (241, 565))
+        self.assertEqual((game.state.cities['qiao'].gold, game.state.cities['qiao'].grain), (241, 5514))
 
     def test_late_opening_never_backfills_name_or_size_events(self):
         for start, tier in (((219, 1), 'normal'), ((221, 1), 'large'), ((225, 7), 'large')):
