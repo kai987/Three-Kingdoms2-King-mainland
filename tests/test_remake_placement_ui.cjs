@@ -47,6 +47,7 @@ async function checkBiographies(){
   return {dataset:{officerBiography:stableId},isConnected,busy:true,content,hasAttribute:key=>key==='aria-busy',removeAttribute(key){assert.equal(key,'aria-busy');this.busy=false;},querySelector(key){assert.equal(key,'[data-biography-content]');return content;}};
  };
  let requests=0;
+ context.GamePaths={asset:path=>path};
  context.fetch=async url=>{
   assert.equal(url,'/assets/officer-biographies.json');
   if(++requests===1)return {ok:false};

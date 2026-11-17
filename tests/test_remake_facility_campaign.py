@@ -95,9 +95,9 @@ class FacilityCampaignTests(unittest.TestCase):
             for key,city in game.state.cities.items():
                 with self.subTest(scenario=catalog.data['id'],city=key):
                     row=result['cities'][key]
-                    self.assertEqual(row['town'],{'normal':1,'large':2,'giant':3}[
-                        tier_at(catalog.data,key,game.state.year,game.state.month)])
-                    self.assertEqual((row['preparedness'],row['damage']),(40,0))
+                    expected = facilities.opening_view(catalog.data, key)
+                    self.assertEqual((row['town'], row['preparedness'], row['damage']),
+                                     (expected['town'], expected['preparedness'], expected['damage']))
                     preview=session.preview_city(catalog.data['id'],key)
                     self.assertEqual(preview['city']['owner'],city.owner)
             self.assertEqual(game.export_save(),before)

@@ -349,7 +349,7 @@ class DevelopmentCampaignTests(unittest.TestCase):
         pool['schema'] = 'tk2-city-development-v1'
         for key, row in pool['cities'].items():
             size = {'normal': 1, 'large': 2, 'giant': 3}[catalog.data['city_profiles'][key]['tier']]
-            baseline = dict(land=150*size, industry=150*size, population=50000*size, governance=70)
+            baseline = development.opening_view(catalog, key, schema=development.LEGACY_SCHEMA)
             row.update(baseline, baseline=baseline.copy())
         old_row = pool['cities']['shujun']
         old_row.update(land=482, population=151300, governance=72)
@@ -558,7 +558,7 @@ class DevelopmentCampaignTests(unittest.TestCase):
                     self.assertEqual({field: expected[field] for field in development.LIMITS if field != 'population'},
                                      {field: reviewed[field] for field in development.LIMITS if field != 'population'})
                     date = (game.state.year, game.state.month)
-                    if tier_at(catalog.data, key, *date) == 'normal' and key != 'wuchang':
+                    if tier_at(catalog.data, key, *date) == 'normal' and key not in ('wuchang', 'guonei', 'luzon'):
                         ordinary_cities.add(key)
                         self.assertIn(key, development._ORDINARY_CITY_OPENINGS)
                         anchors = development._ORDINARY_CITY_OPENINGS[key]

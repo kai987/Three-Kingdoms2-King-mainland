@@ -83,7 +83,7 @@ const values=html=>[...html.matchAll(/<option value="(\d+)"/g)].map(m=>Number(m[
  // Closing and opening anew discards unconfirmed drafts.
  context.allocate(city,1);assert.equal(input.value,'40');assert(element('#confirm-allocation').disabled);
  const seed={min:'1',max:'4294967295',value:'999999999999'};context.bindNumberInput(seed);seed.oninput();assert.equal(seed.value,'4294967295');seed.value='-2';seed.onchange();assert.equal(seed.value,'1');seed.value='';seed.onblur();assert.equal(seed.value,'1');seed.value='Infinity';seed.onblur();assert.equal(seed.value,'1');
- assert.equal((source.match(/type="number"/g)||[]).length,4,'All current numeric controls are explicitly covered');
+ assert.equal((source.match(/type="number"/g)||[]).length,5,'All current numeric controls are explicitly covered');
  assert(source.includes('id="departure-battle-grain" type="number" min="0" step="1"'));
  assert(source.includes('GameBattleSupply.departure(view,city,draft.officers,quote'));
  assert(source.includes('id="battle-facility-batches" type="number" min="1" max="${trade.max_batches}"'));

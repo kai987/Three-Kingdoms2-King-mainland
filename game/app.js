@@ -385,7 +385,7 @@ async function command(kind,payload={}){
   }else if(kind==='new')checkpoint='new';
   else if(kind==='settle'||['result','finished'].includes(view.game?.phase))checkpoint='battle';
   else if(kind==='battle_place'||kind==='three_visits'||kind==='southern_mission'||
-   ['stage','worked','paused'].some(key=>view.catalog.southern_mission?.[key]!==previousView.catalog.southern_mission?.[key]))checkpoint='progress';
+   ['stage','worked','paused'].some(key=>view.catalog?.southern_mission?.[key]!==previousView.catalog?.southern_mission?.[key]))checkpoint='progress';
   else if(kind==='end_turn'||previousTurn!==view.game?.turn)checkpoint='turn';
   await scene?.play();
   if(!silentDialogue&&typeof showDialogueFeedback==='function')showDialogueFeedback(kind,payload,dialogueBefore,view);
