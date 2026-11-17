@@ -55,7 +55,7 @@ export async function prepareWorkerProbe(workerURL) {
         try {
           const expression = `
             py.runPython(${JSON.stringify(script)});
-            globalThis.__openingPythonProfile = () => py.runPython('json.dumps(_start_measurements)');
+            globalThis.__openingPythonProfile = () => py.runPython('_opening_pack_report()');
             {
               const locate = requestedScenario, load = catalog;
               let active;

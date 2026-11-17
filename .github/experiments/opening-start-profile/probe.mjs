@@ -121,10 +121,11 @@ export async function installStartProfile(page,testInfo) {
         styleMs:(after.RecalcStyleDuration-before.RecalcStyleDuration)*1000});
     },
     async finish() {
-      const {workerRows, python} = await worker.evaluate(()=>({
-        workerRows:self.__openingWorkerStarts(),python:JSON.parse(self.__openingPythonProfile()),
+      const {workerRows, openings, components, other_pack_calls} = await worker.evaluate(()=>({
+        workerRows:self.__openingWorkerStarts(),...JSON.parse(self.__openingPythonProfile()),
       }));
-      await writeFile(testInfo.outputPath('opening-start-profile.json'),JSON.stringify({rows,workerRows,python},null,2));
+      await writeFile(testInfo.outputPath('opening-start-profile.json'),
+        JSON.stringify({rows,workerRows,python:openings,components,otherPackCalls:other_pack_calls},null,2));
       setup.close();
     },
   };

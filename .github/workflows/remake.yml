@@ -1,4 +1,4 @@
-name: PR 59 start-of-campaign profiling
+name: PR 59 opening view packing profile
 
 on:
   workflow_dispatch:
@@ -16,7 +16,7 @@ env:
 
 jobs:
   profile:
-    if: github.ref == 'refs/heads/codex/ci-opening-start-profile'
+    if: github.ref == 'refs/heads/codex/ci-opening-pack-profile'
     name: Profile the first opening batch on desktop and touch on one runner
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -69,10 +69,11 @@ jobs:
           test -z "$(git status --porcelain)"
           python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_SOURCE" --content-sha256 "$FROZEN_WEB_CONTENT"
           python -B "$RUNNER_TEMP/opening-start-profile/report.py" build/opening-start-profile | tee -a "$GITHUB_STEP_SUMMARY"
+          python -B "$RUNNER_TEMP/opening-start-profile/pack-report.py" build/opening-start-profile | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Retain profiles and original Playwright test outcomes
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: opening-start-profile-${{ github.run_attempt }}
+          name: opening-view-pack-profile-${{ github.run_attempt }}
           path: build/opening-start-profile
           if-no-files-found: warn
