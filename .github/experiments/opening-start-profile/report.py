@@ -1,5 +1,4 @@
 from pathlib import Path
-from statistics import median
 import csv
 import json
 import sys
@@ -40,18 +39,26 @@ def measure(device):
         w = worker[b['id']]
         py = python[scenario]
         assert b['status'] == w['status'] == 200
-        assert len(py['new_ms']) == len(py['view_ms']) == len(py['decorate_ms']) == 1
+        assert len(py['new_ms']) == len(py['view_ms']) == len(py['decorate_ms']) == len(py['session_ms']) == len(py['catalog_ms']) == len(py['pack_ms']) == len(py['encode_ms']) == 1
         assert b['eventOpens'] and b['eventCloses'] and b['renders'] and b['sawBusy']
         assert b['click'] <= b['sent'] <= b['received'] <= b['eventOpens'][0] <= b['eventCloses'][-1]
         assert abs(row['totalMs']-sum(row[k] for k in ('clickMs','idleMs','eventWaitMs','eventDismissMs'))) < 0.01
         view = sum(py['view_ms'])+sum(py['decorate_ms'])
-        init = py['session_ms']-view
-        assert init >= sum(py['new_ms']) and w['ms']+2 >= py['session_ms']
+        session = sum(py['session_ms'])
+        init = session-view
+        assert init >= sum(py['new_ms']) and w['ms']+2 >= py['dispatch_ms']
+        assert w['scenario'] == scenario and w['dispatch'] >= w['entered']
+        queue = w['dispatch']-w['entered']
+        assert w['ms'] + 2 >= py['dispatch_ms'] + w['jsCatalogMs'] + queue
         rows.append(dict(device=device,scenario=scenario,cities=len(row['cities']),opening_ms=row['totalMs'],
             click_ms=row['clickMs'],playwright_wait_idle_ms=row['idleMs'],event_wait_visible_ms=row['eventWaitMs'],
             event_dismiss_ms=row['eventDismissMs'], worker_inside_ms=w['ms'], worker_roundtrip_ms=b['received']-b['sent'],
             worker_initialize_ms=init, construct_state_ms=sum(py['new_ms']), worker_initial_view_ms=view,
-            worker_other_ms=w['ms']-py['session_ms'],
+            worker_other_ms=w['ms']-session, worker_queue_ms=queue,
+            js_catalog_ms=w['jsCatalogMs'], python_catalog_ms=sum(py['catalog_ms']),
+            worker_pack_ms=sum(py['pack_ms']), worker_json_encode_ms=sum(py['encode_ms']),
+            worker_unattributed_ms=w['ms']-session-queue-w['jsCatalogMs']-sum(
+                py['catalog_ms']+py['pack_ms']+py['encode_ms']),
             app_render_ms=sum(r['end']-r['start'] for r in b['renders']), render_calls=len(b['renders']),
             browser_layout_ms=row['layoutMs'],browser_style_ms=row['styleMs'],
             browser_reply_to_busy_clear_ms=b['busyCleared']-b['received'],

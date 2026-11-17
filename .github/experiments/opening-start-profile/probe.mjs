@@ -88,18 +88,23 @@ export async function installStartProfile(page,testInfo) {
         const receive=self.onmessage, send=self.postMessage, pending=new Map(), complete=[];
         self.onmessage=function(event) {
           const message=event.data;
-          if (message?.type==='request' && message.path==='/api/command' && JSON.parse(message.body).kind==='new') pending.set(message.id,performance.now());
+          if (message?.type==='request' && message.path==='/api/command' && JSON.parse(message.body).kind==='new') pending.set(message.id,{entered:performance.now(),scenario:JSON.parse(message.body).payload.scenario});
           return Reflect.apply(receive,this,[event]);
         };
         self.postMessage=function(message,...rest) {
           if (message?.type==='response' && pending.has(message.id)) {
-            const started=pending.get(message.id);
-            complete.push({id:message.id, ms:performance.now()-started, status:message.status});
+            const row=pending.get(message.id);
+            complete.push({...row,id:message.id, ms:performance.now()-row.entered, status:message.status});
             pending.delete(message.id);
           }
           return Reflect.apply(send,this,[message,...rest]);
         };
         self.__openingWorkerStarts=()=>complete;
+        self.__markOpeningDispatch = scenario => {
+          const row=[...pending.values()].find(entry=>entry.scenario===scenario && entry.dispatch===undefined);
+          if (row) row.dispatch=performance.now();
+          return row;
+        };
       });
       setup=await prepareWorkerProbe(worker.url());
       page.once('close',()=>setup.close());

@@ -53,7 +53,27 @@ export async function prepareWorkerProbe(workerURL) {
         clearTimeout(timer);
         let error;
         try {
-          const expression = `py.runPython(${JSON.stringify(script)}); globalThis.__openingPythonProfile = () => py.runPython('json.dumps(_start_measurements)'); true`;
+          const expression = `
+            py.runPython(${JSON.stringify(script)});
+            globalThis.__openingPythonProfile = () => py.runPython('json.dumps(_start_measurements)');
+            {
+              const locate = requestedScenario, load = catalog;
+              let active;
+              requestedScenario = function(path,body) {
+                const scenario = Reflect.apply(locate,this,[path,body]);
+                active = path==='/api/command' && JSON.parse(body).kind==='new'
+                  ? globalThis.__markOpeningDispatch(scenario) : undefined;
+                return scenario;
+              };
+              catalog = async function(...args) {
+                const row=active;
+                if (!row) return Reflect.apply(load,this,args);
+                const start=performance.now();
+                try { return await Reflect.apply(load,this,args); }
+                finally { row.jsCatalogMs=performance.now()-start; }
+              };
+            }
+            true`;
           const result = await send('Debugger.evaluateOnCallFrame',{
             callFrameId:message.params.callFrames[0].callFrameId, expression, returnByValue:true
           });
