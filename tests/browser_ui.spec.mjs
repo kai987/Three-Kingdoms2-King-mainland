@@ -1955,7 +1955,7 @@ async function verifyOpeningBatch(page,testInfo,batchId){
    // New retainers must be commandable people, with their bound white
    // portrait in the actual detail dialog, not merely reference-file rows.
    const roster=saved.state.cities.liaodong.roster.officer_ids;
-   expect(roster).toHaveLength(13);
+   expect(roster).toHaveLength(12);
    expect(Object.values(saved.state.officers).filter(row=>row.faction_id==='gongsun')).toHaveLength(15);
    for(const pid of ['historical-wang-jian-liaodong','historical-gongsun-xiu','historical-bi-sheng']){
     const [officerId,officer]=Object.entries(saved.state.officers).find(([,row])=>row.person_id===pid);

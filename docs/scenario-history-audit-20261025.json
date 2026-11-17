@@ -3,7 +3,7 @@
   "review_revision": "2026-11-08",
   "review_file": "game/config/references/scenario-history-review.json",
   "review_sha256": "1dd4f2fb0b91b9a22615912a07853a766506f777d5b99bbbb645b60f53aa82e4",
-  "presentation_sha256": "07f7d557c49c582de95653ec6ac7efdc75769afc5a1ed3cb1f7384ec7c49412f",
+  "presentation_sha256": "0ffa5086bd4fef5b8d8b12ed4a86b540e3545c845acdf9311464775a4c534bdf",
   "scope": "Regional review and current-data consistency, not a complete attested city/month prefect list or a SAN14 export.",
   "boundary_definition": "Different opening owners connected by links, sea_links or travel_routes; each unordered city pair is listed once. These are network borders, not geographic administrative boundary polygons.",
   "historical_count": 23,
