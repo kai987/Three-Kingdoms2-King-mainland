@@ -2750,7 +2750,7 @@ test('faction command books can all be spent in one city and survive save reload
   expect(current.state.turn).toBe(initial.state.turn);expect(row.used).toBe(index+1);expect(row.total).toBe(total);
   expect(row.orders).toHaveLength(index+1);expect(row.orders.every(order=>order.city==='shujun'&&order.kind==='recruit'&&order.cost===1)).toBe(true);
   expect(current.state.cities.shujun.reserves).toBe(initial.state.cities.shujun.reserves+(index+1)*100);
-  expect(current.state.cities.shujun.gold).toBe(initial.state.cities.shujun.gold-(index+1)*20);expect(current.state.cities.shujun.grain).toBe(initial.state.cities.shujun.grain-(index+1)*30);
+  expect(current.state.cities.shujun.gold).toBe(initial.state.cities.shujun.gold-(index+1)*20);expect(current.state.cities.shujun.grain).toBe(initial.state.cities.shujun.grain-(index+1)*300);
   expect(current.state.rng).toEqual(initial.state.rng);await expect(counter).toHaveAttribute('data-command-books-remaining',String(total-index-1));
   if(index+1<total)await expect(page.locator('#recruit')).toBeEnabled();
  }
@@ -3065,7 +3065,7 @@ test('march preview discloses a downstream depot shortage before moving officers
  const after=await tacticalSave(page);
  const march=after.state.extension.travel.marches.find(row=>row.source==='shujun'&&row.target==='nanjun');
  expect(march).toMatchObject({officers:[370],quote:{days:56,path:['shujun','qianwei','jiangyang','bajun','fuling','badong','nanjun']}});
- expect(march.supply.loaded).toBe(Math.ceil((before.state.officers[370].troops+100)*4/1000));
+ expect(march.supply.loaded).toBe(Math.ceil((before.state.officers[370].troops+100)*4/100));
  expect(after.state.cities.shujun.grain).toBe(before.state.cities.shujun.grain-march.supply.loaded);
  expect(after.state.cities.guanghan.grain).toBe(0);
  const inTransit=page.locator(`[data-march="${march.id}"] button[data-march-officer="370"]`);
@@ -3170,7 +3170,7 @@ test('Dong Zhuo relocation opens in February 190 with its own bilingual historic
  expect(saved.state.extension.facilities.cities.jingzhao).toEqual(beforeRelocation.state.extension.facilities.cities.jingzhao);
  const beforeTreasury=beforeRelocation.state.extension.treasury,treasury=saved.state.extension.treasury;
  const previousTreasure=beforeTreasury.cities.jingzhao.treasure;
- expect(effects.loot).toEqual({gold:50000,grain:100000,treasure:99-previousTreasure});
+ expect(effects.loot).toEqual({gold:50000,grain:1000000,treasure:99-previousTreasure});
  expect(treasury.cities.jingzhao.treasure).toBe(99);
  expect(treasury.cities.henan.treasure).toBe(beforeTreasury.cities.henan.treasure);
  expect(treasury.ledger.found).toBeGreaterThanOrEqual(beforeTreasury.ledger.found+effects.loot.treasure);

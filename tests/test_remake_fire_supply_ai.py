@@ -11,6 +11,7 @@ from remake.campaign import Campaign,SeedRng
 from remake import battle_supply,tactical_ai,tactic_effects
 from remake.campaign_expansion import TACTICS
 from campaign_fixtures import controlled_catalog,reach_battle
+from campaign_fixtures import legacy_grain_campaign
 
 
 def command(game,kind,**payload):
@@ -47,6 +48,9 @@ def fire_candidate(game,actor,target,own='defenders',foe='attackers'):
 
 
 class FireSupplyAITests(unittest.TestCase):
+    def setUp(self):
+        self.enterContext(legacy_grain_campaign())
+
     def test_real_player_pass_makes_ai_burn_three_bags_and_force_a_thousand_troop_retreat(self):
         game,actor,target=arrived();state,battle=game.state,game.state.battle
         carried=battle['extended']['supply']['sides']['attackers']

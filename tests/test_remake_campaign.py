@@ -88,8 +88,8 @@ class CampaignTests(unittest.TestCase):
         self.assertEqual(self.game.state.extension['command_books']['factions']['shu']['used'], 2)
         row=self.game.state.extension['travel']['marches'][0]
         self.assertEqual(self.game.state.cities['xiangyang'].grain,
-                         3800-row['supply']['loaded'])
-        self.assertEqual(row['supply']['loaded'],estimate(self.game.state,[999],row['quote'])+21)
+                         38000-row['supply']['loaded'])
+        self.assertEqual(row['supply']['loaded'],estimate(self.game.state,[999],row['quote'])+210)
         self.assertEqual(row['supply']['consumed'],0)
         self.assertEqual(self.game.state.soldiers, ledger)
         self.assertIn(999, self.game.state.cities['xiangyang'].roster.officer_ids)

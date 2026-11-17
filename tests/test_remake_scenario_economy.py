@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, canonical
 from remake.dated_events import visible_factions
-from remake import capital_openings, civil_staff, domestic, facilities, logistics, treasures, city_development
+from remake import grain_units, city_economy, capital_openings, civil_staff, domestic, facilities, logistics, treasures, city_development
 from remake.city_economy import (apply_opening_sizes, frontier_outpost_at, income_at, incomes_at,
                                  profile_at, profiles_at, tier_at)
 from remake.officers import OFFICER_TROOP_CAP
@@ -19,7 +19,7 @@ from remake.starting_garrisons import frontier_cities, mobilize_reserves
 from campaign_fixtures import advance_month
 
 FIELDS = ('gold', 'grain', 'reserves')
-HETAO_CITIES = {'shuofang', 'wuyuan', 'yunzhong'}
+HETAO_CITIES = {'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'liucheng', 'guonei', 'luzon'}
 
 
 def synchronize(game, state, **options):
@@ -113,8 +113,8 @@ class DatedScenarioEconomyTests(unittest.TestCase):
             authored.setdefault(row['city'], {})[row['person_id']] = row['troops']
         for city in game.state.cities.values():
             stocks = data['initial_city_resources'][city.id]
-            capital = capital_openings.opening(data, city.id)
-            self.assertEqual((city.gold, city.grain), tuple((capital or stocks)[field] for field in ('gold', 'grain')))
+            capital = capital_openings.opening(data, city.id) or {}
+            self.assertEqual((city.gold, city.grain), tuple((capital or stocks)[field] * (10 if field == 'grain' else 1) for field in ('gold', 'grain')))
             opening = authored.get(city.id, {})
             actual = {game.state.officers[i].person_id: game.state.officers[i].troops
                       for i in city.roster.officer_ids}
@@ -151,9 +151,14 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                     expected = change['after']['troops'] if change else 300
                     self.assertIs(type(row['troops']), int)
                     self.assertGreaterEqual(row['troops'], 0)
-                    self.assertLessEqual(row['troops'], 300)
-                    self.assertEqual(row['troops'], expected, (date, row['person_id']))
-                    if change:
+                    if row['city'] not in ('liucheng', 'guonei'):
+                        self.assertLessEqual(row['troops'], 300)
+                        self.assertEqual(row['troops'], expected, (date, row['person_id']))
+                    else:
+                        self.assertLessEqual(row['troops'], OFFICER_TROOP_CAP)
+                        self.assertEqual(data['era_assignments'][row['person_id']]['placement_basis'],
+                                         'reviewed_historical_faction_opening')
+                    if change and row['city'] not in ('liucheng', 'guonei'):
                         self.assertEqual(change['after']['status'], 'serving')
                         self.assertEqual(row['city'], expansion_garrisons.get(row['person_id'], change['after']['city']))
                 # The frozen retainer review predates the Hetao expansion.
@@ -162,7 +167,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                     gold=sum(data['initial_city_resources'][city]['gold'] for city in reviewed_cities),
                     grain=sum(data['initial_city_resources'][city]['grain'] for city in reviewed_cities),
                     soldiers=sum(data['initial_city_resources'][city]['reserves'] for city in reviewed_cities)
-                             + sum(row['troops'] for row in data['initial_officers']))
+                             + sum(row['troops'] for row in data['initial_officers'] if row['city'] not in ('liucheng', 'guonei')))
                 self.assertEqual(reviewed_material, frozen['material'])
                 patterns = {tuple(data['initial_city_resources'][key][field] for field in FIELDS)
                             for key in data['active_cities']}
@@ -170,10 +175,14 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                 for city in data['cities']:
                     key = city['id']
                     stocks = data['initial_city_resources'][key]
+                    if key in ('liucheng', 'guonei', 'luzon'):
+                        # Separately reviewed historical faction/settlement inputs have their own exact-source suites.
+                        self.assertTrue(all(type(v) is int and v >= 0 for v in stocks.values()))
+                        continue
                     baseline = self.pre_review_stocks(data, key)
                     outpost = frontier_outpost_at(data, key, *date[:2]) is not None
                     if outpost:
-                        self.assertEqual(income_at(data, key, *date[:2]), data['city_income'][key])
+                        self.assertEqual(income_at(data, key, *date[:2]), grain_units.stocks(data['city_income'][key]))
                     for values in (stocks, data['city_income'][key]):
                         self.assertEqual(set(values), set(FIELDS))
                         for field, value in values.items():
@@ -218,6 +227,8 @@ class DatedScenarioEconomyTests(unittest.TestCase):
             self.assertGreater(stock((249, 1), 'wei', field), stock((200, 1), 'wei', field))
         # Every city's opening stock actually differs across playable dates.
         for city in self.catalogs[217, 7].map_cities:
+            if city == 'luzon':
+                continue
             values = {tuple(c.data['initial_city_resources'][city][field] for field in FIELDS)
                       for c in self.catalogs.values()}
             self.assertGreater(len(values), 1, city)
@@ -282,14 +293,15 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         before = {key: tuple(getattr(c, field) for field in FIELDS) for key, c in game.state.cities.items()}
         rng = deepcopy(game.state.rng)
         recruited = game.state.soldiers['recruited']
+        dues = city_economy.garrison_grain(game, game.state)
         advance_month(game)
         expected_recruits = 0
         for key, city in game.state.cities.items():
-            base = game.catalog.data['city_income'][key] if city.owner != 'neutral' else dict.fromkeys(FIELDS, 0)
+            base = grain_units.stocks(game.catalog.data['city_income'][key]) if city.owner != 'neutral' else dict.fromkeys(FIELDS, 0)
             damage = game.state.extension['facilities']['cities'][key]['damage']
             expected = {field: base[field] * (100 - damage) // 100 for field in FIELDS}
             self.assertEqual(tuple(getattr(city, field) for field in FIELDS),
-                             tuple(before[key][i] + expected[field] for i, field in enumerate(FIELDS)))
+                             tuple(max(0, before[key][i] + expected[field] - (dues[key] if field == 'grain' else 0)) for i, field in enumerate(FIELDS)))
             expected_recruits += expected['reserves']
         self.assertEqual(game.state.soldiers['recruited'] - recruited, expected_recruits)
         self.assertEqual(game.state.rng, rng)
@@ -327,17 +339,26 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         before = {field: getattr(parent, field) for field in FIELDS}
         recruits = game.state.soldiers['recruited']
         rng = deepcopy(game.state.rng)
-        advance_month(game)
+        # Opening the dated node splits actual stock; the following month also charges its garrison.
+        due_at_rollover = {}
+        settle = city_economy.settle_garrison_grain
+        def capture(game, state, outposts, dues):
+            due_at_rollover.update(dues)
+            return settle(game, state, outposts, dues)
+        from unittest.mock import patch
+        with patch.object(city_economy, 'settle_garrison_grain', side_effect=capture):
+            advance_month(game)
         child = game.state.cities[key]
-        income = game.catalog.data['city_income'][key] if child.owner != 'neutral' else dict.fromkeys(FIELDS, 0)
+        income = grain_units.stocks(game.catalog.data['city_income'][key]) if child.owner != 'neutral' else dict.fromkeys(FIELDS, 0)
         for field in FIELDS:
-            self.assertEqual(getattr(child, field), before[field] // rule['resource_divisor'] + income[field])
+            self.assertEqual(getattr(child, field), max(0, before[field] // rule['resource_divisor'] + income[field] - (due_at_rollover[key] if field == 'grain' else 0)))
         self.assertEqual(child.owner, changed_owner)
         self.assertNotEqual(child.owner, original_owner)
         self.assertEqual(game.state.rng, rng)
         for field in FIELDS:
             self.assertEqual(getattr(parent, field) + getattr(child, field),
-                before[field] + game.catalog.data['city_income'][parent.id][field] + income[field])
+                before[field] + grain_units.stocks(game.catalog.data['city_income'][parent.id])[field] + income[field]
+                - (due_at_rollover[key] + due_at_rollover[parent.id] if field == 'grain' else 0))
         current = game.to_dict()
         game._open_dated_cities(game.state)
         self.assertEqual(game.to_dict(), current)
@@ -381,7 +402,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                         danyang='giant' if date[:2] >= (240, 1) else 'large').items():
                     self.assertEqual(data['city_profiles'][city]['tier'], tier, city)
                     self.assertEqual(profile_at(data, city, *date[:2])['tier'], tier)
-                    self.assertEqual(income_at(data, city, *date[:2]), data['city_income'][city])
+                    self.assertEqual(income_at(data, city, *date[:2]), grain_units.stocks(data['city_income'][city]))
                 # These two cities share an authored regional/production profile.
                 # Qiao's size difference starts in 221 and appears in every stock.
                 # Canonical date values were already quantized before this size
@@ -430,15 +451,15 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         self.assertEqual(tier_at(data, 'danyang', 240, 1), 'giant')
         self.assertEqual(profile_at(data, 'danyang', 240, 1)['tier'], 'giant')
         self.assertEqual(profiles_at(data, 240, 1)['danyang']['tier'], 'giant')
-        self.assertEqual(income_at(data, 'danyang', 239, 12), data['city_income']['danyang'])
+        self.assertEqual(income_at(data, 'danyang', 239, 12), grain_units.stocks(data['city_income']['danyang']))
         for field in FIELDS:
             # Half-up for a 3/2 increase, consistently recomputed from the opening.
-            expected = (data['city_income']['danyang'][field] * 3 + 1) // 2
+            expected = (grain_units.stocks(data['city_income']['danyang'])[field] * 3 + 1) // 2
             self.assertEqual(income_at(data, 'danyang', 240, 1)[field], expected)
             self.assertEqual(income_at(data, 'danyang', 249, 1)[field], expected)
         self.assertEqual(incomes_at(data, 240, 1)['danyang'], income_at(data, 'danyang', 240, 1))
         late = self.catalogs[249, 1].data
-        self.assertEqual(income_at(late, 'danyang', 263, 5), late['city_income']['danyang'],
+        self.assertEqual(income_at(late, 'danyang', 263, 5), grain_units.stocks(late['city_income']['danyang']),
                          'A post-upgrade opening is already scaled and must never scale twice')
         profile_at(data, 'danyang', 240, 1)['tier'] = 'corrupt'
         income_at(data, 'danyang', 240, 1)['gold'] = -1

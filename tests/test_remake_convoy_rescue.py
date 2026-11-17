@@ -46,7 +46,7 @@ class ConvoyRescueTests(unittest.TestCase):
         game.command('transfer',dict(source='xiangyang',target='jiangxia',officers=[146],route_mode='land'),game.revision)
         return game
 
-    def dispatch(self,game,grain=20):
+    def dispatch(self,game,grain=200):
         proposed=logistics.rescue_targets(game,game.state,'jiangxia')[0]
         self.assertTrue(proposed['can_dispatch'])
         self.assertEqual(proposed['city'],'nanjun')
@@ -118,7 +118,7 @@ class ConvoyRescueTests(unittest.TestCase):
             officers=proposed['officers'],cargo=dict(gold=0,grain=20,reserves=0),route_mode='land')
         for patch in (dict(target_march=True),dict(target_march=999),dict(target='nanyang'),
                       dict(cargo=dict(gold=1,grain=20,reserves=0)),
-                      dict(cargo=dict(gold=0,grain=1000,reserves=0))):
+                      dict(cargo=dict(gold=0,grain=100000,reserves=0))):
             before=game.export_save()
             with self.assertRaises((ValueError,GameError)):
                 game.command('dispatch_transport',dict(base,**patch),game.revision)
@@ -172,8 +172,8 @@ class ConvoyRescueTests(unittest.TestCase):
             for meal in period['days']:
                 if meal is None:continue
                 units=100*len(journey['departure_troops'])
-                used=max(0,(units-credit+999)//1000)
-                credit=credit+used*1000-units;used_total+=used
+                used=max(0,(units-credit+99)//100)
+                credit=credit+used*100-units;used_total+=used
                 meal[:]=[units,used,meal[2],0]
         supply['credit_units']=credit;supply['consumed']=used_total
         supply['remaining']=supply['loaded']+supply['received']-used_total-supply['returned_to_cargo']

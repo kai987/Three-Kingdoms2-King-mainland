@@ -681,7 +681,7 @@ class EarlyIndependentRulerTests(unittest.TestCase):
                     for index, resource in enumerate(('gold', 'grain')):
                         adjustment = sum(opening_stocks[city][resource] - old_stocks[city][resource]
                                          for city in ('henan', 'jingzhao'))
-                        self.assertEqual(totals[index], expected[index] + adjustment)
+                        self.assertEqual(totals[index], (expected[index] + adjustment) * (10 if resource == 'grain' else 1))
                     self.assertEqual(totals[2], expected[2] + reinforcement)
                     self.assertEqual(game.state.soldiers['initial'], totals[2])
 

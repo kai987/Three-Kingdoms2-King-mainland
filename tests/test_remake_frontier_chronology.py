@@ -74,7 +74,7 @@ class FrontierChronologyTests(unittest.TestCase):
                     else:
                         parent = PARENT_CITIES[city]
                         scale = TIER_MULTIPLIERS[data['city_profiles'][parent]['tier']]
-                        self.assertEqual(stocks, {field: data['initial_city_resources'][parent][field] // (2 * scale)
+                        self.assertEqual(stocks, {field: data['initial_city_resources'][parent][field] // (2 * scale) * (10 if field == 'grain' else 1)
                                                   for field in RESOURCE_FIELDS})
                         self.assertGreater(min(stocks.values()), 0)
 

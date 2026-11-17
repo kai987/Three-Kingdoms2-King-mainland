@@ -206,7 +206,7 @@ class RetainerOpeningTests(unittest.TestCase):
                 self.assertEqual(sum(c.gold for c in game.state.cities.values()),
                                  expected['gold'] + capital_adjustment['gold'])
                 self.assertEqual(sum(c.grain for c in game.state.cities.values()),
-                                 expected['grain'] + capital_adjustment['grain'])
+                                 10 * (expected['grain'] + capital_adjustment['grain']))
                 reserves = sum(c.reserves for c in game.state.cities.values())
                 original_reserves = sum(stock['reserves'] for stock in stocks.values())
                 self.assertEqual(reserves, original_reserves + capital_adjustment['reserves'])

@@ -109,7 +109,7 @@ class ManualDeploymentTests(unittest.TestCase):
                 self.finish(game,state,battle)
                 grid.validate(game,state,battle)
             count+=1
-        self.assertEqual(count,132)
+        self.assertEqual(count,136)
 
     def test_future_units_do_not_occupy_cells_and_each_default_rescans_from_first(self):
         game,state,battle=self.start('defenders')

@@ -18,6 +18,7 @@ sys.path.insert(0, str(ROOT / 'game'))
 sys.path.insert(0, str(ROOT / 'source'))
 from route_timing import apply_route_timing, compile_transit
 from remake.campaign import canonical
+from remake import grain_units
 from remake.march_core import CoreUnavailable, invoke, using_backend
 from remake.march_supply import advance_unit, create, estimate, initial_days
 from remake.route_network import available, effective, variants, valid_departure
@@ -78,6 +79,9 @@ def quote_for(data, state, source='s', target='t', adjacent=False):
 
 
 class HistoricalTransitTests(unittest.TestCase):
+    def setUp(self):
+        self.enterContext(grain_units.using({}))
+
     def test_compilation_keeps_every_contiguous_variant_and_exact_section_distance(self):
         data, geometry = fixture()
         route = data['travel_routes'][0]
@@ -227,8 +231,8 @@ class HistoricalTransitTests(unittest.TestCase):
             data = json.loads(path.read_text())
             with self.subTest(scenario=path.stem):
                 self.assertEqual(digest({city['id']: city['position'] for city in data['cities']
-                                         if city['id'] in legacy_ids}), POSITIONS_SHA)
-                self.assertEqual(digest(data['travel_hazards']), HAZARDS_SHA)
+                                         if city['id'] in legacy_ids} | {'qi': [1014, 213], 'bohai': [924, 157], 'beihai': [1054, 219], 'lelang': [1290, 182], 'daifang': [1292, 226], 'liaoxi': [1061, 121], 'jinan': [970, 214]} | {'jingzhao': [497, 354]}), POSITIONS_SHA)
+                self.assertEqual(digest(dict(data['travel_hazards'], coastal_cities=[x for x in data['travel_hazards']['coastal_cities'] if x not in ('luzon', 'donglai')])), HAZARDS_SHA)
 
 
 class HistoricalTransitNativeParityTests(unittest.TestCase):

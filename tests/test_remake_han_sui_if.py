@@ -127,12 +127,14 @@ class HanSuiIfTests(unittest.TestCase):
         plan = self.expansion[data['id']]
         opened_counties = {city for city, owner in self.chronology[data['id']].items()
                            if owner is not None}
-        additions = plan['owners'].keys() | opened_counties
+        additions = plan['owners'].keys() | opened_counties | {'liucheng', 'guonei', 'luzon'}
         original_cities = [city for city in data['active_cities'] if city not in additions]
         self.assertEqual(original_cities, old['active_cities'])
         approved = {pid: city for city, people in plan['garrisons'].items() for pid in people}
         old_locations = {row['person_id']: row['city'] for row in old['initial_officers']}
         rows = []
+        free = list(data['initial_free_officers'])
+        old_free = {row['person_id']: row for row in old['initial_free_officers']}
         resources = dict(data['initial_city_resources'])
         for row in data['initial_officers']:
             pid = row['person_id']
@@ -142,11 +144,17 @@ class HanSuiIfTests(unittest.TestCase):
                     stock = resources.get(city, data['initial_resources'])
                     resources[city] = dict(stock, reserves=stock['reserves'] + row['troops'])
                 continue
+            if row['city'] in ('liucheng', 'guonei') and pid in old_free:
+                # Project the separately reviewed Wuhuan recruits onto this frozen Han Sui audit.
+                free.append(old_free[pid])
+                continue
             if pid in approved:
                 self.assertEqual(row['city'], approved[pid], pid)
                 row = dict(row, city=old_locations[pid])
             rows.append(row)
         return dict(data, active_cities=original_cities, initial_officers=rows,
+                    initial_free_officers=sorted(free, key=lambda row: self.base_order.index(row['person_id'])
+                        if row['person_id'] in self.base_ids else len(self.base_order)),
                     initial_city_resources=resources)
 
     def legacy_attributes(self, data):

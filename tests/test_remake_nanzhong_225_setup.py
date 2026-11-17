@@ -95,11 +95,11 @@ class Nanzhong225SetupTests(unittest.TestCase):
 
     def test_other_garrisons_and_total_membership_are_preserved_without_duplicates(self):
         game = self.game()
-        self.assertEqual(len(self.catalog.data['initial_officers']), 317)
+        self.assertEqual(len(self.catalog.data['initial_officers']), 320)
         self.assertEqual(len(self.catalog.data['initial_free_officers']), 78)
         self.assertEqual(Counter(o.faction_id for o in game.state.officers.values()
                                  if o.faction_id),
-                         dict(wei=127, shu=82, wu=79, nanman=16, shi_xie=7, gongsun=6))
+                         dict(wei=127, shu=82, wu=79, nanman=16, shi_xie=7, gongsun=6, goguryeo=3))
         for faction, metadata in self.catalog.factions.items():
             self.assertEqual(metadata['initial_officers'], sum(
                 o.faction_id == faction for o in game.state.officers.values()))
@@ -120,7 +120,7 @@ class Nanzhong225SetupTests(unittest.TestCase):
             for ident in city.roster.officer_ids:
                 self.assertEqual(game.state.officers[ident].faction_id, city.owner)
             stationed.extend(city.roster.officer_ids)
-        self.assertEqual(len(stationed), 317)
+        self.assertEqual(len(stationed), 320)
         self.assertEqual(len(stationed), len(set(stationed)))
         self.assertEqual(max(len(c.roster.officer_ids) for c in game.state.cities.values()),
                          self.catalog.data['coverage']['planned_max_city_roster'])

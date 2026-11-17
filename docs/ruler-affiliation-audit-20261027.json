@@ -4,8 +4,8 @@
   "base_commit": "69a6e8f01239159b91e150637f888278af3b7a88",
   "review_sha256": "fb38ef837fad2783b70ac326f3496bfb45f322b274a8d062c7f5bc0aa65efdba",
   "presentation_sha256": "07f7d557c49c582de95653ec6ac7efdc75769afc5a1ed3cb1f7384ec7c49412f",
-  "locale_sha256": "abf7d414416219209b5dba3f1defb7915eaaabae9c38d6865d25d1684e6d62a6",
-  "japanese_sha256": "b134c9529c3aa00f3736194f1e9d86f1d11b4e4aca2aa17dd6af998a0c0c3d86",
+  "locale_sha256": "a3288f2b5f9de40b0c9eb76c79dcbc96b9d0774d7d85a5df65d229f3064e7301",
+  "japanese_sha256": "460ff113af66d174ed609522a392b7882e46c6e6ce757b5b070907e199c37248",
   "baseline_serving_non_ruler_reviews": 283,
   "pool": [
     {
@@ -1761,7 +1761,7 @@
         "bian_zhang",
         "song_jian"
       ],
-      "catalog_sha256": "34b8ad367adfc662f0327d7d3dab31e03517d6341a5d6bbcd68acb3632737e72"
+      "catalog_sha256": "cee9b53f9ba6130e49b088b3442a8cdf31335f639d26f04ece1ae727ab13be11"
     },
     {
       "id": "mainland188-06",
@@ -3240,7 +3240,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "f0a51d6f015fd7e1ce0afd8419a21dce6bdd420caf40e7b504967bc828dcf413"
+      "catalog_sha256": "2c7e6061fc7fcce1fc455aea84b84a22044de6364f53d581824ad13e90d48f8c"
     },
     {
       "id": "mainland190-01",
@@ -5173,7 +5173,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "323c0d1e32fa0668f87dde48b53f85d507f11d7a2acc70ebead8a3c4709d93d6"
+      "catalog_sha256": "d82e58db119d35a74167b1a890fbfb51136dd41278b8de55a7ff6a0c7cb3bef1"
     },
     {
       "id": "mainland191-10",
@@ -6657,7 +6657,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "c9249a43640937e84606382c393e7e65722dffe9df3fc23d79397a27adc7e373"
+      "catalog_sha256": "28617da443fc8b50503635b03cc2c10702ff85464801018ffa16789deebdecc1"
     },
     {
       "id": "mainland194-06",
@@ -8381,7 +8381,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "3b358ccbb0622363311053d129c02297f7a85b95049bfba1dddb9ef1f5865557"
+      "catalog_sha256": "a1390f75781b1e773205101edcaaf982ba2b9f08f546a98a607c2595922d578f"
     },
     {
       "id": "mainland196-06",
@@ -10006,7 +10006,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "261c5029f5b183a86259a669cb33f5e5c10e4f3d1147012cbdacbf1fdf9a60ee"
+      "catalog_sha256": "f3def63066ba064a35e70d4d3f8a84327d5548f73b12a3f881db5e73bd4a0963"
     },
     {
       "id": "mainland197-07",
@@ -11889,7 +11889,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "03bb0a7923bd3d1d15a3fd7048dd98c3d80bf28a4a2135af899e5b4d07b3eaef"
+      "catalog_sha256": "e5c5418b6c4969b2b618316a2ffd61f4dd3c6246c5efc842206c7a49d154a99d"
     },
     {
       "id": "mainland198-03",
@@ -13641,7 +13641,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "cf576f7a5ac6148f4655e9444a63dca58d70e10aa850143f4690589b0d87fb47"
+      "catalog_sha256": "821cf45f75407301684f6b06a6c2ca14c07ea477c601f272d4f1695f156bd681"
     },
     {
       "id": "mainland200-01",
@@ -15122,7 +15122,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "a0e6dc6fa6ad89cee7c5799f6b1bc64f852a10c877282736f52a08daadb83b7b"
+      "catalog_sha256": "918846f84acd8b085017fcbaaa8cbc27a7923205f8f9700570a3467c95067da5"
     },
     {
       "id": "mainland201-05",
@@ -16467,7 +16467,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "13f00dd6aea8e1c4955a87bf8350ec4007245bdef3f7045e92214bbccebb233f"
+      "catalog_sha256": "76d5a0a7856a20424ba37a9e8ab161e49ff5bf1c57104cb9475bfced44f2eb98"
     },
     {
       "id": "mainland202-06",
@@ -17922,7 +17922,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "17d8c4d9fa46044e9b7db7c62ae67ce762bfd672deca5cbdb2674d87cbebe367"
+      "catalog_sha256": "b4b60453b0f88986efa08df1682d2c750133b67c8ef192b030fe63f87c1fcee8"
     },
     {
       "id": "mainland207-09",
@@ -19436,7 +19436,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "702e6ca5bb504538ce7f1b3e3acbdd420b2dcfc7e5acd5156d516ffbf14984a7"
+      "catalog_sha256": "01f063f5f43b94d6a4a3119a6025512e945dcb32e0c07f8133fe266934eb2561"
     },
     {
       "id": "mainland208-10",
@@ -20910,7 +20910,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "d9762610d6f9bb5d18959b0470315e324e337d262056dc4a697c3002fcbdc5ef"
+      "catalog_sha256": "f57dac8b9ce2b43fe30c93e2b58a97eaed36e73bd3563e2cf10e6ffbfd59b71e"
     },
     {
       "id": "mainland209-06",
@@ -22209,7 +22209,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "8c20fd2bf6b2540b56b5eacde966e6afa3e576e066a3b18e1cd26f2e0152a6b4"
+      "catalog_sha256": "cc3bd70bc782760c568bc5eab916036332dab7a3672dcea19ff2b625c9036d28"
     },
     {
       "id": "mainland210-11",
@@ -23559,7 +23559,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "1d91c52c5aa5a05563c5b4089806957081397c8fbcb5ffd6bd4c86f9b78ad6b3"
+      "catalog_sha256": "30e9d4ab14bff8a69378091f95caef8dcb160a75d5bbeb1c6f56912d258ca750"
     },
     {
       "id": "mainland211-07-tongguan",
@@ -25006,7 +25006,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "d25e53ec4e58631fa7edf11e1365165c79ac41ee190d8698263e6a1c5acfa079"
+      "catalog_sha256": "a7cf8f7118af44631f9d9374a56631607549ae7255a9fbc1cc21ec3f561d329b"
     },
     {
       "id": "mainland212-06",
@@ -26364,7 +26364,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "0b478f676f39f5cb847a2d38612aa641ea9e4d61665ea60a9bf2491cf5d03596"
+      "catalog_sha256": "c82545bc9f03017909c5304b576eef8a9f2e741318b17471208782b0e2530874"
     },
     {
       "id": "mainland212-12",
@@ -27746,7 +27746,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "8b240b328aaa7511878c23e3f8437620e78848eccdf8fae14eefb3ba5d177002"
+      "catalog_sha256": "36ab6a73eac682b8d76e11f749a2c72bdac66d269028925c58ea671c02150cfc"
     },
     {
       "id": "mainland215-08",
@@ -29135,7 +29135,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "ddf25be1c9d09b024cd0bac917a2c4bfa090cfa0938ee6067f6ef2e9a2120495"
+      "catalog_sha256": "a454e8cd7c062d6ff4d9f14b16a778255992d78074dbc04833c16b9556e088f3"
     },
     {
       "id": "mainland217-07",
@@ -30574,7 +30574,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "11c3709c003664c28d3f72df5d3695c9d913984f4c52bf85b27fd531b5702228"
+      "catalog_sha256": "ac0eab10f0f896a3ece52b07fb816d8834e32d995c56ffeb992323dc97afb7fe"
     },
     {
       "id": "mainland219-07",
@@ -31952,7 +31952,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "f8b977d4c3736d3313ddb668cf59ab3e48096a3942eab61b913248e55754fe4b"
+      "catalog_sha256": "a33287b28df2c0da7659bcfef543eaf57d7348328cf14e2062fa9a9062d5517e"
     },
     {
       "id": "mainland221-07",
@@ -33349,7 +33349,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "f2d6fda5888dcc57eefdd76b1ab31368f6ea51fe3915a48d12fd1fb5840f2076"
+      "catalog_sha256": "22569977e2be21f743c1afb0f6480a7c323db8295c02d36043f722f7595402fc"
     },
     {
       "id": "mainland225-07",
@@ -34704,7 +34704,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "3142ef412b09dd9f157567225b9c66fdd110b7d2e705bc0a20b4f1432f5d4f40"
+      "catalog_sha256": "60dacf50e7978f2e5eb6c278e66ef0df50cbab6fa89ba7bca5e3448fb3346126"
     },
     {
       "id": "mainland227-02",
@@ -36126,7 +36126,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "06cd6d82c2d037c81074367cf61b7d3553f7c9f16636d13b4c26ee242fb30d13"
+      "catalog_sha256": "b718ddd669c32faa1dc9758c4599b5768d9e0222c2ad0fb5f113a091b15de67c"
     },
     {
       "id": "mainland234-02",
@@ -37504,7 +37504,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "96c10eb6da0c3f1862381dab0f9e3db26a5d9ab979be7a61e7ccb22f6e87a508"
+      "catalog_sha256": "010b564befac244ab2a78437d082ea49e0caa0f4682686156e4c70227573f9bc"
     },
     {
       "id": "mainland235-01",
@@ -38765,7 +38765,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "81d08add7820c14b5aee305cdfbd241d632e9f8865270965e0111be1dd81f08f"
+      "catalog_sha256": "7e763438038c4fbaddff52706d1b4f154080413d7bee066c1c845a8464df301b"
     },
     {
       "id": "mainland238-01",
@@ -40143,7 +40143,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "ee3dae6db45e2cb12fcc36cea8ca8b276f0fd28cdaa07b92d95b9d58f0fe9ac7"
+      "catalog_sha256": "d8777e691cf1bcfb2bb424603981ea4d4b8785ea6782902b9462205bb2e0ea94"
     },
     {
       "id": "mainland249-01",
@@ -41546,7 +41546,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "dab87bac9d4c5f85fd997988846391dc2d385465ca89adfa21bee7fff935a959"
+      "catalog_sha256": "cf1bc1af07572a32b72fc8560bb8a11404dd6eb7c612c8ecfe067ed5c037c6c9"
     },
     {
       "id": "mainland263-05",
@@ -42870,7 +42870,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "65d60079d8e93545d1e7fe761f75bbb4d094591b9cd3597f8c9c2e46b2f4ebe1"
+      "catalog_sha256": "3e5269536a8cf940e7db9d7909b0a5f0004ff8984524fc6771e9281ceea469c7"
     }
   ]
 }

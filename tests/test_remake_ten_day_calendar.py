@@ -6,9 +6,10 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
+from remake import grain_units
 from remake.campaign import Campaign, GameError, digest
 from remake import domestic
-from campaign_fixtures import controlled_catalog, confirm_default_placement
+from campaign_fixtures import record_garrison_charges, controlled_catalog, confirm_default_placement
 
 
 class TenDayCalendarTests(unittest.TestCase):
@@ -33,6 +34,7 @@ class TenDayCalendarTests(unittest.TestCase):
     def test_income_and_healing_settle_once_monthly_instead_of_three_times(self):
         game = self.game
         officer = game.state.officers[999]
+        paid = self.enterContext(record_garrison_charges())
         officer.health = officer.profile.health_max - 20
         stocks = {key: (c.gold, c.grain, c.reserves) for key, c in game.state.cities.items()}
         for _ in range(2):
@@ -41,9 +43,9 @@ class TenDayCalendarTests(unittest.TestCase):
             self.assertEqual(officer.health, officer.profile.health_max - 20)
         game._complete_turn(game.state)
         for key, city in game.state.cities.items():
-            income = game.catalog.data['city_income'][key] if city.owner != 'neutral' else dict(gold=0, grain=0, reserves=0)
+            income = grain_units.stocks(game.catalog.data['city_income'][key]) if city.owner != 'neutral' else dict(gold=0, grain=0, reserves=0)
             self.assertEqual((city.gold, city.grain, city.reserves),
-                tuple(stocks[key][i] + income[field] for i, field in enumerate(('gold', 'grain', 'reserves'))))
+                tuple(stocks[key][i] + income[field] - (paid[key] if field == 'grain' else 0) for i, field in enumerate(('gold', 'grain', 'reserves'))))
         self.assertEqual(officer.health,
             min(officer.profile.health_max, officer.profile.health_max - 20 + game.catalog.data['rules']['monthly_heal']))
 

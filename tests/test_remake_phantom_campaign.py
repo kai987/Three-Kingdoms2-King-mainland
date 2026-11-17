@@ -19,6 +19,7 @@ from remake.campaign import Campaign, SeedRng, digest
 from remake.errors import GameError
 from campaign_fixtures import arrange_contact, arrange_tactic
 from test_remake_tactical_ai import battle
+from campaign_fixtures import legacy_grain_campaign
 
 WAIT = dict(kind='wait', actor=None, target=None, tactic=None, score=0)
 
@@ -79,6 +80,9 @@ def rehash(saved):
 
 
 class PhantomCampaignTests(unittest.TestCase):
+    def setUp(self):
+        self.enterContext(legacy_grain_campaign())
+
     def test_both_sides_success_pay_four_ap_one_draw_without_other_damage_or_flags(self):
         for own, expected in (('attackers', 3), ('defenders', 2)):
             with self.subTest(side=own):

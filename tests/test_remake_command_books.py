@@ -85,7 +85,7 @@ class CommandBooks(unittest.TestCase):
         current = self.game.state.cities[city.id]
         self.assertEqual(current.reserves, city.reserves + 100 * total)
         self.assertEqual(current.gold, city.gold - 20 * total)
-        self.assertEqual(current.grain, city.grain - 30 * total)
+        self.assertEqual(current.grain, city.grain - 300 * total)
         self.assertEqual(self.game.state.rng.draws, start.rng.draws)
         self.assertEqual(books.remaining(self.game.state, 'wei'), books.remaining(start, 'wei'))
 
@@ -321,7 +321,7 @@ class CommandBooks(unittest.TestCase):
         self.assertEqual(books.remaining(self.game.state, 'shu'), books.remaining(before, 'shu') - 1)
         self.assertEqual(self.game.state.cities[city.id].reserves, before.cities[city.id].reserves)
         self.assertEqual(self.game.state.cities[city.id].gold, before.cities[city.id].gold - 20)
-        self.assertEqual(self.game.state.cities[city.id].grain, before.cities[city.id].grain - 30)
+        self.assertEqual(self.game.state.cities[city.id].grain, before.cities[city.id].grain - 300)
 
     def test_close_and_reopen_are_scoped_and_delayed_close_cannot_end_new_flow(self):
         ident = self.game.state.cities['xiangyang'].roster.officer_ids[0]

@@ -10,6 +10,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, GameError, digest
+from remake import grain_units, city_economy
 from remake.city_economy import income_at, profile_at
 from remake.session import CampaignSession
 from remake.view_transport import ViewTransport
@@ -50,7 +51,8 @@ def growth_catalog(start=(239, 12)):
                                       'nanyang': dict(gold=0, grain=0, reserves=0)}
     data['city_income'] = {'danyang': dict(gold=35, grain=90, reserves=0),
                            'nanyang': dict(gold=0, grain=0, reserves=0)}
-    opening_income = income_at(data, 'danyang', *start)
+    with grain_units.using({}):
+        opening_income = income_at(data, 'danyang', *start)
     data['city_profiles']['danyang'] = profile_at(data, 'danyang', *start)
     data['city_income']['danyang'] = opening_income
     data['links'] = [['danyang', 'nanyang']]
@@ -87,7 +89,7 @@ class CityProgressionTests(unittest.TestCase):
             previous_turn = next_turn(game)
             self.assertEqual((game.state.year, game.state.month, game.state.day), (239, 12, day))
             self.assertEqual(game.state.cities['danyang'].gold, 101)
-            self.assertEqual(game.state.cities['danyang'].grain, 205)
+            self.assertEqual(game.state.cities['danyang'].grain, 2050)
             self.assertEqual(upgrades(game), [])
             saved = game.export_save()
             game.command('ai', dict(turn=previous_turn), -1)
@@ -95,7 +97,7 @@ class CityProgressionTests(unittest.TestCase):
         previous_turn = next_turn(game)
         self.assertEqual((game.state.year, game.state.month, game.state.day, game.state.turn), (240, 1, 1, 4))
         city = game.state.cities['danyang']
-        self.assertEqual((city.gold, city.grain, city.reserves), (154, 340, 0),
+        self.assertEqual((city.gold, city.grain, city.reserves), (154, 3332, 0),
                          'Only 53 gold/135 grain income is added; no opening stock or free soldiers')
         self.assertEqual(city.owner, 'wei', 'Growth must retain actual ownership instead of historical Wu')
         self.assertEqual(game.to_dict()['soldiers'], initial['soldiers'])
@@ -111,7 +113,7 @@ class CityProgressionTests(unittest.TestCase):
         self.assertEqual(event['factions'], ['wei'])
         self.assertEqual(event['audience'], 'world')
         self.assertEqual(event['details'], dict(from_tier='large', to_tier='giant',
-                                               income=dict(gold=53, grain=135, reserves=0)))
+                                               income=dict(gold=53, grain=1350, reserves=0)))
         saved, revision = game.export_save(), game.revision
         game.command('ai', dict(turn=previous_turn), revision - 1)
         self.assertEqual(game.export_save(), saved)
@@ -125,7 +127,7 @@ class CityProgressionTests(unittest.TestCase):
             next_turn(twin)
         self.assertEqual((twin.state.year, twin.state.month, twin.state.day), (240, 2, 1))
         self.assertEqual(upgrades(twin), [event], 'The next monthly settlement must not repeat the upgrade')
-        self.assertEqual((twin.state.cities['danyang'].gold, twin.state.cities['danyang'].grain), (207, 475))
+        self.assertEqual((twin.state.cities['danyang'].gold, twin.state.cities['danyang'].grain), (207, 4614))
 
     def test_a_post_240_opening_is_already_giant_and_never_replays_the_upgrade(self):
         for start in ((240, 1), (249, 1)):
@@ -137,7 +139,7 @@ class CityProgressionTests(unittest.TestCase):
                 for _ in range(3):
                     next_turn(game)
                 self.assertEqual(upgrades(game), [])
-                self.assertEqual((game.state.cities['danyang'].gold, game.state.cities['danyang'].grain), (154, 340))
+                self.assertEqual((game.state.cities['danyang'].gold, game.state.cities['danyang'].grain), (154, 3332))
 
     def test_compact_session_views_update_size_and_income_with_the_same_cached_catalog(self):
         catalog = growth_catalog()
@@ -148,7 +150,7 @@ class CityProgressionTests(unittest.TestCase):
         opening = session.view()
         first = transport.pack(opening, catalog.sha256)
         self.assertEqual(opening['catalog']['city_profiles']['danyang']['tier'], 'large')
-        self.assertEqual(opening['catalog']['city_income']['danyang'], dict(gold=35, grain=90, reserves=0))
+        self.assertEqual(opening['catalog']['city_income']['danyang'], dict(gold=35, grain=900, reserves=0))
         for field in ('city_profiles', 'city_income'):
             self.assertNotIn(field, first['static_catalog'])
         known = first['catalog_token'] + ':' + first['quote_token']
@@ -160,7 +162,7 @@ class CityProgressionTests(unittest.TestCase):
         self.assertNotIn('static_catalog', wire)
         self.assertEqual(wire['catalog_token'], first['catalog_token'])
         self.assertEqual(wire['view']['catalog']['city_profiles']['danyang']['tier'], 'giant')
-        self.assertEqual(wire['view']['catalog']['city_income']['danyang'], dict(gold=53, grain=135, reserves=0))
+        self.assertEqual(wire['view']['catalog']['city_income']['danyang'], dict(gold=53, grain=1350, reserves=0))
         for field in ('city_profiles', 'city_income'):
             self.assertEqual(wire['view']['catalog'][field], current['catalog'][field])
         self.assertEqual(current['catalog']['scenarios'][0]['city_profiles']['danyang']['tier'], 'large',
@@ -170,7 +172,7 @@ class CityProgressionTests(unittest.TestCase):
         self.assertEqual(session.export_save(), saved, 'Full/compact view reads must not modify state or RNG')
         restored = session.load_save(saved, session.revision)
         self.assertEqual(restored['catalog']['city_profiles']['danyang']['tier'], 'giant')
-        self.assertEqual(restored['catalog']['city_income']['danyang'], dict(gold=53, grain=135, reserves=0))
+        self.assertEqual(restored['catalog']['city_income']['danyang'], dict(gold=53, grain=1350, reserves=0))
         self.assertEqual(session.export_save(), saved)
 
     def test_forged_growth_event_date_tier_or_income_is_rejected_atomically(self):

@@ -10,9 +10,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 sys.path.insert(0, str(ROOT / 'game'))
 from build_campaigns import apply_patch
+from remake import grain_units
 from remake.campaign import Campaign, Catalog
 from remake.session import CampaignSession
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import record_garrison_charges, controlled_catalog
 
 ISLANDS = ('zhuya', 'yizhou')
 SGZ47 = 'https://zh.wikisource.org/zh-hant/三國志/卷47'
@@ -137,6 +138,7 @@ class IslandHistoryTests(unittest.TestCase):
                 for policy in game.state.extension['treasury']['factions'].values():
                     policy.update(enabled=False,gold_floor=0)
                 before = game.to_dict()
+                paid = self.enterContext(record_garrison_charges())
                 for _ in range(3):
                     turn = game.state.turn
                     game.command('end_turn', {}, game.revision)
@@ -144,7 +146,9 @@ class IslandHistoryTests(unittest.TestCase):
                 self.assertEqual((game.state.year, game.state.month), end)
                 for city in ISLANDS:
                     self.assertEqual(game.state.cities[city].owner, 'neutral')
-                    self.assertEqual(game.to_dict()['cities'][city], before['cities'][city])
+                    expected_city = deepcopy(before['cities'][city])
+                expected_city['grain'] -= paid[city]
+                self.assertEqual(game.to_dict()['cities'][city], expected_city)
                 self.assertEqual(game.to_dict()['officers'], after_monthly_healing(before['officers']))
                 self.assertEqual(game.to_dict()['rng'], before['rng'])
                 self.assertEqual(game.to_dict()['soldiers'], before['soldiers'])
@@ -187,12 +191,15 @@ class IslandHistoryTests(unittest.TestCase):
                 for policy in game.state.extension['treasury']['factions'].values():
                     policy.update(enabled=False,gold_floor=0)
                 before = game.to_dict()
+                paid = self.enterContext(record_garrison_charges())
                 for _ in range(3):
                     turn = game.state.turn
                     game.command('end_turn', {}, game.revision)
                     game.command('ai', {'turn': turn}, game.revision)
                 self.assertEqual(game.state.cities[city].owner, 'wei')
-                self.assertEqual(game.to_dict()['cities'][city], before['cities'][city])
+                expected_city = deepcopy(before['cities'][city])
+                expected_city['grain'] -= paid[city]
+                self.assertEqual(game.to_dict()['cities'][city], expected_city)
                 self.assertEqual(game.to_dict()['officers'], after_monthly_healing(before['officers']))
                 self.assertEqual(game.to_dict()['soldiers'], before['soldiers'])
 

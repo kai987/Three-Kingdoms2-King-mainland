@@ -60,18 +60,18 @@ class SegmentSupplyTests(unittest.TestCase):
                 units=game.state.officers[ident].troops+100
                 first=march_supply.cost(units-100,1,10)
                 self.assertEqual(row['supply']['loaded'],first)
-                self.assertEqual(game.state.cities['xiangyang'].grain,100-first)
+                self.assertEqual(game.state.cities['xiangyang'].grain,1000-first)
                 self.step(game)
                 row=game.state.extension['travel']['marches'][0]
                 self.assertEqual(march_supply.current_city(row),'nanjun')
                 self.assertEqual(row['supply']['route_days'],10)
-                self.assertEqual(game.state.cities['nanjun'].grain,100,'No remote refill before the next real day')
+                self.assertEqual(game.state.cities['nanjun'].grain,1000,'No remote refill before the next real day')
                 game=self.restore(game);self.step(game);self.step(game)
                 row=game.state.extension['travel']['marches'][0]
                 total=march_supply.cost(units-100,1,30)
                 self.assertEqual(row['supply']['consumed'],total)
                 self.assertEqual(row['supply']['received'],total-first)
-                self.assertEqual(game.state.cities['nanjun'].grain,100-(total-first))
+                self.assertEqual(game.state.cities['nanjun'].grain,1000-(total-first)-9)
                 self.assertEqual(row['supply']['shortage_days'],0)
                 self.assertEqual(game.to_dict()['rng'],before['rng'])
                 self.assertEqual(game.to_dict()['soldiers'],before['soldiers'])
@@ -113,8 +113,8 @@ class SegmentSupplyTests(unittest.TestCase):
         game=self.game(days=(1,1));ident,row=self.queue(game)
         self.step(game);row=game.state.extension['travel']['marches'][0]
         self.assertEqual(row['supply']['elapsed_days'],2)
-        self.assertEqual(row['supply']['consumed'],1)
-        self.assertEqual(game.state.cities['nanjun'].grain,100)
+        self.assertEqual(row['supply']['consumed'],6)
+        self.assertEqual(game.state.cities['nanjun'].grain,997)
         self.assertGreater(row['supply']['credit_units'],0)
 
     def test_arrived_full_city_waiting_is_fed_by_that_actual_city(self):

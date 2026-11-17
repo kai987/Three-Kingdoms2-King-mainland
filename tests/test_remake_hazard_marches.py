@@ -180,9 +180,23 @@ class HazardMarchTests(unittest.TestCase):
                     game._complete_turn(game.state)
                     game._spawn_eligible(game.state)
                     game._reconcile_factions(game.state)
-                ids = game.state.cities[source].roster.officer_ids[:3]
+                # The historical Beihai posting now has one officer. Stage the
+                # same three-general loss fixture with two other serving allies.
+                home = game.state.cities[source]
+                for donor in game.state.cities.values():
+                    if donor.id == source or donor.owner != owner:
+                        continue
+                    for ident in list(donor.roster.officer_ids):
+                        if len(home.roster.officer_ids) >= 3:
+                            break
+                        if ident not in game.state.extension['leaders'].values():
+                            donor.roster.officer_ids.remove(ident)
+                            home.roster.officer_ids.append(ident)
+                ids = home.roster.officer_ids[:3]
                 self.assertEqual(len(ids), 3)
                 self.set_troops(game, ids, 10000)
+                treasures.synchronize(game, game.state)
+                domestic.synchronize(game, game.state)
                 game.validate(game.state)
                 draws = game.state.rng.draws
                 game.command(order, dict(source=source, target=target, officers=ids,

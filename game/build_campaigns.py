@@ -217,7 +217,8 @@ def apply_city_expansion(data, locations, opening, notes, people_by_id):
         parent_scale = TIER_MULTIPLIERS[profile['tier']]
         profile.update(tier='normal', label=TIER_LABELS['normal'], reference_income=None,
                        basis='historical_city_expansion_regional_balance',
-                       is_SAN14_starting_resources=False, economy_source_ids=[])
+                       is_SAN14_starting_resources=False, economy_source_ids=[],
+                       economy_numeric_basis='authorial_remake_balance_not_historical_measurement')
         for key in ('tier_basis', 'tier_date_precision'):
             profile.pop(key, None)
         data['city_profiles'][city_id] = profile
@@ -411,7 +412,8 @@ def add_luzon_settlement(data, location):
         land=80, industry=45, population=2100, governance=45)
     data['city_profiles'][city] = dict(tier='normal', label=TIER_LABELS['normal'],
         basis='optional_island_settlement', reference_income=None,
-        is_SAN14_starting_resources=False, economy_source_ids=[])
+        is_SAN14_starting_resources=False, economy_source_ids=[],
+                       economy_numeric_basis='authorial_remake_balance_not_historical_measurement')
     data['city_history'][city] = dict(
         neutral_label='可設城地點', sources=[LUZON_SOURCE],
         detail='渡海建城為遊戲設定。部隊可自夷洲出航，抵達後以剩餘兵力與兵糧駐守呂宋。',
@@ -462,7 +464,7 @@ def load_sources(*, timing=True):
     canonical_index = read('game/config/campaigns/index.json')
     scenario_dates = {row['id']: (row['year'], row['month']) for row in canonical_index['scenarios']}
     scenario_ids = set(scenario_dates)
-    additions = read_faction_additions(SOURCE / 'faction-additions', scenario_ids)
+    additions = read_faction_additions(ROOT / 'game/config/campaigns/faction-additions', scenario_ids)
     for addition in additions:
         city = addition['faction']['city']
         if city in expansion_openings['notes']:
