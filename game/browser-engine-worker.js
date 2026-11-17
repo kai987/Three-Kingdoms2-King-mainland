@@ -105,7 +105,7 @@ sys.path.insert(0, '/tk2/source')
 os.environ['MARCH_CORE_BACKEND'] = 'python'
 from remake.browser_runtime import BrowserRuntime
 BrowserRuntime(json.loads(_tk2_paths), json.loads(_tk2_previews), _tk2_initial)`);
- booting=false;self.postMessage({type:'ready',build_commit:manifest.build_commit||null});
+ booting=false;self.postMessage({type:'ready',build_commit:manifest.build_commit||null,shared_scenarios:true});
 })();
 boot.catch(()=>{booting=false;self.postMessage({type:'fatal'});});
 let queue=Promise.resolve();
