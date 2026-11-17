@@ -1,30 +1,125 @@
-name: Web campaign checks
+name: Profile PR 57 touch shard 3
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
-    inputs:
-      force_full:
-        description: Run every regression group
-        type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
 
 permissions:
   contents: read
   actions: read
-  deployments: read
 
-concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  FROZEN_SOURCE: a5d23ef14a769718bd20d7ba456c75f8b5dfdaa0
+  FROZEN_TREE: 0c50632b97aab1e7fb14622cc6ed980cc4a45d7d
+  FROZEN_WEB_CONTENT: f462d1accdd2456bfc22272e9f2a23a6b8ae75a3490f89a287aecd426fb03b07
+  SOURCE_RUN: '44125749102'
+  BASELINE_WEB_ARTIFACT: '14346624835'
+  TK2_TEST_PLAN: build/ci/test-plan.json
 
 jobs:
-  verify:
-    uses: ./.github/workflows/web-checks.yml
-    with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+  touch-three:
+    name: Touch shard 3 on runner ${{ matrix.machine }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    strategy:
+      fail-fast: false
+      matrix:
+        machine: [A, B, C]
+    env:
+      PROFILE_RUNNER: ${{ matrix.machine }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+          sparse-checkout: |
+            /.gitignore
+            /.github/experiments/profile_touch_shard.py
+            /.github/actions/browser-tools/
+            /tests/
+            /tools/browser-tests/
+            /tools/ci/
+            /source/
+            /game/config/
+            /game/data/
+            /game/assets/map-presentation.json
+            /game/assets/battlefields/index.json
+          sparse-checkout-cone-mode: false
+      - name: Use the exact merged source and its sparse browser paths
+        run: |
+          test "$(git rev-parse HEAD^)" = "$FROZEN_SOURCE"
+          git diff --exit-code "$FROZEN_SOURCE" HEAD -- .             ':(exclude).github/workflows/remake.yml'             ':(exclude).github/experiments/profile_touch_shard.py'
+          cp .github/experiments/profile_touch_shard.py "$RUNNER_TEMP/profile_touch_shard.py"
+          git switch --detach "$FROZEN_SOURCE"
+          test "$(git rev-parse HEAD)" = "$FROZEN_SOURCE"
+          test "$(git rev-parse 'HEAD^{tree}')" = "$FROZEN_TREE"
+          test -z "$(git status --porcelain)"
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: ./.github/actions/browser-tools
+      - name: Check the merged main run's verified artifact identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p build/touch3-profile
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$BASELINE_WEB_ARTIFACT"             --jq '[.id,.name,.workflow_run.id,.digest,.expired]|@tsv' > build/touch3-profile/artifact.tsv
+          printf '%s\t%s\t%s\t%s\t%s\n' "$BASELINE_WEB_ARTIFACT" "verified-web-$FROZEN_SOURCE" "$SOURCE_RUN"             'sha256:65e341365e288cddb3f58829c2ad416898ff27f6a01877de32a7050c26dd1144' false             | diff - build/touch3-profile/artifact.tsv
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: verified-web-${{ env.FROZEN_SOURCE }}
+          path: build/web
+          github-token: ${{ github.token }}
+          run-id: ${{ env.SOURCE_RUN }}
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: browser-timing-summary-a7f3bb99ef1faee93c343a4be762644261523726
+          path: build/reference-timing
+          github-token: ${{ github.token }}
+          run-id: '44120450915'
+      - name: Verify the Web contents and exact 18-case selection
+        run: |
+          python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_SOURCE" --content-sha256 "$FROZEN_WEB_CONTENT"
+          mkdir -p build/ci
+          python -B tools/ci/plan.py --force-full --event-name local --head "$FROZEN_SOURCE" > "$TK2_TEST_PLAN"
+          node tools/browser-tests/verify-shards.mjs touch-chromium
+          node <<'JS' > build/touch3-profile/selection.json
+          const assert = require('node:assert/strict');
+          const scope = require('./tools/browser-tests/scope.cjs').loadBrowserScope();
+          const shard = require('./tools/browser-tests/case-shards.cjs').selectedShard(scope, 'touch-chromium', 3);
+          const reference = require('./build/reference-timing/touch-chromium-shard-3.json');
+          const ids = shard.cases.map(c => c.id).sort();
+          assert.equal(reference.commit, 'a7f3bb99ef1faee93c343a4be762644261523726');
+          assert.equal(scope.full, true);
+          assert.equal(scope.selectedCases.length, 54);
+          assert.equal(ids.length, 18);
+          assert.deepEqual(ids, reference.cases.map(c => c.id).sort());
+          console.log(JSON.stringify(ids));
+          JS
+          cp "$TK2_TEST_PLAN" build/touch3-profile/test-plan.json
+          git hash-object tests/browser_ui.spec.mjs tests/browser_soldier_ui.spec.mjs tools/browser-tests/cases.json tools/browser-tests/case-durations.json > build/touch3-profile/source-hashes.txt
+      - name: Repeat the same shard twice and record machine telemetry
+        run: DIAGNOSTIC_COMMIT="$GITHUB_SHA" GITHUB_SHA="$FROZEN_SOURCE" python -B "$RUNNER_TEMP/profile_touch_shard.py"
+      - name: Recheck the artifact and verify each pass exercised exactly the 18 cases
+        if: always()
+        run: |
+          python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_SOURCE" --content-sha256 "$FROZEN_WEB_CONTENT" | tee build/touch3-profile/final-web-verification.json
+          node <<'JS'
+          const assert = require('node:assert/strict');
+          const ids = require('./build/touch3-profile/selection.json');
+          for (const repeat of [1, 2]) {
+            const report = require(`./build/touch3-profile/repeat-${repeat}/case-timings.json`);
+            assert.equal(report.commit, process.env.FROZEN_SOURCE);
+            assert.equal(report.project, 'touch-chromium');
+            assert.equal(report.shard, 3);
+            assert.equal(report.status, 'passed');
+            assert.deepEqual(report.cases.map(c => c.id).sort(), ids);
+          }
+          JS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: touch3-runner-${{ matrix.machine }}-attempt-${{ github.run_attempt }}
+          path: build/touch3-profile
+          if-no-files-found: error
+          retention-days: 7
