@@ -107,6 +107,70 @@
       "source_sha256": "637761991355c2831a7111d6f470f9447daccd47afddb7e8a232a0c7f39ea6e0",
       "thumbnail_sha256": "548ba838fbf01ce674b7ba0c8a2550fcc7b44dbd4a4d6d14a71dae825054b61c"
     },
+    "historical-goguryeo-annyu": {
+      "source_sha256": "1add9dc11cfd765befc9c8bd6c3e6b68edb073c168a13b1f03370c09cfc8c4e8",
+      "thumbnail_sha256": "2374177e1dfe74f42076267871d8f6a56dd78183e86ad23548cfea75fc956cc1"
+    },
+    "historical-goguryeo-bak-wigeo": {
+      "source_sha256": "0e9d0c04c25a1538c61947ea7b1be805a3262dc5cebb5e88280b8d75b2ed0b44",
+      "thumbnail_sha256": "0c484c33285169d9346ad27ad68d16f2ba860aaecebcb3664039c236837a36f0"
+    },
+    "historical-goguryeo-dayu": {
+      "source_sha256": "54f0afe756970d3eb0aab929e7cce10842815b958239cf969eeec9d1b3eaf2df",
+      "thumbnail_sha256": "59db4d32c6d0b41ff7853f800e3949f6f73c3d556daa71f001fe121495faba4f"
+    },
+    "historical-goguryeo-deungnae": {
+      "source_sha256": "14115491c9ac8d569e12b8e1eb6db0f9f6a3c477716df7afb6cb18fbc6d51212",
+      "thumbnail_sha256": "675cc1ed4cad49b4a9ab09856bde4b0358afb5013279ff87a8389410be1f5777"
+    },
+    "historical-goguryeo-eulpaso": {
+      "source_sha256": "75cea93c9c1e876ede724fb566a260e25bd05182c0f9547d3a250de71cb7e118",
+      "thumbnail_sha256": "6f1a6da3374efa2ceeb96e1a070f430a91d7597ff411d87582d7808977db036c"
+    },
+    "historical-goguryeo-eumu": {
+      "source_sha256": "4dd5221f7b8dc3f17a601014870f7aeaee95628d865937e2926a088ac908d353",
+      "thumbnail_sha256": "2b3535db5d4b8e1f3e6f58270cea02c3d723dedeb52556f178d5d834fab659da"
+    },
+    "historical-goguryeo-goyuru": {
+      "source_sha256": "758d76522e48dcbf96b634c48e84bf29886181b76de97bb566627e5e63217ee8",
+      "thumbnail_sha256": "c580c6ba4552c1cf8663c6f66a4d6c940cc4c80881dc48ef4f6f8c862711b7c7"
+    },
+    "historical-goguryeo-gyesu": {
+      "source_sha256": "f6aa74adfe7e33fe109ef0d3f3424434744f4563b67cdab54eaa341d22fafa7b",
+      "thumbnail_sha256": "2007e2778127bd49bd67fcb909b17337e0740d8e3c91edcae9cc8ab5b48abfdc"
+    },
+    "historical-goguryeo-miru": {
+      "source_sha256": "593de8eaa64bba564a59f7fff848a8636681d7e16702c14ba504ed92cc59256c",
+      "thumbnail_sha256": "8a0ce76017d03e500463b4a2bbf723823bae9d76e1cfe3ba8db4eb5e92a43397"
+    },
+    "historical-goguryeo-myeongnim-eosu": {
+      "source_sha256": "eb18b2109d02a018aefdf6b80790fc2bee8a5f5b94dcc8430971c714a269f7cd",
+      "thumbnail_sha256": "bc16a0ceda7f2c722876c67783c0795baa971091eece3289899d478690161ade"
+    },
+    "historical-goguryeo-myeongnim-holdo": {
+      "source_sha256": "22c198802e6739dce745300c4b627469fde1b2219b86a8b04cd00f95fed406bc",
+      "thumbnail_sha256": "d613af4f820d1aaef243ac9b20c44460f13a5975b4937f70e8f3b55e2ee5eb82"
+    },
+    "historical-goguryeo-nyuyu": {
+      "source_sha256": "ada0abcf8ecec97f345d3bc1ce313f1d86e91dc71b18a8f2301bbd99b06664c3",
+      "thumbnail_sha256": "c99b2ff83532103a8e1bebe976f0eccee4192f8a9cd588d8c6a56ba7fbda8306"
+    },
+    "historical-goguryeo-queen-u": {
+      "source_sha256": "9cdd0bc3c4521580173738f1c07c2b2998ead4b84f5b79f1f01bf6978e063254",
+      "thumbnail_sha256": "0d1b9dcc979a219b9a6ed8a09bca3be6d527cb0c4a678b9e4dbc5e1d713a9918"
+    },
+    "historical-goguryeo-ugeo": {
+      "source_sha256": "d34a8a4dc3b080532b48a1532378002628f78f6e8041b0770251b32397a4b1ae",
+      "thumbnail_sha256": "bf3e585b5805b7e4ef230cb7196a12ddf346a9b284efb26df23b3ee4c1137692"
+    },
+    "historical-goguryeo-yeonin": {
+      "source_sha256": "0f0f714117cf3638e837353a5267d2444dea69bdee06f3260965d84f8fed59b1",
+      "thumbnail_sha256": "0ee245324e2dcde29fe4bce35a43d6877ebcb83075caaee946a96c756b0a8aec"
+    },
+    "historical-goguryeo-yu-okgu": {
+      "source_sha256": "e6087b334e709cc96d7e96ed60797cc1307d7799cadea205e20fcec82f286d88",
+      "thumbnail_sha256": "46e72875abb654ba510a07e53e18d966ac4f387615015e5c02d76ee1a467b546"
+    },
     "historical-gongchou-cheng": {
       "source_sha256": "bc2ba3f902a9770ce4005f38f67976b09743036b564bb8639e6ebaa9aa083d2b",
       "thumbnail_sha256": "a1772a5a81636cbed998cf227d6fd1880f4a8c2d006297a5b8ddf2e9e2c3320d"
@@ -202,6 +266,22 @@
     "historical-wei-yan-liaodong": {
       "source_sha256": "dba4e07cf4a26b4ec65f48b394cb33a83eea307b5c1527d06ac9ccb08b9f7a44",
       "thumbnail_sha256": "c603fae969c418e003ff8125a09c26b65e51999d79715e889804b3e25968f966"
+    },
+    "historical-wuhuan-nanlou": {
+      "source_sha256": "7791430c413d2fb5379d9250791a1ff08e49a3513e3373f4121e533ca4270441",
+      "thumbnail_sha256": "4d3fb38fd1ab045a3b26425f05559b283cab82e839ddd2bd69ba88da36d23e8e"
+    },
+    "historical-wuhuan-sufuwan": {
+      "source_sha256": "2bf4e47bc41746cdca3f34782031c9c285a48d5e6c3840bca3b5814722d16ef0",
+      "thumbnail_sha256": "db43a54fdbf202f2687a8c77842b73f9293d5ffdc274ad9f64ffe7d2c22e5d74"
+    },
+    "historical-wuhuan-supuyan": {
+      "source_sha256": "90a1e0087efe9ae14438370c1629adf534c982789a2886f073d220b3f39f1849",
+      "thumbnail_sha256": "ee1e44c03e2eb2417e888e14a13bab4d9ca09dc2ae9d6f963d0017cf5e6aed7c"
+    },
+    "historical-wuhuan-wuyan": {
+      "source_sha256": "bbd6e65e59f840e25e6b0364a656e5673948d0facfeee0ad24e58913b33715ce",
+      "thumbnail_sha256": "8a0c1b46b37eaa53d8ccc5899ef42fe2748d1412c79ec79f96bcc62157736aef"
     },
     "historical-xiahou-bo": {
       "source_sha256": "528bad53a302fed381307d313fe99e68f01814b82d509a3b46f760e67fe9b1c3",

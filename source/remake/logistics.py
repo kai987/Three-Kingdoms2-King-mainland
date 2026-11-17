@@ -5,6 +5,7 @@ into one friendly destination only after an actual arrival. No ROM inputs.
 """
 from copy import copy, deepcopy
 
+from . import grain_units
 from .errors import GameError
 from . import command_books, historical_campaigns
 from .officers import OFFICER_TROOP_CAP, parse_officer_ref
@@ -62,7 +63,7 @@ def _key(ident):
 
 
 def _new_city(city):
-    return dict(owner=city.owner, policy=deepcopy(DEFAULT_POLICY), last_dispatch_turn=0)
+    return dict(owner=city.owner, policy=grain_units.policy(DEFAULT_POLICY), last_dispatch_turn=0)
 
 
 def empty(game, state):
@@ -136,7 +137,7 @@ def synchronize(game, state):
     for key, city in state.cities.items():
         row = pool['cities'].setdefault(key, _new_city(city))
         if row['owner'] != city.owner:
-            row.update(owner=city.owner, policy=deepcopy(DEFAULT_POLICY), last_dispatch_turn=0)
+            row.update(owner=city.owner, policy=grain_units.policy(DEFAULT_POLICY), last_dispatch_turn=0)
     for row in list(pool['convoys']):
         for ident in row['officers']:
             home=_home(state,ident)
@@ -776,7 +777,7 @@ def prepare_ai(game, state, owner):
             policy['enabled'] = key not in fronts
             policy['allow_sea'] = policy['allow_special'] = False
             policy['max_gold'] = max(policy['max_gold'], 2000)
-            policy['max_grain'] = max(policy['max_grain'], 5000)
+            policy['max_grain'] = max(policy['max_grain'], grain_units.amount(5000))
 
 
 def auto_dispatch(game, state, owner):

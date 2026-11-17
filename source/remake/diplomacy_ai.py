@@ -1,7 +1,7 @@
 """Read-only strategy for the same diplomacy orders available to players."""
 from collections import defaultdict
 
-from . import command_books, diplomacy, historical_campaigns
+from . import command_books, diplomacy, grain_units, historical_campaigns
 from .officers import ref_sort_key
 
 TREATY_TURNS = 12
@@ -42,13 +42,15 @@ def _gift(state, cities, target_cities, current, desired):
         source = state.cities[city['id']]
         envoy = min(city['envoys'], key=lambda row: _envoy_key(state, source.id, row))
         for resource, reserve in GIFT_RESERVE.items():
+            if resource == 'grain':
+                reserve = grain_units.amount(reserve)
             stock = getattr(source, resource)
             maximum = min(stock // 2, stock - reserve, city['limits'][resource],
                           max(100000000 - getattr(other, resource) for other in target_cities))
             if maximum <= 0:
                 continue
             gain = lambda amount: diplomacy.gift_gain(resource, amount, envoy['intellect'], envoy['virtue'])
-            _, unit = diplomacy.LIMITS[resource]
+            _, unit = diplomacy.gift_limits(resource)
             achieved = min(desired, current + gain(maximum))
             if achieved <= current:
                 continue

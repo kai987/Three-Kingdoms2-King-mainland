@@ -14,11 +14,12 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
+from remake import grain_units
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
 from remake import civil_staff, diplomacy, domestic, equipment, facilities, treasures
 from remake.officers import OFFICER_TROOP_CAP, YearState, initialize_officer, year_state
-from campaign_fixtures import controlled_catalog, arrange_contact, finish_soldier_encounter, confirm_default_placement
+from campaign_fixtures import record_garrison_charges, controlled_catalog, arrange_contact, finish_soldier_encounter, confirm_default_placement
 
 
 FREE_PERSON = 'san14-candidate-0001'
@@ -137,7 +138,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
                 self.assertEqual(actual, expected)
                 self.assertEqual(game.state.officers, skeleton.officers)
                 self.assertEqual(game.state.rng, skeleton.rng)
-                self.assertEqual(len(game.catalog.definitions), 1056)
+                self.assertEqual(len(game.catalog.definitions), 1080)
                 self.assertTrue(all(type(ident) is int for ident in game.state.officers))
                 self.assertEqual(game.state.extension['events']['items'][0]['kind'], 'campaign_start')
                 game.validate(game.state)
@@ -286,6 +287,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.hire(game, 'runan')
         owned = [c for c in game.state.cities.values() if c.owner == 'shu']
         before = {field: sum(getattr(c, field) for c in owned) for field in ('gold', 'grain', 'reserves')}
+        paid = self.enterContext(record_garrison_charges())
         for _ in range(3): self.step(game)
         salaries = [e for e in game.state.extension['events']['items'] if e['kind'] == 'staff_salary']
         self.assertEqual(len(salaries), 1)
@@ -297,8 +299,8 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.assertEqual((details['amount'], details['paid']), (10, 10))
         for field in before:
             current = sum(getattr(game.state.cities[c.id], field) for c in owned)
-            base = sum(game.catalog.data['city_income'][c.id][field] for c in owned)
-            self.assertEqual(current, before[field] + base + details['bonus'][field] - (10 if field == 'gold' else 0))
+            base = sum(grain_units.stocks(game.catalog.data['city_income'][c.id])[field] for c in owned)
+            self.assertEqual(current, before[field] + base + details['bonus'][field] - (10 if field == 'gold' else sum(paid[c.id] for c in owned) if field == 'grain' else 0))
         frozen = game.export_save()
         for _ in range(3): game.view(); game.export_save()
         self.assertEqual(game.export_save(), frozen)

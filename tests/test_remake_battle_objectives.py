@@ -183,7 +183,7 @@ class CoalitionBattleTests(unittest.TestCase):
         game._start_expanded_battle(state,state.cities['jiangxia'],state.cities['nanyang'],
             [ally,player],paid=True,manual_deployment=placement,march_supply=dict(remaining=200,credit_units=0),
             coalition=dict(sources={str(ally):'jiangxia',str(player):'xiangyang'},
-                           provisions=dict(wu=100000,shu=100000)))
+                           provisions=dict(wu=10000,shu=10000)))
         game.validate(state)
         return game,ally,player
 
@@ -307,7 +307,7 @@ class BattleServiceTests(unittest.TestCase):
         command(game,'battle_facility',battle_id=b['id'],actor=a['id'],action='buy_grain',batches=2)
         self.assertEqual(game.state.cities[b['source']].grain,before.cities[b['source']].grain)
         self.assertEqual(game.state.battle['extended']['supply']['sides']['attackers']['remaining'],
-                         before.battle['extended']['supply']['sides']['attackers']['remaining']+200)
+                         before.battle['extended']['supply']['sides']['attackers']['remaining']+2000)
         self.assertEqual(game.state.cities[b['source']].gold,before.cities[b['source']].gold-2*offer['trade']['rate'])
         self.assertEqual(game.state.rng,before.rng)
         game,b,a=self.ready('armory');offer=battle_services.quote(game,game.state,b,a,'attackers')

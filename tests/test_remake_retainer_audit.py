@@ -97,6 +97,9 @@ class RetainerAuditNegativeTests(unittest.TestCase):
             EXPECTED_SCOPE=2, FIRST_NEW_RUNTIME=4)
         self.constants.start()
         self.addCleanup(self.constants.stop)
+        supplements = patch.object(AUDIT, 'check_added_factions', return_value={})
+        supplements.start()
+        self.addCleanup(supplements.stop)
 
     def checked(self):
         people, order, _ = AUDIT.check_people(self.canonical, self.review)
@@ -309,7 +312,7 @@ class RealRetainerAuditIntegrationTests(unittest.TestCase):
             self.skipTest('Authored retainer reference not yet installed')
         report = AUDIT.build_report()
         self.assertEqual(report['summary']['scenarios'], 29)
-        self.assertEqual(report['summary']['people'], 1056)
+        self.assertEqual(report['summary']['people'], 1080)
         self.assertEqual(report['summary']['new_people'], 22)
         self.assertEqual(report['summary']['historical'], 23)
         self.assertEqual(report['summary']['fictional'], 6)

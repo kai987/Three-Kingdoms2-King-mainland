@@ -9,13 +9,14 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
+from remake import grain_units
 from remake.campaign import Campaign, Catalog
 from remake import civil_staff, domestic, facilities, logistics, treasures, city_development
 from remake.errors import GameError
 from remake.march_core import using_backend
 from remake.march_supply import estimate
 from remake.travel import TravelCampaign
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import record_garrison_charges, controlled_catalog
 from test_remake_march_core import neutral_transit_config, route_state
 
 
@@ -195,6 +196,7 @@ class NeutralTransferTests(unittest.TestCase):
                     # physical travel home, with the same daily food service.
                     game = self.restore(game, alternate)
                     self.assertTrue(game.state.extension['travel']['marches'])
+                    paid = self.enterContext(record_garrison_charges())
                     saw_return = False;consumed = 0
                     for _ in range(12):
                         if not game.state.extension['travel']['marches']:break
@@ -221,8 +223,8 @@ class NeutralTransferTests(unittest.TestCase):
                     self.assertNotIn(ident, game.state.cities[CHAIN[-1]].roster.officer_ids)
                     self.assertEqual(game.state.soldiers['lost']-initial_lost,
                                      troops-game.state.officers[ident].troops)
-                    self.assertEqual(game.state.cities[CHAIN[0]].grain, grain+loaded-consumed)
-                    self.assertEqual({city:game.state.cities[city].grain for city in CHAIN[1:]}, other_grain)
+                    self.assertEqual(game.state.cities[CHAIN[0]].grain, grain+loaded-consumed-paid[CHAIN[0]])
+                    self.assertEqual({city:game.state.cities[city].grain for city in CHAIN[1:]}, {key:value-paid[key] for key,value in other_grain.items()})
                     self.assertEqual(game.state.rng, rng)
                     self.restore(game, alternate)
 

@@ -22,6 +22,7 @@ from supplement_redraw import PALETTE
 
 PLAN = 'art/portraits/retainer-additions-v1/plan.json'
 EARLY_SHU_PLAN = 'art/portraits/early-shu-v1/plan.json'
+FRONTIER_PLAN = 'art/portraits/frontier-portraits-v1/plan.json'
 SCHEMA = 'tk2-retainer-portrait-additions-v1'
 NATIVE_SIZE = (32, 40)
 ENHANCED_SIZE = (128, 160)
@@ -107,13 +108,19 @@ def fixed_color(color):
 
 
 def detail_blocks(image, phase=(0, 0)):
-    """Count non-uniform complete 4px blocks, including transparent pixels."""
+    """Yield whether each complete 4px block is non-uniform."""
     width, height = image.size
     pixels = image.load()
-    return sum(any(pixels[x + dx, y + dy] != pixels[x, y]
+    return (any(pixels[x + dx, y + dy] != pixels[x, y]
                    for dy in range(4) for dx in range(4))
                for y in range(phase[1], height - 3, 4)
                for x in range(phase[0], width - 3, 4))
+
+
+def visible_pixel(color, matte):
+    rgb = color[:3]
+    return color[3] >= 128 and (matte == 'alpha' or
+                                (min(rgb) < 225 if matte == 'white' else max(rgb) > 32))
 
 
 def authored_crop(raw_source, box, matte):
@@ -122,10 +129,9 @@ def authored_crop(raw_source, box, matte):
     if crop.width < 96 or crop.height < 128:
         raise ValueError('Retainer source must contain authored high resolution pixels')
     # Check every phase: padding a nearest4x file must not disguise an upscale.
-    if any(detail_blocks(crop, (x, y)) == 0 for y in range(4) for x in range(4)):
+    if any(not any(detail_blocks(crop, (x, y))) for y in range(4) for x in range(4)):
         raise ValueError('Retainer source is an exact nearest4x enlargement')
-    mask = bytes(255 if alpha >= 128 and (matte == 'alpha' or max(red, green, blue) > 32)
-                 else 0 for red, green, blue, alpha in crop.getdata())
+    mask = bytes(255 if visible_pixel(color, matte) else 0 for color in crop.getdata())
     alpha = Image.frombytes('L', crop.size, mask)
     visible = alpha.getbbox()
     if visible is None:
@@ -154,7 +160,7 @@ def direct_hd(source, visible, native):
     changes = sum(pixels[offset:offset + 4] != baseline[offset:offset + 4]
                   for offset in range(0, len(pixels), 4))
     colors = len(set(enhanced.getdata()))
-    blocks = detail_blocks(enhanced)
+    blocks = sum(detail_blocks(enhanced))
     if changes < 1024 or not 5 <= colors <= 16 or blocks < 20:
         raise ValueError('Retainer portrait adds insufficient high resolution detail')
     return encode_png(pixels, ENHANCED_SIZE), pixels, dict(
@@ -239,7 +245,7 @@ def append_retainer_assets(root, entries, outputs, atlases, used_hashes, *,
         if list(image.size) != expected_size:
             raise ValueError('Retainer authored source geometry differs')
         matte = person.get('source_matte', 'black' if atlas_path else 'alpha')
-        if matte not in ('black', 'alpha') or (atlas_path and matte != 'black'):
+        if matte not in ('black', 'alpha', 'white') or (atlas_path and matte != 'black'):
             raise ValueError('Invalid retainer source matte')
         source_meta = dict(original_source_path=relative, original_source_sha256=digest(source_raw),
                            source_size=list(image.size), source_matte=matte,
@@ -306,8 +312,8 @@ def append_retainer_assets(root, entries, outputs, atlases, used_hashes, *,
             else:
                 if any(key.startswith('native_original_') for key in person):
                     raise ValueError('Generated retainer portrait cannot bind an original native')
-                indices = bytes(0 if alpha < 128 else native_index(red, green, blue)
-                                for red, green, blue, alpha in image.getdata())
+                indices = bytes(native_index(*color[:3]) if visible_pixel(color, matte) else 0
+                                for color in image.getdata())
                 indexed = Image.frombytes('L', image.size, indices)
                 partition = dict(x_bounds=[0, image.width], y_bounds=[0, image.height])
                 native = bake_cell(indexed, 0, partition, (1, 1), image.size)
@@ -327,8 +333,19 @@ def append_retainer_assets(root, entries, outputs, atlases, used_hashes, *,
         if digest(pixels) in hd_hashes:
             raise ValueError('Retainer enhanced pixels duplicate an existing identity')
         hd_hashes.add(digest(pixels))
-        crop_path = str(Path(plan_path).parent / 'source-crops' / (pid + '.png'))
-        crop_png = encode_png(crop.tobytes(), crop.size)
+        if matte == 'white':
+            # Single white-background originals already contain the entire crop.
+            crop_path, crop_png = relative, source_raw
+            white = Image.new('RGBA', (512, 640), 'white')
+            inset = (8, 10, 504, 625)
+            portrait = ImageOps.contain(crop.crop(visible), (inset[2] - inset[0], inset[3] - inset[1]),
+                                        Image.Resampling.LANCZOS)
+            white.paste(portrait, ((white.width - portrait.width) // 2, inset[3] - portrait.height))
+            new_outputs[root / f'game/assets/portraits/white/{pid}.png'] = encode_png(white.tobytes(), white.size)
+        else:
+            crop_path = str(Path(plan_path).parent / 'source-crops' / (pid + '.png'))
+            crop_png = encode_png(crop.tobytes(), crop.size)
+            new_outputs[root / crop_path] = crop_png
         native_path = (person['native_original_path'].removeprefix('game')
                        if kind == 'original_portrait_redraw' else f'/assets/portraits/generated/{pid}.png')
         native_archive = str(Path(plan_path).parent / 'native-32x40' / (pid + '.png'))
@@ -375,7 +392,6 @@ def append_retainer_assets(root, entries, outputs, atlases, used_hashes, *,
         if kind != 'original_portrait_redraw':
             new_outputs[root / 'game' / native_path.lstrip('/')] = native['png']
         new_outputs[root / 'game' / new_hd[pid]['path'].lstrip('/')] = encoded
-        new_outputs[root / crop_path] = crop_png
         new_outputs[root / native_archive] = native['png']
 
     hd['people'] = dict(old_hd, **new_hd)

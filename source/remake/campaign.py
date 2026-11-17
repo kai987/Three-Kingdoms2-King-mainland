@@ -15,10 +15,11 @@ from threading import RLock
 from types import SimpleNamespace
 
 from .errors import GameError, INVALID_SAVE_MESSAGE
-from . import diplomacy, historical_campaigns, observer, three_visits
+from . import diplomacy, grain_units, historical_campaigns, observer, southern_mission, three_visits
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
+from . import city_economy
 from .city_economy import frontier_maintenance, income_at
 from .starting_garrisons import resolve as resolve_opening_garrisons
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
@@ -296,7 +297,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         state = CampaignState(faction, seed, SeedRng(seed), d['start_year'], d['start_month'], d['start_year'])
         for key in d['active_cities']:
             state.cities[key] = City(key, d['initial_owners'][key],
-                                     CityRoster(key, rules=self.catalog.rules), **resources[key])
+                                     CityRoster(key, rules=self.catalog.rules), **grain_units.stocks(resources[key]))
         for row in d['initial_officers']:
             ident = self.catalog.ids[row['person_id']]
             city = state.cities[row['city']]
@@ -311,7 +312,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             city.roster.officer_ids.append(ident)
         state.soldiers['initial'] = sum(c.reserves for c in state.cities.values()) + sum(o.troops for o in state.officers.values())
         self._initialize_expansion(state)
+        diplomacy.initialize(self.catalog, state)
         state.extension.update(difficulty=difficulty, ai_strategy={}, events=empty_events())
+        state.extension[grain_units.FIELD] = grain_units.CURRENT
         if lifespan == 'none':
             state.extension['lifespan'] = lifespan
         state.extension['travel'] = dict(counter=0, marches=[], battle_arrival=False, discovered=[])
@@ -346,7 +349,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         return value
 
     def view(self):
-        with self.lock:
+        with self.lock, grain_units.using(self.state):
             from . import dated_events
             from . import troop_types
             state = self.state
@@ -364,7 +367,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                     state.year if state else self.catalog.data['start_year'],
                                     state.month if state else self.catalog.data['start_month']),
                                 'links': self.catalog.data['links'],
-                                'rules': {**self.catalog.data['rules'], 'officer_troop_capacity': OFFICER_TROOP_CAP},
+                                'rules': {**self.catalog.data['rules'], 'officer_troop_capacity': OFFICER_TROOP_CAP,
+                                          'recruit_grain_per_100': grain_units.amount(self.catalog.data['rules']['recruit_grain_per_100'])},
+                                'grain_people_per_day': grain_units.denominator(),
                                 'calendar_rules': self.catalog.data['calendar_rules'],
                                 'difficulties': catalog_choices(),
                                 'notes': self.catalog.data['design_notes'], 'library_count': len(self.catalog.definitions),
@@ -374,6 +379,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'civil_staff': self._civil_staff_view(state),
                                 'diplomacy': diplomacy.view(self, state),
                                 'three_visits': three_visits.view(self, state),
+                                'southern_mission': southern_mission.view(self, state),
                                 'domestic':domestic.view(self,state),
                                 'logistics':logistics.view(self,state,travel_quotes=travel.get('travel_quotes',{})),
                                 'treasury':treasures.view(self,state),
@@ -389,7 +395,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'names': {str(i): self.person_name(state, i) for i in state.officers} if state else {}}}
 
     def command(self, kind, payload, revision):
-        with self.lock:
+        with self.lock, grain_units.using(None if kind == 'new' else self.state):
             if not isinstance(payload, dict):
                 raise GameError('操作参数无效。')
             if self.state and self.state.player == observer.SEAT and kind not in ('new', 'observe_turn'):
@@ -431,6 +437,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                'observe_turn': self._observe_turn,
                                'diplomacy': lambda state, payload: diplomacy.execute(self, state, payload, state.player),
                                three_visits.COMMAND: lambda state, payload: three_visits.execute(self, state, payload),
+                               southern_mission.COMMAND: lambda state, payload: southern_mission.execute(self, state, payload),
                                'hire_staff': self._hire_staff, 'reject_staff': self._reject_staff,
                                'staff_recruit': self._staff_recruit, 'choose_successor': self._choose_successor,
                                'set_domestic':self._set_domestic,'set_logistics':self._set_logistics,
@@ -463,6 +470,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 city_development.synchronize(self,candidate)
                 record_events(self, self.state, candidate, kind, payload)
                 historical_campaigns.process(self,candidate)
+                southern_mission.process(self,candidate)
                 diplomacy.synchronize(self,candidate)
                 civil_staff.synchronize(self, candidate, opening=kind == 'new', monthly=candidate.day == 1)
                 logistics.synchronize(self,candidate)
@@ -569,10 +577,10 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         if 'allocation_flow' in payload and type(payload['allocation_flow']) is not bool:
             raise GameError('操作参数无效。')
         r = self.catalog.data['rules']
-        if city.gold < r['recruit_gold_per_100'] or city.grain < r['recruit_grain_per_100']:
+        if city.gold < r['recruit_gold_per_100'] or city.grain < grain_units.amount(r['recruit_grain_per_100']):
             raise GameError('金钱或粮食不足。')
         city.gold -= r['recruit_gold_per_100']
-        city.grain -= r['recruit_grain_per_100']
+        city.grain -= grain_units.amount(r['recruit_grain_per_100'])
         domestic.add_reserves(self,state,city,r['recruit_per_action'],recruited=True)
         command_books.spend(state, city, 'recruit')
         if payload.get('allocation_flow'):
@@ -689,22 +697,24 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                         self._note(state, f'{name}到达寿命边界，释放兵员{released}归原城。')
             state.calendar_cursor = state.year
             self._note(state, f'新年更新人物库，记录{count}项年代事件；未自动招募或复活人物。')
+        garrison_dues = city_economy.garrison_grain(self, state)
         for city in state.cities.values():
             if city.owner != 'neutral':
                 income=income_at(self.catalog.data,city.id,state.year,state.month) or {
-                    'gold':r['monthly_gold_income'],'grain':r['monthly_grain_income'],'reserves':0}
+                    'gold':r['monthly_gold_income'],'grain':grain_units.amount(r['monthly_grain_income']),'reserves':0}
                 income=city_development.adjust_income(self,state,city.id,income)
                 income=facilities.adjusted_income(state,city.id,income)
                 city.gold += income['gold']
                 city.grain += income['grain']
                 domestic.add_reserves(self,state,city,income['reserves'],recruited=True)
-        frontier_maintenance(self,state)
+        outposts = frontier_maintenance(self, state)
         existing = set(state.officers)
         self._spawn_eligible(state)
         for ident, officer in state.officers.items():
             if ident in existing and officer.alive:
                 officer.health = min(officer.profile.health_max, officer.health + r['monthly_heal'])
         domestic.month_rollover(self,state)
+        city_economy.settle_garrison_grain(self, state, outposts, garrison_dues)
         facilities.month_rollover(self,state)
         city_development.month_rollover(self,state)
 
@@ -832,6 +842,10 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             return self.view()
 
     def validate(self, state):
+        with grain_units.using(state):
+            self._validate_state(state)
+
+    def _validate_state(self, state):
         if 'campaign_id' in state.extension and not _valid_campaign_id(state.extension['campaign_id']):
             raise ValueError('campaign identity')
         get_settings(state)
@@ -902,7 +916,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             if ident not in seen and (officer.faction_id is not None or officer.troops != 0):
                 raise ValueError('unassigned officer ownership/troops')
         current_soldiers = (sum(c.reserves for c in state.cities.values())
-            +sum(o.troops for o in state.officers.values())+logistics.in_transit_reserves(state))
+            +sum(o.troops for o in state.officers.values())+logistics.in_transit_reserves(state)
+            +southern_mission.in_transit_troops(state))
         if current_soldiers + state.soldiers['lost'] != state.soldiers['initial'] + state.soldiers['recruited']:
             raise ValueError('soldier conservation')
         for values in (state.settled_battles, state.completed_ai_turns, state.year_events):

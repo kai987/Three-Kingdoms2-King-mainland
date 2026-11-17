@@ -41,7 +41,7 @@ WU_JU_STAFF = NEW_IDS[17:20]
 class RetainerOpeningTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        _, sources = load_sources(timing=False)
+        _, sources = load_sources()
         cls.sources = {row['id'].removeprefix('mainland'): row for row in sources}
         cls.temp = tempfile.TemporaryDirectory(prefix='tk2-retainer-openings-')
         cls.paths, cls.catalogs = {}, {}
@@ -84,7 +84,7 @@ class RetainerOpeningTests(unittest.TestCase):
 
     def test_append_only_ids_preserve_every_released_person_and_all29_plans(self):
         self.assertEqual(len(self.sources), 29)
-        self.assertEqual(len(self.people), 1056)
+        self.assertEqual(len(self.people), 1080)
         self.assertEqual(tuple(self.pool['order'][1030:1052]), NEW_IDS)
         self.assertEqual([self.people[pid]['runtime_id'] for pid in NEW_IDS], list(range(1031, 1053)))
         before = self.pool['order'][:1030]
@@ -149,13 +149,16 @@ class RetainerOpeningTests(unittest.TestCase):
             self.assert_posting(chapter, 'historical-qian-bo-cangwu', 'wu', 'gaoliang')
 
     def test_gongsun_courtiers_have_single_id_and_real_city_membership(self):
-        for pid in GONGSUN_233:
-            self.assert_posting('234-02', pid, 'gongsun', 'liaodong')
-        for pid in GONGSUN_233 + GONGSUN_238:
-            self.assert_posting('238-01', pid, 'gongsun', 'liaodong')
+        wang_zan = 'historical-wang-zan-xuantu'
+        for chapter, members in [('234-02', GONGSUN_233), ('235-01', (wang_zan,)),
+                                 ('238-01', GONGSUN_233 + GONGSUN_238)]:
+            for pid in members:
+                self.assert_posting(chapter, pid, 'gongsun', 'xuantu' if pid == wang_zan else 'liaodong')
+        self.assert_posting('249-01', wang_zan, None, 'xuantu')
+        self.assertEqual(self.sources['184-02']['appearance_windows'][wang_zan][0]['city'], 'xuantu')
         game = self.game('238-01', 'gongsun')
         self.assertEqual(faction_officer_counts(self.catalogs['238-01'])['gongsun'], 15)
-        self.assertEqual(len(game.state.cities['liaodong'].roster.officer_ids), 13)
+        self.assertEqual(len(game.state.cities['liaodong'].roster.officer_ids), 12)
         self.assertEqual(len([p for p in self.people.values() if p['name'] in ('柳甫', '柳浦')]), 1)
         self.assertEqual(self.people['historical-heng-yi-cangwu']['chronology_design']['historical_death_year'], 211)
         for pid in ('historical-liu-fu-liaodong', 'historical-wang-jian-liaodong',
@@ -186,22 +189,32 @@ class RetainerOpeningTests(unittest.TestCase):
                 self.assertEqual(len(memberships), len(set(memberships)))
                 self.assertTrue(all(len(c.roster.officer_ids) <= 99 for c in game.state.cities.values()))
                 expected = dict(materials[catalog.data['id']])
-                # The retainer review was frozen before the three Hetao locations were added.
-                for city in ('shuofang', 'wuyuan', 'yunzhong'):
+                # The retainer review was frozen before these cities were added.
+                for city in ('shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan',
+                             'xuantu', 'liucheng', 'guonei', 'luzon'):
                     stock = catalog.data['initial_city_resources'][city]
                     expected['gold'] += stock['gold']
                     expected['grain'] += stock['grain']
                     expected['soldiers'] += stock['reserves']
-                self.assertEqual(sum(c.gold for c in game.state.cities.values()), expected['gold'])
-                self.assertEqual(sum(c.grain for c in game.state.cities.values()), expected['grain'])
+                expected['soldiers'] += sum(row['troops'] for row in catalog.data['initial_officers']
+                                            if row['city'] in ('liucheng', 'guonei'))
                 stocks, mobilized = mobilize_reserves(catalog)
-                _, opening = catalog.opening_garrisons
+                opening_stocks, opening = catalog.opening_garrisons
+                capital_adjustment = {field: sum(opening_stocks[city][field] - stocks[city][field]
+                                                for city in ('henan', 'jingzhao'))
+                                      for field in ('gold', 'grain', 'reserves')}
+                self.assertEqual(sum(c.gold for c in game.state.cities.values()),
+                                 expected['gold'] + capital_adjustment['gold'])
+                self.assertEqual(sum(c.grain for c in game.state.cities.values()),
+                                 10 * (expected['grain'] + capital_adjustment['grain']))
                 reserves = sum(c.reserves for c in game.state.cities.values())
-                self.assertEqual(reserves, sum(stock['reserves'] for stock in stocks.values()))
-                self.assertEqual(reserves + sum(mobilized.values()), expected['soldiers'])
+                original_reserves = sum(stock['reserves'] for stock in stocks.values())
+                self.assertEqual(reserves, original_reserves + capital_adjustment['reserves'])
+                self.assertEqual(original_reserves + sum(mobilized.values()), expected['soldiers'])
                 soldiers = reserves + sum(o.troops for o in game.state.officers.values()
                                           if o.faction_id is not None)
-                self.assertEqual(soldiers, expected['soldiers'] + sum(opening.values()) - sum(mobilized.values()))
+                self.assertEqual(soldiers, expected['soldiers'] + capital_adjustment['reserves']
+                                 + sum(opening.values()) - sum(mobilized.values()))
                 self.assertEqual(game.state.soldiers, dict(initial=soldiers, recruited=0, lost=0))
                 initial = {catalog.ids[r['person_id']] for key in ('initial_officers', 'initial_free_officers')
                            for r in catalog.data[key]}

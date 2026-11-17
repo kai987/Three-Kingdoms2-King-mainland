@@ -7,6 +7,7 @@ import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'source'))
 from remake.events import validate
+from remake import grain_units
 
 
 def event(kind, details, **extra):
@@ -22,7 +23,8 @@ class EconomySupplyEventTests(unittest.TestCase):
         state=SimpleNamespace(year=190,month=1,day=1,turn=1,
             extension={'events':{'next_id':2,'items':[deepcopy(row)]}})
         snapshot=deepcopy(state.extension)
-        validate(SimpleNamespace(catalog=catalog),state)
+        with grain_units.using(state):
+            validate(SimpleNamespace(catalog=catalog),state)
         self.assertEqual(state.extension,snapshot)
 
     def reject_details(self, row, changes):

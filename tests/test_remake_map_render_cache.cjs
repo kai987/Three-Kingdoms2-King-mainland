@@ -46,8 +46,10 @@ function environment(){
  vm.createContext(context);
  const namesStart=source.indexOf('\n',source.indexOf('const mapPosition='))+1;
  vm.runInContext(source.slice(namesStart,source.indexOf('const mapColor=')),context);
+ vm.runInContext(source.slice(source.indexOf('const factionCastleStyles='),source.indexOf('function smoothMapPath(')),context);
  vm.runInContext(source.slice(source.indexOf('function factionDisplayName('),source.indexOf('function setPreviewFaction(')),context);
  vm.runInContext(source.slice(source.indexOf('function layoutCityLabels('),source.indexOf('\nasync function showCityInformation(')),context);
+ vm.runInContext(source.slice(source.indexOf('function mapMarchArrowMarker('),source.indexOf('function renderMapMarchRoutes(')),context);
  return {context,counts,elements,stage,cities:()=>cityElements,render:()=>context.renderMap(),markup:()=>markup};
 }
 const env=environment(),{context,counts,elements}=env;
@@ -56,6 +58,7 @@ context.view.catalog.map_presentation.city_names.a={displayName:'後甲'};
 env.render();const svg=elements.get('world-map'),nav=context.mapNavigation,city=env.cities()[0],zoom=elements.get('map-zoom-in');
 assert.match(env.markup(),/data-city-label="a" aria-hidden="true">甲<\/text>/);
 assert.match(env.markup(),/aria-label="甲，曹操"/);
+assert.match(env.markup(),/data-city="a" data-owner="wei"[^>]*>[\s\S]*?castle-outline-pixels" x="100" y="100" fill="#000"/);
 assert.match(env.markup(),/<option value="a"[^>]*>甲 · 曹操<\/option>/);
 assert(!env.markup().includes('後甲'));
 city.focus();const camera=JSON.stringify(context.mapCamera);assert.equal(counts.writes,1);assert.equal(counts.paths,1);
@@ -142,6 +145,15 @@ assert(bedMarkup.includes('data-city-road-bed'));assert(bedMarkup.includes('x="2
 assert(bedMarkup.includes('data-inactive-city="b"'));assert(!bedMarkup.includes('class="city-hit unowned'));
 assert(bedMarkup.includes('d="M100 100L200 200"'));assert(bedMarkup.indexOf('data-city-road-bed')<bedMarkup.indexOf('class="city-hit'));
 assert.equal(JSON.stringify(roadView.game),roadState);
+// Modern raster already cleared former roads. Repainting those masks with
+// unstyled hydrology creates cutouts along restyled coasts.
+roadView.catalog.map_presentation.city_road_bed.repair_path='M245 245L260 260';
+roadView.catalog.world={...roadView.catalog.world,background:'/assets/map-road-centers.png'};
+roadBedEnv.render();
+const canonicalMask=roadBedEnv.markup().match(/<mask id="city-road-bed-mask"[^>]*>([\s\S]*?)<\/mask>/)[1];
+assert(!canonicalMask.includes('M245 245L260 260'));
+assert(!canonicalMask.includes('x="100" y="100"'));
+assert(canonicalMask.includes('x="200" y="200" width="4" height="4"'));
 // Shared reaches are independent of which endpoint lists them first. Keep
 // truly different curves, even if they use the same two harbour endpoints.
 const riverEnv=environment(),riverPoints=[[100,100],[150,130],[200,200]];

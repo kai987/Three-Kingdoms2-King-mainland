@@ -68,6 +68,21 @@
    text:["徐庶向劉備推薦諸葛亮。《三國志》記載，劉備駐屯新野時曾三次親往拜訪。劉備可從所在城池的「城政」啟程，每旬拜訪一次。","徐庶が劉備に諸葛亮を推薦した。『三国志』には、新野に駐屯していた劉備が自ら三度訪ねたとある。劉備のいる都市の「都市」メニューから、ひと旬に一度訪ねられる。"],
    sources:[["《三國志·諸葛亮傳》","https://zh.wikisource.org/zh-hant/三國志/卷35"],["《三國志·先主傳》","https://zh.wikisource.org/zh-hant/三國志/卷32"]]
   },
+  historical_wuhuan_expedition:{
+   title:["曹操北征烏桓","曹操の烏桓遠征"],
+   counts:[1,5,2],
+   front:false,
+   text:["建安十二年，曹操北征烏桓。田疇引路，張遼領前鋒，曹純、張郃隨軍。本作從遼西集結，軍糧和道路允許時，史定武將領兵向柳城出發。","建安12年、曹操は烏桓を討つため北へ向かった。田疇が道を案内し、張遼が先鋒を率い、曹純と張郃が従軍した。ゲームでは遼西に集結し、兵糧と経路が確保できれば、史実の武将が柳城へ出陣する。"],
+   aftermath:["建安十二年八月，曹軍在白狼山擊敗蹋頓。曹操親征，田疇引路，張遼任前鋒，曹純與張郃從征。九月曹軍自柳城還師，本劇本從戰後開始，柳城已歸曹操。","建安12年8月、曹操軍は白狼山で蹋頓を破った。曹操の親征に田疇が道を案内し、張遼が先鋒を務め、曹純と張郃が従軍した。9月に曹操軍は柳城から帰還した。このシナリオは戦後から始まり、柳城は曹操の支配下にある。"],
+   sources:[["《三國志·武帝紀》","https://zh.wikisource.org/zh-hant/三國志/卷01"],["《三國志·田疇傳》","https://zh.wikisource.org/zh-hant/三國志/卷11#田疇"],["《三國志·張遼、張郃傳》","https://zh.wikisource.org/zh-hant/三國志/卷17"],["《三國志·曹純傳》","https://zh.wikisource.org/zh-hant/三國志/卷09#曹純"]]
+  },
+  historical_goguryeo_expedition:{
+   title:["曹魏征高句麗","曹魏の高句麗遠征"],
+   counts:[2,3,2],
+   front:false,
+   text:["正始年間，毌丘儉從玄菟出兵，攻陷丸都。東川王退走，玄菟太守王頎在後續戰事中追擊。魏軍後來撤回，《三國史記》記載東川王於247年另築平壤城。遊戲以國內城代表集安的王都城域，毌丘儉與在役的王頎可集結出征。魏軍取勝後，國內城依戰果歸魏。","正始年間、毌丘倹は玄菟から出兵し、丸都を陥落させた。東川王は逃れ、玄菟太守の王頎が後の戦いで追撃した。魏軍はその後撤退し、『三国史記』によれば東川王は247年に新たに平壌城を築いた。ゲームでは集安の王都圏を国内城で表し、毌丘倹と在籍中の王頎が集結して出陣する。戦闘で魏軍が勝てば、国内城は魏の支配下に入る。"],
+   sources:[["《三國志·毌丘儉傳》","https://zh.wikisource.org/zh-hant/三國志/卷28#毌丘儉"],["《三國史記》東川王","https://zh.wikisource.org/zh-hant/三國史記/卷17#東川王"]]
+  },
   historical_yizhou_campaign:{
    title:["涪城決裂・入蜀爭奪戰","涪城で決裂・入蜀争奪戦"],
    counts:[2,3,3],
@@ -116,9 +131,15 @@
   historical_three_visits_second:['再訪隆中','隆中への再訪'],
   historical_longzhong:['隆中對','隆中対']
  });
+ const SOUTHERN_MISSION=Object.freeze({
+  historical_wu_southern_mission:['東吳宣化南行','東呉の南海使節'],
+  luzon_landing:['朱應、康泰抵達呂宋','朱応・康泰、ルソンに到着'],
+  luzon_settlement_completed:['呂宋築城完成','ルソンの築城完了']
+ });
  const KINDS=Object.freeze({
   ...Object.fromEntries(Object.entries(CHAPTER_TEXT).map(([kind,chapter])=>[kind,chapter.title])),
   ...THREE_VISITS,
+  ...SOUTHERN_MISSION,
   campaign_start:['戰役揭幕','戦役の開幕'],officer_appeared:['武將登場','武将の登場'],
   recruit_success:['登用成功','登用に成功'],recruit_failure:['登用未果','登用を断られました'],
   defection:['武將轉屬','武将の移籍'],officer_death:['武將逝世','武将の死去'],
@@ -161,6 +182,9 @@
  // Each registered kind owns one scene. The established IDs preserve artwork
  // already drawn for a single event, and disasters choose their own variant.
  const ESTABLISHED_SCENES=Object.freeze({
+  historical_wu_southern_mission:'wu-southern-mission',
+  luzon_landing:'luzon-survey',
+  luzon_settlement_completed:'luzon-construction',
   historical_three_visits:'longzhong-road',
   historical_three_visits_first:'longzhong-first',
   historical_three_visits_second:'longzhong-second',
@@ -178,6 +202,8 @@
   guandu:['官渡平原的兩軍旌旗','官渡の平原に立つ両軍の旗'],
   'red-cliffs':['赤壁江面上的戰船','赤壁の川面に並ぶ軍船'],
   'historical-dong-zhuo-relocation':['洛陽宮城火光下西行的車隊','燃える洛陽の宮城を後に、西へ向かう車列'],
+  'historical-wuhuan-expedition':['白狼山間擎「曺」字軍旗的騎隊','白狼山で「曺」の軍旗を掲げる騎兵隊'],
+  'historical-goguryeo-expedition':['丸都山城下舉著赭黃紅邊「魏」字軍旗的魏軍','丸都山城のふもとで赤縁の黄土色の「魏」旗を掲げる魏軍'],
   wedding:['婚禮堂上的紅幔與燈火','婚礼の広間を飾る赤い幕と灯り'],
   memorial:['供奉牌位的廳堂','位牌を安置した広間'],
   flood:['遭洪水淹沒的城郊','洪水に見舞われた町外れ'],
@@ -209,7 +235,7 @@
   historical_nanzhong:[2,2,3],historical_liaodong:[2,3,2],
   ...Object.fromEntries(Object.entries(CHAPTER_TEXT).map(([kind,chapter])=>[kind,chapter.counts]))
  });
- const MILESTONES=new Set([...Object.keys(HISTORICAL_CAMPAIGNS),...Object.keys(THREE_VISITS)]);
+ const MILESTONES=new Set([...Object.keys(HISTORICAL_CAMPAIGNS),...Object.keys(THREE_VISITS),...Object.keys(SOUTHERN_MISSION)]);
  const HISTORICAL=new Set([...MILESTONES,...FOUNDINGS,...COUPS]);
  const BATTLE_HISTORY=new Set(['battle_started','battle_result','battle_supply_exhausted','city_captured',
   'duel_started','duel_result','tactic','ai_campaign','march_weather','march_arrived','march_returned','route_discovered',...SUPPLY]);
@@ -217,12 +243,24 @@
  const WORLD=new Set(['campaign_start','officer_appeared','officer_death','succession','faction_ended','faction_founded','faction_founding_skipped','faction_coup','faction_coup_skipped',...Object.keys(HISTORICAL_CAMPAIGNS),'city_founded','city_upgraded','city_renamed','city_captured','new_year','campaign_victory','campaign_defeat']);
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const clone=value=>JSON.parse(JSON.stringify(value));
- function validEvent(row,cityCount=Number.MAX_SAFE_INTEGER){
+ function validEvent(row,cityCount=Number.MAX_SAFE_INTEGER,denominator=1000){
   if(row?.kind==='diplomacy_result'&&!validDiplomacyEvent(row))return false;
+  if(Object.hasOwn(SOUTHERN_MISSION,row?.kind)&&!validSouthernMission(row))return false;
   return !!row&&Number.isSafeInteger(row.id)&&row.id>0&&Object.hasOwn(KINDS,row.kind)&&['player','world'].includes(row.audience)&&
    Number.isSafeInteger(row.year)&&row.year>0&&Number.isInteger(row.month)&&row.month>=1&&row.month<=12&&[1,11,21].includes(row.day)&&Number.isSafeInteger(row.turn)&&row.turn>0&&
    ['person_ids','city_ids','factions'].every(key=>Array.isArray(row[key])&&row[key].every(id=>typeof id==='string'&&id.length<=128))&&
-   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row,cityCount))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!CITY_OPERATIONS.has(row.kind)||validCityDevelopmentEvent(row))&&(row.kind!=='battle_supply_exhausted'||validBattleSupplyEvent(row))&&(row.kind!=='battle_result'||!Object.hasOwn(row.details,'coalition')||validCoalitionCapture(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row,cityCount))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(!Object.hasOwn(HISTORICAL_CAMPAIGNS,row.kind)||validHistoricalCampaign(row))&&(!Object.hasOwn(THREE_VISITS,row.kind)||validThreeVisit(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row))&&(row.kind!=='tactic'||validTacticEvent(row));
+   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row,cityCount))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row,denominator))&&(!CITY_OPERATIONS.has(row.kind)||validCityDevelopmentEvent(row))&&(row.kind!=='battle_supply_exhausted'||validBattleSupplyEvent(row,denominator))&&(row.kind!=='battle_result'||!Object.hasOwn(row.details,'coalition')||validCoalitionCapture(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row,cityCount))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(!Object.hasOwn(HISTORICAL_CAMPAIGNS,row.kind)||validHistoricalCampaign(row,denominator))&&(!Object.hasOwn(THREE_VISITS,row.kind)||validThreeVisit(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row))&&(row.kind!=='tactic'||validTacticEvent(row));
+ }
+ function validSouthernMission(row){
+  const {details:d,kind,year}=row;
+  if(row.audience!=='player'||row.factions?.length!==1||row.factions[0]!=='wu'||row.person_ids?.length!==0||
+     row.city_ids?.length!==2||!['kuaiji','yizhou'].includes(row.city_ids[0])||row.city_ids[1]!=='luzon'||!d)return false;
+  const keys=Object.keys(d).sort().join(',');
+  if(kind==='historical_wu_southern_mission')return keys==='days,storm_days'&&year>=244&&year<=251&&
+   [0,10,20].includes(d.storm_days)&&Number.isSafeInteger(d.days)&&d.days>d.storm_days&&d.days<=10020;
+  if(kind==='luzon_landing')return keys==='can_build'&&typeof d.can_build==='boolean';
+  return keys==='troops,work_days'&&Number.isSafeInteger(d.troops)&&d.troops>=10000&&d.troops<=100000000&&
+   d.work_days===Math.ceil(3600000/d.troops);
  }
  function validThreeVisit(row){
   const {audience,factions,person_ids:people,city_ids:cities,details}=row;
@@ -239,32 +277,41 @@
    Number.isInteger(d.duration)&&(d.action==='alliance'?d.duration>=1&&d.duration<=72:d.duration===0)&&
    row.city_ids?.length===(d.action==='request_attack'?2:1)&&row.person_ids?.length===(d.action==='return_captives'?2:1);
  }
- function validHistoricalCampaign(row){
+ function validHistoricalCampaign(row,denominator){
   const validIds=(ids,min,max)=>ids.length>=min&&ids.length<=max&&ids.every(id=>id.length>0&&id.trim()===id)&&new Set(ids).size===ids.length;
   const [factions,people,cities]=HISTORICAL_CAMPAIGNS[row.kind];
-  const validDetails=row.kind==='historical_dong_zhuo_relocation'?validDongZhuoRelocation(row):Object.keys(row.details).length===0;
+  const validDetails=row.kind==='historical_dong_zhuo_relocation'?validDongZhuoRelocation(row,denominator):Object.keys(row.details).length===0;
   return row.audience==='world'&&validDetails&&
    validIds(row.person_ids,people??1,people??4)&&validIds(row.city_ids,cities??1,cities??8)&&validIds(row.factions,factions,factions);
  }
- function validDongZhuoRelocation(row){
+ function validDongZhuoRelocation(row,denominator){
   if(row.year!==190||row.month!==2||row.factions[0]!=='dong_zhuo'||row.person_ids[0]!=='san14-candidate-0736'||
      row.city_ids[0]!=='henan'||row.city_ids[1]!=='jingzhao')return false;
   const d=row.details,keys=Object.keys(d);
   if(!keys.length)return true;
   const inRange=(value,min,max)=>Number.isSafeInteger(value)&&value>=min&&value<=max;
-  const hasLoot=Object.hasOwn(d,'loot'),expectedKeys=`damage_after,damage_before,${hasLoot?'loot,':''}lost,moved,town_after,town_before`;
+  const hasLoot=Object.hasOwn(d,'loot'),legacyTroops=Object.hasOwn(d,'troops_to_reserves');
+  const expectedKeys=`damage_after,damage_before,${hasLoot?'loot,':''}lost,moved,town_after,town_before${legacyTroops?',troops_to_reserves':''}`;
   if(keys.sort().join(',')!==expectedKeys||
      !inRange(d.town_before,1,3)||d.town_after!==1||!inRange(d.damage_before,0,50)||d.damage_after!==50)return false;
   const {moved,lost,loot}=d,limits={gold:100000000,grain:100000000,population:CITY_POPULATION_LIMIT};
+  const reserveTransfer=Object.hasOwn(moved??{},'reserves')&&!legacyTroops;
+  if((reserveTransfer||legacyTroops)&&!hasLoot)return false;
+  if(reserveTransfer)limits.reserves=100000000;
+  if(legacyTroops){
+   if(!inRange(d.troops_to_reserves,0,moved?.troops))return false;
+   limits.troops=100000000;
+  }
   if(hasLoot){
    if(!loot||typeof loot!=='object'||Array.isArray(loot))return false;
    const lootFields=Object.hasOwn(loot,'grain')?['gold','grain','treasure']:['gold','treasure'];
    if(Object.keys(loot).sort().join(',')!==lootFields.join(',')||
-      lootFields.some(field=>!inRange(loot[field],0,RELOCATION_LOOT_LIMITS[field])))return false;
+      lootFields.some(field=>!inRange(loot[field],0,RELOCATION_LOOT_LIMITS[field]*(field==='grain'?1000/denominator:1))))return false;
   }
   return [moved,lost].every(amounts=>amounts&&typeof amounts==='object'&&!Array.isArray(amounts)&&
-   Object.keys(amounts).sort().join(',')==='gold,grain,population'&&amounts.population%100===0&&
-   Object.entries(limits).every(([field,cap])=>inRange(amounts[field],0,cap)))&&
+   Object.keys(amounts).sort().join(',')===Object.keys(limits).join(',')&&
+   Object.entries(limits).every(([field,cap])=>inRange(amounts[field],0,cap)&&
+    ((!reserveTransfer&&!legacyTroops&&field!=='population')||amounts[field]%100===0)))&&
    Object.entries(limits).every(([field,cap])=>moved[field]+lost[field]<=cap)&&
    (!hasLoot||(moved.gold+loot.gold<=limits.gold&&moved.grain+(loot.grain??0)<=limits.grain));
  }
@@ -309,14 +356,14 @@
   return row.kind==='faction_founded'?d.reason==='formed'&&d.reserves<=1000*row.person_ids.length:
    ['city_occupied','leader_unavailable'].includes(d.reason)&&d.reserves===0;
  }
- function validFacilityEvent(row){
+ function validFacilityEvent(row,denominator){
   const d=row.details,k=row.kind,fields={town_developed:['actor','from_town','to_town','gold'],officer_treated:['actor','target','gold','before','after'],officer_studied:['actor','target','gold','before','after','bonus'],grain_traded:['actor','direction','batches','grain','gold','rate'],equipment_bought:['actor','target','slot','item','previous','gold'],prevention_improved:['actor','gold','gain','repair','preparedness_before','preparedness_after','damage_before','damage_after'],city_disaster:['disaster','gold','grain','reserves','rate','preparedness_before','preparedness_after','damage_before','damage_after']}[k];
   if(k==='grain_traded'&&['battle_id','side','destination'].some(key=>Object.hasOwn(d,key)))fields.push('battle_id','side','destination');
   const num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max,people=k==='city_disaster'?[]:[...new Set([d.actor,...(Object.hasOwn(d,'target')?[d.target]:[])])];
   if(row.audience!=='player'||row.city_ids.length!==1||!row.city_ids[0]||row.factions.length!==1||!row.factions[0]||people.some(id=>typeof id!=='string'||!id)||Object.keys(d).sort().join(',')!==fields.sort().join(',')||JSON.stringify(row.person_ids)!==JSON.stringify(people)||!num('gold',0,100000000))return false;
   if(k==='town_developed')return num('from_town',1,2)&&d.to_town===d.from_town+1&&d.gold>0;
   if(k==='officer_treated'||k==='officer_studied')return num('before',k==='officer_treated'?0:1,k==='officer_treated'?99:79)&&num('after',1,k==='officer_treated'?99:89)&&d.after>d.before&&d.gold>0&&(k==='officer_treated'||num('bonus',1,88)&&d.after-d.before>=5&&d.after-d.before<=12);
-  if(k==='grain_traded')return ['buy','sell'].includes(d.direction)&&num('batches',1,1000)&&num('rate',1,100)&&d.grain===d.batches*100&&d.gold===d.batches*d.rate&&(!Object.hasOwn(d,'battle_id')||d.direction==='buy'&&d.destination==='battle'&&['attackers','defenders'].includes(d.side)&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id));
+  if(k==='grain_traded')return ['buy','sell'].includes(d.direction)&&num('batches',1,1000)&&num('rate',1,100)&&d.grain===d.batches*100000/denominator&&d.gold===d.batches*d.rate&&(!Object.hasOwn(d,'battle_id')||d.direction==='buy'&&d.destination==='battle'&&['attackers','defenders'].includes(d.side)&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id));
   if(k==='equipment_bought')return ['weapon','armor'].includes(d.slot)&&num('item',0,d.slot==='weapon'?28:7)&&num('previous',0,d.slot==='weapon'?28:7)&&d.item!==d.previous&&d.gold>0;
   if(!['preparedness_before','preparedness_after'].every(key=>num(key,0,99))||!['damage_before','damage_after'].every(key=>num(key,0,50)))return false;
   if(k==='prevention_improved')return num('gain',0,99)&&num('repair',0,50)&&num('gold',1,100)&&d.preparedness_after-d.preparedness_before===d.gain&&d.damage_before-d.damage_after===d.repair;
@@ -347,9 +394,9 @@
     Object.keys(share).sort().join(',')==='gold,grain,reserves'&&Object.values(share).every(num))&&
    Array.isArray(d.returns)&&d.returns.length<=10&&d.returns.every(city)&&new Set(d.returns).size===d.returns.length;
  }
- function validBattleSupplyEvent(row){
+ function validBattleSupplyEvent(row,denominator){
   const d=row.details,num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max;
-  return row.audience==='player'&&row.city_ids.length>=1&&row.city_ids.length<=2&&row.city_ids.every(id=>id)&&new Set(row.city_ids).size===row.city_ids.length&&row.factions.length>=1&&row.factions.length<=2&&row.factions.every(id=>id)&&new Set(row.factions).size===row.factions.length&&row.person_ids.length<=10&&row.person_ids.every(id=>id)&&new Set(row.person_ids).size===row.person_ids.length&&Object.keys(d).sort().join(',')==='battle_id,daily_grain,days,grain,missing_units,outcome,side'&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id)&&['attackers','defenders'].includes(d.side)&&num('days',1,30)&&num('grain',0,100000000)&&num('daily_grain',1,202)&&num('missing_units',1,d.daily_grain*1000)&&d.outcome===(d.side==='attackers'?'retreat':'victory');
+  return row.audience==='player'&&row.city_ids.length>=1&&row.city_ids.length<=2&&row.city_ids.every(id=>id)&&new Set(row.city_ids).size===row.city_ids.length&&row.factions.length>=1&&row.factions.length<=2&&row.factions.every(id=>id)&&new Set(row.factions).size===row.factions.length&&row.person_ids.length<=10&&row.person_ids.every(id=>id)&&new Set(row.person_ids).size===row.person_ids.length&&Object.keys(d).sort().join(',')==='battle_id,daily_grain,days,grain,missing_units,outcome,side'&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id)&&['attackers','defenders'].includes(d.side)&&num('days',1,30)&&num('grain',0,100000000)&&num('daily_grain',1,202000/denominator)&&num('missing_units',1,d.daily_grain*denominator)&&d.outcome===(d.side==='attackers'?'retreat':'victory');
  }
  function validEquipmentEvent(row){
   const d=row.details,num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max;
@@ -413,14 +460,14 @@
  }
  function campaignKey(view){return view?.game?JSON.stringify([view.catalog?.scenario_id||view.catalog?.title||'',view.game.seed,view.game.player]):null;}
  function eventRows(view){
-  const rows=view?.game?.extension?.events?.items,cityCount=view?.catalog?.cities?.length;
-  return Array.isArray(rows)?rows.filter(row=>validEvent(row,cityCount)).sort((a,b)=>a.id-b.id):[];
+  const rows=view?.game?.extension?.events?.items,cityCount=view?.catalog?.cities?.length,denominator=view?.catalog?.grain_people_per_day;
+  return Array.isArray(rows)?rows.filter(row=>validEvent(row,cityCount,denominator)).sort((a,b)=>a.id-b.id):[];
  }
  function historyRows(view){
   const rows=new Map(eventRows(view).map(row=>[row.id,row]));
   const milestones=view?.game?.extension?.events?.milestones;
   if(Array.isArray(milestones))for(const row of milestones){
-   if(MILESTONES.has(row?.kind)&&!rows.has(row.id)&&validEvent(row,view?.catalog?.cities?.length))rows.set(row.id,row);
+   if(MILESTONES.has(row?.kind)&&!rows.has(row.id)&&validEvent(row,view?.catalog?.cities?.length,view?.catalog?.grain_people_per_day))rows.set(row.id,row);
   }
   return [...rows.values()].sort((a,b)=>b.id-a.id);
  }
@@ -461,7 +508,7 @@
    const observing=view?.game?.player==='observer';
    const chapter=CHAPTER_TEXT[row.kind];
    if(chapter){
-    const history=text(...chapter.text);
+    const history=text(...(chapter.aftermath&&row.month===9?chapter.aftermath:chapter.text));
     return chapter.front?history+(observing?text(
      ' 路線可通行時，進攻方的 AI 會優先評估這條戰線，勝負由實際交戰決定。',
      ' 通行できる経路があれば、進攻側のAIはこの戦線を優先します。勝敗は実際の戦闘で決まります。'):text(
@@ -471,6 +518,9 @@
    const n=names(row),p=n.people.join(text('、','・'))||text('武將','武将'),c=n.cities.join(' → ')||text('戰役地圖','戦役地図'),f=n.factions.at(-1)||text('本方','自軍'),d=row.details;
    switch(row.kind){
     case 'historical_three_visits_first':return text('劉備第一次到隆中，諸葛亮外出未歸。下旬可再訪。','劉備が初めて隆中を訪ねたが、諸葛亮は外出していた。次の旬にまた訪ねられる。');
+    case 'historical_wu_southern_mission':return text(`孫權派宣化從事朱應、中郎康泰從${n.cities[0]}出海。船隊預計${d.days}日抵達呂宋外海，已計入${d.storm_days}日風暴延誤。`,`孫権は宣化従事の朱応と中郎の康泰を${n.cities[0]}から派遣しました。ルソン沖まで${d.days}日（暴風による遅延${d.storm_days}日を含む）の見込みです。`);
+    case 'luzon_landing':return d.can_build?text('使節已登陸呂宋。可派至少一萬名士兵築城，由鄰近吳城按旬調撥金與兵糧。','使節がルソンに上陸しました。兵1万人以上を送り、近隣の呉領から旬ごとに金と兵糧を送って築城できます。'):text('使節路經呂宋，島上已有城池，船隊繼續南行。','使節はルソンに立ち寄りました。島にはすでに都市があり、船団は南へ進みます。');
+    case 'luzon_settlement_completed':return text(`呂宋經${d.work_days}日施工完成，${d.troops}人入城，編入預備兵。`,`ルソンは延べ${d.work_days}日の工事で完成しました。兵${d.troops}人が入城し、予備兵に編入されました。`);
     case 'historical_three_visits_second':return text('劉備第二次到隆中，仍未見到諸葛亮，便留下書信。下旬可再訪。','劉備は再び隆中を訪ねたが、諸葛亮に会えず、書状を残した。次の旬にまた訪ねられる。');
     case 'historical_longzhong':return text(`劉備第三次到隆中，終於見到諸葛亮。兩人議定方略，諸葛亮應邀出仕，已列入${n.cities[0]}的武將名冊。`,`三度目の訪問で、劉備はついに諸葛亮と会った。方略を語り合った後、諸葛亮は招きに応じて仕官し、${n.cities[0]}の武将名簿に加わった。`);
     case 'diplomacy_result':{
@@ -553,7 +603,9 @@
     case 'historical_liaodong':return text(
      '曹叡命司馬懿討伐據守襄平的公孫淵。魏軍的電腦將優先考慮遼西至襄平的戰線，玩家自行調兵。攻城以部隊實際抵達為前提，勝負依交戰結果決定。',
      '曹叡が司馬懿に、襄平に拠る公孫淵の討伐を命じます。魏軍のAIは遼西から襄平に至る戦線を優先し、プレイヤーは自分で兵を動かします。部隊が到着して初めて攻城となり、勝敗は交戦の結果で決まります。');
-    case 'city_founded':{const founded=n.cities[0]||c,parent=n.cities[1];return text(`${founded}依年代建置，承接${parent||'原城'}目前歸屬及部分資源。`,`${founded}が設定年代に開設され、${parent||'元の都市'}の現在の所属と一部の資源を引き継ぎました。`);}
+    case 'city_founded':{const founded=n.cities[0]||c,parent=n.cities[1];return d.settlement
+     ?text(`部隊自${parent}渡海，在${founded}設城。抵達的武將、兵力和剩餘兵糧已入城。`,`${parent}から渡海した部隊が${founded}に築城しました。武将と兵が入城し、残った兵糧が備蓄されました。`)
+     :text(`${founded}依年代建置，承接${parent||'原城'}目前歸屬及部分資源。`,`${founded}が設定年代に開設され、${parent||'元の都市'}の現在の所属と一部の資源を引き継ぎました。`);}
     case 'city_renamed':return text(`${row.year}年${row.month}月起，本作節點的顯示城名由${label(d.from_name)}切換為${label(d.to_name)}。目前歸屬、武將、兵數與庫存保持實際戰局狀態。`,`${row.year}年${row.month}月から、本作の拠点表示名が${label(d.from_name)}から${label(d.to_name)}へ切り替わりました。現在の支配・武将・兵力・在庫は実際の戦況を引き継ぎます。`);
     case 'city_upgraded':{
      const tiers={normal:text('通常都市','通常都市'),large:text('大都市','大都市'),giant:text('巨大都市','巨大都市')},income=d.income||{};
@@ -562,7 +614,7 @@
     case 'city_captured':{const owner=n.factions[0]||f;return text(`${c}的歸屬改為${owner}。駐軍及資源已結算。`,`${c}は${owner}の支配下となりました。守備隊と資源は精算済みです。`);}
     case 'battle_started':return observing?text(`${c}發生交戰，雙方由 AI 指揮。`,`${c}で戦闘が始まりました。両軍ともAIが指揮します。`):text(`${c}發生交戰。請依兵力、地形與敵軍狀態選擇行動。`,`${c}で戦闘が始まります。兵力・地形・敵の状態を見て行動を選びましょう。`);
     case 'battle_supply_exhausted':{
-     const side=d.side==='attackers'?text('攻方','攻撃側'):text('守方','防御側'),shortage=(d.missing_units/1000).toFixed(3).replace(/\.?0+$/,'');
+     const side=d.side==='attackers'?text('攻方','攻撃側'):text('守方','防御側'),shortage=(d.missing_units/(view?.catalog?.grain_people_per_day??1000)).toFixed(3).replace(/\.?0+$/,'');
      const outcome=d.side==='attackers'?text('攻方因缺糧撤退','攻撃側が兵糧不足で撤退'):text('守方因缺糧失守，攻方獲勝','防御側が兵糧不足で陥落し、攻撃側が勝利');
      return text(`${c}戰鬥已結算${d.days}日，${side}每日需兵糧${d.daily_grain}，現餘${d.grain}，本日缺少${shortage}。${outcome}。`,`${c}の戦闘で${d.days}日が経過しました。${side}は1日${d.daily_grain}の兵糧を必要としますが、残量は${d.grain}、本日の不足は${shortage}です。${outcome}しました。`);
     }
@@ -646,7 +698,10 @@
   }
   function relocationEffects(row){
    if(row.kind!=='historical_dong_zhuo_relocation'||!Object.hasOwn(row.details,'moved'))return '';
-   const {moved,lost,loot,town_before,town_after,damage_before,damage_after}=row.details;
+   const {moved,lost,loot,town_before,town_after,damage_before,damage_after,troops_to_reserves}=row.details;
+   const troops=amount=>Object.hasOwn(amount,'reserves')?`、${text('預備兵','予備兵')} ${amount.reserves} 人`:
+    Object.hasOwn(amount,'troops')?`、兵士 ${amount.troops} 人`:'';
+   const reserves=troops_to_reserves?text(`（其中 ${troops_to_reserves} 人編入預備兵）`,`（うち ${troops_to_reserves} 人は予備兵に編入）`):'';
    let lootRow='';
    if(loot){
     const hasGrain=Object.hasOwn(loot,'grain'),treasureName=text('寶物','宝物'),treasureUnit=text('件','点');
@@ -663,14 +718,18 @@
     lootRow=`<div data-relocation-loot><strong>${label}</strong> ${amountList(loot)}${capacityNote}</div>`;
    }
    return `<section class="event-facts" data-event-relocation-effects aria-label="${text('遷都結算','遷都の結果')}">
-     <div data-relocation-moved><strong>${text('轉入長安','長安へ移転')}</strong> 金 ${moved.gold}、兵糧 ${moved.grain}、人口 ${moved.population} 人</div>
-     <div data-relocation-lost><strong>${text('洛陽損失','洛陽の損失')}</strong> 金 ${lost.gold}、兵糧 ${lost.grain}、${text('離散','離散者')} ${lost.population} 人</div>
+     <div data-relocation-moved><strong>${text('轉入長安','長安へ移転')}</strong> 金 ${moved.gold}、兵糧 ${moved.grain}、人口 ${moved.population} 人${troops(moved)}${reserves}</div>
+     <div data-relocation-lost><strong>${text('洛陽損失','洛陽の損失')}</strong> 金 ${lost.gold}、兵糧 ${lost.grain}、${text('離散','離散者')} ${lost.population} 人${troops(lost)}</div>
      ${lootRow}
      <div data-relocation-facilities><strong>${text('洛陽設施','洛陽の施設')}</strong> ${text(`城町等級 ${town_before} → ${town_after}、災損 ${damage_before} → ${damage_after}`,`町等級 ${town_before} → ${town_after}、被害 ${damage_before} → ${damage_after}`)}</div>
      <small>${text('以上為遊戲內結算數值。','以上はゲーム内の処理結果です。')}</small>
     </section>`;
   }
   function historicalIntroduction(row){
+   if(row.kind==='historical_wu_southern_mission'){
+    const body=text('《梁書》記孫權遣朱應、康泰通海南諸國，並記兩人出使扶南。本作採244至251年的觸發窗口，途經呂宋及築城是遊戲情節。','『梁書』は孫権が朱応と康泰を南海諸国に遣わし、二人が扶南へ赴いたと記しています。244～251年の発生期間、ルソンへの寄港と築城はゲーム上の設定です。');
+    return `<aside class="event-history"><h3>${text('史實背景','史実の背景')}</h3><p>${escape(body)}</p><p><a href="https://zh.wikisource.org/zh-hant/梁書/卷54#海南諸國" target="_blank" rel="noopener noreferrer">${text('《梁書》卷54','『梁書』巻54')}</a></p></aside>`;
+   }
    const chapter=row.kind==='historical_longzhong'?CHAPTER_TEXT.historical_three_visits:CHAPTER_TEXT[row.kind];
    if(chapter){
     const links=chapter.sources.map(([label,url])=>`<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${escape(label)}</a>`).join(' · ');
@@ -747,9 +806,11 @@
    const dialogue=options.dialogue||root.GameDialogue,progress=view?.catalog?.three_visits;
    const visit=options.onVisit&&!historyMode&&row.kind==='historical_three_visits'&&progress?.can_visit&&progress.next_visit===1
     ? `<button class="primary" data-event-visit autofocus>${text('前往隆中拜訪','隆中へ訪ねる')}</button>` : '';
+   const settlement=options.onSettlement&&!historyMode&&row.kind==='luzon_landing'&&view?.catalog?.southern_mission?.stage==='offer'
+    ? `<button class="primary" data-event-settlement>${text('查看呂宋築城計畫','ルソンの築城計画を確認')}</button>`:'';
    const kicker=historyMode?text('事件回顧','出来事の記録'):`${text('戰役事件','戦役の出来事')} · ${shown}/${total}`;
    const actions=historyMode?`<button type="button" class="primary" data-event-history-back>${text('返回事件列表','一覧へ戻る')}</button>`:
-    `${visit}${queue.length?`<button data-event-skip>${text('略過本批','この一括表示を終了')}</button>`:''}<button data-event-next${visit?'':' class="primary" autofocus'}>${queue.length?text('下一則','次へ'):text('返回戰役','戦役に戻る')}</button>`;
+    `${visit}${settlement}${queue.length?`<button data-event-skip>${text('略過本批','この一括表示を終了')}</button>`:''}<button data-event-next${visit||settlement?'':' class="primary" autofocus'}>${queue.length?text('下一則','次へ'):text('返回戰役','戦役に戻る')}</button>`;
    modal.innerHTML=`<div data-event-root data-event-kind="${row.kind}" data-l10n-native="${locale()}"><div class="event-heading"><div><p class="event-kicker">${escape(kicker)}</p><h2 id="event-title">${escape(eventTitle(row))}${escape(count)}</h2></div>${languagePicker()}</div><p class="event-date">${eventDate(row)}${cities?`<span class="event-location"> · ${escape(cities)}</span>`:''}</p>${illustration(rows)}<div id="event-description" class="event-description">${rows.map(e=>`${relocationEffects(e)}${dialogue?.html&&dialogue?.event?dialogue.html(dialogue.event(e,view,locale(),i18n),{language:locale(),portraits}):''}<p class="event-facts">${escape(description(e))}</p>${historicalIntroduction(e)}`).join('')}</div><div class="dialog-actions event-actions">${actions}</div></div>`;
    if(historyMode){
     const back=modal.querySelector('[data-event-history-back]');
@@ -757,6 +818,10 @@
     show('[data-event-history-back]');return;
    }
    modal.querySelector('[data-event-next]').onclick=advance;
+   if(settlement)modal.querySelector('[data-event-settlement]').onclick=()=>{
+    if(isBusy())return;
+    active=null;closeModal();options.onSettlement();
+   };
    if(visit){
     const button=modal.querySelector('[data-event-visit]'),group=active;
     button.onclick=async()=>{
@@ -767,7 +832,7 @@
     };
    }
    const skip=modal.querySelector('[data-event-skip]');if(skip)skip.onclick=clear;
-   show(visit?'[data-event-visit]':'[data-event-next]');
+   show(visit?'[data-event-visit]':settlement?'[data-event-settlement]':'[data-event-next]');
   }
   function renderHistory(focus='[data-event-history-filter]'){
    const player=view?.game?.player,hasFaction=!!player&&player!=='observer';

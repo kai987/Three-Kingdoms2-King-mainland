@@ -27,9 +27,12 @@
       "title": "faction resources show current allies and large factions receive 40 command books",
       "groups": [
         "scenarios",
-        "economy"
+        "economy",
+        "map"
       ],
       "scenario_ids": [
+        "mainland200-01",
+        "mainland202-06",
         "mainland208-10"
       ],
       "scenario_scope": "fixed"

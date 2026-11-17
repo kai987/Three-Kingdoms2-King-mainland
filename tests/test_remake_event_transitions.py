@@ -13,9 +13,10 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
+from remake import grain_units
 from remake.campaign import Campaign, Catalog, GameError
 from remake import civil_staff, domestic, facilities, logistics, march_supply, treasures, city_development
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import record_garrison_charges, controlled_catalog
 from campaign_dated_fixtures import dated_catalog
 
 
@@ -301,6 +302,7 @@ class CampaignEventTransitionTests(unittest.TestCase):
             data['city_foundings'] = {'baxi': dict(year=218, month=1, parent='xiangyang', resource_divisor=4)}
             data['city_income']['baxi'] = dict(gold=0, grain=0, reserves=0)
         game = start(catalog_with(change))
+        paid = self.enterContext(record_garrison_charges())
         original = {field: getattr(game.state.cities['xiangyang'], field) for field in ('gold', 'grain', 'reserves')}
         for _ in range(3):
             tick(game)
@@ -311,8 +313,8 @@ class CampaignEventTransitionTests(unittest.TestCase):
         self.assertEqual(found[0]['factions'], ['shu'])
         self.assertEqual(game.state.cities['baxi'].owner, 'shu')
         for field, amount in original.items():
-            self.assertEqual(getattr(game.state.cities['baxi'], field), amount // 4)
-            self.assertEqual(getattr(game.state.cities['xiangyang'], field), amount - amount // 4)
+            self.assertEqual(getattr(game.state.cities['baxi'], field), amount // 4 - (paid['baxi'] if field == 'grain' else 0))
+            self.assertEqual(getattr(game.state.cities['xiangyang'], field), amount - amount // 4 - (paid['xiangyang'] if field == 'grain' else 0))
         tick(game)
         self.assertEqual(events(game, 'city_founded'), found)
         game.validate(game.state)

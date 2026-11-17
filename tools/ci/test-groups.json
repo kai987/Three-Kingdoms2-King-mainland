@@ -16,6 +16,24 @@
         "mainland194-06"
       ]
     },
+    "tests/test_remake_ai_deployment.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_ai_deployment_reference.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ]
+    },
     "tests/test_remake_allied_settlement.py": {
       "tier": "related",
       "groups": [
@@ -46,10 +64,26 @@
         "economy"
       ]
     },
+    "tests/test_remake_auto_deployment_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ]
+    },
     "tests/test_remake_battle_assets.py": {
       "tier": "global",
       "groups": [
         "battle"
+      ]
+    },
+    "tests/test_remake_battle_deployment_reference.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map"
       ]
     },
     "tests/test_remake_battle_enhanced_static.py": {
@@ -74,6 +108,15 @@
         "map"
       ]
     },
+    "tests/test_remake_battle_objectives.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "economy",
+        "save"
+      ]
+    },
     "tests/test_remake_battle_presentation.py": {
       "tier": "related",
       "groups": [
@@ -84,6 +127,14 @@
       "tier": "related",
       "groups": [
         "battle",
+        "save"
+      ]
+    },
+    "tests/test_remake_battle_supply.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "logistics",
         "save"
       ]
     },
@@ -114,11 +165,44 @@
         "save"
       ]
     },
+    "tests/test_remake_campaign_balance.py": {
+      "tier": "global",
+      "groups": [
+        "battle",
+        "economy",
+        "logistics",
+        "scenarios"
+      ]
+    },
     "tests/test_remake_campaign_soak.py": {
       "tier": "full",
       "groups": [
         "battle",
         "logistics"
+      ]
+    },
+    "tests/test_remake_chain_ai.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_chain_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_chain_condition.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "save"
       ]
     },
     "tests/test_remake_ci_gate.py": {
@@ -141,6 +225,13 @@
     "tests/test_remake_ci_shards.py": {
       "tier": "global",
       "groups": []
+    },
+    "tests/test_remake_city_development.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "save"
+      ]
     },
     "tests/test_remake_city_expansion.py": {
       "tier": "related",
@@ -252,10 +343,13 @@
         "economy"
       ]
     },
-    "tests/test_remake_dlc_campaigns.py": {
-      "tier": "full",
+    "tests/test_remake_deployment_campaign.py": {
+      "tier": "related",
       "groups": [
-        "scenarios"
+        "battle",
+        "map",
+        "save",
+        "logistics"
       ]
     },
     "tests/test_remake_diplomacy.py": {
@@ -265,6 +359,20 @@
         "logistics",
         "battle",
         "save"
+      ]
+    },
+    "tests/test_remake_directional_deployment.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "save"
+      ]
+    },
+    "tests/test_remake_dlc_campaigns.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios"
       ]
     },
     "tests/test_remake_domestic.py": {
@@ -284,6 +392,13 @@
       "groups": [
         "map",
         "logistics"
+      ]
+    },
+    "tests/test_remake_economy_supply_events.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "battle"
       ]
     },
     "tests/test_remake_effect_assets.py": {
@@ -360,6 +475,13 @@
         "map"
       ]
     },
+    "tests/test_remake_fire_supply_ai.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "logistics"
+      ]
+    },
     "tests/test_remake_frontier_chronology.py": {
       "tier": "related",
       "groups": [
@@ -395,10 +517,44 @@
         "scenarios"
       ]
     },
+    "tests/test_remake_general_tactic_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_general_tactic_gate.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ]
+    },
     "tests/test_remake_generated_officers.py": {
       "tier": "related",
       "groups": [
         "people"
+      ]
+    },
+    "tests/test_remake_goguryeo.py": {
+      "tier": "related",
+      "groups": [
+        "scenarios",
+        "people",
+        "map"
+      ]
+    },
+    "tests/test_remake_grain_economy.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "logistics",
+        "save"
       ]
     },
     "tests/test_remake_han_sui_if.py": {
@@ -522,6 +678,32 @@
         "logistics"
       ]
     },
+    "tests/test_remake_luzon_settlement.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "scenarios",
+        "save"
+      ]
+    },
+    "tests/test_remake_manual_deployment.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_manual_deployment_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "map",
+        "people",
+        "save"
+      ]
+    },
     "tests/test_remake_map_presentation.py": {
       "tier": "related",
       "groups": [
@@ -570,6 +752,13 @@
         "mainland225-07"
       ]
     },
+    "tests/test_remake_natural_checkpoints.py": {
+      "tier": "compatibility",
+      "groups": [
+        "battle",
+        "save"
+      ]
+    },
     "tests/test_remake_neutral_transfers.py": {
       "tier": "related",
       "groups": [
@@ -610,6 +799,29 @@
         "boot"
       ]
     },
+    "tests/test_remake_phantom_ai.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people"
+      ]
+    },
+    "tests/test_remake_phantom_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "save",
+        "people",
+        "logistics"
+      ]
+    },
+    "tests/test_remake_phantom_condition.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "save"
+      ]
+    },
     "tests/test_remake_placement_completion.py": {
       "tier": "full",
       "groups": [
@@ -627,6 +839,38 @@
       "groups": [
         "people",
         "portraits"
+      ]
+    },
+    "tests/test_remake_preview_transport.py": {
+      "tier": "global",
+      "groups": [
+        "boot",
+        "scenarios",
+        "map"
+      ]
+    },
+    "tests/test_remake_qimen_ai.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_qimen_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_qimen_condition.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "save"
       ]
     },
     "tests/test_remake_retainer_audit.py": {
@@ -765,6 +1009,20 @@
         "boot"
       ]
     },
+    "tests/test_remake_soldier_pathfinding.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "save"
+      ]
+    },
+    "tests/test_remake_soldier_rules.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "save"
+      ]
+    },
     "tests/test_remake_songjian_luxing.py": {
       "tier": "related",
       "groups": [
@@ -792,6 +1050,14 @@
         "mainland263-05"
       ]
     },
+    "tests/test_remake_southern_mission.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "scenarios",
+        "save"
+      ]
+    },
     "tests/test_remake_southern_route_pairs.py": {
       "tier": "related",
       "groups": [
@@ -817,6 +1083,22 @@
         "people",
         "save",
         "scenarios"
+      ]
+    },
+    "tests/test_remake_tactic_effects.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "logistics",
+        "save"
+      ]
+    },
+    "tests/test_remake_tactic_event_snapshots.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "save"
       ]
     },
     "tests/test_remake_tactical_ai.py": {
@@ -901,256 +1183,6 @@
       "groups": [
         "map",
         "logistics"
-      ]
-    },
-    "tests/test_remake_battle_objectives.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "people",
-        "economy",
-        "save"
-      ]
-    },
-    "tests/test_remake_soldier_rules.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "save"
-      ]
-    },
-    "tests/test_remake_campaign_balance.py": {
-      "tier": "global",
-      "groups": [
-        "battle",
-        "economy",
-        "logistics",
-        "scenarios"
-      ]
-    },
-    "tests/test_remake_preview_transport.py": {
-      "tier": "global",
-      "groups": [
-        "boot",
-        "scenarios",
-        "map"
-      ]
-    },
-    "tests/test_remake_battle_supply.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "logistics",
-        "save"
-      ]
-    },
-    "tests/test_remake_city_development.py": {
-      "tier": "related",
-      "groups": [
-        "economy",
-        "save"
-      ]
-    },
-    "tests/test_remake_economy_supply_events.py": {
-      "tier": "related",
-      "groups": [
-        "economy",
-        "battle"
-      ]
-    },
-    "tests/test_remake_tactic_effects.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "people",
-        "logistics",
-        "save"
-      ]
-    },
-    "tests/test_remake_soldier_pathfinding.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "save"
-      ]
-    },
-    "tests/test_remake_battle_deployment_reference.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "map"
-      ]
-    },
-    "tests/test_remake_tactic_event_snapshots.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "save"
-      ]
-    },
-    "tests/test_remake_fire_supply_ai.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "logistics"
-      ]
-    },
-    "tests/test_remake_directional_deployment.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "map",
-        "save"
-      ]
-    },
-    "tests/test_remake_deployment_campaign.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "map",
-        "save",
-        "logistics"
-      ]
-    },
-    "tests/test_remake_phantom_condition.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "save"
-      ]
-    },
-    "tests/test_remake_phantom_campaign.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "save",
-        "people",
-        "logistics"
-      ]
-    },
-    "tests/test_remake_phantom_ai.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "people"
-      ]
-    },
-    "tests/test_remake_chain_condition.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "people",
-        "save"
-      ]
-    },
-    "tests/test_remake_chain_campaign.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "people",
-        "save"
-      ]
-    },
-    "tests/test_remake_chain_ai.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "people",
-        "save"
-      ]
-    },
-    "tests/test_remake_qimen_condition.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "people",
-        "save"
-      ]
-    },
-    "tests/test_remake_qimen_campaign.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "people",
-        "save"
-      ]
-    },
-    "tests/test_remake_qimen_ai.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "people",
-        "save"
-      ]
-    },
-    "tests/test_remake_manual_deployment.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "map",
-        "people",
-        "save"
-      ]
-    },
-    "tests/test_remake_manual_deployment_campaign.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "map",
-        "people",
-        "save"
-      ]
-    },
-    "tests/test_remake_ai_deployment.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "map",
-        "people",
-        "save"
-      ]
-    },
-    "tests/test_remake_ai_deployment_reference.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "map",
-        "people",
-        "save"
-      ]
-    },
-    "tests/test_remake_auto_deployment_campaign.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "map",
-        "people",
-        "save"
-      ]
-    },
-    "tests/test_remake_general_tactic_gate.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "map",
-        "people",
-        "save"
-      ]
-    },
-    "tests/test_remake_general_tactic_campaign.py": {
-      "tier": "related",
-      "groups": [
-        "battle",
-        "map",
-        "people",
-        "save"
-      ]
-    },
-    "tests/test_remake_natural_checkpoints.py": {
-      "tier": "compatibility",
-      "groups": [
-        "battle",
-        "save"
       ]
     }
   }

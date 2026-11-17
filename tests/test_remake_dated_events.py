@@ -9,7 +9,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import dated_events
+from remake import city_economy, dated_events
 from campaign_dated_fixtures import dated_catalog, SONG, BIAN, BEIGONG, LI, HAN
 
 
@@ -32,8 +32,8 @@ class DatedEventsTests(unittest.TestCase):
 
     def test_february_has_five_local_people_and_only_nine_selectable_factions(self):
         catalog=Catalog(ROOT/'game/data/campaigns/184-02.json')
-        self.assertEqual(len(catalog.factions),11)
-        self.assertEqual(len(dated_events.visible_factions(catalog)),9)
+        self.assertEqual(len(catalog.factions),13)
+        self.assertEqual(len(dated_events.visible_factions(catalog)),11)
         for faction in ('song_jian','bian_zhang'):
             with self.assertRaises(GameError):
                 Headless(catalog).command('new',dict(faction=faction,seed=2026),0)
@@ -88,7 +88,7 @@ class DatedEventsTests(unittest.TestCase):
         self.assertEqual(game.state.soldiers,before.soldiers)
         for city in game.state.cities.values():
             prior=before.cities[city.id]
-            self.assertEqual((city.gold,city.grain),(prior.gold,prior.grain))
+            self.assertEqual((city.gold,city.grain),(prior.gold,prior.grain-city_economy.garrison_grain(game,before)[city.id]))
             if city.id in {'jincheng','tianshui','longxi'}:
                 assigned=sum(game.state.officers[i].troops for i in city.roster.officer_ids)
                 self.assertEqual(city.reserves+assigned,prior.reserves)

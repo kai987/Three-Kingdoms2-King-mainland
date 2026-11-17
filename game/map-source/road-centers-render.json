@@ -1,9 +1,9 @@
 {
   "schema": "tk2-road-center-render-v1",
-  "source_sha256": "b1d6b547e96e7fa93baf711b3a64b3c629ce16bd254ffba66d8f09d4767c82c3",
-  "positions_sha256": "91a45ddd1005028f4f20779946104df3bab590aab30a0c63c1d17f24a810d38d",
+  "source_sha256": "3d1ca54f92a7b09af7ecd000be0c0dcaaff982c8a4920f20e5960787840aca73",
+  "positions_sha256": "276b966297eadab70e2655b0603b309aa4251bee5f718cf748153e326b26ddae",
   "baseline_sha256": "3cf81b31f08fe73ff5f9acd7627e009de9e4250664088c2d7cfc54f31bd2f683",
   "ground_sha256": "ea8cf8ecbb573205b9b3e9ea43c1c15ec61ff5bef3e3d1e699bea75b0d7c08c0",
-  "output_sha256": "a13c227efe5fa0e94a571a221f2a3cf704ec4116ddcbb3550d5f7d0cd1768738",
-  "water_render_sha256": "0c7a57f42c9a37de18bb01ee41cf18178fe3ebadb3a8f1d1ef07f2eb365c6852"
+  "output_sha256": "201f69f13e51e58f795a686cdb4655e82b3e68edbd15a9e9188a906c8914dd9b",
+  "water_render_sha256": "ee86f42d85b7e3ede7b64a1c0e8bcb3530da23402b6830682e803357da58a2fe"
 }

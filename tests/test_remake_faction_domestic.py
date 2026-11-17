@@ -8,11 +8,12 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / 'source'), str(ROOT / 'tests')]
+from remake import grain_units
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
 from remake import civil_staff, domestic, logistics, treasures
 from remake.officers import YearState, year_state
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import record_garrison_charges, controlled_catalog
 
 
 def faction_catalog(*, isolated_targets=False, empty_city=False, neutral_city=False):
@@ -125,6 +126,7 @@ class FactionDomesticTests(unittest.TestCase):
             policy=dict(training_enabled=True, gold_floor=0, grain_floor=0))
         state = game.state
         initial = {key: (c.gold, c.grain) for key, c in state.cities.items()}
+        paid = self.enterContext(record_garrison_charges())
         costs = {key: dict(gold=0, grain=0) for key in ('xiangyang', 'nanjun')}
         for _ in range(3):
             quotes = {key: domestic.training_preview(game, state, key) for key in costs}
@@ -139,18 +141,18 @@ class FactionDomesticTests(unittest.TestCase):
         intellect = state.officers[civil].profile.intellect
         self.assertEqual(intellect, 99)
         for key in costs:
-            base = game.catalog.data['city_income'][key]
+            base = grain_units.stocks(game.catalog.data['city_income'][key])
             for index, field in enumerate(('gold', 'grain')):
                 bonus = base[field] // 2
                 self.assertEqual(getattr(state.cities[key], field),
-                                 initial[key][index] - costs[key][field] + base[field] + bonus)
+                                 initial[key][index] - costs[key][field] + base[field] + bonus - (paid[key] if field == 'grain' else 0))
             self.assertGreater(pool_row := state.extension['domestic']['cities'][key]['morale'], 70)
             self.assertLessEqual(pool_row, 100)
         for key in ('nanyang', 'jiangxia'):
             self.assertEqual(state.extension['domestic']['cities'][key]['morale'], 70)
-            base = game.catalog.data['city_income'][key]
+            base = grain_units.stocks(game.catalog.data['city_income'][key])
             self.assertEqual((state.cities[key].gold, state.cities[key].grain),
-                             (initial[key][0] + base['gold'], initial[key][1] + base['grain']))
+                             (initial[key][0] + base['gold'], initial[key][1] + base['grain'] - paid[key]))
         self.assertEqual(state.rng.draws, 0)
         saved = game.export_save()
         restored = Campaign(game.catalog)

@@ -28,13 +28,13 @@ _VIEW_CACHE_REQUEST = re.compile(
     rf'(?P<legacy>{_VIEW_TOKEN})|scenarios-v1\|(?P<view>{_VIEW_TOKEN})\|(?P<scenarios>(?:[a-f0-9]{{64}})?)')
 GET_PATHS = frozenset(('/api/state', '/api/city-preview', '/api/march-config',
                        '/api/march-status', '/api/march-preview', '/api/save'))
-POST_PATHS = frozenset(('/api/command', '/api/load'))
+POST_PATHS = frozenset(('/api/command', '/api/load', '/api/transfer-preview'))
 COMMANDS = frozenset(('new', 'persuade_officer', 'recruit_officer', 'transfer',
                      'tactic', 'duel_start', 'duel_action', 'allocate', 'allocation_close', 'recruit',
                      'depart', 'attack', 'battle_move', 'battle_place', 'battle_wait', 'battle_facility', 'retreat', 'settle', 'end_turn', 'ai',
                      'siege_form','siege_orders','siege_step','siege_withdraw',
                      'arrivals', 'observe_turn', 'hire_staff', 'reject_staff', 'staff_recruit',
-                     'choose_successor', 'three_visits', 'set_domestic', 'set_logistics', 'diplomacy',
+                     'choose_successor', 'three_visits', 'southern_mission', 'set_domestic', 'set_logistics', 'diplomacy',
                      'dispatch_transport', 'search_treasure', 'reward_officer',
                      'sell_treasure', 'set_governor', 'set_treasury_policy',
                      'develop_land','develop_industry','develop_population',
@@ -178,6 +178,8 @@ class BrowserRuntime:
             raise GameError(INVALID_SAVE_MESSAGE) from None
         if not isinstance(payload, dict):
             raise GameError(INVALID_SAVE_MESSAGE if loading else '操作参数无效。')
+        if url.path == '/api/transfer-preview':
+            return self.session.preview_transfer(payload)
         if url.path == '/api/command':
             if (set(payload) != {'kind', 'payload', 'revision'}
                     or not isinstance(payload['kind'], str)

@@ -113,7 +113,7 @@ class EventSceneStaticBoundaries(unittest.TestCase):
         self.assertEqual(static, {'/' + name: (name, 'image/webp') for name in expected})
         self.assertEqual({str(file.relative_to(ROOT / 'game'))
                           for file in (ROOT / 'game' / prefix).glob('*.webp')}, expected)
-        self.assertEqual(len(expected), 93)
+        self.assertEqual(len(expected), 98)
         hashes = {}
         for name in sorted(expected):
             with self.subTest(scene=name):
@@ -306,6 +306,25 @@ class WebBuildBoundaries(unittest.TestCase):
         self.assertNotIn('config/cloud-save-public.json', assets)
         self.assertNotIn('data/campaigns/index.json', assets)
         self.assertFalse(any(name.startswith(('map-source/', 'art/', '.env')) for name in assets))
+
+    def test_officer_biographies_cover_the_named_roster_and_publish_at_the_game_asset_path(self):
+        asset_path = 'assets/officer-biographies.json'
+        biographies = json.loads((ROOT / 'game' / asset_path).read_text())
+        roster = json.loads((ROOT / 'game/config/campaigns/people.json').read_text())
+        self.assertIn(asset_path, WEB.static_allowlist())
+        self.assertEqual(biographies['schema'], 'tk2-officer-biographies-v1')
+        self.assertEqual(set(biographies['people']), set(roster['people']))
+        for person_id, profile in biographies['people'].items():
+            with self.subTest(person_id=person_id):
+                kind = profile['kind']
+                self.assertIn(kind, ('historical', 'literary', 'unverified'))
+                self.assertTrue(profile['zh'].strip())
+                self.assertTrue(profile['ja'].strip())
+                if kind != 'unverified':
+                    self.assertTrue(profile.get('sources'))
+                for source in profile.get('sources', ()):
+                    self.assertTrue(source['title'].strip())
+                    self.assertTrue(source['url'].startswith('https://'))
 
 
 @unittest.skipUnless((ROOT / 'tools/web-runtime/node_modules/pyodide/package.json').is_file(),

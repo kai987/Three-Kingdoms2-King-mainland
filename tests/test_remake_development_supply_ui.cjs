@@ -10,6 +10,14 @@ assert.equal(supply.departure(view,view.game.cities.home,[1],route,1e12).battle_
 assert.equal(supply.departure(view,view.game.cities.home,[1],route,-1).battle_grain,0);
 assert.equal(supply.departure(view,{...view.game.cities.home,grain:12},[1],route).battle_grain,1);
 assert.equal(JSON.stringify(view),before,'Draft estimates preserve campaign data');
+const current=structuredClone(view);
+current.catalog.battle_supply_rules.denominator=100;
+const currentSource=current.game.cities.home;
+assert.deepEqual(supply.departure(current,currentSource,[1],route),{
+ march_grain:110,battle_grain:330,battle_grain_default:330,battle_grain_max:890,
+ total_grain:440,daily_grain:11,days_supported:30,
+});
+assert.equal(supply.departure(current,{...currentSource,grain:120},[1],route).battle_grain,10);
 assert.equal(development.summary(view,'home'),'');
 view.catalog.city_development={cities:{home:{land:150,industry:150,population:50000,governance:70,eligible_actors:[1],actor_quotes:{1:{develop_land:{gold_min:18,gold_max:26,gain_min:17,gain_max:42,governance_gain_min:1,governance_gain_max:2,eligible:true}}}}}};
 assert(development.summary(view,'home').includes('150'));assert(development.summary(view,'home').includes('data-l10n-native="ja"'));

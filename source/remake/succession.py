@@ -97,6 +97,7 @@ _SUCCESSORS = {
     ('yuan_shao', _person(35)): ((34, (202, 5)), (37, None)),  # Yuan Shang, then Yuan Tan
     ('gongsun', _person(268)): ((264, (204, 12)),),  # Gongsun Du → Gongsun Kang
     ('gongsun', _person(264)): ((263, None),),  # Gongsun Kang → younger brother Gongsun Gong
+    ('wuhuan', _person(201)): ((740, None),),  # Qiu Liju → Tadun while Louban was young
     ('ma_teng', _person(771)): ((769, (208, 12)),),  # Ma Chao took command of his father's troops
     ('zhang_ji', _person(638)): ((625, (196, 12)),),  # Zhang Ji → kinsman Zhang Xiu
 }
@@ -156,6 +157,9 @@ def historical_order(game, state, faction, previous):
     ruler = state.officers.get(previous)
     if ruler is None:
         return ()
+    entry = game.catalog.data.get('historical_successions', {}).get(ruler.person_id)
+    if entry and entry['faction'] == faction:
+        return ((game.catalog.ids[entry['nominee']], tuple(entry['admission'])),)
     now = (state.year, state.month)
     return tuple((game.catalog.ids.get(_person(number)), admission)
                  for number, admission in _order(faction, ruler.person_id, now))

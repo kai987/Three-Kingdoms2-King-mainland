@@ -1,5 +1,7 @@
 """Shared harbour approaches, mountain links and actual travel transactions."""
 from copy import deepcopy
+from hashlib import sha256
+from itertools import pairwise
 from math import atan2, ceil, cos, radians, sin, sqrt
 import json
 from pathlib import Path
@@ -13,6 +15,7 @@ from remake.campaign import Campaign, Catalog
 from remake.march_core import using_backend
 from remake.march_supply import estimate
 from remake import treasures
+from game.build_portrait_manifest import png_pixels
 
 
 def read(name):
@@ -37,8 +40,13 @@ class RouteCorridorTests(unittest.TestCase):
         cls.catalogs = [Catalog(ROOT / 'game/data' / name)
                        for name in read('game/data/campaigns/index.json')['catalogs']]
 
+    def expected_regular_port_connections(self, city):
+        limited_ports = self.spec.get('limited_port_connections', {})
+        regular_pairs = len(self.navigation['coastal_cities']) - len(limited_ports) - 1
+        return regular_pairs + sum(city in origins for origins in limited_ports.values())
+
     def test_harbour_approaches_reuse_the_painted_corridor_in_both_directions(self):
-        self.assertEqual(set(self.spec['access_overrides']), {'liaodong', 'lelang', 'kuaiji', 'jiaozhi'})
+        self.assertEqual(set(self.spec['access_overrides']), {'liaodong', 'kuaiji', 'jiaozhi'})
         for city, points in self.spec['access_overrides'].items():
             self.assertEqual(points[0], self.catalogs[0].map_cities[city]['position'])
             expected = points + [self.navigation['ports'][city]]
@@ -49,7 +57,129 @@ class RouteCorridorTests(unittest.TestCase):
                 actual = row['draw'][0]['points'] if row['from'] == city else list(reversed(row['draw'][-1]['points']))
                 self.assertEqual(actual, expected, (city, row['from'], row['to']))
                 count += 1
-            self.assertEqual(count, len(self.navigation['coastal_cities']) - 1)
+            self.assertEqual(count, self.expected_regular_port_connections(city))
+
+    def test_revised_northeast_ports_use_the_current_ocean(self):
+        revision = self.navigation['coastal_revision']
+        raw = (ROOT / revision['source']).read_bytes()
+        self.assertEqual(revision['source_sha256'], sha256(raw).hexdigest())
+        self.assertEqual(revision['region'], self.spec['coastal_revision']['region'])
+        (width, _), rgba = png_pixels(raw, (1352, 1024))
+        for city, hint in self.spec['coastal_revision']['ports'].items():
+            with self.subTest(city=city):
+                x, y = self.navigation['ports'][city]
+                self.assertLessEqual((x-hint[0])**2 + (y-hint[1])**2, 12**2)
+                offset = (y*width + x)*4
+                red, green, blue = rgba[offset:offset+3]
+                self.assertTrue(blue > 140 and blue > red*1.4 and blue > green*1.3)
+
+    def test_beihai_solid_road_ends_on_dry_ground_at_its_sea_lane(self):
+        approach = self.spec['shore_access_overrides']['beihai']
+        city, shore = approach
+        port = self.navigation['ports']['beihai']
+        revision = self.navigation['coastal_revision']
+        (width, _), rgba = png_pixels((ROOT / revision['source']).read_bytes(), (1352, 1024))
+        # The road's 4.1 px outer stroke has a round cap. Check the ground
+        # under the stroke ends on the land side of the shoreline.
+        for y in range(shore[1] - 2, city[1] + 1):
+            for x in range(min(city[0], shore[0]) - 2, max(city[0], shore[0]) + 3):
+                offset = (y*width + x)*4
+                red, green, blue = rgba[offset:offset+3]
+                self.assertFalse(blue > 60 and blue > red*1.4 and blue > green*1.3, (x, y))
+        checked = 0
+        for row in self.navigation['routes']:
+            if row['from'] == 'beihai':
+                land, sea = (leg['points'] for leg in row['draw'][:2])
+            elif row['to'] == 'beihai':
+                land, sea = (leg['points'][::-1] for leg in reversed(row['draw'][1:]))
+            else:
+                continue
+            self.assertEqual(land, approach)
+            self.assertEqual(sea[:2], [shore, port])
+            checked += 1
+        self.assertEqual(checked, self.expected_regular_port_connections('beihai'))
+
+    def test_daifang_shore_approach_ends_before_open_water(self):
+        approach = self.spec['shore_access_overrides']['daifang']
+        self.assertEqual(approach[0], [1296, 190])
+        self.assertEqual(approach[-1], [1283, 201])
+        source = read('game/config/terrain-art.json')['world_surface']
+        crop = source['crop']
+        size, mask = png_pixels((ROOT / source['path']).read_bytes(), (crop['width'], crop['height']))
+        pixel = lambda x, y: mask[((y-crop['y'])*size[0] + x-crop['x'])*4 + 1]
+        for a, b in pairwise(approach):
+            steps = 2*max(abs(a[0]-b[0]), abs(a[1]-b[1]))
+            self.assertTrue(all(pixel(*(round(u+(v-u)*i/steps) for u, v in zip(a, b)))
+                                for i in range(steps+1)))
+        self.assertEqual(pixel(1283, 202), 0)
+        row = next(r for r in self.navigation['routes']
+                   if (r['from'], r['to']) == ('beihai', 'daifang'))
+        self.assertEqual(row['draw'][-1]['points'], approach[::-1])
+        self.assertEqual(row['draw'][1]['points'][-1], approach[-1])
+
+    def test_luzon_navigation_uses_its_drawn_footprint_and_taiwan_only(self):
+        config = self.navigation['island_coastline']
+        outline = read(config['source'])['luzon']['outline']
+        self.assertEqual(config['outline_sha256'],
+                         sha256(json.dumps(outline, separators=(',', ':')).encode()).hexdigest())
+        route, = [row for row in self.navigation['routes'] if 'luzon' in (row['from'], row['to'])]
+        self.assertEqual((route['from'], route['to']), ('yizhou', 'luzon'))
+        self.assertEqual(route['draw'][-1]['points'], self.spec['shore_access_overrides']['luzon'][::-1])
+        sea = route['draw'][1]['points']
+        self.assertEqual(sea[-1], [1134, 925])
+        self.assertEqual(sea[-2], self.navigation['ports']['luzon'])
+
+    def test_donglai_crossing_is_a_known_sea_route_in_every_opening(self):
+        city = 'donglai'
+        route_id = 'liaodong:donglai:sea'
+        self.assertIn(city, self.shared['travel_hazards']['coastal_cities'])
+        for catalog in self.catalogs:
+            data = catalog.data
+            with self.subTest(campaign=data['id']):
+                self.assertIn(city, data['active_cities'])
+                self.assertIn(['liaodong', city], data['links'])
+                routes = {}
+                for field in ('travel_routes', 'sea_routes'):
+                    routes[field] = [r for r in data[field]
+                                     if r['mode'] == 'sea' and city in (r['from'], r['to'])]
+                    self.assertEqual([r['id'] for r in routes[field]], [route_id])
+                self.assertEqual(routes['travel_routes'], routes['sea_routes'])
+                self.assertFalse(any(city in (r['from'], r['to']) for r in data['exploration_routes']))
+                route, = routes['sea_routes']
+                self.assertFalse(route['discovery_candidate'])
+                self.assertIn('《三國志・公孫度傳》', route['history']['basis'])
+        approaches = self.spec['shore_access_overrides'][city]
+        lanes = [row for row in self.navigation['routes'] if city in (row['from'], row['to'])]
+        self.assertEqual([(row['from'], row['to']) for row in lanes], [('liaodong', city)])
+        approach = lanes[0]['draw']
+        self.assertEqual(approach[-1]['points'], approaches[::-1])
+        self.assertEqual(approach[1]['points'][-2:], [self.navigation['ports'][city], approaches[-1]])
+
+    def test_donglai_crossing_quotes_both_directions_and_survives_save(self):
+        catalog = next(c for c in self.catalogs if c.data['id'] == 'mainland263-05')
+        route = next(row for row in catalog.data['sea_routes'] if row['id'] == 'liaodong:donglai:sea')
+        for backend in ('python', 'rust'):
+            with self.subTest(backend=backend), using_backend(backend):
+                game = Campaign(catalog)
+                game.command('new', dict(faction='wei', seed=2026), 0)
+                state = game.state
+                self.assertEqual(state.extension['travel']['discovered'], [])
+                for source, target in (('liaodong', 'donglai'), ('donglai', 'liaodong')):
+                    quote = game._travel_path(state, source, target, 'wei', 'sea')
+                    self.assertEqual(quote['path'], [source, target])
+                    leg, = quote['routes']
+                    self.assertEqual(leg['id'], route['id'])
+                    self.assertIsNone(game._travel_path(state, source, target, 'wei', 'explore'))
+                officer = next(i for i in state.cities['liaodong'].roster.officer_ids
+                               if state.officers[i].troops > 0)
+                game.command('transfer', dict(source='liaodong', target='donglai',
+                                              officers=[officer], route_mode='sea'), game.revision)
+                self.assertEqual(game.state.extension['travel']['marches'][0]['quote']['routes'][0]['id'],
+                                 route['id'])
+                saved = game.export_save()
+                restored = Campaign(catalog)
+                restored.load_save(saved, 0)
+                self.assertEqual(restored.export_save(), saved)
 
     def test_jiaozhi_port_access_shares_the_exact_existing_eastern_trunk(self):
         points = self.spec['access_overrides']['jiaozhi']
@@ -70,8 +200,8 @@ class RouteCorridorTests(unittest.TestCase):
         self.assertNotIn([416, 860], points, 'The old parallel southern approach is removed')
 
     def test_ship_geometry_is_continuous_city_to_port_to_city_for_every_current_route(self):
-        positions = {c['id']: c['position'] for c in self.shared['cities']}
         for catalog in self.catalogs:
+            positions = {key: city['position'] for key, city in catalog.map_cities.items()}
             for field in ('travel_routes', 'sea_routes', 'exploration_routes'):
                 for row in catalog.data[field]:
                     if row['mode'] != 'sea':
@@ -98,7 +228,9 @@ class RouteCorridorTests(unittest.TestCase):
                 self.assertEqual({k: compiled[key][k] for k in identity_fields},
                                  {k: row[k] for k in identity_fields}, (catalog.data['id'], key))
                 self.assertEqual(compiled[key]['timing_geometry']['schema'], 'tk2-route-timing-v1')
-            self.assertEqual(len(compiled), len(original) + len(self.navigation['land_roads']) + len(self.navigation.get('river_routes', [])))
+            self.assertEqual(len(compiled), len(original) + len(self.navigation['land_roads'])
+                             + len(self.navigation.get('river_routes', [])) + 1)
+            self.assertEqual(compiled['yizhou:luzon:sea']['mode'], 'sea')
 
     def test_new_roads_share_one_northern_approach_and_are_explicit_mountain_game_corridors(self):
         expected = {'bajun', 'fuling'}

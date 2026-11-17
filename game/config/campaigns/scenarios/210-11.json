@@ -3870,7 +3870,7 @@
           "historical-sun-zong-liaodong": "liaodong",
           "historical-liu-yuan-liaodong": "liaodong",
           "historical-gongsun-heng": "liaodong",
-          "historical-wang-zan-xuantu": "liaodong",
+          "historical-wang-zan-xuantu": "xuantu",
           "historical-guo-xin-liaodong": "liaodong",
           "historical-liu-fu-liaodong": "liaodong",
           "historical-wang-jian-liaodong": "liaodong",
@@ -34383,8 +34383,8 @@
             "status": "chronology_excluded",
             "year_state": "not_appeared",
             "faction": null,
-            "city": "liaodong",
-            "reason": "生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 玄菟節點不在地圖，可用襄平/遼東軍府代理；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+            "city": "xuantu",
+            "reason": "生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 以玄菟郡為本作的活動地區；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
             "death_year_resolved": false,
             "planning_complete": true,
             "placement_basis": "retainer_affiliation_review_20261027",
@@ -34395,7 +34395,7 @@
               "source_urls": [
                 "https://zh.wikisource.org/wiki/三國志/卷47"
               ],
-              "note": "生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 玄菟節點不在地圖，可用襄平/遼東軍府代理；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+              "note": "生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 以玄菟郡為本作的活動地區；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
               "reference_date": [
                 210,
                 11
@@ -34412,7 +34412,7 @@
                 250,
                 12
               ],
-              "city": "liaodong",
+              "city": "xuantu",
               "status": "future_free",
               "basis": "retainer_affiliation_review_20261027"
             }
@@ -35293,7 +35293,7 @@
                   "ruler": false,
                   "troops": 0
                 },
-                "note": "生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 玄菟節點不在地圖，可用襄平/遼東軍府代理；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
+                "note": "生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 以玄菟郡為本作的活動地區；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。 未在本年已有已證任職；使用活動區域的在野／未登場候選，不強編為現城城主臣屬。",
                 "source_urls": [
                   "https://zh.wikisource.org/wiki/三國志/卷47"
                 ],
@@ -39434,7 +39434,7 @@
                 250,
                 12
               ],
-              "city": "liaodong",
+              "city": "xuantu",
               "resolve_death_year": false
             }
           ],

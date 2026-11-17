@@ -19,8 +19,9 @@ from types import SimpleNamespace
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from ruler_audit import (HETAO_EXPANSION_CITIES, city_names, date_parts, frozen_material_totals,
-                         indexed, is_fictional, material_totals, read, require, text, urls)
+from ruler_audit import (LATER_EXPANSION_CITIES, check_added_factions, city_names, date_parts,
+                         frozen_material_totals, indexed, is_fictional, material_totals, read,
+                         require, reviewed_expansion_post, text, urls)
 from remake.dated_events import validate_source, visible_factions
 
 REFERENCE = ROOT / 'game/config/references/retainer-affiliation-review.json'
@@ -30,7 +31,7 @@ REPORT_JSON = ROOT / 'docs/retainer-affiliation-audit-20261027.json'
 REPORT_MD = ROOT / 'docs/retainer-affiliation-audit-20261027.md'
 EXPECTED_BASE_PEOPLE = 1030
 FROZEN_RETAINER_PEOPLE = 1052
-EXPECTED_PEOPLE = 1056
+EXPECTED_PEOPLE = 1080
 EXPECTED_SCENARIOS = 29
 EXPECTED_HISTORICAL = 23
 EXPECTED_FICTIONAL = 6
@@ -214,15 +215,17 @@ def check_catalog(data, decision, canonical_people, order, scope, presentation=N
                              ids={pid: person['runtime_id'] for pid, person in people.items()})
     validate_source(static)
     visible = {row['id']: row for row in visible_factions(static)}
+    added_rulers = check_added_factions(data)
     require(set(data['faction_rulers']) == set(factions), label + 'faction/ruler definitions differ')
     require(all(data['initial_owners'].get(city) in {*visible, 'neutral'} for city in active),
             label + 'unknown/dormant active-city owner')
     # The frozen retainer review predates these independent map additions.
     reviewed_owners = {city: owner for city, owner in data['initial_owners'].items()
-                       if city not in HETAO_EXPANSION_CITIES}
+                       if city not in LATER_EXPANSION_CITIES}
     require(digest(reviewed_owners) == decision.get('owners_sha256'),
             label + 'frozen city owners differ')
-    require(digest(data['faction_rulers']) == decision.get('faction_rulers_sha256'),
+    reviewed_rulers = {fid: ruler for fid, ruler in data['faction_rulers'].items() if fid not in added_rulers}
+    require(digest(reviewed_rulers) == decision.get('faction_rulers_sha256'),
             label + 'frozen faction ruler identities differ')
     opening, city_counts = {}, Counter()
     for status, field in (('serving', 'initial_officers'), ('free', 'initial_free_officers')):
@@ -333,7 +336,8 @@ def check_catalog(data, decision, canonical_people, order, scope, presentation=N
         after = checked_state(change.get('after'), label + pid + ' after')
         current = opening.get(pid, dict(status=eras[pid]['status'], faction=eras[pid].get('faction'),
                     city=eras[pid].get('city'), ruler=False, troops=0))
-        require(after == current, label + 'frozen change.after differs: ' + pid)
+        require(reviewed_expansion_post(data, pid, after) == current,
+                label + 'reviewed change.after differs: ' + pid)
         require(before != after, label + 'recorded change is empty: ' + pid)
         source_note(change, label + pid + ' change')
         text(change.get('certainty'), label + pid + ' certainty')
@@ -406,7 +410,7 @@ def build_report(reference_path=REFERENCE, catalog_dir=CATALOG_DIR, people_path=
             '追加人物の徳60・忠80は本作の設定値です。初期体力は王建のみ原表42、ほか21人は80、回復上限は全員80です。'
             '王建の原表忠59は所属文脈が空のため公孫氏への忠には適用せず、原表徳41も徳60を覆しません。']),
         material_definition=('開放都市の資金・兵糧、予備兵と在籍武将の帯兵の合計を表示します。'
-                             '固定レビューとの照合では後から追加された河套三都市の初期備蓄を除きます。'),
+                             '固定レビューとの照合では追加都市の初期備蓄と、別に設定した辺境勢力の都市駐屯兵を除きます。'),
         stat_policy='追加人物はSAN14魅力の出典がないため徳60。初期体力は王建のみ原表cnblogs-line-0229の42、'
                     'ほかは80、回復上限は全員80。王建の原表忠59は所属対象が空なので公孫氏臣としても忠80。'
                     '196年登場・249年寿命や原表徳41は保持資料であり、史実年代や本作徳へ転用しない。',

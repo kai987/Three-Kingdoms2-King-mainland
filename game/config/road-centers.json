@@ -7436,7 +7436,7 @@
       "city": "jingzhao",
       "center": [
         497,
-        354
+        336
       ],
       "old_hub": [
         502,
@@ -10547,11 +10547,11 @@
             ],
             [
               992,
-              215
+              223
             ],
             [
-              1014,
-              213
+              1010,
+              233
             ]
           ],
           "radius": 7
@@ -10565,12 +10565,12 @@
           "index": 247,
           "points": [
             [
-              970,
-              214
+              973,
+              227
             ],
             [
               975,
-              219
+              223
             ],
             [
               980.5,
@@ -11009,63 +11009,55 @@
     },
     {
       "id": "liaoxi-changli-liaodong",
-      "cities": [
-        "liaoxi",
-        "liaodong"
-      ],
-      "intermediate_stops": [
-        [
-          1138,
-          57
-        ]
-      ],
+      "cities": ["yuyang", "liaoxi", "liaodong"],
+      "intermediate_stops": [[1117, 72]],
       "strokes": [
+        {"index": 246, "points": [[965, 66], [970, 69], [982, 69], [1009, 122], [1022, 127], [1037, 127]], "radius": 9},
         {
           "index": 260,
-          "points": [
-            [
-              1061,
-              121
-            ],
-            [
-              1070,
-              96
-            ],
-            [
-              1086,
-              78
-            ],
-            [
-              1104,
-              65
-            ],
-            [
-              1120,
-              60
-            ],
-            [
-              1138,
-              57
-            ],
-            [
-              1155,
-              60
-            ],
-            [
-              1170,
-              65
-            ],
-            [
-              1183,
-              73
-            ],
-            [
-              1194,
-              78
-            ]
-          ],
+          "points": [[1037, 127], [1051, 106], [1067, 94], [1088, 80], [1102, 74], [1117, 72], [1134, 70], [1152, 66], [1170, 69], [1183, 73], [1194, 78]],
           "radius": 9
         }
+      ]
+    },
+    {
+      "id": "nanpi-coastal-roads",
+      "cities": ["bohai", "hejian", "anping", "yan", "pingyuan", "jinan"],
+      "reason": "The Hejian and Xindu roads join before the Nanpi approach, which they share with the Ji and Pingyuan roads.",
+      "intermediate_stops": [[912, 165]],
+      "strokes": [
+        {"index": 209, "points": [[891.5, 163.5], [902, 163], [912, 165], [925.5, 172]], "radius": 9},
+        {"index": 233, "points": [[925.5, 172], [951, 191]], "radius": 0},
+        {"index": 234, "points": [[925.5, 172], [941, 193], [957, 211], [973, 227]], "radius": 8}
+      ]
+    },
+    {
+      "id": "shandong-coastal-fork",
+      "cities": ["qi", "beihai", "donghai"],
+      "reason": "Keep the Laizhou Bay junction on land and give the shared road to Langya an exact branch point.",
+      "intermediate_stops": [[1024, 287], [1017, 265], [1020, 249], [1038, 247]],
+      "strokes": [
+        {"index": 252, "points": [[1010, 233], [1020, 237], [1028, 243]], "radius": 8},
+        {"index": 253, "points": [[1036, 326], [1024, 287], [1017, 265], [1020, 249], [1028, 243]], "radius": 0},
+        {"index": 255, "points": [[1028, 243], [1038, 247], [1046, 250]], "radius": 0}
+      ]
+    },
+    {
+      "id": "liaodong-lelang-daifang",
+      "cities": ["liaodong", "lelang", "daifang"],
+      "reason": "The two existing roads meet the revised western Korean commandery sites.",
+      "strokes": [
+        {"index": 266, "points": [[1194, 78], [1219, 81], [1243, 94], [1261, 113], [1273, 135], [1276, 157]], "radius": 9},
+        {"index": 267, "points": [[1276, 157], [1284, 167], [1291, 178], [1296, 190]], "radius": 8}
+      ]
+    },
+    {
+      "id": "changan-south-bank",
+      "cities": ["jingzhao", "anding", "fufeng", "hongnong"],
+      "reason": "Fufeng and Anding share the short final approach after Chang'an moves north. The Hongnong road takes a smooth turn from the east.",
+      "strokes": [
+        {"index": 59, "points": [[414, 346], [418, 346], [430, 358], [490, 358], [494, 350]], "radius": 9},
+        {"index": 70, "points": [[502, 350], [510, 346], [610, 346]], "radius": 9}
       ]
     }
   ],
@@ -11075,6 +11067,24 @@
       "city": "jiaozhi",
       "d": "M387 853L438 858Q438 858 438 858L448 858Q448 858 448 858L452 862Q452 862 452 862L452 874",
       "reason": "Remove the historical baked direct harbour spur; the current approach shares the JiaoZhi–Yulin northern trunk before branching toward the same port."
+    },
+    {
+      "id": "beihai-former-port",
+      "city": "beihai",
+      "d": "M1054 219L1079 194Q1084 189 1084 184L1084 172",
+      "reason": "The relocated city uses a newly reviewed harbour approach."
+    },
+    {
+      "id": "lelang-former-port",
+      "city": "lelang",
+      "d": "M1290 182L1281.5 206Q1280 210 1277 210L1272 210Q1270 210 1268 208L1264 204",
+      "reason": "The relocated city uses a newly reviewed harbour approach."
+    },
+    {
+      "id": "daifang-former-port",
+      "city": "daifang",
+      "d": "M1292 226L1276 230L1268 237",
+      "reason": "The relocated city uses a newly reviewed harbour approach."
     }
   ],
   "former_protected_hubs": [

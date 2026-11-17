@@ -10,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'source'))
 from campaign_fixtures import advance_month, controlled_catalog
 from remake.campaign import Campaign
 from remake.city_development import LIMITS
-from remake.city_economy import frontier_maintenance, frontier_outposts_view, income_at, profile_at
+from remake.city_economy import frontier_maintenance, frontier_outposts_view, garrison_grain_cost, income_at, profile_at
 from remake.march_supply import cost
 from remake.session import CampaignSession
 
@@ -48,10 +48,10 @@ class FrontierEconomyTests(unittest.TestCase):
                 outpost_start, rear_start = (original['cities'][key] for key in ('nanyang', 'nanjun'))
                 self.assertEqual((state.year, state.month), (217, 12))
                 self.assertEqual(outpost.gold, outpost_start['gold'] + 35)
-                self.assertEqual(outpost.grain, outpost_start['grain'] + 90 - cost(troops + 17, 0, 30))
+                self.assertEqual(outpost.grain, outpost_start['grain'] + 900 - cost(troops + 17, 0, 30))
                 self.assertEqual(outpost.reserves, outpost_start['reserves'] + 17)
                 self.assertEqual(rear.gold, rear_start['gold'] + 35 - 15)
-                self.assertEqual(rear.grain, rear_start['grain'] + 90)
+                self.assertEqual(rear.grain, rear_start['grain'] + 855)
                 self.assertEqual(state.soldiers, dict(original['soldiers'], recruited=17))
                 self.assertEqual(sum(state.officers[i].troops for i in outpost.roster.officer_ids), troops)
 
@@ -60,7 +60,7 @@ class FrontierEconomyTests(unittest.TestCase):
                 outpost, rear = state.cities['nanyang'], state.cities['nanjun']
                 self.assertEqual((state.year, state.month), (218, 1))
                 self.assertEqual(outpost.gold, before_restore['nanyang']['gold'] + 35)
-                self.assertEqual(outpost.grain, before_restore['nanyang']['grain'] + 90)
+                self.assertEqual(outpost.grain, before_restore['nanyang']['grain'] + 900 - garrison_grain_cost(game.catalog.data, 'nanyang', 218, 1, troops, 17))
                 self.assertEqual(rear.gold, before_restore['nanjun']['gold'] + 35)
                 self.assertEqual(outpost.owner, 'wei')
 
@@ -74,7 +74,7 @@ class FrontierEconomyTests(unittest.TestCase):
         start = outpost.gold, outpost.grain, outpost.reserves, rear.gold
         advance_month(game)
         self.assertEqual((outpost.gold, outpost.grain, outpost.reserves, rear.gold),
-                         (start[0] + 70, start[1] + 180 - cost(34, 0, 30), start[2] + 34, start[3] + 35 - 30))
+                         (start[0] + 70, start[1] + 1800 - cost(34, 0, 30), start[2] + 34, start[3] + 35 - 30))
         self.assertEqual(frontier_outposts_view(game.catalog.data, state)[outpost.id]['monthly_maintenance'], 30)
         self.assertEqual(development['baseline']['population'] * 2, development['population'])
         game.validate(state)
@@ -147,14 +147,14 @@ class FrontierEconomyTests(unittest.TestCase):
             path = Path(tmp) / 'frontier.json'
             path.write_text(json.dumps(data, ensure_ascii=False))
             session = CampaignSession([path])
-        income = data['city_income']['nanyang']
+        income = dict(data['city_income']['nanyang'], grain=900)
         setup = dict(monthly_maintenance=15, sponsor_city='nanjun')
         opening = session.preview_city(data['id'], 'nanyang')['city']
         self.assertEqual(opening['profile']['kind'], 'frontier_outpost')
         self.assertEqual(opening['income'], income)
         self.assertEqual(opening['frontier_outpost'], setup)
         self.assertNotIn('kind', profile_at(data, 'nanyang', 217, 11))
-        self.assertEqual(income_at(data, 'nanyang', 218, 1), data['city_income']['nanyang'])
+        self.assertEqual(income_at(data, 'nanyang', 218, 1), income)
         result = session.command('new', dict(faction='wei', seed=310), 0)['catalog']
         self.assertEqual(result['frontier_outposts']['nanyang'], setup)
         self.assertEqual(result['city_income']['nanyang'], income)

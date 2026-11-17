@@ -8,7 +8,7 @@ from copy import deepcopy
 from dataclasses import replace
 
 from .errors import GameError
-from . import command_books
+from . import capital_openings, command_books, grain_units
 from .officers import parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref
 from .city_economy import tier_at
 
@@ -48,7 +48,8 @@ def _pool(state):
 
 
 def _rule(game, key):
-    return game.catalog.data.get('facility_rules', {}).get(key, RULES[key])
+    value = game.catalog.data.get('facility_rules', {}).get(key, RULES[key])
+    return grain_units.amount(value) if key == 'trade_batch_grain' else value
 
 
 def _validate_rules(game):
@@ -113,12 +114,21 @@ def _new_city(city, town=1, preparedness=None):
         preparedness=RULES['initial_preparedness'] if preparedness is None else preparedness, damage=0)
 
 
+def opening_view(data, city):
+    capital = capital_openings.opening(data, city)
+    if capital:
+        return {field: capital[field] for field in ('town', 'preparedness', 'damage')}
+    tier = tier_at(data, city, data['start_year'], data['start_month'])
+    return dict(town={'normal': 1, 'large': 2, 'giant': 3}[tier],
+                preparedness=data.get('facility_rules', {}).get('initial_preparedness', RULES['initial_preparedness']),
+                damage=0)
+
+
 def empty(game, state):
     return dict(schema=SCHEMA,
-        cities={key: _new_city(city, {'normal': 1, 'large': 2, 'giant': 3}[
-            tier_at(game.catalog.data, key, state.year, state.month)],_rule(game,'initial_preparedness'))
+        cities={key: dict(owner=city.owner, **opening_view(game.catalog.data, key))
             for key, city in state.cities.items()},
-        factions={owner: deepcopy(DEFAULT_POLICY) for owner in sorted(game.catalog.factions) if owner != 'neutral'},
+        factions={owner: grain_units.policy(DEFAULT_POLICY) for owner in sorted(game.catalog.factions) if owner != 'neutral'},
         study={}, last_disaster_month=_month(state),
         auto_turns={owner: 0 for owner in sorted(game.catalog.factions) if owner != 'neutral'})
 
@@ -420,6 +430,10 @@ def set_policy(game, state, payload, owner):
 
 def adjusted_income(state, city_id, income):
     damage = state.extension.get('facilities', {}).get('cities', {}).get(city_id, {}).get('damage', 0)
+    return income_after_damage(income, damage)
+
+
+def income_after_damage(income, damage):
     return {key: value * (100-damage) // 100 for key, value in income.items()}
 
 

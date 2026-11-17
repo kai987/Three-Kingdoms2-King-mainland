@@ -54,7 +54,8 @@ JINGNAN = {
 
 
 def expansion_material(data):
-    plan = json.loads((ROOT / 'game/config/campaigns/city-expansion-openings.json').read_text())
+    source = ROOT / 'game/config/campaigns'
+    plan = json.loads((source / 'city-expansion-openings.json').read_text())
     opened = set(plan['scenarios'][data['id']]['owners'])
     # These baselines predate opening the old county seats. Their existing
     # late-game stocks were already counted at the original opening dates.
@@ -62,8 +63,19 @@ def expansion_material(data):
     for city, former_opening in (('wuchang', (221, 4)), ('jianan', (260, 10))):
         if city in data['active_cities'] and date < former_opening:
             opened.add(city)
-    return tuple(sum(data['initial_city_resources'][city][field] for city in opened)
-                 for field in ('gold', 'grain', 'reserves'))
+    additional_troops = 0
+    for path in sorted((source / 'faction-additions').glob('*.json')):
+        addition = json.loads(path.read_text())
+        opened.add(addition['faction']['city'])
+        period = next(row for row in reversed(addition['periods']) if tuple(row['start']) <= date)
+        additional_troops += period.get('troops', 0)
+        additional_troops += sum(officer['troops'] for officer in period.get('officers', []))
+        if period['owner'] == addition['faction']['id']:
+            additional_troops += sum(officer['troops'] for officer in addition.get('officer_chronology', [])
+                                     if tuple(officer['start']) <= date <= tuple(officer['end']))
+    gold, grain, reserves = (sum(data['initial_city_resources'][city][field] for city in opened)
+                             for field in ('gold', 'grain', 'reserves'))
+    return gold, grain, reserves + additional_troops
 
 
 class HistoricalScenarioTests(unittest.TestCase):
@@ -557,12 +569,18 @@ class EarlyIndependentRulerTests(unittest.TestCase):
         for person_id in self.ZANG_GROUP:
             self.assert_free_posting(game, person_id, 'donghai')
         self.assert_posting(game, 'san14-candidate-0147', 'shu', 'donghai')
-        for chapter in ('197-07', '198-03'):
+        langya_postings = {
+            '197-07': {'san14-candidate-0308'},
+            '198-03': {'san14-candidate-0308', 'san14-candidate-0545'},
+        }
+        for chapter, langya_officers in langya_postings.items():
             with self.subTest(chapter=chapter):
                 game = self.game(chapter, 'zang_ba')
                 self.assertEqual(game.state.cities['donghai'].owner, 'zang_ba')
+                self.assertEqual(game.state.cities['langya'].owner, 'zang_ba')
                 for person_id in self.ZANG_GROUP:
-                    self.assert_posting(game, person_id, 'zang_ba', 'donghai',
+                    city = 'langya' if person_id in langya_officers else 'donghai'
+                    self.assert_posting(game, person_id, 'zang_ba', city,
                                         ruler=person_id == 'san14-candidate-0525')
                 # The displaced regular garrison keeps its own allegiance.
                 preserved = {
@@ -658,9 +676,13 @@ class EarlyIndependentRulerTests(unittest.TestCase):
                     old_stocks, old_troops = mobilize_reserves(catalog)
                     self.assertEqual(sum(row['reserves'] for row in old_stocks.values())
                                      + sum(old_troops.values()), expected[2])
-                    _, opening_troops = catalog.opening_garrisons
+                    opening_stocks, opening_troops = catalog.opening_garrisons
                     reinforcement = sum(opening_troops.values()) - sum(old_troops.values())
-                    self.assertEqual(totals, (*expected[:2], expected[2] + reinforcement))
+                    for index, resource in enumerate(('gold', 'grain')):
+                        adjustment = sum(opening_stocks[city][resource] - old_stocks[city][resource]
+                                         for city in ('henan', 'jingzhao'))
+                        self.assertEqual(totals[index], (expected[index] + adjustment) * (10 if resource == 'grain' else 1))
+                    self.assertEqual(totals[2], expected[2] + reinforcement)
                     self.assertEqual(game.state.soldiers['initial'], totals[2])
 
     def test_new_local_commands_start_preview_and_restore_without_changing_membership(self):
@@ -686,7 +708,10 @@ class EarlyIndependentRulerTests(unittest.TestCase):
                 metadata = next(row for row in summary['factions'] if row['id'] == faction)
                 self.assertEqual(metadata['ruler_person_id'], session.game.state.officers[leader].person_id)
                 self.assertEqual(summary['initial_owners'][city], faction)
-                self.assertEqual(summary['faction_officers'][faction], len(preview['officers']))
+                faction_roster_size = sum(len(state.roster.officer_ids)
+                                          for state in session.game.state.cities.values()
+                                          if state.owner == faction)
+                self.assertEqual(summary['faction_officers'][faction], faction_roster_size)
                 self.assertEqual(session.export_save(), save)
                 restored = CampaignSession(self.paths)
                 restored.load_save(save, 0)
@@ -720,8 +745,10 @@ class FrozenRulerAuditNegativeTests(unittest.TestCase):
                                           self.pool, self.presentation)
 
     def expected_material(self):
-        stocks = [self.data['initial_city_resources'][city] for city in ('shuofang', 'wuyuan', 'yunzhong')]
+        stocks = [self.data['initial_city_resources'][city] for city in (
+            'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'liucheng', 'guonei')]
         gold, grain, soldiers = (sum(city[field] for city in stocks) for field in ('gold', 'grain', 'reserves'))
+        soldiers += 5050 + 2480  # The 194 Wuhuan and Goguryeo frontier garrisons.
         frozen = self.decision['material']
         return dict(gold=frozen['gold'] + gold, grain=frozen['grain'] + grain,
                     soldiers=frozen['soldiers'] + soldiers)
@@ -789,7 +816,7 @@ class FrozenRulerAuditNegativeTests(unittest.TestCase):
         self.assertEqual(data['placement_completion'], self.data['placement_completion'])
         self.assertEqual(sum(row['troops'] for row in data['initial_officers']),
                          sum(row['troops'] for row in self.data['initial_officers']))
-        with self.assertRaisesRegex(ValueError, 'frozen placement differs: ' + person_id):
+        with self.assertRaisesRegex(ValueError, 'reviewed placement differs: ' + person_id):
             self.check_copy(data)
 
     def test_stale_placement_provenance_counter_is_rejected(self):
@@ -806,6 +833,16 @@ class FrozenRulerAuditNegativeTests(unittest.TestCase):
                 data['initial_city_resources']['chenliu'][field] += 1
                 with self.assertRaisesRegex(ValueError, 'totals differ from frozen pre-change material'):
                     self.check_copy(data)
+
+    def test_later_frontier_stocks_and_troops_match_the_separate_opening_sources(self):
+        data = deepcopy(self.data)
+        data['initial_city_resources']['liucheng']['grain'] += 1
+        with self.assertRaisesRegex(ValueError, 'historical faction opening stocks differ: liucheng'):
+            self.check_copy(data)
+        data = deepcopy(self.data)
+        next(row for row in data['initial_officers'] if row['city'] == 'guonei')['troops'] += 1
+        with self.assertRaisesRegex(ValueError, 'historical faction garrison differs: guonei'):
+            self.check_copy(data)
 
     def test_unopened_future_city_stocks_are_outside_active_world_material_totals(self):
         data = deepcopy(self.data)

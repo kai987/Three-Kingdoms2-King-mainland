@@ -141,11 +141,35 @@
    ['subject',c.t('我將上奏請罷曹爽所掌軍職，請諸官各守職分。','曹爽の軍職を解くよう上奏する。諸官はそれぞれの務めを守ってほしい。')],
    ['other',c.t('先核對朝廷詔命，諸部不可擅自調動。','まず朝廷の詔を確かめよ。各部隊は勝手に動くな。')]
   ],
+  historical_wuhuan_expedition:(c,d,ids,row)=>row.month===9?[
+   ['messenger',c.t('白狼山的戰報已到。曹軍由柳城還師。','白狼山の戦報が届きました。曹操軍は柳城から帰還します。')]
+  ]:[
+   ['subject',c.t('田疇熟悉北路，諸軍到遼西集結。','田疇は北の道に詳しい。諸軍を遼西に集めよ。')],
+   ['other',c.t('願領先鋒。軍糧到齊便向柳城進兵。','先鋒を承ります。兵糧がそろい次第、柳城へ向かいましょう。')]
+  ],
+  historical_goguryeo_expedition:c=>[
+   ['subject',c.t('諸軍從玄菟出發，沿山路向丸都進兵。','諸軍は玄菟から山道を進み、丸都へ向かう。')],
+   ['other',c.t('請先備足軍糧。東川王若退走，我軍須即時查明去向。','兵糧を整えましょう。東川王が退けば、直ちにその行方を確かめます。')]
+  ],
+  historical_wu_southern_mission:c=>[
+   ['messenger',c.t('宣化從事朱應與中郎康泰已奉命登舟。','宣化従事の朱応と中郎の康泰は、命を受けて乗船しました。')],
+   ['clerk',c.t('船隊會先察看沿岸泊地，再循海道南行。','船団はまず沿岸の停泊地を調べ、海路を南へ進みます。')]
+  ],
+  luzon_landing:(c,d)=>[
+   ['messenger',c.t('使節已抵達呂宋。','使節がルソンに着きました。')],
+   ['clerk',d.can_build?c.t('此處可尋泊地。是否調兵築城，請主上裁決。','ここには船を泊められます。兵を送り、築城するかご決裁ください。'):c.t('船隊已確認港灣，將繼續南行。','船団は湾の様子を確かめ、さらに南へ向かいます。')]
+  ],
+  luzon_settlement_completed:c=>[
+   ['messenger',c.t('城垣與泊地均已完工。','城壁と船着き場が完成しました。')],
+   ['clerk',c.t('築城士兵已在呂宋列入預備兵名冊。','築城にあたった兵をルソンの予備兵名簿に記しました。')]
+  ],
   historical_wei_invades_shu:c=>[
    ['subject',c.t('進取漢中，須先定各路的出發時日與補給。','漢中へ進むには、まず各軍の出発日と補給を定めねばならぬ。')],
    ['other',c.t('我軍另察武都方向，各部須依山路實況前進。','我が軍は武都方面を調べよう。各部隊は山道の状況に合わせて進め。')]
   ],
-  city_founded:c=>[['messenger',c.t(`${c.place}的新城建置已完成。`,`${c.place}の新しい都市が開設されました。`)],['clerk',c.t('城中人員與資源已列冊，請核對後再定部署。','都市の人員と資源を記録しました。ご確認のうえ配置をご指示ください。')]],
+  city_founded:(c,d,ids)=>[['messenger',d.settlement
+   ?c.t(`部隊自${c.city(d.parent)}渡海，已在${c.city(ids[0])}設城。`,`${c.city(d.parent)}から渡海した部隊が、${c.city(ids[0])}に築城しました。`)
+   :c.t(`${c.place}的新城建置已完成。`,`${c.place}の新しい都市が開設されました。`)],['clerk',c.t('城中人員與資源已列冊，請核對後再定部署。','都市の人員と資源を記録しました。ご確認のうえ配置をご指示ください。')]],
   city_captured:c=>[['messenger',c.t(`${c.place}已易主，城內情勢呈上。`,`${c.place}の支配が変わりました。都市の状況をご報告します。`)],['clerk',c.t('請核對守軍與庫存，安排後續防務。','守備隊と在庫を確認し、次の守備を整えましょう。')]],
   city_upgraded:c=>[['clerk',c.t(`${c.place}的都市規模已擴大。`,`${c.place}の都市規模が拡大しました。`)],['messenger',c.t('新規模的月收入已列明，請據此安排支出。','新しい規模の月収を記しました。今後の支出計画にご参照ください。')]],
   city_renamed:c=>[['clerk',c.t('年代已至，這一地圖節點的顯示城名依設定切換。','年代の境界に達し、この地図拠点の表示名が設定どおり切り替わりました。')],['messenger',c.t('現有歸屬與駐軍照舊列冊，詳情請閱史實背景。','現在の支配と駐屯を引き継いで記録しました。史実との関係は下の説明をご覧ください。')]],
@@ -200,10 +224,10 @@
   const subject=c.person(subjectId),actor=c.person(d.actor),target=c.person(d.target||ids[0]),other=c.person(ids[1]);
   const speakers={subject,actor,target,other,governor:d.governor?c.person(d.governor):c.role('clerk'),staff:c.person(d.staff_id,'clerk',d),...Object.fromEntries(Object.keys(ROLES).map(key=>[key,c.role(key)]))};
   Object.assign(c,{subject,place:(row.city_ids||[]).map(c.city).join(' → ')||c.t('戰役各地','各地')});
-  return EVENTS[row.kind](c,d).map(([who,text])=>({...speakers[who],text}));
+  return EVENTS[row.kind](c,d,row.city_ids||[],row).map(([who,text])=>({...speakers[who],text}));
  }
- const COMMANDS=Object.freeze({new:'event',persuade_officer:'event',recruit_officer:'event',three_visits:'event',transfer:'inline',tactic:'inline',duel_start:'inline',duel_action:'inline',allocate:'inline',allocation_close:'silent',recruit:'inline',depart:'inline',attack:'inline',battle_move:'inline',battle_place:'silent',battle_wait:'inline',battle_facility:'inline',retreat:'inline',settle:'event',end_turn:'inline',ai:'silent',arrivals:'silent',observe_turn:'silent',siege_form:'inline',siege_orders:'inline',siege_step:'inline',siege_withdraw:'inline',hire_staff:'event',reject_staff:'event',staff_recruit:'event',choose_successor:'event',diplomacy:'event',set_domestic:'inline',set_logistics:'inline',dispatch_transport:'event',search_treasure:'event',reward_officer:'event',sell_treasure:'event',set_governor:'event',set_treasury_policy:'inline',develop_land:'event',develop_industry:'event',develop_population:'event',develop_town:'event',treat_officer:'event',study_officer:'event',trade_grain:'event',buy_equipment:'event',improve_prevention:'event',set_facility_policy:'inline',equip_owned:'event'});
- const ACTION_NAMES={new:['開始戰役','戦役開始'],persuade_officer:['勸降','引き抜き'],recruit_officer:['登用','登用'],transfer:['調動','移動'],tactic:['施放計略','計略の使用'],duel_start:['挑戰單挑','一騎討ちの挑戦'],duel_action:['單挑行動','一騎討ちの行動'],allocate:['編兵','兵の編制'],recruit:['徵募預備兵','予備兵の募兵'],depart:['出征','出陣'],attack:['攻擊','攻撃'],battle_move:['戰術移動','戦術移動'],battle_place:['布陣確認','配置の確定'],battle_wait:['結束本方行動','自軍の行動終了'],battle_facility:['使用戰場設施','戦場施設の利用'],retreat:['撤退','撤退'],settle:['戰果結算','戦果の精算'],end_turn:['結束本旬','今旬の終了'],siege_form:['選擇陣形','陣形の選択'],siege_orders:['下達交鋒命令','交戦命令の指定'],siege_step:['推進交鋒','交戦の進行'],siege_withdraw:['退出交鋒','交戦からの離脱'],hire_staff:['雇用文吏','文官の採用'],reject_staff:['婉拒文吏','文官の採用見送り'],staff_recruit:['文吏尋訪','文官による登用'],choose_successor:['選擇繼承者','後継者の選択'],three_visits:['拜訪諸葛亮','諸葛亮を訪ねる'],set_domestic:['內政委任','内政の担当'],set_logistics:['運輸方針','輸送の方針'],dispatch_transport:['派出運輸隊','輸送隊の派遣'],search_treasure:['尋寶','宝の探索'],reward_officer:['賞賜','褒美'],sell_treasure:['出售寶物','宝の売却'],set_governor:['任命太守','太守の任命'],set_treasury_policy:['寶庫方針','宝庫の方針'],develop_land:['開墾土地','土地の開墾'],develop_industry:['發展產業','産業の開発'],develop_population:['開發城町人口','町の人口開発'],develop_town:['發展城町','町の発展'],treat_officer:['療傷','治療'],study_officer:['修學','学習'],trade_grain:['交易兵糧','兵糧の取引'],buy_equipment:['購買武具','武具の購入'],improve_prevention:['防災整備','防災整備'],set_facility_policy:['設施方針','施設の方針'],equip_owned:['裝備備用武具','予備武具の装備']};
+ const COMMANDS=Object.freeze({new:'event',persuade_officer:'event',recruit_officer:'event',three_visits:'event',southern_mission:'silent',transfer:'inline',tactic:'inline',duel_start:'inline',duel_action:'inline',allocate:'inline',allocation_close:'silent',recruit:'inline',depart:'inline',attack:'inline',battle_move:'inline',battle_place:'silent',battle_wait:'inline',battle_facility:'inline',retreat:'inline',settle:'event',end_turn:'inline',ai:'silent',arrivals:'silent',observe_turn:'silent',siege_form:'inline',siege_orders:'inline',siege_step:'inline',siege_withdraw:'inline',hire_staff:'event',reject_staff:'event',staff_recruit:'event',choose_successor:'event',diplomacy:'event',set_domestic:'inline',set_logistics:'inline',dispatch_transport:'event',search_treasure:'event',reward_officer:'event',sell_treasure:'event',set_governor:'event',set_treasury_policy:'inline',develop_land:'event',develop_industry:'event',develop_population:'event',develop_town:'event',treat_officer:'event',study_officer:'event',trade_grain:'event',buy_equipment:'event',improve_prevention:'event',set_facility_policy:'inline',equip_owned:'event'});
+ const ACTION_NAMES={new:['開始戰役','戦役開始'],persuade_officer:['勸降','引き抜き'],recruit_officer:['登用','登用'],transfer:['調動','移動'],tactic:['施放計略','計略の使用'],duel_start:['挑戰單挑','一騎討ちの挑戦'],duel_action:['單挑行動','一騎討ちの行動'],allocate:['編兵','兵の編制'],recruit:['徵募預備兵','予備兵の募兵'],depart:['出征','出陣'],attack:['攻擊','攻撃'],battle_move:['戰術移動','戦術移動'],battle_place:['布陣確認','配置の確定'],battle_wait:['結束本方行動','自軍の行動終了'],battle_facility:['使用戰場設施','戦場施設の利用'],retreat:['撤退','撤退'],settle:['戰果結算','戦果の精算'],end_turn:['結束本旬','今旬の終了'],siege_form:['選擇陣形','陣形の選択'],siege_orders:['下達交鋒命令','交戦命令の指定'],siege_step:['推進交鋒','交戦の進行'],siege_withdraw:['退出交鋒','交戦からの離脱'],hire_staff:['雇用文吏','文官の採用'],reject_staff:['婉拒文吏','文官の採用見送り'],staff_recruit:['文吏尋訪','文官による登用'],choose_successor:['選擇繼承者','後継者の選択'],three_visits:['拜訪諸葛亮','諸葛亮を訪ねる'],southern_mission:['呂宋築城計畫','ルソンの築城計画'],set_domestic:['內政委任','内政の担当'],set_logistics:['運輸方針','輸送の方針'],dispatch_transport:['派出運輸隊','輸送隊の派遣'],search_treasure:['尋寶','宝の探索'],reward_officer:['賞賜','褒美'],sell_treasure:['出售寶物','宝の売却'],set_governor:['任命太守','太守の任命'],set_treasury_policy:['寶庫方針','宝庫の方針'],develop_land:['開墾土地','土地の開墾'],develop_industry:['發展產業','産業の開発'],develop_population:['開發城町人口','町の人口開発'],develop_town:['發展城町','町の発展'],treat_officer:['療傷','治療'],study_officer:['修學','学習'],trade_grain:['交易兵糧','兵糧の取引'],buy_equipment:['購買武具','武具の購入'],improve_prevention:['防災整備','防災整備'],set_facility_policy:['設施方針','施設の方針'],equip_owned:['裝備備用武具','予備武具の装備']};
  function freshEvents(before,after){const floor=before?.game?.extension?.events?.next_id||1;return (after?.game?.extension?.events?.items||[]).filter(row=>row.id>=floor);}
  function command(kind,payload={},before,after,{language='zh-Hant',i18n,error=null}={}){
   if(!Object.hasOwn(COMMANDS,kind))return [];

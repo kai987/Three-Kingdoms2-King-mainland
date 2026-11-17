@@ -13,6 +13,7 @@ the program only validates the inputs.
 """
 import argparse
 from collections import Counter
+from functools import lru_cache
 from hashlib import sha256
 import json
 from pathlib import Path
@@ -32,8 +33,11 @@ REPORT_JSON = ROOT / 'docs/ruler-affiliation-audit-20261027.json'
 REPORT_MD = ROOT / 'docs/ruler-affiliation-audit-20261027.md'
 EXPECTED_SCENARIOS = 29
 EXPECTED_POOL = 67
-EXPECTED_PEOPLE = 1056
-HETAO_EXPANSION_CITIES = frozenset(('shuofang', 'wuyuan', 'yunzhong'))
+EXPECTED_PEOPLE = 1080
+FRONTIER_CAPITALS = frozenset(('guonei', 'liucheng'))
+LATER_EXPANSION_CITIES = FRONTIER_CAPITALS | frozenset((
+    'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'luzon'))
+OPENING_CONFIG = ROOT / 'game/config/campaigns'
 LOCATION_FIELDS = ('status', 'faction', 'city')
 STATE_FIELDS = (*LOCATION_FIELDS, 'ruler')
 
@@ -113,7 +117,7 @@ def city_names(data, presentation):
     return result
 
 
-def material_totals(data, active):
+def material_totals(data, active, troop_cities=None):
     """Sum active-city stocks and carried soldiers, including returned troops."""
     stocks = [data['initial_city_resources'].get(city, data['initial_resources'])
               for city in sorted(active)]
@@ -127,12 +131,88 @@ def material_totals(data, active):
     return dict(gold=sum(row['gold'] for row in stocks),
                 grain=sum(row['grain'] for row in stocks),
                 soldiers=sum(row['reserves'] for row in stocks)
-                + sum(row['troops'] for row in data['initial_officers']))
+                + sum(row['troops'] for row in data['initial_officers']
+                      if troop_cities is None or row['city'] in troop_cities))
 
 
 def frozen_material_totals(data, active):
-    """Exclude later Hetao city stocks while still counting all carried troops."""
-    return material_totals(data, active - HETAO_EXPANSION_CITIES)
+    """Compare the historical review's original board and carried soldiers."""
+    return material_totals(data, active - LATER_EXPANSION_CITIES, active - FRONTIER_CAPITALS)
+
+
+@lru_cache(maxsize=1)
+def opening_supplements():
+    return (read(OPENING_CONFIG / 'city-expansion-openings.json')['scenarios'],
+            [read(path) for path in sorted((OPENING_CONFIG / 'faction-additions').glob('*.json'))])
+
+
+def reviewed_expansion_post(data, person_id, old):
+    """Return the latest independently reviewed posting for a frozen person record."""
+    if (person_id == 'historical-wang-zan-xuantu' and old.get('city') == 'liaodong'
+            and old.get('status') in ('free', 'chronology_excluded') and old.get('faction') is None):
+        # Xuantu replaces Wang Zan's old regional proxy in the appearance plans.
+        return dict(old, city='xuantu')
+    openings, _ = opening_supplements()
+    for city, people in openings.get(data['id'], {}).get('garrisons', {}).items():
+        if (city in LATER_EXPANSION_CITIES and person_id in people
+                and old.get('status') == 'serving' and old.get('faction') == data['initial_owners'][city]):
+            return dict(old, city=city)
+    for record, period in historical_faction_periods(data):
+        faction = record['faction']
+        ruler = period.get('ruler') == person_id
+        officers = historical_faction_officers(data, record, period)
+        officer = next((row for row in officers if row['person_id'] == person_id), None)
+        if ruler or officer:
+            updated = dict(old, status='serving', faction=faction['id'], city=faction['city'])
+            if 'ruler' in old:
+                updated['ruler'] = ruler
+            if 'troops' in old:
+                updated['troops'] = period['troops'] if ruler else officer['troops']
+            return updated
+    return old
+
+
+def historical_faction_periods(data):
+    _, additions = opening_supplements()
+    date = [data['start_year'], data['start_month']]
+    for record in additions:
+        period = next(row for row in reversed(record['periods']) if row['start'] <= date)
+        yield record, period
+
+
+def historical_faction_officers(data, record, period):
+    if period['owner'] != record['faction']['id']:
+        return []
+    date = [data['start_year'], data['start_month']]
+    return [*period.get('officers', []), *(row for row in record.get('officer_chronology', [])
+                                         if row['start'] <= date <= row['end'])]
+
+
+def check_added_factions(data):
+    """Check the later capitals against their own dated historical decisions."""
+    ident = data['id']
+    factions = {row['id']: row for row in data['factions']}
+    expected = {}
+    for record, period in historical_faction_periods(data):
+        fid, city = (record['faction'][key] for key in ('id', 'city'))
+        require(data['initial_owners'].get(city) == period['owner'],
+                f'{ident}: historical faction city owner differs: {city}')
+        if 'resources' in period:
+            require(data['initial_city_resources'].get(city) == period['resources'],
+                    f'{ident}: historical faction opening stocks differ: {city}')
+        garrison = {row['person_id']: (row['troops'], bool(row.get('ruler')))
+                    for row in data['initial_officers'] if row['city'] == city}
+        troops = {row['person_id']: (row['troops'], False)
+                  for row in historical_faction_officers(data, record, period)}
+        if ruler := period.get('ruler'):
+            require(fid in factions and factions[fid]['city'] == city,
+                    f'{ident}: missing historical faction: {fid}')
+            expected[fid] = dict(id=fid, person_id=ruler, city=city)
+            troops[ruler] = (period['troops'], True)
+        else:
+            require(fid not in factions, f'{ident}: inactive historical faction: {fid}')
+        require(garrison == troops, f'{ident}: historical faction garrison differs: {city}')
+    return expected
 
 
 def check_catalog(data, decision, pool, presentation):
@@ -162,6 +242,7 @@ def check_catalog(data, decision, pool, presentation):
     static = SimpleNamespace(data=data, factions=factions, map_cities=cities, ids=ids)
     validate_dated_source(static)
     visible = {row['id']: row for row in visible_factions(static)}
+    added_rulers = check_added_factions(data)
     require(set(data['faction_rulers']) == set(factions),
             ident + ': faction and ruler identities differ')
     for fid, faction in factions.items():
@@ -169,7 +250,7 @@ def check_catalog(data, decision, pool, presentation):
         require(runtime in by_runtime, ident + ': unknown ruler runtime ID: ' + fid)
         require(faction.get('captain') == by_runtime[runtime]['name'],
                 ident + ': captain is not canonical ruler name: ' + fid)
-        require(by_runtime[runtime]['person_id'] in pool,
+        require(fid in added_rulers or by_runtime[runtime]['person_id'] in pool,
                 ident + ': ruler missing from frozen review pool: ' + fid)
     require(all(data['initial_owners'].get(city) in {*visible, 'neutral'} for city in active),
             ident + ': unknown/dormant opening city owner')
@@ -193,8 +274,10 @@ def check_catalog(data, decision, pool, presentation):
             opening[pid] = actual
 
     expected_rulers = indexed(decision.get('rulers'), 'id', ident + ' reviewed rulers')
+    require(not (set(expected_rulers) & set(added_rulers)), ident + ': duplicate reviewed faction')
+    expected_rulers.update(added_rulers)
     require(set(expected_rulers) == set(visible),
-            ident + ': frozen review must cover all visible rulers exactly once')
+            ident + ': reviewed openings must cover all visible rulers exactly once')
     ruler_ids = set()
     ruler_rows = []
     names = city_names(data, presentation)
@@ -233,13 +316,14 @@ def check_catalog(data, decision, pool, presentation):
         row, era = reviewed_people[pid], eras[pid]
         require(all(key in row for key in LOCATION_FIELDS),
                 ident + ': incomplete frozen placement: ' + pid)
-        require(located(row) == located(era), ident + ': frozen placement differs: ' + pid)
+        reviewed = reviewed_expansion_post(data, pid, row)
+        require(located(reviewed) == located(era), ident + ': reviewed placement differs: ' + pid)
         for key in ('review_level', 'disposition', 'note', 'certainty'):
             text(row.get(key), ident + ' ' + pid + ' ' + key)
         urls(row.get('source_urls'), ident + ' ' + pid)
         if era['status'] in ('serving', 'free'):
             require(pid in opening, ident + ': reviewed active person missing from opening: ' + pid)
-        rows.append(dict(row, name=person['name'], runtime_id=person['runtime_id'],
+        rows.append(dict(reviewed, name=person['name'], runtime_id=person['runtime_id'],
                          ruler=pid in ruler_ids, city_name=names.get(era.get('city'))))
 
     material = material_totals(data, active)
@@ -258,7 +342,8 @@ def check_catalog(data, decision, pool, presentation):
                     and type(row[key]['ruler']) is bool,
                     ident + ': incomplete correction ' + key + ': ' + pid)
         after = dict(located(eras[pid]), ruler=pid in ruler_ids)
-        require(row['after'] == after, ident + ': correction result differs: ' + pid)
+        require(reviewed_expansion_post(data, pid, row['after']) == after,
+                ident + ': correction result differs: ' + pid)
         require(row['before'] != row['after'], ident + ': correction records no change: ' + pid)
         text(row.get('note'), ident + ' correction ' + pid)
         text(row.get('certainty'), ident + ' correction certainty ' + pid)
@@ -336,7 +421,10 @@ def build_report(reference_path=REFERENCE, catalog_dir=CATALOG_DIR):
         result['title_ja'] = data.get('main_scenario', {}).get('title_i18n', {}).get(
             'ja', japanese.get(title, title))
         by_runtime = {row['runtime_id']: row['person_id'] for row in data['people']}
-        all_rulers.update(by_runtime[rid] for rid in data['faction_rulers'].values())
+        _, supplements = opening_supplements()
+        added_factions = {record['faction']['id'] for record in supplements}
+        all_rulers.update(by_runtime[rid] for fid, rid in data['faction_rulers'].items()
+                          if fid not in added_factions)
         result['catalog_sha256'] = sha256(path.read_bytes()).hexdigest()
         results.append(result)
     require(seen == set(decisions), 'Compiled/reviewed scenario set differs')
@@ -362,7 +450,7 @@ def build_report(reference_path=REFERENCE, catalog_dir=CATALOG_DIR):
                 summary=dict(counts), limits=review['limits'], sources=review.get('sources', {}),
                 scope='Frozen ruler affiliation decisions and global structural checks; not full biographical or monthly-garrison historical certification.',
                 material_definition=('Opening totals include all active-city stocks and carried troops. '
-                    'The frozen comparison excludes opening stocks at the three later Hetao sites.'),
+                    'The frozen comparison excludes later city stocks and their separately authored frontier armies.'),
                 conversion=conversion, scenarios=results)
 
 

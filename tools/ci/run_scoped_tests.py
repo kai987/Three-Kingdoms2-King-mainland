@@ -267,6 +267,7 @@ def scenario_smoke(identities,backends=('python','rust'),*,root=ROOT,turns=3):
     if not identities:return []
     sys.path.insert(0,str(root/'source'))
     from remake.campaign import Catalog,canonical,digest
+    from remake import grain_units
     from remake.march_core import using_backend
     soak=module_at('ci_selected_campaign_soak',root/'tools/campaign-soak/run.py')
     _,paths=inventory(root);results=[]
@@ -283,7 +284,7 @@ def scenario_smoke(identities,backends=('python','rust'),*,root=ROOT,turns=3):
                 opening_stocks,opening_troops=catalog.opening_garrisons
                 for city in state.cities.values():
                     require(city.owner==catalog.data['initial_owners'][city.id],f'{identity}: initial owner differs for {city.id}')
-                    stock=opening_stocks[city.id]
+                    stock=grain_units.stocks(opening_stocks[city.id])
                     require(all(getattr(city,key)==stock[key]for key in('gold','grain','reserves')),f'{identity}: initial stock differs for {city.id}')
                     require(len(city.roster.officer_ids)<=99,f'{identity}: opening officer capacity exceeded')
                     require(all(state.officers[oid].troops==opening_troops[state.officers[oid].person_id]

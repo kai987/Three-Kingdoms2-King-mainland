@@ -1,0 +1,106 @@
+{
+  "schema": "tk2-historical-faction-openings-v1",
+  "faction": {
+    "id": "wuhuan",
+    "name": "乌桓",
+    "city": "liucheng",
+    "color": "#62455e"
+  },
+  "history": {
+    "basis": "柳城為漢代遼西郡屬縣。以今朝陽袁台子柳城遺址定位；遊戲城標略向西北避開大凌河與昌黎。史書記曹操進兵柳城征遼西烏桓，本作用柳城代表該部政治與軍事中心。丘力居、蹋頓、樓班的開局主從按史料次序配置，交替確月未詳。207年八月曹軍破烏桓後，九月及後續開局柳城歸曹方。城市人口及物資兵數為本作配置。",
+    "sources": [
+      "https://www.ln.gov.cn/web/zwgkx/zfxxgk1/zc/xzgfxwj/szf/szfwj/2023010509303592434/index.shtml",
+      "https://zh.wikisource.org/wiki/後漢書/卷90#烏桓",
+      "https://zh.wikisource.org/wiki/三國志/卷30#烏丸",
+      "https://ancient-china-books.github.io/zizhitongjian/OEBPS/Text/6209.html"
+    ]
+  },
+  "periods": [
+    {
+      "start": [184, 2],
+      "owner": "wuhuan",
+      "ruler": "san14-candidate-0201",
+      "troops": 2400,
+      "officers": [{"person_id": "san14-candidate-0740", "troops": 1400}],
+      "resources": {"gold": 1060, "grain": 5100, "reserves": 1350},
+      "note": "史載丘力居為遼西烏桓大人，部眾五千餘落。柳城以該部勢力為開局代表。蹋頓在本作的早期出場按既有生涯窗口配置。"
+    },
+    {
+      "start": [188, 6],
+      "owner": "wuhuan",
+      "ruler": "san14-candidate-0201",
+      "troops": 2500,
+      "officers": [{"person_id": "san14-candidate-0740", "troops": 1450}],
+      "resources": {"gold": 860, "grain": 4690, "reserves": 1200},
+      "note": "張純、張舉與丘力居合作起事，柳城由丘力居領遼西烏桓。遊戲以同盟表示合作。"
+    },
+    {
+      "start": [190, 1],
+      "owner": "wuhuan",
+      "ruler": "san14-candidate-0201",
+      "troops": 2450,
+      "officers": [{"person_id": "san14-candidate-0740", "troops": 1550}],
+      "resources": {"gold": 920, "grain": 4930, "reserves": 1250},
+      "note": "丘力居卒於初平年間，未載確月。沿用本作原先的卒年設定，以丘力居代表當期開局。"
+    },
+    {
+      "start": [194, 6],
+      "owner": "wuhuan",
+      "ruler": "san14-candidate-0740",
+      "troops": 3250,
+      "resources": {"gold": 1240, "grain": 5850, "reserves": 1600},
+      "note": "丘力居死後，樓班尚幼，由從子蹋頓代領。"
+    },
+    {
+      "start": [198, 3],
+      "owner": "wuhuan",
+      "ruler": "san14-candidate-0740",
+      "troops": 3400,
+      "officers": [{"person_id": "san14-candidate-0996", "troops": 1250}],
+      "resources": {"gold": 1560, "grain": 6580, "reserves": 1800},
+      "note": "蹋頓與袁紹修好並助擊公孫瓚。樓班開局在柳城，成年奉為單于的確切年份未詳。"
+    },
+    {
+      "start": [202, 6],
+      "owner": "wuhuan",
+      "ruler": "san14-candidate-0996",
+      "troops": 1400,
+      "officers": [{"person_id": "san14-candidate-0740", "troops": 3500}],
+      "resources": {"gold": 1580, "grain": 6770, "reserves": 1810},
+      "note": "史載樓班成年後被推為單于，蹋頓仍主持軍議。史無確切年份，本作自此劇本表現兩人的分工。"
+    },
+    {
+      "start": [207, 9],
+      "owner": "wei",
+      "resources": {"gold": 430, "grain": 2280, "reserves": 550},
+      "note": "建安十二年八月白狼山戰事後，九月曹操自柳城還師。本劇本是戰後開局，以曹方代表柳城，開局庫存按戰後調低。"
+    },
+    {
+      "start": [219, 7],
+      "owner": "wei",
+      "resources": {"gold": 760, "grain": 3520, "reserves": 880},
+      "note": "白狼山戰後本作按曹方的遼西區域配置。晚期烏桓仍有諸部活動，柳城開局歸屬按曹魏代表。"
+    }
+  ],
+  "officer_chronology": [
+    {"person_id": "historical-wuhuan-nanlou", "start": [188, 6], "end": [207, 8], "troops": 650,
+      "note": "上谷烏桓首領。其部本與遼西並立，後與蘇僕延奉樓班為單于。自188年開局集中各部至柳城，為本作聯軍配置。晚年不詳，以207年聯盟解體為出場終點。",
+      "sources": ["https://zh.wikisource.org/wiki/後漢書/卷90#烏桓", "https://zh.wikisource.org/wiki/三國志/卷30#烏丸"]},
+    {"person_id": "historical-wuhuan-supuyan", "start": [188, 6], "end": [207, 8], "troops": 600,
+      "note": "遼東屬國烏桓峭王，曾獲袁紹印綬，後與難樓擁立樓班。本作自188年開局將其所部編入聯軍。晚年不詳，以207年聯盟解體為出場終點。",
+      "sources": ["https://zh.wikisource.org/wiki/後漢書/卷90#烏桓", "https://zh.wikisource.org/wiki/三國志/卷30#烏丸"]},
+    {"person_id": "historical-wuhuan-wuyan", "start": [188, 6], "end": [207, 8], "troops": 550,
+      "note": "右北平烏桓汗魯王，曾獲袁紹印綬。曹軍破烏桓後奔遼東，為公孫康所殺。188年起駐柳城是本作聯軍配置。",
+      "sources": ["https://zh.wikisource.org/wiki/後漢書/卷90#烏桓", "https://zh.wikisource.org/wiki/三國志/卷30#烏丸"]},
+    {"person_id": "historical-wuhuan-sufuwan", "start": [202, 6], "end": [207, 8], "troops": 450,
+      "note": "《三國志》記其與樓班、烏延等於207年敗走遼東，為公孫康所殺。此前行跡未載，提前至202年登場為本作配置。",
+      "sources": ["https://zh.wikisource.org/wiki/三國志/卷30#烏丸", "https://zh.wikisource.org/wiki/三國志/卷01"]}
+  ],
+  "future_in_capital": ["san14-candidate-0996"],
+  "allies_by_scenario": {
+    "mainland188-06": ["zhang_chun"],
+    "mainland198-03": ["yuan_shao"],
+    "mainland200-01": ["yuan_shao"],
+    "mainland201-05": ["yuan_shao"]
+  }
+}

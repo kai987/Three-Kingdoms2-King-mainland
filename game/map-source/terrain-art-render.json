@@ -1,44 +1,97 @@
 {
   "schema": "tk2-current-map-terrain-art-render-v1",
-  "policy": "Current road/water background wins; apply only retained opaque art pixels outside protected corridors.",
+  "policy": "Render the full map from its terrain and shorelines beneath the current cities and roads.",
   "rebuild_command": "python3 -B game/build_terrain_art.py",
   "sources": {
     "art/map-western-range-v1/manifest.json": "f1f2a7816f7b996dcf4b06920c8f2e2062dce66b4b8e08337d05231d53f8ea6d",
     "art/map-western-range-v2/manifest.json": "ac7d98decd6e80e9d5574aeb12a90ffc7f8deaa36203b31260dcca15b459ec34",
     "art/map-western-range-v3/manifest.json": "e2ca03db95ea413efe1480af40de92bafe686d6aa1c670db33904b3f89e1bdc1",
     "art/map-western-range-v3/source/road-centers-before-junctions.png": "a5de4d6f09d860a5d0f93479321e4365d5a13c048de38c97c7bbef45ef0336e7",
-    "game/assets/map-road-centers.png": "a13c227efe5fa0e94a571a221f2a3cf704ec4116ddcbb3550d5f7d0cd1768738",
-    "game/build_portrait_manifest.py": "99534ed531229159c5e18d0c7ed9fbf10ff8370f495f0d623e3dcb88cd0a991a",
-    "game/build_terrain_art.py": "7ad3ae0ab3d4432fe0d65307ae8e7a10e3c0bf77904f399c311ffd695a9d885b",
-    "game/config/campaigns/shared.json": "8b72140f0839d023542b7938cd9f9d038cb59f9c0897da4099c9cb4520e52405",
-    "game/config/road-centers.json": "b1d6b547e96e7fa93baf711b3a64b3c629ce16bd254ffba66d8f09d4767c82c3",
-    "game/config/route-geometry.json": "2f53d159bd211fa5ee7c1a7b45a24dc19007ffc8e7a19270f8bcaf07fa73b136",
-    "game/config/terrain-art.json": "4687cb65416c651f94722df5a79337cedff84484e4c3eb51920ada968d56c45b",
-    "game/config/water-corrections.json": "5af4c359db943d38bfae0f9b32de4e9fc751ae024a69a41334a2abe8506c3e2e",
+    "game/assets/map-road-centers.png": "201f69f13e51e58f795a686cdb4655e82b3e68edbd15a9e9188a906c8914dd9b",
+    "game/build_portrait_manifest.py": "a3b946984633b5bb030d117c408024c5caad5c425c92070356967148450c08d5",
+    "game/build_terrain_art.py": "2954ebb68b399a735ff73d99b62ef4ee419b99540db6ca73563b819675989e54",
+    "game/config/campaigns/shared.json": "cc9c95e9ea9c7e464eb3f0861e61b5e4410bfeafcf065b1232a89b28c0988b49",
+    "game/config/road-centers.json": "3d1ca54f92a7b09af7ecd000be0c0dcaaff982c8a4920f20e5960787840aca73",
+    "game/config/route-geometry.json": "f1472ddf1f63b60da745899e04815948ecb7c5781afdc401056dcefe056d9a94",
+    "game/config/terrain-art.json": "dbd1ac2233fb8ff4bc07f5178933956f5c421d2b62d07ecd0a09d5a02472e6ec",
+    "game/config/water-corrections.json": "26ae46a51010a6f746a91d37b987f1c15ab870faa35519890300255ba516a3a2",
+    "game/island_art.py": "0f29ac4cf21cd3bf183844b0c653d535fdae94d3c30777f98479b6405bc18447",
     "game/map-source/approved-western-range-art.png": "50f7a296a2b476591b9a4cefd371b7317290489628baa266444c4a4fce3d06b1",
     "game/map-source/historic-water.svg": "24cf80474725fbcf3b841c9af8bdcdd4fe2c673d5ff212ba9a218a8af358b723",
-    "game/map-source/hydrology-ground.png": "11f8373fa8277b1c403c543463425a81d50438d22bb9c25e723f51829f70b9e4",
-    "game/map-source/road-centers-render.json": "89d0b762a1a47d4841e1b92a474ba0f4c69ac3b8b80de0a32233a60cc42e619d",
+    "game/map-source/hydrology-ground.png": "488e75e26eabc331fbb3276dc5cf5a4bc32883424b782525d9f4d1c1421c96ee",
+    "game/map-source/northeast-coast-art.png": "bf07b62c1da5d3225568b5a0d4784ceb4afca96aeb4c0e7d71a10f8350f09eff",
+    "game/map-source/northeast-coastline.png": "3af958327bc3fb585c54c7ebfed7b3a66e8d4f418e4ace3d7c8977e3f5deebf5",
+    "game/map-source/road-centers-render.json": "6cf298a47d46fd098f5e9c64d7dfeaa66aab63aa58ddb34d4de5ac0aca210acf",
     "game/map-source/road-ground.png": "ea8cf8ecbb573205b9b3e9ea43c1c15ec61ff5bef3e3d1e699bea75b0d7c08c0",
     "game/map-source/sea-shadow.svg": "207a066255705a6f080ed9196cd75911d7bc16f37dd3a455ad061a5740130f58",
     "game/map-source/terrain-under-water.png": "e0bdfc8406f8ddf6285fdc9cdf929ec2a3ee406600bc403c6d050d22ab0a555c",
-    "game/map-source/water-render.json": "0c7a57f42c9a37de18bb01ee41cf18178fe3ebadb3a8f1d1ef07f2eb365c6852",
+    "game/map-source/water-render.json": "ee86f42d85b7e3ede7b64a1c0e8bcb3530da23402b6830682e803357da58a2fe",
     "game/road_centers.py": "16e16ab039fe15605f27d9e46df18ad945014b2aec9f5dd9eb4e9df32f74cdea",
-    "game/route_render_source.py": "af454561a401c244d8ca9d86d6097e9ecc71e7621c64ad2dd9b85c3d44aa8f90"
+    "game/route_render_source.py": "af454561a401c244d8ca9d86d6097e9ecc71e7621c64ad2dd9b85c3d44aa8f90",
+    "game/world_surface.py": "62ecbab374c95f8977348893c6b3c7c72bcb5269c22ecce4293cf98354583784"
   },
-  "positions_sha256": "91a45ddd1005028f4f20779946104df3bab590aab30a0c63c1d17f24a810d38d",
+  "positions_sha256": "276b966297eadab70e2655b0603b309aa4251bee5f718cf748153e326b26ddae",
   "city_count": 115,
   "approved_asset_rgba_sha256": "5bbd57a0a685f6aa7fea017c1647925487edc35be062f2410c7b82dff10a2617",
+  "islands": {
+    "yizhou": {
+      "before_bounds": [
+        1102,
+        638,
+        1202,
+        798
+      ],
+      "after_bounds": [
+        1106,
+        650,
+        1181,
+        770
+      ],
+      "land_pixels_before": 7834,
+      "land_pixels_after": 4407,
+      "fixed_pixels": 688
+    },
+    "zhuya": {
+      "before_bounds": [
+        484,
+        871,
+        594,
+        990
+      ],
+      "after_bounds": [
+        501,
+        870,
+        583,
+        959
+      ],
+      "land_pixels_before": 8038,
+      "land_pixels_after": 4518,
+      "fixed_pixels": 687
+    }
+  },
+  "scenery": {
+    "luzon": {
+      "bounds": [
+        1094,
+        924,
+        1186,
+        1023
+      ],
+      "land_pixels": 5677
+    }
+  },
   "output": {
     "path": "game/assets/map-western-range.png",
-    "sha256": "111a3824cf3bbba1d1d8b2bfa47864d0c3ddb6ccc886476e45231762cca08d39",
-    "rgba_sha256": "8cdba9b31813d3872fee017f90a214352db0eb9fde8c6c87d9c798ea7e8606a7"
+    "sha256": "e04ed1d2ecf2246ed3a9d0c0b78475b963b479228899b85ad3b3579a3dbeee02",
+    "rgba_sha256": "af2fe5a20c72e3ead420974b5ffa2b7e89f1d7eb8ee8b772acab8c8c76ced4b7"
   },
   "stats": {
     "art_pixels": 63868,
     "applied_pixels": 62250,
     "protected_art_pixels": 1618,
-    "protected_pixels": 523363,
-    "outside_art_pixels_unchanged": 1320580
+    "protected_pixels": 559233,
+    "island_pixels_changed": 32644,
+    "surface_pixels_changed": 360272,
+    "outside_art_pixels_unchanged": 952508
   }
 }

@@ -7,6 +7,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.browser_runtime import BrowserRuntime
+from remake.errors import GameError
 from remake.session import CampaignSession
 
 
@@ -166,3 +167,64 @@ class MarchPreviewTests(unittest.TestCase):
         self.assertEqual(runtime.dispatch_json(f'/api/march-preview?source=wuyuan&target=jincheng&revision={revision}')['status'], 400)
         self.assertEqual((session.revision, session.journal), (revision, journal))
         self.assertEqual(runtime.dispatch_json('/api/save')['body'], current)
+
+    def test_transfer_preview_quotes_and_commits_the_same_supplied_detour(self):
+        session = opening('217-07', 'shu')
+        scenario = next(iter(session.catalogs))
+        runtime = BrowserRuntime({scenario: str(ROOT / 'game/data/campaigns/217-07.json')},
+                                 session._scenario_previews(), scenario)
+        runtime.session = session
+        state = session.game.state
+        state.cities['guanghan'].grain = 0
+        state.cities['nanjun'].grain = 0  # The destination never supplies a transfer.
+        session.game.validate(state)
+        before, journal = session.export_save(), list(session.journal)
+        data = dict(source='shujun', target='nanjun', officers=[370], route_mode='fastest')
+        request = dict(data, revision=session.revision)
+        response = runtime.dispatch_json('/api/transfer-preview', 'POST', json.dumps(request))
+        self.assertEqual(response['status'], 200)
+        quote = json.loads(response['body'])
+        self.assertEqual((quote['primary']['days'], quote['primary']['path'][1]), (45, 'guanghan'))
+        detour = quote['detour']
+        self.assertEqual((detour['days'], detour['path']),
+                         (56, ['shujun', 'qianwei', 'jiangyang', 'bajun', 'fuling', 'badong', 'nanjun']))
+        self.assertEqual(detour['segments'][0]['route_id'], 'shujun:qianwei:river')
+        self.assertEqual((session.export_save(), session.journal), (before, journal))
+        self.assertEqual(runtime.dispatch_json('/api/transfer-preview', 'POST',
+            json.dumps(dict(request, revision=session.revision-1)))['status'], 409)
+        self.assertEqual(runtime.dispatch_json('/api/transfer-preview', 'POST',
+            json.dumps(dict(request, officers=[370, 370])))['status'], 400)
+        self.assertEqual(runtime.dispatch_json('/api/transfer-preview', 'POST',
+            json.dumps(dict(request, route_mode='invalid')))['status'], 400)
+
+        land = session.preview_transfer(dict(request, route_mode='land'))
+        self.assertEqual(land['primary']['modes'], ['land'])
+        self.assertEqual((land['detour']['days'], land['detour']['modes']), (112, ['land']))
+
+        source_grain = state.cities['shujun'].grain
+        session.command('transfer', dict(data, supply_detour=True), session.revision)
+        state = session.game.state
+        row, = state.extension['travel']['marches']
+        self.assertEqual(row['quote'], quote_details(detour))
+        self.assertEqual(state.cities['shujun'].grain, source_grain-row['supply']['loaded'])
+        saved = session.export_save()
+        session.load_save(saved, session.revision)
+        self.assertEqual(session.export_save(), saved)
+
+    def test_no_supplied_detour_does_not_replace_the_normal_transfer(self):
+        session = opening('217-07', 'shu')
+        state = session.game.state
+        request = dict(source='shujun', target='nanjun', officers=[370], route_mode='fastest')
+        self.assertIsNone(session.preview_transfer(dict(request, revision=session.revision))['detour'])
+        for key, city in state.cities.items():
+            if city.owner == state.player and key != 'shujun':
+                city.grain = 0
+        before, revision = session.export_save(), session.revision
+        preview = session.preview_transfer(dict(request, revision=revision))
+        self.assertIsNone(preview['detour'])
+        with self.assertRaisesRegex(GameError, '補給'):
+            session.command('transfer', dict(request, supply_detour=True), revision)
+        self.assertEqual((session.export_save(), session.revision), (before, revision))
+        session.command('transfer', request, revision)
+        row, = session.game.state.extension['travel']['marches']
+        self.assertEqual(row['quote'], quote_details(preview['primary']))

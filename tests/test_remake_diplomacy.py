@@ -87,7 +87,7 @@ class DiplomacyTests(unittest.TestCase):
                 saved = game.export_save()
                 orders = command_books.remaining(game.state, 'shu')
                 with self.assertRaises(GameError):
-                    self.order(game, 'goodwill', resource=resource, amount=20001)
+                    self.order(game, 'goodwill', resource=resource, amount=200001)
                 self.assertEqual(game.export_save(), saved)
                 self.order(game, 'goodwill', resource=resource, amount=amount)
                 self.assertEqual(stock('xiangyang'), before['xiangyang']-amount)

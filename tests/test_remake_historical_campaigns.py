@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
 from remake import battle_placement, city_development, civil_staff, events, facilities, historical_campaigns as history, strategic_ai, treasures
-from remake.historical_chapters import CHAPTERS
+from remake.historical_chapters import CHAPTERS, GOGURYEO_EXPEDITION, GUANQIU_JIAN, WANG_QI, DONGCHEON
 from remake.march_core import using_backend
 from remake.officers import transfer_officers
 
@@ -414,6 +414,7 @@ class HistoricalCampaignTests(unittest.TestCase):
             self.assertFalse(self.events(game, history.ALLIANCE_ENDED))
             self.advance(game)
             self.arrivals(game)
+            self.finish_pending_battles(game)
         event, = self.events(game, history.ALLIANCE_ENDED)
         self.assertEqual((event['year'], event['month'], event['day'], event['audience']),
                          (219, 10, 1, 'world'))
@@ -422,6 +423,10 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertEqual(game.state.cities['nanjun'].owner, 'shu')
         self.assertEqual(game.state.cities['jiangxia'].owner, 'wu')
         game = self.resume(game)
+        if game.state.phase == 'result':
+            game.command('settle', {'battle_id': game.state.battle['id']}, game.revision)
+            self.arrivals(game)
+        self.finish_pending_battles(game)
         self.advance(game)
         self.assertEqual(len(self.events(game, history.ALLIANCE_ENDED)), 1)
 
@@ -640,7 +645,7 @@ class HistoricalCampaignTests(unittest.TestCase):
             '249-01': 'gaopingling', '263-05': 'wei_invades_shu',
         }
         cases = [*scenarios.items(), ('190-01', 'dong_zhuo_relocation')]
-        self.assertEqual(set(CHAPTERS), {f'historical_{name}' for _, name in cases})
+        self.assertEqual(set(CHAPTERS) - set(history.FRONTIER_SORTIES), {f'historical_{name}' for _, name in cases})
         for scenario, name in cases:
             with self.subTest(scenario=scenario):
                 kind = f'historical_{name}'
@@ -691,6 +696,61 @@ class HistoricalCampaignTests(unittest.TestCase):
                             history.process(game, state)
                         self.assertNotIn(kind, state.extension[history.RECEIPTS])
 
+    def test_wuhuan_september_opening_records_the_victory_without_replaying_the_sortie(self):
+        game = self.opening('207-09', 'wei')
+        event, = self.events(game, history.WUHUAN_EXPEDITION)
+        self.assertEqual((event['year'], event['month'], event['city_ids']),
+                         (207, 9, ['liaoxi', 'liucheng']))
+        self.assertEqual(len(event['person_ids']), 5)
+        self.assertEqual(game.state.cities['liucheng'].owner, 'wei')
+        with patch.object(strategic_ai, '_open_ai_queue'):
+            self.advance(game)
+        self.assertFalse(game.state.extension['travel']['marches'])
+        self.assertEqual(len(self.events(self.resume(game), history.WUHUAN_EXPEDITION)), 1)
+
+    def test_goguryeo_named_officers_march_and_capture_guonei_on_settlement(self):
+        data = json.loads((ROOT / 'game/data/campaigns/249-01.json').read_bytes())
+        data.update(id='frontier-expedition-fixture', start_year=244, start_month=7,
+                    active_cities=['liaodong', 'xuantu', 'guonei'], city_foundings={},
+                    initial_owners={'liaodong': 'wei', 'xuantu': 'wei', 'guonei': 'goguryeo'},
+                    initial_alliances=[], initial_free_officers=[])
+        data['factions'] = [dict(id=side, name=side, city=city, color='#004488')
+                            for side, city in [('wei', 'liaodong'), ('goguryeo', 'guonei')]]
+        entries = [('san14-candidate-0529', 'liaodong', 300, True),
+                   (GUANQIU_JIAN, 'xuantu', 1800, False),
+                   (WANG_QI, 'liaodong', 800, False), (DONGCHEON, 'guonei', 200, True)]
+        ids = {row['person_id']: row['runtime_id'] for row in data['people']}
+        data['faction_rulers'] = {'wei': ids[entries[0][0]], 'goguryeo': ids[DONGCHEON]}
+        data['initial_officers'] = [dict(person_id=person, city=city, troops=troops, ruler=ruler)
+                                    for person, city, troops, ruler in entries]
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'scenario.json'
+            path.write_text(json.dumps(data))
+            game = Headless(Catalog(path))
+        game.command('new', {'faction': 'goguryeo', 'seed': 2026}, 0)
+        event, = self.events(game, GOGURYEO_EXPEDITION)
+        self.assertEqual(event['person_ids'], [GUANQIU_JIAN, WANG_QI, DONGCHEON])
+        self.assertEqual(game.state.cities['guonei'].owner, 'goguryeo')
+        with patch.object(strategic_ai, '_open_ai_queue'):
+            self.advance(game)
+            move, = game.state.extension['travel']['marches']
+            self.assertEqual((move['kind'], move['target'], move['officers']),
+                             ('transfer', 'xuantu', [ids[WANG_QI]]))
+            self.arrivals(game)
+            for _ in range(18):
+                if game.state.phase == 'battle':
+                    break
+                self.advance(game)
+                self.arrivals(game)
+        self.assertEqual(game.state.phase, 'battle')
+        battle = game.state.battle
+        self.assertEqual((battle['source'], battle['target']), ('xuantu', 'guonei'))
+        self.assertEqual([u['id'] for u in battle['attackers']], [ids[GUANQIU_JIAN], ids[WANG_QI]])
+        self.assertEqual(game.state.cities['guonei'].owner, 'goguryeo')
+        self.finish_pending_battles(game)
+        self.assertEqual(game.state.cities['guonei'].owner, 'wei')
+        self.assertEqual(len(self.events(self.resume(game), GOGURYEO_EXPEDITION)), 1)
+
     def test_dong_zhuo_relocation_fires_once_when_january_campaign_reaches_february(self):
         kind = history.DONG_ZHUO_RELOCATION
         game = self.opening('190-01', 'dong_zhuo')
@@ -729,22 +789,23 @@ class HistoricalCampaignTests(unittest.TestCase):
         moved, lost, loot = (event['details'][field] for field in ('moved', 'lost', 'loot'))
         old_treasury = legacy.state.extension['treasury']
         treasure_before = old_treasury['cities']['jingzhao']['treasure']
-        self.assertEqual(loot, dict(gold=50_000, grain=100_000, treasure=99 - treasure_before))
-        for field in ('gold', 'grain', 'population'):
+        self.assertEqual(loot, dict(gold=50_000, grain=1_000_000, treasure=99 - treasure_before))
+        for field in ('gold', 'grain', 'population', 'reserves'):
             if field == 'population':
-                unit = city_development.POPULATION_UNIT
                 new = game.state.extension['city_development']['cities']
                 old = legacy.state.extension['city_development']['cities']
                 source_before, target_before = (old[city][field] for city in event['city_ids'])
                 source_after, target_after = (new[city][field] for city in event['city_ids'])
             else:
-                unit = 1
                 source_before, target_before = (getattr(legacy.state.cities[city], field) for city in event['city_ids'])
                 source_after, target_after = (getattr(game.state.cities[city], field) for city in event['city_ids'])
-            self.assertEqual(moved[field], source_before * 70 // (100 * unit) * unit)
-            self.assertEqual(lost[field], source_before * 25 // (100 * unit) * unit)
+            self.assertEqual(moved[field], source_before * 72 // 10_000 * 100)
+            self.assertEqual(lost[field], source_before * 25 // 10_000 * 100)
             self.assertEqual(source_after, source_before - moved[field] - lost[field])
             self.assertEqual(target_after, target_before + moved[field] + loot.get(field, 0))
+        self.assertEqual(game.state.soldiers['lost'], legacy.state.soldiers['lost'] + lost['reserves'])
+        self.assertEqual({ident: officer.troops for ident, officer in game.state.officers.items()},
+                         {ident: officer.troops for ident, officer in legacy.state.officers.items()})
         original_town = legacy.state.extension['facilities']['cities']['henan']
         damaged_town = game.state.extension['facilities']['cities']['henan']
         self.assertEqual(damaged_town, dict(original_town, town=1, damage=50))
@@ -755,7 +816,6 @@ class HistoricalCampaignTests(unittest.TestCase):
         for key in event['city_ids']:
             self.assertEqual(game.state.cities[key].roster.officer_ids,
                              legacy.state.cities[key].roster.officer_ids)
-            self.assertEqual(game.state.cities[key].reserves, legacy.state.cities[key].reserves)
         expected_treasury = deepcopy(old_treasury)
         expected_treasury['cities']['jingzhao']['treasure'] += loot['treasure']
         expected_treasury['ledger']['found'] += loot['treasure']
@@ -767,17 +827,29 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertEqual(legacy.export_save(), before_legacy_replay)
 
         movement_only, = self.events(legacy, kind)
-        movement_only['details'] = {key: value for key, value in event['details'].items() if key != 'loot'}
+        movement_only['details'] = deepcopy(event['details'])
+        del movement_only['details']['loot']
+        del movement_only['details']['moved']['reserves'], movement_only['details']['lost']['reserves']
+        movement_only['details']['moved']['gold'] += 1  # Old receipts used one-unit gold precision.
         legacy = self.resume(legacy)
         before_legacy_replay = legacy.export_save()
         history.process(legacy, legacy.state)
         self.assertEqual(legacy.export_save(), before_legacy_replay)
 
         previous_loot, = self.events(legacy, kind)
-        previous_loot['details'] = deepcopy(event['details'])
-        del previous_loot['details']['loot']['grain']
+        previous_loot['details']['loot'] = {key: amount for key, amount in loot.items() if key != 'grain'}
         legacy = self.resume(legacy)
         before_legacy_replay = legacy.export_save()
+        history.process(legacy, legacy.state)
+        self.assertEqual(legacy.export_save(), before_legacy_replay)
+        former_active, = self.events(legacy, kind)
+        former_active['details'] = deepcopy(event['details'])
+        former_active['details']['troops_to_reserves'] = 150
+        for section, troops in (('moved', 5_100), ('lost', 1_700)):
+            del former_active['details'][section]['reserves']
+            former_active['details'][section]['troops'] = troops
+        before_legacy_replay = legacy.export_save()
+        legacy = self.resume(legacy)
         history.process(legacy, legacy.state)
         self.assertEqual(legacy.export_save(), before_legacy_replay)
         game = self.resume(game)
@@ -806,13 +878,22 @@ class HistoricalCampaignTests(unittest.TestCase):
         development['henan']['population'] = 15_999
         development['jingzhao']['population'] = 1_999_700
         treasures.debit(state, destination.id, treasures.count(state, destination.id), reason='spent')
+        target_reserves = facilities.LIMIT - 237
+        state.soldiers['recruited'] += target_reserves - destination.reserves
+        destination.reserves = target_reserves
+        state.soldiers['initial'] += 1_975 - source.reserves
+        source.reserves = 1_975
+        troops_before = {ident: officer.troops for ident, officer in state.officers.items()}
 
         history.process(game, state)
         event, = self.events(game, kind)
-        self.assertEqual(event['details']['moved'], dict(gold=0, grain=0, population=200))
-        self.assertEqual(event['details']['lost'], dict(gold=250, grain=592, population=3900))
+        self.assertEqual(event['details']['moved'], dict(gold=0, grain=0, population=200, reserves=200))
+        self.assertEqual(event['details']['lost'], dict(gold=200, grain=500, population=3900, reserves=400))
+        self.assertEqual((source.reserves, destination.reserves), (1_375, facilities.LIMIT - 37))
+        self.assertEqual(state.soldiers['lost'], 400)
+        self.assertEqual({ident: officer.troops for ident, officer in state.officers.items()}, troops_before)
         self.assertEqual(event['details']['loot'], dict(gold=23, grain=23, treasure=99))
-        self.assertEqual((source.gold, source.grain, development['henan']['population']), (750, 1779, 11_899))
+        self.assertEqual((source.gold, source.grain, development['henan']['population']), (800, 1871, 11_899))
         self.assertEqual((destination.gold, destination.grain, development['jingzhao']['population']),
                          (facilities.LIMIT, facilities.LIMIT, 1_999_900))
         self.assertEqual(treasures.count(state, destination.id), 99)
@@ -820,9 +901,13 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertTrue(city_development.valid_population(development['henan']['population']))
         self.assertTrue(city_development.valid_population(development['jingzhao']['population']))
         history.validate_event(game.catalog, state, event)
-        for section, field, invalid in (('moved', 'population', 1), ('lost', 'gold', -1),
+        active = sum(officer.troops for officer in state.officers.values())
+        self.assertEqual(active + sum(city.reserves for city in state.cities.values()) + state.soldiers['lost'],
+                         state.soldiers['initial'] + state.soldiers['recruited'])
+        for section, field, invalid in (('moved', 'population', 1), ('lost', 'gold', -1), ('lost', 'gold', 201),
+                                        ('moved', 'reserves', 101), ('moved', 'troops', 100),
                                         ('moved', 'grain', facilities.LIMIT), ('moved', 'gold', True),
-                                        ('loot', 'gold', 50_001), ('loot', 'grain', 100_001),
+                                        ('loot', 'gold', 50_001), ('loot', 'grain', 1_000_001),
                                         ('loot', 'grain', False), ('loot', 'treasure', 100),
                                         ('loot', 'treasure', True)):
             with self.subTest(section=section, field=field, value=invalid):
@@ -944,7 +1029,7 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertNotIn('milestones', prior)
         expected = [row for row in prior['items'] if row['kind'] in events.MILESTONE_KINDS]
         self.assertEqual([row['kind'] for row in expected],
-                         ['historical_three_visits', 'historical_three_visits_first'])
+                         ['historical_three_visits', history.WUHUAN_EXPEDITION, 'historical_three_visits_first'])
 
         for _ in range(events.LIMIT + 2):
             game._emit_event(game.state, 'new_year', details={'year': game.state.year}, audience='world')

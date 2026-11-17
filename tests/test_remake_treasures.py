@@ -4,6 +4,7 @@ from pathlib import Path
 from types import SimpleNamespace
 import sys
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
@@ -11,6 +12,7 @@ from remake import treasures, command_books
 from remake.campaign import SeedRng
 from remake.errors import GameError
 from remake.officers import GameRules
+from remake.session import CampaignSession
 
 
 class FixtureGame:
@@ -92,6 +94,34 @@ class TreasuresTests(unittest.TestCase):
         view['cities']['capital']['reward_targets'][0]['gold_rewards'][0]['gain'] = 99
         view['factions']['one']['policy']['enabled'] = True
         self.assertEqual(state, before, 'View containers cannot alias mutable treasury policy or quotes')
+
+    def test_changan_opening_treasure_matches_preview_and_initial_ledger(self):
+        expected = {'190-01': 4, '191-10': 99, '194-06': 46, '196-06': 18,
+                    '197-07': 12, '198-03': 8, '200-01': 4}
+        session = CampaignSession([ROOT / 'game' / 'data' / 'campaigns' / f'{key}.json' for key in expected])
+        for key, amount in expected.items():
+            with self.subTest(scenario=key):
+                scenario = f'mainland{key}'
+                preview = session.preview_city(scenario, 'jingzhao')['city']
+                self.assertEqual(preview['treasure'], amount)
+                session.command('new', dict(scenario=scenario, faction=preview['owner'], seed=2), session.revision)
+                state = session.game.state
+                self.assertEqual(treasures.count(state, 'jingzhao'), amount)
+                treasury = state.extension['treasury']
+                self.assertEqual(treasury['ledger']['initial'], sum(row['treasure'] for row in treasury['cities'].values()))
+                self.assertEqual(treasury['ledger']['found'], 0)
+                treasures.validate(session.game, state)
+
+    def test_changan_previous_save_keeps_saved_treasure(self):
+        session = CampaignSession([ROOT / 'game' / 'data' / 'campaigns' / '191-10.json'])
+        with patch.object(treasures, '_CHANGAN_RELOCATION_TREASURES', {}):
+            session.command('new', dict(faction='dong_zhuo', seed=2), session.revision)
+            treasures.debit(session.game.state, 'jingzhao', 1, reason='spent')
+            old_save = session.export_save()
+        self.assertEqual(session.preview_city('mainland191-10', 'jingzhao')['city']['treasure'], 99)
+        session.load_save(old_save, session.revision)
+        self.assertEqual(treasures.count(session.game.state, 'jingzhao'), 3)
+        self.assertEqual(session.export_save(), old_save)
 
     def test_governor_manual_selection_auto_restore_and_unavailability(self):
         game, state = fixture()

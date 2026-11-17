@@ -38,29 +38,29 @@
   "source_files": {
     "game/config/references/original-officer-stats.json": "11ab9fbfe6852d2d8e59a400e7fd62b59281506b224acef141d2690e4a769032",
     "game/config/references/cnblogs-officer-stats.json": "fee9b0e47615f676c25bea80900bdb60896a193253f4eb8e4a9c4e3ed8605fef",
-    "game/config/campaigns/people.json": "67e43eb1723321a92a5d17a11fce9ff06ad917cc42154e5147b6324af6f0af26",
-    "game/config/campaigns/shared.json": "8b72140f0839d023542b7938cd9f9d038cb59f9c0897da4099c9cb4520e52405"
+    "game/config/campaigns/people.json": "45063728f4b4ed25eb8be4d85f91090c475a979931303f890459da5791f13899",
+    "game/config/campaigns/shared.json": "cc9c95e9ea9c7e464eb3f0861e61b5e4410bfeafcf065b1232a89b28c0988b49"
   },
   "counts": {
-    "people": 1056,
+    "people": 1080,
     "sources": {
       "design_region_inference": 265,
       "design_trait_inference": 7,
-      "fallback_design": 528,
+      "fallback_design": 539,
       "original_table_transcription": 9,
-      "retained_design": 26,
+      "retained_design": 39,
       "verified_original_rom": 221
     },
     "effective_codes": {
-      "0": 637,
-      "1": 212,
+      "0": 648,
+      "1": 225,
       "2": 207
     },
     "changed_from_baseline": 376,
     "original_records": 237,
     "bound_original": 221
   },
-  "records_sha256": "d004b7b45a0dc096e85f8ee1ed60facf35714456dd98e06a08a2932f8abb32b4",
+  "records_sha256": "9a1b2915e6acbee2afad9538d5ab984f3debb6d437df078c3a3a835ed2436a41",
   "records": {
     "historical-beigong-boyu": {
       "person_id": "historical-beigong-boyu",
@@ -328,6 +328,206 @@
       "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
       "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
     },
+    "historical-goguryeo-annyu": {
+      "person_id": "historical-goguryeo-annyu",
+      "name": "晏留",
+      "base_code": 0,
+      "code": 0,
+      "source_kind": "fallback_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "資料不足，保留既有軍種設定。",
+      "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
+    "historical-goguryeo-bak-wigeo": {
+      "person_id": "historical-goguryeo-bak-wigeo",
+      "name": "驳位居",
+      "base_code": 1,
+      "code": 1,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
+    },
+    "historical-goguryeo-dayu": {
+      "person_id": "historical-goguryeo-dayu",
+      "name": "多优",
+      "base_code": 0,
+      "code": 0,
+      "source_kind": "fallback_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "資料不足，保留既有軍種設定。",
+      "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
+    "historical-goguryeo-deungnae": {
+      "person_id": "historical-goguryeo-deungnae",
+      "name": "得来",
+      "base_code": 0,
+      "code": 0,
+      "source_kind": "fallback_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "資料不足，保留既有軍種設定。",
+      "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
+    "historical-goguryeo-dongcheon": {
+      "person_id": "historical-goguryeo-dongcheon",
+      "name": "东川王",
+      "base_code": 1,
+      "code": 1,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
+    },
+    "historical-goguryeo-eulpaso": {
+      "person_id": "historical-goguryeo-eulpaso",
+      "name": "乙巴素",
+      "base_code": 0,
+      "code": 0,
+      "source_kind": "fallback_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "資料不足，保留既有軍種設定。",
+      "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
+    "historical-goguryeo-eumu": {
+      "person_id": "historical-goguryeo-eumu",
+      "name": "阴友",
+      "base_code": 1,
+      "code": 1,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
+    },
+    "historical-goguryeo-gogukcheon": {
+      "person_id": "historical-goguryeo-gogukcheon",
+      "name": "故国川王",
+      "base_code": 1,
+      "code": 1,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
+    },
+    "historical-goguryeo-goyuru": {
+      "person_id": "historical-goguryeo-goyuru",
+      "name": "高优娄",
+      "base_code": 0,
+      "code": 0,
+      "source_kind": "fallback_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "資料不足，保留既有軍種設定。",
+      "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
+    "historical-goguryeo-gyesu": {
+      "person_id": "historical-goguryeo-gyesu",
+      "name": "罽须",
+      "base_code": 1,
+      "code": 1,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
+    },
+    "historical-goguryeo-jungcheon": {
+      "person_id": "historical-goguryeo-jungcheon",
+      "name": "中川王",
+      "base_code": 1,
+      "code": 1,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
+    },
+    "historical-goguryeo-miru": {
+      "person_id": "historical-goguryeo-miru",
+      "name": "密友",
+      "base_code": 1,
+      "code": 1,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
+    },
+    "historical-goguryeo-myeongnim-eosu": {
+      "person_id": "historical-goguryeo-myeongnim-eosu",
+      "name": "明临於漱",
+      "base_code": 1,
+      "code": 1,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
+    },
+    "historical-goguryeo-myeongnim-holdo": {
+      "person_id": "historical-goguryeo-myeongnim-holdo",
+      "name": "明临笏睹",
+      "base_code": 0,
+      "code": 0,
+      "source_kind": "fallback_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "資料不足，保留既有軍種設定。",
+      "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
+    "historical-goguryeo-nyuyu": {
+      "person_id": "historical-goguryeo-nyuyu",
+      "name": "纽由",
+      "base_code": 1,
+      "code": 1,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
+    },
+    "historical-goguryeo-queen-u": {
+      "person_id": "historical-goguryeo-queen-u",
+      "name": "于氏",
+      "base_code": 0,
+      "code": 0,
+      "source_kind": "fallback_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "資料不足，保留既有軍種設定。",
+      "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
+    "historical-goguryeo-sansang": {
+      "person_id": "historical-goguryeo-sansang",
+      "name": "山上王",
+      "base_code": 1,
+      "code": 1,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
+    },
+    "historical-goguryeo-ugeo": {
+      "person_id": "historical-goguryeo-ugeo",
+      "name": "优居",
+      "base_code": 1,
+      "code": 1,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
+    },
+    "historical-goguryeo-yeonin": {
+      "person_id": "historical-goguryeo-yeonin",
+      "name": "然人",
+      "base_code": 1,
+      "code": 1,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
+    },
+    "historical-goguryeo-yu-okgu": {
+      "person_id": "historical-goguryeo-yu-okgu",
+      "name": "刘屋句",
+      "base_code": 1,
+      "code": 1,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
+    },
     "historical-gongchou-cheng": {
       "person_id": "historical-gongchou-cheng",
       "name": "公仇称",
@@ -566,6 +766,46 @@
     "historical-wei-yan-liaodong": {
       "person_id": "historical-wei-yan-liaodong",
       "name": "卫演",
+      "base_code": 0,
+      "code": 0,
+      "source_kind": "fallback_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "資料不足，保留既有軍種設定。",
+      "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
+    "historical-wuhuan-nanlou": {
+      "person_id": "historical-wuhuan-nanlou",
+      "name": "难楼",
+      "base_code": 0,
+      "code": 0,
+      "source_kind": "fallback_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "資料不足，保留既有軍種設定。",
+      "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
+    "historical-wuhuan-sufuwan": {
+      "person_id": "historical-wuhuan-sufuwan",
+      "name": "速附丸",
+      "base_code": 0,
+      "code": 0,
+      "source_kind": "fallback_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "資料不足，保留既有軍種設定。",
+      "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
+    "historical-wuhuan-supuyan": {
+      "person_id": "historical-wuhuan-supuyan",
+      "name": "苏仆延",
+      "base_code": 0,
+      "code": 0,
+      "source_kind": "fallback_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "資料不足，保留既有軍種設定。",
+      "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
+    "historical-wuhuan-wuyan": {
+      "person_id": "historical-wuhuan-wuyan",
+      "name": "乌延",
       "base_code": 0,
       "code": 0,
       "source_kind": "fallback_design",

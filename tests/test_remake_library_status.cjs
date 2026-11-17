@@ -88,12 +88,12 @@ if(python.status!==0)throw new Error(python.stderr||'Runtime fixture generation 
 const rows=JSON.parse(python.stdout);
 for(const row of rows){
  const before=JSON.stringify(row.library),counts=JSON.parse(JSON.stringify(context.libraryEntryCounts(row.library)));
- assert.equal(Object.values(counts).reduce((a,b)=>a+b,0),1056,'Every identity must be counted exactly once');
+ assert.equal(Object.values(counts).reduce((a,b)=>a+b,0),1080,'Every identity must be counted exactly once');
  assert.equal(JSON.stringify(row.library),before,'Classification must not mutate the library');
  const serving=row.library.filter(p=>p.alive===true&&p.faction!==null).length,free=row.library.filter(p=>p.alive===true&&p.faction===null).length;
  assert.equal(counts.serving,serving);assert.equal(counts.free,free);
  const [year,month]=row.date.split('-').map(Number),summary=context.libraryEntrySummary(row.library,{year,month});
- assert(summary.includes('data-locale-only="zh-Hant"'));assert(summary.includes('data-locale-only="ja"'));assert(summary.includes(`已登場 ${serving+free}／總庫 1056`));
+ assert(summary.includes('data-locale-only="zh-Hant"'));assert(summary.includes('data-locale-only="ja"'));assert(summary.includes(`已登場 ${serving+free}／總庫 1080`));
  assert.equal(counts.pending_history,0);assert.equal(counts.pending_capacity,0);assert.equal(counts.pending_faction,0);
  const wang=row.library.find(p=>p.person_id==='historical-wang-jian-liaodong');
  assert.equal(wang.id,1044);assert.equal(wang.health_max,80);assert.equal(wang.initialization.health,42);
@@ -109,7 +109,7 @@ for(const row of rows){
  assert.equal(xiu.id,1047);assert.equal(xiu.year_state,'not_born');
  assert(context.libraryFilterMatches(xiu,'unentered'));assert(!context.libraryFilterMatches(xiu,'free'));
  if(row.date==='217-07'){
-  assert.equal(counts.serving,372);assert.equal(counts.free,55);
+  assert.equal(counts.serving,375);assert.equal(counts.free,55);
   for(const pid of ['historical-xue-yong','historical-yuan-chen','historical-liu-yan-shu']){
    const retainer=row.library.find(p=>p.person_id===pid);
    assert.equal(context.libraryEntryStatus(retainer),'serving');
@@ -141,7 +141,7 @@ for(const row of rows){
   assert(!context.libraryFilterMatches(zhao,'unentered'));
  }
  if(row.date==='191-10'){
-  assert.equal(counts.serving,304);assert.equal(counts.free,97);
+  assert.equal(counts.serving,316);assert.equal(counts.free,95);
   const zhaoChong=row.library.find(p=>p.person_id==='historical-zhao-chong');
   assert.equal(zhaoChong.id,1031);assert.equal(zhaoChong.faction,'zhang_miao');assert.equal(zhaoChong.alive,true);
   assert(context.libraryFilterMatches(zhaoChong,'own','zhang_miao'));
@@ -151,7 +151,7 @@ for(const row of rows){
   assert(context.libraryFilterMatches(sun,'unentered'));assert(!context.libraryFilterMatches(sun,'serving'));
  }
  if(row.date==='201-05'){
-  assert.equal(counts.serving,297);assert.equal(counts.free,130);
+  assert.equal(counts.serving,309);assert.equal(counts.free,128);
   const xiahou=row.library.find(p=>p.person_id==='historical-xiahou-bo');
   assert.equal(xiahou.alive,null);
   assert(!context.libraryFilterMatches(xiahou,'serving'));

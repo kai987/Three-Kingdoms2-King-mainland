@@ -13,7 +13,8 @@ from .errors import GameError
 from . import command_books, diplomacy, diplomacy_ai, historical_campaigns, officer_relations
 from .officers import integer, recruitment_loyalty, ref_sort_key
 from . import civil_staff
-from .march_supply import DENOMINATOR, OFFICER_UNITS, estimate as march_grain, next_supply_days, required_grain
+from . import grain_units
+from .march_supply import denominator, OFFICER_UNITS, estimate as march_grain, next_supply_days, required_grain
 from .route_hazards import allocate_survivors
 
 
@@ -151,7 +152,7 @@ class StrategicAI:
         if city.grain < loaded:
             return False
         units = sum(self.state.officers[i].troops for i in ids) + OFFICER_UNITS * len(ids)
-        credit, progress = loaded * DENOMINATOR, 0
+        credit, progress = loaded * denominator(), 0
         for index, leg in enumerate(quote['routes']):
             progress += leg['days']
             credit -= units * leg['days']
@@ -160,10 +161,10 @@ class StrategicAI:
             checkpoint = self.state.cities[quote['path'][index + 1]]
             if index < len(quote['routes']) - 1 and checkpoint.owner == city.owner:
                 days = next_supply_days(self.state, quote, city.owner, progress)
-                needed = max(0, (units * days - credit + DENOMINATOR - 1) // DENOMINATOR)
+                needed = max(0, (units * days - credit + denominator() - 1) // denominator())
                 if checkpoint.grain < needed:
                     return False
-                credit += needed * DENOMINATOR
+                credit += needed * denominator()
         return True
 
     def attack_option(self, city, target, *, require_grain=True):
@@ -210,11 +211,13 @@ class StrategicAI:
 
     def attack_approaches(self, owner):
         approaches = defaultdict(list)
+        reserved = historical_campaigns.reserved_sortie_targets(self.game, self.state, owner)
         for source in self.state.cities.values():
             if source.owner != owner:
                 continue
             for target in self.neighbors(source):
-                if target.owner != owner and not historical_campaigns.allied(self.state, owner, target.owner):
+                if (target.id not in reserved and target.owner != owner
+                        and not historical_campaigns.allied(self.state, owner, target.owner)):
                     approaches[target.id].append(source)
         return approaches
 
@@ -276,7 +279,7 @@ class StrategicAI:
                     days = sum(quote['days'] for _, quote in scheduled)
                     supply = sum(march_grain(self.state, order['officers'], quote)
                                  for order, quote in scheduled)
-                    score = min(power-required,required//3)-days*3-supply*2+min(200,target.gold//20+target.grain//200)
+                    score = min(power-required,required//3)-days*3-supply*2//grain_units.amount(1)+min(200,target.gold//20+target.grain//grain_units.amount(200))
                     feasible.append((-score, size, target.id, tuple(o['source'] for o in members), orders))
                 if feasible:
                     # Do not send a second column merely to overrun an empty
@@ -347,10 +350,10 @@ class StrategicAI:
             ids = self.defenders(city)
             troops = sum(self.state.officers[ident].troops for ident in ids)
             # Stock one full battle plus two turns of movement for a large army.
-            grain_goal = max(3000, required_grain(troops, len(ids), BUDGET_DAYS + 20))
+            grain_goal = max(grain_units.amount(3000), required_grain(troops, len(ids), BUDGET_DAYS + 20))
             gold_goal = 1500
             gold, grain = logistics.supply_shortages(self.state, city, gold_goal, grain_goal)
-            if gold >= 100 or grain >= 300:
+            if gold >= 100 or grain >= grain_units.amount(300):
                 shortage = gold * 100 // gold_goal + grain * 100 // grain_goal
                 requests.append((city.id not in sources, -shortage, city.id, gold_goal, grain_goal))
 
@@ -501,8 +504,8 @@ class StrategicAI:
         for ident in sorted(self.available(city),key=lambda i:(self.state.officers[i].troops,ref_sort_key(i))):
             officer = self.state.officers[ident]
             amount = min(80,max(0,city.reserves-guard),max(0,600-officer.troops))
-            if amount and city.gold >= 4 and city.grain >= 8:
-                officer.troops += amount;city.reserves -= amount;city.gold -= 4;city.grain -= 8
+            if amount and city.gold >= 4 and city.grain >= grain_units.amount(8):
+                officer.troops += amount;city.reserves -= amount;city.gold -= 4;city.grain -= grain_units.amount(8)
 
     def personnel_or_recruit(self, city):
         x, r = self.state.extension, self.game.catalog.data['rules']
@@ -542,9 +545,9 @@ class StrategicAI:
             else:
                 self.game._report_ai(self.state,city,'hire_staff',staff_id)
                 return
-        if (ids or clerks) and city.reserves<200 and city.gold>=r['recruit_gold_per_100'] and city.grain>=r['recruit_grain_per_100']:
+        if (ids or clerks) and city.reserves<200 and city.gold>=r['recruit_gold_per_100'] and city.grain>=grain_units.amount(r['recruit_grain_per_100']):
             city.reserves += r['recruit_per_action'];self.state.soldiers['recruited'] += r['recruit_per_action']
-            command_books.spend(self.state,city,'recruit');city.gold -= r['recruit_gold_per_100'];city.grain -= r['recruit_grain_per_100']
+            command_books.spend(self.state,city,'recruit');city.gold -= r['recruit_gold_per_100'];city.grain -= grain_units.amount(r['recruit_grain_per_100'])
             self.game._report_ai(self.state,city,'recruit_soldiers')
             return
         candidates = self.game._persuadable(self.state,city)
@@ -588,6 +591,7 @@ def run(campaign, state, payload):
         raise GameError('当前不是待处理的电脑回合。')
     # Resuming an interrupted city queue must not repeat this turn's diplomacy.
     if not state.extension['ai_queue']:
+        historical_campaigns.dispatch_frontier_sorties(campaign, state)
         _open_ai_queue(campaign, state)
         if state.phase != 'ai':
             return

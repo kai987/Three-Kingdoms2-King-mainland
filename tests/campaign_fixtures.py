@@ -7,10 +7,44 @@ import tempfile
 from unittest.mock import patch
 
 from remake.campaign import Campaign, Catalog
-from remake import officer_relations, city_development, battle_supply, battle_grid, civil_staff
+from remake import officer_relations, city_development, battle_supply, battle_grid, civil_staff, grain_units, capital_openings, city_economy
 from remake.officers import appearance_values
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+@contextmanager
+def record_garrison_charges():
+    """Include actual new city bills in pre-existing conservation assertions."""
+    from collections import Counter
+    paid = Counter()
+    settle = city_economy.settle_garrison_grain
+    def receipt(game, state, outposts, dues):
+        for key, required in dues.items():
+            if key not in outposts:
+                paid[key] += min(state.cities[key].grain, required)
+        return settle(game, state, outposts, dues)
+    with patch.object(city_economy, 'settle_garrison_grain', side_effect=receipt):
+        yield paid
+
+
+@contextmanager
+def legacy_grain_campaign():
+    """Exercise pre-denomination saves with their original provision receipts.
+
+    New-campaign scale, production and tactical/march charges have separate
+    current-unit acceptance tests in test_remake_grain_economy.
+    """
+    current = Campaign._new
+
+    def retained(game, *args, **kwargs):
+        state = current(game, *args, **kwargs)
+        state.extension.pop(grain_units.FIELD)
+        return state
+
+    with patch.object(grain_units, 'CURRENT', 1), grain_units.using({}), \
+            patch.object(Campaign, '_new', retained):
+        yield
 
 
 @contextmanager
@@ -42,6 +76,7 @@ def pre_city_development_opening():
         if state.extension.get('city_development') != city_development.empty(game, state):
             raise AssertionError('Historical fixture may omit only pristine opening development')
         state.extension.pop('city_development')
+        state.extension.pop(grain_units.FIELD)
         if (stocks != {key: (city.gold, city.grain, city.reserves) for key, city in state.cities.items()}
                 or state.rng != rng):
             raise AssertionError('Historical opening isolation changed city stocks or RNG')
@@ -51,7 +86,10 @@ def pre_city_development_opening():
         if 'city_development' in state.extension:
             raise AssertionError('Historical march/duel fixture unexpectedly developed a city')
 
-    with patch.object(Campaign, '_new', retained), patch.object(city_development, 'synchronize', unchanged):
+    with patch.object(grain_units, 'CURRENT', 1), grain_units.using({}), \
+            patch.object(Campaign, '_new', retained), patch.object(city_development, 'synchronize', unchanged), \
+            patch.object(capital_openings, 'opening', return_value={}), \
+            patch.object(city_economy, 'settle_garrison_grain', return_value=None):
         yield
 
 
@@ -163,6 +201,7 @@ def controlled_catalog():
     data['appearance_locations'] = {p: c for p, c, _, _ in rows}
     data['appearance_windows'] = {p: [] for p in people}
     data['era_assignments'] = {}
+    data['historical_successions'] = {}
     data['initial_resources'] = dict(gold=1200, grain=3800, reserves=1200)
     data['initial_city_resources'] = {c: deepcopy(data['initial_resources']) for c in active}
     data['city_income'] = {c: dict(gold=35, grain=90, reserves=0) for c in active}

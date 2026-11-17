@@ -6,13 +6,20 @@
     "xicheng": {"position": [475, 427], "coordinates": [109.02, 32.70], "terrain": "mountain"},
     "shangyong": {"position": [557, 416], "coordinates": [110.23, 32.19], "terrain": "mountain"},
     "yiling": {"position": [614, 487], "coordinates": [111.30, 30.70], "terrain": "mountain"},
-    "changli": {"position": [1138, 57], "coordinates": [120.92, 41.18], "terrain": "plain"},
+    "changli": {"position": [1117, 72], "coordinates": [120.92, 41.18], "terrain": "plain"},
+    "liucheng": {"position": [1074, 50], "coordinates": [120.4217, 41.4897], "terrain": "plain"},
     "pingyang": {"position": [690, 273], "coordinates": [111.46, 36.08], "terrain": "plain"},
     "hengyang": {"position": [716, 623], "coordinates": [112.62, 27.66], "terrain": "plain"},
     "xiangdong": {"position": [772, 656], "coordinates": [112.66, 26.88], "terrain": "plain"},
     "jianping": {"position": [592, 536], "coordinates": [109.88, 31.08], "terrain": "mountain"},
     "shuofang": {"position": [410, 97], "coordinates": [107.12, 40.51], "terrain": "plain"},
     "wuyuan": {"position": [569, 56], "coordinates": [109.81, 40.58], "terrain": "plain"},
-    "yunzhong": {"position": [688, 123], "coordinates": [111.33, 40.53], "terrain": "plain"}
+    "yunzhong": {"position": [688, 123], "coordinates": [111.33, 40.53], "terrain": "plain"},
+    "donglai": {"position": [1111, 220], "coordinates": [120.45, 37.64], "terrain": "plain"},
+    "langya": {"position": [1005, 291], "coordinates": [118.39, 35.13], "terrain": "plain"},
+    "taishan": {"position": [972, 263], "coordinates": [117.37, 36.22], "terrain": "mountain"},
+    "xuantu": {"position": [1232, 29], "coordinates": [123.68, 41.83], "terrain": "plain"},
+    "guonei": {"position": [1264, 67], "coordinates": [126.1762, 41.1387], "terrain": "mountain"},
+    "luzon": {"position": [1145, 949], "coordinates": [121.62, 18.21], "terrain": "plain"}
   }
 }

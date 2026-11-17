@@ -17,7 +17,7 @@
       "role": "Literal source labels only; not a positional join."
     }
   ],
-  "city_count": 129,
+  "city_count": 136,
   "original_map_count": 30,
   "templates": {
     "original-00": {
@@ -1005,6 +1005,48 @@
       "kind": "regional_reuse",
       "reason_tc": "雲中故城位於東漢并州北部，共用原版「并州」戰場作為區域模板。",
       "reason_ja": "雲中の旧城は後漢の并州北部にあり、原作「并州」の戦場を地域用テンプレートとして共用します。"
+    },
+    "donglai": {
+      "map_id": "original-03",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「青州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「青州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "langya": {
+      "map_id": "original-10",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「徐州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「徐州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "taishan": {
+      "map_id": "original-11",
+      "kind": "regional_reuse",
+      "reason_tc": "本作按區域選用原版「兗州」戰場；屬新增或區域節點的美術重用，不表示原版另有此城專屬地圖。",
+      "reason_ja": "本作の地域に合わせて原作「兗州」の戦場を共用します。追加都市・地域拠点への美術流用であり、この都市の原作専用地図を新たに復元したものではありません。"
+    },
+    "liucheng": {
+      "map_id": "original-00",
+      "kind": "regional_reuse",
+      "reason_tc": "柳城位於遼西腹地，與遼西共用原版「遼東」戰場作為區域模板。",
+      "reason_ja": "柳城は遼西の内陸にあり、遼西と同じ原作「遼東」の戦場を地域用テンプレートとして使用します。"
+    },
+    "xuantu": {
+      "map_id": "original-00",
+      "kind": "regional_reuse",
+      "reason_tc": "玄菟郡位於遼東東北，與襄平共用原版「遼東」戰場作為區域模板。",
+      "reason_ja": "玄菟郡は遼東の北東にあり、襄平と同じ原作「遼東」の戦場を地域用テンプレートとして使用します。"
+    },
+    "guonei": {
+      "map_id": "original-00",
+      "kind": "regional_reuse",
+      "reason_tc": "國內城在鴨綠江北岸，與玄菟共用原版「遼東」戰場作為區域模板。",
+      "reason_ja": "国内城は鴨緑江の北岸にあり、玄菟と同じ原作「遼東」の戦場を地域用テンプレートとして使用します。"
+    },
+    "luzon": {
+      "map_id": "original-18",
+      "kind": "regional_reuse",
+      "reason_tc": "呂宋使用與夷洲相同的原版「交州」水陸戰場模板。",
+      "reason_ja": "ルソンは夷洲と同じ原作「交州」の水陸戦場を共用します。"
     }
   }
 }

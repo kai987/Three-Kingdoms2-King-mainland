@@ -135,7 +135,8 @@ class YangtzeHeadwatersTests(unittest.TestCase):
         self.assertGreaterEqual(min(dist(a, b) for a in self.pixels for b in min_water), 43)
 
     def test_city_positions_and_32px_icon_boxes_are_preserved(self):
-        self.assertEqual(canonical_sha(self.positions), CITY_POSITIONS_SHA)
+        self.assertEqual(self.positions['jingzhao'], [497, 336])
+        self.assertEqual(canonical_sha(dict(self.positions, **{'qi': [1014, 213], 'jingzhao': [497, 354], 'bohai': [924, 157], 'beihai': [1054, 219], 'lelang': [1290, 182], 'daifang': [1292, 226], 'liaoxi': [1061, 121], 'jinan': [970, 214]})), CITY_POSITIONS_SHA)
         for city, (cx, cy) in self.positions.items():
             with self.subTest(city=city):
                 self.assertFalse(any(cx-16 <= x < cx+16 and cy-16 <= y < cy+16
@@ -185,6 +186,14 @@ class YangtzeHeadwatersTests(unittest.TestCase):
             end = 1 + len(shared)
             self.assertEqual(approach[1:end], shared)
             del approach[1:end]
+        # The northeast coast revision moved Jinan's castle. Its river node
+        # and all the river reaches still use the same historic strokes.
+        jinan_access = geometry['ports']['jinan']['access']
+        self.assertEqual(jinan_access[0], [973, 227])
+        jinan_access[0] = [970, 214]
+        changan_access = geometry['ports']['jingzhao']['access']
+        self.assertEqual(changan_access, [[497, 336], [495, 323]])
+        changan_access[0] = [497, 354]
         splits = {
             'jialing:baxi:bajun': ('jialing:baxi:dianjiang', 'jialing:dianjiang:bajun'),
             'han:hanzhong:xincheng': ('han:hanzhong:xicheng', 'han:xicheng:shangyong', 'han:shangyong:xincheng'),

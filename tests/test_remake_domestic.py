@@ -91,7 +91,7 @@ class DomesticTests(unittest.TestCase):
             self.assertEqual(game.export_save(), snapshot)
             game._complete_turn(game.state)
         self.assertEqual(intellect, 99)
-        self.assertEqual((city.gold, city.grain), (start[0] + 150, start[1] + 450))
+        self.assertEqual((city.gold, city.grain), (start[0] + 150, start[1] + 4500 - 132))
         snapshot = game.export_save()
         domestic.month_rollover(game, game.state)
         self.assertEqual(game.export_save(), snapshot)
@@ -103,9 +103,9 @@ class DomesticTests(unittest.TestCase):
         game = self.game()
         civil, military = self.appoint(game)
         state = game.state
-        for intellect, gold, grain in ((30, 2, 7), (58, 4, 14), (59, 5, 15), (60, 5, 15),
-                                      (61, 6, 18), (75, 20, 60), (94, 39, 117), (95, 40, 120), (96, 42, 127),
-                                      (97, 45, 135), (98, 47, 142), (99, 50, 150)):
+        for intellect, gold, grain in ((30, 2, 76), (58, 4, 147), (59, 5, 150), (60, 5, 150),
+                                      (61, 6, 180), (75, 20, 600), (94, 39, 1170), (95, 40, 1200), (96, 42, 1275),
+                                      (97, 45, 1350), (98, 47, 1425), (99, 50, 1500)):
             with self.subTest(intellect=intellect):
                 officer = state.officers[civil]
                 officer.profile = replace(officer.profile, intellect=intellect)
@@ -133,11 +133,11 @@ class DomesticTests(unittest.TestCase):
 
         # One full duty at 20%, one half duty at 50%, and one missed duty.
         city = state.cities['xiangyang']
-        self.assertEqual((city.gold, city.grain), (start[0] + 115, start[1] + 345))
+        self.assertEqual((city.gold, city.grain), (start[0] + 115, start[1] + 3450 - 132))
         self.assertNotIn('income_rate_units', state.extension['domestic']['cities'][city.id])
 
     def test_midmonth_old_save_keeps_earned_income_then_uses_new_rate(self):
-        for older_rate, gold, grain in ((40, 146, 440), (50, 150, 450)):
+        for older_rate, gold, grain in ((40, 146, 4400), (50, 150, 4500)):
             with self.subTest(older_rate=older_rate):
                 game = self.game()
                 self.appoint(game)
@@ -159,7 +159,7 @@ class DomesticTests(unittest.TestCase):
                 for _ in range(2):
                     domestic.finish_faction_turn(loaded, state, 'shu', automatic=False)
                     loaded._complete_turn(state)
-                self.assertEqual((city.gold, city.grain), (start[0] + gold, start[1] + grain))
+                self.assertEqual((city.gold, city.grain), (start[0] + gold, start[1] + grain - 132))
 
     def test_recruiting_costs_reserve_target_morale_and_training_are_bounded(self):
         game = self.game()
@@ -168,7 +168,7 @@ class DomesticTests(unittest.TestCase):
         city, row = game.state.cities['xiangyang'], game.state.extension['domestic']['cities']['xiangyang']
         quote = domestic.recruitment_preview(game, game.state, city.id)
         self.assertEqual(quote['soldiers'], 100)
-        self.assertEqual(quote['grain'], 30)
+        self.assertEqual(quote['grain'], 300)
         before = city.gold, city.grain, city.reserves, game.state.soldiers['recruited']
         troops_before = sum(game.state.officers[i].troops for i in city.roster.officer_ids)
         expected_recruited = sum(domestic.recruitment_preview(game, game.state, key)['soldiers']
@@ -202,17 +202,17 @@ class DomesticTests(unittest.TestCase):
             with self.subTest(strength=strength):
                 officer.profile = replace(officer.profile, martial_strength=strength)
                 self.assertEqual(domestic.recruitment_preview(game, game.state, city.id),
-                                 dict(soldiers=100, gold=gold, grain=30))
+                                 dict(soldiers=100, gold=gold, grain=300))
 
         city.gold = 10
         officer.profile = replace(officer.profile, martial_strength=51)
         self.assertEqual(domestic.recruitment_preview(game, game.state, city.id),
-                         dict(soldiers=58, gold=10, grain=18))
+                         dict(soldiers=58, gold=10, grain=174))
 
-        city.gold, city.grain = 0, 9
+        city.gold, city.grain = 0, 90
         officer.profile = replace(officer.profile, martial_strength=99)
         self.assertEqual(domestic.recruitment_preview(game, game.state, city.id),
-                         dict(soldiers=30, gold=0, grain=9))
+                         dict(soldiers=30, gold=0, grain=90))
 
     def test_personnel_ranks_real_abilities_and_reuses_actual_fee_and_rng(self):
         game = self.game()

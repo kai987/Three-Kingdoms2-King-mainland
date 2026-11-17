@@ -60,6 +60,10 @@ class TreasuryCampaignTests(unittest.TestCase):
                 for key, city in state.cities.items():
                     expected = 0 if city.owner == 'neutral' else {
                         'normal': 2, 'large': 4, 'giant': 6}[tier_at(catalog.data, key, state.year, state.month)]
+                    relocation = {'mainland191-10': 99, 'mainland194-06': 46,
+                                  'mainland196-06': 18, 'mainland197-07': 12, 'mainland198-03': 8}
+                    if key == 'jingzhao' and city.owner != 'neutral':
+                        expected = relocation.get(catalog.data['id'], expected)
                     self.assertEqual(treasures.count(state, key), expected)
                     self.assertEqual(session.preview_city(catalog.data['id'], key)['city']['treasure'], expected)
                     total += expected

@@ -11,7 +11,11 @@
         "yiling": "neutral",
         "shuofang": "han",
         "wuyuan": "han",
-        "yunzhong": "han"
+        "yunzhong": "han",
+        "donglai": "han",
+        "langya": "han",
+        "taishan": "han",
+        "xuantu": "han"
       },
       "garrisons": {
         "hefei": [],
@@ -22,7 +26,39 @@
         "yiling": [],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [],
+        "langya": [],
+        "taishan": [],
+        "xuantu": []
+      },
+      "opening_notes": {
+        "donglai": "漢郡府仍以漢廷表示，東萊未配置已證駐將。",
+        "langya": "漢琅邪國以開陽代表，開局歸漢廷，未配置已證駐將。",
+        "taishan": "泰山郡府以漢廷表示，未把後來任太守的應劭提前調入。",
+        "xuantu": "《後漢書·郡國志》列玄菟為幽州屬郡。本劇本以漢廷代表郡府。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 680,
+          "grain": 2950,
+          "reserves": 660
+        },
+        "langya": {
+          "gold": 670,
+          "grain": 2850,
+          "reserves": 650
+        },
+        "taishan": {
+          "gold": 650,
+          "grain": 2700,
+          "reserves": 700
+        },
+        "xuantu": {
+          "gold": 490,
+          "grain": 2050,
+          "reserves": 580
+        }
       }
     },
     "mainland188-06": {
@@ -35,7 +71,11 @@
         "yiling": "neutral",
         "shuofang": "neutral",
         "wuyuan": "neutral",
-        "yunzhong": "neutral"
+        "yunzhong": "neutral",
+        "donglai": "han",
+        "langya": "han",
+        "taishan": "han",
+        "xuantu": "han"
       },
       "garrisons": {
         "hefei": [],
@@ -46,7 +86,41 @@
         "yiling": [],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [],
+        "langya": [
+          "san14-candidate-0525"
+        ],
+        "taishan": [],
+        "xuantu": []
+      },
+      "opening_notes": {
+        "donglai": "漢末尚由漢廷代表東萊郡府。",
+        "langya": "開陽仍屬漢廷。臧霸於黃巾起後從陶謙作戰，此處為區域駐防配置。",
+        "taishan": "泰山仍以漢廷代表郡府，應劭於189年受任，在此開局尚未駐泰山。",
+        "xuantu": "《後漢書·郡國志》列玄菟為幽州屬郡。本劇本以漢廷代表郡府。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 690,
+          "grain": 3000,
+          "reserves": 680
+        },
+        "langya": {
+          "gold": 675,
+          "grain": 2900,
+          "reserves": 665
+        },
+        "taishan": {
+          "gold": 660,
+          "grain": 2750,
+          "reserves": 710
+        },
+        "xuantu": {
+          "gold": 470,
+          "grain": 1925,
+          "reserves": 550
+        }
       }
     },
     "mainland190-01": {
@@ -59,7 +133,11 @@
         "yiling": "liu_biao",
         "shuofang": "neutral",
         "wuyuan": "neutral",
-        "yunzhong": "neutral"
+        "yunzhong": "neutral",
+        "donglai": "neutral",
+        "langya": "tao_qian",
+        "taishan": "liu_dai",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [],
@@ -72,7 +150,48 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [],
+        "langya": [
+          "san14-candidate-0525"
+        ],
+        "taishan": [
+          "san14-candidate-0062"
+        ],
+        "xuantu": []
+      },
+      "opening_notes": {
+        "donglai": "公孫度渡海收取東萊諸縣的確月與控制範圍未詳，先列東萊地方官署。",
+        "langya": "按徐州形勢歸陶謙。臧霸從陶謙擊黃巾後屯開陽，初平元年確切駐軍情況未詳。",
+        "taishan": "以兗州刺史劉岱代表區域歸屬。應劭於中平六年受任泰山太守。",
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 560,
+          "grain": 2150,
+          "reserves": 510
+        },
+        "langya": {
+          "gold": 620,
+          "grain": 2500,
+          "reserves": 640
+        },
+        "taishan": {
+          "gold": 610,
+          "grain": 2400,
+          "reserves": 680
+        },
+        "xuantu": {
+          "gold": 460,
+          "grain": 1825,
+          "reserves": 520
+        }
+      },
+      "attested_garrisons": {
+        "taishan": [
+          "san14-candidate-0062"
+        ]
       }
     },
     "mainland191-10": {
@@ -85,7 +204,11 @@
         "yiling": "liu_biao",
         "shuofang": "neutral",
         "wuyuan": "neutral",
-        "yunzhong": "neutral"
+        "yunzhong": "neutral",
+        "donglai": "neutral",
+        "langya": "tao_qian",
+        "taishan": "liu_dai",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [],
@@ -98,7 +221,49 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [],
+        "langya": [
+          "san14-candidate-0525",
+          "san14-candidate-0545"
+        ],
+        "taishan": [
+          "san14-candidate-0062"
+        ],
+        "xuantu": []
+      },
+      "opening_notes": {
+        "donglai": "青州諸軍爭奪，黃縣本時點的守軍未詳，先列東萊地方官署。",
+        "langya": "按徐州形勢歸陶謙。臧霸與孫觀聚眾屯開陽，其確切到任時間未詳。",
+        "taishan": "仍按兗州形勢歸劉岱，應劭為史載太守，本年十一月另有其拒黃巾的記載。",
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 525,
+          "grain": 2000,
+          "reserves": 490
+        },
+        "langya": {
+          "gold": 620,
+          "grain": 2450,
+          "reserves": 640
+        },
+        "taishan": {
+          "gold": 575,
+          "grain": 2225,
+          "reserves": 630
+        },
+        "xuantu": {
+          "gold": 460,
+          "grain": 1825,
+          "reserves": 520
+        }
+      },
+      "attested_garrisons": {
+        "taishan": [
+          "san14-candidate-0062"
+        ]
       }
     },
     "mainland194-06": {
@@ -111,7 +276,11 @@
         "yiling": "liu_biao",
         "shuofang": "neutral",
         "wuyuan": "yuan_shao",
-        "yunzhong": "yuan_shao"
+        "yunzhong": "yuan_shao",
+        "donglai": "neutral",
+        "langya": "tao_qian",
+        "taishan": "lubu",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -132,7 +301,49 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [],
+        "langya": [
+          "san14-candidate-0525",
+          "san14-candidate-0545"
+        ],
+        "taishan": [
+          "san14-candidate-0043"
+        ],
+        "xuantu": []
+      },
+      "opening_notes": {
+        "donglai": "袁譚後來進取青州海隅，黃縣易手確月未詳，仍按地方官署配置。",
+        "langya": "按徐州形勢歸陶謙，臧霸與孫觀駐開陽按本傳所述屯地配置。",
+        "taishan": "應劭在曹嵩遇害後離郡。按本劇本兗州東部形勢暫歸呂布，並未確認奉高的實際交接。",
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 485,
+          "grain": 1700,
+          "reserves": 455
+        },
+        "langya": {
+          "gold": 475,
+          "grain": 1650,
+          "reserves": 470
+        },
+        "taishan": {
+          "gold": 460,
+          "grain": 1625,
+          "reserves": 500
+        },
+        "xuantu": {
+          "gold": 460,
+          "grain": 1825,
+          "reserves": 520
+        }
+      },
+      "attested_garrisons": {
+        "langya": [
+          "san14-candidate-0525"
+        ]
       }
     },
     "mainland196-06": {
@@ -145,7 +356,11 @@
         "yiling": "liu_biao",
         "shuofang": "neutral",
         "wuyuan": "yuan_shao",
-        "yunzhong": "yuan_shao"
+        "yunzhong": "yuan_shao",
+        "donglai": "yuan_shao",
+        "langya": "shu",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -166,7 +381,45 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "san14-candidate-0236"
+        ],
+        "langya": [
+          "san14-candidate-0409"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
+        ],
+        "xuantu": []
+      },
+      "opening_notes": {
+        "donglai": "按袁譚東進青州的區域形勢歸袁紹。黃縣確切易手時間未詳。",
+        "langya": "按劉備接領徐州後的原定態勢配置。臧霸在本劇本原為在野，保持此設定。",
+        "taishan": "按曹操收復兗州後的區域形勢配置。呂虔後來受任太守，其就任時間未詳。",
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 515,
+          "grain": 1950,
+          "reserves": 505
+        },
+        "langya": {
+          "gold": 510,
+          "grain": 1810,
+          "reserves": 510
+        },
+        "taishan": {
+          "gold": 550,
+          "grain": 2000,
+          "reserves": 600
+        },
+        "xuantu": {
+          "gold": 460,
+          "grain": 1825,
+          "reserves": 520
+        }
       }
     },
     "mainland197-07": {
@@ -179,7 +432,11 @@
         "yiling": "liu_biao",
         "shuofang": "neutral",
         "wuyuan": "yuan_shao",
-        "yunzhong": "yuan_shao"
+        "yunzhong": "yuan_shao",
+        "donglai": "yuan_shao",
+        "langya": "zang_ba",
+        "taishan": "lubu",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -200,7 +457,45 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "san14-candidate-0416"
+        ],
+        "langya": [
+          "san14-candidate-0308"
+        ],
+        "taishan": [
+          "san14-candidate-0108"
+        ],
+        "xuantu": []
+      },
+      "opening_notes": {
+        "donglai": "本劇本為假想開局，東萊沿用袁紹在青州的既有勢力格局。",
+        "langya": "本劇本中臧霸自成勢力，開陽隨其徐州勢力配置，仍維持東海為本拠。",
+        "taishan": "本劇本為假想開局，泰山按東平與山陽的既有格局歸呂布。",
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 545,
+          "grain": 2000,
+          "reserves": 525
+        },
+        "langya": {
+          "gold": 530,
+          "grain": 1950,
+          "reserves": 575
+        },
+        "taishan": {
+          "gold": 520,
+          "grain": 1900,
+          "reserves": 590
+        },
+        "xuantu": {
+          "gold": 460,
+          "grain": 1825,
+          "reserves": 520
+        }
       }
     },
     "mainland198-03": {
@@ -213,7 +508,11 @@
         "yiling": "liu_biao",
         "shuofang": "neutral",
         "wuyuan": "yuan_shao",
-        "yunzhong": "yuan_shao"
+        "yunzhong": "yuan_shao",
+        "donglai": "yuan_shao",
+        "langya": "zang_ba",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -234,15 +533,57 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "san14-candidate-0184"
+        ],
+        "langya": [
+          "san14-candidate-0545",
+          "san14-candidate-0308"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
+        ],
+        "xuantu": []
       },
       "attested_garrisons": {
         "guangling": [
           "san14-candidate-0683"
+        ],
+        "langya": [
+          "san14-candidate-0545"
         ]
       },
       "transfers": {
         "san14-candidate-0683": "shu"
+      },
+      "opening_notes": {
+        "donglai": "按袁譚控制青州東部的區域形勢配置，屬袁紹勢力。",
+        "langya": "呂布尚未覆亡。開陽歸本劇本既有的臧霸勢力，仍維持東海為本拠。",
+        "taishan": "按兗州東部的既有格局歸曹操。呂虔任泰山太守的確切起始時間未詳。",
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 560,
+          "grain": 2080,
+          "reserves": 550
+        },
+        "langya": {
+          "gold": 530,
+          "grain": 1900,
+          "reserves": 570
+        },
+        "taishan": {
+          "gold": 580,
+          "grain": 2150,
+          "reserves": 640
+        },
+        "xuantu": {
+          "gold": 460,
+          "grain": 1825,
+          "reserves": 520
+        }
       }
     },
     "mainland200-01": {
@@ -255,7 +596,11 @@
         "yiling": "liu_biao",
         "shuofang": "neutral",
         "wuyuan": "yuan_shao",
-        "yunzhong": "yuan_shao"
+        "yunzhong": "yuan_shao",
+        "donglai": "yuan_shao",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [],
@@ -276,15 +621,57 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "san14-candidate-0177"
+        ],
+        "langya": [
+          "san14-candidate-0525",
+          "san14-candidate-0545"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
+        ],
+        "xuantu": []
       },
       "attested_garrisons": {
         "guangling": [
           "san14-candidate-0683"
+        ],
+        "langya": [
+          "san14-candidate-0525"
         ]
       },
       "transfers": {
         "san14-candidate-0683": "shu"
+      },
+      "opening_notes": {
+        "donglai": "按袁譚所領青州歸袁紹。管統後見於史料為東萊太守，其就任確年未詳。",
+        "langya": "曹操擒呂布後以臧霸為琅邪相，開陽歸曹操勢力。",
+        "taishan": "泰山歸曹操，呂虔為任期內的守將配置，其就任確月未載。",
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 650,
+          "grain": 2575,
+          "reserves": 665
+        },
+        "langya": {
+          "gold": 610,
+          "grain": 2375,
+          "reserves": 640
+        },
+        "taishan": {
+          "gold": 660,
+          "grain": 2650,
+          "reserves": 760
+        },
+        "xuantu": {
+          "gold": 490,
+          "grain": 1950,
+          "reserves": 560
+        }
       }
     },
     "mainland201-05": {
@@ -297,7 +684,11 @@
         "yiling": "liu_biao",
         "shuofang": "neutral",
         "wuyuan": "yuan_shao",
-        "yunzhong": "yuan_shao"
+        "yunzhong": "yuan_shao",
+        "donglai": "yuan_shao",
+        "langya": "yuan_shao",
+        "taishan": "yuan_shao",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -320,7 +711,45 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "san14-candidate-0177"
+        ],
+        "langya": [
+          "san14-candidate-0454"
+        ],
+        "taishan": [
+          "san14-candidate-0758"
+        ],
+        "xuantu": []
+      },
+      "opening_notes": {
+        "donglai": "本劇本為假想開局，東萊隨青州既有格局歸袁紹。",
+        "langya": "本劇本以袁紹控制徐州，開陽按此格局配置袁方守將。",
+        "taishan": "本劇本以袁紹控制兗州，泰山按此格局配置袁方守將。",
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 660,
+          "grain": 2675,
+          "reserves": 685
+        },
+        "langya": {
+          "gold": 630,
+          "grain": 2475,
+          "reserves": 670
+        },
+        "taishan": {
+          "gold": 660,
+          "grain": 2550,
+          "reserves": 725
+        },
+        "xuantu": {
+          "gold": 490,
+          "grain": 1950,
+          "reserves": 560
+        }
       }
     },
     "mainland202-06": {
@@ -333,7 +762,11 @@
         "yiling": "liu_biao",
         "shuofang": "neutral",
         "wuyuan": "gao_gan",
-        "yunzhong": "gao_gan"
+        "yunzhong": "gao_gan",
+        "donglai": "yuan_tan",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -356,12 +789,60 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "san14-candidate-0177"
+        ],
+        "langya": [
+          "san14-candidate-0525",
+          "san14-candidate-0014"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
+        ],
+        "xuantu": []
       },
       "attested_garrisons": {
         "hefei": [
           "san14-candidate-0956"
+        ],
+        "donglai": [
+          "san14-candidate-0177"
+        ],
+        "langya": [
+          "san14-candidate-0525"
         ]
+      },
+      "opening_notes": {
+        "donglai": "依袁氏分裂後東萊太守管統從袁譚的史載分配。管統就任確月未載。",
+        "langya": "曹操平呂布後以臧霸為琅邪相。開陽沿用曹方歸屬。",
+        "taishan": "按曹方既有兗州格局配置。呂虔任泰山太守的就任確月未載。",
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 615,
+          "grain": 2450,
+          "reserves": 650
+        },
+        "langya": {
+          "gold": 640,
+          "grain": 2525,
+          "reserves": 690
+        },
+        "taishan": {
+          "gold": 680,
+          "grain": 2725,
+          "reserves": 780
+        },
+        "xuantu": {
+          "gold": 490,
+          "grain": 1950,
+          "reserves": 560
+        }
+      },
+      "transfers": {
+        "san14-candidate-0177": "yuan_shang"
       }
     },
     "mainland207-09": {
@@ -374,7 +855,11 @@
         "yiling": "liu_biao",
         "shuofang": "neutral",
         "wuyuan": "wei",
-        "yunzhong": "wei"
+        "yunzhong": "wei",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -397,12 +882,53 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "historical-sun-kang"
+        ],
+        "langya": [
+          "san14-candidate-0525"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
+        ],
+        "xuantu": []
       },
       "attested_garrisons": {
         "hefei": [
           "san14-candidate-0956"
+        ],
+        "langya": [
+          "san14-candidate-0525"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
         ]
+      },
+      "resources": {
+        "donglai": {
+          "gold": 680,
+          "grain": 2700,
+          "reserves": 680
+        },
+        "langya": {
+          "gold": 670,
+          "grain": 2775,
+          "reserves": 710
+        },
+        "taishan": {
+          "gold": 700,
+          "grain": 2850,
+          "reserves": 795
+        },
+        "xuantu": {
+          "gold": 520,
+          "grain": 2150,
+          "reserves": 670
+        }
+      },
+      "opening_notes": {
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland208-10": {
@@ -415,7 +941,11 @@
         "yiling": "wei",
         "shuofang": "neutral",
         "wuyuan": "wei",
-        "yunzhong": "wei"
+        "yunzhong": "wei",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -438,7 +968,50 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "historical-sun-kang"
+        ],
+        "langya": [
+          "san14-candidate-0525"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
+        ],
+        "xuantu": []
+      },
+      "resources": {
+        "donglai": {
+          "gold": 685,
+          "grain": 2750,
+          "reserves": 690
+        },
+        "langya": {
+          "gold": 680,
+          "grain": 2825,
+          "reserves": 725
+        },
+        "taishan": {
+          "gold": 710,
+          "grain": 2900,
+          "reserves": 810
+        },
+        "xuantu": {
+          "gold": 520,
+          "grain": 2150,
+          "reserves": 670
+        }
+      },
+      "attested_garrisons": {
+        "langya": [
+          "san14-candidate-0525"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
+        ]
+      },
+      "opening_notes": {
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland209-06": {
@@ -451,7 +1024,11 @@
         "yiling": "wei",
         "shuofang": "neutral",
         "wuyuan": "wei",
-        "yunzhong": "wei"
+        "yunzhong": "wei",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -474,7 +1051,45 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "historical-sun-kang"
+        ],
+        "langya": [
+          "historical-xu-xi"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
+        ],
+        "xuantu": []
+      },
+      "opening_notes": {
+        "donglai": "依假想劇本東部青州格局歸曹操。",
+        "langya": "依假想劇本徐州北部格局歸曹操。",
+        "taishan": "依假想劇本兗州格局歸曹操。",
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 700,
+          "grain": 2800,
+          "reserves": 700
+        },
+        "langya": {
+          "gold": 690,
+          "grain": 2850,
+          "reserves": 740
+        },
+        "taishan": {
+          "gold": 710,
+          "grain": 2925,
+          "reserves": 815
+        },
+        "xuantu": {
+          "gold": 520,
+          "grain": 2150,
+          "reserves": 670
+        }
       }
     },
     "mainland210-11": {
@@ -487,7 +1102,11 @@
         "yiling": "wu",
         "shuofang": "neutral",
         "wuyuan": "wei",
-        "yunzhong": "wei"
+        "yunzhong": "wei",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -510,7 +1129,45 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "historical-sun-kang"
+        ],
+        "langya": [
+          "historical-xu-xi"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
+        ],
+        "xuantu": []
+      },
+      "opening_notes": {
+        "donglai": "依假想劇本東部青州格局歸曹操。",
+        "langya": "依假想劇本徐州北部格局歸曹操。",
+        "taishan": "依假想劇本兗州格局歸曹操。",
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 705,
+          "grain": 2875,
+          "reserves": 715
+        },
+        "langya": {
+          "gold": 690,
+          "grain": 2875,
+          "reserves": 740
+        },
+        "taishan": {
+          "gold": 710,
+          "grain": 2950,
+          "reserves": 825
+        },
+        "xuantu": {
+          "gold": 520,
+          "grain": 2150,
+          "reserves": 670
+        }
       }
     },
     "mainland211-07-tongguan": {
@@ -523,7 +1180,11 @@
         "yiling": "shu",
         "shuofang": "neutral",
         "wuyuan": "wei",
-        "yunzhong": "wei"
+        "yunzhong": "wei",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -546,7 +1207,47 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "historical-sun-kang"
+        ],
+        "langya": [
+          "historical-xu-xi"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
+        ],
+        "xuantu": []
+      },
+      "resources": {
+        "donglai": {
+          "gold": 725,
+          "grain": 2950,
+          "reserves": 735
+        },
+        "langya": {
+          "gold": 720,
+          "grain": 3000,
+          "reserves": 765
+        },
+        "taishan": {
+          "gold": 740,
+          "grain": 3100,
+          "reserves": 855
+        },
+        "xuantu": {
+          "gold": 520,
+          "grain": 2150,
+          "reserves": 670
+        }
+      },
+      "attested_garrisons": {
+        "taishan": [
+          "san14-candidate-0980"
+        ]
+      },
+      "opening_notes": {
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland212-06": {
@@ -559,7 +1260,11 @@
         "yiling": "shu",
         "shuofang": "neutral",
         "wuyuan": "cao_zhang",
-        "yunzhong": "wei"
+        "yunzhong": "wei",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -582,7 +1287,45 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "historical-sun-kang"
+        ],
+        "langya": [
+          "historical-xu-xi"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
+        ],
+        "xuantu": []
+      },
+      "opening_notes": {
+        "donglai": "依假想劇本東部青州格局歸曹操。",
+        "langya": "依假想劇本徐州北部格局歸曹操。",
+        "taishan": "依假想劇本兗州格局歸曹操。",
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 730,
+          "grain": 3025,
+          "reserves": 750
+        },
+        "langya": {
+          "gold": 720,
+          "grain": 3000,
+          "reserves": 765
+        },
+        "taishan": {
+          "gold": 735,
+          "grain": 3050,
+          "reserves": 850
+        },
+        "xuantu": {
+          "gold": 520,
+          "grain": 2150,
+          "reserves": 670
+        }
       }
     },
     "mainland212-12": {
@@ -595,7 +1338,11 @@
         "yiling": "shu",
         "shuofang": "neutral",
         "wuyuan": "wei",
-        "yunzhong": "wei"
+        "yunzhong": "wei",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -618,7 +1365,47 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "historical-sun-kang"
+        ],
+        "langya": [
+          "historical-mao-hui"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
+        ],
+        "xuantu": []
+      },
+      "resources": {
+        "donglai": {
+          "gold": 735,
+          "grain": 3050,
+          "reserves": 755
+        },
+        "langya": {
+          "gold": 725,
+          "grain": 3050,
+          "reserves": 770
+        },
+        "taishan": {
+          "gold": 745,
+          "grain": 3125,
+          "reserves": 865
+        },
+        "xuantu": {
+          "gold": 520,
+          "grain": 2150,
+          "reserves": 670
+        }
+      },
+      "attested_garrisons": {
+        "taishan": [
+          "san14-candidate-0980"
+        ]
+      },
+      "opening_notes": {
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland215-08": {
@@ -631,7 +1418,11 @@
         "yiling": "shu",
         "shuofang": "neutral",
         "wuyuan": "neutral",
-        "yunzhong": "neutral"
+        "yunzhong": "neutral",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -656,14 +1447,52 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "historical-sun-kang"
+        ],
+        "langya": [
+          "historical-xu-xi"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
+        ],
+        "xuantu": []
       },
       "attested_garrisons": {
         "hefei": [
           "san14-candidate-0663",
           "san14-candidate-0913",
           "san14-candidate-0102"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
         ]
+      },
+      "resources": {
+        "donglai": {
+          "gold": 740,
+          "grain": 3100,
+          "reserves": 765
+        },
+        "langya": {
+          "gold": 735,
+          "grain": 3100,
+          "reserves": 780
+        },
+        "taishan": {
+          "gold": 750,
+          "grain": 3150,
+          "reserves": 875
+        },
+        "xuantu": {
+          "gold": 520,
+          "grain": 2150,
+          "reserves": 670
+        }
+      },
+      "opening_notes": {
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland217-07": {
@@ -676,7 +1505,11 @@
         "yiling": "shu",
         "shuofang": "neutral",
         "wuyuan": "neutral",
-        "yunzhong": "neutral"
+        "yunzhong": "neutral",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -700,7 +1533,47 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "historical-sun-kang"
+        ],
+        "langya": [
+          "historical-xu-xi"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
+        ],
+        "xuantu": []
+      },
+      "resources": {
+        "donglai": {
+          "gold": 750,
+          "grain": 3150,
+          "reserves": 785
+        },
+        "langya": {
+          "gold": 740,
+          "grain": 3150,
+          "reserves": 790
+        },
+        "taishan": {
+          "gold": 760,
+          "grain": 3200,
+          "reserves": 890
+        },
+        "xuantu": {
+          "gold": 520,
+          "grain": 2150,
+          "reserves": 670
+        }
+      },
+      "attested_garrisons": {
+        "taishan": [
+          "san14-candidate-0980"
+        ]
+      },
+      "opening_notes": {
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland219-07": {
@@ -713,7 +1586,11 @@
         "yiling": "shu",
         "shuofang": "neutral",
         "wuyuan": "neutral",
-        "yunzhong": "neutral"
+        "yunzhong": "neutral",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -736,7 +1613,17 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "historical-sun-kang"
+        ],
+        "langya": [
+          "historical-xu-xi"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
+        ],
+        "xuantu": []
       },
       "attested_garrisons": {
         "xicheng": [
@@ -744,11 +1631,39 @@
         ],
         "shangyong": [
           "san14-candidate-0463"
+        ],
+        "taishan": [
+          "san14-candidate-0980"
         ]
       },
       "transfers": {
         "san14-candidate-0455": "wei",
         "san14-candidate-0463": "wei"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 750,
+          "grain": 3150,
+          "reserves": 785
+        },
+        "langya": {
+          "gold": 745,
+          "grain": 3150,
+          "reserves": 805
+        },
+        "taishan": {
+          "gold": 760,
+          "grain": 3225,
+          "reserves": 900
+        },
+        "xuantu": {
+          "gold": 520,
+          "grain": 2150,
+          "reserves": 670
+        }
+      },
+      "opening_notes": {
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland221-07": {
@@ -761,7 +1676,11 @@
         "yiling": "wu",
         "shuofang": "neutral",
         "wuyuan": "neutral",
-        "yunzhong": "neutral"
+        "yunzhong": "neutral",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -784,7 +1703,15 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "historical-sun-kang"
+        ],
+        "langya": [
+          "san14-candidate-0014"
+        ],
+        "taishan": [],
+        "xuantu": []
       },
       "attested_garrisons": {
         "xicheng": [
@@ -793,6 +1720,31 @@
         "yiling": [
           "san14-candidate-0902"
         ]
+      },
+      "resources": {
+        "donglai": {
+          "gold": 780,
+          "grain": 3250,
+          "reserves": 815
+        },
+        "langya": {
+          "gold": 760,
+          "grain": 3250,
+          "reserves": 820
+        },
+        "taishan": {
+          "gold": 780,
+          "grain": 3300,
+          "reserves": 915
+        },
+        "xuantu": {
+          "gold": 630,
+          "grain": 2300,
+          "reserves": 740
+        }
+      },
+      "opening_notes": {
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland225-07": {
@@ -805,7 +1757,11 @@
         "yiling": "wu",
         "shuofang": "neutral",
         "wuyuan": "neutral",
-        "yunzhong": "neutral"
+        "yunzhong": "neutral",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -828,12 +1784,41 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [],
+        "langya": [],
+        "taishan": [],
+        "xuantu": []
       },
       "attested_garrisons": {
         "xicheng": [
           "san14-candidate-0455"
         ]
+      },
+      "resources": {
+        "donglai": {
+          "gold": 795,
+          "grain": 3325,
+          "reserves": 830
+        },
+        "langya": {
+          "gold": 770,
+          "grain": 3325,
+          "reserves": 840
+        },
+        "taishan": {
+          "gold": 785,
+          "grain": 3375,
+          "reserves": 925
+        },
+        "xuantu": {
+          "gold": 630,
+          "grain": 2300,
+          "reserves": 740
+        }
+      },
+      "opening_notes": {
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland227-02": {
@@ -846,7 +1831,11 @@
         "yiling": "wu",
         "shuofang": "neutral",
         "wuyuan": "neutral",
-        "yunzhong": "neutral"
+        "yunzhong": "neutral",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -869,7 +1858,11 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [],
+        "langya": [],
+        "taishan": [],
+        "xuantu": []
       },
       "attested_garrisons": {
         "xicheng": [
@@ -878,6 +1871,31 @@
         "yiling": [
           "san14-candidate-0902"
         ]
+      },
+      "resources": {
+        "donglai": {
+          "gold": 800,
+          "grain": 3350,
+          "reserves": 840
+        },
+        "langya": {
+          "gold": 775,
+          "grain": 3375,
+          "reserves": 850
+        },
+        "taishan": {
+          "gold": 790,
+          "grain": 3400,
+          "reserves": 930
+        },
+        "xuantu": {
+          "gold": 630,
+          "grain": 2300,
+          "reserves": 740
+        }
+      },
+      "opening_notes": {
+        "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland234-02": {
@@ -890,7 +1908,11 @@
         "yiling": "wu",
         "shuofang": "neutral",
         "wuyuan": "neutral",
-        "yunzhong": "neutral"
+        "yunzhong": "neutral",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -913,12 +1935,49 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "san14-candidate-0942"
+        ],
+        "langya": [
+          "san14-candidate-0061"
+        ],
+        "taishan": [
+          "historical-expansion-0009"
+        ],
+        "xuantu": [
+          "historical-wang-zan-xuantu"
+        ]
       },
       "attested_garrisons": {
         "yiling": [
           "san14-candidate-0838"
         ]
+      },
+      "resources": {
+        "donglai": {
+          "gold": 820,
+          "grain": 3450,
+          "reserves": 865
+        },
+        "langya": {
+          "gold": 785,
+          "grain": 3450,
+          "reserves": 875
+        },
+        "taishan": {
+          "gold": 800,
+          "grain": 3450,
+          "reserves": 950
+        },
+        "xuantu": {
+          "gold": 540,
+          "grain": 2100,
+          "reserves": 580
+        }
+      },
+      "opening_notes": {
+        "xuantu": "《三國志·吳主傳》裴注引《吳書》載233年王贊為玄菟太守。本劇本推定其仍在任。"
       }
     },
     "mainland235-01": {
@@ -931,7 +1990,11 @@
         "yiling": "wu",
         "shuofang": "wei",
         "wuyuan": "neutral",
-        "yunzhong": "neutral"
+        "yunzhong": "neutral",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -954,7 +2017,47 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "san14-candidate-0960"
+        ],
+        "langya": [
+          "san14-candidate-0061"
+        ],
+        "taishan": [
+          "san14-candidate-0273"
+        ],
+        "xuantu": [
+          "historical-wang-zan-xuantu"
+        ]
+      },
+      "opening_notes": {
+        "donglai": "依假想劇本青州格局歸魏，駐將為區域分防配置。",
+        "langya": "依假想劇本徐州格局歸魏，駐將為區域分防配置。",
+        "taishan": "依假想劇本兗州格局歸魏，駐將為區域分防配置。",
+        "xuantu": "《三國志·吳主傳》裴注引《吳書》載233年王贊為玄菟太守。本劇本推定其仍在任。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 820,
+          "grain": 3450,
+          "reserves": 870
+        },
+        "langya": {
+          "gold": 785,
+          "grain": 3450,
+          "reserves": 875
+        },
+        "taishan": {
+          "gold": 800,
+          "grain": 3475,
+          "reserves": 950
+        },
+        "xuantu": {
+          "gold": 540,
+          "grain": 2100,
+          "reserves": 580
+        }
       }
     },
     "mainland238-01": {
@@ -967,7 +2070,11 @@
         "yiling": "wu",
         "shuofang": "wei",
         "wuyuan": "neutral",
-        "yunzhong": "neutral"
+        "yunzhong": "neutral",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "gongsun"
       },
       "garrisons": {
         "hefei": [
@@ -990,12 +2097,52 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [
+          "san14-candidate-0118"
+        ],
+        "langya": [
+          "san14-candidate-0061"
+        ],
+        "taishan": [
+          "san14-candidate-0993"
+        ],
+        "xuantu": [
+          "historical-wang-zan-xuantu"
+        ]
       },
       "attested_garrisons": {
         "yiling": [
           "san14-candidate-0838"
         ]
+      },
+      "opening_notes": {
+        "donglai": "東萊仍在魏方。籌備遼東戰役期間加配海防資源，為本作配置。",
+        "langya": "開陽仍在魏方。王祥為琅邪臨沂人，駐開陽為區域配置。",
+        "taishan": "奉高仍在魏方。守將為區域分防配置。",
+        "xuantu": "景初二年正月，襄平尚未陷落，玄菟仍歸公孫淵。王贊見載於233年，延續駐任為本作推定。"
+      },
+      "resources": {
+        "donglai": {
+          "gold": 850,
+          "grain": 3600,
+          "reserves": 920
+        },
+        "langya": {
+          "gold": 790,
+          "grain": 3450,
+          "reserves": 880
+        },
+        "taishan": {
+          "gold": 805,
+          "grain": 3500,
+          "reserves": 950
+        },
+        "xuantu": {
+          "gold": 590,
+          "grain": 2225,
+          "reserves": 760
+        }
       }
     },
     "mainland249-01": {
@@ -1010,7 +2157,11 @@
         "pingyang": "wei",
         "shuofang": "wei",
         "wuyuan": "neutral",
-        "yunzhong": "neutral"
+        "yunzhong": "neutral",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "wei"
       },
       "garrisons": {
         "hefei": [
@@ -1039,7 +2190,11 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [],
+        "langya": [],
+        "taishan": [],
+        "xuantu": []
       },
       "attested_garrisons": {
         "chaisang": [
@@ -1048,6 +2203,31 @@
         "yiling": [
           "san14-candidate-0833"
         ]
+      },
+      "resources": {
+        "donglai": {
+          "gold": 870,
+          "grain": 3625,
+          "reserves": 920
+        },
+        "langya": {
+          "gold": 810,
+          "grain": 3575,
+          "reserves": 895
+        },
+        "taishan": {
+          "gold": 820,
+          "grain": 3600,
+          "reserves": 975
+        },
+        "xuantu": {
+          "gold": 500,
+          "grain": 1875,
+          "reserves": 440
+        }
+      },
+      "opening_notes": {
+        "xuantu": "238年襄平陷落後，《三國志·公孫度傳》載玄菟等郡平定，開局歸曹魏。"
       }
     },
     "mainland263-05": {
@@ -1065,7 +2245,11 @@
         "jianping": "wu",
         "shuofang": "wei",
         "wuyuan": "neutral",
-        "yunzhong": "neutral"
+        "yunzhong": "neutral",
+        "donglai": "wei",
+        "langya": "wei",
+        "taishan": "wei",
+        "xuantu": "wei"
       },
       "garrisons": {
         "hefei": [
@@ -1103,12 +2287,41 @@
         ],
         "shuofang": [],
         "wuyuan": [],
-        "yunzhong": []
+        "yunzhong": [],
+        "donglai": [],
+        "langya": [],
+        "taishan": [],
+        "xuantu": []
       },
       "attested_garrisons": {
         "yiling": [
           "san14-candidate-0833"
         ]
+      },
+      "resources": {
+        "donglai": {
+          "gold": 845,
+          "grain": 3500,
+          "reserves": 880
+        },
+        "langya": {
+          "gold": 790,
+          "grain": 3450,
+          "reserves": 875
+        },
+        "taishan": {
+          "gold": 800,
+          "grain": 3500,
+          "reserves": 935
+        },
+        "xuantu": {
+          "gold": 580,
+          "grain": 2175,
+          "reserves": 620
+        }
+      },
+      "opening_notes": {
+        "xuantu": "238年襄平陷落後，《三國志·公孫度傳》載玄菟等郡平定，開局歸曹魏。"
       }
     }
   },
@@ -1293,6 +2506,45 @@
         "wei": "以本劇本雁門一帶所屬的魏方作區域配置。史載曹操平定并州後任梁習整頓邊防，雲中舊郡的駐守情況未詳。"
       },
       "neutral_label": "河套地方部众（中立）"
+    },
+    "donglai": {
+      "basis": "東萊郡屬青州，本作用漢代黃縣治所。184、188以漢廷代表郡治；190至194列東萊地方官署，公孫度越海攻取諸縣的確月及控制範圍未詳。196起按袁譚進取青州的區域形勢劃入袁紹，202分配袁譚並置史載東萊太守管統，確切到任月未載。袁譚覆亡後歸曹方；238年海防加備為本作配置。後世地方志對曹魏是否遷治掖縣記載有異，戰役共用黃縣城標。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/後漢書/卷112#東萊郡",
+        "https://zh.wikisource.org/wiki/三國志/卷08#公孫度",
+        "https://zh.wikisource.org/wiki/三國志/卷06#袁紹",
+        "https://zh.wikisource.org/wiki/三國志/卷11#王脩",
+        "https://shandong-chorography.org/database/a/section/3/article/12/",
+        "https://shandong-chorography.org/database/a/section/3/article/106/"
+      ]
+    },
+    "langya": {
+      "basis": "琅邪隸徐州，以東漢以來的開陽治所作地圖節點。黃巾前後的漢、陶謙及196年劉備開局按徐州形勢配置；194與198依《臧霸傳》列屯開陽者，臧霸作為既有勢力君主時仍以東海為本拠。曹操平呂布後以臧霸為琅邪相，200年起歷史開局歸曹方。曹魏太和六年封曹敏為琅邪王。黃巾及徐州戰亂期間的資源減少是本作配置。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/後漢書/卷42#琅邪孝王京",
+        "https://zh.wikisource.org/wiki/後漢書/卷111#琅邪國",
+        "https://zh.wikisource.org/wiki/三國志/卷18#臧霸",
+        "https://zh.wikisource.org/wiki/三國志/卷20#范陽閔王矩"
+      ]
+    },
+    "taishan": {
+      "basis": "泰山郡屬兗州，以奉高為治。184、188以漢廷代表郡治；190與191按兗州形勢配置劉岱勢力，應劭為史載泰山太守。194年應劭去郡、兗州更張後，依東平與山陽開局歸呂布，為區域推定，奉高交接未有確載。196起歸曹方；呂虔任太守十數年，史料未載就任月。鮑信史載濟北相，保留既有濟北區域代理。戰事期開局儲備較低為本作配置。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/後漢書/卷111#泰山郡",
+        "https://zh.wikisource.org/wiki/後漢書_(四庫全書本)/卷078",
+        "https://zh.wikisource.org/wiki/三國志/卷01",
+        "https://zh.wikisource.org/wiki/三國志/卷18#呂虔",
+        "https://zh.wikisource.org/wiki/晉書/卷014#兗州"
+      ]
+    },
+    "xuantu": {
+      "basis": "玄菟郡為東漢幽州屬郡。治所多次移動，本作採東漢至魏晉的上伯官城址所在的瀋撫一帶，設於襄平東北。初期以漢廷代表郡府。公孫氏據遼東後，納入其實際勢力範圍。景初二年（238）襄平失守後與其他遼東諸郡一併歸魏。開局人口與物資為本作配置。",
+      "sources": [
+        "https://www.chinakongzi.org/kzsf/lsjd/houhanshu/200711/t20071126_35846.htm",
+        "https://www.xuoda.com/ls/sgz/027.htm",
+        "https://zh.wikisource.org/wiki/三國志/卷47#吳主",
+        "https://whly.ln.gov.cn/whly/zfxxgk/fdzdgknr/jyta/srddbjy/sssjrdechy2024n/2024101116145325058/index.shtml"
+      ]
     }
   }
 }

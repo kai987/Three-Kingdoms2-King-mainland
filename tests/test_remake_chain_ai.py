@@ -17,6 +17,7 @@ from campaign_fixtures import arrange_tactic,controlled_catalog
 from test_remake_battle_grid import fixture,plain,position
 from test_remake_fire_supply_ai import command
 from test_remake_tactical_ai import actors,kernel_battle
+from campaign_fixtures import legacy_grain_campaign
 
 
 def water_group():
@@ -72,6 +73,9 @@ def actual_success_seed(chance,draws):
 
 
 class ChainAITests(unittest.TestCase):
+    def setUp(self):
+        self.enterContext(legacy_grain_campaign())
+
     def test_directional_duration_means_and_day_horizon_are_movement_estimates(self):
         _,_,battle,field=water_group();target=battle['defenders'][0]
         with patch.object(grid,'_field',return_value=field):

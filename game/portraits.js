@@ -11,7 +11,13 @@
    !Number.isInteger(value.height)||value.height<1||value.height>256||!value.people||typeof value.people!=='object'||Array.isArray(value.people))throw new Error('Invalid portrait index');
   const people=Object.create(null);
   for(const[id,row]of Object.entries(value.people)){
-   if(!personPattern.test(id)||!row||!['nes_original','generated'].includes(row.kind)||!pathPattern.test(row.path)||
+   if(!personPattern.test(id)||!row)throw new Error('Invalid portrait entry');
+   if(row.kind==='generic_placeholder'){
+    if(row.original_id!==null||['path','enhanced','refined','white'].some(key=>Object.hasOwn(row,key)))throw new Error('Invalid generic portrait entry');
+    people[id]=Object.freeze({kind:row.kind,original_id:null});
+    continue;
+   }
+   if(!['nes_original','generated'].includes(row.kind)||!pathPattern.test(row.path)||
     (row.kind==='nes_original'&&(!Number.isInteger(row.original_id)||row.original_id<0||row.original_id>236)))throw new Error('Invalid portrait entry');
    const entry={path:row.path,kind:row.kind,original_id:row.kind==='nes_original'?row.original_id:null};
    if(Object.prototype.hasOwnProperty.call(row,'enhanced')){
@@ -57,7 +63,7 @@
   }
   function entry(id){return typeof id==='string'?(generated.get(id)||index?.people[id]||null):null;}
   function selectedAsset(row,size){
-   if(!row)return null;
+   if(!row?.path)return null;
    if((size==='roster'||size==='library')&&row.thumbnail&&!failedPaths.has(row.thumbnail.path))return{...row.thumbnail,enhanced:true};
    const variant=[row.white,row.refined,row.enhanced].find(item=>item&&!failedPaths.has(item.path));
    if(variant)return{...variant,enhanced:true};
@@ -78,6 +84,7 @@
   }
   function description(row,asset=null){
    if(!row)return text(status==='idle'||status==='loading'?'肖像準備中':'肖像待補',status==='idle'||status==='loading'?'肖像を準備中':'肖像は未設定です');
+   if(row.kind==='generic_placeholder')return text('共用武將占位肖像','共通の武将用仮肖像');
    if(row.thumbnail&&asset?.path===row.thumbnail.path)return row.kind==='nes_original'
     ?text('原版像素肖像・128×160縮圖','原作のドット肖像・128×160サムネイル')
     :text('新增繪製像素肖像・128×160縮圖・非史實容貌','新規制作のドット肖像・128×160サムネイル・史実の容貌ではありません');
@@ -94,7 +101,7 @@
   }
   function contents(id,rawName,source,size){
    const row=entry(id),asset=selectedAsset(row,size),available=!!asset,name=labelName(rawName),width=asset?.width||index?.width||32,height=asset?.height||index?.height||40;
-   const missing=row&&!available?text('肖像載入失敗','肖像を読み込めませんでした'):description(null);
+   const missing=row&&!available&&row.kind!=='generic_placeholder'?text('肖像載入失敗','肖像を読み込めませんでした'):description(row);
    const alt=available?`${name}${text('的肖像','の肖像')}`:`${name} · ${missing}`;
    const image=available?`<img data-portrait-image src="${escape(imageUrl(asset.path))}" width="${width}" height="${height}" alt="${escape(alt)}" loading="lazy" decoding="async" draggable="false">`:
     `<span class="portrait-placeholder" role="img" aria-label="${escape(alt)}"><span aria-hidden="true">？</span></span>`;

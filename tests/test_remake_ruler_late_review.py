@@ -172,10 +172,10 @@ class LateRulerReviewTests(unittest.TestCase):
                 scenario = catalog.data['id']
                 opened_counties = {city for city, owner in self.chronology[scenario].items()
                                    if owner is not None}
-                new_cities = self.expansion[scenario]['owners'].keys() | opened_counties
+                new_cities = self.expansion[scenario]['owners'].keys() | opened_counties | {'liucheng', 'guonei', 'luzon'}
                 added_reserves = sum(catalog.data['initial_city_resources'][city]['reserves']
                                      for city in new_cities)
-                old_total = expected['soldiers'] + added_reserves
+                old_total = expected['soldiers'] + added_reserves + sum(row['troops'] for row in catalog.data['initial_officers'] if row['city'] in ('liucheng', 'guonei'))
                 self.assertEqual(sum(row['reserves'] for row in old_stocks.values())
                                  + sum(old_troops.values()), old_total)
                 self.assertEqual(actual, old_total + sum(opening_troops.values()) - sum(old_troops.values()))

@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'source'))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from remake.dated_events import validate_source as validate_dated_source, visible_factions
-from ruler_audit import frozen_material_totals, material_totals
+from ruler_audit import check_added_factions, frozen_material_totals, material_totals, reviewed_expansion_post
 
 REFERENCE = ROOT / 'game/config/references/scenario-history-review.json'
 REPORT_JSON = ROOT / 'docs/scenario-history-audit-20261025.json'
@@ -364,6 +364,7 @@ def compile_report():
                     and opening.get(pid, {}).get('status') == 'free',
                     ident + ': returned opening troops differ from the reserve adjustment')
         soldier_total = material_totals(data, active)['soldiers']
+        check_added_factions(data)
         require('initial_soldier_total' not in decision
                 or decision['initial_soldier_total'] == frozen_material_totals(data, active)['soldiers'],
                 ident + ': opening soldier conservation summary differs')
@@ -395,6 +396,8 @@ def compile_report():
             require(data['faction_rulers'].get(fid) == people[pid]['runtime_id'],
                     ident + ': faction ruler runtime identity mismatch ' + fid)
         for row in changes['officer_changes']:
+            row = reviewed_expansion_post(data, row['person_id'],
+                                          dict(row, status=row.get('status', 'serving' if row.get('faction') else 'free')))
             pid, faction, city = row['person_id'], row.get('faction'), row.get('city')
             require(pid in people, ident + ': reviewed person missing from pool ' + pid)
             actual = opening.get(pid)

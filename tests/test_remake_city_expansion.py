@@ -8,6 +8,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / 'source'), str(ROOT / 'game')]
 from build_campaigns import apply_patch
+from remake import diplomacy
 from remake.campaign import Campaign, Catalog
 from remake.city_economy import apply_opening_sizes
 from remake.map_presentation import city_names
@@ -16,11 +17,13 @@ from remake.march_core import using_backend
 
 ALWAYS_ACTIVE_ADDITIONS = {
     'hefei', 'guangling', 'chaisang', 'xicheng', 'shangyong', 'yiling',
-    'shuofang', 'wuyuan', 'yunzhong',
+    'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu',
 }
+FACTION_CAPITALS = {'liucheng', 'guonei'}
+SETTLEMENT_SITES = {'luzon'}
 FOUNDINGS = {'changli': (244, 9), 'pingyang': (247, 5), 'hengyang': (257, 2),
              'xiangdong': (257, 2), 'jianping': (260, 1)}
-ADDITIONS = ALWAYS_ACTIVE_ADDITIONS | FOUNDINGS.keys()
+ADDITIONS = ALWAYS_ACTIVE_ADDITIONS | FACTION_CAPITALS | FOUNDINGS.keys() | SETTLEMENT_SITES
 
 
 def read(path):
@@ -71,7 +74,9 @@ class CityExpansionTests(unittest.TestCase):
                 state = game.state
                 reviewed_owners = {key: owner for key, owner in self.chronology['owners'][scenario].items()
                                    if owner is not None}
-                self.assertEqual(set(state.cities), set(original['active_cities']) | expected | reviewed_owners.keys())
+                self.assertEqual(set(state.cities),
+                                 set(original['active_cities']) | expected | FACTION_CAPITALS
+                                 | reviewed_owners.keys() | SETTLEMENT_SITES)
                 self.assertEqual(set(state.cities), set(catalog.active_city_ids(*date)))
                 self.assertEqual(set(catalog.map_cities), set(legacy) | ADDITIONS)
                 self.assertEqual({key: catalog.map_cities[key]['position'] for key in legacy}, legacy)
@@ -93,7 +98,11 @@ class CityExpansionTests(unittest.TestCase):
                 for field in ('initial_city_resources', 'city_income'):
                     self.assertEqual({key: catalog.data[field][key] for key in legacy}, original[field])
                 self.assertEqual({key: state.cities[key].owner for key in expected}, plan['owners'])
-                for city in expected | reviewed_owners.keys() | {'gaoliang', 'xiping'}:
+                for city in ('donglai', 'langya', 'taishan', 'xuantu'):
+                    self.assertEqual(catalog.data['initial_city_resources'][city], plan['resources'][city])
+                    if note := plan.get('opening_notes', {}).get(city):
+                        self.assertEqual(catalog.data['city_history'][city]['opening']['note'], note)
+                for city in expected | FACTION_CAPITALS | reviewed_owners.keys() | SETTLEMENT_SITES | {'gaoliang', 'xiping'}:
                     self.assertTrue(set(game._neighbors(city, state)).intersection(state.cities), city)
                     self.assertTrue(game._city_occupancy(state, state.cities[city]) <= 99, city)
                     if state.cities[city].owner == 'neutral':
@@ -162,6 +171,84 @@ class CityExpansionTests(unittest.TestCase):
         self.assertEqual({city: late.cities[city].owner for city in FOUNDINGS},
                          dict(changli='wei', pingyang='wei', hengyang='wu', xiangdong='wu', jianping='wu'))
 
+    def test_xuantu_is_present_before_and_after_the_238_conquest(self):
+        for scenario, catalog in self.catalogs.items():
+            date = (catalog.data['start_year'], catalog.data['start_month'])
+            if date < (190, 1):
+                owner = 'han'
+            elif date <= (238, 1):
+                owner = 'gongsun'
+            else:
+                owner = 'wei'
+            with self.subTest(scenario=scenario):
+                self.assertIn('xuantu', catalog.active_city_ids(*date))
+                self.assertEqual(catalog.data['initial_owners']['xuantu'], owner)
+                self.assertEqual(city_names(catalog, *date)['xuantu'], '玄菟')
+                self.assertEqual(catalog.map_cities['xuantu']['position'], [1232, 29])
+                self.assertEqual(catalog.map_cities['liaodong']['position'], [1194, 78])
+                for field in ('gold', 'grain', 'reserves'):
+                    self.assertGreater(catalog.data['initial_city_resources']['xuantu'][field], 0)
+
+    def test_liucheng_hosts_liaoxi_wuhuan_until_the_207_campaign(self):
+        for scenario, catalog in self.catalogs.items():
+            date = (catalog.data['start_year'], catalog.data['start_month'])
+            prewar = date < (207, 9)
+            with self.subTest(scenario=scenario):
+                self.assertIn('liucheng', catalog.active_city_ids(*date))
+                self.assertEqual(catalog.map_cities['liucheng']['position'], [1074, 50])
+                self.assertEqual(catalog.data['initial_owners']['liucheng'], 'wuhuan' if prewar else 'wei')
+                self.assertEqual('wuhuan' in catalog.factions, prewar)
+                if prewar:
+                    ruler = ('0201' if date < (194, 6) else '0740' if date < (202, 6) else '0996')
+                    pid = 'san14-candidate-' + ruler
+                    self.assertEqual(catalog.factions['wuhuan']['city'], 'liucheng')
+                    self.assertEqual(catalog.data['faction_rulers']['wuhuan'], catalog.ids[pid])
+                    self.assertIn((pid, 'liucheng', True),
+                                  {(row['person_id'], row['city'], row.get('ruler'))
+                                   for row in catalog.data['initial_officers']})
+        guest = 'san14-candidate-0996'
+        self.assertEqual(self.catalogs['mainland184-02'].data['appearance_locations'][guest], 'liucheng')
+        postwar = self.catalogs['mainland207-09'].data['initial_free_officers']
+        self.assertIn((guest, 'liaodong'), {(row['person_id'], row['city']) for row in postwar})
+
+    def test_wuhuan_opening_treaties_use_runtime_diplomacy_and_save(self):
+        for scenario, ally in (('mainland188-06', 'zhang_chun'), ('mainland200-01', 'yuan_shao')):
+            with self.subTest(scenario=scenario):
+                game = self.start(scenario, 'wuhuan')
+                self.assertTrue(diplomacy.allied(game.state, 'wuhuan', ally))
+                self.assertTrue(diplomacy.allied(game.state, ally, 'wuhuan'))
+                self.assertEqual(diplomacy.expiry(game.state, 'wuhuan', ally), game.state.turn + 36)
+                state = game.export_save()
+                loaded = Headless(game.catalog)
+                loaded.load_save(state, 0)
+                self.assertTrue(diplomacy.allied(loaded.state, 'wuhuan', ally))
+                self.assertEqual(loaded.export_save(), state)
+
+    def test_named_wuhuan_officers_follow_their_reviewed_opening_windows(self):
+        leaders = {'historical-wuhuan-nanlou': 650, 'historical-wuhuan-supuyan': 600,
+                   'historical-wuhuan-wuyan': 550}
+        late = 'historical-wuhuan-sufuwan'
+        people = leaders.keys() | {late}
+        for scenario, catalog in self.catalogs.items():
+            date = (catalog.data['start_year'], catalog.data['start_month'])
+            actual = {row['person_id']: (row['city'], row['troops'])
+                      for row in catalog.data['initial_officers'] if row['person_id'] in people}
+            expected = dict(leaders) if (188, 6) <= date < (207, 9) else {}
+            if (202, 6) <= date < (207, 9):
+                expected[late] = 450
+            with self.subTest(scenario=scenario):
+                self.assertEqual(actual, {pid: ('liucheng', troops) for pid, troops in expected.items()})
+                self.assertTrue(all(catalog.data['era_assignments'][pid]['faction'] == 'wuhuan' for pid in expected))
+                self.assertFalse(people & {row['person_id'] for row in catalog.data['initial_free_officers']})
+                if 'wuhuan' in catalog.factions:
+                    self.assertEqual(catalog.factions['wuhuan']['name'], '乌桓')
+        game = self.start('mainland202-06', 'wuhuan')
+        biographies = read('game/assets/officer-biographies.json')['people']
+        for pid in people:
+            self.assertEqual(game.state.officers[game.catalog.ids[pid]].faction_id, 'wuhuan')
+            self.assertEqual(biographies[pid]['kind'], 'historical')
+            self.assertEqual(len(biographies[pid]['sources']), 2)
+
     def test_both_era_name_cutovers_keep_the_same_city_ids(self):
         catalog = self.catalogs['mainland263-05']
         for city, date, expected in [
@@ -174,6 +261,11 @@ class CityExpansionTests(unittest.TestCase):
             ('hepu', (258, 9), '珠官'),
             ('hepu', (258, 10), '合浦'),
             ('hepu', (263, 5), '合浦'),
+            ('langya', (184, 2), '琅邪国'),
+            ('langya', (194, 6), '琅邪郡'),
+            ('langya', (207, 9), '琅邪国'),
+            ('langya', (217, 7), '琅邪郡'),
+            ('langya', (234, 2), '琅邪国'),
         ]:
             with self.subTest(city=city, date=date):
                 self.assertEqual(city_names(catalog, *date)[city], expected)
@@ -185,7 +277,7 @@ class CityExpansionTests(unittest.TestCase):
             roads = {city for city in ADDITIONS if any(
                 route['mode'] == 'land' and city in (route['from'], route['to'])
                 and {route['from'], route['to']} <= active for route in game._known_routes(game.state))}
-            self.assertEqual(roads, ADDITIONS)
+            self.assertEqual(roads, ADDITIONS - SETTLEMENT_SITES)
             for source, target, mode in [
                 ('hefei', 'danyang', 'land'), ('guangling', 'danyang', 'river'),
                 ('chaisang', 'qichun', 'river'), ('xicheng', 'hanzhong', 'river'),
@@ -194,6 +286,12 @@ class CityExpansionTests(unittest.TestCase):
                 ('pingyang', 'hedong', 'land'),
                 ('hengyang', 'changsha', 'river'), ('xiangdong', 'hengyang', 'river'),
                 ('jianping', 'badong', 'river'),
+                ('beihai', 'donglai', 'land'), ('beihai', 'langya', 'land'),
+                ('langya', 'donghai', 'land'), ('jinan', 'taishan', 'land'),
+                ('taishan', 'shanyang', 'land'), ('taishan', 'langya', 'land'),
+                ('liaodong', 'xuantu', 'land'), ('xuantu', 'liaodong', 'land'),
+                ('liaoxi', 'liucheng', 'land'), ('liucheng', 'liaoxi', 'land'),
+                ('yizhou', 'luzon', 'sea'), ('luzon', 'yizhou', 'sea'),
             ]:
                 with self.subTest(source=source, target=target, mode=mode):
                     route = next(route for route in game._known_routes(game.state)

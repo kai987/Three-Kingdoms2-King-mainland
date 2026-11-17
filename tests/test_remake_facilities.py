@@ -47,7 +47,7 @@ def fixture(seed=2026):
         action_used=False,roster=SimpleNamespace(officer_ids=ids))
         for key,owner,ids in [('capital','one',[1,2,3,4,5,7]),('border','one',[clerk['id']]),
             ('enemy','two',[6]),('neutral','neutral',[])]}
-    state=SimpleNamespace(year=217,month=4,day=1,turn=1,phase='city',player='one',
+    state=SimpleNamespace(year=217,month=4,day=1,turn=1,phase='city',player='one',seed=seed,
         rng=SeedRng(seed),battle=None,cities=cities,officers=officers,events=[],
         soldiers=dict(initial=6400,recruited=0,lost=0),extension=dict(
             civil_staff=dict(people={clerk['id']:clerk}),officer_actions={},leaders=dict(one=1,two=6),

@@ -247,12 +247,14 @@ class FullCatalogRouteTimingTests(unittest.TestCase):
             source = read('game/config/campaigns/'+scenario['file'])
             original = build_campaigns.apply_patch(shared, source.get('overrides', {}))
             apply_opening_sizes(original, city_scale_rules)
+            location = read('game/config/campaigns/city-expansion-map.json')['cities']['luzon']
+            build_campaigns.add_luzon_settlement(original, location)
             compiled = read('game/data/campaigns/'+scenario['id'].removeprefix('mainland')+'.json')
             expected_links = original['links']+[[r['from'], r['to']] for r in navigation['land_roads']]
             self.assertEqual(compiled['links'], expected_links, scenario['id'])
             self.assertEqual({city: compiled['city_coordinates'][city] for city in original['city_coordinates']},
                              original['city_coordinates'])
-            self.assertEqual(compiled['cities'][:len(original['cities'])], original['cities'])
+            self.assertEqual([city for city in compiled['cities'] if city['id'] in {c['id'] for c in original['cities']}], original['cities'])
             self.assertEqual(compiled['travel_rules']['geometry_sha256'], fingerprint)
             for key in ('speeds', 'detours', 'embark_days'):
                 self.assertEqual(compiled['travel_rules'][key], original['travel_rules'][key])
@@ -351,7 +353,8 @@ class FullCatalogRouteTimingTests(unittest.TestCase):
                     if route['id'] in copies:
                         self.assertEqual(physical, copies[route['id']], (scenario['id'], field, route['id']))
                     copies[route['id']] = physical
-                    if route['id'] in old_rows and any(route[k] != old_rows[route['id']][k] for k in ('distance_km', 'days')):
+                    previous = old_rows.get(route['id'], {})
+                    if any(key in previous and route[key] != previous[key] for key in ('distance_km', 'days')):
                         changed += 1
                     checked += 1
         self.assertGreater(checked, 9000)

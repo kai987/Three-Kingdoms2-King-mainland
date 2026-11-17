@@ -27,9 +27,20 @@ async function main() {
   ], {cwd: root, encoding: 'utf8'}));
   // Preserve the opaque native castle pixels; a rectangular exclusion would
   // retain the old fork in transparent corners of the 32 x 32 castle sprite.
-  const pixels = [...presentation.castle_fill_pixels, ...presentation.castle_outline_pixels];
-  const castles = Object.values(positions).flatMap(([cx, cy]) => pixels.map(([x, y]) =>
-    `<rect x="${cx+x}" y="${cy+y}" width="4" height="4" fill="black"/>`)).join('');
+  const fillPixels = presentation.castle_fill_pixels;
+  const outlinePixels = presentation.castle_outline_pixels;
+  const castlePixels = [...fillPixels, ...outlinePixels];
+  const castleRects = (centers, pixels, fill) => centers.flatMap(([cx, cy]) => pixels.map(([x, y]) =>
+    `<rect x="${cx+x}" y="${cy+y}" width="4" height="4" fill="${fill}"/>`)).join('');
+  const relocated = geometry.native_city_connectors.filter(({points: [oldCenter], center}) =>
+    oldCenter.some((value, axis) => value !== center[axis]));
+  const relocatedIds = new Set(relocated.map(({city}) => city));
+  const fixedCenters = Object.entries(positions).filter(([city]) => !relocatedIds.has(city))
+    .map(([, center]) => center);
+  const castles = castleRects(fixedCenters, castlePixels, 'black');
+  const formerCastles = castleRects(relocated.map(({points: [oldCenter]}) => oldCenter), castlePixels, 'white');
+  const newCenters = relocated.map(({center}) => center);
+  const newCastles = castleRects(newCenters, outlinePixels, 'black') + castleRects(newCenters, fillPixels, 'white');
   const water = json('game/map-source/water-render.json');
   if (water.schema !== 'tk2-water-render-v1' || water.config_sha256 !== sha(read('game/config/water-corrections.json')))
     throw Error('Water render does not match current configuration');
@@ -49,7 +60,7 @@ async function main() {
       </mask>
       <mask id="repair" maskUnits="userSpaceOnUse" x="0" y="0" width="1352" height="1024">
         <path d="${maskPath}" stroke="white" stroke-width="6.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        <g shape-rendering="crispEdges">${castles}</g>
+        <g shape-rendering="crispEdges">${formerCastles}${castles}</g>
       </mask>
       <mask id="road-crossings" maskUnits="userSpaceOnUse" x="0" y="0" width="1352" height="1024">
         <path d="${paintPath}" stroke="white" stroke-width="5.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -72,6 +83,7 @@ async function main() {
         <g mask="url(#road-crossings)">${crossings}</g>
       </g>
     </g>
+    <g shape-rendering="crispEdges">${newCastles}</g>
   </svg>`;
   const browser = await chromium.launch({channel: 'chrome', headless: true});
   try {

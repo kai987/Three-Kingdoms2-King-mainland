@@ -96,7 +96,7 @@ class PlacementCompletionTests(unittest.TestCase):
                 self.assertNotIn('content_generation', data)
                 self.assertEqual(catalog.rules.city_officer_capacity, 99)
                 self.assertEqual(catalog.rules.battle_officers_per_side, 10)
-                self.assertEqual(len(data['people']), 1056)
+                self.assertEqual(len(data['people']), 1080)
                 for key in shared_board:
                     self.assertEqual(data[key], stable.data[key], key)
                 foundings = dict(stable.data['city_foundings'])
@@ -107,7 +107,7 @@ class PlacementCompletionTests(unittest.TestCase):
                 for person in data['people']:
                     self.assertEqual(person['runtime_id'], stable.ids[person['person_id']])
                     self.assertIsNotNone(person['profile']['virtue'])
-                    self.assertIn(portrait_people[person['person_id']]['kind'], ('nes_original', 'generated'))
+                    self.assertIn(portrait_people[person['person_id']]['kind'], ('nes_original', 'generated', 'generic_placeholder'))
                 if date in ((249, 1), (263, 5)):
                     for city in ('liaodong', 'lelang', 'daifang'):
                         self.assertEqual(data['initial_owners'][city], 'wei')
@@ -156,9 +156,12 @@ class PlacementCompletionTests(unittest.TestCase):
                     ident = catalog.ids[pid]
                     ys = year_state(definition, date[0])
                     plan = assignment.get('appearance_plan')
-                    if (ys == YearState.AVAILABLE and assignment['status'] == 'chronology_excluded'
+                    if (ys == YearState.AVAILABLE and assignment['status'] in ('chronology_excluded', 'future')
                             and plan and tuple(plan['start']) > date[:2]):
                         self.assertNotIn(ident, game.state.officers, (date, definition.name, plan))
+                        continue
+                    if assignment['status'] == 'dead':
+                        self.assertNotIn(ident, game.state.officers, (date, definition.name, assignment))
                         continue
                     if ys == YearState.AVAILABLE and assignment['status'] not in EXEMPT_OPENING:
                         self.assertIn(ident, game.state.officers, (date, definition.name, assignment))

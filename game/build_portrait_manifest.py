@@ -22,12 +22,14 @@ REFINED_CONFIG = 'game/config/portrait-refined.json'
 WHITE_CONFIG = 'game/config/portrait-white.json'
 WHITE_TRUECOLOR_METHOD = 'truecolor_redraw'
 WHITE_BLACK_HAIR_METHOD = 'black_hair_redraw'
+WHITE_AUTHORED_METHOD = 'authored_truecolor'
 ENHANCED_REFERENCE = 'art/portraits/hd-samples/zhuge-liang-preserved-v8/portrait-128x160.png'
 HEX = re.compile(r'^[0-9a-f]{64}$')
 ASSET = re.compile(r'^/assets/portraits/(?:original/[0-9]{3}|generated/[a-z0-9-]+)\.png$')
 ENHANCED_ASSET = re.compile(r'^/assets/portraits/enhanced/[a-z0-9-]+\.png$')
 RETAINER_PLAN = 'art/portraits/retainer-additions-v1/plan.json'
-RETAINER_PLANS = (RETAINER_PLAN, 'art/portraits/early-shu-v1/plan.json')
+FRONTIER_PLAN = 'art/portraits/frontier-portraits-v1/plan.json'
+RETAINER_PLANS = (RETAINER_PLAN, 'art/portraits/early-shu-v1/plan.json', FRONTIER_PLAN)
 RETAINER_METHOD = 'retainer_authored_source_direct128_fixed_palette'
 RETAINER_PALETTE = {
     (0, 0, 0, 0), (0, 0, 0, 255), (108, 46, 7, 255), (142, 56, 0, 255),
@@ -273,7 +275,7 @@ def white_records(data, people, enhanced, refined, generated):
                 or not source_hash or row.get('source_sha256') != source_hash
                 or row.get('method') not in ('approved_redraw', 'white_matte_contour',
                                              'targeted_redraw', 'targeted_repair', WHITE_TRUECOLOR_METHOD,
-                                             WHITE_BLACK_HAIR_METHOD)):
+                                             WHITE_BLACK_HAIR_METHOD, WHITE_AUTHORED_METHOD)):
             raise ValueError('White portrait source/person binding differs: ' + person_id)
         asset = directory / (person_id + '.png')
         if directory.is_symlink() or asset.is_symlink() or not asset.is_file():
@@ -284,7 +286,9 @@ def white_records(data, people, enhanced, refined, generated):
             raise ValueError('White portrait hash differs: ' + person_id)
         if row['method'] == WHITE_TRUECOLOR_METHOD and person_id not in truecolor_ids:
             raise ValueError('Female portrait truecolor export is bound to a different person: ' + person_id)
-        if row['method'] in (WHITE_TRUECOLOR_METHOD, WHITE_BLACK_HAIR_METHOD):
+        if row['method'] == WHITE_AUTHORED_METHOD and generated.get(person_id, {}).get('source_matte') != 'white':
+            raise ValueError('Authored white portrait needs its own white source: ' + person_id)
+        if row['method'] in (WHITE_TRUECOLOR_METHOD, WHITE_BLACK_HAIR_METHOD, WHITE_AUTHORED_METHOD):
             if pixels[3::4].count(255) != width * height:
                 raise ValueError('Truecolor portrait must remain opaque: ' + person_id)
         else:
@@ -460,7 +464,7 @@ def retainer_binding(person_id, binding, cache):
             or binding.get('original_source_sha256') != expected_hash):
         raise ValueError('Retainer authored source geometry or attribution differs')
     matte = person.get('source_matte', 'black' if atlas else 'alpha')
-    if matte not in ('black', 'alpha') or binding.get('source_matte') != matte:
+    if matte not in ('black', 'alpha', 'white') or binding.get('source_matte') != matte:
         raise ValueError('Retainer source matte differs')
     if atlas:
         grid, index = person.get('grid'), person.get('cell_index')
@@ -579,7 +583,8 @@ def validate_retainer_redrawn(person_id, row, source, pixels, cache=None):
     if 'prompt' in person and any(proof.get(key) != person.get(key) for key in ('prompt', 'prompt_sha256')):
         raise ValueError('Retainer enhanced prompt binding differs')
     directory = str(Path(plan_path).parent) + '/'
-    crop_path = directory + 'source-crops/' + person_id + '.png'
+    matte = proof['source_matte']
+    crop_path = proof['original_source_path'] if matte == 'white' else directory + 'source-crops/' + person_id + '.png'
     archive_path = directory + 'native-32x40/' + person_id + '.png'
     if (proof.get('retained_source_crop') != crop_path or proof.get('native_archive') != archive_path
             or proof.get('native_archive_sha256') != binding['png_sha256']):
@@ -604,7 +609,8 @@ def validate_retainer_redrawn(person_id, row, source, pixels, cache=None):
     for y in range(height):
         for x in range(width):
             color = crop_pixels[(y * width + x) * 4:(y * width + x) * 4 + 4]
-            if color[3] >= 128 and (proof['source_matte'] == 'alpha' or max(color[:3]) > 32):
+            if color[3] >= 128 and (matte == 'alpha' or
+                                    (min(color[:3]) < 225 if matte == 'white' else max(color[:3]) > 32)):
                 visible = [min(visible[0], x), min(visible[1], y), max(visible[2], x + 1), max(visible[3], y + 1)]
     if (visible[0] <= 0 or visible[1] <= 0 or visible[2] >= width or visible[3] >= height
             or visible[2] - visible[0] < 60 or visible[3] - visible[1] < 96
@@ -701,8 +707,12 @@ def build():
     if len(bound) != mapping['bound_original_people'] or len(bound_ids) != len(bound):
         raise ValueError('Original portrait binding count mismatch')
     new = generated['by_person_id']
-    if set(new) != set(people) - set(bound):
-        raise ValueError('New portrait coverage must exactly match unbound stable identities')
+    # A released scenario can keep its original fallback without churning saves.
+    generic = {pid for pid, person in people.items()
+               if person.get('portrait_policy') == 'generic_placeholder' and pid not in new}
+    if (generic & set(bound) or set(new) != set(people) - set(bound) - generic
+            or any(person.get('portrait_policy') not in (None, 'generic_placeholder') for person in people.values())):
+        raise ValueError('Portrait assets and shared placeholders must cover each stable identity once')
     output, source_atlases, used_cells, retainer_cache = {}, {}, set(), {}
     retainer_originals = {}
     for plan_path in RETAINER_PLANS:
@@ -727,6 +737,8 @@ def build():
                 retainer_binding(person_id, binding, retainer_cache)
                 item.update(**{key: binding[key] for key in ('retainer_plan', 'retainer_plan_sha256',
                                 'original_source_path', 'original_source_sha256', 'source_origin')})
+        elif person_id in generic:
+            item = dict(kind='generic_placeholder', original_id=None, source='explicit_shared_placeholder')
         else:
             source = new[person_id]
             if source.get('source') != 'imagegen_new_pixel_art' or source.get('art_direction_basis') != 'authorial_game_art_not_historical_likeness':
@@ -776,10 +788,11 @@ def build():
         raise ValueError('Generated portraits contain duplicate pixel images; review the source cells')
     sources = {name: sha((ROOT / 'game/config' / name).read_bytes()) for name in
                ('portrait-identity-map.json', 'portrait-originals.json', 'portrait-generated.json')}
+    with_art = {pid: row for pid, row in output.items() if pid not in generic}
     enhanced_data = {}
     if (ROOT / ENHANCED_CONFIG).is_file():
         enhanced_data = read(ENHANCED_CONFIG)
-        for person_id, variant in enhanced_records(enhanced_data, output).items():
+        for person_id, variant in enhanced_records(enhanced_data, with_art).items():
             output[person_id]['enhanced'] = variant
         sources['portrait-enhanced.json'] = sha((ROOT / ENHANCED_CONFIG).read_bytes())
     refined_data = {}
@@ -789,7 +802,7 @@ def build():
             output[person_id]['refined'] = variant
         sources['portrait-refined.json'] = sha((ROOT / REFINED_CONFIG).read_bytes())
     if (ROOT / WHITE_CONFIG).is_file():
-        for person_id, variant in white_records(read(WHITE_CONFIG), output, enhanced_data.get('people', {}),
+        for person_id, variant in white_records(read(WHITE_CONFIG), with_art, enhanced_data.get('people', {}),
                                                 refined_data.get('people', {}), generated['by_person_id']).items():
             output[person_id]['white'] = variant
         sources['portrait-white.json'] = sha((ROOT / WHITE_CONFIG).read_bytes())
@@ -797,6 +810,7 @@ def build():
         identity_policy='stable_person_id; no ordinal or similarity matching; saves and released catalogs unchanged',
         generated_likeness_policy='new game art, not claimed historical likeness or an original NES portrait',
         counts=dict(people=len(output), nes_original=counts['nes_original'], generated=counts['generated'],
+                    generic_placeholder=counts['generic_placeholder'],
                     original_archive=237, original_unique_pixels=len({r['rgba_sha256'] for r in validated_originals.values()}),
                     bound_original_unique_pixels=len({r['rgba_sha256'] for r in output.values() if r['kind'] == 'nes_original'}),
                     generated_unique_pixels=generated_unique, original_identity_pending=237 - len(bound)),

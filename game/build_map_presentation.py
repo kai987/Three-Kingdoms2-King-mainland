@@ -42,8 +42,11 @@ def road_center_corrections(root, approved):
         raise ValueError('Road-center raster differs from approved map pins')
     water = json.loads((here / 'map-source/water-render.json').read_bytes())
     water_config = here / 'config/water-corrections.json'
+    water_source = json.loads(water_config.read_bytes())
     inputs = {'game/map-source/road-ground.png', 'game/map-source/terrain-under-water.png',
               'game/map-source/historic-water.svg', 'game/map-source/sea-shadow.svg'}
+    if 'northeast_coast' in water_source:
+        inputs.add(water_source['northeast_coast']['path'])
     if (water.get('schema') != 'tk2-water-render-v1'
             or water.get('config_sha256') != hash_bytes(water_config.read_bytes())
             or set(water.get('sources', {})) != inputs):

@@ -1,7 +1,9 @@
 """Resolve starting reserves and historically calibrated active garrisons."""
 from collections import defaultdict
 
+from . import capital_openings
 from .officers import OFFICER_TROOP_CAP
+from .route_hazards import allocate_survivors
 from .route_network import available, effective
 
 
@@ -113,4 +115,24 @@ def resolve(catalog):
             continue
         increase = (20 if city in frontier else 12) + bonus.get(owner, 0)
         troops[person] = min(OFFICER_TROOP_CAP, troops[person] * (100 + increase) // 100)
+    for city in ('henan', 'jingzhao'):
+        if city not in resources or not (capital := capital_openings.opening(data, city)):
+            continue
+        resources[city].update({field: capital[field] for field in resources[city].keys() & capital.keys()})
+        roster = [row['person_id'] for row in data['initial_officers'] if row['city'] == city]
+        garrison = [troops[person] for person in roster]
+        total = sum(garrison)
+        target = total * capital['troop_percent'] // 100
+        if target < total:
+            revised = allocate_survivors(garrison, target, total)
+        elif target > total:
+            room = [OFFICER_TROOP_CAP - count for count in garrison]
+            capacity = sum(room)
+            if capacity == 0:
+                continue
+            additions = allocate_survivors(room, min(target - total, capacity), capacity)
+            revised = [count + extra for count, extra in zip(garrison, additions)]
+        else:
+            continue
+        troops.update(zip(roster, revised))
     return resources, troops

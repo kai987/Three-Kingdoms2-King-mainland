@@ -1,11 +1,12 @@
 """City production and frontier upkeep for authored openings and live turns.
 
-City sizes and production are gameplay settings. Only committed frontier
-maintenance debits city stocks.
+City sizes and production are gameplay settings. Garrison grain and frontier
+maintenance are charged during the month rollover.
 """
 from copy import deepcopy
 from heapq import heappop, heappush
 
+from . import grain_units
 from .route_hazards import route_allowed
 from .route_network import effective
 
@@ -65,8 +66,9 @@ def income_at(data, city_id, year, month):
         return None
     opening_tier = data.get('city_profiles', {}).get(city_id, {}).get('tier', 'normal')
     tier = tier_at(data, city_id, year, month)
+    income = grain_units.stocks(income)
     if tier == opening_tier:
-        return dict(income)
+        return income
     return {field: _scaled(value, TIER_MULTIPLIERS[tier], TIER_MULTIPLIERS[opening_tier])
             for field, value in income.items()}
 
@@ -142,25 +144,70 @@ def frontier_outposts_view(data, state=None):
             for key, rule in outposts.items()}
 
 
+def garrison_grain_cost(data, city_id, year, month, active, reserves):
+    """Round once, after combining the active and reserve allocations."""
+    days = data['calendar_rules']['month_days']
+    rate = 100 * grain_units.denominator()
+    if frontier_outpost_at(data, city_id, year, month):
+        active_rate, reserve_rate = 100, 100
+    else:
+        active_rate, reserve_rate = 25, 10
+    return ((active * active_rate + reserves * reserve_rate) * days + rate - 1) // rate
+
+
+def grain_balance(production, upkeep, owner):
+    if owner == 'neutral':
+        production = upkeep = 0
+    return dict(production=production, upkeep=upkeep, net=production - upkeep)
+
+
+def garrison_grain(game, state):
+    from .domestic import _marching
+
+    absent = _marching(game, state)
+    if state.battle:
+        absent.update(unit['id'] for side in ('attackers', 'defenders') for unit in state.battle[side])
+    result = {}
+    for city in state.cities.values():
+        if city.owner == 'neutral':
+            result[city.id] = 0
+            continue
+        active = sum(state.officers[i].troops for i in city.roster.officer_ids
+                     if i not in absent and state.officers[i].alive)
+        result[city.id] = garrison_grain_cost(game.catalog.data, city.id, state.year, state.month,
+                                             active, city.reserves)
+    return result
+
+
+def settle_garrison_grain(game, state, outposts, dues):
+    names = None
+    for key, required in dues.items():
+        if key in outposts:
+            continue
+        city = state.cities[key]
+        paid = min(city.grain, required)
+        city.grain -= paid
+        if required > paid and city.owner == state.player:
+            if names is None:
+                from .map_presentation import city_names
+                names = city_names(game.catalog, state.year, state.month)
+            game._note(state, f'{names[key]}驻军粮草不足，尚缺{required - paid}粮。')
+
+
 def frontier_maintenance(game, state):
     """Settle facilities from rear-city gold and rations from local stock."""
     outposts = frontier_outposts_view(game.catalog.data, state)
     if not outposts:
-        return
-    from .domestic import _garrison_troops
+        return outposts
     from .map_presentation import city_names
-    from .march_supply import cost as ration_cost
 
     names = city_names(game.catalog, state.year, state.month)
-    battling = {unit['id'] for side in ('attackers', 'defenders')
-                for unit in state.battle[side]} if state.battle else set()
-    days = game.catalog.data['calendar_rules']['month_days']
+    rations = garrison_grain(game, state)
     for key, row in outposts.items():
         outpost = state.cities[key]
         if outpost.owner == 'neutral':
             continue
-        troops = _garrison_troops(game, state, outpost, exclude=battling)
-        ration = ration_cost(troops, 0, days)
+        ration = rations[key]
         fed = min(ration, outpost.grain)
         outpost.grain -= fed
         cost = row['monthly_maintenance']
@@ -179,6 +226,7 @@ def frontier_maintenance(game, state):
             shortfall = f'，粮草尚缺{ration - fed}' if fed < ration else ''
             note += f'驻军消耗{fed}粮{shortfall}。'
         game._note(state, note)
+    return outposts
 
 
 def opening_development(data, city_id, tier):

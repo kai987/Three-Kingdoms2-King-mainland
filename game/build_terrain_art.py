@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Composite approved local mountain pixels over the current map, using stdlib only.
+"""Render the native world map, using stdlib only.
 
 The retained transparent crop contains art changes, never an older full-map
 background. Current water, banks, road corridors and city boxes take priority.
@@ -22,8 +22,10 @@ CONFIG = 'game/config/terrain-art.json'
 COMMAND = 'python3 -B game/build_terrain_art.py'
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_portrait_manifest import png_pixels
+from island_art import render_scenic_island
 from road_centers import build as road_geometry
 from route_render_source import validate_geometry_sources
+from world_surface import render_world_surface
 
 
 def canonical(value):
@@ -151,6 +153,122 @@ def protect_paths(mask, size, paths, radius, crop):
                             mask[yy*width+xx] = 1
 
 
+def blue_water(pixel):
+    r, g, b = pixel[:3]
+    return b >= 120 and b > r+40 and b > g+40
+
+
+def take_land_component(pending, start):
+    """Remove and return one four-connected region, including its dark outline."""
+    component, stack = {start}, [start]
+    pending.remove(start)
+    while stack:
+        x, y = stack.pop()
+        for point in ((x-1, y), (x+1, y), (x, y-1), (x, y+1)):
+            if point in pending:
+                pending.remove(point)
+                component.add(point)
+                stack.append(point)
+    return component
+
+
+def coast_distances(points, region, margin):
+    left, top, right, bottom = region
+    distances, edge = dict.fromkeys(points, 0), set(points)
+    for distance in range(1, margin+1):
+        edge = {(xx, yy) for x, y in edge for xx, yy in ((x-1, y), (x+1, y), (x, y-1), (x, y+1))
+                if left <= xx < right and top <= yy < bottom} - distances.keys()
+        distances.update(dict.fromkeys(edge, distance))
+    return distances
+
+
+def scale_islands(output, base, terrain, size, positions, islands):
+    """Scale only clean terrain around each fixed land/sea route junction."""
+    width, height = size
+    changed = bytearray(width * height)
+    summaries = {}
+
+    def pixel(pixels, x, y):
+        start = (y * width + x) * 4
+        return pixels[start:start+4]
+
+    def bounds(points):
+        return [min(x for x, _ in points), min(y for _, y in points),
+                max(x for x, _ in points), max(y for _, y in points)]
+
+    for city, spec in islands.items():
+        left, top, right, bottom = region = spec['region']
+        px, py = spec['pivot']
+        dx, dy = spec['open_water_offset']
+        if not (0 <= left < px < right <= width and 0 <= top < py < bottom <= height
+                and 0 <= left+dx < right+dx <= width and 0 <= top+dy < bottom+dy <= height):
+            raise ValueError(f'Island region or sea sample is outside the map: {city}')
+        pending = {(x, y) for y in range(top, bottom) for x in range(left, right)
+                   if not blue_water(pixel(terrain, x, y))}
+        center = tuple(positions[city])
+        if center not in pending:
+            raise ValueError(f'Island city is not on the source land: {city}')
+        land = take_land_component(pending, center)
+        nearby_land = set()
+        while pending:
+            component = take_land_component(pending, next(iter(pending)))
+            # Small detached flecks are coastal stippling, not other islands.
+            if len(component) >= 24:
+                nearby_land.update(component)
+        clear_margin, full_water_margin = 28, 17
+        distances = coast_distances(land, region, clear_margin)
+        neighboring_coast = coast_distances(nearby_land, region, 6)
+        shore = {point for point, distance in distances.items()
+                 if distance == 0 or distance <= 10 and point not in neighboring_coast}
+
+        resized_land = set()
+        fixed_pixels = 0
+        for y in range(top, bottom):
+            for x in range(left, right):
+                # Inverse 3/4 scale about a pixel-space pivot. Sample at pixel
+                # centers so the coastline and its dither stay sharp.
+                sx = px + (4 * (x-px) + 2) // 3
+                sy = py + (4 * (y-py) + 2) // 3
+                if (x, y) in nearby_land:
+                    if (sx, sy) in land:
+                        raise ValueError(f'Island resize overlaps another shore: {city}')
+                    continue
+                if (sx, sy) in land:
+                    resized_land.add((x, y))
+                if (sx, sy) in shore:
+                    replacement = pixel(terrain, sx, sy)
+                elif (x, y) in distances and ((x, y) in land or (x, y) not in neighboring_coast):
+                    replacement = pixel(terrain, x+dx, y+dy)
+                    if not blue_water(replacement):
+                        raise ValueError(f'Island infill sample is not open water: {city}')
+                    # Fade the outer rim into the surrounding sea after the
+                    # former coast's dark dither has been fully removed.
+                    distance = distances[x, y]
+                    if distance > full_water_margin:
+                        span = clear_margin - full_water_margin
+                        weight = clear_margin - distance
+                        replacement = bytes((new * weight + old * (span-weight)) // span
+                                            for new, old in zip(replacement, pixel(terrain, x, y)))
+                else:
+                    continue
+                original = pixel(base, x, y)
+                if original != pixel(terrain, x, y):
+                    # The clean ground omits the baked castle and its access
+                    # road. Keep those original foreground pixels in place.
+                    fixed_pixels += 1
+                    continue
+                index = y*width+x
+                if original != replacement:
+                    output[index*4:index*4+4] = replacement
+                    changed[index] = 1
+        if center not in resized_land or not fixed_pixels:
+            raise ValueError(f'Island resize lost a fixed feature: {city}')
+        summaries[city] = dict(before_bounds=bounds(land), after_bounds=bounds(resized_land),
+                               land_pixels_before=len(land), land_pixels_after=len(resized_land),
+                               fixed_pixels=fixed_pixels)
+    return changed, summaries
+
+
 def render(root=ROOT, config_path=CONFIG):
     root = Path(root)
     config_raw = local(root, config_path).read_bytes()
@@ -192,6 +310,15 @@ def render(root=ROOT, config_path=CONFIG):
     for name, expected in water['sources'].items():
         if digest(read(name)) != expected:
             raise ValueError('Water render source changed: ' + name)
+    surface = config['world_surface']
+    if water['sources'].get(surface['shape_source']) != surface['shape_sha256']:
+        raise ValueError('Navigation coastline and world coastline differ')
+    shoreline_raw = read(surface['path'])
+    if digest(shoreline_raw) != surface['sha256']:
+        raise ValueError('Coastline mask source hash differs: ' + surface['path'])
+    shore_crop = surface['crop']
+    _, shoreline = png_pixels(shoreline_raw, (shore_crop['width'], shore_crop['height']))
+    _, original_surface = png_pixels(read(surface['original_surface']), size)
     road_render = json.loads(read(config['road_render']))
     if (road_render.get('schema') != 'tk2-road-center-render-v1'
             or road_render['output_sha256'] != sources[config['base']]
@@ -210,14 +337,14 @@ def render(root=ROOT, config_path=CONFIG):
         raise ValueError('Unknown current route geometry')
     validate_geometry_sources(root, compiled['sources'])
     for name in ('game/build_terrain_art.py', 'game/road_centers.py',
-                 'game/build_portrait_manifest.py', 'game/route_render_source.py'):
+                 'game/build_portrait_manifest.py', 'game/route_render_source.py',
+                 'game/world_surface.py', 'game/island_art.py'):
         read(name)
     width, height = size
     water_mask = runs_mask(water['mask_runs'], size)
     # Corrections mask alone omits unchanged historic water and coastlines.
     for index in range(width*height):
-        r, g, b = hydrology[index*4:index*4+3]
-        if b >= 120 and b > r+40 and b > g+40:
+        if blue_water(hydrology[index*4:index*4+3]):
             water_mask[index] = 1
     protected = dilate(water_mask, size, config['protection']['water_bank_px'])
     # The repair mask also contains erased former spokes. Retain the current
@@ -257,20 +384,30 @@ def render(root=ROOT, config_path=CONFIG):
         raise ValueError('Approved mountain source pixel inventory differs')
     if digest(reconstructed_approval) != config['approval']['original_asset_rgba_sha256']:
         raise ValueError('Transparent crop does not reconstruct the retained approved mountain pixels')
+    island_changes, islands = scale_islands(output, base_pixels, hydrology, size, positions,
+                                           config['islands'])
+    surface_changes = render_world_surface(output, base_pixels, hydrology, original_surface,
+                                           size, shoreline, shore_crop, island_changes)
+    luzon = render_scenic_island(output, base_pixels, hydrology, original_surface,
+                                size, config['luzon'], surface_changes)
     output = bytes(output)
     png = png_encode(size, output)
     manifest = dict(schema='tk2-current-map-terrain-art-render-v1',
-        policy='Current road/water background wins; apply only retained opaque art pixels outside protected corridors.',
+        policy='Render the full map from its terrain and shorelines beneath the current cities and roads.',
         rebuild_command=COMMAND, sources=dict(sorted(sources.items())),
         positions_sha256=digest(canonical(positions)), city_count=len(positions),
         approved_asset_rgba_sha256=config['approval']['original_asset_rgba_sha256'],
+        islands=islands, scenery={'luzon': luzon},
         output=dict(path=config['output'], sha256=digest(png), rgba_sha256=digest(output)),
         stats=dict(art_pixels=sum(art_mask), applied_pixels=sum(applied),
                    protected_art_pixels=sum(art_mask)-sum(applied), protected_pixels=sum(protected),
-                   outside_art_pixels_unchanged=width*height-sum(art_mask)))
+                   island_pixels_changed=sum(island_changes), surface_pixels_changed=sum(surface_changes),
+                   outside_art_pixels_unchanged=sum(not (a or b or c) for a, b, c in
+                                                    zip(art_mask, island_changes, surface_changes))))
     details = dict(size=size, crop=crop, base_pixels=base_pixels, output_pixels=output,
                    source_pixels=source_pixels, art_mask=art_mask,
-                   protected_mask=protected, applied_mask=applied)
+                   protected_mask=protected, applied_mask=applied, island_changes=island_changes,
+                   surface_changes=surface_changes)
     return png, manifest, details
 
 
