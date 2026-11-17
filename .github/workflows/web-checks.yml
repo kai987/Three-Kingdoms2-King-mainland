@@ -2,6 +2,9 @@ name: Shared Web campaign verification
 on:
   workflow_call:
     inputs:
+      sparse_full_gate:
+        type: boolean
+        default: false
       force_full:
         type: boolean
         default: false
@@ -15,6 +18,15 @@ permissions:
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   RUSTUP_TOOLCHAIN: '1.93.0'
+  FROZEN_WEB_HEAD: 'd304bf7a3b667bf355c9508b2ce77df5ec7f4310'
+  FROZEN_WEB_CONTENT: '703c9a17a610e6bbae3daa5500b2cb334887cee8061caf43888c73f24014c063'
+  FROZEN_WEB_RUN: '44037546841'
+  FULL_GATE_PATHS: |
+    /tools/ci/
+    /tools/browser-tests/
+    /tests/browser_ui.spec.mjs
+    /tests/browser_soldier_ui.spec.mjs
+    /game/data/campaigns/index.json
 jobs:
   scope:
     runs-on: ubuntu-latest
@@ -421,9 +433,15 @@ jobs:
       - run: npm ci --prefix tools/web-runtime --ignore-scripts
       - name: Build the candidate once and retain its identity
         id: identity
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          python -B game/build_web.py --output build/web
-          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA")
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/14307817518" |
+            jq -e --arg digest 'sha256:a652a4006315365f7718da7de0c773c025e34d413c097783da7f426c2d630496' --arg name "candidate-web-$FROZEN_WEB_HEAD" \
+              '.digest == $digest and .name == $name and .workflow_run.id == 44037546841 and .expired == false'
+          GITHUB_SHA="$FROZEN_WEB_HEAD" python -B game/build_web.py --output build/web
+          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_WEB_HEAD" --content-sha256 "$FROZEN_WEB_CONTENT")
           printf 'content_sha256=%s\n' "$content" >> "$GITHUB_OUTPUT"
       - name: Actual WASM campaign and CPU replay parity
         run: node tests/browser_engine_smoke.mjs build/web
@@ -474,12 +492,14 @@ jobs:
           path: build/ci
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: candidate-web-${{ github.sha }}
+          name: candidate-web-${{ env.FROZEN_WEB_HEAD }}
           path: build/web
+          github-token: ${{ github.token }}
+          run-id: ${{ env.FROZEN_WEB_RUN }}
       - name: Require the exact immutable candidate
         env:
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
-        run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_WEB_HEAD" --content-sha256 "$CONTENT_SHA"
       - name: Show the selected scope and execute actual browser controls
         env:
           BROWSER_PROJECT: ${{ matrix.project }}
@@ -536,14 +556,53 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Check out final gate inputs
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        env:
+          GIT_TRACE2_EVENT: ${{ runner.temp }}/gate-checkout.jsonl
         with:
           persist-credentials: false
           # The reused gate reads tools/ci and downloads the tested release.
           sparse-checkout: >-
             ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' &&
-                needs.scope.result == 'success' && needs.scope.outputs.reuse == 'true' && '/tools/ci/' || '' }}
+                needs.scope.result == 'success' && needs.scope.outputs.reuse == 'true' && '/tools/ci/' ||
+                inputs.sparse_full_gate && needs.scope.result == 'success' &&
+                needs.scope.outputs.mode == 'full' && env.FULL_GATE_PATHS || '' }}
           sparse-checkout-cone-mode: false
+      - name: Retain only timings from the Git checkout trace
+        env:
+          SPARSE_FULL_GATE: ${{ inputs.sparse_full_gate }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from datetime import datetime
+          from pathlib import Path
+
+          trace = Path(os.environ['RUNNER_TEMP']) / 'gate-checkout.jsonl'
+          pending = {}
+          commands = []
+          if trace.is_file():
+              for line in trace.read_text().splitlines():
+                  row = json.loads(line)
+                  if row['event'] == 'start':
+                      args = iter(row['argv'][1:])
+                      for arg in args:
+                          if arg == '-c':
+                              next(args, None)
+                          elif not arg.startswith('-'):
+                              if arg in {'fetch', 'checkout', 'read-tree'}:
+                                  pending[row['sid']] = (arg, row['time'])
+                              break
+                  elif row['event'] == 'exit' and row['sid'] in pending:
+                      kind, start = pending.pop(row['sid'])
+                      end = row['time']
+                      elapsed = (datetime.fromisoformat(end) - datetime.fromisoformat(start)).total_seconds()
+                      commands.append(dict(kind=kind, start=start, end=end, ms=round(elapsed * 1000)))
+          if not any(cmd['kind']=='fetch' for cmd in commands):
+              raise SystemExit('Git fetch trace missing')
+          print('GATE_CHECKOUT_TIMING ' + json.dumps(dict(mode=os.environ['SPARSE_FULL_GATE'], commands=commands)))
+          PY
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
@@ -596,13 +655,15 @@ jobs:
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         if: needs.scope.outputs.web == 'true'
         with:
-          name: candidate-web-${{ github.sha }}
+          name: candidate-web-${{ env.FROZEN_WEB_HEAD }}
           path: build/web
+          github-token: ${{ github.token }}
+          run-id: ${{ env.FROZEN_WEB_RUN }}
       - name: Verify the original candidate after every required check passed
         if: needs.scope.outputs.web == 'true'
         env:
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
-        run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_WEB_HEAD" --content-sha256 "$CONTENT_SHA"
       - name: Retain the exact tested release
         if: needs.scope.outputs.web == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
