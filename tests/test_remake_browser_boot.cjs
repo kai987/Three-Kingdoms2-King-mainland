@@ -43,6 +43,7 @@ function fixture({gateRuntime=false,failures={},mutateManifest,changeAsset,respo
  assert.equal(concurrent.runCount,0);assert.equal(concurrent.writes.size,0,'no data is installed before all assets and the runtime are ready');
  assert(!concurrent.requests.some(row=>row.name.includes('second')||row.name.includes('third')),'other scenarios stay lazy');
  concurrent.releaseRuntime();await concurrent.boot;assert.equal(concurrent.runCount,1);assert.equal(concurrent.messages.find(row=>row.type==='ready').build_commit,concurrent.manifest.build_commit);assert.equal(concurrent.unpacked.length,1);
+ assert.equal(concurrent.messages.find(row=>row.type==='ready').shared_scenarios,true);
  assert(concurrent.messages.some(row=>row.phase==='manifest'));assert(concurrent.messages.some(row=>row.phase==='loading'&&row.receivedBytes>0));assert(concurrent.messages.some(row=>row.phase==='initializing'));assert(!concurrent.messages.some(row=>'percent' in row));
  const downloaded=concurrent.requests.reduce((sum,row)=>sum+concurrent.assets.get(row.name).length,0);assert.equal(concurrent.messages.find(row=>row.phase==='initializing').receivedBytes,downloaded,'reported game-data bytes count actual fetched data and exclude the runtime');
  assert.equal(concurrent.writes.get(concurrent.manifest.catalogs[0].path).length,concurrent.manifest.catalogs[0].bytes);

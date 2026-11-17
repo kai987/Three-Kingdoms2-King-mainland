@@ -22,6 +22,10 @@ from .preview_transport import unpack as unpack_previews
 MAX_BODY_BYTES = 2 * 1024 * 1024
 MAX_CATALOGS = 2
 IDENTIFIER = re.compile(r'[a-z0-9][a-z0-9_-]{0,79}')
+# Keep the existing empty, one-token and two-token requests valid.
+_VIEW_TOKEN = r'(?:[a-f0-9]{64}(?::[a-f0-9]{64})?)?'
+_VIEW_CACHE_REQUEST = re.compile(
+    rf'(?P<legacy>{_VIEW_TOKEN})|scenarios-v1\|(?P<view>{_VIEW_TOKEN})\|(?P<scenarios>(?:[a-f0-9]{{64}})?)')
 GET_PATHS = frozenset(('/api/state', '/api/city-preview', '/api/march-config',
                        '/api/march-status', '/api/march-preview', '/api/save'))
 POST_PATHS = frozenset(('/api/command', '/api/load'))
@@ -202,17 +206,22 @@ class BrowserRuntime:
 
     def dispatch_compact_json(self, path, method='GET', body=None, known=''):
         """Opt-in wire optimization; old callers still receive complete views."""
-        if not isinstance(known, str) or (known and not re.fullmatch(r'[a-f0-9]{64}(?::[a-f0-9]{64})?', known)):
+        tokens = _VIEW_CACHE_REQUEST.fullmatch(known) if isinstance(known, str) else None
+        if tokens is None:
             return {'status': 400, 'body': _encode({'error': '视图缓存标识无效。'})}
-        return self.dispatch_json(path, method, body, _known=known)
+        return self.dispatch_json(path, method, body, _known=tokens['legacy'] or tokens['view'] or '',
+                                  _known_scenarios=tokens['scenarios'])
 
-    def dispatch_json(self, path, method='GET', body=None, *, _known=None):
+    def dispatch_json(self, path, method='GET', body=None, *, _known=None, _known_scenarios=None):
         """Return only status and JSON text; caller input is never executable."""
         try:
             with self.session.lock, using_backend('python'):
                 result = self._dispatch(path, method, body)
                 if _known is not None:
-                    result = self._view_transport.pack(result, self.session.game.catalog.sha256, _known)
+                    result = self._view_transport.pack(
+                        result, self.session.game.catalog.sha256, _known,
+                        known_scenarios=_known_scenarios,
+                        scenario_previews=self.session._opening_previews if _known_scenarios is not None else None)
                 return {'status': 200, 'body': _encode(result)}
         except GameError as exc:
             return {'status': exc.status, 'body': _encode({'error': str(exc)})}

@@ -52,4 +52,26 @@ routeAware.clear();assert.equal(routeAware.token(),'');
 assert.throws(()=>routeAware.hydrate(packet(token,quote,updated,fixed)),/Missing route quotes/,'clearing the cache also forgets all route quotes');assert.equal(routeAware.token(),'');
 assert.throws(()=>routeAware.hydrate(packet(token,quote,state)),/Missing view catalog/,'a rejected partial restoration does not install metadata');
 assert.deepEqual(routeAware.hydrate(packet(token,quote,state,fixed)),expected(fixed,state,routes));
+const sharedCache=create(),scenariosToken='d'.repeat(64),updatedToken='e'.repeat(64);
+const {scenarios,...scenarioSpecific}=fixed;
+const otherSpecific={...scenarioSpecific,scenario_id:otherFixed.scenario_id,title:otherFixed.title};
+assert.equal(sharedCache.token(true),'scenarios-v1||');
+const sharedPacket={...packet(token,quote,state,scenarioSpecific),
+ scenarios_token:scenariosToken,shared_scenarios:scenarios};
+assert.deepEqual(sharedCache.hydrate(sharedPacket),expected(fixed,state,routes));
+assert.equal(sharedCache.token(true),`scenarios-v1|${token}:${quote}|${scenariosToken}`);
+assert.equal(sharedCache.token(),token+':'+quote,'Legacy workers can still receive the standard tokens');
+const switchPacket={...packet(otherToken,otherQuote,otherView,otherSpecific),scenarios_token:scenariosToken};
+const sharedSwitch=sharedCache.hydrate(switchPacket);
+assert.deepEqual(sharedSwitch,expected(otherFixed,otherView,newRoutes));
+sharedSwitch.catalog.scenarios[0].id='not stored in cache';
+assert.equal(sharedCache.hydrate(switchPacket).catalog.scenarios[0].id,'same');
+assert.throws(()=>sharedCache.hydrate({...switchPacket,scenarios_token:updatedToken}),/Missing shared scenarios/);
+assert.throws(()=>sharedCache.hydrate({...switchPacket,scenarios_token:updatedToken,shared_scenarios:{}}),/Invalid shared scenarios/);
+assert.equal(sharedCache.token(true),`scenarios-v1|${otherToken}:${otherQuote}|${scenariosToken}`);
+const updatedScenarios=[{id:'revised'}];
+assert.deepEqual(sharedCache.hydrate({...switchPacket,scenarios_token:updatedToken,shared_scenarios:updatedScenarios}),
+ expected({...otherFixed,scenarios:updatedScenarios},otherView,newRoutes));
+sharedCache.clear();assert.equal(sharedCache.token(true),'scenarios-v1||');
+assert.deepEqual(sharedCache.hydrate(packet(token,quote,state,fixed)),expected(fixed,state,routes));
 console.log('View cache: full hydration, immutable metadata/LRU, quote-context reuse, scenario switching, atomic malformed/missing-cache rejection and full recovery passed');

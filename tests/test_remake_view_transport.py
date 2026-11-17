@@ -1,5 +1,6 @@
 """Compact worker views hydrate exactly; legacy transport and saves stay intact."""
 from copy import deepcopy
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -16,13 +17,15 @@ import remake.session as sessions
 from campaign_fixtures import controlled_catalog
 
 
-def hydrate(packet, cached=None, quotes=None):
+def hydrate(packet, cached=None, quotes=None, scenarios=None):
     if packet.get('transport') != 'tk2-view-v1':
         return packet
     fixed = packet.get('static_catalog', cached)
     by_id = {str(row['id']): row for row in fixed['library']}
     view = deepcopy(packet['view'])
     view['catalog'] = dict(fixed, **view['catalog'])
+    if 'scenarios_token' in packet:
+        view['catalog']['scenarios'] = packet.get('shared_scenarios', scenarios)
     if 'travel_quotes' not in packet['view']['catalog']:
         view['catalog']['travel_quotes'] = quotes if quotes is not None else fixed['travel_quotes']
     view['catalog']['library'] = [dict(by_id[str(row['id'])], **row) for row in packet['view']['catalog']['library']]
@@ -182,6 +185,53 @@ class ViewTransportTests(unittest.TestCase):
         reloaded = self.transport.pack(first_view, 'source-a', '')
         self.assertIn('static_catalog', reloaded)
         self.assertEqual(hydrate(reloaded), first_view)
+
+    def test_shared_scenarios_are_independent_of_scenario_catalogs_and_resend_on_a_stale_token(self):
+        current = self.session.view()
+        previews = self.session._opening_previews
+        first = self.transport.pack(current, 'source-a', known_scenarios='', scenario_previews=previews)
+        token = first['scenarios_token']
+        self.assertNotIn('scenarios', first['static_catalog'])
+        self.assertEqual(hydrate(first), current)
+        switched = deepcopy(current)
+        switched['catalog']['title'] = 'Another scenario'
+        with patch('remake.view_transport.hashlib.sha256',
+                   wraps=hashlib.sha256) as hashed:
+            warm = self.transport.pack(switched, 'source-b', known_scenarios=token, scenario_previews=previews)
+            self.assertEqual(hashed.call_count, 2, 'Only the new scenario catalog and route key are hashed')
+        self.assertEqual(warm['scenarios_token'], token)
+        self.assertNotIn('shared_scenarios', warm)
+        self.assertEqual(hydrate(warm, scenarios=first['shared_scenarios']), switched)
+        self.assertEqual(hydrate(self.transport.pack(switched, 'source-b')), switched)
+        stale = self.transport.pack(switched, 'source-b', known_scenarios='0' * 64, scenario_previews=previews)
+        self.assertEqual(stale['shared_scenarios'], switched['catalog']['scenarios'])
+
+    def test_runtime_version_change_refreshes_shared_scenarios_and_leaves_saves_intact(self):
+        runtime = object.__new__(BrowserRuntime)
+        runtime.session = self.session
+        runtime._view_transport = ViewTransport()
+        self.session.command('new', dict(faction='shu', seed=2026), 0)
+        saved = runtime.dispatch_json('/api/save')
+
+        first = json.loads(runtime.dispatch_compact_json('/api/state', known='scenarios-v1||')['body'])
+        known = f"scenarios-v1|{first['catalog_token']}:{first['quote_token']}|{first['scenarios_token']}"
+        warm = json.loads(runtime.dispatch_compact_json('/api/state', known=known)['body'])
+        self.assertNotIn('shared_scenarios', warm)
+        catalog = dict(first['static_catalog'], travel_quotes=first['view']['catalog']['travel_quotes'])
+        self.assertEqual(hydrate(warm, catalog, scenarios=first['shared_scenarios']),
+                         json.loads(runtime.dispatch_json('/api/state')['body']))
+
+        self.session._opening_previews = [dict(row, title=row['title']+' revised')
+                                          for row in self.session._opening_previews]
+        changed = json.loads(runtime.dispatch_compact_json('/api/state', known=known)['body'])
+        self.assertNotEqual(changed['scenarios_token'], first['scenarios_token'])
+        self.assertNotIn('static_catalog', changed)
+        self.assertEqual(hydrate(changed, catalog), json.loads(runtime.dispatch_json('/api/state')['body']))
+        self.assertEqual(runtime.dispatch_json('/api/save'), saved)
+        for bad in ('scenarios-v1|', 'scenarios-v1|invalid|', 'scenarios-v1||stale',
+                    'scenarios-v1||'+'1'*64+'|extra'):
+            with self.subTest(known=bad):
+                self.assertEqual(runtime.dispatch_compact_json('/api/state', known=bad)['status'], 400)
 
     def test_runtime_legacy_and_compact_paths_preserve_raw_saves_rng_and_errors(self):
         runtime = object.__new__(BrowserRuntime)

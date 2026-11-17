@@ -22,11 +22,13 @@ function fixture(prefix='/Three-Kingdoms2-King-mainland/',{paths=true,workerHash
 (async()=>{
  const versioned=fixture('/nested-game/',{workerHash:'a'.repeat(64)});
  assert.equal(new URL(versioned.worker.url).searchParams.get('v'),'a'.repeat(64),'the actual worker source version separates cached entry points');
- versioned.worker.respond({type:'ready',build_commit:'b'.repeat(40)});
+ versioned.worker.respond({type:'ready',build_commit:'b'.repeat(40),shared_scenarios:true});
+ assert.equal(versioned.window.GameBrowserEngine.sharedScenarios,true);
  assert.equal(versioned.window.GameBrowserEngine.version,'b'.repeat(40),'display version comes from the loaded Worker manifest');
  assert.equal(versioned.requests.length,0,'no later build.json request can relabel an already running campaign');
  const invalidVersion=fixture('/');invalidVersion.worker.respond({type:'ready',build_commit:'<script>'});
  assert.equal(invalidVersion.window.GameBrowserEngine.version,'');
+ assert.equal(invalidVersion.window.GameBrowserEngine.sharedScenarios,false,'An older Worker uses the legacy tokens');
  for(const prefix of ['/nested-game/','/']){
   const fallback=fixture(prefix,{paths:false});
   await fallback.window.fetch('/locales/zh-hant.json');
