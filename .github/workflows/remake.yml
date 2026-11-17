@@ -23,11 +23,11 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          fetch-depth: 2
+          fetch-depth: 10
           persist-credentials: false
       - name: Freeze release source and isolate profiling files
         run: |
-          test "$(git rev-parse HEAD^)" = "$FROZEN_SOURCE"
+          git merge-base --is-ancestor "$FROZEN_SOURCE" HEAD
           git diff --exit-code "$FROZEN_SOURCE" HEAD -- . ':!.github/workflows/remake.yml' ':!.github/experiments/opening-start-profile'
           cp -R .github/experiments/opening-start-profile "$RUNNER_TEMP/"
           git switch --detach "$FROZEN_SOURCE"
