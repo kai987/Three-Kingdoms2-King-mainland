@@ -1,30 +1,70 @@
 name: Web campaign checks
+run-name: ${{ github.event_name == 'pull_request' && github.event.pull_request.title || 'Rehearse reuse of the experimental PR receipts' }}
 
 on:
-  push:
-    branches: [main]
   pull_request:
+    types: [opened, edited]
+    branches: [codex/ci-full-gate-sparse-base]
   workflow_dispatch:
     inputs:
-      force_full:
-        description: Run every regression group
-        type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
+      pr_number:
+        description: Draft experiment PR number
+        type: number
+        required: true
+      baseline_run:
+        description: Successful full-checkout run
+        type: string
+        required: true
+      sparse_run:
+        description: Successful sparse-checkout run
+        type: string
+        required: true
 
 permissions:
   contents: read
   actions: read
   deployments: read
-
-concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
+  pull-requests: read
 
 jobs:
   verify:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'codex/ci-full-gate-sparse' &&
+      github.event.pull_request.draft &&
+      (github.event.pull_request.title == 'Measure full gate checkout (baseline)' ||
+       github.event.pull_request.title == 'Measure full gate checkout (sparse)')
     uses: ./.github/workflows/web-checks.yml
     with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+      force_full: true
+      sparse_full_gate: ${{ github.event.pull_request.title == 'Measure full gate checkout (sparse)' }}
+  rehearse-reuse:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/codex/ci-full-gate-sparse'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+          ref: refs/pull/${{ inputs.pr_number }}/merge
+          fetch-depth: 0
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/experiments/check-full-gate-receipt.py
+            /tools/ci/
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - name: Verify both uploaded receipts against a simulated main push
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ inputs.pr_number }}
+          BASELINE_RUN: ${{ inputs.baseline_run }}
+          SPARSE_RUN: ${{ inputs.sparse_run }}
+        run: python -B .github/experiments/check-full-gate-receipt.py
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: experimental-receipt-reuse
+          path: build/ci-receipt-rehearsal/
+          if-no-files-found: error
