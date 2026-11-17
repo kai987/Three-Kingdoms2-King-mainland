@@ -8,11 +8,23 @@
     "game/map-source/road-ground.png": "ea8cf8ecbb573205b9b3e9ea43c1c15ec61ff5bef3e3d1e699bea75b0d7c08c0",
     "game/map-source/terrain-under-water.png": "e0bdfc8406f8ddf6285fdc9cdf929ec2a3ee406600bc403c6d050d22ab0a555c",
     "game/map-source/historic-water.svg": "24cf80474725fbcf3b841c9af8bdcdd4fe2c673d5ff212ba9a218a8af358b723",
-    "game/map-source/sea-shadow.svg": "207a066255705a6f080ed9196cd75911d7bc16f37dd3a455ad061a5740130f58"
+    "game/map-source/sea-shadow.svg": "207a066255705a6f080ed9196cd75911d7bc16f37dd3a455ad061a5740130f58",
+    "game/map-source/northeast-coast-art.png": "bf07b62c1da5d3225568b5a0d4784ceb4afca96aeb4c0e7d71a10f8350f09eff"
   },
   "provenance": {
     "scene_sha256": "bf3684b48772332a1dd8084cb0f33c61cbe034e5d4642b13ae648682aa6233d1",
     "policy": "Promoted local source layers, no historical files required for rebuild. Existing mountains and untouched river sections are preserved."
+  },
+  "northeast_coast": {
+    "path": "game/map-source/northeast-coast-art.png",
+    "crop": {"x": 940, "y": 0, "width": 412, "height": 420},
+    "references": [
+      "https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-land/",
+      "https://seagrant.whoi.edu/wp-content/uploads/2015/01/WHOI-R-87-011-Ying-Wang-and-David-Au.pdf",
+      "https://html.rhhz.net/DSJYJ/20150208.htm",
+      "https://opaj.napstic.cn/periodicalArticle/0120250601321751"
+    ],
+    "basis_tc": "以地理資料校準渤海、遼東半島、山東半島與朝鮮半島的相對位置，渤海西岸至萊州灣使用程鵬等（2025）圖3a的漢代古岸線概化，作為漢末至三國的近似。收回近代黃河三角洲凸出部分，保留遼東灣和渤海海峽。朝鮮半島採北朝上的局部經緯比例（經度每度29像素、緯度每度36像素），超出東側畫幅的部分直接裁切。新岸線以原圖像素網格、深色描邊和近岸碎紋繪製。"
   },
   "wei": {
     "replace_from_x": 528,
@@ -46,10 +58,48 @@
       639,
       326
     ],
+    "headwaters": {
+      "points": [[306, 293], [314, 294], [325, 296], [333, 299], [342, 305], [351, 312], [362, 316], [375, 319], [389, 320], [405, 321], [419, 323], [425, 323], [436, 322]],
+      "join": [436, 322],
+      "source": "https://www.geodoi.ac.cn/WebCn/geodoi.aspx?Id=424"
+    },
     "width": 4,
     "pixel": 2,
     "color": "#2145ff"
   },
+  "regional_river_sources": {
+    "loess_plateau": [
+      "https://slt.nx.gov.cn/xxgk_281/fdzdgknr/slkp/jhzl/202112/t20211201_3176821.html",
+      "https://www.geodoi.ac.cn/WebCn/geodoi.aspx?Id=424",
+      "https://www.mee.gov.cn/xxgk2018/xxgk/xxgk05/202301/W020230109526405860559.pdf"
+    ],
+    "liaodong": [
+      "https://www.ln.gov.cn/web/zwgkx/tzgg/2026052115034943567/index.shtml",
+      "https://zrzy.ln.gov.cn/zrzy/ywbb/gzkx/2024082914300395009/2024082914291345800.pdf",
+      "https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-rivers-lake-centerlines/"
+    ],
+    "korean_peninsula": [
+      "https://nationalatlas.ngii.go.kr/pages/page_3875.php",
+      "https://nationalatlas.ngii.go.kr/pages/page_4065.php",
+      "https://www.hydrosheds.org/products/hydrorivers",
+      "https://www.geodoi.ac.cn/WebCn/doi.aspx?Id=781"
+    ]
+  },
+  "regional_rivers": [
+    {"id": "jing", "name": "涇水", "width": 4, "mouth": "wei", "points": [[395, 225], [405, 230], [417, 235], [430, 244], [449, 253], [463, 257], [475, 265], [489, 272], [502, 279], [518, 291], [527, 301], [532, 310], [535, 319]]},
+    {"id": "beiluo", "name": "北洛河", "width": 3.2, "mouth": "wei", "points": [[503, 186], [515, 205], [532, 226], [554, 238], [570, 255], [579, 274], [591, 289], [601, 307], [614, 325]]},
+    {"id": "wuding", "name": "無定河", "width": 3.2, "mouth": "yellow", "points": [[480, 146], [500, 136], [521, 128], [548, 127], [584, 131], [599, 151], [616, 160], [631, 175], [648, 187]]},
+    {"id": "yan", "name": "延河", "width": 3.2, "mouth": "yellow", "points": [[538, 169], [553, 181], [562, 190], [580, 197], [608, 202], [629, 209], [648, 215]]},
+    {"id": "fen", "name": "汾水", "width": 4, "mouth": "yellow", "points": [[716, 103], [706, 122], [719, 151], [712, 170], [704, 190], [708, 212], [703, 230], [696, 246], [686, 265], [670, 279], [643, 291], [624, 301]]},
+    {"id": "liao", "name": "遼河", "width": 4, "mouth": "sea", "points": [[1207, 0], [1204, 14], [1205, 26], [1215, 38], [1200, 47], [1186, 50], [1176, 64], [1173, 74], [1165, 81], [1164, 88], [1160, 93], [1156, 98], [1153, 100]]},
+    {"id": "daling", "name": "大凌河", "width": 3.2, "mouth": "sea", "points": [[1035, 83], [1050, 79], [1065, 84], [1077, 73], [1092, 66], [1110, 61], [1116, 68], [1128, 70], [1124, 79], [1136, 89], [1133, 94]]},
+    {"id": "biliu", "name": "碧流河", "width": 3.2, "mouth": "sea", "points": [[1181, 113], [1175, 120], [1173, 118], [1169, 120], [1171, 126], [1168, 132], [1172, 137], [1169, 141], [1171, 144]]},
+    {"id": "yalu", "name": "鴨綠江", "width": 4, "mouth": "sea", "points": [[1337, 55], [1343, 67], [1338, 74], [1324, 72], [1309, 69], [1303, 59], [1293, 66], [1291, 75], [1280, 85], [1276, 91], [1264, 95], [1257, 101], [1246, 107], [1229, 120], [1226, 123], [1224, 128], [1224, 131]]},
+    {"id": "chongchon", "name": "清川江", "width": 3.2, "mouth": "sea", "points": [[1300, 114], [1297, 115], [1295, 112], [1288, 116], [1275, 131], [1260, 139], [1259, 140], [1257, 142]]},
+    {"id": "taedong", "name": "大同江", "width": 3.2, "mouth": "sea", "points": [[1305, 112], [1303, 125], [1293, 126], [1291, 130], [1285, 133], [1285, 138], [1273, 140], [1270, 151], [1269, 155], [1266, 160], [1262, 165], [1265, 172], [1263, 171], [1259, 171], [1251, 171]]},
+    {"id": "han_korea", "name": "漢江", "width": 4, "mouth": "sea", "points": [[1351, 222], [1348, 228], [1341, 233], [1330, 232], [1331, 229], [1319, 214], [1310, 211], [1304, 213], [1298, 209], [1291, 212]]},
+    {"id": "nakdong", "name": "洛東江", "width": 3.2, "mouth": "off_map", "points": [[1351, 246], [1346, 250], [1342, 248], [1341, 252], [1345, 261], [1346, 273], [1347, 279], [1345, 288], [1351, 290]]}
+  ],
   "mouths": [
     {
       "river": "yellow",

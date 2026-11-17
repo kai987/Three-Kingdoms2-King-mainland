@@ -1,8 +1,9 @@
 """Conditional historical campaigns and diplomacy."""
 
+from .errors import GameError
 from .officers import transfer_officers
-from . import city_development, facilities, treasures
-from .historical_chapters import CHAPTERS, DONG_ZHUO_RELOCATION
+from . import grain_units, capital_openings, city_development, command_books, facilities, treasures
+from .historical_chapters import CHAPTERS, DONG_ZHUO_RELOCATION, FRONTIER_SORTIES, WUHUAN_EXPEDITION
 
 GUANDU = 'historical_guandu'
 ALLIANCE = 'historical_sun_liu_alliance'
@@ -21,12 +22,13 @@ ALLIANCE_ENDED = 'historical_sun_liu_alliance_ended'
 ALLIANCE_CONTINUING = 'sun_liu_continuing_alliance'
 RECEIPTS = 'historical_campaigns'
 DONG_ZHUO_RELOCATION_DETAILS = frozenset(('moved', 'lost', 'town_before', 'town_after',
-                                         'damage_before', 'damage_after', 'loot'))
+                                         'damage_before', 'damage_after', 'loot', 'troops_to_reserves'))
 _RELOCATION_LOOT = {'gold': 50_000, 'grain': 100_000, 'treasure': 99}
 _RELOCATION_STOCKS = {
-    'gold': (facilities.LIMIT, 1),
-    'grain': (facilities.LIMIT, 1),
-    'population': (city_development.LIMITS['population'], city_development.POPULATION_UNIT),
+    'gold': facilities.LIMIT,
+    'grain': facilities.LIMIT,
+    'population': city_development.LIMITS['population'],
+    'reserves': facilities.LIMIT,
 }
 
 LEADERS = {
@@ -247,23 +249,20 @@ def _relocate_court(state, cities):
     development = state.extension['city_development']['cities']
     source_development = development[source.id]
     target_development = development[target.id]
-    source_stock = dict(gold=source.gold, grain=source.grain,
+    source_stock = dict(gold=source.gold, grain=source.grain, reserves=source.reserves,
                         population=source_development['population'])
     loot_gold = min(_RELOCATION_LOOT['gold'], max(0, facilities.LIMIT - target.gold))
-    loot_grain = min(_RELOCATION_LOOT['grain'], max(0, facilities.LIMIT - target.grain))
+    loot_grain = min(grain_units.amount(_RELOCATION_LOOT['grain']), max(0, facilities.LIMIT - target.grain))
     treasury = state.extension['treasury']
     loot_treasure = min(_RELOCATION_LOOT['treasure'],
                         treasures.RULES['city_cap'] - treasures.count(state, target.id),
                         treasures.LIMIT - treasury['ledger']['found'])
-    target_stock = dict(gold=target.gold + loot_gold, grain=target.grain + loot_grain,
+    target_stock = dict(gold=target.gold + loot_gold, grain=target.grain + loot_grain, reserves=target.reserves,
                         population=target_development['population'])
     moved, lost = {}, {}
-    for field, (cap, unit) in _RELOCATION_STOCKS.items():
-        stock = source_stock[field]
+    for field, cap in _RELOCATION_STOCKS.items():
         room = max(0, cap - target_stock[field])
-        moved[field] = min(stock * 70 // 100, room) // unit * unit
-        lost[field] = stock * 25 // (100 * unit) * unit
-
+        moved[field], lost[field] = capital_openings.relocation_amounts(source_stock[field], room)
     treasures.credit(state, target.id, loot_treasure, reason='found')
     source.gold -= moved['gold'] + lost['gold']
     source.grain -= moved['grain'] + lost['grain']
@@ -271,6 +270,9 @@ def _relocate_court(state, cities):
     target.gold += moved['gold'] + loot_gold
     target.grain += moved['grain'] + loot_grain
     target_development['population'] += moved['population']
+    source.reserves -= moved['reserves'] + lost['reserves']
+    target.reserves += moved['reserves']
+    state.soldiers['lost'] += lost['reserves']
 
     town = state.extension['facilities']['cities'][source.id]
     details = dict(moved=moved, lost=lost,
@@ -292,7 +294,82 @@ def _record(game, state, receipts, kind, cities):
             state.extension['ai_strategy'].pop(owner, None)
     game._emit_event(state, kind, city_ids=cities, factions=factions, audience='world',
                      person_ids=_event_people(kind), details=details)
-    game._note(state, NOTES[kind])
+    note = ('白狼山之戰已結束，曹軍控制柳城。'
+            if kind == WUHUAN_EXPEDITION and _date(state) == (207, 9) else NOTES[kind])
+    game._note(state, note)
+
+
+def _frontier_ready(game, state, kind):
+    source, target, defender, people, last_sortie = FRONTIER_SORTIES[kind]
+    if (kind == WUHUAN_EXPEDITION and _date(state) == (207, 9)
+            and game.catalog.data['id'] == 'mainland207-09'):
+        return _holds(state, ((target, 'wei'),))
+    commander = state.officers.get(game.catalog.ids.get(people[0]))
+    return (_date(state) <= last_sortie and commander is not None and commander.alive
+            and commander.faction_id == 'wei' and _holds(state, ((source, 'wei'), (target, defender)))
+            and not allied(state, 'wei', defender) and target in game._neighbors(source, state))
+
+
+def _active_sorties(game, state, owner):
+    if owner != 'wei' or owner in state.extension['pending_succession']:
+        return
+    receipts = state.extension.get(RECEIPTS, {})
+    for kind, (source, target, _, people, last_sortie) in FRONTIER_SORTIES.items():
+        if (kind in receipts and _date(state) <= last_sortie
+                and _frontier_ready(game, state, kind) and _has_leaders(state, EVENT_FACTIONS[kind], kind)):
+            members = [game.catalog.ids.get(person) for person in people]
+            present = [ident for ident in members if ident in state.officers and state.officers[ident].alive
+                       and state.officers[ident].faction_id == owner]
+            if members[0] in present:
+                yield state.cities[source], state.cities[target], present
+
+
+def reserved_sortie_targets(game, state, owner):
+    """Hand the relevant front to the dated named expedition, not the generic planner."""
+    return {target.id for _, target, _ in _active_sorties(game, state, owner)}
+
+
+def dispatch_frontier_sorties(game, state):
+    """Stage the serving historical officers through ordinary strategic orders."""
+    marches = state.extension['travel']['marches']
+    for staging, target, members in _active_sorties(game, state, 'wei'):
+        if state.phase != 'ai' or any(row['owner'] == 'wei' and row['kind'] == 'attack'
+                                      and row['target'] == target.id for row in marches):
+            continue
+        used = state.extension['officer_actions']
+        unavailable = game._march_ids(state)
+        waiting = any(row['owner'] == 'wei' and row['target'] == staging.id
+                      and set(members).intersection(row['officers']) for row in marches)
+        at_staging = []
+        for ident in members:
+            officer = state.officers[ident]
+            if ident in unavailable or officer.health <= 0:
+                continue
+            if used.get(str(ident)) == state.turn:
+                waiting |= ident in staging.roster.officer_ids and officer.troops > 0
+                continue
+            if ident in staging.roster.officer_ids:
+                if officer.troops > 0:
+                    at_staging.append(ident)
+                continue
+            home = next((city for city in state.cities.values() if city.owner == 'wei'
+                         and ident in city.roster.officer_ids), None)
+            if (home is None or not command_books.can_spend(state, 'wei', 'transfer')
+                    or game._city_occupancy(state, staging) >= game.catalog.rules.city_officer_capacity):
+                continue
+            try:
+                game._queue_march(state, home, staging, [ident], 'transfer', 'land')
+            except GameError:
+                continue
+            waiting = True
+        if (waiting or members[0] not in at_staging or
+                not command_books.can_spend(state, 'wei', 'depart')):
+            continue
+        try:
+            game._queue_march(state, staging, target, at_staging, 'attack', 'land')
+        except GameError:
+            continue
+
 
 
 def process(game, state):
@@ -321,6 +398,8 @@ def process(game, state):
             continue
         if (not _holds(state, holdings) or not _has_leaders(state, factions, kind)
                 or not _in_service(game, state, kind) or not _front_open(game, state, kind)):
+            continue
+        if kind in FRONTIER_SORTIES and not _frontier_ready(game, state, kind):
             continue
         if kind == YILING and _alliance_active(state):
             _record(game, state, receipts, ALLIANCE_ENDED, ('badong', 'yidu'))
@@ -485,8 +564,9 @@ def validate_state(catalog, state):
 def _valid_relocation_details(details):
     if details == {}:  # Older saves had a narrative-only event with the same receipt.
         return True
+    optional = {'loot', 'troops_to_reserves'}
     if (not isinstance(details, dict)
-            or details.keys() - {'loot'} != DONG_ZHUO_RELOCATION_DETAILS - {'loot'}):
+            or details.keys() - optional != DONG_ZHUO_RELOCATION_DETAILS - optional):
         return False
     town_cap, damage_cap = facilities.RULES['town_cap'], facilities.RULES['damage_cap']
     if any(type(details[key]) is not int for key in ('town_before', 'town_after',
@@ -496,19 +576,34 @@ def _valid_relocation_details(details):
             and 0 <= details['damage_before'] <= damage_cap and details['damage_after'] == damage_cap):
         return False
     moved, lost = details['moved'], details['lost']
-    if any(not isinstance(stock, dict) or stock.keys() != _RELOCATION_STOCKS.keys()
-           for stock in (moved, lost)):
+    if not isinstance(moved, dict):
         return False
-    if not all(type(moved[field]) is int and type(lost[field]) is int
-               and moved[field] >= 0 and lost[field] >= 0
-               and moved[field] + lost[field] <= cap
-               and moved[field] % unit == 0 and lost[field] % unit == 0
-               for field, (cap, unit) in _RELOCATION_STOCKS.items()):
+    legacy_troops = 'troops_to_reserves' in details
+    reserve_transfer = 'reserves' in moved and not legacy_troops
+    caps = dict(_RELOCATION_STOCKS)
+    if not reserve_transfer:
+        del caps['reserves']
+    if legacy_troops:
+        caps['troops'] = facilities.LIMIT
+    if any(not isinstance(stock, dict) or stock.keys() != caps.keys() for stock in (moved, lost)):
         return False
+    for field, cap in caps.items():
+        unit = capital_openings.UNIT if reserve_transfer or legacy_troops or field == 'population' else 1
+        if any(type(value) is not int or value < 0 or value % unit for value in (moved[field], lost[field])):
+            return False
+        if moved[field] + lost[field] > cap:
+            return False
+    if (reserve_transfer or legacy_troops) and 'loot' not in details:
+        return False
+    if legacy_troops:
+        reserves = details['troops_to_reserves']
+        if type(reserves) is not int or not 0 <= reserves <= moved['troops']:
+            return False
     if 'loot' in details:  # Saved receipts may omit the grain bonus or the entire loot entry.
         loot = details['loot']
+        loot_limits = grain_units.stocks(_RELOCATION_LOOT)
         if (not isinstance(loot, dict) or loot.keys() - {'grain'} != {'gold', 'treasure'}
-                or any(type(value) is not int or not 0 <= value <= _RELOCATION_LOOT[field]
+                or any(type(value) is not int or not 0 <= value <= loot_limits[field]
                        for field, value in loot.items())):
             return False
         return all(moved[field] + loot.get(field, 0) <= facilities.LIMIT for field in ('gold', 'grain'))

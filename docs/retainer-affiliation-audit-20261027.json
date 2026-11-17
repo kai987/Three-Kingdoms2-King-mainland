@@ -3,11 +3,11 @@
   "revision": "2026-10-27",
   "base_commit": "f65d3abae2c2c50293c5cf08d07f49413d60cbf6",
   "review_sha256": "603ad153aba66bf76bfc0bf3197c7baea8842d06eac6d4e0b5777183f0de59ee",
-  "canonical_people_sha256": "67e43eb1723321a92a5d17a11fce9ff06ad917cc42154e5147b6324af6f0af26",
+  "canonical_people_sha256": "45063728f4b4ed25eb8be4d85f91090c475a979931303f890459da5791f13899",
   "base_people_snapshot_sha256": "0aaaeb86c6414b250ec6b3bab35c14d9f989bd108b24017719c57691f7a7acd3",
   "summary": {
     "scenarios": 29,
-    "people": 1056,
+    "people": 1080,
     "new_people": 22,
     "historical": 23,
     "fictional": 6,
@@ -635,7 +635,7 @@
     "239年後新人物的未知後續不自動編魏或蜀；沿用地域在野與明示的可玩退出估界。",
     "238年同年登場與死亡的王建、畢盛、公孫修，早局未來登場窗明示允許死亡年登場，與238開局相同；不把同年出生／出仕／死亡解析為已不可能出場。"
   ],
-  "material_definition": "開放都市の資金・兵糧、予備兵と在籍武将の帯兵の合計を表示します。固定レビューとの照合では後から追加された河套三都市の初期備蓄を除きます。",
+  "material_definition": "開放都市の資金・兵糧、予備兵と在籍武将の帯兵の合計を表示します。固定レビューとの照合では追加都市の初期備蓄と、別に設定した辺境勢力の都市駐屯兵を除きます。",
   "stat_policy": "追加人物はSAN14魅力の出典がないため徳60。初期体力は王建のみ原表cnblogs-line-0229の42、ほかは80、回復上限は全員80。王建の原表忠59は所属対象が空なので公孫氏臣としても忠80。196年登場・249年寿命や原表徳41は保持資料であり、史実年代や本作徳へ転用しない。",
   "scenarios": [
     {
@@ -1300,46 +1300,48 @@
         }
       ],
       "material": {
-        "gold": 154439,
-        "grain": 543554,
-        "soldiers": 202252
+        "gold": 158939,
+        "grain": 564304,
+        "soldiers": 213102
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 1006,
+          "authorial_region_placement": 1004,
           "game_reference": 1,
           "bounded_pre_founding_free_projection": 1,
           "authorial_garrison_relocation": 14,
           "authorial_pre_revolt_region_proxy": 5,
+          "historical_career_with_opening_station_inference": 26,
           "explicit_scenario_scope": 7,
           "attested_identity_explicit_game_lifetime_and_region": 22
         },
         "bases": {
           "person_specific_future_free_appearance": 736,
           "same_date_SAN14_guide_free_location": 1,
-          "retained_person_specific_free_location": 149,
+          "retained_person_specific_free_location": 147,
           "retained_reviewed_opening_membership": 113,
           "retainer_affiliation_review_20261027": 23,
           "authorial_dong_zhuo_184_andi_relocation": 14,
           "retained_explicit_scenario_ruler": 8,
           "user_requested_bian_zhang_conditional_liangzhou_revolt": 4,
+          "reviewed_historical_faction_opening": 26,
           "user_requested_local_song_jian_before_184_11": 1,
           "explicit_scenario_scope": 7
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 135,
-        "planned_serving": 135,
-        "initial_free": 156,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 140,
+        "planned_serving": 140,
+        "initial_free": 154,
         "planned_max_city_roster": 17,
-        "future_plans": 758,
+        "future_plans": 779,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -1477,17 +1479,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "bf714184a4a2daf04013b242e58219be579c288304316326a09497e3f5275439",
       "faction_rulers_sha256": "ef63e6399185a4c8d23a1889cdc7185eca24eebc692e3726d0729952452b0344",
-      "catalog_sha256": "c1c4fe114492b0c9c50117250550f2688dd835547ea5555ba9ccb6b320bfc206"
+      "catalog_sha256": "34b8ad367adfc662f0327d7d3dab31e03517d6341a5d6bbcd68acb3632737e72"
     },
     {
       "id": "mainland188-06",
@@ -2262,18 +2271,19 @@
         }
       ],
       "material": {
-        "gold": 154439,
-        "grain": 543554,
-        "soldiers": 195352
+        "gold": 158744,
+        "grain": 563919,
+        "soldiers": 208017
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 1005,
+          "authorial_region_placement": 1003,
           "game_reference": 2,
           "primary_text_chronology_choice": 1,
           "authorial_northern_career_proxy": 3,
           "regional_primary_mapping": 2,
           "bounded_career_inference": 5,
+          "historical_career_with_opening_station_inference": 26,
           "bounded_early_follower_career_inference": 2,
           "primary_text_affiliation": 1,
           "primary_local_family_force_with_regional_proxy": 1,
@@ -2285,7 +2295,7 @@
         "bases": {
           "person_specific_future_free_appearance": 669,
           "same_date_SAN14_guide_free_location": 2,
-          "retained_person_specific_free_location": 209,
+          "retained_person_specific_free_location": 207,
           "authorial_region_placement": 16,
           "retained_reviewed_opening_membership": 91,
           "historical_review_20261025": 6,
@@ -2293,24 +2303,25 @@
           "retained_explicit_scenario_ruler": 7,
           "ruler_affiliation_review_20261027": 3,
           "user_reviewed_188_independent_ma_teng": 3,
+          "reviewed_historical_faction_opening": 26,
           "retainer_affiliation_review_20261027": 26,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 10
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 109,
-        "planned_serving": 109,
-        "initial_free": 232,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 117,
+        "planned_serving": 117,
+        "initial_free": 230,
         "planned_max_city_roster": 14,
-        "future_plans": 691,
+        "future_plans": 709,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -2448,17 +2459,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "42a8a858daab4bd4fbc769ca62c379ead4e06289b3e31a563d5243a2e638e239",
       "faction_rulers_sha256": "b4933aa7dcd307bd58331ee257cea9a180678dac857305d312b2c81111311658",
-      "catalog_sha256": "9fb3f08206c94eed7f71cb7c864873f3cabbbfed73a917cee069da6fb5f25c61"
+      "catalog_sha256": "f0a51d6f015fd7e1ce0afd8419a21dce6bdd420caf40e7b504967bc828dcf413"
     },
     {
       "id": "mainland190-01",
@@ -3469,19 +3487,20 @@
         }
       ],
       "material": {
-        "gold": 150070,
-        "grain": 518965,
-        "soldiers": 230907
+        "gold": 154190,
+        "grain": 537870,
+        "soldiers": 244127
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 955,
+          "authorial_region_placement": 953,
           "game_reference": 24,
           "primary_text_affiliation_bounded_local_city_proxy": 1,
           "regional_primary_mapping": 3,
           "primary_text_affiliation": 8,
           "authorial_garrison_relocation": 27,
           "primary_text_office_bounded_opening_month": 1,
+          "historical_career_with_opening_station_inference": 26,
           "primary_refuge_relationship_playable_affiliation_mapping": 1,
           "primary_relationship_transfer_year_bounded_game_inference": 1,
           "romance_compatibility_only": 1,
@@ -3494,7 +3513,7 @@
         "bases": {
           "person_specific_future_free_appearance": 616,
           "same_date_SAN14_guide_free_location": 3,
-          "retained_person_specific_free_location": 131,
+          "retained_person_specific_free_location": 129,
           "retainer_affiliation_review_20261027": 27,
           "ruler_affiliation_review_20261027": 19,
           "historical_review_20261025": 18,
@@ -3502,24 +3521,25 @@
           "retained_reviewed_opening_membership": 179,
           "retained_explicit_scenario_ruler": 16,
           "same_date_SAN14_recorded_death": 21,
+          "reviewed_historical_faction_opening": 26,
           "authorial_garrison_relocation_for_song_jian_longxi": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 10
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 256,
-        "planned_serving": 256,
-        "initial_free": 135,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 266,
+        "planned_serving": 266,
+        "initial_free": 133,
         "planned_max_city_roster": 25,
-        "future_plans": 634,
+        "future_plans": 650,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -3657,17 +3677,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "884ce0965504b52f99db48b1e3354023f152d1ed903de2a9859aaab56515249d",
       "faction_rulers_sha256": "a9bfe3eca27c9197264371f8ac363dd3b5f7fe8a370e260022bd5b5d403873e6",
-      "catalog_sha256": "12615eb03716bd10a20bfa2f1556b2d38b9b5c0599bdeded9ec2f283e013da0b"
+      "catalog_sha256": "323c0d1e32fa0668f87dde48b53f85d507f11d7a2acc70ebead8a3c4709d93d6"
     },
     {
       "id": "mainland191-10",
@@ -4567,19 +4594,20 @@
         }
       ],
       "material": {
-        "gold": 148080,
-        "grain": 511815,
-        "soldiers": 243787
+        "gold": 152130,
+        "grain": 530345,
+        "soldiers": 257197
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 840,
+          "authorial_region_placement": 838,
           "game_reference": 4,
           "bounded_career_inference": 127,
           "primary_text_affiliation_bounded_local_city_proxy": 1,
           "primary_text_affiliation": 3,
           "authorial_garrison_relocation": 44,
           "regional_primary_mapping": 1,
+          "historical_career_with_opening_station_inference": 26,
           "bounded_transit_region_game_proxy": 1,
           "primary_relationship_transfer_year_bounded_game_inference": 1,
           "explicit_regional_proxy": 1,
@@ -4594,13 +4622,14 @@
           "same_date_SAN14_guide_affiliation": 1,
           "authored_bounded_source_snapshot_continuity": 121,
           "retainer_affiliation_review_20261027": 25,
-          "authorial_region_placement": 37,
+          "authorial_region_placement": 36,
           "retained_chronology_or_explicit_exclusion": 36,
           "historical_review_20261025": 48,
           "historical_city_owner_relocation_authorial_garrison": 19,
           "retained_reviewed_opening_membership": 85,
-          "retained_person_specific_free_location": 56,
+          "retained_person_specific_free_location": 55,
           "retained_explicit_scenario_ruler": 16,
+          "reviewed_historical_faction_opening": 26,
           "authored_bounded_snapshot_continuity": 4,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
@@ -4608,18 +4637,18 @@
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 304,
-        "planned_serving": 304,
-        "initial_free": 97,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 316,
+        "planned_serving": 316,
+        "initial_free": 95,
         "planned_max_city_roster": 36,
-        "future_plans": 609,
+        "future_plans": 623,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -4757,17 +4786,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "6a9841808b80e6506faa3c061edbe46d070a0c768978c62e2ea69faeaf7d3135",
       "faction_rulers_sha256": "9e43334e7bb3d84ca3d658a49f3ba19bd409ad3de3eebeed8d414724b4306d43",
-      "catalog_sha256": "90b2d0bbdd558c808a6f70afa0b7608c67abf9398d4129f1a41ae6d0ce0c15d0"
+      "catalog_sha256": "c9249a43640937e84606382c393e7e65722dffe9df3fc23d79397a27adc7e373"
     },
     {
       "id": "mainland194-06",
@@ -5554,13 +5590,13 @@
         }
       ],
       "material": {
-        "gold": 145775,
-        "grain": 504127,
-        "soldiers": 239972
+        "gold": 149845,
+        "grain": 521877,
+        "soldiers": 252647
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 902,
+          "authorial_region_placement": 901,
           "game_reference": 80,
           "primary_text_affiliation": 6,
           "dated_envoy_regional_proxy": 1,
@@ -5568,6 +5604,7 @@
           "regional_primary_mapping": 6,
           "bounded_career_inference": 1,
           "primary_refuge_relation_without_attested_office": 1,
+          "historical_career_with_opening_station_inference": 25,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 10,
@@ -5581,30 +5618,31 @@
           "retained_reviewed_opening_membership": 225,
           "same_date_SAN14_recorded_death": 76,
           "historical_review_20261025": 12,
-          "retained_person_specific_free_location": 114,
+          "retained_person_specific_free_location": 113,
           "retained_explicit_scenario_ruler": 17,
           "historical_city_owner_relocation_authorial_garrison": 21,
           "ruler_affiliation_review_20261027": 11,
           "retainer_affiliation_review_20261027": 23,
           "authorial_region_placement": 4,
+          "reviewed_historical_faction_opening": 25,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 10
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 294,
-        "planned_serving": 294,
-        "initial_free": 124,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 305,
+        "planned_serving": 305,
+        "initial_free": 123,
         "planned_max_city_roster": 21,
-        "future_plans": 551,
+        "future_plans": 565,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -5742,17 +5780,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "04411825cb3930090e4dec95d095810ca9d7da3a905d557ec195e5caf9234273",
       "faction_rulers_sha256": "5befbfe4a7421f33a1a6182b0ce08a4d2642574cd15cc683620e76bc578e77d4",
-      "catalog_sha256": "b94c9138d401b3300ea88e39c1605196db96cfb8a6d5c249ed308c6c700b2f6b"
+      "catalog_sha256": "3b358ccbb0622363311053d129c02297f7a85b95049bfba1dddb9ef1f5865557"
     },
     {
       "id": "mainland196-06",
@@ -6519,13 +6564,13 @@
         }
       ],
       "material": {
-        "gold": 144400,
-        "grain": 498502,
-        "soldiers": 238562
+        "gold": 148625,
+        "grain": 517037,
+        "soldiers": 251427
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 987,
+          "authorial_region_placement": 986,
           "game_reference": 8,
           "local_warband_without_attested_city": 4,
           "primary_text_affiliation": 3,
@@ -6534,6 +6579,7 @@
           "authorial_garrison_relocation": 13,
           "bounded_regional_inference": 1,
           "primary_refuge_relation_without_attested_office": 1,
+          "historical_career_with_opening_station_inference": 25,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
@@ -6548,12 +6594,13 @@
           "ruler_affiliation_review_20261027": 8,
           "retained_reviewed_opening_membership": 226,
           "retained_chronology_or_explicit_exclusion": 96,
-          "retained_person_specific_free_location": 142,
+          "retained_person_specific_free_location": 141,
           "historical_review_20261025": 16,
           "retained_explicit_scenario_ruler": 17,
           "historical_city_owner_relocation_authorial_garrison": 7,
           "retainer_affiliation_review_20261027": 23,
           "authorial_region_placement": 4,
+          "reviewed_historical_faction_opening": 25,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 6,
@@ -6561,18 +6608,18 @@
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 282,
-        "planned_serving": 282,
-        "initial_free": 160,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 293,
+        "planned_serving": 293,
+        "initial_free": 159,
         "planned_max_city_roster": 24,
-        "future_plans": 510,
+        "future_plans": 524,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -6710,17 +6757,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "854b2b443eaf7c5308a103cd15307164bb1f1bb1593f6bfb7ca04f87b152abe6",
       "faction_rulers_sha256": "32d406b3a2334cf6d360e40970623f11d896476dd404429061a5b450ada7beb7",
-      "catalog_sha256": "2a48c63fc989e576fe035638ad6d5332256af5212dd0f8eabb270eeda6ea4848"
+      "catalog_sha256": "261c5029f5b183a86259a669cb33f5e5c10e4f3d1147012cbdacbf1fdf9a60ee"
     },
     {
       "id": "mainland197-07",
@@ -7494,13 +7548,13 @@
         }
       ],
       "material": {
-        "gold": 145410,
-        "grain": 503427,
-        "soldiers": 235182
+        "gold": 149725,
+        "grain": 522302,
+        "soldiers": 248142
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 991,
+          "authorial_region_placement": 990,
           "game_reference": 5,
           "regional_primary_mapping": 8,
           "authorial_if_independent_faction_mapping": 3,
@@ -7508,9 +7562,9 @@
           "displaced_prefect_region_proxy": 1,
           "bounded_independent_local_army_region_proxy": 1,
           "authorial_region_proxy": 2,
+          "fictional_scenario_adaptation": 29,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
-          "fictional_scenario_adaptation": 4,
           "attested_identity_explicit_game_lifetime_and_region": 16,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 5,
           "fictional_inherited_yuan_army_affiliation_mapping": 1
@@ -7522,11 +7576,12 @@
           "same_date_SAN14_guide_affiliation": 1,
           "ruler_affiliation_review_20261027": 20,
           "retained_chronology_or_explicit_exclusion": 110,
-          "retained_person_specific_free_location": 162,
+          "retained_person_specific_free_location": 161,
           "user_requested_independent_han_sui_IF": 3,
           "retained_explicit_scenario_ruler": 16,
           "historical_city_owner_relocation_authorial_garrison": 7,
           "retainer_affiliation_review_20261027": 23,
+          "reviewed_historical_faction_opening": 25,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
@@ -7535,18 +7590,18 @@
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 279,
-        "planned_serving": 279,
-        "initial_free": 172,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 290,
+        "planned_serving": 290,
+        "initial_free": 171,
         "planned_max_city_roster": 15,
-        "future_plans": 489,
+        "future_plans": 502,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -7683,17 +7738,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "b52220633f476989402d26d8b0c1bbe35d4bcc3464852f0e8ee462e6cd5fad33",
       "faction_rulers_sha256": "f92fecd0138c0b8225f14a349ac7f6d683dcaf9c9f7903a3ff03f8925e099ccc",
-      "catalog_sha256": "42a49ff6226d6dbd479fb07be378e59b96a8276626b443e111cd2315bfe61edd"
+      "catalog_sha256": "03bb0a7923bd3d1d15a3fd7048dd98c3d80bf28a4a2135af899e5b4d07b3eaef"
     },
     {
       "id": "mainland198-03",
@@ -8546,13 +8608,13 @@
         }
       ],
       "material": {
-        "gold": 145420,
-        "grain": 503427,
-        "soldiers": 240957
+        "gold": 150130,
+        "grain": 523312,
+        "soldiers": 255587
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 974,
+          "authorial_region_placement": 973,
           "regional_primary_mapping": 5,
           "primary_text_affiliation": 2,
           "bounded_career_inference": 20,
@@ -8560,22 +8622,22 @@
           "bounded_regional_inference": 1,
           "primary_refuge_region_dated_campaign_inference": 1,
           "bounded_independent_local_army_region_proxy": 1,
+          "historical_career_with_opening_station_inference": 30,
           "primary_text_chronology": 2,
-          "primary_separate_tribal_leader_regional_proxy": 1,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
-          "historical_career_with_opening_station_inference": 4,
           "attested_identity_explicit_game_lifetime_and_region": 16,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 6
         },
         "bases": {
-          "authored_nearby_historical_snapshot_continuity": 948,
+          "authored_nearby_historical_snapshot_continuity": 947,
           "ruler_affiliation_review_20261027": 14,
           "historical_review_20261025": 8,
           "explicit_primary_or_reviewed_DLC_membership": 19,
           "bounded_career_inference": 1,
           "authored_nearby_historical_roster_inference": 24,
-          "retainer_affiliation_review_20261027": 25,
+          "retainer_affiliation_review_20261027": 24,
+          "reviewed_historical_faction_opening": 26,
           "authorial_garrison_relocation_for_song_jian_longxi": 4,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
@@ -8584,18 +8646,18 @@
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 296,
-        "planned_serving": 296,
-        "initial_free": 148,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 308,
+        "planned_serving": 308,
+        "initial_free": 146,
         "planned_max_city_roster": 16,
-        "future_plans": 481,
+        "future_plans": 494,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -8733,17 +8795,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "7b9985737edff1f3d3f4e7ca97d6158f5567279f8c6da06ea9e1d08b98fa4131",
       "faction_rulers_sha256": "ef80aa6ff5949ea0c7dc0951d13cf908d623b0e45bf0bca482fa956504b35d18",
-      "catalog_sha256": "f014ff0a6b7e83103409b73a43aea7929e13bcd235ce6616ad58a01d6827299b"
+      "catalog_sha256": "cf576f7a5ac6148f4655e9444a63dca58d70e10aa850143f4690589b0d87fb47"
     },
     {
       "id": "mainland200-01",
@@ -9453,23 +9522,23 @@
         }
       ],
       "material": {
-        "gold": 156580,
-        "grain": 554292,
-        "soldiers": 258182
+        "gold": 161570,
+        "grain": 575772,
+        "soldiers": 273157
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 821,
+          "authorial_region_placement": 819,
           "game_reference": 167,
           "primary_text_affiliation": 2,
           "authorial_garrison_relocation": 28,
           "regional_primary_mapping": 1,
           "bounded_regional_inference": 1,
           "annotated_biography_with_opening_station_inference": 1,
+          "historical_career_with_opening_station_inference": 30,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
-          "historical_career_with_opening_station_inference": 4,
           "attested_identity_explicit_game_lifetime_and_region": 18,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 4
         },
@@ -9479,11 +9548,12 @@
           "same_date_SAN14_guide_affiliation": 4,
           "retained_reviewed_opening_membership": 244,
           "same_date_SAN14_recorded_death": 159,
-          "retained_person_specific_free_location": 111,
+          "retained_person_specific_free_location": 109,
           "historical_review_20261025": 28,
           "retained_explicit_scenario_ruler": 10,
           "historical_city_owner_relocation_authorial_garrison": 11,
           "historical_guandu_xiaopei_opening": 1,
+          "reviewed_historical_faction_opening": 26,
           "authorial_garrison_relocation_for_song_jian_longxi": 4,
           "ruler_affiliation_review_20261027": 2,
           "authorial_region_placement": 2,
@@ -9494,18 +9564,18 @@
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 310,
-        "planned_serving": 310,
-        "initial_free": 121,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 322,
+        "planned_serving": 322,
+        "initial_free": 119,
         "planned_max_city_roster": 10,
-        "future_plans": 457,
+        "future_plans": 470,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -9643,17 +9713,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "2345663d0089eff32e28f7130d424904e7e2df03add729cbd14fd80c1c496c66",
       "faction_rulers_sha256": "fac3e812503f82e9c49d85b3072709bc0ec23de11dea7fb6f66acca4d676eab9",
-      "catalog_sha256": "9a190894712a097ad517eeaf50d2cdb6af93da6c91c6043893f6296164204c0d"
+      "catalog_sha256": "a0e6dc6fa6ad89cee7c5799f6b1bc64f852a10c877282736f52a08daadb83b7b"
     },
     {
       "id": "mainland201-05",
@@ -10338,19 +10415,19 @@
         }
       ],
       "material": {
-        "gold": 156580,
-        "grain": 554292,
-        "soldiers": 254282
+        "gold": 161600,
+        "grain": 575872,
+        "soldiers": 269272
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 1013,
+          "authorial_region_placement": 1011,
           "game_reference": 4,
           "authorial_if_independent_faction_mapping": 3,
           "authorial_garrison_relocation": 3,
+          "fictional_scenario_adaptation": 29,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "fictional_scenario_adaptation": 3,
           "attested_identity_explicit_game_lifetime_and_region": 18,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 4
         },
@@ -10360,11 +10437,12 @@
           "retained_explicit_IF_membership": 263,
           "same_date_SAN14_guide_affiliation": 1,
           "retained_chronology_or_explicit_exclusion": 178,
-          "retained_person_specific_free_location": 122,
+          "retained_person_specific_free_location": 120,
           "user_requested_independent_han_sui_IF": 3,
           "retained_explicit_scenario_ruler": 10,
           "historical_city_owner_relocation_authorial_garrison": 9,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
+          "reviewed_historical_faction_opening": 26,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
@@ -10373,18 +10451,18 @@
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 297,
-        "planned_serving": 297,
-        "initial_free": 130,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 309,
+        "planned_serving": 309,
+        "initial_free": 128,
         "planned_max_city_roster": 40,
-        "future_plans": 443,
+        "future_plans": 456,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -10521,17 +10599,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "798cc3ece4739ff85bdc86ccee6946e10e328c949eeebfc3c8a07ea5ff06d097",
       "faction_rulers_sha256": "9bc6e36a96349a37627d183857f52f18e37acb94582974f02e780eeffae4f7b7",
-      "catalog_sha256": "2b7cb7b403fea2344d4d0c7b0520cb8584e6ff9c6840a9800013bb97fab65374"
+      "catalog_sha256": "13f00dd6aea8e1c4955a87bf8350ec4007245bdef3f7045e92214bbccebb233f"
     },
     {
       "id": "mainland202-06",
@@ -11241,30 +11326,31 @@
         }
       ],
       "material": {
-        "gold": 156580,
-        "grain": 554292,
-        "soldiers": 260282
+        "gold": 161605,
+        "grain": 576062,
+        "soldiers": 276022
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 959,
+          "authorial_region_placement": 957,
           "bounded_career_inference": 32,
           "primary_text_affiliation": 2,
           "authorial_garrison_relocation": 27,
           "regional_primary_mapping": 1,
+          "historical_career_with_opening_station_inference": 29,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "historical_career_with_opening_station_inference": 3,
           "attested_identity_explicit_game_lifetime_and_region": 18,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 4
         },
         "bases": {
-          "authored_nearby_historical_snapshot_continuity": 934,
+          "authored_nearby_historical_snapshot_continuity": 932,
           "explicit_primary_or_reviewed_DLC_membership": 30,
           "historical_review_20261025": 26,
           "bounded_career_inference": 2,
           "authored_nearby_historical_roster_inference": 23,
+          "reviewed_historical_faction_opening": 26,
           "authorial_garrison_relocation_for_song_jian_longxi": 4,
           "ruler_affiliation_review_20261027": 2,
           "authorial_region_placement": 2,
@@ -11275,18 +11361,18 @@
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 316,
-        "planned_serving": 316,
-        "initial_free": 115,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 329,
+        "planned_serving": 329,
+        "initial_free": 113,
         "planned_max_city_roster": 20,
-        "future_plans": 432,
+        "future_plans": 444,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -11424,17 +11510,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "c5530a38d4c76299b552722dd6bdf26ca581a47bbd8360780d54505e1cfb075d",
       "faction_rulers_sha256": "d5df5f8d57c56459a2d423649bb0b481709fa31bb4eb3f83f40215726e601679",
-      "catalog_sha256": "6a09eb43078ca6ff9763c58ebb664af40119ff519e718375a1e84510542caa92"
+      "catalog_sha256": "17d8c4d9fa46044e9b7db7c62ae67ce762bfd672deca5cbdb2674d87cbebe367"
     },
     {
       "id": "mainland207-09",
@@ -12188,9 +12281,9 @@
         }
       ],
       "material": {
-        "gold": 161820,
-        "grain": 578067,
-        "soldiers": 273862
+        "gold": 165840,
+        "grain": 596172,
+        "soldiers": 280047
       },
       "placement_counts": {
         "reference_classes": {
@@ -12207,7 +12300,7 @@
           "primary_fugitive_guest_with_month_uncertainty": 1,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 16,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 6
         },
@@ -12228,22 +12321,23 @@
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 353,
-        "planned_serving": 353,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 356,
+        "planned_serving": 356,
         "initial_free": 93,
         "planned_max_city_roster": 21,
-        "future_plans": 370,
+        "future_plans": 381,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -12381,17 +12475,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "d47f391862b98e47a01ef3ae72cb48a410a53d267ebe6db33bf0c77b8349d5e7",
       "faction_rulers_sha256": "6f8e45b565441c7d7ae1981973c740047fe417bd0c7696700a698d362e1d5dbd",
-      "catalog_sha256": "adcd18a5ce81393c98e95b2340f94136d557b9f752ef67fb3f33ed4dcf360995"
+      "catalog_sha256": "702e6ca5bb504538ce7f1b3e3acbdd420b2dcfc7e5acd5156d516ffbf14984a7"
     },
     {
       "id": "mainland208-10",
@@ -13208,9 +13309,9 @@
         }
       ],
       "material": {
-        "gold": 155612,
-        "grain": 547047,
-        "soldiers": 281677
+        "gold": 159657,
+        "grain": 565302,
+        "soldiers": 287902
       },
       "placement_counts": {
         "reference_classes": {
@@ -13228,7 +13329,7 @@
           "bounded_regional_inference": 1,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 16,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 6
         },
@@ -13253,22 +13354,23 @@
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
           "reviewed_early_shu_retainer_opening": 3,
-          "retainer_affiliation_review_20261027": 22
+          "retainer_affiliation_review_20261027": 22,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 395,
-        "planned_serving": 395,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 398,
+        "planned_serving": 398,
         "initial_free": 53,
         "planned_max_city_roster": 54,
-        "future_plans": 359,
+        "future_plans": 370,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -13405,17 +13507,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "75c478d6e42a535adc9a5ccc73391ac6232013d0c7c3d0c282c3e2ea9f4637eb",
       "faction_rulers_sha256": "346d1ddeaee30c6e7c176b8a9af225f30d8a19e296965a2a3ed85336a8185464",
-      "catalog_sha256": "6a0be07796556c4ab719af13903b11c62a05ac6008fced4faf46668ea261269a"
+      "catalog_sha256": "d9762610d6f9bb5d18959b0470315e324e337d262056dc4a697c3002fcbdc5ef"
     },
     {
       "id": "mainland209-06",
@@ -14092,9 +14201,9 @@
         }
       ],
       "material": {
-        "gold": 155612,
-        "grain": 547047,
-        "soldiers": 281827
+        "gold": 159682,
+        "grain": 565402,
+        "soldiers": 288082
       },
       "placement_counts": {
         "reference_classes": {
@@ -14105,7 +14214,7 @@
           "authorial_garrison_relocation": 4,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "fictional_scenario_adaptation": 3,
+          "fictional_scenario_adaptation": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -14126,22 +14235,23 @@
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
           "reviewed_early_shu_retainer_opening": 3,
-          "retainer_affiliation_review_20261027": 22
+          "retainer_affiliation_review_20261027": 22,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 395,
-        "planned_serving": 395,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 398,
+        "planned_serving": 398,
         "initial_free": 46,
         "planned_max_city_roster": 25,
-        "future_plans": 339,
+        "future_plans": 350,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -14278,17 +14388,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "ea94226cbf3ee073231005ad5f9d70ef01b0860ee07454d99ccf98ea9c854682",
       "faction_rulers_sha256": "bafc1947682d63116c3f0a1abc06a116c2d95ef65c8bee48f31aa09f19bd7c91",
-      "catalog_sha256": "f824e063fe8d06e726059508066c6b2f012cde727e49410ab878ef148dbb57f0"
+      "catalog_sha256": "8c20fd2bf6b2540b56b5eacde966e6afa3e576e066a3b18e1cd26f2e0152a6b4"
     },
     {
       "id": "mainland210-11",
@@ -14967,9 +15084,9 @@
         }
       ],
       "material": {
-        "gold": 155612,
-        "grain": 547047,
-        "soldiers": 278527
+        "gold": 159687,
+        "grain": 565527,
+        "soldiers": 284807
       },
       "placement_counts": {
         "reference_classes": {
@@ -14981,7 +15098,7 @@
           "authorial_garrison_relocation": 6,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "fictional_scenario_adaptation": 3,
+          "fictional_scenario_adaptation": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -15002,22 +15119,23 @@
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
           "reviewed_early_shu_retainer_opening": 3,
-          "retainer_affiliation_review_20261027": 22
+          "retainer_affiliation_review_20261027": 22,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 384,
-        "planned_serving": 384,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 387,
+        "planned_serving": 387,
         "initial_free": 60,
         "planned_max_city_roster": 26,
-        "future_plans": 328,
+        "future_plans": 339,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -15154,17 +15272,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "165c300901d7a93e61125cdf2dbbbf27a692217a429d74cc18c1f1d73b3fa4a0",
       "faction_rulers_sha256": "267ef81e82354d3709d2594524d5fedd1ace08605bf4fc6281b81d0993ad4d56",
-      "catalog_sha256": "1d511c9b2ffdce2c580ae2fdce598cff83d4f007387125634445721664db4142"
+      "catalog_sha256": "1d91c52c5aa5a05563c5b4089806957081397c8fbcb5ffd6bd4c86f9b78ad6b3"
     },
     {
       "id": "mainland211-07-tongguan",
@@ -15866,9 +15991,9 @@
         }
       ],
       "material": {
-        "gold": 165052,
-        "grain": 576634,
-        "soldiers": 297735
+        "gold": 169207,
+        "grain": 595464,
+        "soldiers": 304090
       },
       "placement_counts": {
         "reference_classes": {
@@ -15883,7 +16008,7 @@
           "bounded_local_career_inference": 1,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -15899,22 +16024,23 @@
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
           "reviewed_early_shu_retainer_opening": 3,
-          "retainer_affiliation_review_20261027": 22
+          "retainer_affiliation_review_20261027": 22,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 393,
-        "planned_serving": 393,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 396,
+        "planned_serving": 396,
         "initial_free": 41,
         "planned_max_city_roster": 14,
-        "future_plans": 322,
+        "future_plans": 333,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -16051,17 +16177,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "4d6634b7f57ebb50ed8df150c8ecd3ab3fb6a1df20af3273b81ed8d6d0e7f90b",
       "faction_rulers_sha256": "a666d46bd25f4303ce0e53ac3fa3047570ee7fc8f925d7d8f0f3bd6e1a6cbcef",
-      "catalog_sha256": "0dd871caad281de20535abe9b50f3726a03e439dff166de3f8ec25626a146f25"
+      "catalog_sha256": "d25e53ec4e58631fa7edf11e1365165c79ac41ee190d8698263e6a1c5acfa079"
     },
     {
       "id": "mainland212-06",
@@ -16752,9 +16885,9 @@
         }
       ],
       "material": {
-        "gold": 165052,
-        "grain": 576634,
-        "soldiers": 294135
+        "gold": 169207,
+        "grain": 595489,
+        "soldiers": 300500
       },
       "placement_counts": {
         "reference_classes": {
@@ -16766,7 +16899,7 @@
           "fictional_victory_affiliation_and_authorial_city_proxy": 1,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "fictional_scenario_adaptation": 3,
+          "fictional_scenario_adaptation": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -16786,22 +16919,23 @@
           "retainer_affiliation_review_20261027": 23,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 385,
-        "planned_serving": 385,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 388,
+        "planned_serving": 388,
         "initial_free": 42,
         "planned_max_city_roster": 14,
-        "future_plans": 317,
+        "future_plans": 328,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -16938,17 +17072,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "99a8f17ffdf237181c9763b1fce1f149788529b09007fab5a8f099f466792f6c",
       "faction_rulers_sha256": "fff6ce3c9ca4367347fa120cb5c15294ed217ecd9d79cfd9828d6a5534d752b4",
-      "catalog_sha256": "45b1e46951c14879648414162a34503f07d0854b34cf570c7a85db4316fffd2b"
+      "catalog_sha256": "0b478f676f39f5cb847a2d38612aa641ea9e4d61665ea60a9bf2491cf5d03596"
     },
     {
       "id": "mainland212-12",
@@ -17696,9 +17837,9 @@
         }
       ],
       "material": {
-        "gold": 165052,
-        "grain": 576634,
-        "soldiers": 287835
+        "gold": 169227,
+        "grain": 595639,
+        "soldiers": 294225
       },
       "placement_counts": {
         "reference_classes": {
@@ -17716,7 +17857,7 @@
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -17738,22 +17879,23 @@
           "ruler_affiliation_review_20261027": 3,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 366,
-        "planned_serving": 366,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 369,
+        "planned_serving": 369,
         "initial_free": 54,
         "planned_max_city_roster": 16,
-        "future_plans": 317,
+        "future_plans": 328,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -17890,17 +18032,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "cdbe8cf3f8546ce0fdcb3b151381ab9608f1ea3b96f6fdb14f1abcd437951ffb",
       "faction_rulers_sha256": "dc5f4ad21c350c2455518e753e1f0281d46b6082c02a2c469bce78194e8f1fb1",
-      "catalog_sha256": "f95b84b453d1522f4550685253fe6acc7e061f526a02ff2a600b4d60fc85a771"
+      "catalog_sha256": "8b240b328aaa7511878c23e3f8437620e78848eccdf8fae14eefb3ba5d177002"
     },
     {
       "id": "mainland215-08",
@@ -18607,9 +18756,9 @@
         }
       ],
       "material": {
-        "gold": 164577,
-        "grain": 577760,
-        "soldiers": 289692
+        "gold": 168772,
+        "grain": 596890,
+        "soldiers": 296112
       },
       "placement_counts": {
         "reference_classes": {
@@ -18620,7 +18769,7 @@
           "primary_text_chronology": 2,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -18635,22 +18784,23 @@
           "ruler_affiliation_review_20261027": 3,
           "authorial_region_placement": 2,
           "explicit_scenario_scope": 8,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 368,
-        "planned_serving": 368,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 371,
+        "planned_serving": 371,
         "initial_free": 53,
         "planned_max_city_roster": 20,
-        "future_plans": 290,
+        "future_plans": 301,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -18787,17 +18937,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "464a32215389614dfe2239f707ae63e025220d6af45179cd6aff7defa3346ae2",
       "faction_rulers_sha256": "cfe491bc52ae2428f1645ef45381f58aafecc1bbf57a1bdc087b749984606123",
-      "catalog_sha256": "7fb36ae9351710bbfa97ba084b9bfd55761bc3328c71f7bd190bdeb6756f2b63"
+      "catalog_sha256": "ddf25be1c9d09b024cd0bac917a2c4bfa090cfa0938ee6067f6ef2e9a2120495"
     },
     {
       "id": "mainland217-07",
@@ -19482,9 +19639,9 @@
         }
       ],
       "material": {
-        "gold": 164877,
-        "grain": 576792,
-        "soldiers": 290555
+        "gold": 169097,
+        "grain": 596072,
+        "soldiers": 297020
       },
       "placement_counts": {
         "reference_classes": {
@@ -19498,7 +19655,7 @@
           "primary_text_chronology": 2,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -19516,22 +19673,23 @@
           "retainer_affiliation_review_20261027": 25,
           "authorial_region_placement": 2,
           "explicit_scenario_scope": 8,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 372,
-        "planned_serving": 372,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 375,
+        "planned_serving": 375,
         "initial_free": 55,
         "planned_max_city_roster": 19,
-        "future_plans": 260,
+        "future_plans": 271,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -19668,17 +19826,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "464a32215389614dfe2239f707ae63e025220d6af45179cd6aff7defa3346ae2",
       "faction_rulers_sha256": "cfe491bc52ae2428f1645ef45381f58aafecc1bbf57a1bdc087b749984606123",
-      "catalog_sha256": "aa3b66b965ad6f775b017973f86593c805616597c3c01525b2574a1ec1277e01"
+      "catalog_sha256": "11c3709c003664c28d3f72df5d3695c9d913984f4c52bf85b27fd531b5702228"
     },
     {
       "id": "mainland219-07",
@@ -20365,9 +20530,9 @@
         }
       ],
       "material": {
-        "gold": 157511,
-        "grain": 545185,
-        "soldiers": 287557
+        "gold": 162066,
+        "grain": 565730,
+        "soldiers": 294377
       },
       "placement_counts": {
         "reference_classes": {
@@ -20380,7 +20545,7 @@
           "primary_text_chronology": 2,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -20400,22 +20565,23 @@
           "retained_explicit_scenario_ruler": 4,
           "retainer_affiliation_review_20261027": 25,
           "explicit_scenario_scope": 8,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 394,
-        "planned_serving": 394,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 397,
+        "planned_serving": 397,
         "initial_free": 42,
         "planned_max_city_roster": 21,
-        "future_plans": 235,
+        "future_plans": 246,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -20552,17 +20718,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "4dbfff06ddcb2b21de03781efe28b6131cc9792ee819b10a25a27c127bca575d",
       "faction_rulers_sha256": "cfe491bc52ae2428f1645ef45381f58aafecc1bbf57a1bdc087b749984606123",
-      "catalog_sha256": "cd2381d40e0b37440195fd65b87cbdd2280e0616cb3e685fa221215e72f33353"
+      "catalog_sha256": "f8b977d4c3736d3313ddb668cf59ab3e48096a3942eab61b913248e55754fe4b"
     },
     {
       "id": "mainland221-07",
@@ -21270,9 +21443,9 @@
         }
       ],
       "material": {
-        "gold": 171792,
-        "grain": 584155,
-        "soldiers": 287127
+        "gold": 176522,
+        "grain": 605125,
+        "soldiers": 294077
       },
       "placement_counts": {
         "reference_classes": {
@@ -21285,7 +21458,7 @@
           "post_attestation_career_and_station_inference": 1,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 20,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 1,
           "attested_office_with_bounded_career_and_city_proxy": 1
@@ -21306,22 +21479,23 @@
           "authored_bounded_source_snapshot_continuity": 4,
           "retained_chronology_or_explicit_exclusion": 2,
           "explicit_scenario_scope": 8,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 356,
-        "planned_serving": 356,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 359,
+        "planned_serving": 359,
         "initial_free": 53,
         "planned_max_city_roster": 16,
-        "future_plans": 211,
+        "future_plans": 222,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -21458,17 +21632,24 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "eb439914409b9ffee7ebe227d37f7be2a15bf5726b564cd0ea8ffbbcf0e5dbac",
       "faction_rulers_sha256": "54354a95d5e3fa8bba196e9627c91a1d27f978373ad57113156d494722adebee",
-      "catalog_sha256": "c3f9edc1e52b43b8d648f0f10c94de9b732601169141dd2cb1f7295e9438b169"
+      "catalog_sha256": "f2d6fda5888dcc57eefdd76b1ab31368f6ea51fe3915a48d12fd1fb5840f2076"
     },
     {
       "id": "mainland225-07",
@@ -22228,9 +22409,9 @@
         }
       ],
       "material": {
-        "gold": 174045,
-        "grain": 594086,
-        "soldiers": 276737
+        "gold": 178805,
+        "grain": 615281,
+        "soldiers": 283732
       },
       "placement_counts": {
         "reference_classes": {
@@ -22244,7 +22425,7 @@
           "post_attestation_career_and_station_inference": 1,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 21,
           "attested_office_with_bounded_career_and_city_proxy": 1
         },
@@ -22264,22 +22445,23 @@
           "user_requested_225_nanzhong_merge": 3,
           "authorial_lu_yusheng_wu_opening": 1,
           "explicit_scenario_scope": 8,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 317,
-        "planned_serving": 317,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 320,
+        "planned_serving": 320,
         "initial_free": 78,
         "planned_max_city_roster": 15,
-        "future_plans": 174,
+        "future_plans": 185,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -22416,17 +22598,24 @@
         "shangyong": "上庸",
         "yiling": "西陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "f91dd84ab6a68d8f05a0daadc5c78e99ec841e0eb5ae24ca35bc0cdfaceae5de",
       "faction_rulers_sha256": "be667ef9f21920ec6a858103907e5915ad70790124b6247d322eb6e67757fc5f",
-      "catalog_sha256": "83bc07ff59b54f4d4b766f01f4797908a9f8b1c0e064fc3c47bc56e11f0ebc48"
+      "catalog_sha256": "3142ef412b09dd9f157567225b9c66fdd110b7d2e705bc0a20b4f1432f5d4f40"
     },
     {
       "id": "mainland227-02",
@@ -23115,9 +23304,9 @@
         }
       ],
       "material": {
-        "gold": 175250,
-        "grain": 589086,
-        "soldiers": 286850
+        "gold": 180025,
+        "grain": 610381,
+        "soldiers": 293870
       },
       "placement_counts": {
         "reference_classes": {
@@ -23129,7 +23318,7 @@
           "post_attestation_career_and_station_inference": 1,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 21,
           "attested_office_with_bounded_career_and_city_proxy": 1
         },
@@ -23146,22 +23335,23 @@
           "authorial_lu_yusheng_wu_opening": 1,
           "retained_chronology_or_explicit_exclusion": 2,
           "explicit_scenario_scope": 8,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 330,
-        "planned_serving": 330,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 333,
+        "planned_serving": 333,
         "initial_free": 37,
         "planned_max_city_roster": 17,
-        "future_plans": 162,
+        "future_plans": 173,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -23298,17 +23488,24 @@
         "shangyong": "上庸",
         "yiling": "西陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "5c4fcecfdbd6cd59d76dcde84aca3b3089e687fc6fad283be922e99bc9583bcc",
       "faction_rulers_sha256": "a39b47059b45388e7266309f408d6ef76f5a2707d76297324a956c3bf10b87e2",
-      "catalog_sha256": "ad9ac03120f96c48583761382404313ba06a214c93afe9b60f6480a3fee621f0"
+      "catalog_sha256": "06cd6d82c2d037c81074367cf61b7d3553f7c9f16636d13b4c26ee242fb30d13"
     },
     {
       "id": "mainland234-02",
@@ -23955,9 +24152,9 @@
         }
       ],
       "material": {
-        "gold": 176010,
-        "grain": 590911,
-        "soldiers": 279480
+        "gold": 180795,
+        "grain": 612531,
+        "soldiers": 286890
       },
       "placement_counts": {
         "reference_classes": {
@@ -23969,7 +24166,7 @@
           "primary_text_hostage_unavailable": 1,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 17,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 5
         },
@@ -23989,22 +24186,23 @@
           "retainer_affiliation_review_20261027": 23,
           "authorial_lu_yusheng_wu_opening": 1,
           "explicit_scenario_scope": 8,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 304,
-        "planned_serving": 304,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 307,
+        "planned_serving": 307,
         "initial_free": 17,
         "planned_max_city_roster": 18,
-        "future_plans": 130,
+        "future_plans": 139,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -24141,17 +24339,24 @@
         "shangyong": "上庸",
         "yiling": "西陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "46f850468355e715baf10296298b206009cef55acda6283d0d3491c40b21b35b",
       "faction_rulers_sha256": "88d7a40c90e365122ab673e2696dd09b2cc3e87c6ff7b8a1a18a6a7feb1210c7",
-      "catalog_sha256": "7544367f220e6a6f6aa6f7ffeb593b71347248e35e5ecfab21cd3f4c0cc298f6"
+      "catalog_sha256": "96c10eb6da0c3f1862381dab0f9e3db26a5d9ab979be7a61e7ccb22f6e87a508"
     },
     {
       "id": "mainland235-01",
@@ -24750,9 +24955,9 @@
         }
       ],
       "material": {
-        "gold": 183217,
-        "grain": 637192,
-        "soldiers": 282192
+        "gold": 188002,
+        "grain": 658837,
+        "soldiers": 289607
       },
       "placement_counts": {
         "reference_classes": {
@@ -24760,7 +24965,7 @@
           "game_reference": 2,
           "bounded_career_inference": 108,
           "primary_text_captivity": 1,
-          "fictional_scenario_adaptation": 3,
+          "fictional_scenario_adaptation": 27,
           "explicit_scenario_scope": 9,
           "attested_identity_explicit_game_lifetime_and_region": 17,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 5
@@ -24779,22 +24984,23 @@
           "authorial_lu_yusheng_wu_opening": 1,
           "explicit_scenario_scope": 9,
           "reviewed_early_shu_retainer_opening": 2,
-          "retainer_affiliation_review_20261027": 22
+          "retainer_affiliation_review_20261027": 22,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 302,
-        "planned_serving": 302,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 304,
+        "planned_serving": 304,
         "initial_free": 17,
         "planned_max_city_roster": 13,
-        "future_plans": 126,
+        "future_plans": 135,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -24931,17 +25137,24 @@
         "shangyong": "上庸",
         "yiling": "西陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "e5784fe9c8e37a1fa05d9a7b437a337c38712c71e22a0088ebdbe0798c90323f",
       "faction_rulers_sha256": "88d7a40c90e365122ab673e2696dd09b2cc3e87c6ff7b8a1a18a6a7feb1210c7",
-      "catalog_sha256": "819578f9d2a714e4e9151ef20f37a29d28204d2599ee408612ec2d8bdae18176"
+      "catalog_sha256": "81d08add7820c14b5aee305cdfbd241d632e9f8865270965e0111be1dd81f08f"
     },
     {
       "id": "mainland238-01",
@@ -25573,9 +25786,9 @@
         }
       ],
       "material": {
-        "gold": 183217,
-        "grain": 637192,
-        "soldiers": 279192
+        "gold": 188092,
+        "grain": 659137,
+        "soldiers": 287182
       },
       "placement_counts": {
         "reference_classes": {
@@ -25586,7 +25799,7 @@
           "primary_text_chronology": 5,
           "primary_text_hostage_unavailable": 1,
           "explicit_scenario_scope": 9,
-          "historical_career_with_opening_station_inference": 2,
+          "historical_career_with_opening_station_inference": 26,
           "attested_identity_explicit_game_lifetime_and_region": 11,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 11
         },
@@ -25607,22 +25820,23 @@
           "authorial_lu_yusheng_wu_opening": 1,
           "explicit_scenario_scope": 9,
           "reviewed_early_shu_retainer_opening": 2,
-          "retainer_affiliation_review_20261027": 22
+          "retainer_affiliation_review_20261027": 22,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 296,
-        "planned_serving": 296,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 299,
+        "planned_serving": 299,
         "initial_free": 14,
         "planned_max_city_roster": 17,
-        "future_plans": 99,
+        "future_plans": 107,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -25759,17 +25973,24 @@
         "shangyong": "上庸",
         "yiling": "西陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "46f850468355e715baf10296298b206009cef55acda6283d0d3491c40b21b35b",
       "faction_rulers_sha256": "88d7a40c90e365122ab673e2696dd09b2cc3e87c6ff7b8a1a18a6a7feb1210c7",
-      "catalog_sha256": "dc3fae554a74f759c8b3e7ae91ee71a0ed738ef43c476911b2aeec050abbc424"
+      "catalog_sha256": "ee3dae6db45e2cb12fcc36cea8ca8b276f0fd28cdaa07b92d95b9d58f0fe9ac7"
     },
     {
       "id": "mainland249-01",
@@ -26352,9 +26573,9 @@
         }
       ],
       "material": {
-        "gold": 192532,
-        "grain": 663242,
-        "soldiers": 269567
+        "gold": 197162,
+        "grain": 684087,
+        "soldiers": 277412
       },
       "placement_counts": {
         "reference_classes": {
@@ -26363,7 +26584,8 @@
           "bounded_career_inference": 2,
           "primary_text_chronology": 5,
           "explicit_scenario_scope": 11,
-          "attested_identity_explicit_game_lifetime_and_region": 22
+          "attested_identity_explicit_game_lifetime_and_region": 22,
+          "historical_career_with_opening_station_inference": 24
         },
         "bases": {
           "same_date_SAN14_recorded_death": 697,
@@ -26378,22 +26600,23 @@
           "authorial_lu_yusheng_wu_opening": 1,
           "retained_chronology_or_explicit_exclusion": 2,
           "explicit_scenario_scope": 11,
-          "retainer_affiliation_review_20261027": 22
+          "retainer_affiliation_review_20261027": 22,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 242,
-        "planned_serving": 242,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 248,
+        "planned_serving": 248,
         "initial_free": 40,
         "planned_max_city_roster": 13,
-        "future_plans": 44,
+        "future_plans": 46,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -26530,17 +26753,24 @@
         "shangyong": "上庸",
         "yiling": "西陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "b9d2470236cef521ffd24c3b4796aae3f026a00e1e9b91e5409790b18bd8b843",
       "faction_rulers_sha256": "9ecd312834ea40823cd656781e0d70833dbee8d89759266d74355adaaeeed70f",
-      "catalog_sha256": "1a73a53ba2f6ed980132e841a4248b2b927e190f83897a4ec3011becf396d2c0"
+      "catalog_sha256": "dab87bac9d4c5f85fd997988846391dc2d385465ca89adfa21bee7fff935a959"
     },
     {
       "id": "mainland263-05",
@@ -27172,9 +27402,9 @@
         }
       ],
       "material": {
-        "gold": 181654,
-        "grain": 610735,
-        "soldiers": 236180
+        "gold": 186299,
+        "grain": 631530,
+        "soldiers": 243855
       },
       "placement_counts": {
         "reference_classes": {
@@ -27186,7 +27416,8 @@
           "primary_text_month_regional_mapping": 1,
           "authorial_retinue_window": 1,
           "office_seat_mapping_if_canonical_id_matches": 1,
-          "attested_identity_explicit_game_lifetime_and_region": 22
+          "attested_identity_explicit_game_lifetime_and_region": 22,
+          "historical_career_with_opening_station_inference": 24
         },
         "bases": {
           "retained_chronology_or_explicit_exclusion": 829,
@@ -27200,22 +27431,23 @@
           "explicit_scenario_scope": 8,
           "primary_lu_xing_revolt_month": 1,
           "authorial_lu_xing_retinue_window": 1,
-          "retainer_affiliation_review_20261027": 23
+          "retainer_affiliation_review_20261027": 23,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "coverage": {
-        "library": 1056,
-        "configured_profiles": 1056,
-        "health_configured": 1056,
-        "affinity_configured": 1056,
-        "placement_plans": 1056,
-        "initial_serving": 158,
-        "planned_serving": 158,
+        "library": 1080,
+        "configured_profiles": 1080,
+        "health_configured": 1080,
+        "affinity_configured": 1080,
+        "placement_plans": 1080,
+        "initial_serving": 164,
+        "planned_serving": 164,
         "initial_free": 33,
         "planned_max_city_roster": 8,
         "future_plans": 0,
         "san14_charisma_profiles": 1004,
-        "default_virtue_profiles": 52,
+        "default_virtue_profiles": 76,
         "pending_profiles": 0,
         "pending_capacity": 0,
         "pending_history": 0,
@@ -27352,17 +27584,24 @@
         "shangyong": "上庸",
         "yiling": "西陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "owners_sha256": "3a4913d2c957d4c93f4a93839539a4499b327863d50558ef64e448120e61b64d",
       "faction_rulers_sha256": "776639615ceda108afe5be6649eef06abece58acca7b7854a40cab465d6826c6",
-      "catalog_sha256": "327b81cbc7e463f49d0694ed6afa8b192c1bdb0649eb61abbc47294ecdc7206d"
+      "catalog_sha256": "65d60079d8e93545d1e7fe761f75bbb4d094591b9cd3597f8c9c2e46b2f4ebe1"
     }
   ]
 }

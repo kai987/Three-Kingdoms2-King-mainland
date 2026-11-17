@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT/'source'), str(ROOT/'tests')]
-from remake import battle_grid, battle_supply, tactic_effects, tactical_ai
+from remake import grain_units, battle_grid, battle_supply, tactic_effects, tactical_ai
 from remake.campaign import Campaign, SeedRng, digest
 from remake.campaign_expansion import TACTICS
 from remake.errors import GameError
@@ -100,7 +100,9 @@ class TacticFormulaTests(unittest.TestCase):
         )
         for inputs, expected in vectors:
             with self.subTest(inputs=inputs):
-                self.assertEqual(tactic_effects.fire_arrow_requested(*inputs), expected)
+                with grain_units.using({'extension': {}}):
+                    self.assertEqual(tactic_effects.fire_arrow_requested(*inputs), expected)
+                self.assertEqual(tactic_effects.fire_arrow_requested(*inputs), expected + 9 * (inputs[1] // 5))
         for args in ((True, 99, 0), (-1, 99, 0), (1, 100, 0), (1, 99, 5), (1, 99, -1), (1, 99, 0.0)):
             with self.assertRaises(ValueError):
                 tactic_effects.fire_arrow_requested(*args)
@@ -266,7 +268,7 @@ class BurnLedgerTests(unittest.TestCase):
         # city debit use the separately covered shared battlefield facility.
         battle_supply.receive(state, b, 'attackers', 5)
         world += 5
-        self.assertEqual(battle_supply.destroy(state, b, 'attackers', 100), row['loaded']-1-2+5)
+        self.assertEqual(battle_supply.destroy(state, b, 'attackers', 100), row['loaded']-3-2+5)
         self.assertEqual(row['credit_units'], credit)
         self.assertEqual(battle_supply.destroy(state, b, 'attackers', 100), 0)
         self.assertEqual(row['loaded']+row['received'], row['consumed']+row['remaining']+battle_supply.burned(row))

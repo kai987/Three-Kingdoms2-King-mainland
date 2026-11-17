@@ -31,6 +31,7 @@ EXACT = pairs('''
 都市開發參數無效。=>都市開発の操作指定が正しくありません。
 開發參數無效。=>開発の操作指定が正しくありません。
 戰鬥備糧超出可用兵糧或上限。=>戦闘用の備糧が、利用可能な兵糧または上限を超えています。
+目前沒有可補給的迂迴路線。=>現在、途中で補給できる迂回路はありません。
 本戰役未啟用都市開發。=>この戦役では都市開発が有効になっていません。
 開發與統治度已達上限。=>開発値と統治度は、どちらも上限に達しています。
 本城資金不足，請備妥報價上限。=>この都市の資金が不足しています。見積りの最大額を用意してください。
@@ -947,6 +948,10 @@ def build():
     city_labels.update(label.removesuffix('郡') for label in tuple(city_labels) if label.endswith('郡'))
     city_labels.update(('建業', '成都', '長安', '洛陽', '許昌', '南皮', '濮陽', '山陰', '呉', '阆中', '雒城', '襄平', '宛城', '汉寿', '汉嘉', '许县', '秣陵', '清河', '汉中', '番禺', '昌邑', '临淄', '晋阳', '姑臧', '寿春', '蓟', '邺', '信都'))
     names.update({label: label.translate(CITY_CHARS) for label in city_labels})
+    names['高句丽'] = '高句麗'
+    names['乌桓'] = '烏桓'
+    names['吕宋'] = names['呂宋'] = 'ルソン'
+    names['可設城地點'] = '築城可能地点'
     names.update(SCENARIOS)
     # A source may already use a Japanese display spelling. Preserve it as an
     # atomic proper name instead of translating smaller overlapping terms.

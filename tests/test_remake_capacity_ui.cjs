@@ -17,6 +17,10 @@ context.GameCommandBooks=commandBookFixture.api;commandBookFixture.attach(contex
 vm.createContext(context);
 context.isRuler=id=>context.GameOfficerChoices.isRuler(id,context.view.game.extension?.leaders);
 vm.runInContext(source.slice(source.indexOf('const capacity='),source.indexOf('\nconst marching=')),context);
+vm.runInContext(source.slice(source.indexOf('const unbuiltSettlement='),source.indexOf(';',source.indexOf('const unbuiltSettlement='))+1),context);
+context.GameI18n.t=String;
+vm.runInContext(source.slice(source.indexOf('function battleText('),source.indexOf('function battleTactical(')),context);
+
 vm.runInContext(source.slice(source.indexOf('function officerAttributes('),source.indexOf('// Classify actual runtime entry')),context);
 async function weightedTransferChecks(){
  const nodes=new Map(),get=selector=>{
@@ -146,8 +150,6 @@ async function weightedTransferChecks(){
  context.departure(home,'enemy');assert.equal(lastDialog,departureDialog,'An allied destination cannot open a departure dialog');
  delete context.view.catalog.non_aggression;
  await element('#confirm-departure').onclick();assert.equal(lastCommand.kind,'depart');assert.equal(lastCommand.payload.officers.length,10);
- context.GameI18n.t=String;
- vm.runInContext(source.slice(source.indexOf('function battleText('),source.indexOf('function battleTactical(')),context);
  context.view.catalog.allied_attacks={enemy:{faction:'shu',committed:5,remaining:5}};
  picked=[];context.departure(home,'enemy');
  assert.match(element('#departure-allied').innerHTML,/5\/10名武將.+可增派5名/);
@@ -192,6 +194,7 @@ async function weightedTransferChecks(){
  context.view.catalog.scenario_id=context.view.catalog.scenarios[3].id;
  vm.runInContext(source.slice(source.indexOf("let campaignDifficulty="),source.indexOf("const $=")),context);
  vm.runInContext(source.slice(source.indexOf('function factionResources('),source.indexOf('function factionBase(')),context);
+ vm.runInContext(source.slice(source.indexOf('const factionCastleStyles='),source.indexOf('function smoothMapPath(')),context);
  vm.runInContext(source.slice(source.indexOf('function selectFaction('),source.indexOf('function renderMap(')),context);
  context.selectFaction();
  const menu=element('#inspector').innerHTML;

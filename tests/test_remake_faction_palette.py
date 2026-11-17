@@ -29,7 +29,7 @@ class FactionPaletteTests(unittest.TestCase):
 
     def test_all_current_scenarios_have_separated_visible_fills(self):
         self.assertEqual(len(self.catalogs),29)
-        self.assertEqual(len(self.catalogs['mainland190-01'].factions),27)
+        self.assertEqual(len(self.catalogs['mainland190-01'].factions),29)
         self.assertIn('zhang_miao',self.catalogs['mainland190-01'].factions)
         for identity,catalog in self.catalogs.items():
             palette=faction_colors(catalog)
@@ -43,7 +43,8 @@ class FactionPaletteTests(unittest.TestCase):
                 self.assertGreaterEqual(color_oklab(color)[0],.43,identity)
                 self.assertGreaterEqual(color_distance(color,'#ffffff'),.15,identity)
             for first,other in combinations(catalog.factions,2):
-                self.assertGreaterEqual(color_distance(palette[first],palette[other]),.14,
+                spacing = .159 if {'goguryeo', 'wuhuan'}.intersection((first, other)) else .14
+                self.assertGreaterEqual(color_distance(palette[first],palette[other]),spacing,
                                         (identity,first,other,palette[first],palette[other]))
 
     def test_song_jian_has_clear_contrast_with_dong_zhuo_and_liu_yan(self):
@@ -65,12 +66,14 @@ class FactionPaletteTests(unittest.TestCase):
         self.assertEqual(colors['liu_yan'],'#00e8d8')
         self.assertNotEqual(colors['liu_zhang'],colors['shu'])
         self.assertEqual(len({colors[faction] for faction in ('yuan_shang','yuan_tan','yuan_xi')}),3)
+        self.assertEqual(colors['goguryeo'], '#6900b6')
+        self.assertEqual(colors['wuhuan'], '#62455e')
 
     def test_native_subset_keeps_the_fills_of_the_expanded_scenario(self):
         full=self.catalogs['mainland198-03']
         subset=SimpleNamespace(factions={key:row for key,row in full.factions.items()
                                           if key not in {'song_jian','zang_ba'}})
-        self.assertEqual(len(subset.factions),18)
+        self.assertEqual(len(subset.factions),20)
         palette=faction_colors(full)
         self.assertEqual(faction_colors(subset),{key:palette[key] for key in ['neutral',*subset.factions]})
 

@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 NS = {'svg': 'http://www.w3.org/2000/svg'}
 ADDITION = 'upper-jinsha-visual'
 LEGACY_WATER_SHA = '1b6d3702ef74362ad1f74d022fed7129e44968e7e3990899773f5b6fb4a21cb2'
-CITY_POSITIONS_SHA = '80d1afa4da904731f5f99819b4e8e7a5fca1ff1a73d6d182ade237474fbb6a9a'
+CITY_POSITIONS_SHA = '6c9a5551e7df73697e67541b3830d9808c7debebe24e3c43c25ad2be6a9c561d'
 NETWORK_GEOMETRY_SHA = 'b6ce7eaf5fda2e5825a1a4644c49da7b5fed71d5422f9041b7c4dbc318a739b9'
 
 
@@ -135,7 +135,8 @@ class YangtzeHeadwatersTests(unittest.TestCase):
         self.assertGreaterEqual(min(dist(a, b) for a in self.pixels for b in min_water), 43)
 
     def test_city_positions_and_32px_icon_boxes_are_preserved(self):
-        self.assertEqual(canonical_sha(self.positions), CITY_POSITIONS_SHA)
+        self.assertEqual(self.positions['jingzhao'], [497, 336])
+        self.assertEqual(canonical_sha(dict(self.positions, jingzhao=[497, 354])), CITY_POSITIONS_SHA)
         for city, (cx, cy) in self.positions.items():
             with self.subTest(city=city):
                 self.assertFalse(any(cx-16 <= x < cx+16 and cy-16 <= y < cy+16
@@ -185,6 +186,14 @@ class YangtzeHeadwatersTests(unittest.TestCase):
             end = 1 + len(shared)
             self.assertEqual(approach[1:end], shared)
             del approach[1:end]
+        # The northeast coast revision moved Jinan's castle. Its river node
+        # and all the river reaches still use the same historic strokes.
+        jinan_access = geometry['ports']['jinan']['access']
+        self.assertEqual(jinan_access[0], [973, 227])
+        jinan_access[0] = [970, 214]
+        changan_access = geometry['ports']['jingzhao']['access']
+        self.assertEqual(changan_access, [[497, 336], [495, 323]])
+        changan_access[0] = [497, 354]
         splits = {
             'jialing:baxi:bajun': ('jialing:baxi:dianjiang', 'jialing:dianjiang:bajun'),
             'han:hanzhong:xincheng': ('han:hanzhong:xicheng', 'han:xicheng:shangyong', 'han:shangyong:xincheng'),

@@ -1,4 +1,16 @@
 {
+  "langya": {
+    "names": [
+      {"from_date": [184, 1], "to_date": [193, 12], "name": "琅邪国"},
+      {"from_date": [194, 1], "to_date": [205, 12], "name": "琅邪郡"},
+      {"from_date": [206, 1], "to_date": [216, 12], "name": "琅邪国"},
+      {"from_date": [217, 1], "to_date": [231, 12], "name": "琅邪郡"},
+      {"from_date": [232, 1], "name": "琅邪国"}
+    ],
+    "detail": "節點設於東漢琅邪國治開陽（今山東臨沂一帶）。劉容死後國絕，206年漢廷復封劉熙，216年再次國除。232年曹魏改封曹敏為琅邪王。本作按年界顯示國名與郡名，藩王封號與戰役實際歸屬分開。",
+    "detail_ja": "地点は後漢の琅邪国の治所・開陽（現在の山東省臨沂付近）です。劉容の死後に国が絶え、206年に劉熙が王に封じられ、216年に再び国が廃されました。232年に魏は曹敏を琅邪王に改封しました。ゲームでは年初で郡名と国名を切り替え、王号とは別に勢力の支配を設定します。",
+    "sources": ["https://zh.wikisource.org/wiki/後漢書/卷42#琅邪孝王京", "https://www.qj.hk/jingdian/book/57/2343.html", "https://www.shidianguji.com/zh/book/CADAL01027428/chapter/1ljtrz67840ll"]
+  },
   "hepu": {
     "names": [
       {"from_date": [1, 1], "to_date": [227, 12], "name": "合浦"},

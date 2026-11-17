@@ -96,26 +96,26 @@ class LogisticsTests(unittest.TestCase):
         state = game.state
         domestic.prepare_ai(game, state, 'shu')
         source, target = state.cities['xiangyang'], state.cities['nanjun']
-        source.grain, target.grain = 1000, 200
+        source.grain, target.grain = 10000, 2000
         offices = domestic.appointments(state, 'shu')
         spare = [ident for ident in source.roster.officer_ids if ident not in (offices['civil'], offices['military'])]
         books = command_books.remaining(state, 'shu')
 
-        self.assertTrue(logistics.dispatch_attack_grain(game, state, target, 550,
+        self.assertTrue(logistics.dispatch_attack_grain(game, state, target, 5500,
                                                          protected_officers=spare[:1], max_turns=2))
         row, = state.extension['logistics']['convoys']
         self.assertEqual((row['source'], row['target'], row['officers']), (source.id, target.id, spare[1:]))
-        self.assertEqual(row['cargo'], dict(gold=0, grain=351, reserves=0, treasure=0))
-        self.assertEqual(source.grain, 1000 - row['cargo']['grain'] - row['journeys'][0]['supply']['loaded'])
-        self.assertGreaterEqual(source.grain, 500)
-        self.assertEqual(target.grain, 200)
+        self.assertEqual(row['cargo'], dict(gold=0, grain=3502, reserves=0, treasure=0))
+        self.assertEqual(source.grain, 10000 - row['cargo']['grain'] - row['journeys'][0]['supply']['loaded'])
+        self.assertGreaterEqual(source.grain, 5000)
+        self.assertEqual(target.grain, 2000)
         self.assertEqual(command_books.remaining(state, 'shu'), books - 1)
-        self.assertEqual(logistics.attack_grain_shortage(state, target, 550), 0)
-        self.assertFalse(logistics.dispatch_attack_grain(game, state, target, 550))
+        self.assertEqual(logistics.attack_grain_shortage(state, target, 5500), 0)
+        self.assertFalse(logistics.dispatch_attack_grain(game, state, target, 5500))
         game.validate(state)
 
         self.advance_due(game)
-        self.assertGreaterEqual(game.state.cities['nanjun'].grain, 550)
+        self.assertGreaterEqual(game.state.cities['nanjun'].grain, 5500)
         self.assertTrue(game.state.extension['logistics']['convoys'][0]['delivery_done'])
 
     def test_observer_resupplies_a_stranded_attack_through_to_victory(self):

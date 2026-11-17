@@ -66,6 +66,11 @@ def validate_source(catalog):
     if not isinstance(exits, dict) or any(pid not in catalog.ids or not _date(date)
                                        for pid, date in exits.items()):
         raise ValueError('Invalid historical monthly exit date')
+    for pid, rule in catalog.data.get('historical_successions', {}).items():
+        if (pid not in catalog.ids or set(rule) != {'faction', 'nominee', 'admission'}
+                or rule['faction'] not in catalog.factions or rule['nominee'] not in catalog.ids
+                or rule['nominee'] == pid or not _date(rule['admission'])):
+            raise ValueError('Invalid historical succession')
 
 
 def exit_dates(catalog):

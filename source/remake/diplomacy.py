@@ -2,6 +2,7 @@
 from copy import deepcopy
 
 from . import command_books, logistics, officer_relations, treasures
+from . import grain_units
 from .errors import GameError
 from .officers import deserialize_officer_ref, parse_officer_ref, ref_sort_key, recruitment_loyalty
 
@@ -32,6 +33,22 @@ def _section(state, name):
 
 def _pair(first, second):
     return '|'.join(sorted((first, second)))
+
+
+def initialize(catalog, state):
+    """Seed reviewed opening alliances using the ordinary, expiring treaty rules."""
+    for row in catalog.data.get('initial_alliances', ()):
+        first, second = row['factions']
+        duration = row['duration']
+        if (first == second or not {first, second} <= catalog.factions.keys()
+                or type(duration) is not int or not 1 <= duration <= MAX_TURNS):
+            raise ValueError('Invalid opening alliance')
+        key = _pair(first, second)
+        pool = _pool(state)
+        if key in pool['treaties']:
+            raise ValueError('Duplicate opening alliance')
+        pool['relations'][key] = FRIENDLY
+        pool['treaties'][key] = state.turn + duration
 
 
 def relation(state, first, second):
@@ -205,7 +222,7 @@ def command_options(game, state, owner):
                   for o in _envoys(state, city, travelling)]
         if envoys:
             limits = {key: min(limit, treasures.count(state, city.id) if key=='treasure' else getattr(city, key))
-                      for key, (limit, _) in LIMITS.items()}
+                      for key in LIMITS for limit, _ in (gift_limits(key),)}
             result['cities'].append(dict(id=city.id, envoys=envoys, limits=limits))
     by_owner = {}
     for city in state.cities.values():
@@ -218,8 +235,12 @@ def command_options(game, state, owner):
     return result
 
 
+def gift_limits(resource):
+    return tuple(grain_units.amount(value) for value in LIMITS[resource]) if resource == 'grain' else LIMITS[resource]
+
+
 def gift_gain(resource, amount, intellect, virtue):
-    weight = 3 * amount if resource == 'treasure' else amount // LIMITS[resource][1]
+    weight = 3 * amount if resource == 'treasure' else amount // gift_limits(resource)[1]
     return min(25, max(1, weight) + (intellect + virtue) // 60)
 
 
@@ -229,7 +250,7 @@ def can_recover(score, intellect, virtue):
 
 def _goodwill(state, city, envoy, target, other, score, payload):
     kind, amount = payload['resource'], payload['amount']
-    if type(kind) is not str or kind not in LIMITS or type(amount) is not int or not 1 <= amount <= LIMITS[kind][0]:
+    if type(kind) is not str or kind not in LIMITS or type(amount) is not int or not 1 <= amount <= gift_limits(kind)[0]:
         raise GameError('請選擇有效的禮品數量。')
     leader = state.extension['leaders'][target]
     destinations = sorted(other, key=lambda c: (leader not in c.roster.officer_ids, c.id))

@@ -155,7 +155,7 @@ def _ration_nutrition(state,battle,side):
     from . import battle_supply
     ledger=battle['extended'].get('supply')
     credit=ledger['sides'][side]['credit_units']if ledger is not None else 0
-    return battle_supply.available(state,battle,side)*1000+credit
+    return battle_supply.available(state,battle,side)*battle_supply.denominator()+credit
 
 
 def _wins_by_waiting(state,battle,own,foe):
@@ -195,7 +195,7 @@ def _fire_supply_value(state,battle,own,foe,intellect):
     values=[]
     for roll in range(5):
         loss=min(grain,fire_arrow_requested(grain,intellect,roll))
-        after=before-loss*1000
+        after=before-loss*battle_supply.denominator()
         value=army*(before_days-min(days_left,after/units))/days_left
         if after<units:
             if own=='attackers'and not own_fed:

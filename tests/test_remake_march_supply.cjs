@@ -3,7 +3,7 @@ const assert=require('node:assert/strict'),{execFileSync}=require('node:child_pr
 const supply=require('../game/march-supply.js');
 const cases=[];
 for(const troops of [0,1,300,999,9990,98901])for(const officers of [1,10,99])for(const days of [1,10,12,33,400])for(const reserves of [0,50,100000])cases.push([troops,officers,days,reserves]);
-const actual=cases.map(row=>supply.requiredGrain(...row));
+const actual=cases.map(row=>supply.requiredGrain(...row,100));
 const expected=JSON.parse(execFileSync('python3',['-B','-c','import json,sys;from remake.march_supply import required_grain;print(json.dumps([required_grain(*x) for x in json.load(sys.stdin)]))'],{cwd:path.join(__dirname,'../source'),input:JSON.stringify(cases),encoding:'utf8'}));
 assert.deepEqual(actual,expected);
 assert.equal(supply.requiredGrain(1000,1,12),14);assert.equal(supply.requiredGrain(1000,1,10),11);
@@ -58,6 +58,7 @@ import json, sys
 from types import SimpleNamespace as N
 from unittest.mock import patch
 from remake.march_supply import advance_unit, create
+from remake.grain_units import using
 
 arg = json.load(sys.stdin)
 def run(cities, days):
@@ -68,14 +69,15 @@ def run(cities, days):
         advance_unit(N(_supply_event=lambda *a, **kw: None), state, unit, journey, absolute_tick=days)
     return journey['supply']
 
-print(json.dumps([run(arg['itineraryCities'], arg['itinerary']['days']), run(arg['lowCities'], 6)]))
+with using({'extension': {}}):
+    print(json.dumps([run(arg['itineraryCities'], arg['itinerary']['days']), run(arg['lowCities'], 6)]))
 `],{cwd:path.join(__dirname,'../source'),input:JSON.stringify({itinerary,loaded,itineraryCities,lowCities}),encoding:'utf8'}));
 assert.deepEqual(observed[0].refills.map(row=>[row.source,row.grain]),forecast.map(row=>[row.city,row.required]),'Forecast matches actual engine refills');
 assert.equal(observed[1].route_days,5,'The first deficient checkpoint stops the column');
 assert.equal(observed[1].waiting,true);
 
 const app=require('node:fs').readFileSync(require.resolve('../game/app.js'),'utf8');
-const context={view:{game:{officers:marching,cities:lowCities}},GameMarchSupply:supply,GameI18n:{t:name=>name},
+const context={view:{catalog:{},game:{officers:marching,cities:lowCities}},GameMarchSupply:supply,GameI18n:{t:name=>name},
  cityName:city=>city,battleText:(tc,ja)=>`${tc} | ${ja}`,escapeHtml:city=>city};
 require('node:vm').runInNewContext(app.slice(app.indexOf('function marchRefillForecastHtml('),app.indexOf('function departureBudget(')),context);
 const markup=context.marchRefillForecastHtml(itinerary,[1],loaded,'wei');

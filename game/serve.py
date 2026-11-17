@@ -35,16 +35,16 @@ EVENT_SCENE_IDS = ('ai-campaign', 'battle-result', 'battle-started', 'battle-sup
                    'faction-coup-skipped', 'faction-ended', 'faction-founded',
                    'faction-founding-skipped', 'flood', 'governor-assigned', 'grain-traded', 'guandu',
                    'historical-dingjun', 'historical-dong-zhuo-coalition',
-                   'historical-dong-zhuo-relocation', 'historical-gaopingling',
+                   'historical-dong-zhuo-relocation', 'historical-gaopingling', 'historical-goguryeo-expedition',
                    'historical-hanzhong', 'historical-hanzhong-preparation', 'historical-hefei',
                    'historical-hefei-defense', 'historical-liaodong', 'historical-liyang-campaign',
                    'historical-memorial', 'historical-nanzhong', 'historical-sun-jian-jingzhou',
                    'historical-sun-liu-alliance', 'historical-sun-liu-alliance-ended',
                    'historical-tongguan', 'historical-wei-invades-shu',
-                   'historical-welcome-han-emperor', 'historical-wuzhang', 'historical-xiangfan',
+                   'historical-welcome-han-emperor', 'historical-wuhuan-expedition', 'historical-wuzhang', 'historical-xiangfan',
                    'historical-xiapi-expedition', 'historical-yanzhou-counteroffensive',
                    'historical-yiling', 'historical-yizhou-campaign', 'historical-youzhou-pacification',
-                   'longzhong-first', 'longzhong-road', 'longzhong-second', 'longzhong-study',
+                   'longzhong-first', 'longzhong-road', 'longzhong-second', 'longzhong-study', 'luzon-construction', 'luzon-survey',
                    'march-arrived', 'march-resupplied', 'march-retreat', 'march-returned',
                    'march-starvation', 'march-weather', 'memorial', 'new-year', 'officer-appeared',
                    'officer-rewarded', 'officer-studied', 'officer-treated', 'prevention-improved',
@@ -52,7 +52,7 @@ EVENT_SCENE_IDS = ('ai-campaign', 'battle-result', 'battle-started', 'battle-sup
                    'staff-allegiance', 'staff-candidate', 'staff-declined', 'staff-expired',
                    'staff-hired', 'staff-salary', 'succession', 'tactic', 'town-developed',
                    'transport-arrived', 'transport-departed', 'transport-returned', 'transport-weather',
-                   'treasure-found', 'treasure-search-failed', 'treasure-sold', 'wedding',)
+                   'treasure-found', 'treasure-search-failed', 'treasure-sold', 'wedding', 'wu-southern-mission',)
 MAX_BODY_BYTES = 2 * 1024 * 1024
 AUDIT_LIMITS = {'file_opens': 5000, 'imports': 1024, 'requests': 4096, 'denied_access': 1024}
 
@@ -693,7 +693,7 @@ def make_handler(game, cloud_config, cloud_csp, static, audit=None, here=HERE):
 
         def do_POST(self):
             try:
-                if self.path not in ('/api/command', '/api/load'):
+                if self.path not in ('/api/command', '/api/load', '/api/transfer-preview'):
                     return self.send(404, {'error': '未找到这个操作。'})
                 lengths = self.headers.get_all('Content-Length', [])
                 if (self.headers.get_all('Transfer-Encoding') or len(lengths) != 1
@@ -726,6 +726,8 @@ def make_handler(game, cloud_config, cloud_csp, static, audit=None, here=HERE):
                     raise ValueError('payload')
                 if self.path == '/api/command':
                     view = game.command(payload.get('kind'), payload.get('payload', {}), payload.get('revision'))
+                elif self.path == '/api/transfer-preview':
+                    view = game.preview_transfer(payload)
                 else:
                     view = game.load_save(payload.get('save'), payload.get('revision'))
                 self.send(200, view)
@@ -861,6 +863,7 @@ def main():
               '/assets/map-city-ground.png': ('map-source/hydrology-ground.png', 'image/png'),
               '/assets/map-western-range.png': ('assets/map-western-range.png', 'image/png'),
               '/assets/city-positions.json': ('assets/city-positions.json', 'application/json; charset=utf-8'),
+              '/assets/officer-biographies.json': ('assets/officer-biographies.json', 'application/json; charset=utf-8'),
               '/assets/unifont.woff': ('assets/unifont.woff', 'font/woff')}
     static.update(portrait_static_assets())
     static.update(civil_portrait_static_assets())

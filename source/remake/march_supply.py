@@ -1,9 +1,9 @@
 """Deterministic daily food, real checkpoints and auditable starvation."""
 from copy import deepcopy
+from .grain_units import denominator
 from .historical_campaigns import transit_allowed
 from .officers import OFFICER_TROOP_CAP
 
-DENOMINATOR=1000
 OFFICER_UNITS=100
 LIMIT=100000000
 MAX_DAILY_UNITS=LIMIT+99*(OFFICER_TROOP_CAP+OFFICER_UNITS)
@@ -17,7 +17,7 @@ _FIELDS={'schema','troops','officers','reserves','elapsed_days','route_days','lo
 
 
 def cost(troops,officers,days,reserves=0):
-    return ((troops+100*officers+reserves)*days+999)//1000
+    return ((troops+100*officers+reserves)*days + denominator() - 1)//denominator()
 
 
 required_grain=cost
@@ -104,8 +104,8 @@ def close(supply,turn):
 
 def _meal(supply,units):
     needed=max(0,units-supply['credit_units'])
-    used=min(supply['remaining'],(needed+999)//1000)
-    available=supply['credit_units']+used*1000
+    used=min(supply['remaining'],(needed + denominator() - 1)//denominator())
+    available=supply['credit_units']+used*denominator()
     missing=max(0,units-available)
     supply['credit_units']=max(0,available-units)
     supply['remaining']-=used;supply['consumed']+=used;supply['elapsed_days']+=1
@@ -161,7 +161,7 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
         city_id=current_city(journey)
         distance=next_supply_days(state,quote,unit['owner'],supply['route_days'])
         budget_days=10 if supply['route_days']>=quote['days'] else distance
-        wanted=max(0,(units*max(1,budget_days)-supply['credit_units']+999)//1000-supply['remaining'])
+        wanted=max(0,(units*max(1,budget_days)-supply['credit_units'] + denominator() - 1)//denominator()-supply['remaining'])
         if wanted and city_id and state.cities[city_id].owner==unit['owner']:
             city=state.cities[city_id];amount=min(wanted,city.grain,LIMIT-supply['remaining'])
             if amount:
@@ -179,7 +179,7 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
         blocked=(upcoming is not None and upcoming!=quote['path'][-1]
                  and not transit_allowed(state,unit['owner'],state.cities[upcoming].owner))
         if blocked:supply['retreat_requested']=True;unit['reason']='route_blocked'
-        enough=supply['remaining']*1000+supply['credit_units']>=units*distance
+        enough=supply['remaining']*denominator()+supply['credit_units']>=units*distance
         moving=(supply['route_days']<quote['days'] and not blocked and not unit.get('hold')
                 and not (supply['retreat_requested'] and city_id is not None and unit.get('status')!='returning')
                 and (city_id is None or enough or unit.get('status')=='returning'))
@@ -257,7 +257,7 @@ def validate(supply,quote,departure_turn,state_turn):
         raise ValueError('Segment supply closed clock')
     end=(state_turn-1)*10 if closed is None else closed
     if (supply['start_tick']!=(departure_turn-1)*10 or supply['clock_tick']!=end
-        or supply['last_turn']!=end//10+1 or supply['credit_units']>=1000
+        or supply['last_turn']!=end//10+1 or supply['credit_units']>=denominator()
         or supply['route_days']>quote['days'] or supply['officers']>99
         or supply['troops']>supply['officers']*OFFICER_TROOP_CAP or supply['from_cargo']>supply['loaded']):
         raise ValueError('Segment supply clock or manifest')
@@ -311,13 +311,13 @@ def validate(supply,quote,departure_turn,state_turn):
                     or any(type(n)is not int or not 0<=n<=bound
                            for n,bound in zip(meal,(MAX_DAILY_UNITS,LIMIT,1,MAX_DAILY_UNITS)))):
                 raise ValueError('Segment supply daily meal')
-            units,used,moved,missing=meal;balance=credit+used*1000-units+missing
+            units,used,moved,missing=meal;balance=credit+used*denominator()-units+missing
             while manifest_index+1<len(manifests) and manifests[manifest_index+1]['tick']<=tick:
                 manifest_index+=1
             actual=manifests[manifest_index]
             if units!=sum(actual['troops'].values())+100*len(actual['troops'])+actual['reserves']:
                 raise ValueError('Segment ration units do not match travelling people')
-            if moved not in (0,1) or missing>units or not 0<=balance<1000 or missing and balance:
+            if moved not in (0,1) or missing>units or not 0<=balance<denominator() or missing and balance:
                 raise ValueError('Segment supply meal arithmetic')
             if used>inventory:raise ValueError('Meal spent grain before it was delivered')
             inventory-=used
@@ -377,10 +377,10 @@ def validate_departures(supply,quote,*,returning=False):
             inventory+=receipts.get(tick,0);tick+=1
             if meal is None:continue
             units,used,moved,missing=meal
-            if moved and progress in starts and inventory*DENOMINATOR+credit<units*starts[progress]:
+            if moved and progress in starts and inventory*denominator()+credit<units*starts[progress]:
                 raise ValueError('Outbound departure cannot fund its next physical leg')
             inventory-=used
-            credit=max(0,credit+used*DENOMINATOR-units+missing)
+            credit=max(0,credit+used*denominator()-units+missing)
             progress+=moved
 
 

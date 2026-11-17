@@ -1056,7 +1056,31 @@
     "historical-xiahou-bo",
     "historical-xue-yong",
     "historical-yuan-chen",
-    "historical-liu-yan-shu"
+    "historical-liu-yan-shu",
+    "historical-goguryeo-gogukcheon",
+    "historical-goguryeo-sansang",
+    "historical-goguryeo-dongcheon",
+    "historical-goguryeo-jungcheon",
+    "historical-goguryeo-gyesu",
+    "historical-goguryeo-queen-u",
+    "historical-goguryeo-ugeo",
+    "historical-goguryeo-yeonin",
+    "historical-goguryeo-annyu",
+    "historical-goguryeo-eulpaso",
+    "historical-goguryeo-goyuru",
+    "historical-goguryeo-myeongnim-eosu",
+    "historical-goguryeo-bak-wigeo",
+    "historical-goguryeo-deungnae",
+    "historical-goguryeo-miru",
+    "historical-goguryeo-yu-okgu",
+    "historical-goguryeo-nyuyu",
+    "historical-goguryeo-dayu",
+    "historical-goguryeo-eumu",
+    "historical-goguryeo-myeongnim-holdo",
+    "historical-wuhuan-nanlou",
+    "historical-wuhuan-supuyan",
+    "historical-wuhuan-wuyan",
+    "historical-wuhuan-sufuwan"
   ],
   "people": {
     "san14-candidate-0001": {
@@ -135020,7 +135044,7 @@
       "birth_year": 190,
       "service_year": 233,
       "death_year": 250,
-      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 玄菟節點不在地圖，可用襄平/遼東軍府代理；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。",
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 以玄菟郡為本作的活動地區；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。",
       "chronology_design": {
         "birth_year": 190,
         "service_year": 233,
@@ -135033,7 +135057,7 @@
           "service_year": "authorial_earliest_supported_opening_not_first_historical_service",
           "death_year": "authorial_lifetime_exit_boundary_unknown_historical_death"
         },
-        "basis": "生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 玄菟節點不在地圖，可用襄平/遼東軍府代理；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。"
+        "basis": "生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 以玄菟郡為本作的活動地區；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。"
       },
       "profile": {
         "health_max": 80,
@@ -135077,7 +135101,7 @@
         "source_urls": [
           "https://zh.wikisource.org/wiki/三國志/卷47"
         ],
-        "notes": "公孫氏玄菟太守。生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 玄菟節點不在地圖，可用襄平/遼東軍府代理；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
+        "notes": "公孫氏玄菟太守。生年不詳；190年為可玩年齡估計，233年為本作出場起點，不冒稱首次任官年。卒年不詳；250年僅為本作壽命退出估界。 以玄菟郡為本作的活動地區；不能把身在其郡受拘的吳使秦旦等誤作其部屬。234後延續為推定。 武、知、適性為本作角色設定；體力80、忠誠預設80、德60，非SAN14或原版未有來源的數值。",
         "source_name": "王贊"
       },
       "pre_campaign_stat_policy_v1": {
@@ -136948,6 +136972,2742 @@
         "default_loyalty": 80,
         "source_loyalty": null
       }
+    },
+    "historical-goguryeo-gogukcheon": {
+      "person_id": "historical-goguryeo-gogukcheon",
+      "name": "故国川王",
+      "runtime_id": 1057,
+      "birth_year": 155,
+      "service_year": 179,
+      "death_year": 197,
+      "chronology_basis": "reviewed_koguryo_annal_chronology",
+      "chronology_design": {
+        "birth_year": 155,
+        "service_year": 179,
+        "death_year": 197,
+        "historical_birth_year": null,
+        "historical_death_year": 197,
+        "last_attested_year": 197,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "accession_year",
+          "death_year": "historical_attested_year_month"
+        },
+        "basis": "《三國史記·高句麗本紀》載故國川王名男武，179年繼位，197年五月卒；未見確切生年，155年為遊戲年齡估值。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 69,
+        "intellect": 78,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_leader_game_design",
+          "intellect": "explicit_frontier_leader_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_mountain_game_design"
+        }
+      },
+      "aliases": [
+        "故国川王",
+        "故國川王",
+        "国壤王",
+        "國壤王",
+        "男武"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-gogukcheon",
+        "name": "故国川王",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "故国川王",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷16"
+        ],
+        "notes": "史料用於考訂身分、生涯及年代；武、知、適性為本作設計值。"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 69,
+          "intellect": 78,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_leader_game_design",
+            "intellect": "explicit_frontier_leader_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_mountain_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-gogukcheon",
+          "name": "故国川王",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder"
+    },
+    "historical-goguryeo-sansang": {
+      "person_id": "historical-goguryeo-sansang",
+      "name": "山上王",
+      "runtime_id": 1058,
+      "birth_year": 169,
+      "service_year": 197,
+      "death_year": 227,
+      "chronology_basis": "reviewed_koguryo_annal_chronology",
+      "chronology_design": {
+        "birth_year": 169,
+        "service_year": 197,
+        "death_year": 227,
+        "historical_birth_year": null,
+        "historical_death_year": 227,
+        "last_attested_year": 227,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "accession_year",
+          "death_year": "historical_attested_year_month"
+        },
+        "basis": "《三國史記》載山上王名延優，197年繼位，209年冬移都丸都，227年五月卒；未見確切生年，169年為遊戲年齡估值。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 67,
+        "intellect": 75,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_leader_game_design",
+          "intellect": "explicit_frontier_leader_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_mountain_game_design"
+        }
+      },
+      "aliases": [
+        "山上王",
+        "延优",
+        "延優"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-sansang",
+        "name": "山上王",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "山上王",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷16"
+        ],
+        "notes": "史料用於考訂身分、生涯及年代；武、知、適性為本作設計值。"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 67,
+          "intellect": 75,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_leader_game_design",
+            "intellect": "explicit_frontier_leader_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_mountain_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder"
+    },
+    "historical-goguryeo-dongcheon": {
+      "person_id": "historical-goguryeo-dongcheon",
+      "name": "东川王",
+      "runtime_id": 1059,
+      "birth_year": 209,
+      "service_year": 227,
+      "death_year": 248,
+      "chronology_basis": "reviewed_koguryo_annal_chronology",
+      "chronology_design": {
+        "birth_year": 209,
+        "service_year": 227,
+        "death_year": 248,
+        "historical_birth_year": 209,
+        "historical_death_year": 248,
+        "last_attested_year": 248,
+        "precision": {
+          "birth_year": "historical_attested_year",
+          "service_year": "accession_year",
+          "death_year": "historical_attested_year_month"
+        },
+        "basis": "《三國史記》載東川王名憂位居，227年繼位，238年助魏討公孫淵，242年攻西安平，248年九月卒。《三國志·魏書·東夷傳》稱位宮，兩書人名異同有爭議，本作以王號標示。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 78,
+        "intellect": 66,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_leader_game_design",
+          "intellect": "explicit_frontier_leader_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_mountain_game_design"
+        }
+      },
+      "aliases": [
+        "东川王",
+        "東川王",
+        "東襄王",
+        "忧位居",
+        "憂位居",
+        "郊彘"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-dongcheon",
+        "name": "东川王",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "東川王",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷17"
+        ],
+        "notes": "史料用於考訂身分、生涯及年代；武、知、適性為本作設計值。"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 78,
+          "intellect": 66,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_leader_game_design",
+            "intellect": "explicit_frontier_leader_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_mountain_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-dongcheon",
+          "name": "东川王",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder"
+    },
+    "historical-goguryeo-jungcheon": {
+      "person_id": "historical-goguryeo-jungcheon",
+      "name": "中川王",
+      "runtime_id": 1060,
+      "birth_year": 224,
+      "service_year": 248,
+      "death_year": 270,
+      "chronology_basis": "reviewed_koguryo_annal_chronology",
+      "chronology_design": {
+        "birth_year": 224,
+        "service_year": 248,
+        "death_year": 270,
+        "historical_birth_year": 224,
+        "historical_death_year": 270,
+        "last_attested_year": 270,
+        "precision": {
+          "birth_year": "historical_attested_year",
+          "service_year": "accession_year",
+          "death_year": "historical_attested_year_month"
+        },
+        "basis": "《三國史記》載中川王名然弗，248年九月繼位，270年十月卒。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 67,
+        "intellect": 73,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_leader_game_design",
+          "intellect": "explicit_frontier_leader_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_mountain_game_design"
+        }
+      },
+      "aliases": [
+        "中川王",
+        "中壤王",
+        "然弗"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-jungcheon",
+        "name": "中川王",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "中川王",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷17"
+        ],
+        "notes": "史料用於考訂身分、生涯及年代；武、知、適性為本作設計值。"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 67,
+          "intellect": 73,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_leader_game_design",
+            "intellect": "explicit_frontier_leader_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_mountain_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-jungcheon",
+          "name": "中川王",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder"
+    },
+    "historical-goguryeo-gyesu": {
+      "person_id": "historical-goguryeo-gyesu",
+      "name": "罽须",
+      "runtime_id": 1061,
+      "birth_year": 156,
+      "service_year": 184,
+      "death_year": 202,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 156,
+        "service_year": 184,
+        "death_year": 202,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 197,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "authorial_estimated_game_exit_year"
+        },
+        "basis": "高句麗王族。《三國史記》將他與遼東軍交戰一事繫於故國川王六年（184年），實際年代有不同解讀。山上王初年，他率軍迎擊發歧借來的軍隊，並勸王以兄喪之禮安葬發歧。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 78,
+        "intellect": 66,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "罽须",
+        "罽須"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-gyesu",
+        "name": "罽须",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "罽須",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷16",
+          "https://db.history.go.kr/common/compareViewer.do?levelId=sg_016_0030_0060&type=ancient"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 78,
+          "intellect": 66,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-gyesu",
+          "name": "罽须",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-goguryeo-queen-u": {
+      "person_id": "historical-goguryeo-queen-u",
+      "name": "于氏",
+      "runtime_id": 1062,
+      "birth_year": 162,
+      "service_year": 180,
+      "death_year": 234,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 162,
+        "service_year": 180,
+        "death_year": 234,
+        "historical_birth_year": null,
+        "historical_death_year": 234,
+        "last_attested_year": 234,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "historical_attested_year"
+        },
+        "basis": "椽那部于素之女。先為故國川王王后；故國川王無子而卒後，她擁立延優即山上王，再立為后。東川王二年尊為王太后。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 35,
+        "intellect": 77,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "于氏"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-queen-u",
+        "name": "于氏",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "于氏",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷16",
+          "https://zh.wikisource.org/wiki/三國史記/卷17"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 35,
+          "intellect": 77,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-queen-u",
+          "name": "于氏",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-goguryeo-ugeo": {
+      "person_id": "historical-goguryeo-ugeo",
+      "name": "优居",
+      "runtime_id": 1063,
+      "birth_year": 160,
+      "service_year": 190,
+      "death_year": 204,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 160,
+        "service_year": 190,
+        "death_year": 204,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 190,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "authorial_estimated_game_exit_year"
+        },
+        "basis": "高句麗大加，曾與主簿然人率軍助公孫度討富山。《三國史記》系於新大王年間，與公孫度據遼東的年代難合，本作以約190年置入。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 68,
+        "intellect": 62,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "优居",
+        "優居"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-ugeo",
+        "name": "优居",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "優居",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷30#高句麗",
+          "https://zh.wikisource.org/wiki/三國史記/卷16",
+          "https://encykorea.aks.ac.kr/Article/E0039782"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 68,
+          "intellect": 62,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-ugeo",
+          "name": "优居",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-goguryeo-yeonin": {
+      "person_id": "historical-goguryeo-yeonin",
+      "name": "然人",
+      "runtime_id": 1064,
+      "birth_year": 164,
+      "service_year": 190,
+      "death_year": 204,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 164,
+        "service_year": 190,
+        "death_year": 204,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 190,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "authorial_estimated_game_exit_year"
+        },
+        "basis": "高句麗主簿，與大加優居共同出兵支援公孫度平富山。記載的年次有出入，本作按公孫度據遼東後推定遊戲登場。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 55,
+        "intellect": 71,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "然人"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-yeonin",
+        "name": "然人",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "然人",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷30#高句麗",
+          "https://zh.wikisource.org/wiki/三國史記/卷16",
+          "https://encykorea.aks.ac.kr/Article/E0039782"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 55,
+          "intellect": 71,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-yeonin",
+          "name": "然人",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-goguryeo-annyu": {
+      "person_id": "historical-goguryeo-annyu",
+      "name": "晏留",
+      "runtime_id": 1065,
+      "birth_year": 160,
+      "service_year": 191,
+      "death_year": 206,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 160,
+        "service_year": 191,
+        "death_year": 206,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 191,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "authorial_estimated_game_exit_year"
+        },
+        "basis": "故國川王平定王都之亂後，四部共舉晏留。晏留薦乙巴素為政，因薦賢之功受任大使者。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 43,
+        "intellect": 77,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "晏留"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-annyu",
+        "name": "晏留",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "晏留",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷16"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 43,
+          "intellect": 77,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-annyu",
+          "name": "晏留",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-goguryeo-eulpaso": {
+      "person_id": "historical-goguryeo-eulpaso",
+      "name": "乙巴素",
+      "runtime_id": 1066,
+      "birth_year": 140,
+      "service_year": 191,
+      "death_year": 203,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 140,
+        "service_year": 191,
+        "death_year": 203,
+        "historical_birth_year": null,
+        "historical_death_year": 203,
+        "last_attested_year": 203,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "historical_attested_year"
+        },
+        "basis": "故國川王採納晏留推薦，任乙巴素為國相。他受命掌政，任至山上王七年八月去世。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 45,
+        "intellect": 88,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "乙巴素"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-eulpaso",
+        "name": "乙巴素",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "乙巴素",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷16"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 45,
+          "intellect": 88,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-eulpaso",
+          "name": "乙巴素",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-goguryeo-goyuru": {
+      "person_id": "historical-goguryeo-goyuru",
+      "name": "高优娄",
+      "runtime_id": 1067,
+      "birth_year": 173,
+      "service_year": 203,
+      "death_year": 230,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 173,
+        "service_year": 203,
+        "death_year": 230,
+        "historical_birth_year": null,
+        "historical_death_year": 230,
+        "last_attested_year": 230,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "historical_attested_year"
+        },
+        "basis": "山上王七年接任去世的乙巴素為國相，歷事山上王與東川王，卒於東川王四年七月。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 47,
+        "intellect": 76,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "高优娄",
+        "高優婁"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-goyuru",
+        "name": "高优娄",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "高優婁",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷16",
+          "https://zh.wikisource.org/wiki/三國史記/卷17"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 47,
+          "intellect": 76,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-goyuru",
+          "name": "高优娄",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-goguryeo-myeongnim-eosu": {
+      "person_id": "historical-goguryeo-myeongnim-eosu",
+      "name": "明临於漱",
+      "runtime_id": 1068,
+      "birth_year": 200,
+      "service_year": 230,
+      "death_year": 254,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 200,
+        "service_year": 230,
+        "death_year": 254,
+        "historical_birth_year": null,
+        "historical_death_year": 254,
+        "last_attested_year": 254,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "historical_attested_year"
+        },
+        "basis": "原有于台官等，東川王四年繼高優婁任國相。中川王時又兼掌內外兵馬，卒於中川王七年四月。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 64,
+        "intellect": 79,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "明临於漱",
+        "明臨於漱"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-myeongnim-eosu",
+        "name": "明临於漱",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "明臨於漱",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷17"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 64,
+          "intellect": 79,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-myeongnim-eosu",
+          "name": "明临於漱",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-goguryeo-bak-wigeo": {
+      "person_id": "historical-goguryeo-bak-wigeo",
+      "name": "驳位居",
+      "runtime_id": 1069,
+      "birth_year": 204,
+      "service_year": 238,
+      "death_year": 251,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 204,
+        "service_year": 238,
+        "death_year": 251,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 238,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "authorial_estimated_game_exit_year"
+        },
+        "basis": "《三國志》稱他是拔奇之子，父出奔遼東後，他留在高句麗，官古雛加。生卒及任官年份不詳，本作以三世紀中葉為活動窗口。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 66,
+        "intellect": 58,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "驳位居",
+        "駮位居"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-bak-wigeo",
+        "name": "驳位居",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "駮位居",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷30#高句麗"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 66,
+          "intellect": 58,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-bak-wigeo",
+          "name": "驳位居",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-goguryeo-deungnae": {
+      "person_id": "historical-goguryeo-deungnae",
+      "name": "得来",
+      "runtime_id": 1070,
+      "birth_year": 210,
+      "service_year": 242,
+      "death_year": 244,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 210,
+        "service_year": 242,
+        "death_year": 244,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 244,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "authorial_estimated_game_exit_year"
+        },
+        "basis": "高句麗沛者。屢諫東川王，未被採納，後絕食而死。《三國志》記毌丘儉進兵時保全其墓與家眷；本作以出兵前作退場邊界，月份為遊戲設定。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 40,
+        "intellect": 79,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "得来"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-deungnae",
+        "name": "得来",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "得来",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷28#毌丘儉",
+          "https://zh.wikisource.org/wiki/三國史記/卷17"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 40,
+          "intellect": 79,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-deungnae",
+          "name": "得来",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-goguryeo-miru": {
+      "person_id": "historical-goguryeo-miru",
+      "name": "密友",
+      "runtime_id": 1071,
+      "birth_year": 216,
+      "service_year": 245,
+      "death_year": 265,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 216,
+        "service_year": 245,
+        "death_year": 265,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 246,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "authorial_estimated_game_exit_year"
+        },
+        "basis": "東部人。魏軍追擊東川王時，率部掩護君主脫身，被劉屋句救回。《三國史記》繫於246年，並記他獲賜巨谷、青木谷。遊戲依不同史料對遠征的紀年，將登場設在245年。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 82,
+        "intellect": 65,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "密友"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-miru",
+        "name": "密友",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "密友",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷17",
+          "https://db.history.go.kr/id/sg_045r_0050_0120",
+          "https://encykorea.aks.ac.kr/Article/E0016818"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 82,
+          "intellect": 65,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-miru",
+          "name": "密友",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-goguryeo-yu-okgu": {
+      "person_id": "historical-goguryeo-yu-okgu",
+      "name": "刘屋句",
+      "runtime_id": 1072,
+      "birth_year": 219,
+      "service_year": 245,
+      "death_year": 265,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 219,
+        "service_year": 245,
+        "death_year": 265,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 246,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "authorial_estimated_game_exit_year"
+        },
+        "basis": "下部人。東川王遭魏軍追擊時，他從戰地背回負傷的密友。《三國史記》繫於246年，並記他獲賜鴨綠與杜訥河原。遊戲安排245年登場，卒年不詳。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 75,
+        "intellect": 59,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "刘屋句",
+        "劉屋句"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-yu-okgu",
+        "name": "刘屋句",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "劉屋句",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷17",
+          "https://db.history.go.kr/id/sg_045r_0050_0120"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 75,
+          "intellect": 59,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-yu-okgu",
+          "name": "刘屋句",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-goguryeo-nyuyu": {
+      "person_id": "historical-goguryeo-nyuyu",
+      "name": "纽由",
+      "runtime_id": 1073,
+      "birth_year": 215,
+      "service_year": 245,
+      "death_year": 246,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 215,
+        "service_year": 245,
+        "death_year": 246,
+        "historical_birth_year": null,
+        "historical_death_year": 246,
+        "last_attested_year": 246,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "historical_attested_year"
+        },
+        "basis": "東部人。魏軍追擊東川王時入敵營，破壞追擊並戰死，追贈九使者。《三國史記》繫於246年；與魏方遠征紀年有出入。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 76,
+        "intellect": 75,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "纽由",
+        "紐由"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-nyuyu",
+        "name": "纽由",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "紐由",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷17",
+          "https://db.history.go.kr/id/sg_045r_0050_0060",
+          "https://encykorea.aks.ac.kr/Article/E0016818"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 76,
+          "intellect": 75,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-nyuyu",
+          "name": "纽由",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-goguryeo-dayu": {
+      "person_id": "historical-goguryeo-dayu",
+      "name": "多优",
+      "runtime_id": 1074,
+      "birth_year": 230,
+      "service_year": 246,
+      "death_year": 268,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 230,
+        "service_year": 246,
+        "death_year": 268,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 246,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "authorial_estimated_game_exit_year"
+        },
+        "basis": "紐由之子。魏軍遠征後，東川王追贈其父九使者，並授多優為大使者。任命之外的生平記載有限。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 56,
+        "intellect": 64,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "多优",
+        "多優"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-dayu",
+        "name": "多优",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "多優",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷17",
+          "https://db.history.go.kr/id/sg_045r_0050_0120"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 56,
+          "intellect": 64,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-dayu",
+          "name": "多优",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-goguryeo-eumu": {
+      "person_id": "historical-goguryeo-eumu",
+      "name": "阴友",
+      "runtime_id": 1075,
+      "birth_year": 220,
+      "service_year": 254,
+      "death_year": 271,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 220,
+        "service_year": 254,
+        "death_year": 271,
+        "historical_birth_year": null,
+        "historical_death_year": 271,
+        "last_attested_year": 271,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "historical_attested_year"
+        },
+        "basis": "原任沸流沛者，中川王七年接任國相。歷事中川王、西川王，西川王二年七月卒，由其子尚婁接任。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 60,
+        "intellect": 78,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "阴友",
+        "陰友"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-eumu",
+        "name": "阴友",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "陰友",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷17"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 60,
+          "intellect": 78,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-eumu",
+          "name": "阴友",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-goguryeo-myeongnim-holdo": {
+      "person_id": "historical-goguryeo-myeongnim-holdo",
+      "name": "明临笏睹",
+      "runtime_id": 1076,
+      "birth_year": 235,
+      "service_year": 256,
+      "death_year": 276,
+      "chronology_basis": "reviewed_goguryeo_officer_attestation",
+      "chronology_design": {
+        "birth_year": 235,
+        "service_year": 256,
+        "death_year": 276,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 256,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_attested_or_estimated_activity",
+          "death_year": "authorial_estimated_game_exit_year"
+        },
+        "basis": "椽那出身；中川王九年娶公主，授駙馬都尉。史籍未詳其後的軍政經歷和卒年。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 56,
+        "intellect": 63,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_regional_game_design"
+        }
+      },
+      "aliases": [
+        "明临笏睹",
+        "明臨笏覩"
+      ],
+      "virtue_design": {
+        "person_id": "historical-goguryeo-myeongnim-holdo",
+        "name": "明临笏睹",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "明臨笏覩",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國史記/卷17"
+        ],
+        "notes": "史料用於考訂身分與事跡。能力、駐軍及缺少記載的年代為本作配置。"
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder",
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 56,
+          "intellect": 63,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_regional_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-goguryeo-myeongnim-holdo",
+          "name": "明临笏睹",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "未有已審對應的遊戲魅力資料，沿用德60預設值。",
+          "sources": []
+        },
+        "initialization": null
+      }
+    },
+    "historical-wuhuan-nanlou": {
+      "person_id": "historical-wuhuan-nanlou",
+      "name": "难楼",
+      "runtime_id": 1077,
+      "birth_year": 155,
+      "service_year": 188,
+      "death_year": 207,
+      "chronology_basis": "reviewed_historical_wuhuan_career_with_opening_window",
+      "chronology_design": {
+        "birth_year": 155,
+        "service_year": 188,
+        "death_year": 207,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 200,
+        "precision": {
+          "birth_year": "authorial_estimate",
+          "service_year": "authorial_coalition_attestation_window",
+          "death_year": "authorial_exit_boundary_not_exact_death"
+        },
+        "basis": "上谷烏桓首領。其部本與遼西並立，後與蘇僕延奉樓班為單于。自188年開局集中各部至柳城，為本作聯軍配置。晚年不詳，以207年聯盟解體為出場終點。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 72,
+        "intellect": 67,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_wuhuan_cavalry_design"
+        }
+      },
+      "aliases": [
+        "难楼",
+        "難楼",
+        "難樓"
+      ],
+      "virtue_design": {
+        "person_id": "historical-wuhuan-nanlou",
+        "name": "难楼",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "難楼",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/後漢書/卷90#烏桓",
+          "https://zh.wikisource.org/wiki/三國志/卷30#烏丸"
+        ],
+        "notes": "史料用於考訂身分與生涯；武、知、適性與軍種均為本作設定。"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 72,
+          "intellect": 67,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_wuhuan_cavalry_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-wuhuan-nanlou",
+          "name": "难楼",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder"
+    },
+    "historical-wuhuan-supuyan": {
+      "person_id": "historical-wuhuan-supuyan",
+      "name": "苏仆延",
+      "runtime_id": 1078,
+      "birth_year": 156,
+      "service_year": 188,
+      "death_year": 207,
+      "chronology_basis": "reviewed_historical_wuhuan_career_with_opening_window",
+      "chronology_design": {
+        "birth_year": 156,
+        "service_year": 188,
+        "death_year": 207,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": 200,
+        "precision": {
+          "birth_year": "authorial_estimate",
+          "service_year": "authorial_coalition_attestation_window",
+          "death_year": "authorial_exit_boundary_not_exact_death"
+        },
+        "basis": "遼東屬國烏桓峭王，曾獲袁紹印綬，後與難樓擁立樓班。本作自188年開局將其所部編入聯軍。晚年不詳，以207年聯盟解體為出場終點。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 73,
+        "intellect": 65,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_wuhuan_cavalry_design"
+        }
+      },
+      "aliases": [
+        "苏仆延",
+        "蘇僕延",
+        "頒下"
+      ],
+      "virtue_design": {
+        "person_id": "historical-wuhuan-supuyan",
+        "name": "苏仆延",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "蘇僕延",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/後漢書/卷90#烏桓",
+          "https://zh.wikisource.org/wiki/三國志/卷30#烏丸"
+        ],
+        "notes": "史料用於考訂身分與生涯；武、知、適性與軍種均為本作設定。"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 73,
+          "intellect": 65,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_wuhuan_cavalry_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-wuhuan-supuyan",
+          "name": "苏仆延",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder"
+    },
+    "historical-wuhuan-wuyan": {
+      "person_id": "historical-wuhuan-wuyan",
+      "name": "乌延",
+      "runtime_id": 1079,
+      "birth_year": 157,
+      "service_year": 188,
+      "death_year": 207,
+      "chronology_basis": "reviewed_historical_wuhuan_career_with_opening_window",
+      "chronology_design": {
+        "birth_year": 157,
+        "service_year": 188,
+        "death_year": 207,
+        "historical_birth_year": null,
+        "historical_death_year": 207,
+        "last_attested_year": 207,
+        "precision": {
+          "birth_year": "authorial_estimate",
+          "service_year": "authorial_coalition_attestation_window",
+          "death_year": "historical_attested_year"
+        },
+        "basis": "右北平烏桓汗魯王，曾獲袁紹印綬。曹軍破烏桓後奔遼東，為公孫康所殺。188年起駐柳城是本作聯軍配置。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 75,
+        "intellect": 58,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_wuhuan_cavalry_design"
+        }
+      },
+      "aliases": [
+        "乌延",
+        "烏延",
+        "汗魯王",
+        "汗盧維"
+      ],
+      "virtue_design": {
+        "person_id": "historical-wuhuan-wuyan",
+        "name": "乌延",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "烏延",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/後漢書/卷90#烏桓",
+          "https://zh.wikisource.org/wiki/三國志/卷30#烏丸"
+        ],
+        "notes": "史料用於考訂身分與生涯；武、知、適性與軍種均為本作設定。"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 75,
+          "intellect": 58,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_wuhuan_cavalry_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-wuhuan-wuyan",
+          "name": "乌延",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder"
+    },
+    "historical-wuhuan-sufuwan": {
+      "person_id": "historical-wuhuan-sufuwan",
+      "name": "速附丸",
+      "runtime_id": 1080,
+      "birth_year": 170,
+      "service_year": 202,
+      "death_year": 207,
+      "chronology_basis": "reviewed_historical_wuhuan_career_with_opening_window",
+      "chronology_design": {
+        "birth_year": 170,
+        "service_year": 202,
+        "death_year": 207,
+        "historical_birth_year": null,
+        "historical_death_year": 207,
+        "last_attested_year": 207,
+        "precision": {
+          "birth_year": "authorial_estimate",
+          "service_year": "authorial_coalition_attestation_window",
+          "death_year": "historical_attested_year"
+        },
+        "basis": "《三國志》記其與樓班、烏延等於207年敗走遼東，為公孫康所殺。此前行跡未載，提前至202年登場為本作配置。"
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 65,
+        "intellect": 53,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_frontier_officer_game_design",
+          "intellect": "explicit_frontier_officer_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_wuhuan_cavalry_design"
+        }
+      },
+      "aliases": [
+        "速附丸"
+      ],
+      "virtue_design": {
+        "person_id": "historical-wuhuan-sufuwan",
+        "name": "速附丸",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "速附丸",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/三國志/卷30#烏丸",
+          "https://zh.wikisource.org/wiki/三國志/卷01"
+        ],
+        "notes": "史料用於考訂身分與生涯；武、知、適性與軍種均為本作設定。"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 65,
+          "intellect": 53,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_frontier_officer_game_design",
+            "intellect": "explicit_frontier_officer_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_wuhuan_cavalry_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-wuhuan-sufuwan",
+          "name": "速附丸",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder"
     }
   },
   "retainer_additions": {

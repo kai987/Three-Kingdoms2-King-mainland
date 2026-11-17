@@ -5,6 +5,7 @@ come from the recovered per-map table. Exact prices/healing use the remake's
 existing facility tables; entering a village pays ordinary terrain movement,
 and service use never spends a strategic command book.
 """
+from . import grain_units
 from .errors import GameError
 from . import battle_grid, equipment, facilities, battle_supply
 from .officers import parse_officer_ref
@@ -143,8 +144,9 @@ def ai_action(game, state, battle, actor, side, *, site=None):
                 battle_id=battle['id'])
     if offer['kind']=='hospital' and offer['health']<offer['max_health'] and offer['gold']>=offer['medical_gold']:
         return dict(base,action='treat',score=(offer['max_health']-offer['health'])*4+40)
-    if offer['kind']=='market' and offer['grain']<500 and offer['trade']['max_batches']:
-        batches=min(offer['trade']['max_batches'],(500-offer['grain']+99)//100)
+    if offer['kind']=='market' and offer['grain']<grain_units.amount(500) and offer['trade']['max_batches']:
+        batch = offer['trade']['batch_grain']
+        batches=min(offer['trade']['max_batches'],(grain_units.amount(500)-offer['grain']+batch-1)//batch)
         return dict(base,action='buy_grain',batches=batches,score=40)
     if offer['kind']=='armory':
         officer = state.officers[actor['id']]

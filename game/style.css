@@ -543,8 +543,7 @@ margin:0
 .faction-choice .faction-choice-heading span{
 margin:0
 }
-.faction-choice-identity{display:inline-flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px}
-.faction-choice-cities{font-size:14px;white-space:nowrap}
+.faction-city-icon{flex:none}
 .faction-choice .faction-choice-resources{
 font-size:14px;
 line-height:1.45;
@@ -1015,7 +1014,6 @@ font-size:14px
 
 /* Keep the native32px silhouette; unowned castles cover the baked black border in white. */
 .city-hit .castle-fill,.city-hit .castle-border{stroke:none;shape-rendering:crispEdges}
-.faction-swatch{flex:none;border:1px solid #000;image-rendering:pixelated}
 .map-bottom-bar{position:absolute;right:14px;bottom:14px;z-index:2;display:flex;align-items:stretch;gap:8px;max-width:calc(100% - 122px)}
 .map-bottom-bar .map-toolbar{position:static;flex-wrap:nowrap;max-width:none;min-width:0;flex:1;font-size:14px}
 .map-bottom-bar .map-toolbar button{min-width:40px;min-height:32px;padding:2px 6px;font-size:14px}
@@ -1043,21 +1041,32 @@ font-size:14px
 .map-march-note{margin-top:3px}
 .map-march-actions{display:flex;justify-content:flex-end;padding:4px 8px;border-top:1px solid #40382b}
 .map-march-actions button{min-height:32px;padding:2px 8px;font-size:14px}
-#stage{--march-available:#4ee6ed;--march-detour:#ffbc59;--march-restricted:#e9edf2;--march-outline:#17232e}
+#stage,#dialog{--march-available:#4ee6ed;--march-detour:#ffbc59;--march-restricted:#e9edf2;--march-supply-shortage:#ff965e;--march-outline:#17232e}
 [data-march-map-kind=available],[data-march-key=available]{--march-route:var(--march-available);--march-dash:none}
 [data-march-map-kind=detour],[data-march-key=detour]{--march-route:var(--march-detour);--march-dash:8 5}
 [data-march-map-kind=restricted],[data-march-key=restricted]{--march-route:var(--march-restricted);--march-dash:2 6}
+[data-march-map-kind=supply-shortage],[data-march-key=supply-shortage]{--march-route:var(--march-supply-shortage);--march-dash:8 6}
+[data-march-map-kind=supply-detour],[data-march-key=supply-detour]{--march-route:var(--march-available);--march-dash:none}
 .map-march-line-bed,.map-march-line,.map-march-arrow{fill:none;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round}
 .map-march-line-bed{stroke:var(--march-outline);stroke-width:5.5;stroke-dasharray:var(--march-dash)}
 .map-march-line{stroke:var(--march-route);stroke-width:3;stroke-dasharray:var(--march-dash)}
 [data-march-map-kind=detour] .map-march-line{stroke-width:3.5}
 [data-march-map-kind=restricted] .map-march-line-bed{stroke-width:3.5}
 [data-march-map-kind=restricted] .map-march-line{stroke-width:1.8}
+[data-march-shared] .map-march-line-bed{stroke-dasharray:none}
+[data-march-map-kind=available][data-march-shared] .map-march-line{stroke-dasharray:8 6}
+[data-march-map-kind=supply-detour][data-march-shared] .map-march-line{stroke-dasharray:6 8;stroke-dashoffset:-8}
 .map-march-arrow{stroke:transparent;stroke-width:2.5}
 [data-march-key]{display:inline-grid;align-items:center;vertical-align:0.06em;width:1.6em;height:0.55em;padding:0 2px;margin-right:0.5em;border-radius:2px;background:var(--march-outline)}
 [data-march-key]::after{content:'';border-top:2px solid var(--march-route)}
-[data-march-key=detour]::after{border-top-style:dashed}
+[data-march-key=detour]::after,[data-march-key=supply-shortage]::after{border-top-style:dashed}
 [data-march-key=restricted]::after{border-top-style:dotted}
+#transfer-supply-detour{margin-top:12px;padding-top:10px;border-top:1px solid var(--ink)}
+.transfer-route-comparison p{margin:0 0 6px}
+#use-transfer-detour{margin-top:8px}
+#use-transfer-detour[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+[data-transfer-supply-svg]{display:block;width:100%;height:clamp(8rem,36vw,13rem);border:1px solid var(--ink);background:#17232e}
+.transfer-supply-pins circle{fill:#fff;stroke:#17232e;stroke-width:1.5;vector-effect:non-scaling-stroke}
 #world-map .city-hit.action-target .city-outline{fill:#fff3;stroke:#ffff80;stroke-width:4;stroke-dasharray:none;filter:drop-shadow(0 0 2px #000)}
 #world-map .city-hit.march-preview-target .city-outline{fill:#fff4;stroke:#fff;stroke-width:4;stroke-dasharray:3 2;filter:drop-shadow(0 0 2px #000)}
 .city-hit.action-unavailable{cursor:not-allowed}

@@ -1,10 +1,13 @@
 """Atomic scenario switching. Failed new/load requests retain the current game."""
 from threading import RLock
+from . import grain_units, southern_mission
 from .campaign import Campaign, Catalog, GameError, verified_save_content
 from .map_presentation import city_names,presentation,faction_colors
-from .city_economy import frontier_outposts_view,income_at,incomes_at,profile_at,profiles_at
+from .city_economy import (frontier_outposts_view, garrison_grain, garrison_grain_cost, grain_balance,
+                           income_at, incomes_at, profile_at, profiles_at)
 from .officer_relations import opening_values
 from .dated_events import visible_factions
+from .treasures import opening_stock as opening_treasure_stock
 
 
 DEFAULT_SCENARIO = 'mainland184-02'
@@ -31,6 +34,8 @@ def faction_resources(catalog, state=None):
         for ident, officer in state.officers.items():
             if officer.alive and officer.faction_id in totals:
                 totals[officer.faction_id]['troops'] += deployed.get(ident, officer.troops)
+        if southern_mission.OWNER in totals:
+            totals[southern_mission.OWNER]['troops'] += southern_mission.in_transit_troops(state)
     else:
         data = catalog.data
         stocks, troops = catalog.opening_garrisons
@@ -41,7 +46,7 @@ def faction_resources(catalog, state=None):
             total = totals[owner]
             total['cities'] += 1
             for field in ('gold', 'grain', 'reserves'):
-                total[field] += stocks[key][field]
+                total[field] += grain_units.CURRENT * stocks[key][field] if field == 'grain' else stocks[key][field]
         for row in data['initial_officers']:
             owner = data['initial_owners'][row['city']]
             if owner in totals:
@@ -113,6 +118,10 @@ class CampaignSession:
             return self._decorate_view(self.game.view())
 
     def _decorate_view(self, result):
+        with grain_units.using(self.game.state):
+            return self._campaign_view(result)
+
+    def _campaign_view(self, result):
         """Add session metadata to one fresh campaign response under our lock."""
         names=city_names(self.game.catalog,
             self.game.state.year if self.game.state else self.game.catalog.data['start_year'],
@@ -128,9 +137,18 @@ class CampaignSession:
         result['catalog']['frontier_outposts']=frontier_outposts_view(self.game.catalog.data,self.game.state)
         if self.game.state:
             from .facilities import adjusted_income
-            from . import city_development
+            from . import city_development, domestic
             result['catalog']['city_income']={key:adjusted_income(self.game.state,key,city_development.adjust_income(self.game,self.game.state,key,income) if key in self.game.state.cities else income)
                 for key,income in result['catalog']['city_income'].items()}
+            upkeep = garrison_grain(self.game, self.game.state)
+            fallback = dict(gold=0, grain=grain_units.amount(self.game.catalog.data['rules']['monthly_grain_income']))
+            result['catalog']['city_grain_balance'] = {
+                key: grain_balance(result['catalog']['city_income'].get(key, fallback)['grain']
+                                   + domestic.earned_grain(self.game.state, key,
+                                       result['catalog']['city_income'].get(key, fallback)),
+                                   upkeep[key], city.owner)
+                for key, city in self.game.state.cities.items()
+            }
         result['catalog']['road_additions']=self.game.catalog.data.get('road_additions',[])
         result['catalog']['world']=self.game.catalog.data.get('world')
         result['catalog']['scenario_id']=self.game.catalog.data['id']
@@ -210,7 +228,7 @@ class CampaignSession:
 
     def preview_city(self, scenario, city):
         """Read opening data for one city without creating a game or drawing RNG."""
-        with self.lock:
+        with self.lock, grain_units.using():
             if not isinstance(scenario,str) or scenario not in self.catalogs:
                 raise GameError('请选择有效的战役。')
             c=self.catalogs[scenario];d=c.data
@@ -220,6 +238,7 @@ class CampaignSession:
             stocks,troops=c.opening_garrisons
             from .equipment import initial_view
             from .city_development import opening_view
+            from .facilities import income_after_damage, opening_view as opening_facilities
             preview_game=self.game if c is self.game.catalog else Campaign(c)
             for row in d['initial_officers']:
                 if row['city']!=city:continue
@@ -231,27 +250,29 @@ class CampaignSession:
                                                          faction_id=d['initial_owners'][city],is_ruler=row.get('ruler',False)),
                                      is_ruler=bool(row.get('ruler')),equipment=initial_view(preview_game,row['person_id'])))
             owner=d['initial_owners'][city]
-            from .city_economy import tier_at
-            treasure = {'normal':2,'large':4,'giant':6}[tier_at(d,city,d['start_year'],d['start_month'])] if owner!='neutral' else 0
-            town={'normal':1,'large':2,'giant':3}[tier_at(d,city,d['start_year'],d['start_month'])]
-            facilities=dict(town=town,preparedness=d.get('facility_rules',{}).get('initial_preparedness',40),
-                damage=0,services=['hospital','market']+(['school','armory'] if town>=2 else []))
+            treasure = opening_treasure_stock(d,city,owner,d['start_year'],d['start_month'])
+            facilities=opening_facilities(d,city)
+            facilities['services']=['hospital','market']+(['school','armory'] if facilities['town']>=2 else [])
+            income=income_after_damage(income_at(d,city,d['start_year'],d['start_month']),facilities['damage'])
             history=d.get('city_history',{}).get(city,{})
             neutral_name=history.get('neutral_label') or ('地方汉郡（中立）' if history.get('opening',{}).get('basis')=='unmapped_local_han_administration' else '无主')
             frontier=frontier_outposts_view(d).get(city)
+            upkeep = garrison_grain_cost(d, city, d['start_year'], d['start_month'],
+                                         sum(o['troops'] for o in officers), stocks[city]['reserves'])
+            balance = grain_balance(income['grain'], upkeep, owner)
             return dict(scenario=scenario,title=d['title'],year=d['start_year'],month=d['start_month'],
                 capacity=c.rules.city_officer_capacity,
                 city=dict(id=city,owner=owner,treasure=treasure,facilities=facilities,city_development=opening_view(c,city),owner_name=c.factions[owner]['name'] if owner!='neutral' else neutral_name,
                     terrain=c.map_cities[city].get('terrain'),officers=officers,
-                    profile=profile_at(d,city,d['start_year'],d['start_month']),income=income_at(d,city,d['start_year'],d['start_month']),
+                    profile=profile_at(d,city,d['start_year'],d['start_month']),income=income, grain_balance=balance,
                     history=d.get('city_history',{}).get(city),frontier_outpost=frontier,
-                    **stocks[city]))
+                    **grain_units.stocks(stocks[city])))
 
     def preview_march(self, source, target, revision):
         """Quote from one player-owned city without spending a command or RNG."""
         from .march_preview import preview
 
-        with self.lock:
+        with self.lock, grain_units.using(self.game.state):
             if (not isinstance(revision, str) or not 1 <= len(revision) <= 16
                     or not revision.isascii() or not revision.isdecimal()):
                 raise GameError('查询参数无效。')
@@ -264,6 +285,24 @@ class CampaignSession:
                     or 'travel_rules' not in self.game.catalog.data):
                 raise GameError('查询参数无效。')
             return preview(self.game, state, source, target, self.revision)
+
+    def preview_transfer(self, payload):
+        """Quote a transfer choice against one current order selection."""
+        from .march_preview import preview_transfer
+
+        with self.lock, grain_units.using(self.game.state):
+            if (not isinstance(payload, dict)
+                    or set(payload) != {'source', 'target', 'officers', 'route_mode', 'revision'}
+                    or type(payload['revision']) is not int):
+                raise GameError('操作参数无效。')
+            if payload['revision'] != self.revision:
+                raise GameError('进度已更新，请重新选择操作。', 409)
+            state = self.game.state
+            if state is None or 'travel_rules' not in self.game.catalog.data:
+                raise GameError('查询参数无效。')
+            source, target, ids = self.game._transfer_selection(state, payload)
+            return preview_transfer(self.game, state, source.id, target.id, ids,
+                                    payload['route_mode'], self.revision)
 
     def load_save(self, save, revision):
         with self.lock:

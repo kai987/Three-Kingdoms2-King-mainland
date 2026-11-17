@@ -96,8 +96,8 @@
         "id": "qi",
         "name": "齐郡",
         "position": [
-          1014,
-          213
+          1010,
+          233
         ],
         "terrain": "plain"
       },
@@ -142,7 +142,7 @@
         "name": "京兆",
         "position": [
           497,
-          354
+          336
         ],
         "terrain": "plain"
       },
@@ -357,8 +357,8 @@
         "id": "bohai",
         "name": "渤海",
         "position": [
-          924,
-          157
+          951,
+          191
         ],
         "terrain": "plain"
       },
@@ -393,8 +393,8 @@
         "id": "beihai",
         "name": "北海",
         "position": [
-          1054,
-          219
+          1046,
+          250
         ],
         "terrain": "plain"
       },
@@ -501,8 +501,8 @@
         "id": "lelang",
         "name": "乐浪",
         "position": [
-          1290,
-          182
+          1276,
+          157
         ],
         "terrain": "water"
       },
@@ -510,8 +510,8 @@
         "id": "daifang",
         "name": "带方",
         "position": [
-          1292,
-          226
+          1296,
+          190
         ],
         "terrain": "water"
       },
@@ -780,8 +780,8 @@
         "id": "liaoxi",
         "name": "辽西",
         "position": [
-          1061,
-          121
+          1037,
+          127
         ],
         "terrain": "plain"
       },
@@ -825,8 +825,8 @@
         "id": "jinan",
         "name": "济南",
         "position": [
-          970,
-          214
+          973,
+          227
         ],
         "terrain": "plain"
       },
@@ -1609,6 +1609,10 @@
       [
         "lelang",
         "liaodong"
+      ],
+      [
+        "liaodong",
+        "donglai"
       ],
       [
         "liaodong",
@@ -52999,6 +53003,19 @@
         "days": 10
       },
       {
+        "id": "liaodong:donglai:sea",
+        "from": "liaodong",
+        "to": "donglai",
+        "mode": "sea",
+        "terrain": "sea",
+        "geo": [[123, 40], [120.43, 37.68]],
+        "discovery_candidate": false,
+        "history": {
+          "basis": "漢代墓葬考古顯示膠東與遼東沿渤海海峽往來。《三國志・公孫度傳》載公孫度渡海收取東萊諸縣。遊戲以襄平與東萊為陸路接駁點，代表跨海峽的區域航程。",
+          "sources": ["https://www.sinoss.net/uploadfile/2010/1130/9651.pdf", "https://zh.wikisource.org/zh-hant/三國志/卷08"]
+        }
+      },
+      {
         "id": "liaodong:wujun:sea",
         "from": "liaodong",
         "to": "wujun",
@@ -55148,8 +55165,25 @@
                 132
               ],
               [
-                924,
-                157
+                923,
+                150
+              ],
+              [
+                925.5,
+                172
+              ]
+            ]
+          },
+          {
+            "mode": "land",
+            "points": [
+              [
+                925.5,
+                172
+              ],
+              [
+                951,
+                191
               ]
             ]
           }
@@ -55727,16 +55761,42 @@
                 145
               ],
               [
-                899,
-                148
+                889,
+                146
               ],
               [
-                910,
-                157
+                902,
+                154
               ],
               [
-                924,
-                157
+                912,
+                165
+              ]
+            ]
+          },
+          {
+            "mode": "land",
+            "points": [
+              [
+                912,
+                165
+              ],
+              [
+                925.5,
+                172
+              ]
+            ]
+          },
+          {
+            "mode": "land",
+            "points": [
+              [
+                925.5,
+                172
+              ],
+              [
+                951,
+                191
               ]
             ]
           }
@@ -56410,7 +56470,7 @@
               ],
               [
                 497,
-                354
+                336
               ]
             ]
           }
@@ -56672,8 +56732,25 @@
                 132
               ],
               [
-                924,
-                157
+                923,
+                150
+              ],
+              [
+                925.5,
+                172
+              ]
+            ]
+          },
+          {
+            "mode": "land",
+            "points": [
+              [
+                925.5,
+                172
+              ],
+              [
+                951,
+                191
               ]
             ]
           }
@@ -57675,13 +57752,27 @@
         "jiuzhen",
         "rinan",
         "zhuya",
-        "yizhou"
+        "yizhou",
+        "donglai"
       ],
       "discovery_policy": "Active coastal board cities only; unknown sea crossings are optional exploration. Reveal a route after a surviving force reaches land, even before a subsequent enemy-city siege. Zero troop survivors/cancelled marches reveal nothing.",
       "casualty_policy": "Soldiers only; generals are retained. Army survivors use total floor plus largest remainders, not per-general independent rounding. One sea-storm draw per complete voyage; terrain hazards can additionally apply.",
       "timing_policy": "Departure month fixes forecast and severity roll; quote is read-only. Known-route lengths use geographic waypoints; special land times use plain-road baseline rather than multiply the old mountain time."
     },
     "sea_routes": [
+      {
+        "id": "liaodong:donglai:sea",
+        "from": "liaodong",
+        "to": "donglai",
+        "mode": "sea",
+        "terrain": "sea",
+        "geo": [[123, 40], [120.43, 37.68]],
+        "discovery_candidate": false,
+        "history": {
+          "basis": "漢代墓葬考古顯示膠東與遼東沿渤海海峽往來。《三國志・公孫度傳》載公孫度渡海收取東萊諸縣。遊戲以襄平與東萊為陸路接駁點，代表跨海峽的區域航程。",
+          "sources": ["https://www.sinoss.net/uploadfile/2010/1130/9651.pdf", "https://zh.wikisource.org/zh-hant/三國志/卷08"]
+        }
+      },
       {
         "id": "liaodong:wujun:sea",
         "from": "liaodong",

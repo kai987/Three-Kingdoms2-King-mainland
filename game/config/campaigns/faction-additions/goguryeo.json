@@ -1,0 +1,428 @@
+{
+  "schema": "tk2-historical-faction-openings-v1",
+  "faction": {
+    "id": "goguryeo",
+    "name": "高句丽",
+    "city": "guonei",
+    "color": "#6900b6"
+  },
+  "history": {
+    "basis": "國內城、丸都山城皆在今吉林集安。遊戲以國內城作為鴨綠江北岸的統一地圖節點，高句麗獨立於玄菟郡。山上王於209年冬移都丸都；244至245年曹魏由玄菟出兵，攻破丸都。《三國史記》載東川王於247年另築平壤城，地望有異說；後期開局仍以集安城域代表本國核心。",
+    "sources": [
+      "https://whc.unesco.org/en/list/1135/maps/",
+      "https://zh.wikisource.org/wiki/三國史記/卷16",
+      "https://zh.wikisource.org/wiki/三國史記/卷17",
+      "https://zh.wikisource.org/wiki/三國志/卷28#毌丘儉",
+      "https://zh.wikisource.org/wiki/三國志/卷30#高句麗"
+    ]
+  },
+  "periods": [
+    {
+      "start": [
+        179,
+        1
+      ],
+      "owner": "goguryeo",
+      "ruler": "historical-goguryeo-gogukcheon",
+      "troops": 970,
+      "resources": {
+        "gold": 950,
+        "grain": 5100,
+        "reserves": 1600
+      },
+      "note": "故國川王在位，國內城為高句麗王都的遊戲節點。"
+    },
+    {
+      "start": [
+        197,
+        5
+      ],
+      "owner": "goguryeo",
+      "ruler": "historical-goguryeo-sansang",
+      "troops": 890,
+      "resources": {
+        "gold": 1020,
+        "grain": 5350,
+        "reserves": 1700
+      },
+      "note": "山上王繼位；209年冬移都丸都，遊戲仍使用集安的國內城節點。"
+    },
+    {
+      "start": [
+        227,
+        5
+      ],
+      "owner": "goguryeo",
+      "ruler": "historical-goguryeo-dongcheon",
+      "troops": 1010,
+      "resources": {
+        "gold": 1080,
+        "grain": 5650,
+        "reserves": 1800
+      },
+      "note": "東川王在位。史載238年高句麗出兵助魏討公孫淵；本作在該劇本以暫時的開局同盟表示。"
+    },
+    {
+      "start": [
+        248,
+        9
+      ],
+      "owner": "goguryeo",
+      "ruler": "historical-goguryeo-jungcheon",
+      "troops": 430,
+      "resources": {
+        "gold": 870,
+        "grain": 4650,
+        "reserves": 1450
+      },
+      "note": "中川王在位。魏軍遠征後國力恢復，集安城域仍以國內城節點表示。"
+    }
+  ],
+  "ruler_chronology": [
+    {
+      "person_id": "historical-goguryeo-gogukcheon",
+      "start": [
+        179,
+        1
+      ],
+      "exit": [
+        197,
+        5
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-sansang",
+      "start": [
+        197,
+        5
+      ],
+      "exit": [
+        227,
+        5
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-dongcheon",
+      "start": [
+        227,
+        5
+      ],
+      "exit": [
+        248,
+        9
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-jungcheon",
+      "start": [
+        248,
+        9
+      ],
+      "exit": [
+        270,
+        10
+      ]
+    }
+  ],
+  "allies_by_scenario": {
+    "mainland238-01": [
+      "wei"
+    ]
+  },
+  "officer_chronology": [
+    {
+      "person_id": "historical-goguryeo-gyesu",
+      "start": [
+        184,
+        1
+      ],
+      "end": [
+        202,
+        12
+      ],
+      "troops": 540,
+      "note": "高句麗王族。《三國史記》將他與遼東軍交戰一事繫於故國川王六年（184年），實際年代有不同解讀。山上王初年，他率軍迎擊發歧借來的軍隊，並勸王以兄喪之禮安葬發歧。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國史記/卷16",
+        "https://db.history.go.kr/common/compareViewer.do?levelId=sg_016_0030_0060&type=ancient"
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-queen-u",
+      "start": [
+        180,
+        2
+      ],
+      "end": [
+        234,
+        8
+      ],
+      "troops": 0,
+      "note": "椽那部于素之女。先為故國川王王后；故國川王無子而卒後，她擁立延優即山上王，再立為后。東川王二年尊為王太后。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國史記/卷16",
+        "https://zh.wikisource.org/wiki/三國史記/卷17"
+      ],
+      "exit": [
+        234,
+        9
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-ugeo",
+      "start": [
+        190,
+        1
+      ],
+      "end": [
+        204,
+        12
+      ],
+      "troops": 430,
+      "note": "高句麗大加，曾與主簿然人率軍助公孫度討富山。《三國史記》系於新大王年間，與公孫度據遼東的年代難合，本作以約190年置入。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷30#高句麗",
+        "https://zh.wikisource.org/wiki/三國史記/卷16",
+        "https://encykorea.aks.ac.kr/Article/E0039782"
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-yeonin",
+      "start": [
+        190,
+        1
+      ],
+      "end": [
+        204,
+        12
+      ],
+      "troops": 280,
+      "note": "高句麗主簿，與大加優居共同出兵支援公孫度平富山。記載的年次有出入，本作按公孫度據遼東後推定遊戲登場。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷30#高句麗",
+        "https://zh.wikisource.org/wiki/三國史記/卷16",
+        "https://encykorea.aks.ac.kr/Article/E0039782"
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-annyu",
+      "start": [
+        191,
+        4
+      ],
+      "end": [
+        206,
+        12
+      ],
+      "troops": 140,
+      "note": "故國川王平定王都之亂後，四部共舉晏留。晏留薦乙巴素為政，因薦賢之功受任大使者。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國史記/卷16"
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-eulpaso",
+      "start": [
+        191,
+        4
+      ],
+      "end": [
+        203,
+        7
+      ],
+      "troops": 120,
+      "note": "故國川王採納晏留推薦，任乙巴素為國相。他受命掌政，任至山上王七年八月去世。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國史記/卷16"
+      ],
+      "exit": [
+        203,
+        8
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-goyuru",
+      "start": [
+        203,
+        8
+      ],
+      "end": [
+        230,
+        6
+      ],
+      "troops": 190,
+      "note": "山上王七年接任去世的乙巴素為國相，歷事山上王與東川王，卒於東川王四年七月。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國史記/卷16",
+        "https://zh.wikisource.org/wiki/三國史記/卷17"
+      ],
+      "exit": [
+        230,
+        7
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-myeongnim-eosu",
+      "start": [
+        230,
+        7
+      ],
+      "end": [
+        254,
+        3
+      ],
+      "troops": 450,
+      "note": "原有于台官等，東川王四年繼高優婁任國相。中川王時又兼掌內外兵馬，卒於中川王七年四月。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國史記/卷17"
+      ],
+      "exit": [
+        254,
+        4
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-bak-wigeo",
+      "start": [
+        238,
+        1
+      ],
+      "end": [
+        251,
+        12
+      ],
+      "troops": 340,
+      "note": "《三國志》稱他是拔奇之子，父出奔遼東後，他留在高句麗，官古雛加。生卒及任官年份不詳，本作以三世紀中葉為活動窗口。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷30#高句麗"
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-deungnae",
+      "start": [
+        242,
+        1
+      ],
+      "end": [
+        244,
+        7
+      ],
+      "troops": 120,
+      "note": "高句麗沛者。屢諫東川王，未被採納，後絕食而死。《三國志》記毌丘儉進兵時保全其墓與家眷；本作以出兵前作退場邊界，月份為遊戲設定。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷28#毌丘儉",
+        "https://zh.wikisource.org/wiki/三國史記/卷17"
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-miru",
+      "start": [
+        245,
+        1
+      ],
+      "end": [
+        265,
+        12
+      ],
+      "troops": 520,
+      "note": "東部人。魏軍追擊東川王時，率部掩護君主脫身，被劉屋句救回。《三國史記》繫於246年，並記他獲賜巨谷、青木谷。遊戲依不同史料對遠征的紀年，將登場設在245年。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國史記/卷17",
+        "https://db.history.go.kr/id/sg_045r_0050_0120",
+        "https://encykorea.aks.ac.kr/Article/E0016818"
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-yu-okgu",
+      "start": [
+        245,
+        1
+      ],
+      "end": [
+        265,
+        12
+      ],
+      "troops": 330,
+      "note": "下部人。東川王遭魏軍追擊時，他從戰地背回負傷的密友。《三國史記》繫於246年，並記他獲賜鴨綠與杜訥河原。遊戲安排245年登場，卒年不詳。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國史記/卷17",
+        "https://db.history.go.kr/id/sg_045r_0050_0120"
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-nyuyu",
+      "start": [
+        245,
+        1
+      ],
+      "end": [
+        246,
+        9
+      ],
+      "troops": 290,
+      "note": "東部人。魏軍追擊東川王時入敵營，破壞追擊並戰死，追贈九使者。《三國史記》繫於246年；與魏方遠征紀年有出入。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國史記/卷17",
+        "https://db.history.go.kr/id/sg_045r_0050_0060",
+        "https://encykorea.aks.ac.kr/Article/E0016818"
+      ],
+      "exit": [
+        246,
+        10
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-dayu",
+      "start": [
+        246,
+        10
+      ],
+      "end": [
+        268,
+        12
+      ],
+      "troops": 215,
+      "note": "紐由之子。魏軍遠征後，東川王追贈其父九使者，並授多優為大使者。任命之外的生平記載有限。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國史記/卷17",
+        "https://db.history.go.kr/id/sg_045r_0050_0120"
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-eumu",
+      "start": [
+        254,
+        4
+      ],
+      "end": [
+        271,
+        6
+      ],
+      "troops": 360,
+      "note": "原任沸流沛者，中川王七年接任國相。歷事中川王、西川王，西川王二年七月卒，由其子尚婁接任。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國史記/卷17"
+      ],
+      "exit": [
+        271,
+        7
+      ]
+    },
+    {
+      "person_id": "historical-goguryeo-myeongnim-holdo",
+      "start": [
+        256,
+        11
+      ],
+      "end": [
+        276,
+        12
+      ],
+      "troops": 180,
+      "note": "椽那出身；中川王九年娶公主，授駙馬都尉。史籍未詳其後的軍政經歷和卒年。 開局配屬國內城、兵力與未明的生涯界限為遊戲設計。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國史記/卷17"
+      ]
+    }
+  ]
+}

@@ -643,7 +643,8 @@ function build(check) {
   const refined = read('portrait-refined.json').people;
   const generated = read('portrait-generated.json').by_person_id;
   const female = Object.entries(generated)
-    .filter(([id, portrait]) => portrait.gender_design === 'female' && !targetedRedraws.has(id))
+    .filter(([id, portrait]) => portrait.gender_design === 'female' &&
+      portrait.source_matte !== 'white' && !targetedRedraws.has(id))
     .map(([id]) => id).sort();
   assert.deepEqual(Object.keys(eyeRegions).sort(), female);
   const atlases = new Map();
@@ -665,7 +666,8 @@ function build(check) {
       let png;
       let pixels;
       let method;
-      const authored = approved.has(id) || targetedRedraws.has(id);
+      const originalWhite = generated[id]?.source_matte === 'white';
+      const authored = originalWhite || approved.has(id) || targetedRedraws.has(id);
       const truecolor = individualRedraws[id]?.truecolor_export;
       const hairRedraw = individualRedraws[id]?.black_hair_redraw;
       try {
@@ -675,11 +677,11 @@ function build(check) {
           assert.deepEqual([image.width, image.height], [width, height]);
           verifyWhiteMargin(image.rgba);
           pixels = image.rgba;
-          if (hairRedraw || truecolor) {
+          if (originalWhite || hairRedraw || truecolor) {
             if (truecolor) assert.equal(generated[id]?.gender_design, 'female');
-            assert.equal(sha(png), (hairRedraw || truecolor).output_sha256, 'Portrait differs from the approved export');
+            if (!originalWhite) assert.equal(sha(png), (hairRedraw || truecolor).output_sha256, 'Portrait differs from the approved export');
             for (let offset = 3; offset < pixels.length; offset += 4) assert.equal(pixels[offset], 255);
-            method = hairRedraw ? 'black_hair_redraw' : 'truecolor_redraw';
+            method = originalWhite ? 'authored_truecolor' : hairRedraw ? 'black_hair_redraw' : 'truecolor_redraw';
           } else {
             method = approved.has(id) && !individualRedraws[id] ? 'approved_redraw' : 'targeted_redraw';
           }
@@ -699,7 +701,7 @@ function build(check) {
           pixels = renderWhite(source);
           method = 'white_matte_contour';
         }
-        const framed = hairRedraw || truecolor ? pixels : fitPortraitFrame(pixels);
+        const framed = originalWhite || hairRedraw || truecolor ? pixels : fitPortraitFrame(pixels);
         if (!authored) {
           pixels = refineMaterialShading(framed);
           if (inkRepairs[id]) {

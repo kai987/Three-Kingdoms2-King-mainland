@@ -7,12 +7,13 @@
  function departure(view,source,ids,quote,selected=null){
   const rules=view.catalog.battle_supply_rules,people=view.game.officers;
   if(!rules||rules.denominator!==1000||rules.officer_units!==100||rules.budget_days!==30)throw Error('Unsupported battle supply rules');
-  const march=root.GameMarchSupply.estimate(people,ids,quote,0,view.game.cities,source.owner);
+  const denominator=rules.denominator??1000;
+  const march=root.GameMarchSupply.estimate(people,ids,quote,0,view.game.cities,source.owner,denominator);
   const troops=ids.reduce((n,id)=>n+(people[id]?.troops||0),0),daily=troops+100*ids.length;
   const max=Math.max(0,Math.min(rules.limit-march,source.grain-march));
-  const initial=Math.min(Math.ceil(daily*rules.budget_days/1000),max);
+  const initial=Math.min(Math.ceil(daily*rules.budget_days/denominator),max);
   const grain=selected===null?initial:Math.max(0,Math.min(max,Number.isFinite(Number(selected))?Math.trunc(Number(selected)):0));
-  return {march_grain:march,battle_grain:grain,battle_grain_default:initial,battle_grain_max:max,total_grain:march+grain,daily_grain:Math.ceil(daily/1000),days_supported:daily?Math.floor(grain*1000/daily):0};
+  return {march_grain:march,battle_grain:grain,battle_grain_default:initial,battle_grain_max:max,total_grain:march+grain,daily_grain:Math.ceil(daily/denominator),days_supported:daily?Math.floor(grain*denominator/daily):0};
  }
  function summary(view,locale='zh-Hant'){
   const ledger=view?.catalog?.battle_supply;if(!ledger)return '';

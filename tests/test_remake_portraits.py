@@ -50,7 +50,10 @@ class PortraitIdentityTests(unittest.TestCase):
                     bound.append(row['person_id'])
         self.assertEqual(len(bound), len(set(bound)))
         self.assertEqual(len(bound), 221)
-        self.assertEqual(len(self.people) - len(bound), 835)
+        placeholders = sum(person.get('portrait_policy') == 'generic_placeholder'
+                           for person in self.people.values())
+        self.assertEqual(placeholders, 24)
+        self.assertEqual(len(self.people) - len(bound) - placeholders, 835)
 
     def test_independently_reviewed_names_do_not_bind_similar_people(self):
         self.assertEqual(self.records[108]['transcribed_name'], '諸葛瞻')
@@ -98,17 +101,23 @@ class PortraitReleaseTests(unittest.TestCase):
     def setUpClass(cls):
         cls.index = builder.build()
 
-    def test_all_canonical_people_have_real_assets_and_explicit_provenance(self):
+    def test_all_canonical_people_have_explicit_portrait_provenance(self):
         index = self.index
         self.assertEqual(index['counts'], {
-            'people': 1056, 'nes_original': 221, 'generated': 835, 'original_archive': 237,
+            'people': 1080, 'nes_original': 221, 'generated': 855, 'generic_placeholder': 4,
+            'original_archive': 237,
             'original_unique_pixels': 183, 'bound_original_unique_pixels': 179,
-            'generated_unique_pixels': 835, 'original_identity_pending': 16})
+            'generated_unique_pixels': 855, 'original_identity_pending': 16})
         self.assertEqual(set(index['people']), set(builder.identities()))
-        self.assertEqual(set(index['by_runtime_id']), {str(i) for i in range(1057)} - {'1005'})
+        self.assertEqual(set(index['by_runtime_id']), {str(i) for i in range(1081)} - {'1005'})
         self.assertEqual((index['width'], index['height']), (32, 40))
         for person_id, row in index['people'].items():
             with self.subTest(person_id=person_id):
+                if row['kind'] == 'generic_placeholder':
+                    self.assertEqual(row['source'], 'explicit_shared_placeholder')
+                    self.assertIsNone(row['original_id'])
+                    self.assertNotIn('path', row)
+                    continue
                 self.assertTrue((ROOT / 'game' / row['path'].lstrip('/')).is_file())
                 if row['kind'] == 'generated':
                     self.assertEqual(row['path'], f'/assets/portraits/generated/{person_id}.png')
@@ -126,6 +135,19 @@ class PortraitReleaseTests(unittest.TestCase):
                     self.assertEqual(row['source'], 'pinned_ROM_static_frame0')
                     self.assertIn(row['original_id'], range(237))
 
+    def test_frontier_officers_use_their_own_portraits_for_existing_campaign_ids(self):
+        recorded = read(builder.FRONTIER_PLAN)['people']
+        assignments = {row['person_id'] for faction in ('wuhuan', 'goguryeo')
+                       for row in read(f'game/config/campaigns/faction-additions/{faction}.json')['officer_chronology']}
+        self.assertEqual({row['person_id'] for row in recorded}, assignments)
+        self.assertEqual(len(recorded), 20)
+        for person in recorded:
+            pid = person['person_id']
+            row = self.index['people'][pid]
+            self.assertEqual(row['kind'], 'generated')
+            self.assertEqual(row['original_source_path'], person['source_path'])
+            self.assertEqual(row['white']['path'], f'/assets/portraits/white/{pid}.png')
+
     def test_historical_additions_have_retained_natives_and_real_redrawn_detail(self):
         canonical = read('game/config/campaigns/people.json')
         expected = ['historical-song-jian', 'historical-lu-xing',
@@ -134,7 +156,7 @@ class PortraitReleaseTests(unittest.TestCase):
         self.assertEqual(canonical['order'][1023:1030], expected)
         self.assertEqual(canonical['order'][1030:1052],
                          [row['person_id'] for row in read('art/portraits/retainer-additions-v1/plan.json')['people']])
-        self.assertEqual(canonical['order'][1052:],
+        self.assertEqual(canonical['order'][1052:1056],
                          [row['person_id'] for row in read('art/portraits/early-shu-v1/plan.json')['people']])
         released = [[pid, canonical['people'][pid]['runtime_id']] for pid in canonical['order'][:1023]]
         self.assertEqual(builder.sha(json.dumps(released, separators=(',', ':')).encode()),
@@ -235,7 +257,7 @@ class PortraitReleaseTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, message):
                     builder.build()
 
-        fail_with(lambda data: data['by_person_id'].pop(first), 'coverage')
+        fail_with(lambda data: data['by_person_id'].pop(first), 'cover each stable identity once')
         fail_with(lambda data: data['by_person_id'][first].update(source='original_NES_art'), 'provenance')
         fail_with(lambda data: data['by_person_id'][first].update(png_sha256='0' * 64), 'hash mismatch')
         fail_with(lambda data: data['by_person_id'][first].update(source_atlas='../untrusted.png'), 'Invalid art source')

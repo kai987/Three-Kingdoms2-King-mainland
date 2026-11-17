@@ -1,6 +1,29 @@
 {
   "schema": "tk2-route-corridors-v1",
-  "access_policy": "Reuse the approved, already painted city-to-harbour approach and append only the short link to the unchanged navigation port. Prevent a second parallel land corridor without moving cities or repainting terrain.",
+  "access_policy": "Preserve the approved painted approaches where they still meet the shore. Rebuild relocated approaches against the revised coastline.",
+  "coastal_revision": {
+    "region": [940, 0, 1352, 420],
+    "ports": {
+      "liaodong": [1188, 140],
+      "liaoxi": [1056, 140],
+      "bohai": [992, 184],
+      "beihai": [1048, 220],
+      "lelang": [1248, 156],
+      "daifang": [1284, 212],
+      "donglai": [1112, 200],
+      "luzon": [1136, 916]
+    }
+  },
+  "limited_port_connections": {
+    "donglai": ["liaodong"],
+    "luzon": ["yizhou"]
+  },
+  "shore_access_overrides": {
+    "beihai": [[1046, 250], [1048, 233]],
+    "donglai": [[1111, 220], [1112, 208]],
+    "daifang": [[1296, 190], [1287, 196], [1283, 199], [1283, 201]],
+    "luzon": [[1145, 949], [1139, 937], [1134, 930], [1134, 925]]
+  },
   "access_overrides": {
     "liaodong": [
       [
@@ -14,24 +37,6 @@
       [
         1186,
         134
-      ]
-    ],
-    "lelang": [
-      [
-        1290,
-        182
-      ],
-      [
-        1280,
-        210
-      ],
-      [
-        1270,
-        210
-      ],
-      [
-        1264,
-        204
       ]
     ],
     "kuaiji": [
@@ -936,6 +941,133 @@
         "is_proven_direct_Han_road": false,
         "basis": "以本作小沛／譙郡的區域代理節點經徐州平原至下邳。路線與折點為遊戲地圖校準。",
         "source": "https://zh.wikisource.org/zh-hant/三國志/卷01"
+      }
+    },
+    {
+      "from": "beihai",
+      "to": "donglai",
+      "mode": "land",
+      "terrain": "plain",
+      "points": [[1046, 250], [1057, 251], [1070, 246], [1084, 237], [1097, 227], [1111, 220]],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《後漢書·郡國志》分列青州的北海國與東萊郡。遊戲沿膠東北部的陸地連接北海與東萊黃縣。",
+        "source": "https://zh.wikisource.org/wiki/後漢書/卷112#東萊郡"
+      }
+    },
+    {
+      "from": "beihai",
+      "to": "langya",
+      "mode": "land",
+      "terrain": "plain",
+      "sections": [
+        [[1046, 250], [1038, 247]],
+        [[1038, 247], [1028, 243]],
+        [[1028, 243], [1020, 249]],
+        [[1020, 249], [1017, 265]],
+        [[1017, 265], [1024, 287]],
+        [[1024, 287], [1015, 289], [1005, 291]]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《後漢書·郡國志》記北海的平昌、朱虛原屬琅邪。遊戲沿北海通往東海的既有幹道南下，再由岔口通往開陽。",
+        "source": "https://zh.wikisource.org/wiki/後漢書/卷112#北海國"
+      }
+    },
+    {
+      "from": "langya",
+      "to": "donghai",
+      "mode": "land",
+      "terrain": "plain",
+      "sections": [
+        [[1005, 291], [1015, 289], [1024, 287]],
+        [[1024, 287], [1036, 326]]
+      ],
+      "history": {
+        "classification": "authorial_regional_historical_city_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《後漢書·郡國志》載開陽原屬東海，建初五年改屬琅邪。遊戲以共用的東海幹道及開陽支路呈現相鄰兩地。",
+        "source": "https://zh.wikisource.org/wiki/後漢書/卷111#琅邪國"
+      }
+    },
+    {
+      "from": "jinan",
+      "to": "taishan",
+      "mode": "land",
+      "terrain": "mountain",
+      "points": [[973, 227], [966, 238], [962, 249], [965, 257], [972, 263]],
+      "history": {
+        "classification": "authorial_regional_mountain_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《後漢書·郡國志》分列濟南與泰山地區的縣治。遊戲以山麓道路連接東平陵和奉高。",
+        "source": "https://zh.wikisource.org/wiki/後漢書/卷111#泰山郡"
+      }
+    },
+    {
+      "from": "taishan",
+      "to": "shanyang",
+      "mode": "land",
+      "terrain": "mountain",
+      "points": [[972, 263], [960, 269], [947, 274], [934, 281], [925, 296], [917, 306]],
+      "history": {
+        "classification": "authorial_regional_mountain_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《後漢書·郡國志》分列兗州的泰山與山陽。遊戲以奉高西南的丘陵道路連接昌邑。",
+        "source": "https://zh.wikisource.org/wiki/後漢書/卷111#泰山郡"
+      }
+    },
+    {
+      "from": "taishan",
+      "to": "langya",
+      "mode": "land",
+      "terrain": "mountain",
+      "points": [[972, 263], [976, 274], [985, 280], [995, 285], [1005, 291]],
+      "history": {
+        "classification": "authorial_regional_mountain_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《後漢書·郡國志》記泰山的蓋縣有沂水源頭，開陽屬琅邪。遊戲以山間道路抽象奉高通往開陽的區域交通。",
+        "source": "https://zh.wikisource.org/wiki/後漢書/卷111#泰山郡"
+      }
+    },
+    {
+      "from": "liaoxi",
+      "to": "liucheng",
+      "mode": "land",
+      "terrain": "mountain",
+      "points": [[1037, 127], [1036, 113], [1040, 101], [1046, 89], [1056, 82], [1062, 70], [1069, 60], [1074, 50]],
+      "history": {
+        "classification": "authorial_regional_mountain_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "柳城為漢遼西郡屬縣，遺址位於朝陽袁台子的大凌河谷。本作以山麓通道連接遼西與柳城，代表區域往來。",
+        "source": "https://www.ln.gov.cn/web/zwgkx/zfxxgk1/zc/xzgfxwj/szf/szfwj/2023010509303592434/index.shtml"
+      }
+    },
+    {
+      "from": "liaodong",
+      "to": "xuantu",
+      "mode": "land",
+      "terrain": "mountain",
+      "points": [[1194, 78], [1207, 76], [1220, 73], [1230, 67], [1239, 57], [1237, 43], [1232, 29]],
+      "history": {
+        "classification": "authorial_regional_mountain_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·吳主傳》裴注引《吳書》記玄菟在遼東東北；本作沿遼水以東的山麓配置襄平至玄菟的陸路。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷47#吳主"
+      }
+    },
+    {
+      "from": "xuantu",
+      "to": "guonei",
+      "mode": "land",
+      "terrain": "mountain",
+      "points": [[1232, 29], [1240, 47], [1251, 61], [1264, 67]],
+      "history": {
+        "classification": "authorial_regional_mountain_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·毌丘儉傳》記魏軍出玄菟攻高句麗丸都。本作以鴨綠江北岸的山間道路代表玄菟通往集安的區域交通。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷28#毌丘儉"
       }
     }
   ],

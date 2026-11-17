@@ -33,7 +33,7 @@ def direct_battle(*, attacker_grain=None, defender_grain=None):
     source, target = state.cities['xiangyang'], state.cities['nanyang']
     if attacker_grain is not None:
         # The old direct-entry strategic expense is separate from real bags.
-        source.grain = max(1, state.officers[146].troops//25) + attacker_grain
+        source.grain = 10 * max(1, state.officers[146].troops//25) + attacker_grain
     if defender_grain is not None:
         target.grain = defender_grain
     game._start_expanded_battle(state, source, target, [146])
@@ -53,13 +53,13 @@ class BattleSupplyTests(unittest.TestCase):
         state.cities['xiangyang'].grain = 4
         before = deepcopy(state)
         quote = battle_supply.departure_quote(state, [146], route)
-        self.assertEqual(quote['march_grain'], 1)
-        self.assertEqual(quote['battle_grain_default'], 3)
-        self.assertEqual(quote['battle_grain_max'], 3)
+        self.assertEqual(quote['march_grain'], 3)
+        self.assertEqual(quote['battle_grain_default'], 1)
+        self.assertEqual(quote['battle_grain_max'], 1)
         self.assertEqual(quote['total_grain'], 4)
         self.assertEqual(state, before)
-        self.assertEqual(battle_supply.departure_quote(state,[146],route,battle_grain=0)['total_grain'],1)
-        for invalid in (-1, 4, True, '3', 3.0):
+        self.assertEqual(battle_supply.departure_quote(state,[146],route,battle_grain=0)['total_grain'],3)
+        for invalid in (-1, 2, True, '1', 1.0):
             with self.subTest(invalid=invalid), self.assertRaises(GameError):
                 battle_supply.departure_quote(state,[146],route,battle_grain=invalid)
         self.assertEqual(state, before)
@@ -69,13 +69,13 @@ class BattleSupplyTests(unittest.TestCase):
         initial = source.grain
         command(game,'depart',source=source.id,target='nanyang',officers=[146])
         march = deepcopy(game.state.extension['travel']['marches'][0])
-        self.assertEqual(march['supply']['loaded'], 10)  # 1 march + 9 battle
-        self.assertEqual(game.state.cities[source.id].grain, initial-10)
+        self.assertEqual(march['supply']['loaded'], 87)  # 3 march + 84 battle
+        self.assertEqual(game.state.cities[source.id].grain, initial-87)
         reach_battle(game)
         row = game.state.battle['extended']['supply']['sides']['attackers']
-        self.assertEqual((row['loaded'],row['initial_credit']), (9,720))
-        self.assertEqual(game.state.cities[source.id].grain, initial-10)
-        self.assertEqual(game.state.battle['extended']['supply']['sides']['defenders']['loaded'],18)
+        self.assertEqual((row['loaded'],row['initial_credit']), (84,20))
+        self.assertEqual(game.state.cities[source.id].grain, initial-87)
+        self.assertEqual(game.state.battle['extended']['supply']['sides']['defenders']['loaded'],174)
         game.validate(game.state)
 
     def test_friendly_transfer_has_only_the_existing_march_budget(self):
@@ -89,12 +89,12 @@ class BattleSupplyTests(unittest.TestCase):
 
     def test_explicit_attack_budget_and_rejected_overload_are_atomic(self):
         game = new(); before = game.export_save()
-        for invalid in (-1,3800,True,'2'):
+        for invalid in (-1,38000,True,'2'):
             with self.subTest(invalid=invalid), self.assertRaises(GameError):
                 command(game,'depart',source='xiangyang',target='nanyang',officers=[146],battle_grain=invalid)
             self.assertEqual(game.export_save(),before)
         command(game,'depart',source='xiangyang',target='nanyang',officers=[146],battle_grain=0)
-        self.assertEqual(game.state.extension['travel']['marches'][0]['supply']['loaded'],1)
+        self.assertEqual(game.state.extension['travel']['marches'][0]['supply']['loaded'],3)
 
     def test_daily_charges_keep_fractional_credit_and_follow_actual_survivors(self):
         game = direct_battle(); battle = game.state.battle
@@ -102,14 +102,14 @@ class BattleSupplyTests(unittest.TestCase):
         start = row['remaining']; rng = deepcopy(game.state.rng)
         for _ in range(3):
             advance_day(game)
-        self.assertEqual(row['consumed'],1)
-        self.assertEqual(row['credit_units'],160)  # 1000-3*(180+100)
+        self.assertEqual(row['consumed'],9)
+        self.assertEqual(row['credit_units'],60)  # 9*100 - 3*(180+100)
         battle['attackers'][0]['troops'] = 50
         for _ in range(4):
             advance_day(game)
-        self.assertEqual(row['consumed'],2)
-        self.assertEqual(row['credit_units'],560)
-        self.assertEqual(row['remaining'],start-2)
+        self.assertEqual(row['consumed'],15)
+        self.assertEqual(row['credit_units'],60)
+        self.assertEqual(row['remaining'],start-15)
         before = deepcopy(battle['extended']['supply'])
         battle_supply.end_day(game,game.state,battle)
         self.assertEqual(battle['extended']['supply'],before,'Repeated day hook must not charge twice')
@@ -123,8 +123,8 @@ class BattleSupplyTests(unittest.TestCase):
         battle = game.state.battle
         self.assertEqual(battle['round'],2)
         self.assertEqual(battle['extended']['supply']['days'],1)
-        for side in battle_supply.SIDES:
-            self.assertEqual(battle['extended']['supply']['sides'][side]['consumed'],1)
+        for side, consumed in (('attackers', 3), ('defenders', 6)):
+            self.assertEqual(battle['extended']['supply']['sides'][side]['consumed'],consumed)
         self.assertEqual(game.state.extension['command_books'],before.extension['command_books'])
         self.assertEqual(game.state.rng,before.rng)
         game.validate(game.state)
@@ -144,7 +144,7 @@ class BattleSupplyTests(unittest.TestCase):
             command(game, 'battle_wait', battle_id=game.state.battle['id'])
         event = game.state.extension['events']['items'][-1]
         self.assertEqual(event['kind'], 'battle_supply_exhausted')
-        self.assertEqual(event['details']['daily_grain'], 31)
+        self.assertEqual(event['details']['daily_grain'], 303)
         self.assertGreater(event['details']['missing_units'], 22000)
         saved = game.export_save()
         restored = Campaign(game.catalog)
@@ -182,7 +182,7 @@ class BattleSupplyTests(unittest.TestCase):
             command(restored,'battle_wait',battle_id=restored.state.battle['id'])
         row = restored.state.battle['extended']['supply']['sides']['attackers']
         self.assertEqual(cities['xiangyang'].grain-restored.state.cities['xiangyang'].grain,row['loaded'])
-        self.assertEqual(row['loaded'],9)
+        self.assertEqual(row['loaded'],84)
         restored.validate(restored.state)
 
     def test_rejected_legacy_command_rolls_back_even_its_lazy_loading(self):
@@ -202,8 +202,8 @@ class BattleSupplyTests(unittest.TestCase):
                 command(game,'battle_facility',battle_id=battle['id'],actor=actor['id'],action='buy_grain',batches=2)
                 current = game.state.battle['extended']['supply']['sides'][side]
                 old = before.battle['extended']['supply']['sides'][side]
-                self.assertEqual(current['remaining'],old['remaining']+200)
-                self.assertEqual(current['received'],200)
+                self.assertEqual(current['remaining'],old['remaining']+2000)
+                self.assertEqual(current['received'],2000)
                 self.assertEqual({k:c.grain for k,c in game.state.cities.items()},
                                  {k:c.grain for k,c in before.cities.items()})
                 self.assertEqual(game.state.rng,before.rng)
@@ -323,7 +323,7 @@ class BattleSupplyTests(unittest.TestCase):
         dispatch('develop_land',city='xiangyang',actor=999)
         self.assertGreater(games[0].state.extension['city_development']['cities']['xiangyang']['land'],land)
         dispatch('depart',source='xiangyang',target='nanyang',officers=[146],battle_grain=0)
-        self.assertEqual(games[0].state.extension['travel']['marches'][0]['supply']['loaded'],1)
+        self.assertEqual(games[0].state.extension['travel']['marches'][0]['supply']['loaded'],3)
         for _ in range(30):
             state=games[0].state
             if state.phase=='battle':break
@@ -339,13 +339,12 @@ class BattleSupplyTests(unittest.TestCase):
             point=games[0].state.battle['extended']['tactical']['positions'][str(placement['actor'])]
             dispatch('battle_place',battle_id=games[0].state.battle['id'],actor=placement['actor'],**point)
         self.assertIn('supply',games[0].state.battle['extended'])
-        self.assertEqual(games[0].state.battle['extended']['supply']['sides']['attackers']['initial_credit'],720)
+        self.assertEqual(games[0].state.battle['extended']['supply']['sides']['attackers']['initial_credit'],20)
         with patch('remake.tactical_ai.choose_action',return_value=WAIT):
-            for _ in range(3):
-                dispatch('battle_wait',battle_id=games[0].state.battle['id'])
+            dispatch('battle_wait',battle_id=games[0].state.battle['id'])
         self.assertEqual(games[0].state.phase,'result')
         self.assertEqual(games[0].state.battle['outcome'],'retreat')
-        self.assertEqual(games[0].state.battle['extended']['supply']['days'],3)
+        self.assertEqual(games[0].state.battle['extended']['supply']['days'],1)
         dispatch('settle',battle_id=games[0].state.battle['id'])
         self.assertIsNone(games[0].state.battle)
 

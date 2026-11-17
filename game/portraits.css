@@ -10,9 +10,15 @@
 .officer-identity>span:last-child{min-width:0;overflow-wrap:anywhere}
 .roster-table .officer-identity,.library-table .officer-identity{gap:6px}
 .roster-table .officer-identity>span:last-child{min-width:3em}
+.city-information-officer{text-align:start}
 .person-profile-head{display:flex;gap:20px;align-items:flex-start;margin-bottom:16px;min-width:0}
 .person-profile-summary{min-width:0;flex:1}
 .person-profile-summary p:last-child{margin-bottom:0}
+.person-biography{border-top:1px solid currentColor;border-bottom:1px solid currentColor;padding:12px 0;margin-bottom:16px}
+.person-biography h3{margin:0 0 6px}
+.person-biography p{margin:0 0 6px}
+.person-biography p:last-child{margin-bottom:0}
+.person-biography-sources{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:10px;row-gap:4px;overflow-wrap:anywhere}
 .unit .officer-identity{flex:1}
 .unit .officer-identity>span:last-child{min-width:2em}
 .duel-fighter-head{display:flex;align-items:center;gap:16px;margin-bottom:12px;min-width:0}

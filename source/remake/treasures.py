@@ -21,6 +21,15 @@ DEFAULT_POLICY = dict(enabled=False, target_loyalty=90, gold_budget=100,
 _FIELDS = {'schema', 'cities', 'factions', 'ledger', 'auto_turns'}
 _CITY_FIELDS = {'owner', 'treasure', 'governor', 'governor_mode'}
 _LEDGER_FIELDS = {'initial', 'found', 'spent', 'sold', 'lost'}
+# Game opening stocks carrying forward the 190 relocation receipt. The early
+# successor scenarios represent depletion during the wars around Chang'an.
+_CHANGAN_RELOCATION_TREASURES = {
+    'mainland191-10': RULES['city_cap'],
+    'mainland194-06': 46,
+    'mainland196-06': 18,
+    'mainland197-07': 12,
+    'mainland198-03': 8,
+}
 
 
 def _int(value, low, high):
@@ -66,11 +75,19 @@ def current_governor(game, state, city):
     return _governor(game, state, city, saved) if saved is not None else None
 
 
+def opening_stock(data, city_id, owner, year, month):
+    """Resolve the same treasury stock for opening previews and new games."""
+    if owner == 'neutral':
+        return 0
+    if city_id == 'jingzhao' and data.get('id') in _CHANGAN_RELOCATION_TREASURES:
+        return _CHANGAN_RELOCATION_TREASURES[data['id']]
+    return {'normal': 2, 'large': 4, 'giant': 6}[tier_at(data, city_id, year, month)]
+
+
 def empty(game, state):
     cities = {}
     for key, city in state.cities.items():
-        tier = tier_at(game.catalog.data, key, state.year, state.month)
-        amount = {'normal': 2, 'large': 4, 'giant': 6}[tier] if city.owner != 'neutral' else 0
+        amount = opening_stock(game.catalog.data, key, city.owner, state.year, state.month)
         cities[key] = dict(owner=city.owner, treasure=amount,
                            governor=_governor(game, state, city), governor_mode='auto')
     owners = set(game.catalog.factions) - {'neutral'}

@@ -136,13 +136,22 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
  const additions=['historical-song-jian','historical-lu-xing','historical-tang-pu','historical-li-tong-jiaozhi','historical-beigong-boyu','historical-li-wenhou','historical-bian-zhang'];
  i18n.locale='zh-Hant';
  const released=create({i18n,fetch:async()=>({ok:true,json:async()=>shipped})});assert(await released.load());
- const allGenerated=Object.entries(shipped.people).filter(([,row])=>row.kind==='generated');assert.equal(allGenerated.length,835);
- assert.equal(Object.keys(shipped.people).length,1056);
+ const allGenerated=Object.entries(shipped.people).filter(([,row])=>row.kind==='generated');assert.equal(allGenerated.length,855);
+ assert.equal(Object.keys(shipped.people).length,1080);
+ assert.equal(Object.values(shipped.people).filter(row=>row.kind==='generic_placeholder').length,4);
  assert.equal(Object.values(shipped.people).filter(row=>row.kind==='nes_original').length,221);
  assert.equal(shipped.by_runtime_id['1044'],'historical-wang-jian-liaodong');
  assert.equal(shipped.people['historical-wang-jian-liaodong'].kind,'nes_original');
  assert.equal(shipped.people['historical-wang-jian-liaodong'].original_id,11);
  for(const[pid,row]of Object.entries(shipped.people)){
+  if(row.kind==='generic_placeholder'){
+   assert.equal(released.asset(pid),null);
+   const markup=released.html(pid,row.name,{size:'detail',source:true});
+   assert(markup.includes('portrait-placeholder'));
+   assert(markup.includes('共用武將占位肖像'));
+   assert(!markup.includes('<img'));
+   continue;
+  }
   assert.deepEqual(row.white,{path:`/assets/portraits/white/${pid}.png`,width:512,height:640},pid);
   assert.deepEqual(released.asset(pid),{...row.white,enhanced:true},pid);
  }

@@ -1,7 +1,7 @@
 {
   "schema": "tk2-generated-portraits-v1",
-  "count": 835,
-  "unique_pixel_images": 835,
+  "count": 855,
+  "unique_pixel_images": 855,
   "native_size": [
     32,
     40
@@ -1761,11 +1761,251 @@
       "art_gender_design": "male",
       "source_type": "single_authored_portrait",
       "retainer_plan": "art/portraits/early-shu-v1/plan.json"
+    },
+    {
+      "id": "historical-wuhuan-nanlou",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-wuhuan-nanlou.png",
+      "sha256": "c361cd5d61baf2fb25d19373e7a9c8ca961e0691fad985171130d3cace857951",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-wuhuan-supuyan",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-wuhuan-supuyan.png",
+      "sha256": "c5e7c6045a94848a39f1bf545167e33f454a2087b1fa1dc44b5bff1b23372fb1",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-wuhuan-wuyan",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-wuhuan-wuyan.png",
+      "sha256": "8a675eda3e44b5ab815e2baade5177c7aabdddf996949955dbe4f1e0a72ebf80",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-wuhuan-sufuwan",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-wuhuan-sufuwan.png",
+      "sha256": "833bd605139dbd1843678575d12677c970f9035e931df8121149e16064239f0e",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-gyesu",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-gyesu.png",
+      "sha256": "077814f5f5a0bfe86f2f33d75402d7a366708e194351eac8f3573c572ae5f7b4",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-queen-u",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-queen-u.png",
+      "sha256": "28e0f1006971bac2c183174358fc73a1f75982455e953902779d9c1cc0e8bb5d",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "female",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-ugeo",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-ugeo.png",
+      "sha256": "e53af15e1028d40dca09b34493e83ae41c4d2e2dfa3ec166d9fae54ae1a57855",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-yeonin",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-yeonin.png",
+      "sha256": "57873972c5106494e13b517579a79c760c2b488f95168a26761a04e6139345c8",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-annyu",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-annyu.png",
+      "sha256": "b0dd125727f2209f076f2c1e7091a7ac4a79d9b93f987ef9a6ff27263cef1c08",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-eulpaso",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-eulpaso.png",
+      "sha256": "8f7a9fd73ff3a0bb113ac3dea7e2a9a497cb80a1458387d61424fcdfe0e71435",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-goyuru",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-goyuru.png",
+      "sha256": "1d6d32263efa0619be87a032d4f138ff0a7c29ad1ead512934fcc62ade5d6a15",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-myeongnim-eosu",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-myeongnim-eosu.png",
+      "sha256": "6d779ce14229363f419b7e47e510350bd0f53e9429d00b4610119879d12e33ee",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-bak-wigeo",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-bak-wigeo.png",
+      "sha256": "7e21ca04b67a57f33a0eb0d0c2681f755428c92b8b0c445df66ecf9b4c79c11c",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-deungnae",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-deungnae.png",
+      "sha256": "858469bfce4f509895f60af5c23ce2c04a3f3f8bcdb517a1410fe3d05faaff10",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-miru",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-miru.png",
+      "sha256": "4abda870f4322694a517090226b3d62bae3b5e00015555f07634198c0ffe55d8",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-yu-okgu",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-yu-okgu.png",
+      "sha256": "b22e1699fb85a13eae19079b71512a929c71b576e69cbd57c0fd88729f2c55b2",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-nyuyu",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-nyuyu.png",
+      "sha256": "876318b56bd097a294e6d119d0dea29d8dfbdd501a6d6d32fcf8f1a9bc90d449",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-dayu",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-dayu.png",
+      "sha256": "c09d40ab63b402243e441a7a4ae88516dfcdaa668a1a775328e4b055ab368148",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-eumu",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-eumu.png",
+      "sha256": "3dfeb9a0fefe47dca41e73cd0c67c1171bc2d26aac3041acecbdab0b3171f976",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-myeongnim-holdo",
+      "path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-myeongnim-holdo.png",
+      "sha256": "ca033ded365a310a31cc7eccb5987232d825f592d2a80c821133429af38f1367",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
     }
   ],
   "assigned_by_gender": {
-    "male": 783,
-    "female": 52
+    "male": 802,
+    "female": 53
   },
   "duplicate_fallback_count": 0,
   "by_person_id": {
@@ -35514,6 +35754,1006 @@
         31,
         39
       ]
+    },
+    "historical-wuhuan-nanlou": {
+      "path": "/assets/portraits/generated/historical-wuhuan-nanlou.png",
+      "png_sha256": "55b4b6574bbdad810e313f8b3b2f8544733013263418c5bbd36e0348fd067657",
+      "rgba_sha256": "afda37c7c161fdfb83d50edc6b98b79b7c030d97191b9d84d9d456133db3d571",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 405,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "难楼",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-wuhuan-nanlou.png",
+      "original_source_sha256": "c361cd5d61baf2fb25d19373e7a9c8ca961e0691fad985171130d3cace857951",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-wuhuan-nanlou.png",
+      "source_sha256": "c361cd5d61baf2fb25d19373e7a9c8ca961e0691fad985171130d3cace857951",
+      "opaque_pixels": 542,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        17,
+        21,
+        1105,
+        1366
+      ],
+      "native_fitted_box": [
+        1,
+        2,
+        31,
+        39
+      ]
+    },
+    "historical-wuhuan-supuyan": {
+      "path": "/assets/portraits/generated/historical-wuhuan-supuyan.png",
+      "png_sha256": "34f8c2ffc95c6fedd039d5ea03b517789b7b76a024381191ad71cbeb3c6a3f80",
+      "rgba_sha256": "7c34c608c055ddacec71c81b5962f3da2da352e469583fa600792395167c004b",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 439,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "苏仆延",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-wuhuan-supuyan.png",
+      "original_source_sha256": "c5e7c6045a94848a39f1bf545167e33f454a2087b1fa1dc44b5bff1b23372fb1",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-wuhuan-supuyan.png",
+      "source_sha256": "c5e7c6045a94848a39f1bf545167e33f454a2087b1fa1dc44b5bff1b23372fb1",
+      "opaque_pixels": 565,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        17,
+        15,
+        1108,
+        1363
+      ],
+      "native_fitted_box": [
+        1,
+        2,
+        31,
+        39
+      ]
+    },
+    "historical-wuhuan-wuyan": {
+      "path": "/assets/portraits/generated/historical-wuhuan-wuyan.png",
+      "png_sha256": "c61dcf6c4b7f9bb85049816448be03f0f438f9be16408098d408be096d5cb684",
+      "rgba_sha256": "ac7b991fa3848a5eda516b2cb364a123c2b5caf83e26d3a309150b76fbb70b4e",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 402,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "乌延",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-wuhuan-wuyan.png",
+      "original_source_sha256": "8a675eda3e44b5ab815e2baade5177c7aabdddf996949955dbe4f1e0a72ebf80",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-wuhuan-wuyan.png",
+      "source_sha256": "8a675eda3e44b5ab815e2baade5177c7aabdddf996949955dbe4f1e0a72ebf80",
+      "opaque_pixels": 453,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        18,
+        20,
+        1105,
+        1366
+      ],
+      "native_fitted_box": [
+        1,
+        2,
+        31,
+        39
+      ]
+    },
+    "historical-wuhuan-sufuwan": {
+      "path": "/assets/portraits/generated/historical-wuhuan-sufuwan.png",
+      "png_sha256": "7d1b60cf0695ee87f6488fee25320f9cb06ce257bf7587512ea1858e68bc3cd7",
+      "rgba_sha256": "d085076b4b16ade338453a1d952fc1bdcba4ea0c982fc0457441df128b374ab8",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 419,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "速附丸",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-wuhuan-sufuwan.png",
+      "original_source_sha256": "833bd605139dbd1843678575d12677c970f9035e931df8121149e16064239f0e",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-wuhuan-sufuwan.png",
+      "source_sha256": "833bd605139dbd1843678575d12677c970f9035e931df8121149e16064239f0e",
+      "opaque_pixels": 594,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        17,
+        28,
+        1105,
+        1365
+      ],
+      "native_fitted_box": [
+        1,
+        2,
+        31,
+        39
+      ]
+    },
+    "historical-goguryeo-gyesu": {
+      "path": "/assets/portraits/generated/historical-goguryeo-gyesu.png",
+      "png_sha256": "306af8b6557c589150204c273f504b50d2f814d78c724ecc0054a65600d47cee",
+      "rgba_sha256": "51c085b992e076fbf31d80a2576d3f4d0a9fa67f6c0f6d54baf1725ec9574ab6",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 420,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "罽须",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-gyesu.png",
+      "original_source_sha256": "077814f5f5a0bfe86f2f33d75402d7a366708e194351eac8f3573c572ae5f7b4",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-gyesu.png",
+      "source_sha256": "077814f5f5a0bfe86f2f33d75402d7a366708e194351eac8f3573c572ae5f7b4",
+      "opaque_pixels": 450,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        36,
+        14,
+        1084,
+        1367
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        30,
+        39
+      ]
+    },
+    "historical-goguryeo-queen-u": {
+      "path": "/assets/portraits/generated/historical-goguryeo-queen-u.png",
+      "png_sha256": "e2efaf2312672dd549c3b95cc31c272b3f12f697d1504da6c2fd1fb8b09e79b9",
+      "rgba_sha256": "959eb8b82dfb8e6bdd575da1308d2ff023cdcf3af7596286e7234a183381f3b6",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 377,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "female",
+      "name": "于氏",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-queen-u.png",
+      "original_source_sha256": "28e0f1006971bac2c183174358fc73a1f75982455e953902779d9c1cc0e8bb5d",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-queen-u.png",
+      "source_sha256": "28e0f1006971bac2c183174358fc73a1f75982455e953902779d9c1cc0e8bb5d",
+      "opaque_pixels": 502,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        106,
+        96,
+        1035,
+        1321
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        30,
+        39
+      ]
+    },
+    "historical-goguryeo-ugeo": {
+      "path": "/assets/portraits/generated/historical-goguryeo-ugeo.png",
+      "png_sha256": "94b3f86e31508a231dd345bf6f5a7576b519880749d93f521489bf4d8c645397",
+      "rgba_sha256": "b3d7d00df3e575d0669a97fec656480cd6df8112774c1066685c8f27a33ce838",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 413,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "优居",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-ugeo.png",
+      "original_source_sha256": "e53af15e1028d40dca09b34493e83ae41c4d2e2dfa3ec166d9fae54ae1a57855",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-ugeo.png",
+      "source_sha256": "e53af15e1028d40dca09b34493e83ae41c4d2e2dfa3ec166d9fae54ae1a57855",
+      "opaque_pixels": 416,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        29,
+        38,
+        1094,
+        1365
+      ],
+      "native_fitted_box": [
+        1,
+        2,
+        31,
+        39
+      ]
+    },
+    "historical-goguryeo-yeonin": {
+      "path": "/assets/portraits/generated/historical-goguryeo-yeonin.png",
+      "png_sha256": "8bd8444bdf10ecc716b89ef7f86d9bd28cdff559f8fd0d061da291ee63b40343",
+      "rgba_sha256": "f7a8a5d405cbfef845e672b006bb887fd511ad0c1a277744886d969367b2ed60",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 341,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "然人",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-yeonin.png",
+      "original_source_sha256": "57873972c5106494e13b517579a79c760c2b488f95168a26761a04e6139345c8",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-yeonin.png",
+      "source_sha256": "57873972c5106494e13b517579a79c760c2b488f95168a26761a04e6139345c8",
+      "opaque_pixels": 450,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        36,
+        16,
+        1086,
+        1364
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        31,
+        39
+      ]
+    },
+    "historical-goguryeo-annyu": {
+      "path": "/assets/portraits/generated/historical-goguryeo-annyu.png",
+      "png_sha256": "bdfc62c13bb98c4e2bf5f97ffe4ab08435b76412d25c44f76fdeaedbfa3bdb78",
+      "rgba_sha256": "86204667a502a1711fd996be869c2eb8af3dabfa59252084301b16c1f914ead1",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 429,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "晏留",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-annyu.png",
+      "original_source_sha256": "b0dd125727f2209f076f2c1e7091a7ac4a79d9b93f987ef9a6ff27263cef1c08",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-annyu.png",
+      "source_sha256": "b0dd125727f2209f076f2c1e7091a7ac4a79d9b93f987ef9a6ff27263cef1c08",
+      "opaque_pixels": 540,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        33,
+        12,
+        1088,
+        1366
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        31,
+        39
+      ]
+    },
+    "historical-goguryeo-eulpaso": {
+      "path": "/assets/portraits/generated/historical-goguryeo-eulpaso.png",
+      "png_sha256": "e9ca3f00f1ea1b72fba85eee936ffcb54f2ae6747057fadcd8eaeb2310627ca8",
+      "rgba_sha256": "0e968854918260efca9747ef7ac79044d695844efeb2900292f46ccbe5b29012",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 404,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "乙巴素",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-eulpaso.png",
+      "original_source_sha256": "8f7a9fd73ff3a0bb113ac3dea7e2a9a497cb80a1458387d61424fcdfe0e71435",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-eulpaso.png",
+      "source_sha256": "8f7a9fd73ff3a0bb113ac3dea7e2a9a497cb80a1458387d61424fcdfe0e71435",
+      "opaque_pixels": 460,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        114,
+        21,
+        1008,
+        1369
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        28,
+        39
+      ]
+    },
+    "historical-goguryeo-goyuru": {
+      "path": "/assets/portraits/generated/historical-goguryeo-goyuru.png",
+      "png_sha256": "165ac27abd1cb34bad7056b63dc43ac9b0b1e0dfa1eaa659b7ad05898551575e",
+      "rgba_sha256": "50c3b97b22b0f46632882e9ee4d8256145a689a7fd51869b4ea452e7a5fa7620",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 432,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "高优娄",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-goyuru.png",
+      "original_source_sha256": "1d6d32263efa0619be87a032d4f138ff0a7c29ad1ead512934fcc62ade5d6a15",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-goyuru.png",
+      "source_sha256": "1d6d32263efa0619be87a032d4f138ff0a7c29ad1ead512934fcc62ade5d6a15",
+      "opaque_pixels": 599,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        37,
+        13,
+        1085,
+        1367
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        30,
+        39
+      ]
+    },
+    "historical-goguryeo-myeongnim-eosu": {
+      "path": "/assets/portraits/generated/historical-goguryeo-myeongnim-eosu.png",
+      "png_sha256": "f2001dbec73cbec5581a2c23049f30dbc34d98cb92bf7b94ebcd5fbf101f05d4",
+      "rgba_sha256": "7926ef3013789d8edc9301af1d3d54a56b2835453ea2ea4f9f41a108c06abbea",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 422,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "明临於漱",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-myeongnim-eosu.png",
+      "original_source_sha256": "6d779ce14229363f419b7e47e510350bd0f53e9429d00b4610119879d12e33ee",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-myeongnim-eosu.png",
+      "source_sha256": "6d779ce14229363f419b7e47e510350bd0f53e9429d00b4610119879d12e33ee",
+      "opaque_pixels": 471,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        38,
+        13,
+        1084,
+        1366
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        30,
+        39
+      ]
+    },
+    "historical-goguryeo-bak-wigeo": {
+      "path": "/assets/portraits/generated/historical-goguryeo-bak-wigeo.png",
+      "png_sha256": "0f383a2e99607dd4fb9f6984be6f25ab5b956b6020ebafe3808fcb6b45830db1",
+      "rgba_sha256": "2412199d009e252fde0967ef872054bfd7548facef2020c21345cef66abfa015",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 424,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "驳位居",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-bak-wigeo.png",
+      "original_source_sha256": "7e21ca04b67a57f33a0eb0d0c2681f755428c92b8b0c445df66ecf9b4c79c11c",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-bak-wigeo.png",
+      "source_sha256": "7e21ca04b67a57f33a0eb0d0c2681f755428c92b8b0c445df66ecf9b4c79c11c",
+      "opaque_pixels": 542,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        36,
+        21,
+        1085,
+        1364
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        31,
+        39
+      ]
+    },
+    "historical-goguryeo-deungnae": {
+      "path": "/assets/portraits/generated/historical-goguryeo-deungnae.png",
+      "png_sha256": "666ef06131ab37d7804d76288bbaac99a80ff02f52ec2901b681d749147dbe8b",
+      "rgba_sha256": "c203679c2b6edd6a2ba7e63d403687332b2381ba25f3982e9cb7bdbe0cf4fc87",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 381,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "得来",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-deungnae.png",
+      "original_source_sha256": "858469bfce4f509895f60af5c23ce2c04a3f3f8bcdb517a1410fe3d05faaff10",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-deungnae.png",
+      "source_sha256": "858469bfce4f509895f60af5c23ce2c04a3f3f8bcdb517a1410fe3d05faaff10",
+      "opaque_pixels": 543,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        114,
+        51,
+        1009,
+        1367
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ]
+    },
+    "historical-goguryeo-miru": {
+      "path": "/assets/portraits/generated/historical-goguryeo-miru.png",
+      "png_sha256": "0f2240c8983d8ecabde2b923eb4de926cf68d2dc2bc427eb45db109747cfa15f",
+      "rgba_sha256": "b52ba3d007bf001a86f73b2ea50a142fcf8e3e2af1dc80f9f5e035be34abe67a",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 423,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "密友",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-miru.png",
+      "original_source_sha256": "4abda870f4322694a517090226b3d62bae3b5e00015555f07634198c0ffe55d8",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-miru.png",
+      "source_sha256": "4abda870f4322694a517090226b3d62bae3b5e00015555f07634198c0ffe55d8",
+      "opaque_pixels": 440,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        29,
+        12,
+        1094,
+        1361
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        31,
+        39
+      ]
+    },
+    "historical-goguryeo-yu-okgu": {
+      "path": "/assets/portraits/generated/historical-goguryeo-yu-okgu.png",
+      "png_sha256": "568eecee189717ba27098b44a060bb55ee2ce110919da078a3d514b7fa01a3f8",
+      "rgba_sha256": "10efa7b619169bd7726cc7ef17c3d4d85738409dab5aff89c9d15c13964728db",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 392,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "刘屋句",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-yu-okgu.png",
+      "original_source_sha256": "b22e1699fb85a13eae19079b71512a929c71b576e69cbd57c0fd88729f2c55b2",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-yu-okgu.png",
+      "source_sha256": "b22e1699fb85a13eae19079b71512a929c71b576e69cbd57c0fd88729f2c55b2",
+      "opaque_pixels": 441,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        37,
+        13,
+        1085,
+        1365
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        30,
+        39
+      ]
+    },
+    "historical-goguryeo-nyuyu": {
+      "path": "/assets/portraits/generated/historical-goguryeo-nyuyu.png",
+      "png_sha256": "f2fa0c9afadd159bf9242eae630e9042928e914008a564fe6045f8ba15851131",
+      "rgba_sha256": "c2e32fa8f9f872fbad6d80f2ccb22a3ebed78cbfeb7d58e01fd852d300d50cb9",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 412,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "纽由",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-nyuyu.png",
+      "original_source_sha256": "876318b56bd097a294e6d119d0dea29d8dfbdd501a6d6d32fcf8f1a9bc90d449",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-nyuyu.png",
+      "source_sha256": "876318b56bd097a294e6d119d0dea29d8dfbdd501a6d6d32fcf8f1a9bc90d449",
+      "opaque_pixels": 497,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        38,
+        25,
+        1084,
+        1367
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        31,
+        39
+      ]
+    },
+    "historical-goguryeo-dayu": {
+      "path": "/assets/portraits/generated/historical-goguryeo-dayu.png",
+      "png_sha256": "a01a20c3d09d454a675d7dcce6de15ee60c496e3003b0c0935de05af94d14ac5",
+      "rgba_sha256": "a95636ed64eb5c0b22c4b41a76fcd2997a7f87af96876395e9f7f76011415603",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 363,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "多优",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-dayu.png",
+      "original_source_sha256": "c09d40ab63b402243e441a7a4ae88516dfcdaa668a1a775328e4b055ab368148",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-dayu.png",
+      "source_sha256": "c09d40ab63b402243e441a7a4ae88516dfcdaa668a1a775328e4b055ab368148",
+      "opaque_pixels": 458,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        36,
+        13,
+        1084,
+        1364
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        30,
+        39
+      ]
+    },
+    "historical-goguryeo-eumu": {
+      "path": "/assets/portraits/generated/historical-goguryeo-eumu.png",
+      "png_sha256": "fcd252aa3005f8e869318796b71e8a67ce19c305707c6186ae89af0f8ed7069e",
+      "rgba_sha256": "13c65feeed6105d29f9e16b18384f9148391e4b0ba62bc58a375cb80497fe045",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 423,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "阴友",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-eumu.png",
+      "original_source_sha256": "3dfeb9a0fefe47dca41e73cd0c67c1171bc2d26aac3041acecbdab0b3171f976",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-eumu.png",
+      "source_sha256": "3dfeb9a0fefe47dca41e73cd0c67c1171bc2d26aac3041acecbdab0b3171f976",
+      "opaque_pixels": 586,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        96,
+        49,
+        1026,
+        1368
+      ],
+      "native_fitted_box": [
+        2,
+        1,
+        29,
+        39
+      ]
+    },
+    "historical-goguryeo-myeongnim-holdo": {
+      "path": "/assets/portraits/generated/historical-goguryeo-myeongnim-holdo.png",
+      "png_sha256": "93552609da9bb9e5dee8e8b87842930c318857d29b9b590b15fcd32aa8ac1cac",
+      "rgba_sha256": "7554ecc7d3228d8106049fc5d06edfb2c45dafd539805024c0269849c694aa96",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 368,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "明临笏睹",
+      "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json",
+      "retainer_plan_sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-myeongnim-holdo.png",
+      "original_source_sha256": "ca033ded365a310a31cc7eccb5987232d825f592d2a80c821133429af38f1367",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/frontier-portraits-v1/source/historical-goguryeo-myeongnim-holdo.png",
+      "source_sha256": "ca033ded365a310a31cc7eccb5987232d825f592d2a80c821133429af38f1367",
+      "opaque_pixels": 441,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        37,
+        11,
+        1084,
+        1364
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        30,
+        39
+      ]
     }
   },
   "retainer_plan": {
@@ -35533,6 +36773,15 @@
       "generated_count": 4,
       "original_count": 0,
       "source_images": 4,
+      "method": "retainer_authored_source_direct128_fixed_palette"
+    },
+    {
+      "path": "art/portraits/frontier-portraits-v1/plan.json",
+      "sha256": "10f2463a85b7dcd1d93fe933ba41a769433746d6c6d66ba0ae388e93c04c7be7",
+      "count": 20,
+      "generated_count": 20,
+      "original_count": 0,
+      "source_images": 20,
       "method": "retainer_authored_source_direct128_fixed_palette"
     }
   ]

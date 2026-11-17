@@ -195,7 +195,7 @@ class FacilityCampaignTests(unittest.TestCase):
         receipt=events[0]['details'];current=game.state.cities[source.id]
         self.assertEqual(receipt['disaster'],'drought');self.assertEqual(receipt['rate'],10)
         self.assertEqual(current.gold,before.cities[source.id].gold+income['gold'])
-        self.assertEqual(current.grain,before.cities[source.id].grain+income['grain']-receipt['grain'])
+        self.assertEqual(current.grain,before.cities[source.id].grain+income['grain']-192-receipt['grain'])
         self.assertEqual(current.reserves,before.cities[source.id].reserves+income['reserves']-receipt['reserves'])
         self.assertEqual(game.state.soldiers['lost']-before.soldiers['lost'],receipt['reserves'])
         self.assertEqual(game.state.officers[146].health,8,'Only established monthly healing changes the wounded officer')
@@ -229,7 +229,7 @@ class FacilityCampaignTests(unittest.TestCase):
         self.advance(game)
         current=game.state.cities['xiangyang']
         self.assertEqual(current.gold,before.gold+expected['gold'])
-        self.assertEqual(current.grain,before.grain+expected['grain'])
+        self.assertEqual(current.grain,before.grain+expected['grain']-192)
         self.assertEqual(current.reserves,before.reserves+expected['reserves'])
         self.restore(game)
 

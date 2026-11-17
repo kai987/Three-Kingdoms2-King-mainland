@@ -190,8 +190,12 @@ class RoadCenterBuilderTests(unittest.TestCase):
         self.assertEqual(set(repairs), {'dongping-changyi', 'jinan-linzi', 'shanggu-ji',
                                         'hongnong-luoyang', 'jiyin-qiao-changyi',
                                         'liaoxi-changli-liaodong', 'lingling-eastern-fork',
-                                        'runan-northeast-fork', 'qichun-chaisang-poyang-shared-trunks'})
+                                        'runan-northeast-fork', 'qichun-chaisang-poyang-shared-trunks',
+                                        'nanpi-coastal-roads', 'shandong-coastal-fork',
+                                        'liaodong-lelang-daifang', 'changan-south-bank'})
         coastal = rows[260]
+        self.assertEqual(rows[246]['new_points'][0], positions['yuyang'])
+        self.assertEqual(rows[246]['new_points'][-1], positions['liaoxi'])
         self.assertEqual(coastal['new_points'][0], positions['liaoxi'])
         self.assertEqual(coastal['new_points'][-1], positions['liaodong'])
         expansion = json.loads((ROOT / 'game/config/campaigns/city-expansion-map.json').read_text())
@@ -200,6 +204,39 @@ class RoadCenterBuilderTests(unittest.TestCase):
         self.assertNotIn('Q' + stop, coastal['new_d'])
         roads = json.loads((ROOT / 'game/config/route-corridors.json').read_text())['land_connections']
         self.assertFalse(any('changli' in (row['from'], row['to']) for row in roads))
+        nanpi_trunk = rows[233]['new_points']
+        self.assertEqual(nanpi_trunk[-1], positions['bohai'])
+        approaches = {row['from']: row['draw'] for row in catalog['regional_roads']
+                      if row['to'] == 'bohai'}
+        self.assertEqual(approaches['hejian'][-1]['points'], nanpi_trunk)
+        self.assertEqual(approaches['yan'][-1]['points'], nanpi_trunk)
+        self.assertEqual(approaches['hejian'][-2]['points'], rows[209]['new_points'][-2:])
+        self.assertEqual(rows[232]['new_points'][-1], nanpi_trunk[0])
+        self.assertEqual(rows[252]['new_points'][0], positions['qi'])
+        self.assertEqual(rows[253]['new_points'][0], positions['donghai'])
+        self.assertEqual(rows[255]['new_points'][-1], positions['beihai'])
+        self.assertEqual(rows[252]['new_points'][-1], rows[253]['new_points'][-1])
+        self.assertEqual(rows[253]['new_points'][-1], rows[255]['new_points'][0])
+        langya_routes = {row['from']: row['sections'] for row in roads
+                         if 'langya' in (row['from'], row['to']) and 'sections' in row}
+        north_approach = langya_routes['beihai']
+        south_approach = langya_routes['langya']
+        self.assertEqual(north_approach[-1], list(reversed(south_approach[0])))
+        native = {frozenset((tuple(a), tuple(b))) for i in (253, 255)
+                  for a, b in zip(rows[i]['new_points'], rows[i]['new_points'][1:])}
+        for part in [*north_approach[:-1], *south_approach[1:]]:
+            self.assertIn(frozenset(map(tuple, part)), native)
+        self.assertEqual(rows[266]['new_points'][0], positions['liaodong'])
+        self.assertEqual(rows[266]['new_points'][-1], positions['lelang'])
+        self.assertEqual(rows[267]['new_points'][0], positions['lelang'])
+        self.assertEqual(rows[267]['new_points'][-1], positions['daifang'])
+        changan = positions['jingzhao']
+        self.assertEqual(changan, [497, 336])
+        self.assertEqual(rows[59]['new_points'][0], positions['fufeng'])
+        self.assertEqual(rows[59]['new_points'][-1], rows[62]['new_points'][-2])
+        self.assertTrue(rows[62]['new_d'].endswith('M494 350L497 336'))
+        self.assertEqual(rows[70]['new_points'][0], changan)
+        self.assertEqual(rows[71]['new_points'][0], changan)
         centered = {tuple(node): positions[hub['city']] for hub in source['hubs']
                     for node in hub['nodes_to_collapse']}
         centered.update({tuple(point): positions[row['city']]

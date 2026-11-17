@@ -3,9 +3,9 @@
   "review_revision": "2026-10-27",
   "base_commit": "69a6e8f01239159b91e150637f888278af3b7a88",
   "review_sha256": "fb38ef837fad2783b70ac326f3496bfb45f322b274a8d062c7f5bc0aa65efdba",
-  "presentation_sha256": "8ab67aea65f34e44cc9701776fca7437a9641f328403ce968ddab374200e5efc",
-  "locale_sha256": "97f2bc890f603057ed6985a025d22f3700827c20cdacb5954df1aa3826041001",
-  "japanese_sha256": "125fcf0739a7892a23815e9e6994d6081df3c439d7b4804d374172a902194674",
+  "presentation_sha256": "07f7d557c49c582de95653ec6ac7efdc75769afc5a1ed3cb1f7384ec7c49412f",
+  "locale_sha256": "abf7d414416219209b5dba3f1defb7915eaaabae9c38d6865d25d1684e6d62a6",
+  "japanese_sha256": "b134c9529c3aa00f3736194f1e9d86f1d11b4e4aca2aa17dd6af998a0c0c3d86",
   "baseline_serving_non_ruler_reviews": 283,
   "pool": [
     {
@@ -349,7 +349,7 @@
     "fictional": 6,
     "historical": 23,
     "people": 1943,
-    "rulers": 320,
+    "rulers": 360,
     "corrections": 129,
     "chronology": 117
   },
@@ -367,7 +367,7 @@
   ],
   "sources": {},
   "scope": "Frozen ruler affiliation decisions and global structural checks; not full biographical or monthly-garrison historical certification.",
-  "material_definition": "Opening totals include all active-city stocks and carried troops. The frozen comparison excludes opening stocks at the three later Hetao sites.",
+  "material_definition": "Opening totals include all active-city stocks and carried troops. The frozen comparison excludes later city stocks and their separately authored frontier armies.",
   "scenarios": [
     {
       "id": "mainland184-02",
@@ -392,6 +392,13 @@
           "name": "董卓",
           "city": "anding",
           "city_name": "安定"
+        },
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-gogukcheon",
+          "name": "故国川王",
+          "city": "guonei",
+          "city_name": "国内城"
         },
         {
           "id": "gongsun_zan",
@@ -434,6 +441,13 @@
           "name": "孙坚",
           "city": "xiapi",
           "city_name": "下邳"
+        },
+        {
+          "id": "wuhuan",
+          "person_id": "san14-candidate-0201",
+          "name": "丘力居",
+          "city": "liucheng",
+          "city_name": "柳城"
         },
         {
           "id": "yellow_turban",
@@ -1511,29 +1525,31 @@
         }
       ],
       "material": {
-        "gold": 154439,
-        "grain": 543554,
-        "soldiers": 202252
+        "gold": 158939,
+        "grain": 564304,
+        "soldiers": 213102
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 1006,
+          "authorial_region_placement": 1004,
           "game_reference": 1,
           "bounded_pre_founding_free_projection": 1,
           "authorial_garrison_relocation": 14,
           "authorial_pre_revolt_region_proxy": 5,
+          "historical_career_with_opening_station_inference": 26,
           "explicit_scenario_scope": 7,
           "attested_identity_explicit_game_lifetime_and_region": 22
         },
         "bases": {
           "person_specific_future_free_appearance": 736,
           "same_date_SAN14_guide_free_location": 1,
-          "retained_person_specific_free_location": 149,
+          "retained_person_specific_free_location": 147,
           "retained_reviewed_opening_membership": 113,
           "retainer_affiliation_review_20261027": 23,
           "authorial_dong_zhuo_184_andi_relocation": 14,
           "retained_explicit_scenario_ruler": 8,
           "user_requested_bian_zhang_conditional_liangzhou_revolt": 4,
+          "reviewed_historical_faction_opening": 26,
           "user_requested_local_song_jian_before_184_11": 1,
           "explicit_scenario_scope": 7
         }
@@ -1726,19 +1742,26 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [
         "bian_zhang",
         "song_jian"
       ],
-      "catalog_sha256": "c1c4fe114492b0c9c50117250550f2688dd835547ea5555ba9ccb6b320bfc206"
+      "catalog_sha256": "34b8ad367adfc662f0327d7d3dab31e03517d6341a5d6bbcd68acb3632737e72"
     },
     {
       "id": "mainland188-06",
@@ -1763,6 +1786,13 @@
           "name": "董卓",
           "city": "tianshui",
           "city_name": "漢陽"
+        },
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-gogukcheon",
+          "name": "故国川王",
+          "city": "guonei",
+          "city_name": "国内城"
         },
         {
           "id": "han",
@@ -1819,6 +1849,13 @@
           "name": "孙坚",
           "city": "changsha",
           "city_name": "长沙"
+        },
+        {
+          "id": "wuhuan",
+          "person_id": "san14-candidate-0201",
+          "name": "丘力居",
+          "city": "liucheng",
+          "city_name": "柳城"
         },
         {
           "id": "zhang_chun",
@@ -2304,7 +2341,7 @@
         {
           "status": "serving",
           "faction": "han",
-          "city": "wei",
+          "city": "langya",
           "person_id": "san14-candidate-0525",
           "review_level": "additional_regional_commander_review",
           "disposition": "retained_dated_service",
@@ -2318,7 +2355,7 @@
           "name": "臧霸",
           "runtime_id": 524,
           "ruler": false,
-          "city_name": "邺"
+          "city_name": "琅邪国"
         },
         {
           "status": "chronology_excluded",
@@ -2894,18 +2931,19 @@
         }
       ],
       "material": {
-        "gold": 154439,
-        "grain": 543554,
-        "soldiers": 195352
+        "gold": 158744,
+        "grain": 563919,
+        "soldiers": 208017
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 1005,
+          "authorial_region_placement": 1003,
           "game_reference": 2,
           "primary_text_chronology_choice": 1,
           "authorial_northern_career_proxy": 3,
           "regional_primary_mapping": 2,
           "bounded_career_inference": 5,
+          "historical_career_with_opening_station_inference": 26,
           "bounded_early_follower_career_inference": 2,
           "primary_text_affiliation": 1,
           "primary_local_family_force_with_regional_proxy": 1,
@@ -2917,7 +2955,7 @@
         "bases": {
           "person_specific_future_free_appearance": 669,
           "same_date_SAN14_guide_free_location": 2,
-          "retained_person_specific_free_location": 209,
+          "retained_person_specific_free_location": 207,
           "authorial_region_placement": 16,
           "retained_reviewed_opening_membership": 91,
           "historical_review_20261025": 6,
@@ -2925,6 +2963,7 @@
           "retained_explicit_scenario_ruler": 7,
           "ruler_affiliation_review_20261027": 3,
           "user_reviewed_188_independent_ma_teng": 3,
+          "reviewed_historical_faction_opening": 26,
           "retainer_affiliation_review_20261027": 26,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 10
@@ -3185,16 +3224,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "9fb3f08206c94eed7f71cb7c864873f3cabbbfed73a917cee069da6fb5f25c61"
+      "catalog_sha256": "f0a51d6f015fd7e1ce0afd8419a21dce6bdd420caf40e7b504967bc828dcf413"
     },
     {
       "id": "mainland190-01",
@@ -3219,6 +3265,13 @@
           "name": "董卓",
           "city": "henan",
           "city_name": "洛阳"
+        },
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-gogukcheon",
+          "name": "故国川王",
+          "city": "guonei",
+          "city_name": "国内城"
         },
         {
           "id": "gongsun",
@@ -3352,6 +3405,13 @@
           "name": "曹操",
           "city": "qiao",
           "city_name": "小沛"
+        },
+        {
+          "id": "wuhuan",
+          "person_id": "san14-candidate-0201",
+          "name": "丘力居",
+          "city": "liucheng",
+          "city_name": "柳城"
         },
         {
           "id": "yuan_shao",
@@ -3867,7 +3927,7 @@
         {
           "status": "serving",
           "faction": "tao_qian",
-          "city": "xiapi",
+          "city": "langya",
           "person_id": "san14-candidate-0525",
           "review_level": "additional_regional_commander_review",
           "disposition": "retained_dated_service",
@@ -3881,7 +3941,7 @@
           "name": "臧霸",
           "runtime_id": 524,
           "ruler": false,
-          "city_name": "下邳"
+          "city_name": "琅邪国"
         },
         {
           "status": "chronology_excluded",
@@ -4450,19 +4510,20 @@
         }
       ],
       "material": {
-        "gold": 150070,
-        "grain": 518965,
-        "soldiers": 230907
+        "gold": 154190,
+        "grain": 537870,
+        "soldiers": 244127
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 955,
+          "authorial_region_placement": 953,
           "game_reference": 24,
           "primary_text_affiliation_bounded_local_city_proxy": 1,
           "regional_primary_mapping": 3,
           "primary_text_affiliation": 8,
           "authorial_garrison_relocation": 27,
           "primary_text_office_bounded_opening_month": 1,
+          "historical_career_with_opening_station_inference": 26,
           "primary_refuge_relationship_playable_affiliation_mapping": 1,
           "primary_relationship_transfer_year_bounded_game_inference": 1,
           "romance_compatibility_only": 1,
@@ -4475,7 +4536,7 @@
         "bases": {
           "person_specific_future_free_appearance": 616,
           "same_date_SAN14_guide_free_location": 3,
-          "retained_person_specific_free_location": 131,
+          "retained_person_specific_free_location": 129,
           "retainer_affiliation_review_20261027": 27,
           "ruler_affiliation_review_20261027": 19,
           "historical_review_20261025": 18,
@@ -4483,6 +4544,7 @@
           "retained_reviewed_opening_membership": 179,
           "retained_explicit_scenario_ruler": 16,
           "same_date_SAN14_recorded_death": 21,
+          "reviewed_historical_faction_opening": 26,
           "authorial_garrison_relocation_for_song_jian_longxi": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 10
@@ -5095,16 +5157,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "12615eb03716bd10a20bfa2f1556b2d38b9b5c0599bdeded9ec2f283e013da0b"
+      "catalog_sha256": "323c0d1e32fa0668f87dde48b53f85d507f11d7a2acc70ebead8a3c4709d93d6"
     },
     {
       "id": "mainland191-10",
@@ -5129,6 +5198,13 @@
           "name": "董卓",
           "city": "jingzhao",
           "city_name": "长安"
+        },
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-gogukcheon",
+          "name": "故国川王",
+          "city": "guonei",
+          "city_name": "国内城"
         },
         {
           "id": "gongsun",
@@ -5234,6 +5310,13 @@
           "name": "曹操",
           "city": "dongjun",
           "city_name": "濮阳"
+        },
+        {
+          "id": "wuhuan",
+          "person_id": "san14-candidate-0201",
+          "name": "丘力居",
+          "city": "liucheng",
+          "city_name": "柳城"
         },
         {
           "id": "yuan_shao",
@@ -5748,7 +5831,7 @@
         {
           "status": "serving",
           "faction": "tao_qian",
-          "city": "xiapi",
+          "city": "langya",
           "person_id": "san14-candidate-0525",
           "review_level": "additional_regional_commander_review",
           "disposition": "retained_dated_service",
@@ -5762,7 +5845,7 @@
           "name": "臧霸",
           "runtime_id": 524,
           "ruler": false,
-          "city_name": "下邳"
+          "city_name": "琅邪国"
         },
         {
           "status": "chronology_excluded",
@@ -6328,19 +6411,20 @@
         }
       ],
       "material": {
-        "gold": 148080,
-        "grain": 511815,
-        "soldiers": 243787
+        "gold": 152130,
+        "grain": 530345,
+        "soldiers": 257197
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 840,
+          "authorial_region_placement": 838,
           "game_reference": 4,
           "bounded_career_inference": 127,
           "primary_text_affiliation_bounded_local_city_proxy": 1,
           "primary_text_affiliation": 3,
           "authorial_garrison_relocation": 44,
           "regional_primary_mapping": 1,
+          "historical_career_with_opening_station_inference": 26,
           "bounded_transit_region_game_proxy": 1,
           "primary_relationship_transfer_year_bounded_game_inference": 1,
           "explicit_regional_proxy": 1,
@@ -6355,13 +6439,14 @@
           "same_date_SAN14_guide_affiliation": 1,
           "authored_bounded_source_snapshot_continuity": 121,
           "retainer_affiliation_review_20261027": 25,
-          "authorial_region_placement": 37,
+          "authorial_region_placement": 36,
           "retained_chronology_or_explicit_exclusion": 36,
           "historical_review_20261025": 48,
           "historical_city_owner_relocation_authorial_garrison": 19,
           "retained_reviewed_opening_membership": 85,
-          "retained_person_specific_free_location": 56,
+          "retained_person_specific_free_location": 55,
           "retained_explicit_scenario_ruler": 16,
+          "reviewed_historical_faction_opening": 26,
           "authored_bounded_snapshot_continuity": 4,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
@@ -6556,16 +6641,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "90b2d0bbdd558c808a6f70afa0b7608c67abf9398d4129f1a41ae6d0ce0c15d0"
+      "catalog_sha256": "c9249a43640937e84606382c393e7e65722dffe9df3fc23d79397a27adc7e373"
     },
     {
       "id": "mainland194-06",
@@ -6577,6 +6669,13 @@
       "title_ja": "群雄割拠",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-gogukcheon",
+          "name": "故国川王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0268",
@@ -6688,6 +6787,13 @@
           "name": "曹操",
           "city": "jiyin",
           "city_name": "鄄城"
+        },
+        {
+          "id": "wuhuan",
+          "person_id": "san14-candidate-0740",
+          "name": "蹋顿",
+          "city": "liucheng",
+          "city_name": "柳城"
         },
         {
           "id": "xu_gong",
@@ -7209,7 +7315,7 @@
         {
           "status": "serving",
           "faction": "tao_qian",
-          "city": "donghai",
+          "city": "langya",
           "person_id": "san14-candidate-0525",
           "review_level": "additional_regional_commander_review",
           "disposition": "retained_dated_service",
@@ -7223,7 +7329,7 @@
           "name": "臧霸",
           "runtime_id": 524,
           "ruler": false,
-          "city_name": "东海"
+          "city_name": "琅邪郡"
         },
         {
           "status": "chronology_excluded",
@@ -7788,13 +7894,13 @@
         }
       ],
       "material": {
-        "gold": 145775,
-        "grain": 504127,
-        "soldiers": 239972
+        "gold": 149845,
+        "grain": 521877,
+        "soldiers": 252647
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 902,
+          "authorial_region_placement": 901,
           "game_reference": 80,
           "primary_text_affiliation": 6,
           "dated_envoy_regional_proxy": 1,
@@ -7802,6 +7908,7 @@
           "regional_primary_mapping": 6,
           "bounded_career_inference": 1,
           "primary_refuge_relation_without_attested_office": 1,
+          "historical_career_with_opening_station_inference": 25,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 10,
@@ -7815,12 +7922,13 @@
           "retained_reviewed_opening_membership": 225,
           "same_date_SAN14_recorded_death": 76,
           "historical_review_20261025": 12,
-          "retained_person_specific_free_location": 114,
+          "retained_person_specific_free_location": 113,
           "retained_explicit_scenario_ruler": 17,
           "historical_city_owner_relocation_authorial_garrison": 21,
           "ruler_affiliation_review_20261027": 11,
           "retainer_affiliation_review_20261027": 23,
           "authorial_region_placement": 4,
+          "reviewed_historical_faction_opening": 25,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 10
@@ -8257,16 +8365,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "b94c9138d401b3300ea88e39c1605196db96cfb8a6d5c249ed308c6c700b2f6b"
+      "catalog_sha256": "3b358ccbb0622363311053d129c02297f7a85b95049bfba1dddb9ef1f5865557"
     },
     {
       "id": "mainland196-06",
@@ -8278,6 +8393,13 @@
       "title_ja": "曹操の台頭",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-gogukcheon",
+          "name": "故国川王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0268",
@@ -8396,6 +8518,13 @@
           "name": "孙策",
           "city": "danyang",
           "city_name": "秣陵"
+        },
+        {
+          "id": "wuhuan",
+          "person_id": "san14-candidate-0740",
+          "name": "蹋顿",
+          "city": "liucheng",
+          "city_name": "柳城"
         },
         {
           "id": "yuan_shao",
@@ -9473,13 +9602,13 @@
         }
       ],
       "material": {
-        "gold": 144400,
-        "grain": 498502,
-        "soldiers": 238562
+        "gold": 148625,
+        "grain": 517037,
+        "soldiers": 251427
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 987,
+          "authorial_region_placement": 986,
           "game_reference": 8,
           "local_warband_without_attested_city": 4,
           "primary_text_affiliation": 3,
@@ -9488,6 +9617,7 @@
           "authorial_garrison_relocation": 13,
           "bounded_regional_inference": 1,
           "primary_refuge_relation_without_attested_office": 1,
+          "historical_career_with_opening_station_inference": 25,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
@@ -9502,12 +9632,13 @@
           "ruler_affiliation_review_20261027": 8,
           "retained_reviewed_opening_membership": 226,
           "retained_chronology_or_explicit_exclusion": 96,
-          "retained_person_specific_free_location": 142,
+          "retained_person_specific_free_location": 141,
           "historical_review_20261025": 16,
           "retained_explicit_scenario_ruler": 17,
           "historical_city_owner_relocation_authorial_garrison": 7,
           "retainer_affiliation_review_20261027": 23,
           "authorial_region_placement": 4,
+          "reviewed_historical_faction_opening": 25,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 6,
@@ -9859,16 +9990,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "2a48c63fc989e576fe035638ad6d5332256af5212dd0f8eabb270eeda6ea4848"
+      "catalog_sha256": "261c5029f5b183a86259a669cb33f5e5c10e4f3d1147012cbdacbf1fdf9a60ee"
     },
     {
       "id": "mainland197-07",
@@ -9880,6 +10018,13 @@
       "title_ja": "皇帝呂布",
       "fictional": true,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0268",
@@ -9998,6 +10143,13 @@
           "name": "孙策",
           "city": "danyang",
           "city_name": "秣陵"
+        },
+        {
+          "id": "wuhuan",
+          "person_id": "san14-candidate-0740",
+          "name": "蹋顿",
+          "city": "liucheng",
+          "city_name": "柳城"
         },
         {
           "id": "yuan_shao",
@@ -11083,13 +11235,13 @@
         }
       ],
       "material": {
-        "gold": 145410,
-        "grain": 503427,
-        "soldiers": 235182
+        "gold": 149725,
+        "grain": 522302,
+        "soldiers": 248142
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 991,
+          "authorial_region_placement": 990,
           "game_reference": 5,
           "regional_primary_mapping": 8,
           "authorial_if_independent_faction_mapping": 3,
@@ -11097,9 +11249,9 @@
           "displaced_prefect_region_proxy": 1,
           "bounded_independent_local_army_region_proxy": 1,
           "authorial_region_proxy": 2,
+          "fictional_scenario_adaptation": 29,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
-          "fictional_scenario_adaptation": 4,
           "attested_identity_explicit_game_lifetime_and_region": 16,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 5,
           "fictional_inherited_yuan_army_affiliation_mapping": 1
@@ -11111,11 +11263,12 @@
           "same_date_SAN14_guide_affiliation": 1,
           "ruler_affiliation_review_20261027": 20,
           "retained_chronology_or_explicit_exclusion": 110,
-          "retained_person_specific_free_location": 162,
+          "retained_person_specific_free_location": 161,
           "user_requested_independent_han_sui_IF": 3,
           "retained_explicit_scenario_ruler": 16,
           "historical_city_owner_relocation_authorial_garrison": 7,
           "retainer_affiliation_review_20261027": 23,
+          "reviewed_historical_faction_opening": 25,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
@@ -11720,16 +11873,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "42a49ff6226d6dbd479fb07be378e59b96a8276626b443e111cd2315bfe61edd"
+      "catalog_sha256": "03bb0a7923bd3d1d15a3fd7048dd98c3d80bf28a4a2135af899e5b4d07b3eaef"
     },
     {
       "id": "mainland198-03",
@@ -11741,6 +11901,13 @@
       "title_ja": "呂布討伐戦",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0268",
@@ -11838,6 +12005,13 @@
           "name": "孙策",
           "city": "danyang",
           "city_name": "秣陵"
+        },
+        {
+          "id": "wuhuan",
+          "person_id": "san14-candidate-0740",
+          "name": "蹋顿",
+          "city": "liucheng",
+          "city_name": "柳城"
         },
         {
           "id": "yuan_shao",
@@ -12918,13 +13092,13 @@
         }
       ],
       "material": {
-        "gold": 145420,
-        "grain": 503427,
-        "soldiers": 240957
+        "gold": 150130,
+        "grain": 523312,
+        "soldiers": 255587
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 974,
+          "authorial_region_placement": 973,
           "regional_primary_mapping": 5,
           "primary_text_affiliation": 2,
           "bounded_career_inference": 20,
@@ -12932,22 +13106,22 @@
           "bounded_regional_inference": 1,
           "primary_refuge_region_dated_campaign_inference": 1,
           "bounded_independent_local_army_region_proxy": 1,
+          "historical_career_with_opening_station_inference": 30,
           "primary_text_chronology": 2,
-          "primary_separate_tribal_leader_regional_proxy": 1,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
-          "historical_career_with_opening_station_inference": 4,
           "attested_identity_explicit_game_lifetime_and_region": 16,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 6
         },
         "bases": {
-          "authored_nearby_historical_snapshot_continuity": 948,
+          "authored_nearby_historical_snapshot_continuity": 947,
           "ruler_affiliation_review_20261027": 14,
           "historical_review_20261025": 8,
           "explicit_primary_or_reviewed_DLC_membership": 19,
           "bounded_career_inference": 1,
           "authored_nearby_historical_roster_inference": 24,
-          "retainer_affiliation_review_20261027": 25,
+          "retainer_affiliation_review_20261027": 24,
+          "reviewed_historical_faction_opening": 26,
           "authorial_garrison_relocation_for_song_jian_longxi": 4,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
@@ -13451,16 +13625,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "f014ff0a6b7e83103409b73a43aea7929e13bcd235ce6616ad58a01d6827299b"
+      "catalog_sha256": "cf576f7a5ac6148f4655e9444a63dca58d70e10aa850143f4690589b0d87fb47"
     },
     {
       "id": "mainland200-01",
@@ -13472,6 +13653,13 @@
       "title_ja": "官渡の戦い",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0268",
@@ -13541,6 +13729,13 @@
           "name": "孙策",
           "city": "wujun",
           "city_name": "吴"
+        },
+        {
+          "id": "wuhuan",
+          "person_id": "san14-candidate-0740",
+          "name": "蹋顿",
+          "city": "liucheng",
+          "city_name": "柳城"
         },
         {
           "id": "yuan_shao",
@@ -14036,7 +14231,7 @@
         {
           "status": "serving",
           "faction": "wei",
-          "city": "hongnong",
+          "city": "langya",
           "person_id": "san14-candidate-0525",
           "review_level": "additional_regional_commander_review",
           "disposition": "retained_dated_service",
@@ -14050,7 +14245,7 @@
           "name": "臧霸",
           "runtime_id": 524,
           "ruler": false,
-          "city_name": "弘农"
+          "city_name": "琅邪郡"
         },
         {
           "status": "serving",
@@ -14615,23 +14810,23 @@
         }
       ],
       "material": {
-        "gold": 156580,
-        "grain": 554292,
-        "soldiers": 258182
+        "gold": 161570,
+        "grain": 575772,
+        "soldiers": 273157
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 821,
+          "authorial_region_placement": 819,
           "game_reference": 167,
           "primary_text_affiliation": 2,
           "authorial_garrison_relocation": 28,
           "regional_primary_mapping": 1,
           "bounded_regional_inference": 1,
           "annotated_biography_with_opening_station_inference": 1,
+          "historical_career_with_opening_station_inference": 30,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
-          "historical_career_with_opening_station_inference": 4,
           "attested_identity_explicit_game_lifetime_and_region": 18,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 4
         },
@@ -14641,11 +14836,12 @@
           "same_date_SAN14_guide_affiliation": 4,
           "retained_reviewed_opening_membership": 244,
           "same_date_SAN14_recorded_death": 159,
-          "retained_person_specific_free_location": 111,
+          "retained_person_specific_free_location": 109,
           "historical_review_20261025": 28,
           "retained_explicit_scenario_ruler": 10,
           "historical_city_owner_relocation_authorial_garrison": 11,
           "historical_guandu_xiaopei_opening": 1,
+          "reviewed_historical_faction_opening": 26,
           "authorial_garrison_relocation_for_song_jian_longxi": 4,
           "ruler_affiliation_review_20261027": 2,
           "authorial_region_placement": 2,
@@ -14910,16 +15106,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "9a190894712a097ad517eeaf50d2cdb6af93da6c91c6043893f6296164204c0d"
+      "catalog_sha256": "a0e6dc6fa6ad89cee7c5799f6b1bc64f852a10c877282736f52a08daadb83b7b"
     },
     {
       "id": "mainland201-05",
@@ -14931,6 +15134,13 @@
       "title_ja": "華北の覇者・袁紹",
       "fictional": true,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0268",
@@ -15000,6 +15210,13 @@
           "name": "孙权",
           "city": "wujun",
           "city_name": "吴"
+        },
+        {
+          "id": "wuhuan",
+          "person_id": "san14-candidate-0740",
+          "name": "蹋顿",
+          "city": "liucheng",
+          "city_name": "柳城"
         },
         {
           "id": "yuan_shao",
@@ -16074,19 +16291,19 @@
         }
       ],
       "material": {
-        "gold": 156580,
-        "grain": 554292,
-        "soldiers": 254282
+        "gold": 161600,
+        "grain": 575872,
+        "soldiers": 269272
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 1013,
+          "authorial_region_placement": 1011,
           "game_reference": 4,
           "authorial_if_independent_faction_mapping": 3,
           "authorial_garrison_relocation": 3,
+          "fictional_scenario_adaptation": 29,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "fictional_scenario_adaptation": 3,
           "attested_identity_explicit_game_lifetime_and_region": 18,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 4
         },
@@ -16096,11 +16313,12 @@
           "retained_explicit_IF_membership": 263,
           "same_date_SAN14_guide_affiliation": 1,
           "retained_chronology_or_explicit_exclusion": 178,
-          "retained_person_specific_free_location": 122,
+          "retained_person_specific_free_location": 120,
           "user_requested_independent_han_sui_IF": 3,
           "retained_explicit_scenario_ruler": 10,
           "historical_city_owner_relocation_authorial_garrison": 9,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
+          "reviewed_historical_faction_opening": 26,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
@@ -16233,16 +16451,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "2b7cb7b403fea2344d4d0c7b0520cb8584e6ff9c6840a9800013bb97fab65374"
+      "catalog_sha256": "13f00dd6aea8e1c4955a87bf8350ec4007245bdef3f7045e92214bbccebb233f"
     },
     {
       "id": "mainland202-06",
@@ -16260,6 +16485,13 @@
           "name": "高干",
           "city": "taiyuan",
           "city_name": "晋阳"
+        },
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
         },
         {
           "id": "gongsun",
@@ -16330,6 +16562,13 @@
           "name": "孙权",
           "city": "wujun",
           "city_name": "吴"
+        },
+        {
+          "id": "wuhuan",
+          "person_id": "san14-candidate-0996",
+          "name": "楼班",
+          "city": "liucheng",
+          "city_name": "柳城"
         },
         {
           "id": "yuan_shang",
@@ -16830,7 +17069,7 @@
         {
           "status": "serving",
           "faction": "wei",
-          "city": "donghai",
+          "city": "langya",
           "person_id": "san14-candidate-0525",
           "review_level": "additional_regional_commander_review",
           "disposition": "retained_dated_service",
@@ -16844,7 +17083,7 @@
           "name": "臧霸",
           "runtime_id": 524,
           "ruler": false,
-          "city_name": "东海"
+          "city_name": "琅邪郡"
         },
         {
           "status": "serving",
@@ -17401,30 +17640,31 @@
         }
       ],
       "material": {
-        "gold": 156580,
-        "grain": 554292,
-        "soldiers": 260282
+        "gold": 161605,
+        "grain": 576062,
+        "soldiers": 276022
       },
       "placement_counts": {
         "reference_classes": {
-          "authorial_region_placement": 959,
+          "authorial_region_placement": 957,
           "bounded_career_inference": 32,
           "primary_text_affiliation": 2,
           "authorial_garrison_relocation": 27,
           "regional_primary_mapping": 1,
+          "historical_career_with_opening_station_inference": 29,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "historical_career_with_opening_station_inference": 3,
           "attested_identity_explicit_game_lifetime_and_region": 18,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 4
         },
         "bases": {
-          "authored_nearby_historical_snapshot_continuity": 934,
+          "authored_nearby_historical_snapshot_continuity": 932,
           "explicit_primary_or_reviewed_DLC_membership": 30,
           "historical_review_20261025": 26,
           "bounded_career_inference": 2,
           "authored_nearby_historical_roster_inference": 23,
+          "reviewed_historical_faction_opening": 26,
           "authorial_garrison_relocation_for_song_jian_longxi": 4,
           "ruler_affiliation_review_20261027": 2,
           "authorial_region_placement": 2,
@@ -17666,16 +17906,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "6a09eb43078ca6ff9763c58ebb664af40119ff519e718375a1e84510542caa92"
+      "catalog_sha256": "17d8c4d9fa46044e9b7db7c62ae67ce762bfd672deca5cbdb2674d87cbebe367"
     },
     {
       "id": "mainland207-09",
@@ -17687,6 +17934,13 @@
       "title_ja": "三顧の礼",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0264",
@@ -18248,7 +18502,7 @@
         {
           "status": "serving",
           "faction": "wei",
-          "city": "qiao",
+          "city": "langya",
           "person_id": "san14-candidate-0525",
           "review_level": "additional_regional_commander_review",
           "disposition": "retained_dated_service",
@@ -18262,7 +18516,7 @@
           "name": "臧霸",
           "runtime_id": 524,
           "ruler": false,
-          "city_name": "小沛"
+          "city_name": "琅邪国"
         },
         {
           "status": "serving",
@@ -18821,9 +19075,9 @@
         }
       ],
       "material": {
-        "gold": 161820,
-        "grain": 578067,
-        "soldiers": 273862
+        "gold": 165840,
+        "grain": 596172,
+        "soldiers": 280047
       },
       "placement_counts": {
         "reference_classes": {
@@ -18840,7 +19094,7 @@
           "primary_fugitive_guest_with_month_uncertainty": 1,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 16,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 6
         },
@@ -18861,7 +19115,8 @@
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -19165,16 +19420,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "adcd18a5ce81393c98e95b2340f94136d557b9f752ef67fb3f33ed4dcf360995"
+      "catalog_sha256": "702e6ca5bb504538ce7f1b3e3acbdd420b2dcfc7e5acd5156d516ffbf14984a7"
     },
     {
       "id": "mainland208-10",
@@ -19186,6 +19448,13 @@
       "title_ja": "赤壁の戦い",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0264",
@@ -19756,7 +20025,7 @@
         {
           "status": "serving",
           "faction": "wei",
-          "city": "jingzhao",
+          "city": "langya",
           "person_id": "san14-candidate-0525",
           "review_level": "additional_regional_commander_review",
           "disposition": "retained_dated_service",
@@ -19770,7 +20039,7 @@
           "name": "臧霸",
           "runtime_id": 524,
           "ruler": false,
-          "city_name": "长安"
+          "city_name": "琅邪国"
         },
         {
           "status": "serving",
@@ -20323,9 +20592,9 @@
         }
       ],
       "material": {
-        "gold": 155612,
-        "grain": 547047,
-        "soldiers": 281677
+        "gold": 159657,
+        "grain": 565302,
+        "soldiers": 287902
       },
       "placement_counts": {
         "reference_classes": {
@@ -20343,7 +20612,7 @@
           "bounded_regional_inference": 1,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 16,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 6
         },
@@ -20368,7 +20637,8 @@
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
           "reviewed_early_shu_retainer_opening": 3,
-          "retainer_affiliation_review_20261027": 22
+          "retainer_affiliation_review_20261027": 22,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -20624,16 +20894,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "6a0be07796556c4ab719af13903b11c62a05ac6008fced4faf46668ea261269a"
+      "catalog_sha256": "d9762610d6f9bb5d18959b0470315e324e337d262056dc4a697c3002fcbdc5ef"
     },
     {
       "id": "mainland209-06",
@@ -20645,6 +20922,13 @@
       "title_ja": "志在千里",
       "fictional": true,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0264",
@@ -21746,9 +22030,9 @@
         }
       ],
       "material": {
-        "gold": 155612,
-        "grain": 547047,
-        "soldiers": 281827
+        "gold": 159682,
+        "grain": 565402,
+        "soldiers": 288082
       },
       "placement_counts": {
         "reference_classes": {
@@ -21759,7 +22043,7 @@
           "authorial_garrison_relocation": 4,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "fictional_scenario_adaptation": 3,
+          "fictional_scenario_adaptation": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -21780,7 +22064,8 @@
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
           "reviewed_early_shu_retainer_opening": 3,
-          "retainer_affiliation_review_20261027": 22
+          "retainer_affiliation_review_20261027": 22,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [],
@@ -21908,16 +22193,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "f824e063fe8d06e726059508066c6b2f012cde727e49410ab878ef148dbb57f0"
+      "catalog_sha256": "8c20fd2bf6b2540b56b5eacde966e6afa3e576e066a3b18e1cd26f2e0152a6b4"
     },
     {
       "id": "mainland210-11",
@@ -21929,6 +22221,13 @@
       "title_ja": "天下二分計",
       "fictional": true,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0264",
@@ -23024,9 +23323,9 @@
         }
       ],
       "material": {
-        "gold": 155612,
-        "grain": 547047,
-        "soldiers": 278527
+        "gold": 159687,
+        "grain": 565527,
+        "soldiers": 284807
       },
       "placement_counts": {
         "reference_classes": {
@@ -23038,7 +23337,7 @@
           "authorial_garrison_relocation": 6,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "fictional_scenario_adaptation": 3,
+          "fictional_scenario_adaptation": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -23059,7 +23358,8 @@
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
           "reviewed_early_shu_retainer_opening": 3,
-          "retainer_affiliation_review_20261027": 22
+          "retainer_affiliation_review_20261027": 22,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -23243,16 +23543,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "1d511c9b2ffdce2c580ae2fdce598cff83d4f007387125634445721664db4142"
+      "catalog_sha256": "1d91c52c5aa5a05563c5b4089806957081397c8fbcb5ffd6bd4c86f9b78ad6b3"
     },
     {
       "id": "mainland211-07-tongguan",
@@ -23264,6 +23571,13 @@
       "title_ja": "潼関の戦い",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0264",
@@ -24364,9 +24678,9 @@
         }
       ],
       "material": {
-        "gold": 165052,
-        "grain": 576634,
-        "soldiers": 297735
+        "gold": 169207,
+        "grain": 595464,
+        "soldiers": 304090
       },
       "placement_counts": {
         "reference_classes": {
@@ -24381,7 +24695,7 @@
           "bounded_local_career_inference": 1,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -24397,7 +24711,8 @@
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
           "reviewed_early_shu_retainer_opening": 3,
-          "retainer_affiliation_review_20261027": 22
+          "retainer_affiliation_review_20261027": 22,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -24675,16 +24990,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "0dd871caad281de20535abe9b50f3726a03e439dff166de3f8ec25626a146f25"
+      "catalog_sha256": "d25e53ec4e58631fa7edf11e1365165c79ac41ee190d8698263e6a1c5acfa079"
     },
     {
       "id": "mainland212-06",
@@ -24702,6 +25024,13 @@
           "name": "曹彰",
           "city": "taiyuan",
           "city_name": "晋阳"
+        },
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
         },
         {
           "id": "gongsun",
@@ -25800,9 +26129,9 @@
         }
       ],
       "material": {
-        "gold": 165052,
-        "grain": 576634,
-        "soldiers": 294135
+        "gold": 169207,
+        "grain": 595489,
+        "soldiers": 300500
       },
       "placement_counts": {
         "reference_classes": {
@@ -25814,7 +26143,7 @@
           "fictional_victory_affiliation_and_authorial_city_proxy": 1,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "fictional_scenario_adaptation": 3,
+          "fictional_scenario_adaptation": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -25834,7 +26163,8 @@
           "retainer_affiliation_review_20261027": 23,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -26018,16 +26348,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "45b1e46951c14879648414162a34503f07d0854b34cf570c7a85db4316fffd2b"
+      "catalog_sha256": "0b478f676f39f5cb847a2d38612aa641ea9e4d61665ea60a9bf2491cf5d03596"
     },
     {
       "id": "mainland212-12",
@@ -26039,6 +26376,13 @@
       "title_ja": "入蜀争奪戦",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0264",
@@ -27130,9 +27474,9 @@
         }
       ],
       "material": {
-        "gold": 165052,
-        "grain": 576634,
-        "soldiers": 287835
+        "gold": 169227,
+        "grain": 595639,
+        "soldiers": 294225
       },
       "placement_counts": {
         "reference_classes": {
@@ -27150,7 +27494,7 @@
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -27172,7 +27516,8 @@
           "ruler_affiliation_review_20261027": 3,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -27385,16 +27730,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "五原",
-        "yunzhong": "云中"
+        "yunzhong": "云中",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "f95b84b453d1522f4550685253fe6acc7e061f526a02ff2a600b4d60fc85a771"
+      "catalog_sha256": "8b240b328aaa7511878c23e3f8437620e78848eccdf8fae14eefb3ba5d177002"
     },
     {
       "id": "mainland215-08",
@@ -27406,6 +27758,13 @@
       "title_ja": "合肥の戦い",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0264",
@@ -28475,9 +28834,9 @@
         }
       ],
       "material": {
-        "gold": 164577,
-        "grain": 577760,
-        "soldiers": 289692
+        "gold": 168772,
+        "grain": 596890,
+        "soldiers": 296112
       },
       "placement_counts": {
         "reference_classes": {
@@ -28488,7 +28847,7 @@
           "primary_text_chronology": 2,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -28503,7 +28862,8 @@
           "ruler_affiliation_review_20261027": 3,
           "authorial_region_placement": 2,
           "explicit_scenario_scope": 8,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -28759,16 +29119,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "7fb36ae9351710bbfa97ba084b9bfd55761bc3328c71f7bd190bdeb6756f2b63"
+      "catalog_sha256": "ddf25be1c9d09b024cd0bac917a2c4bfa090cfa0938ee6067f6ef2e9a2120495"
     },
     {
       "id": "mainland217-07",
@@ -28780,6 +29147,13 @@
       "title_ja": "漢中争奪戦",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0264",
@@ -29851,9 +30225,9 @@
         }
       ],
       "material": {
-        "gold": 164877,
-        "grain": 576792,
-        "soldiers": 290555
+        "gold": 169097,
+        "grain": 596072,
+        "soldiers": 297020
       },
       "placement_counts": {
         "reference_classes": {
@@ -29867,7 +30241,7 @@
           "primary_text_chronology": 2,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -29885,7 +30259,8 @@
           "retainer_affiliation_review_20261027": 25,
           "authorial_region_placement": 2,
           "explicit_scenario_scope": 8,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -30183,16 +30558,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "aa3b66b965ad6f775b017973f86593c805616597c3c01525b2574a1ec1277e01"
+      "catalog_sha256": "11c3709c003664c28d3f72df5d3695c9d913984f4c52bf85b27fd531b5702228"
     },
     {
       "id": "mainland219-07",
@@ -30204,6 +30586,13 @@
       "title_ja": "関羽包囲網",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0264",
@@ -31277,9 +31666,9 @@
         }
       ],
       "material": {
-        "gold": 157511,
-        "grain": 545185,
-        "soldiers": 287557
+        "gold": 162066,
+        "grain": 565730,
+        "soldiers": 294377
       },
       "placement_counts": {
         "reference_classes": {
@@ -31292,7 +31681,7 @@
           "primary_text_chronology": 2,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -31312,7 +31701,8 @@
           "retained_explicit_scenario_ruler": 4,
           "retainer_affiliation_review_20261027": 25,
           "explicit_scenario_scope": 8,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -31546,16 +31936,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "cd2381d40e0b37440195fd65b87cbdd2280e0616cb3e685fa221215e72f33353"
+      "catalog_sha256": "f8b977d4c3736d3313ddb668cf59ab3e48096a3942eab61b913248e55754fe4b"
     },
     {
       "id": "mainland221-07",
@@ -31567,6 +31964,13 @@
       "title_ja": "夷陵前夜",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0263",
@@ -32636,9 +33040,9 @@
         }
       ],
       "material": {
-        "gold": 171792,
-        "grain": 584155,
-        "soldiers": 287127
+        "gold": 176522,
+        "grain": 605125,
+        "soldiers": 294077
       },
       "placement_counts": {
         "reference_classes": {
@@ -32651,7 +33055,7 @@
           "post_attestation_career_and_station_inference": 1,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 20,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 1,
           "attested_office_with_bounded_career_and_city_proxy": 1
@@ -32672,7 +33076,8 @@
           "authored_bounded_source_snapshot_continuity": 4,
           "retained_chronology_or_explicit_exclusion": 2,
           "explicit_scenario_scope": 8,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -32928,16 +33333,23 @@
         "shangyong": "上庸",
         "yiling": "夷陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "c3f9edc1e52b43b8d648f0f10c94de9b732601169141dd2cb1f7295e9438b169"
+      "catalog_sha256": "f2d6fda5888dcc57eefdd76b1ab31368f6ea51fe3915a48d12fd1fb5840f2076"
     },
     {
       "id": "mainland225-07",
@@ -32949,6 +33361,13 @@
       "title_ja": "南蛮征伐",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0263",
@@ -34019,9 +34438,9 @@
         }
       ],
       "material": {
-        "gold": 174045,
-        "grain": 594086,
-        "soldiers": 276737
+        "gold": 178805,
+        "grain": 615281,
+        "soldiers": 283732
       },
       "placement_counts": {
         "reference_classes": {
@@ -34035,7 +34454,7 @@
           "post_attestation_career_and_station_inference": 1,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 21,
           "attested_office_with_bounded_career_and_city_proxy": 1
         },
@@ -34055,7 +34474,8 @@
           "user_requested_225_nanzhong_merge": 3,
           "authorial_lu_yusheng_wu_opening": 1,
           "explicit_scenario_scope": 8,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -34268,16 +34688,23 @@
         "shangyong": "上庸",
         "yiling": "西陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "83bc07ff59b54f4d4b766f01f4797908a9f8b1c0e064fc3c47bc56e11f0ebc48"
+      "catalog_sha256": "3142ef412b09dd9f157567225b9c66fdd110b7d2e705bc0a20b4f1432f5d4f40"
     },
     {
       "id": "mainland227-02",
@@ -34289,6 +34716,13 @@
       "title_ja": "出師の表",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-sansang",
+          "name": "山上王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0263",
@@ -35345,9 +35779,9 @@
         }
       ],
       "material": {
-        "gold": 175250,
-        "grain": 589086,
-        "soldiers": 286850
+        "gold": 180025,
+        "grain": 610381,
+        "soldiers": 293870
       },
       "placement_counts": {
         "reference_classes": {
@@ -35359,7 +35793,7 @@
           "post_attestation_career_and_station_inference": 1,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 21,
           "attested_office_with_bounded_career_and_city_proxy": 1
         },
@@ -35376,7 +35810,8 @@
           "authorial_lu_yusheng_wu_opening": 1,
           "retained_chronology_or_explicit_exclusion": 2,
           "explicit_scenario_scope": 8,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -35675,16 +36110,23 @@
         "shangyong": "上庸",
         "yiling": "西陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪郡",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "ad9ac03120f96c48583761382404313ba06a214c93afe9b60f6480a3fee621f0"
+      "catalog_sha256": "06cd6d82c2d037c81074367cf61b7d3553f7c9f16636d13b4c26ee242fb30d13"
     },
     {
       "id": "mainland234-02",
@@ -35696,6 +36138,13 @@
       "title_ja": "秋風五丈原",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-dongcheon",
+          "name": "东川王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0262",
@@ -36746,9 +37195,9 @@
         }
       ],
       "material": {
-        "gold": 176010,
-        "grain": 590911,
-        "soldiers": 279480
+        "gold": 180795,
+        "grain": 612531,
+        "soldiers": 286890
       },
       "placement_counts": {
         "reference_classes": {
@@ -36760,7 +37209,7 @@
           "primary_text_hostage_unavailable": 1,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 3,
+          "historical_career_with_opening_station_inference": 27,
           "attested_identity_explicit_game_lifetime_and_region": 17,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 5
         },
@@ -36780,7 +37229,8 @@
           "retainer_affiliation_review_20261027": 23,
           "authorial_lu_yusheng_wu_opening": 1,
           "explicit_scenario_scope": 8,
-          "reviewed_early_shu_retainer_opening": 3
+          "reviewed_early_shu_retainer_opening": 3,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -37038,16 +37488,23 @@
         "shangyong": "上庸",
         "yiling": "西陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "7544367f220e6a6f6aa6f7ffeb593b71347248e35e5ecfab21cd3f4c0cc298f6"
+      "catalog_sha256": "96c10eb6da0c3f1862381dab0f9e3db26a5d9ab979be7a61e7ccb22f6e87a508"
     },
     {
       "id": "mainland235-01",
@@ -37059,6 +37516,13 @@
       "title_ja": "秋風越えて",
       "fictional": true,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-dongcheon",
+          "name": "东川王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0262",
@@ -38103,9 +38567,9 @@
         }
       ],
       "material": {
-        "gold": 183217,
-        "grain": 637192,
-        "soldiers": 282192
+        "gold": 188002,
+        "grain": 658837,
+        "soldiers": 289607
       },
       "placement_counts": {
         "reference_classes": {
@@ -38113,7 +38577,7 @@
           "game_reference": 2,
           "bounded_career_inference": 108,
           "primary_text_captivity": 1,
-          "fictional_scenario_adaptation": 3,
+          "fictional_scenario_adaptation": 27,
           "explicit_scenario_scope": 9,
           "attested_identity_explicit_game_lifetime_and_region": 17,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 5
@@ -38132,7 +38596,8 @@
           "authorial_lu_yusheng_wu_opening": 1,
           "explicit_scenario_scope": 9,
           "reviewed_early_shu_retainer_opening": 2,
-          "retainer_affiliation_review_20261027": 22
+          "retainer_affiliation_review_20261027": 22,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -38284,16 +38749,23 @@
         "shangyong": "上庸",
         "yiling": "西陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "819578f9d2a714e4e9151ef20f37a29d28204d2599ee408612ec2d8bdae18176"
+      "catalog_sha256": "81d08add7820c14b5aee305cdfbd241d632e9f8865270965e0111be1dd81f08f"
     },
     {
       "id": "mainland238-01",
@@ -38305,6 +38777,13 @@
       "title_ja": "遼東征討",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-dongcheon",
+          "name": "东川王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "gongsun",
           "person_id": "san14-candidate-0262",
@@ -39355,9 +39834,9 @@
         }
       ],
       "material": {
-        "gold": 183217,
-        "grain": 637192,
-        "soldiers": 279192
+        "gold": 188092,
+        "grain": 659137,
+        "soldiers": 287182
       },
       "placement_counts": {
         "reference_classes": {
@@ -39368,7 +39847,7 @@
           "primary_text_chronology": 5,
           "primary_text_hostage_unavailable": 1,
           "explicit_scenario_scope": 9,
-          "historical_career_with_opening_station_inference": 2,
+          "historical_career_with_opening_station_inference": 26,
           "attested_identity_explicit_game_lifetime_and_region": 11,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 11
         },
@@ -39389,7 +39868,8 @@
           "authorial_lu_yusheng_wu_opening": 1,
           "explicit_scenario_scope": 9,
           "reviewed_early_shu_retainer_opening": 2,
-          "retainer_affiliation_review_20261027": 22
+          "retainer_affiliation_review_20261027": 22,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -39647,16 +40127,23 @@
         "shangyong": "上庸",
         "yiling": "西陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "dc3fae554a74f759c8b3e7ae91ee71a0ed738ef43c476911b2aeec050abbc424"
+      "catalog_sha256": "ee3dae6db45e2cb12fcc36cea8ca8b276f0fd28cdaa07b92d95b9d58f0fe9ac7"
     },
     {
       "id": "mainland249-01",
@@ -39668,6 +40155,13 @@
       "title_ja": "正始の変",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-jungcheon",
+          "name": "中川王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "shu",
           "person_id": "san14-candidate-0945",
@@ -40709,9 +41203,9 @@
         }
       ],
       "material": {
-        "gold": 192532,
-        "grain": 663242,
-        "soldiers": 269567
+        "gold": 197162,
+        "grain": 684087,
+        "soldiers": 277412
       },
       "placement_counts": {
         "reference_classes": {
@@ -40720,7 +41214,8 @@
           "bounded_career_inference": 2,
           "primary_text_chronology": 5,
           "explicit_scenario_scope": 11,
-          "attested_identity_explicit_game_lifetime_and_region": 22
+          "attested_identity_explicit_game_lifetime_and_region": 22,
+          "historical_career_with_opening_station_inference": 24
         },
         "bases": {
           "same_date_SAN14_recorded_death": 697,
@@ -40735,7 +41230,8 @@
           "authorial_lu_yusheng_wu_opening": 1,
           "retained_chronology_or_explicit_exclusion": 2,
           "explicit_scenario_scope": 11,
-          "retainer_affiliation_review_20261027": 22
+          "retainer_affiliation_review_20261027": 22,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -41034,16 +41530,23 @@
         "shangyong": "上庸",
         "yiling": "西陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "1a73a53ba2f6ed980132e841a4248b2b927e190f83897a4ec3011becf396d2c0"
+      "catalog_sha256": "dab87bac9d4c5f85fd997988846391dc2d385465ca89adfa21bee7fff935a959"
     },
     {
       "id": "mainland263-05",
@@ -41055,6 +41558,13 @@
       "title_ja": "蜀漢の滅亡",
       "fictional": false,
       "rulers": [
+        {
+          "id": "goguryeo",
+          "person_id": "historical-goguryeo-jungcheon",
+          "name": "中川王",
+          "city": "guonei",
+          "city_name": "国内城"
+        },
         {
           "id": "lu_xing",
           "person_id": "historical-lu-xing",
@@ -42101,9 +42611,9 @@
         }
       ],
       "material": {
-        "gold": 181654,
-        "grain": 610735,
-        "soldiers": 236180
+        "gold": 186299,
+        "grain": 631530,
+        "soldiers": 243855
       },
       "placement_counts": {
         "reference_classes": {
@@ -42115,7 +42625,8 @@
           "primary_text_month_regional_mapping": 1,
           "authorial_retinue_window": 1,
           "office_seat_mapping_if_canonical_id_matches": 1,
-          "attested_identity_explicit_game_lifetime_and_region": 22
+          "attested_identity_explicit_game_lifetime_and_region": 22,
+          "historical_career_with_opening_station_inference": 24
         },
         "bases": {
           "retained_chronology_or_explicit_exclusion": 829,
@@ -42129,7 +42640,8 @@
           "explicit_scenario_scope": 8,
           "primary_lu_xing_revolt_month": 1,
           "authorial_lu_xing_retinue_window": 1,
-          "retainer_affiliation_review_20261027": 23
+          "retainer_affiliation_review_20261027": 23,
+          "reviewed_historical_faction_opening": 24
         }
       },
       "corrections": [
@@ -42342,16 +42854,23 @@
         "shangyong": "上庸",
         "yiling": "西陵",
         "changli": "昌黎",
+        "liucheng": "柳城",
         "pingyang": "平阳",
         "hengyang": "衡阳",
         "xiangdong": "湘东",
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城"
+        "yunzhong": "云中旧城",
+        "donglai": "东莱",
+        "langya": "琅邪国",
+        "taishan": "泰山",
+        "xuantu": "玄菟",
+        "guonei": "国内城",
+        "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "327b81cbc7e463f49d0694ed6afa8b192c1bdb0649eb61abbc47294ecdc7206d"
+      "catalog_sha256": "65d60079d8e93545d1e7fe761f75bbb4d094591b9cd3597f8c9c2e46b2f4ebe1"
     }
   ]
 }

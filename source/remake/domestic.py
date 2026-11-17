@@ -8,6 +8,7 @@ Only committed faction-turn and calendar hooks perform work. Views are pure.
 """
 from copy import deepcopy
 
+from . import grain_units
 from .errors import GameError
 from . import command_books
 from .officers import OFFICER_TROOP_CAP, parse_officer_ref
@@ -57,7 +58,7 @@ def _reset_income(row, month):
 
 
 def _new_faction():
-    return dict(civil=None, military=None, policy=deepcopy(DEFAULT_POLICY))
+    return dict(civil=None, military=None, policy=grain_units.policy(DEFAULT_POLICY))
 
 
 def empty(game, state):
@@ -278,7 +279,7 @@ def on_arrival(game, state, ids, city_id):
 def _income(game, city_id, state=None):
     value = game.catalog.data.get('city_income', {}).get(city_id,
         dict(gold=game.catalog.data['rules'].get('monthly_gold_income', 0),
-             grain=game.catalog.data['rules'].get('monthly_grain_income', 0), reserves=0))
+             grain=grain_units.amount(game.catalog.data['rules'].get('monthly_grain_income', 0)), reserves=0))
     if state is not None:
         from .city_economy import income_at
         from .facilities import adjusted_income
@@ -306,6 +307,12 @@ def _earned_income_units(row):
 def _income_bonus(base, units):
     denominator = 100 * _INCOME_UNITS_PER_PERCENT * _INCOME_DUTIES_PER_MONTH
     return {field: int(base[field]) * units // denominator for field in ('gold', 'grain')}
+
+
+def earned_grain(state, city_id, income):
+    row = _pool(state)['cities'][city_id]
+    units = _earned_income_units(row) if row['income_month'] == _month(state) else 0
+    return _income_bonus(income, units)['grain']
 
 
 def month_rollover(game, state):
@@ -358,11 +365,12 @@ def recruitment_preview(game, state, city_id):
     available_grain = max(0, city.grain - policy['grain_floor'])
     unit_gold = _recruit_gold_per_100(strength)
     gold_capacity = available_gold * 100 // unit_gold if unit_gold else LIMIT
+    unit_grain = grain_units.amount(30)
     amount = min(100 + strength, max(0, policy['reserve_target'] - city.reserves),
-                 gold_capacity, available_grain * 100 // 30,
+                 gold_capacity, available_grain * 100 // unit_grain,
                  LIMIT - city.reserves)
     return dict(soldiers=amount, gold=(amount * unit_gold + 99) // 100,
-                grain=(amount * 30 + 99) // 100)
+                grain=(amount * unit_grain + 99) // 100)
 
 
 def training_preview(game, state, city_id):
@@ -375,10 +383,11 @@ def training_preview(game, state, city_id):
     if not soldiers:
         return dict(gain=0, gold=0, grain=0)
     units = (soldiers + 999) // 1000
-    if city.gold - post['policy']['gold_floor'] < units or city.grain - post['policy']['grain_floor'] < units * 2:
+    grain = grain_units.amount(units * 2)
+    if city.gold - post['policy']['gold_floor'] < units or city.grain - post['policy']['grain_floor'] < grain:
         return dict(gain=0, gold=0, grain=0)
     gain = min(100 - row['morale'], 2 + state.officers[ident].profile.martial_strength // 25)
-    return dict(gain=gain, gold=units, grain=units * 2)
+    return dict(gain=gain, gold=units, grain=grain)
 
 
 def allocation_preview(game, state, city_id):

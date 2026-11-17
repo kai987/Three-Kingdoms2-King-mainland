@@ -6,6 +6,7 @@ AI-only original difficulty bonus is not imported. The campaign's seeded modulo
 sampling and nonspatial legacy gate remain adaptations. These helpers never
 initialize supply, spend maneuver points or advance random state.
 """
+from . import grain_units
 from .march_supply import LIMIT
 from .officers import experience_tier
 
@@ -42,7 +43,7 @@ def fire_arrow_requested(grain, intellect, roll):
     _integer(grain, 0, LIMIT, 'army grain')
     _integer(intellect, 0, 99, 'intellect')
     _integer(roll, 0, 4, 'fire-arrow roll')
-    return grain*(10+roll)//100+intellect//5
+    return grain*(10+roll)//100+grain_units.amount(intellect//5)
 
 
 def _tier(officer):

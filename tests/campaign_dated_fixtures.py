@@ -23,7 +23,10 @@ def dated_catalog(kind='founding'):
     if kind in ('founding','coup'):
         data = json.loads((ROOT/'game/data/campaigns/184-02.json').read_text())
         data.update(id='controlled-liangzhou-184-10', start_month=10,
-                    title='涼州起兵驗收', active_cities=['henan','jincheng','tianshui','longxi'], city_foundings={})
+                    title='涼州起兵驗收', active_cities=['henan','jincheng','tianshui','longxi'],
+                    city_foundings={}, historical_successions={})
+        data['historical_exit_dates'] = {pid: date for pid, date in data['historical_exit_dates'].items()
+                                         if not pid.startswith('historical-goguryeo-')}
         sides = {'han','bian_zhang','song_jian'}
         data['factions'] = [row for row in data['factions'] if row['id'] in sides]
         data['faction_rulers'] = {k:v for k,v in data['faction_rulers'].items() if k in sides}

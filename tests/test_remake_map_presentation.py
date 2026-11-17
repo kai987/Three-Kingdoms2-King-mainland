@@ -2,6 +2,7 @@
 from copy import deepcopy
 import hashlib
 import json
+from math import ceil, hypot
 from pathlib import Path
 import subprocess
 import sys
@@ -14,6 +15,7 @@ sys.path.insert(0,str(ROOT/'game'))
 from remake.map_presentation import city_names,presentation
 from remake.session import CampaignSession
 from build_map_presentation import road_center_corrections
+from build_portrait_manifest import png_pixels
 from road_centers import build as build_road_centers
 
 
@@ -105,7 +107,7 @@ class MapPresentationTests(unittest.TestCase):
         self.assertEqual(meta['schema'],'tk2-road-center-corrections-v1')
         self.assertEqual(meta['backgrounds'],{'/assets/map-navigation.png':'/assets/map-road-centers.png'})
         self.assertEqual(len(meta['hubs']),58)
-        self.assertEqual(meta['summary'],dict(reviewed_hubs=58,visible_hubs=12,changed_segments=339,
+        self.assertEqual(meta['summary'],dict(reviewed_hubs=58,visible_hubs=12,changed_segments=340,
                                              deleted_spokes=162,protected_hubs=0))
         for field in ('ground','provenance','protected_hubs','changes','removed_obsolete_paths','mask_d','paint_d','corridor_repairs'):
             self.assertNotIn(field,meta,'The compact center audit does not duplicate full source metadata')
@@ -145,7 +147,8 @@ class MapPresentationTests(unittest.TestCase):
                   'game/assets/map-road-centers.png',manifest_path,
                   'game/config/water-corrections.json','game/map-source/water-render.json',
                   'game/map-source/hydrology-ground.png','game/map-source/terrain-under-water.png',
-                  'game/map-source/historic-water.svg','game/map-source/sea-shadow.svg')
+                  'game/map-source/historic-water.svg','game/map-source/sea-shadow.svg',
+                  'game/map-source/northeast-coast-art.png')
         originals={name:(ROOT/name).read_bytes() for name in required}
         with tempfile.TemporaryDirectory() as temporary:
             root=Path(temporary)
@@ -186,12 +189,65 @@ class MapPresentationTests(unittest.TestCase):
         self.assertEqual(set(water['stats']['clippedMouthPixels']),{'yellow','yangtze','huai','pearl','red'})
         self.assertTrue(all(n>0 for n in water['stats']['clippedMouthPixels'].values()))
         self.assertGreater(water['stats']['seaShadowMaskPixels'],0)
+        self.assertGreater(water['stats']['northeastCoastPixels'],40_000)
         actual=road_center_corrections(ROOT,source['approved_asset_sha256'])
         self.assertEqual(actual['render']['water_render_sha256'],hashlib.sha256((ROOT/'game/map-source/water-render.json').read_bytes()).hexdigest())
         bridges=presentation()['road_bridges']
         self.assertEqual(bridges['sources']['ground'],water['output'])
         self.assertTrue(bridges['audit']['route_bridges']['bajun:zangke'])
         self.assertTrue(bridges['audit']['route_bridges']['fuling:zangke'])
+
+    def test_upper_wei_follows_the_reviewed_valley_and_river_lines_are_continuous(self):
+        config = json.loads((ROOT/'game/config/water-corrections.json').read_bytes())
+        manifest = json.loads((ROOT/'game/map-source/water-render.json').read_bytes())
+        size = tuple(config['size'])
+        _, ground = png_pixels((ROOT / manifest['output']['path']).read_bytes(), size)
+        _, original = png_pixels((ROOT/'game/map-source/road-ground.png').read_bytes(), size)
+        blue = bytes((0, 42, 248, 255))
+        water_colors = {blue, bytes((33, 69, 255, 255))}
+
+        def pixel(pixels, x, y):
+            start = (y * size[0] + x) * 4
+            return pixels[start:start+4]
+
+        upper = config['wei']['headwaters']
+        self.assertEqual(upper['points'][-1], upper['join'])
+        self.assertEqual(upper['points'][0], [306, 293])
+        for x, y in ((306, 293), (320, 295), (351, 312), (388, 320), (420, 325), (436, 322)):
+            self.assertEqual(pixel(ground, x, y), blue, (x, y))
+        self.assertEqual(pixel(ground, 258, 297), blue)
+        for x, y in ((258, 299), (258, 301), (287, 297), (296, 294)):
+            self.assertNotIn(pixel(ground, x, y), water_colors, (x, y))
+        self.assertEqual(pixel(original, 334, 347), blue)
+        for x, y in ((334, 347), (358, 339), (370, 336), (405, 325)):
+            self.assertNotIn(pixel(ground, x, y), water_colors, (x, y))
+        expected = {'jing', 'beiluo', 'wuding', 'yan', 'fen', 'liao', 'daling', 'biliu',
+                    'yalu', 'chongchon', 'taedong', 'han_korea', 'nakdong'}
+        self.assertLessEqual(expected, set(manifest['stats']['regionalRiverPixels']))
+
+        def near(x, y, radius):
+            return {(sx, sy) for sx in range(max(0, x-radius), min(size[0], x+radius+1))
+                    for sy in range(max(0, y-radius), min(size[1], y+radius+1))}
+
+        for river in [dict(upper, id='upper_wei'), *config['regional_rivers']]:
+            with self.subTest(river=river['id']):
+                points = river['points']
+                samples = []
+                for (x, y), (xx, yy) in zip(points, points[1:]):
+                    steps = max(1, ceil(hypot(xx-x, yy-y)))
+                    samples.extend((round(x+(xx-x)*i/steps), round(y+(yy-y)*i/steps))
+                                   for i in range(steps+1))
+                water = {point for xy in samples for point in near(*xy, 4)
+                         if pixel(ground, *point) in water_colors}
+                frontier = water & near(*samples[0], 2)
+                self.assertTrue(frontier)
+                reached = set(frontier)
+                while frontier:
+                    x, y = frontier.pop()
+                    adjacent = {(x-1, y), (x+1, y), (x, y-1), (x, y+1)} & water - reached
+                    frontier.update(adjacent)
+                    reached.update(adjacent)
+                self.assertTrue(all(near(*xy, 2) & reached for xy in samples))
 
 
 if __name__=='__main__':unittest.main()

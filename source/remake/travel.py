@@ -9,7 +9,7 @@ from heapq import heappop, heappush
 from itertools import count
 from math import asin, ceil, cos, radians, sin, sqrt
 from .errors import GameError
-from . import command_books, historical_campaigns, observer
+from . import command_books, historical_campaigns, observer, southern_mission
 from .officers import (OFFICER_TROOP_CAP, integer, select_deployment, transfer_officers,
                        ref_sort_key, deserialize_officer_ref)
 
@@ -250,7 +250,10 @@ class TravelCampaign:
         return dict(faction=partner, committed=committed, troops=troops,
                     remaining=max(0, self.catalog.rules.battle_officers_per_side - committed))
 
-    def _queue_march(self, state, source, target, ids, kind, mode='fastest', *, battle_grain=None):
+    def _queue_march(self, state, source, target, ids, kind, mode='fastest', *, battle_grain=None,
+                     supply_detour=False):
+        if kind == 'attack' and southern_mission.blocks_settlement(state, source.owner, target.id):
+            raise GameError('呂宋正在進行宣化南行劇情，請從呂宋的築城計畫派遣船隊。')
         if kind == 'attack' and historical_campaigns.allied(state, source.owner, target.owner):
             raise GameError('同盟期间，不能向盟友出征。')
         order = 'depart' if kind == 'attack' else 'transfer'
@@ -268,6 +271,11 @@ class TravelCampaign:
             raise GameError('目的城武将容量不足。')
         if mode=='explore' and not sum(state.officers[i].troops for i in ids):
             raise GameError('探索航行至少需要一名带兵武将。')
+        if supply_detour:
+            from .transfer_supply import detour
+            quote = detour(self, state, source.id, target.id, ids, mode, quote)
+            if not quote:
+                raise GameError('目前沒有可補給的迂迴路線。')
         from .march_supply import create, estimate
         if kind == 'attack':
             from .battle_supply import departure_quote
@@ -431,7 +439,7 @@ class TravelCampaign:
         row['supply']['waiting'] = True
 
     def _start_arrived_attack(self, state, row, target):
-        from .march_supply import DENOMINATOR, _completion_tick
+        from .march_supply import denominator, _completion_tick
 
         marches = state.extension['travel']['marches']
         ids = self._attack_members(state, row)
@@ -489,8 +497,8 @@ class TravelCampaign:
                     sources[str(ident)] = column['source']
                 grain, credit = (column['supply'][key] for key in ('remaining', 'credit_units'))
                 owner = column['owner']
-                provisions[owner] = provisions.get(owner, 0) + grain * DENOMINATOR + credit
-            grain, credit = divmod(sum(provisions.values()), DENOMINATOR)
+                provisions[owner] = provisions.get(owner, 0) + grain * denominator() + credit
+            grain, credit = divmod(sum(provisions.values()), denominator())
             supply = dict(remaining=grain, credit_units=credit)
             coalition = dict(sources=sources, provisions=provisions)
             ids = self._attack_members(state, primary)
@@ -501,6 +509,31 @@ class TravelCampaign:
             march_supply=supply, arrival_city=primary['quote']['path'][-2], manual_deployment=True,
             coalition=coalition, empty_capture_actor=empty_capture_actor)
         return True
+
+    def _found_arrived_settlement(self, state, row, source, target):
+        ids = self._attack_members(state, row)
+        marches = state.extension['travel']['marches']
+        if not ids:
+            marches.remove(row)
+            return
+        provision = row['supply']['remaining']
+        if target.grain + provision > 100000000:
+            row['supply']['waiting'] = True
+            return
+        transfer_officers(source.roster, target.roster, ids)
+        from .domestic import on_arrival
+        on_arrival(self, state, ids, target.id)
+        target.owner = row['owner']
+        target.grain += provision
+        target.action_used = True
+        self._discover_march_route(state, row)
+        marches.remove(row)
+        state.extension['officer_actions'].update({str(ident): state.turn for ident in ids})
+        self._note(state, f'{self.faction_name(state, target.owner)}渡海抵达{self.catalog.map_cities[target.id]["name"]}并设城。')
+        self._emit_event(state, 'city_founded', person_ids=[state.officers[ids[0]].person_id],
+            city_ids=[target.id, source.id], factions=[target.owner],
+            details=dict(parent=source.id, settlement=True), audience='world')
+        self._reconcile_factions(state)
 
     def _arrivals(self, state, payload):
         if state.phase != 'arrivals': raise GameError('当前没有待处理的到达事件。')
@@ -557,6 +590,14 @@ class TravelCampaign:
                 if row['owner']==state.player:
                     self._emit_event(state,'march_arrived',person_ids=[state.officers[i].person_id for i in ids[:1]],
                         city_ids=[source.id,target.id],factions=[row['owner']],details=dict(march_id=row['id'],officers=len(ids)))
+            elif (target.owner == 'neutral' and not target.roster.officer_ids
+                  and self.catalog.map_cities[target.id].get('settlement_site')):
+                if southern_mission.blocks_settlement(state, row['owner'], target.id):
+                    row['supply']['retreat_requested']=True;row['supply']['waiting']=True;row['reason']='target_changed'
+                    self._resolve_supply_retreats(state)
+                    continue
+                self._found_arrived_settlement(state, row, source, target)
+                if state.phase == 'finished': return
             else:
                 if not self._start_arrived_attack(state, row, target): continue
                 historical_campaigns.process_battle(self, state)

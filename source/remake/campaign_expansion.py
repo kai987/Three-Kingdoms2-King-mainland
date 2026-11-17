@@ -5,7 +5,7 @@ remake designs. No original engine, ROM tables or control IR are loaded.
 """
 from dataclasses import replace
 from .errors import GameError
-from . import historical_campaigns, observer, three_visits
+from . import grain_units, historical_campaigns, observer, southern_mission, three_visits
 from . import presentation, equipment, command_books, battle_grid, siege, battle_allegiance, battle_services, officer_relations, battle_supply, battle_conditions, battle_placement, battle_auto_deployment
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
@@ -248,14 +248,25 @@ class ExpandedCampaign:
             state.extension['officer_actions'][str(ident)]=state.turn
         self._note(state,f'{self.person_name(state, actor.runtime_id)}劝说{self.person_name(state, ident)}，{"转属成功" if success else "遭到拒绝"}，花费{fee}金。')
 
-    def _transfer(self,state,payload):
-        source=self._owned_city(state,payload.get('source'),action=True)
-        destination=self._owned_city(state,payload.get('target'))
-        ids=payload.get('officers')
-        if source.id==destination.id or not isinstance(ids,list) or not ids or len(ids)!=len(set(ids)):
+    def _transfer_selection(self, state, payload, *, action=False):
+        source = self._owned_city(state, payload.get('source'), action=action)
+        destination = self._owned_city(state, payload.get('target'))
+        ids = payload.get('officers')
+        if (source.id == destination.id or not isinstance(ids, list)
+                or not 1 <= len(ids) <= self.catalog.rules.city_officer_capacity):
             raise GameError('请选择不同的目的城和不重复的调动名单。')
-        for ident in ids: self._personnel_actor(state,source,ident)
-        self._queue_march(state,source,destination,ids,'transfer',payload.get('route_mode','fastest'))
+        ids = [self._personnel_actor(state, source, ident).runtime_id for ident in ids]
+        if len(ids) != len(set(ids)):
+            raise GameError('请选择不同的目的城和不重复的调动名单。')
+        return source, destination, ids
+
+    def _transfer(self,state,payload):
+        source, destination, ids = self._transfer_selection(state, payload, action=True)
+        supply_detour = payload.get('supply_detour', False)
+        if type(supply_detour) is not bool:
+            raise GameError('请选择有效的行军路线。')
+        self._queue_march(state,source,destination,ids,'transfer',payload.get('route_mode','fastest'),
+                          supply_detour=supply_detour)
 
     def _start_expanded_battle(self,state,source,target,ids,*,paid=False,march_supply=None,arrival_city=None,
                                manual_deployment=False,coalition=None,empty_capture_actor=None):
@@ -270,7 +281,7 @@ class ExpandedCampaign:
             for city_id in set(coalition['sources'].values()):
                 members=[i for i in selected if coalition['sources'][str(i)]==city_id]
                 select_deployment(state.cities[city_id].roster,members,state.officers)
-        cost=0 if paid else max(1,sum(state.officers[i].troops for i in selected)//25)
+        cost=0 if paid else grain_units.amount(max(1,sum(state.officers[i].troops for i in selected)//25))
         if not paid and source.grain<cost: raise GameError('出征粮食不足。')
         marching=self._march_ids(state)
         defenders=sorted((i for i in target.roster.officer_ids if i not in marching and state.officers[i].troops>0 and state.officers[i].health>0),key=lambda i:(-state.officers[i].troops,ref_sort_key(i)))[:10]
@@ -1000,6 +1011,11 @@ class ExpandedCampaign:
         self._prune_marches(state)
         self._reconcile_factions(state)
 
+    def _unified(self, state):
+        return all(city.owner == state.player or (city.owner == 'neutral'
+                   and self.catalog.map_cities[city.id].get('settlement_site'))
+                   for city in state.cities.values())
+
     def _reconcile_factions(self,state,*,declined_recruit=None):
         from . import dated_events, diplomacy, succession
         x=state.extension
@@ -1069,8 +1085,9 @@ class ExpandedCampaign:
                            if winner else '各势力均已退出战役。')
         elif state.player in x['ended_factions']:
             state.phase='finished';x['outcome']='defeat'
-        elif all(c.owner==state.player for c in state.cities.values()):
-            state.phase='finished';x['outcome']='victory';self._note(state,f'{len(state.cities)}城归一，战役胜利。')
+        elif self._unified(state):
+            count = sum(city.owner == state.player for city in state.cities.values())
+            state.phase='finished';x['outcome']='victory';self._note(state,f'{count}城归一，战役胜利。')
         if 'civil_staff' in x:
             from .civil_staff import synchronize
             synchronize(self, state, checks=False)
@@ -1175,8 +1192,13 @@ class ExpandedCampaign:
         if dated_events.enabled(self.catalog):fields.add('dated_events')
         if historical_campaigns.RECEIPTS in x:fields.add(historical_campaigns.RECEIPTS)
         if three_visits.COMMAND in x:fields.add(three_visits.COMMAND)
+        if southern_mission.COMMAND in x:fields.add(southern_mission.COMMAND)
         if 'diplomacy' in x:fields.add('diplomacy')
         if 'campaign_id' in x:fields.add('campaign_id')
+        if grain_units.FIELD in x:
+            if type(x[grain_units.FIELD]) is not int or x[grain_units.FIELD] != grain_units.CURRENT:
+                raise ValueError('Invalid grain denomination')
+            fields.add(grain_units.FIELD)
         if 'lifespan' in x:
             if x['lifespan'] != 'none':raise ValueError('Invalid lifespan mode')
             fields.add('lifespan')
@@ -1184,6 +1206,7 @@ class ExpandedCampaign:
         dated_events.validate_state(self,state)
         historical_campaigns.validate_state(self.catalog,state)
         three_visits.validate_state(self.catalog,state)
+        southern_mission.validate_state(self.catalog,state)
         self._validate_travel(state)
         if not isinstance(x['free_locations'],dict) or not isinstance(x['officer_actions'],dict):raise ValueError('personnel state')
         for key,city in x['free_locations'].items():
@@ -1232,7 +1255,7 @@ class ExpandedCampaign:
         if state.player == observer.SEAT:
             if x['outcome'] != observer.outcome(state):raise ValueError('false observer result')
         else:
-            if x['outcome']=='victory' and not all(c.owner==state.player for c in state.cities.values()):raise ValueError('false mainland victory')
+            if x['outcome']=='victory' and not self._unified(state):raise ValueError('false mainland victory')
             if x['outcome']=='defeat' and state.player not in x['ended_factions']:raise ValueError('false mainland defeat')
         queue=x['ai_queue']
         if not isinstance(queue,list) or len(queue)!=len(set(queue)) or not set(queue)<=set(state.cities):raise ValueError('AI queue')
@@ -1286,7 +1309,7 @@ class ExpandedCampaign:
             if not isinstance(d['log'],list) or len(d['log'])>10 or any(not isinstance(v,str) or len(v)>500 for v in d['log']):raise ValueError('duel log')
 
     def _validate_battle_coalition(self,state,battle):
-        from .march_supply import DENOMINATOR, LIMIT
+        from .march_supply import denominator, LIMIT
 
         ext=battle['extended']
         coalition=ext['coalition']
@@ -1321,7 +1344,7 @@ class ExpandedCampaign:
         if set(provisions)!=owners or 'supply' not in ext:
             raise ValueError('Invalid coalition provision owners')
         for amount in provisions.values():
-            integer(amount,0,(LIMIT*DENOMINATOR+DENOMINATOR-1)*len(sources),'coalition provisions')
+            integer(amount,0,(LIMIT*denominator()+denominator()-1)*len(sources),'coalition provisions')
         supply=ext['supply']['sides']['attackers']
-        if sum(provisions.values())!=supply['loaded']*DENOMINATOR+supply['initial_credit']:
+        if sum(provisions.values())!=supply['loaded']*denominator()+supply['initial_credit']:
             raise ValueError('Invalid coalition provision balance')

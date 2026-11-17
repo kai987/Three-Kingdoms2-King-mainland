@@ -31,7 +31,34 @@ context.hasCommandBook=kind=>commandBookFixture.api.can(view,kind);context.comma
 vm.createContext(context);
 vm.runInContext(source.slice(source.indexOf('const routeModes='),source.indexOf('function factionResources(')),context);
 vm.runInContext(source.slice(source.indexOf('function departureLimit('),source.indexOf('function departure(')),context);
+function testSupplyOverlay(){
+ const path=(route_id,from,to,d,one_way=false)=>({route_id,from,to,d,one_way});
+ const shared=path('river','port','away','M30 40L240 40',true);
+ const primary=path('low-stock','home','port','M10 10L30 40');
+ const bypass=path('stocked','home','port','M10 10L60 70L30 40');
+ const arrows=[];
+ const layer={innerHTML:'',querySelectorAll(selector){
+  assert.equal(selector,'[data-march-directed]');
+  const found=this.innerHTML.match(/data-from="(.*?)" data-to="(.*?)" data-march-shared data-march-directed/g)||[];
+  return found.map(()=>({dataset:shared,querySelector:()=>({getTotalLength:()=>210,getPointAtLength:x=>({x:x+30,y:40})}),
+   insertAdjacentHTML:(where,html)=>arrows.push({where,html})}));
+ }};
+ const result={options:[{segments:[primary,shared]}],supplyShortage:true,supplyDetour:{segments:[bypass,shared]}};
+ const before=JSON.stringify(result);
+ context.renderMapMarchRoutes(result,layer,'transfer-supply-map-arrow');
+ const groups=[...layer.innerHTML.matchAll(/<g data-march-map-kind="([^"]+)"[^>]+>[\s\S]*?<\/g>/g)];
+ assert.deepEqual(groups.map(row=>row[1]),['supply-shortage','supply-shortage','supply-detour','supply-detour']);
+ assert(groups[1][0].includes('data-march-shared')&&groups[3][0].includes('data-march-shared'));
+ assert(groups[1][0].includes('map-march-line-bed')&&!groups[3][0].includes('map-march-line-bed'));
+ assert(!groups[1][0].includes('data-march-directed')&&groups[3][0].includes('data-march-directed'));
+ assert.equal(arrows.length,1);
+ assert.match(arrows[0].html,/data-from="port" data-to="away".*marker-end="url\(#transfer-supply-map-arrow\)"/);
+ assert.equal(JSON.stringify(result),before);
+ context.renderMapMarchRoutes(null,layer);
+ assert.equal(layer.innerHTML,'');
+}
 async function test(){
+ testSupplyOverlay();
  const same=value=>JSON.parse(JSON.stringify(value)),snapshot=JSON.stringify(view);
  assert.deepEqual(same(context.actionTargetCities('depart',home)),['enemy','empty']);
  view.catalog.allied_attacks={enemy:{remaining:0}};
@@ -84,6 +111,6 @@ async function test(){
  assert.match(detail.innerHTML,/available/);assert.equal(context.mapAction.selection.id,'enemy');context.cancelMapAction();
  context.busy=true;context.beginMapAction('depart',home);assert.equal(context.mapAction,null);
  assert(renders>=5);
- console.log('map actions: blocked and available route previews, target-bound dialogs, command-book guards, mobile map scroll/focus and immutable state passed');
+ console.log('map actions: blocked and available route previews, target-bound dialogs, command-book guards, mobile map scroll/focus, shared supply overlay arrows and immutable state passed');
 }
 test().catch(error=>{console.error(error);process.exitCode=1;});

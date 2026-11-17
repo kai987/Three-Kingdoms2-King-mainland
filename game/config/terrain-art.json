@@ -11,6 +11,50 @@
   "road_source": "game/config/road-centers.json",
   "route_geometry": "game/config/route-geometry.json",
   "cities": "game/config/campaigns/shared.json",
+  "world_surface": {
+    "path": "game/map-source/northeast-coastline.png",
+    "sha256": "3af958327bc3fb585c54c7ebfed7b3a66e8d4f418e4ace3d7c8977e3f5deebf5",
+    "crop": {"x": 940, "y": 0, "width": 412, "height": 420},
+    "shape_source": "game/map-source/northeast-coast-art.png",
+    "shape_sha256": "bf07b62c1da5d3225568b5a0d4784ceb4afca96aeb4c0e7d71a10f8350f09eff",
+    "original_surface": "game/map-source/road-ground.png"
+  },
+  "islands": {
+    "yizhou": {
+      "region": [1066, 610, 1235, 835],
+      "pivot": [1120, 688],
+      "open_water_offset": [110, 103]
+    },
+    "zhuya": {
+      "region": [456, 842, 630, 1017],
+      "pivot": [552, 868],
+      "open_water_offset": [500, 4]
+    }
+  },
+  "luzon": {
+    "source": "https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-land/",
+    "relief_source": "https://www.jica.go.jp/project/philippines/0600933/04/pdf/Manual_on_FC_Planning.pdf",
+    "outline": [
+      [1179, 930], [1173, 945], [1187, 961], [1176, 981], [1154, 988],
+      [1156, 994], [1148, 1003], [1167, 1033], [1177, 1035], [1174, 1029],
+      [1192, 1025], [1204, 1031], [1206, 1040], [1213, 1038], [1214, 1031],
+      [1217, 1035], [1235, 1038], [1221, 1042], [1232, 1051], [1228, 1055],
+      [1243, 1055], [1239, 1068], [1230, 1061], [1238, 1058], [1227, 1060],
+      [1213, 1056], [1208, 1046], [1187, 1034], [1183, 1034], [1192, 1048],
+      [1189, 1053], [1181, 1044], [1159, 1034], [1144, 1043], [1131, 1040],
+      [1131, 1035], [1123, 1038], [1120, 1029], [1133, 1018], [1121, 1012],
+      [1121, 1022], [1114, 1022], [1111, 1014], [1103, 1014], [1097, 1000],
+      [1094, 978], [1105, 985], [1114, 982], [1112, 950], [1120, 927],
+      [1138, 924], [1157, 932], [1168, 932], [1174, 927]
+    ],
+    "mountains": [
+      {"source": [935, 566, 54, 38], "target": [1115, 946, 34, 29]},
+      {"source": [982, 594, 54, 39], "target": [1150, 942, 31, 28]},
+      {"source": [724, 743, 43, 27], "target": [1128, 967, 38, 25]},
+      {"source": [957, 383, 48, 31], "target": [1097, 984, 25, 23]},
+      {"source": [805, 743, 51, 29], "target": [1128, 996, 39, 29]}
+    ]
+  },
   "art_source": {
     "path": "game/map-source/approved-western-range-art.png",
     "sha256": "50f7a296a2b476591b9a4cefd371b7317290489628baa266444c4a4fce3d06b1",

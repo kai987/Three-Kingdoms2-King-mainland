@@ -5,14 +5,15 @@ conquests, consume random numbers, or acknowledge/advance a game from the UI.
 """
 from copy import deepcopy
 import re
-from . import historical_campaigns, observer, three_visits
-from .battle_supply import COALITION_LIMIT, DENOMINATOR, MAX_BATTLE_DAILY_UNITS
+from . import historical_campaigns, observer, southern_mission, three_visits
+from . import grain_units
+from .battle_supply import COALITION_LIMIT, denominator, MAX_BATTLE_DAILY_UNITS
 from .city_development import LIMITS as DEVELOPMENT_LIMITS, POPULATION_UNIT, valid_population
 from .dated_events import FOUNDING_TROOP_TARGET
 from .officers import OFFICER_TROOP_CAP, ref_sort_key, is_generated_ref
 
 LIMIT = 100
-MILESTONE_KINDS = frozenset((*historical_campaigns.EVENT_FACTIONS, *three_visits.STAGES))
+MILESTONE_KINDS = frozenset((*historical_campaigns.EVENT_FACTIONS, *three_visits.STAGES, *southern_mission.EVENTS))
 STAFF_KINDS = {'staff_candidate', 'staff_hired', 'staff_declined', 'staff_expired',
                'staff_salary', 'staff_allegiance'}
 STAFF_DETAILS = {'staff_id', 'name', 'portrait', 'reason', 'amount', 'paid', 'bonus', 'counts'}
@@ -54,7 +55,7 @@ DETAILS = {
     'recruit_success': {'actor'}, 'recruit_failure': {'actor'},
     'defection': {'from_faction', 'to_faction', 'actor'},
     'officer_death': {'released_troops'}, 'succession': {'previous'},
-    'faction_ended': set(), 'city_founded': {'parent'},
+    'faction_ended': set(), 'city_founded': {'parent','settlement'},
     'city_upgraded': {'from_tier','to_tier','income'},
     'city_renamed': {'from_name', 'to_name'},
     'city_captured': {'previous_owner'},
@@ -65,6 +66,9 @@ DETAILS = {
     **{kind: set() for kind in historical_campaigns.EVENT_FACTIONS},
     historical_campaigns.DONG_ZHUO_RELOCATION: historical_campaigns.DONG_ZHUO_RELOCATION_DETAILS,
     **{kind: set() for kind in three_visits.STAGES},
+    southern_mission.DEPARTED: {'days', 'storm_days'},
+    southern_mission.LANDED: {'can_build'},
+    southern_mission.FOUNDED: {'troops', 'work_days'},
     'battle_started': {'battle_id', 'attacker', 'defender'},
     'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered', 'coalition'},
     'duel_started': set(), 'duel_result': {'result'},
@@ -164,7 +168,7 @@ def _validate_facility_event(row):
             valid=valid and number('bonus',1,88) and 5<=d['after']-d['before']<=12
     elif kind=='grain_traded':
         valid=(d['direction'] in ('buy','sell') and number('batches',1,1000)
-            and number('rate',1,100) and d['grain']==d['batches']*100 and d['gold']==d['batches']*d['rate'])
+            and number('rate',1,100) and d['grain']==d['batches']*grain_units.amount(100) and d['gold']==d['batches']*d['rate'])
         if 'battle_id' in d:
             valid=(valid and d['direction']=='buy' and d['destination']=='battle'
                 and d['side'] in ('attackers','defenders') and isinstance(d['battle_id'],str)
@@ -235,11 +239,11 @@ def _validate_battle_supply_event(row):
             or d['side'] not in ('attackers','defenders')):
         raise ValueError('Battle supply event fields')
     for key, low, high in (('days',1,30),('grain',0,100000000),
-                           ('daily_grain',1,MAX_BATTLE_DAILY_UNITS//DENOMINATOR),
+                           ('daily_grain',1,MAX_BATTLE_DAILY_UNITS//denominator()),
                            ('missing_units',1,MAX_BATTLE_DAILY_UNITS)):
         if type(d[key]) is not int or not low <= d[key] <= high:
             raise ValueError('Battle supply event values')
-    if (d['missing_units']>d['daily_grain']*DENOMINATOR
+    if (d['missing_units']>d['daily_grain']*denominator()
             or d['outcome'] != ('retreat' if d['side']=='attackers' else 'victory')):
         raise ValueError('Battle supply event receipt')
 
@@ -609,6 +613,14 @@ def validate(campaign, state):
             _validate_coalition_result(campaign, row)
         if row['kind']=='equipment_acquired':
             _validate_equipment_event(row)
+        if row['kind']=='city_founded' and 'settlement' in row['details']:
+            d = row['details']
+            if (d['settlement'] is not True or len(row['city_ids']) != 2
+                    or d.get('parent') != row['city_ids'][1] or len(row['factions']) != 1
+                    or row['factions'][0] == 'neutral' or len(row['person_ids']) != 1
+                    or row['audience'] != 'world'
+                    or not campaign.catalog.map_cities[row['city_ids'][0]].get('settlement_site')):
+                raise ValueError('Settlement founding event')
         if row['kind']=='diplomacy_result':
             from .diplomacy import MAX_TURNS, PARAMETERS
             d = row['details']
@@ -624,6 +636,8 @@ def validate(campaign, state):
             historical_campaigns.validate_event(campaign.catalog,state,row)
         if row['kind'] in three_visits.STAGES:
             three_visits.validate_event(campaign.catalog,state,row)
+        if row['kind'] in southern_mission.EVENTS:
+            southern_mission.validate_event(state,row)
         if row['kind'] in {'faction_founded','faction_founding_skipped'}:
             rules={r['id']:r for r in campaign.catalog.data.get('faction_foundings',[])}
             d=row['details']; rule=rules.get(d.get('founding_id'))

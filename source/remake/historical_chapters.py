@@ -4,6 +4,23 @@ from typing import NamedTuple
 
 
 DONG_ZHUO_RELOCATION = 'historical_dong_zhuo_relocation'
+WUHUAN_EXPEDITION = 'historical_wuhuan_expedition'
+GOGURYEO_EXPEDITION = 'historical_goguryeo_expedition'
+ZHANG_LIAO = 'san14-candidate-0663'
+CAO_CHUN = 'san14-candidate-0514'
+ZHANG_HE = 'san14-candidate-0618'
+CAO_CAO = 'san14-candidate-0521'
+TIAN_CHOU = 'san14-candidate-0712'
+GUANQIU_JIAN = 'san14-candidate-0152'
+WANG_QI = 'san14-candidate-0046'
+DONGCHEON = 'historical-goguryeo-dongcheon'
+
+# The expedition staging points are the playable equivalents of the historical
+# approaches. The first listed officer commands the on-map column.
+FRONTIER_SORTIES = {
+    WUHUAN_EXPEDITION: ('liaoxi', 'liucheng', 'wuhuan', (ZHANG_LIAO, CAO_CAO, CAO_CHUN, ZHANG_HE), (207, 8)),
+    GOGURYEO_EXPEDITION: ('xuantu', 'guonei', 'goguryeo', (GUANQIU_JIAN, WANG_QI), (245, 12)),
+}
 
 
 class Chapter(NamedTuple):
@@ -110,6 +127,13 @@ CHAPTERS = {
         people=('san14-candidate-0952', 'san14-candidate-0446', 'san14-candidate-0440'),
         note='徐庶薦諸葛亮。',
     ),
+    WUHUAN_EXPEDITION: Chapter(
+        start=(207, 5), end=(207, 9),
+        leaders=(('wei', CAO_CAO),), holdings=(('liaoxi', 'wei'),),
+        officers=(), cities=('liaoxi', 'liucheng'),
+        people=(CAO_CAO, ZHANG_LIAO, CAO_CHUN, ZHANG_HE, TIAN_CHOU),
+        note='曹操北征烏桓，張遼領先鋒，曹純、張郃從征，田疇引路。',
+    ),
     'historical_yizhou_campaign': Chapter(
         start=(212, 12), end=(214, 5),
         leaders=(('shu', 'san14-candidate-0952'), ('liu_zhang', 'san14-candidate-0938')),
@@ -160,6 +184,14 @@ CHAPTERS = {
         cities=('henan',),
         people=('san14-candidate-0344', 'san14-candidate-0522', 'san14-candidate-0529'),
         note='高平陵之變。',
+    ),
+    GOGURYEO_EXPEDITION: Chapter(
+        start=(244, 7), end=(245, 12),
+        leaders=(('wei', 'san14-candidate-0529'), ('goguryeo', DONGCHEON)),
+        holdings=(('xuantu', 'wei'), ('guonei', 'goguryeo')),
+        officers=((GUANQIU_JIAN, 'wei'),), cities=('xuantu', 'guonei'),
+        people=(GUANQIU_JIAN, WANG_QI, DONGCHEON),
+        note='毌丘儉由玄菟出兵征高句麗，王頎參與後續追擊。',
     ),
     'historical_wei_invades_shu': Chapter(
         start=(263, 5), end=(263, 11),

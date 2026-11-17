@@ -12,11 +12,11 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'source'))
 sys.path.insert(0, str(ROOT/'tests'))
-from remake import city_development as development, command_books
+from remake import capital_openings, city_development as development, command_books, large_city_population
 from remake import domestic, treasures
 from remake.errors import GameError
 from remake.campaign import Campaign, Catalog
-from remake.city_economy import income_at
+from remake.city_economy import income_at, tier_at
 from remake.session import CampaignSession
 from test_remake_facilities import fixture
 from test_remake_civil_staff_campaign import staff_catalog
@@ -365,6 +365,97 @@ class DevelopmentCampaignTests(unittest.TestCase):
         self.assertGreater(development.adjust_income(restored, restored.state, 'shujun', income)['grain'],
                            income['grain'])
 
+    def test_luoyang_fixed_opening_preserves_previous_saves(self):
+        directory = ROOT/'game/data/campaigns'
+        early = ('184-02', '188-06', '190-01')
+        for scenario in (*early, '191-10', '221-07', '263-05'):
+            with self.subTest(scenario=scenario):
+                catalog = Catalog(directory/f'{scenario}.json')
+                faction = catalog.data['initial_owners']['henan']
+                game = Campaign(catalog)
+                game.state = game._new(faction, 2026)
+                pool = game.state.extension['city_development']
+                baseline = pool['cities']['henan']['baseline']
+                self.assertEqual(pool['cities']['henan']['population'], baseline['population'])
+                if scenario in early:
+                    self.assertEqual(development.opening_view(catalog, 'henan')['population'], 203_100)
+                    self.assertEqual(baseline['population'], 203_100)
+                    repeated = game._new(faction, 7)
+                    self.assertEqual(repeated.extension['city_development']['cities']['henan']['baseline'],
+                                     baseline)
+                    self.assertEqual(game.state.rng.draws, 0)
+                save = game.export_save()
+                restored = Campaign(catalog)
+                with patch.object(restored, 'view', return_value={}):
+                    restored.load_save(json.loads(json.dumps(save)), 0)
+                self.assertEqual(restored.export_save(), save)
+
+                for schema in (development.PREVIOUS_SCHEMA, development.SEEDED_SCHEMA):
+                    with self.subTest(schema=schema):
+                        old = development.empty(game, game.state, schema=schema)
+                        old_luoyang = old['cities']['henan']
+                        self.assertNotEqual(old_luoyang['baseline']['population'], baseline['population'])
+                        old_luoyang['population'] += 500
+                        game.state.extension['city_development'] = old
+                        save = game.export_save()
+                        with patch.object(restored, 'view', return_value={}):
+                            restored.load_save(json.loads(json.dumps(save)), restored.revision)
+                        development.synchronize(restored, restored.state)
+                        self.assertEqual(restored.export_save(), save)
+
+    def test_historical_openings_preserve_previous_population_baselines(self):
+        catalog = Catalog(ROOT/'game/data/campaigns/249-01.json')
+        game = Campaign(catalog)
+        game.state = game._new(catalog.data['initial_owners']['danyang'], 2026)
+        large_city_baselines = development.empty(game, game.state, schema=development.LARGE_CITY_SCHEMA)['cities']
+        old_catalog = Catalog(ROOT/'game/data/campaigns/249-01.json')
+        older_game = Campaign(old_catalog)
+        with patch.object(capital_openings, 'opening', return_value={}):
+            older_game.state = older_game._new(catalog.data['initial_owners']['danyang'], 2026)
+        self.assertNotEqual(older_game.state.cities['henan'].gold, game.state.cities['henan'].gold)
+        self.assertNotEqual(older_game.state.extension['facilities'], game.state.extension['facilities'])
+        large = set(large_city_population.OPENINGS)
+        for schema, capitals_and_giants in (
+                (development.LUOYANG_SCHEMA, {'henan', 'jingzhao', 'wei', 'yingchuan', 'shujun', 'danyang'}),
+                (development.GIANT_CITY_SCHEMA, {'henan', 'jingzhao'}),
+                (development.CAPITAL_SCHEMA, set()),
+                (development.LARGE_CITY_SCHEMA, set())):
+            with self.subTest(schema=schema):
+                if schema in (development.CAPITAL_SCHEMA, development.LARGE_CITY_SCHEMA):
+                    older_game.state = deepcopy(game.state)
+                old = development.empty(older_game, older_game.state, schema=schema)
+                for key, row in old['cities'].items():
+                    differs = {field for field in development.LIMITS
+                               if row['baseline'][field] != large_city_baselines[key]['baseline'][field]}
+                    if key in large and schema != development.LARGE_CITY_SCHEMA:
+                        self.assertEqual(differs, {'population'}, key)
+                    else:
+                        self.assertEqual(bool(differs), key in capitals_and_giants, key)
+                    if differs or row['population'] % 1000 == 0:
+                        row['population'] += 500
+                older_game.state.extension['city_development'] = old
+                save = older_game.export_save()
+                restored = Campaign(catalog)
+                with patch.object(restored, 'view', return_value={}):
+                    restored.load_save(json.loads(json.dumps(save)), 0)
+                development.synchronize(restored, restored.state)
+                self.assertEqual(restored.export_save(), save)
+
+    def test_ordinary_opening_estimates_preserve_v8_saves(self):
+        catalog = Catalog(ROOT/'game/data/campaigns/200-01.json')
+        game = Campaign(catalog)
+        game.state = game._new(catalog.data['initial_owners']['qiao'], 2026)
+        old = development.empty(game, game.state, schema=development.HUNDRED_PLACE_SCHEMA)
+        old['cities']['hefei']['population'] += 500
+        self.assertNotEqual(old['cities']['hefei']['baseline'], development.opening_view(catalog, 'hefei'))
+        game.state.extension['city_development'] = old
+        save = game.export_save()
+        restored = Campaign(catalog)
+        with patch.object(restored, 'view', return_value={}):
+            restored.load_save(json.loads(json.dumps(save)), 0)
+        development.synchronize(restored, restored.state)
+        self.assertEqual(restored.export_save(), save)
+
     def test_real_ai_turn_executes_the_same_paid_development_and_seeded_effect(self):
         data = deepcopy(staff_catalog(free=False).data)
         data['city_development_rules'].update(enabled=True, ai_enabled=True)
@@ -414,7 +505,8 @@ class DevelopmentCampaignTests(unittest.TestCase):
         paths = [path for path in sorted((ROOT/'game/data/campaigns').glob('*.json')) if path.name != 'index.json']
         self.assertEqual(len(paths), 29)
         session = CampaignSession(paths)
-        examples = {}
+        examples, reviewed_baselines = {}, {}
+        ordinary_cities = set()
         for path in paths:
             with self.subTest(scenario=path.stem):
                 catalog = session.catalogs['mainland' + path.stem]
@@ -429,17 +521,55 @@ class DevelopmentCampaignTests(unittest.TestCase):
                 self.assertEqual(set(view['cities']), set(game.state.cities))
                 for field in development.LIMITS:
                     self.assertGreater(len({row[field] for row in view['cities'].values()}), 10)
-                for key in ('henan', 'shujun', 'wenshan'):
-                    preview = session.preview_city(catalog.data['id'], key)['city']['city_development']
-                    self.assertEqual(preview, view['cities'][key]['baseline'])
-                    examples[path.stem, key] = preview
+                named = ('henan', 'jingzhao', 'wei', 'yingchuan', 'shujun', 'danyang', 'wenshan',
+                         'hefei', 'jiangxia', 'xincheng', 'wuyuan', 'shuofang', 'yunzhong')
+                for key in (*named, *large_city_population.OPENINGS):
+                    preview = session.preview_city(catalog.data['id'], key)['city']
+                    baseline = view['cities'][key]['baseline']
+                    self.assertEqual(preview['city_development'], baseline)
+                    examples[path.stem, key] = baseline
+                    if key in ('henan', 'jingzhao'):
+                        city = game.state.cities[key]
+                        for field in ('gold', 'grain'):
+                            self.assertEqual(preview[field], getattr(city, field))
+                        for field in ('town', 'preparedness', 'damage'):
+                            self.assertEqual(preview['facilities'][field], game.state.extension['facilities']['cities'][key][field])
+                        active = sum(game.state.officers[ident].troops for ident in city.roster.officer_ids)
+                        self.assertEqual(sum(officer['troops'] for officer in preview['officers']), active)
+                        base = income_at(catalog.data, key, game.state.year, game.state.month)
+                        damage = preview['facilities']['damage']
+                        self.assertEqual(preview['income'], {field: amount * (100-damage) // 100
+                                                             for field, amount in base.items()})
                 for key, row in view['cities'].items():
-                    self.assertEqual({field: row[field] for field in development.LIMITS},
-                                     development.opening_view(catalog, key))
+                    expected = development.opening_view(catalog, key, seed=game.state.seed)
+                    self.assertEqual({field: row[field] for field in development.LIMITS}, expected)
+                    previous = development.opening_view(catalog, key, schema=development.CAPITAL_SCHEMA)
+                    reviewed = development.opening_view(catalog, key, schema=development.LARGE_CITY_SCHEMA)
+                    previous_population_format = development.opening_view(catalog, key, schema=development.HUNDRED_PLACE_SCHEMA)
+                    reviewed_baselines[path.stem, key] = reviewed
+                    changed = {field for field in development.LIMITS if reviewed[field] != previous[field]}
+                    if key not in large_city_population.OPENINGS or (key == 'qiao' and path.stem < '221-01'):
+                        self.assertFalse(changed, key)
+                    else:
+                        self.assertTrue(changed <= {'population'}, key)
+                    population = reviewed['population']
+                    delta = previous_population_format['population'] - population
+                    self.assertIn(delta, range(100, 1000, 100) if population % 1000 == 0 else (0,))
+                    self.assertEqual({field: expected[field] for field in development.LIMITS if field != 'population'},
+                                     {field: reviewed[field] for field in development.LIMITS if field != 'population'})
+                    date = (game.state.year, game.state.month)
+                    if tier_at(catalog.data, key, *date) == 'normal' and key != 'wuchang':
+                        ordinary_cities.add(key)
+                        self.assertIn(key, development._ORDINARY_CITY_OPENINGS)
+                        anchors = development._ORDINARY_CITY_OPENINGS[key]
+                        self.assertTrue(anchors[0][0] <= date <= anchors[-1][0], (path.stem, key))
+                        self.assertNotEqual(expected['population'] % 1000, 0, (path.stem, key))
+                    else:
+                        self.assertEqual(expected, previous_population_format, (path.stem, key))
                     base = income_at(catalog.data, key, game.state.year, game.state.month)
                     self.assertEqual(row['income'], base)
                     self.assertEqual(development.adjust_income(game, game.state, key, base), base)
-                    self.assertEqual(row['baseline'], development.opening_view(catalog, key))
+                    self.assertEqual(row['baseline'], expected)
                 self.assertEqual(game.export_save(), before)
                 restored = Campaign(catalog)
                 with patch.object(restored, 'view', return_value={}):
@@ -467,9 +597,38 @@ class DevelopmentCampaignTests(unittest.TestCase):
                     # The next development really runs on the restored state.
                     game = restored
                 self.assertEqual(game.state.rng.draws, before['state']['rng']['draws']+6)
+        self.assertEqual(ordinary_cities, set(development._ORDINARY_CITY_OPENINGS))
+        self.assertEqual(examples['200-01', 'hefei']['population'], 1_300)
+        self.assertEqual(examples['202-06', 'hefei']['population'], 8_700)
+        self.assertEqual(examples['200-01', 'qiao']['population'], 23_700)
+        self.assertGreater(examples['219-07', 'jiangxia']['population'], examples['208-10', 'jiangxia']['population'])
         for field in development.LIMITS:
             self.assertLess(examples['191-10', 'henan'][field], examples['184-02', 'henan'][field])
             self.assertLess(examples['191-10', 'henan'][field], examples['221-07', 'henan'][field])
+        recovery = [examples[path.stem, 'henan']['population'] for path in paths
+                    if path.stem >= '191-10']
+        self.assertEqual(recovery, sorted(set(recovery)))
+        self.assertEqual((recovery[0], recovery[-1]), (6_900, 198_200))
+        self.assertEqual(examples['191-10', 'jingzhao']['population'], 207_500)
+        self.assertEqual(reviewed_baselines['196-06', 'jingzhao']['population'], 86_000)
+        for key, expected in {
+            'wei': {'202-06': 107_000, '207-09': 75_000, '219-07': 137_000, '263-05': 127_000},
+            'yingchuan': {'196-06': 59_000, '200-01': 93_000, '219-07': 142_000, '263-05': 111_000},
+            'shujun': {'194-06': 152_000, '227-02': 193_000, '263-05': 205_000},
+            'danyang': {'184-02': 24_000, '212-06': 50_000, '249-01': 146_000, '263-05': 175_000},
+            'bajun': {'184-02': 49_000, '227-02': 68_500, '263-05': 88_000},
+            'hanzhong': {'215-08': 93_300, '219-07': 33_000, '263-05': 72_000},
+            'jiujiang': {'200-01': 56_000, '249-01': 111_000, '263-05': 73_000},
+            'kuaiji': {'196-06': 61_000, '197-07': 58_000, '263-05': 101_000},
+            'nanjun': {'207-09': 89_000, '221-07': 83_000, '227-02': 74_000, '263-05': 104_000},
+            'nanyang': {'184-02': 68_000, '198-03': 49_000, '263-05': 93_000},
+            'qiao': {'200-01': 55_300, '221-07': 71_400, '263-05': 87_000},
+            'wuchang': {'184-02': 29_000, '227-02': 91_000, '234-02': 79_000, '263-05': 97_000},
+            'wujun': {'184-02': 64_000, '200-01': 76_000, '263-05': 109_000},
+            'xiangyang': {'207-09': 112_000, '208-10': 97_000, '263-05': 111_000},
+        }.items():
+            for scenario, population in expected.items():
+                self.assertEqual(reviewed_baselines[scenario, key]['population'], population, (scenario, key))
         for field in ('land', 'industry', 'population'):
             self.assertGreater(examples['184-02', 'shujun'][field], examples['184-02', 'wenshan'][field])
 

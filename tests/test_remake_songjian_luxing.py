@@ -44,6 +44,10 @@ EARLY_EXPANSION_RESERVES = {
     'wuchang': 1320,  # E County is present in the 184 opening.
 }
 HETAO_184_RESERVES = {'shuofang': 630, 'wuyuan': 660, 'yunzhong': 660}
+LATER_184_RESERVES = {'donglai': 660, 'langya': 650, 'taishan': 700, 'xuantu': 580,
+                      'guonei': 1600, 'liucheng': 1350, 'luzon': 0}
+FRONTIER_184_GARRISONS = {'goguryeo': 1510, 'wuhuan': 3800}
+LATER_184_SOLDIERS = sum(LATER_184_RESERVES.values()) + sum(FRONTIER_184_GARRISONS.values())
 # These are the 57 earlier Longxi relocations. Six Han Sui retinue placements
 # are subsequently corrected to independent Jincheng; the earlier relocation
 # record stays as provenance. Keep IDs: names are not unique identities.
@@ -109,7 +113,7 @@ class SongJianLuXingTests(unittest.TestCase):
 
     def test_seven_new_identities_keep_1024_to_1030_without_reusing_wei_li_tong(self):
         catalog = self.catalogs['mainland263-05']
-        self.assertEqual(len(catalog.ids), 1056)
+        self.assertEqual(len(catalog.ids), 1080)
         self.assertEqual(len(catalog.ids), len(self.data['mainland263-05']['era_assignments']))
         self.assertEqual(len(set(catalog.ids.values())), len(catalog.ids))
         self.assertNotIn(1005, catalog.by_id)
@@ -203,16 +207,17 @@ class SongJianLuXingTests(unittest.TestCase):
             self.assertEqual(state.cities[city].owner, 'han' if city in HETAO_184_RESERVES else 'neutral')
             self.assertEqual(state.cities[city].roster.officer_ids, [])
         self.assertEqual(sum(row['reserves'] for city, row in old_stocks.items() if city not in expansion_reserves)
-                         + sum(old_troops.values()), ORIGINAL_184_SOLDIERS)
+                         + sum(old_troops.values()), ORIGINAL_184_SOLDIERS + LATER_184_SOLDIERS)
         reinforcement = sum(opening_troops.values()) - sum(old_troops.values())
         self.assertEqual(sum(c.reserves for city, c in state.cities.items() if city not in expansion_reserves)
-                         + sum(o.troops for o in state.officers.values()), ORIGINAL_184_SOLDIERS + reinforcement)
-        expected_total = ORIGINAL_184_SOLDIERS + sum(expected_reserves.values()) + reinforcement
+                         + sum(o.troops for o in state.officers.values()),
+                         ORIGINAL_184_SOLDIERS + LATER_184_SOLDIERS + reinforcement)
+        expected_total = ORIGINAL_184_SOLDIERS + sum(expected_reserves.values()) + LATER_184_SOLDIERS + reinforcement
         self.assertEqual(state.soldiers['initial'], expected_total)
         self.assertEqual(sum(c.reserves for c in state.cities.values())
                          + sum(o.troops for o in state.officers.values()), expected_total)
-        self.assertEqual(len(game.catalog.data['initial_officers']), 135)
-        self.assertEqual(len(game.catalog.data['initial_free_officers']), 156)
+        self.assertEqual(len(game.catalog.data['initial_officers']), 135 + 3 + 2)
+        self.assertEqual(len(game.catalog.data['initial_free_officers']), 156 - 2)
         game.validate(state)
 
     def test_seventeen_lifetime_openings_include_five_if_and_keep_longxi_name(self):
@@ -402,13 +407,15 @@ class SongJianLuXingTests(unittest.TestCase):
         opening_factions = {row['id'] for row in rows['mainland184-02']['factions']}
         self.assertNotIn('song_jian', opening_factions)
         self.assertNotIn('bian_zhang', opening_factions)
-        self.assertEqual(len(opening_factions), 9)
+        self.assertTrue(FRONTIER_184_GARRISONS.keys() <= opening_factions)
+        self.assertEqual(len(opening_factions), 11)
         self.assertEqual({row['id'] for row in rows['mainland184-02']['future_factions']},
                          {'song_jian', 'bian_zhang'})
         self.assertEqual(len(rows['mainland184-02']['scheduled_faction_foundings']), 2)
         self.assertEqual(len(rows['mainland184-02']['scheduled_faction_coups']), 1)
         self.assertEqual(rows['mainland184-02']['initial_soldier_total'],
-                         ORIGINAL_184_SOLDIERS + sum(EARLY_EXPANSION_RESERVES.values()) + sum(HETAO_184_RESERVES.values()))
+                         ORIGINAL_184_SOLDIERS + sum(EARLY_EXPANSION_RESERVES.values())
+                         + sum(HETAO_184_RESERVES.values()) + LATER_184_SOLDIERS)
         adaptations = report['fictional_adaptations']
         self.assertEqual({row['id'] for row in adaptations}, SONG_IF_OPENINGS)
         self.assertTrue(all(row['fictional'] for row in adaptations))

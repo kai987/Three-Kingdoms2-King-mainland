@@ -185,3 +185,18 @@ def preview(game, state, source, target, revision):
         result['status'] = 'no_direct_route'
         result['detour'] = _staged_attack(game, state, source, target, known)
     return result
+
+
+def preview_transfer(game, state, source, target, ids, mode, revision):
+    """Add map geometry to the same deterministic detour used at confirmation."""
+    from .transfer_supply import detour
+
+    primary = game._travel_path(state, source, target, state.player, mode)
+    alternative = detour(game, state, source, target, ids, mode, primary)
+    data = game.catalog.data
+
+    def with_geometry(quote):
+        return dict(quote, segments=_quote_segments(data, quote['routes'])) if quote else None
+
+    return dict(source=source, target=target, revision=revision, route_mode=mode,
+                primary=with_geometry(primary), detour=with_geometry(alternative))

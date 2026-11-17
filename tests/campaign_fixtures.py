@@ -163,6 +163,7 @@ def controlled_catalog():
     data['appearance_locations'] = {p: c for p, c, _, _ in rows}
     data['appearance_windows'] = {p: [] for p in people}
     data['era_assignments'] = {}
+    data['historical_successions'] = {}
     data['initial_resources'] = dict(gold=1200, grain=3800, reserves=1200)
     data['initial_city_resources'] = {c: deepcopy(data['initial_resources']) for c in active}
     data['city_income'] = {c: dict(gold=35, grain=90, reserves=0) for c in active}

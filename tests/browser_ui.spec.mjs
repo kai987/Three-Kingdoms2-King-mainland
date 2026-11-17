@@ -475,7 +475,29 @@ test('recovery callback waits for title Start',async({page},testInfo)=>{
 
 test('faction resources show current allies and large factions receive 40 command books',async({page})=>{
  await opening(page);
- await page.locator('#scenario').selectOption('mainland208-10');
+ const scenarios=page.locator('#scenario');
+ const marker=id=>page.locator(`#world-map .city-hit[data-city="${id}"]`);
+ const choice=id=>page.locator(`.faction-choice:has(input[value="${id}"]) .faction-city-icon`);
+ const expectColors=async(element,border,fill)=>{
+  await expect(element.locator('.castle-border')).toHaveAttribute('fill',border);
+  await expect(element.locator('.castle-fill')).toHaveAttribute('fill',fill);
+ };
+ await scenarios.selectOption('mainland190-01');
+ await expectColors(choice('sun_jian'),'#000','#f85898');
+ await expectColors(choice('dong_zhuo'),'#000','#a40000');
+ await expectColors(choice('gongsun_zan'),'#a00000','#ffffff');
+ for(const [scenario,yuan] of [['mainland200-01','yuan_shao'],['mainland202-06','yuan_shang']]){
+  await scenarios.selectOption(scenario);
+  await expect(marker('wei')).toHaveAttribute('data-owner',yuan);
+  await expectColors(marker('wei'),'#ffffff','#000000');
+  await expectColors(choice(yuan),'#ffffff','#000000');
+  await expectColors(choice('wei'),'#000','#0078f8');
+  await expectColors(choice('wu'),'#000','#f85898');
+  await expectColors(choice('shu'),'#000','#f8b800');
+  await expectColors(choice('song_jian'),'#000','#f000ff');
+  await expectColors(choice('ma_teng'),'#000','#ffffff');
+ }
+ await scenarios.selectOption('mainland208-10');
  await page.locator('input[name=faction][value=wei]').check();
  await page.locator('#begin').click();
  await waitIdle(page);await tacticalDismiss(page);
@@ -487,6 +509,15 @@ test('faction resources show current allies and large factions receive 40 comman
  await expect(allies('shu')).toHaveText('孫權');
  await expect(allies('wu')).toHaveText('劉備');
  await expect(allies('wei')).toHaveText('—');
+ const weiLedgerIcon=ledger.locator('tr[data-faction-resources="wei"] .faction-city-icon');
+ await expectColors(weiLedgerIcon,'#000','#0078f8');
+ const maLedgerIcon=ledger.locator('tr[data-faction-resources="ma_teng"] .faction-city-icon');
+ await expectColors(maLedgerIcon,'#000','#ffffff');
+ await expectColors(page.locator('#world-map .city-hit[data-owner="ma_teng"]').first(),'#000','#ffffff');
+ const nativeBorder=marker('wei').locator('.castle-border');
+ await expect(nativeBorder).toHaveAttribute('fill','#000');
+ expect(await weiLedgerIcon.locator('.castle-border').evaluate(part=>part.getBBox().width)).toBe(
+  await nativeBorder.evaluate(part=>part.getBBox().width));
 
  await page.locator('#utility-menu summary').click();
  await page.locator('#faction-diplomacy').click();
@@ -514,7 +545,17 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  const openingResources=page.locator('.faction-choice [data-faction-resources="han"]');
  const openingSummary=page.locator('#setup-summary');
  const openingHan=page.locator('.faction-choice:has(input[value="han"])');
- await expect(openingHan.locator('.faction-choice-name + .faction-choice-cities')).toHaveText('都市 7');
+ await expect(openingResources.locator(':scope > span').first()).toHaveText('都市 7');
+ await expect(openingHan.locator('.faction-choice-heading .faction-choice-cities')).toHaveCount(0);
+ await expect(openingResources).toHaveText(new RegExp('^\\s*都市\\s*7\\s*·\\s*'+hanResources.source));
+ const layout=await openingHan.evaluate(row=>{
+  const heading=row.querySelector('.faction-choice-heading').getBoundingClientRect();
+  const resources=row.querySelector('.faction-choice-resources').getBoundingClientRect();
+  const cities=row.querySelector('.faction-choice-cities').getBoundingClientRect();
+  return {headingBottom:heading.bottom,resourceTop:resources.top,cityIndent:cities.left-resources.left};
+ });
+ expect(layout.resourceTop).toBeGreaterThanOrEqual(layout.headingBottom);
+ expect(Math.abs(layout.cityIndent)).toBeLessThanOrEqual(1);
  for(const resources of [openingResources,openingSummary]){
   await expect(resources).toContainText(hanResources);
   await expect(resources).not.toContainText('文吏');
@@ -1308,8 +1349,20 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
  const scenarios=page.locator('#scenario'),marker=id=>page.locator(`#world-map .city-hit[data-city="${id}"]`);
  const factionFill=async(city,faction)=>{
   await expect(marker(city)).toHaveAttribute('data-owner',faction);
+  const icon=page.locator(`.faction-choice:has(input[value="${faction}"]) svg.faction-city-icon`);
+  await expect(icon).toBeVisible();
+  await expect(icon).toHaveAttribute('aria-hidden','true');
+  for(const part of ['castle-border','castle-fill']){
+   const inMap=marker(city).locator(`use.${part}`),inList=icon.locator(`use.${part}`);
+   await expect(inList).toHaveAttribute('href',await inMap.getAttribute('href'));
+   await expect(inList).toHaveAttribute('fill',await inMap.getAttribute('fill'));
+   const dimensions=element=>element.evaluate(node=>{const {width,height}=node.getBBox();return {width,height};});
+   const rendered=await dimensions(inList);
+   expect(rendered).toEqual(await dimensions(inMap));
+   expect(rendered.width).toBeGreaterThan(0);
+   expect(rendered.height).toBeGreaterThan(0);
+  }
   const fill=await marker(city).locator('.castle-fill').getAttribute('fill');
-  await expect(page.locator(`.faction-choice:has(input[value="${faction}"]) .faction-swatch rect`)).toHaveAttribute('fill',fill);
   expect(fill).not.toBe('#ffffff');
   return fill;
  };
@@ -1321,10 +1374,7 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
  const han=page.locator('input[name=faction][value=han_sui]');
  await expect(han).toHaveCount(1);await han.check();
  await expect(han.locator('..')).toContainText('韓遂');
- await expect(marker('jincheng')).toHaveAttribute('data-owner','han_sui');
- const hanFill=await marker('jincheng').locator('.castle-fill').getAttribute('fill');
- expect(hanFill).toBe(await han.locator('..').locator('.faction-swatch rect').getAttribute('fill'));
- expect(hanFill).not.toBe('#ffffff');
+ const hanFill=await factionFill('jincheng','han_sui');
  expect(hanFill).not.toBe(await marker('tianshui').locator('.castle-fill').getAttribute('fill'));
  expect(hanFill).not.toBe(await marker('jingzhao').locator('.castle-fill').getAttribute('fill'));
  for(const city of ['wudu','yinping']){
@@ -1963,7 +2013,13 @@ test('officer encyclopedia distinguishes initial body, remake cap and contextual
   await expect(page.locator('.person-profile-summary')).toContainText(new RegExp(`德\\s*${virtue}`),{useInnerText:true});
   await expect(summary).toContainText('不代表原版最大體力',{useInnerText:true});
   await expect(summary).toContainText('同勢力移動及讀檔不會重置',{useInnerText:true});
-  if(pid==='san14-candidate-0952')await expect(summary.locator('[data-current-loyalty]')).toHaveText('--');
+  const biography=page.locator(`#dialog [data-officer-biography="${pid}"]`);
+  if(pid==='san14-candidate-0952'){
+   await expect(summary.locator('[data-current-loyalty]')).toHaveText('--');
+   await expect(biography.locator('[data-biography-kind=historical]')).toContainText('史料記載',{useInnerText:true});
+   await expect(biography.locator('[data-biography-text] [data-locale-only="zh-Hant"]:visible')).toBeVisible();
+   await expect(biography.locator('[data-biography-source]').first()).toHaveAttribute('href',/^https:\/\//);
+  }
   await page.locator('#dialog-language').selectOption('ja');
   await expect(summary.locator('[data-initial-health]')).toHaveText(String(health));
   await expect(summary.locator('[data-source-loyalty]')).toHaveText(sourceLoyalty);
@@ -1971,10 +2027,14 @@ test('officer encyclopedia distinguishes initial body, remake cap and contextual
   await expect(summary).toContainText('同勢力内の移動とロード',{useInnerText:true});
   if(pid==='san14-candidate-0952'){
    await expect(summary.locator('[data-current-loyalty]')).toHaveText('--');
+   await expect(biography.locator('[data-biography-kind=historical]')).toContainText('史料に記載',{useInnerText:true});
+   await expect(biography.locator('[data-biography-text] [data-locale-only="ja"]:visible')).toBeVisible();
    await historyScreenshot(page,testInfo,'liubei-original-body-loyalty-ja');
   }
   await page.locator('#dialog-language').selectOption('zh-Hant');
   await page.locator('#back-library').click();
+  await expect(page.locator('#library-search')).toHaveValue(pid);
+  await expect(page.locator('#library-results .person-detail')).toBeFocused();
  }
  await closeDialog(page);
  if(!await page.locator('#rules').isVisible())await page.locator('#utility-menu summary').click();
@@ -2396,11 +2456,38 @@ test('a natural August drought shows bilingual illustrated losses and preserves 
 
 test('actual equipment appears in city intelligence and person details with server weight previews, exclusive initial gear and saved replacements',async({page},testInfo)=>{
  await opening(page);await page.locator('#scenario').selectOption('mainland217-07');await page.locator('input[name=faction][value=shu]').check();
- const preview=await page.evaluate(async()=>{const response=await fetch('/api/city-preview?'+new URLSearchParams({scenario:'mainland217-07',city:'shujun'}));if(!response.ok)throw new Error('Initial equipment preview failed');return (await response.json()).city;});
+ const openingCity=city=>page.evaluate(async city=>{const response=await fetch('/api/city-preview?'+new URLSearchParams({scenario:'mainland217-07',city}));if(!response.ok)throw new Error('Initial equipment preview failed');return (await response.json()).city;},city);
+ const officerButton=(info,id)=>info.getByRole('button').and(info.locator(`[data-city-information-officer="${id}"]`));
+ const inspectOfficer=async(info,{id,personId,troops},mode)=>{
+  const button=officerButton(info,id);
+  if(testInfo.project.name==='touch-chromium')await button.tap();else await button.click();
+  const profile=page.locator(`#dialog [data-officer-profile="${id}"][data-officer-profile-mode="${mode}"]`);
+  await expect(profile).toBeVisible();
+  const portrait=profile.locator(`[data-portrait-person="${personId}"] img`);
+  await expectPortraitVariant(page,portrait,personId);
+  const biography=page.locator(`#dialog [data-officer-biography="${personId}"]`);
+  await expect(biography.locator('[data-biography-kind]:not([data-biography-kind=loading],[data-biography-kind=unavailable])')).toBeVisible();
+  if(personId==='san14-candidate-0952')await expect(biography.locator('[data-biography-kind=historical]')).toBeVisible();
+  await expect(page.locator('#dialog [data-officer-profile-troops]:visible')).toHaveText(String(troops));
+  return page.locator(`#dialog [data-officer-equipment="${id}"]:visible`);
+ };
+ const backToCity=async(info,id)=>{
+  await page.locator('#back-city-roster').click();
+  await expect(info).toBeVisible();
+  await expect(officerButton(info,id)).toBeFocused();
+ };
+ const preview=await openingCity('shujun');
  const previewLiu=preview.officers.find(person=>person.person_id==='san14-candidate-0952');expect(previewLiu).toBeTruthy();expect(previewLiu.equipment.scope).toBe('initial');
  expect(previewLiu.equipment.weapon.name_tc).toContain('雙股劍');
  await page.locator('#city-jump').selectOption('shujun');const previewInfo=page.locator('.city-information[data-inspected-city=shujun]');await expect(previewInfo).toBeVisible();
- const previewGear=previewInfo.locator(`[data-officer-equipment="${previewLiu.id}"]:visible`);await expect(previewGear).toHaveAttribute('data-equipment-scope','initial');await expect(previewGear).toContainText(previewLiu.equipment.weapon.name_tc);await expect(previewGear).toContainText(previewLiu.equipment.armor.name_tc);await closeDialog(page);
+ const previewGear=previewInfo.locator(`[data-officer-equipment="${previewLiu.id}"]:visible`);await expect(previewGear).toHaveAttribute('data-equipment-scope','initial');await expect(previewGear).toContainText(previewLiu.equipment.weapon.name_tc);await expect(previewGear).toContainText(previewLiu.equipment.armor.name_tc);
+ const openingOfficer={id:previewLiu.id,personId:previewLiu.person_id,troops:previewLiu.troops};
+ const openingGear=await inspectOfficer(previewInfo,openingOfficer,'preview');
+ await expect(openingGear).toHaveAttribute('data-equipment-scope','initial');
+ await expect(openingGear).toContainText(previewLiu.equipment.weapon.name_tc);
+ await historyScreenshot(page,testInfo,'opening-city-officer-detail',{fullPage:false});
+ await backToCity(previewInfo,openingOfficer.id);
+ await closeDialog(page);
  await page.locator('#begin').click();await expect(page.locator('#city-facilities')).toBeEnabled({timeout:90_000});await waitIdle(page);await dismissHistoryOpening(page);
  const read=()=>page.evaluate(async()=>{const a=await fetch('/api/save'),b=await fetch('/api/state');if(!a.ok||!b.ok)throw new Error('Equipment read-only state failed');const value=await b.json();return {save:await a.json(),view:value.view||value};});
  const signed=value=>value>0?'+'+value:String(value),initial=await read();const liu=initial.view.catalog.library.find(person=>person.person_id==='san14-candidate-0952');expect(liu).toBeTruthy();
@@ -2428,6 +2515,32 @@ test('actual equipment appears in city intelligence and person details with serv
  expect(after.view.catalog.equipment.officers[String(selection.ident)].attack_bonus).toBe(selection.quote.after.attack_bonus);await expect(page.locator('#facility-equipment-buy')).toBeDisabled();await closeDialog(page);
  const events=page.locator('#event-dialog');await expect(events).toBeVisible();await assertOriginalEventArt(page,events,'equipment_bought');const skip=events.locator('[data-event-skip]');await(await skip.count()?skip:events.locator('[data-event-next]')).click();await expect(events).not.toBeVisible();
  const updated=await inspect(selection.city);await page.locator('#dialog-language').selectOption('zh-Hant');const changed=updated.locator(`[data-officer-equipment="${selection.ident}"]:visible`);await expect(changed).toContainText(selection.item.name_tc);const newIcon=changed.locator('img[data-equipment-slot=weapon]');await expect(newIcon).toHaveAttribute('data-equipment-key',`weapon:${selection.item.id}`);await expect(newIcon).toHaveAttribute('data-original-ui-provenance','remake-equipment-icon');expect(await newIcon.getAttribute('src')).not.toBe(oldSource);await expect.poll(()=>newIcon.evaluate(node=>node.complete&&node.naturalWidth===128)).toBe(true);await changed.locator('button[data-equipment-slot=weapon]').click();await expect(page.locator('#game-equipment-tooltip')).toContainText(`單挑攻擊${signed(selection.quote.after.attack_bonus)}`);await page.keyboard.press('Escape');await historyScreenshot(page,testInfo,'equipment-after-purchase',{fullPage:false});await closeDialog(page);
+ const changedOfficer=after.save.state.officers[selection.ident];
+ const liveInfo=await inspect(selection.city);
+ const liveGear=await inspectOfficer(liveInfo,{id:selection.ident,personId:changedOfficer.person_id,troops:changedOfficer.troops},'live');
+ await expect(liveGear).toHaveAttribute('data-equipment-scope','current');
+ await expect(liveGear).toContainText(selection.item.name_tc);
+ await historyScreenshot(page,testInfo,'live-city-officer-detail',{fullPage:false});
+ await backToCity(liveInfo,selection.ident);
+ await closeDialog(page);
+
+ // Inspect the same city from the chooser while its live officer already has
+ // a different weapon. The opening profile must remain scoped to the preview.
+ await page.locator('#main-menu').click();
+ await expect(page.locator('#scenario')).toHaveValue('mainland217-07');
+ const originalOfficer=(await openingCity(selection.city)).officers.find(row=>row.person_id===changedOfficer.person_id);
+ expect(originalOfficer).toBeTruthy();
+ expect(originalOfficer.equipment.weapon.id).not.toBe(selection.item.id);
+ await page.locator('#city-jump').selectOption(selection.city);
+ const chooserInfo=page.locator(`.city-information[data-inspected-city="${selection.city}"][data-information-mode="preview"]`);
+ const chooserGear=await inspectOfficer(chooserInfo,{id:originalOfficer.id,personId:originalOfficer.person_id,troops:originalOfficer.troops},'preview');
+ await expect(chooserGear).toHaveAttribute('data-equipment-scope','initial');
+ await expect(chooserGear).toContainText(originalOfficer.equipment.weapon.name_tc);
+ await backToCity(chooserInfo,originalOfficer.id);
+ await closeDialog(page);
+ await page.locator('#cancel-setup').click();
+ expect((await read()).save).toEqual(after.save,'Opening and live officer details never rewrite a running campaign');
+
  const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);const restored=await read();expect(restored.save).toEqual(JSON.parse(raw));expect(restored.view.catalog.equipment.officers[String(selection.ident)].weapon.id).toBe(selection.item.id);
  expect(restored.view.catalog.equipment.officers[String(selection.ident)].attack_bonus).toBe(selection.quote.after.attack_bonus);expect(errors.get(page)).toEqual([]);
 });
@@ -2873,7 +2986,7 @@ test('an at-large heir in a friendly city requires recruitment consent',async({p
  expect(errors.get(page)).toEqual([]);
 });
 
-test('march preview discloses a downstream depot shortage before moving officers',async({page})=>{
+test('march preview discloses a downstream depot shortage before moving officers',async({page},testInfo)=>{
  const save=execFileSync('python3',['-B',new URL('./browser_march_supply_fixture.py',import.meta.url).pathname],
   {maxBuffer:2*1024*1024});
  await opening(page);
@@ -2884,20 +2997,86 @@ test('march preview discloses a downstream depot shortage before moving officers
  await page.locator('#city-jump').selectOption('shujun');
  const before=await tacticalSave(page);
  expect(before.state.cities.guanghan.grain).toBe(0);
- await clickCityCommand(page,'transfer');
- await page.locator('#transfer-city').selectOption('nanjun');
- await page.locator('input[name=transfer-officer][value="370"]').check();
- const depot=page.locator('[data-march-refill-stop="guanghan"]');
+ const destination=page.locator('#transfer-city'),estimate=page.locator('#transfer-estimate');
+ const depot=page.locator('#transfer-refill-forecast [data-march-refill-stop="guanghan"]');
+ const detour=page.locator('#transfer-supply-detour [data-transfer-detour-days]');
+ const chooseDetour=page.locator('#use-transfer-detour');
+ const openTransfer=async()=>{
+  await clickCityCommand(page,'transfer');
+  await destination.selectOption('nanjun');
+  await page.locator('input[name=transfer-officer][value="370"]').check();
+  await expect(detour).toBeVisible();
+ };
+ await openTransfer();
  await expect(depot).toBeVisible();
  await expect(depot).toHaveAttribute('data-current-grain','0');
  const requirement=Number(await depot.getAttribute('data-required-grain'));
  expect(requirement).toBeGreaterThan(0);
  await expect(depot).toHaveAttribute('data-grain-shortfall',String(requirement));
+ await page.locator('#dialog-language').selectOption('zh-Hant');
+ await expect(detour).toContainText('可補給的繞行路線',{useInnerText:true});
  await page.locator('#dialog-language').selectOption('ja');
  await expect(depot).toContainText('補給待ち',{useInnerText:true});
+ await expect(detour).toContainText('補給できる迂回路',{useInnerText:true});
+ await expect(estimate).toContainText(/45\s*日/);
+ await expect(detour).toHaveAttribute('data-transfer-detour-days','56');
+ await expect(detour).toContainText(/56\s*日/);
  await expect(page.locator('#confirm-transfer')).toBeEnabled();
+
+ const map=page.locator('#transfer-supply-detour [data-transfer-supply-map]');
+ const viaGuanghan=map.locator('[data-march-map-kind="supply-shortage"][data-route-id="guanghan:shujun:land"] .map-march-line').first();
+ const viaQianwei=map.locator('[data-march-map-kind="supply-detour"][data-route-id="shujun:qianwei:river"] .map-march-line').first();
+ await expect(map.locator('svg[data-transfer-supply-svg]')).toBeVisible();
+ await expect(viaGuanghan).toBeVisible();
+ await expect(viaQianwei).toBeVisible();
+ const stroke=path=>path.evaluate(node=>getComputedStyle(node).stroke);
+ const primaryColor=await stroke(viaGuanghan),bypassColor=await stroke(viaQianwei);
+ expect([primaryColor,bypassColor]).not.toContain('none');
+ expect(primaryColor).not.toBe(bypassColor);
+ await expect(map.locator('[data-march-shared]')).not.toHaveCount(0);
+ await map.screenshot({path:testInfo.outputPath('transfer-supply-detour.png')});
+
+ await chooseDetour.click();
+ await expect(chooseDetour).toHaveAttribute('aria-pressed','true');
+ await expect(estimate).toContainText(/56\s*日/);
+
+ // A direct route clears the recommendation and any explicit detour choice.
+ await destination.selectOption('qianwei');
+ await expect(detour).toHaveCount(0);
+ await expect(map).toHaveCount(0);
+ await expect(estimate).toContainText(/4\s*日/);
+ await destination.selectOption('nanjun');
+ await expect(detour).toBeVisible();
+ await expect(chooseDetour).toHaveAttribute('aria-pressed','false');
+ await expect(estimate).toContainText(/45\s*日/);
  await closeDialog(page);
  expect(await tacticalSave(page)).toEqual(before);
+
+ // The recommendation is explicit and the selected quote is the saved journey.
+ await openTransfer();
+ await expect(estimate).toContainText(/45\s*日/);
+ await chooseDetour.click();
+ await expect(chooseDetour).toHaveAttribute('aria-pressed','true');
+ await expect(estimate).toContainText(/56\s*日/);
+ await page.locator('#confirm-transfer').click();
+ await waitIdle(page);
+ await expect(page.locator('#dialog')).toBeHidden();
+ const after=await tacticalSave(page);
+ const march=after.state.extension.travel.marches.find(row=>row.source==='shujun'&&row.target==='nanjun');
+ expect(march).toMatchObject({officers:[370],quote:{days:56,path:['shujun','qianwei','jiangyang','bajun','fuling','badong','nanjun']}});
+ expect(march.supply.loaded).toBe(Math.ceil((before.state.officers[370].troops+100)*4/1000));
+ expect(after.state.cities.shujun.grain).toBe(before.state.cities.shujun.grain-march.supply.loaded);
+ expect(after.state.cities.guanghan.grain).toBe(0);
+ const inTransit=page.locator(`[data-march="${march.id}"] button[data-march-officer="370"]`);
+ const toggle=page.locator('#inspector-toggle');
+ if(!await inTransit.isVisible()&&await toggle.isVisible())await toggle.click();
+ if(testInfo.project.name==='touch-chromium')await inTransit.tap();else await inTransit.click();
+ await expect(page.locator('#dialog [data-officer-profile="370"][data-officer-profile-mode="live"]')).toBeVisible();
+ await expect(page.locator('#dialog [data-officer-profile-troops]')).toHaveText(String(after.state.officers[370].troops));
+ await page.locator('#dialog [data-cancel]').click();
+ await expect(page.locator('#dialog')).toBeHidden();
+ await expect(inTransit).toBeVisible();
+ expect(await tacticalSave(page)).toEqual(after);
  expect(errors.get(page)).toEqual([]);
 });
 
@@ -2928,8 +3107,19 @@ test('published event backdrops decode from the verified web build',async({page}
 
 test('Dong Zhuo relocation opens in February 190 with its own bilingual historical scene',async({page},testInfo)=>{
  await opening(page);
+ await page.locator('#scenario').selectOption('mainland191-10');
+ for(const [city,reserves,active] of [['henan',300,5058],['jingzhao',1800,5653]]){
+  await page.locator('#city-jump').selectOption(city);
+  const detail=page.locator(`[data-inspected-city="${city}"]`);
+  await expect(detail.locator('.resources dd').nth(2)).toHaveText(String(reserves));
+  await expect(detail.locator('.city-information-strength')).toContainText(String(active));
+  await closeDialog(page);
+ }
  await page.locator('#scenario').selectOption('mainland190-01');
  await page.locator('input[name=faction][value=dong_zhuo]').check();
+ await page.locator('#city-jump').selectOption('henan');
+ await expect(page.locator('[data-inspected-city=henan] [data-city-development=henan]:visible')).toContainText('203100');
+ await closeDialog(page);
  await page.locator('#begin').click();
  await waitIdle(page);
  await dismissHistoryOpening(page);
@@ -2939,6 +3129,7 @@ test('Dong Zhuo relocation opens in February 190 with its own bilingual historic
  let saved=await tacticalSave(page);
  expect([saved.state.year,saved.state.month]).toEqual([190,1]);
  expect(receipts(saved)).toHaveLength(0);
+ expect(saved.state.extension.city_development.cities.henan.population).toBe(203100);
  let beforeRelocation=saved;
  const controls={city:'end-turn',ai:'run-ai',arrivals:'process-arrivals',result:'settle'};
  for(let step=0;step<30&&saved.state.month===1;step++){
@@ -2970,7 +3161,7 @@ test('Dong Zhuo relocation opens in February 190 with its own bilingual historic
  expect(effects).toMatchObject({town_after:1,damage_after:50});
  const beforeDevelopment=beforeRelocation.state.extension.city_development.cities;
  const development=saved.state.extension.city_development.cities;
- expect(effects.moved.population).toBe(Math.floor(beforeDevelopment.henan.population*70/10000)*100);
+ expect(effects.moved.population).toBe(Math.floor(beforeDevelopment.henan.population*72/10000)*100);
  expect(effects.lost.population).toBe(Math.floor(beforeDevelopment.henan.population*25/10000)*100);
  expect(development.henan.population).toBe(beforeDevelopment.henan.population-effects.moved.population-effects.lost.population);
  expect(development.jingzhao.population).toBe(beforeDevelopment.jingzhao.population+effects.moved.population);
@@ -2982,13 +3173,15 @@ test('Dong Zhuo relocation opens in February 190 with its own bilingual historic
  expect(treasury.cities.jingzhao.treasure).toBe(99);
  expect(treasury.cities.henan.treasure).toBe(beforeTreasury.cities.henan.treasure);
  expect(treasury.ledger.found).toBeGreaterThanOrEqual(beforeTreasury.ledger.found+effects.loot.treasure);
- for(const field of ['gold','grain']){
+ for(const field of ['gold','grain','reserves']){
   const stock=saved.state.cities.henan[field]+effects.moved[field]+effects.lost[field];
-  expect(effects.moved[field]).toBe(Math.floor(stock*70/100));
-  expect(effects.lost[field]).toBe(Math.floor(stock*25/100));
+  expect(effects.moved[field]).toBe(Math.floor(stock*72/10000)*100);
+  expect(effects.lost[field]).toBe(Math.floor(stock*25/10000)*100);
   expect(saved.state.cities.henan[field]).toBeLessThan(beforeRelocation.state.cities.henan[field]);
-  expect(saved.state.cities.jingzhao[field]).toBeGreaterThanOrEqual(beforeRelocation.state.cities.jingzhao[field]+effects.moved[field]+effects.loot[field]);
+  expect(saved.state.cities.jingzhao[field]).toBeGreaterThanOrEqual(beforeRelocation.state.cities.jingzhao[field]+effects.moved[field]+(effects.loot[field]??0));
  }
+ expect(effects.moved.reserves).toBeGreaterThan(0);
+ expect(effects.moved).not.toHaveProperty('troops');
 
  const event=page.locator('#event-dialog'),shown=event.locator('[data-event-kind]');
  for(let step=0;step<30;step++){
@@ -3006,6 +3199,8 @@ test('Dong Zhuo relocation opens in February 190 with its own bilingual historic
  const settlement=event.locator('[data-event-relocation-effects]');
  await expect(settlement.locator('[data-relocation-moved]')).toContainText('轉入長安');
  await expect(settlement.locator('[data-relocation-lost]')).toContainText('洛陽損失');
+ await expect(settlement.locator('[data-relocation-moved]')).toContainText(`預備兵 ${effects.moved.reserves} 人`);
+ await expect(settlement.locator('[data-relocation-lost]')).toContainText(`預備兵 ${effects.lost.reserves} 人`);
  for(const field of ['gold','grain','population']){
   await expect(settlement.locator('[data-relocation-moved]')).toContainText(String(effects.moved[field]));
   await expect(settlement.locator('[data-relocation-lost]')).toContainText(String(effects.lost[field]));
@@ -3018,6 +3213,7 @@ test('Dong Zhuo relocation opens in February 190 with its own bilingual historic
  await historyScreenshot(page,testInfo,'dong-zhuo-relocation-tc',{fullPage:false});
  await event.locator('[data-language-picker]').selectOption('ja');
  await expect(event.locator('#event-title')).toHaveText('董卓、長安へ遷都');
+ await expect(settlement.locator('[data-relocation-moved]')).toContainText(`予備兵 ${effects.moved.reserves} 人`);
  await expect(event.locator('#event-description')).toContainText('宮殿・宗廟の焼失を三月');
  await expect(settlement.locator('[data-relocation-moved]')).toContainText(String(effects.moved.population));
  await expect(settlement.locator('[data-relocation-loot]')).toContainText(String(effects.loot.gold));

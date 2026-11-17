@@ -118,6 +118,24 @@ class HTTPBoundaryTests(unittest.TestCase):
             self.assertEqual(exchange(port, path=f'{route}&revision=%FF')[0], 400)
             self.assertEqual(exchange(port, path='/api/save')[2], baseline)
 
+    def test_transfer_preview_posts_a_read_only_revision_bound_selection(self):
+        from remake.session import CampaignSession
+
+        game = CampaignSession([ROOT / 'game/data/campaigns/217-07.json'])
+        game.command('new', {'scenario': 'mainland217-07', 'faction': 'shu', 'seed': 2026}, 0)
+        game.game.state.cities['guanghan'].grain = 0
+        request = dict(source='shujun', target='nanjun', route_mode='fastest', officers=[370], revision=1)
+        with isolated_server(game) as (server, _, _):
+            port = server.server_address[1]
+            baseline = exchange(port, path='/api/save')[2]
+            headers = {'Content-Type': 'application/json'}
+            status, _, body = exchange(port, 'POST', '/api/transfer-preview', json.dumps(request), headers)
+            self.assertEqual(status, 200)
+            self.assertEqual(json.loads(body)['detour']['path'][1], 'qianwei')
+            self.assertEqual(exchange(port, 'POST', '/api/transfer-preview',
+                                      json.dumps(dict(request, revision=0)), headers)[0], 409)
+            self.assertEqual(exchange(port, path='/api/save')[2], baseline)
+
     def test_pkce_entry_does_not_log_auth_codes_or_expose_state(self):
         audit = transport.AuditLog()
         with isolated_server(audit=audit) as (server, game, _):

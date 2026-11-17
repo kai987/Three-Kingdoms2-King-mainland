@@ -23,12 +23,13 @@ from remake.city_economy import TIER_LABELS, TIER_MULTIPLIERS, apply_opening_siz
 from remake.treasures import RULES as TREASURY_RULES
 from remake.facilities import RULES as FACILITY_RULES
 from remake.equipment import RULES as EQUIPMENT_RULES, build_initials
-from route_timing import apply_route_timing
+from route_timing import apply_route_timing, kilometers
 from river_network import build as build_river_network
 from road_history import apply_history
 from route_render_source import validate_geometry_sources
 from officer_stat_sources import validate_original_virtue, validate_campaign_stats
 from import_campaign_stats import validate_reference as validate_public_reference
+from campaign_faction_additions import prepare_factions, place_faction_officers, read_faction_additions
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'game/config/campaigns'
@@ -44,6 +45,7 @@ EXPANSION_CITIES = {
     'shangyong': ('上庸', 'xincheng'),
     'yiling': ('夷陵', 'nanjun'),
     'changli': ('昌黎', 'liaodong'),
+    'liucheng': ('柳城', 'liaoxi'),
     'pingyang': ('平阳', 'hedong'),
     'hengyang': ('衡阳', 'changsha'),
     'xiangdong': ('湘东', 'changsha'),
@@ -51,6 +53,11 @@ EXPANSION_CITIES = {
     'shuofang': ('朔方', 'anding'),
     'wuyuan': ('五原', 'xihe'),
     'yunzhong': ('云中', 'yanmen'),
+    'donglai': ('东莱', 'beihai'),
+    'langya': ('琅邪', 'donghai'),
+    'taishan': ('泰山', 'jinan'),
+    'xuantu': ('玄菟', 'liaodong'),
+    'guonei': ('国内城', 'xuantu'),
 }
 HAN_ANNALS = 'https://zh.wikisource.org/wiki/三國志/卷04'
 WU_ANNALS = 'https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnux22fnsn_304'
@@ -61,6 +68,7 @@ EXPANSION_FOUNDINGS = {
     'xiangdong': (257, 2, 'attested_annal_month', '孫吳於257年二月分長沙東部置湘東郡，治酃縣。', WU_ANNALS),
     'jianping': (260, 1, 'attested_year_game_month', '孫吳260年分宜都置郡；史料未載確月，本作以1月為年界。', 'https://zh.wikisource.org/wiki/宋書/卷37'),
 }
+LUZON_SOURCE = 'https://www.un.org/depts/los/clcs_new/submissions_files/phl22_09/phl_esummary.pdf'
 
 
 def read(path):
@@ -236,6 +244,15 @@ def apply_city_expansion(data, locations, opening, notes, people_by_id):
     factions = {row['id']: row for row in data['factions']}
     if set(owners) != new_active or set(garrisons) != new_active or set(owners.values()) - (set(factions) | {'neutral'}):
         raise ValueError(f'{data["id"]}: expansion opening does not match active cities/factions')
+    stocks = opening.get('resources', {})
+    opening_notes = opening.get('opening_notes', {})
+    if set(stocks) - new_active or set(opening_notes) - new_active:
+        raise ValueError(f'{data["id"]}: expansion stock or note for inactive city')
+    for city_id, stock in stocks.items():
+        if set(stock) != {'gold', 'grain', 'reserves'} or any(type(value) is not int or value < 0
+                                                            for value in stock.values()):
+            raise ValueError(f'{data["id"]}: invalid opening resources at {city_id}')
+        data['initial_city_resources'][city_id] = dict(stock)
     data['initial_owners'].update(owners)
     data['city_count'] = len(data['cities'])
     officers = {row['person_id']: row for row in data['initial_officers']}
@@ -252,8 +269,8 @@ def apply_city_expansion(data, locations, opening, notes, people_by_id):
         fictional = data['main_scenario']['group'] == 'if'
         history['opening'] = dict(
             owner=owners[city_id], basis='fictional_scenario_adaptation' if fictional else 'reviewed_regional_opening',
-            note=('按假想劇本的既有勢力格局配置。' if fictional
-                  else '有任職史料的駐將單列。其餘按當年勢力範圍及可用人物配置。'),
+            note=opening_notes.get(city_id, '按假想劇本的既有勢力格局配置。' if fictional
+                                   else '有任職史料的駐將單列。其餘按當年勢力範圍及可用人物配置。'),
             sources=history['sources'])
         if city_id in outposts:
             history['opening']['note'] = notes[city_id]['opening_notes'][owners[city_id]]
@@ -344,6 +361,14 @@ def apply_navigation_sources(data, navigation):
             if route['from'] != row['from']:
                 draw = [dict(part, points=list(reversed(part['points']))) for part in reversed(draw)]
             row['draw'] = draw
+            if 'days' not in row:
+                # Source-only callers still need valid quotes before measuring the SVG.
+                ports, coords, rules = row['geo'], data['city_coordinates'], data['travel_rules']
+                land = round((kilometers(coords[row['from']], ports[0])
+                              + kilometers(ports[-1], coords[row['to']])) * rules['detours']['plain'], 1)
+                sea = round(sum(kilometers(a, b) for a, b in zip(ports, ports[1:])), 1)
+                days = ceil(land / rules['speeds']['plain']) + ceil(sea / rules['speeds']['sea']) + rules['embark_days']
+                row.update(distance_km=round(land + sea, 1), land_km=land, sea_km=sea, days=days)
     for corridor in navigation['land_roads']:
         a, b = corridor['from'], corridor['to']
         if frozenset((a, b)) in {frozenset(e) for e in data['links']}:
@@ -370,6 +395,37 @@ def apply_navigation_sources(data, navigation):
         data['travel_routes'].append(river)
 
 
+def add_luzon_settlement(data, location):
+    """Reachable island site in every opening, established by arriving troops."""
+    city, origin = 'luzon', 'yizhou'
+    data['cities'].append(dict(id=city, name='吕宋', position=location['position'],
+                               terrain=location['terrain'], settlement_site=True))
+    data['city_count'] = len(data['cities'])
+    data['city_coordinates'][city] = location['coordinates']
+    data['active_cities'].append(city)
+    data['added_city_ids'].append(city)
+    data['initial_owners'][city] = 'neutral'
+    data['initial_city_resources'][city] = dict(gold=0, grain=0, reserves=0)
+    data['city_income'][city] = dict(gold=12, grain=38, reserves=8)
+    data.setdefault('initial_city_development', {})[city] = dict(
+        land=80, industry=45, population=2100, governance=45)
+    data['city_profiles'][city] = dict(tier='normal', label=TIER_LABELS['normal'],
+        basis='optional_island_settlement', reference_income=None,
+        is_SAN14_starting_resources=False, economy_source_ids=[])
+    data['city_history'][city] = dict(
+        neutral_label='可設城地點', sources=[LUZON_SOURCE],
+        detail='渡海建城為遊戲設定。部隊可自夷洲出航，抵達後以剩餘兵力與兵糧駐守呂宋。',
+        detail_ja='海外での築城はゲーム上の設定です。夷洲から出航し、到着した兵と残った兵糧でルソンを守備できます。',
+        summary_i18n={'zh-Hant': '夷洲有通往呂宋北部的海路。派帶兵武將抵達後，可在未設城處建立據點。',
+                      'ja': '夷洲からルソン北部へ航路があります。兵を率いる武将が到着すると、未築城の地点に拠点を開けます。'})
+    data['links'].append([origin, city])
+    data['travel_hazards']['coastal_cities'].append(city)
+    route = dict(id=f'{origin}:{city}:sea', **{'from': origin, 'to': city}, mode='sea',
+                 terrain='sea', geo=[[120.29, 24.1], [120.77, 18.56]], discovery_candidate=False)
+    for field in ('travel_routes', 'sea_routes'):
+        data[field].append(deepcopy(route))
+
+
 def load_sources(*, timing=True):
     navigation = read('game/config/navigation-geometry.json')
     if navigation.get('schema') != 'sea-mask-navigation-geometry-v1':
@@ -379,6 +435,13 @@ def load_sources(*, timing=True):
                             + (ROOT/'game/route_timing.py').read_bytes()).hexdigest() if timing else None
     if timing:
         validate_geometry_sources(ROOT, geometry['sources'])
+    coastal_revision = read('game/config/route-corridors.json').get('coastal_revision')
+    if coastal_revision:
+        coast = 'game/map-source/hydrology-ground.png'
+        expected = dict(region=coastal_revision['region'], source=coast,
+                        source_sha256=sha256((ROOT / coast).read_bytes()).hexdigest())
+        if navigation.get('coastal_revision') != expected:
+            raise ValueError('Northeast coast navigation is stale; rebuild navigation geometry')
     river_network = build_river_network()
     if (navigation.get('river_network', {}).get('source_sha256') != river_network['source_sha256']
             or navigation.get('river_routes') != river_network['routes']):
@@ -399,13 +462,19 @@ def load_sources(*, timing=True):
     canonical_index = read('game/config/campaigns/index.json')
     scenario_dates = {row['id']: (row['year'], row['month']) for row in canonical_index['scenarios']}
     scenario_ids = set(scenario_dates)
+    additions = read_faction_additions(SOURCE / 'faction-additions', scenario_ids)
+    for addition in additions:
+        city = addition['faction']['city']
+        if city in expansion_openings['notes']:
+            raise ValueError(f'Duplicate historical faction city: {city}')
+        expansion_openings['notes'][city] = addition['history']
     if (city_chronology.get('schema') != 'tk2-city-chronology-openings-v1'
             or set(city_chronology['owners']) != scenario_ids
             or any(set(row) != {'wuchang', 'jianan'} for row in city_chronology['owners'].values())
             or (set(city_chronology['garrisons']) | set(city_chronology['free_locations'])) - scenario_ids):
         raise ValueError('Incomplete reviewed city chronology')
     if (expansion_openings.get('schema') != 'tk2-city-expansion-openings-v1'
-            or set(expansion_map) != set(EXPANSION_CITIES)
+            or set(expansion_map) != {*EXPANSION_CITIES, 'luzon'}
             or set(expansion_openings['scenarios']) != scenario_ids
             or set(expansion_openings['notes']) != set(EXPANSION_CITIES)):
         raise ValueError('Incomplete reviewed historical city expansion')
@@ -460,8 +529,11 @@ def load_sources(*, timing=True):
             raise ValueError('A campaign may not add or remove canonical person identities')
         apply_city_chronology(data, city_chronology, current_people)
         apply_opening_sizes(data, city_scale_rules)
-        apply_city_expansion(data, expansion_map, expansion_openings['scenarios'][entry['id']],
-                             expansion_openings['notes'], current_people)
+        opening = expansion_openings['scenarios'][entry['id']]
+        present = prepare_factions(data, opening, additions, current_people)
+        apply_city_expansion(data, expansion_map, opening, expansion_openings['notes'], current_people)
+        add_luzon_settlement(data, expansion_map['luzon'])
+        place_faction_officers(data, present, current_people)
         apply_early_shu_openings(data, early_shu_openings, current_people)
         original_people = validate_original_virtue(current_people, original_stats, original_identities)
         stat_counts = validate_campaign_stats(current_people, public_stats, san14_abilities, san14_dlc_abilities)

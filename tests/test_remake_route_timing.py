@@ -351,7 +351,8 @@ class FullCatalogRouteTimingTests(unittest.TestCase):
                     if route['id'] in copies:
                         self.assertEqual(physical, copies[route['id']], (scenario['id'], field, route['id']))
                     copies[route['id']] = physical
-                    if route['id'] in old_rows and any(route[k] != old_rows[route['id']][k] for k in ('distance_km', 'days')):
+                    previous = old_rows.get(route['id'], {})
+                    if any(key in previous and route[key] != previous[key] for key in ('distance_km', 'days')):
                         changed += 1
                     checked += 1
         self.assertGreater(checked, 9000)

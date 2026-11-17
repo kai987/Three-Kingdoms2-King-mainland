@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, canonical
 from remake.dated_events import visible_factions
-from remake import civil_staff, domestic, facilities, logistics, treasures, city_development
+from remake import capital_openings, civil_staff, domestic, facilities, logistics, treasures, city_development
 from remake.city_economy import (apply_opening_sizes, frontier_outpost_at, income_at, incomes_at,
                                  profile_at, profiles_at, tier_at)
 from remake.officers import OFFICER_TROOP_CAP
@@ -113,19 +113,23 @@ class DatedScenarioEconomyTests(unittest.TestCase):
             authored.setdefault(row['city'], {})[row['person_id']] = row['troops']
         for city in game.state.cities.values():
             stocks = data['initial_city_resources'][city.id]
-            self.assertEqual((city.gold, city.grain), (stocks['gold'], stocks['grain']))
+            capital = capital_openings.opening(data, city.id)
+            self.assertEqual((city.gold, city.grain), tuple((capital or stocks)[field] for field in ('gold', 'grain')))
             opening = authored.get(city.id, {})
             actual = {game.state.officers[i].person_id: game.state.officers[i].troops
                       for i in city.roster.officer_ids}
             self.assertEqual(actual.keys(), opening.keys())
             old_troops = {pid: mobilized_troops[pid] for pid in opening}
-            self.assertEqual(city.reserves, mobilized_stocks[city.id]['reserves'])
-            self.assertEqual(city.reserves + sum(old_troops.values()),
+            mobilized_reserves = mobilized_stocks[city.id]['reserves']
+            self.assertEqual(city.reserves, capital.get('reserves', mobilized_reserves))
+            self.assertEqual(mobilized_reserves + sum(old_troops.values()),
                              stocks['reserves'] + sum(opening.values()))
             self.assertEqual(actual, {pid: opening_troops[pid] for pid in opening})
-            self.assertTrue(all(opening[pid] <= old_troops[pid] <= troops <= OFFICER_TROOP_CAP
+            self.assertTrue(all(opening[pid] <= old_troops[pid] and 0 <= troops <= OFFICER_TROOP_CAP
                                 for pid, troops in actual.items()))
-            self.assertGreaterEqual(city.reserves, (stocks['reserves'] * 40 + 99) // 100)
+            if not capital or capital['troop_percent'] >= 100:
+                self.assertTrue(all(old_troops[pid] <= troops for pid, troops in actual.items()))
+            self.assertGreaterEqual(mobilized_reserves, (stocks['reserves'] * 40 + 99) // 100)
 
     def test_all_current_openings_have_dated_nonuniform_stocks_and_income(self):
         self.assertEqual(len(self.catalogs), 29)
@@ -281,7 +285,9 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         advance_month(game)
         expected_recruits = 0
         for key, city in game.state.cities.items():
-            expected = game.catalog.data['city_income'][key] if city.owner != 'neutral' else dict.fromkeys(FIELDS, 0)
+            base = game.catalog.data['city_income'][key] if city.owner != 'neutral' else dict.fromkeys(FIELDS, 0)
+            damage = game.state.extension['facilities']['cities'][key]['damage']
+            expected = {field: base[field] * (100 - damage) // 100 for field in FIELDS}
             self.assertEqual(tuple(getattr(city, field) for field in FIELDS),
                              tuple(before[key][i] + expected[field] for i, field in enumerate(FIELDS)))
             expected_recruits += expected['reserves']

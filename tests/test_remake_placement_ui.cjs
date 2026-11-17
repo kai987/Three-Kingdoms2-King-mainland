@@ -40,4 +40,37 @@ assert(!context.dialogContent.body.includes('开局来源'));assert(!context.dia
 assert(context.dialogContent.body.includes('武知来自第三方SAN14数值转写'));assert(context.dialogContent.body.includes('德60'));
 assert.equal(JSON.stringify(context.view),gameBefore,'Person details must not change current game/library state');
 context.GameI18n.locale='ja';context.showPerson(person.id);assert.equal(element('#library-search').value,'preserve search');assert.equal(JSON.stringify(context.view),gameBefore);
-console.log('placement UI: current TC/JP evidence, first-appearance dates/city, safe links, historical caveats, no obsolete provenance and immutable game/input passed');
+async function checkBiographies(){
+ const id=person.person_id,entry={kind:'historical',zh:'漢末人物 <script>bad()</script>',ja:'漢末の人物',sources:[{title:'史書 <em>題名</em>',url:'https://example.com/book'},{title:'Duplicate',url:'https://example.com/book'},{title:'Unsafe',url:'javascript:alert(1)'}]};
+ const biographySection=(stableId,isConnected=true)=>{
+  const content={innerHTML:''};
+  return {dataset:{officerBiography:stableId},isConnected,busy:true,content,hasAttribute:key=>key==='aria-busy',removeAttribute(key){assert.equal(key,'aria-busy');this.busy=false;},querySelector(key){assert.equal(key,'[data-biography-content]');return content;}};
+ };
+ let requests=0;
+ context.fetch=async url=>{
+  assert.equal(url,'/assets/officer-biographies.json');
+  if(++requests===1)return {ok:false};
+  return {ok:true,json:async()=>({schema:'tk2-officer-biographies-v1',people:{[id]:entry,literary:{kind:'literary',zh:'小說人物'},unverified:{kind:'unverified',zh:'暫無史料'}}})};
+ };
+ assert(context.dialogContent.body.includes(`data-officer-biography="${id}"`),'Catalog profile uses the stable person ID');
+ const generated=context.officerBiographySection('clerk-000001');
+ assert(generated.includes('data-biography-kind="generated"'));assert(!generated.includes('aria-busy'));
+ const requestFailed=biographySection(id);
+ await context.loadOfficerBiography(requestFailed);
+ assert(requestFailed.content.innerHTML.includes('data-biography-kind="unavailable"'),'A failed fetch is not a lack of historical evidence');
+ const history=biographySection(id),closeBeforeLoad=biographySection(id,false),novel=biographySection('literary'),uncertain=biographySection('unverified'),missing=biographySection('missing');
+ for(const section of [history,closeBeforeLoad,novel,uncertain,missing])assert(section.busy);
+ await Promise.all([history,closeBeforeLoad,novel,uncertain,missing].map(section=>context.loadOfficerBiography(section)));
+ assert.equal(requests,2,'One successful asset fetch is shared across profiles');
+ assert(!history.busy);
+ assert(history.content.innerHTML.includes('data-biography-kind="historical"'));assert(history.content.innerHTML.includes('漢末の人物'));
+ assert(history.content.innerHTML.includes('&lt;script&gt;'));assert(!history.content.innerHTML.includes('<script>'));
+ assert.equal((history.content.innerHTML.match(/data-biography-source/g)||[]).length,1);
+ assert(history.content.innerHTML.includes('史書 &lt;em&gt;題名&lt;/em&gt;'));assert(!history.content.innerHTML.includes('javascript:'));
+ assert.equal(closeBeforeLoad.content.innerHTML,'','Opening another profile cannot replace its biography');
+ assert(novel.content.innerHTML.includes('data-biography-kind="literary"'));assert(novel.content.innerHTML.includes('紹介文（繁体字中国語）'));
+ assert(uncertain.content.innerHTML.includes('data-biography-kind="unverified"'));assert(uncertain.content.innerHTML.includes('暫無史料'));
+ assert(missing.content.innerHTML.includes('data-biography-kind="unverified"'));assert(!missing.content.innerHTML.includes('data-biography-text'));
+ assert.equal(JSON.stringify(context.view),gameBefore,'Biography display is read-only');
+}
+checkBiographies().then(()=>console.log('placement and biography UI: current TC/JP evidence, first-appearance dates/city, read-only biographies, safe sources, and historical caveats passed'),error=>{console.error(error);process.exitCode=1;});

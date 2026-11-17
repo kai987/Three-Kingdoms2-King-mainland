@@ -47,10 +47,10 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
 }
 (async()=>{
  const sceneIds=Object.keys(KINDS).map(kind=>sceneForEvent(row(1,kind)));
- assert.equal(sceneIds.length,92);
+ assert.equal(sceneIds.length,97);
  for(const scene of sceneIds)assert.match(scene,/^[a-z-]+$/);
  sceneIds.push(sceneForEvent(row(1,'city_disaster',{details:{disaster:'flood'}})));
- assert.equal(new Set(sceneIds).size,93,'Each event kind and disaster variant owns a different scene');
+ assert.equal(new Set(sceneIds).size,98,'Each event kind and disaster variant owns a different scene');
  const scenesDir=require('node:path').join(__dirname,'../game/assets/event-scenes');
  assert.deepEqual(fs.readdirSync(scenesDir).filter(name=>name.endsWith('.webp')).sort(),
   sceneIds.map(scene=>scene+'.webp').sort(),'The renderer references every available event art asset exactly once');
@@ -322,6 +322,29 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
  assert(legacyPlayback.modal.innerHTML.includes('金 50000、寶物 93 件（金 50000、寶物 99 件，按庫存容量入庫）'));
  assert(!legacyPlayback.modal.innerHTML.includes('兵糧 100000'),'Earlier loot receipts show only the recorded deposit');
  legacyPlayback.events.dispose();
+ const modernRelocation={...relocation,details:{...relocation.details,troops_to_reserves:250,
+  moved:{...relocation.details.moved,troops:5100},lost:{...relocation.details.lost,troops:1700}}};
+ assert(validEvent(modernRelocation));
+ assert(!validEvent({...modernRelocation,details:{...modernRelocation.details,troops_to_reserves:5101}}));
+ for(const field of ['gold','grain','population','troops']){
+  const fractional={...modernRelocation.details.moved,[field]:modernRelocation.details.moved[field]+1};
+  assert(!validEvent({...modernRelocation,details:{...modernRelocation.details,moved:fractional}}));
+ }
+ const modernPlayback=fixture([modernRelocation]);
+ modernPlayback.events.observe(view([modernRelocation]),{newGame:true});modernPlayback.drain();
+ assert(modernPlayback.modal.innerHTML.includes('兵士 5100 人（其中 250 人編入預備兵）'));
+ assert(modernPlayback.modal.innerHTML.includes('兵士 1700 人'));
+ modernPlayback.events.dispose();
+ const reserveRelocation={...relocation,details:{...relocation.details,
+  moved:{...relocation.details.moved,reserves:1200},lost:{...relocation.details.lost,reserves:400}}};
+ assert(validEvent(reserveRelocation));
+ assert(!validEvent({...reserveRelocation,details:{...reserveRelocation.details,troops_to_reserves:0}}));
+ assert(!validEvent({...reserveRelocation,details:{...reserveRelocation.details,lost:{...reserveRelocation.details.lost,reserves:401}}}));
+ const reservePlayback=fixture([reserveRelocation]);
+ reservePlayback.events.observe(view([reserveRelocation]),{newGame:true});reservePlayback.drain();
+ assert(reservePlayback.modal.innerHTML.includes('預備兵 1200 人'));
+ assert(reservePlayback.modal.innerHTML.includes('預備兵 400 人'));
+ reservePlayback.events.dispose();
  const founding=(id,kind='faction_founded',extra={})=>row(id,kind,{year:184,month:11,day:1,turn:28,audience:'world',
   person_ids:['historical-beigong-boyu','historical-li-wenhou'],city_ids:['jincheng'],factions:['beigong_boyu'],
   details:{founding_id:'liangzhou-revolt-184-11',reason:kind==='faction_founded'?'formed':'leader_unavailable',reserves:kind==='faction_founded'?1200:0},...extra});
@@ -635,5 +658,5 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
   assert(line.includes('劉禪'));assert(!line.includes('劉備'),'Event faction labels follow the live ruler, not the opening name');
  }
  assert.equal(JSON.stringify(inheritedView),inheritedBefore,'Bilingual event display never changes faction identity or state');inherited.events.dispose();
- console.log('events: 92 bilingual scenes, strict event snapshots, deduplicated visit control, read-only history, locale continuity and immutable presentation passed');
+ console.log('events: 97 bilingual kinds, strict event snapshots, deduplicated visit control, read-only history, locale continuity and immutable presentation passed');
 })().catch(error=>{console.error(error);process.exitCode=1});
