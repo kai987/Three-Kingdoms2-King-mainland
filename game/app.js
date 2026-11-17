@@ -299,7 +299,7 @@ function setBusy(value){
 }
 async function request(path,body,{raw=false,text=false}={}){
  const settings=body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:raw?body:JSON.stringify(body)};
- if(viewCache&&typeof GameBrowserEngine!=='undefined'&&['/api/state','/api/command','/api/load'].includes(path))settings.tk2ViewCache=viewCache.token();
+ if(viewCache&&typeof GameBrowserEngine!=='undefined'&&['/api/state','/api/command','/api/load'].includes(path))settings.tk2ViewCache=viewCache.token(GameBrowserEngine.sharedScenarios);
  const response=await fetch(path,settings);
  const decoded=text&&response.ok?await response.text():await response.json();
  const value=text&&response.ok?decoded:(viewCache?viewCache.hydrate(decoded):decoded);
