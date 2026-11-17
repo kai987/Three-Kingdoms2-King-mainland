@@ -1711,6 +1711,7 @@ test('a stale local API menu warns without restarting or changing its campaign',
     if(path.startsWith('/api/'))await window.__recordScenarioApi({path,method:settings.method||'GET'});
     if(path!=='/api/state')return result;
     const value=await result.clone().json(),catalog=value.static_catalog||value.catalog;
+    if(Array.isArray(value.shared_scenarios))value.shared_scenarios=value.shared_scenarios.filter(row=>!excluded.has(row.id));
     if(Array.isArray(catalog?.scenarios))catalog.scenarios=catalog.scenarios.filter(row=>!excluded.has(row.id));
     return new Response(JSON.stringify(value),{status:result.status,headers:result.headers});
    };
