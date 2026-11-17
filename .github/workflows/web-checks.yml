@@ -452,6 +452,18 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
+          sparse-checkout: |
+            /.gitignore
+            /.github/actions/browser-tools/
+            /tests/
+            /tools/browser-tests/
+            /tools/ci/
+            /source/
+            /game/config/
+            /game/data/
+            /game/assets/map-presentation.json
+            /game/assets/battlefields/index.json
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
@@ -523,14 +535,23 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      FULL_GATE_SPARSE_PATHS: |
+        /tools/ci/
+        /tools/browser-tests/
+        /tests/browser_ui.spec.mjs
+        /tests/browser_soldier_ui.spec.mjs
+        /game/data/campaigns/index.json
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-          # The reused gate reads tools/ci and downloads the tested release.
+          # Reuse needs only CI helpers. Full verification also reads browser coverage inputs.
           sparse-checkout: >-
-            ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' &&
-                needs.scope.result == 'success' && needs.scope.outputs.reuse == 'true' && '/tools/ci/' || '' }}
+            ${{ needs.scope.result == 'success' &&
+                (github.event_name == 'push' && github.ref == 'refs/heads/main' &&
+                 needs.scope.outputs.reuse == 'true' && '/tools/ci/' ||
+                 needs.scope.outputs.mode == 'full' && env.FULL_GATE_SPARSE_PATHS) || '' }}
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:

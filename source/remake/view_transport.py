@@ -14,26 +14,41 @@ PERSON_STATE = frozenset(('year_state', 'faction', 'alive', 'location', 'intelle
 
 
 class ViewTransport:
-    """Two immutable catalogs, explicitly negotiated separately by each tab."""
+    """Per-tab catalog caches and a shared token for immutable opening previews."""
     def __init__(self):
         self.catalogs = OrderedDict()
+        self._catalogs_without_scenarios = OrderedDict()
+        self._scenario_previews = None
+        self._scenarios_token = None
 
-    def pack(self, value, source_sha, known=''):
+    def pack(self, value, source_sha, known='', *, known_scenarios=None, scenario_previews=None):
         if not isinstance(value, dict) or not {'catalog', 'game', 'revision'} <= value.keys():
             return value
         catalog = value['catalog']
-        if source_sha not in self.catalogs:
-            static = {key: field for key, field in catalog.items() if key in STATIC_FIELDS}
+        shared_scenarios = known_scenarios is not None and 'scenarios' in catalog
+        catalogs = self._catalogs_without_scenarios if shared_scenarios else self.catalogs
+        if shared_scenarios and (scenario_previews is None or self._scenario_previews is not scenario_previews
+                                 or self._scenarios_token is None):
+            # The browser runtime keeps its verified opening previews fixed for
+            # the session. Cache the digest and keep the current view's list
+            # available so clients with a stale token can receive it again.
+            raw = json.dumps(catalog['scenarios'], sort_keys=True, ensure_ascii=False,
+                             allow_nan=False, separators=(',', ':')).encode('utf-8')
+            self._scenarios_token = hashlib.sha256(raw).hexdigest()
+            self._scenario_previews = scenario_previews
+        if source_sha not in catalogs:
+            static = {key: field for key, field in catalog.items()
+                      if key in STATIC_FIELDS and (key != 'scenarios' or not shared_scenarios)}
             static['library'] = [{key: field for key, field in row.items() if key not in PERSON_STATE}
                                  for row in catalog['library']]
             raw = json.dumps(static, sort_keys=True, ensure_ascii=False,
                              allow_nan=False, separators=(',', ':')).encode('utf-8')
             token = hashlib.sha256(raw).hexdigest()
-            self.catalogs[source_sha] = (token, static)
-        self.catalogs.move_to_end(source_sha)
-        while len(self.catalogs) > 2:
-            self.catalogs.popitem(last=False)
-        token, static = self.catalogs[source_sha]
+            catalogs[source_sha] = (token, static)
+        catalogs.move_to_end(source_sha)
+        while len(catalogs) > 2:
+            catalogs.popitem(last=False)
+        token, static = catalogs[source_sha]
         known_static, _, known_quotes = known.partition(':')
         game = value['game']
         # Read-only route quotes depend on ownership, active cities, player,
@@ -56,4 +71,8 @@ class ViewTransport:
                       view=dict(value, catalog=current))
         if known_static != token:
             result['static_catalog'] = static
+        if shared_scenarios:
+            result['scenarios_token'] = self._scenarios_token
+            if known_scenarios != self._scenarios_token:
+                result['shared_scenarios'] = catalog['scenarios']
         return result
