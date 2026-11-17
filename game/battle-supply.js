@@ -6,8 +6,8 @@
  const text=(locale,tc,ja)=>locale==='ja'?ja:tc;
  function departure(view,source,ids,quote,selected=null){
   const rules=view.catalog.battle_supply_rules,people=view.game.officers;
-  if(!rules||rules.denominator!==1000||rules.officer_units!==100||rules.budget_days!==30)throw Error('Unsupported battle supply rules');
-  const denominator=rules.denominator??1000;
+  if(!rules||![100,1000].includes(rules.denominator)||rules.officer_units!==100||rules.budget_days!==30)throw Error('Unsupported battle supply rules');
+  const {denominator}=rules;
   const march=root.GameMarchSupply.estimate(people,ids,quote,0,view.game.cities,source.owner,denominator);
   const troops=ids.reduce((n,id)=>n+(people[id]?.troops||0),0),daily=troops+100*ids.length;
   const max=Math.max(0,Math.min(rules.limit-march,source.grain-march));

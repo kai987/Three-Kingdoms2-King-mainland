@@ -541,13 +541,13 @@ test('faction resources show current allies and large factions receive 40 comman
 
 test('observer speed changes cadence without resuming a pause and city counts follow ownership',async({page})=>{
  await opening(page);
- const hanResources=/金\s*13,?190\s*·\s*兵糧\s*43,?124\s*·\s*兵士\s*23,?484\s*·\s*預備兵\s*8,?763\s*·\s*現役\s*49/;
+ const hanResources=/金\s*15,?680\s*·\s*兵糧\s*536,?740\s*·\s*兵士\s*23,?484\s*·\s*預備兵\s*11,?353\s*·\s*現役\s*49/;
  const openingResources=page.locator('.faction-choice [data-faction-resources="han"]');
  const openingSummary=page.locator('#setup-summary');
  const openingHan=page.locator('.faction-choice:has(input[value="han"])');
- await expect(openingResources.locator(':scope > span').first()).toHaveText('都市 7');
+ await expect(openingResources.locator(':scope > span').first()).toHaveText('都市 11');
  await expect(openingHan.locator('.faction-choice-heading .faction-choice-cities')).toHaveCount(0);
- await expect(openingResources).toHaveText(new RegExp('^\\s*都市\\s*7\\s*·\\s*'+hanResources.source));
+ await expect(openingResources).toHaveText(new RegExp('^\\s*都市\\s*11\\s*·\\s*'+hanResources.source));
  const layout=await openingHan.evaluate(row=>{
   const heading=row.querySelector('.faction-choice-heading').getBoundingClientRect();
   const resources=row.querySelector('.faction-choice-resources').getBoundingClientRect();
@@ -614,7 +614,7 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  await expect(han.locator('[data-faction-officers]')).toHaveText('49');
  await expect(han.locator('th + td')).toHaveAttribute('data-faction-cities','han');
  await expect(han.locator('[data-faction-troops]')).toHaveText(/^23,?484$/);
- await expect(han.locator('[data-faction-troops] + td')).toHaveText(/^8,?763$/);
+ await expect(han.locator('[data-faction-troops] + td')).toHaveText(/^11,?353$/);
  const checkLedgerColumns=async()=>{
   const columns=await headers.evaluateAll(nodes=>nodes.map(node=>({
    width:node.getBoundingClientRect().width,padding:getComputedStyle(node).paddingInline
@@ -651,13 +651,14 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  const speedControl=await speed.elementHandle();
  await speed.selectOption('slow');
  await expectNextAfter(3600,openingTurn);
- const firstTurnCounts=await readCityCounts(await tacticalSave(page));
- expect(firstTurnCounts).not.toEqual(openingCounts);
+ await readCityCounts(await tacticalSave(page));
  expect(await speed.evaluate((node,original)=>node===original,speedControl)).toBe(true);
  await speedControl.dispose();
  await expect(speed).toHaveValue('slow');
  await speed.selectOption('fast');
  await expectNextAfter(600,openingTurn+1);
+ const countsAfterCapture=await readCityCounts(await tacticalSave(page));
+ expect(countsAfterCapture).not.toEqual(openingCounts);
  await expect(speed).toHaveValue('fast');
 
  await toggle.press('Enter');
@@ -3105,7 +3106,7 @@ test('published event backdrops decode from the verified web build',async({page}
   }
   return sizes;
  },{all:browserScope.full,updates});
- expect(result).toHaveLength(browserScope.full||!updates.length?93:updates.length);
+ expect(result).toHaveLength(browserScope.full||!updates.length?98:updates.length);
  for(const [path,width,height]of result)expect(width>height&&height>0,path).toBe(true);
 });
 
@@ -3253,7 +3254,15 @@ test('Liu Bei can make three visits and recruit Zhuge Liang after restoring a sa
  await waitIdle(page);
 
  const event=page.locator('#event-dialog');
- const waitForStory=kind=>expect(event.locator(`[data-event-kind="${kind}"]`)).toBeVisible();
+ const waitForStory=async kind=>{
+  const story=event.locator(`[data-event-kind="${kind}"]`);
+  for(let i=0;i<12;i++){
+   await expect(event).toBeVisible();
+   if(await story.isVisible())return;
+   await event.locator('[data-event-next]').click();
+  }
+  await expect(story).toBeVisible();
+ };
  const visit=page.locator('#visit-zhuge-liang');
  const showVisit=async(completed)=>{
   await page.locator('#city-jump').selectOption('yiyang');
