@@ -2,6 +2,9 @@ name: Shared Web campaign verification
 on:
   workflow_call:
     inputs:
+      equipment_optimized:
+        type: boolean
+        default: false
       force_full:
         type: boolean
         default: false
@@ -15,6 +18,9 @@ permissions:
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   RUSTUP_TOOLCHAIN: '1.93.0'
+  FROZEN_WEB_HEAD: 'd304bf7a3b667bf355c9508b2ce77df5ec7f4310'
+  FROZEN_WEB_CONTENT: '703c9a17a610e6bbae3daa5500b2cb334887cee8061caf43888c73f24014c063'
+  FROZEN_WEB_RUN: '44037546841'
 jobs:
   scope:
     runs-on: ubuntu-latest
@@ -421,9 +427,15 @@ jobs:
       - run: npm ci --prefix tools/web-runtime --ignore-scripts
       - name: Build the candidate once and retain its identity
         id: identity
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          python -B game/build_web.py --output build/web
-          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA")
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/14307817518" |
+            jq -e --arg digest 'sha256:a652a4006315365f7718da7de0c773c025e34d413c097783da7f426c2d630496' --arg name "candidate-web-$FROZEN_WEB_HEAD" \
+              '.digest == $digest and .name == $name and .workflow_run.id == 44037546841 and .expired == false'
+          GITHUB_SHA="$FROZEN_WEB_HEAD" python -B game/build_web.py --output build/web
+          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_WEB_HEAD" --content-sha256 "$FROZEN_WEB_CONTENT")
           printf 'content_sha256=%s\n' "$content" >> "$GITHUB_OUTPUT"
       - name: Actual WASM campaign and CPU replay parity
         run: node tests/browser_engine_smoke.mjs build/web
@@ -455,6 +467,7 @@ jobs:
           sparse-checkout: |
             /.gitignore
             /.github/actions/browser-tools/
+            /.github/experiments/pr57-equipment.patch
             /tests/
             /tools/browser-tests/
             /tools/ci/
@@ -474,12 +487,31 @@ jobs:
           path: build/ci
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: candidate-web-${{ github.sha }}
+          name: candidate-web-${{ env.FROZEN_WEB_HEAD }}
           path: build/web
+          github-token: ${{ github.token }}
+          run-id: ${{ env.FROZEN_WEB_RUN }}
       - name: Require the exact immutable candidate
         env:
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
-        run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_WEB_HEAD" --content-sha256 "$CONTENT_SHA"
+      - name: Select the equipment test and record runner CPU and load
+        env:
+          EQUIPMENT_OPTIMIZED: ${{ inputs.equipment_optimized }}
+        run: |
+          set -euo pipefail
+          expected='14d165af0f8d23a633f25bd58ed767d0a7e61d6d'
+          if [[ "$EQUIPMENT_OPTIMIZED" == true ]]; then
+            git apply .github/experiments/pr57-equipment.patch
+            expected='41faebfab7a4fb377b248fc7a42a3769c61181f6'
+          fi
+          git diff --check
+          blob=$(git hash-object tests/browser_ui.spec.mjs)
+          test "$blob" = "$expected"
+          printf 'Equipment optimized: %s\nBrowser suite blob: %s\n' "$EQUIPMENT_OPTIMIZED" "$blob"
+          lscpu | awk -F: '/^CPU\(s\):|^Model name:/ {print $1 ":" $2}'
+          cat /proc/loadavg
+          cat /proc/pressure/cpu
       - name: Show the selected scope and execute actual browser controls
         env:
           BROWSER_PROJECT: ${{ matrix.project }}
@@ -596,13 +628,15 @@ jobs:
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         if: needs.scope.outputs.web == 'true'
         with:
-          name: candidate-web-${{ github.sha }}
+          name: candidate-web-${{ env.FROZEN_WEB_HEAD }}
           path: build/web
+          github-token: ${{ github.token }}
+          run-id: ${{ env.FROZEN_WEB_RUN }}
       - name: Verify the original candidate after every required check passed
         if: needs.scope.outputs.web == 'true'
         env:
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
-        run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_WEB_HEAD" --content-sha256 "$CONTENT_SHA"
       - name: Retain the exact tested release
         if: needs.scope.outputs.web == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

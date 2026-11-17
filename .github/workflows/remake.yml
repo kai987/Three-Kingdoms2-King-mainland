@@ -1,18 +1,17 @@
 name: Web campaign checks
+run-name: ${{ inputs.trial }} equipment full CI (${{ inputs.optimized && 'PR 57' || 'main' }})
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
     inputs:
-      force_full:
-        description: Run every regression group
+      trial:
+        description: A/B trial label
+        type: string
+        required: true
+      optimized:
+        description: Use the PR 57 equipment test
         type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
+        default: false
 
 permissions:
   contents: read
@@ -20,11 +19,13 @@ permissions:
   deployments: read
 
 concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
+  group: web-checks-${{ github.ref }}-manual
+  cancel-in-progress: false
 
 jobs:
   verify:
+    if: github.ref == 'refs/heads/codex/ci-equipment-full-ab'
     uses: ./.github/workflows/web-checks.yml
     with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+      force_full: true
+      equipment_optimized: ${{ inputs.optimized }}
