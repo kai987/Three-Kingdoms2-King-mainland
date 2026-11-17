@@ -1,30 +1,86 @@
-name: Web campaign checks
+name: PR 59 shared opening scenarios experiment
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
-    inputs:
-      force_full:
-        description: Run every regression group
-        type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
 
 permissions:
   contents: read
   actions: read
-  deployments: read
 
-concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
+env:
+  FROZEN_SOURCE: bc01fe5c6ed5983be2052c55bdc524ddb69ab3b9
+  FROZEN_TREE: 21c5f53fef9dbccf41e4871b883d68b5becabdc9
+  FROZEN_WEB_CONTENT: 8387cdd8f7b6d5ab47b580a26f85aacb43db843d16b6abea8caf4ebc00d86728
+  SOURCE_RUN: '44089598448'
+  SOURCE_ARTIFACT: '14330333242'
 
 jobs:
-  verify:
-    uses: ./.github/workflows/web-checks.yml
-    with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+  profile:
+    if: github.ref == 'refs/heads/codex/ci-opening-shared-ab'
+    name: Profile the first opening batch on desktop and touch on one runner
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Freeze release source and isolate profiling files
+        run: |
+          git merge-base --is-ancestor "$FROZEN_SOURCE" HEAD
+          git diff --exit-code "$FROZEN_SOURCE" HEAD -- . ':!.github/workflows/remake.yml' ':!.github/experiments/opening-shared-scenarios'
+          cp -R .github/experiments/opening-shared-scenarios "$RUNNER_TEMP/"
+          git switch --detach "$FROZEN_SOURCE"
+          test "$(git rev-parse 'HEAD^{tree}')" = "$FROZEN_TREE"
+          test -z "$(git status --porcelain)"
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: ./.github/actions/browser-tools
+      - name: Verify the identity of the original PR 59 Web archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$SOURCE_ARTIFACT" \
+            --jq '[.id,.name,.workflow_run.id,.digest,.expired]|@tsv' > "$RUNNER_TEMP/artifact.tsv"
+          test "$(cut -f1 "$RUNNER_TEMP/artifact.tsv")" = "$SOURCE_ARTIFACT"
+          test "$(cut -f2 "$RUNNER_TEMP/artifact.tsv")" = "verified-web-$FROZEN_SOURCE"
+          test "$(cut -f3 "$RUNNER_TEMP/artifact.tsv")" = "$SOURCE_RUN"
+          test "$(cut -f4 "$RUNNER_TEMP/artifact.tsv")" = 'sha256:04f62678b6283471bdb486f409eb11b0cdb045d55c56e015653ac67aac8ebb82'
+          test "$(cut -f5 "$RUNNER_TEMP/artifact.tsv")" = false
+          cat "$RUNNER_TEMP/artifact.tsv"
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: verified-web-${{ env.FROZEN_SOURCE }}
+          path: build/web
+          github-token: ${{ github.token }}
+          run-id: ${{ env.SOURCE_RUN }}
+      - name: Verify the frozen Web release before profiling
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_SOURCE" --content-sha256 "$FROZEN_WEB_CONTENT"
+      - name: Record the runner hardware
+        run: |
+          lscpu | awk -F: '/^CPU\(s\):|^Model name:/ {print $1 ":" $2}'
+      - name: Verify shared cache fallback and version changes
+        env:
+          PYTHONPATH: source
+        run: python -B "$RUNNER_TEMP/opening-shared-scenarios/check.py"
+      - name: Compare desktop with baseline first
+        run: |
+          bash "$RUNNER_TEMP/opening-shared-scenarios/run.sh" desktop-chromium baseline
+          bash "$RUNNER_TEMP/opening-shared-scenarios/run.sh" desktop-chromium shared
+      - name: Compare touch with shared scenarios first
+        run: |
+          bash "$RUNNER_TEMP/opening-shared-scenarios/run.sh" touch-chromium shared
+          bash "$RUNNER_TEMP/opening-shared-scenarios/run.sh" touch-chromium baseline
+      - name: Compare complete views, saves and timing reports
+        run: |
+          test -z "$(git status --porcelain)"
+          python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_SOURCE" --content-sha256 "$FROZEN_WEB_CONTENT"
+          python -B "$RUNNER_TEMP/opening-shared-scenarios/report.py" build/opening-shared-scenarios | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Retain profiles and original Playwright test outcomes
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: opening-shared-scenarios-${{ github.run_attempt }}
+          path: build/opening-shared-scenarios
+          if-no-files-found: warn
