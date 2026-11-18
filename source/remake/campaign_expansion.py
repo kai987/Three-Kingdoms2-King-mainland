@@ -96,6 +96,7 @@ class ExpandedCampaign:
             city = self.catalog.data['appearance_locations'].get(person.person_id)
             windows = self.catalog.data.get('appearance_windows', {}).get(person.person_id)
             resolve_death_year = False
+            faction = None
             if windows is not None:
                 current = next((w for w in windows if tuple(w['start']) <=
                     (state.year, state.month) <= tuple(w['end'])), None)
@@ -103,6 +104,7 @@ class ExpandedCampaign:
                     continue
                 city = current['city']
                 resolve_death_year = current.get('resolve_death_year') is True
+                faction = current.get('faction')
             ys = year_state(person, state.year)
             if ys != YearState.AVAILABLE and not (ys == YearState.DEATH_YEAR_REVIEW and resolve_death_year):
                 continue
@@ -112,13 +114,31 @@ class ExpandedCampaign:
                 authored = state.cities.get(city)
                 if not authored or all(authored.owner != owner for owner, _ in parents):
                     city = next((home for _, home in parents if home), city)
+            if faction:
+                # Prefer the authored post. A captured or full city can be
+                # replaced by another city that the appointing faction holds.
+                eligible = (home for home in state.cities.values() if home.owner == faction
+                            and self._city_occupancy(state, home) < self.catalog.rules.city_officer_capacity)
+                home = min(eligible, key=lambda home: (home.id != city, home.id), default=None)
+                if home is None:
+                    continue
+                city = home.id
             if city not in state.cities:
                 continue
             state.officers[ident] = initialize_officer(person, ident, self.catalog.profiles[ident],
-                **appearance_values(self.catalog.profiles[ident], row.get('initialization')),
+                **appearance_values(self.catalog.profiles[ident], row.get('initialization'), faction_id=faction),
+                faction_id=faction,
                 year=state.year, rules=self.catalog.rules, resolve_death_year=resolve_death_year)
-            state.extension['free_locations'][str(ident)] = city
-            self._note(state, f'{person.name}已到登场年代，在{self.catalog.map_cities[city]["name"]}待访。')
+            city_name = self.catalog.map_cities[city]['name']
+            if faction:
+                home.roster.officer_ids.append(ident)
+                if person.person_id in southern_mission.ENVOYS:
+                    self._note(state, f'{person.name}出使歸來，在{city_name}歸隊。')
+                else:
+                    self._note(state, f'{person.name}已到登场年代，在{city_name}出仕。')
+            else:
+                state.extension['free_locations'][str(ident)] = city
+                self._note(state, f'{person.name}已到登场年代，在{city_name}待访。')
 
     def _runtime_year_state(self, state, person):
         # Existing officers can outlive their normal window, but an opening
@@ -1160,6 +1180,7 @@ class ExpandedCampaign:
             person=self.catalog.definitions[row['person_id']];profile=self.catalog.profiles[ident]
             officer=state.officers.get(ident) if state else None
             library.append({'id':ident,'person_id':person.person_id,'name':person.name,'birth':person.birth_year,
+                            **({'regnal_title':row['regnal_title']} if 'regnal_title' in row else {}),
                             'service':person.service_year,'death':person.death_year,'missing':list(profile.missing),
                             'year_state':(self._runtime_year_state(state, person) if officer and officer.alive
                                 else year_state(person, state.year if state else self.catalog.data['start_year'])).value,

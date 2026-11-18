@@ -72,6 +72,19 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
   opening.events.observe(state,{newGame:true});opening.drain();
   assertScene(opening.modal.innerHTML,'campaign-start');opening.events.dispose();
  }
+ const dongcheon='historical-goguryeo-dongcheon';
+ const expedition=fixture();
+ const expeditionView=view([row(1,'historical_goguryeo_expedition',{year:244,month:1,audience:'world',
+  factions:['wei','goguryeo'],city_ids:['xuantu','guonei'],
+  person_ids:['san14-candidate-0152','san14-candidate-0046',dongcheon]})]);
+ expedition.events.observe(expeditionView,{newGame:true});expedition.drain();
+ for(const language of ['zh-Hant','ja']){
+  expedition.i18n.locale=language;expedition.doc.emit('game-language-change');
+  assert.match(expedition.modal.innerHTML,/憂位居（東川王）/);
+  assert.equal(expedition.modal.innerHTML.split('憂位居（東川王）').length,2);
+  assert.match(expedition.modal.innerHTML,/憂位居(?:於|は)247年/);
+ }
+ expedition.events.dispose();
  const liuBei='san14-candidate-0952',zhugeLiang='san14-candidate-0440';
  const recommendation=row(1,'historical_three_visits',{year:207,month:9,audience:'world',factions:['shu','liu_biao'],
   person_ids:[liuBei,'san14-candidate-0446',zhugeLiang],city_ids:['yiyang','xiangyang']});

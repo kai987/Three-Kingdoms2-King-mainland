@@ -1,0 +1,59 @@
+{
+  "schema": "tk2-retainer-portrait-additions-v1",
+  "native_size": [
+    32,
+    40
+  ],
+  "enhanced_size": [
+    128,
+    160
+  ],
+  "source": "Three independent built-in ImageGen originals in the style of the existing Nam-mu portrait.",
+  "people": [
+    {
+      "person_id": "historical-goguryeo-sansang",
+      "name": "延优",
+      "art_gender_design": "male",
+      "source_kind": "imagegen_new_pixel_art",
+      "source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-sansang.png",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_sha256": "b894f2505e4ed4f8ab5201411cbf7edc22112da4ffcc8bcc30a319dafc5fdfef",
+      "source_matte": "white",
+      "prompt": "art/portraits/goguryeo-rulers-v1/prompts/historical-goguryeo-sansang.txt",
+      "prompt_sha256": "e4a122d1c5c69d43448ccdea34c8fce12ce494113974652d39ed7deaa9113bb2"
+    },
+    {
+      "person_id": "historical-goguryeo-dongcheon",
+      "name": "忧位居",
+      "art_gender_design": "male",
+      "source_kind": "imagegen_new_pixel_art",
+      "source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-dongcheon.png",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_sha256": "f2b525261f87dc3345f068db73931a7d36d302377c358929fa7c893132d9bbef",
+      "source_matte": "white",
+      "prompt": "art/portraits/goguryeo-rulers-v1/prompts/historical-goguryeo-dongcheon.txt",
+      "prompt_sha256": "882dab3cafd844108f127718fb5aba4858e6249bf17726789fab50e30a1bfb0d"
+    },
+    {
+      "person_id": "historical-goguryeo-jungcheon",
+      "name": "然弗",
+      "art_gender_design": "male",
+      "source_kind": "imagegen_new_pixel_art",
+      "source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-jungcheon.png",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_sha256": "82c26f8316f099aa25f3cf32ad56bf31a626e9874f5d70cf5c505e1ddf0aa04b",
+      "source_matte": "white",
+      "prompt": "art/portraits/goguryeo-rulers-v1/prompts/historical-goguryeo-jungcheon.txt",
+      "prompt_sha256": "e7d68ef50d6b072323b5120d8aefa65d007828bd5a389770871227879349655b"
+    }
+  ]
+}

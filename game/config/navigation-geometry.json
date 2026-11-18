@@ -1951,6 +1951,67 @@
       ]
     },
     {
+      "id": "yuyang:liucheng:land",
+      "from": "yuyang",
+      "to": "liucheng",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "restored_lulong_branch_to_liucheng",
+        "is_proven_direct_Han_road": false,
+        "basis": "《三國志·田疇傳》記田疇引曹軍出盧龍、歷平岡、登白狼堆，後追至柳城。本作由漁陽共用盧龍山道西段，再分支至柳城。路形為遊戲配置。",
+        "source": "https://zh.wikisource.org/wiki/三國志/卷11#田疇"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              965,
+              66
+            ],
+            [
+              981,
+              49
+            ],
+            [
+              1001,
+              47
+            ],
+            [
+              1023,
+              59
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "points": [
+            [
+              1023,
+              59
+            ],
+            [
+              1037,
+              65
+            ],
+            [
+              1051,
+              65
+            ],
+            [
+              1062,
+              59
+            ],
+            [
+              1074,
+              50
+            ]
+          ]
+        }
+      ]
+    },
+    {
       "from": "liaodong",
       "to": "xuantu",
       "mode": "land",

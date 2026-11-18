@@ -11,7 +11,8 @@ LANDED = 'luzon_landing'
 FOUNDED = 'luzon_settlement_completed'
 EVENTS = (DEPARTED, LANDED, FOUNDED)
 OWNER, RULER, SITE = 'wu', 'san14-candidate-0553', 'luzon'
-START, END = (244, 1), (251, 12)
+ENVOYS = ('historical-zhu-ying-wu', 'historical-kang-tai-wu')
+DEPARTURE_YEAR, RETURN_YEAR = 244, 251
 PORTS = {'yizhou': ('yizhou', SITE), 'kuaiji': ('kuaiji', 'yizhou', SITE)}
 MIN_TROOPS = 10_000
 LIMIT = 100_000_000
@@ -178,7 +179,8 @@ def in_transit_troops(state):
 
 
 def _emit(game, state, kind, port, details):
-    game._emit_event(state, kind, city_ids=[port, SITE], factions=[OWNER], details=details)
+    game._emit_event(state, kind, city_ids=[port, SITE], factions=[OWNER], details=details,
+                     person_ids=ENVOYS if kind == DEPARTED else ())
 
 
 def _return_troops(game, state, record, sources):
@@ -204,9 +206,11 @@ def process(game, state):
     record = state.extension.get(COMMAND)
     if record is None:
         leader = state.officers.get(state.extension['leaders'].get(OWNER))
-        if (not START <= (state.year, state.month) <= END or not leader or not leader.alive
+        if (state.year != DEPARTURE_YEAR or not leader or not leader.alive
                 or leader.person_id != RULER
                 or (game.catalog.data.get('main_scenario') or {}).get('group') == 'if'):
+            return
+        if not all(pid in game.catalog.ids for pid in ENVOYS):
             return
         voyages, _ = _connections(game, state)
         if voyages:
@@ -275,7 +279,7 @@ def validate_state(catalog, state):
     if (state.player != OWNER or SITE not in state.cities or not isinstance(record, dict)
             or record.get('stage') not in ('survey', 'offer', 'declined', 'closed', 'sailing', 'building', 'built')
             or not _valid_voyage(record.get('survey'), state.turn)
-            or not START <= _turn_date(catalog, record['survey']['turn']) <= END):
+            or _turn_date(catalog, record['survey']['turn'])[0] != DEPARTURE_YEAR):
         raise ValueError('Southern mission receipt')
     stage = record['stage']
     fields = {'stage', 'survey'}
@@ -327,7 +331,9 @@ def validate_event(state, row):
     else:
         turn = voyage['turn']
         details = dict(days=voyage['wind_days'] + voyage['storm_days'], storm_days=voyage['storm_days'])
-    if (row['turn'] != turn or row['audience'] != 'player' or row['person_ids']
+    people = row['person_ids']
+    if (row['turn'] != turn or row['audience'] != 'player'
+            or (people and (kind != DEPARTED or tuple(people) != ENVOYS))
             or row['city_ids'] != [voyage['port'], SITE] or row['factions'] != [OWNER]
             or row['details'] != details):
         raise ValueError('Southern mission event receipt')

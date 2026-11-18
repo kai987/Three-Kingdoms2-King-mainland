@@ -243,12 +243,14 @@ class CampaignSession:
             for row in d['initial_officers']:
                 if row['city']!=city:continue
                 ident=c.ids[row['person_id']];profile=c.profiles[ident]
+                person=c.by_id[ident]
                 officers.append(dict(id=ident,person_id=row['person_id'],name=c.name(ident),martial_strength=profile.martial_strength,
                                      intellect=profile.intellect,virtue=profile.virtue,troops=troops[row['person_id']],
                                      experience=0,tier=0,
                                      **opening_values(c,ident,
                                                          faction_id=d['initial_owners'][city],is_ruler=row.get('ruler',False)),
-                                     is_ruler=bool(row.get('ruler')),equipment=initial_view(preview_game,row['person_id'])))
+                                     is_ruler=bool(row.get('ruler')),equipment=initial_view(preview_game,row['person_id']),
+                                     **({'regnal_title':person['regnal_title']} if 'regnal_title' in person else {})))
             owner=d['initial_owners'][city]
             treasure = opening_treasure_stock(d,city,owner,d['start_year'],d['start_month'])
             facilities=opening_facilities(d,city)

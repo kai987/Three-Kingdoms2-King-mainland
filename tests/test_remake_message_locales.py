@@ -80,15 +80,15 @@ class MessageLocaleTests(unittest.TestCase):
         self.assertEqual(translate('諸葛亮向孙权提出歸還俘虜，結果：遭拒。', self.data),
                          '諸葛亮が孫権に「捕虜返還」を提案。結果：拒否。')
 
-    def test_all1080_officer_identities_keep_the_name_crosswalk(self):
-        self.assertEqual(len(self.catalog['people']), 1080)
+    def test_all1082_officer_identities_keep_the_name_crosswalk(self):
+        self.assertEqual(len(self.catalog['people']), 1082)
         ids = set()
         for person in self.catalog['people']:
             ids.add(person['person_id'])
             japanese = person['ability_source']['source_name']
             self.assertEqual(translate(person['name'], self.data), japanese)
             self.assertEqual(translate(japanese, self.data), japanese)
-        self.assertEqual(len(ids), 1080)
+        self.assertEqual(len(ids), 1082)
         self.assertEqual(translate('乐𬘭', self.data), '楽綝')
         self.assertEqual(translate('马云𫘧', self.data), '馬雲騄')
         for source, target in {'宋建':'宋建', '吕兴':'呂興', '唐谱':'唐譜', '李统':'李統'}.items():
@@ -96,6 +96,15 @@ class MessageLocaleTests(unittest.TestCase):
             self.assertEqual(translate(target, self.data), target)
         self.assertEqual(translate('吴郡', self.data), '呉郡')
         self.assertEqual(translate('长安', self.data), '長安')
+
+    def test_goguryeo_personal_names_and_regnal_titles_localize_separately(self):
+        for name, title, japanese in (
+                ('男武', '故国川王', '男武（故国川王）'),
+                ('延优', '山上王', '延優（山上王）'),
+                ('忧位居', '东川王', '憂位居（東川王）'),
+                ('然弗', '中川王', '然弗（中川王）')):
+            with self.subTest(name=name):
+                self.assertEqual(translate(f'{name}（{title}）', self.data), japanese)
 
     def test_every_city_and_period_label_is_a_complete_japanese_name(self):
         for city in self.catalog['cities']:

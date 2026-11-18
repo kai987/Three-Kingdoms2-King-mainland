@@ -1,0 +1,162 @@
+{
+  "schema": "tk2-retainer-portrait-native-records-v1",
+  "plan": "art/portraits/goguryeo-rulers-v1/plan.json",
+  "plan_sha256": "77eb2f585fe208f69668712fb71898f7bef7e742afa3f71349852257eb4cccf5",
+  "count": 3,
+  "native_size": [
+    32,
+    40
+  ],
+  "people": {
+    "historical-goguryeo-sansang": {
+      "path": "/assets/portraits/generated/historical-goguryeo-sansang.png",
+      "png_sha256": "a4f2a0dbb97d92a3d40950a19ef9a96f22e918fdbb74e09f7050bd41792d1991",
+      "rgba_sha256": "52b11c1bd0d9fc175c291ad2f5920ddb51edc7ced9dc842753ba13569195ccf7",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 379,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "延优",
+      "retainer_plan": "art/portraits/goguryeo-rulers-v1/plan.json",
+      "retainer_plan_sha256": "77eb2f585fe208f69668712fb71898f7bef7e742afa3f71349852257eb4cccf5",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-sansang.png",
+      "original_source_sha256": "b894f2505e4ed4f8ab5201411cbf7edc22112da4ffcc8bcc30a319dafc5fdfef",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-sansang.png",
+      "source_sha256": "b894f2505e4ed4f8ab5201411cbf7edc22112da4ffcc8bcc30a319dafc5fdfef",
+      "opaque_pixels": 442,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        102,
+        33,
+        1020,
+        1369
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ]
+    },
+    "historical-goguryeo-dongcheon": {
+      "path": "/assets/portraits/generated/historical-goguryeo-dongcheon.png",
+      "png_sha256": "75b3ac810bdc97cddc11e9ae4b3e21d166abcdd9ab6fa0daba07c2b3f57e04ac",
+      "rgba_sha256": "e1b963a0ac9dfda70cc9b7ad05433310277ad8782dd67ab3445275f8d55d14f4",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 397,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "忧位居",
+      "retainer_plan": "art/portraits/goguryeo-rulers-v1/plan.json",
+      "retainer_plan_sha256": "77eb2f585fe208f69668712fb71898f7bef7e742afa3f71349852257eb4cccf5",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-dongcheon.png",
+      "original_source_sha256": "f2b525261f87dc3345f068db73931a7d36d302377c358929fa7c893132d9bbef",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-dongcheon.png",
+      "source_sha256": "f2b525261f87dc3345f068db73931a7d36d302377c358929fa7c893132d9bbef",
+      "opaque_pixels": 435,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        98,
+        90,
+        1024,
+        1368
+      ],
+      "native_fitted_box": [
+        2,
+        1,
+        30,
+        39
+      ]
+    },
+    "historical-goguryeo-jungcheon": {
+      "path": "/assets/portraits/generated/historical-goguryeo-jungcheon.png",
+      "png_sha256": "c3a0326815de8aca14342bbcb011c880109ad7e92cd51a77f40566d79155d887",
+      "rgba_sha256": "31ca92a79061acd2b372bff71a3666625aa0296d5517a4930ee5d565c2b6edf8",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 355,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "然弗",
+      "retainer_plan": "art/portraits/goguryeo-rulers-v1/plan.json",
+      "retainer_plan_sha256": "77eb2f585fe208f69668712fb71898f7bef7e742afa3f71349852257eb4cccf5",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-jungcheon.png",
+      "original_source_sha256": "82c26f8316f099aa25f3cf32ad56bf31a626e9874f5d70cf5c505e1ddf0aa04b",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-jungcheon.png",
+      "source_sha256": "82c26f8316f099aa25f3cf32ad56bf31a626e9874f5d70cf5c505e1ddf0aa04b",
+      "opaque_pixels": 387,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        102,
+        34,
+        1021,
+        1370
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ]
+    }
+  }
+}

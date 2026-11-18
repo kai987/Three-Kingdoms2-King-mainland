@@ -312,7 +312,7 @@ class RealRetainerAuditIntegrationTests(unittest.TestCase):
             self.skipTest('Authored retainer reference not yet installed')
         report = AUDIT.build_report()
         self.assertEqual(report['summary']['scenarios'], 29)
-        self.assertEqual(report['summary']['people'], 1080)
+        self.assertEqual(report['summary']['people'], 1082)
         self.assertEqual(report['summary']['new_people'], 22)
         self.assertEqual(report['summary']['historical'], 23)
         self.assertEqual(report['summary']['fictional'], 6)

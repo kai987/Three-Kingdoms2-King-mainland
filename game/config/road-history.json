@@ -121,6 +121,21 @@
         ]
       }
     },
+    "yuyang:liucheng:land": {
+      "source_ids": [
+        "sanguo1",
+        "sanguo11"
+      ],
+      "classification": "restored_lulong_branch_to_liucheng",
+      "basis_tc": "曹軍於207年經盧龍、平岡、白狼山進抵柳城。本作自207年七月開放漁陽至柳城山路，共用盧龍山道西段。",
+      "basis_ja": "207年、曹操軍は盧龍・平岡・白狼山を経て柳城に達した。本作では207年7月から、盧龍山道の西側を共用する漁陽―柳城の山道を開放する。",
+      "availability": {
+        "from": [
+          207,
+          7
+        ]
+      }
+    },
     "fufeng:jingzhao:river": {
       "source_ids": [
         "hanshu29"

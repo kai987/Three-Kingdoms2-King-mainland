@@ -123,6 +123,10 @@
       "source_sha256": "14115491c9ac8d569e12b8e1eb6db0f9f6a3c477716df7afb6cb18fbc6d51212",
       "thumbnail_sha256": "675cc1ed4cad49b4a9ab09856bde4b0358afb5013279ff87a8389410be1f5777"
     },
+    "historical-goguryeo-dongcheon": {
+      "source_sha256": "e6b8c2bb84c434fe18b3cbec398e70eb84b025a5fd2b95d01a5c58ed6592e445",
+      "thumbnail_sha256": "4d269cd0b110e59ede3798713180bb5b5a78defc09411f5fffbcfe842822021e"
+    },
     "historical-goguryeo-eulpaso": {
       "source_sha256": "75cea93c9c1e876ede724fb566a260e25bd05182c0f9547d3a250de71cb7e118",
       "thumbnail_sha256": "6f1a6da3374efa2ceeb96e1a070f430a91d7597ff411d87582d7808977db036c"
@@ -131,6 +135,10 @@
       "source_sha256": "4dd5221f7b8dc3f17a601014870f7aeaee95628d865937e2926a088ac908d353",
       "thumbnail_sha256": "2b3535db5d4b8e1f3e6f58270cea02c3d723dedeb52556f178d5d834fab659da"
     },
+    "historical-goguryeo-gogukcheon": {
+      "source_sha256": "ad0071baf45c194d38a16a4e02a7cea11c07816bd7183e045d5b244ea0937c36",
+      "thumbnail_sha256": "c19eb5f80f2ccfae701dfe9a4438531faa8769dc46d7f5c49c1f0f323b5b16c1"
+    },
     "historical-goguryeo-goyuru": {
       "source_sha256": "758d76522e48dcbf96b634c48e84bf29886181b76de97bb566627e5e63217ee8",
       "thumbnail_sha256": "c580c6ba4552c1cf8663c6f66a4d6c940cc4c80881dc48ef4f6f8c862711b7c7"
@@ -138,6 +146,10 @@
     "historical-goguryeo-gyesu": {
       "source_sha256": "f6aa74adfe7e33fe109ef0d3f3424434744f4563b67cdab54eaa341d22fafa7b",
       "thumbnail_sha256": "2007e2778127bd49bd67fcb909b17337e0740d8e3c91edcae9cc8ab5b48abfdc"
+    },
+    "historical-goguryeo-jungcheon": {
+      "source_sha256": "9b7b83cfb083f245e0aa17dd7b8c64ba0a08674d0a30820d6c02b11a7a82f4f1",
+      "thumbnail_sha256": "8e3f3136c7aa5e5514f35a9f4e43db14cb66ba49d009e6482e979aa7e5ba1d08"
     },
     "historical-goguryeo-miru": {
       "source_sha256": "593de8eaa64bba564a59f7fff848a8636681d7e16702c14ba504ed92cc59256c",
@@ -158,6 +170,10 @@
     "historical-goguryeo-queen-u": {
       "source_sha256": "9cdd0bc3c4521580173738f1c07c2b2998ead4b84f5b79f1f01bf6978e063254",
       "thumbnail_sha256": "0d1b9dcc979a219b9a6ed8a09bca3be6d527cb0c4a678b9e4dbc5e1d713a9918"
+    },
+    "historical-goguryeo-sansang": {
+      "source_sha256": "11c6a8e0c3cb24f730c1c54e9c700e0f0dd2f4a6e747308dc8d8da39b2c170bd",
+      "thumbnail_sha256": "add8aacbf4b3fb0c88c9410844cb5a3414d564d3717d65d75674c2a81edff88e"
     },
     "historical-goguryeo-ugeo": {
       "source_sha256": "d34a8a4dc3b080532b48a1532378002628f78f6e8041b0770251b32397a4b1ae",
@@ -190,6 +206,10 @@
     "historical-heng-yi-cangwu": {
       "source_sha256": "67db6392761cd7ff08e9cbc8344caae5284d316e94b0acfc27c8778391a4f4a4",
       "thumbnail_sha256": "70ba24eab9cbe2a01b65a4f7a890a7a9cf3af458467da0afdc548a99ee34659e"
+    },
+    "historical-kang-tai-wu": {
+      "source_sha256": "2122f22398f45b7829a383ea65f5e186fe67eb164bf883a3a66fe2ed8a099a71",
+      "thumbnail_sha256": "b4570fa7023c44f6fdfac20723d3c4174d2229bf865d279290f9baa3c743e7cf"
     },
     "historical-li-tong-jiaozhi": {
       "source_sha256": "456ee88b3d6f5480187fad5c6819512139866c247118371c93b6731e01f030ef",
@@ -306,6 +326,10 @@
     "historical-zhao-chong": {
       "source_sha256": "1f19b2bf1b7c1a3b153a852feca0bf9c7644a5f0f7d6ba861994677293e132c5",
       "thumbnail_sha256": "2c7361b0e3c51d38f594fdc1073a4b10c32bb29719659be94056e2eb993b4508"
+    },
+    "historical-zhu-ying-wu": {
+      "source_sha256": "8dfc0233188de31d0c4b066ebb911475588781c695cb1810728a95aed4a051aa",
+      "thumbnail_sha256": "f70ea3bbe8cbb7b26f417f259531fa50a95184910a4c43adce61181a294b7060"
     },
     "san14-candidate-0001": {
       "source_sha256": "118c9193bc4b35ecfa12793b87a34c80256b3468b3a3f73d9de3059389d0cd5d",
@@ -3264,8 +3288,8 @@
       "thumbnail_sha256": "6975d5ef197fe53ef1d49ef779669c4e282a856069ad83131455e67b374fe060"
     },
     "san14-candidate-0740": {
-      "source_sha256": "d48a2075f47dea6125313c7a6a261b8a23f6bc4059548a553005330110ba5df7",
-      "thumbnail_sha256": "f0ffa3ecfdaa06dc9d7af548ea520872a03bb09692d16bdb8281b5880c4e64fa"
+      "source_sha256": "568bc065da9ed21ac167e4d7c8257f83c9a0cc2cc156aef67465ca15286fccda",
+      "thumbnail_sha256": "5aa732c0ccebb84142d2a4ca9794096a5356d345aef8acd8bbea36ca299df0b3"
     },
     "san14-candidate-0741": {
       "source_sha256": "9c66ff0079d5536929c517f0660d5f400b9a55dfe5c514261fb1a2395af8f9c3",

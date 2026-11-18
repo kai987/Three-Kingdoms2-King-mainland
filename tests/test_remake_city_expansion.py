@@ -312,6 +312,27 @@ class CityExpansionTests(unittest.TestCase):
                         self.assertEqual(quote['modes'], ['river'])
                         self.assertIsNone(quote['routes'][0]['hazard'])
 
+    def test_lulong_branches_to_liucheng_and_lelang_keeps_its_direct_road(self):
+        with using_backend('python'):
+            game = self.start('mainland207-09', 'wei')
+            state = game.state
+            known = game._known_routes(state)
+            routes = {r['id']: r for r in known}
+            mountain = routes['yuyang:liucheng:land']
+            self.assertEqual(mountain['terrain'], 'mountain')
+            self.assertEqual(mountain['draw'][0], routes['yuyang:liaoxi:lulong:land']['draw'][0])
+            self.assertEqual(mountain['draw'][0]['points'][-1], mountain['draw'][1]['points'][0])
+            for a, b, days in (('yuyang', 'liucheng', 36), ('liaodong', 'lelang', 15)):
+                for origin, target in ((a, b), (b, a)):
+                    with self.subTest(origin=origin, target=target):
+                        quote = game._travel_path(state, origin, target, state.cities[origin].owner,
+                                                  'land', adjacent=True)
+                        self.assertEqual((quote['path'], quote['days']), ([origin, target], days))
+            self.assertEqual(sum(r['mode'] == 'land' and {r['from'], r['to']} == {'lelang', 'liaodong'}
+                                 for r in known), 1)
+            early = self.start('mainland202-06')
+            self.assertNotIn(mountain['id'], {r['id'] for r in early._known_routes(early.state)})
+
     def test_liaoxi_coast_has_one_corridor_and_uses_changli_only_when_active(self):
         trunk = 'liaodong:liaoxi:land'
         for scenario, stops in [('mainland238-01', ['liaoxi']),

@@ -80,7 +80,7 @@
    title:["曹魏征高句麗","曹魏の高句麗遠征"],
    counts:[2,3,2],
    front:false,
-   text:["正始年間，毌丘儉從玄菟出兵，攻陷丸都。東川王退走，玄菟太守王頎在後續戰事中追擊。魏軍後來撤回，《三國史記》記載東川王於247年另築平壤城。遊戲以國內城代表集安的王都城域，毌丘儉與在役的王頎可集結出征。魏軍取勝後，國內城依戰果歸魏。","正始年間、毌丘倹は玄菟から出兵し、丸都を陥落させた。東川王は逃れ、玄菟太守の王頎が後の戦いで追撃した。魏軍はその後撤退し、『三国史記』によれば東川王は247年に新たに平壌城を築いた。ゲームでは集安の王都圏を国内城で表し、毌丘倹と在籍中の王頎が集結して出陣する。戦闘で魏軍が勝てば、国内城は魏の支配下に入る。"],
+   text:["正始年間，毌丘儉從玄菟出兵，攻陷丸都。憂位居（東川王）退走，玄菟太守王頎在後續戰事中追擊。魏軍後來撤回，《三國史記》記載憂位居於247年另築平壤城。遊戲以國內城代表集安的王都城域，毌丘儉與在役的王頎可集結出征。魏軍取勝後，國內城依戰果歸魏。","正始年間、毌丘倹は玄菟から出兵し、丸都を陥落させた。憂位居（東川王）は逃れ、玄菟太守の王頎が後の戦いで追撃した。魏軍はその後撤退し、『三国史記』によれば憂位居は247年に新たに平壌城を築いた。ゲームでは集安の王都圏を国内城で表し、毌丘倹と在籍中の王頎が集結して出陣する。戦闘で魏軍が勝てば、国内城は魏の支配下に入る。"],
    sources:[["《三國志·毌丘儉傳》","https://zh.wikisource.org/zh-hant/三國志/卷28#毌丘儉"],["《三國史記》東川王","https://zh.wikisource.org/zh-hant/三國史記/卷17#東川王"]]
   },
   historical_yizhou_campaign:{
@@ -252,11 +252,13 @@
    !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row,cityCount))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row,denominator))&&(!CITY_OPERATIONS.has(row.kind)||validCityDevelopmentEvent(row))&&(row.kind!=='battle_supply_exhausted'||validBattleSupplyEvent(row,denominator))&&(row.kind!=='battle_result'||!Object.hasOwn(row.details,'coalition')||validCoalitionCapture(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row,cityCount))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(!Object.hasOwn(HISTORICAL_CAMPAIGNS,row.kind)||validHistoricalCampaign(row,denominator))&&(!Object.hasOwn(THREE_VISITS,row.kind)||validThreeVisit(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row))&&(row.kind!=='tactic'||validTacticEvent(row));
  }
  function validSouthernMission(row){
-  const {details:d,kind,year}=row;
-  if(row.audience!=='player'||row.factions?.length!==1||row.factions[0]!=='wu'||row.person_ids?.length!==0||
+  const {details:d,kind,year,person_ids:people}=row;
+  const validPeople=Array.isArray(people)&&(people.length===0||(kind==='historical_wu_southern_mission'&&
+   people.length===2&&people[0]==='historical-zhu-ying-wu'&&people[1]==='historical-kang-tai-wu'));
+  if(row.audience!=='player'||row.factions?.length!==1||row.factions[0]!=='wu'||!validPeople||
      row.city_ids?.length!==2||!['kuaiji','yizhou'].includes(row.city_ids[0])||row.city_ids[1]!=='luzon'||!d)return false;
   const keys=Object.keys(d).sort().join(',');
-  if(kind==='historical_wu_southern_mission')return keys==='days,storm_days'&&year>=244&&year<=251&&
+  if(kind==='historical_wu_southern_mission')return keys==='days,storm_days'&&year===244&&
    [0,10,20].includes(d.storm_days)&&Number.isSafeInteger(d.days)&&d.days>d.storm_days&&d.days<=10020;
   if(kind==='luzon_landing')return keys==='can_build'&&typeof d.can_build==='boolean';
   return keys==='troops,work_days'&&Number.isSafeInteger(d.troops)&&d.troops>=10000&&d.troops<=100000000&&
@@ -493,15 +495,20 @@
   const locale=()=>i18n?.locale==='ja'?'ja':'zh-Hant',text=(tc,ja)=>locale()==='ja'?ja:tc;
   const label=value=>i18n?.t?i18n.t(String(value??''),locale()):String(value??'');
   function refreshHistoryLabel(){const button=doc?.querySelector?.('#event-history');if(button){button.textContent=text('事件回顧','出来事の記録');button.setAttribute('data-l10n-native',locale());}}
-  function names(row,includePeople=true){
-   const catalog=view?.catalog||{},people=includePeople?new Map((catalog.library||[]).map(p=>[p.person_id,p.name])):null;
-   const personName=id=>{const current=Object.entries(view?.game?.officers||{}).find(([,person])=>person.person_id===id);return people.get(id)||(current&&catalog.names?.[current[0]])||text('未具名武將','名前未設定の武将');};
+  function names(row,includePeople=true,includeRegnalTitles=false){
+   const catalog=view?.catalog||{},people=includePeople?new Map((catalog.library||[]).map(p=>[p.person_id,p])):null;
+   const personName=id=>{
+    const person=people.get(id),current=Object.entries(view?.game?.officers||{}).find(([,officer])=>officer.person_id===id);
+    const name=label(person?.name||(current&&catalog.names?.[current[0]])||text('未具名武將','名前未設定の武将'));
+    const title=includeRegnalTitles&&person?.regnal_title?.[locale()];
+    return title?`${name}（${title}）`:name;
+   };
    const monthIndex=([year,month])=>year*12+month,date=monthIndex([row.year,row.month]);
    const cityName=id=>{
     const period=catalog.city_history?.[id]?.names?.find(p=>date>=monthIndex(p.from_date||[p.start??1,1])&&date<=monthIndex(p.to_date||[p.end??9999,12]));
     return period?.name||catalog.cities?.find(c=>c.id===id)?.name||text('未知城池','不明な都市');
    };
-   return {people:includePeople?row.person_ids.map(id=>label(personName(id))):[],cities:row.city_ids.map(id=>label(cityName(id))),
+   return {people:includePeople?row.person_ids.map(personName):[],cities:row.city_ids.map(id=>label(cityName(id))),
     factions:row.factions.map(id=>{const faction=catalog.factions?.find(f=>f.id===id)||catalog.scheduled_factions?.find(f=>f.id===id);return label(faction?.display_name||faction?.name||(id==='neutral'?text('無主','空白都市'):text('未具名勢力','名前未設定の勢力')));})};
   }
   function description(row){
@@ -515,7 +522,7 @@
      ' 有可通行的路線時，進攻方的電腦會優先評估這條戰線。玩家自行下令，部隊按現有路線與兵糧規則行軍，勝負由實際交戰決定。',
      ' 通行できる経路があれば、進攻側のAIはこの戦線を優先します。プレイヤーは自分で出陣を命じます。部隊は既存の経路と兵糧のルールに従い、勝敗は実際の戦闘で決まります。')):history;
    }
-   const n=names(row),p=n.people.join(text('、','・'))||text('武將','武将'),c=n.cities.join(' → ')||text('戰役地圖','戦役地図'),f=n.factions.at(-1)||text('本方','自軍'),d=row.details;
+   const n=names(row,true,true),p=n.people.join(text('、','・'))||text('武將','武将'),c=n.cities.join(' → ')||text('戰役地圖','戦役地図'),f=n.factions.at(-1)||text('本方','自軍'),d=row.details;
    switch(row.kind){
     case 'historical_three_visits_first':return text('劉備第一次到隆中，諸葛亮外出未歸。下旬可再訪。','劉備が初めて隆中を訪ねたが、諸葛亮は外出していた。次の旬にまた訪ねられる。');
     case 'historical_wu_southern_mission':return text(`孫權派宣化從事朱應、中郎康泰從${n.cities[0]}出海。船隊預計${d.days}日抵達呂宋外海，已計入${d.storm_days}日風暴延誤。`,`孫権は宣化従事の朱応と中郎の康泰を${n.cities[0]}から派遣しました。ルソン沖まで${d.days}日（暴風による遅延${d.storm_days}日を含む）の見込みです。`);
@@ -562,7 +569,11 @@
     }
     case 'governor_assigned':return text(`${c}太守：${d.governor?p:'尚無適任者'}（${d.mode==='auto'?'自動選任':'指定'}）。任命不消耗城池行動；兩名全勢力內政官的委任另行管理。`,`${c}の太守は${d.governor?p:'該当者なし'}（${d.mode==='auto'?'自動選任':'指定'}）です。任命では都市行動を使いません。勢力全体の内政担当2名は別に管理します。`);
     case 'campaign_start':return observing?text('第三方觀戰開始。所有勢力由 AI 行動。','第三者観戦が始まりました。すべての勢力がAIで行動します。'):text(`${f}展開新的戰役。每旬10日，請安排人事、兵力與行軍。`,`${f}による新たな戦役が始まります。1旬10日、人事・兵力・行軍を整えましょう。`);
-    case 'officer_appeared':return text(`${p}已到登場年代，在${c}待訪。`,`${p}が登場年を迎え、${c}で仕官先を待っています。`);
+    case 'officer_appeared':return row.factions.includes('wu')&&['historical-zhu-ying-wu','historical-kang-tai-wu'].includes(row.person_ids[0])
+     ?text(`${p}出使歸來，在${c}歸隊。`,`${p}が使節の任務から帰り、${c}に復帰しました。`)
+     :row.factions.length
+     ?text(`${p}已到登場年代，在${c}加入${f}。`,`${p}が登場年を迎え、${c}で${f}に仕官しました。`)
+     :text(`${p}已到登場年代，在${c}待訪。`,`${p}が登場年を迎え、${c}で仕官先を待っています。`);
     case 'recruit_success':return text(`${p}接受登用，加入${f}。`,`${p}が登用に応じ、${f}へ加わりました。`);
     case 'recruit_failure':return text(`${p}此次未接受登用。尋訪費用已按規則結算。`,`${p}は今回の登用を断りました。訪問費用は規則どおり精算されています。`);
     case 'defection':return text(`${p}的所屬已變更，現歸${f}。`,`${p}の所属が変わり、現在は${f}に仕えています。`);
@@ -727,7 +738,7 @@
   }
   function historicalIntroduction(row){
    if(row.kind==='historical_wu_southern_mission'){
-    const body=text('《梁書》記孫權遣朱應、康泰通海南諸國，並記兩人出使扶南。本作採244至251年的觸發窗口，途經呂宋及築城是遊戲情節。','『梁書』は孫権が朱応と康泰を南海諸国に遣わし、二人が扶南へ赴いたと記しています。244～251年の発生期間、ルソンへの寄港と築城はゲーム上の設定です。');
+    const body=text('《梁書》記孫權遣朱應、康泰通海南諸國，並記兩人出使扶南。本作設定兩人於244年出發、251年歸隊。途經呂宋及築城也是遊戲情節。','『梁書』は孫権が朱応と康泰を南海諸国に遣わし、二人が扶南へ赴いたと記しています。本作では244年に出発し、251年に復帰します。ルソンへの寄港と築城もゲーム上の設定です。');
     return `<aside class="event-history"><h3>${text('史實背景','史実の背景')}</h3><p>${escape(body)}</p><p><a href="https://zh.wikisource.org/zh-hant/梁書/卷54#海南諸國" target="_blank" rel="noopener noreferrer">${text('《梁書》卷54','『梁書』巻54')}</a></p></aside>`;
    }
    const chapter=row.kind==='historical_longzhong'?CHAPTER_TEXT.historical_three_visits:CHAPTER_TEXT[row.kind];
@@ -769,7 +780,14 @@
     const absent=['historical_three_visits_first','historical_three_visits_second'].includes(e.kind);
     return [...(absent?e.person_ids.slice(0,1):e.person_ids),...(typeof e.details.actor==='string'?[e.details.actor]:[])];
    }))].slice(0,4);
-   let people=ids.map(id=>{const name=names({...row,person_ids:[id]}).people[0];return portraits?.entry?.(id)?`<figure class="event-person">${portraits.html(id,name,{size:'duel'})}<figcaption>${escape(name)}</figcaption></figure>`:'';}).join('');
+   let people=ids.map(id=>{
+    const portrait=portraits?.entry?.(id);
+    // The envoys are already named in the dialogue. Show portraits here once
+    // artwork is available, leaving the sea scene clear of placeholder tiles.
+    if(!portrait||(row.kind==='historical_wu_southern_mission'&&portrait.kind==='generic_placeholder'))return '';
+    const name=names({...row,person_ids:[id]}).people[0];
+    return `<figure class="event-person">${portraits.html(id,name,{size:'duel'})}<figcaption>${escape(name)}</figcaption></figure>`;
+   }).join('');
    if(STAFF.has(row.kind)){
     const staff=[...new Map(rows.filter(e=>/^clerk-[0-9]{6,12}$/.test(e.details.staff_id||'')&&['clerk-1','clerk-2','clerk-3'].includes(e.details.portrait)).map(e=>[e.details.staff_id,e.details])).values()].slice(0,4);
     people+=staff.map(d=>`<figure class="event-person" data-event-staff="${escape(d.staff_id)}">${portraits?.civilHtml?portraits.civilHtml(d.portrait,d.name,{className:'event-staff-face',locale:locale()}):`<img class="event-staff-face" src="${root.GamePaths?.asset(`/assets/civil-staff/${d.portrait}.png`)||`/assets/civil-staff/${d.portrait}.png`}" width="32" height="40" alt="${escape(text(`${label(d.name)}・架空文吏共用像素肖像`,`${label(d.name)}・架空文官の共通ドット肖像`))}"/>`}<figcaption>${escape(label(d.name))}</figcaption></figure>`).join('');

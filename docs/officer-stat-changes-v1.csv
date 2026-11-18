@@ -1055,10 +1055,10 @@ historical-xiahou-bo,夏侯博,65,65,0,san14_charisma,65,80,80,80,80,0,explicit_
 historical-xue-yong,薛永,77,77,0,san14_charisma,77,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
 historical-yuan-chen,袁綝,75,75,0,san14_charisma,75,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
 historical-liu-yan-shu,刘琰,75,75,0,san14_charisma,75,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
-historical-goguryeo-gogukcheon,故国川王,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
-historical-goguryeo-sansang,山上王,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
-historical-goguryeo-dongcheon,东川王,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
-historical-goguryeo-jungcheon,中川王,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
+historical-goguryeo-gogukcheon,男武,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
+historical-goguryeo-sansang,延优,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
+historical-goguryeo-dongcheon,忧位居,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
+historical-goguryeo-jungcheon,然弗,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
 historical-goguryeo-gyesu,罽须,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
 historical-goguryeo-queen-u,于氏,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
 historical-goguryeo-ugeo,优居,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
@@ -1079,3 +1079,5 @@ historical-wuhuan-nanlou,难楼,60,60,0,configured_default,,80,80,80,80,0,explic
 historical-wuhuan-supuyan,苏仆延,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
 historical-wuhuan-wuyan,乌延,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
 historical-wuhuan-sufuwan,速附丸,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
+historical-zhu-ying-wu,朱應,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
+historical-kang-tai-wu,康泰,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80

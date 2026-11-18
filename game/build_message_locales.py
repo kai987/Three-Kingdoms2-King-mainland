@@ -602,6 +602,7 @@ PATTERNS = [runtime_pattern(*row) for row in [
     (r'新年更新人物库，记录(\d+)项年代事件；未自动招募或复活人物。', '年が改まり、人物データの年代イベント$2件を記録しました。自動登用や人物の復活は行いません。'),
     (r'电脑行动完成，轮到本方。各城收获金钱(\d+)、粮食(\d+)。', 'コンピューターの行動が終了しました。自軍のターンです。各都市は資金$2・兵糧$3を獲得しました。'),
     (r'(.+)已到登场年代，在(.+)待访。', '$2が登場年代に達し、$3で在野となりました。'),
+    (r'(.+)出使歸來，在(.+)歸隊。', '$2が使節の任務から帰り、$3に復帰しました。'),
     (r'本城已满(\d+)人，招募未执行。', 'この都市は定員$2人に達しているため、登用は行いませんでした。'),
     (r'本城已满(\d+)人，劝降未执行。', 'この都市は定員$2人に達しているため、勧誘は行いませんでした。'),
     (r'(.+)寻访(.+)，招募(成功|未获应允)，花费(\d+)金。', '$2が$3を訪問。登用結果：$4。資金$5を消費しました。'),
@@ -929,11 +930,13 @@ def build():
     for person in data['people']:
         # A display spelling only: same-name identities remain separate IDs.
         japanese = person['ability_source']['source_name']
+        title = person.get('regnal_title', {})
         for label in [person['name'], japanese, *person.get('aliases', [])]:
+            target = title['ja'] if label in title.values() else japanese
             previous = names.get(label)
-            if previous and previous != japanese:
+            if previous and previous != target:
                 raise ValueError('Ambiguous localized spelling: ' + label)
-            names[label] = japanese
+            names[label] = target
     people = {person['person_id']: person for person in data['people']}
     for person_id, aliases in data.get('additional_person_aliases', {}).items():
         japanese = people[person_id]['ability_source']['source_name']

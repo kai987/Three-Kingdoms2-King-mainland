@@ -3,20 +3,20 @@
   "policy": "Existing logical legs only. Actual rendered SVG curves; no straight-line fallback. Land city_sections identify exact intermediate city stops; runtime must enforce active-city transit. Geographic conversion belongs to the campaign compiler.",
   "sources": {
     "game/build_route_geometry.cjs": "ed8b7be184253d72832d0f14284a401b8252056aac2e14ec913e12a80847bef6",
-    "game/build_campaigns.py": "4a50f03b006338cf5d7d2de041d45a8269bc72f448fee51693ef0788c423f6c3",
+    "game/build_campaigns.py": "14e4c45c2a0b8ed1a756d719df33c4ba803c4ad4fb1b43d173ddbb28fcddba75",
     "game/config/road-centers.json": "3d1ca54f92a7b09af7ecd000be0c0dcaaff982c8a4920f20e5960787840aca73",
     "game/road_centers.py": "16e16ab039fe15605f27d9e46df18ad945014b2aec9f5dd9eb4e9df32f74cdea",
-    "game/config/navigation-geometry.json": "2f9c9c9fa54b6eb3ea554d05eaa943278565d3d9746a17cd7dc256d4a1f68be7",
-    "game/config/route-corridors.json": "a980a53c0180636fa6578599135e0185250472d3db98c4150ed9fef3e08c40bf",
+    "game/config/navigation-geometry.json": "76095dd03b3b0b853ca5e861257b93a523dbef3a2684352790f089919cd0dd6a",
+    "game/config/route-corridors.json": "d883f744a04f48ee1465e70276bab88fd8b80265e62b33753a06b8cb5cef127d",
     "game/road_history.py": "4513459c4f635d2b617d6e04d87207fb987bcfe3a87b6168c4228dbd104c18d6",
-    "game/config/road-history.json": "5350706e4e1f430fc6cc1382f23db412fc881326914ff546466ea834a11ad35e",
+    "game/config/road-history.json": "e5bfbeaedead741da1dc49dd560c97d1bb39a52550f85a24fbedfdaa53bdfbec",
     "game/build_navigation_geometry.cjs": "0c28cfb34fdef1911b76fa39c18d95b67e17f3e667a34a16b1084397509d83d4",
     "game/config/river-network.json": "3792bd49dbfe64c29a9a58e101c9919b5b88e37c8f99a9f3a05192b91c8404e2",
     "game/river_network.py": "aea0392c0fd7efe88ff6dc985968f8492009f934ce874adf8a325175eaac7ca7",
     "game/config/map-source.json": "1bb8b1bb4cdb0d36f0d7664da886cd4d31d3d7a8c4d08650463550cee0378b79",
     "game/app.js": "35d7ec8aa5056b75674f9dc16e343498a348041cc36112cbc32253ad35c59585",
     "game/config/route-render-source.json": "c5047ab0f7f8bef5ccd1f511778d051c7522e125d432718a59ee3805f469ecea",
-    "game/config/campaigns/shared.json": "cc9c95e9ea9c7e464eb3f0861e61b5e4410bfeafcf065b1232a89b28c0988b49",
+    "game/config/campaigns/shared.json": "4f4553ecc55a2811de9396e57e873607324c3e3fffbd1fbfec85f60122635c9e",
     "game/config/campaigns/city-expansion-map.json": "15c5cfff78598f3e1346b33adee362d33fda2401d12bee4045ec44799508d982",
     "game/config/campaigns/city-expansion-openings.json": "f2c0eb5c5286e8b72c0c6cb41d5e3a941121bb9c01e5aec83cf10773412c75ee",
     "game/config/campaigns/index.json": "0b5095ca8de43f8201f979d88d289015da7536e5b3795a2ca8cc519e555699d3",
@@ -50,7 +50,7 @@
     "game/config/campaigns/scenarios/249-01.json": "ccebcc3920b107bf30675612a7457c7e2a292245d102fa71984e35f59c3dc270",
     "game/config/campaigns/scenarios/263-05.json": "853b6df7b1b9f85d132e3c8115af8a59c9a56900719cef35f893a635d6983d5f"
   },
-  "input_geometry_sha256": "e82efc2cde02e7a948b3d34d55bec83f1eae0d5ca9c790398ee7f5c8c4eba82e",
+  "input_geometry_sha256": "1f5de68ffcc9057c451f0df3f85d9d7e0c7d268500883579e21f65fa511a20ba",
   "routes": {
     "anding:fufeng:land": {
       "from": "anding",
@@ -14469,12 +14469,16 @@
             1037,
             127
           ],
-          "d": "M965 66L973 57.5Q981 49 991 48Q1001 47 1012 53Q1023 59 1034 69Q1045 79 1048.5 90.5Q1052 102 1044.5 114.5L1037 127",
-          "length_px": 147.600067,
+          "d": "M965 66L973 57.5Q981 49 991 48Q1001 47 1012 53L1023 59M1023 59L1034 69Q1045 79 1048.5 90.5Q1052 102 1044.5 114.5L1037 127",
+          "length_px": 147.728821,
           "chord_px": 94.366308,
           "pieces": [
             {
-              "d": "M965 66L973 57.5Q981 49 991 48Q1001 47 1012 53Q1023 59 1034 69Q1045 79 1048.5 90.5Q1052 102 1044.5 114.5L1037 127",
+              "d": "M965 66L973 57.5Q981 49 991 48Q1001 47 1012 53L1023 59",
+              "reverse": false
+            },
+            {
+              "d": "M1023 59L1034 69Q1045 79 1048.5 90.5Q1052 102 1044.5 114.5L1037 127",
               "reverse": false
             }
           ]
@@ -14495,12 +14499,16 @@
                 1037,
                 127
               ],
-              "d": "M965 66L973 57.5Q981 49 991 48Q1001 47 1012 53Q1023 59 1034 69Q1045 79 1048.5 90.5Q1052 102 1044.5 114.5L1037 127",
-              "length_px": 147.600067,
+              "d": "M965 66L973 57.5Q981 49 991 48Q1001 47 1012 53L1023 59M1023 59L1034 69Q1045 79 1048.5 90.5Q1052 102 1044.5 114.5L1037 127",
+              "length_px": 147.728821,
               "chord_px": 94.366308,
               "pieces": [
                 {
-                  "d": "M965 66L973 57.5Q981 49 991 48Q1001 47 1012 53Q1023 59 1034 69Q1045 79 1048.5 90.5Q1052 102 1044.5 114.5L1037 127",
+                  "d": "M965 66L973 57.5Q981 49 991 48Q1001 47 1012 53L1023 59",
+                  "reverse": false
+                },
+                {
+                  "d": "M1023 59L1034 69Q1045 79 1048.5 90.5Q1052 102 1044.5 114.5L1037 127",
                   "reverse": false
                 }
               ]
@@ -17077,6 +17085,69 @@
               "pieces": [
                 {
                   "d": "M1037 127L1036.5 120Q1036 113 1038 107Q1040 101 1043 95Q1046 89 1051 85.5Q1056 82 1059 76Q1062 70 1065.5 65Q1069 60 1071.5 55L1074 50",
+                  "reverse": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "yuyang:liucheng:land": {
+      "from": "yuyang",
+      "to": "liucheng",
+      "mode": "land",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            965,
+            66
+          ],
+          "end": [
+            1074,
+            50
+          ],
+          "d": "M965 66L973 57.5Q981 49 991 48Q1001 47 1012 53L1023 59M1023 59L1030 62Q1037 65 1044 65Q1051 65 1056.5 62Q1062 59 1068 54.5L1074 50",
+          "length_px": 123.203453,
+          "chord_px": 110.168053,
+          "pieces": [
+            {
+              "d": "M965 66L973 57.5Q981 49 991 48Q1001 47 1012 53L1023 59",
+              "reverse": false
+            },
+            {
+              "d": "M1023 59L1030 62Q1037 65 1044 65Q1051 65 1056.5 62Q1062 59 1068 54.5L1074 50",
+              "reverse": false
+            }
+          ]
+        }
+      ],
+      "city_sections": [
+        {
+          "from": "yuyang",
+          "to": "liucheng",
+          "parts": [
+            {
+              "mode": "land",
+              "start": [
+                965,
+                66
+              ],
+              "end": [
+                1074,
+                50
+              ],
+              "d": "M965 66L973 57.5Q981 49 991 48Q1001 47 1012 53L1023 59M1023 59L1030 62Q1037 65 1044 65Q1051 65 1056.5 62Q1062 59 1068 54.5L1074 50",
+              "length_px": 123.203453,
+              "chord_px": 110.168053,
+              "pieces": [
+                {
+                  "d": "M965 66L973 57.5Q981 49 991 48Q1001 47 1012 53L1023 59",
+                  "reverse": false
+                },
+                {
+                  "d": "M1023 59L1030 62Q1037 65 1044 65Q1051 65 1056.5 62Q1062 59 1068 54.5L1074 50",
                   "reverse": false
                 }
               ]
@@ -31546,10 +31617,10 @@
   },
   "audit": {
     "catalogs": 29,
-    "input_routes": 471,
-    "compiled_routes": 471,
-    "graph_nodes": 182,
-    "graph_strokes": 260,
+    "input_routes": 472,
+    "compiled_routes": 472,
+    "graph_nodes": 183,
+    "graph_strokes": 261,
     "unmatched": [],
     "shared_city_pass_through": [
       {

@@ -29,7 +29,9 @@ from road_history import apply_history
 from route_render_source import validate_geometry_sources
 from officer_stat_sources import validate_original_virtue, validate_campaign_stats
 from import_campaign_stats import validate_reference as validate_public_reference
-from campaign_faction_additions import prepare_factions, place_faction_officers, read_faction_additions
+from campaign_faction_additions import (
+    prepare_factions, place_faction_officers, place_southern_envoys, read_faction_additions,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'game/config/campaigns'
@@ -461,6 +463,7 @@ def load_sources(*, timing=True):
     expansion_map = read('game/config/campaigns/city-expansion-map.json')['cities']
     expansion_openings = read('game/config/campaigns/city-expansion-openings.json')
     early_shu_openings = read('game/config/campaigns/early-shu-openings.json')
+    southern_envoys = read('game/config/campaigns/wu-southern-envoys.json')
     canonical_index = read('game/config/campaigns/index.json')
     scenario_dates = {row['id']: (row['year'], row['month']) for row in canonical_index['scenarios']}
     scenario_ids = set(scenario_dates)
@@ -537,6 +540,7 @@ def load_sources(*, timing=True):
         add_luzon_settlement(data, expansion_map['luzon'])
         place_faction_officers(data, present, current_people)
         apply_early_shu_openings(data, early_shu_openings, current_people)
+        place_southern_envoys(data, southern_envoys, current_people)
         original_people = validate_original_virtue(current_people, original_stats, original_identities)
         stat_counts = validate_campaign_stats(current_people, public_stats, san14_abilities, san14_dlc_abilities)
         data['coverage'].update(

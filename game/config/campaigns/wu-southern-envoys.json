@@ -1,0 +1,36 @@
+{
+  "faction": "wu",
+  "city": "kuaiji",
+  "people": [
+    {
+      "person_id": "historical-zhu-ying-wu",
+      "start": [
+        251,
+        1
+      ],
+      "end": [
+        260,
+        12
+      ],
+      "note": "東吳宣化從事。據《梁書》，孫權派他與中郎康泰浮海出使南海諸國。其生卒與出使年月不詳。本作設定244年出使、251年歸隊，出使期間不可調動。山陰為遊戲駐地，生年及260年退場界線為遊戲推定。",
+      "sources": [
+        "https://www.shidianguji.com/zh/book/LS0008/chapter/LS0008_269"
+      ]
+    },
+    {
+      "person_id": "historical-kang-tai-wu",
+      "start": [
+        251,
+        1
+      ],
+      "end": [
+        260,
+        12
+      ],
+      "note": "東吳中郎。據《梁書》，孫權派他與宣化從事朱應浮海通使南海諸國。使團的見聞成為史籍記述南海諸國的早期資料。其生卒與出使年月不詳。本作設定244年出使、251年歸隊，出使期間不可調動。山陰為遊戲駐地，生年及260年退場界線為遊戲推定。",
+      "sources": [
+        "https://www.shidianguji.com/zh/book/LS0008/chapter/LS0008_269"
+      ]
+    }
+  ]
+}

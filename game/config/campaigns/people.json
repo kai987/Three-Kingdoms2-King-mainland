@@ -1080,7 +1080,9 @@
     "historical-wuhuan-nanlou",
     "historical-wuhuan-supuyan",
     "historical-wuhuan-wuyan",
-    "historical-wuhuan-sufuwan"
+    "historical-wuhuan-sufuwan",
+    "historical-zhu-ying-wu",
+    "historical-kang-tai-wu"
   ],
   "people": {
     "san14-candidate-0001": {
@@ -136975,7 +136977,7 @@
     },
     "historical-goguryeo-gogukcheon": {
       "person_id": "historical-goguryeo-gogukcheon",
-      "name": "故国川王",
+      "name": "男武",
       "runtime_id": 1057,
       "birth_year": 155,
       "service_year": 179,
@@ -137015,11 +137017,18 @@
         "故國川王",
         "国壤王",
         "國壤王",
-        "男武"
+        "男武",
+        "国襄王",
+        "國襄王",
+        "国襄",
+        "國襄",
+        "伊夷谟",
+        "伊夷謨",
+        "伊夷模"
       ],
       "virtue_design": {
         "person_id": "historical-goguryeo-gogukcheon",
-        "name": "故国川王",
+        "name": "男武",
         "policy_id": "campaign-officer-stats-v1",
         "status": "configured_default",
         "virtue": 60,
@@ -137037,7 +137046,7 @@
       },
       "ability_source": {
         "kind": "historical_authorial_game_design",
-        "source_name": "故国川王",
+        "source_name": "男武",
         "source_urls": [
           "https://zh.wikisource.org/wiki/三國史記/卷16"
         ],
@@ -137069,7 +137078,7 @@
         },
         "virtue_design": {
           "person_id": "historical-goguryeo-gogukcheon",
-          "name": "故国川王",
+          "name": "男武",
           "policy_id": "campaign-officer-stats-v1",
           "status": "configured_default",
           "virtue": 60,
@@ -137087,11 +137096,16 @@
         "default_loyalty": 80,
         "source_loyalty": null
       },
-      "portrait_policy": "generic_placeholder"
+      "portrait_policy": "generic_placeholder",
+      "regnal_title": {
+        "zh-Hans": "故国川王",
+        "zh-Hant": "故國川王",
+        "ja": "故国川王"
+      }
     },
     "historical-goguryeo-sansang": {
       "person_id": "historical-goguryeo-sansang",
-      "name": "山上王",
+      "name": "延优",
       "runtime_id": 1058,
       "birth_year": 169,
       "service_year": 197,
@@ -137129,11 +137143,13 @@
       "aliases": [
         "山上王",
         "延优",
-        "延優"
+        "延優",
+        "位宫",
+        "位宮"
       ],
       "virtue_design": {
         "person_id": "historical-goguryeo-sansang",
-        "name": "山上王",
+        "name": "延优",
         "policy_id": "campaign-officer-stats-v1",
         "status": "configured_default",
         "virtue": 60,
@@ -137151,7 +137167,7 @@
       },
       "ability_source": {
         "kind": "historical_authorial_game_design",
-        "source_name": "山上王",
+        "source_name": "延優",
         "source_urls": [
           "https://zh.wikisource.org/wiki/三國史記/卷16"
         ],
@@ -137183,7 +137199,7 @@
         },
         "virtue_design": {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "policy_id": "campaign-officer-stats-v1",
           "status": "configured_default",
           "virtue": 60,
@@ -137201,11 +137217,16 @@
         "default_loyalty": 80,
         "source_loyalty": null
       },
-      "portrait_policy": "generic_placeholder"
+      "portrait_policy": "generic_placeholder",
+      "regnal_title": {
+        "zh-Hans": "山上王",
+        "zh-Hant": "山上王",
+        "ja": "山上王"
+      }
     },
     "historical-goguryeo-dongcheon": {
       "person_id": "historical-goguryeo-dongcheon",
-      "name": "东川王",
+      "name": "忧位居",
       "runtime_id": 1059,
       "birth_year": 209,
       "service_year": 227,
@@ -137246,11 +137267,14 @@
         "東襄王",
         "忧位居",
         "憂位居",
-        "郊彘"
+        "郊彘",
+        "东襄王",
+        "东襄",
+        "東襄"
       ],
       "virtue_design": {
         "person_id": "historical-goguryeo-dongcheon",
-        "name": "东川王",
+        "name": "忧位居",
         "policy_id": "campaign-officer-stats-v1",
         "status": "configured_default",
         "virtue": 60,
@@ -137268,7 +137292,7 @@
       },
       "ability_source": {
         "kind": "historical_authorial_game_design",
-        "source_name": "東川王",
+        "source_name": "憂位居",
         "source_urls": [
           "https://zh.wikisource.org/wiki/三國史記/卷17"
         ],
@@ -137300,7 +137324,7 @@
         },
         "virtue_design": {
           "person_id": "historical-goguryeo-dongcheon",
-          "name": "东川王",
+          "name": "忧位居",
           "policy_id": "campaign-officer-stats-v1",
           "status": "configured_default",
           "virtue": 60,
@@ -137318,11 +137342,16 @@
         "default_loyalty": 80,
         "source_loyalty": null
       },
-      "portrait_policy": "generic_placeholder"
+      "portrait_policy": "generic_placeholder",
+      "regnal_title": {
+        "zh-Hans": "东川王",
+        "zh-Hant": "東川王",
+        "ja": "東川王"
+      }
     },
     "historical-goguryeo-jungcheon": {
       "person_id": "historical-goguryeo-jungcheon",
-      "name": "中川王",
+      "name": "然弗",
       "runtime_id": 1060,
       "birth_year": 224,
       "service_year": 248,
@@ -137360,11 +137389,12 @@
       "aliases": [
         "中川王",
         "中壤王",
-        "然弗"
+        "然弗",
+        "中壤"
       ],
       "virtue_design": {
         "person_id": "historical-goguryeo-jungcheon",
-        "name": "中川王",
+        "name": "然弗",
         "policy_id": "campaign-officer-stats-v1",
         "status": "configured_default",
         "virtue": 60,
@@ -137382,7 +137412,7 @@
       },
       "ability_source": {
         "kind": "historical_authorial_game_design",
-        "source_name": "中川王",
+        "source_name": "然弗",
         "source_urls": [
           "https://zh.wikisource.org/wiki/三國史記/卷17"
         ],
@@ -137414,7 +137444,7 @@
         },
         "virtue_design": {
           "person_id": "historical-goguryeo-jungcheon",
-          "name": "中川王",
+          "name": "然弗",
           "policy_id": "campaign-officer-stats-v1",
           "status": "configured_default",
           "virtue": 60,
@@ -137432,7 +137462,12 @@
         "default_loyalty": 80,
         "source_loyalty": null
       },
-      "portrait_policy": "generic_placeholder"
+      "portrait_policy": "generic_placeholder",
+      "regnal_title": {
+        "zh-Hans": "中川王",
+        "zh-Hant": "中川王",
+        "ja": "中川王"
+      }
     },
     "historical-goguryeo-gyesu": {
       "person_id": "historical-goguryeo-gyesu",
@@ -139690,6 +139725,233 @@
         "virtue_design": {
           "person_id": "historical-wuhuan-sufuwan",
           "name": "速附丸",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder"
+    },
+    "historical-zhu-ying-wu": {
+      "person_id": "historical-zhu-ying-wu",
+      "name": "朱應",
+      "runtime_id": 1081,
+      "birth_year": 212,
+      "service_year": 251,
+      "death_year": 260,
+      "chronology_basis": "reviewed_wu_southern_envoy_with_estimated_game_dates",
+      "chronology_design": {
+        "birth_year": 212,
+        "service_year": 251,
+        "death_year": 260,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": null,
+        "precision": {
+          "birth_year": "authorial_estimate",
+          "service_year": "authorial_southern_mission_return",
+          "death_year": "authorial_game_retirement_boundary_not_historical_death"
+        },
+        "basis": "東吳宣化從事。據《梁書》，孫權派他與中郎康泰浮海出使南海諸國。其生卒與出使年月不詳。本作設定244年出使、251年歸隊，出使期間不可調動。山陰為遊戲駐地，生年及260年退場界線為遊戲推定。",
+        "mission_departure_year": 244
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 32,
+        "intellect": 75,
+        "virtue": 60,
+        "terrain_affinity": 2,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_southern_envoy_game_design",
+          "intellect": "explicit_southern_envoy_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_maritime_service_game_design"
+        }
+      },
+      "aliases": [
+        "朱应",
+        "朱応"
+      ],
+      "virtue_design": {
+        "person_id": "historical-zhu-ying-wu",
+        "name": "朱應",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "朱応",
+        "source_urls": [
+          "https://www.shidianguji.com/zh/book/LS0008/chapter/LS0008_269"
+        ],
+        "notes": "史料用於考訂身分與出使事蹟；武、知與水域適性為本作設定。"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 32,
+          "intellect": 75,
+          "virtue": 60,
+          "terrain_affinity": 2,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_southern_envoy_game_design",
+            "intellect": "explicit_southern_envoy_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_maritime_service_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-zhu-ying-wu",
+          "name": "朱應",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder"
+    },
+    "historical-kang-tai-wu": {
+      "person_id": "historical-kang-tai-wu",
+      "name": "康泰",
+      "runtime_id": 1082,
+      "birth_year": 208,
+      "service_year": 251,
+      "death_year": 260,
+      "chronology_basis": "reviewed_wu_southern_envoy_with_estimated_game_dates",
+      "chronology_design": {
+        "birth_year": 208,
+        "service_year": 251,
+        "death_year": 260,
+        "historical_birth_year": null,
+        "historical_death_year": null,
+        "last_attested_year": null,
+        "precision": {
+          "birth_year": "authorial_estimate",
+          "service_year": "authorial_southern_mission_return",
+          "death_year": "authorial_game_retirement_boundary_not_historical_death"
+        },
+        "basis": "東吳中郎。據《梁書》，孫權派他與宣化從事朱應浮海通使南海諸國。使團的見聞成為史籍記述南海諸國的早期資料。其生卒與出使年月不詳。本作設定244年出使、251年歸隊，出使期間不可調動。山陰為遊戲駐地，生年及260年退場界線為遊戲推定。",
+        "mission_departure_year": 244
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 36,
+        "intellect": 82,
+        "virtue": 60,
+        "terrain_affinity": 2,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "explicit_southern_envoy_game_design",
+          "intellect": "explicit_southern_envoy_game_design",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma",
+          "terrain_affinity": "explicit_maritime_service_game_design"
+        }
+      },
+      "aliases": [
+        "康泰"
+      ],
+      "virtue_design": {
+        "person_id": "historical-kang-tai-wu",
+        "name": "康泰",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_name": "康泰",
+        "source_urls": [
+          "https://www.shidianguji.com/zh/book/LS0008/chapter/LS0008_269"
+        ],
+        "notes": "史料用於考訂身分與出使事蹟；武、知與水域適性為本作設定。"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "初始本作設計配置。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 36,
+          "intellect": 82,
+          "virtue": 60,
+          "terrain_affinity": 2,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default_cap",
+            "martial_strength": "explicit_southern_envoy_game_design",
+            "intellect": "explicit_southern_envoy_game_design",
+            "virtue": "default60_absent_numeric_source",
+            "terrain_affinity": "explicit_maritime_service_game_design"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "missing_numeric_source_default60",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-kang-tai-wu",
+          "name": "康泰",
           "policy_id": "campaign-officer-stats-v1",
           "status": "configured_default",
           "virtue": 60,

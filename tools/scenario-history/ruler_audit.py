@@ -33,7 +33,7 @@ REPORT_JSON = ROOT / 'docs/ruler-affiliation-audit-20261027.json'
 REPORT_MD = ROOT / 'docs/ruler-affiliation-audit-20261027.md'
 EXPECTED_SCENARIOS = 29
 EXPECTED_POOL = 67
-EXPECTED_PEOPLE = 1080
+EXPECTED_PEOPLE = 1082
 FRONTIER_CAPITALS = frozenset(('guonei', 'liucheng'))
 LATER_EXPANSION_CITIES = FRONTIER_CAPITALS | frozenset((
     'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'luzon'))
