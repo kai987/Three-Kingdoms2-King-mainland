@@ -10,11 +10,11 @@
     "rgba_sha256": "914d8a6b6744eb8cc2e5470d789044bed6b311c9e673a4c93b7660c8370f9d51"
   },
   "counts": {
-    "people": 1076,
-    "source_unique": 1035,
+    "people": 1082,
+    "source_unique": 1041,
     "atlas_count": 19,
-    "retainer_people": 46,
-    "retainer_source_images": 31
+    "retainer_people": 52,
+    "retainer_source_images": 37
   },
   "processing": {
     "mode": "imagegen_atlas_color_studies_with_original_material_masks",
@@ -41026,6 +41026,378 @@
         },
         "prompt": "art/portraits/frontier-portraits-v1/prompts/historical-goguryeo-myeongnim-holdo.txt",
         "prompt_sha256": "d68739e01688292460bbc2e705d1be01c87ba35a17dbc18fa3fbeff225ed88a8"
+      }
+    },
+    "historical-zhu-ying-wu": {
+      "path": "/assets/portraits/enhanced/historical-zhu-ying-wu.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-zhu-ying-wu.png",
+      "source_sha256": "5ef20b566578e4a4de6f670cc17e385c2f911b403a79d62d44d591b03d394179",
+      "sha256": "26045a9d37f83bf1a38a873a3ea7581e226dcb918b3a64438cdb34be0b6617a3",
+      "pixel_sha256": "68fb09d8972c5c72f7b90c367ac7df79e1dad5d7ef509e081fb1a2ccca8cc9ed",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "retainer_authored_source_direct128_fixed_palette",
+        "retainer_plan": "art/portraits/envoys-and-gogukcheon-v1/plan.json",
+        "retainer_plan_sha256": "7e1c12ec23d00c8ea6119b5d00ee2c328d47534a32cd2a4c37bbd7f79d01e26b",
+        "original_source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-zhu-ying-wu.png",
+        "original_source_sha256": "d48b3566a4f167718aeec4ad1cdb56600e40a2c92a48644dd59c5a43c503e1f5",
+        "source_size": [
+          1122,
+          1402
+        ],
+        "source_matte": "white",
+        "source_origin": "new_retained_imagegen_source",
+        "source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-zhu-ying-wu.png",
+        "source_sha256": "d48b3566a4f167718aeec4ad1cdb56600e40a2c92a48644dd59c5a43c503e1f5",
+        "retained_source_crop": "art/portraits/envoys-and-gogukcheon-v1/source/historical-zhu-ying-wu.png",
+        "retained_source_crop_sha256": "d48b3566a4f167718aeec4ad1cdb56600e40a2c92a48644dd59c5a43c503e1f5",
+        "retained_source_crop_rgba_sha256": "f202877d24b17afe764d7f541ddd2d4b4cb2bfd61697290f0a20f4aba6f4f17c",
+        "source_cell_box": [
+          0,
+          0,
+          1122,
+          1402
+        ],
+        "source_visible_box": [
+          19,
+          20,
+          1103,
+          1367
+        ],
+        "native_fitted_box": [
+          1,
+          2,
+          31,
+          39
+        ],
+        "native_archive": "art/portraits/envoys-and-gogukcheon-v1/native-32x40/historical-zhu-ying-wu.png",
+        "native_archive_sha256": "5ef20b566578e4a4de6f670cc17e385c2f911b403a79d62d44d591b03d394179",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 15,
+          "changedPixels": 9336,
+          "nearest4xExact": false,
+          "nonUniformBlocks4x4": 711
+        },
+        "prompt": "art/portraits/envoys-and-gogukcheon-v1/prompts/historical-zhu-ying-wu.txt",
+        "prompt_sha256": "70012cbf04482c492f3d64f15778075e0ce0d03981072308d6d773d016ab5a12"
+      }
+    },
+    "historical-kang-tai-wu": {
+      "path": "/assets/portraits/enhanced/historical-kang-tai-wu.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-kang-tai-wu.png",
+      "source_sha256": "3bb126092d92d4a65ee7a97e3e9ecdcf11775626d192a33d0adfd4a6ad29eef0",
+      "sha256": "dcebd8b17342aef0aacfc524e655f3f7c65441b4a23b2fb46e6227e5ec394ce0",
+      "pixel_sha256": "87b47b83bd6420fefc85ccc53499f48e4387464717404d6764ec3eff49ad6358",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "retainer_authored_source_direct128_fixed_palette",
+        "retainer_plan": "art/portraits/envoys-and-gogukcheon-v1/plan.json",
+        "retainer_plan_sha256": "7e1c12ec23d00c8ea6119b5d00ee2c328d47534a32cd2a4c37bbd7f79d01e26b",
+        "original_source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-kang-tai-wu.png",
+        "original_source_sha256": "212358684a9f7f5c686a38a2bfbe93ca1f87160ebb6adbb1be305bc38f982a7b",
+        "source_size": [
+          1122,
+          1402
+        ],
+        "source_matte": "white",
+        "source_origin": "new_retained_imagegen_source",
+        "source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-kang-tai-wu.png",
+        "source_sha256": "212358684a9f7f5c686a38a2bfbe93ca1f87160ebb6adbb1be305bc38f982a7b",
+        "retained_source_crop": "art/portraits/envoys-and-gogukcheon-v1/source/historical-kang-tai-wu.png",
+        "retained_source_crop_sha256": "212358684a9f7f5c686a38a2bfbe93ca1f87160ebb6adbb1be305bc38f982a7b",
+        "retained_source_crop_rgba_sha256": "4db89210b72fc8f22e743227fccabce733431fdcb89f32faf1154f15bfcb8ea8",
+        "source_cell_box": [
+          0,
+          0,
+          1122,
+          1402
+        ],
+        "source_visible_box": [
+          21,
+          22,
+          1102,
+          1378
+        ],
+        "native_fitted_box": [
+          1,
+          1,
+          31,
+          39
+        ],
+        "native_archive": "art/portraits/envoys-and-gogukcheon-v1/native-32x40/historical-kang-tai-wu.png",
+        "native_archive_sha256": "3bb126092d92d4a65ee7a97e3e9ecdcf11775626d192a33d0adfd4a6ad29eef0",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 15,
+          "changedPixels": 9979,
+          "nearest4xExact": false,
+          "nonUniformBlocks4x4": 744
+        },
+        "prompt": "art/portraits/envoys-and-gogukcheon-v1/prompts/historical-kang-tai-wu.txt",
+        "prompt_sha256": "3cdba7aaa7617b749c2e6b0bcfbe4ef830a2e937233e432b99f2747dbe9da3d6"
+      }
+    },
+    "historical-goguryeo-gogukcheon": {
+      "path": "/assets/portraits/enhanced/historical-goguryeo-gogukcheon.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-goguryeo-gogukcheon.png",
+      "source_sha256": "3cb05aff028b327ccdbd80fdb0b8ceed8e549ad5d9eb9b9bb03571b32339575a",
+      "sha256": "b5d0c8fb74e1b0b372943f8948093a2a49a805900cb978ac0935dd8d12435fb3",
+      "pixel_sha256": "9d5205156936d953df69e43ba0d9e56a27b63baec200071d17a9ee051f40e850",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "retainer_authored_source_direct128_fixed_palette",
+        "retainer_plan": "art/portraits/envoys-and-gogukcheon-v1/plan.json",
+        "retainer_plan_sha256": "7e1c12ec23d00c8ea6119b5d00ee2c328d47534a32cd2a4c37bbd7f79d01e26b",
+        "original_source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-goguryeo-gogukcheon.png",
+        "original_source_sha256": "0d56e174ae43a9a95421bf1d4cd9c07b400072fa26d1e29c873941987f33ea75",
+        "source_size": [
+          1122,
+          1402
+        ],
+        "source_matte": "white",
+        "source_origin": "new_retained_imagegen_source",
+        "source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-goguryeo-gogukcheon.png",
+        "source_sha256": "0d56e174ae43a9a95421bf1d4cd9c07b400072fa26d1e29c873941987f33ea75",
+        "retained_source_crop": "art/portraits/envoys-and-gogukcheon-v1/source/historical-goguryeo-gogukcheon.png",
+        "retained_source_crop_sha256": "0d56e174ae43a9a95421bf1d4cd9c07b400072fa26d1e29c873941987f33ea75",
+        "retained_source_crop_rgba_sha256": "23dff8fd376f292c67c1701e69e0e52d27ab509207b9f0cb436e1255e6149476",
+        "source_cell_box": [
+          0,
+          0,
+          1122,
+          1402
+        ],
+        "source_visible_box": [
+          110,
+          40,
+          1013,
+          1370
+        ],
+        "native_fitted_box": [
+          3,
+          1,
+          29,
+          39
+        ],
+        "native_archive": "art/portraits/envoys-and-gogukcheon-v1/native-32x40/historical-goguryeo-gogukcheon.png",
+        "native_archive_sha256": "3cb05aff028b327ccdbd80fdb0b8ceed8e549ad5d9eb9b9bb03571b32339575a",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 15,
+          "changedPixels": 10033,
+          "nearest4xExact": false,
+          "nonUniformBlocks4x4": 726
+        },
+        "prompt": "art/portraits/envoys-and-gogukcheon-v1/prompts/historical-goguryeo-gogukcheon.txt",
+        "prompt_sha256": "2caf61540a7a2d225246cfa9fc92f45e4afde19e35af8c51dd4e5fc7437899f6"
+      }
+    },
+    "historical-goguryeo-sansang": {
+      "path": "/assets/portraits/enhanced/historical-goguryeo-sansang.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-goguryeo-sansang.png",
+      "source_sha256": "a4f2a0dbb97d92a3d40950a19ef9a96f22e918fdbb74e09f7050bd41792d1991",
+      "sha256": "62404c282e811ba2e0532f5eec4f91a5964fb11eadad92c810715da388f5bcf2",
+      "pixel_sha256": "b2bd7f49633874252e737f2e76c90695287d9ff913ed845bb2df356945b72618",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "retainer_authored_source_direct128_fixed_palette",
+        "retainer_plan": "art/portraits/goguryeo-rulers-v1/plan.json",
+        "retainer_plan_sha256": "77eb2f585fe208f69668712fb71898f7bef7e742afa3f71349852257eb4cccf5",
+        "original_source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-sansang.png",
+        "original_source_sha256": "b894f2505e4ed4f8ab5201411cbf7edc22112da4ffcc8bcc30a319dafc5fdfef",
+        "source_size": [
+          1122,
+          1402
+        ],
+        "source_matte": "white",
+        "source_origin": "new_retained_imagegen_source",
+        "source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-sansang.png",
+        "source_sha256": "b894f2505e4ed4f8ab5201411cbf7edc22112da4ffcc8bcc30a319dafc5fdfef",
+        "retained_source_crop": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-sansang.png",
+        "retained_source_crop_sha256": "b894f2505e4ed4f8ab5201411cbf7edc22112da4ffcc8bcc30a319dafc5fdfef",
+        "retained_source_crop_rgba_sha256": "b664f7a1feca7c333a9b730285cf53aa460f0dd18158d22f4fb5ae0e39df8fd5",
+        "source_cell_box": [
+          0,
+          0,
+          1122,
+          1402
+        ],
+        "source_visible_box": [
+          102,
+          33,
+          1020,
+          1369
+        ],
+        "native_fitted_box": [
+          3,
+          1,
+          29,
+          39
+        ],
+        "native_archive": "art/portraits/goguryeo-rulers-v1/native-32x40/historical-goguryeo-sansang.png",
+        "native_archive_sha256": "a4f2a0dbb97d92a3d40950a19ef9a96f22e918fdbb74e09f7050bd41792d1991",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 15,
+          "changedPixels": 9093,
+          "nearest4xExact": false,
+          "nonUniformBlocks4x4": 677
+        },
+        "prompt": "art/portraits/goguryeo-rulers-v1/prompts/historical-goguryeo-sansang.txt",
+        "prompt_sha256": "e4a122d1c5c69d43448ccdea34c8fce12ce494113974652d39ed7deaa9113bb2"
+      }
+    },
+    "historical-goguryeo-dongcheon": {
+      "path": "/assets/portraits/enhanced/historical-goguryeo-dongcheon.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-goguryeo-dongcheon.png",
+      "source_sha256": "75b3ac810bdc97cddc11e9ae4b3e21d166abcdd9ab6fa0daba07c2b3f57e04ac",
+      "sha256": "d66138568b1e6db8a4503d143c4505804c94a7b67fd9cd105380aa8ddd469636",
+      "pixel_sha256": "bcf194cb6374b559a45dcd5f46f74764d78e27ab7d7e435e06a580a8369fe912",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "retainer_authored_source_direct128_fixed_palette",
+        "retainer_plan": "art/portraits/goguryeo-rulers-v1/plan.json",
+        "retainer_plan_sha256": "77eb2f585fe208f69668712fb71898f7bef7e742afa3f71349852257eb4cccf5",
+        "original_source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-dongcheon.png",
+        "original_source_sha256": "f2b525261f87dc3345f068db73931a7d36d302377c358929fa7c893132d9bbef",
+        "source_size": [
+          1122,
+          1402
+        ],
+        "source_matte": "white",
+        "source_origin": "new_retained_imagegen_source",
+        "source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-dongcheon.png",
+        "source_sha256": "f2b525261f87dc3345f068db73931a7d36d302377c358929fa7c893132d9bbef",
+        "retained_source_crop": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-dongcheon.png",
+        "retained_source_crop_sha256": "f2b525261f87dc3345f068db73931a7d36d302377c358929fa7c893132d9bbef",
+        "retained_source_crop_rgba_sha256": "5fa60ab6658db5ec8ca37438e1065d039d425b19d2434e51f758a17e3daf0e80",
+        "source_cell_box": [
+          0,
+          0,
+          1122,
+          1402
+        ],
+        "source_visible_box": [
+          98,
+          90,
+          1024,
+          1368
+        ],
+        "native_fitted_box": [
+          2,
+          1,
+          30,
+          39
+        ],
+        "native_archive": "art/portraits/goguryeo-rulers-v1/native-32x40/historical-goguryeo-dongcheon.png",
+        "native_archive_sha256": "75b3ac810bdc97cddc11e9ae4b3e21d166abcdd9ab6fa0daba07c2b3f57e04ac",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 15,
+          "changedPixels": 11028,
+          "nearest4xExact": false,
+          "nonUniformBlocks4x4": 776
+        },
+        "prompt": "art/portraits/goguryeo-rulers-v1/prompts/historical-goguryeo-dongcheon.txt",
+        "prompt_sha256": "882dab3cafd844108f127718fb5aba4858e6249bf17726789fab50e30a1bfb0d"
+      }
+    },
+    "historical-goguryeo-jungcheon": {
+      "path": "/assets/portraits/enhanced/historical-goguryeo-jungcheon.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-goguryeo-jungcheon.png",
+      "source_sha256": "c3a0326815de8aca14342bbcb011c880109ad7e92cd51a77f40566d79155d887",
+      "sha256": "0abfce3c411cf183b656383585a06acbe84a1aa3d008c8c940ef0cd41dbfa497",
+      "pixel_sha256": "acc601595d3eacaf09f05b45ef27a16e52af499e80ba1b3d8e28f0f091d8a24d",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "retainer_authored_source_direct128_fixed_palette",
+        "retainer_plan": "art/portraits/goguryeo-rulers-v1/plan.json",
+        "retainer_plan_sha256": "77eb2f585fe208f69668712fb71898f7bef7e742afa3f71349852257eb4cccf5",
+        "original_source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-jungcheon.png",
+        "original_source_sha256": "82c26f8316f099aa25f3cf32ad56bf31a626e9874f5d70cf5c505e1ddf0aa04b",
+        "source_size": [
+          1122,
+          1402
+        ],
+        "source_matte": "white",
+        "source_origin": "new_retained_imagegen_source",
+        "source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-jungcheon.png",
+        "source_sha256": "82c26f8316f099aa25f3cf32ad56bf31a626e9874f5d70cf5c505e1ddf0aa04b",
+        "retained_source_crop": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-jungcheon.png",
+        "retained_source_crop_sha256": "82c26f8316f099aa25f3cf32ad56bf31a626e9874f5d70cf5c505e1ddf0aa04b",
+        "retained_source_crop_rgba_sha256": "b947577740b11bbeb20b967aa55bf653bed209f899f9270ec2f736762a58a7d3",
+        "source_cell_box": [
+          0,
+          0,
+          1122,
+          1402
+        ],
+        "source_visible_box": [
+          102,
+          34,
+          1021,
+          1370
+        ],
+        "native_fitted_box": [
+          3,
+          1,
+          29,
+          39
+        ],
+        "native_archive": "art/portraits/goguryeo-rulers-v1/native-32x40/historical-goguryeo-jungcheon.png",
+        "native_archive_sha256": "c3a0326815de8aca14342bbcb011c880109ad7e92cd51a77f40566d79155d887",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 15,
+          "changedPixels": 9424,
+          "nearest4xExact": false,
+          "nonUniformBlocks4x4": 688
+        },
+        "prompt": "art/portraits/goguryeo-rulers-v1/prompts/historical-goguryeo-jungcheon.txt",
+        "prompt_sha256": "e7d68ef50d6b072323b5120d8aefa65d007828bd5a389770871227879349655b"
       }
     }
   }

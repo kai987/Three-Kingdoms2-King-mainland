@@ -29,7 +29,9 @@ ASSET = re.compile(r'^/assets/portraits/(?:original/[0-9]{3}|generated/[a-z0-9-]
 ENHANCED_ASSET = re.compile(r'^/assets/portraits/enhanced/[a-z0-9-]+\.png$')
 RETAINER_PLAN = 'art/portraits/retainer-additions-v1/plan.json'
 FRONTIER_PLAN = 'art/portraits/frontier-portraits-v1/plan.json'
-RETAINER_PLANS = (RETAINER_PLAN, 'art/portraits/early-shu-v1/plan.json', FRONTIER_PLAN)
+GOGURYEO_RULERS_PLAN = 'art/portraits/goguryeo-rulers-v1/plan.json'
+RETAINER_PLANS = (RETAINER_PLAN, 'art/portraits/early-shu-v1/plan.json', FRONTIER_PLAN,
+                  'art/portraits/envoys-and-gogukcheon-v1/plan.json', GOGURYEO_RULERS_PLAN)
 RETAINER_METHOD = 'retainer_authored_source_direct128_fixed_palette'
 RETAINER_PALETTE = {
     (0, 0, 0, 0), (0, 0, 0, 255), (108, 46, 7, 255), (142, 56, 0, 255),

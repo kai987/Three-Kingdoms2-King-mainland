@@ -1,7 +1,7 @@
 {
   "schema": "tk2-generated-portraits-v1",
-  "count": 855,
-  "unique_pixel_images": 855,
+  "count": 861,
+  "unique_pixel_images": 861,
   "native_size": [
     32,
     40
@@ -2001,10 +2001,82 @@
       "art_gender_design": "male",
       "source_type": "single_authored_portrait",
       "retainer_plan": "art/portraits/frontier-portraits-v1/plan.json"
+    },
+    {
+      "id": "historical-zhu-ying-wu",
+      "path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-zhu-ying-wu.png",
+      "sha256": "d48b3566a4f167718aeec4ad1cdb56600e40a2c92a48644dd59c5a43c503e1f5",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/envoys-and-gogukcheon-v1/plan.json"
+    },
+    {
+      "id": "historical-kang-tai-wu",
+      "path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-kang-tai-wu.png",
+      "sha256": "212358684a9f7f5c686a38a2bfbe93ca1f87160ebb6adbb1be305bc38f982a7b",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/envoys-and-gogukcheon-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-gogukcheon",
+      "path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-goguryeo-gogukcheon.png",
+      "sha256": "0d56e174ae43a9a95421bf1d4cd9c07b400072fa26d1e29c873941987f33ea75",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/envoys-and-gogukcheon-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-sansang",
+      "path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-sansang.png",
+      "sha256": "b894f2505e4ed4f8ab5201411cbf7edc22112da4ffcc8bcc30a319dafc5fdfef",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/goguryeo-rulers-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-dongcheon",
+      "path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-dongcheon.png",
+      "sha256": "f2b525261f87dc3345f068db73931a7d36d302377c358929fa7c893132d9bbef",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/goguryeo-rulers-v1/plan.json"
+    },
+    {
+      "id": "historical-goguryeo-jungcheon",
+      "path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-jungcheon.png",
+      "sha256": "82c26f8316f099aa25f3cf32ad56bf31a626e9874f5d70cf5c505e1ddf0aa04b",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "source_type": "single_authored_portrait",
+      "retainer_plan": "art/portraits/goguryeo-rulers-v1/plan.json"
     }
   ],
   "assigned_by_gender": {
-    "male": 802,
+    "male": 808,
     "female": 53
   },
   "duplicate_fallback_count": 0,
@@ -36754,6 +36826,306 @@
         30,
         39
       ]
+    },
+    "historical-zhu-ying-wu": {
+      "path": "/assets/portraits/generated/historical-zhu-ying-wu.png",
+      "png_sha256": "5ef20b566578e4a4de6f670cc17e385c2f911b403a79d62d44d591b03d394179",
+      "rgba_sha256": "155dd795335c979c4998fe6a9c0dd0f64cb8d5ae2b2b63e98f1bb4ff537c2487",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 368,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "朱應",
+      "retainer_plan": "art/portraits/envoys-and-gogukcheon-v1/plan.json",
+      "retainer_plan_sha256": "7e1c12ec23d00c8ea6119b5d00ee2c328d47534a32cd2a4c37bbd7f79d01e26b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-zhu-ying-wu.png",
+      "original_source_sha256": "d48b3566a4f167718aeec4ad1cdb56600e40a2c92a48644dd59c5a43c503e1f5",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-zhu-ying-wu.png",
+      "source_sha256": "d48b3566a4f167718aeec4ad1cdb56600e40a2c92a48644dd59c5a43c503e1f5",
+      "opaque_pixels": 494,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        19,
+        20,
+        1103,
+        1367
+      ],
+      "native_fitted_box": [
+        1,
+        2,
+        31,
+        39
+      ]
+    },
+    "historical-kang-tai-wu": {
+      "path": "/assets/portraits/generated/historical-kang-tai-wu.png",
+      "png_sha256": "3bb126092d92d4a65ee7a97e3e9ecdcf11775626d192a33d0adfd4a6ad29eef0",
+      "rgba_sha256": "79a28eedb33f4287bb1550f6039e45b9e6b97cf37d1616862f8f6e1b1f1bbf97",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 373,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "康泰",
+      "retainer_plan": "art/portraits/envoys-and-gogukcheon-v1/plan.json",
+      "retainer_plan_sha256": "7e1c12ec23d00c8ea6119b5d00ee2c328d47534a32cd2a4c37bbd7f79d01e26b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-kang-tai-wu.png",
+      "original_source_sha256": "212358684a9f7f5c686a38a2bfbe93ca1f87160ebb6adbb1be305bc38f982a7b",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-kang-tai-wu.png",
+      "source_sha256": "212358684a9f7f5c686a38a2bfbe93ca1f87160ebb6adbb1be305bc38f982a7b",
+      "opaque_pixels": 493,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        21,
+        22,
+        1102,
+        1378
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        31,
+        39
+      ]
+    },
+    "historical-goguryeo-gogukcheon": {
+      "path": "/assets/portraits/generated/historical-goguryeo-gogukcheon.png",
+      "png_sha256": "3cb05aff028b327ccdbd80fdb0b8ceed8e549ad5d9eb9b9bb03571b32339575a",
+      "rgba_sha256": "50dc80ffc1461d0926ab703aed4a2863f434a41951ffd8626378d7b20c1b136f",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 400,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "男武",
+      "retainer_plan": "art/portraits/envoys-and-gogukcheon-v1/plan.json",
+      "retainer_plan_sha256": "7e1c12ec23d00c8ea6119b5d00ee2c328d47534a32cd2a4c37bbd7f79d01e26b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-goguryeo-gogukcheon.png",
+      "original_source_sha256": "0d56e174ae43a9a95421bf1d4cd9c07b400072fa26d1e29c873941987f33ea75",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-goguryeo-gogukcheon.png",
+      "source_sha256": "0d56e174ae43a9a95421bf1d4cd9c07b400072fa26d1e29c873941987f33ea75",
+      "opaque_pixels": 412,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        110,
+        40,
+        1013,
+        1370
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ]
+    },
+    "historical-goguryeo-sansang": {
+      "path": "/assets/portraits/generated/historical-goguryeo-sansang.png",
+      "png_sha256": "a4f2a0dbb97d92a3d40950a19ef9a96f22e918fdbb74e09f7050bd41792d1991",
+      "rgba_sha256": "52b11c1bd0d9fc175c291ad2f5920ddb51edc7ced9dc842753ba13569195ccf7",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 379,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "延优",
+      "retainer_plan": "art/portraits/goguryeo-rulers-v1/plan.json",
+      "retainer_plan_sha256": "77eb2f585fe208f69668712fb71898f7bef7e742afa3f71349852257eb4cccf5",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-sansang.png",
+      "original_source_sha256": "b894f2505e4ed4f8ab5201411cbf7edc22112da4ffcc8bcc30a319dafc5fdfef",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-sansang.png",
+      "source_sha256": "b894f2505e4ed4f8ab5201411cbf7edc22112da4ffcc8bcc30a319dafc5fdfef",
+      "opaque_pixels": 442,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        102,
+        33,
+        1020,
+        1369
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ]
+    },
+    "historical-goguryeo-dongcheon": {
+      "path": "/assets/portraits/generated/historical-goguryeo-dongcheon.png",
+      "png_sha256": "75b3ac810bdc97cddc11e9ae4b3e21d166abcdd9ab6fa0daba07c2b3f57e04ac",
+      "rgba_sha256": "e1b963a0ac9dfda70cc9b7ad05433310277ad8782dd67ab3445275f8d55d14f4",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 397,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "忧位居",
+      "retainer_plan": "art/portraits/goguryeo-rulers-v1/plan.json",
+      "retainer_plan_sha256": "77eb2f585fe208f69668712fb71898f7bef7e742afa3f71349852257eb4cccf5",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-dongcheon.png",
+      "original_source_sha256": "f2b525261f87dc3345f068db73931a7d36d302377c358929fa7c893132d9bbef",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-dongcheon.png",
+      "source_sha256": "f2b525261f87dc3345f068db73931a7d36d302377c358929fa7c893132d9bbef",
+      "opaque_pixels": 435,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        98,
+        90,
+        1024,
+        1368
+      ],
+      "native_fitted_box": [
+        2,
+        1,
+        30,
+        39
+      ]
+    },
+    "historical-goguryeo-jungcheon": {
+      "path": "/assets/portraits/generated/historical-goguryeo-jungcheon.png",
+      "png_sha256": "c3a0326815de8aca14342bbcb011c880109ad7e92cd51a77f40566d79155d887",
+      "rgba_sha256": "31ca92a79061acd2b372bff71a3666625aa0296d5517a4930ee5d565c2b6edf8",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 355,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "然弗",
+      "retainer_plan": "art/portraits/goguryeo-rulers-v1/plan.json",
+      "retainer_plan_sha256": "77eb2f585fe208f69668712fb71898f7bef7e742afa3f71349852257eb4cccf5",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-jungcheon.png",
+      "original_source_sha256": "82c26f8316f099aa25f3cf32ad56bf31a626e9874f5d70cf5c505e1ddf0aa04b",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-jungcheon.png",
+      "source_sha256": "82c26f8316f099aa25f3cf32ad56bf31a626e9874f5d70cf5c505e1ddf0aa04b",
+      "opaque_pixels": 387,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        102,
+        34,
+        1021,
+        1370
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ]
     }
   },
   "retainer_plan": {
@@ -36782,6 +37154,24 @@
       "generated_count": 20,
       "original_count": 0,
       "source_images": 20,
+      "method": "retainer_authored_source_direct128_fixed_palette"
+    },
+    {
+      "path": "art/portraits/envoys-and-gogukcheon-v1/plan.json",
+      "sha256": "7e1c12ec23d00c8ea6119b5d00ee2c328d47534a32cd2a4c37bbd7f79d01e26b",
+      "count": 3,
+      "generated_count": 3,
+      "original_count": 0,
+      "source_images": 3,
+      "method": "retainer_authored_source_direct128_fixed_palette"
+    },
+    {
+      "path": "art/portraits/goguryeo-rulers-v1/plan.json",
+      "sha256": "77eb2f585fe208f69668712fb71898f7bef7e742afa3f71349852257eb4cccf5",
+      "count": 3,
+      "generated_count": 3,
+      "original_count": 0,
+      "source_images": 3,
       "method": "retainer_authored_source_direct128_fixed_palette"
     }
   ]

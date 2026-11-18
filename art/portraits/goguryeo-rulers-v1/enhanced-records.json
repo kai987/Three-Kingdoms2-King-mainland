@@ -1,0 +1,198 @@
+{
+  "schema": "tk2-retainer-portrait-enhanced-records-v1",
+  "plan": "art/portraits/goguryeo-rulers-v1/plan.json",
+  "plan_sha256": "77eb2f585fe208f69668712fb71898f7bef7e742afa3f71349852257eb4cccf5",
+  "count": 3,
+  "size": [
+    128,
+    160
+  ],
+  "people": {
+    "historical-goguryeo-sansang": {
+      "path": "/assets/portraits/enhanced/historical-goguryeo-sansang.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-goguryeo-sansang.png",
+      "source_sha256": "a4f2a0dbb97d92a3d40950a19ef9a96f22e918fdbb74e09f7050bd41792d1991",
+      "sha256": "62404c282e811ba2e0532f5eec4f91a5964fb11eadad92c810715da388f5bcf2",
+      "pixel_sha256": "b2bd7f49633874252e737f2e76c90695287d9ff913ed845bb2df356945b72618",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "retainer_authored_source_direct128_fixed_palette",
+        "retainer_plan": "art/portraits/goguryeo-rulers-v1/plan.json",
+        "retainer_plan_sha256": "77eb2f585fe208f69668712fb71898f7bef7e742afa3f71349852257eb4cccf5",
+        "original_source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-sansang.png",
+        "original_source_sha256": "b894f2505e4ed4f8ab5201411cbf7edc22112da4ffcc8bcc30a319dafc5fdfef",
+        "source_size": [
+          1122,
+          1402
+        ],
+        "source_matte": "white",
+        "source_origin": "new_retained_imagegen_source",
+        "source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-sansang.png",
+        "source_sha256": "b894f2505e4ed4f8ab5201411cbf7edc22112da4ffcc8bcc30a319dafc5fdfef",
+        "retained_source_crop": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-sansang.png",
+        "retained_source_crop_sha256": "b894f2505e4ed4f8ab5201411cbf7edc22112da4ffcc8bcc30a319dafc5fdfef",
+        "retained_source_crop_rgba_sha256": "b664f7a1feca7c333a9b730285cf53aa460f0dd18158d22f4fb5ae0e39df8fd5",
+        "source_cell_box": [
+          0,
+          0,
+          1122,
+          1402
+        ],
+        "source_visible_box": [
+          102,
+          33,
+          1020,
+          1369
+        ],
+        "native_fitted_box": [
+          3,
+          1,
+          29,
+          39
+        ],
+        "native_archive": "art/portraits/goguryeo-rulers-v1/native-32x40/historical-goguryeo-sansang.png",
+        "native_archive_sha256": "a4f2a0dbb97d92a3d40950a19ef9a96f22e918fdbb74e09f7050bd41792d1991",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 15,
+          "changedPixels": 9093,
+          "nearest4xExact": false,
+          "nonUniformBlocks4x4": 677
+        },
+        "prompt": "art/portraits/goguryeo-rulers-v1/prompts/historical-goguryeo-sansang.txt",
+        "prompt_sha256": "e4a122d1c5c69d43448ccdea34c8fce12ce494113974652d39ed7deaa9113bb2"
+      }
+    },
+    "historical-goguryeo-dongcheon": {
+      "path": "/assets/portraits/enhanced/historical-goguryeo-dongcheon.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-goguryeo-dongcheon.png",
+      "source_sha256": "75b3ac810bdc97cddc11e9ae4b3e21d166abcdd9ab6fa0daba07c2b3f57e04ac",
+      "sha256": "d66138568b1e6db8a4503d143c4505804c94a7b67fd9cd105380aa8ddd469636",
+      "pixel_sha256": "bcf194cb6374b559a45dcd5f46f74764d78e27ab7d7e435e06a580a8369fe912",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "retainer_authored_source_direct128_fixed_palette",
+        "retainer_plan": "art/portraits/goguryeo-rulers-v1/plan.json",
+        "retainer_plan_sha256": "77eb2f585fe208f69668712fb71898f7bef7e742afa3f71349852257eb4cccf5",
+        "original_source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-dongcheon.png",
+        "original_source_sha256": "f2b525261f87dc3345f068db73931a7d36d302377c358929fa7c893132d9bbef",
+        "source_size": [
+          1122,
+          1402
+        ],
+        "source_matte": "white",
+        "source_origin": "new_retained_imagegen_source",
+        "source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-dongcheon.png",
+        "source_sha256": "f2b525261f87dc3345f068db73931a7d36d302377c358929fa7c893132d9bbef",
+        "retained_source_crop": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-dongcheon.png",
+        "retained_source_crop_sha256": "f2b525261f87dc3345f068db73931a7d36d302377c358929fa7c893132d9bbef",
+        "retained_source_crop_rgba_sha256": "5fa60ab6658db5ec8ca37438e1065d039d425b19d2434e51f758a17e3daf0e80",
+        "source_cell_box": [
+          0,
+          0,
+          1122,
+          1402
+        ],
+        "source_visible_box": [
+          98,
+          90,
+          1024,
+          1368
+        ],
+        "native_fitted_box": [
+          2,
+          1,
+          30,
+          39
+        ],
+        "native_archive": "art/portraits/goguryeo-rulers-v1/native-32x40/historical-goguryeo-dongcheon.png",
+        "native_archive_sha256": "75b3ac810bdc97cddc11e9ae4b3e21d166abcdd9ab6fa0daba07c2b3f57e04ac",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 15,
+          "changedPixels": 11028,
+          "nearest4xExact": false,
+          "nonUniformBlocks4x4": 776
+        },
+        "prompt": "art/portraits/goguryeo-rulers-v1/prompts/historical-goguryeo-dongcheon.txt",
+        "prompt_sha256": "882dab3cafd844108f127718fb5aba4858e6249bf17726789fab50e30a1bfb0d"
+      }
+    },
+    "historical-goguryeo-jungcheon": {
+      "path": "/assets/portraits/enhanced/historical-goguryeo-jungcheon.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-goguryeo-jungcheon.png",
+      "source_sha256": "c3a0326815de8aca14342bbcb011c880109ad7e92cd51a77f40566d79155d887",
+      "sha256": "0abfce3c411cf183b656383585a06acbe84a1aa3d008c8c940ef0cd41dbfa497",
+      "pixel_sha256": "acc601595d3eacaf09f05b45ef27a16e52af499e80ba1b3d8e28f0f091d8a24d",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "retainer_authored_source_direct128_fixed_palette",
+        "retainer_plan": "art/portraits/goguryeo-rulers-v1/plan.json",
+        "retainer_plan_sha256": "77eb2f585fe208f69668712fb71898f7bef7e742afa3f71349852257eb4cccf5",
+        "original_source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-jungcheon.png",
+        "original_source_sha256": "82c26f8316f099aa25f3cf32ad56bf31a626e9874f5d70cf5c505e1ddf0aa04b",
+        "source_size": [
+          1122,
+          1402
+        ],
+        "source_matte": "white",
+        "source_origin": "new_retained_imagegen_source",
+        "source_path": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-jungcheon.png",
+        "source_sha256": "82c26f8316f099aa25f3cf32ad56bf31a626e9874f5d70cf5c505e1ddf0aa04b",
+        "retained_source_crop": "art/portraits/goguryeo-rulers-v1/source/historical-goguryeo-jungcheon.png",
+        "retained_source_crop_sha256": "82c26f8316f099aa25f3cf32ad56bf31a626e9874f5d70cf5c505e1ddf0aa04b",
+        "retained_source_crop_rgba_sha256": "b947577740b11bbeb20b967aa55bf653bed209f899f9270ec2f736762a58a7d3",
+        "source_cell_box": [
+          0,
+          0,
+          1122,
+          1402
+        ],
+        "source_visible_box": [
+          102,
+          34,
+          1021,
+          1370
+        ],
+        "native_fitted_box": [
+          3,
+          1,
+          29,
+          39
+        ],
+        "native_archive": "art/portraits/goguryeo-rulers-v1/native-32x40/historical-goguryeo-jungcheon.png",
+        "native_archive_sha256": "c3a0326815de8aca14342bbcb011c880109ad7e92cd51a77f40566d79155d887",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 15,
+          "changedPixels": 9424,
+          "nearest4xExact": false,
+          "nonUniformBlocks4x4": 688
+        },
+        "prompt": "art/portraits/goguryeo-rulers-v1/prompts/historical-goguryeo-jungcheon.txt",
+        "prompt_sha256": "e7d68ef50d6b072323b5120d8aefa65d007828bd5a389770871227879349655b"
+      }
+    }
+  }
+}

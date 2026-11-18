@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake import domestic, southern_mission as mission
 from remake.campaign import Campaign, Catalog, GameError
+from campaign_fixtures import advance_month
 
 
 class Headless(Campaign):
@@ -32,6 +33,20 @@ class SouthernMissionTests(unittest.TestCase):
         if game.state.phase == 'arrivals':
             self.command(game, 'arrivals')
 
+    def advance_to_january(self, game, year):
+        state = game.state
+        while (state.year, state.month) < (year - 1, 12):
+            advance_month(game)
+            game._reconcile_factions(state)
+        for _ in range(3):
+            self.next_turn(game)
+        self.assertEqual((game.state.year, game.state.month), (year, 1))
+
+    def begin_mission(self):
+        game = self.start('238-01')
+        self.advance_to_january(game, mission.DEPARTURE_YEAR)
+        return game
+
     def realm_events(self, game):
         stream = game.state.extension['events']
         return [row['kind'] for row in [*stream.get('milestones', []), *stream['items']]
@@ -51,10 +66,53 @@ class SouthernMissionTests(unittest.TestCase):
         self.assertEqual(restored.export_save(), save)
         return restored
 
+    def test_the_249_opening_keeps_envoys_abroad_without_replaying_departure(self):
+        game = self.start()
+        ids = [game.catalog.ids[pid] for pid in mission.ENVOYS]
+        self.assertEqual([game.catalog.name(ident) for ident in ids], ['朱應', '康泰'])
+        self.assertTrue(all(ident not in game.state.officers for ident in ids))
+        self.assertEqual(self.realm_events(game), [])
+        for pid in mission.ENVOYS:
+            plan = game.catalog.data['era_assignments'][pid]['appearance_plan']
+            self.assertEqual((plan['mission_departure_year'], plan['start']),
+                             (244, [251, 1]))
+        self.round_trip(game)
+        late = self.start('263-05')
+        self.assertTrue(all(ident not in late.state.officers for ident in ids))
+
+    def test_envoys_return_to_wu_in_251_even_if_kuaiji_has_fallen(self):
+        for captured in (False, True):
+            with self.subTest(captured=captured):
+                game = self.start()
+                if captured:
+                    game.state.cities['kuaiji'].owner = 'wei'
+                ids = [game.catalog.ids[pid] for pid in mission.ENVOYS]
+                self.assertTrue(all(ident not in game.state.officers for ident in ids))
+                self.advance_to_january(game, mission.RETURN_YEAR)
+                state = game.state
+                for ident in ids:
+                    home = next(city for city in state.cities.values() if ident in city.roster.officer_ids)
+                    self.assertEqual(home.owner, 'wu')
+                    self.assertEqual(home.id == 'kuaiji', not captured)
+                    officer = state.officers[ident]
+                    self.assertEqual((officer.faction_id, officer.troops), ('wu', 0))
+                    self.assertNotIn(str(ident), state.extension['free_locations'])
+                    appearance = next(row for row in state.extension['events']['items']
+                                      if row['kind'] == 'officer_appeared'
+                                      and row['person_ids'] == [state.officers[ident].person_id])
+                    self.assertEqual((appearance['factions'], appearance['city_ids']), (['wu'], [home.id]))
+                game.validate(state)
+                self.assertEqual(self.realm_events(game), [])
+                self.round_trip(game)
+
     def test_offers_once_in_window_and_decline_leaves_the_island_empty(self):
         self.assertIsNone(mission.view(earlier := self.start('238-01'), earlier.state))
         self.assertIsNone(mission.view(other := self.start(faction='wei'), other.state))
-        game = self.start()
+        game = self.begin_mission()
+        departure = next(row for row in game.state.extension['events']['items']
+                         if row['kind'] == mission.DEPARTED)
+        self.assertEqual((departure['year'], departure['person_ids']), (244, list(mission.ENVOYS)))
+        self.assertTrue(all(game.catalog.ids[pid] not in game.state.officers for pid in mission.ENVOYS))
         self.reach_offer(game)
         before = game.export_save()
         with self.assertRaises(GameError):
@@ -68,7 +126,7 @@ class SouthernMissionTests(unittest.TestCase):
         self.assertEqual(self.realm_events(game), [mission.DEPARTED, mission.LANDED])
 
     def test_fleet_survives_typhoon_and_building_pauses_until_stocks_return(self):
-        game = self.start()
+        game = self.begin_mission()
         self.reach_offer(game)
         winter = mission.view(game, game.state)['routes'][0]['wind_days']
         while game.state.month != 6:

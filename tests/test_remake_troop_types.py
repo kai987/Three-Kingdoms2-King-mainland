@@ -35,7 +35,7 @@ class OriginalTroopTypeTests(unittest.TestCase):
         before={path:sha256(path.read_bytes()).hexdigest()for path in paths}
         self.assertEqual(tool.build(),self.data)
         self.assertEqual({path:sha256(path.read_bytes()).hexdigest()for path in paths},before)
-        self.assertEqual(self.data['counts']['people'],1080)
+        self.assertEqual(self.data['counts']['people'],1082)
         self.assertEqual(self.data['counts']['sources']['verified_original_rom'],221)
         self.assertEqual(self.data['counts']['sources']['original_table_transcription'],9)
 

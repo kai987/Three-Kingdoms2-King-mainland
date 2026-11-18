@@ -38,29 +38,29 @@
   "source_files": {
     "game/config/references/original-officer-stats.json": "11ab9fbfe6852d2d8e59a400e7fd62b59281506b224acef141d2690e4a769032",
     "game/config/references/cnblogs-officer-stats.json": "fee9b0e47615f676c25bea80900bdb60896a193253f4eb8e4a9c4e3ed8605fef",
-    "game/config/campaigns/people.json": "45063728f4b4ed25eb8be4d85f91090c475a979931303f890459da5791f13899",
-    "game/config/campaigns/shared.json": "cc9c95e9ea9c7e464eb3f0861e61b5e4410bfeafcf065b1232a89b28c0988b49"
+    "game/config/campaigns/people.json": "edba242b9c18142a318cbc02f9cfda6b2825350a3550be94dab5eff65c770a49",
+    "game/config/campaigns/shared.json": "4f4553ecc55a2811de9396e57e873607324c3e3fffbd1fbfec85f60122635c9e"
   },
   "counts": {
-    "people": 1080,
+    "people": 1082,
     "sources": {
       "design_region_inference": 265,
       "design_trait_inference": 7,
       "fallback_design": 539,
       "original_table_transcription": 9,
-      "retained_design": 39,
+      "retained_design": 41,
       "verified_original_rom": 221
     },
     "effective_codes": {
       "0": 648,
       "1": 225,
-      "2": 207
+      "2": 209
     },
     "changed_from_baseline": 376,
     "original_records": 237,
     "bound_original": 221
   },
-  "records_sha256": "9a1b2915e6acbee2afad9538d5ab984f3debb6d437df078c3a3a835ed2436a41",
+  "records_sha256": "36018afd166ef8588c714757a7c085e93bb7b434b1d706d8580228087d688a94",
   "records": {
     "historical-beigong-boyu": {
       "person_id": "historical-beigong-boyu",
@@ -370,7 +370,7 @@
     },
     "historical-goguryeo-dongcheon": {
       "person_id": "historical-goguryeo-dongcheon",
-      "name": "东川王",
+      "name": "忧位居",
       "base_code": 1,
       "code": 1,
       "source_kind": "retained_design",
@@ -400,7 +400,7 @@
     },
     "historical-goguryeo-gogukcheon": {
       "person_id": "historical-goguryeo-gogukcheon",
-      "name": "故国川王",
+      "name": "男武",
       "base_code": 1,
       "code": 1,
       "source_kind": "retained_design",
@@ -430,7 +430,7 @@
     },
     "historical-goguryeo-jungcheon": {
       "person_id": "historical-goguryeo-jungcheon",
-      "name": "中川王",
+      "name": "然弗",
       "base_code": 1,
       "code": 1,
       "source_kind": "retained_design",
@@ -490,7 +490,7 @@
     },
     "historical-goguryeo-sansang": {
       "person_id": "historical-goguryeo-sansang",
-      "name": "山上王",
+      "name": "延优",
       "base_code": 1,
       "code": 1,
       "source_kind": "retained_design",
@@ -571,6 +571,16 @@
     "historical-heng-yi-cangwu": {
       "person_id": "historical-heng-yi-cangwu",
       "name": "衡毅",
+      "base_code": 2,
+      "code": 2,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
+    },
+    "historical-kang-tai-wu": {
+      "person_id": "historical-kang-tai-wu",
+      "name": "康泰",
       "base_code": 2,
       "code": 2,
       "source_kind": "retained_design",
@@ -872,6 +882,16 @@
       "reference": "game/config/campaigns/people.json",
       "basis_tc": "資料不足，保留既有軍種設定。",
       "basis_ja": "資料が不足するため、既存の兵種設定を維持します。"
+    },
+    "historical-zhu-ying-wu": {
+      "person_id": "historical-zhu-ying-wu",
+      "name": "朱應",
+      "base_code": 2,
+      "code": 2,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
     },
     "san14-candidate-0001": {
       "person_id": "san14-candidate-0001",

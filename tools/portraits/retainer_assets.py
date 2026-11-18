@@ -23,6 +23,8 @@ from supplement_redraw import PALETTE
 PLAN = 'art/portraits/retainer-additions-v1/plan.json'
 EARLY_SHU_PLAN = 'art/portraits/early-shu-v1/plan.json'
 FRONTIER_PLAN = 'art/portraits/frontier-portraits-v1/plan.json'
+ENVOY_AND_KING_PLAN = 'art/portraits/envoys-and-gogukcheon-v1/plan.json'
+GOGURYEO_RULERS_PLAN = 'art/portraits/goguryeo-rulers-v1/plan.json'
 SCHEMA = 'tk2-retainer-portrait-additions-v1'
 NATIVE_SIZE = (32, 40)
 ENHANCED_SIZE = (128, 160)

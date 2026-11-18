@@ -88,12 +88,12 @@ if(python.status!==0)throw new Error(python.stderr||'Runtime fixture generation 
 const rows=JSON.parse(python.stdout);
 for(const row of rows){
  const before=JSON.stringify(row.library),counts=JSON.parse(JSON.stringify(context.libraryEntryCounts(row.library)));
- assert.equal(Object.values(counts).reduce((a,b)=>a+b,0),1080,'Every identity must be counted exactly once');
+ assert.equal(Object.values(counts).reduce((a,b)=>a+b,0),1082,'Every identity must be counted exactly once');
  assert.equal(JSON.stringify(row.library),before,'Classification must not mutate the library');
  const serving=row.library.filter(p=>p.alive===true&&p.faction!==null).length,free=row.library.filter(p=>p.alive===true&&p.faction===null).length;
  assert.equal(counts.serving,serving);assert.equal(counts.free,free);
  const [year,month]=row.date.split('-').map(Number),summary=context.libraryEntrySummary(row.library,{year,month});
- assert(summary.includes('data-locale-only="zh-Hant"'));assert(summary.includes('data-locale-only="ja"'));assert(summary.includes(`已登場 ${serving+free}／總庫 1080`));
+ assert(summary.includes('data-locale-only="zh-Hant"'));assert(summary.includes('data-locale-only="ja"'));assert(summary.includes(`已登場 ${serving+free}／總庫 1082`));
  assert.equal(counts.pending_history,0);assert.equal(counts.pending_capacity,0);assert.equal(counts.pending_faction,0);
  const wang=row.library.find(p=>p.person_id==='historical-wang-jian-liaodong');
  assert.equal(wang.id,1044);assert.equal(wang.health_max,80);assert.equal(wang.initialization.health,42);

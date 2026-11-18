@@ -3,7 +3,7 @@
   "review_revision": "2026-11-08",
   "review_file": "game/config/references/scenario-history-review.json",
   "review_sha256": "1dd4f2fb0b91b9a22615912a07853a766506f777d5b99bbbb645b60f53aa82e4",
-  "presentation_sha256": "0ffa5086bd4fef5b8d8b12ed4a86b540e3545c845acdf9311464775a4c534bdf",
+  "presentation_sha256": "e74ede031c6e9c8d45eac630cfc4d1af6d6bbe3c6efaf70e6fe2d7ed6b16c1b0",
   "scope": "Regional review and current-data consistency, not a complete attested city/month prefect list or a SAN14 export.",
   "boundary_definition": "Different opening owners connected by links, sea_links or travel_routes; each unordered city pair is listed once. These are network borders, not geographic administrative boundary polygons.",
   "historical_count": 23,
@@ -21,7 +21,7 @@
     "future_factions": 2,
     "scheduled_faction_foundings": 2,
     "scheduled_faction_coups": 1,
-    "boundary_links": 1639,
+    "boundary_links": 1648,
     "opening_officers": 9023,
     "new_factions": 43,
     "city_changes": 109,
@@ -35,7 +35,7 @@
     "future_factions": 0,
     "scheduled_faction_foundings": 0,
     "scheduled_faction_coups": 0,
-    "boundary_links": 412,
+    "boundary_links": 414,
     "opening_officers": 2219,
     "new_factions": 13,
     "city_changes": 14,
@@ -171,7 +171,7 @@
       "title": "184年2月 · 黄巾之乱",
       "title_ja": "184年2月 · 黄巾之乱",
       "catalog_file": "game/data/campaigns/184-02.json",
-      "catalog_sha256": "cee9b53f9ba6130e49b088b3442a8cdf31335f639d26f04ece1ae727ab13be11",
+      "catalog_sha256": "9378154bb42ae3f3385f0527bbb031e27ea3608d7bc8a5bb21ce3b4ab4179212",
       "factions": [
         {
           "id": "ding_yuan",
@@ -193,7 +193,7 @@
         },
         {
           "id": "goguryeo",
-          "ruler": "故国川王",
+          "ruler": "男武",
           "person_id": "historical-goguryeo-gogukcheon",
           "city": "guonei",
           "city_name": "国内城",
@@ -2264,6 +2264,23 @@
         },
         {
           "cities": [
+            "liucheng",
+            "yuyang"
+          ],
+          "owners": [
+            "wuhuan",
+            "gongsun_zan"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "nanyang",
             "xiangyang"
           ],
@@ -2628,7 +2645,7 @@
         },
         {
           "person_id": "historical-goguryeo-gogukcheon",
-          "name": "故国川王",
+          "name": "男武",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -5973,7 +5990,7 @@
       "title": "188年6月 · 漢朝搖搖欲墜",
       "title_ja": "揺らぐ漢朝",
       "catalog_file": "game/data/campaigns/188-06.json",
-      "catalog_sha256": "2c7e6061fc7fcce1fc455aea84b84a22044de6364f53d581824ad13e90d48f8c",
+      "catalog_sha256": "3e619cab45f873a8e6c49ca75a18235af3ffc83d7404adaa2a70690b6b621c4c",
       "factions": [
         {
           "id": "ding_yuan",
@@ -5995,7 +6012,7 @@
         },
         {
           "id": "goguryeo",
-          "ruler": "故国川王",
+          "ruler": "男武",
           "person_id": "historical-goguryeo-gogukcheon",
           "city": "guonei",
           "city_name": "国内城",
@@ -7805,6 +7822,23 @@
         },
         {
           "cities": [
+            "liucheng",
+            "yuyang"
+          ],
+          "owners": [
+            "wuhuan",
+            "zhang_chun"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "longxi",
             "tianshui"
           ],
@@ -8134,7 +8168,7 @@
         },
         {
           "person_id": "historical-goguryeo-gogukcheon",
-          "name": "故国川王",
+          "name": "男武",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -11952,7 +11986,7 @@
       "title": "190年1月 · 反董卓联盟",
       "title_ja": "190年1月 · 反董卓联盟",
       "catalog_file": "game/data/campaigns/190-01.json",
-      "catalog_sha256": "d82e58db119d35a74167b1a890fbfb51136dd41278b8de55a7ff6a0c7cb3bef1",
+      "catalog_sha256": "cc317da854f287f035b6e4ea71f67ba5380cacb2ff61384464ba3c50891c8616",
       "factions": [
         {
           "id": "bao_xin",
@@ -11974,7 +12008,7 @@
         },
         {
           "id": "goguryeo",
-          "ruler": "故国川王",
+          "ruler": "男武",
           "person_id": "historical-goguryeo-gogukcheon",
           "city": "guonei",
           "city_name": "国内城",
@@ -14590,6 +14624,23 @@
         },
         {
           "cities": [
+            "liucheng",
+            "yuyang"
+          ],
+          "owners": [
+            "wuhuan",
+            "gongsun_zan"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "longxi",
             "tianshui"
           ],
@@ -15092,7 +15143,7 @@
         },
         {
           "person_id": "historical-goguryeo-gogukcheon",
-          "name": "故国川王",
+          "name": "男武",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -20176,7 +20227,7 @@
       "title": "191年10月 · 二袁的意图",
       "title_ja": "191年10月 · 二袁的意图",
       "catalog_file": "game/data/campaigns/191-10.json",
-      "catalog_sha256": "28617da443fc8b50503635b03cc2c10702ff85464801018ffa16789deebdecc1",
+      "catalog_sha256": "3af7642685b79b15a20af25cbb9c54209ada0fbc326eabef8411d78f700c33db",
       "factions": [
         {
           "id": "bao_xin",
@@ -20198,7 +20249,7 @@
         },
         {
           "id": "goguryeo",
-          "ruler": "故国川王",
+          "ruler": "男武",
           "person_id": "historical-goguryeo-gogukcheon",
           "city": "guonei",
           "city_name": "国内城",
@@ -22726,6 +22777,23 @@
         },
         {
           "cities": [
+            "liucheng",
+            "yuyang"
+          ],
+          "owners": [
+            "wuhuan",
+            "gongsun_zan"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "longxi",
             "tianshui"
           ],
@@ -23180,7 +23248,7 @@
         },
         {
           "person_id": "historical-goguryeo-gogukcheon",
-          "name": "故国川王",
+          "name": "男武",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -28461,11 +28529,11 @@
       "title": "194年6月 · 群雄割据",
       "title_ja": "194年6月 · 群雄割据",
       "catalog_file": "game/data/campaigns/194-06.json",
-      "catalog_sha256": "a1390f75781b1e773205101edcaaf982ba2b9f08f546a98a607c2595922d578f",
+      "catalog_sha256": "a66fe63069d641971abf065c1ac9ecede421c64ad5794c9f35fcdee04dbae725",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "故国川王",
+          "ruler": "男武",
           "person_id": "historical-goguryeo-gogukcheon",
           "city": "guonei",
           "city_name": "国内城",
@@ -31117,6 +31185,23 @@
         },
         {
           "cities": [
+            "liucheng",
+            "yuyang"
+          ],
+          "owners": [
+            "wuhuan",
+            "gongsun_zan"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "longxi",
             "tianshui"
           ],
@@ -31641,7 +31726,7 @@
         },
         {
           "person_id": "historical-goguryeo-gogukcheon",
-          "name": "故国川王",
+          "name": "男武",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -37000,11 +37085,11 @@
       "title": "196年6月 · 曹操得勢",
       "title_ja": "曹操の台頭",
       "catalog_file": "game/data/campaigns/196-06.json",
-      "catalog_sha256": "f3def63066ba064a35e70d4d3f8a84327d5548f73b12a3f881db5e73bd4a0963",
+      "catalog_sha256": "c09fab3b499b69a7108f13a00ef8376e06ee6d3c40609e209239282153dbe768",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "故国川王",
+          "ruler": "男武",
           "person_id": "historical-goguryeo-gogukcheon",
           "city": "guonei",
           "city_name": "国内城",
@@ -39652,6 +39737,23 @@
         },
         {
           "cities": [
+            "liucheng",
+            "yuyang"
+          ],
+          "owners": [
+            "wuhuan",
+            "gongsun_zan"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "longxi",
             "tianshui"
           ],
@@ -40246,7 +40348,7 @@
         },
         {
           "person_id": "historical-goguryeo-gogukcheon",
-          "name": "故国川王",
+          "name": "男武",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -45607,11 +45709,11 @@
       "title": "198年3月 · 呂布討伐戰",
       "title_ja": "呂布討伐戦",
       "catalog_file": "game/data/campaigns/198-03.json",
-      "catalog_sha256": "821cf45f75407301684f6b06a6c2ca14c07ea477c601f272d4f1695f156bd681",
+      "catalog_sha256": "e5d8c9caa3a90ceda24e05b67aa983035e4571e06b60ae73d461f696dd533f47",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -48133,6 +48235,23 @@
         },
         {
           "cities": [
+            "liucheng",
+            "yuyang"
+          ],
+          "owners": [
+            "wuhuan",
+            "gongsun_zan"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "longxi",
             "tianshui"
           ],
@@ -48727,7 +48846,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -53958,11 +54077,11 @@
       "title": "200年1月 · 官渡之战",
       "title_ja": "200年1月 · 官渡之战",
       "catalog_file": "game/data/campaigns/200-01.json",
-      "catalog_sha256": "918846f84acd8b085017fcbaaa8cbc27a7923205f8f9700570a3467c95067da5",
+      "catalog_sha256": "b5a4f4b7c7d3e51aa904c2975b49659d9d7aa14ddad04892f4b5478281a27187",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -56139,6 +56258,23 @@
         },
         {
           "cities": [
+            "liucheng",
+            "yuyang"
+          ],
+          "owners": [
+            "wuhuan",
+            "yuan_shao"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "longxi",
             "tianshui"
           ],
@@ -56544,7 +56680,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -61856,7 +61992,7 @@
       "title": "202年6月 · 河北爭亂",
       "title_ja": "河北争乱",
       "catalog_file": "game/data/campaigns/202-06.json",
-      "catalog_sha256": "b4b60453b0f88986efa08df1682d2c750133b67c8ef192b030fe63f87c1fcee8",
+      "catalog_sha256": "12e2a20d85c7f746de9cb04d832cd0fef16324969177423202c8a8ba5028061d",
       "factions": [
         {
           "id": "gao_gan",
@@ -61869,7 +62005,7 @@
         },
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -64131,6 +64267,23 @@
         },
         {
           "cities": [
+            "liucheng",
+            "yuyang"
+          ],
+          "owners": [
+            "wuhuan",
+            "yuan_xi"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "longxi",
             "tianshui"
           ],
@@ -64551,7 +64704,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -69781,11 +69934,11 @@
       "title": "207年9月 · 三顾茅庐",
       "title_ja": "207年9月 · 三顾茅庐",
       "catalog_file": "game/data/campaigns/207-09.json",
-      "catalog_sha256": "01f063f5f43b94d6a4a3119a6025512e945dcb32e0c07f8133fe266934eb2561",
+      "catalog_sha256": "a794356250ba01ca188ad9eec2a4e7d0379631166ab21dccd5d18ebd67046951",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -72046,7 +72199,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -78124,11 +78277,11 @@
       "title": "208年10月 · 赤壁之战",
       "title_ja": "208年10月 · 赤壁之战",
       "catalog_file": "game/data/campaigns/208-10.json",
-      "catalog_sha256": "f57dac8b9ce2b43fe30c93e2b58a97eaed36e73bd3563e2cf10e6ffbfd59b71e",
+      "catalog_sha256": "ea915e5e034864a353caab308863e4362a66c423c5835355f0dc7d3ae4de944c",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -80515,7 +80668,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -86649,11 +86802,11 @@
       "title": "211年7月 · 潼關之戰",
       "title_ja": "潼関の戦い",
       "catalog_file": "game/data/campaigns/211-07-tongguan.json",
-      "catalog_sha256": "a7cf8f7118af44631f9d9374a56631607549ae7255a9fbc1cc21ec3f561d329b",
+      "catalog_sha256": "7701aa05dadc101c1fc144cd0c9345ed48a6d3bebf2a2c6a4c6cf00e516b1b3e",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -88752,7 +88905,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -93954,11 +94107,11 @@
       "title": "212年12月 · 入蜀爭奪戰",
       "title_ja": "入蜀争奪戦",
       "catalog_file": "game/data/campaigns/212-12.json",
-      "catalog_sha256": "36ab6a73eac682b8d76e11f749a2c72bdac66d269028925c58ea671c02150cfc",
+      "catalog_sha256": "92e2a0336810739ba81fd06d1e5630fc9853349e57c103d30bf43599f5519dd7",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -96031,7 +96184,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -102271,11 +102424,11 @@
       "title": "215年8月 · 合淝之戰",
       "title_ja": "合肥の戦い",
       "catalog_file": "game/data/campaigns/215-08.json",
-      "catalog_sha256": "a454e8cd7c062d6ff4d9f14b16a778255992d78074dbc04833c16b9556e088f3",
+      "catalog_sha256": "c5bfc11c03e47ea2d7e39dd7b99301380e44dd4fd47ad179a3523313c5a0267b",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -103906,7 +104059,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -108322,11 +108475,11 @@
       "title": "217年7月 · 汉中争夺战",
       "title_ja": "217年7月 · 汉中争夺战",
       "catalog_file": "game/data/campaigns/217-07.json",
-      "catalog_sha256": "ac0eab10f0f896a3ece52b07fb816d8834e32d995c56ffeb992323dc97afb7fe",
+      "catalog_sha256": "4fd6a9324499a92bb9414ffe05f9d00be48610eacd99c825068eb9f8629afccd",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -109977,7 +110130,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -114454,11 +114607,11 @@
       "title": "219年7月 · 关羽包围网",
       "title_ja": "219年7月 · 关羽包围网",
       "catalog_file": "game/data/campaigns/219-07.json",
-      "catalog_sha256": "a33287b28df2c0da7659bcfef543eaf57d7348328cf14e2062fa9a9062d5517e",
+      "catalog_sha256": "e8270f329eee6c1b5c86d963082c7e37e69619725e258d5dbe0bcc194368806f",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -116110,7 +116263,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -120660,11 +120813,11 @@
       "title": "221年7月 · 夷陵前夕",
       "title_ja": "221年7月 · 夷陵前夕",
       "catalog_file": "game/data/campaigns/221-07.json",
-      "catalog_sha256": "22569977e2be21f743c1afb0f6480a7c323db8295c02d36043f722f7595402fc",
+      "catalog_sha256": "0002d1013f98a063bf62a1d09a1f248df8c7bbd30621ed182f2b6579ec54274b",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -122312,7 +122465,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -126571,11 +126724,11 @@
       "title": "225年7月 · 征伐南蠻",
       "title_ja": "南蛮征伐",
       "catalog_file": "game/data/campaigns/225-07.json",
-      "catalog_sha256": "60dacf50e7978f2e5eb6c278e66ef0df50cbab6fa89ba7bca5e3448fb3346126",
+      "catalog_sha256": "a2194a24c26efaa3e0ebd170155d76fa9913e2f189f418f268751bab538c86a3",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -128337,7 +128490,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -132587,11 +132740,11 @@
       "title": "227年2月 · 出师表",
       "title_ja": "227年2月 · 出师表",
       "catalog_file": "game/data/campaigns/227-02.json",
-      "catalog_sha256": "b718ddd669c32faa1dc9758c4599b5768d9e0222c2ad0fb5f113a091b15de67c",
+      "catalog_sha256": "7197d724379e5c1692a0dd14faac073f1390e7e0e86a9a7df784a17e08948f0b",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -134198,7 +134351,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -138028,11 +138181,11 @@
       "title": "234年2月 · 秋風五丈原",
       "title_ja": "秋風五丈原",
       "catalog_file": "game/data/campaigns/234-02.json",
-      "catalog_sha256": "010b564befac244ab2a78437d082ea49e0caa0f4682686156e4c70227573f9bc",
+      "catalog_sha256": "d91260be4ece1c7b5b47a1f6c86b3ed125c824b4a30dbbd465d82f320c3b6aa8",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "东川王",
+          "ruler": "忧位居",
           "person_id": "historical-goguryeo-dongcheon",
           "city": "guonei",
           "city_name": "国内城",
@@ -139553,7 +139706,7 @@
         },
         {
           "person_id": "historical-goguryeo-dongcheon",
-          "name": "东川王",
+          "name": "忧位居",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -142979,11 +143132,11 @@
       "title": "238年1月 · 征讨辽东",
       "title_ja": "238年1月 · 征讨辽东",
       "catalog_file": "game/data/campaigns/238-01.json",
-      "catalog_sha256": "d8777e691cf1bcfb2bb424603981ea4d4b8785ea6782902b9462205bb2e0ea94",
+      "catalog_sha256": "a17c3a37b8da8183d6e0281ad41669f5478a43afd865ab6788c34f7a64de81e5",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "东川王",
+          "ruler": "忧位居",
           "person_id": "historical-goguryeo-dongcheon",
           "city": "guonei",
           "city_name": "国内城",
@@ -144504,7 +144657,7 @@
         },
         {
           "person_id": "historical-goguryeo-dongcheon",
-          "name": "东川王",
+          "name": "忧位居",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -147861,11 +148014,11 @@
       "title": "249年1月 · 正始之变",
       "title_ja": "249年1月 · 正始之变",
       "catalog_file": "game/data/campaigns/249-01.json",
-      "catalog_sha256": "cf1bc1af07572a32b72fc8560bb8a11404dd6eb7c612c8ecfe067ed5c037c6c9",
+      "catalog_sha256": "844c14f51c852bebd73ee20aa3b040c6f3ee615a71897d75ccab9ad6ca41f9d7",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "中川王",
+          "ruler": "然弗",
           "person_id": "historical-goguryeo-jungcheon",
           "city": "guonei",
           "city_name": "国内城",
@@ -149311,7 +149464,7 @@
         },
         {
           "person_id": "historical-goguryeo-jungcheon",
-          "name": "中川王",
+          "name": "然弗",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -152293,11 +152446,11 @@
       "title": "263年5月 · 蜀漢滅亡",
       "title_ja": "蜀漢の滅亡",
       "catalog_file": "game/data/campaigns/263-05.json",
-      "catalog_sha256": "3e5269536a8cf940e7db9d7909b0a5f0004ff8984524fc6771e9281ceea469c7",
+      "catalog_sha256": "f7c37e2e7e2abeb5ccf69e93aa86f094c7dc1ac11f00233aa73d5e18eedd9e5d",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "中川王",
+          "ruler": "然弗",
           "person_id": "historical-goguryeo-jungcheon",
           "city": "guonei",
           "city_name": "国内城",
@@ -153958,7 +154111,7 @@
         },
         {
           "person_id": "historical-goguryeo-jungcheon",
-          "name": "中川王",
+          "name": "然弗",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -155989,11 +156142,11 @@
       "title": "197年7月 · 皇帝呂布",
       "title_ja": "皇帝呂布",
       "catalog_file": "game/data/campaigns/197-07.json",
-      "catalog_sha256": "e5c5418b6c4969b2b618316a2ffd61f4dd3c6246c5efc842206c7a49d154a99d",
+      "catalog_sha256": "e1bbf826ac20c171f94d6d644a0014b8a8ef07ebce497dfadba02d33cf143164",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -158590,6 +158743,23 @@
         },
         {
           "cities": [
+            "liucheng",
+            "yuyang"
+          ],
+          "owners": [
+            "wuhuan",
+            "gongsun_zan"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "longxi",
             "tianshui"
           ],
@@ -159221,7 +159391,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -164523,11 +164693,11 @@
       "title": "201年5月 · 華北霸者・袁紹",
       "title_ja": "華北の覇者・袁紹",
       "catalog_file": "game/data/campaigns/201-05.json",
-      "catalog_sha256": "76d5a0a7856a20424ba37a9e8ab161e49ff5bf1c57104cb9475bfced44f2eb98",
+      "catalog_sha256": "2fddefa8738e9655e24f664b1e6a00de0b34cf0f25b9e46f1d56a9b0767cfc3f",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -166493,6 +166663,23 @@
         },
         {
           "cities": [
+            "liucheng",
+            "yuyang"
+          ],
+          "owners": [
+            "wuhuan",
+            "yuan_shao"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "longxi",
             "tianshui"
           ],
@@ -166898,7 +167085,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -171484,11 +171671,11 @@
       "title": "209年6月 · 志在千里",
       "title_ja": "志在千里",
       "catalog_file": "game/data/campaigns/209-06.json",
-      "catalog_sha256": "cc3bd70bc782760c568bc5eab916036332dab7a3672dcea19ff2b625c9036d28",
+      "catalog_sha256": "5496f07bd5f4dbc73fca42d48c02435706d6ce5c4047b9ecc7e0126aefb656a1",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -173574,7 +173761,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -178305,11 +178492,11 @@
       "title": "210年11月 · 二分天下之計",
       "title_ja": "天下二分計",
       "catalog_file": "game/data/campaigns/210-11.json",
-      "catalog_sha256": "30e9d4ab14bff8a69378091f95caef8dcb160a75d5bbeb1c6f56912d258ca750",
+      "catalog_sha256": "453b41e798e96e78a1b657bcec892b529410fccf6ba78d6ff167e41b6ad6f699",
       "factions": [
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -180321,7 +180508,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",
@@ -185126,7 +185313,7 @@
       "title": "212年6月 · 錦馬超展翅高飛",
       "title_ja": "錦馬超飛翔",
       "catalog_file": "game/data/campaigns/212-06.json",
-      "catalog_sha256": "c82545bc9f03017909c5304b576eef8a9f2e741318b17471208782b0e2530874",
+      "catalog_sha256": "fb75ee4de70a61dceef08d1b82c1531b468ec93889b6d1b8f1d99c0dfe6ab154",
       "factions": [
         {
           "id": "cao_zhang",
@@ -185139,7 +185326,7 @@
         },
         {
           "id": "goguryeo",
-          "ruler": "山上王",
+          "ruler": "延优",
           "person_id": "historical-goguryeo-sansang",
           "city": "guonei",
           "city_name": "国内城",
@@ -187429,7 +187616,7 @@
         },
         {
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "status": "serving",
           "faction": "goguryeo",
           "city": "guonei",

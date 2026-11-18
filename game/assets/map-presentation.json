@@ -4204,35 +4204,35 @@
       "road_geometry_sha256": "3d1ca54f92a7b09af7ecd000be0c0dcaaff982c8a4920f20e5960787840aca73",
       "land_path_sha256": "54d3ce279ff2650c1da9e768f9c91cd7601b2611bcca94ae2f372bc29dd9ea40",
       "catalogs": {
-        "game/data/campaigns/184-02.json": "cee9b53f9ba6130e49b088b3442a8cdf31335f639d26f04ece1ae727ab13be11",
-        "game/data/campaigns/188-06.json": "2c7e6061fc7fcce1fc455aea84b84a22044de6364f53d581824ad13e90d48f8c",
-        "game/data/campaigns/190-01.json": "d82e58db119d35a74167b1a890fbfb51136dd41278b8de55a7ff6a0c7cb3bef1",
-        "game/data/campaigns/191-10.json": "28617da443fc8b50503635b03cc2c10702ff85464801018ffa16789deebdecc1",
-        "game/data/campaigns/194-06.json": "a1390f75781b1e773205101edcaaf982ba2b9f08f546a98a607c2595922d578f",
-        "game/data/campaigns/196-06.json": "f3def63066ba064a35e70d4d3f8a84327d5548f73b12a3f881db5e73bd4a0963",
-        "game/data/campaigns/197-07.json": "e5c5418b6c4969b2b618316a2ffd61f4dd3c6246c5efc842206c7a49d154a99d",
-        "game/data/campaigns/198-03.json": "821cf45f75407301684f6b06a6c2ca14c07ea477c601f272d4f1695f156bd681",
-        "game/data/campaigns/200-01.json": "918846f84acd8b085017fcbaaa8cbc27a7923205f8f9700570a3467c95067da5",
-        "game/data/campaigns/201-05.json": "76d5a0a7856a20424ba37a9e8ab161e49ff5bf1c57104cb9475bfced44f2eb98",
-        "game/data/campaigns/202-06.json": "b4b60453b0f88986efa08df1682d2c750133b67c8ef192b030fe63f87c1fcee8",
-        "game/data/campaigns/207-09.json": "01f063f5f43b94d6a4a3119a6025512e945dcb32e0c07f8133fe266934eb2561",
-        "game/data/campaigns/208-10.json": "f57dac8b9ce2b43fe30c93e2b58a97eaed36e73bd3563e2cf10e6ffbfd59b71e",
-        "game/data/campaigns/209-06.json": "cc3bd70bc782760c568bc5eab916036332dab7a3672dcea19ff2b625c9036d28",
-        "game/data/campaigns/210-11.json": "30e9d4ab14bff8a69378091f95caef8dcb160a75d5bbeb1c6f56912d258ca750",
-        "game/data/campaigns/211-07-tongguan.json": "a7cf8f7118af44631f9d9374a56631607549ae7255a9fbc1cc21ec3f561d329b",
-        "game/data/campaigns/212-06.json": "c82545bc9f03017909c5304b576eef8a9f2e741318b17471208782b0e2530874",
-        "game/data/campaigns/212-12.json": "36ab6a73eac682b8d76e11f749a2c72bdac66d269028925c58ea671c02150cfc",
-        "game/data/campaigns/215-08.json": "a454e8cd7c062d6ff4d9f14b16a778255992d78074dbc04833c16b9556e088f3",
-        "game/data/campaigns/217-07.json": "ac0eab10f0f896a3ece52b07fb816d8834e32d995c56ffeb992323dc97afb7fe",
-        "game/data/campaigns/219-07.json": "a33287b28df2c0da7659bcfef543eaf57d7348328cf14e2062fa9a9062d5517e",
-        "game/data/campaigns/221-07.json": "22569977e2be21f743c1afb0f6480a7c323db8295c02d36043f722f7595402fc",
-        "game/data/campaigns/225-07.json": "60dacf50e7978f2e5eb6c278e66ef0df50cbab6fa89ba7bca5e3448fb3346126",
-        "game/data/campaigns/227-02.json": "b718ddd669c32faa1dc9758c4599b5768d9e0222c2ad0fb5f113a091b15de67c",
-        "game/data/campaigns/234-02.json": "010b564befac244ab2a78437d082ea49e0caa0f4682686156e4c70227573f9bc",
-        "game/data/campaigns/235-01.json": "7e763438038c4fbaddff52706d1b4f154080413d7bee066c1c845a8464df301b",
-        "game/data/campaigns/238-01.json": "d8777e691cf1bcfb2bb424603981ea4d4b8785ea6782902b9462205bb2e0ea94",
-        "game/data/campaigns/249-01.json": "cf1bc1af07572a32b72fc8560bb8a11404dd6eb7c612c8ecfe067ed5c037c6c9",
-        "game/data/campaigns/263-05.json": "3e5269536a8cf940e7db9d7909b0a5f0004ff8984524fc6771e9281ceea469c7"
+        "game/data/campaigns/184-02.json": "9378154bb42ae3f3385f0527bbb031e27ea3608d7bc8a5bb21ce3b4ab4179212",
+        "game/data/campaigns/188-06.json": "3e619cab45f873a8e6c49ca75a18235af3ffc83d7404adaa2a70690b6b621c4c",
+        "game/data/campaigns/190-01.json": "cc317da854f287f035b6e4ea71f67ba5380cacb2ff61384464ba3c50891c8616",
+        "game/data/campaigns/191-10.json": "3af7642685b79b15a20af25cbb9c54209ada0fbc326eabef8411d78f700c33db",
+        "game/data/campaigns/194-06.json": "a66fe63069d641971abf065c1ac9ecede421c64ad5794c9f35fcdee04dbae725",
+        "game/data/campaigns/196-06.json": "c09fab3b499b69a7108f13a00ef8376e06ee6d3c40609e209239282153dbe768",
+        "game/data/campaigns/197-07.json": "e1bbf826ac20c171f94d6d644a0014b8a8ef07ebce497dfadba02d33cf143164",
+        "game/data/campaigns/198-03.json": "e5d8c9caa3a90ceda24e05b67aa983035e4571e06b60ae73d461f696dd533f47",
+        "game/data/campaigns/200-01.json": "b5a4f4b7c7d3e51aa904c2975b49659d9d7aa14ddad04892f4b5478281a27187",
+        "game/data/campaigns/201-05.json": "2fddefa8738e9655e24f664b1e6a00de0b34cf0f25b9e46f1d56a9b0767cfc3f",
+        "game/data/campaigns/202-06.json": "12e2a20d85c7f746de9cb04d832cd0fef16324969177423202c8a8ba5028061d",
+        "game/data/campaigns/207-09.json": "a794356250ba01ca188ad9eec2a4e7d0379631166ab21dccd5d18ebd67046951",
+        "game/data/campaigns/208-10.json": "ea915e5e034864a353caab308863e4362a66c423c5835355f0dc7d3ae4de944c",
+        "game/data/campaigns/209-06.json": "5496f07bd5f4dbc73fca42d48c02435706d6ce5c4047b9ecc7e0126aefb656a1",
+        "game/data/campaigns/210-11.json": "453b41e798e96e78a1b657bcec892b529410fccf6ba78d6ff167e41b6ad6f699",
+        "game/data/campaigns/211-07-tongguan.json": "7701aa05dadc101c1fc144cd0c9345ed48a6d3bebf2a2c6a4c6cf00e516b1b3e",
+        "game/data/campaigns/212-06.json": "fb75ee4de70a61dceef08d1b82c1531b468ec93889b6d1b8f1d99c0dfe6ab154",
+        "game/data/campaigns/212-12.json": "92e2a0336810739ba81fd06d1e5630fc9853349e57c103d30bf43599f5519dd7",
+        "game/data/campaigns/215-08.json": "c5bfc11c03e47ea2d7e39dd7b99301380e44dd4fd47ad179a3523313c5a0267b",
+        "game/data/campaigns/217-07.json": "4fd6a9324499a92bb9414ffe05f9d00be48610eacd99c825068eb9f8629afccd",
+        "game/data/campaigns/219-07.json": "e8270f329eee6c1b5c86d963082c7e37e69619725e258d5dbe0bcc194368806f",
+        "game/data/campaigns/221-07.json": "0002d1013f98a063bf62a1d09a1f248df8c7bbd30621ed182f2b6579ec54274b",
+        "game/data/campaigns/225-07.json": "a2194a24c26efaa3e0ebd170155d76fa9913e2f189f418f268751bab538c86a3",
+        "game/data/campaigns/227-02.json": "7197d724379e5c1692a0dd14faac073f1390e7e0e86a9a7df784a17e08948f0b",
+        "game/data/campaigns/234-02.json": "d91260be4ece1c7b5b47a1f6c86b3ed125c824b4a30dbbd465d82f320c3b6aa8",
+        "game/data/campaigns/235-01.json": "1bc95d886f0a399f3915fba0ced21d45ad5c63f6f5361c7cd30ed408598a1a9e",
+        "game/data/campaigns/238-01.json": "a17c3a37b8da8183d6e0281ad41669f5478a43afd865ab6788c34f7a64de81e5",
+        "game/data/campaigns/249-01.json": "844c14f51c852bebd73ee20aa3b040c6f3ee615a71897d75ccab9ad6ca41f9d7",
+        "game/data/campaigns/263-05.json": "f7c37e2e7e2abeb5ccf69e93aa86f094c7dc1ac11f00233aa73d5e18eedd9e5d"
       }
     },
     "style": [
@@ -5135,14 +5135,14 @@
         "water_length": 4.5
       },
       "bridge-075": {
-        "d": "M1042.83 78.94L1043.11 79.36L1043.39 79.77L1043.93 80.61L1044.19 81.04L1044.45 81.46L1044.71 81.89L1044.96 82.33L1045.2 82.76L1045.44 83.2",
+        "d": "M1042.72 78.78L1043 79.2L1043.28 79.61L1043.56 80.03L1043.83 80.45L1044.09 80.87L1044.61 81.73L1044.86 82.16L1045.11 82.6L1045.35 83.03",
         "center": [
-          1044.19,
-          81.04
+          1044.09,
+          80.87
         ],
         "axis": [
-          0.523,
-          0.852
+          0.526,
+          0.85
         ],
         "water_length": 2.5
       },
@@ -5586,7 +5586,7 @@
       "M360 414L352.5 416.5Q345 419 337 424Q329 429 322 431L315 433": [
         "bridge-074"
       ],
-      "M965 66L973 57.5Q981 49 991 48Q1001 47 1012 53Q1023 59 1034 69Q1045 79 1048.5 90.5Q1052 102 1044.5 114.5L1037 127": [
+      "M1023 59L1034 69Q1045 79 1048.5 90.5Q1052 102 1044.5 114.5L1037 127": [
         "bridge-075"
       ],
       "M827 340L812.5 334.5Q798 329 784 324.5Q770 320 752.5 316.5Q735 313 717 312Q699 311 689.5 309Q680 307 673 304L666 301": [
@@ -5677,9 +5677,9 @@
       ]
     },
     "audit": {
-      "land_strokes": 429,
+      "land_strokes": 431,
       "baked_strokes": 198,
-      "dynamic_strokes": 232,
+      "dynamic_strokes": 234,
       "water_crossings": 109,
       "unique_bridges": 104,
       "baked_bridges": 66,
@@ -5827,6 +5827,7 @@
         "liaoxi:liucheng": [
           "bridge-100"
         ],
+        "liucheng:yuyang": [],
         "liaodong:xuantu": [],
         "guonei:xuantu": [],
         "bajun:jiangyang": [],

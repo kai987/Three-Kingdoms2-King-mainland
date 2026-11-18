@@ -1,0 +1,59 @@
+{
+  "schema": "tk2-retainer-portrait-additions-v1",
+  "native_size": [
+    32,
+    40
+  ],
+  "enhanced_size": [
+    128,
+    160
+  ],
+  "source": "Three independent built-in ImageGen originals for two Sun Wu envoys and Gogukcheon of Goguryeo.",
+  "people": [
+    {
+      "person_id": "historical-zhu-ying-wu",
+      "name": "朱應",
+      "art_gender_design": "male",
+      "source_kind": "imagegen_new_pixel_art",
+      "source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-zhu-ying-wu.png",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_sha256": "d48b3566a4f167718aeec4ad1cdb56600e40a2c92a48644dd59c5a43c503e1f5",
+      "source_matte": "white",
+      "prompt": "art/portraits/envoys-and-gogukcheon-v1/prompts/historical-zhu-ying-wu.txt",
+      "prompt_sha256": "70012cbf04482c492f3d64f15778075e0ce0d03981072308d6d773d016ab5a12"
+    },
+    {
+      "person_id": "historical-kang-tai-wu",
+      "name": "康泰",
+      "art_gender_design": "male",
+      "source_kind": "imagegen_new_pixel_art",
+      "source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-kang-tai-wu.png",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_sha256": "212358684a9f7f5c686a38a2bfbe93ca1f87160ebb6adbb1be305bc38f982a7b",
+      "source_matte": "white",
+      "prompt": "art/portraits/envoys-and-gogukcheon-v1/prompts/historical-kang-tai-wu.txt",
+      "prompt_sha256": "3cdba7aaa7617b749c2e6b0bcfbe4ef830a2e937233e432b99f2747dbe9da3d6"
+    },
+    {
+      "person_id": "historical-goguryeo-gogukcheon",
+      "name": "男武",
+      "art_gender_design": "male",
+      "source_kind": "imagegen_new_pixel_art",
+      "source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-goguryeo-gogukcheon.png",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_sha256": "0d56e174ae43a9a95421bf1d4cd9c07b400072fa26d1e29c873941987f33ea75",
+      "source_matte": "white",
+      "prompt": "art/portraits/envoys-and-gogukcheon-v1/prompts/historical-goguryeo-gogukcheon.txt",
+      "prompt_sha256": "2caf61540a7a2d225246cfa9fc92f45e4afde19e35af8c51dd4e5fc7437899f6"
+    }
+  ]
+}

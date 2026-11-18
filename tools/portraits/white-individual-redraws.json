@@ -13133,6 +13133,11 @@
     "overall_refinement": {
       "reference_sha256": "9c28e7f78a3d9cdb4129e31293571fabbcee4ab29cb6d18a2f33f3232037b3e0",
       "study_sha256": "f4df92175a14846c1753fc5bd171858923b5a9deb4439e348b807c9b9e2259d7"
+    },
+    "black_hair_redraw": {
+      "reference_sha256": "d48a2075f47dea6125313c7a6a261b8a23f6bc4059548a553005330110ba5df7",
+      "study_sha256": "a911cf8b1594b627c887b73a4902372ebc8eeb76beb7c15dc85486bbccd577d4",
+      "output_sha256": "568bc065da9ed21ac167e4d7c8257f83c9a0cc2cc156aef67465ca15286fccda"
     }
   },
   "san14-candidate-0741": {

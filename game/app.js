@@ -543,7 +543,7 @@ function setPreviewFaction(id,focus=null,reveal=false){
  }
  return true;
 }
-function layoutCityLabels(cities,offsets,world){
+function layoutCityLabels(cities,offsets,world,labelFor=cityName){
  const above=[0,-17,'middle'];
  const nearby=[above,[0,38,'middle'],[-23,8,'end'],[23,8,'start'],
   [-23,-13,'end'],[23,-13,'start'],[-23,29,'end'],[23,29,'start'],
@@ -555,7 +555,7 @@ function layoutCityLabels(cities,offsets,world){
  const overlaps=(a,b)=>a[0]<b[2]&&a[2]>b[0]&&a[1]<b[3]&&a[3]>b[1];
  const top=world.y||0;
  const plans=cities.map((city,index)=>{
-  const [x,y]=positions[index],name=cityName(city.id);
+  const [x,y]=positions[index],name=labelFor(city.id);
   // The map uses 16-unit Unifont with a 3-unit outline.
   const width=Array.from(GameI18n.t(name)).length*16;
   const ownFrame=[x-21,y-13,x+21,y+21];
@@ -584,7 +584,18 @@ function renderMap(){
  const game=view.game,preview=setupPreview,owners=preview?.initial_owners||Object.fromEntries(Object.values(game?.cities||{}).map(c=>[c.id,c.owner]));
  const board=preview?.map_cities||view.catalog.cities;
  const active=board.filter(c=>(preview?.active_cities||view.catalog.active_cities).includes(c.id));
- const factions=preview?.factions||view.catalog.factions,ownerName=(id,city)=>{const history=(preview?.city_history||view.catalog.city_history)?.[city];return id==='neutral'?(history?.neutral_label||(history?.opening?.basis==='unmapped_local_han_administration'?'地方汉郡（中立）':'无主')):factionDisplayName(factions.find(f=>f.id===id))||'守备军';};
+ const factions=preview?.factions||view.catalog.factions;
+ const goguryeo=factions.find(f=>f.id==='goguryeo');
+ const mapCityLabel=id=>id===goguryeo?.city&&owners[id]===goguryeo.id&&goguryeo.captain
+  ?`${cityName(id)} · ${goguryeo.captain}`:cityName(id);
+ const ownerName=(id,city)=>{
+  if(id==='neutral'){
+   const history=(preview?.city_history||view.catalog.city_history)?.[city];
+   return history?.neutral_label||(history?.opening?.basis==='unmapped_local_han_administration'?'地方汉郡（中立）':'无主');
+  }
+  const row=factions.find(f=>f.id===id);
+  return (id==='goguryeo'&&row?.captain)||factionDisplayName(row)||'守备军';
+ };
  const added=preview?.added_city_ids||view.catalog.added_city_ids||[],activeIds=new Set(active.map(c=>c.id));
  const cityProfiles=preview?.city_profiles||view.catalog.city_profiles||{};
  const focused=preview?.focus||selectedCity,selected=board.find(c=>c.id===focused),center=selected?mapPosition(selected):[760,440];
@@ -685,7 +696,7 @@ function renderMap(){
   return `<g data-regional-road="${r.from}-${r.to}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;
  })).join('');
  const offsets=preview?.city_label_offsets||view.catalog.city_label_offsets||{};
- const labels=cityLabels==='none'?'':layoutCityLabels(active,offsets,world)
+ const labels=cityLabels==='none'?'':layoutCityLabels(active,offsets,world,mapCityLabel)
   .filter(({city:c})=>cityLabels==='all'||(['giant','large'].includes(cityLabels)?cityProfiles[c.id]?.tier===cityLabels:added.includes(c.id)||view.catalog.map_presentation.labelled_city_ids.includes(c.id)||c.id===focused))
   .map(({city,name,x,y,anchor})=>`<text class="map-city-name" x="${x}" y="${y}" text-anchor="${anchor}" data-city-label="${city.id}" aria-hidden="true">${escapeHtml(name)}</text>`).join('');
  const bridges=mapBridgeLayer([roads,expansionRoads,regionalRoads,navigableSeas,navigableRivers]);
@@ -1684,6 +1695,7 @@ function personStatus(p){
  if(p.alive===false)return '已退出';
  if(p.prisoner)return battleText('俘虜','捕虜')+' · '+escapeHtml(cityName(p.prisoner.city));
  if(p.alive)return p.faction?escapeHtml(faction(p.faction)):'在野 · '+escapeHtml(cityName(p.location));
+ if(missionAway(p.era_assignment?.appearance_plan,view.game?.year))return battleText('出使中','使節として派遣中');
  const labels={not_born:'未出生',not_appeared:'未出仕',available:'年代合格',death_year_review:'卒年待核',dead:'已过卒年',unknown:'年代待核'};
  if(['not_born','not_appeared','dead'].includes(p.year_state))return labels[p.year_state];
  return {pending_history:'归属待考',pending_faction:'势力待接入',pending_capacity:'容量不足，尚未登场',scenario_excluded:'本剧本不登场'}[p.era_assignment?.status]||labels[p.year_state];
@@ -1714,6 +1726,9 @@ function sourceReference(value){
  if(typeof value!=='string'||value.trim()!==value||!value.startsWith('https://'))return null;
  try{const url=new URL(value);return url.protocol==='https:'&&url.hostname&&!url.username&&!url.password?url.href:null;}catch{return null;}
 }
+function missionAway(plan,year){
+ return plan?.mission_departure_year<=year&&year<plan.start?.[0];
+}
 function personPlacementEvidence(assignment){
  const review=assignment?.placement_review,plan=assignment?.appearance_plan;
  if(!review&&!plan)return '';
@@ -1722,6 +1737,11 @@ function personPlacementEvidence(assignment){
  const categories={game_reference:['公開遊戲配置參考','公開ゲームの配置資料を参考にした設定'],bounded_career_inference:['有年代界限的生涯推定','年代を限定した経歴に基づく推定'],authorial_region_placement:['本作區域防務配置','本作独自の地域・防衛配置'],historical_career_with_opening_station_inference:['依史料仕履推定開局駐地','史料上の経歴をもとに開始時の駐屯先を推定'],fictional_scenario_adaptation:['假想劇本配置','仮想シナリオの配置']};
  const excluded=['本劇本不登場','本シナリオでは登場しない'];
  const statuses={serving:['開局在籍','開始時に仕官中'],free:['開局在野','開始時に在野'],future_free:['到期於歸城在野待訪','登場期間に指定都市で在野となり、登用を待つ'],excluded,scenario_excluded:excluded};
+ if(plan?.status==='future'&&plan.faction){
+  const year=view.game?.year??review?.reference_date?.[0];
+  statuses.future=missionAway(plan,year)?[`出使中，${plan.start[0]}年歸隊`,`使節として派遣中。${plan.start[0]}年に復帰`]
+   :['到期於指定勢力出仕','登場期間に指定勢力へ仕官'];
+ }
  return ['zh-Hant','ja'].map(language=>{
   const ja=language==='ja',index=ja?1:0,heading=ja?'配置根拠と初登場の予定':'歸城依據與首次登場安排';
   const category=(categories[review?.historical_certainty]||['本作歸城複核','本作の配置確認'])[index];
@@ -1785,7 +1805,7 @@ function showPerson(id,{back=showLibrary,fromCity=false,fromList=false}={}){
   abilityEvidence=`<p>${dates}</p>${sourceLinks?`<p>${sourceLinks}</p>`:''}`;
  }
  const pendingNote=p.alive==null?{pending_capacity:'本剧本所属势力的城内容量不足，本人尚未加入战局，不计入在籍人数。',scenario_excluded:'本剧本明确设为不登场，不会在后续月份自动加入。',pending_history:'本剧本的所属或驻城尚待考证，未自动加入战局。',pending_faction:'本剧本尚未接入所属势力，未自动加入战局。'}[a?.status]:null;
- openPersonDialog(`${p.name} · 人物配置`,`${personProfileHead(id,p,runtime?'live':'catalog',runtime)}${typeof GameEquipment!=='undefined'?(runtime?GameEquipment.summary(view,id,{locale:GameI18n.locale,bilingual:true}):GameEquipment.render(p.equipment,{id:p.id,locale:GameI18n.locale,bilingual:true})):''}${initialStatDescription(p,runtime)}${p.study_gain?`<p class="small" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">目前知 ${p.intellect}＝開局來源知 ${p.base_intellect}＋本局學問所成長 ${p.study_gain}；學習不會改寫人物來源資料。</p><p class="small" data-locale-only="ja" data-l10n-native="ja">現在の知 ${p.intellect}＝開始時の知 ${p.base_intellect}＋この戦役の学問所の成長 ${p.study_gain}。人物の出典データは書き換えません。</p>`:''}${runtime?sourceEvidence(`<p>经 ${experience} · 原始经验 ${runtime.experience} · 经验等级 ${runtime.tier}。经沿用原版显示规则：原始经验每50点显示1；战斗等级单独按经验门槛判定。</p>`,`経 ${experience}・累積経験値 ${runtime.experience}・経験段階 ${runtime.tier}。原作と同じく累積経験値50点を「経」1として表示し、戦闘の段階は別の経験値境界で判定します。`):''}<p>${abilityNote}</p>${abilityEvidence}${pendingNote?`<p class="person-entry-status">${pendingNote}</p>`:''}${virtueDescription(p)}${a?.placement_review||a?.appearance_plan?personPlacementEvidence(a):''}${p.alive?`<p>当前战局：${escapeHtml(p.faction?faction(p.faction):'在野')} · ${escapeHtml(cityName(current||p.location||'待归城'))}</p>`:''}`,{back,fromCity,fromList});
+ openPersonDialog(`${officerDetailName(p)} · 人物配置`,`${personProfileHead(id,p,runtime?'live':'catalog',runtime)}${typeof GameEquipment!=='undefined'?(runtime?GameEquipment.summary(view,id,{locale:GameI18n.locale,bilingual:true}):GameEquipment.render(p.equipment,{id:p.id,locale:GameI18n.locale,bilingual:true})):''}${initialStatDescription(p,runtime)}${p.study_gain?`<p class="small" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">目前知 ${p.intellect}＝開局來源知 ${p.base_intellect}＋本局學問所成長 ${p.study_gain}；學習不會改寫人物來源資料。</p><p class="small" data-locale-only="ja" data-l10n-native="ja">現在の知 ${p.intellect}＝開始時の知 ${p.base_intellect}＋この戦役の学問所の成長 ${p.study_gain}。人物の出典データは書き換えません。</p>`:''}${runtime?sourceEvidence(`<p>经 ${experience} · 原始经验 ${runtime.experience} · 经验等级 ${runtime.tier}。经沿用原版显示规则：原始经验每50点显示1；战斗等级单独按经验门槛判定。</p>`,`経 ${experience}・累積経験値 ${runtime.experience}・経験段階 ${runtime.tier}。原作と同じく累積経験値50点を「経」1として表示し、戦闘の段階は別の経験値境界で判定します。`):''}<p>${abilityNote}</p>${abilityEvidence}${pendingNote?`<p class="person-entry-status">${pendingNote}</p>`:''}${virtueDescription(p)}${a?.placement_review||a?.appearance_plan?personPlacementEvidence(a):''}${p.alive?`<p>当前战局：${escapeHtml(p.faction?faction(p.faction):'在野')} · ${escapeHtml(cityName(current||p.location||'待归城'))}</p>`:''}`,{back,fromCity,fromList});
  if(typeof GameDialogue!=='undefined'){
   const notes=['zh-Hant','ja'].map(language=>{
    const basis=GameDialogue.relation(view,id,language);
@@ -1801,7 +1821,8 @@ let officerBiographyRequest;
 function requestOfficerBiographies(){
  if(!officerBiographyRequest){
   officerBiographyRequest=Promise.resolve().then(async()=>{
-   const response=await fetch(GamePaths.asset('/assets/officer-biographies.json'));
+   const path='/assets/officer-biographies.json';
+   const response=await fetch(globalThis.GamePaths?.asset(path)||path);
    if(!response.ok)throw new Error('Biography data unavailable');
    const body=await response.json(),people=body?.people;
    if(body?.schema!=='tk2-officer-biographies-v1'||!people||typeof people!=='object'||Array.isArray(people))throw new Error('Invalid biography data');
@@ -1847,6 +1868,10 @@ function personRosterStats(record,ruler,opening=false){
  const health=escapeHtml(record.health??'—'),loyalty=escapeHtml(GameOfficerChoices.loyalty(record,{isRuler:ruler}));
  return `<p>${opening?battleText('開局體力','開始時の体力'):battleText('目前體力','現在の体力')} <span data-current-health>${health}</span> · ${opening?battleText('開局忠誠','開始時の忠誠'):battleText('目前忠誠','現在の忠誠')} <span data-current-loyalty>${loyalty}</span></p>`;
 }
+function officerDetailName(person){
+ const title=person.regnal_title?.['zh-Hans'];
+ return title?`${person.name}（${title}）`:person.name;
+}
 function openPersonDialog(title,body,{back,fromCity,fromList,opening=false}){
  const button=fromCity?`<button type="button" id="back-city-roster">${battleText('返回都市情報','都市情報に戻る')}</button>`:fromList?'':'<button type="button" id="back-library">返回武将库</button>';
  openDialog(title,body,button+`<button data-cancel>${opening?'关闭资料':'返回战役'}</button>`);
@@ -1858,7 +1883,7 @@ function openPersonDialog(title,body,{back,fromCity,fromList,opening=false}){
 }
 function showOpeningOfficer(officer,{year,month,city,cityName:place,back}){
  const profile={...officer,martial:officer.martial_strength};
- openPersonDialog(`${officer.name} · 人物配置`,personProfileHead(officer.id,profile,'preview',officer)+
+ openPersonDialog(`${officerDetailName(officer)} · 人物配置`,personProfileHead(officer.id,profile,'preview',officer)+
   `<p>${battleText('劇本開局預覽','シナリオ開始時')} · ${GameCalendar.text({year,month,day:1})} · ${escapeHtml(city.owner_name)} · ${escapeHtml(place)}</p>`+
   personRosterStats(officer,officer.is_ruler,true)+
   (typeof GameEquipment!=='undefined'?GameEquipment.render(officer.equipment,{id:officer.id,locale:GameI18n.locale,bilingual:true}):''),

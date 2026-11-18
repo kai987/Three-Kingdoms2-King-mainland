@@ -1,6 +1,7 @@
 """Apply separately sourced historical faction openings to the shared scenario board."""
 
 import json
+from remake.southern_mission import DEPARTURE_YEAR, RETURN_YEAR
 
 
 SCHEMA = 'tk2-historical-faction-openings-v1'
@@ -111,7 +112,7 @@ def apply_ruler_chronology(data, owner, city, timeline, sources, people, date):
                                                    status, start, exit_date, False)
 
 
-def apply_officer_chronology(data, owner, city, officers, people, date, *, active):
+def apply_officer_chronology(data, owner, city, officers, people, date, *, active, join_faction=False):
     """Keep each named retainer in their own documented or estimated service window."""
     for entry in officers:
         pid, start, end = entry['person_id'], entry['start'], entry['end']
@@ -129,6 +130,29 @@ def apply_officer_chronology(data, owner, city, officers, people, date, *, activ
             data.setdefault('historical_exit_dates', {})[pid] = exit_date
         data['era_assignments'][pid] = opening_era(data, person, owner, city, entry['sources'], entry['note'],
                                                    status, start, end, status == 'serving' and date[0] == person['death_year'])
+        if join_faction and status == 'future':
+            data['appearance_windows'][pid][0]['faction'] = owner
+            data['era_assignments'][pid]['appearance_plan'].update(status='future', faction=owner)
+
+
+def place_southern_envoys(data, opening, people):
+    """Keep the named envoys off the city roster until their return."""
+    owner, city = opening['faction'], opening['city']
+    date = [data['start_year'], data['start_month']]
+    apply_officer_chronology(data, owner, city, opening['people'], people, date,
+                             active=True, join_faction=True)
+    for entry in opening['people']:
+        pid = entry['person_id']
+        era = data['era_assignments'][pid]
+        if entry['start'] != [RETURN_YEAR, 1]:
+            raise ValueError(f'{data["id"]}: invalid envoy return date: {pid}')
+        era['appearance_plan']['mission_departure_year'] = DEPARTURE_YEAR
+        if era['status'] == 'serving':
+            if data['initial_owners'].get(city) != owner:
+                raise ValueError(f'{data["id"]}: opening envoy post is outside Wu: {city}')
+            data['initial_officers'].append(dict(
+                person_id=pid, city=city, troops=0, ruler=False,
+                resolve_death_year=era['death_year_resolved']))
 
 
 def place_faction_officers(data, present, people):

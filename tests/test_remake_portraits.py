@@ -52,7 +52,7 @@ class PortraitIdentityTests(unittest.TestCase):
         self.assertEqual(len(bound), 221)
         placeholders = sum(person.get('portrait_policy') == 'generic_placeholder'
                            for person in self.people.values())
-        self.assertEqual(placeholders, 24)
+        self.assertEqual(placeholders, 26)
         self.assertEqual(len(self.people) - len(bound) - placeholders, 835)
 
     def test_independently_reviewed_names_do_not_bind_similar_people(self):
@@ -104,12 +104,12 @@ class PortraitReleaseTests(unittest.TestCase):
     def test_all_canonical_people_have_explicit_portrait_provenance(self):
         index = self.index
         self.assertEqual(index['counts'], {
-            'people': 1080, 'nes_original': 221, 'generated': 855, 'generic_placeholder': 4,
+            'people': 1082, 'nes_original': 221, 'generated': 861, 'generic_placeholder': 0,
             'original_archive': 237,
             'original_unique_pixels': 183, 'bound_original_unique_pixels': 179,
-            'generated_unique_pixels': 855, 'original_identity_pending': 16})
+            'generated_unique_pixels': 861, 'original_identity_pending': 16})
         self.assertEqual(set(index['people']), set(builder.identities()))
-        self.assertEqual(set(index['by_runtime_id']), {str(i) for i in range(1081)} - {'1005'})
+        self.assertEqual(set(index['by_runtime_id']), {str(i) for i in range(1083)} - {'1005'})
         self.assertEqual((index['width'], index['height']), (32, 40))
         for person_id, row in index['people'].items():
             with self.subTest(person_id=person_id):
@@ -147,6 +147,17 @@ class PortraitReleaseTests(unittest.TestCase):
             self.assertEqual(row['kind'], 'generated')
             self.assertEqual(row['original_source_path'], person['source_path'])
             self.assertEqual(row['white']['path'], f'/assets/portraits/white/{pid}.png')
+
+    def test_wu_envoys_and_gogukcheon_use_their_own_white_portraits(self):
+        plan = read('art/portraits/envoys-and-gogukcheon-v1/plan.json')
+        expected = {'historical-zhu-ying-wu', 'historical-kang-tai-wu', 'historical-goguryeo-gogukcheon'}
+        self.assertEqual({row['person_id'] for row in plan['people']}, expected)
+        for source in plan['people']:
+            pid = source['person_id']
+            portrait = self.index['people'][pid]
+            self.assertEqual(portrait['kind'], 'generated')
+            self.assertEqual(portrait['original_source_path'], source['source_path'])
+            self.assertEqual(portrait['white'], dict(path=f'/assets/portraits/white/{pid}.png', width=512, height=640))
 
     def test_historical_additions_have_retained_natives_and_real_redrawn_detail(self):
         canonical = read('game/config/campaigns/people.json')

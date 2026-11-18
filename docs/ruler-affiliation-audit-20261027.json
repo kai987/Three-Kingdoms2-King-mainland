@@ -3,9 +3,9 @@
   "review_revision": "2026-10-27",
   "base_commit": "69a6e8f01239159b91e150637f888278af3b7a88",
   "review_sha256": "fb38ef837fad2783b70ac326f3496bfb45f322b274a8d062c7f5bc0aa65efdba",
-  "presentation_sha256": "0ffa5086bd4fef5b8d8b12ed4a86b540e3545c845acdf9311464775a4c534bdf",
+  "presentation_sha256": "e74ede031c6e9c8d45eac630cfc4d1af6d6bbe3c6efaf70e6fe2d7ed6b16c1b0",
   "locale_sha256": "a3288f2b5f9de40b0c9eb76c79dcbc96b9d0774d7d85a5df65d229f3064e7301",
-  "japanese_sha256": "460ff113af66d174ed609522a392b7882e46c6e6ce757b5b070907e199c37248",
+  "japanese_sha256": "d2ec2a62d9f8618dcb96177fa0e74e875649f617ae29791fcf2bc3278becd396",
   "baseline_serving_non_ruler_reviews": 283,
   "pool": [
     {
@@ -396,7 +396,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-gogukcheon",
-          "name": "故国川王",
+          "name": "男武",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -1536,7 +1536,7 @@
           "bounded_pre_founding_free_projection": 1,
           "authorial_garrison_relocation": 14,
           "authorial_pre_revolt_region_proxy": 5,
-          "historical_career_with_opening_station_inference": 26,
+          "historical_career_with_opening_station_inference": 28,
           "explicit_scenario_scope": 7,
           "attested_identity_explicit_game_lifetime_and_region": 22
         },
@@ -1549,7 +1549,7 @@
           "authorial_dong_zhuo_184_andi_relocation": 14,
           "retained_explicit_scenario_ruler": 8,
           "user_requested_bian_zhang_conditional_liangzhou_revolt": 4,
-          "reviewed_historical_faction_opening": 26,
+          "reviewed_historical_faction_opening": 28,
           "user_requested_local_song_jian_before_184_11": 1,
           "explicit_scenario_scope": 7
         }
@@ -1761,7 +1761,7 @@
         "bian_zhang",
         "song_jian"
       ],
-      "catalog_sha256": "cee9b53f9ba6130e49b088b3442a8cdf31335f639d26f04ece1ae727ab13be11"
+      "catalog_sha256": "9378154bb42ae3f3385f0527bbb031e27ea3608d7bc8a5bb21ce3b4ab4179212"
     },
     {
       "id": "mainland188-06",
@@ -1790,7 +1790,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-gogukcheon",
-          "name": "故国川王",
+          "name": "男武",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -2943,7 +2943,7 @@
           "authorial_northern_career_proxy": 3,
           "regional_primary_mapping": 2,
           "bounded_career_inference": 5,
-          "historical_career_with_opening_station_inference": 26,
+          "historical_career_with_opening_station_inference": 28,
           "bounded_early_follower_career_inference": 2,
           "primary_text_affiliation": 1,
           "primary_local_family_force_with_regional_proxy": 1,
@@ -2963,7 +2963,7 @@
           "retained_explicit_scenario_ruler": 7,
           "ruler_affiliation_review_20261027": 3,
           "user_reviewed_188_independent_ma_teng": 3,
-          "reviewed_historical_faction_opening": 26,
+          "reviewed_historical_faction_opening": 28,
           "retainer_affiliation_review_20261027": 26,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 10
@@ -3240,7 +3240,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "2c7e6061fc7fcce1fc455aea84b84a22044de6364f53d581824ad13e90d48f8c"
+      "catalog_sha256": "3e619cab45f873a8e6c49ca75a18235af3ffc83d7404adaa2a70690b6b621c4c"
     },
     {
       "id": "mainland190-01",
@@ -3269,7 +3269,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-gogukcheon",
-          "name": "故国川王",
+          "name": "男武",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -4523,7 +4523,7 @@
           "primary_text_affiliation": 8,
           "authorial_garrison_relocation": 27,
           "primary_text_office_bounded_opening_month": 1,
-          "historical_career_with_opening_station_inference": 26,
+          "historical_career_with_opening_station_inference": 28,
           "primary_refuge_relationship_playable_affiliation_mapping": 1,
           "primary_relationship_transfer_year_bounded_game_inference": 1,
           "romance_compatibility_only": 1,
@@ -4544,7 +4544,7 @@
           "retained_reviewed_opening_membership": 179,
           "retained_explicit_scenario_ruler": 16,
           "same_date_SAN14_recorded_death": 21,
-          "reviewed_historical_faction_opening": 26,
+          "reviewed_historical_faction_opening": 28,
           "authorial_garrison_relocation_for_song_jian_longxi": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 10
@@ -5173,7 +5173,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "d82e58db119d35a74167b1a890fbfb51136dd41278b8de55a7ff6a0c7cb3bef1"
+      "catalog_sha256": "cc317da854f287f035b6e4ea71f67ba5380cacb2ff61384464ba3c50891c8616"
     },
     {
       "id": "mainland191-10",
@@ -5202,7 +5202,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-gogukcheon",
-          "name": "故国川王",
+          "name": "男武",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -6424,7 +6424,7 @@
           "primary_text_affiliation": 3,
           "authorial_garrison_relocation": 44,
           "regional_primary_mapping": 1,
-          "historical_career_with_opening_station_inference": 26,
+          "historical_career_with_opening_station_inference": 28,
           "bounded_transit_region_game_proxy": 1,
           "primary_relationship_transfer_year_bounded_game_inference": 1,
           "explicit_regional_proxy": 1,
@@ -6446,7 +6446,7 @@
           "retained_reviewed_opening_membership": 85,
           "retained_person_specific_free_location": 55,
           "retained_explicit_scenario_ruler": 16,
-          "reviewed_historical_faction_opening": 26,
+          "reviewed_historical_faction_opening": 28,
           "authored_bounded_snapshot_continuity": 4,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
@@ -6657,7 +6657,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "28617da443fc8b50503635b03cc2c10702ff85464801018ffa16789deebdecc1"
+      "catalog_sha256": "3af7642685b79b15a20af25cbb9c54209ada0fbc326eabef8411d78f700c33db"
     },
     {
       "id": "mainland194-06",
@@ -6672,7 +6672,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-gogukcheon",
-          "name": "故国川王",
+          "name": "男武",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -7908,7 +7908,7 @@
           "regional_primary_mapping": 6,
           "bounded_career_inference": 1,
           "primary_refuge_relation_without_attested_office": 1,
-          "historical_career_with_opening_station_inference": 25,
+          "historical_career_with_opening_station_inference": 27,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 10,
@@ -7928,7 +7928,7 @@
           "ruler_affiliation_review_20261027": 11,
           "retainer_affiliation_review_20261027": 23,
           "authorial_region_placement": 4,
-          "reviewed_historical_faction_opening": 25,
+          "reviewed_historical_faction_opening": 27,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 10
@@ -8381,7 +8381,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "a1390f75781b1e773205101edcaaf982ba2b9f08f546a98a607c2595922d578f"
+      "catalog_sha256": "a66fe63069d641971abf065c1ac9ecede421c64ad5794c9f35fcdee04dbae725"
     },
     {
       "id": "mainland196-06",
@@ -8396,7 +8396,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-gogukcheon",
-          "name": "故国川王",
+          "name": "男武",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -9617,7 +9617,7 @@
           "authorial_garrison_relocation": 13,
           "bounded_regional_inference": 1,
           "primary_refuge_relation_without_attested_office": 1,
-          "historical_career_with_opening_station_inference": 25,
+          "historical_career_with_opening_station_inference": 27,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
@@ -9638,7 +9638,7 @@
           "historical_city_owner_relocation_authorial_garrison": 7,
           "retainer_affiliation_review_20261027": 23,
           "authorial_region_placement": 4,
-          "reviewed_historical_faction_opening": 25,
+          "reviewed_historical_faction_opening": 27,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 6,
@@ -10006,7 +10006,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "f3def63066ba064a35e70d4d3f8a84327d5548f73b12a3f881db5e73bd4a0963"
+      "catalog_sha256": "c09fab3b499b69a7108f13a00ef8376e06ee6d3c40609e209239282153dbe768"
     },
     {
       "id": "mainland197-07",
@@ -10021,7 +10021,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -11249,7 +11249,7 @@
           "displaced_prefect_region_proxy": 1,
           "bounded_independent_local_army_region_proxy": 1,
           "authorial_region_proxy": 2,
-          "fictional_scenario_adaptation": 29,
+          "fictional_scenario_adaptation": 31,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
           "attested_identity_explicit_game_lifetime_and_region": 16,
@@ -11268,7 +11268,7 @@
           "retained_explicit_scenario_ruler": 16,
           "historical_city_owner_relocation_authorial_garrison": 7,
           "retainer_affiliation_review_20261027": 23,
-          "reviewed_historical_faction_opening": 25,
+          "reviewed_historical_faction_opening": 27,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
@@ -11889,7 +11889,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "e5c5418b6c4969b2b618316a2ffd61f4dd3c6246c5efc842206c7a49d154a99d"
+      "catalog_sha256": "e1bbf826ac20c171f94d6d644a0014b8a8ef07ebce497dfadba02d33cf143164"
     },
     {
       "id": "mainland198-03",
@@ -11904,7 +11904,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -13106,7 +13106,7 @@
           "bounded_regional_inference": 1,
           "primary_refuge_region_dated_campaign_inference": 1,
           "bounded_independent_local_army_region_proxy": 1,
-          "historical_career_with_opening_station_inference": 30,
+          "historical_career_with_opening_station_inference": 32,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
@@ -13121,7 +13121,7 @@
           "bounded_career_inference": 1,
           "authored_nearby_historical_roster_inference": 24,
           "retainer_affiliation_review_20261027": 24,
-          "reviewed_historical_faction_opening": 26,
+          "reviewed_historical_faction_opening": 28,
           "authorial_garrison_relocation_for_song_jian_longxi": 4,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
@@ -13641,7 +13641,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "821cf45f75407301684f6b06a6c2ca14c07ea477c601f272d4f1695f156bd681"
+      "catalog_sha256": "e5d8c9caa3a90ceda24e05b67aa983035e4571e06b60ae73d461f696dd533f47"
     },
     {
       "id": "mainland200-01",
@@ -13656,7 +13656,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -14823,7 +14823,7 @@
           "regional_primary_mapping": 1,
           "bounded_regional_inference": 1,
           "annotated_biography_with_opening_station_inference": 1,
-          "historical_career_with_opening_station_inference": 30,
+          "historical_career_with_opening_station_inference": 32,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 6,
@@ -14841,7 +14841,7 @@
           "retained_explicit_scenario_ruler": 10,
           "historical_city_owner_relocation_authorial_garrison": 11,
           "historical_guandu_xiaopei_opening": 1,
-          "reviewed_historical_faction_opening": 26,
+          "reviewed_historical_faction_opening": 28,
           "authorial_garrison_relocation_for_song_jian_longxi": 4,
           "ruler_affiliation_review_20261027": 2,
           "authorial_region_placement": 2,
@@ -15122,7 +15122,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "918846f84acd8b085017fcbaaa8cbc27a7923205f8f9700570a3467c95067da5"
+      "catalog_sha256": "b5a4f4b7c7d3e51aa904c2975b49659d9d7aa14ddad04892f4b5478281a27187"
     },
     {
       "id": "mainland201-05",
@@ -15137,7 +15137,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -16301,7 +16301,7 @@
           "game_reference": 4,
           "authorial_if_independent_faction_mapping": 3,
           "authorial_garrison_relocation": 3,
-          "fictional_scenario_adaptation": 29,
+          "fictional_scenario_adaptation": 31,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
           "attested_identity_explicit_game_lifetime_and_region": 18,
@@ -16318,7 +16318,7 @@
           "retained_explicit_scenario_ruler": 10,
           "historical_city_owner_relocation_authorial_garrison": 9,
           "authorial_garrison_relocation_for_song_jian_longxi": 3,
-          "reviewed_historical_faction_opening": 26,
+          "reviewed_historical_faction_opening": 28,
           "authorial_region_placement": 2,
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
@@ -16467,7 +16467,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "76d5a0a7856a20424ba37a9e8ab161e49ff5bf1c57104cb9475bfced44f2eb98"
+      "catalog_sha256": "2fddefa8738e9655e24f664b1e6a00de0b34cf0f25b9e46f1d56a9b0767cfc3f"
     },
     {
       "id": "mainland202-06",
@@ -16489,7 +16489,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -17651,7 +17651,7 @@
           "primary_text_affiliation": 2,
           "authorial_garrison_relocation": 27,
           "regional_primary_mapping": 1,
-          "historical_career_with_opening_station_inference": 29,
+          "historical_career_with_opening_station_inference": 31,
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
@@ -17664,7 +17664,7 @@
           "historical_review_20261025": 26,
           "bounded_career_inference": 2,
           "authored_nearby_historical_roster_inference": 23,
-          "reviewed_historical_faction_opening": 26,
+          "reviewed_historical_faction_opening": 28,
           "authorial_garrison_relocation_for_song_jian_longxi": 4,
           "ruler_affiliation_review_20261027": 2,
           "authorial_region_placement": 2,
@@ -17922,7 +17922,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "b4b60453b0f88986efa08df1682d2c750133b67c8ef192b030fe63f87c1fcee8"
+      "catalog_sha256": "12e2a20d85c7f746de9cb04d832cd0fef16324969177423202c8a8ba5028061d"
     },
     {
       "id": "mainland207-09",
@@ -17937,7 +17937,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -19094,7 +19094,7 @@
           "primary_fugitive_guest_with_month_uncertainty": 1,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "historical_career_with_opening_station_inference": 27,
+          "historical_career_with_opening_station_inference": 29,
           "attested_identity_explicit_game_lifetime_and_region": 16,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 6
         },
@@ -19116,7 +19116,7 @@
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
           "reviewed_early_shu_retainer_opening": 3,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -19436,7 +19436,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "01f063f5f43b94d6a4a3119a6025512e945dcb32e0c07f8133fe266934eb2561"
+      "catalog_sha256": "a794356250ba01ca188ad9eec2a4e7d0379631166ab21dccd5d18ebd67046951"
     },
     {
       "id": "mainland208-10",
@@ -19451,7 +19451,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -20612,7 +20612,7 @@
           "bounded_regional_inference": 1,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "historical_career_with_opening_station_inference": 27,
+          "historical_career_with_opening_station_inference": 29,
           "attested_identity_explicit_game_lifetime_and_region": 16,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 6
         },
@@ -20638,7 +20638,7 @@
           "explicit_scenario_scope": 7,
           "reviewed_early_shu_retainer_opening": 3,
           "retainer_affiliation_review_20261027": 22,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -20910,7 +20910,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "f57dac8b9ce2b43fe30c93e2b58a97eaed36e73bd3563e2cf10e6ffbfd59b71e"
+      "catalog_sha256": "ea915e5e034864a353caab308863e4362a66c423c5835355f0dc7d3ae4de944c"
     },
     {
       "id": "mainland209-06",
@@ -20925,7 +20925,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -22043,7 +22043,7 @@
           "authorial_garrison_relocation": 4,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "fictional_scenario_adaptation": 27,
+          "fictional_scenario_adaptation": 29,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -22065,7 +22065,7 @@
           "explicit_scenario_scope": 7,
           "reviewed_early_shu_retainer_opening": 3,
           "retainer_affiliation_review_20261027": 22,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [],
@@ -22209,7 +22209,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "cc3bd70bc782760c568bc5eab916036332dab7a3672dcea19ff2b625c9036d28"
+      "catalog_sha256": "5496f07bd5f4dbc73fca42d48c02435706d6ce5c4047b9ecc7e0126aefb656a1"
     },
     {
       "id": "mainland210-11",
@@ -22224,7 +22224,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -23337,7 +23337,7 @@
           "authorial_garrison_relocation": 6,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "fictional_scenario_adaptation": 27,
+          "fictional_scenario_adaptation": 29,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -23359,7 +23359,7 @@
           "explicit_scenario_scope": 7,
           "reviewed_early_shu_retainer_opening": 3,
           "retainer_affiliation_review_20261027": 22,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -23559,7 +23559,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "30e9d4ab14bff8a69378091f95caef8dcb160a75d5bbeb1c6f56912d258ca750"
+      "catalog_sha256": "453b41e798e96e78a1b657bcec892b529410fccf6ba78d6ff167e41b6ad6f699"
     },
     {
       "id": "mainland211-07-tongguan",
@@ -23574,7 +23574,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -24695,7 +24695,7 @@
           "bounded_local_career_inference": 1,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "historical_career_with_opening_station_inference": 27,
+          "historical_career_with_opening_station_inference": 29,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -24712,7 +24712,7 @@
           "explicit_scenario_scope": 7,
           "reviewed_early_shu_retainer_opening": 3,
           "retainer_affiliation_review_20261027": 22,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -25006,7 +25006,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "a7cf8f7118af44631f9d9374a56631607549ae7255a9fbc1cc21ec3f561d329b"
+      "catalog_sha256": "7701aa05dadc101c1fc144cd0c9345ed48a6d3bebf2a2c6a4c6cf00e516b1b3e"
     },
     {
       "id": "mainland212-06",
@@ -25028,7 +25028,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -26143,7 +26143,7 @@
           "fictional_victory_affiliation_and_authorial_city_proxy": 1,
           "authorial_if_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "fictional_scenario_adaptation": 27,
+          "fictional_scenario_adaptation": 29,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -26164,7 +26164,7 @@
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
           "reviewed_early_shu_retainer_opening": 3,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -26364,7 +26364,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "c82545bc9f03017909c5304b576eef8a9f2e741318b17471208782b0e2530874"
+      "catalog_sha256": "fb75ee4de70a61dceef08d1b82c1531b468ec93889b6d1b8f1d99c0dfe6ab154"
     },
     {
       "id": "mainland212-12",
@@ -26379,7 +26379,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -27494,7 +27494,7 @@
           "primary_text_chronology": 2,
           "authorial_lifetime_region_proxy": 1,
           "explicit_scenario_scope": 7,
-          "historical_career_with_opening_station_inference": 27,
+          "historical_career_with_opening_station_inference": 29,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -27517,7 +27517,7 @@
           "user_requested_song_jian_lifetime_longxi_opening": 1,
           "explicit_scenario_scope": 7,
           "reviewed_early_shu_retainer_opening": 3,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -27746,7 +27746,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "36ab6a73eac682b8d76e11f749a2c72bdac66d269028925c58ea671c02150cfc"
+      "catalog_sha256": "92e2a0336810739ba81fd06d1e5630fc9853349e57c103d30bf43599f5519dd7"
     },
     {
       "id": "mainland215-08",
@@ -27761,7 +27761,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -28847,7 +28847,7 @@
           "primary_text_chronology": 2,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 27,
+          "historical_career_with_opening_station_inference": 29,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -28863,7 +28863,7 @@
           "authorial_region_placement": 2,
           "explicit_scenario_scope": 8,
           "reviewed_early_shu_retainer_opening": 3,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -29135,7 +29135,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "a454e8cd7c062d6ff4d9f14b16a778255992d78074dbc04833c16b9556e088f3"
+      "catalog_sha256": "c5bfc11c03e47ea2d7e39dd7b99301380e44dd4fd47ad179a3523313c5a0267b"
     },
     {
       "id": "mainland217-07",
@@ -29150,7 +29150,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -30241,7 +30241,7 @@
           "primary_text_chronology": 2,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 27,
+          "historical_career_with_opening_station_inference": 29,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -30260,7 +30260,7 @@
           "authorial_region_placement": 2,
           "explicit_scenario_scope": 8,
           "reviewed_early_shu_retainer_opening": 3,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -30574,7 +30574,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "ac0eab10f0f896a3ece52b07fb816d8834e32d995c56ffeb992323dc97afb7fe"
+      "catalog_sha256": "4fd6a9324499a92bb9414ffe05f9d00be48610eacd99c825068eb9f8629afccd"
     },
     {
       "id": "mainland219-07",
@@ -30589,7 +30589,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -31681,7 +31681,7 @@
           "primary_text_chronology": 2,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 27,
+          "historical_career_with_opening_station_inference": 29,
           "attested_identity_explicit_game_lifetime_and_region": 19,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 3
         },
@@ -31702,7 +31702,7 @@
           "retainer_affiliation_review_20261027": 25,
           "explicit_scenario_scope": 8,
           "reviewed_early_shu_retainer_opening": 3,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -31952,7 +31952,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "a33287b28df2c0da7659bcfef543eaf57d7348328cf14e2062fa9a9062d5517e"
+      "catalog_sha256": "e8270f329eee6c1b5c86d963082c7e37e69619725e258d5dbe0bcc194368806f"
     },
     {
       "id": "mainland221-07",
@@ -31967,7 +31967,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -33055,7 +33055,7 @@
           "post_attestation_career_and_station_inference": 1,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 27,
+          "historical_career_with_opening_station_inference": 29,
           "attested_identity_explicit_game_lifetime_and_region": 20,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 1,
           "attested_office_with_bounded_career_and_city_proxy": 1
@@ -33077,7 +33077,7 @@
           "retained_chronology_or_explicit_exclusion": 2,
           "explicit_scenario_scope": 8,
           "reviewed_early_shu_retainer_opening": 3,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -33349,7 +33349,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "22569977e2be21f743c1afb0f6480a7c323db8295c02d36043f722f7595402fc"
+      "catalog_sha256": "0002d1013f98a063bf62a1d09a1f248df8c7bbd30621ed182f2b6579ec54274b"
     },
     {
       "id": "mainland225-07",
@@ -33364,7 +33364,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -34454,7 +34454,7 @@
           "post_attestation_career_and_station_inference": 1,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 27,
+          "historical_career_with_opening_station_inference": 29,
           "attested_identity_explicit_game_lifetime_and_region": 21,
           "attested_office_with_bounded_career_and_city_proxy": 1
         },
@@ -34475,7 +34475,7 @@
           "authorial_lu_yusheng_wu_opening": 1,
           "explicit_scenario_scope": 8,
           "reviewed_early_shu_retainer_opening": 3,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -34704,7 +34704,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "60dacf50e7978f2e5eb6c278e66ef0df50cbab6fa89ba7bca5e3448fb3346126"
+      "catalog_sha256": "a2194a24c26efaa3e0ebd170155d76fa9913e2f189f418f268751bab538c86a3"
     },
     {
       "id": "mainland227-02",
@@ -34719,7 +34719,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-sansang",
-          "name": "山上王",
+          "name": "延优",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -35793,7 +35793,7 @@
           "post_attestation_career_and_station_inference": 1,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 27,
+          "historical_career_with_opening_station_inference": 29,
           "attested_identity_explicit_game_lifetime_and_region": 21,
           "attested_office_with_bounded_career_and_city_proxy": 1
         },
@@ -35811,7 +35811,7 @@
           "retained_chronology_or_explicit_exclusion": 2,
           "explicit_scenario_scope": 8,
           "reviewed_early_shu_retainer_opening": 3,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -36126,7 +36126,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "b718ddd669c32faa1dc9758c4599b5768d9e0222c2ad0fb5f113a091b15de67c"
+      "catalog_sha256": "7197d724379e5c1692a0dd14faac073f1390e7e0e86a9a7df784a17e08948f0b"
     },
     {
       "id": "mainland234-02",
@@ -36141,7 +36141,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-dongcheon",
-          "name": "东川王",
+          "name": "忧位居",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -37209,7 +37209,7 @@
           "primary_text_hostage_unavailable": 1,
           "attested_submission_bounded_career_station_continuity": 1,
           "explicit_scenario_scope": 8,
-          "historical_career_with_opening_station_inference": 27,
+          "historical_career_with_opening_station_inference": 29,
           "attested_identity_explicit_game_lifetime_and_region": 17,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 5
         },
@@ -37230,7 +37230,7 @@
           "authorial_lu_yusheng_wu_opening": 1,
           "explicit_scenario_scope": 8,
           "reviewed_early_shu_retainer_opening": 3,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -37504,7 +37504,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "010b564befac244ab2a78437d082ea49e0caa0f4682686156e4c70227573f9bc"
+      "catalog_sha256": "d91260be4ece1c7b5b47a1f6c86b3ed125c824b4a30dbbd465d82f320c3b6aa8"
     },
     {
       "id": "mainland235-01",
@@ -37519,7 +37519,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-dongcheon",
-          "name": "东川王",
+          "name": "忧位居",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -38577,7 +38577,7 @@
           "game_reference": 2,
           "bounded_career_inference": 108,
           "primary_text_captivity": 1,
-          "fictional_scenario_adaptation": 27,
+          "fictional_scenario_adaptation": 29,
           "explicit_scenario_scope": 9,
           "attested_identity_explicit_game_lifetime_and_region": 17,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 5
@@ -38597,7 +38597,7 @@
           "explicit_scenario_scope": 9,
           "reviewed_early_shu_retainer_opening": 2,
           "retainer_affiliation_review_20261027": 22,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -38765,7 +38765,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "7e763438038c4fbaddff52706d1b4f154080413d7bee066c1c845a8464df301b"
+      "catalog_sha256": "1bc95d886f0a399f3915fba0ced21d45ad5c63f6f5361c7cd30ed408598a1a9e"
     },
     {
       "id": "mainland238-01",
@@ -38780,7 +38780,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-dongcheon",
-          "name": "东川王",
+          "name": "忧位居",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -39847,7 +39847,7 @@
           "primary_text_chronology": 5,
           "primary_text_hostage_unavailable": 1,
           "explicit_scenario_scope": 9,
-          "historical_career_with_opening_station_inference": 26,
+          "historical_career_with_opening_station_inference": 28,
           "attested_identity_explicit_game_lifetime_and_region": 11,
           "primary_named_office_with_explicit_opening_date_and_region_inference": 11
         },
@@ -39869,7 +39869,7 @@
           "explicit_scenario_scope": 9,
           "reviewed_early_shu_retainer_opening": 2,
           "retainer_affiliation_review_20261027": 22,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -40143,7 +40143,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "d8777e691cf1bcfb2bb424603981ea4d4b8785ea6782902b9462205bb2e0ea94"
+      "catalog_sha256": "a17c3a37b8da8183d6e0281ad41669f5478a43afd865ab6788c34f7a64de81e5"
     },
     {
       "id": "mainland249-01",
@@ -40158,7 +40158,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-jungcheon",
-          "name": "中川王",
+          "name": "然弗",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -41215,7 +41215,7 @@
           "primary_text_chronology": 5,
           "explicit_scenario_scope": 11,
           "attested_identity_explicit_game_lifetime_and_region": 22,
-          "historical_career_with_opening_station_inference": 24
+          "historical_career_with_opening_station_inference": 26
         },
         "bases": {
           "same_date_SAN14_recorded_death": 697,
@@ -41231,7 +41231,7 @@
           "retained_chronology_or_explicit_exclusion": 2,
           "explicit_scenario_scope": 11,
           "retainer_affiliation_review_20261027": 22,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -41546,7 +41546,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "cf1bc1af07572a32b72fc8560bb8a11404dd6eb7c612c8ecfe067ed5c037c6c9"
+      "catalog_sha256": "844c14f51c852bebd73ee20aa3b040c6f3ee615a71897d75ccab9ad6ca41f9d7"
     },
     {
       "id": "mainland263-05",
@@ -41561,7 +41561,7 @@
         {
           "id": "goguryeo",
           "person_id": "historical-goguryeo-jungcheon",
-          "name": "中川王",
+          "name": "然弗",
           "city": "guonei",
           "city_name": "国内城"
         },
@@ -42626,7 +42626,7 @@
           "authorial_retinue_window": 1,
           "office_seat_mapping_if_canonical_id_matches": 1,
           "attested_identity_explicit_game_lifetime_and_region": 22,
-          "historical_career_with_opening_station_inference": 24
+          "historical_career_with_opening_station_inference": 26
         },
         "bases": {
           "retained_chronology_or_explicit_exclusion": 829,
@@ -42641,7 +42641,7 @@
           "primary_lu_xing_revolt_month": 1,
           "authorial_lu_xing_retinue_window": 1,
           "retainer_affiliation_review_20261027": 23,
-          "reviewed_historical_faction_opening": 24
+          "reviewed_historical_faction_opening": 26
         }
       },
       "corrections": [
@@ -42870,7 +42870,7 @@
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "3e5269536a8cf940e7db9d7909b0a5f0004ff8984524fc6771e9281ceea469c7"
+      "catalog_sha256": "f7c37e2e7e2abeb5ccf69e93aa86f094c7dc1ac11f00233aa73d5e18eedd9e5d"
     }
   ]
 }

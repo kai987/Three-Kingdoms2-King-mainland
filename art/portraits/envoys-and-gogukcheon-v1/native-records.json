@@ -1,0 +1,162 @@
+{
+  "schema": "tk2-retainer-portrait-native-records-v1",
+  "plan": "art/portraits/envoys-and-gogukcheon-v1/plan.json",
+  "plan_sha256": "7e1c12ec23d00c8ea6119b5d00ee2c328d47534a32cd2a4c37bbd7f79d01e26b",
+  "count": 3,
+  "native_size": [
+    32,
+    40
+  ],
+  "people": {
+    "historical-zhu-ying-wu": {
+      "path": "/assets/portraits/generated/historical-zhu-ying-wu.png",
+      "png_sha256": "5ef20b566578e4a4de6f670cc17e385c2f911b403a79d62d44d591b03d394179",
+      "rgba_sha256": "155dd795335c979c4998fe6a9c0dd0f64cb8d5ae2b2b63e98f1bb4ff537c2487",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 368,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "朱應",
+      "retainer_plan": "art/portraits/envoys-and-gogukcheon-v1/plan.json",
+      "retainer_plan_sha256": "7e1c12ec23d00c8ea6119b5d00ee2c328d47534a32cd2a4c37bbd7f79d01e26b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-zhu-ying-wu.png",
+      "original_source_sha256": "d48b3566a4f167718aeec4ad1cdb56600e40a2c92a48644dd59c5a43c503e1f5",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-zhu-ying-wu.png",
+      "source_sha256": "d48b3566a4f167718aeec4ad1cdb56600e40a2c92a48644dd59c5a43c503e1f5",
+      "opaque_pixels": 494,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        19,
+        20,
+        1103,
+        1367
+      ],
+      "native_fitted_box": [
+        1,
+        2,
+        31,
+        39
+      ]
+    },
+    "historical-kang-tai-wu": {
+      "path": "/assets/portraits/generated/historical-kang-tai-wu.png",
+      "png_sha256": "3bb126092d92d4a65ee7a97e3e9ecdcf11775626d192a33d0adfd4a6ad29eef0",
+      "rgba_sha256": "79a28eedb33f4287bb1550f6039e45b9e6b97cf37d1616862f8f6e1b1f1bbf97",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 373,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "康泰",
+      "retainer_plan": "art/portraits/envoys-and-gogukcheon-v1/plan.json",
+      "retainer_plan_sha256": "7e1c12ec23d00c8ea6119b5d00ee2c328d47534a32cd2a4c37bbd7f79d01e26b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-kang-tai-wu.png",
+      "original_source_sha256": "212358684a9f7f5c686a38a2bfbe93ca1f87160ebb6adbb1be305bc38f982a7b",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-kang-tai-wu.png",
+      "source_sha256": "212358684a9f7f5c686a38a2bfbe93ca1f87160ebb6adbb1be305bc38f982a7b",
+      "opaque_pixels": 493,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        21,
+        22,
+        1102,
+        1378
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        31,
+        39
+      ]
+    },
+    "historical-goguryeo-gogukcheon": {
+      "path": "/assets/portraits/generated/historical-goguryeo-gogukcheon.png",
+      "png_sha256": "3cb05aff028b327ccdbd80fdb0b8ceed8e549ad5d9eb9b9bb03571b32339575a",
+      "rgba_sha256": "50dc80ffc1461d0926ab703aed4a2863f434a41951ffd8626378d7b20c1b136f",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 400,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "男武",
+      "retainer_plan": "art/portraits/envoys-and-gogukcheon-v1/plan.json",
+      "retainer_plan_sha256": "7e1c12ec23d00c8ea6119b5d00ee2c328d47534a32cd2a4c37bbd7f79d01e26b",
+      "native_kind": "generated",
+      "original_source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-goguryeo-gogukcheon.png",
+      "original_source_sha256": "0d56e174ae43a9a95421bf1d4cd9c07b400072fa26d1e29c873941987f33ea75",
+      "source_size": [
+        1122,
+        1402
+      ],
+      "source_matte": "white",
+      "source_origin": "new_retained_imagegen_source",
+      "source_path": "art/portraits/envoys-and-gogukcheon-v1/source/historical-goguryeo-gogukcheon.png",
+      "source_sha256": "0d56e174ae43a9a95421bf1d4cd9c07b400072fa26d1e29c873941987f33ea75",
+      "opaque_pixels": 412,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        110,
+        40,
+        1013,
+        1370
+      ],
+      "native_fitted_box": [
+        3,
+        1,
+        29,
+        39
+      ]
+    }
+  }
+}

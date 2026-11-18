@@ -62,7 +62,7 @@
       "relationship_loyalty_increased": 4,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -207,7 +207,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "5af13465cb593c191dbe1760198ac6699e1518215bee39bdfbd390fdd62535db",
+      "opening_save_sha256": "2c7ba7658667e999b34374631439b1a478c7bddcaefdd83c5db5b35853503203",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -1310,7 +1310,7 @@
       "relationship_loyalty_increased": 2,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -1455,7 +1455,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "e25cb6ff1c6a985553b2a4a177f6dd0181436ab8f2b3ee649757d775b4611106",
+      "opening_save_sha256": "9f61e2c1d437ab0fe9f933f6909e47c0fd50a5597f36d599fd6641313ce13338",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -2912,7 +2912,7 @@
       "relationship_loyalty_increased": 14,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -3057,7 +3057,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "ed3a4d8c062005dadccfca427f747fa774fc145713abb8a4f645373023d44264",
+      "opening_save_sha256": "c775166ca616703e4cd4fc35c941198f544ce2b86f48d73a20308be17a0d3a56",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -5042,7 +5042,7 @@
       "relationship_loyalty_increased": 15,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -5187,7 +5187,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "f449657c6bffe945c7c27656dd68c5afb648c8423f92a6146ae9840e6598fd3a",
+      "opening_save_sha256": "a9391455771388c6ac8d4a354005d86fae354215a176f36e861ce4fa06ea35ed",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -7243,7 +7243,7 @@
       "relationship_loyalty_increased": 14,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -7388,7 +7388,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "b17b8141432428afbf30806a352cd5e73a539d78b7d04d9d3846fe70840b9109",
+      "opening_save_sha256": "7f95b30bf52db821f179d1d4a9aa9b89acdc6d94e9e21c56af111bfb5bfe5025",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -9543,7 +9543,7 @@
       "relationship_loyalty_increased": 18,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -9702,7 +9702,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "3e62d1d0849e0acb9c1c2bfd8d142e953097d1a907619eb5807261696683dda4",
+      "opening_save_sha256": "8291f981a5847208582781dd569eaad621c7de23305bcbf58d93aca2ba010ccb",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -12155,7 +12155,7 @@
       "relationship_loyalty_increased": 13,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -12216,7 +12216,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "b0d6eb0deffd4387271969a5904166da6328ce0db9be9280e892f0bccaf056cd",
+      "opening_save_sha256": "879f917350a1501c926501bb33829b27952effaf3fb8e644176b06a8924b2ed7",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -14618,7 +14618,7 @@
       "relationship_loyalty_increased": 17,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -14777,7 +14777,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "39c76ba289d24cd20bf6233ccf590dd4a32446ea9378671c5e11a2efcc05eac7",
+      "opening_save_sha256": "fb4d7ef424987700d51dedfa933560d1e0fbdbbb228d84a61eff40292e576142",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -17271,7 +17271,7 @@
       "relationship_loyalty_increased": 17,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -17416,7 +17416,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "189fa0d2b717d32dcdd29aabd00a9ca393d3bdcf1c52e34a13267575595ee14a",
+      "opening_save_sha256": "b9408979cd5ab3ffef266078d9608f4dfe3a2d0efe48033c7e6eee3fdc9670d5",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -19942,7 +19942,7 @@
       "relationship_loyalty_increased": 19,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -19989,7 +19989,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "9e3cfaa873fdef34d3438b15d483ba4da73bd8cf8e74e747ac2ee66120a15fe7",
+      "opening_save_sha256": "6d17fd0c40228f53fac9915ef9eff0e4681ce5f8e4961715c1be5bb9ce570b8d",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -22467,7 +22467,7 @@
       "relationship_loyalty_increased": 16,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -22612,7 +22612,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "fda04d39d960e71bf2269d638cacb5b068644f82e0fcfea2d14fce2ad49e8626",
+      "opening_save_sha256": "fd6ed0b5022078bcc619f08eea4f1d4f6eb3c2063de3458e6526798549fb22ef",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -25037,7 +25037,7 @@
       "relationship_loyalty_increased": 18,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -25182,7 +25182,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "c6fdbffc0f5beaa02bd8503b187049be5a0ff34348b10996cec8196f90f24b3d",
+      "opening_save_sha256": "91bf6c1240ba357533680ea3e1bbd7eccd1a8d664bb24961269d043232b8575b",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -27653,7 +27653,7 @@
       "relationship_loyalty_increased": 16,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -27854,7 +27854,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "3a1193a5eac177f661bd52b0574cdc59ee8c0deb16abe0ded6bb769121e781ef",
+      "opening_save_sha256": "f9f96487567f50fe2392f84f5211fe414dfd7db4f6fe7210e23f288f7d7f59e0",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -30263,7 +30263,7 @@
       "relationship_loyalty_increased": 17,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -30310,7 +30310,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "fcfd468215cc0142b5dd2095ba1c6dd8c5ee9791da07ff41e95997a1d2e6d613",
+      "opening_save_sha256": "7e275926bbcce80723a45137750a3b81efe74df0327477fc47e37f07bc0cf764",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -32742,7 +32742,7 @@
       "relationship_loyalty_increased": 15,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -32817,7 +32817,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "50073cb1f745ea9f4c0d23d7351c7a353cea2439b0a20f34148d25e01a95549b",
+      "opening_save_sha256": "e5e9fc5ce1d2df94ab950ca31fc12cafd70cdebf12dba3c7f9a58021176902cc",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -35219,7 +35219,7 @@
       "relationship_loyalty_increased": 16,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -35406,7 +35406,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "4eee7569b9cf5b74a069d59b870f3c2caca3f135977bb1c10524eba9c857f061",
+      "opening_save_sha256": "bc777347c193743afe985587be20224d50fb60849ba7c6d7029b219e216158ee",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -37815,7 +37815,7 @@
       "relationship_loyalty_increased": 7,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -37876,7 +37876,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "ca063e091cbd3c30ea603f7dff882d50c94355c74f60973192572a39f75fe5aa",
+      "opening_save_sha256": "c743026876a37ba4de702cabb5a8464c10a9df7a23635abf6749d36439b76e3d",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -40119,7 +40119,7 @@
       "relationship_loyalty_increased": 16,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -40320,7 +40320,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "4a0a5a603898e931482f64b55ed403f29619cb6b53d0f9d1804555a41544d7ef",
+      "opening_save_sha256": "776484ff06cbd457af015385ac5aa9959ccc4275f40abc9aec6cf67eb1b5c2de",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -42578,7 +42578,7 @@
       "relationship_loyalty_increased": 14,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -42723,7 +42723,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "e593fdee72c0c33bf0fd4e1fdea0574065699795cd12f38abce301e9a2daa0e2",
+      "opening_save_sha256": "6a5187dc9c74ea02ae1f1c76b020e2415755233788d9d46133315740c898c0b1",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -44935,7 +44935,7 @@
       "relationship_loyalty_increased": 13,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -45080,7 +45080,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "4d467fd957dd8aec7168fa3643350d326d1e71b43dd52bf7601a46d3b10f75e6",
+      "opening_save_sha256": "1258cbebde313eb37f13b6f447a5f049f643f1c191b4f40f5b3426c0bfc9a87f",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -47211,7 +47211,7 @@
       "relationship_loyalty_increased": 13,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -47356,7 +47356,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "cb4749cb5857d3cb6697da28632de42f8ecabe235196c188e5330d2e6ac9af92",
+      "opening_save_sha256": "5e98a834a2d04f07479538e96b3c014e9cb037d91fb12f88fc778d727527055f",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -49499,7 +49499,7 @@
       "relationship_loyalty_increased": 4,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -49644,7 +49644,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "e990d89be46f3347df988bd3e0316e388a313664044cc098eea7bbe099642ebd",
+      "opening_save_sha256": "b4c26dd9da9239c62f5b37ad071d53fbf1e014a1c6b5c906fc3c7216299a76f4",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -51367,7 +51367,7 @@
       "relationship_loyalty_increased": 1,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -51512,7 +51512,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "d69032dea399b9548bfcce55213557dcd71edff71408f6481a1214cc0181cd0a",
+      "opening_save_sha256": "b8bb0830f2f6e3e5eb9d273406e0c020ab047c93b979700a5f436626b862f24d",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -52952,7 +52952,7 @@
       "relationship_loyalty_increased": 1,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -53097,7 +53097,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "b80c180c29cbf2211441ffa4f0b6e65b8665dfc60524a9b81dcb277f5731246f",
+      "opening_save_sha256": "a702739e0513f10720c10bf26f7b92ac604b234df72de63f2739444521c7ea87",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -54381,7 +54381,7 @@
       "relationship_loyalty_increased": 1,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -54526,7 +54526,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "3e9756016c8b201f3a055ffce32c9cfbc647d55b96d32893fa25398fb23303eb",
+      "opening_save_sha256": "c117c13e85b9a35cb6d64d9fd1e04c4a24eefa0392a0c4cf5bfe1e5ec9c69fcc",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -55474,7 +55474,7 @@
       "relationship_loyalty_increased": 1,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -55549,7 +55549,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "93a16d278ac92a0aaecb755e6fb17317ec8d2df07e1fd8170536737591a3afce",
+      "opening_save_sha256": "4d00c5aaa6aea00c6f0bf04f8c0d1bd1d14123278cd032b0580be480db8d6d0a",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -56481,7 +56481,7 @@
       "relationship_loyalty_increased": 3,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -56626,7 +56626,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "86638631e93ae6c10b9ffc085fade7ec35ed98468c0df49d16d6fd6df29ce11a",
+      "opening_save_sha256": "912b548ead101320bf8deef599070c5e85b9ff209db970620c028deb3610ee55",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -57460,7 +57460,7 @@
       "relationship_loyalty_increased": 4,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -57605,7 +57605,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "577501cb3a8c1257fe3fca6167f6f26ec57816264cb71938c34b395b36ab2057",
+      "opening_save_sha256": "299cfde8bb4d0391394f1b0e0e177deba95291024732b676b470130f7ec36b27",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -58142,7 +58142,7 @@
       "relationship_loyalty_increased": 2,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 76
+        "missing_charisma_default60": 78
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -58287,7 +58287,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "372799d3d0631d98e1d22f48ea6efd1a55aa313cac64b9f7c8356ab5981fee70",
+      "opening_save_sha256": "05d5ef44cb827797b8eb0c3ccf38deebc0aee6ec2c67882e8a86a1ae0a437b04",
       "changed_people": [
         {
           "person_id": "san14-candidate-0348",

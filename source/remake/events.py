@@ -463,8 +463,11 @@ def transition(campaign, before, after, kind, payload):
             if is_generated_ref(ident):
                 continue  # Hiring already emitted the independent staff snapshot.
             city = after.extension['free_locations'].get(str(ident))
+            faction = officer.faction_id
+            if faction:
+                city = next((home.id for home in after.cities.values() if ident in home.roster.officer_ids), None)
             emit(campaign, after, 'officer_appeared', person_ids=[officer.person_id],
-                 city_ids=[city] if city else [], audience='world')
+                 city_ids=[city] if city else [], factions=[faction] if faction else [], audience='world')
         elif previous.alive and not officer.alive:
             homes = [city.id for city in before.cities.values() if ident in city.roster.officer_ids]
             emit(campaign, after, 'officer_death', person_ids=[officer.person_id],
