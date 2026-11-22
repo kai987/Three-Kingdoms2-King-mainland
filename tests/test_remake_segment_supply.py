@@ -5,12 +5,13 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
 from remake.campaign import Campaign,Catalog,digest
 from remake.errors import GameError
-from remake import facilities, march_supply, treasures, city_development
+from remake import facilities, march_supply, treasures, city_development, city_economy
 from remake.march_core import using_backend
 from campaign_fixtures import controlled_catalog
 
@@ -35,6 +36,10 @@ def segment_catalog(days=(10,20),checkpoint_grain=100):
 
 
 class SegmentSupplyTests(unittest.TestCase):
+    def setUp(self):
+        # Keep the exact depot stocks isolated from the independent city ration bill.
+        self.enterContext(patch.object(city_economy, 'settle_turn_grain'))
+
     def game(self,**options):
         game=Campaign(segment_catalog(**options));game.command('new',dict(faction='shu',seed=2026),0)
         return game
@@ -71,7 +76,7 @@ class SegmentSupplyTests(unittest.TestCase):
                 total=march_supply.cost(units-100,1,30)
                 self.assertEqual(row['supply']['consumed'],total)
                 self.assertEqual(row['supply']['received'],total-first)
-                self.assertEqual(game.state.cities['nanjun'].grain,1000-(total-first)-9)
+                self.assertEqual(game.state.cities['nanjun'].grain,1000-(total-first))
                 self.assertEqual(row['supply']['shortage_days'],0)
                 self.assertEqual(game.to_dict()['rng'],before['rng'])
                 self.assertEqual(game.to_dict()['soldiers'],before['soldiers'])
@@ -217,6 +222,10 @@ class SegmentSupplyTests(unittest.TestCase):
 
 
 class YearEndSupplyRetreatTests(unittest.TestCase):
+    def setUp(self):
+        # Keep the exact depot stocks isolated from the independent city ration bill.
+        self.enterContext(patch.object(city_economy, 'settle_turn_grain'))
+
     def game(self, *, all_dead=False):
         data=deepcopy(segment_catalog(days=(15,20),checkpoint_grain=0).data)
         data.update(id='controlled-year-end-retreat',start_month=12)

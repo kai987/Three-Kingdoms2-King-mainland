@@ -10,9 +10,9 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT/'source'), str(ROOT/'tests')]
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import civil_staff, city_economy, diplomacy, domestic, logistics, march_supply
+from remake import civil_staff, diplomacy, domestic, logistics, march_supply
 from remake.march_core import enabled, using_backend
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import controlled_catalog, record_garrison_charges
 from test_remake_domestic import domestic_catalog
 
 
@@ -83,8 +83,6 @@ class AlliedTransitTests(unittest.TestCase):
                     game = self.campaign(expires=expires)
                     source, destination = (game.state.cities[key] for key in ('xiangyang', 'yingchuan'))
                     grain = game.state.cities['jiangxia'].grain
-                    dues = city_economy.garrison_grain(game, game.state)['jiangxia']
-                    start_month = game.state.year * 12 + game.state.month
                     gold = destination.gold
                     ident = source.roster.officer_ids[1]
                     order_data = dict(source=source.id, target=destination.id, officers=[ident], route_mode='land')
@@ -96,16 +94,16 @@ class AlliedTransitTests(unittest.TestCase):
                     game = Campaign(game.catalog)
                     game.load_save(saved, 0)
                     self.assertEqual(game.export_save(), saved)
-                    for _ in range(10):
-                        if not game.state.extension[lane][key]:
-                            break
-                        self.advance(game)
-                    else:
-                        self.fail('Allied journey did not finish')
+                    with record_garrison_charges() as dues:
+                        for _ in range(10):
+                            if not game.state.extension[lane][key]:
+                                break
+                            self.advance(game)
+                        else:
+                            self.fail('Allied journey did not finish')
                     source, destination = (game.state.cities[key] for key in ('xiangyang', 'yingchuan'))
-                    elapsed_months = game.state.year * 12 + game.state.month - start_month
-                    self.assertEqual(game.state.cities['jiangxia'].grain, grain-dues*elapsed_months,
-                                     'Only the allies’ own garrison eats their grain')
+                    self.assertEqual(game.state.cities['jiangxia'].grain, grain-dues['jiangxia'],
+                                     'Allied transit does not consume this city’s grain')
                     self.assertNotIn(ident, game.state.cities['jiangxia'].roster.officer_ids)
                     if expires == 2:
                         self.assertIn(ident, source.roster.officer_ids)
@@ -230,8 +228,9 @@ class MarchSupplyTests(unittest.TestCase):
         game = self.game(transfer=True)
         before = game.state.cities['xiangyang'].grain
         ident,row = self.queue(game,transfer=True)
-        self.advance(game)
-        spent = row['supply']['consumed']
+        with record_garrison_charges() as dues:
+            self.advance(game)
+        spent = row['supply']['consumed'] + dues['xiangyang']
         game.state.officers[ident].faction_id = None
         game._prune_marches(game.state)
         self.assertFalse(game.state.extension['travel']['marches'])
@@ -298,7 +297,7 @@ class ConvoySupplyTests(unittest.TestCase):
     def test_convoy_loading_cargo_separation_and_return_rations(self):
         game = self.game()
         before = game.state.cities['xiangyang'].grain
-        start_month = game.state.year * 12 + game.state.month
+        dues = self.enterContext(record_garrison_charges())
         row = self.dispatch(game)
         budget = row['journeys'][0]['supply']['loaded']
         self.assertEqual(game.state.cities['xiangyang'].grain,before-200-budget)
@@ -321,11 +320,9 @@ class ConvoySupplyTests(unittest.TestCase):
         saved = game.export_save()
         loaded = Campaign(game.catalog); loaded.load_save(saved,0)
         self.assertEqual(loaded.export_save(),saved)
-        upkeep = city_economy.garrison_grain(loaded, loaded.state)['xiangyang']
         self.advance_due(loaded)
         self.assertFalse(loaded.state.extension['logistics']['convoys'])
-        due = upkeep * (loaded.state.year * 12 + loaded.state.month - start_month)
-        self.assertEqual(loaded.state.cities['xiangyang'].grain,before-budget-return_food-due)
+        self.assertEqual(loaded.state.cities['xiangyang'].grain,before-budget-return_food-dues['xiangyang'])
 
     def test_no_grain_for_return_walks_and_suffers_hunger_without_free_trip_or_negative_cargo(self):
         game = self.game()
