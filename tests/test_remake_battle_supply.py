@@ -11,7 +11,7 @@ from remake.campaign import Campaign
 from remake import battle_supply, march_supply
 from remake.errors import GameError
 from remake.march_core import using_backend
-from campaign_fixtures import controlled_catalog, reach_battle
+from campaign_fixtures import controlled_catalog, reach_battle, record_garrison_charges
 import test_remake_battle_objectives as objectives
 
 WAIT = dict(kind='wait', actor=None, target=None, tactic=None, score=0)
@@ -71,10 +71,11 @@ class BattleSupplyTests(unittest.TestCase):
         march = deepcopy(game.state.extension['travel']['marches'][0])
         self.assertEqual(march['supply']['loaded'], 87)  # 3 march + 84 battle
         self.assertEqual(game.state.cities[source.id].grain, initial-87)
-        reach_battle(game)
+        with record_garrison_charges() as dues:
+            reach_battle(game)
         row = game.state.battle['extended']['supply']['sides']['attackers']
         self.assertEqual((row['loaded'],row['initial_credit']), (84,20))
-        self.assertEqual(game.state.cities[source.id].grain, initial-87)
+        self.assertEqual(game.state.cities[source.id].grain, initial-87-dues[source.id])
         self.assertEqual(game.state.battle['extended']['supply']['sides']['defenders']['loaded'],174)
         game.validate(game.state)
 

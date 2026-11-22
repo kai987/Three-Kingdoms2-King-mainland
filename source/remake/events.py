@@ -9,6 +9,7 @@ from . import historical_campaigns, observer, southern_mission, three_visits
 from . import grain_units
 from .battle_supply import COALITION_LIMIT, denominator, MAX_BATTLE_DAILY_UNITS
 from .city_development import LIMITS as DEVELOPMENT_LIMITS, POPULATION_UNIT, valid_population
+from .civil_staff import PORTRAITS as CIVIL_PORTRAITS
 from .dated_events import FOUNDING_TROOP_TARGET
 from .officers import OFFICER_TROOP_CAP, ref_sort_key, is_generated_ref
 
@@ -318,7 +319,7 @@ def _validate_staff_event(row, city_count):
         name = details['name']
         if not isinstance(name, str) or not 1 <= len(name) <= 40 or not name.strip() or not name.isprintable():
             raise ValueError('Civil staff event name')
-    if 'portrait' in details and details['portrait'] not in {'clerk-1', 'clerk-2', 'clerk-3'}:
+    if 'portrait' in details and details['portrait'] not in CIVIL_PORTRAITS:
         raise ValueError('Civil staff event portrait')
     if 'reason' in details and (not isinstance(details['reason'], str)
             or re.fullmatch(r'[a-z_]{1,80}', details['reason']) is None):

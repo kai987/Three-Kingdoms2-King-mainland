@@ -34,7 +34,23 @@ class CivilPortraitStaticTests(unittest.TestCase):
             self.assertEqual(hashlib.sha256(pixels).hexdigest(),row['pixel_sha256'])
             self.assertLessEqual(row['qa']['palette_size'],16);self.assertEqual(row['qa']['alpha_changes'],0)
         paths=serve.civil_portrait_static_assets(ROOT/'game')
-        self.assertEqual(set(paths),{'/assets/civil-staff/enhanced/index.json'}|{row['path']for row in data['portraits'].values()})
+        white={f'/assets/civil-staff/white/clerk-{n:02d}.png' for n in range(1,11)}
+        self.assertEqual(set(paths),{'/assets/civil-staff/enhanced/index.json'}|{row['path']for row in data['portraits'].values()}|white)
+        for path in white:
+            raw=(ROOT/'game'/paths[path][0]).read_bytes()
+            self.assertEqual(png.png_pixels(raw,(512,640))[0],(512,640))
+
+    def test_new_pool_does_not_register_unlisted_or_symlinked_images(self):
+        with tempfile.TemporaryDirectory() as folder:
+            here,base=self.prepare(folder)
+            white=base.parent/'white';white.mkdir()
+            (white/'clerk-01.png').write_bytes(b'fixture PNG')
+            (white/'clerk-11.png').write_bytes(b'unlisted')
+            (white/'clerk-02.png').symlink_to(white/'clerk-01.png')
+            paths=serve.civil_portrait_static_assets(here)
+            self.assertIn('/assets/civil-staff/white/clerk-01.png',paths)
+            self.assertNotIn('/assets/civil-staff/white/clerk-02.png',paths)
+            self.assertNotIn('/assets/civil-staff/white/clerk-11.png',paths)
 
     def test_wrong_names_paths_sizes_and_unlisted_files_are_never_public(self):
         for replacement in ('/assets/civil-staff/enhanced/../clerk-1.png','/assets/civil-staff/enhanced/clerk-2.png',

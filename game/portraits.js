@@ -6,6 +6,15 @@
  const pathPattern=/^\/assets\/portraits\/(?:original|generated)\/[A-Za-z0-9_-]+\.png$/;
  const enhancedPathPattern=/^\/assets\/portraits\/enhanced\/[A-Za-z0-9_-]{1,128}\.png$/;
  const personPattern=/^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/;
+ function civilEntry(key){
+  if(typeof key!=='string')return null;
+  const base='/assets/civil-staff';
+  const identity={kind:'generated',fictional:true,original_id:null};
+  if(/^clerk-[123]$/.test(key))return {...identity,path:`${base}/${key}.png`,width:32,height:40,
+   enhanced:{path:`${base}/enhanced/${key}.png`,width:128,height:160}};
+  if(/^clerk-(?:0[1-9]|10)$/.test(key))return {...identity,path:`${base}/white/${key}.png`,width:512,height:640};
+  return null;
+ }
  function validIndex(value){
   if(!value||value.schema!=='tk2-portraits-v1'||!Number.isInteger(value.width)||value.width<1||value.width>256||
    !Number.isInteger(value.height)||value.height<1||value.height>256||!value.people||typeof value.people!=='object'||Array.isArray(value.people))throw new Error('Invalid portrait index');
@@ -58,8 +67,12 @@
   }
   function registerGenerated(pool){
    generated.clear();const people=Array.isArray(pool?.people)?pool.people:Object.values(pool?.people||{});
-   for(const person of people){if(!/^clerk-[0-9]{6,12}$/.test(person?.id||'')||!/^clerk-[123]$/.test(person?.portrait||''))continue;
-    generated.set(person.id,Object.freeze({path:`/assets/civil-staff/${person.portrait}.png`,kind:'generated',fictional:true,width:32,height:40,original_id:null,enhanced:Object.freeze({path:`/assets/civil-staff/enhanced/${person.portrait}.png`,width:128,height:160})}));}
+   for(const person of people){
+    const row=civilEntry(person?.portrait);
+    if(!row||!/^clerk-[0-9]{6,12}$/.test(person?.id||''))continue;
+    if(row.enhanced)Object.freeze(row.enhanced);
+    generated.set(person.id,Object.freeze(row));
+   }
   }
   function entry(id){return typeof id==='string'?(generated.get(id)||index?.people[id]||null):null;}
   function selectedAsset(row,size){
@@ -73,13 +86,11 @@
   const assetPaths=row=>[row.path,row.enhanced?.path,row.refined?.path,row.white?.path,row.thumbnail?.path];
   function failAsset(id,path){const row=entry(id);if(!row||typeof path!=='string'||!assetPaths(row).includes(path))return false;failedPaths.add(path);refresh();return true;}
   function civilAsset(key){
-   if(!/^clerk-[123]$/.test(key||''))return null;
-   const enhanced=`/assets/civil-staff/enhanced/${key}.png`,native=`/assets/civil-staff/${key}.png`;
-   return !failedPaths.has(enhanced)?{path:enhanced,width:128,height:160,enhanced:true}:!failedPaths.has(native)?{path:native,width:32,height:40,enhanced:false}:null;
+   return selectedAsset(civilEntry(key));
   }
   function civilHtml(key,rawName,{className='civil-staff-portrait',locale:language=locale()}={}){
    if(!['civil-staff-portrait','event-staff-face'].includes(className))className='civil-staff-portrait';
-   const value=civilAsset(key),title=language==='ja'?'架空の文吏・共用ドット肖像':'架空文吏・共用像素肖像',name=i18n?.t?i18n.t(String(rawName||''),language):String(rawName||'');
+   const value=civilAsset(key),title=language==='ja'?'架空の文吏・共通肖像':'架空文吏・共用肖像',name=i18n?.t?i18n.t(String(rawName||''),language):String(rawName||'');
    return value?`<img data-civil-portrait="${escape(key)}" data-civil-name="${escape(rawName||'')}" class="${className}" src="${escape(root.GamePaths?.asset(value.path)||value.path)}" width="${value.width}" height="${value.height}" alt="${escape(name?name+'・'+title:title)}" loading="lazy" decoding="async">`:`<span class="${className} civil-staff-placeholder" role="img" aria-label="${escape(title)}">吏</span>`;
   }
   function description(row,asset=null){
@@ -95,7 +106,10 @@
    const enhanced=asset?.enhanced;
    if(enhanced&&row.enhanced?.rendering==='nearest4x')return text('新增繪製像素肖像・4倍放大・非史實容貌','新規制作のドット肖像・4倍拡大・史実の容貌ではありません');
    if(enhanced&&row.enhanced?.rendering==='redrawn128')return text('新增繪製像素肖像・128×160補繪・非史實容貌','新規制作のドット肖像・128×160描き直し・史実の容貌ではありません');
-   if(row.fictional)return enhanced?text('架空武將・共用像素肖像・明暗強化','架空の武将・共通ドット肖像・陰影強化'):text('架空武將・共用原版像素肖像','架空の武将・共通の原作ドット肖像');
+   if(row.fictional){
+    if(row.width===512)return text('架空武將・512×640白底共用肖像','架空の武将・512×640白背景の共通肖像');
+    return enhanced?text('架空武將・共用像素肖像・明暗強化','架空の武将・共通ドット肖像・陰影強化'):text('架空武將・共用原版像素肖像','架空の武将・共通の原作ドット肖像');
+   }
    if(enhanced)return row.kind==='nes_original'?text('原版像素肖像・明暗強化','原作のドット肖像・陰影強化'):text('新增繪製肖像・明暗強化・非史實容貌','新規制作の肖像・陰影強化・史実の容貌ではありません');
    return row.kind==='nes_original'?text('原版像素肖像','原作のドット肖像'):text('新增繪製肖像・非史實容貌','新規制作の肖像・史実の容貌ではありません');
   }
@@ -123,8 +137,9 @@
    const image=event.target;
    if(image?.hasAttribute?.('data-civil-portrait')){
     const key=image.getAttribute?.('data-civil-portrait')||image.dataset?.civilPortrait,attempted=image.getAttribute?.('src');
-    if(!/^clerk-[123]$/.test(key||''))return;
-    const canonical=[`/assets/civil-staff/enhanced/${key}.png`,`/assets/civil-staff/${key}.png`].find(path=>path===attempted||displayedPath(path)===attempted);
+    const row=civilEntry(key);
+    if(!row)return;
+    const canonical=assetPaths(row).find(path=>typeof path==='string'&&(path===attempted||displayedPath(path)===attempted));
     if(!canonical)return;
     failedPaths.add(canonical);const next=civilAsset(key);
     if(next){image.setAttribute('src',displayedPath(next.path));image.setAttribute('width',String(next.width));image.setAttribute('height',String(next.height));}
@@ -159,7 +174,7 @@
    })();
    return loading;
   }
-  return Object.freeze({load,html,personId,entry,asset,failAsset,civilAsset,civilHtml,registerGenerated,refresh,imageError,get status(){return status;}});
+  return Object.freeze({load,html,personId,entry,asset,failAsset,civilEntry,civilAsset,civilHtml,registerGenerated,refresh,imageError,get status(){return status;}});
  }
- if(typeof module==='object'&&module.exports)module.exports={create,validIndex};else root.GamePortraits=create();
+ if(typeof module==='object'&&module.exports)module.exports={create,validIndex,civilEntry};else root.GamePortraits=create();
 })(typeof window==='object'?window:globalThis);

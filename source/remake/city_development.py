@@ -213,7 +213,10 @@ def synchronize(game, state):
     for key, city in state.cities.items():
         if key not in pool['cities']:
             pool['cities'][key] = _new_city(game, state, city, pool['schema'])
-        pool['cities'][key]['owner'] = city.owner
+        row = pool['cities'][key]
+        if row['owner'] != city.owner:
+            row.pop('garrison_spirit', None)
+        row['owner'] = city.owner
     for key in set(pool['cities'])-set(state.cities):
         del pool['cities'][key]
     for owner in game.catalog.factions:
@@ -472,6 +475,7 @@ def view(game, state):
         best = min(actors, key=lambda ident: (-_profile(game, state, ident).intellect, ref_sort_key(ident))) if actors else None
         base_income = income_at(game.catalog.data, key, state.year, state.month) or dict(gold=0, grain=0, reserves=0)
         result['cities'][key] = dict(owner=city.owner, **{field: row[field] for field in LIMITS},
+            garrison_spirit=row.get('garrison_spirit', 100),
             baseline=deepcopy(row['baseline']), cooldown=row['cooldown'], tax_rate=tax_rate(row['governance']),
             eligible_actors=actors, actor_quotes=quotes,
             actions=deepcopy(quotes[str(best)]) if best is not None else {},
@@ -500,7 +504,7 @@ def validate(game, state):
         raise ValueError('City development AI receipt')
     for key, city in state.cities.items():
         row = pool['cities'][key]
-        if not isinstance(row, dict) or set(row) != _CITY_FIELDS or row['owner'] != city.owner or not _int(row['cooldown'], 0, 6):
+        if not isinstance(row, dict) or set(row) - {'garrison_spirit'} != _CITY_FIELDS or not _int(row.get('garrison_spirit',100),0,100) or row['owner'] != city.owner or not _int(row['cooldown'], 0, 6):
             raise ValueError('City development city fields')
         _metrics({field: row[field] for field in LIMITS})
         if row['baseline'] != opening_view(game.catalog, key, seed=state.seed, schema=pool['schema']):

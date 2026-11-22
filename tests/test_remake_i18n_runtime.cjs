@@ -31,10 +31,10 @@ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'game/i
 (async()=>{
  const i18n=context.window.GameI18n;await i18n.ready;
  assert.equal(i18n.locale,'zh-Hant');assert.equal(document.title,'三國·大陸戰役');assert.equal(heading.data,'保存進度');
- assert.equal(nativeTCText.data,'金城 · 金旋 · 劉金 · 花費資金50、兵糧20，預備兵300；黃金甲。');
- assert.equal(nativeTC.getAttribute('aria-label'),'資金、兵糧、預備兵');
- assert.equal(nativeJAText.data,'金城の金旋へ資金50、兵糧20。予備兵300と黄金甲を確認します。');
- assert.equal(nativeJA.getAttribute('title'),'資金・兵糧・予備兵');
+ assert.equal(nativeTCText.data,'金城 · 金旋 · 劉金 · 花費資金50、糧20，預備兵300；黃金甲。');
+ assert.equal(nativeTC.getAttribute('aria-label'),'資金、糧、預備兵');
+ assert.equal(nativeJAText.data,'金城の金旋へ資金50、糧20。予備兵300と黄金甲を確認します。');
+ assert.equal(nativeJA.getAttribute('title'),'資金・糧・予備兵');
  const index=JSON.parse(fs.readFileSync(path.join(root,'game/data/campaigns/index.json')));
  assert.equal(index.schema,'tk2-campaign-index-v1');assert.equal(index.catalogs.length,29);
  const rows=index.catalogs.map(file=>{const data=JSON.parse(fs.readFileSync(path.join(root,'game/data',file)));return{title:data.title,year:data.start_year,month:data.start_month,main_scenario:data.main_scenario};});
@@ -47,15 +47,15 @@ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'game/i
   ['史实','史実'],['假想','仮想'],
   ['河北爭亂','河北争乱'],['合淝之戰','合肥の戦い'],
   ['呂布討伐戰','呂布討伐戦'],['潼關之戰','潼関の戦い'],
-  ['袁尚势力 · 9座城池 · 根据地邺。钱 100 · 粮 200 · 预备兵 300 · 武将 40人 · 文吏 0人。地图已预览本剧本归属，开始后才建立新战役。','袁尚勢力 · 9都市 · 本拠鄴。資金100 · 兵糧200 · 予備兵300 · 武将40人 · 文吏0人。開始時の所属を表示中です。確定すると新しく開始します。'],
+  ['袁尚势力 · 9座城池 · 根据地邺。钱 100 · 粮 200 · 预备兵 300 · 武将 40人 · 文吏 0人。地图已预览本剧本归属，开始后才建立新战役。','袁尚勢力 · 9都市 · 本拠鄴。資金100 · 糧200 · 予備兵300 · 武将40人 · 文吏0人。開始時の所属を表示中です。確定すると新しく開始します。'],
   ['200年1月 · 官渡之战','200年1月 · 官渡の戦い'],
   ['208年10月 · 赤壁之战','208年10月 · 赤壁の戦い'],
   ['官渡之战','官渡の戦い'],['赤壁之战','赤壁の戦い'],
   ['元データ説明','元データ説明'],['关羽','関羽'],['张辽','張遼'],['许昌','許昌'],
-  ['钱 123 · 粮 456 · 预备兵 789','資金 123 · 兵糧 456 · 予備兵 789'],
+  ['钱 123 · 粮 456 · 预备兵 789','資金 123 · 糧 456 · 予備兵 789'],
   ['关羽攻击张辽，损兵17。','関羽が張遼を攻撃。17の兵力損耗。'],
-  ['钱 123 · 粮 456 · 预备兵 789 · 武将 42人','資金 123 · 兵糧 456 · 予備兵 789 · 武将 42人'],
-  ['曹操势力合计：钱 123 · 粮 456 · 预备兵 789 · 武将 42人','曹操勢力の合計：資金 123 · 兵糧 456 · 予備兵 789 · 武将 42人'],
+  ['钱 123 · 粮 456 · 预备兵 789 · 武将 42人','資金 123 · 糧 456 · 予備兵 789 · 武将 42人'],
+  ['曹操势力合计：钱 123 · 粮 456 · 预备兵 789 · 武将 42人','曹操勢力の合計：資金 123 · 糧 456 · 予備兵 789 · 武将 42人'],
   ['经','経'],['经验999','経験999'],['关羽 · 300兵 · 武97 · 知75 · 德70 · 体力97 · 经验86','関羽 · 300兵 · 武97 · 知75 · 徳70 · 体力97 · 経験86'],
   ['1023人武将库','武将名鑑・1023人'],['全部1023人','全1023人'],
   ['荀勖','荀勗'],['施績','朱績'],
@@ -89,26 +89,26 @@ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'game/i
  for(const row of rows){const once=i18n.t(row.title,'ja');assert.equal(i18n.t(once,'ja'),once,row.title);assert(!once.includes('の戦いの戦い'),row.title);}
  assert.equal(i18n.t('关羽','zh-Hant'),'關羽');
  const resourceCases=[
-  ['金錢・糧食・預備兵','資金・兵糧・預備兵','資金・兵糧・予備兵'],
-  ['金钱 · 粮食 · 预备兵','資金 · 兵糧 · 預備兵','資金 · 兵糧 · 予備兵'],
-  ['资金 123 · 兵粮 456 · 预备兵 789','資金 123 · 兵糧 456 · 預備兵 789','資金 123 · 兵糧 456 · 予備兵 789'],
-  ['金 123 · 錢456 · 糧 789','資金 123 · 資金456 · 兵糧 789','資金 123 · 資金456 · 兵糧 789'],
-  ['花費金50、糧20','花費資金50、兵糧20','花費資金50、兵糧20'],
-  ['花費50金、20糧','花費資金50、兵糧20','花費資金50、兵糧20'],
+  ['金錢・糧食・預備兵','資金・糧・預備兵','資金・糧・予備兵'],
+  ['金钱 · 粮食 · 预备兵','資金 · 糧 · 預備兵','資金 · 糧 · 予備兵'],
+  ['资金 123 · 兵粮 456 · 预备兵 789','資金 123 · 糧 456 · 預備兵 789','資金 123 · 糧 456 · 予備兵 789'],
+  ['金 123 · 錢456 · 糧 789','資金 123 · 資金456 · 糧 789','資金 123 · 資金456 · 糧 789'],
+  ['花費金50、糧20','花費資金50、糧20','花費資金50、糧20'],
+  ['花費50金、20糧','花費資金50、糧20','花費資金50、糧20'],
   ['最高費用金14–17；收入50金。','最高費用資金14–17；收入資金50。','最高費用資金14–17；收入資金50。'],
-  ['金：100 · 糧：200 · 預備兵：300','資金：100 · 兵糧：200 · 預備兵：300','資金：100 · 兵糧：200 · 予備兵：300'],
-  ['金— · 糧—','資金— · 兵糧—','資金— · 兵糧—'],
+  ['金：100 · 糧：200 · 預備兵：300','資金：100 · 糧：200 · 預備兵：300','資金：100 · 糧：200 · 予備兵：300'],
+  ['金— · 糧—','資金— · 糧—','資金— · 糧—'],
   ['金城50 · 金旋20 · 劉金10 · 黃金甲 · 金盔 · 金鎧','金城50 · 金旋20 · 劉金10 · 黃金甲 · 金盔 · 金鎧','金城50 · 金旋20 · 劉金10 · 黃金甲 · 金盔 · 金鎧'],
   ['city_金钱50 grain_粮食20 city-資金100 https://example.invalid/金钱/粮食?gold=100','city_金钱50 grain_粮食20 city-資金100 https://example.invalid/金钱/粮食?gold=100','city_金钱50 grain_粮食20 city-資金100 https://example.invalid/金钱/粮食?gold=100'],
  ];
  for(const[source,tc,ja]of resourceCases)for(const[language,expected]of [['zh-Hant',tc],['ja',ja]]){const result=i18n.resourceText(source,language);assert.equal(result,expected,language+': '+source);assert.equal(i18n.resourceText(result,language),expected,'Resource normalization is idempotent');assert.deepEqual(result.match(/\d+/g),source.match(/\d+/g),'Resource labels preserve every integer');}
  for(const source of ['city_金钱50 grain_粮食20 city-資金100 https://example.invalid/金钱/粮食?gold=100','https://example.invalid/金城/金旋?name=劉金'])for(const language of ['zh-Hant','ja'])assert.equal(i18n.t(source,language),source,'Translation preserves technical tokens');
- assert.equal(i18n.t('金钱50 · 粮食20 · 预备兵300','zh-Hant'),'資金50 · 兵糧20 · 預備兵300');
- assert.equal(i18n.t('金钱50 · 粮食20 · 预备兵300','ja'),'資金50 · 兵糧20 · 予備兵300');
+ assert.equal(i18n.t('金钱50 · 粮食20 · 预备兵300','zh-Hant'),'資金50 · 糧20 · 預備兵300');
+ assert.equal(i18n.t('金钱50 · 粮食20 · 预备兵300','ja'),'資金50 · 糧20 · 予備兵300');
  assert.equal(i18n.t('金城 · 金旋 · 劉金','zh-Hant'),'金城 · 金旋 · 劉金');
  assert.equal(i18n.t('内河水路：顺流、逆流；长江与湘水（含洞庭出口）。','zh-Hant'),'內河水路：順流、逆流；長江與湘水（含洞庭出口）。');
  for(let n=0;n<2;n++){assert(i18n.setLocale('ja'));assert.equal(heading.data,'セーブ');assert.equal(document.title,'三国志・大陸戦役');assert.equal(literalGold.data,'金 50');assert(i18n.setLocale('zh-Hant'));assert.equal(heading.data,'保存進度');assert.equal(document.title,'三國·大陸戰役');assert.equal(literalGold.data,'金 50');}
- assert.equal(nativeTCText.data,'金城 · 金旋 · 劉金 · 花費資金50、兵糧20，預備兵300；黃金甲。');assert.equal(nativeJAText.data,'金城の金旋へ資金50、兵糧20。予備兵300と黄金甲を確認します。');
+ assert.equal(nativeTCText.data,'金城 · 金旋 · 劉金 · 花費資金50、糧20，預備兵300；黃金甲。');assert.equal(nativeJAText.data,'金城の金旋へ資金50、糧20。予備兵300と黄金甲を確認します。');
  assert.equal(rawLink.getAttribute('href'),'https://example.invalid/金钱/粮食?gold=100');assert.equal(rawLink.getAttribute('id'),'city-金钱');assert.equal(rawLink.getAttribute('data-city-id'),'金城');
  const storageBefore=[...storage];assert.equal(i18n.setLocale('zh-CN'),false);assert.equal(i18n.locale,'zh-Hant');assert.deepEqual([...storage],storageBefore);
  assert.equal(input.value,'13579');assert.equal(input.checked,true);assert.equal(language.children[0].children[0].data,'繁體中文');assert.equal(language.children[1].children[0].data,'日本語');

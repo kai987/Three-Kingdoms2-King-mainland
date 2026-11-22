@@ -88,7 +88,8 @@ def preview_city_history(catalog):
 
 
 class CampaignSession:
-    def __init__(self, paths, *, initial_scenario=None):
+    def __init__(self, paths, *, initial_scenario=None, record_journal=True):
+        self.record_journal = record_journal
         catalogs=[Catalog(path) for path in paths]
         if not catalogs:
             raise ValueError('Current campaign catalogs are required')
@@ -103,7 +104,7 @@ class CampaignSession:
                                                self.catalogs[key].data['start_month'], key))
         if not isinstance(initial_scenario, str) or initial_scenario not in self.catalogs:
             raise ValueError('Unknown initial scenario')
-        self.game=Campaign(self.catalogs[initial_scenario])
+        self.game=Campaign(self.catalogs[initial_scenario], record_journal=self.record_journal)
         self.lock=RLock()
         self._opening_previews=None
 
@@ -146,7 +147,8 @@ class CampaignSession:
                 key: grain_balance(result['catalog']['city_income'].get(key, fallback)['grain']
                                    + domestic.earned_grain(self.game.state, key,
                                        result['catalog']['city_income'].get(key, fallback)),
-                                   upkeep[key], city.owner)
+                                   upkeep[key], city.owner, result['catalog']['city_development']['cities'][key]['population']
+                                   if result['catalog'].get('city_development') else 0)
                 for key, city in self.game.state.cities.items()
             }
         result['catalog']['road_additions']=self.game.catalog.data.get('road_additions',[])
@@ -217,14 +219,14 @@ class CampaignSession:
                 scenario=payload.get('scenario',self.game.catalog.data['id'])
                 if not isinstance(scenario,str) or scenario not in self.catalogs:raise GameError('请选择有效的战役。')
                 if type(revision) is not int or revision!=self.revision:raise GameError('进度已更新。',409)
-                candidate=Campaign(self.catalogs[scenario]);candidate.revision=self.revision
+                candidate=Campaign(self.catalogs[scenario], record_journal=self.record_journal);candidate.revision=self.revision
                 result=candidate.command(kind,payload,revision)
                 self.game=candidate
             else:result=self.game.command(kind,payload,revision)
             return self._decorate_view(result)
 
-    def export_save(self):
-        with self.lock:return self.game.export_save()
+    def export_save(self, *, compact=False):
+        with self.lock:return self.game.export_save(compact=compact)
 
     def preview_city(self, scenario, city):
         """Read opening data for one city without creating a game or drawing RNG."""
@@ -261,10 +263,11 @@ class CampaignSession:
             frontier=frontier_outposts_view(d).get(city)
             upkeep = garrison_grain_cost(d, city, d['start_year'], d['start_month'],
                                          sum(o['troops'] for o in officers), stocks[city]['reserves'])
-            balance = grain_balance(income['grain'], upkeep, owner)
+            development = opening_view(c, city)
+            balance = grain_balance(income['grain'], upkeep, owner, development['population'])
             return dict(scenario=scenario,title=d['title'],year=d['start_year'],month=d['start_month'],
                 capacity=c.rules.city_officer_capacity,
-                city=dict(id=city,owner=owner,treasure=treasure,facilities=facilities,city_development=opening_view(c,city),owner_name=c.factions[owner]['name'] if owner!='neutral' else neutral_name,
+                city=dict(id=city,owner=owner,treasure=treasure,facilities=facilities,city_development=development,owner_name=c.factions[owner]['name'] if owner!='neutral' else neutral_name,
                     terrain=c.map_cities[city].get('terrain'),officers=officers,
                     profile=profile_at(d,city,d['start_year'],d['start_month']),income=income, grain_balance=balance,
                     history=d.get('city_history',{}).get(city),frontier_outpost=frontier,
@@ -313,7 +316,7 @@ class CampaignSession:
             if not isinstance(scenario, str) or scenario not in self.catalogs:
                 verified_save_content(save)
                 raise GameError('存档所属战役不可用，进度未改变。')
-            candidate=Campaign(self.catalogs[scenario]);candidate.revision=self.revision
+            candidate=Campaign(self.catalogs[scenario], record_journal=self.record_journal);candidate.revision=self.revision
             result=candidate.load_save(save,revision)
             self.game=candidate
             return self._decorate_view(result)

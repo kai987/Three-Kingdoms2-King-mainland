@@ -310,6 +310,13 @@ class ExpandedCampaign:
         from .domestic import unit_morale
         for ident in [*selected,*defenders]:
             support[str(ident)]['morale']=unit_morale(self,state,ident)
+            if ident in selected and paid:
+                spirit = state.extension.get('domestic', {}).get('march_spirit', {}).get(str(ident), 100)
+            else:
+                home = source.id if ident in selected else target.id
+                spirit = state.extension.get('city_development', {}).get('cities', {}).get(home, {}).get('garrison_spirit', 100)
+            if spirit < 100:
+                support[str(ident)]['garrison_spirit'] = spirit
         state.battle_counter+=1
         state.battle={'id':f'battle-{state.battle_counter}','source':source.id,'target':target.id,'attacker':source.owner,'defender':target.owner,
                       'attackers':units(selected),'defenders':units(defenders),'used':[],'round':1,'outcome':None,'supply_cost':cost,
@@ -1170,7 +1177,13 @@ class ExpandedCampaign:
 
     def _expanded_ai(self,state,payload):
         from .strategic_ai import run
-        return run(self,state,payload)
+        # Every faction scans the same road network many times in one AI phase.
+        # Keep it local to this transaction, including on rejected commands.
+        self._ai_routes = {}
+        try:
+            return run(self,state,payload)
+        finally:
+            del self._ai_routes
 
     def _expanded_catalog_view(self,state):
         from . import troop_types
@@ -1305,7 +1318,8 @@ class ExpandedCampaign:
         units={u['id']:u for u in b['attackers']+b['defenders']}
         if set(e['support'])!={str(i) for i in units}:raise ValueError('battle support identities')
         for key,s in e['support'].items():
-            if set(s)!={'health','energy','stunned','guard','morale'}:raise ValueError('battle support fields')
+            if 'garrison_spirit' in s:integer(s['garrison_spirit'],0,100,'garrison spirit')
+            if set(s)-{'garrison_spirit'}!={'health','energy','stunned','guard','morale'}:raise ValueError('battle support fields')
             integer(s['morale'],0,100,'battle morale')
             integer(s['health'],1,state.officers[deserialize_officer_ref(key,self.catalog.rules)].health,'battle HP')
             integer(s['energy'],0,18,'battle energy');integer(s['stunned'],0,1,'battle confusion');integer(s['guard'],0,2,'battle shield')

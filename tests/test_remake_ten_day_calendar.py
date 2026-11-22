@@ -39,7 +39,7 @@ class TenDayCalendarTests(unittest.TestCase):
         stocks = {key: (c.gold, c.grain, c.reserves) for key, c in game.state.cities.items()}
         for _ in range(2):
             game._complete_turn(game.state)
-            self.assertEqual({key: (c.gold, c.grain, c.reserves) for key, c in game.state.cities.items()}, stocks)
+            self.assertEqual({key: (c.gold, c.grain + paid[key], c.reserves) for key, c in game.state.cities.items()}, stocks)
             self.assertEqual(officer.health, officer.profile.health_max - 20)
         game._complete_turn(game.state)
         for key, city in game.state.cities.items():

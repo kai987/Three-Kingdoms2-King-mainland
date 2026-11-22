@@ -45,10 +45,18 @@ def _valid_campaign_id(value):
 def verified_save_content(payload):
     """Check the shared save format and integrity before comparing catalogs."""
     try:
-        if not isinstance(payload, dict) or set(payload) != {
-                'format', 'version', 'catalog_sha256', 'scenario', 'state', 'checksum'}:
+        from . import compact_save
+        packed = isinstance(payload, dict) and type(payload.get('version')) is int and payload['version'] == 3
+        fields = {'format', 'version', 'catalog_sha256', 'scenario', 'state', 'checksum'}
+        if packed:
+            fields.add('deflate')
+        if not isinstance(payload, dict) or set(payload) != fields:
             raise ValueError('save envelope')
         content = {key: value for key, value in payload.items() if key != 'checksum'}
+        if digest(content) != payload['checksum']:
+            raise ValueError('save checksum')
+        if packed:
+            content = compact_save.unpack(content)
         state = content['state']
         if (content['format'] != 'three-kingdoms-remake-save'
                 or type(content['version']) is not int or content['version'] not in (1, 2)
@@ -63,10 +71,8 @@ def verified_save_content(payload):
                        for key in ('cities', 'officers', 'rng', 'extension'))
                 or ('command_books' in state['extension']) == (content['version'] == 1)):
             raise ValueError('save structure')
-        if digest(content) != payload['checksum']:
-            raise ValueError('save checksum')
         return content
-    except (ValueError, TypeError, OverflowError, RecursionError) as exc:
+    except (ValueError, TypeError, KeyError, OverflowError, RecursionError) as exc:
         raise GameError(INVALID_SAVE_MESSAGE) from exc
 
 
@@ -121,7 +127,8 @@ class CampaignState:
 
 class Catalog:
     def __init__(self, path: Path):
-        raw = Path(path).read_bytes()
+        self.path = Path(path)
+        raw = self.path.read_bytes()
         self.sha256 = hashlib.sha256(raw).hexdigest()
         self.data = json.loads(raw)
         if self.data.get('schema') != 'tk2-campaign-v1':
@@ -158,6 +165,26 @@ class Catalog:
         assert len(self.definitions) == expected_people and len(self.map_cities) == expected
 
     @cached_property
+    def previous_weather_sha256(self):
+        # Only the five revised monthly disaster settings may differ from the
+        # previous catalog. Preserve strict identity for all other game data.
+        try:
+            raw = self.path.read_bytes()
+        except OSError:
+            return None
+        if hashlib.sha256(raw).hexdigest() != self.sha256:
+            return None
+        data = json.loads(raw)
+        rules = data.get('facility_rules', {})
+        previous = dict(flood_months=[5, 6], drought_months=[8, 9],
+                        flood_plain_chance=12, flood_mountain_chance=6, drought_chance=12)
+        if any(rules.get(key) != facilities.RULES[key] for key in previous):
+            return None
+        rules.update(previous)
+        encoded = (json.dumps(data, ensure_ascii=False, separators=(',', ':')) + '\n').encode()
+        return hashlib.sha256(encoded).hexdigest()
+
+    @cached_property
     def opening_garrisons(self):
         return resolve_opening_garrisons(self)
 
@@ -178,7 +205,8 @@ class Catalog:
 
 
 class Campaign(TravelCampaign, ExpandedCampaign):
-    def __init__(self, catalog: Catalog):
+    def __init__(self, catalog: Catalog, *, record_journal=True):
+        self.record_journal = record_journal
         self.catalog = catalog
         self.state: CampaignState | None = None
         self.revision = 0
@@ -409,7 +437,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             if type(revision) is not int or revision != self.revision:
                 raise GameError('进度已更新，请重新选择操作。', 409)
             with presentation.capture(self) as scenes:
-                before = self.to_dict()
+                before = self.to_dict() if self.record_journal else None
                 if kind == 'new':
                     campaign_id = payload.get('campaign_id')
                     if 'campaign_id' in payload and not _valid_campaign_id(campaign_id):
@@ -481,9 +509,10 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 self.validate(candidate)
                 self.state = candidate
                 self.revision += 1
-                self.journal.append({'kind': kind, 'revision': self.revision,
-                                     'before_sha256': digest(before), 'after_sha256': digest(self.to_dict()),
-                                     'rng_draws': candidate.rng.draws})
+                if self.record_journal:
+                    self.journal.append({'kind': kind, 'revision': self.revision,
+                                         'before_sha256': digest(before), 'after_sha256': digest(self.to_dict()),
+                                         'rng_draws': candidate.rng.draws})
                 return presentation.response(self.view(), self.revision, scenes)
 
     def _owned_city(self, state, key, *, action=False):
@@ -611,7 +640,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         amount=max(1,base//((defender['martial']+80)*10000))
         support=(state.battle or {}).get('extended',{}).get('support',{}).get(str(attacker['id']),{})
         factor=max(80,min(110,100+(support.get('morale',70)-70)//3))
-        return min(defender['troops'],max(1,amount*factor//100))
+        return min(defender['troops'],max(1,amount*factor*support.get('garrison_spirit',100)//10000))
 
     def _attack(self, state, payload):
         return self._expanded_attack(state, payload)
@@ -697,7 +726,6 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                         self._note(state, f'{name}到达寿命边界，释放兵员{released}归原城。')
             state.calendar_cursor = state.year
             self._note(state, f'新年更新人物库，记录{count}项年代事件；未自动招募或复活人物。')
-        garrison_dues = city_economy.garrison_grain(self, state)
         for city in state.cities.values():
             if city.owner != 'neutral':
                 income=income_at(self.catalog.data,city.id,state.year,state.month) or {
@@ -707,14 +735,14 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 city.gold += income['gold']
                 city.grain += income['grain']
                 domestic.add_reserves(self,state,city,income['reserves'],recruited=True)
-        outposts = frontier_maintenance(self, state)
+        frontier_maintenance(self, state)
         existing = set(state.officers)
         self._spawn_eligible(state)
         for ident, officer in state.officers.items():
             if ident in existing and officer.alive:
                 officer.health = min(officer.profile.health_max, officer.health + r['monthly_heal'])
         domestic.month_rollover(self,state)
-        city_economy.settle_garrison_grain(self, state, outposts, garrison_dues)
+        city_economy.settle_turn_grain(self, state)
         facilities.month_rollover(self,state)
         city_development.month_rollover(self,state)
 
@@ -733,6 +761,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 state.month = 1
                 state.year += 1
             self._monthly_calendar(state)
+        else:
+            city_economy.settle_turn_grain(self, state)
         state.turn += 1
         if month_changed:
             from . import dated_events, succession_depositions
@@ -768,13 +798,18 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 self._note(state,'新月结算：各城按规模获得金钱、粮食与预备兵收入，武将恢复体力。')
             self._note(state,'各势力本旬行动完成，进入下一旬战略阶段；每旬固定10天。')
 
-    def export_save(self):
+    def export_save(self, *, compact=False):
         with self.lock:
             if self.state is None:
                 raise GameError('请先开始演练。')
             value = {'format': 'three-kingdoms-remake-save', 'version': 2,
                      'catalog_sha256': self.catalog.sha256, 'scenario': self.catalog.data['id'],
                      'state': self.to_dict()}
+            if compact:
+                from . import compact_save
+                value = compact_save.pack(value)
+                if len(canonical(value).encode()) + 100 > compact_save.MAX_FILE_BYTES:
+                    raise GameError('存档超过容量上限。')
             return {**value, 'checksum': digest(value)}
 
     def load_save(self, payload, revision):
@@ -784,13 +819,12 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             content = verified_save_content(payload)
             if content['scenario'] != self.catalog.data['id']:
                 raise GameError(INVALID_SAVE_MESSAGE)
-            if content['catalog_sha256'] != self.catalog.sha256:
+            if content['catalog_sha256'] != self.catalog.sha256 and content['catalog_sha256'] != self.catalog.previous_weather_sha256:
                 raise GameError('此存档与当前剧本版本不兼容。请使用创建存档时的游戏版本。')
             try:
-                raw = deepcopy(content['state'])
+                raw = content['state'] if payload['version'] == 3 else deepcopy(content['state'])
                 # The current catalog's existing campaigns acquire the three
                 # new presentation/AI preferences without replaying past events.
-                # Historical catalog IDs/checksums remain unsupported.
                 extension = raw['extension']
                 legacy = content['version'] == 1
                 extension.setdefault('difficulty', 'normal')
@@ -838,7 +872,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 raise GameError(INVALID_SAVE_MESSAGE) from exc
             self.state = candidate
             self.revision += 1
-            self.journal.append({'kind': 'load', 'revision': self.revision, 'after_sha256': digest(self.to_dict()), 'rng_draws': candidate.rng.draws})
+            if self.record_journal:
+                self.journal.append({'kind': 'load', 'revision': self.revision, 'after_sha256': digest(self.to_dict()), 'rng_draws': candidate.rng.draws})
             return self.view()
 
     def validate(self, state):

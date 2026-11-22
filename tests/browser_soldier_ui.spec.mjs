@@ -550,7 +550,7 @@ test('fire arrows burn carried grain and conversion loyalty gates stay actionabl
   await expect(page.locator('#confirm-tactic')).toBeEnabled();
   if(kind==='conversion71')await expect(forecast).toContainText(/必定失敗|必ず失敗/);
   await page.locator('#dialog-language').selectOption('ja');await expect(page.locator('#tactic-effect-preview .tactic-effect-forecast[data-l10n-native="ja"]')).toBeVisible();
-  if(kind==='fire')await expect(forecast).toContainText('携行兵糧');
+  if(kind==='fire')await expect(forecast).toContainText('携行糧');
   expect(await save(page)).toEqual(before.save,'Forecast and language changes do not roll effects or spend points');
   await evidence(page,testInfo,'original-tactic-preview-'+kind);
   await page.locator('#confirm-tactic').click();const after=await animation(page,{withView:false}),prior=before.save.state,next=after.save.state;
@@ -778,7 +778,8 @@ test('manual deployment places sequentially in native zones with zero-cost check
  expect(first.view.catalog.battle_tactical.placement.actor).toBe(attacker.expected_next.actor);expect(first.save.state.battle.extended.tactical.positions[String(attacker.expected_next.actor)]).toEqual(attacker.expected_next.default_point);
  expect(Object.keys(first.save.state.battle.extended.tactical.positions).sort()).toEqual(attacker.expected_next.position_ids);expect(domain(first.save)).toEqual(domain(before.save));
  await page.keyboard.down('Enter');await page.waitForTimeout(250);await idle(page);expect(await save(page)).toEqual(first.save,'Held Enter must not confirm a second officer');await page.keyboard.up('Enter');
- await expect.poll(()=>page.evaluate(checksum=>{const raw=localStorage.getItem('three-kingdoms-autosaves-v1');if(!raw)return false;const rows=JSON.parse(raw);return rows.items?.some(row=>JSON.parse(row.raw).checksum===checksum)||false;},first.save.checksum)).toBe(true);
+ const compactChecksum=await page.evaluate(async()=>(await (await fetch('/api/save?compact=1')).json()).checksum);
+ await expect.poll(()=>page.evaluate(checksum=>{const raw=localStorage.getItem('three-kingdoms-autosaves-v1');if(!raw)return false;const rows=JSON.parse(raw);return rows.items?.some(row=>JSON.parse(row.raw).checksum===checksum)||false;},compactChecksum)).toBe(true);
  await load(page,first.save,'confirmed-placement-checkpoint.json');expect(await save(page)).toEqual(first.save);await expect(page.locator('[data-placement-progress]')).toHaveAttribute('data-placement-progress','1');
  await locale(page,'ja');await expect(page.locator('#battle-place-confirm')).toContainText('この位置で確定');await expect(page.locator('#inspector')).toContainText('未確定の配置プレビューは保存しません');
  for(let i=0;i<2;i++){await control(page,'battle-place-confirm');await idle(page);}

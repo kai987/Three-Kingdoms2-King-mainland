@@ -36,5 +36,26 @@ class SaveTransferTests(unittest.TestCase):
         with self.assertRaises(GameError):restored.load_save(bad,restored.revision)
         self.assertEqual(canonical(restored.export_save()),before)
 
+    def test_compact_header_round_trip_and_corrupt_body_are_atomic(self):
+        import base64
+        import zlib
+        game = Campaign(Catalog(ROOT/'game/data/campaigns/190-01.json'))
+        game.command('new', dict(faction='observer',seed=2026), 0)
+        legacy = game.export_save()
+        packed = game.export_save(compact=True)
+        self.assertEqual(packed['version'], 3)
+        self.assertLess(len(canonical(packed)), len(canonical(legacy)) // 2)
+        game.load_save(packed,game.revision)
+        self.assertEqual(game.export_save(), legacy)
+        for bad in (dict(packed, state=dict(packed['state'],year=300)),
+                    dict(packed, deflate=packed['deflate'][:-4]),
+                    dict(packed, deflate=base64.b64encode(zlib.compress(b'[]')).decode())):
+            bad['checksum'] = digest({k:v for k,v in bad.items() if k!='checksum'})
+            revision = game.revision
+            with self.assertRaises(GameError):
+                game.load_save(bad,revision)
+            self.assertEqual(game.revision, revision)
+            self.assertEqual(game.export_save(), legacy)
+
 
 if __name__=='__main__':unittest.main()

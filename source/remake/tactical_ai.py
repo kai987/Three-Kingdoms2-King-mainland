@@ -109,7 +109,8 @@ def expected_attack(battle, actor, target, damage_percent=32):
               for spread in range(90, 111)]
     morale = _support(battle, actor).get('morale',70)
     factor = max(80,min(110,100+(morale-70)//3))
-    values = [min(target['troops'],max(1,value*factor//100)) for value in values]
+    spirit = _support(battle, actor).get('garrison_spirit', 100)
+    values = [min(target['troops'],max(1,value*factor*spirit//10000)) for value in values]
     if guarded:
         values = [max(1, value // 2) for value in values]
     return sum(values) / len(values)

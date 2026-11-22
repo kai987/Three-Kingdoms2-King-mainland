@@ -14,7 +14,7 @@ from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
 from remake import domestic, logistics
 from remake.officers import YearState, year_state
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import controlled_catalog, record_garrison_charges
 
 
 def domestic_catalog():
@@ -84,6 +84,7 @@ class DomesticTests(unittest.TestCase):
         intellect = game.state.officers[civil].profile.intellect
         city = game.state.cities['xiangyang']
         start = city.gold, city.grain
+        paid = self.enterContext(record_garrison_charges())
         for _ in range(3):
             domestic.finish_faction_turn(game, game.state, 'shu', automatic=False)
             snapshot = game.export_save()
@@ -91,7 +92,7 @@ class DomesticTests(unittest.TestCase):
             self.assertEqual(game.export_save(), snapshot)
             game._complete_turn(game.state)
         self.assertEqual(intellect, 99)
-        self.assertEqual((city.gold, city.grain), (start[0] + 150, start[1] + 4500 - 132))
+        self.assertEqual((city.gold, city.grain), (start[0] + 150, start[1] + 4500 - paid['xiangyang']))
         snapshot = game.export_save()
         domestic.month_rollover(game, game.state)
         self.assertEqual(game.export_save(), snapshot)
@@ -117,6 +118,7 @@ class DomesticTests(unittest.TestCase):
         state = game.state
         city = state.cities['xiangyang']
         start = city.gold, city.grain
+        paid = self.enterContext(record_garrison_charges())
         domestic.finish_faction_turn(game, state, 'shu', automatic=False)
         game._complete_turn(state)
         saved = game.export_save()
@@ -133,7 +135,7 @@ class DomesticTests(unittest.TestCase):
 
         # One full duty at 20%, one half duty at 50%, and one missed duty.
         city = state.cities['xiangyang']
-        self.assertEqual((city.gold, city.grain), (start[0] + 115, start[1] + 3450 - 132))
+        self.assertEqual((city.gold, city.grain), (start[0] + 115, start[1] + 3450 - paid['xiangyang']))
         self.assertNotIn('income_rate_units', state.extension['domestic']['cities'][city.id])
 
     def test_midmonth_old_save_keeps_earned_income_then_uses_new_rate(self):
@@ -156,10 +158,11 @@ class DomesticTests(unittest.TestCase):
                 state = loaded.state
                 city = state.cities['xiangyang']
                 start = city.gold, city.grain
+                paid = self.enterContext(record_garrison_charges())
                 for _ in range(2):
                     domestic.finish_faction_turn(loaded, state, 'shu', automatic=False)
                     loaded._complete_turn(state)
-                self.assertEqual((city.gold, city.grain), (start[0] + gold, start[1] + grain - 132))
+                self.assertEqual((city.gold, city.grain), (start[0] + gold, start[1] + grain - paid['xiangyang']))
 
     def test_recruiting_costs_reserve_target_morale_and_training_are_bounded(self):
         game = self.game()

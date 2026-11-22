@@ -504,16 +504,24 @@ def portrait_static_assets(here=HERE):
 
 
 def civil_portrait_static_assets(here=HERE):
-    """Only the three fixed, identity-bound civil portrait variants are public."""
+    """Allow only the fixed civil portrait keys used by current and legacy saves."""
     root = Path(here).resolve()
     base = root / 'assets/civil-staff'
     enhanced = base / 'enhanced'
     index = enhanced / 'index.json'
-    if ((root / 'assets').is_symlink() or base.is_symlink() or
-            enhanced.is_symlink() or index.is_symlink()):
+    if (root / 'assets').is_symlink() or base.is_symlink():
         return {}
-    static = {'/assets/civil-staff/enhanced/index.json':
-              ('assets/civil-staff/enhanced/index.json', 'application/json; charset=utf-8')}
+    static = {}
+    if not (base / 'white').is_symlink():
+        for number in range(1, 11):
+            relative = f'assets/civil-staff/white/clerk-{number:02d}.png'
+            target = root / relative
+            if not target.is_symlink() and target.is_file():
+                static['/' + relative] = (relative, 'image/png')
+    if enhanced.is_symlink() or index.is_symlink():
+        return static
+    static['/assets/civil-staff/enhanced/index.json'] = (
+        'assets/civil-staff/enhanced/index.json', 'application/json; charset=utf-8')
     try:
         data = json.loads(index.read_text(encoding='utf-8'))
     except (OSError, ValueError):
@@ -663,6 +671,8 @@ def make_handler(game, cloud_config, cloud_csp, static, audit=None, here=HERE):
                         raise GameError('未找到这个剧本。')
                     from remake.march_core import config_for
                     return self.send(200, config_for(catalog.data))
+                if self.path == '/api/save?compact=1':
+                    return self.send(200, game.export_save(compact=True))
                 if self.path == '/api/save':
                     return self.send(200, game.export_save())
                 if urlsplit(self.path).path == '/api/city-preview':
@@ -774,7 +784,8 @@ def main():
     cloud_config = public_config(HERE / 'config/cloud-save-public.json')
     cloud_csp = content_security_policy(cloud_config)
     current_index = json.loads((HERE / 'data/campaigns/index.json').read_text())
-    game = CampaignSession([HERE / 'data' / name for name in current_index['catalogs']])
+    game = CampaignSession([HERE / 'data' / name for name in current_index['catalogs']],
+                           record_journal=bool(args.audit_log))
     static = {'/': ('index.html', 'text/html; charset=utf-8'),
               '/favicon.ico': ('favicon.ico', 'image/x-icon'),
               '/favicon.svg': ('favicon.svg', 'image/svg+xml'),

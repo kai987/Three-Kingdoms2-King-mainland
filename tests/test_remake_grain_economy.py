@@ -18,7 +18,7 @@ class GrainEconomyTests(unittest.TestCase):
         path = ROOT / 'game/data/campaigns/208-10.json'
         session = CampaignSession([path])
         opening = session.preview_city('mainland208-10', 'jiangxia')['city']
-        self.assertEqual(opening['grain_balance'], dict(production=740, upkeep=1486, net=-746))
+        self.assertEqual(opening['grain_balance'], dict(production=740, upkeep=1486, civilian=82, net=-828))
         live = session.command('new', {'faction': 'shu', 'seed': 2026}, 0)
         self.assertEqual(live['catalog']['grain_people_per_day'], 100)
         self.assertEqual(live['catalog']['city_grain_balance']['jiangxia'], opening['grain_balance'])
@@ -36,7 +36,7 @@ class GrainEconomyTests(unittest.TestCase):
         self.assertEqual(city_economy.garrison_grain_cost(game.catalog.data, city.id, state.year,
                                                        state.month, 999, 333), 85)
         advance_month(game)
-        self.assertEqual(city.grain, stocks + production - upkeep)
+        self.assertEqual(city.grain, stocks + production - upkeep - city_economy.civilian_grain(state.extension['city_development']['cities'][city.id]['population']))
 
         state = game.state
         city = state.cities['xiangyang']
@@ -45,8 +45,39 @@ class GrainEconomyTests(unittest.TestCase):
         soldiers = deepcopy(state.soldiers)
         advance_month(game)
         self.assertEqual(city.grain, 0)
-        self.assertEqual(state.soldiers['lost'], soldiers['lost'])
-        self.assertTrue(any('驻军粮草不足' in line for line in state.log))
+        self.assertGreater(state.soldiers['lost'], soldiers['lost'])
+        self.assertTrue(any('本旬缺粮' in line for line in state.log))
+
+    def test_partial_shortage_exact_payment_and_total_shortage_each_turn(self):
+        for share in (0, 50, 100):
+            with self.subTest(share=share):
+                game = Campaign(controlled_catalog())
+                game.command('new', {'faction': 'shu', 'seed': 2026}, 0)
+                state = game.state
+                city = state.cities['xiangyang']
+                row = state.extension['city_development']['cities'][city.id]
+                row.update(population=100000, governance=80, land=400, industry=300)
+                before = dict(row)
+                count = {i: state.officers[i].troops for i in city.roster.officer_ids}
+                reserves, lost = city.reserves, state.soldiers['lost']
+                need = (city_economy.garrison_grain(game,state)[city.id] + 300) // 3
+                city.grain = need * share // 100
+                short = need - city.grain
+                game._complete_turn(state)
+                self.assertEqual(city.grain, 0)
+                self.assertEqual(row.get('garrison_spirit',100), 100 - 100 * short // (10 * need))
+                self.assertEqual(row['population'], 100000 - 100 * (1000 * short // (10 * need)))
+                for field in ('land','industry','governance'):
+                    self.assertEqual(row[field], before[field] - before[field] * short // (10 * need))
+                self.assertEqual(city.reserves, reserves - reserves * short // (10 * need))
+                for ident,troops in count.items():
+                    self.assertEqual(state.officers[ident].troops, troops - troops * short // (10 * need))
+                self.assertEqual(state.soldiers['lost'] - lost, reserves - city.reserves
+                                 + sum(v - state.officers[i].troops for i,v in count.items()))
+                game.validate(state)
+                restored = Campaign(game.catalog)
+                restored.load_save(game.export_save(compact=True),0)
+                self.assertEqual(restored.to_dict(), game.to_dict())
 
     def test_legacy_march_can_resume_with_the_original_receipt_and_stock(self):
         create = Campaign._new

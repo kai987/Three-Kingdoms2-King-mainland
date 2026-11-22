@@ -69,9 +69,18 @@ class TravelCampaign:
         routes = self.catalog.data['travel_routes']
         if state is None:
             return effective(routes)
-        discovered = set(state.extension['travel']['discovered'])
-        return effective(routes + [row for row in self.catalog.data.get('exploration_routes', [])
-                         if row['id'] in discovered], state.cities, getattr(state, 'year', None), state.month)
+        discovered = frozenset(state.extension['travel']['discovered'])
+        year = getattr(state, 'year', None)
+        cache = getattr(self, '_ai_routes', None)
+        if cache is not None:
+            key = (year, state.month, frozenset(state.cities), discovered)
+            if key in cache:
+                return cache[key]
+        active = effective(routes + [row for row in self.catalog.data.get('exploration_routes', [])
+                                     if row['id'] in discovered], state.cities, year, state.month)
+        if cache is not None:
+            cache[key] = active
+        return active
 
     def _exploration_route(self, source, target):
         coastal = set(self.catalog.data['travel_hazards']['coastal_cities'])

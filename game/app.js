@@ -17,7 +17,7 @@ const OBSERVER_SPEEDS={
 let observerPlaying=false,observerTimer=null,observerSpeed='normal';
 let observerYearSaving=false;
 const viewCache=typeof GameViewCache==='undefined'?null:GameViewCache.create();
-const localAutosave=typeof GameAutosave==='undefined'?null:GameAutosave.create({getRawSave:()=>request('/api/save',undefined,{text:true}),getView:()=>view,isBusy:()=>busy,loadRawSave:loadSave,locale:()=>GameI18n.locale,onStatus:state=>{if(state.state==='error')notice(localAutosave.statusText(),true);}});
+const localAutosave=typeof GameAutosave==='undefined'?null:GameAutosave.create({getRawSave:()=>request('/api/save?compact=1',undefined,{text:true}),getView:()=>view,isBusy:()=>busy,loadRawSave:loadSave,locale:()=>GameI18n.locale,onStatus:state=>{if(state.state==='error')notice(localAutosave.statusText(),true);}});
 document.addEventListener('game-language-change',()=>{localAutosave?.refresh();refreshDialogueFeedback();refreshPersonnelDialogue();if(setupPreview)setPreviewFaction(setupPreview.faction,setupPreview.focus);else if(view?.game?.battle&&!busy&&!dialog.open)renderBattle();});
 const difficultyName=id=>({easy:'简单',normal:'普通',hard:'困难'}[id]||'普通');
 const $=s=>document.querySelector(s), dialog=$('#dialog'),survivorPreviews=new WeakMap();
@@ -776,7 +776,7 @@ async function showCityInformation(id){
   else{
    const c=view.game.cities[id],def=view.catalog.cities.find(c=>c.id===id);
    data={title:view.catalog.title,year:view.game.year,month:view.game.month,day:view.game.day,capacity:capacity(),city:{...c,
-    owner_name:faction(c.owner),terrain:def.terrain,profile:view.catalog.city_profiles[id],income:view.catalog.city_income[id],grain_balance:view.catalog.city_grain_balance?.[id],history:view.catalog.city_history?.[id],frontier_outpost:view.catalog.frontier_outposts?.[id],
+    owner_name:faction(c.owner),terrain:def.terrain,profile:view.catalog.city_profiles[id],income:view.catalog.city_income[id],city_development:view.catalog.city_development?.cities?.[id],grain_balance:view.catalog.city_grain_balance?.[id],history:view.catalog.city_history?.[id],frontier_outpost:view.catalog.frontier_outposts?.[id],
     officers:c.roster.officer_ids.map(i=>{const o=view.game.officers[i];return {id:i,name:name(i),martial_strength:o.profile.martial_strength,intellect:o.profile.intellect,virtue:o.profile.virtue,loyalty:o.loyalty,is_ruler:isRuler(i),health:o.health,troops:o.troops,experience:o.experience,equipment:view.catalog.equipment?.officers?.[String(i)]};})}};
   }
   if(!dialog.open||generation!==dialogGeneration||preview!==setupPreview)return;
@@ -804,7 +804,7 @@ async function showCityInformation(id){
    ${preview?`<p class="small"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">寶 ${c.treasure??0}/99</span><span data-locale-only="ja" data-l10n-native="ja">宝 ${c.treasure??0}/99</span></p>`:typeof GameTreasury!=='undefined'?GameTreasury.summary(view,id):''}
    <dl class="resources"><div class="resource-pair"><dt>資金</dt><dd>${c.gold}</dd></div><div class="resource-pair"><dt>兵糧</dt><dd>${c.grain}</dd></div><div class="resource-pair"><dt>預備兵</dt><dd>${c.reserves}</dd></div></dl>
    ${c.income?`<p class="small">${c.owner==='neutral'?'无主城暂无月收入':`每月金${c.income.gold} / 粮${c.income.grain} / 预备兵${c.income.reserves}`}</p>`:''}
-   ${c.grain_balance?`<dl class="resources city-grain-balance" data-city-grain-balance><div class="resource-pair"><dt>${cityCommandText('月產糧','月間兵糧収入')}</dt><dd data-grain-production>${c.grain_balance.production}</dd></div><div class="resource-pair"><dt>${cityCommandText('駐軍耗糧','駐屯軍の兵糧消費')}</dt><dd data-grain-upkeep>${c.grain_balance.upkeep}</dd></div><div class="resource-pair"><dt>${cityCommandText('兵糧淨收支','兵糧の収支')}</dt><dd data-grain-net>${c.grain_balance.net>0?'+':''}${c.grain_balance.net}</dd></div></dl><p class="small">${cityCommandText(`1 點兵糧相當於 ${preview?100:(view.catalog.grain_people_per_day??1000)} 名士兵的單日基本口糧。`,`兵糧1は兵 ${preview?100:(view.catalog.grain_people_per_day??1000)} 人の1日分の基本配給です。`)}</p>`:''}
+   ${c.grain_balance?`<dl class="resources city-grain-balance" data-city-grain-balance><div class="resource-pair"><dt>${cityCommandText('月產糧','月間兵糧収入')}</dt><dd data-grain-production>${c.grain_balance.production}</dd></div><div class="resource-pair"><dt>${cityCommandText('駐軍耗糧','駐屯軍の兵糧消費')}</dt><dd data-grain-upkeep>${c.grain_balance.upkeep}</dd></div><div class="resource-pair"><dt>${cityCommandText('居民月耗糧','住民の月間消費')}</dt><dd data-civilian-grain>${c.grain_balance.civilian}</dd></div><div class="resource-pair"><dt>${cityCommandText('駐軍士氣','駐屯軍の士気')}</dt><dd>${c.city_development?.garrison_spirit??100}</dd></div><div class="resource-pair"><dt>${cityCommandText('兵糧淨收支','兵糧の収支')}</dt><dd data-grain-net>${c.grain_balance.net>0?'+':''}${c.grain_balance.net}</dd></div></dl><p class="small">${cityCommandText(`1 點兵糧相當於 ${preview?100:(view.catalog.grain_people_per_day??1000)} 名士兵的單日基本口糧。`,`兵糧1は兵 ${preview?100:(view.catalog.grain_people_per_day??1000)} 人の1日分の基本配給です。`)}</p>`:''}
    <p class="city-information-strength">驻城 ${c.officers.length}/${data.capacity}人 · 武将带兵合计 ${troops}</p>
    ${!preview&&typeof GameCivilStaff!=='undefined'?GameCivilStaff.summary(view,id,{locale:GameI18n.locale,cityName,bilingual:true}):''}
    <div class="roster-scroll"><table class="roster-table"><thead><tr><th>武将</th><th>兵</th><th>武</th><th>知</th><th>德</th><th>忠</th><th>经</th><th>体</th></tr></thead><tbody>${rows||'<tr><td colspan="8">暂无驻军</td></tr>'}</tbody></table></div>
@@ -2315,11 +2315,11 @@ $('#restart').onclick=()=>selectFaction();
 $('#save').onclick=async()=>{
  if(busy)return;
  try{
-  const save=await request('/api/save',undefined,{text:true});
+  const save=await request('/api/save?compact=1',undefined,{text:true});
   let savedInBrowser=true;
   try{localStorage.setItem('three-kingdoms-save',save);}catch{savedInBrowser=false;}
   const link=document.createElement('a');
-  link.download=GameI18n.t(view.catalog.title)+' '+GameI18n.t('存档')+'.json';
+  link.download=GameI18n.t(view.catalog.title)+' '+GameI18n.t('存档')+'.tk2.json';
   const url=URL.createObjectURL(new Blob([save],{type:'application/json'}));
   try{
    link.href=url;

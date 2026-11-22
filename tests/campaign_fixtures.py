@@ -18,13 +18,12 @@ def record_garrison_charges():
     """Include actual new city bills in pre-existing conservation assertions."""
     from collections import Counter
     paid = Counter()
-    settle = city_economy.settle_garrison_grain
-    def receipt(game, state, outposts, dues):
-        for key, required in dues.items():
-            if key not in outposts:
-                paid[key] += min(state.cities[key].grain, required)
-        return settle(game, state, outposts, dues)
-    with patch.object(city_economy, 'settle_garrison_grain', side_effect=receipt):
+    settle = city_economy.settle_turn_grain
+    def receipt(game, state):
+        before = {key: city.grain for key, city in state.cities.items()}
+        settle(game, state)
+        paid.update({key: stock - state.cities[key].grain for key, stock in before.items()})
+    with patch.object(city_economy, 'settle_turn_grain', side_effect=receipt):
         yield paid
 
 
@@ -89,7 +88,7 @@ def pre_city_development_opening():
     with patch.object(grain_units, 'CURRENT', 1), grain_units.using({}), \
             patch.object(Campaign, '_new', retained), patch.object(city_development, 'synchronize', unchanged), \
             patch.object(capital_openings, 'opening', return_value={}), \
-            patch.object(city_economy, 'settle_garrison_grain', return_value=None):
+            patch.object(city_economy, 'settle_turn_grain', return_value=None):
         yield
 
 
