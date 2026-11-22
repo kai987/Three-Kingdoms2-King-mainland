@@ -6,12 +6,9 @@ on:
         description: Attempt that recorded the verified Web candidate
         value: ${{ jobs.gate.outputs.verified_attempt }}
     inputs:
-      force_full:
+      batch_enabled:
         type: boolean
-        default: false
-      publish:
-        type: boolean
-        default: false
+        required: true
 permissions:
   contents: read
   actions: read
@@ -19,6 +16,73 @@ permissions:
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   RUSTUP_TOOLCHAIN: '1.93.0'
+  AB_SOURCE: 'a24bf1ad11e41ba31b7d3709f34f2ba7c5b46440'
+  AB_TREE: '521559f972e74e75fb53046891ec9b426c1fed28'
+  AB_ARTIFACT_HEAD: 'b527c81f59f496baa1a1711b74d85f8863e6e740'
+  AB_RUN: '45047630871'
+  AB_NATIVE_ID: '14764077282'
+  AB_NATIVE_ZIP_SHA: 'e0180621dc02e948205e7a1fb79fa642967ab92952f97e084b6e783497a9dc48'
+  AB_NATIVE_TAR_SHA: '46e2291d10105605333919c57848facc450c7ce664abf5e6cace7c44eee5fad5'
+  AB_NATIVE_LIBRARY_SHA: '1bec230db405d6fb3a5effe1518a32467da4eabaa682f88cc66df2b22acf5f90'
+  AB_WEB_ID: '14763802838'
+  AB_WEB_SHA: '7bab66945f03f8ea8226dd7e6f6d3e68e9801e5ac753f36184463e317fa6d5'
+  AB_WEB_CONTENT: 'a45f91de8f239041f9d360e102aebb9c1f24e2b355462ffbecfe9dec0d66c17a'
+  AB_BATCH: ${{ inputs.batch_enabled && 'on' || 'off' }}
+  AB_PYTHON_RUNNER: |
+    import os
+    from pathlib import Path
+    import runpy
+    import sys
+    import unittest
+
+    sys.path.insert(0, str(Path.cwd() / 'source'))
+    from remake import restore_routes
+
+    mode = os.environ['AB_BATCH']
+    assert mode in ('on', 'off')
+    script, *args = sys.argv[1:]
+    sys.argv = [script, *args]
+    prepare = restore_routes._prepare
+    test_run = unittest.TestCase.run
+    contract_tests = {
+        'test_remake_hazard_marches.HazardMarchTests.test_restore_batches_active_and_historical_legs_and_rejects_edits',
+        'test_remake_hazard_marches.HazardMarchTests.test_restore_with_older_native_library_keeps_scalar_checks',
+    }
+    force_contract = False
+    counts = {'workload': 0, 'contract': 0}
+
+    def measured_prepare(data, state):
+        if mode == 'off' and not force_contract:
+            return None
+        result = prepare(data, state)
+        if result is not None:
+            counts['contract' if force_contract else 'workload'] += 1
+        return result
+
+    def measured_test(test, result=None):
+        global force_contract
+        previous, before = force_contract, counts['workload']
+        test_id = test.id()
+        force_contract = test_id in contract_tests
+        try:
+            return test_run(test, result)
+        finally:
+            force_contract = previous
+            if test_id.startswith('test_remake_delegation_replay.') and (
+                    '.test_217_' in test_id or '.test_263_' in test_id):
+                batches = counts['workload'] - before
+                print(f'AB_REPLAY {test_id} mode={mode} restore_batches={batches}', flush=True)
+                if result is not None and result.wasSuccessful():
+                    assert (batches > 0) == (mode == 'on')
+
+    restore_routes._prepare = measured_prepare
+    unittest.TestCase.run = measured_test
+    print(f'AB_BATCH {mode}', flush=True)
+    try:
+        runpy.run_path(script, run_name='__main__')
+    finally:
+        print(f'AB_RESTORE_COUNTS {mode} {counts}', flush=True)
+        assert mode != 'off' or counts['workload'] == 0
 jobs:
   scope:
     runs-on: ubuntu-latest
@@ -37,6 +101,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.AB_SOURCE }}
           fetch-depth: 0
           persist-credentials: false
           sparse-checkout: /tools/ci/
@@ -44,47 +109,34 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
-      - name: Select required checks from cumulative source changes
-        env:
-          GH_TOKEN: ${{ github.token }}
-          FORCE_FULL: ${{ inputs.force_full }}
-          PUBLISH_REQUESTED: ${{ inputs.publish }}
-        run: |
-          mkdir -p build/ci
-          args=()
-          if [ "$FORCE_FULL" = true ]; then args+=(--force-full); fi
-          if [ "$PUBLISH_REQUESTED" = true ]; then args+=(--publish); fi
-          python -B tools/ci/plan.py --head "$GITHUB_SHA" --event-name "$GITHUB_EVENT_NAME" --event-path "$GITHUB_EVENT_PATH" --repository "$GITHUB_REPOSITORY" "${args[@]}" > build/ci/test-plan.json
-      - name: Find successful verification of the merged pull request
-        id: pr
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !inputs.force_full
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python -B tools/ci/pr_reuse.py find --plan build/ci/test-plan.json --candidate build/ci/pr-candidate.json
-      - name: Download only the successful PR attempt's receipt
-        id: receipt
-        if: steps.pr.outputs.run_id != ''
-        continue-on-error: true
+      - name: Load the original #66 full test plan
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: pr-proof-${{ steps.pr.outputs.run_id }}-attempt-${{ steps.pr.outputs.attempt }}
-          path: build/ci/pr-proof
+          artifact-ids: '14764042191'
+          path: build/ci
           github-token: ${{ github.token }}
-          run-id: ${{ steps.pr.outputs.run_id }}
-      - name: Validate PR evidence and finalize required jobs
+          run-id: ${{ env.AB_RUN }}
+          merge-multiple: true
+      - name: Require the verified source, plan and artifact identities
         id: plan
         env:
           GH_TOKEN: ${{ github.token }}
-          PR_LOOKUP: ${{ steps.pr.outcome }}
-          PR_DOWNLOAD: ${{ steps.receipt.outcome }}
         run: |
-          if [ "$PR_LOOKUP" = success ]; then
-            args=()
-            if [ "$PR_DOWNLOAD" = success ]; then args+=(--proof build/ci/pr-proof/receipt.json); fi
-            python -B tools/ci/pr_reuse.py decide --plan build/ci/test-plan.json --candidate build/ci/pr-candidate.json "${args[@]}"
-          fi
-          python -B tools/ci/gate.py outputs --plan build/ci/test-plan.json --head "$GITHUB_SHA" >> "$GITHUB_OUTPUT"
-          python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$AB_SOURCE"
+          test "$(git rev-parse 'HEAD^{tree}')" = "$AB_TREE"
+          jq -e --arg head "$AB_ARTIFACT_HEAD" '.head == $head and .mode == "full" and .full and .native and .rules and .soak and .resupply and .web and (.publish | not) and (.pr_reuse == null)' build/ci/test-plan.json
+          verify_input() {
+            gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$1" |
+              jq -e --argjson run "$AB_RUN" --argjson id "$1" --arg name "$2" --arg digest "sha256:$3" \
+                '.id == $id and .name == $name and .workflow_run.id == $run and (.expired | not) and .digest == $digest'
+          }
+          verify_input "$AB_NATIVE_ID" "native-reference-$AB_ARTIFACT_HEAD" "$AB_NATIVE_ZIP_SHA"
+          verify_input "$AB_WEB_ID" "candidate-web-$AB_ARTIFACT_HEAD" "$AB_WEB_SHA"
+          python -B tools/ci/gate.py outputs --plan build/ci/test-plan.json --head "$AB_ARTIFACT_HEAD" >> "$GITHUB_OUTPUT"
+          python -B tools/ci/gate.py summary --plan build/ci/test-plan.json --head "$AB_ARTIFACT_HEAD" >> "$GITHUB_STEP_SUMMARY"
+          printf 'AB_SOURCE %s\nAB_NATIVE %s %s\nAB_WEB %s %s\n' "$AB_SOURCE" "$AB_NATIVE_ID" "$AB_NATIVE_LIBRARY_SHA" "$AB_WEB_ID" "$AB_WEB_CONTENT"
+
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: test-plan-${{ github.sha }}
@@ -100,6 +152,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.AB_SOURCE }}
           fetch-depth: 0
           persist-credentials: false
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
@@ -119,6 +172,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.AB_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -144,14 +198,6 @@ jobs:
           cargo test --manifest-path crates/march-core/Cargo.toml --locked
           python game/build_march_core.py --check
           node tests/march_wasm_parity.cjs
-      - name: Preserve native executable modes for the dependent parity jobs
-        run: tar -cf build/native-reference.tar -C build march-core
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: native-reference-${{ github.sha }}
-          path: build/native-reference.tar
-          overwrite: true
-          retention-days: 3
   campaign-rules:
     needs: [scope, native-rules]
     if: needs.scope.outputs.rules == 'true' && needs.scope.outputs.reuse != 'true'
@@ -182,6 +228,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.AB_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -197,14 +244,21 @@ jobs:
           test -f tools/web-runtime/node_modules/pyodide/package.json
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: native-reference-${{ github.sha }}
+          artifact-ids: ${{ env.AB_NATIVE_ID }}
           path: build
-      - name: Restore this run's checked native reference
-        run: tar -xf build/native-reference.tar -C build
+          github-token: ${{ github.token }}
+          run-id: ${{ env.AB_RUN }}
+          merge-multiple: true
+      - name: Restore the exact #66 native reference
+        run: |
+          set -euo pipefail
+          printf '%s  build/native-reference.tar\n' "$AB_NATIVE_TAR_SHA" | sha256sum -c -
+          tar -xf build/native-reference.tar -C build
+          printf '%s  build/march-core/libmarch_core.so\n' "$AB_NATIVE_LIBRARY_SHA" | sha256sum -c -
       - name: Campaign behavior with ${{ matrix.backend }} marching, shard ${{ matrix.shard }}/6
         env:
           TEST_SHARD: ${{ matrix.shard }}
-        run: python -B tools/ci/run_campaign_tests.py --shard "$TEST_SHARD" --shards 6 --timings build/ci/campaign-timings.json
+        run: python -B -c "$AB_PYTHON_RUNNER" tools/ci/run_campaign_tests.py --shard "$TEST_SHARD" --shards 6 --timings build/ci/campaign-timings.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
@@ -236,22 +290,30 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.AB_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: native-reference-${{ github.sha }}
+          artifact-ids: ${{ env.AB_NATIVE_ID }}
           path: build
-      - name: Restore this run's checked native reference
-        run: tar -xf build/native-reference.tar -C build
+          github-token: ${{ github.token }}
+          run-id: ${{ env.AB_RUN }}
+          merge-multiple: true
+      - name: Restore the exact #66 native reference
+        run: |
+          set -euo pipefail
+          printf '%s  build/native-reference.tar\n' "$AB_NATIVE_TAR_SHA" | sha256sum -c -
+          tar -xf build/native-reference.tar -C build
+          printf '%s  build/march-core/libmarch_core.so\n' "$AB_NATIVE_LIBRARY_SHA" | sha256sum -c -
       - name: Full-duration cross-year campaign execution
         env:
           SOAK_CASE: ${{ matrix.case }}
           SOAK_SEED: ${{ matrix.seed }}
           SOAK_BACKEND: ${{ matrix.backend }}
-        run: python -B tools/campaign-soak/ci.py fragment --case "$SOAK_CASE" --seed "$SOAK_SEED" --backend "$SOAK_BACKEND" --head "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" --output "build/soak-ci/${SOAK_CASE}-${SOAK_SEED}-${SOAK_BACKEND}.json" --progress
+        run: python -B -c "$AB_PYTHON_RUNNER" tools/campaign-soak/ci.py fragment --case "$SOAK_CASE" --seed "$SOAK_SEED" --backend "$SOAK_BACKEND" --head "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" --output "build/soak-ci/${SOAK_CASE}-${SOAK_SEED}-${SOAK_BACKEND}.json" --progress
       - name: Retain replay diagnostics even after failure
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -268,6 +330,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.AB_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -299,6 +362,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.AB_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -363,6 +427,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.AB_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -383,8 +448,11 @@ jobs:
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         if: needs.scope.outputs.native == 'true'
         with:
-          name: native-reference-${{ github.sha }}
+          artifact-ids: ${{ env.AB_NATIVE_ID }}
           path: build
+          github-token: ${{ github.token }}
+          run-id: ${{ env.AB_RUN }}
+          merge-multiple: true
       - name: Restore the same native reference
         if: needs.scope.outputs.native == 'true'
         run: tar -xf build/native-reference.tar -C build
@@ -408,13 +476,14 @@ jobs:
     timeout-minutes: 10
     outputs:
       content_sha256: ${{ steps.identity.outputs.content_sha256 }}
-      artifact_id: ${{ steps.candidate.outputs.artifact-id }}
-      archive_sha256: ${{ steps.candidate.outputs.artifact-digest }}
+      artifact_id: ${{ steps.identity.outputs.artifact_id }}
+      archive_sha256: ${{ steps.identity.outputs.archive_sha256 }}
     env:
       MARCH_CORE_BACKEND: python
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.AB_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -425,23 +494,23 @@ jobs:
           cache: npm
           cache-dependency-path: tools/web-runtime/package-lock.json
       - run: npm ci --prefix tools/web-runtime --ignore-scripts
-      - name: Build the candidate once and retain its identity
+      - name: Rebuild and compare the #66 Web content digest
         id: identity
         run: |
-          python -B game/build_web.py --output build/web
-          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA")
-          printf 'content_sha256=%s\n' "$content" >> "$GITHUB_OUTPUT"
-      - name: Actual WASM campaign and CPU replay parity
-        run: node tests/browser_engine_smoke.mjs build/web
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        id: candidate
+          GITHUB_SHA="$AB_ARTIFACT_HEAD" python -B game/build_web.py --output build/web-rebuilt
+          content=$(python -B tools/ci/gate.py artifact --root build/web-rebuilt --head "$AB_ARTIFACT_HEAD" --content-sha256 "$AB_WEB_CONTENT")
+          printf 'content_sha256=%s\nartifact_id=%s\narchive_sha256=%s\n' "$content" "$AB_WEB_ID" "$AB_WEB_SHA" >> "$GITHUB_OUTPUT"
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: candidate-web-${{ github.sha }}
+          artifact-ids: ${{ env.AB_WEB_ID }}
           path: build/web
-          overwrite: true
-          include-hidden-files: true
-          if-no-files-found: error
-          retention-days: 7
+          github-token: ${{ github.token }}
+          run-id: ${{ env.AB_RUN }}
+          merge-multiple: true
+      - name: Actual WASM campaign and CPU replay parity
+        run: |
+          python -B tools/ci/gate.py artifact --root build/web --head "$AB_ARTIFACT_HEAD" --content-sha256 "$AB_WEB_CONTENT"
+          node tests/browser_engine_smoke.mjs build/web
   browser-ui:
     needs: [scope, web-build]
     if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
@@ -458,6 +527,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.AB_SOURCE }}
           persist-credentials: false
           sparse-checkout: |
             /.gitignore
@@ -483,11 +553,13 @@ jobs:
         with:
           artifact-ids: ${{ needs.web-build.outputs.artifact_id }}
           path: build/web
+          github-token: ${{ github.token }}
+          run-id: ${{ env.AB_RUN }}
           merge-multiple: true
       - name: Require the exact immutable candidate
         env:
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
-        run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$AB_ARTIFACT_HEAD" --content-sha256 "$CONTENT_SHA"
       - name: Show the selected scope and execute actual browser controls
         env:
           BROWSER_PROJECT: ${{ matrix.project }}
@@ -495,7 +567,7 @@ jobs:
         run: |
           node tools/browser-tests/scope.cjs --plan "$TK2_TEST_PLAN"
           node tools/browser-tests/verify-shards.mjs "$BROWSER_PROJECT"
-          node tools/browser-tests/run-shard.mjs "$BROWSER_PROJECT" "$BROWSER_SHARD"
+          GITHUB_SHA="$AB_ARTIFACT_HEAD" node tools/browser-tests/run-shard.mjs "$BROWSER_PROJECT" "$BROWSER_SHARD"
       - name: Retain bounded per-case timing data
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
@@ -524,6 +596,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.AB_SOURCE }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -555,6 +628,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.AB_SOURCE }}
           persist-credentials: false
           # Reuse needs only CI helpers. Full verification also reads browser coverage inputs.
           sparse-checkout: >-
@@ -575,8 +649,8 @@ jobs:
           JOB_RESULTS: ${{ toJSON(needs) }}
         run: |
           python -c 'import os,pathlib;pathlib.Path("build/ci/needs.json").write_text(os.environ["JOB_RESULTS"])'
-          python -B tools/ci/gate.py verify --plan build/ci/test-plan.json --needs build/ci/needs.json --head "$GITHUB_SHA"
-          python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
+          python -B tools/ci/gate.py verify --plan build/ci/test-plan.json --needs build/ci/needs.json --head "$AB_ARTIFACT_HEAD"
+          python -B tools/ci/gate.py summary --plan build/ci/test-plan.json --head "$AB_ARTIFACT_HEAD" >> "$GITHUB_STEP_SUMMARY"
       - name: Collect scoped Python reports from this run
         if: needs.scope.outputs.mode == 'scoped' && needs.scope.outputs.reuse != 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
@@ -602,7 +676,7 @@ jobs:
         env:
           TK2_TEST_PLAN: build/ci/test-plan.json
         run: |
-          node tools/browser-tests/aggregate-timings.mjs build/browser-timings --head "$GITHUB_SHA"
+          node tools/browser-tests/aggregate-timings.mjs build/browser-timings --head "$AB_ARTIFACT_HEAD"
           cat build/browser-timings/summary.md >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
@@ -617,6 +691,8 @@ jobs:
         with:
           artifact-ids: ${{ needs.web-build.outputs.artifact_id }}
           path: build/web
+          github-token: ${{ github.token }}
+          run-id: ${{ env.AB_RUN }}
           merge-multiple: true
       - name: Verify the original candidate after every required check passed
         id: candidate
@@ -627,8 +703,8 @@ jobs:
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
         run: |
           python -B tools/ci/verified_web.py record --root build/web \
-            --record build/ci/verified-candidate.json --head "$GITHUB_SHA" \
-            --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT"
+            --record build/ci/verified-candidate.json --head "$AB_ARTIFACT_HEAD" \
+            --run-id "$AB_RUN" --attempt 1
           printf 'attempt=%s\n' "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
       - name: Upload the verified candidate record
         if: needs.scope.outputs.web == 'true'

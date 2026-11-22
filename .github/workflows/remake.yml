@@ -1,18 +1,17 @@
 name: Web campaign checks
+run-name: ${{ inputs.trial }} save route batch ${{ inputs.batch_enabled && 'on' || 'off' }}
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
     inputs:
-      force_full:
-        description: Run every regression group
+      trial:
+        description: Trial label
+        type: string
+        required: true
+      batch_enabled:
+        description: Batch route validation in save restores
         type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
+        required: true
 
 permissions:
   contents: read
@@ -20,11 +19,12 @@ permissions:
   deployments: read
 
 concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
+  group: ci-batch-restore-full-ab
+  cancel-in-progress: false
 
 jobs:
   verify:
+    if: github.ref == 'refs/heads/codex/ci-batch-restore-full-ab'
     uses: ./.github/workflows/web-checks.yml
     with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+      batch_enabled: ${{ inputs.batch_enabled }}
