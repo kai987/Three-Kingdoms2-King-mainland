@@ -50,10 +50,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
           SOURCE_RUN: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.id || github.run_id }}
+          SOURCE_ATTEMPT: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.run_attempt || needs.verify-manual.outputs.verified_attempt }}
         run: |
           set -euo pipefail
           current=$(gh api "repos/${GITHUB_REPOSITORY}/commits/main" --jq .sha)
-          printf 'commit=%s\nrun=%s\n' "$SOURCE_SHA" "$SOURCE_RUN" >> "$GITHUB_OUTPUT"
+          printf 'commit=%s\nrun=%s\nattempt=%s\n' "$SOURCE_SHA" "$SOURCE_RUN" "$SOURCE_ATTEMPT" >> "$GITHUB_OUTPUT"
           printf 'artifact=github-pages-%s\n' "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
           if [ "$SOURCE_SHA" = "$current" ]; then
             printf 'current=true\n' >> "$GITHUB_OUTPUT"
@@ -87,42 +88,33 @@ jobs:
               output.write('publish=' + str(plan['publish']).lower() + '\n')
           print('Publication requested:', plan['publish'])
           PYPLAN
-      - name: Download only the exact successful main run's tested static artifact
+      - name: Check out verification code from this Pages workflow revision
+        if: steps.identity.outputs.current == 'true' && steps.scope.outputs.publish == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+          sparse-checkout: /tools/ci/
+          sparse-checkout-cone-mode: false
+      - name: Read the successful gate's verified candidate record
         if: steps.identity.outputs.current == 'true' && steps.scope.outputs.publish == 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: verified-web-${{ steps.identity.outputs.commit }}
-          path: verified-web
+          name: verified-candidate-${{ steps.identity.outputs.commit }}-attempt-${{ steps.identity.outputs.attempt }}
+          path: verified-candidate
           github-token: ${{ github.token }}
           run-id: ${{ steps.identity.outputs.run }}
-      - name: Verify identity without executing downloaded project code
+      - name: Download the recorded candidate and verify every release file
         if: steps.identity.outputs.current == 'true' && steps.scope.outputs.publish == 'true'
         env:
+          GH_TOKEN: ${{ github.token }}
           EXPECTED_SHA: ${{ steps.identity.outputs.commit }}
+          SOURCE_RUN: ${{ steps.identity.outputs.run }}
+          SOURCE_ATTEMPT: ${{ steps.identity.outputs.attempt }}
         run: |
-          python - <<'PYVERIFY'
-          import hashlib, json, os
-          from pathlib import Path, PurePosixPath
-          root = Path('verified-web')
-          identity = json.loads((root / 'runtime/build.json').read_text())
-          assert identity['schema'] == 'tk2-static-build-v1'
-          assert identity['commit'] == os.environ['EXPECTED_SHA']
-          files = identity['files']
-          expected = set(files) | {'runtime/build.json'}
-          actual = {p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file()}
-          assert actual == expected, 'The release has missing or unexpected files'
-          for name, record in files.items():
-              relative = PurePosixPath(name)
-              assert not relative.is_absolute() and '..' not in relative.parts
-              target = root / relative
-              assert not target.is_symlink()
-              raw = target.read_bytes()
-              assert len(raw) == record['bytes']
-              assert hashlib.sha256(raw).hexdigest() == record['sha256']
-          encoded = (json.dumps(files, ensure_ascii=False, allow_nan=False, separators=(',', ':')) + '\n').encode()
-          assert hashlib.sha256(encoded).hexdigest() == identity['content_sha256']
-          print('Verified the exact tested release:', identity['commit'])
-          PYVERIFY
+          python -B tools/ci/verified_web.py prepare --root verified-web \
+            --record verified-candidate/verified-candidate.json --head "$EXPECTED_SHA" \
+            --run-id "$SOURCE_RUN" --attempt "$SOURCE_ATTEMPT"
       - name: Upload verified Pages release
         if: steps.identity.outputs.current == 'true' && steps.scope.outputs.publish == 'true'
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
