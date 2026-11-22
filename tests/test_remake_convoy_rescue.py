@@ -9,7 +9,7 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
 from remake.campaign import Campaign,Catalog,digest
-from remake import facilities,logistics,march_supply,treasures,city_development
+from remake import facilities,grain_units,logistics,march_supply,treasures,city_development
 from remake.errors import GameError
 from remake.march_core import using_backend
 from test_remake_domestic import domestic_catalog
@@ -168,12 +168,13 @@ class ConvoyRescueTests(unittest.TestCase):
         for packet in supply['ration_manifests']:
             packet['troops']={key:0 for key in packet['troops']}
         credit=used_total=0
+        denominator=grain_units.denominator()
         for period in supply['periods']:
             for meal in period['days']:
                 if meal is None:continue
                 units=100*len(journey['departure_troops'])
-                used=max(0,(units-credit+99)//100)
-                credit=credit+used*100-units;used_total+=used
+                used=max(0,(units-credit+denominator-1)//denominator)
+                credit=credit+used*denominator-units;used_total+=used
                 meal[:]=[units,used,meal[2],0]
         supply['credit_units']=credit;supply['consumed']=used_total
         supply['remaining']=supply['loaded']+supply['received']-used_total-supply['returned_to_cargo']
@@ -233,7 +234,7 @@ class ConvoyRescueTests(unittest.TestCase):
     def test_return_to_full_home_warehouse_waits_without_zero_day_overflow(self):
         from remake import civil_staff,domestic
         data=deepcopy(transport_catalog(long=True).data)
-        data['initial_city_resources']['xiangyang']=dict(gold=logistics.LIMIT-100,grain=6,reserves=0)
+        data['initial_city_resources']['xiangyang']=dict(gold=logistics.LIMIT-100,grain=1000,reserves=0)
         data['city_income']={key:dict(gold=100 if key=='xiangyang' else 0,grain=0,reserves=0)
                              for key in data['active_cities']}
         with tempfile.TemporaryDirectory() as tmp:

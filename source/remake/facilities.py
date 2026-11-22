@@ -128,13 +128,15 @@ def opening_view(data, city):
 
 
 def empty(game, state):
-    return dict(schema=SCHEMA,
+    pool = dict(schema=SCHEMA,
         cities={key: dict(owner=city.owner, **opening_view(game.catalog.data, key))
             for key, city in state.cities.items()},
         factions={owner: grain_units.policy(DEFAULT_POLICY) for owner in sorted(game.catalog.factions) if owner != 'neutral'},
         study={}, last_disaster_month=_month(state),
-        harvest=dict(first_year=state.year, settled_year=0, disasters={}),
         auto_turns={owner: 0 for owner in sorted(game.catalog.factions) if owner != 'neutral'})
+    if _rule(game, 'disasters_enabled'):
+        pool['harvest'] = dict(first_year=state.year, settled_year=0, disasters={})
+    return pool
 
 
 def synchronize(game, state):
@@ -496,7 +498,7 @@ def harvest_bonus(game, state, city):
 
 def close_harvest(game, state):
     """Snapshot eligibility and September production before advancing the calendar."""
-    if state.month != HARVEST_MONTH:
+    if state.month != HARVEST_MONTH or not _rule(game, 'disasters_enabled'):
         return {}
     pool = _pool(state)
     if 'harvest' not in pool:
@@ -530,11 +532,11 @@ def month_rollover(game, state):
     pool, month = _pool(state), _month(state)
     if pool['last_disaster_month'] >= month:
         return []
-    if 'harvest' not in pool:
-        pool['harvest'] = _recover_harvest_history(game, state)
     pool['last_disaster_month'] = month
     if not _rule(game, 'disasters_enabled'):
         return []
+    if 'harvest' not in pool:
+        pool['harvest'] = _recover_harvest_history(game, state)
     kind = ('flood' if state.month in _rule(game, 'flood_months') else
             'drought' if state.month in _rule(game, 'drought_months') else None)
     if kind is None:

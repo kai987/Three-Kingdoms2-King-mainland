@@ -183,7 +183,7 @@ class CoalitionBattleTests(unittest.TestCase):
         game._start_expanded_battle(state,state.cities['jiangxia'],state.cities['nanyang'],
             [ally,player],paid=True,manual_deployment=placement,march_supply=dict(remaining=200,credit_units=0),
             coalition=dict(sources={str(ally):'jiangxia',str(player):'xiangyang'},
-                           provisions=dict(wu=10000,shu=10000)))
+                           provisions=dict(wu=5000,shu=5000)))
         game.validate(state)
         return game,ally,player
 

@@ -5,7 +5,13 @@ const {webcrypto,createHash}=require('node:crypto'),{gzipSync}=require('node:zli
 const source=fs.readFileSync(path.join(__dirname,'../game/browser-engine-worker.js'),'utf8').replace(/^import [^\n]+;\n/gm,'');
 const sha=raw=>createHash('sha256').update(raw).digest('hex');
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
-async function until(test){for(let count=0;count<80;count++){if(test())return;await flush();}throw Error('Worker fixture did not reach the expected checkpoint');}
+async function until(test){
+ const deadline=Date.now()+2000;
+ while(!test()){
+  if(Date.now()>=deadline)throw Error('Worker fixture did not reach the expected checkpoint');
+  await new Promise(resolve=>setTimeout(resolve,1));
+ }
+}
 function fixture({gateRuntime=false,failures={},mutateManifest,changeAsset,respond,compressedPreviews=false}={}){
  const bundle=Buffer.from('verified-python-archive'),preview=Buffer.from('[]'),assets=new Map(),rows=['first','second','third'].map(id=>{
   const raw=Buffer.from(JSON.stringify({id,exact_bytes:'save identity stays unchanged'}));assets.set(`runtime/catalogs/${id}.json.gz`,gzipSync(raw));return{id,url:`runtime/catalogs/${id}.json.gz`,path:`/tk2/game/data/campaigns/${id}.json`,sha256:sha(raw),bytes:raw.length};

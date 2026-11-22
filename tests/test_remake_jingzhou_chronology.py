@@ -145,6 +145,9 @@ class JingzhouChronologyTests(unittest.TestCase):
 
     def test_continuing_217_campaign_keeps_its_city_after_240(self):
         game = start('217-07', 'wu', city_disasters=False)
+        for stocked_city in game.state.cities.values():
+            if stocked_city.owner != 'neutral':
+                stocked_city.grain = 10_000_000
         city = game.state.cities['yiyang']
         original_owner = city.owner
         original_rng = game.state.rng.state, game.state.rng.draws

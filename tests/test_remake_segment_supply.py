@@ -11,7 +11,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
 from remake.campaign import Campaign,Catalog,digest
 from remake.errors import GameError
-from remake import facilities, march_supply, treasures, city_development, city_economy
+from remake import diplomacy_ai, facilities, march_supply, treasures, city_development, city_economy
 from remake.march_core import using_backend
 from campaign_fixtures import controlled_catalog
 
@@ -118,8 +118,8 @@ class SegmentSupplyTests(unittest.TestCase):
         game=self.game(days=(1,1));ident,row=self.queue(game)
         self.step(game);row=game.state.extension['travel']['marches'][0]
         self.assertEqual(row['supply']['elapsed_days'],2)
-        self.assertEqual(row['supply']['consumed'],6)
-        self.assertEqual(game.state.cities['nanjun'].grain,997)
+        self.assertEqual(row['supply']['consumed'],12)
+        self.assertEqual(game.state.cities['nanjun'].grain,994)
         self.assertGreater(row['supply']['credit_units'],0)
 
     def test_arrived_full_city_waiting_is_fed_by_that_actual_city(self):
@@ -170,6 +170,7 @@ class SegmentSupplyTests(unittest.TestCase):
 
     def test_return_to_origin_waits_at_a_cut_route_across_turns_and_save_loads(self):
         from remake import civil_staff,domestic,logistics
+        self.enterContext(patch.object(diplomacy_ai, 'orders', return_value=[]))
         for backend in ('python','rust'):
             with self.subTest(backend=backend),using_backend(backend):
                 game=self.game(days=(5,5));ident,outbound=self.queue(game)

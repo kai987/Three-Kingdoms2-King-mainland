@@ -70,7 +70,8 @@ def pre_city_development_opening():
     current = Campaign._new
 
     def retained(game, *args, **kwargs):
-        state = current(game, *args, **kwargs)
+        with grain_units.using({}):
+            state = current(game, *args, **kwargs)
         stocks = {key: (city.gold, city.grain, city.reserves) for key, city in state.cities.items()}
         rng = deepcopy(state.rng)
         if state.extension.get('city_development') != city_development.empty(game, state):

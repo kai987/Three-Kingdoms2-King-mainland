@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake import grain_units
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import civil_staff, diplomacy, domestic, equipment, facilities, treasures
+from remake import city_economy, civil_staff, diplomacy, domestic, equipment, facilities, treasures
 from remake.officers import OFFICER_TROOP_CAP, YearState, initialize_officer, year_state
 from campaign_fixtures import record_garrison_charges, controlled_catalog, arrange_contact, finish_soldier_encounter, confirm_default_placement
 
@@ -342,7 +342,8 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.assertEqual((details['amount'], details['paid']), (10, 10))
         for field in before:
             current = sum(getattr(game.state.cities[c.id], field) for c in owned)
-            base = sum(grain_units.stocks(game.catalog.data['city_income'][c.id])[field] for c in owned)
+            base = sum(city_economy.scale_monthly_grain(
+                grain_units.stocks(game.catalog.data['city_income'][c.id]))[field] for c in owned)
             self.assertEqual(current, before[field] + base + details['bonus'][field] - (10 if field == 'gold' else sum(paid[c.id] for c in owned) if field == 'grain' else 0))
         frozen = game.export_save()
         for _ in range(3): game.view(); game.export_save()

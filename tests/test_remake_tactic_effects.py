@@ -268,7 +268,8 @@ class BurnLedgerTests(unittest.TestCase):
         # city debit use the separately covered shared battlefield facility.
         battle_supply.receive(state, b, 'attackers', 5)
         world += 5
-        self.assertEqual(battle_supply.destroy(state, b, 'attackers', 100), row['loaded']-3-2+5)
+        self.assertEqual(battle_supply.destroy(state, b, 'attackers', row['loaded']+5),
+                         row['loaded']-row['consumed']-2+5)
         self.assertEqual(row['credit_units'], credit)
         self.assertEqual(battle_supply.destroy(state, b, 'attackers', 100), 0)
         self.assertEqual(row['loaded']+row['received'], row['consumed']+row['remaining']+battle_supply.burned(row))

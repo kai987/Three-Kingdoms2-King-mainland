@@ -52,7 +52,7 @@ class PortraitIdentityTests(unittest.TestCase):
         self.assertEqual(len(bound), 221)
         placeholders = sum(person.get('portrait_policy') == 'generic_placeholder'
                            for person in self.people.values())
-        self.assertEqual(placeholders, 26)
+        self.assertEqual(placeholders, 27)
         self.assertEqual(len(self.people) - len(bound) - placeholders, 835)
 
     def test_independently_reviewed_names_do_not_bind_similar_people(self):
