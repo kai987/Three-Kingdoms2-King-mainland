@@ -89,7 +89,7 @@ assert(!source.includes('<image href="${world.background}"'));
 const castleContext={active:[{id:'old',position:[100,200]},{id:'empty',position:[300,400]},{id:'outpost',position:[500,600]}],
  owners:{old:'shu',empty:'neutral'},mapPosition:c=>c.position,mapColor:id=>id==='neutral'?'#ffffff':'#0088ff',
  cityProfiles:{outpost:{kind:'frontier_outpost'}},cityTypeLabel:()=> '邊塞據點',
- focused:null,preview:null,mapAction:null,cityName:id=>id,ownerName:id=>id,escapeHtml:String};
+ focused:null,preview:null,mapAction:null,mapCityName:id=>id,ownerName:id=>id,escapeHtml:String};
 vm.createContext(castleContext);
 vm.runInContext(source.slice(source.indexOf('const factionCastleStyles='),source.indexOf('function smoothMapPath(')),castleContext);
 const castleStart=source.indexOf(' const castles=active.map('),castleEnd=source.indexOf(' const extras=',castleStart);

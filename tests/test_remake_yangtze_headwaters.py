@@ -230,6 +230,9 @@ class YangtzeHeadwatersTests(unittest.TestCase):
                     i = route.index(pieces[0])
                     self.assertEqual(tuple(route[i:i + len(pieces)]), pieces)
                     route[i:i + len(pieces)] = [original]
+        fengyi_access = geometry['ports']['fengyi']['access']
+        self.assertEqual(fengyi_access[0], [576, 299])
+        fengyi_access[0] = [567, 327]  # Normalize the relocated seat for the original-network comparison.
         self.assertEqual(canonical_sha(geometry), NETWORK_GEOMETRY_SHA)
         self.assertEqual((len(geometry['connections']), len(geometry['reaches'])), (44, 47))
         self.assertEqual((len(spec['connections']), len(spec['reaches'])), (62, 59))

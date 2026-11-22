@@ -231,7 +231,7 @@ class HistoricalTransitTests(unittest.TestCase):
             data = json.loads(path.read_text())
             with self.subTest(scenario=path.stem):
                 self.assertEqual(digest({city['id']: city['position'] for city in data['cities']
-                                         if city['id'] in legacy_ids} | {'qi': [1014, 213], 'bohai': [924, 157], 'beihai': [1054, 219], 'lelang': [1290, 182], 'daifang': [1292, 226], 'liaoxi': [1061, 121], 'jinan': [970, 214]} | {'jingzhao': [497, 354]}), POSITIONS_SHA)
+                                         if city['id'] in legacy_ids} | {'qi': [1014, 213], 'bohai': [924, 157], 'beihai': [1054, 219], 'lelang': [1290, 182], 'daifang': [1292, 226], 'liaoxi': [1061, 121], 'jinan': [970, 214]} | {'jingzhao': [497, 354], 'fengyi': [567, 327]}), POSITIONS_SHA)
                 self.assertEqual(digest(dict(data['travel_hazards'], coastal_cities=[x for x in data['travel_hazards']['coastal_cities'] if x not in ('luzon', 'donglai')])), HAZARDS_SHA)
 
 

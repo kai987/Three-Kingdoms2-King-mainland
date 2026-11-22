@@ -191,7 +191,9 @@ class RetainerOpeningTests(unittest.TestCase):
                 expected = dict(materials[catalog.data['id']])
                 # The retainer review was frozen before these cities were added.
                 for city in ('shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan',
-                             'xuantu', 'liucheng', 'guonei', 'luzon'):
+                             'xuantu', 'liucheng', 'guonei', 'luzon', 'nanan', 'xinping', 'beidi', 'guangwei'):
+                    if city not in game.state.cities:
+                        continue
                     stock = catalog.data['initial_city_resources'][city]
                     expected['gold'] += stock['gold']
                     expected['grain'] += stock['grain']
