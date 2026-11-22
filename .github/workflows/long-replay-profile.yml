@@ -17,12 +17,12 @@ jobs:
       PYTHONHASHSEED: '0'
     steps:
       - name: Checkout profiling harness
-        uses: actions/checkout@3d3c42e5aac5ba805da76410c181273ba90b1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
           path: experiment
       - name: Checkout #65 merge and its original replay cases
-        uses: actions/checkout@3d3c42e5aac5ba805da76410c181273ba90b1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: df2b51043bfccda36946c8c6d81bb68928eaefa4
           persist-credentials: false
