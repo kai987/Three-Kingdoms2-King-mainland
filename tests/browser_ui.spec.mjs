@@ -1038,11 +1038,15 @@ test('daily marching grain loads once and consumes actual days through visible t
  expect(next.state.officers[officerText].health).toBe(initial.state.officers[officerText].health);
  expect(next.state.officers[officerText].loyalty).toBe(initial.state.officers[officerText].loyalty);
  expect(received).toBe(marched.supply.refills.reduce((sum,row)=>sum+row.grain,0));
- // No delegate was appointed and no monthly income is due: all food spent
- // this turn comes out of the travelling bag, never the origin store again.
+ // The origin pays its own garrison and resident bill on day 11.
+ const balance=await page.evaluate(async city=>{
+  const payload=await (await fetch('/api/state')).json();
+  return (payload.view||payload).catalog.city_grain_balance[city];
+ },source);
+ const localBill=Math.floor((balance.upkeep+balance.civilian)/3);
  expect(next.state.extension.domestic.factions.shu.civil).toBeNull();
  expect(next.state.extension.domestic.factions.shu.military).toBeNull();
- expect(next.state.cities[source].grain).toBe(departing.state.cities[source].grain);
+ expect(next.state.cities[source].grain).toBe(departing.state.cities[source].grain-localBill);
  expect(next.state.cities[source].owner).toBe('shu');
  await expect(live).toHaveAttribute('data-supply-loaded',String(loaded));
  await expect(live).toHaveAttribute('data-supply-consumed',String(consumed));

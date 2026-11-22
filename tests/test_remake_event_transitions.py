@@ -304,8 +304,10 @@ class CampaignEventTransitionTests(unittest.TestCase):
         game = start(catalog_with(change))
         paid = self.enterContext(record_garrison_charges())
         original = {field: getattr(game.state.cities['xiangyang'], field) for field in ('gold', 'grain', 'reserves')}
-        for _ in range(3):
+        for _ in range(2):
             tick(game)
+        before_founding = paid['xiangyang']
+        tick(game)
         found = events(game, 'city_founded')
         self.assertEqual(len(found), 1)
         self.assertEqual(found[0]['city_ids'], ['baxi', 'xiangyang'])
@@ -313,8 +315,9 @@ class CampaignEventTransitionTests(unittest.TestCase):
         self.assertEqual(found[0]['factions'], ['shu'])
         self.assertEqual(game.state.cities['baxi'].owner, 'shu')
         for field, amount in original.items():
-            self.assertEqual(getattr(game.state.cities['baxi'], field), amount // 4 - (paid['baxi'] if field == 'grain' else 0))
-            self.assertEqual(getattr(game.state.cities['xiangyang'], field), amount - amount // 4 - (paid['xiangyang'] if field == 'grain' else 0))
+            split = (amount - before_founding if field == 'grain' else amount) // 4
+            self.assertEqual(getattr(game.state.cities['baxi'], field), split - (paid['baxi'] if field == 'grain' else 0))
+            self.assertEqual(getattr(game.state.cities['xiangyang'], field), amount - split - (paid['xiangyang'] if field == 'grain' else 0))
         tick(game)
         self.assertEqual(events(game, 'city_founded'), found)
         game.validate(game.state)
