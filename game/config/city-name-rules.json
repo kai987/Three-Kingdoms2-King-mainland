@@ -65,12 +65,12 @@
   },
   "tianshui": {
     "names": [
-      {"from_date": [1, 1], "to_date": [227, 12], "name": "漢陽"},
-      {"from_date": [228, 1], "name": "天水"}
+      {"from_date": [1, 1], "to_date": [220, 12], "name": "漢陽"},
+      {"from_date": [221, 1], "name": "天水"}
     ],
-    "detail": "節點對應冀縣。東漢74年改天水郡為漢陽郡。《三國志》記228年祁山戰事時稱天水，本作採228年初作顯示界線。復名年代諸書有異。",
-    "detail_ja": "地点は冀県です。後漢は74年に天水郡を漢陽郡に改称しました。復名の時期は史料に異同があり、本作では『三国志』が祁山の戦いで天水と記した228年の年初に表示を切り替えます。",
-    "sources": ["https://zh.wikisource.org/wiki/後漢書/卷113#涼州", "https://zh.wikisource.org/wiki/三國志/卷17#張郃"]
+    "detail": "郡治在冀縣。東漢改天水為漢陽；曹魏黃初時已見復稱天水，228年北伐史料亦用此名。本作以221年初作顯示界線。",
+    "detail_ja": "郡治は冀県です。後漢では漢陽と改称され、魏の黄初年間には天水の名が再び見えます。228年の北伐の記事も天水と記すため、表示は221年の年初に切り替えます。",
+    "sources": ["https://zh.wikisource.org/wiki/後漢書/卷113#涼州", "https://zh.wikisource.org/zh-hant/三國志/卷13#王肅", "https://zh.wikisource.org/zh-hant/三國志/卷44#姜維"]
   },
   "xiping": {
     "names": [

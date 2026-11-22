@@ -1075,6 +1075,7 @@ test('city size labels and the report adapt to available space while retaining m
   if(mode==='all'){
    for(const city of ['shuofang','wuyuan','yunzhong'])
     await expect(page.locator(`[data-city-label="${city}"]`)).toHaveCount(1);
+   await expect(page.locator('[data-city-label=liucheng]')).toHaveText('柳城');
   }
  }
  await labels.click();await labels.click();
@@ -1475,7 +1476,7 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
  await scenarios.selectOption('mainland194-06');await page.locator('input[name=faction][value=wei]').check();
  expect(await factionFill('shujun','liu_zhang')).toBe(yiFill);
  await expect(marker('jiyin')).toHaveAttribute('data-owner','wei');
- await expect(marker('jiyin')).toHaveAttribute('aria-label',/^鄄，曹操$/);
+ await expect(marker('jiyin')).toHaveAttribute('aria-label',/^鄄城，曹操$/);
  // Zhang Miao's allied army is independently selectable, rather than an
  // ordinary Lü Bu garrison. Cao Cao still opens in the Juancheng proxy.
  await expect(marker('chenliu')).toHaveAttribute('data-owner','zhang_miao');

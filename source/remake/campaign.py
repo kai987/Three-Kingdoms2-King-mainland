@@ -15,12 +15,12 @@ from threading import RLock
 from types import SimpleNamespace
 
 from .errors import GameError, INVALID_SAVE_MESSAGE
-from . import diplomacy, grain_units, historical_campaigns, observer, southern_mission, three_visits
+from . import diplomacy, grain_relief, grain_units, historical_campaigns, observer, southern_mission, three_visits
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from . import city_economy
-from .city_economy import frontier_maintenance, income_at
+from .city_economy import frontier_maintenance
 from .starting_garrisons import resolve as resolve_opening_garrisons
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
 from .events import empty as empty_events, emit as emit_event, transition as record_events, validate as validate_events
@@ -165,24 +165,28 @@ class Catalog:
         assert len(self.definitions) == expected_people and len(self.map_cities) == expected
 
     @cached_property
-    def previous_weather_sha256(self):
-        # Only the five revised monthly disaster settings may differ from the
-        # previous catalog. Preserve strict identity for all other game data.
+    def previous_weather_hashes(self):
+        # Preserve strict identity for all rules outside the two earlier weather schedules.
         try:
             raw = self.path.read_bytes()
         except OSError:
-            return None
+            return ()
         if hashlib.sha256(raw).hexdigest() != self.sha256:
-            return None
+            return ()
         data = json.loads(raw)
         rules = data.get('facility_rules', {})
-        previous = dict(flood_months=[5, 6], drought_months=[8, 9],
-                        flood_plain_chance=12, flood_mountain_chance=6, drought_chance=12)
-        if any(rules.get(key) != facilities.RULES[key] for key in previous):
-            return None
-        rules.update(previous)
-        encoded = (json.dumps(data, ensure_ascii=False, separators=(',', ':')) + '\n').encode()
-        return hashlib.sha256(encoded).hexdigest()
+        historical = (dict(drought_months=[8, 9, 10]),
+                      dict(flood_months=[5, 6], drought_months=[8, 9],
+                           flood_plain_chance=12, flood_mountain_chance=6, drought_chance=12))
+        keys = set().union(*historical)
+        if any(rules.get(key) != facilities.RULES[key] for key in keys):
+            return ()
+        hashes = []
+        for previous in historical:
+            data['facility_rules'] = dict(rules, **previous)
+            encoded = (json.dumps(data, ensure_ascii=False, separators=(',', ':')) + '\n').encode()
+            hashes.append(hashlib.sha256(encoded).hexdigest())
+        return tuple(hashes)
 
     @cached_property
     def opening_garrisons(self):
@@ -343,6 +347,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         diplomacy.initialize(self.catalog, state)
         state.extension.update(difficulty=difficulty, ai_strategy={}, events=empty_events())
         state.extension[grain_units.FIELD] = grain_units.CURRENT
+        if grain_units.current_rations():
+            state.extension[grain_units.RATION_FIELD] = grain_units.RATION_VERSION
         if lifespan == 'none':
             state.extension['lifespan'] = lifespan
         state.extension['travel'] = dict(counter=0, marches=[], battle_arrival=False, discovered=[])
@@ -398,6 +404,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'rules': {**self.catalog.data['rules'], 'officer_troop_capacity': OFFICER_TROOP_CAP,
                                           'recruit_grain_per_100': grain_units.amount(self.catalog.data['rules']['recruit_grain_per_100'])},
                                 'grain_people_per_day': grain_units.denominator(),
+                                'grain_scale': grain_units.scale(),
                                 'calendar_rules': self.catalog.data['calendar_rules'],
                                 'difficulties': catalog_choices(),
                                 'notes': self.catalog.data['design_notes'], 'library_count': len(self.catalog.definitions),
@@ -406,6 +413,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 **expanded, **travel,
                                 'civil_staff': self._civil_staff_view(state),
                                 'diplomacy': diplomacy.view(self, state),
+                                'grain_recovery': (grain_relief.recovery_view(self, state, state.player)
+                                                   if state and state.phase == 'city' and state.player in self.catalog.factions
+                                                   else {}),
                                 'three_visits': three_visits.view(self, state),
                                 'southern_mission': southern_mission.view(self, state),
                                 'domestic':domestic.view(self,state),
@@ -696,7 +706,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 parent_name = self.catalog.map_cities[rule['parent']]['name']
                 self._note(state,f'{self.catalog.map_cities[key]["name"]}建置，承接{parent_name}当时归属与部分资源；未新增兵员或强制转属。')
 
-    def _monthly_calendar(self, state):
+    def _monthly_calendar(self, state, harvest=None):
         """Monthly income, healing and dated events run only at month rollover."""
         r = self.catalog.data['rules']
         self._open_dated_cities(state)
@@ -728,10 +738,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             self._note(state, f'新年更新人物库，记录{count}项年代事件；未自动招募或复活人物。')
         for city in state.cities.values():
             if city.owner != 'neutral':
-                income=income_at(self.catalog.data,city.id,state.year,state.month) or {
-                    'gold':r['monthly_gold_income'],'grain':grain_units.amount(r['monthly_grain_income']),'reserves':0}
-                income=city_development.adjust_income(self,state,city.id,income)
-                income=facilities.adjusted_income(state,city.id,income)
+                income=city_economy.monthly_income(self,city.id,state)
                 city.gold += income['gold']
                 city.grain += income['grain']
                 domestic.add_reserves(self,state,city,income['reserves'],recruited=True)
@@ -742,6 +749,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             if ident in existing and officer.alive:
                 officer.health = min(officer.profile.health_max, officer.health + r['monthly_heal'])
         domestic.month_rollover(self,state)
+        if harvest:
+            facilities.settle_harvest(self, state, harvest)
         city_economy.settle_turn_grain(self, state)
         facilities.month_rollover(self,state)
         city_development.month_rollover(self,state)
@@ -755,12 +764,13 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         state.day += 10
         month_changed = state.day > 30
         if month_changed:
+            harvest = facilities.close_harvest(self, state)
             state.day = 1
             state.month += 1
             if state.month > 12:
                 state.month = 1
                 state.year += 1
-            self._monthly_calendar(state)
+            self._monthly_calendar(state, harvest)
         else:
             city_economy.settle_turn_grain(self, state)
         state.turn += 1
@@ -819,7 +829,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             content = verified_save_content(payload)
             if content['scenario'] != self.catalog.data['id']:
                 raise GameError(INVALID_SAVE_MESSAGE)
-            if content['catalog_sha256'] != self.catalog.sha256 and content['catalog_sha256'] != self.catalog.previous_weather_sha256:
+            if content['catalog_sha256'] != self.catalog.sha256 and content['catalog_sha256'] not in self.catalog.previous_weather_hashes:
                 raise GameError('此存档与当前剧本版本不兼容。请使用创建存档时的游戏版本。')
             try:
                 raw = content['state'] if payload['version'] == 3 else deepcopy(content['state'])

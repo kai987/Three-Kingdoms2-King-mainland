@@ -1082,7 +1082,8 @@
     "historical-wuhuan-wuyan",
     "historical-wuhuan-sufuwan",
     "historical-zhu-ying-wu",
-    "historical-kang-tai-wu"
+    "historical-kang-tai-wu",
+    "historical-ma-yong-longxi"
   ],
   "people": {
     "san14-candidate-0001": {
@@ -139952,6 +139953,119 @@
         "virtue_design": {
           "person_id": "historical-kang-tai-wu",
           "name": "康泰",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      },
+      "portrait_policy": "generic_placeholder"
+    },
+    "historical-ma-yong-longxi": {
+      "person_id": "historical-ma-yong-longxi",
+      "name": "马颙",
+      "runtime_id": 1083,
+      "birth_year": 195,
+      "service_year": 227,
+      "death_year": 249,
+      "chronology_basis": "《三國志·張既傳》裴注引《魏略》記馬顒任隴西長史，228年奉太守游楚之命出城列陣。生卒不詳，遊戲以227年開局代表北伐前的郡府人事。",
+      "chronology_design": {
+        "birth_year": 195,
+        "service_year": 227,
+        "death_year": null,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_opening_window_not_first_historical_service_year",
+          "death_year": "unknown_not_last_attestation",
+          "retirement_year": "authorial_game_retirement_boundary_not_historical_death"
+        },
+        "basis": "《三國志·張既傳》裴注引《魏略》記馬顒任隴西長史，228年奉太守游楚之命出城列陣。生卒不詳，遊戲以227年開局代表北伐前的郡府人事。",
+        "last_attested_year": 228,
+        "retirement_year": 249
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 40,
+        "intellect": 70,
+        "virtue": 60,
+        "terrain_affinity": 2,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "马颙",
+        "馬顒"
+      ],
+      "virtue_design": {
+        "person_id": "historical-ma-yong-longxi",
+        "name": "马颙",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷15#張既"
+        ],
+        "notes": "《三國志·張既傳》裴注引《魏略》記馬顒任隴西長史，228年奉太守游楚之命出城列陣。生卒不詳，遊戲以227年開局代表北伐前的郡府人事。 武力40、知力70、德60為本作估值。",
+        "source_name": "馬顒"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 40,
+          "intellect": 70,
+          "virtue": 60,
+          "terrain_affinity": 2,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default80_no_original_source",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60_missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-ma-yong-longxi",
+          "name": "马颙",
           "policy_id": "campaign-officer-stats-v1",
           "status": "configured_default",
           "virtue": 60,

@@ -3,17 +3,17 @@ const assert=require('node:assert/strict'),{execFileSync}=require('node:child_pr
 const supply=require('../game/march-supply.js');
 const cases=[];
 for(const troops of [0,1,300,999,9990,98901])for(const officers of [1,10,99])for(const days of [1,10,12,33,400])for(const reserves of [0,50,100000])cases.push([troops,officers,days,reserves]);
-const actual=cases.map(row=>supply.requiredGrain(...row,100));
+const actual=cases.map(row=>supply.requiredGrain(...row));
 const expected=JSON.parse(execFileSync('python3',['-B','-c','import json,sys;from remake.march_supply import required_grain;print(json.dumps([required_grain(*x) for x in json.load(sys.stdin)]))'],{cwd:path.join(__dirname,'../source'),input:JSON.stringify(cases),encoding:'utf8'}));
 assert.deepEqual(actual,expected);
-assert.equal(supply.requiredGrain(1000,1,12),14);assert.equal(supply.requiredGrain(1000,1,10),11);
-assert.equal(supply.estimate({a:{troops:600},b:{troops:300}},['a','b'],{days:20},200),26);
+assert.equal(supply.requiredGrain(1000,1,12),264);assert.equal(supply.requiredGrain(1000,1,10),220);
+assert.equal(supply.estimate({a:{troops:600},b:{troops:300}},['a','b'],{days:20},200),520);
 const quote={days:30,path:['home','empty','depot','front'],routes:[{days:7},{days:13},{days:10}]},
  cities={home:{owner:'wei'},empty:{owner:'neutral'},depot:{owner:'wei'},front:{owner:'wei'}},
  people={a:{troops:900}},snapshot=JSON.stringify({quote,cities,people});
 assert.equal(supply.initialDays(quote,cities,'wei'),20,'A neutral city cannot supply the column');
-assert.equal(supply.estimate(people,['a'],quote,0,cities,'wei'),20,'Only the first friendly supply interval is loaded');
-assert.equal(supply.estimate(people,['a'],quote),30,'A bare duration remains valid for callers without ownership context');
+assert.equal(supply.estimate(people,['a'],quote,0,cities,'wei'),400,'Only the first friendly supply interval is loaded');
+assert.equal(supply.estimate(people,['a'],quote),600,'A bare duration remains valid for callers without ownership context');
 assert.deepEqual(supply.position(quote,0),{city:'home',from:'home',to:'empty',progress_days:0,leg_days:7,arrived:false});
 assert.equal(supply.position(quote,7).city,'empty');
 assert.deepEqual(supply.position(quote,10),{city:null,from:'empty',to:'depot',progress_days:3,leg_days:13,arrived:false});
@@ -34,23 +34,23 @@ const itineraryCities={home:{owner:'wei',grain:1000},ally:{owner:'shu',grain:100
  'depot-a':{owner:'wei',grain:2},empty:{owner:'neutral',grain:1000},
  'depot-b':{owner:'wei',grain:5},enemy:{owner:'wu',grain:1000}};
 const marching={1:{troops:1025}};
-const provisions=supply.estimate(marching,[1],itinerary,0,itineraryCities,'wei');
+const provisions=supply.estimate(marching,[1],itinerary,0,itineraryCities,'wei',1000);
 assert.equal(provisions,6);
 const loaded=provisions+4; // The engine treats battle grain as part of the march balance.
 const before=JSON.stringify({marching,itinerary,itineraryCities});
-const forecast=supply.refillForecast(marching,[1],itinerary,loaded,itineraryCities,'wei');
+const forecast=supply.refillForecast(marching,[1],itinerary,loaded,itineraryCities,'wei',1000);
 assert.deepEqual(forecast,[
  {city:'depot-a',next:'depot-b',days:5,stock:2,required:2,shortfall:0,conditional:false},
  {city:'depot-b',next:'enemy',days:3,stock:5,required:3,shortfall:0,conditional:false}
 ]);
-assert.equal(supply.refillForecast(marching,[1],itinerary,provisions,itineraryCities,'wei')[0].required,6);
+assert.equal(supply.refillForecast(marching,[1],itinerary,provisions,itineraryCities,'wei',1000)[0].required,6);
 const lowCities={...itineraryCities,'depot-a':{owner:'wei',grain:1}};
-assert.deepEqual(supply.refillForecast(marching,[1],itinerary,loaded,lowCities,'wei'),[
+assert.deepEqual(supply.refillForecast(marching,[1],itinerary,loaded,lowCities,'wei',1000),[
  {...forecast[0],stock:1,shortfall:1},{...forecast[1],conditional:true}
 ]);
 const direct={path:['home','depot-a'],days:3,routes:[{days:3}]};
 assert.deepEqual(supply.refillForecast(marching,[1],direct,loaded,itineraryCities,'wei'),[],'Arrival is not a transit refill');
-assert.deepEqual(supply.refillForecast(marching,[],itinerary,0,itineraryCities,'wei'),[]);
+assert.deepEqual(supply.refillForecast(marching,[],itinerary,0,itineraryCities,'wei',1000),[]);
 assert.equal(JSON.stringify({marching,itinerary,itineraryCities}),before,'A forecast leaves game and quote data unchanged');
 
 const observed=JSON.parse(execFileSync('python3',['-B','-c',`
@@ -77,7 +77,7 @@ assert.equal(observed[1].route_days,5,'The first deficient checkpoint stops the 
 assert.equal(observed[1].waiting,true);
 
 const app=require('node:fs').readFileSync(require.resolve('../game/app.js'),'utf8');
-const context={view:{catalog:{},game:{officers:marching,cities:lowCities}},GameMarchSupply:supply,GameI18n:{t:name=>name},
+const context={view:{catalog:{grain_people_per_day:1000},game:{officers:marching,cities:lowCities}},GameMarchSupply:supply,GameI18n:{t:name=>name},
  cityName:city=>city,battleText:(tc,ja)=>`${tc} | ${ja}`,escapeHtml:city=>city};
 require('node:vm').runInNewContext(app.slice(app.indexOf('function marchRefillForecastHtml('),app.indexOf('function departureBudget(')),context);
 const markup=context.marchRefillForecastHtml(itinerary,[1],loaded,'wei');

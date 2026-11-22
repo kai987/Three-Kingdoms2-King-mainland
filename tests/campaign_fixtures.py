@@ -37,7 +37,8 @@ def legacy_grain_campaign():
     current = Campaign._new
 
     def retained(game, *args, **kwargs):
-        state = current(game, *args, **kwargs)
+        with grain_units.using({}):
+            state = current(game, *args, **kwargs)
         state.extension.pop(grain_units.FIELD)
         return state
 

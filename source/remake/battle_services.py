@@ -55,7 +55,7 @@ def quote(game, state, battle, actor, side, *, site=None):
         stock={'weapon': [], 'armor': []}, trade=None,
         medical_gold=facilities._rule(game, 'medical_gold'))
     if site['kind'] == 'market':
-        rate = facilities._rule(game, 'market_buy_rates')[str(_town(state,battle))]
+        rate = facilities.market_rate(game, _town(state,battle), 'buy', state.month)
         batch = facilities._rule(game, 'trade_batch_grain')
         room = battle_supply.pool_limit(battle,side)-grain
         result['trade'] = dict(rate=rate, batch_grain=batch,

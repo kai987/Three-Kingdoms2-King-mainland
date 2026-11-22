@@ -5,7 +5,7 @@
  if(typeof module==='object'&&module.exports)module.exports=api;else root.GameMarchSupply=api;
 })(typeof window==='object'?window:globalThis,function(){
  'use strict';
- const RATION_DENOMINATOR=1000,OFFICER_UNITS=100;
+ const RATION_DENOMINATOR=50,OFFICER_UNITS=100;
  function requiredGrain(troops,officers,days,reserves=0,denominator=RATION_DENOMINATOR){
   if([troops,officers,days,reserves].some(n=>!Number.isSafeInteger(n)||n<0))throw new TypeError('Invalid march supply');
   const units=troops+OFFICER_UNITS*officers+reserves,value=units*days;

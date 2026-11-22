@@ -73,22 +73,22 @@ class MessageLocaleTests(unittest.TestCase):
 
     def test_diplomacy_log_preserves_date_envoy_target_and_outcome(self):
         for command, japanese in [('親善', '親善'), ('同盟', '同盟'), ('歸還俘虜', '捕虜返還'),
-                                  ('請求攻擊', '攻撃要請'), ('勸告投降', '降伏勧告')]:
+                                  ('請求攻擊', '攻撃要請'), ('請求糧援', '食糧援助要請'), ('勸告投降', '降伏勧告')]:
             with self.subTest(command=command):
                 self.assertEqual(translate(f'217年7月上旬 諸葛亮向孙权提出{command}，結果：達成。', self.data),
                                  f'217年7月上旬 諸葛亮が孫権に「{japanese}」を提案。結果：成立。')
         self.assertEqual(translate('諸葛亮向孙权提出歸還俘虜，結果：遭拒。', self.data),
                          '諸葛亮が孫権に「捕虜返還」を提案。結果：拒否。')
 
-    def test_all1082_officer_identities_keep_the_name_crosswalk(self):
-        self.assertEqual(len(self.catalog['people']), 1082)
+    def test_all1083_officer_identities_keep_the_name_crosswalk(self):
+        self.assertEqual(len(self.catalog['people']), 1083)
         ids = set()
         for person in self.catalog['people']:
             ids.add(person['person_id'])
             japanese = person['ability_source']['source_name']
             self.assertEqual(translate(person['name'], self.data), japanese)
             self.assertEqual(translate(japanese, self.data), japanese)
-        self.assertEqual(len(ids), 1082)
+        self.assertEqual(len(ids), 1083)
         self.assertEqual(translate('乐𬘭', self.data), '楽綝')
         self.assertEqual(translate('马云𫘧', self.data), '馬雲騄')
         for source, target in {'宋建':'宋建', '吕兴':'呂興', '唐谱':'唐譜', '李统':'李統'}.items():

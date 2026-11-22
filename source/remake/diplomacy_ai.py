@@ -35,13 +35,14 @@ def _frontiers(ai):
     return holdings, borders
 
 
-def _gift(state, cities, target_cities, current, desired):
+def _gift(state, cities, target_cities, current, desired, *, resources=GIFT_RESERVE):
     """Give only surplus and stop at the smallest amount that meets the goal."""
     choices = []
     for city in cities:
         source = state.cities[city['id']]
         envoy = min(city['envoys'], key=lambda row: _envoy_key(state, source.id, row))
-        for resource, reserve in GIFT_RESERVE.items():
+        for resource in resources:
+            reserve = GIFT_RESERVE[resource]
             if resource == 'grain':
                 reserve = grain_units.amount(reserve)
             stock = getattr(source, resource)
@@ -68,7 +69,7 @@ def _gift(state, cities, target_cities, current, desired):
 def _request_target(ai, target, enemy_owners, marches, ally_cities, historical_targets):
     """Ask for an attack the ally can supply against one of our border rivals."""
     state = ai.state
-    if (target['id'] == state.player or not ai.budget
+    if (target['id'] == state.player or ai.grain_outlook(target['id'])[0] is not None or not ai.budget
             or not command_books.can_spend(state, target['id'], 'depart')):
         return None
     eligible = [state.cities[key] for key in target['attack_cities']
@@ -115,6 +116,7 @@ def orders(ai, owner):
     own_borders = border_owners.get(owner, set())
     discretionary = command_books.remaining(state, owner) > command_books.cost('diplomacy')
     proposals = []
+    recovering = ai.grain_outlook(owner)[0] is not None
 
     def add(rank, target, action, **fields):
         proposals.append((rank, target, dict(base, action=action, target=target) | fields))
@@ -125,6 +127,17 @@ def orders(ai, owner):
                            or owner in historical_opponents.get(target, set()))
         recent = lambda action: _recent_order(state, owner, target, action)
         can_gift = actions['goodwill'] and discretionary and not recent('goodwill')
+        if recovering:
+            if (discretionary and target in own_borders and not option['alliance']
+                    and not protected_front and (owner, target) not in hostile_pairs
+                    and (target, owner) not in hostile_pairs):
+                if actions['alliance']:
+                    add(0, target, 'alliance', duration=TREATY_TURNS)
+                elif can_gift and score < diplomacy.NORMAL:
+                    gift = _gift(state, cities, holdings[target], score, diplomacy.NORMAL, resources=('gold',))
+                    if gift:
+                        add(1, target, 'goodwill', **gift)
+            continue
         if actions['return_captives']:
             captives = (state.officers[row['id']] for row in option['captives'])
             captive = min(captives, key=lambda row: (

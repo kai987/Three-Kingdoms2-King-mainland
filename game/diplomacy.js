@@ -11,6 +11,7 @@
   alliance:{name:['同盟','同盟'],note:['外交感情須達平常。盟友互不攻擊，部隊可通過同盟領地。','外交感情が平常以上で締結できます。同盟中は互いに攻撃せず、同盟領を通過できます。']},
   return_captives:{name:['歸還俘虜','捕虜返還'],note:['請對方交還被俘的本勢力武將。','相手勢力に捕らわれた自勢力の武将の返還を求めます。']},
   request_attack:{name:['請求攻擊','攻撃要請'],note:['可請求友好以上的同盟勢力攻打第三方據點，部隊按行軍規則出陣。','友好以上の同盟勢力に第三勢力の拠点への攻撃を要請します。部隊は行軍ルールに従って出陣します。']},
+  request_grain:{name:['請求糧援','食糧援助要請'],note:['本方無法及時補足缺口時，可向盟友請求兩個月的用糧。前三次有餘糧便會答應，第四次起還需要至少友好關係。','自勢力で不足を補えない場合、同盟勢力に2か月分の食糧を要請できます。3回目までは余剰があれば受諾され、4回目以降は友好以上が必要です。']},
   surrender:{name:['勸告投降','降伏勧告'],note:['勸告對方勢力投降。外交感情、雙方國力及戰局會影響結果。','相手勢力に降伏を勧めます。外交感情、両勢力の国力と戦況が結果に影響します。']}
  };
  const resources={gold:['資金','資金'],grain:['兵糧','兵糧'],treasure:['寶物','宝']};
@@ -62,12 +63,14 @@
    const captives=target?.captives||[],prisoner=find(captives,draft.prisoner)||captives[0];
    const attackCities=target?.attack_cities||[];
    const attackCity=attackCities.includes(draft.attack_city)?draft.attack_city:attackCities[0];
-   Object.assign(draft,{city:city?.id,target:target?.id,envoy:envoy?.id,prisoner:prisoner?.id,attack_city:attackCity});
+   const aidCities=Object.values(current.grain_relief||{}).filter(row=>row.amount>0);
+   const aidCity=find(aidCities,draft.aid_city)||aidCities[0];
+   Object.assign(draft,{city:city?.id,target:target?.id,envoy:envoy?.id,prisoner:prisoner?.id,attack_city:attackCity,aid_city:aidCity?.id});
    const maximum=city?.limits?.[draft.resource]??0;
-   return {current,draft,city,target,envoys,envoy,captives,prisoner,attackCities,attackCity,maximum};
+   return {current,draft,city,target,envoys,envoy,captives,prisoner,attackCities,attackCity,aidCities,aidCity,maximum};
   }
   function payload(row){
-   const {current,draft,city,target,envoy,prisoner,attackCity,maximum}=row;
+   const {current,draft,city,target,envoy,prisoner,attackCity,aidCity,maximum}=row;
    if(!city||!target||!envoy||!current.can_command||target.actions?.[draft.action]!==true)return null;
    const commandData={action:draft.action,city:city.id,envoy:envoy.id,target:target.id};
    switch(draft.action){
@@ -78,6 +81,7 @@
     case 'alliance':return {...commandData,duration:bounded(draft.duration,current.max_turns,1)};
     case 'return_captives':return prisoner?{...commandData,prisoner:prisoner.id}:null;
     case 'request_attack':return attackCity?{...commandData,attack_city:attackCity}:null;
+    case 'request_grain':return aidCity?{...commandData,aid_city:aidCity.id}:null;
     case 'surrender':return commandData;
     default:return null;
    }
@@ -92,7 +96,7 @@
    <tbody>${targets.map(target=>`<tr><th scope="row">${escape(translate(factionName(target.id)))}</th><td>${escape(stage(target))}</td><td>${escape(alliance(target))}</td></tr>`).join('')}</tbody></table></div></details>`;
   }
   function extra(row){
-   const {current,draft,captives,prisoner,attackCities,attackCity,maximum}=row;
+   const {current,draft,target,captives,prisoner,attackCities,attackCity,aidCities,aidCity,maximum}=row;
    switch(draft.action){
     case 'goodwill':
      return `<div class="diplomacy-fields">${field('diplomacy-resource',text('贈禮種類','贈り物の種類'),draft.resource,Object.entries(resources).map(([id,name])=>[id,text(...name)]))}
@@ -104,6 +108,12 @@
      return field('diplomacy-prisoner',text('請求歸還的武將','返還を求める武将'),prisoner?.id,captives.map(row=>[row.id,translate(row.name)]));
     case 'request_attack':
      return field('diplomacy-attack-city',text('請求攻擊的城池','攻撃を要請する都市'),attackCity,attackCities.map(id=>[id,translate(cityName(id))]));
+    case 'request_grain':{
+     const number=target?.grain_request_number;
+     return field('diplomacy-aid-city',text('受援城池','援助先の都市'),aidCity?.id,
+       aidCities.map(city=>[city.id,`${translate(cityName(city.id))} · ${text('糧','食糧')} ${city.amount}`]))
+       + (number&&target?.actions?.request_grain?`<p class="small">${text(`向此盟友第 ${number} 次求援`,`この同盟勢力への要請は ${number} 回目`)}${number>3&&!target.grain_request_friendly?text(' · 目前關係低於友好',' · 現在の関係は友好未満'):''}</p>`:'');
+    }
     default:return '';
    }
   }
@@ -136,7 +146,7 @@
    if(!showing())return;
    const relationsElement=dialog.querySelector('[data-diplomacy-relations]');
    if(relationsElement)relationsElement.open=!!relationsOpen;
-   for(const [id,key] of [['target','target'],['action','action'],['city','city'],['envoy','envoy'],['resource','resource'],['prisoner','prisoner'],['attack-city','attack_city']]){
+   for(const [id,key] of [['target','target'],['action','action'],['city','city'],['envoy','envoy'],['resource','resource'],['prisoner','prisoner'],['attack-city','attack_city'],['aid-city','aid_city']]){
     const input=query('diplomacy-'+id);
     if(input)input.onchange=()=>{draft[key]=input.value;active.result=null;render();};
    }
@@ -170,9 +180,11 @@
    }
    return done;
   }
-  function open(){
+  function open({aidCity}={}){
    if(!canOpen()||pending)return false;
-   active={identity:identity(),draft:{action:'goodwill',resource:'gold',amount:1,duration:data().max_turns}};
+   const target=aidCity?data().targets.find(row=>row.actions?.request_grain):null;
+   active={identity:identity(),draft:{action:aidCity?'request_grain':'goodwill',target:target?.id,
+    aid_city:aidCity,resource:'gold',amount:1,duration:data().max_turns}};
    render();
    return showing();
   }

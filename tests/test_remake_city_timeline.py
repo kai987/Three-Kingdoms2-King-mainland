@@ -47,8 +47,8 @@ def timeline_catalog(start):
     data['faction_rulers'] = {owner: people[index * 3]['runtime_id']
                             for index, owner in enumerate(('wei', 'shu'))}
     data['appearance_locations'] = {row['person_id']: row['city'] for row in data['initial_officers']}
-    data['initial_city_resources'] = dict(qiao=dict(gold=101, grain=205, reserves=0),
-                                         dongjun=dict(gold=0, grain=205, reserves=0))
+    data['initial_city_resources'] = dict(qiao=dict(gold=101, grain=2050, reserves=0),
+                                         dongjun=dict(gold=0, grain=2050, reserves=0))
     data['city_income'] = dict(qiao=dict(gold=35, grain=90, reserves=0),
                               dongjun=dict(gold=0, grain=205, reserves=0))
     data['city_scale_rules'] = read('game/config/city-scale-rules.json')
@@ -134,7 +134,8 @@ class CityTimelineTests(unittest.TestCase):
         self.assertEqual(event['factions'], ['wei'])
         self.assertEqual(event['audience'], 'world')
         self.assertEqual(dated_events(game, 'city_upgraded'), [])
-        self.assertEqual((game.state.cities['qiao'].gold, game.state.cities['qiao'].grain), (136, 2950 - dues['qiao']))
+        self.assertEqual((game.state.cities['qiao'].gold, game.state.cities['qiao'].grain),
+                         (136, initial['cities']['qiao']['grain'] + 1800 - dues['qiao']))
         self.assertEqual(game.state.cities['qiao'].owner, initial['cities']['qiao']['owner'])
         self.assertEqual(game.to_dict()['officers'], after_monthly_healing(initial['officers']))
         self.assertEqual(game.to_dict()['soldiers'], initial['soldiers'])
@@ -154,11 +155,12 @@ class CityTimelineTests(unittest.TestCase):
         for _ in range(3):
             next_turn(game)
         self.assertEqual((game.state.year, game.state.month, game.state.day), (221, 1, 1))
-        self.assertEqual((game.state.cities['qiao'].gold, game.state.cities['qiao'].grain), (171, 3850 - dues['qiao']))
+        self.assertEqual((game.state.cities['qiao'].gold, game.state.cities['qiao'].grain),
+                         (171, initial['cities']['qiao']['grain'] + 3600 - dues['qiao']))
         event, = dated_events(game, 'city_upgraded')
         self.assertEqual(event['city_ids'], ['qiao'])
         self.assertEqual(event['details'], dict(from_tier='normal', to_tier='large',
-                                              income=dict(gold=70, grain=1800, reserves=0)))
+                                              income=dict(gold=70, grain=3600, reserves=0)))
         self.assertEqual(dated_events(game, 'city_renamed'), [])
         self.assertEqual(game.to_dict()['officers'], after_monthly_healing(initial['officers']))
         self.assertEqual(game.to_dict()['soldiers'], initial['soldiers'])
@@ -166,7 +168,8 @@ class CityTimelineTests(unittest.TestCase):
         for _ in range(3):
             next_turn(game)
         self.assertEqual(dated_events(game, 'city_upgraded'), [event])
-        self.assertEqual((game.state.cities['qiao'].gold, game.state.cities['qiao'].grain), (241, 5650 - dues['qiao']))
+        self.assertEqual((game.state.cities['qiao'].gold, game.state.cities['qiao'].grain),
+                         (241, initial['cities']['qiao']['grain'] + 7200 - dues['qiao']))
 
     def test_late_opening_never_backfills_name_or_size_events(self):
         for start, tier in (((219, 1), 'normal'), ((221, 1), 'large'), ((225, 7), 'large')):

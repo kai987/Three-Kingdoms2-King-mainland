@@ -6,6 +6,8 @@ use serde_json::{json, Value};
 use std::cmp::Reverse;
 use std::collections::BinaryHeap;
 
+const MAX_BATTLE_OFFICERS: usize = 20;
+
 #[derive(Deserialize)]
 struct Unit {
     troops: i64,
@@ -169,8 +171,8 @@ fn movement(
 pub(crate) fn candidates(request: &Value) -> Result<Value> {
     let r = Request::deserialize(request).map_err(|e| e.to_string())?;
     let units = r.friends.iter().chain(&r.enemies);
-    if r.friends.len() > 10
-        || r.enemies.len() > 10
+    // Conversions move existing officers across sides after deployment.
+    if r.friends.len() + r.enemies.len() > MAX_BATTLE_OFFICERS
         || r.enemy_rank.len() != r.enemies.len()
         || !(0..=1000).contains(&r.damage_percent)
         || units.clone().any(|u| {

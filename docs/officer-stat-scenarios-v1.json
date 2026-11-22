@@ -18,23 +18,23 @@
   },
   "summary": {
     "cities": 3739,
-    "serving": 9164,
+    "serving": 9165,
     "rulers": 360,
-    "ordinary_serving": 8804,
+    "ordinary_serving": 8805,
     "free": 2399,
-    "total_instantiated": 11563,
+    "total_instantiated": 11564,
     "initial_health_changed": 2919,
     "health_cap_increased": 1237,
     "ordinary_loyalty_changed": 1697,
     "source_context_applied": 1561,
     "source_context_mismatch_defaults": 995,
     "source_ruler_marker_nonruler_defaults": 18,
-    "no_source_loyalty_defaults": 6230,
+    "no_source_loyalty_defaults": 6231,
     "relationship_matches": 405,
     "relationship_exceptions": 15,
     "relationship_loyalty_increased": 311,
     "preview_cities_checked": 3739,
-    "preview_officers_checked": 9164
+    "preview_officers_checked": 9165
   },
   "scenarios": [
     {
@@ -62,7 +62,7 @@
       "relationship_loyalty_increased": 4,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -207,7 +207,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "2cb2d2c048be706fe2c9111e6ca9408d732733de8be99fd3f8c2ed34f1e97548",
+      "opening_save_sha256": "bfefdb917c9334eb4fa80f5ab0818e65b4103eb18e430c2ebfe6d31881f3ae42",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -1310,7 +1310,7 @@
       "relationship_loyalty_increased": 2,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -1455,7 +1455,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "251530dfd814d17a6fab9d8e105cd0949dd6e93fde21491b122376a781ed3b05",
+      "opening_save_sha256": "0cfe03807ef014b0978788d0834ac5f4c8883d4986c44f6c299c9ecdd4a2b9ba",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -2912,7 +2912,7 @@
       "relationship_loyalty_increased": 14,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -3057,7 +3057,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "cfcdfdab83124f491454c9de442d808abbf4493f9a2759aba8f7f9b4a2ed832e",
+      "opening_save_sha256": "8be6af45ed605e39fa6cc8d545129e5e3e270d5c55a8a620af0f11e8f1db83d6",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -5042,7 +5042,7 @@
       "relationship_loyalty_increased": 15,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -5187,7 +5187,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "27a415bfec16fcc914c6f11e027161f7c9c67d382a1deb25e70de402d5abfdd2",
+      "opening_save_sha256": "e3a53310a989c498702fdac49cf090ace86c9ce6f65a2713c91fe17de89bffda",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -7243,7 +7243,7 @@
       "relationship_loyalty_increased": 14,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -7388,7 +7388,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "38744830c2acbc6eabd5c61eac0dea8488a3d089788a89ed4e33b7d05e466966",
+      "opening_save_sha256": "a4a667fa1a1e935692940edc2ce0575507bce3719e92a4ebb09a6e6e1aab35f4",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -9543,7 +9543,7 @@
       "relationship_loyalty_increased": 18,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -9702,7 +9702,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "33fea395ebb2e54f5b9fd68853c815cca8ea8b4103b15140b478439ab1a4e914",
+      "opening_save_sha256": "ceac9eb80b7acf811d1b0a37b99d8b31c2c9c9db05654ddeb03f36b73c417d9c",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -12155,7 +12155,7 @@
       "relationship_loyalty_increased": 13,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -12216,7 +12216,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "aaf608d77b9083585f5804460ad80754032cbb51d3d620d972350be7fad9e542",
+      "opening_save_sha256": "f33b9b6cd4415ca1f730ecedefd4d7695c22c48e631c12509028001cc8581478",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -14618,7 +14618,7 @@
       "relationship_loyalty_increased": 17,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -14777,7 +14777,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "404deb3210938ed9cdfeb1cb14a683fff1724308ca2593dc1742d04fbae1f95c",
+      "opening_save_sha256": "6b7d620ab38f594fff3ca7309a832a9a94aa7c1c8d00a561c8506483367fff2c",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -17271,7 +17271,7 @@
       "relationship_loyalty_increased": 17,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -17416,7 +17416,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "7046697070190d0b97b36ef3f41f0f4bbefddda403762e120fdc0de69c8ba47d",
+      "opening_save_sha256": "6b3762073e4e923d825ef468d830a6c3c14d61951b8d2dba7658b2078a409127",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -18437,7 +18437,7 @@
           "runtime_id": 389,
           "name": "朱治",
           "role": "serving",
-          "city": "luling",
+          "city": "wujun",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0030",
           "previous_initial_health": 80,
@@ -19942,7 +19942,7 @@
       "relationship_loyalty_increased": 19,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -19989,7 +19989,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "be69e7b8568128db0da43812b58869e4df47eaf505337c39002d4cd1103d1510",
+      "opening_save_sha256": "96b28b1d6a74d0b782e1d9f85e99c5ea426da144ebf51b8abd16726f179d30ed",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -22467,7 +22467,7 @@
       "relationship_loyalty_increased": 16,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -22612,7 +22612,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "b6a64d92fea87112630df0b83d7f972e329e7f868f35510b51970a0ed6640da2",
+      "opening_save_sha256": "c6c528f75631e03339c8c788a0f089b22f9c9fab0408ac775eb58773f47d4d93",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -23534,7 +23534,7 @@
           "runtime_id": 389,
           "name": "朱治",
           "role": "serving",
-          "city": "lujiang",
+          "city": "wujun",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0030",
           "previous_initial_health": 80,
@@ -25037,7 +25037,7 @@
       "relationship_loyalty_increased": 18,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -25182,7 +25182,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "ca81669d3a7fa48e3619cce30c3b7d2e566ba5856e0097e38b806e0a901acf29",
+      "opening_save_sha256": "584a3d5fff6d4f20ca12a2270d38e9755c7a4a0e9caf06803140357e9dc185bb",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -26001,7 +26001,7 @@
           "runtime_id": 389,
           "name": "朱治",
           "role": "serving",
-          "city": "kuaiji",
+          "city": "wujun",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0030",
           "previous_initial_health": 80,
@@ -27653,7 +27653,7 @@
       "relationship_loyalty_increased": 16,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -27854,7 +27854,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "4ba985c59aecfd269b9b7ad2061eeda1aa2aad590eb76fb2fbb6f38acc30ce0f",
+      "opening_save_sha256": "47b51d27439dbcf89cb1f4979a4bd83472bc4f024b96269ac2348ddfedf093e5",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -28673,7 +28673,7 @@
           "runtime_id": 389,
           "name": "朱治",
           "role": "serving",
-          "city": "qichun",
+          "city": "wujun",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0030",
           "previous_initial_health": 80,
@@ -30263,7 +30263,7 @@
       "relationship_loyalty_increased": 17,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -30310,7 +30310,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "16837f677d842d45f90302c9c182d0c8b0c1ba9b2670e7b401627c7b93fe370e",
+      "opening_save_sha256": "5072d1812b901ff529415a180fe9a2655e536e3a7f5d33e19c97e8417cb8a4f7",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -32742,7 +32742,7 @@
       "relationship_loyalty_increased": 15,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -32817,7 +32817,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "605030a63a127c06bc60631a4615e2fc7b869638faae35f8b1260b13e94af9ec",
+      "opening_save_sha256": "36c93dbfc8deb101578b1a7c4bd90f852467aa35ef528a53e5353b19085c4f69",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -35219,7 +35219,7 @@
       "relationship_loyalty_increased": 16,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -35406,7 +35406,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "c42dc90957545ff33c44a7886164e32cb12e7c7d3e6e22583c86f9a05e900451",
+      "opening_save_sha256": "c7303463cb407c329356284e8bccb837063f716ea8c40a9be08087cee50b48e7",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -36241,7 +36241,7 @@
           "runtime_id": 389,
           "name": "朱治",
           "role": "serving",
-          "city": "yulin",
+          "city": "wujun",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0030",
           "previous_initial_health": 80,
@@ -37815,7 +37815,7 @@
       "relationship_loyalty_increased": 7,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -37876,7 +37876,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "4ec80d27df81440440262f5b5c52c3462391d1d7bc27a4e59334ba1938e8c557",
+      "opening_save_sha256": "bd4667042df4a852a246ba76a064ed983543b9c29b1a88197b496ecf2ef1d380",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -40119,7 +40119,7 @@
       "relationship_loyalty_increased": 16,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -40320,7 +40320,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "378b00485ad6b5262914940dfa6296b7dbd03044ef5d281cf8f1213c9c59d4a3",
+      "opening_save_sha256": "88e8fa83b1b772a39c683cd4ece6086dd4011d88ee41693ca050c9714fb7f828",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -41123,7 +41123,7 @@
           "runtime_id": 389,
           "name": "朱治",
           "role": "serving",
-          "city": "yulin",
+          "city": "wujun",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0030",
           "previous_initial_health": 80,
@@ -42578,7 +42578,7 @@
       "relationship_loyalty_increased": 14,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -42723,7 +42723,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "ec84ee7deda213057d319c11807550493d762c1b210058a28218394ba65dcd1b",
+      "opening_save_sha256": "1ea51695ada9c08be3576d66a352e6e8d5428dde32a734de7f572ce956439a23",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -43510,7 +43510,7 @@
           "runtime_id": 389,
           "name": "朱治",
           "role": "serving",
-          "city": "hepu",
+          "city": "wujun",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0030",
           "previous_initial_health": 80,
@@ -44935,7 +44935,7 @@
       "relationship_loyalty_increased": 13,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -45080,7 +45080,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "fef6863edc4a0009c5ca9ba7c4c9585c7cf09c991c25c2b3d29b1dd11f800a46",
+      "opening_save_sha256": "87a06996b6050cffa54d1420b06dfcf28cd478a741c6ddf12a63cda5709f98a5",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -45883,7 +45883,7 @@
           "runtime_id": 389,
           "name": "朱治",
           "role": "serving",
-          "city": "kuaiji",
+          "city": "wujun",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0030",
           "previous_initial_health": 80,
@@ -47211,7 +47211,7 @@
       "relationship_loyalty_increased": 13,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -47356,7 +47356,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "f851389caa4063e9cb980b621f307f7b5bc2be2b1fd9cf5f5b53bfc7a3b2a064",
+      "opening_save_sha256": "5df7509274c9db5a3b97afcfaeb1c2c4432aaf1d222821b08090eb8361c95c40",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -48159,7 +48159,7 @@
           "runtime_id": 389,
           "name": "朱治",
           "role": "serving",
-          "city": "linhe",
+          "city": "wujun",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0030",
           "previous_initial_health": 80,
@@ -49499,7 +49499,7 @@
       "relationship_loyalty_increased": 4,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -49644,7 +49644,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "cc42e8b57fd5ac17a881e2182cb313a04db2759aebdd7aa77a921105ee275834",
+      "opening_save_sha256": "71a246a631d55bb650867034a2da6e58481af06ccd2ffc044f308d798b70533c",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -50291,7 +50291,7 @@
           "runtime_id": 388,
           "name": "朱然",
           "role": "serving",
-          "city": "lujiang",
+          "city": "nanjun",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0119",
           "previous_initial_health": 80,
@@ -50307,7 +50307,7 @@
           "runtime_id": 389,
           "name": "朱治",
           "role": "serving",
-          "city": "nanjun",
+          "city": "wujun",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0030",
           "previous_initial_health": 80,
@@ -50323,7 +50323,7 @@
           "runtime_id": 390,
           "name": "朱褒",
           "role": "serving",
-          "city": "guanghan",
+          "city": "zangke",
           "faction": "shu",
           "source_row_id": "cnblogs-line-0227",
           "previous_initial_health": 80,
@@ -51367,7 +51367,7 @@
       "relationship_loyalty_increased": 1,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -51512,7 +51512,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "944c2ab7c6c8bc7a8d6a1bb048ac0705d4e955daa6a9722a9e3f89a1ea1355ad",
+      "opening_save_sha256": "3e93ab73411cd5749c683aca3ede324aea269c0f8a95a34e24449cc1f027d4f5",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -52095,7 +52095,7 @@
           "runtime_id": 388,
           "name": "朱然",
           "role": "serving",
-          "city": "danyang",
+          "city": "nanjun",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0119",
           "previous_initial_health": 80,
@@ -52935,29 +52935,29 @@
       "player": "wei",
       "seed": 2026,
       "cities": 131,
-      "serving": 333,
+      "serving": 334,
       "rulers": 5,
-      "ordinary_serving": 328,
+      "ordinary_serving": 329,
       "free": 37,
-      "total_instantiated": 370,
+      "total_instantiated": 371,
       "initial_health_changed": 77,
       "health_cap_increased": 38,
       "ordinary_loyalty_changed": 32,
       "source_context_applied": 33,
       "source_context_mismatch_defaults": 45,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 250,
+      "no_source_loyalty_defaults": 251,
       "relationship_matches": 1,
       "relationship_exceptions": 0,
       "relationship_loyalty_increased": 1,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 131,
-      "preview_officers_checked": 333,
+      "preview_officers_checked": 334,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -53097,7 +53097,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "b50fc5cee6cd4f06d28c097c92deadf7a836000507c6ac2121c2ba19e3afbf5d",
+      "opening_save_sha256": "605ee3dac579fc574330e017c8d597e24a328f8b9b905ea454980f15d50bb5a2",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -53584,7 +53584,7 @@
           "runtime_id": 388,
           "name": "朱然",
           "role": "serving",
-          "city": "yidu",
+          "city": "nanjun",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0119",
           "previous_initial_health": 80,
@@ -54327,7 +54327,7 @@
           "runtime_id": 976,
           "name": "吕凯",
           "role": "serving",
-          "city": "shujun",
+          "city": "yunnan",
           "faction": "shu",
           "source_row_id": "cnblogs-line-0081",
           "previous_initial_health": 80,
@@ -54381,7 +54381,7 @@
       "relationship_loyalty_increased": 1,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -54526,7 +54526,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "545b5d16e807df1d54b32b48356c3bea11581abb0fc8f94b88056b622d61edf8",
+      "opening_save_sha256": "902bda27b612a6994d3c955cfec78393ad247651c065d473495ea343b9744b8b",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -54853,7 +54853,7 @@
           "runtime_id": 377,
           "name": "周鲂",
           "role": "serving",
-          "city": "yuzhang",
+          "city": "poyang",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0138",
           "previous_initial_health": 80,
@@ -54885,7 +54885,7 @@
           "runtime_id": 388,
           "name": "朱然",
           "role": "serving",
-          "city": "lujiang",
+          "city": "nanjun",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0119",
           "previous_initial_health": 80,
@@ -55474,7 +55474,7 @@
       "relationship_loyalty_increased": 1,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -55549,7 +55549,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "1f232cc4ffb39a1c61de8880d17849a3a799be8e857e29e64363a8dec0be82af",
+      "opening_save_sha256": "f441944f5c08ead8d0c5b30335c1989302dd45fcf243fa961c7faccbe4e604c1",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -56481,7 +56481,7 @@
       "relationship_loyalty_increased": 3,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -56626,7 +56626,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "615f21c3a820ec1b963b3a297ca5af3cbf3bb0eb831ce2727226baa5c2ec2e66",
+      "opening_save_sha256": "2b2639d7ba5b035c5291029c3ed55731ee238726220f5d6dcb0bebfb02cfb0ca",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -56921,7 +56921,7 @@
           "runtime_id": 388,
           "name": "朱然",
           "role": "serving",
-          "city": "wujun",
+          "city": "nanjun",
           "faction": "wu",
           "source_row_id": "cnblogs-line-0119",
           "previous_initial_health": 80,
@@ -57460,7 +57460,7 @@
       "relationship_loyalty_increased": 4,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -57605,7 +57605,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "847842c300a5dec7fe3addbc625974632dd3f9aee41d03e23825b1285b070fdd",
+      "opening_save_sha256": "b913f7670ea886c0b0226cec397b9650d9e26248c546e4913159b4030f945e1f",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -57937,7 +57937,7 @@
           "runtime_id": 612,
           "name": "张嶷",
           "role": "serving",
-          "city": "zangke",
+          "city": "yuexi",
           "faction": "shu",
           "source_row_id": "cnblogs-line-0176",
           "previous_initial_health": 80,
@@ -58142,7 +58142,7 @@
       "relationship_loyalty_increased": 2,
       "virtue_coverage": {
         "san14_charisma": 1004,
-        "missing_charisma_default60": 78
+        "missing_charisma_default60": 79
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -58287,7 +58287,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "1d15167cc2fa9b75ad57e9557d13627cde65f260a58b30f171f1cab9d90a0fcd",
+      "opening_save_sha256": "6f35f0e4763a25f9eddaa22e06d27336845d7e3f619f1edd7a9ad23ec349da85",
       "changed_people": [
         {
           "person_id": "san14-candidate-0348",

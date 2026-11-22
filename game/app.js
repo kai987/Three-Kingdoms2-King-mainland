@@ -588,7 +588,7 @@ function renderMap(){
  const factions=preview?.factions||view.catalog.factions;
  const mapCityName=id=>{
   const name=cityName(id);
-  return ['jincheng','guonei'].includes(id)?name:name.replace(/[郡县縣国國道城亭]+$/u,'')||name;
+  return name.replace(/[郡县縣国國道亭]+$/u,'')||name;
  };
  const ownerName=(id,city)=>{
   if(id==='neutral'){
@@ -778,7 +778,7 @@ async function showCityInformation(id){
   else{
    const c=view.game.cities[id],def=view.catalog.cities.find(c=>c.id===id);
    data={title:view.catalog.title,year:view.game.year,month:view.game.month,day:view.game.day,capacity:capacity(),city:{...c,
-    owner_name:faction(c.owner),terrain:def.terrain,profile:view.catalog.city_profiles[id],income:view.catalog.city_income[id],city_development:view.catalog.city_development?.cities?.[id],grain_balance:view.catalog.city_grain_balance?.[id],history:view.catalog.city_history?.[id],frontier_outpost:view.catalog.frontier_outposts?.[id],
+    owner_name:faction(c.owner),governor:view.catalog.treasury?.cities?.[id]?.governor,terrain:def.terrain,profile:view.catalog.city_profiles[id],income:view.catalog.city_income[id],city_development:view.catalog.city_development?.cities?.[id],grain_balance:view.catalog.city_grain_balance?.[id],history:view.catalog.city_history?.[id],frontier_outpost:view.catalog.frontier_outposts?.[id],
     officers:c.roster.officer_ids.map(i=>{const o=view.game.officers[i];return {id:i,name:name(i),martial_strength:o.profile.martial_strength,intellect:o.profile.intellect,virtue:o.profile.virtue,loyalty:o.loyalty,is_ruler:isRuler(i),health:o.health,troops:o.troops,experience:o.experience,equipment:view.catalog.equipment?.officers?.[String(i)]};})}};
   }
   if(!dialog.open||generation!==dialogGeneration||preview!==setupPreview)return;
@@ -790,9 +790,11 @@ async function showCityInformation(id){
   if(garrisons?.length)garrisonHistory=`<p>开局驻防：${garrisons.map(g=>`${escapeHtml(g.name)}（${garrisonLabels[g.basis]||'区域防务调配'}）`).join('、')}</p>`;
   else if(garrisons)garrisonHistory='<p>未虚构初始郡守，驻防名册暂空，可在战役中调将或招募。</p>';
   const historySources=(history?.sources||[]).map((source,i)=>{const url=typeof source==='string'?source:source?.url,label=typeof source==='object'&&source?.note?source.note:`参考资料${i+1}`;return typeof url==='string'&&url?`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`:`<span>${escapeHtml(label)}</span>`;}).join(' · ');
+  const governor=c.officers.find(officer=>officer.id===c.governor);
   const body=`<div class="city-information" data-inspected-city="${id}" data-information-mode="${preview?'preview':'live'}">
    <p class="small">${preview?'剧本开局预览':'当前战役'} · ${GameCalendar.text({...data,day:data.day??1})}</p>
    <p class="city-information-owner">归属：${escapeHtml(c.owner==='neutral'&&history?.neutral_label?history.neutral_label:c.owner_name)}</p>
+   ${governor?`<p data-city-governor="${escapeHtml(String(governor.id))}">${battleText('太守','太守')} <span>${escapeHtml(governor.name)}</span></p>`:''}
    ${history?.summary_i18n?`<div class="city-island-status" data-island-status="${id}"><p data-locale-only="zh-Hant" data-l10n-native="zh-Hant">${escapeHtml(history.summary_i18n['zh-Hant'])}</p><p data-locale-only="ja" data-l10n-native="ja">${escapeHtml(history.summary_i18n.ja)}</p></div>`:''}
    ${naming?.detail?`<p class="small">${escapeHtml(naming.detail)}</p>`:''}
    ${history?`<details class="scenario-notes city-history"><summary>年代与开局归属依据</summary>${sourceEvidence(`<p>${escapeHtml(history.detail)}</p><p>${escapeHtml(history.opening?.note||'')}</p>${historySources}`,history.detail_ja||'都市の年代・開始時所属について、史料の記録と本作の配置設定を区別しています。詳細な根拠と資料の精度は原資料で確認できます。')}<p>驻将按攻略参考、君主营地和同势力防务调配安排；史料任职会单独注明，不代表所有驻将均为史实郡守。</p>${garrisonHistory}</details>`:''}
@@ -806,7 +808,9 @@ async function showCityInformation(id){
    ${preview?`<p class="small"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">寶 ${c.treasure??0}/99</span><span data-locale-only="ja" data-l10n-native="ja">宝 ${c.treasure??0}/99</span></p>`:typeof GameTreasury!=='undefined'?GameTreasury.summary(view,id):''}
    <dl class="resources"><div class="resource-pair"><dt>資金</dt><dd>${c.gold}</dd></div><div class="resource-pair"><dt>兵糧</dt><dd>${c.grain}</dd></div><div class="resource-pair"><dt>預備兵</dt><dd>${c.reserves}</dd></div></dl>
    ${c.income?`<p class="small">${c.owner==='neutral'?'无主城暂无月收入':`每月金${c.income.gold} / 粮${c.income.grain} / 预备兵${c.income.reserves}`}</p>`:''}
-   ${c.grain_balance?`<dl class="resources city-grain-balance" data-city-grain-balance><div class="resource-pair"><dt>${cityCommandText('月產糧','月間兵糧収入')}</dt><dd data-grain-production>${c.grain_balance.production}</dd></div><div class="resource-pair"><dt>${cityCommandText('駐軍耗糧','駐屯軍の兵糧消費')}</dt><dd data-grain-upkeep>${c.grain_balance.upkeep}</dd></div><div class="resource-pair"><dt>${cityCommandText('居民月耗糧','住民の月間消費')}</dt><dd data-civilian-grain>${c.grain_balance.civilian}</dd></div><div class="resource-pair"><dt>${cityCommandText('駐軍士氣','駐屯軍の士気')}</dt><dd>${c.city_development?.garrison_spirit??100}</dd></div><div class="resource-pair"><dt>${cityCommandText('兵糧淨收支','兵糧の収支')}</dt><dd data-grain-net>${c.grain_balance.net>0?'+':''}${c.grain_balance.net}</dd></div></dl><p class="small">${cityCommandText(`1 點兵糧相當於 ${preview?100:(view.catalog.grain_people_per_day??1000)} 名士兵的單日基本口糧。`,`兵糧1は兵 ${preview?100:(view.catalog.grain_people_per_day??1000)} 人の1日分の基本配給です。`)}</p>`:''}
+   ${preview?'':cityGrainWarning(id)}
+   ${preview?'':grainRecoveryNotice(id)}
+   ${c.grain_balance?`<dl class="resources city-grain-balance" data-city-grain-balance><div class="resource-pair"><dt>${cityCommandText('月產糧','月間兵糧収入')}</dt><dd data-grain-production>${c.grain_balance.production}</dd></div><div class="resource-pair"><dt>${cityCommandText('駐軍耗糧','駐屯軍の兵糧消費')}</dt><dd data-grain-upkeep>${c.grain_balance.upkeep}</dd></div><div class="resource-pair"><dt>${cityCommandText('居民月耗糧','住民の月間消費')}</dt><dd data-civilian-grain>${c.grain_balance.civilian}</dd></div><div class="resource-pair"><dt>${cityCommandText('駐軍士氣','駐屯軍の士気')}</dt><dd>${c.city_development?.garrison_spirit??100}</dd></div><div class="resource-pair"><dt>${cityCommandText('兵糧淨收支','兵糧の収支')}</dt><dd data-grain-net>${c.grain_balance.net>0?'+':''}${c.grain_balance.net}</dd></div></dl><p class="small">${cityCommandText(`1 點兵糧相當於 ${(preview?data.grain_people_per_day:view.catalog.grain_people_per_day)??1000} 名士兵的單日基本口糧。`,`兵糧1は兵 ${(preview?data.grain_people_per_day:view.catalog.grain_people_per_day)??1000} 人の1日分の基本配給です。`)}</p>`:''}
    <p class="city-information-strength">驻城 ${c.officers.length}/${data.capacity}人 · 武将带兵合计 ${troops}</p>
    ${!preview&&typeof GameCivilStaff!=='undefined'?GameCivilStaff.summary(view,id,{locale:GameI18n.locale,cityName,bilingual:true}):''}
    <div class="roster-scroll"><table class="roster-table"><thead><tr><th>武将</th><th>兵</th><th>武</th><th>知</th><th>德</th><th>忠</th><th>经</th><th>体</th></tr></thead><tbody>${rows||'<tr><td colspan="8">暂无驻军</td></tr>'}</tbody></table></div>
@@ -814,6 +818,7 @@ async function showCityInformation(id){
   const rosterButton=officer=>dialog.querySelector(`[data-city-information-officer="${officer.id}"]`);
   const draw=()=>{
    if(openDialog(title,body,close)===undefined)return;
+   bindCityGrainWarning(dialog);
    for(const officer of c.officers)rosterButton(officer).onclick=()=>{
     const scroll=dialog.scrollTop,table=dialog.querySelector('.roster-scroll');
     const rowScroll=[table.scrollLeft,table.scrollTop];
@@ -851,6 +856,27 @@ function showCivilStaff(id){staffInterface()?.open(id);}
 function delegationInterface(){
  if(!domesticUI&&typeof GameDomestic!=='undefined')domesticUI=GameDomestic.create({getView:()=>view,cityName:id=>cityName(id),openDialog:(...args)=>openDialog(...args),command:(kind,payload)=>command(kind,payload),dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
  return domesticUI;
+}
+function cityGrainWarning(id,{showCity=false}={}){
+ const diplomacy=view.catalog.diplomacy,warning=diplomacy?.grain_relief?.[id];
+ if(!warning)return '';
+ const label=warning.zero_in===0?cityCommandText('本城糧庫已空。','この都市の食糧は底をつきました。'):
+  cityCommandText(`預計 ${warning.zero_in} 旬內糧庫將見底。`,`${warning.zero_in} 旬以内に食糧が底をつく見込みです。`);
+ const canRequest=warning.amount>0&&diplomacy.can_command&&diplomacy.targets.some(row=>row.actions?.request_grain);
+ const request=canRequest?` <button type="button" data-city-grain-aid="${escapeHtml(id)}">${cityCommandText('向盟友請求兩個月用糧','同盟勢力に2か月分の食糧を要請')}</button>`:'';
+ return `<p class="small" data-city-grain-warning="${warning.zero_in}">${showCity?`<strong>${escapeHtml(cityName(id))}</strong> · `:''}${label}${request}</p>`;
+}
+function grainRecoveryNotice(id,{faction=false}={}){
+ const outlook=view.catalog.grain_recovery;
+ const turns=faction?outlook?.turns:outlook?.cities?.[id];
+ if(!Number.isInteger(turns))return '';
+ const label=faction?cityCommandText('全勢力糧儲預計三個月內用盡。','勢力全体の食糧が3か月以内に尽きる見込みです。'):
+  cityCommandText('糧儲不足三個月，政務官將優先購糧或開墾土地。','3か月以内に食糧が不足する見込みです。政務官は食糧購入または土地開墾を優先します。');
+ return `<p class="small" data-grain-recovery="${turns}">${label}</p>`;
+}
+function bindCityGrainWarning(container){
+ const button=container.querySelector('[data-city-grain-aid]');
+ if(button)button.onclick=()=>diplomacyInterface()?.open({aidCity:button.dataset.cityGrainAid});
 }
 function diplomacyInterface(){
  if(!diplomacyUI&&typeof GameDiplomacy!=='undefined')diplomacyUI=GameDiplomacy.create({getView:()=>view,cityName,factionName:faction,openDialog,command,dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
@@ -1076,6 +1102,8 @@ function renderCity(){
  ${outpost?frontierOutpostNote(outpost,city.owner):''}
  ${showExpedition?`<button type="button" id="luzon-project">${cityCommandText('呂宋築城計畫','ルソンの築城計画')}</button>`:''}
  <dl class="resources"><div class="resource-pair"><dt>資金</dt><dd>${city.gold}</dd></div><div class="resource-pair"><dt>兵糧</dt><dd>${city.grain}</dd></div><div class="resource-pair"><dt>預備兵</dt><dd>${city.reserves}</dd></div></dl>
+ ${cityGrainWarning(city.id)||cityGrainWarning(Object.values(view.catalog.diplomacy?.grain_relief||{})[0]?.id,{showCity:true})}
+ ${grainRecoveryNotice(city.id,{faction:true})||grainRecoveryNotice(city.id)}
  ${commandBookHint()}${owned?allocationCompatibilityNotice():''}<div class="city-information-entry"><p class="small" data-city-occupancy="${cityOccupancy(city)}" data-city-capacity="${capacity()}">驻城 ${cityOccupancy(city)}/${capacity()}；每方出战上限10人。</p><button id="city-information">${cityCommandText('都市情報','都市情報')}</button></div>
  ${cityCommandTabs(city)}${cityCommandOrder.map(key=>cityCommandPanel(city,key,panels[key]||`<p class="small">${cityCommandText('目前沒有可用命令。','現在、利用できる命令はありません。')}</p>`)).join('')}
  <details class="city-roster-summary"><summary>${cityCommandText(`武將名冊（${city.roster.officer_ids.length}人）`,`武将一覧（${city.roster.officer_ids.length}人）`)}</summary><ul class="city-roster-list">${city.roster.officer_ids.map(id=>`<li><button type="button" id="city-roster-${escapeHtml(id)}" data-city-roster-officer="${escapeHtml(id)}"><span class="officer-identity">${portraitHtml(id)}<span>${escapeHtml(name(id))}${marching().has(id)?'（在途）':''}</span></span><span>${view.game.officers[id].troops}${cityCommandText('兵','兵')}</span></button></li>`).join('')||`<li>${cityCommandText('暫無駐軍','駐屯する武将はいません')}</li>`}</ul></details>
@@ -1085,6 +1113,7 @@ function renderCity(){
  <p class="small city-scale">${scale&&income?`${escapeHtml(cityTypeLabel(scale))} · ${city.owner==='neutral'?'无主城暂无月收入':`每月金${income.gold} / 粮${income.grain} / 预备兵${income.reserves}`}`:'本城资源资料待载入。'}</p>
  ${cityEconomyNote(scale)}</details><div class="city-command-footer actions" id="city-command-footer">${owned?'':'<button id="home">返回本城</button>'}<button id="end-turn">结束本旬</button></div>`;
  bindCityCommandGroups(city);
+ bindCityGrainWarning($('#inspector'));
  const visitButton=showVisits&&$('#visit-zhuge-liang');
  if(visitButton)visitButton.onclick=()=>submitThreeVisit(visits.next_visit);
  if(showExpedition)$('#luzon-project').onclick=showLuzonProject;
@@ -1437,7 +1466,7 @@ function marchRefillForecastHtml(quote,ids,loaded,owner,rows){
  }).join('');
  return `<div class="small" data-march-refill-preview><strong>${title}</strong><ul>${stops}</ul><p>${battleText('按目前兵力、庫存及攜行兵糧估算。途中在本方城池補給。','現在の兵力・在庫・携行兵糧での試算です。途中の補給は自勢力の都市で行います。')}</p></div>`;
 }
-function legacyDepartureCost(troops){return Math.max(1,Math.floor(troops/25))*1000/(view.catalog.grain_people_per_day??1000);}
+function legacyDepartureCost(troops){return Math.max(1,Math.floor(troops/25))*(view.catalog.grain_scale??1);}
 function departureBudget(city,destination,ids){
  if(!view.catalog.travel_rules)return legacyDepartureCost(ids.reduce((sum,id)=>sum+view.game.officers[id].troops,0));
  const quotes=routeQuotes();

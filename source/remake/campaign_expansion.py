@@ -1233,6 +1233,12 @@ class ExpandedCampaign:
             if type(x[grain_units.FIELD]) is not int or x[grain_units.FIELD] != grain_units.CURRENT:
                 raise ValueError('Invalid grain denomination')
             fields.add(grain_units.FIELD)
+        if grain_units.RATION_FIELD in x:
+            if (type(x[grain_units.RATION_FIELD]) is not int
+                    or x[grain_units.RATION_FIELD] != grain_units.RATION_VERSION
+                    or grain_units.FIELD not in x):
+                raise ValueError('Invalid grain ration rules')
+            fields.add(grain_units.RATION_FIELD)
         if 'lifespan' in x:
             if x['lifespan'] != 'none':raise ValueError('Invalid lifespan mode')
             fields.add('lifespan')

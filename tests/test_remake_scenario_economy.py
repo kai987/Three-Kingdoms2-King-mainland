@@ -144,6 +144,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                 expansion = self.expansion[data['id']]
                 expansion_garrisons = {person: city for city, people in expansion['garrisons'].items()
                                        for person in people}
+                expansion_garrisons.update({post['person_id']: city for city, post in data['initial_governors'].items()})
                 if date == (227, 2):
                     from remake.historical_chapters import LONGYOU_JOINERS, LONGYOU_GOVERNOR
                     expansion_garrisons.update(dict.fromkeys((*LONGYOU_JOINERS, LONGYOU_GOVERNOR), 'tianshui'))
@@ -153,6 +154,8 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                     # released officers still retain their exact300 baseline.
                     change = changes.get(row['person_id'])
                     expected = change['after']['troops'] if change else 300
+                    if row['person_id'] == 'historical-ma-yong-longxi':
+                        expected = 0
                     self.assertIs(type(row['troops']), int)
                     self.assertGreaterEqual(row['troops'], 0)
                     if row['city'] not in ('liucheng', 'guonei'):
@@ -304,6 +307,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
             base = grain_units.stocks(game.catalog.data['city_income'][key]) if city.owner != 'neutral' else dict.fromkeys(FIELDS, 0)
             damage = game.state.extension['facilities']['cities'][key]['damage']
             expected = {field: base[field] * (100 - damage) // 100 for field in FIELDS}
+            expected['grain'] *= 2
             self.assertEqual(tuple(getattr(city, field) for field in FIELDS),
                              tuple(max(0, before[key][i] + expected[field] - (dues[key] if field == 'grain' else 0)) for i, field in enumerate(FIELDS)))
             expected_recruits += expected['reserves']
@@ -317,6 +321,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
 
     def test_foundation_still_transfers_actual_parent_resources_not_future_static_stocks(self):
         game = self.game((249, 1), city_disasters=False)
+        game.catalog.data.setdefault('city_development_rules', {})['unrest_enabled'] = False
         # Direct calendar-service boundary fixture: historical event only opens
         # the node, while actual holdings and current resources are conserved.
         while (game.state.year, game.state.month) < (257, 1):
@@ -337,7 +342,8 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         # This valid ownership fixture deliberately differs from the opening
         # history. The future node must inherit the actual current owner.
         parent.owner = changed_owner
-        parent.gold, parent.grain = 1011, 4021
+        # Keep this split test independent of pre-rollover starvation losses.
+        parent.gold, parent.grain = 1011, 14021
         synchronize(game, game.state, checks=False)
         game.validate(game.state)
         before = {field: getattr(parent, field) for field in FIELDS}
@@ -348,9 +354,11 @@ class DatedScenarioEconomyTests(unittest.TestCase):
             while game.state.day != 21:
                 game._complete_turn(game.state)
             before_split = {field: getattr(parent, field) for field in FIELDS}
+            parent_income = city_economy.monthly_income(game, parent.id, game.state, date=(257, 2))
             game._complete_turn(game.state)
         child = game.state.cities[key]
         income = grain_units.stocks(game.catalog.data['city_income'][key]) if child.owner != 'neutral' else dict.fromkeys(FIELDS, 0)
+        income['grain'] *= 2
         for field in FIELDS:
             self.assertEqual(getattr(child, field), max(0, before_split[field] // rule['resource_divisor'] + income[field] - (due_at_rollover[key] if field == 'grain' else 0)))
         self.assertEqual(child.owner, changed_owner)
@@ -358,7 +366,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         self.assertEqual(game.state.rng, rng)
         for field in FIELDS:
             self.assertEqual(getattr(parent, field) + getattr(child, field),
-                before[field] + grain_units.stocks(game.catalog.data['city_income'][parent.id])[field] + income[field]
+                before[field] + parent_income[field] + income[field]
                 - (due_at_rollover[key] + due_at_rollover[parent.id] if field == 'grain' else 0))
         current = game.to_dict()
         game._open_dated_cities(game.state)

@@ -14,9 +14,9 @@ import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
-from remake import civil_staff,facilities,treasures
+from remake import civil_staff,facilities,grain_relief,treasures
 from remake.campaign import Campaign,Catalog,SeedRng,digest,canonical
-from remake.city_economy import income_at,tier_at
+from remake.city_economy import income_at,monthly_income,tier_at
 from remake.errors import GameError
 from remake.march_core import using_backend,invoke,CoreUnavailable
 from remake.session import CampaignSession
@@ -196,7 +196,7 @@ class FacilityCampaignTests(unittest.TestCase):
         receipt=events[0]['details'];current=game.state.cities[source.id]
         self.assertEqual(receipt['disaster'],'drought');self.assertEqual(receipt['rate'],10)
         self.assertEqual(current.gold,before.cities[source.id].gold+income['gold'])
-        self.assertEqual(current.grain,before.cities[source.id].grain+income['grain']-paid[source.id]-receipt['grain'])
+        self.assertEqual(current.grain,before.cities[source.id].grain+2*income['grain']-paid[source.id]-receipt['grain'])
         self.assertEqual(current.reserves,before.cities[source.id].reserves+income['reserves']-receipt['reserves'])
         self.assertEqual(game.state.soldiers['lost']-before.soldiers['lost'],receipt['reserves'])
         self.assertEqual(game.state.officers[146].health,8,'Only established monthly healing changes the wounded officer')
@@ -231,9 +231,81 @@ class FacilityCampaignTests(unittest.TestCase):
             self.advance(game)
         current=game.state.cities['xiangyang']
         self.assertEqual(current.gold,before.gold+expected['gold'])
-        self.assertEqual(current.grain,before.grain+expected['grain']-paid['xiangyang'])
+        self.assertEqual(current.grain,before.grain+2*expected['grain']-paid['xiangyang'])
         self.assertEqual(current.reserves,before.reserves+expected['reserves'])
         self.restore(game)
+
+    def test_market_quote_changes_at_rollover_and_matches_actual_transaction(self):
+        game = self.new(month=9)
+        city_id = 'xiangyang'
+
+        def prices():
+            market = game.view()['catalog']['facilities']['cities'][city_id]['trade']
+            return market['buy']['rate'], market['sell']['rate']
+
+        self.assertEqual(prices(), (10, 10))
+        self.advance(game, 2)
+        self.assertEqual((game.state.month, game.state.day), (9, 21))
+        self.assertEqual(prices(), (10, 10))
+        self.advance(game)
+        self.assertEqual((game.state.month, game.state.day), (10, 1))
+        self.assertEqual(prices(), (7, 7))
+        stock = game.state.cities[city_id]
+        before = stock.gold, stock.grain, deepcopy(game.state.rng)
+        self.cmd(game, 'trade_grain', city=city_id, actor=146, direction='buy', batches=2)
+        stock = game.state.cities[city_id]
+        self.assertEqual((stock.gold, stock.grain, game.state.rng), (before[0] - 14, before[1] + 2000, before[2]))
+        trade = game.state.extension['events']['items'][-1]
+        self.assertEqual((trade['kind'], trade['details']['rate'], trade['details']['gold']), ('grain_traded', 7, 14))
+        self.restore(game)
+
+    def test_september_harvest_preserves_city_disaster_history_and_pays_once(self):
+        game = self.new(month=8, disasters=True)
+        game.catalog.data['facility_rules']['drought_chance'] = 100
+        state = game.state
+        state.extension['facilities']['cities']['xiangyang']['preparedness'] = 99
+        self.advance(game, 3)
+        self.assertEqual((state.month, state.day), (9, 1))
+        disaster, = [r for r in state.extension['events']['items'] if r['kind'] == 'city_disaster']
+        self.assertEqual(disaster['city_ids'], ['xiangyang'])
+        self.assertEqual(disaster['details']['grain'], 0)
+        self.assertEqual(state.extension['facilities']['harvest']['disasters'], {'xiangyang': state.year})
+        self.advance(game, 2)
+        game = self.restore(game)
+        state = game.state
+        forecast = {key: result.balances[0] for owner in ('shu', 'wu', 'wei')
+                    for key, result in grain_relief.forecasts(game, state, owner, turns=1).items()}
+        expected = {key: monthly_income(game, key, state)['grain'] // 5
+                    for key in state.cities if key != 'xiangyang'}
+        self.advance(game)
+        self.assertEqual((state.month, state.day), (10, 1))
+        self.assertEqual({key: city.grain for key, city in state.cities.items()}, forecast)
+        rows = state.extension['events']['items']
+        harvest, = [row for row in rows if row['kind'] == 'city_harvest']
+        self.assertEqual((harvest['city_ids'], harvest['factions']), (['nanjun'], ['shu']))
+        self.assertEqual(harvest['details'], {'bonuses': [expected['nanjun']]})
+        self.assertGreater(expected['nanjun'], 0)
+        self.assertEqual([r for r in rows if r['kind'] == 'city_disaster'], [disaster])
+        self.assertEqual(state.extension['facilities']['harvest']['settled_year'], state.year)
+        game = self.restore(game)
+        self.advance(game)
+        self.assertEqual([r for r in game.state.extension['events']['items']
+                          if r['kind'] == 'city_harvest'], [harvest])
+
+    def test_harvest_skips_all_affected_player_cities_and_starts_fresh_next_year(self):
+        game = self.new(month=9, disasters=True)
+        state = game.state
+        history = state.extension['facilities']['harvest']
+        history['disasters'].update(xiangyang=state.year, nanjun=state.year)
+        self.advance(game, 3)
+        self.assertFalse(any(row['kind'] == 'city_harvest' for row in state.extension['events']['items']))
+        game.catalog.data['facility_rules'].update(flood_plain_chance=0, flood_mountain_chance=0, drought_chance=0)
+        self.advance(game, 33)
+        self.assertEqual((state.year, state.month, state.day), (218, 9, 1))
+        self.advance(game, 3)
+        harvest, = [row for row in state.extension['events']['items'] if row['kind'] == 'city_harvest']
+        self.assertEqual(harvest['city_ids'], ['nanjun', 'xiangyang'])
+        self.assertEqual((harvest['year'], harvest['month'], harvest['day']), (218, 10, 1))
 
     def test_actual_ai_turn_treats_using_shared_fee_rng_and_local_actions(self):
         game=self.new();city=game.state.cities['nanyang'];ident=city.roster.officer_ids[0]

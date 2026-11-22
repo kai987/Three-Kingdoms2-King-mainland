@@ -13,7 +13,7 @@ from .errors import GameError
 from . import command_books, diplomacy, diplomacy_ai, historical_campaigns, officer_relations
 from .officers import integer, recruitment_loyalty, ref_sort_key
 from . import civil_staff
-from . import grain_units
+from . import grain_relief, grain_units
 from .march_supply import denominator, OFFICER_UNITS, estimate as march_grain, next_supply_days, required_grain
 from .route_hazards import allocate_survivors
 
@@ -27,11 +27,17 @@ class StrategicAI:
         self.neighbor_ids = {}
         self.support_checked = set()
         self.front_supply_checked = set()
+        self.grain_outlooks = {}
         holdings = Counter(city.owner for city in state.cities.values() if city.owner != 'neutral')
         # Let both sides concentrate on the remaining fronts once the map
         # has consolidated. Earlier campaigns retain their wider priorities.
         self.endgame = (1 <= len(holdings) <= 2
                         and max(holdings.values()) * 4 >= len(state.cities) * 3)
+
+    def grain_outlook(self, owner):
+        if owner not in self.grain_outlooks:
+            self.grain_outlooks[owner] = grain_relief.recovery(self.game, self.state, owner)
+        return self.grain_outlooks[owner]
 
     def defenders(self, city):
         """The same healthy, present top ten units the battle can actually use."""
@@ -617,8 +623,10 @@ def run(campaign, state, payload):
             return
     x = state.extension
     ai = StrategicAI(campaign,state)
-    if 'domestic' in x:
-        from .domestic import prepare_ai
+    has_domestic = 'domestic' in x
+    relief_done = {state.cities[key].owner for key in x['ai_queue'][:x['ai_cursor']] if key in state.cities}
+    if has_domestic:
+        from .domestic import prepare_ai, prioritize_grain
         for owner in sorted(campaign.catalog.factions):
             if owner != state.player:
                 prepare_ai(campaign,state,owner)
@@ -627,12 +635,24 @@ def run(campaign, state, payload):
         city = state.cities.get(key)
         if city is None or city.owner in (state.player,'neutral') or not command_books.can_spend(state,city.owner):
             continue
+        outlook = ai.grain_outlook(city.owner)
+        if outlook[0] is not None:
+            if has_domestic and city.owner not in relief_done:
+                prioritize_grain(campaign, state, city.owner, outlook)
+                relief_done.add(city.owner)
+            x['ai_strategy'].pop(city.owner, None)
+            continue
         for _ in range(command_books.MAXIMUM):
             remaining = command_books.remaining(state, city.owner)
             if not command_books.can_spend(state, city.owner):
                 break
             plan = ai.plan(city.owner)
             ai.support_endgame(city.owner, plan)
+            # A final offensive may already be provisioning this town.
+            # Check its new inbound cargo before spending another convoy.
+            if has_domestic and city.owner not in relief_done:
+                prioritize_grain(campaign, state, city.owner, outlook)
+                relief_done.add(city.owner)
             if not command_books.can_spend(state, city.owner):
                 break
             ai.prepare(city)
@@ -651,7 +671,7 @@ def run(campaign, state, payload):
         from . import treasures
         for owner in sorted(campaign.catalog.factions):
             if owner != state.player:
-                finish_faction_turn(campaign,state,owner)
+                finish_faction_turn(campaign, state, owner, outlook=ai.grain_outlook(owner))
                 treasures.ai_idle_turn(campaign,state,owner)
     campaign._complete_turn(state)
     campaign._reconcile_factions(state)

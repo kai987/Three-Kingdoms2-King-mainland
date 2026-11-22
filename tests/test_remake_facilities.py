@@ -199,6 +199,19 @@ class FacilityTests(unittest.TestCase):
         city.grain=100;city.gold=facilities.LIMIT-8
         self.fails(game,state,facilities.trade,dict(city='capital',actor=1,direction='sell',batches=1))
 
+    def test_monthly_market_prices_preserve_same_month_spreads(self):
+        game, state = fixture()
+        book = state.extension['facilities']['cities']['capital']
+        for month, adjustment in enumerate((0, 0, 1, 1, 2, 3, 2, 2, 1, -2, -1, 0), 1):
+            state.month = month
+            for town in (1, 2, 3):
+                with self.subTest(month=month, town=town):
+                    book['town'] = town
+                    market = facilities.view(game, state)['cities']['capital']['trade']
+                    self.assertEqual(market['buy']['rate'], 12 - town + adjustment)
+                    self.assertEqual(market['sell']['rate'], 6 + town + adjustment)
+                    self.assertEqual(market['buy']['batch_grain'], 1000)
+
     def test_armory_real_items_slots_affordability_and_special_unsold_items(self):
         game,state=fixture();before=deepcopy(state.rng);city=state.cities['capital']
         target=state.officers[2];old_pid=target.person_id
@@ -281,7 +294,7 @@ class FacilityTests(unittest.TestCase):
         self.assertEqual(command_books.remaining(state,'one'),3)
         facilities.trade(game,state,dict(city=city.id,actor=1,direction='buy',batches=1),'one')
 
-    def test_six_disaster_months_and_twenty_percent_threshold(self):
+    def test_five_disaster_months_and_twenty_percent_threshold(self):
         for month in range(1,13):
             for roll in (19,20):
                 game,state = fixture()
@@ -289,7 +302,7 @@ class FacilityTests(unittest.TestCase):
                 state.month = month
                 with patch.object(state.rng,'next',return_value=roll):
                     rows=facilities.month_rollover(game,state)
-                active = 5 <= month <= 10 and roll < 20
+                active = 5 <= month <= 9 and roll < 20
                 self.assertEqual({r['city'] for r in rows}, {'capital','border','enemy'} if active else set())
                 self.assertTrue(all(r['disaster']==('flood' if month<=7 else 'drought') for r in rows))
 

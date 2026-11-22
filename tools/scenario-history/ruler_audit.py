@@ -33,7 +33,7 @@ REPORT_JSON = ROOT / 'docs/ruler-affiliation-audit-20261027.json'
 REPORT_MD = ROOT / 'docs/ruler-affiliation-audit-20261027.md'
 EXPECTED_SCENARIOS = 29
 EXPECTED_POOL = 67
-EXPECTED_PEOPLE = 1082
+EXPECTED_PEOPLE = 1083
 FRONTIER_CAPITALS = frozenset(('guonei', 'liucheng'))
 LATER_EXPANSION_CITIES = FRONTIER_CAPITALS | frozenset((
     'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'luzon',
@@ -153,6 +153,10 @@ def reviewed_expansion_post(data, person_id, old):
             and old.get('status') in ('free', 'chronology_excluded') and old.get('faction') is None):
         # Xuantu replaces Wang Zan's old regional proxy in the appearance plans.
         return dict(old, city='xuantu')
+    for city, post in data.get('initial_governors', {}).items():
+        if (person_id == post['person_id'] and old.get('status') == 'serving'
+                and old.get('faction') == data['initial_owners'][city]):
+            return dict(old, city=city)
     openings, _ = opening_supplements()
     for city, people in openings.get(data['id'], {}).get('garrisons', {}).items():
         if (city in LATER_EXPANSION_CITIES and person_id in people

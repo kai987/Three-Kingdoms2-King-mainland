@@ -176,7 +176,7 @@ class CityLifecycleTests(unittest.TestCase):
                 for city, (boundary, early, late) in {
                     'wenshan': ((215, 1), '綿虒道', '汶山'),
                     'yinping': ((229, 1), '陰平道', '陰平'),
-                    'tianshui': ((228, 1), '漢陽', '天水'),
+                    'tianshui': ((221, 1), '漢陽', '天水'),
                     'xiping': ((214, 1), '西平亭', '西平'),
                     'fanyang': ((224, 1), '涿县', '范阳'),
                     'wuchang': ((221, 4), '鄂县', '武昌'),

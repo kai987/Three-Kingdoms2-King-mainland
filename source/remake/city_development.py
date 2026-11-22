@@ -8,10 +8,10 @@ the extension, debit stocks, or advance the campaign random generator.
 from copy import deepcopy
 from hashlib import sha256
 
-from . import capital_openings, command_books, large_city_population
+from . import capital_openings, command_books, grain_units, large_city_population
 from . import ordinary_population_north, ordinary_population_southeast
 from . import ordinary_population_southwest, ordinary_population_west
-from .city_economy import income_at, opening_development, tier_at
+from .city_economy import monthly_income, opening_development, tier_at
 from .errors import GameError
 from .officers import ref_sort_key
 
@@ -235,14 +235,15 @@ def tax_rate(governance):
     return 50 if governance <= 50 else 60 if governance <= 70 else 70 if governance <= 80 else 80 if governance <= 90 else 90 if governance < 100 else 100
 
 
-def _production(row, field, difficulty):
+def _production(row, field, difficulty, *, minimum_population_steps=0):
     if difficulty not in ('easy', 'normal', 'hard'):
         raise ValueError('Unknown campaign difficulty')
-    # Difficulty remains an AI-policy choice in this remake. Original normal
-    # production coefficients apply identically to all players and factions.
-    base, divisor = 60, 3
-    # Factors, without original integer wrapping; divisors cancel in the ratio.
-    return (row['population']//100) * (base + row[field]//divisor) * tax_rate(row['governance'])
+    # Difficulty remains an AI-policy choice.
+    current_grain = field == 'land' and grain_units.current_rations()
+    population_unit, development_divisor = (300, 1) if current_grain else (100, 3)
+    development_factor = 60 + row[field] // development_divisor
+    population_steps = max(minimum_population_steps, row['population'] // population_unit)
+    return population_steps * development_factor * tax_rate(row['governance'])
 
 
 def adjust_income(game, state, city_id, income):
@@ -255,7 +256,10 @@ def adjust_income(game, state, city_id, income):
     difficulty = state.extension.get('difficulty', 'normal')
     for resource, field in (('gold', 'industry'), ('grain', 'land')):
         if resource in result:
-            numerator, denominator = _production(row, field, difficulty), _production(baseline, field, difficulty)
+            numerator = _production(row, field, difficulty)
+            # Custom openings below one production step still have a safe
+            # reference value when their population later reaches one step.
+            denominator = _production(baseline, field, difficulty, minimum_population_steps=1)
             result[resource] = result[resource] * numerator // denominator
     if 'reserves' in result:
         result['reserves'] = result['reserves'] * row['population'] // baseline['population']
@@ -473,13 +477,12 @@ def view(game, state):
         quotes = {str(actor): {kind: _quote(game, state, city, actor, kind, state.player, governor_bonus_percent)
                               for kind in ACTIONS} for actor in actors}
         best = min(actors, key=lambda ident: (-_profile(game, state, ident).intellect, ref_sort_key(ident))) if actors else None
-        base_income = income_at(game.catalog.data, key, state.year, state.month) or dict(gold=0, grain=0, reserves=0)
         result['cities'][key] = dict(owner=city.owner, **{field: row[field] for field in LIMITS},
             garrison_spirit=row.get('garrison_spirit', 100),
             baseline=deepcopy(row['baseline']), cooldown=row['cooldown'], tax_rate=tax_rate(row['governance']),
             eligible_actors=actors, actor_quotes=quotes,
             actions=deepcopy(quotes[str(best)]) if best is not None else {},
-            income=adjust_income(game, state, key, base_income))
+            income=monthly_income(game, key, state))
     return result
 
 

@@ -743,6 +743,17 @@
         }
       ]
     },
+    "historical-ma-yong-longxi": {
+      "kind": "historical",
+      "zh": "馬顒任曹魏隴西長史。228年諸葛亮出祁山時，隴西太守游楚命馬顒出城列陣，郡城守住。生卒年不詳。",
+      "ja": "曹魏の隴西長史。228年に諸葛亮が祁山へ進軍した際、隴西太守の游楚の命で城外に陣を敷き、郡は守られた。生没年は不詳。",
+      "sources": [
+        {
+          "title": "《三國志》張既傳裴注引《魏略》／『三国志』張既伝 裴松之注",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/ab/NLC892-411999000033-306420_%E4%B8%89%E5%9C%8B%E5%BF%97_%E7%AC%AC8%E5%86%8A.pdf"
+        }
+      ]
+    },
     "historical-mao-hui": {
       "kind": "historical",
       "zh": "史料記載，毛暉為兗州軍將、後依臧霸。其活動記錄可見於199年。",

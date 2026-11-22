@@ -22,7 +22,7 @@ RULES = dict(town_cap=3, preparedness_cap=99, damage_cap=50,
     prevention_effect_min=6, prevention_effect_max=10,
     market_buy_rates={'1':11,'2':10,'3':9}, market_sell_rates={'1':7,'2':8,'3':9},
     trade_batch_grain=100, trade_max_batches=1000,
-    flood_months=[5, 6, 7], drought_months=[8, 9, 10], flood_plain_chance=20,
+    flood_months=[5, 6, 7], drought_months=[8, 9], flood_plain_chance=20,
     flood_mountain_chance=20, drought_chance=20, disaster_base_rate=10,
     disasters_enabled=True)
 DEFAULT_POLICY = dict(enabled=False, gold_budget=200, gold_floor=100,
@@ -30,6 +30,9 @@ DEFAULT_POLICY = dict(enabled=False, gold_budget=200, gold_floor=100,
     auto_prevent=True, auto_treat=True, auto_develop=False, auto_study=False,
     auto_trade=False, auto_equip=False)
 _FIELDS = {'schema', 'cities', 'factions', 'study', 'last_disaster_month', 'auto_turns'}
+HARVEST_MONTH = 9
+HARVEST_PERCENT = 20
+MARKET_MONTHLY_ADJUSTMENTS = (0, 0, 1, 1, 2, 3, 2, 2, 1, -2, -1, 0)
 _CITY_FIELDS = {'owner', 'town', 'preparedness', 'damage'}
 _BOOL_POLICY = {'enabled', 'auto_prevent', 'auto_treat', 'auto_develop',
                 'auto_study', 'auto_trade', 'auto_equip'}
@@ -130,6 +133,7 @@ def empty(game, state):
             for key, city in state.cities.items()},
         factions={owner: grain_units.policy(DEFAULT_POLICY) for owner in sorted(game.catalog.factions) if owner != 'neutral'},
         study={}, last_disaster_month=_month(state),
+        harvest=dict(first_year=state.year, settled_year=0, disasters={}),
         auto_turns={owner: 0 for owner in sorted(game.catalog.factions) if owner != 'neutral'})
 
 
@@ -302,8 +306,14 @@ def study(game, state, payload, owner):
     return details
 
 
-def _trade_quote(game, city, town, direction):
-    rate = _rule(game,'market_buy_rates' if direction == 'buy' else 'market_sell_rates')[str(town)]
+def market_rate(game, town, direction, month):
+    rule = 'market_buy_rates' if direction == 'buy' else 'market_sell_rates'
+    base = _rule(game, rule)[str(town)]
+    return min(100, max(1, base + MARKET_MONTHLY_ADJUSTMENTS[month - 1]))
+
+
+def _trade_quote(game, city, town, direction, month):
+    rate = market_rate(game, town, direction, month)
     batch,cap=_rule(game,'trade_batch_grain'),_rule(game,'trade_max_batches')
     maximum = (min(cap, city.gold // rate, (LIMIT - city.grain) // batch) if direction == 'buy'
         else min(cap, city.grain // batch, (LIMIT - city.gold) // rate))
@@ -317,7 +327,7 @@ def trade(game, state, payload, owner):
     direction, batches = payload['direction'], payload['batches']
     if direction not in ('buy', 'sell'):
         raise GameError('請選擇買入或賣出兵糧。')
-    quote = _trade_quote(game, city, _pool(state)['cities'][city.id]['town'], direction)
+    quote = _trade_quote(game, city, _pool(state)['cities'][city.id]['town'], direction, state.month)
     if not _int(batches, 1, quote['max_batches']):
         raise GameError('兵糧交易數量超出可用庫存或上限。')
     gold, grain = batches * quote['rate'], batches * quote['batch_grain']
@@ -450,10 +460,78 @@ def _disaster_band(preparedness):
     return (80, 0, 0) if preparedness else (100, 0, 0)
 
 
+def _recover_harvest_history(game, state):
+    pool = _pool(state)
+    first_disaster = min([*_rule(game, 'flood_months'), *_rule(game, 'drought_months')],
+                         default=HARVEST_MONTH + 1)
+    event_log = state.extension.get('events', {})
+    rows = event_log.get('items', [])
+    complete = (event_log.get('next_id') == 1
+                or rows and (rows[0]['id'] == 1
+                             or (rows[0]['year'], rows[0]['month']) < (state.year, first_disaster)))
+    before_season = pool['last_disaster_month'] < state.year * 12 + first_disaster - 1
+    # Do not infer an unaffected city from a truncated event log.
+    first_year = state.year if before_season or complete else state.year + 1
+    disasters = {key: row['year'] for row in rows
+                 if row['kind'] == 'city_disaster' and row['year'] == state.year
+                 for key in row['city_ids']}
+    return dict(first_year=first_year, settled_year=0, disasters=disasters)
+
+
+def harvest_bonus(game, state, city):
+    """Return this city's September bonus, or None if the city is ineligible."""
+    if state.month != HARVEST_MONTH or city.owner == 'neutral' or not _rule(game, 'disasters_enabled'):
+        return None
+    history = _pool(state).get('harvest') or _recover_harvest_history(game, state)
+    if (state.year < history['first_year'] or history['settled_year'] >= state.year
+            or history['disasters'].get(city.id) == state.year):
+        return None
+    from .city_economy import monthly_income
+    from .domestic import earned_grain
+
+    income = monthly_income(game, city.id, state)
+    production = income['grain'] + earned_grain(state, city.id, income)
+    return production * HARVEST_PERCENT // 100
+
+
+def close_harvest(game, state):
+    """Snapshot eligibility and September production before advancing the calendar."""
+    if state.month != HARVEST_MONTH:
+        return {}
+    pool = _pool(state)
+    if 'harvest' not in pool:
+        pool['harvest'] = _recover_harvest_history(game, state)
+    history = pool['harvest']
+    awards = {}
+    for city in sorted(state.cities.values(), key=lambda city: city.id):
+        bonus = harvest_bonus(game, state, city)
+        if bonus is not None:
+            awards[city.id] = bonus
+    if history['first_year'] <= state.year:
+        history['settled_year'] = state.year
+    return awards
+
+
+def settle_harvest(game, state, awards):
+    """Credit the bonus before the last ration debit and report the player's cities."""
+    player_awards = {}
+    for key, bonus in awards.items():
+        city = state.cities[key]
+        stored = min(bonus, max(0, LIMIT - city.grain))
+        city.grain += stored
+        if city.owner == state.player:
+            player_awards[key] = stored
+    if player_awards:
+        game._emit_event(state, 'city_harvest', city_ids=list(player_awards),
+                         factions=[state.player], details=dict(bonuses=list(player_awards.values())))
+
+
 def month_rollover(game, state):
     pool, month = _pool(state), _month(state)
     if pool['last_disaster_month'] >= month:
         return []
+    if 'harvest' not in pool:
+        pool['harvest'] = _recover_harvest_history(game, state)
     pool['last_disaster_month'] = month
     if not _rule(game, 'disasters_enabled'):
         return []
@@ -472,6 +550,7 @@ def month_rollover(game, state):
             else _rule(game, 'flood_plain_chance')) if kind == 'flood' else _rule(game, 'drought_chance')
         if state.rng.next() % 100 >= chance:
             continue
+        pool['harvest']['disasters'][key] = state.year
         row = pool['cities'][key]
         before_p, before_d = row['preparedness'], row['damage']
         residual, low, high = _disaster_band(before_p)
@@ -495,7 +574,7 @@ def month_rollover(game, state):
     return results
 
 
-def auto_turn(game, state, owner):
+def auto_turn(game, state, owner, *, hold_grain=()):
     pool = _pool(state)
     if owner not in pool['factions'] or not _ready(state, owner) or pool['auto_turns'][owner] == state.turn:
         return []
@@ -528,12 +607,13 @@ def auto_turn(game, state, owner):
                 patient = min(patients, key=lambda i: (state.officers[i].health, ref_sort_key(i)))
                 choice = (treat, dict(city=key, actor=actor, officer=patient))
             if choice is None and command_books.can_spend(state, owner, 'trade_grain') and policy['auto_trade']:
-                buy_quote, sell_quote = (_trade_quote(game, city, row['town'], direction) for direction in ('buy','sell'))
+                buy_quote, sell_quote = (_trade_quote(game, city, row['town'], direction, state.month)
+                                         for direction in ('buy', 'sell'))
                 batches = min(buy_quote['max_batches'], available // buy_quote['rate'],
                     max(0, policy['grain_target']-city.grain+buy_quote['batch_grain']-1)//buy_quote['batch_grain'])
                 if city.grain < policy['grain_target'] and batches > 0:
                     choice = (trade, dict(city=key, actor=actor, direction='buy', batches=batches))
-                elif city.gold < policy['gold_floor'] and city.grain > policy['grain_target']:
+                elif key not in hold_grain and city.gold < policy['gold_floor'] and city.grain > policy['grain_target']:
                     batches = min(sell_quote['max_batches'], (city.grain-policy['grain_target'])//sell_quote['batch_grain'],
                         (policy['gold_floor']-city.gold+sell_quote['rate']-1)//sell_quote['rate'])
                     if batches:
@@ -629,7 +709,8 @@ def view(game, state):
             patients=patients,students=students,equipment_targets=residents,stock=stock,
             develop=dict(from_town=row['town'],to_town=min(3,row['town']+1),gold=development_gold,
                 can_develop=ready and command_books.can_spend(state,city.owner,'develop_town') and row['town']<3 and city.gold>=development_gold),
-            trade={direction:_trade_quote(game,city,row['town'],direction) for direction in ('buy','sell')},
+            trade={direction:_trade_quote(game, city, row['town'], direction, state.month)
+                   for direction in ('buy', 'sell')},
             prevention_quotes=prevention)
     return result
 
@@ -637,7 +718,7 @@ def view(game, state):
 def validate(game, state):
     _validate_rules(game)
     pool = _pool(state)
-    if not isinstance(pool,dict) or set(pool)!=_FIELDS or pool['schema']!=SCHEMA:
+    if not isinstance(pool,dict) or set(pool)-{'harvest'}!=_FIELDS or pool['schema']!=SCHEMA:
         raise ValueError('Facilities schema')
     if not isinstance(pool['cities'],dict) or set(pool['cities'])!=set(state.cities):
         raise ValueError('Facilities city domain')
@@ -653,6 +734,17 @@ def validate(game, state):
     if not _int(pool['last_disaster_month'],game.catalog.data.get('start_year',state.year)*12+
             game.catalog.data.get('start_month',state.month)-1,_month(state)):
         raise ValueError('Facilities monthly receipt')
+    if 'harvest' in pool:
+        history = pool['harvest']
+        if (not isinstance(history, dict) or set(history) != {'first_year', 'settled_year', 'disasters'}
+                or not _int(history['first_year'], game.catalog.data.get('start_year', 1), state.year + 1)
+                or not _int(history['settled_year'], 0, state.year - (state.month <= HARVEST_MONTH))
+                or 0 < history['settled_year'] < history['first_year']
+                or not isinstance(history['disasters'], dict)
+                or set(history['disasters']) - set(game.catalog.map_cities)
+                or any(not _int(year, max(1, history['first_year'] - 1), state.year)
+                       for year in history['disasters'].values())):
+            raise ValueError('Facilities harvest history')
     for key,city in state.cities.items():
         row=pool['cities'][key]
         if (not isinstance(row,dict) or set(row)!=_CITY_FIELDS or row['owner']!=city.owner

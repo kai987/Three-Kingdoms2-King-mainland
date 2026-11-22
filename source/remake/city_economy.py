@@ -78,6 +78,27 @@ def incomes_at(data, year, month):
             for city_id in data.get('city_income', {})}
 
 
+def scale_monthly_grain(income):
+    """Double the completed grain yield after the existing rounding steps."""
+    if income is None or not grain_units.current_rations():
+        return income
+    return dict(income, grain=2 * income['grain'])
+
+
+def monthly_income(game, city_id, state, *, date=None):
+    from . import city_development, facilities
+
+    data = game.catalog.data
+    income = income_at(data, city_id, *(date or (state.year, state.month)))
+    if income is None:
+        rules = data['rules']
+        income = dict(gold=rules.get('monthly_gold_income', 0),
+                      grain=grain_units.amount(rules.get('monthly_grain_income', 0)), reserves=0)
+    if city_id in state.cities:
+        income = city_development.adjust_income(game, state, city_id, income)
+    return scale_monthly_grain(facilities.adjusted_income(state, city_id, income))
+
+
 def _frontier_sponsor(data, city_id, rule, owners, routes, outposts):
     owner = owners[city_id]
     if owner == 'neutral':
@@ -149,16 +170,16 @@ def garrison_grain_cost(data, city_id, year, month, active, reserves):
     days = data['calendar_rules']['month_days']
     rate = 100 * grain_units.denominator()
     if frontier_outpost_at(data, city_id, year, month):
-        active_rate, reserve_rate = 100, 100
+        active_rate = reserve_rate = 50 if grain_units.current_rations() else 100
     else:
-        active_rate, reserve_rate = 25, 10
+        active_rate, reserve_rate = (33, 25) if grain_units.current_rations() else (25, 10)
     return ((active * active_rate + reserves * reserve_rate) * days + rate - 1) // rate
 
 
 def civilian_grain(population):
-    # Public granary share: one grain per thousand inhabitants per ten days.
-    divisor = 10 * grain_units.denominator()
-    return (3 * population + divisor - 1) // divisor
+    percent = 10 if grain_units.current_rations() else 1
+    divisor = 100 * grain_units.denominator()
+    return (30 * population * percent + divisor - 1) // divisor
 
 
 def grain_balance(production, upkeep, owner, population=0):
@@ -193,19 +214,23 @@ def garrison_grain(game, state, absent=None):
     return result
 
 
+def turn_rations(monthly, installment):
+    """Cumulative thirds avoid charging three rounded-up monthly fractions."""
+    return monthly * installment // 3 - monthly * (installment - 1) // 3
+
+
 def settle_turn_grain(game, state):
     absent = absent_troops(game, state)
     garrisons = garrison_grain(game, state, absent)
     cities = state.extension.get('city_development', {}).get('cities', {})
     names = None
-    # Cumulative thirds avoid charging three rounded-up monthly fractions.
     installment = {11: 1, 21: 2, 1: 3}[state.day]
     for key, city in state.cities.items():
         if city.owner == 'neutral':
             continue
         development = cities.get(key)
         monthly = garrisons[key] + civilian_grain(development['population'] if development else 0)
-        required = monthly * installment // 3 - monthly * (installment - 1) // 3
+        required = turn_rations(monthly, installment)
         paid = min(required, city.grain)
         city.grain -= paid
         missing = required - paid

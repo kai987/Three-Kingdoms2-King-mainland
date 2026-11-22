@@ -107,7 +107,7 @@ class LogisticsTests(unittest.TestCase):
                                                          protected_officers=spare[:1], max_turns=2))
         row, = state.extension['logistics']['convoys']
         self.assertEqual((row['source'], row['target'], row['officers']), (source.id, target.id, spare[1:]))
-        self.assertEqual(row['cargo'], dict(gold=0, grain=3502, reserves=0, treasure=0))
+        self.assertEqual(row['cargo'], dict(gold=0, grain=3504, reserves=0, treasure=0))
         self.assertEqual(source.grain, 10000 - row['cargo']['grain'] - row['journeys'][0]['supply']['loaded'])
         self.assertGreaterEqual(source.grain, 5000)
         self.assertEqual(target.grain, 2000)
@@ -129,6 +129,8 @@ class LogisticsTests(unittest.TestCase):
         data['faction_rulers'].pop('wei')
         data['initial_officers'][0].update(city='nanjun', ruler=False, troops=6000)
         data['initial_city_resources']['nanjun'].update(grain=0, reserves=0)
+        for rear in ('xiangyang', 'nanyang'):
+            data['initial_city_resources'][rear]['grain'] *= 2
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / 'endgame.json'
             path.write_text(json.dumps(data, ensure_ascii=False))
@@ -151,7 +153,7 @@ class LogisticsTests(unittest.TestCase):
     def front_supply_game(self, *, keep_only_two_in_rear=False):
         data = transport_catalog(rear=True).data
         data['initial_city_resources']['xiangyang'].update(gold=5000, grain=10000, reserves=1000)
-        data['initial_city_resources']['nanjun'].update(gold=250, grain=450, reserves=0)
+        data['initial_city_resources']['nanjun'].update(gold=250, grain=1500, reserves=0)
         data['initial_officers'].extend(dict(row, troops=2000, ruler=False)
                                         for row in data['initial_free_officers'])
         data['initial_free_officers'] = []
@@ -175,11 +177,11 @@ class LogisticsTests(unittest.TestCase):
         dispatch = logistics.dispatch
         payments = []
 
-        def record_dispatch(campaign, state, payload, owner):
+        def record_dispatch(campaign, state, payload, owner, **kwargs):
             source = state.cities[payload['source']]
             gold, grain = source.gold, source.grain
             books = command_books.remaining(state, owner)
-            row = dispatch(campaign, state, payload, owner)
+            row = dispatch(campaign, state, payload, owner, **kwargs)
             if owner == 'shu':
                 payments.append(row['id'])
                 orders = state.extension['command_books']['factions'][owner]['orders']

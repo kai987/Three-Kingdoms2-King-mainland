@@ -38,29 +38,29 @@
   "source_files": {
     "game/config/references/original-officer-stats.json": "11ab9fbfe6852d2d8e59a400e7fd62b59281506b224acef141d2690e4a769032",
     "game/config/references/cnblogs-officer-stats.json": "fee9b0e47615f676c25bea80900bdb60896a193253f4eb8e4a9c4e3ed8605fef",
-    "game/config/campaigns/people.json": "edba242b9c18142a318cbc02f9cfda6b2825350a3550be94dab5eff65c770a49",
+    "game/config/campaigns/people.json": "ce0e25ce41092f463608be7aae80356eeb32c847f310eaeaa179bf03923524e0",
     "game/config/campaigns/shared.json": "da94d2a2c6505bc025146018f8a33d0e4d5aa36048d373f9feea064aceeabf2d"
   },
   "counts": {
-    "people": 1082,
+    "people": 1083,
     "sources": {
       "design_region_inference": 265,
       "design_trait_inference": 7,
       "fallback_design": 539,
       "original_table_transcription": 9,
-      "retained_design": 41,
+      "retained_design": 42,
       "verified_original_rom": 221
     },
     "effective_codes": {
       "0": 648,
       "1": 225,
-      "2": 209
+      "2": 210
     },
     "changed_from_baseline": 376,
     "original_records": 237,
     "bound_original": 221
   },
-  "records_sha256": "36018afd166ef8588c714757a7c085e93bb7b434b1d706d8580228087d688a94",
+  "records_sha256": "c945c499d0208ef849f9b4b2e3a7d0b186c8a5686e4a70beae9d48dc5db27679",
   "records": {
     "historical-beigong-boyu": {
       "person_id": "historical-beigong-boyu",
@@ -651,6 +651,16 @@
     "historical-lu-xing": {
       "person_id": "historical-lu-xing",
       "name": "吕兴",
+      "base_code": 2,
+      "code": 2,
+      "source_kind": "retained_design",
+      "reference": "game/config/campaigns/people.json",
+      "basis_tc": "延續既有明確軍種設計；未取得原版對照，不宣稱原值。",
+      "basis_ja": "既存の明示的な兵種設定を維持。原作対照は未確認で、原作値とは表示しません。"
+    },
+    "historical-ma-yong-longxi": {
+      "person_id": "historical-ma-yong-longxi",
+      "name": "马颙",
       "base_code": 2,
       "code": 2,
       "source_kind": "retained_design",

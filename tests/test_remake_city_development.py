@@ -538,8 +538,9 @@ class DevelopmentCampaignTests(unittest.TestCase):
                         self.assertEqual(sum(officer['troops'] for officer in preview['officers']), active)
                         base = income_at(catalog.data, key, game.state.year, game.state.month)
                         damage = preview['facilities']['damage']
-                        self.assertEqual(preview['income'], {field: amount * (100-damage) // 100
-                                                             for field, amount in base.items()})
+                        expected_income = {field: amount * (100-damage) // 100 for field, amount in base.items()}
+                        expected_income['grain'] *= 2
+                        self.assertEqual(preview['income'], expected_income)
                 for key, row in view['cities'].items():
                     expected = development.opening_view(catalog, key, seed=game.state.seed)
                     self.assertEqual({field: row[field] for field in development.LIMITS}, expected)
@@ -567,7 +568,10 @@ class DevelopmentCampaignTests(unittest.TestCase):
                     else:
                         self.assertEqual(expected, previous_population_format, (path.stem, key))
                     base = income_at(catalog.data, key, game.state.year, game.state.month)
-                    self.assertEqual(row['income'], base)
+                    damage = game.state.extension['facilities']['cities'][key]['damage']
+                    expected_income = {field: amount * (100-damage) // 100 for field, amount in base.items()}
+                    expected_income['grain'] *= 2
+                    self.assertEqual(row['income'], expected_income)
                     self.assertEqual(development.adjust_income(game, game.state, key, base), base)
                     self.assertEqual(row['baseline'], expected)
                 self.assertEqual(game.export_save(), before)

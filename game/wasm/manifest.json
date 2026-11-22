@@ -2,11 +2,11 @@
   "abi": 1,
   "build_host": "aarch64-apple-darwin",
   "builder_sha256": "e2c581a185539df582541cbd0b9a8060d79e68b570ef96dc27abaa43a170989a",
-  "bytes": 415116,
+  "bytes": 415110,
   "crate": "march-core",
   "file": "march_core.wasm",
   "rust": "1.93.0",
-  "sha256": "4f7e3ad10d8bf8588053f518b609b4147c13c04f20cced420a84ebbd46aee73d",
+  "sha256": "432404a778efcac044ec6d0f76888f465fbc36cec32e7b584fa87992a4fcb281",
   "sources_sha256": {
     "Cargo.lock": "681fc64b6f88550d1f61c6dc48be6c49e123a9ef9ba2926c86a8260d9e780342",
     "Cargo.toml": "9346d419e1beb656dda08c16b3f7310599b2bbdd93784c5da37c5f1e07832fce",
@@ -14,8 +14,8 @@
     "src/lib.rs": "6f73ae95e1617c0a71936036db61f7126389b8563746bfcba1c9ebc6d3568f4a",
     "src/main.rs": "eef1ba77e410ff8726503e1727c2a414b28d3291d62c722ce709882fe632a04a",
     "src/paths.rs": "cf6483ba1cd17f1c988e40410c2a37c7d1423a3e051a3678f15fd126aefd1bfc",
-    "src/tactical.rs": "f6dd44eaddc5c342085291703daec3d7e5e10c7fd93c6fb5dd02a922ac1cc07b",
-    "tests/protocol.rs": "42b018d6e083b6debf1b9e7c6759a64716bfb1571ba02790552e67dcec321aa2",
+    "src/tactical.rs": "fbaee9ddf26deb7f93a35b07080d72422ac8af2cef9613f778e8f8542881958e",
+    "tests/protocol.rs": "51fa6970f413ce72c58b3d87598add85f75013f49a4376910ef00ea001e4b7ad",
     "tests/river.rs": "7176511c019ed77d8a376dbea90aec30a2dcd1bfd4ff05df2765276345c9427a"
   },
   "target": "wasm32-unknown-unknown"

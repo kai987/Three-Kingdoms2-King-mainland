@@ -29,7 +29,7 @@ ORIGINAL_UI_IDS = ('facility-armory', 'facility-hospital', 'facility-market', 'f
                    'event-decorative-frame')
 EVENT_SCENE_IDS = ('ai-campaign', 'battle-result', 'battle-started', 'battle-supply-exhausted',
                    'campaign-defeat', 'campaign-start', 'campaign-victory', 'city-captured',
-                   'city-developed', 'city-founded', 'city-renamed', 'city-upgraded', 'civil-unrest',
+                   'city-developed', 'city-founded', 'city-harvest', 'city-renamed', 'city-upgraded', 'civil-unrest',
                    'defection', 'diplomacy-result', 'domestic-report', 'drought', 'duel-result',
                    'duel-started', 'equipment-acquired', 'equipment-bought', 'faction-coup',
                    'faction-coup-skipped', 'faction-ended', 'faction-founded',

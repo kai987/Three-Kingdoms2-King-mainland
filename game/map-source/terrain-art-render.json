@@ -12,7 +12,7 @@
     "game/build_terrain_art.py": "2954ebb68b399a735ff73d99b62ef4ee419b99540db6ca73563b819675989e54",
     "game/config/campaigns/shared.json": "da94d2a2c6505bc025146018f8a33d0e4d5aa36048d373f9feea064aceeabf2d",
     "game/config/road-centers.json": "7878a02ffde949418a1eec6c5ba82ebd4ca4b25f5a76b4d1da562cfe97da1a5e",
-    "game/config/route-geometry.json": "23a095a1e53a4a810475d248e0d4ea81a1ee646ced3419b58960a9b73f54b480",
+    "game/config/route-geometry.json": "1d725241a92025f435c37b8bac7a3d6ba54405dfa54948c371d540107b2f8eb9",
     "game/config/terrain-art.json": "dbd1ac2233fb8ff4bc07f5178933956f5c421d2b62d07ecd0a09d5a02472e6ec",
     "game/config/water-corrections.json": "26ae46a51010a6f746a91d37b987f1c15ab870faa35519890300255ba516a3a2",
     "game/island_art.py": "0f29ac4cf21cd3bf183844b0c653d535fdae94d3c30777f98479b6405bc18447",

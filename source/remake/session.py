@@ -4,7 +4,7 @@ from . import grain_units, southern_mission
 from .campaign import Campaign, Catalog, GameError, verified_save_content
 from .map_presentation import city_names,presentation,faction_colors
 from .city_economy import (frontier_outposts_view, garrison_grain, garrison_grain_cost, grain_balance,
-                           income_at, incomes_at, profile_at, profiles_at)
+                           income_at, incomes_at, monthly_income, profile_at, profiles_at, scale_monthly_grain)
 from .officer_relations import opening_values
 from .dated_events import visible_factions
 from .treasures import opening_stock as opening_treasure_stock
@@ -134,23 +134,24 @@ class CampaignSession:
         year=date.year if self.game.state else date['start_year']
         month=date.month if self.game.state else date['start_month']
         result['catalog']['city_profiles']=profiles_at(self.game.catalog.data,year,month)
-        result['catalog']['city_income']=incomes_at(self.game.catalog.data,year,month)
         result['catalog']['frontier_outposts']=frontier_outposts_view(self.game.catalog.data,self.game.state)
         if self.game.state:
-            from .facilities import adjusted_income
-            from . import city_development, domestic
-            result['catalog']['city_income']={key:adjusted_income(self.game.state,key,city_development.adjust_income(self.game,self.game.state,key,income) if key in self.game.state.cities else income)
-                for key,income in result['catalog']['city_income'].items()}
-            upkeep = garrison_grain(self.game, self.game.state)
-            fallback = dict(gold=0, grain=grain_units.amount(self.game.catalog.data['rules']['monthly_grain_income']))
+            from . import domestic
+            state = self.game.state
+            development = result['catalog']['city_development']['cities']
+            city_keys = dict.fromkeys((*self.game.catalog.data.get('city_income', {}), *state.cities))
+            income = {key: development[key]['income'] if key in development else monthly_income(self.game, key, state)
+                      for key in city_keys}
+            upkeep = garrison_grain(self.game, state)
+            result['catalog']['city_income'] = income
             result['catalog']['city_grain_balance'] = {
-                key: grain_balance(result['catalog']['city_income'].get(key, fallback)['grain']
-                                   + domestic.earned_grain(self.game.state, key,
-                                       result['catalog']['city_income'].get(key, fallback)),
-                                   upkeep[key], city.owner, result['catalog']['city_development']['cities'][key]['population']
-                                   if result['catalog'].get('city_development') else 0)
-                for key, city in self.game.state.cities.items()
+                key: grain_balance(income[key]['grain'] + domestic.earned_grain(state, key, income[key]),
+                                   upkeep[key], city.owner, development[key]['population'])
+                for key, city in state.cities.items()
             }
+        else:
+            result['catalog']['city_income'] = {key: scale_monthly_grain(income)
+                                                for key, income in incomes_at(self.game.catalog.data, year, month).items()}
         result['catalog']['road_additions']=self.game.catalog.data.get('road_additions',[])
         result['catalog']['world']=self.game.catalog.data.get('world')
         result['catalog']['scenario_id']=self.game.catalog.data['id']
@@ -257,7 +258,8 @@ class CampaignSession:
             treasure = opening_treasure_stock(d,city,owner,d['start_year'],d['start_month'])
             facilities=opening_facilities(d,city)
             facilities['services']=['hospital','market']+(['school','armory'] if facilities['town']>=2 else [])
-            income=income_after_damage(income_at(d,city,d['start_year'],d['start_month']),facilities['damage'])
+            income = scale_monthly_grain(income_after_damage(
+                income_at(d,city,d['start_year'],d['start_month']), facilities['damage']))
             history=d.get('city_history',{}).get(city,{})
             neutral_name=history.get('neutral_label') or ('地方汉郡（中立）' if history.get('opening',{}).get('basis')=='unmapped_local_han_administration' else '无主')
             frontier=frontier_outposts_view(d).get(city)
@@ -265,9 +267,11 @@ class CampaignSession:
                                          sum(o['troops'] for o in officers), stocks[city]['reserves'])
             development = opening_view(c, city)
             balance = grain_balance(income['grain'], upkeep, owner, development['population'])
+            prefect = d.get('initial_governors', {}).get(city)
+            governor = c.ids[prefect['person_id']] if prefect else None
             return dict(scenario=scenario,title=d['title'],year=d['start_year'],month=d['start_month'],
-                capacity=c.rules.city_officer_capacity,
-                city=dict(id=city,owner=owner,treasure=treasure,facilities=facilities,city_development=development,owner_name=c.factions[owner]['name'] if owner!='neutral' else neutral_name,
+                capacity=c.rules.city_officer_capacity, grain_people_per_day=grain_units.denominator(),
+                city=dict(id=city,owner=owner,treasure=treasure,governor=governor,facilities=facilities,city_development=development,owner_name=c.factions[owner]['name'] if owner!='neutral' else neutral_name,
                     terrain=c.map_cities[city].get('terrain'),officers=officers,
                     profile=profile_at(d,city,d['start_year'],d['start_month']),income=income, grain_balance=balance,
                     history=d.get('city_history',{}).get(city),frontier_outpost=frontier,

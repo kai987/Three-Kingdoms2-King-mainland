@@ -104,12 +104,12 @@ class PortraitReleaseTests(unittest.TestCase):
     def test_all_canonical_people_have_explicit_portrait_provenance(self):
         index = self.index
         self.assertEqual(index['counts'], {
-            'people': 1082, 'nes_original': 221, 'generated': 861, 'generic_placeholder': 0,
+            'people': 1083, 'nes_original': 221, 'generated': 861, 'generic_placeholder': 1,
             'original_archive': 237,
             'original_unique_pixels': 183, 'bound_original_unique_pixels': 179,
             'generated_unique_pixels': 861, 'original_identity_pending': 16})
         self.assertEqual(set(index['people']), set(builder.identities()))
-        self.assertEqual(set(index['by_runtime_id']), {str(i) for i in range(1083)} - {'1005'})
+        self.assertEqual(set(index['by_runtime_id']), {str(i) for i in range(1084)} - {'1005'})
         self.assertEqual((index['width'], index['height']), (32, 40))
         for person_id, row in index['people'].items():
             with self.subTest(person_id=person_id):
