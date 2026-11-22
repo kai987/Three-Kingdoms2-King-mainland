@@ -1,6 +1,10 @@
 name: Shared Web campaign verification
 on:
   workflow_call:
+    outputs:
+      verified_attempt:
+        description: Attempt that recorded the verified Web candidate
+        value: ${{ jobs.gate.outputs.verified_attempt }}
     inputs:
       force_full:
         type: boolean
@@ -404,6 +408,8 @@ jobs:
     timeout-minutes: 10
     outputs:
       content_sha256: ${{ steps.identity.outputs.content_sha256 }}
+      artifact_id: ${{ steps.candidate.outputs.artifact-id }}
+      archive_sha256: ${{ steps.candidate.outputs.artifact-digest }}
     env:
       MARCH_CORE_BACKEND: python
     steps:
@@ -428,6 +434,7 @@ jobs:
       - name: Actual WASM campaign and CPU replay parity
         run: node tests/browser_engine_smoke.mjs build/web
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        id: candidate
         with:
           name: candidate-web-${{ github.sha }}
           path: build/web
@@ -474,7 +481,7 @@ jobs:
           path: build/ci
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: candidate-web-${{ github.sha }}
+          artifact-ids: ${{ needs.web-build.outputs.artifact_id }}
           path: build/web
       - name: Require the exact immutable candidate
         env:
@@ -535,6 +542,8 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    outputs:
+      verified_attempt: ${{ steps.candidate.outputs.attempt }}
     env:
       FULL_GATE_SPARSE_PATHS: |
         /tools/ci/
@@ -605,21 +614,26 @@ jobs:
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         if: needs.scope.outputs.web == 'true'
         with:
-          name: candidate-web-${{ github.sha }}
+          artifact-ids: ${{ needs.web-build.outputs.artifact_id }}
           path: build/web
       - name: Verify the original candidate after every required check passed
+        id: candidate
         if: needs.scope.outputs.web == 'true'
         env:
+          CANDIDATE_ID: ${{ needs.web-build.outputs.artifact_id }}
+          CANDIDATE_ARCHIVE_SHA: ${{ needs.web-build.outputs.archive_sha256 }}
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
-        run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
-      - name: Retain the exact tested release
+        run: |
+          python -B tools/ci/verified_web.py record --root build/web \
+            --record build/ci/verified-candidate.json --head "$GITHUB_SHA" \
+            --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT"
+          printf 'attempt=%s\n' "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
+      - name: Upload the verified candidate record
         if: needs.scope.outputs.web == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: verified-web-${{ github.sha }}
-          path: build/web
-          overwrite: true
-          include-hidden-files: true
+          name: verified-candidate-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: build/ci/verified-candidate.json
           if-no-files-found: error
           retention-days: 7
       - name: Record the verified PR source tree and coverage

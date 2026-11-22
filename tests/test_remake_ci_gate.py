@@ -10,6 +10,7 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import patch
+from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('ci_gate', ROOT / 'tools/ci/gate.py')
@@ -17,6 +18,7 @@ gate = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(gate)
 with patch.object(sys, 'path', [str(ROOT / 'tools/ci'), *sys.path]):
     import pr_reuse
+    import verified_web
 HEAD = 'a' * 40
 
 
@@ -128,6 +130,66 @@ class ScopeGateTests(unittest.TestCase):
             git('add', '.'); git('commit', '-qm', 'broken'); value['head'] = git('rev-parse', 'HEAD')
             with self.assertRaisesRegex(ValueError, 'Broken repository link'):
                 gate.check_docs(value, root)
+
+
+class VerifiedCandidateTests(unittest.TestCase):
+    def setUp(self):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        self.root = Path(directory.name)
+        self.source = self.root / 'release'
+        (self.source / 'runtime').mkdir(parents=True)
+        raw = b'approved static entry'
+        (self.source / 'index.html').write_bytes(raw)
+        files = {'index.html': dict(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())}
+        content = hashlib.sha256((json.dumps(files, separators=(',', ':')) + '\n').encode()).hexdigest()
+        self.identity = dict(schema='tk2-static-build-v1', commit=HEAD, files=files, content_sha256=content)
+        (self.source / 'runtime/build.json').write_text(json.dumps(self.identity))
+        self.archive = self.root / 'candidate.zip'
+        with ZipFile(self.archive, 'w') as zipped:
+            for relative in ('index.html', 'runtime/build.json'):
+                zipped.write(self.source / relative, relative)
+        self.context = dict(head=HEAD, run_id=12, attempt=2)
+        self.inputs = dict(artifact_id=22, archive_sha256=self.archive_digest(), content_sha256=content)
+        self.record = verified_web.make_record(self.source, **self.context, **self.inputs)
+
+    def archive_digest(self):
+        return hashlib.sha256(self.archive.read_bytes()).hexdigest()
+
+    def test_exact_archive_is_verified_by_pages_after_gate_validation(self):
+        record = verified_web.validate_record(self.record, **self.context)
+        metadata = dict(id=22, name=f'candidate-web-{HEAD}', workflow_run={'id': 12},
+                        digest='sha256:' + record['archive_sha256'], expired=False)
+        verified_web.verify_metadata(record, metadata)
+        self.assertEqual(verified_web.verify_archive(record, self.archive, self.root / 'pages'), self.identity)
+        for changes in ({'id': 21}, {'workflow_run': {'id': 13}}, {'expired': True},
+                        {'name': 'verified-web-' + HEAD}, {'digest': 'sha256:' + '0' * 64}):
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                verified_web.verify_metadata(record, dict(metadata, **changes))
+
+    def test_record_is_bound_to_commit_run_and_attempt(self):
+        for changes in ({'commit': 'f' * 40}, {'run_id': 13}, {'attempt': 1},
+                        {'artifact_id': True}, {'archive_sha256': ''}, {'content_sha256': 'invalid'}):
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                verified_web.validate_record(dict(self.record, **changes), **self.context)
+
+    def test_tampered_archive_files_and_paths_are_rejected(self):
+        (self.source / 'index.html').write_text('modified')
+        with self.assertRaisesRegex(ValueError, 'Release file changed'):
+            verified_web.make_record(self.source, **self.context, **self.inputs)
+        with ZipFile(self.archive, 'w') as zipped:
+            zipped.write(self.source / 'index.html', 'index.html')
+            zipped.write(self.source / 'runtime/build.json', 'runtime/build.json')
+        with self.assertRaisesRegex(ValueError, 'archive SHA-256'):
+            verified_web.verify_archive(self.record, self.archive, self.root / 'pages')
+        with self.assertRaisesRegex(ValueError, 'Release file changed'):
+            verified_web.verify_archive(dict(self.record, archive_sha256=self.archive_digest()),
+                                        self.archive, self.root / 'pages')
+        with ZipFile(self.archive, 'a') as zipped:
+            zipped.writestr('../index.html', 'unsafe')
+        with self.assertRaisesRegex(ValueError, 'Unsafe path'):
+            verified_web.verify_archive(dict(self.record, archive_sha256=self.archive_digest()),
+                                        self.archive, self.root / 'pages')
 
 
 class PRVerificationTests(unittest.TestCase):
