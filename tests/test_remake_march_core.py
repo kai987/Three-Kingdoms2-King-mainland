@@ -177,6 +177,12 @@ def reference(request, data=None):
                 value = route_allowed(data, args['route'], args['source'], args['target'])
             elif op == 'evaluate_leg':
                 value = evaluate_leg(data, args['route'], args['source'], args['target'], args['month'])
+            elif op == 'restore_route_legs':
+                value = []
+                for index, source, target, month in args['checks']:
+                    route = args['routes'][index]
+                    allowed = route_allowed(data, route, source, target)
+                    value.append(evaluate_leg(data, route, source, target, month) if allowed else None)
             elif op in ('path', 'batch', 'strategic_routes'):
                 travel = TravelCampaign()
                 travel.catalog = SimpleNamespace(data=data, links={frozenset(p) for p in data.get('links', [])})
@@ -293,6 +299,15 @@ def vectors(configs):
     for index, data in enumerate(configs):
         routes = data['travel_routes'] + data.get('exploration_routes', [])
         months = range(1, 13)
+        selected = [route for route in routes
+                    if route.get('one_way') or {route['from'], route['to']} == {'yinping', 'shujun'}]
+        selected = routes[:3] + selected[:3]
+        checks = [(offset, source, target, month)
+                  for offset, route in enumerate(selected)
+                  for source, target in ((route['from'], route['to']), (route['to'], route['from']))
+                  for month in (4, 7, 11)]
+        yield f'restore-routes:{index}', dict(op='restore_route_legs', config=index,
+                                           routes=selected, checks=checks)
         for row in routes:
             for source, target in ((row['from'], row['to']), (row['to'], row['from'])):
                 allowed = dict(op='allowed', config=index, route=row, source=source, target=target)

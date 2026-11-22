@@ -10,7 +10,7 @@ from unittest.mock import patch
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign,Catalog,digest
-from remake import civil_staff, domestic, facilities, logistics, treasures, city_development
+from remake import civil_staff, domestic, facilities, logistics, march_core, treasures, city_development
 from remake.errors import GameError
 from remake.route_hazards import evaluate_leg
 
@@ -344,6 +344,78 @@ class HazardMarchTests(unittest.TestCase):
             bad['checksum']=digest({k:v for k,v in bad.items() if k!='checksum'})
             with self.assertRaises(GameError):game.load_save(bad,game.revision)
             self.assertEqual(game.to_dict(),before)
+
+
+    def test_restore_batches_active_and_historical_legs_and_rejects_edits(self):
+        game = self.game('wu')
+        self.empty(game, 'yizhou', 'wu')
+        ids = game.state.cities['hepu'].roster.officer_ids[:3]
+        self.set_troops(game, ids, 10000)
+        game.command('transfer', dict(source='hepu', target='yizhou', officers=ids,
+                                      route_mode='explore'), game.revision)
+        self.empty(game, 'yizhou', 'wei')
+        self.arrive(game)
+        saved = game.export_save()
+        clone = Campaign(game.catalog)
+        native = march_core.enabled()
+
+        with patch.object(march_core, 'invoke', wraps=march_core.invoke) as invoke:
+            view = clone.load_save(json.loads(json.dumps(saved)), 0)
+            clone.validate(clone.state)
+        batches = [call for call in invoke.call_args_list if call.args[0] == 'restore_route_legs']
+        self.assertEqual(len(batches), int(native))
+        if native:
+            self.assertGreaterEqual(len(batches[0].kwargs['checks']), 2)
+        self.assertEqual(clone.export_save(), saved)
+        self.assertEqual(clone.state.rng, game.state.rng)
+
+        with march_core.using_backend('python'), patch.object(march_core, 'invoke') as invoke:
+            reference = Campaign(game.catalog)
+            self.assertEqual(reference.load_save(saved, 0), view)
+            self.assertEqual(reference.export_save(), saved)
+            self.assertEqual(reference.state.rng, clone.state.rng)
+            invoke.assert_not_called()
+
+        revision = clone.revision
+        before_rng = deepcopy(clone.state.rng)
+        for field, value in (('days', 9999), ('id', 'absent-historical-route')):
+            with self.subTest(field=field):
+                changed = deepcopy(saved)
+                march, = changed['state']['extension']['travel']['marches']
+                march['history'][0]['quote']['routes'][0][field] = value
+                changed['checksum'] = digest({k: v for k, v in changed.items() if k != 'checksum'})
+                with self.assertRaises(GameError):
+                    clone.load_save(changed, revision)
+                self.assertEqual(clone.revision, revision)
+                self.assertEqual(clone.state.rng, before_rng)
+                self.assertEqual(clone.export_save(), saved)
+
+    def test_restore_with_older_native_library_keeps_scalar_checks(self):
+        if not march_core.enabled():
+            self.skipTest('Native fallback is exercised by the Rust regression job')
+        game = self.game()
+        self.empty(game, 'yizhou', 'wu')
+        ident = game.state.cities['hepu'].roster.officer_ids[0]
+        game.command('transfer', dict(source='hepu', target='yizhou', officers=[ident],
+                                      route_mode='explore'), game.revision)
+        saved = game.export_save()
+        operations = []
+        original = march_core.invoke
+
+        def older_native(operation, **payload):
+            operations.append(operation)
+            if operation == 'restore_route_legs':
+                raise ValueError('Unknown march operation')
+            return original(operation, **payload)
+
+        with patch.object(march_core, 'invoke', side_effect=older_native):
+            clone = Campaign(game.catalog)
+            clone.load_save(saved, 0)
+        self.assertEqual(operations.count('restore_route_legs'), 1)
+        self.assertIn('allowed', operations)
+        self.assertIn('evaluate_leg', operations)
+        self.assertEqual(clone.export_save(), saved)
+        self.assertEqual(clone.state.rng, game.state.rng)
 
 
 

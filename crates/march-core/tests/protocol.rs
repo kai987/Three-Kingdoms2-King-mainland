@@ -111,6 +111,20 @@ fn yinping_direction_and_ziwu_season_use_plain_baseline() {
 }
 
 #[test]
+fn restore_route_checks_reject_malformed_indices_and_months() {
+    for check in [
+        json!([0, "a", "b"]),
+        json!([9, "a", "b", 7]),
+        json!([true, "a", "b", 7]),
+        json!([0, "a", "b", 13]),
+    ] {
+        let result = run(&json!({"op":"restore_route_legs", "data":data(),
+            "routes":[land("a", "b", 300.0)], "checks":[check]}));
+        assert_eq!(result["ok"], false, "{result}");
+    }
+}
+
+#[test]
 fn sea_wind_reverses_with_direction_and_month_but_april_is_unchanged() {
     let route = json!({"id":"sea","from":"a","to":"b","mode":"sea","distance_km":1231,"land_km":31,"sea_km":1200,"days":22});
     for (source, target, month, days, wind) in [
