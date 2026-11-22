@@ -1475,7 +1475,7 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
  await scenarios.selectOption('mainland194-06');await page.locator('input[name=faction][value=wei]').check();
  expect(await factionFill('shujun','liu_zhang')).toBe(yiFill);
  await expect(marker('jiyin')).toHaveAttribute('data-owner','wei');
- await expect(marker('jiyin')).toHaveAttribute('aria-label',/鄄城/);
+ await expect(marker('jiyin')).toHaveAttribute('aria-label',/^鄄，曹操$/);
  // Zhang Miao's allied army is independently selectable, rather than an
  // ordinary Lü Bu garrison. Cao Cao still opens in the Juancheng proxy.
  await expect(marker('chenliu')).toHaveAttribute('data-owner','zhang_miao');
@@ -1502,13 +1502,13 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
 
 test('dated Xiaopei Qiao names and city scales appear in real scenario information',async({page},testInfo)=>{
  await opening(page);
- for(const[scenario,name,scale]of[
-  ['mainland217-07','小沛','普通城'],
-  ['mainland219-07','譙郡','普通城'],
-  ['mainland221-07','譙郡','大城'],
+ for(const[scenario,mapName,name,scale]of[
+  ['mainland217-07','小沛','小沛','普通城'],
+  ['mainland219-07','譙','譙郡','普通城'],
+  ['mainland221-07','譙','譙郡','大城'],
  ]){
   await page.locator('#scenario').selectOption(scenario);
-  await expect(page.locator('#city-jump option[value=qiao]')).toContainText(name);
+  await expect(page.locator('#city-jump option[value=qiao]')).toContainText(mapName+' ·');
   await page.locator('#city-jump').selectOption('qiao');
   const info=page.locator('.city-information[data-inspected-city=qiao]');
   await expect(info).toBeVisible();
@@ -3129,7 +3129,7 @@ test('published event backdrops decode from the verified web build',async({page}
   }
   return sizes;
  },{all:browserScope.full,updates});
- expect(result).toHaveLength(browserScope.full||!updates.length?98:updates.length);
+ expect(result).toHaveLength(browserScope.full||!updates.length?99:updates.length);
  for(const [path,width,height]of result)expect(width>height&&height>0,path).toBe(true);
 });
 
