@@ -12,7 +12,8 @@ let dialogueFeedback=null;
 const OBSERVER_SPEEDS={
  slow:{delay:3600,labels:['慢速','低速']},
  normal:{delay:1800,labels:['普通','標準']},
- fast:{delay:600,labels:['快速','高速']}
+ fast:{delay:600,labels:['快速','高速']},
+ instant:{delay:0,labels:['無等待','待機なし']}
 };
 let observerPlaying=false,observerTimer=null,observerSpeed='normal';
 let observerYearSaving=false;
@@ -393,7 +394,7 @@ async function command(kind,payload={}){
  }
  catch(e){notice(e.message,true);if(!silentDialogue&&typeof showDialogueFeedback==='function')showDialogueFeedback(kind,payload,dialogueBefore,view,e.message);return false;}
  finally{
-  await new Promise(resolve=>setTimeout(resolve,180));
+  if(kind!=='observe_turn'||observerSpeed!=='instant')await new Promise(resolve=>setTimeout(resolve,180));
   observerYearSaving=checkpoint==='observer-year';
   setBusy(false);
   if(observerYearSaving){
@@ -2181,6 +2182,8 @@ function refreshObserverControls(){
 }
 function scheduleObserver(){
  if(observerTimer!==null||!observerPlaying||busy||observerYearSaving||!canObserve()||document.hidden)return;
+ const delay=OBSERVER_SPEEDS[observerSpeed].delay;
+ const waitingForDialog=delay===0&&document.querySelector('dialog[open]');
  observerTimer=setTimeout(async()=>{
   observerTimer=null;
   if(!observerPlaying||!canObserve()||document.hidden)return;
@@ -2188,7 +2191,7 @@ function scheduleObserver(){
    if(!await command('observe_turn'))setObserverPlaying(false);
   }
   scheduleObserver();
- },OBSERVER_SPEEDS[observerSpeed].delay);
+ },waitingForDialog?180:delay);
 }
 function setObserverPlaying(value){
  observerPlaying=value&&canObserve();

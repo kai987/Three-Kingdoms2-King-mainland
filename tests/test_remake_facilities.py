@@ -357,7 +357,8 @@ class FacilityTests(unittest.TestCase):
                 elif task=='develop':policy['auto_develop']=True
                 else:policy['auto_study']=True
                 before=deepcopy(state)
-                receipts=facilities.auto_turn(game,state,'one')
+                with patch.object(equipment, 'shop_stock', side_effect=AssertionError('AI requested all shop previews')):
+                    receipts=facilities.auto_turn(game,state,'one')
                 self.assertTrue(receipts)
                 self.assertTrue(all(state.cities[row['city']].action_used for row in receipts))
                 self.assertEqual(state.extension['command_books']['factions']['one']['used'],len(receipts))

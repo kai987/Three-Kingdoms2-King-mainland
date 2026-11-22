@@ -590,7 +590,7 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  const turn=async()=>(await tacticalSave(page)).state.turn;
  await expect(speed).toHaveValue('normal');
  await expect(speed).toHaveAccessibleName('觀戰速度');
- await expect(speed.locator('option')).toHaveText(['慢速','普通','快速']);
+ await expect(speed.locator('option')).toHaveText(['慢速','普通','快速','無等待']);
  await page.clock.runFor(180);
  await expect(status).toHaveAttribute('data-observer-state','playing');
  const openingSave=await tacticalSave(page);
@@ -682,7 +682,7 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  await page.locator('#utility-menu summary').press('Enter');
  await page.locator('#language').selectOption('ja');
  await expect(speed).toHaveAccessibleName('観戦速度');
- await expect(speed.locator('option')).toHaveText(['低速','標準','高速']);
+ await expect(speed.locator('option')).toHaveText(['低速','標準','高速','待機なし']);
  await expect(speed).toHaveValue('normal');
  await expect(headers).toHaveText(['勢力','都市','本拠','同盟','現役','兵士','予備兵','金','糧'],{useInnerText:true});
  await checkLedgerColumns();
@@ -704,6 +704,11 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  await page.locator('#save-file').setInputFiles({name:'observer-lifespan.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(resumed))});
  await expect(page.locator('#dialog')).toBeHidden();await page.clock.runFor(180);await waitIdle(page);
  expect(await tacticalSave(page)).toEqual(resumed);
+ await speed.selectOption('instant');
+ await step.press('Enter');
+ await expect.poll(turn).toBe(resumed.state.turn+1);
+ await waitIdle(page); // The clock is paused, so a fixed command delay would stall here.
+ await expect(status).toHaveAttribute('data-observer-state','paused');
  expect(errors.get(page)).toEqual([]);
 });
 
