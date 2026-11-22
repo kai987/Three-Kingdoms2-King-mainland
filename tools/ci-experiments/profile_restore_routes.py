@@ -109,11 +109,11 @@ def install_native_timers(patches, adapter, timings):
 
         return wrapped
 
-    original = adapter._call
-    scalar = timings.wrap(original, 'route.scalar')
-    batch = timings.wrap(original, 'route.batch')
+    original_call = adapter._call
+    scalar = timings.wrap(original_call, 'route.scalar')
+    batch = timings.wrap(original_call, 'route.batch')
 
-    @wraps(original)
+    @wraps(original_call)
     def call(lib, request):
         if timings.stack and timings.stack[0][0] == 'save.restore':
             operation = request['op']
@@ -121,7 +121,7 @@ def install_native_timers(patches, adapter, timings):
                 return scalar(lib, request)
             if operation == 'restore_route_legs':
                 return batch(lib, request)
-        return original(lib, request)
+        return original_call(lib, request)
 
     patches.enter_context(patch.object(adapter, '_call', call))
     for name, label in (('_encode_request', 'rust.encode'), ('_call_bytes', 'rust.native')):
