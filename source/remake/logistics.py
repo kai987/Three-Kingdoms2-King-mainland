@@ -9,7 +9,8 @@ from . import grain_units
 from .errors import GameError
 from . import command_books, historical_campaigns
 from .officers import OFFICER_TROOP_CAP, parse_officer_ref
-from .route_hazards import allocate_survivors, evaluate_leg, route_allowed, _python_route_allowed
+from .route_hazards import allocate_survivors, _python_route_allowed
+from .restore_routes import validators as route_validators
 
 SCHEMA = 'tk2-logistics-v3'
 LIMIT = 100000000
@@ -1245,6 +1246,7 @@ def _validate_strength(row,state):
 
 
 def validate(game, state):
+    route_allowed, evaluate_leg = route_validators(game.catalog.data)
     pool = _pool(state)
     if (not isinstance(pool, dict) or set(pool) != {'schema', 'next_id', 'cities', 'convoys', 'receipts', 'reports'}
             or pool['schema'] != SCHEMA or not _int(pool['next_id'], 1, 1000001)):

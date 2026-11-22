@@ -867,7 +867,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     tactical['side']=own
                     if own=='defenders':tactical['passed']['attackers']=True
                 civil_staff.migrate_profiles(self, candidate)
-                self.validate(candidate)
+                from .restore_routes import validating_load
+                with validating_load(self.catalog.data, candidate):
+                    self.validate(candidate)
             except (ValueError, TypeError, KeyError, AttributeError, OverflowError) as exc:
                 raise GameError(INVALID_SAVE_MESSAGE) from exc
             self.state = candidate

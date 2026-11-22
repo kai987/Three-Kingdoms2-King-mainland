@@ -155,7 +155,7 @@ def invoke(operation, *, data=None, **payload):
         lib = _load()
         if operation == 'batch' and data is not None:
             return _batch(lib, data, payload)
-        if data is not None and operation in ('allowed', 'evaluate_leg', 'route_allowed'):
+        if data is not None and operation in ('allowed', 'evaluate_leg', 'route_allowed', 'restore_route_legs'):
             # These public helpers accept mutable dictionaries. Send their small
             # rule/coordinate inputs directly, so edits between calls are visible;
             # only immutable campaign graphs use registered contexts.

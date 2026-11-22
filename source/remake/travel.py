@@ -742,7 +742,9 @@ class TravelCampaign:
     def _validate_march_history(self,state,row):
         """Retreats retain the settled route/food/loss receipts of every leg."""
         from .march_supply import validate,current_city,validate_departures,validate_strength_manifests
-        from .route_hazards import evaluate_leg,route_allowed,allocate_survivors
+        from .route_hazards import allocate_survivors
+        from .restore_routes import validators
+        route_allowed, evaluate_leg = validators(self.catalog.data)
         fields={'source','journey_source','target','officers','kind','mode','departure_turn','arrival_turn',
             'checked_turn','departure_year','departure_month','departure_day','departure_troops','quote','risks','supply'}
         from .route_network import variants, valid_departure
@@ -820,7 +822,9 @@ class TravelCampaign:
                 dead_keys=[str(i) for i,p in state.officers.items() if not p.alive])
 
     def _validate_travel(self, state):
-        from .route_hazards import allocate_survivors, evaluate_leg, route_allowed
+        from .route_hazards import allocate_survivors
+        from .restore_routes import validators
+        route_allowed, evaluate_leg = validators(self.catalog.data)
         x=state.extension['travel']
         if not isinstance(x,dict) or set(x)!={'counter','marches','battle_arrival','discovered'}:
             raise ValueError('hazard travel fields')
