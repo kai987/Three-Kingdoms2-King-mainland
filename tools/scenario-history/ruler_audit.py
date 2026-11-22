@@ -36,7 +36,8 @@ EXPECTED_POOL = 67
 EXPECTED_PEOPLE = 1082
 FRONTIER_CAPITALS = frozenset(('guonei', 'liucheng'))
 LATER_EXPANSION_CITIES = FRONTIER_CAPITALS | frozenset((
-    'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'luzon'))
+    'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'luzon',
+    'nanan', 'xinping', 'beidi', 'guangwei'))
 OPENING_CONFIG = ROOT / 'game/config/campaigns'
 LOCATION_FIELDS = ('status', 'faction', 'city')
 STATE_FIELDS = (*LOCATION_FIELDS, 'ruler')

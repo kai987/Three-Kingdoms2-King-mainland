@@ -63,6 +63,7 @@
     },
     "mainland188-06": {
       "owners": {
+        "nanan": "dong_zhuo",
         "hefei": "neutral",
         "guangling": "neutral",
         "chaisang": "neutral",
@@ -78,6 +79,7 @@
         "xuantu": "han"
       },
       "garrisons": {
+        "nanan": [],
         "hefei": [],
         "guangling": [],
         "chaisang": [],
@@ -95,12 +97,14 @@
         "xuantu": []
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
         "donglai": "漢末尚由漢廷代表東萊郡府。",
         "langya": "開陽仍屬漢廷。臧霸於黃巾起後從陶謙作戰，此處為區域駐防配置。",
         "taishan": "泰山仍以漢廷代表郡府，應劭於189年受任，在此開局尚未駐泰山。",
         "xuantu": "《後漢書·郡國志》列玄菟為幽州屬郡。本劇本以漢廷代表郡府。"
       },
       "resources": {
+        "nanan": {"gold": 520, "grain": 2400, "reserves": 550},
         "donglai": {
           "gold": 690,
           "grain": 3000,
@@ -125,6 +129,7 @@
     },
     "mainland190-01": {
       "owners": {
+        "nanan": "ma_teng",
         "hefei": "neutral",
         "guangling": "zhang_chao",
         "chaisang": "neutral",
@@ -140,6 +145,7 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
         "hefei": [],
         "guangling": [],
         "chaisang": [],
@@ -161,12 +167,14 @@
         "xuantu": []
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
         "donglai": "公孫度渡海收取東萊諸縣的確月與控制範圍未詳，先列東萊地方官署。",
         "langya": "按徐州形勢歸陶謙。臧霸從陶謙擊黃巾後屯開陽，初平元年確切駐軍情況未詳。",
         "taishan": "以兗州刺史劉岱代表區域歸屬。應劭於中平六年受任泰山太守。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       },
       "resources": {
+        "nanan": {"gold": 520, "grain": 2400, "reserves": 550},
         "donglai": {
           "gold": 560,
           "grain": 2150,
@@ -196,6 +204,7 @@
     },
     "mainland191-10": {
       "owners": {
+        "nanan": "ma_teng",
         "hefei": "neutral",
         "guangling": "zhang_chao",
         "chaisang": "neutral",
@@ -211,6 +220,7 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
         "hefei": [],
         "guangling": [],
         "chaisang": [],
@@ -233,12 +243,14 @@
         "xuantu": []
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
         "donglai": "青州諸軍爭奪，黃縣本時點的守軍未詳，先列東萊地方官署。",
         "langya": "按徐州形勢歸陶謙。臧霸與孫觀聚眾屯開陽，其確切到任時間未詳。",
         "taishan": "仍按兗州形勢歸劉岱，應劭為史載太守，本年十一月另有其拒黃巾的記載。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       },
       "resources": {
+        "nanan": {"gold": 520, "grain": 2400, "reserves": 550},
         "donglai": {
           "gold": 525,
           "grain": 2000,
@@ -268,6 +280,7 @@
     },
     "mainland194-06": {
       "owners": {
+        "nanan": "ma_teng",
         "hefei": "yuan_shu",
         "guangling": "tao_qian",
         "chaisang": "neutral",
@@ -283,6 +296,7 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
         "hefei": [
           "san14-candidate-0379"
         ],
@@ -313,12 +327,14 @@
         "xuantu": []
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
         "donglai": "袁譚後來進取青州海隅，黃縣易手確月未詳，仍按地方官署配置。",
         "langya": "按徐州形勢歸陶謙，臧霸與孫觀駐開陽按本傳所述屯地配置。",
         "taishan": "應劭在曹嵩遇害後離郡。按本劇本兗州東部形勢暫歸呂布，並未確認奉高的實際交接。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       },
       "resources": {
+        "nanan": {"gold": 520, "grain": 2400, "reserves": 550},
         "donglai": {
           "gold": 485,
           "grain": 1700,
@@ -348,6 +364,8 @@
     },
     "mainland196-06": {
       "owners": {
+        "nanan": "ma_teng",
+        "xinping": "li_jue",
         "hefei": "yuan_shu",
         "guangling": "shu",
         "chaisang": "hua_xin",
@@ -363,6 +381,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [
           "san14-candidate-0219"
         ],
@@ -394,12 +414,16 @@
         "xuantu": []
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "donglai": "按袁譚東進青州的區域形勢歸袁紹。黃縣確切易手時間未詳。",
         "langya": "按劉備接領徐州後的原定態勢配置。臧霸在本劇本原為在野，保持此設定。",
         "taishan": "按曹操收復兗州後的區域形勢配置。呂虔後來受任太守，其就任時間未詳。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       },
       "resources": {
+        "nanan": {"gold": 520, "grain": 2400, "reserves": 550},
+        "xinping": {"gold": 600, "grain": 2600, "reserves": 620},
         "donglai": {
           "gold": 515,
           "grain": 1950,
@@ -424,6 +448,8 @@
     },
     "mainland197-07": {
       "owners": {
+        "nanan": "ma_teng",
+        "xinping": "li_jue",
         "hefei": "lubu",
         "guangling": "lubu",
         "chaisang": "hua_xin",
@@ -439,6 +465,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [
           "san14-candidate-0254"
         ],
@@ -470,12 +498,16 @@
         "xuantu": []
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "donglai": "本劇本為假想開局，東萊沿用袁紹在青州的既有勢力格局。",
         "langya": "本劇本中臧霸自成勢力，開陽隨其徐州勢力配置，仍維持東海為本拠。",
         "taishan": "本劇本為假想開局，泰山按東平與山陽的既有格局歸呂布。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       },
       "resources": {
+        "nanan": {"gold": 520, "grain": 2400, "reserves": 550},
+        "xinping": {"gold": 600, "grain": 2600, "reserves": 620},
         "donglai": {
           "gold": 545,
           "grain": 2000,
@@ -500,6 +532,8 @@
     },
     "mainland198-03": {
       "owners": {
+        "nanan": "ma_teng",
+        "xinping": "li_jue",
         "hefei": "yuan_shu",
         "guangling": "wei",
         "chaisang": "hua_xin",
@@ -515,6 +549,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [
           "san14-candidate-0574"
         ],
@@ -558,12 +594,16 @@
         "san14-candidate-0683": "shu"
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "donglai": "按袁譚控制青州東部的區域形勢配置，屬袁紹勢力。",
         "langya": "呂布尚未覆亡。開陽歸本劇本既有的臧霸勢力，仍維持東海為本拠。",
         "taishan": "按兗州東部的既有格局歸曹操。呂虔任泰山太守的確切起始時間未詳。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       },
       "resources": {
+        "nanan": {"gold": 520, "grain": 2400, "reserves": 550},
+        "xinping": {"gold": 600, "grain": 2600, "reserves": 620},
         "donglai": {
           "gold": 560,
           "grain": 2080,
@@ -588,6 +628,8 @@
     },
     "mainland200-01": {
       "owners": {
+        "nanan": "ma_teng",
+        "xinping": "wei",
         "hefei": "neutral",
         "guangling": "wei",
         "chaisang": "wu",
@@ -603,6 +645,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [],
         "guangling": [
           "san14-candidate-0683"
@@ -646,12 +690,16 @@
         "san14-candidate-0683": "shu"
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "donglai": "按袁譚所領青州歸袁紹。管統後見於史料為東萊太守，其就任確年未詳。",
         "langya": "曹操擒呂布後以臧霸為琅邪相，開陽歸曹操勢力。",
         "taishan": "泰山歸曹操，呂虔為任期內的守將配置，其就任確月未載。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       },
       "resources": {
+        "nanan": {"gold": 590, "grain": 2550, "reserves": 650},
+        "xinping": {"gold": 650, "grain": 2700, "reserves": 720},
         "donglai": {
           "gold": 650,
           "grain": 2575,
@@ -676,6 +724,8 @@
     },
     "mainland201-05": {
       "owners": {
+        "nanan": "ma_teng",
+        "xinping": "ma_teng",
         "hefei": "yuan_shao",
         "guangling": "yuan_shao",
         "chaisang": "wu",
@@ -691,6 +741,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [
           "san14-candidate-0534"
         ],
@@ -724,12 +776,16 @@
         "xuantu": []
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "donglai": "本劇本為假想開局，東萊隨青州既有格局歸袁紹。",
         "langya": "本劇本以袁紹控制徐州，開陽按此格局配置袁方守將。",
         "taishan": "本劇本以袁紹控制兗州，泰山按此格局配置袁方守將。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       },
       "resources": {
+        "nanan": {"gold": 590, "grain": 2550, "reserves": 650},
+        "xinping": {"gold": 650, "grain": 2700, "reserves": 720},
         "donglai": {
           "gold": 660,
           "grain": 2675,
@@ -754,6 +810,8 @@
     },
     "mainland202-06": {
       "owners": {
+        "nanan": "ma_teng",
+        "xinping": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -769,6 +827,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [
           "san14-candidate-0956"
         ],
@@ -814,12 +874,16 @@
         ]
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "donglai": "依袁氏分裂後東萊太守管統從袁譚的史載分配。管統就任確月未載。",
         "langya": "曹操平呂布後以臧霸為琅邪相。開陽沿用曹方歸屬。",
         "taishan": "按曹方既有兗州格局配置。呂虔任泰山太守的就任確月未載。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       },
       "resources": {
+        "nanan": {"gold": 590, "grain": 2550, "reserves": 650},
+        "xinping": {"gold": 650, "grain": 2700, "reserves": 720},
         "donglai": {
           "gold": 615,
           "grain": 2450,
@@ -847,6 +911,8 @@
     },
     "mainland207-09": {
       "owners": {
+        "nanan": "ma_teng",
+        "xinping": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -862,6 +928,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [
           "san14-candidate-0956"
         ],
@@ -906,6 +974,8 @@
         ]
       },
       "resources": {
+        "nanan": {"gold": 590, "grain": 2550, "reserves": 650},
+        "xinping": {"gold": 650, "grain": 2700, "reserves": 720},
         "donglai": {
           "gold": 680,
           "grain": 2700,
@@ -928,11 +998,15 @@
         }
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland208-10": {
       "owners": {
+        "nanan": "ma_teng",
+        "xinping": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -948,6 +1022,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [
           "san14-candidate-0962"
         ],
@@ -981,6 +1057,8 @@
         "xuantu": []
       },
       "resources": {
+        "nanan": {"gold": 590, "grain": 2550, "reserves": 650},
+        "xinping": {"gold": 650, "grain": 2700, "reserves": 720},
         "donglai": {
           "gold": 685,
           "grain": 2750,
@@ -1011,11 +1089,15 @@
         ]
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland209-06": {
       "owners": {
+        "nanan": "ma_teng",
+        "xinping": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -1031,6 +1113,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [
           "san14-candidate-0446"
         ],
@@ -1064,12 +1148,16 @@
         "xuantu": []
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "donglai": "依假想劇本東部青州格局歸曹操。",
         "langya": "依假想劇本徐州北部格局歸曹操。",
         "taishan": "依假想劇本兗州格局歸曹操。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       },
       "resources": {
+        "nanan": {"gold": 590, "grain": 2550, "reserves": 650},
+        "xinping": {"gold": 650, "grain": 2700, "reserves": 720},
         "donglai": {
           "gold": 700,
           "grain": 2800,
@@ -1094,6 +1182,8 @@
     },
     "mainland210-11": {
       "owners": {
+        "nanan": "ma_teng",
+        "xinping": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -1109,6 +1199,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [
           "san14-candidate-0124"
         ],
@@ -1142,12 +1234,16 @@
         "xuantu": []
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "donglai": "依假想劇本東部青州格局歸曹操。",
         "langya": "依假想劇本徐州北部格局歸曹操。",
         "taishan": "依假想劇本兗州格局歸曹操。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       },
       "resources": {
+        "nanan": {"gold": 590, "grain": 2550, "reserves": 650},
+        "xinping": {"gold": 650, "grain": 2700, "reserves": 720},
         "donglai": {
           "gold": 705,
           "grain": 2875,
@@ -1172,6 +1268,8 @@
     },
     "mainland211-07-tongguan": {
       "owners": {
+        "nanan": "ma_teng",
+        "xinping": "ma_teng",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -1187,6 +1285,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [
           "san14-candidate-0016"
         ],
@@ -1220,6 +1320,8 @@
         "xuantu": []
       },
       "resources": {
+        "nanan": {"gold": 590, "grain": 2550, "reserves": 650},
+        "xinping": {"gold": 650, "grain": 2700, "reserves": 720},
         "donglai": {
           "gold": 725,
           "grain": 2950,
@@ -1247,11 +1349,15 @@
         ]
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland212-06": {
       "owners": {
+        "nanan": "ma_teng",
+        "xinping": "ma_teng",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -1267,6 +1373,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [
           "san14-candidate-0579"
         ],
@@ -1300,12 +1408,16 @@
         "xuantu": []
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "donglai": "依假想劇本東部青州格局歸曹操。",
         "langya": "依假想劇本徐州北部格局歸曹操。",
         "taishan": "依假想劇本兗州格局歸曹操。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       },
       "resources": {
+        "nanan": {"gold": 590, "grain": 2550, "reserves": 650},
+        "xinping": {"gold": 650, "grain": 2700, "reserves": 720},
         "donglai": {
           "gold": 730,
           "grain": 3025,
@@ -1330,6 +1442,8 @@
     },
     "mainland212-12": {
       "owners": {
+        "nanan": "wei",
+        "xinping": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -1345,6 +1459,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [
           "san14-candidate-0962"
         ],
@@ -1378,6 +1494,8 @@
         "xuantu": []
       },
       "resources": {
+        "nanan": {"gold": 590, "grain": 2550, "reserves": 650},
+        "xinping": {"gold": 650, "grain": 2700, "reserves": 720},
         "donglai": {
           "gold": 735,
           "grain": 3050,
@@ -1405,11 +1523,15 @@
         ]
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland215-08": {
       "owners": {
+        "nanan": "wei",
+        "xinping": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -1425,6 +1547,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [
           "san14-candidate-0663",
           "san14-candidate-0913",
@@ -1470,6 +1594,8 @@
         ]
       },
       "resources": {
+        "nanan": {"gold": 590, "grain": 2550, "reserves": 650},
+        "xinping": {"gold": 650, "grain": 2700, "reserves": 720},
         "donglai": {
           "gold": 740,
           "grain": 3100,
@@ -1492,11 +1618,15 @@
         }
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland217-07": {
       "owners": {
+        "nanan": "wei",
+        "xinping": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -1512,6 +1642,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [
           "san14-candidate-0663",
           "san14-candidate-0102"
@@ -1546,6 +1678,8 @@
         "xuantu": []
       },
       "resources": {
+        "nanan": {"gold": 590, "grain": 2550, "reserves": 650},
+        "xinping": {"gold": 650, "grain": 2700, "reserves": 720},
         "donglai": {
           "gold": 750,
           "grain": 3150,
@@ -1573,11 +1707,15 @@
         ]
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland219-07": {
       "owners": {
+        "nanan": "wei",
+        "xinping": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -1593,6 +1731,8 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
         "hefei": [
           "san14-candidate-0663"
         ],
@@ -1641,6 +1781,8 @@
         "san14-candidate-0463": "wei"
       },
       "resources": {
+        "nanan": {"gold": 590, "grain": 2550, "reserves": 650},
+        "xinping": {"gold": 650, "grain": 2700, "reserves": 720},
         "donglai": {
           "gold": 750,
           "grain": 3150,
@@ -1663,11 +1805,16 @@
         }
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland221-07": {
       "owners": {
+        "nanan": "wei",
+        "xinping": "wei",
+        "beidi": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -1683,6 +1830,9 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
+        "beidi": [],
         "hefei": [
           "san14-candidate-0842"
         ],
@@ -1722,6 +1872,9 @@
         ]
       },
       "resources": {
+        "nanan": {"gold": 670, "grain": 2880, "reserves": 700},
+        "xinping": {"gold": 760, "grain": 3200, "reserves": 830},
+        "beidi": {"gold": 540, "grain": 2410, "reserves": 610},
         "donglai": {
           "gold": 780,
           "grain": 3250,
@@ -1744,11 +1897,17 @@
         }
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
+        "beidi": "漢末失土後寄治馮翊，以曹魏取得祋祤實土後的關中位置代表北地。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland225-07": {
       "owners": {
+        "nanan": "wei",
+        "xinping": "wei",
+        "beidi": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -1764,6 +1923,9 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
+        "beidi": [],
         "hefei": [
           "san14-candidate-0842"
         ],
@@ -1796,6 +1958,9 @@
         ]
       },
       "resources": {
+        "nanan": {"gold": 670, "grain": 2880, "reserves": 700},
+        "xinping": {"gold": 760, "grain": 3200, "reserves": 830},
+        "beidi": {"gold": 540, "grain": 2410, "reserves": 610},
         "donglai": {
           "gold": 795,
           "grain": 3325,
@@ -1818,11 +1983,17 @@
         }
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
+        "beidi": "漢末失土後寄治馮翊，以曹魏取得祋祤實土後的關中位置代表北地。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland227-02": {
       "owners": {
+        "nanan": "wei",
+        "xinping": "wei",
+        "beidi": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -1838,6 +2009,9 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
+        "beidi": [],
         "hefei": [
           "san14-candidate-0842"
         ],
@@ -1873,6 +2047,9 @@
         ]
       },
       "resources": {
+        "nanan": {"gold": 670, "grain": 2880, "reserves": 700},
+        "xinping": {"gold": 760, "grain": 3200, "reserves": 830},
+        "beidi": {"gold": 540, "grain": 2410, "reserves": 610},
         "donglai": {
           "gold": 800,
           "grain": 3350,
@@ -1895,11 +2072,18 @@
         }
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
+        "beidi": "漢末失土後寄治馮翊，以曹魏取得祋祤實土後的關中位置代表北地。",
         "xuantu": "公孫度於189年據遼東。玄菟的確切接管時間無載，本劇本按公孫氏的遼東勢力範圍配置。"
       }
     },
     "mainland234-02": {
       "owners": {
+        "nanan": "wei",
+        "xinping": "wei",
+        "beidi": "wei",
+        "guangwei": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -1915,6 +2099,10 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
+        "beidi": [],
+        "guangwei": [],
         "hefei": [
           "san14-candidate-0842"
         ],
@@ -1955,6 +2143,10 @@
         ]
       },
       "resources": {
+        "nanan": {"gold": 670, "grain": 2880, "reserves": 700},
+        "xinping": {"gold": 760, "grain": 3200, "reserves": 830},
+        "beidi": {"gold": 540, "grain": 2410, "reserves": 610},
+        "guangwei": {"gold": 590, "grain": 2500, "reserves": 660},
         "donglai": {
           "gold": 820,
           "grain": 3450,
@@ -1977,11 +2169,19 @@
         }
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
+        "beidi": "漢末失土後寄治馮翊，以曹魏取得祋祤實土後的關中位置代表北地。",
+        "guangwei": "曹魏廣魏郡治臨渭，晉改稱略陽。始置確年有異，按本作234年開局啟用。",
         "xuantu": "《三國志·吳主傳》裴注引《吳書》載233年王贊為玄菟太守。本劇本推定其仍在任。"
       }
     },
     "mainland235-01": {
       "owners": {
+        "nanan": "wei",
+        "xinping": "wei",
+        "beidi": "wei",
+        "guangwei": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -1997,6 +2197,10 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
+        "beidi": [],
+        "guangwei": [],
         "hefei": [
           "san14-candidate-0842"
         ],
@@ -2032,12 +2236,20 @@
         ]
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
+        "beidi": "漢末失土後寄治馮翊，以曹魏取得祋祤實土後的關中位置代表北地。",
+        "guangwei": "曹魏廣魏郡治臨渭，晉改稱略陽。始置確年有異，按本作234年開局啟用。",
         "donglai": "依假想劇本青州格局歸魏，駐將為區域分防配置。",
         "langya": "依假想劇本徐州格局歸魏，駐將為區域分防配置。",
         "taishan": "依假想劇本兗州格局歸魏，駐將為區域分防配置。",
         "xuantu": "《三國志·吳主傳》裴注引《吳書》載233年王贊為玄菟太守。本劇本推定其仍在任。"
       },
       "resources": {
+        "nanan": {"gold": 670, "grain": 2880, "reserves": 700},
+        "xinping": {"gold": 760, "grain": 3200, "reserves": 830},
+        "beidi": {"gold": 540, "grain": 2410, "reserves": 610},
+        "guangwei": {"gold": 590, "grain": 2500, "reserves": 660},
         "donglai": {
           "gold": 820,
           "grain": 3450,
@@ -2062,6 +2274,10 @@
     },
     "mainland238-01": {
       "owners": {
+        "nanan": "wei",
+        "xinping": "wei",
+        "beidi": "wei",
+        "guangwei": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -2077,6 +2293,10 @@
         "xuantu": "gongsun"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
+        "beidi": [],
+        "guangwei": [],
         "hefei": [
           "san14-candidate-0842"
         ],
@@ -2117,12 +2337,20 @@
         ]
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
+        "beidi": "漢末失土後寄治馮翊，以曹魏取得祋祤實土後的關中位置代表北地。",
+        "guangwei": "曹魏廣魏郡治臨渭，晉改稱略陽。始置確年有異，按本作234年開局啟用。",
         "donglai": "東萊仍在魏方。籌備遼東戰役期間加配海防資源，為本作配置。",
         "langya": "開陽仍在魏方。王祥為琅邪臨沂人，駐開陽為區域配置。",
         "taishan": "奉高仍在魏方。守將為區域分防配置。",
         "xuantu": "景初二年正月，襄平尚未陷落，玄菟仍歸公孫淵。王贊見載於233年，延續駐任為本作推定。"
       },
       "resources": {
+        "nanan": {"gold": 670, "grain": 2880, "reserves": 700},
+        "xinping": {"gold": 760, "grain": 3200, "reserves": 830},
+        "beidi": {"gold": 540, "grain": 2410, "reserves": 610},
+        "guangwei": {"gold": 590, "grain": 2500, "reserves": 660},
         "donglai": {
           "gold": 850,
           "grain": 3600,
@@ -2147,6 +2375,10 @@
     },
     "mainland249-01": {
       "owners": {
+        "nanan": "wei",
+        "xinping": "wei",
+        "beidi": "wei",
+        "guangwei": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -2164,6 +2396,10 @@
         "xuantu": "wei"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
+        "beidi": [],
+        "guangwei": [],
         "hefei": [
           "san14-candidate-0077"
         ],
@@ -2205,6 +2441,10 @@
         ]
       },
       "resources": {
+        "nanan": {"gold": 670, "grain": 2880, "reserves": 700},
+        "xinping": {"gold": 760, "grain": 3200, "reserves": 830},
+        "beidi": {"gold": 540, "grain": 2410, "reserves": 610},
+        "guangwei": {"gold": 590, "grain": 2500, "reserves": 660},
         "donglai": {
           "gold": 870,
           "grain": 3625,
@@ -2227,11 +2467,19 @@
         }
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
+        "beidi": "漢末失土後寄治馮翊，以曹魏取得祋祤實土後的關中位置代表北地。",
+        "guangwei": "曹魏廣魏郡治臨渭，晉改稱略陽。始置確年有異，按本作234年開局啟用。",
         "xuantu": "238年襄平陷落後，《三國志·公孫度傳》載玄菟等郡平定，開局歸曹魏。"
       }
     },
     "mainland263-05": {
       "owners": {
+        "nanan": "wei",
+        "xinping": "wei",
+        "beidi": "wei",
+        "guangwei": "wei",
         "hefei": "wei",
         "guangling": "wei",
         "chaisang": "wu",
@@ -2252,6 +2500,10 @@
         "xuantu": "wei"
       },
       "garrisons": {
+        "nanan": [],
+        "xinping": [],
+        "beidi": [],
+        "guangwei": [],
         "hefei": [
           "san14-candidate-0650"
         ],
@@ -2299,6 +2551,10 @@
         ]
       },
       "resources": {
+        "nanan": {"gold": 670, "grain": 2880, "reserves": 700},
+        "xinping": {"gold": 760, "grain": 3200, "reserves": 830},
+        "beidi": {"gold": 540, "grain": 2410, "reserves": 610},
+        "guangwei": {"gold": 590, "grain": 2500, "reserves": 660},
         "donglai": {
           "gold": 845,
           "grain": 3500,
@@ -2321,11 +2577,19 @@
         }
       },
       "opening_notes": {
+        "nanan": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。",
+        "xinping": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。",
+        "beidi": "漢末失土後寄治馮翊，以曹魏取得祋祤實土後的關中位置代表北地。",
+        "guangwei": "曹魏廣魏郡治臨渭，晉改稱略陽。始置確年有異，按本作234年開局啟用。",
         "xuantu": "238年襄平陷落後，《三國志·公孫度傳》載玄菟等郡平定，開局歸曹魏。"
       }
     }
   },
   "notes": {
+    "nanan": {"basis": "豲道為郡治。漢末歸屬按漢陽、渭水上游的劇本局勢配置，曹魏時仍為獨立郡。", "sources": ["https://www.shidianguji.com/book/CADAL02086646/chapter/1laz9vfm0p8nn"]},
+    "xinping": {"basis": "東漢由安定、扶風析置，治漆；漢末割據時參照漆縣所處的扶風防區。", "sources": ["https://zh.wikisource.org/wiki/後漢書/卷9"]},
+    "beidi": {"basis": "漢末失土後寄治馮翊，以曹魏取得祋祤實土後的關中位置代表北地。", "sources": ["https://zh.wikisource.org/wiki/魏書/卷106下"]},
+    "guangwei": {"basis": "曹魏廣魏郡治臨渭，晉改稱略陽。始置確年有異，按本作234年開局啟用。", "sources": ["https://zh.wikisource.org/wiki/晉書/卷014#秦州"]},
     "hefei": {
       "basis": "合肥為漢縣。袁術時的開局依淮南勢力配置，劉馥在200年嚴象死後受曹操任命，入合肥空城建州治。200年正月開局先列空城，任命確月待考。215年張遼、樂進、李典均據合肥。張特253年守的是合肥新城，263年續駐為本作前線配置。假想開局依原劇本淮南態勢。",
       "sources": [

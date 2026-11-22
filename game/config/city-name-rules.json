@@ -206,10 +206,8 @@
   },
   "yunzhong": {
     "names": [
-      {"from_date": [1, 1], "to_date": [214, 12], "name": "云中"},
-      {"from_date": [215, 1], "name": "云中旧城"}
+      {"from_date": [1, 1], "name": "云中"}
     ],
-    "announce_name_changes": true,
     "detail": "215年正月撤雲中郡，本作以今托克托縣一帶的雲中故城設邊塞據點。",
     "detail_ja": "215年正月に雲中郡が廃止され、本作では現在のトクト県付近にある雲中の旧城を辺境拠点とします。",
     "sources": ["https://zh.wikisource.org/wiki/三國志/卷01", "https://www.nmgqq.com.cn/quqinggailan/nemenggudashiji/qh/2017-2-16/9787.html"]

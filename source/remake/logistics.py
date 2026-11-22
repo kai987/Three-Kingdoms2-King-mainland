@@ -235,29 +235,31 @@ def _dangerous(quote, policy):
                for leg in quote['routes'])
 
 
+def _permitted_route(game, policy, raw):
+    if raw['mode'] == 'sea' and not policy['allow_sea']:
+        return False
+    if raw['mode'] == 'land' and not policy['allow_special']:
+        rules = game.catalog.data['travel_hazards']
+        yinping, ziwu = rules.get('yinping', {}), rules.get('ziwu', {})
+        pair = {raw['from'], raw['to']}
+        if pair == {yinping.get('from', 'yinping'), yinping.get('to', 'shujun')}:
+            return False
+        if pair == {ziwu.get('from', 'hanzhong'), ziwu.get('to', 'jingzhao')} and raw.get('special', 'ziwu') == 'ziwu':
+            return False
+    return True
+
+
 def _safe_engine(game, policy):
     """Share one filtered graph across a batch without editing the catalog.
 
     Rejecting only its fastest answer would miss a longer safe land detour.
     Copies keep the catalog and all published geometry fingerprints unchanged.
     """
-    def allowed(raw):
-        if raw['mode'] == 'sea' and not policy['allow_sea']:
-            return False
-        if raw['mode'] == 'land' and not policy['allow_special']:
-            rules = game.catalog.data['travel_hazards']
-            yinping, ziwu = rules.get('yinping', {}), rules.get('ziwu', {})
-            pair = {raw['from'], raw['to']}
-            if pair == {yinping.get('from', 'yinping'), yinping.get('to', 'shujun')}:
-                return False
-            if pair == {ziwu.get('from', 'hanzhong'), ziwu.get('to', 'jingzhao')} and raw.get('special', 'ziwu') == 'ziwu':
-                return False
-        return True
     engine = copy(game)
     engine.catalog = copy(game.catalog)
     engine.catalog.data = dict(game.catalog.data,
-        travel_routes=[row for row in game.catalog.data['travel_routes'] if allowed(row)],
-        exploration_routes=[row for row in game.catalog.data.get('exploration_routes', []) if allowed(row)])
+        travel_routes=[row for row in game.catalog.data['travel_routes'] if _permitted_route(game, policy, row)],
+        exploration_routes=[row for row in game.catalog.data.get('exploration_routes', []) if _permitted_route(game, policy, row)])
     return engine
 
 
@@ -265,7 +267,21 @@ def _safe_path(game, state, source, target, owner, mode, policy):
     return _safe_engine(game,policy)._travel_path(state,source,target,owner,mode)
 
 
+def _supply_routes(game, state, owner, pairs, policy):
+    from . import ai_core
+    if ai_core.enabled():
+        data = game.catalog.data
+        excluded = [r['id'] for key in ('travel_routes', 'exploration_routes') for r in data.get(key, ())
+                    if not _permitted_route(game, policy, r)]
+        return ai_core.routes(game, state, owner, pairs, excluded=excluded)
+    engine = _safe_engine(game, policy)
+    return {f'{a}:{b}:{mode}': engine._travel_path(state, a, b, owner, mode)
+            for a, b in pairs for mode in ('land', 'fastest')}
+
+
 def _safe_quote(game, state, source, target, policy, *, quotes=None):
+    if quotes is None and state.phase == 'ai':
+        quotes = _supply_routes(game, state, source.owner, [(source.id, target.id)], policy)
     choices = []
     # Ocean permission never disables a safe inland shipping route. Retain
     # the old land-only answer (and its saved mode) when no river is involved.
@@ -317,15 +333,20 @@ def _meeting_quote(game, state, source, army, policy):
     progress=army['supply'].get('route_days',0)
     elapsed=0
     choices=[]
+    stops=[]
     for index,key in enumerate(army['quote']['path']):
         if index:
             elapsed+=army['quote']['routes'][index-1]['days']
         if elapsed < progress or state.cities[key].owner!=source.owner:
             continue
+        stops.append((index,key,elapsed))
+    pairs = [(source.id,key) for _,key,_ in stops if key != source.id]
+    quotes = _supply_routes(game,state,source.owner,pairs,policy) if pairs and state.phase=='ai' else None
+    for index,key,elapsed in stops:
         if key==source.id:
             selected=('land',game._quote([key],[]))
         else:
-            selected=_safe_quote(game,state,source,state.cities[key],policy)
+            selected=_safe_quote(game,state,source,state.cities[key],policy,quotes=quotes)
         if selected:
             mode,quote=selected
             # Prefer a future stop the courier can reach before the column;
@@ -605,7 +626,8 @@ def dispatch(game, state, payload, owner):
 
 
 def auto_dispatch_city(game, state, city_id):
-    if not _pool(state)['cities'][city_id]['policy']['enabled']:
+    if (not _pool(state)['cities'][city_id]['policy']['enabled']
+            or historical_campaigns.hold_longyou_garrison(game, state, state.cities[city_id])):
         return False
     from .march_supply import next_supply_days,required_grain
     rescues=[]
@@ -672,10 +694,11 @@ def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_
                   and not historical_campaigns.allied(state, owner, row['owner'])}
     protected = set(protected_officers)
     grain_room = LIMIT - target.grain - _inbound(state, target.id)['grain']
-    engines, candidates = {}, []
+    groups, candidates = {}, []
     for source in state.cities.values():
         if (source.owner != owner or source.id == target.id or source.id in active_origins
-                or source.id in threatened or pool['receipts'].get('city:' + source.id, 0) > state.turn):
+                or source.id in threatened or pool['receipts'].get('city:' + source.id, 0) > state.turn
+                or historical_campaigns.hold_longyou_garrison(game, state, source)):
             continue
         row = pool['cities'][source.id]
         policy = row['policy']
@@ -695,37 +718,45 @@ def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_
         # A light escort consumes less of the shipment on the return journey.
         escort = min(escorts, key=lambda ident: (state.officers[ident].troops, _key(ident)))
         permissions = policy['allow_sea'], policy['allow_special']
-        if permissions not in engines:
-            engines[permissions] = _safe_engine(game, policy)
-        engine = engines[permissions]
-        quotes = {f'{source.id}:{target.id}:{mode}': engine._travel_path(state, source.id, target.id, owner, mode)
-                  for mode in ('land', 'fastest')}
-        selected = _safe_quote(game, state, source, target, policy, quotes=quotes)
-        if selected is None:
-            continue
-        mode, quote = selected
-        if max_turns is not None and quote['turns'] > max_turns:
-            continue
-        rations = _rations(state, quote, [escort], _empty_cargo())
-        if source.grain - rations < policy['reserve_grain']:
-            continue
-        grain = min(grain, source.grain - policy['reserve_grain'] - rations)
-        if gold or (grain_need and grain > 0):
-            delivered = min(grain, grain_need)
-            coverage = (gold * 100 // max(1, gold_need)
-                        + delivered * 100 // max(1, grain_need))
-            # A useful shipment next turn can beat a full load many turns away.
-            # A sortie with a specific ration requirement still favors a full load.
-            priority = (-(coverage * 100 // quote['turns']) if require_return
-                        else int(gold < gold_need or delivered < grain_need))
-            candidates.append((priority, quote['days'], -coverage, -delivered,
-                               source.id, mode, escort, gold, grain))
+        groups.setdefault(permissions, []).append((source, escort, gold, grain))
+
+    by_policy = {}
+    for permissions, donors in groups.items():
+        policy = pool['cities'][donors[0][0].id]['policy']
+        pairs = [(donor.id, target.id) for donor, *_ in donors]
+        pairs += [(dest, origin) for origin, dest in pairs]
+        quotes = _supply_routes(game, state, owner, pairs, policy)
+        by_policy[permissions] = quotes
+        for source, escort, gold, grain in donors:
+            policy = pool['cities'][source.id]['policy']
+            selected = _safe_quote(game, state, source, target, policy, quotes=quotes)
+            if selected is None:
+                continue
+            mode, quote = selected
+            if max_turns is not None and quote['turns'] > max_turns:
+                continue
+            rations = _rations(state, quote, [escort], _empty_cargo())
+            if source.grain - rations < policy['reserve_grain']:
+                continue
+            grain = min(grain, source.grain - policy['reserve_grain'] - rations)
+            if gold or (grain_need and grain > 0):
+                delivered = min(grain, grain_need)
+                coverage = (gold * 100 // max(1, gold_need)
+                            + delivered * 100 // max(1, grain_need))
+                # A useful shipment next turn can beat a full load many turns away.
+                # A sortie with a specific ration requirement still favors a full load.
+                priority = (-(coverage * 100 // quote['turns']) if require_return
+                            else int(gold < gold_need or delivered < grain_need))
+                candidates.append((priority, quote['days'], -coverage, -delivered,
+                                   source.id, mode, escort, gold, grain))
     if not candidates:
         return False
 
     for _, _, _, _, source_id, mode, escort, gold, grain in sorted(candidates):
         source = state.cities[source_id]
-        selected = _safe_quote(game, state, target, source, pool['cities'][source_id]['policy'])
+        policy = pool['cities'][source_id]['policy']
+        selected = _safe_quote(game, state, target, source, policy,
+                               quotes=by_policy[policy['allow_sea'], policy['allow_special']])
         if require_return and (selected is None or max_turns is not None
                                and selected[1]['turns'] > max_turns):
             continue

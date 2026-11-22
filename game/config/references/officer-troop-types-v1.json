@@ -39,7 +39,7 @@
     "game/config/references/original-officer-stats.json": "11ab9fbfe6852d2d8e59a400e7fd62b59281506b224acef141d2690e4a769032",
     "game/config/references/cnblogs-officer-stats.json": "fee9b0e47615f676c25bea80900bdb60896a193253f4eb8e4a9c4e3ed8605fef",
     "game/config/campaigns/people.json": "edba242b9c18142a318cbc02f9cfda6b2825350a3550be94dab5eff65c770a49",
-    "game/config/campaigns/shared.json": "4f4553ecc55a2811de9396e57e873607324c3e3fffbd1fbfec85f60122635c9e"
+    "game/config/campaigns/shared.json": "da94d2a2c6505bc025146018f8a33d0e4d5aa36048d373f9feea064aceeabf2d"
   },
   "counts": {
     "people": 1082,

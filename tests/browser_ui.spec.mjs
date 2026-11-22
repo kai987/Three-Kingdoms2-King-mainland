@@ -590,7 +590,7 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  const turn=async()=>(await tacticalSave(page)).state.turn;
  await expect(speed).toHaveValue('normal');
  await expect(speed).toHaveAccessibleName('觀戰速度');
- await expect(speed.locator('option')).toHaveText(['慢速','普通','快速']);
+ await expect(speed.locator('option')).toHaveText(['慢速','普通','快速','無等待']);
  await page.clock.runFor(180);
  await expect(status).toHaveAttribute('data-observer-state','playing');
  const openingSave=await tacticalSave(page);
@@ -682,7 +682,7 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  await page.locator('#utility-menu summary').press('Enter');
  await page.locator('#language').selectOption('ja');
  await expect(speed).toHaveAccessibleName('観戦速度');
- await expect(speed.locator('option')).toHaveText(['低速','標準','高速']);
+ await expect(speed.locator('option')).toHaveText(['低速','標準','高速','待機なし']);
  await expect(speed).toHaveValue('normal');
  await expect(headers).toHaveText(['勢力','都市','本拠','同盟','現役','兵士','予備兵','金','糧'],{useInnerText:true});
  await checkLedgerColumns();
@@ -704,6 +704,11 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  await page.locator('#save-file').setInputFiles({name:'observer-lifespan.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(resumed))});
  await expect(page.locator('#dialog')).toBeHidden();await page.clock.runFor(180);await waitIdle(page);
  expect(await tacticalSave(page)).toEqual(resumed);
+ await speed.selectOption('instant');
+ await step.press('Enter');
+ await expect.poll(turn).toBe(resumed.state.turn+1);
+ await waitIdle(page); // The clock is paused, so a fixed command delay would stall here.
+ await expect(status).toHaveAttribute('data-observer-state','paused');
  expect(errors.get(page)).toEqual([]);
 });
 
@@ -1470,7 +1475,7 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
  await scenarios.selectOption('mainland194-06');await page.locator('input[name=faction][value=wei]').check();
  expect(await factionFill('shujun','liu_zhang')).toBe(yiFill);
  await expect(marker('jiyin')).toHaveAttribute('data-owner','wei');
- await expect(marker('jiyin')).toHaveAttribute('aria-label',/鄄城/);
+ await expect(marker('jiyin')).toHaveAttribute('aria-label',/^鄄，曹操$/);
  // Zhang Miao's allied army is independently selectable, rather than an
  // ordinary Lü Bu garrison. Cao Cao still opens in the Juancheng proxy.
  await expect(marker('chenliu')).toHaveAttribute('data-owner','zhang_miao');
@@ -1497,13 +1502,13 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
 
 test('dated Xiaopei Qiao names and city scales appear in real scenario information',async({page},testInfo)=>{
  await opening(page);
- for(const[scenario,name,scale]of[
-  ['mainland217-07','小沛','普通城'],
-  ['mainland219-07','譙郡','普通城'],
-  ['mainland221-07','譙郡','大城'],
+ for(const[scenario,mapName,name,scale]of[
+  ['mainland217-07','小沛','小沛','普通城'],
+  ['mainland219-07','譙','譙郡','普通城'],
+  ['mainland221-07','譙','譙郡','大城'],
  ]){
   await page.locator('#scenario').selectOption(scenario);
-  await expect(page.locator('#city-jump option[value=qiao]')).toContainText(name);
+  await expect(page.locator('#city-jump option[value=qiao]')).toContainText(mapName+' ·');
   await page.locator('#city-jump').selectOption('qiao');
   const info=page.locator('.city-information[data-inspected-city=qiao]');
   await expect(info).toBeVisible();
@@ -3124,7 +3129,7 @@ test('published event backdrops decode from the verified web build',async({page}
   }
   return sizes;
  },{all:browserScope.full,updates});
- expect(result).toHaveLength(browserScope.full||!updates.length?98:updates.length);
+ expect(result).toHaveLength(browserScope.full||!updates.length?99:updates.length);
  for(const [path,width,height]of result)expect(width>height&&height>0,path).toBe(true);
 });
 

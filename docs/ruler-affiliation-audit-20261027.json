@@ -3,9 +3,9 @@
   "review_revision": "2026-10-27",
   "base_commit": "69a6e8f01239159b91e150637f888278af3b7a88",
   "review_sha256": "fb38ef837fad2783b70ac326f3496bfb45f322b274a8d062c7f5bc0aa65efdba",
-  "presentation_sha256": "b7359e9afd0ee1ed19da37a69bef2a8608566da6d68589e42870d2aa7acd1a9f",
+  "presentation_sha256": "ff5db0f3f8a5c2f4110d2dfdce94f29f11fb8bca6763a7b46c930b3449a8525f",
   "locale_sha256": "a3288f2b5f9de40b0c9eb76c79dcbc96b9d0774d7d85a5df65d229f3064e7301",
-  "japanese_sha256": "f759c11ffda04dab1b01a7a5144eaa58e929b74a3679e85095571e9934f56414",
+  "japanese_sha256": "dacec5d3a4cdd5a6d42c6495bc0561fffe23bee64350180b14700add8f1de6b1",
   "baseline_serving_non_ruler_reviews": 283,
   "pool": [
     {
@@ -1755,13 +1755,17 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [
         "bian_zhang",
         "song_jian"
       ],
-      "catalog_sha256": "474f80af742ca252f9ba3ce2c9b1cc69759fb45496ec6346aeeeaeb65bf89c4a"
+      "catalog_sha256": "bd51f35a837368f4365eb93cb8b771700d19ff3f458f503da91b8e88f67692a9"
     },
     {
       "id": "mainland188-06",
@@ -2931,9 +2935,9 @@
         }
       ],
       "material": {
-        "gold": 158744,
-        "grain": 563919,
-        "soldiers": 208017
+        "gold": 159264,
+        "grain": 566319,
+        "soldiers": 208567
       },
       "placement_counts": {
         "reference_classes": {
@@ -3237,10 +3241,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "ee50b267326c6184f5429a402f33cf842c8f35bc407123751157de9aa0c96a26"
+      "catalog_sha256": "0c4aa2fc1cfb113049ea40c85a8c8c72fdb877b82b2383a60b217cccb9809712"
     },
     {
       "id": "mainland190-01",
@@ -4510,9 +4518,9 @@
         }
       ],
       "material": {
-        "gold": 154190,
-        "grain": 537870,
-        "soldiers": 244127
+        "gold": 154710,
+        "grain": 540270,
+        "soldiers": 244677
       },
       "placement_counts": {
         "reference_classes": {
@@ -5170,10 +5178,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "4275f6d5c6dfc0d6ab6e50e00a2a84050199754b6599e29a70135e12504c124e"
+      "catalog_sha256": "ebf7b8455ee3c1e109a851e5f68d995ddb4e2c85588fd70a0b335e6ce9899ebf"
     },
     {
       "id": "mainland191-10",
@@ -6411,9 +6423,9 @@
         }
       ],
       "material": {
-        "gold": 152130,
-        "grain": 530345,
-        "soldiers": 257197
+        "gold": 152650,
+        "grain": 532745,
+        "soldiers": 257747
       },
       "placement_counts": {
         "reference_classes": {
@@ -6654,10 +6666,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "934702301ceee4d33fdacb34ac3f92408414369be57f1ff59cbc0dba1edb83d8"
+      "catalog_sha256": "85421d8ff772f6b469f930971850661d2dceca9180d51a7a16daea94ef198aab"
     },
     {
       "id": "mainland194-06",
@@ -7894,9 +7910,9 @@
         }
       ],
       "material": {
-        "gold": 149845,
-        "grain": 521877,
-        "soldiers": 252647
+        "gold": 150365,
+        "grain": 524277,
+        "soldiers": 253197
       },
       "placement_counts": {
         "reference_classes": {
@@ -8378,10 +8394,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "71f20b5437572e98af0daee945ed527d1a0e5390b5e67cbc7dbe19b3b360121a"
+      "catalog_sha256": "238610ef3299e5744491978f686a888db9220047c0a77d5abe837f56759c1d6a"
     },
     {
       "id": "mainland196-06",
@@ -9602,9 +9622,9 @@
         }
       ],
       "material": {
-        "gold": 148625,
-        "grain": 517037,
-        "soldiers": 251427
+        "gold": 149745,
+        "grain": 522037,
+        "soldiers": 252597
       },
       "placement_counts": {
         "reference_classes": {
@@ -10003,10 +10023,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "9e3ed8352f12278e3580dd50c92aa345b8737c742f05fc088da9294acbb62511"
+      "catalog_sha256": "43ace91b425f985e8b99886c778242c4e185ad3c4e0856664273ae819a974b6d"
     },
     {
       "id": "mainland197-07",
@@ -11235,9 +11259,9 @@
         }
       ],
       "material": {
-        "gold": 149725,
-        "grain": 522302,
-        "soldiers": 248142
+        "gold": 150845,
+        "grain": 527302,
+        "soldiers": 249312
       },
       "placement_counts": {
         "reference_classes": {
@@ -11886,10 +11910,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "6f8293322e990d44016c35e15b0b2d8abc41909a9e94241e2be1f50e66974531"
+      "catalog_sha256": "7938e7fd2d3d06f42942ad2ca768850408c9ca09a069b623d1b179605bb0222c"
     },
     {
       "id": "mainland198-03",
@@ -13092,9 +13120,9 @@
         }
       ],
       "material": {
-        "gold": 150130,
-        "grain": 523312,
-        "soldiers": 255587
+        "gold": 151250,
+        "grain": 528312,
+        "soldiers": 256757
       },
       "placement_counts": {
         "reference_classes": {
@@ -13638,10 +13666,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "ed981dec65873ae531402a279fe96005696359322aee1b0f091fb7c8b45d1817"
+      "catalog_sha256": "a269bc28d833b573d8135532cea4697e0d27fbae17e48d4de2d9fbb1e18e6c0b"
     },
     {
       "id": "mainland200-01",
@@ -14810,9 +14842,9 @@
         }
       ],
       "material": {
-        "gold": 161570,
-        "grain": 575772,
-        "soldiers": 273157
+        "gold": 162810,
+        "grain": 581022,
+        "soldiers": 274527
       },
       "placement_counts": {
         "reference_classes": {
@@ -15119,10 +15151,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "602dac15185aab1783c0b89ea075cfa66b25b380ead24085e8e741bccddc0b8e"
+      "catalog_sha256": "8a0e2bfc83147bf9349b180c1457dd634eaef1bd3c2bddac111f7a54024f36c5"
     },
     {
       "id": "mainland201-05",
@@ -16291,9 +16327,9 @@
         }
       ],
       "material": {
-        "gold": 161600,
-        "grain": 575872,
-        "soldiers": 269272
+        "gold": 162840,
+        "grain": 581122,
+        "soldiers": 270642
       },
       "placement_counts": {
         "reference_classes": {
@@ -16464,10 +16500,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "d21d935bfe14a87b3dd831059c3cb49aa7df5315685817f757fb955895f41544"
+      "catalog_sha256": "ec1dbc7c1fcb8fda1937aae4b76fc25e9cc7ce998b8a59196aedcedfc4be2ccc"
     },
     {
       "id": "mainland202-06",
@@ -17640,9 +17680,9 @@
         }
       ],
       "material": {
-        "gold": 161605,
-        "grain": 576062,
-        "soldiers": 276022
+        "gold": 162845,
+        "grain": 581312,
+        "soldiers": 277392
       },
       "placement_counts": {
         "reference_classes": {
@@ -17919,10 +17959,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "e599a75793b99e99618d0fae3402179fb09352b3fa88396f2b740cd4a3107261"
+      "catalog_sha256": "20880f15e649527341ff781ad5cdd54c52a2ad22e9435d9739b7dd098be7337a"
     },
     {
       "id": "mainland207-09",
@@ -19075,9 +19119,9 @@
         }
       ],
       "material": {
-        "gold": 165840,
-        "grain": 596172,
-        "soldiers": 280047
+        "gold": 167080,
+        "grain": 601422,
+        "soldiers": 281417
       },
       "placement_counts": {
         "reference_classes": {
@@ -19433,10 +19477,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "427096987b24fbc47ad8bbd5b9515d427ca6967ac4f3232015c4c7c6d881bbb9"
+      "catalog_sha256": "7f3495bd4e2d98c6c8294c30f3c38f75c9ed8d9bf4d078c1e456556f65fe37e4"
     },
     {
       "id": "mainland208-10",
@@ -20592,9 +20640,9 @@
         }
       ],
       "material": {
-        "gold": 159657,
-        "grain": 565302,
-        "soldiers": 287902
+        "gold": 160897,
+        "grain": 570552,
+        "soldiers": 289272
       },
       "placement_counts": {
         "reference_classes": {
@@ -20907,10 +20955,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "e624d0a8574492c31cf406bd17316930700feddc141887edc62f76261bf761e6"
+      "catalog_sha256": "d711cba3e174c104e430638f30a6e561a1e93093749049cd80bc899f9758d18f"
     },
     {
       "id": "mainland209-06",
@@ -22030,9 +22082,9 @@
         }
       ],
       "material": {
-        "gold": 159682,
-        "grain": 565402,
-        "soldiers": 288082
+        "gold": 160922,
+        "grain": 570652,
+        "soldiers": 289452
       },
       "placement_counts": {
         "reference_classes": {
@@ -22206,10 +22258,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "4676ff8a39ed399ef077bcd8fa0751f0b2b3782a6e1f9aebafbb14982b49d429"
+      "catalog_sha256": "2261e3607d2e81d416fdd88e861aae128006f962419f26ed86d7a54248c28d15"
     },
     {
       "id": "mainland210-11",
@@ -23323,9 +23379,9 @@
         }
       ],
       "material": {
-        "gold": 159687,
-        "grain": 565527,
-        "soldiers": 284807
+        "gold": 160927,
+        "grain": 570777,
+        "soldiers": 286177
       },
       "placement_counts": {
         "reference_classes": {
@@ -23556,10 +23612,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "5fe9dd0459d92be47166ca3e793fb82688e28a9c502dbd41aa6e6b5a9da5f3ee"
+      "catalog_sha256": "106411e97e47f0baa4fb4e0a6573137f12f640f44ae36b6b04dc1d5410980a63"
     },
     {
       "id": "mainland211-07-tongguan",
@@ -24678,9 +24738,9 @@
         }
       ],
       "material": {
-        "gold": 169207,
-        "grain": 595464,
-        "soldiers": 304090
+        "gold": 170447,
+        "grain": 600714,
+        "soldiers": 305460
       },
       "placement_counts": {
         "reference_classes": {
@@ -25003,10 +25063,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "28c2e29e560487cd3f10a21b5baf0da8490b592d49727b40fab0340c9c43ef33"
+      "catalog_sha256": "2fe21ca93f91ea2dff3896a1c19e625e7ad4f9d9fdedb337c1d012cf9a66cbf1"
     },
     {
       "id": "mainland212-06",
@@ -26129,9 +26193,9 @@
         }
       ],
       "material": {
-        "gold": 169207,
-        "grain": 595489,
-        "soldiers": 300500
+        "gold": 170447,
+        "grain": 600739,
+        "soldiers": 301870
       },
       "placement_counts": {
         "reference_classes": {
@@ -26361,10 +26425,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "c67b282c2e29b665433e25e6864309469c72c62f566017345e807262b2db2e3e"
+      "catalog_sha256": "c22fb92ac35205b1fc74b368a11eadd5befe9cb5a90f1e013fe63d02a4fe9c4a"
     },
     {
       "id": "mainland212-12",
@@ -27474,9 +27542,9 @@
         }
       ],
       "material": {
-        "gold": 169227,
-        "grain": 595639,
-        "soldiers": 294225
+        "gold": 170467,
+        "grain": 600889,
+        "soldiers": 295595
       },
       "placement_counts": {
         "reference_classes": {
@@ -27743,10 +27811,14 @@
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "20e87798e4a8d65455371522114fa01373e25871f28be2291232cf3fc970fc87"
+      "catalog_sha256": "9d185636e51d20f4d8e8a6b7cf75389a4637e0a11b5bddd86c5e552488d3b23d"
     },
     {
       "id": "mainland215-08",
@@ -28834,9 +28906,9 @@
         }
       ],
       "material": {
-        "gold": 168772,
-        "grain": 596890,
-        "soldiers": 296112
+        "gold": 170012,
+        "grain": 602140,
+        "soldiers": 297482
       },
       "placement_counts": {
         "reference_classes": {
@@ -29126,16 +29198,20 @@
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城",
+        "yunzhong": "云中",
         "donglai": "东莱",
         "langya": "琅邪国",
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "b47c4296ae189b9bec26f91dc5726793d58efa3ac1cd991a2645790144a9e7a2"
+      "catalog_sha256": "afa3b9d97cef6d632d89f89053d7d977adb2d733d53de52572bb5e64224789f7"
     },
     {
       "id": "mainland217-07",
@@ -30225,9 +30301,9 @@
         }
       ],
       "material": {
-        "gold": 169097,
-        "grain": 596072,
-        "soldiers": 297020
+        "gold": 170337,
+        "grain": 601322,
+        "soldiers": 298390
       },
       "placement_counts": {
         "reference_classes": {
@@ -30565,16 +30641,20 @@
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城",
+        "yunzhong": "云中",
         "donglai": "东莱",
         "langya": "琅邪郡",
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "968ee8eb2db59dd48abfc2778d719c4be1d4015ef80a3a82f5ae80762957f9e7"
+      "catalog_sha256": "c18a0b555502e11d13bac54837ceb7965d7d30ee04f697ea7ff82600966ee822"
     },
     {
       "id": "mainland219-07",
@@ -31666,9 +31746,9 @@
         }
       ],
       "material": {
-        "gold": 162066,
-        "grain": 565730,
-        "soldiers": 294377
+        "gold": 163306,
+        "grain": 570980,
+        "soldiers": 295747
       },
       "placement_counts": {
         "reference_classes": {
@@ -31943,16 +32023,20 @@
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城",
+        "yunzhong": "云中",
         "donglai": "东莱",
         "langya": "琅邪郡",
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "eecd7b518e832b7ece6696e04dfad9af9ea29fda0044c2f1e6bf9f9dc69bd8b2"
+      "catalog_sha256": "3278ca539ab4e397f3ae4ab64a775d6a0b99e8546c2026945e5d77193ca474f9"
     },
     {
       "id": "mainland221-07",
@@ -33040,9 +33124,9 @@
         }
       ],
       "material": {
-        "gold": 176522,
-        "grain": 605125,
-        "soldiers": 294077
+        "gold": 178492,
+        "grain": 613615,
+        "soldiers": 296217
       },
       "placement_counts": {
         "reference_classes": {
@@ -33340,16 +33424,20 @@
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城",
+        "yunzhong": "云中",
         "donglai": "东莱",
         "langya": "琅邪郡",
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "987aa07c960c05da6fbfdc701950cc7a9a8c72cf4a19b127e4ca1f66bfc9cb07"
+      "catalog_sha256": "6eb6653553444ddd98a1b68da979f017fc031975edf946c8367c023b796e00d8"
     },
     {
       "id": "mainland225-07",
@@ -34438,9 +34526,9 @@
         }
       ],
       "material": {
-        "gold": 178805,
-        "grain": 615281,
-        "soldiers": 283732
+        "gold": 180775,
+        "grain": 623771,
+        "soldiers": 285872
       },
       "placement_counts": {
         "reference_classes": {
@@ -34695,16 +34783,20 @@
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城",
+        "yunzhong": "云中",
         "donglai": "东莱",
         "langya": "琅邪郡",
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "d19d8271f51e471cf59f38ee71b078dcc3c5db0cf4a1ca6976b306c05a6c5879"
+      "catalog_sha256": "7c80bc6857e9c033d5c8f57de09f03408de092975de344037a651b0bcab3b5cf"
     },
     {
       "id": "mainland227-02",
@@ -35779,9 +35871,9 @@
         }
       ],
       "material": {
-        "gold": 180025,
-        "grain": 610381,
-        "soldiers": 293870
+        "gold": 181995,
+        "grain": 618871,
+        "soldiers": 296010
       },
       "placement_counts": {
         "reference_classes": {
@@ -36117,16 +36209,20 @@
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城",
+        "yunzhong": "云中",
         "donglai": "东莱",
         "langya": "琅邪郡",
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "347938048313241906d08d412bd0cb0365b4f7c85eb117828a1af116844c9828"
+      "catalog_sha256": "0720e6ff10c49317f842665cedf17894a712b2ef152523aad405739c1aa9f386"
     },
     {
       "id": "mainland234-02",
@@ -37195,9 +37291,9 @@
         }
       ],
       "material": {
-        "gold": 180795,
-        "grain": 612531,
-        "soldiers": 286890
+        "gold": 183355,
+        "grain": 623521,
+        "soldiers": 289690
       },
       "placement_counts": {
         "reference_classes": {
@@ -37495,16 +37591,20 @@
         "jianping": "建平",
         "shuofang": "临戎",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城",
+        "yunzhong": "云中",
         "donglai": "东莱",
         "langya": "琅邪国",
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "7971fb7940ef399658f227def0d855c66bdad61cf3090e30dadb09e78b81a1d5"
+      "catalog_sha256": "4ffe17bf93ec05772daf11ecde80b6421631ba4c4391683e801fe4a0e23ffab0"
     },
     {
       "id": "mainland235-01",
@@ -38567,9 +38667,9 @@
         }
       ],
       "material": {
-        "gold": 188002,
-        "grain": 658837,
-        "soldiers": 289607
+        "gold": 190562,
+        "grain": 669827,
+        "soldiers": 292407
       },
       "placement_counts": {
         "reference_classes": {
@@ -38756,16 +38856,20 @@
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城",
+        "yunzhong": "云中",
         "donglai": "东莱",
         "langya": "琅邪国",
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "827fed1e5f21ab2b268d0a8c7ff8e316896a2c42b863aaa6fdfcceb8f8fd7b8e"
+      "catalog_sha256": "c2c86e11b731f1f32298899041b77af1cb0edfdcca347664521500cd6ff156fb"
     },
     {
       "id": "mainland238-01",
@@ -39834,9 +39938,9 @@
         }
       ],
       "material": {
-        "gold": 188092,
-        "grain": 659137,
-        "soldiers": 287182
+        "gold": 190652,
+        "grain": 670127,
+        "soldiers": 289982
       },
       "placement_counts": {
         "reference_classes": {
@@ -40134,16 +40238,20 @@
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城",
+        "yunzhong": "云中",
         "donglai": "东莱",
         "langya": "琅邪国",
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "fb18aa55d91c3d3804a3742c776238385354cf6989b7a4d4d75856953855eb3d"
+      "catalog_sha256": "0e1380f5b719749e0c4af85f885aeeec8b5a9a917493526b7f74e3351e9e5f70"
     },
     {
       "id": "mainland249-01",
@@ -41203,9 +41311,9 @@
         }
       ],
       "material": {
-        "gold": 197162,
-        "grain": 684087,
-        "soldiers": 277412
+        "gold": 199722,
+        "grain": 695077,
+        "soldiers": 280212
       },
       "placement_counts": {
         "reference_classes": {
@@ -41537,16 +41645,20 @@
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城",
+        "yunzhong": "云中",
         "donglai": "东莱",
         "langya": "琅邪国",
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "9344b02cf6af74f09653a7b3545bfb3b4bccab3ba1bfb5a8fddd4e0aca308f12"
+      "catalog_sha256": "dfd7a775a3d27fcf2d0b8e9930af8081d5bbc819893265c66e037902782e048a"
     },
     {
       "id": "mainland263-05",
@@ -42611,9 +42723,9 @@
         }
       ],
       "material": {
-        "gold": 186299,
-        "grain": 631530,
-        "soldiers": 243855
+        "gold": 188859,
+        "grain": 642520,
+        "soldiers": 246655
       },
       "placement_counts": {
         "reference_classes": {
@@ -42861,16 +42973,20 @@
         "jianping": "建平",
         "shuofang": "朔方",
         "wuyuan": "九原",
-        "yunzhong": "云中旧城",
+        "yunzhong": "云中",
         "donglai": "东莱",
         "langya": "琅邪国",
         "taishan": "泰山",
         "xuantu": "玄菟",
         "guonei": "国内城",
+        "nanan": "南安",
+        "xinping": "新平",
+        "beidi": "北地",
+        "guangwei": "广魏",
         "luzon": "吕宋"
       },
       "dormant_factions": [],
-      "catalog_sha256": "e4f296bc4b61117d47acefd374f0eb53bac8e40e0f55ac952b254c19f3198006"
+      "catalog_sha256": "18ef5ddcffe09594b9256158eba7da4ece5da8c00c018a8932dd1bec1a1aa513"
     }
   ]
 }

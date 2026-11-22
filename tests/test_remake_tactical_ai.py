@@ -58,6 +58,31 @@ def successful_rng(state):
 
 
 class TacticalAiTests(unittest.TestCase):
+    def test_rust_and_python_return_the_same_ordered_candidates(self):
+        from remake.march_core import enabled, using_backend
+        with using_backend('auto'):
+            if not enabled():
+                self.skipTest('Build the native march core to compare tactical candidates')
+        for grid in (False, True):
+            game = battle(tactical=grid)
+            state, field = game.state, game.state.battle
+            own, foe = game._player_sides(state)
+            actor = field[own][0]
+            support = field['extended']['support'][str(actor['id'])]
+            support.update(morale=51, garrison_spirit=74)
+            for guarded, stunned in ((0,0),(1,0),(0,1)):
+                field['extended']['support'][str(field[foe][0]['id'])]['guard'] = guarded
+                support['stunned'] = stunned
+                original = game.to_dict()
+                options = dict(game=game, depth=2, allowed_actors={actor['id']})
+                with using_backend('python'):
+                    expected = candidates(state, field, own, foe, 'plain', TACTICS, **options)
+                with using_backend('rust'):
+                    actual = candidates(state, field, own, foe, 'plain', TACTICS, **options)
+                self.assertEqual(actual, expected)
+                self.assertEqual(game.to_dict(), original)
+
+
     def test_morale_prediction_matches_actual_all_damage_spreads(self):
         game=kernel_battle(three_enemies=False)
         state=game.state;b,a,t,_,_=actors(game)

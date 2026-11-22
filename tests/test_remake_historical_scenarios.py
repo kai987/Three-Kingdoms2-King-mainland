@@ -108,6 +108,34 @@ class HistoricalScenarioTests(unittest.TestCase):
                    if row['person_id'] == person_id)
         self.assertIs(row['ruler'], True)
 
+    def test_yongzhou_dates_stocks_and_topology_in_every_opening(self):
+        specs = {'nanan': ((188, 1), {'longxi', 'tianshui'}),
+                 'xinping': ((194, 12), {'anding', 'fufeng'}),
+                 'beidi': ((220, 11), {'jingzhao', 'fengyi'}),
+                 'guangwei': ((234, 2), {'tianshui', 'fufeng'})}
+        openings = json.loads((ROOT / 'game/config/campaigns/city-expansion-openings.json').read_text())
+        from remake.route_network import effective
+
+        for scenario, catalog in self.catalogs.items():
+            data = catalog.data
+            date = data['start_year'], data['start_month']
+            active = catalog.active_city_ids(*date)
+            routes = effective(data['travel_routes'], active, *date)
+            pairs = {frozenset((route['from'], route['to'])) for route in routes if route['mode'] == 'land'}
+            for city, (opening, neighbors) in specs.items():
+                with self.subTest(scenario=scenario, city=city):
+                    self.assertEqual(city in active, date >= opening)
+                    if city not in active:
+                        self.assertNotIn(city, data['initial_owners'])
+                        self.assertFalse(any(city in pair for pair in pairs))
+                        continue
+                    source = openings['scenarios'][scenario]
+                    self.assertEqual(data['initial_owners'][city], source['owners'][city])
+                    self.assertEqual(data['initial_city_resources'][city], source['resources'][city])
+                    self.assertGreater(min(source['resources'][city].values()), 0)
+                    self.assertTrue(all(frozenset((city, other)) in pairs for other in neighbors))
+            self.assertEqual(frozenset(('longxi', 'tianshui')) in pairs, date < specs['nanan'][0])
+
     def test_han_sui_is_an_independent_ruler_in_all_eleven_relevant_openings(self):
         for chapter in HAN_SUI_CHAPTERS:
             with self.subTest(chapter=chapter):
@@ -746,7 +774,7 @@ class FrozenRulerAuditNegativeTests(unittest.TestCase):
 
     def expected_material(self):
         stocks = [self.data['initial_city_resources'][city] for city in (
-            'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'liucheng', 'guonei')]
+            'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'liucheng', 'guonei', 'nanan')]
         gold, grain, soldiers = (sum(city[field] for city in stocks) for field in ('gold', 'grain', 'reserves'))
         soldiers += 5050 + 2480  # The 194 Wuhuan and Goguryeo frontier garrisons.
         frozen = self.decision['material']

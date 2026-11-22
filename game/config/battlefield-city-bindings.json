@@ -17,7 +17,7 @@
       "role": "Literal source labels only; not a positional join."
     }
   ],
-  "city_count": 136,
+  "city_count": 140,
   "original_map_count": 30,
   "templates": {
     "original-00": {
@@ -1041,6 +1041,30 @@
       "kind": "regional_reuse",
       "reason_tc": "國內城在鴨綠江北岸，與玄菟共用原版「遼東」戰場作為區域模板。",
       "reason_ja": "国内城は鴨緑江の北岸にあり、玄菟と同じ原作「遼東」の戦場を地域用テンプレートとして使用します。"
+    },
+    "nanan": {
+      "map_id": "original-09",
+      "kind": "regional_reuse",
+      "reason_tc": "南安與隴西共用隴右戰場。",
+      "reason_ja": "南安は隴西と同じ戦場を使用します。"
+    },
+    "xinping": {
+      "map_id": "original-08",
+      "kind": "regional_reuse",
+      "reason_tc": "新平與扶風共用關中戰場。",
+      "reason_ja": "新平は扶風と同じ戦場を使用します。"
+    },
+    "beidi": {
+      "map_id": "original-08",
+      "kind": "regional_reuse",
+      "reason_tc": "北地與馮翊共用關中戰場。",
+      "reason_ja": "北地は馮翊と同じ戦場を使用します。"
+    },
+    "guangwei": {
+      "map_id": "original-07",
+      "kind": "regional_reuse",
+      "reason_tc": "廣魏與天水共用隴右戰場。",
+      "reason_ja": "広魏は天水と同じ戦場を使用します。"
     },
     "luzon": {
       "map_id": "original-18",

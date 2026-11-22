@@ -113,7 +113,7 @@ class EventSceneStaticBoundaries(unittest.TestCase):
         self.assertEqual(static, {'/' + name: (name, 'image/webp') for name in expected})
         self.assertEqual({str(file.relative_to(ROOT / 'game'))
                           for file in (ROOT / 'game' / prefix).glob('*.webp')}, expected)
-        self.assertEqual(len(expected), 98)
+        self.assertEqual(len(expected), 99)
         hashes = {}
         for name in sorted(expected):
             with self.subTest(scene=name):

@@ -7,12 +7,12 @@
     "art/map-western-range-v2/manifest.json": "ac7d98decd6e80e9d5574aeb12a90ffc7f8deaa36203b31260dcca15b459ec34",
     "art/map-western-range-v3/manifest.json": "e2ca03db95ea413efe1480af40de92bafe686d6aa1c670db33904b3f89e1bdc1",
     "art/map-western-range-v3/source/road-centers-before-junctions.png": "a5de4d6f09d860a5d0f93479321e4365d5a13c048de38c97c7bbef45ef0336e7",
-    "game/assets/map-road-centers.png": "201f69f13e51e58f795a686cdb4655e82b3e68edbd15a9e9188a906c8914dd9b",
+    "game/assets/map-road-centers.png": "ba6559305096c0be4c044f0a59c5660609e73766d9817851cc7aabd136b33547",
     "game/build_portrait_manifest.py": "af2b17c06ddb656d04f1c0bee90f00a86cca93f346261d8ad50e432c0a281c3d",
     "game/build_terrain_art.py": "2954ebb68b399a735ff73d99b62ef4ee419b99540db6ca73563b819675989e54",
-    "game/config/campaigns/shared.json": "4f4553ecc55a2811de9396e57e873607324c3e3fffbd1fbfec85f60122635c9e",
-    "game/config/road-centers.json": "3d1ca54f92a7b09af7ecd000be0c0dcaaff982c8a4920f20e5960787840aca73",
-    "game/config/route-geometry.json": "e9bae9e77fec05ecad4726137f442e2326cad3d1a663613487a61149895fee94",
+    "game/config/campaigns/shared.json": "da94d2a2c6505bc025146018f8a33d0e4d5aa36048d373f9feea064aceeabf2d",
+    "game/config/road-centers.json": "7878a02ffde949418a1eec6c5ba82ebd4ca4b25f5a76b4d1da562cfe97da1a5e",
+    "game/config/route-geometry.json": "23a095a1e53a4a810475d248e0d4ea81a1ee646ced3419b58960a9b73f54b480",
     "game/config/terrain-art.json": "dbd1ac2233fb8ff4bc07f5178933956f5c421d2b62d07ecd0a09d5a02472e6ec",
     "game/config/water-corrections.json": "26ae46a51010a6f746a91d37b987f1c15ab870faa35519890300255ba516a3a2",
     "game/island_art.py": "0f29ac4cf21cd3bf183844b0c653d535fdae94d3c30777f98479b6405bc18447",
@@ -21,7 +21,7 @@
     "game/map-source/hydrology-ground.png": "488e75e26eabc331fbb3276dc5cf5a4bc32883424b782525d9f4d1c1421c96ee",
     "game/map-source/northeast-coast-art.png": "bf07b62c1da5d3225568b5a0d4784ceb4afca96aeb4c0e7d71a10f8350f09eff",
     "game/map-source/northeast-coastline.png": "3af958327bc3fb585c54c7ebfed7b3a66e8d4f418e4ace3d7c8977e3f5deebf5",
-    "game/map-source/road-centers-render.json": "6cf298a47d46fd098f5e9c64d7dfeaa66aab63aa58ddb34d4de5ac0aca210acf",
+    "game/map-source/road-centers-render.json": "d9f0646c0283bdc953b2767e245053fd319c21a75e96785c1bc075e2d6da1d2b",
     "game/map-source/road-ground.png": "ea8cf8ecbb573205b9b3e9ea43c1c15ec61ff5bef3e3d1e699bea75b0d7c08c0",
     "game/map-source/sea-shadow.svg": "207a066255705a6f080ed9196cd75911d7bc16f37dd3a455ad061a5740130f58",
     "game/map-source/terrain-under-water.png": "e0bdfc8406f8ddf6285fdc9cdf929ec2a3ee406600bc403c6d050d22ab0a555c",
@@ -30,7 +30,7 @@
     "game/route_render_source.py": "af454561a401c244d8ca9d86d6097e9ecc71e7621c64ad2dd9b85c3d44aa8f90",
     "game/world_surface.py": "62ecbab374c95f8977348893c6b3c7c72bcb5269c22ecce4293cf98354583784"
   },
-  "positions_sha256": "276b966297eadab70e2655b0603b309aa4251bee5f718cf748153e326b26ddae",
+  "positions_sha256": "acea6eb244f854a602f5594d33a6d62bddc1677c8ab321168a7e21876206076d",
   "city_count": 115,
   "approved_asset_rgba_sha256": "5bbd57a0a685f6aa7fea017c1647925487edc35be062f2410c7b82dff10a2617",
   "islands": {
@@ -82,14 +82,14 @@
   },
   "output": {
     "path": "game/assets/map-western-range.png",
-    "sha256": "e04ed1d2ecf2246ed3a9d0c0b78475b963b479228899b85ad3b3579a3dbeee02",
-    "rgba_sha256": "af2fe5a20c72e3ead420974b5ffa2b7e89f1d7eb8ee8b772acab8c8c76ced4b7"
+    "sha256": "52cc40a139ceeb699bf398b711b8baf2b225488440c1684b7ad3989c2ec450a7",
+    "rgba_sha256": "a3f72a0fce2e4f096e7edc076be5b0c966222bef27ad781830d737fa88d07661"
   },
   "stats": {
     "art_pixels": 63868,
     "applied_pixels": 62250,
     "protected_art_pixels": 1618,
-    "protected_pixels": 559233,
+    "protected_pixels": 559253,
     "island_pixels_changed": 32644,
     "surface_pixels_changed": 360272,
     "outside_art_pixels_unchanged": 952508

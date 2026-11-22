@@ -19,6 +19,7 @@ from hashlib import sha256
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'source'))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools/officer-placement'))
+from remake.historical_chapters import LONGYOU_JOINERS, LONGYOU_GOVERNOR
 from remake.city_economy import TIER_LABELS, TIER_MULTIPLIERS, apply_opening_sizes, frontier_outpost_at
 from remake.treasures import RULES as TREASURY_RULES
 from remake.facilities import RULES as FACILITY_RULES
@@ -60,10 +61,22 @@ EXPANSION_CITIES = {
     'taishan': ('泰山', 'jinan'),
     'xuantu': ('玄菟', 'liaodong'),
     'guonei': ('国内城', 'xuantu'),
+    'nanan': ('南安', 'tianshui'),
+    'xinping': ('新平', 'fufeng'),
+    'beidi': ('北地', 'fengyi'),
+    'guangwei': ('广魏', 'tianshui'),
 }
 HAN_ANNALS = 'https://zh.wikisource.org/wiki/三國志/卷04'
 WU_ANNALS = 'https://www.shidianguji.com/zh/book/LS0004/chapter/1j7fnux22fnsn_304'
 EXPANSION_FOUNDINGS = {
+    'nanan': (188, 1, 'attested_year_game_month', '中平五年由漢陽析置南安，治豲道；以1月為遊戲年界。',
+              'https://www.shidianguji.com/book/CADAL02086646/chapter/1laz9vfm0p8nn'),
+    'xinping': (194, 12, 'attested_annal_month', '興平元年十二月分安定、扶風置新平，治漆。',
+                'https://zh.wikisource.org/wiki/後漢書/卷9'),
+    'beidi': (220, 11, 'attested_reign_game_month', '漢末寄治馮翊，曹丕時劃入祋祤。本作以魏建國時啟用獨立郡城。',
+              'https://zh.wikisource.org/wiki/魏書/卷106下'),
+    'guangwei': (234, 2, 'game_opening_boundary', '曹魏廣魏，治臨渭；始置年代有不同說法，以234年劇本為遊戲界線。',
+                 'https://zh.wikisource.org/wiki/晉書/卷014#秦州'),
     'changli': (244, 9, 'attested_annal_month', '曹魏於244年九月立昌黎縣。', HAN_ANNALS),
     'pingyang': (247, 5, 'attested_annal_month', '平陽為舊縣，247年五月曹魏分河東設郡，本作按立郡開放。', HAN_ANNALS),
     'hengyang': (257, 2, 'attested_annal_month', '孫吳於257年二月分長沙西部置衡陽郡，治湘南。', WU_ANNALS),
@@ -382,11 +395,14 @@ def apply_navigation_sources(data, navigation):
         distance = round(6371.009 * 2 * asin(min(1, sqrt(haversine))) *
                          data['travel_rules']['detours'][corridor['terrain']], 1)
         data['links'].append([a, b])
-        data['travel_routes'].append(dict(id=f'{a}:{b}:land', **{'from': a, 'to': b},
+        route = dict(id=f'{a}:{b}:land', **{'from': a, 'to': b},
             mode='land', terrain=corridor['terrain'], distance_km=distance,
             land_km=distance, sea_km=0,
             days=max(1, ceil(distance / data['travel_rules']['speeds'][corridor['terrain']])),
-            draw=deepcopy(corridor['draw']), history=deepcopy(corridor['history'])))
+            draw=deepcopy(corridor['draw']), history=deepcopy(corridor['history']))
+        if 'availability' in corridor:
+            route['availability'] = deepcopy(corridor['availability'])
+        data['travel_routes'].append(route)
         data['regional_roads'].append(deepcopy(corridor))
 
     # Inland reaches have independent flow rules and never enter the sea or
@@ -537,6 +553,11 @@ def load_sources(*, timing=True):
         opening = expansion_openings['scenarios'][entry['id']]
         present = prepare_factions(data, opening, additions, current_people)
         apply_city_expansion(data, expansion_map, opening, expansion_openings['notes'], current_people)
+        if entry['id'] == 'mainland227-02':
+            # The pre-expedition roster represents the documented Tian-shui staff.
+            for officer in data['initial_officers']:
+                if officer['person_id'] in (*LONGYOU_JOINERS, LONGYOU_GOVERNOR):
+                    relocate_opening_officer(data, officer, 'tianshui', 'wei', 'longyou_historical_prefecture_staff')
         add_luzon_settlement(data, expansion_map['luzon'])
         place_faction_officers(data, present, current_people)
         apply_early_shu_openings(data, early_shu_openings, current_people)

@@ -37,7 +37,7 @@ const loadSource=app.slice(app.indexOf('function showSaveLoadError('),app.indexO
 function integration({pending=false,rejected=false,previousGame=game(),nextGame=game(),phase='city',saveGate}={}){
  const captured=[],requests=[],errors=[],invalidations=[],restored=[];
  const before={revision:8,catalog:{scenario_id:'test',title:'入蜀爭奪戰'},game:{...previousGame,phase}},next={...before,revision:9,game:nextGame};
- const context={busy:false,observerYearSaving:false,view:before,audioOutcome:null,battleScene:null,gameEvents:null,setupPreview:{},selectedCity:'old',actor:1,target:2,confirmOrderCommand:async()=>true,
+ const context={busy:false,observerYearSaving:false,observerSpeed:"normal",view:before,audioOutcome:null,battleScene:null,gameEvents:null,setupPreview:{},selectedCity:'old',actor:1,target:2,confirmOrderCommand:async()=>true,
   clearDialogueFeedback(){},setObserverPlaying(){},SaveTransfer:require('../game/save-transfer.js'),gameAudio:{play(){}},render(){},notice(message,error){if(error)errors.push(message);},
   setBusy(value){context.busy=value;},setTimeout(fn){fn();return 1;},dialog:{close(){restored.push('close');}},
   request:async(path,body,settings)=>{requests.push({path,body,settings});if(rejected)throw Error('Rejected');return next;},

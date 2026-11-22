@@ -118,6 +118,55 @@ class HistoricalCampaignTests(unittest.TestCase):
         city.reserves -= target - unit.troops
         unit.troops = target
 
+    def test_longyou_response_changes_three_holdings_once_and_restores(self):
+        game = self.opening('227-02', 'shu', start_month=12)
+        cities = history.LONGYOU_CITIES
+        # Reach the historical month through normal calendar settlement,
+        # holding AI orders fixed to reproduce the historical starting front.
+        def settle_calendar(state, payload):
+            game._complete_turn(state)
+            game._reconcile_factions(state)
+
+        with patch.object(game, '_expanded_ai', side_effect=settle_calendar):
+            for _ in range(2):
+                self.advance(game)
+            self.assertEqual((game.state.year, game.state.month), (227, 12))
+            residents = {i: game.state.officers[i].troops for key in cities
+                         for i in game.state.cities[key].roster.officer_ids}
+            self.assertTrue(residents)
+            self.assertEqual({game.state.cities[key].owner for key in cities}, {'wei'})
+            ai = strategic_ai.StrategicAI(game, game.state)
+            self.assertEqual(ai.army(game.state.cities['tianshui'], transfer=True), [])
+            self.advance(game)
+        self.assertEqual((game.state.year, game.state.month), (228, 1))
+        event, = self.events(game, history.LONGYOU_RESPONSE)
+        self.assertEqual(event['city_ids'], list(cities))
+        self.assertEqual({game.state.cities[key].owner for key in cities}, {'shu'})
+        self.assertEqual(event['details'], dict(joined=list(history.LONGYOU_JOINERS), governor_withdrew=True))
+        joined = {game.catalog.ids[pid] for pid in history.LONGYOU_JOINERS}
+        governor = game.catalog.ids[history.LONGYOU_GOVERNOR]
+        self.assertTrue({*joined, governor} <= set(residents))
+        self.assertTrue(joined <= set(game.state.cities['tianshui'].roster.officer_ids))
+        for ident, troops in residents.items():
+            owner = 'shu' if ident in joined else 'wei'
+            self.assertEqual((game.state.officers[ident].faction_id, game.state.officers[ident].troops),
+                             (owner, troops))
+            self.assertTrue(any(c.owner == owner and ident in c.roster.officer_ids
+                                for c in game.state.cities.values()))
+        restored = self.resume(game)
+        history.process(restored, restored.state)
+        self.assertEqual(len(self.events(restored, history.LONGYOU_RESPONSE)), 1)
+        self.assertEqual(history.priority_factions(restored.state), ('wei',))
+
+    def test_longyou_response_respects_a_changed_front(self):
+        game = self.opening('227-02', 'shu', start_month=12)
+        alternate = deepcopy(game.state)
+        alternate.year, alternate.month, alternate.turn = 228, 1, 4
+        alternate.cities['nanan'].owner = 'shu'
+        before = game.to_dict(alternate)
+        history.process(game, alternate)
+        self.assertEqual(game.to_dict(alternate), before)
+
     def test_guandu_calendar_once_and_real_yuan_expedition(self):
         game = self.opening('200-01', 'wei')
         self.assertFalse(self.events(game, history.GUANDU))
@@ -645,7 +694,8 @@ class HistoricalCampaignTests(unittest.TestCase):
             '249-01': 'gaopingling', '263-05': 'wei_invades_shu',
         }
         cases = [*scenarios.items(), ('190-01', 'dong_zhuo_relocation')]
-        self.assertEqual(set(CHAPTERS) - set(history.FRONTIER_SORTIES), {f'historical_{name}' for _, name in cases})
+        self.assertEqual(set(CHAPTERS) - {*history.FRONTIER_SORTIES, history.LONGYOU_RESPONSE},
+                         {f'historical_{name}' for _, name in cases})
         for scenario, name in cases:
             with self.subTest(scenario=scenario):
                 kind = f'historical_{name}'

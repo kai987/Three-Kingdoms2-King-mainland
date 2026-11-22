@@ -22,7 +22,8 @@ ALWAYS_ACTIVE_ADDITIONS = {
 FACTION_CAPITALS = {'liucheng', 'guonei'}
 SETTLEMENT_SITES = {'luzon'}
 FOUNDINGS = {'changli': (244, 9), 'pingyang': (247, 5), 'hengyang': (257, 2),
-             'xiangdong': (257, 2), 'jianping': (260, 1)}
+             'xiangdong': (257, 2), 'jianping': (260, 1),
+             'nanan': (188, 1), 'xinping': (194, 12), 'beidi': (220, 11), 'guangwei': (234, 2)}
 ADDITIONS = ALWAYS_ACTIVE_ADDITIONS | FACTION_CAPITALS | FOUNDINGS.keys() | SETTLEMENT_SITES
 
 
@@ -169,7 +170,8 @@ class CityExpansionTests(unittest.TestCase):
                                      {game.state.officers[ident].person_id for ident in roster})
         late = self.start('mainland263-05').state
         self.assertEqual({city: late.cities[city].owner for city in FOUNDINGS},
-                         dict(changli='wei', pingyang='wei', hengyang='wu', xiangdong='wu', jianping='wu'))
+                         dict(changli='wei', pingyang='wei', hengyang='wu', xiangdong='wu', jianping='wu',
+                              nanan='wei', xinping='wei', beidi='wei', guangwei='wei'))
 
     def test_xuantu_is_present_before_and_after_the_238_conquest(self):
         for scenario, catalog in self.catalogs.items():

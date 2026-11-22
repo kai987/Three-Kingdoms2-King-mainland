@@ -17,10 +17,12 @@ Every JSON request returns `{"ok":true,"value":...}` or
 | `evaluate_leg` | `route`, `source`, `target`, `month` | Directional route quote |
 | `path` | `cities`, `source`, `target`, `owner`, `month`, optional `mode`, `adjacent`, `discovered` | Quote or `null` |
 | `batch` | `cities`, `player`, `month`, optional `discovered` | Map of `source:target:mode` quotes |
+| `strategic_routes` | Owned city pairs, owner, dated city ownership, discovered and excluded routes | Reachable land and fastest route quotes for those pairs |
+| `tactical_candidates` | Ordered live units, morale and conditions, optional tactical grid and eligible facilities | Damage forecasts, contact scores and reachable movement candidates |
 | `allocate` | `troops`, `numerator`, `denominator` | Survivor counts in input order |
 | `survival_preview` | `quote`, `troops` | `{minimum,maximum}` survivor arrays |
 
-`allowed`, `evaluate_leg`, `path`, and `batch` accept either a registered
+`allowed`, `evaluate_leg`, `path`, `batch`, and `strategic_routes` accept either a registered
 `context` or an inline `data` object. Configuration contains `travel_rules`,
 `travel_hazards`, `city_coordinates`, `travel_routes`, `exploration_routes`, and
 `links` (legacy attack adjacency). `cities` is an ordered array of `{id,owner}`.

@@ -543,7 +543,6 @@ def auto_turn(game, state, owner):
                     key=lambda i: (-state.officers[i].profile.martial_strength, ref_sort_key(i)))
                 for target in people:
                     for slot in ('weapon','armor'):
-                        current = _equipment().item(slot, getattr(state.officers[target], slot+'_id'))
                         officer = state.officers[target]
                         field = 'attack' if slot == 'weapon' else 'defense'
                         old_effect = _equipment().duel_adjustment(officer.weapon_id,officer.armor_id,
@@ -559,10 +558,11 @@ def auto_turn(game, state, owner):
                             item=min(owned,key=lambda item:(-effect(item),item['id']))
                             choice=(_equipment().equip_owned,dict(city=key,actor=actor,officer=target,slot=slot,item=item['id']))
                             break
-                        offers = [item for item in _equipment().shop_stock(game,state,city,slot)
-                            if 0 <= item['price'] <= available and item['id'] != current['id']
-                            and target in item['eligible_targets'] and effect(item) > old_effect]
-                        if offers and command_books.can_spend(state, owner, 'buy_equipment'):
+                        if not command_books.can_spend(state, owner, 'buy_equipment'):
+                            continue
+                        offers = [item for item in _equipment().affordable_offers(game, state, city, officer, slot, available)
+                                  if effect(item) > old_effect]
+                        if offers:
                             item = min(offers,key=lambda item: (-effect(item),item['price'],item['id']))
                             choice = (buy, dict(city=key, actor=actor, officer=target, slot=slot, item=item['id']))
                             break

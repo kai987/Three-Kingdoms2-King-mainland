@@ -105,6 +105,12 @@
    text:["建興五年，諸葛亮向劉禪上《出師表》，勸他親近賢臣，並請命北伐。漢中是蜀軍北駐與備戰的據點。玩家可在漢中集結、備糧，日後依實際戰局決定何時進軍。","建興5年、諸葛亮は劉禅に『出師の表』を奉り、賢臣を重んじるよう諫め、北伐の許しを求めました。漢中は蜀軍が北方への出陣に備える拠点です。プレイヤーは漢中で兵と兵糧を集め、戦況に応じて進軍を決められます。"],
    sources:[["《三國志》諸葛亮傳","https://zh.wikisource.org/zh-hant/三國志/卷35#諸葛亮"],["《三國志》後主傳","https://zh.wikisource.org/zh-hant/三國志/卷33"]]
   },
+  historical_longyou_response:{
+   title:["祁山北伐・隴右三郡響應","祁山への北伐・隴右三郡の呼応"],
+   counts:[2,1,3],
+   text:["建興六年春，諸葛亮出祁山，南安、天水、安定響應蜀漢。三地轉歸蜀漢。天水太守馬遵與南安太守先後東撤。姜維與功曹梁緒、主簿尹賞、主記梁虔投奔諸葛亮。史實中張郃在街亭擊敗馬謖，曹魏隨後平定三地。在本戰役中，能否奪回由其後的戰局決定。","建興6年の春、諸葛亮は祁山に出兵し、南安・天水・安定が蜀漢に呼応しました。三地は蜀漢の支配下に入りました。天水太守の馬遵と南安太守は東へ退きました。姜維と功曹の梁緒、主簿の尹賞、主記の梁虔は諸葛亮のもとに身を寄せました。史実では張郃が街亭で馬謖を破り、魏が三地を平定しました。この戦役での奪還は、その後の戦況によります。"],
+   sources:[["《三國志》姜維傳","https://zh.wikisource.org/zh-hant/三國志/卷44#姜維"],["《三國志》曹真傳","https://zh.wikisource.org/wiki/三國志/卷09#曹真"],["《三國志》張既傳注引《魏略》","https://zh.wikisource.org/wiki/三國志/卷15#張既"],["《三國志》張郃傳","https://zh.wikisource.org/wiki/三國志/卷17#張郃"]]
+  },
   historical_wuzhang:{
    title:["諸葛亮進軍五丈原","諸葛亮、五丈原へ進軍"],
    counts:[2,2,2],
@@ -203,6 +209,7 @@
   guandu:['官渡平原的兩軍旌旗','官渡の平原に立つ両軍の旗'],
   'red-cliffs':['赤壁江面上的戰船','赤壁の川面に並ぶ軍船'],
   'historical-dong-zhuo-relocation':['洛陽宮城火光下西行的車隊','燃える洛陽の宮城を後に、西へ向かう車列'],
+  'historical-longyou-response':['祁山前線向諸葛亮呈遞竹簡的隴右使者','祁山の陣で諸葛亮に竹簡を差し出す隴右の使者'],
   'historical-wuhuan-expedition':['白狼山間擎「曺」字軍旗的騎隊','白狼山で「曺」の軍旗を掲げる騎兵隊'],
   'historical-goguryeo-expedition':['丸都山城下舉著赭黃紅邊「魏」字軍旗的魏軍','丸都山城のふもとで赤縁の黄土色の「魏」旗を掲げる魏軍'],
   wedding:['婚禮堂上的紅幔與燈火','婚礼の広間を飾る赤い幕と灯り'],
@@ -282,6 +289,16 @@
  }
  function validHistoricalCampaign(row,denominator){
   const validIds=(ids,min,max)=>ids.length>=min&&ids.length<=max&&ids.every(id=>id.length>0&&id.trim()===id)&&new Set(ids).size===ids.length;
+  if(row.kind==='historical_longyou_response'){
+   const d=row.details, eligible=['san14-candidate-0203','san14-candidate-0972','san14-candidate-0010'];
+   if(row.audience!=='world'||row.year!==228||row.month>3||
+      row.factions.join(',')!=='shu,wei'||row.city_ids.join(',')!=='nanan,tianshui,anding')return false;
+   if(!Object.keys(d).length)return row.person_ids.join(',')==='san14-candidate-0440';
+   return Object.keys(d).sort().join(',')==='governor_withdrew,joined'&&typeof d.governor_withdrew==='boolean'&&
+    Array.isArray(d.joined)&&d.joined.every(id=>eligible.includes(id))&&
+    d.joined.join(',')===eligible.filter(id=>d.joined.includes(id)).join(',')&&
+    row.person_ids.join(',')===['san14-candidate-0440',...d.joined,...(d.governor_withdrew?['san14-candidate-0764']:[])].join(',');
+  }
   const [factions,people,cities]=HISTORICAL_CAMPAIGNS[row.kind];
   const validDetails=row.kind==='historical_dong_zhuo_relocation'?validDongZhuoRelocation(row,denominator):Object.keys(row.details).length===0;
   return row.audience==='world'&&validDetails&&
@@ -517,6 +534,13 @@
    const chapter=CHAPTER_TEXT[row.kind];
    if(chapter){
     const history=text(...(chapter.aftermath&&row.month===9?chapter.aftermath:chapter.text));
+    if(row.kind==='historical_longyou_response'&&Array.isArray(row.details.joined)){
+     const joined=names({...row,person_ids:row.details.joined},true).people.join(text('、','・'));
+     const transfer=joined?text(` 本局加入蜀漢：${joined}。`,` この戦役で蜀漢に加わった武将は${joined}です。`):'';
+     const withdrawal=row.details.governor_withdrew
+      ?text(' 本局馬遵率部撤往魏境。',' この戦役で馬遵は配下の兵を率いて魏領に退きました。'):'';
+     return history+transfer+withdrawal;
+    }
     return chapter.front?history+(observing?text(
      ' 路線可通行時，進攻方的 AI 會優先評估這條戰線，勝負由實際交戰決定。',
      ' 通行できる経路があれば、進攻側のAIはこの戦線を優先します。勝敗は実際の戦闘で決まります。'):text(

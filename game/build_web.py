@@ -290,7 +290,7 @@ def build(output):
         if not any(row['id'] == initial_scenario for row in catalogs):
             raise ValueError('The default Yellow Turban campaign is required')
         manifest = {'schema': 'tk2-browser-engine-v1', 'pyodide_version': PYODIDE_VERSION,
-                    'build_commit': commit,
+                    'build_commit': commit, 'ai_wasm_sha256': sha256(assets['wasm/march_core.wasm']),
                     'python_bundle': python_bundle(staging), 'previews': previews,
                     'catalogs': catalogs, 'initial_scenario': initial_scenario}
         put(staging, 'runtime/engine-manifest.json', json_bytes(manifest))

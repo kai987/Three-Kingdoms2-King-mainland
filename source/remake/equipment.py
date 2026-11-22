@@ -284,15 +284,27 @@ def equip_owned(game,state,payload,owner):
     return details
 
 
-def shop_stock(game,state,city,slot):
-    from . import facilities
-    if isinstance(city,str):city=state.cities[city]
+def _city_offers(state, city, slot):
     town=state.extension['facilities']['cities'][city.id]['town']
     offers=stock(town,slot)
     if town>=2:
         for (kind,ident),(where,_,_,price) in SHOP.items():
             if kind==slot and city.id==where:
                 offers.append(dict(item(slot,ident),price=price))
+    return offers
+
+
+def affordable_offers(game, state, city, officer, slot, budget):
+    """Eligible shop items for a present officer during automatic equipment selection."""
+    return [offer for offer in _city_offers(state, city, slot)
+            if 0 <= offer['price'] <= budget
+            and not _reason(game, state, city, officer, slot, offer['id'])[0]]
+
+
+def shop_stock(game,state,city,slot):
+    from . import facilities
+    if isinstance(city,str):city=state.cities[city]
+    offers = _city_offers(state, city, slot)
     targets=[ident for ident in city.roster.officer_ids if facilities._resident(game,state,city,ident)]
     result=[]
     for offer in offers:
