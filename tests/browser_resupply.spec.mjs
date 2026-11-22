@@ -1,6 +1,7 @@
 /* Actual controls and HTTP domain services, with a controlled scenario input. */
 import {test,expect} from '../tools/browser-tests/node_modules/@playwright/test/index.mjs';
 import {readFile} from 'node:fs/promises';
+import {inflateSync} from 'node:zlib';
 import {approveVisibleOrders} from './browser_order_confirm.mjs';
 
 const errors=new WeakMap();
@@ -29,7 +30,9 @@ async function dismissEvents(page){
 }
 async function saved(page){
  const download=page.waitForEvent('download');await page.locator('#save').click();
- return JSON.parse(await readFile(await(await download).path(),'utf8'));
+ const save=JSON.parse(await readFile(await(await download).path(),'utf8'));
+ if(save.version===3)save.state=JSON.parse(inflateSync(Buffer.from(save.deflate,'base64')));
+ return save;
 }
 async function nextTurn(page){
  await page.locator('#end-turn').click();await idle(page);await dismissEvents(page);
