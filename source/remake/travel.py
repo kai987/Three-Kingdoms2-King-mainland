@@ -71,7 +71,9 @@ class TravelCampaign:
             return effective(routes)
         discovered = frozenset(state.extension['travel']['discovered'])
         year = getattr(state, 'year', None)
-        cache = getattr(self, '_ai_routes', None)
+        phase = getattr(self, '_ai_routes', None)
+        # Safe logistics quotes use a copied catalog with a filtered road graph.
+        cache = phase[1] if phase is not None and phase[0] is self.catalog.data else None
         if cache is not None:
             key = (year, state.month, frozenset(state.cities), discovered)
             if key in cache:

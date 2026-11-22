@@ -13,6 +13,7 @@ from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
 from remake import command_books, civil_staff, domestic, equipment, logistics, treasures
 from remake.battle_supply import BUDGET_DAYS
+from remake.march_core import using_backend
 from remake.march_supply import required_grain
 from remake.officers import YearState, initialize_officer, year_state
 from campaign_fixtures import record_garrison_charges
@@ -364,12 +365,16 @@ class LogisticsTests(unittest.TestCase):
         # Neutral nodes are legal transit points, while the final city is friendly.
         for city in game.state.cities.values(): city.owner = 'shu'
         before = deepcopy(game.catalog.data)
-        direct = game._travel_path(game.state, 'yinping', 'shujun', 'shu', 'special')
-        safe = logistics._safe_path(game, game.state, 'yinping', 'shujun', 'shu', 'land',
-                                   dict(allow_sea=False, allow_special=False))
-        self.assertIsNotNone(direct); self.assertIsNotNone(safe)
-        self.assertGreater(len(safe['path']), 2)
-        self.assertFalse(any(leg.get('hazard') for leg in safe['routes']))
+        for backend in ('python', 'rust'):
+            with self.subTest(backend=backend), using_backend(backend), patch.object(
+                    game, '_ai_routes', (game.catalog.data, {}), create=True):
+                direct = game._travel_path(game.state, 'yinping', 'shujun', 'shu', 'special')
+                safe = logistics._safe_path(game, game.state, 'yinping', 'shujun', 'shu', 'land',
+                                           dict(allow_sea=False, allow_special=False))
+                self.assertIsNotNone(direct)
+                self.assertIsNotNone(safe)
+                self.assertGreater(len(safe['path']), 2)
+                self.assertFalse(any(leg.get('hazard') for leg in safe['routes']))
         self.assertEqual(game.catalog.data, before)
 
     def test_marching_source_officers_do_not_satisfy_actual_guard_retention(self):

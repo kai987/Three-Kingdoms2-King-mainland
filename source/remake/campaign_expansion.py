@@ -1179,7 +1179,7 @@ class ExpandedCampaign:
         from .strategic_ai import run
         # Every faction scans the same road network many times in one AI phase.
         # Keep it local to this transaction, including on rejected commands.
-        self._ai_routes = {}
+        self._ai_routes = (self.catalog.data, {})
         try:
             return run(self,state,payload)
         finally:
