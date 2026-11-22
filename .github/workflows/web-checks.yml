@@ -483,6 +483,7 @@ jobs:
         with:
           artifact-ids: ${{ needs.web-build.outputs.artifact_id }}
           path: build/web
+          merge-multiple: true
       - name: Require the exact immutable candidate
         env:
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
@@ -616,6 +617,7 @@ jobs:
         with:
           artifact-ids: ${{ needs.web-build.outputs.artifact_id }}
           path: build/web
+          merge-multiple: true
       - name: Verify the original candidate after every required check passed
         id: candidate
         if: needs.scope.outputs.web == 'true'
