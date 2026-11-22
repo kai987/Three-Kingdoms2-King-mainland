@@ -127,7 +127,9 @@ jobs:
           test "$(git rev-parse 'HEAD^{tree}')" = "$AB_TREE"
           jq -e --arg head "$AB_ARTIFACT_HEAD" '.head == $head and .mode == "full" and .full and .native and .rules and .soak and .resupply and .web and (.publish | not) and (.pr_reuse == null)' build/ci/test-plan.json
           verify_input() {
-            gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$1" |
+            metadata=$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$1")
+            printf '%s\n' "$metadata" | jq -c '{id,name,digest,expired,run:.workflow_run.id}'
+            printf '%s\n' "$metadata" |
               jq -e --argjson run "$AB_RUN" --argjson id "$1" --arg name "$2" --arg digest "sha256:$3" \
                 '.id == $id and .name == $name and .workflow_run.id == $run and (.expired | not) and .digest == $digest'
           }
