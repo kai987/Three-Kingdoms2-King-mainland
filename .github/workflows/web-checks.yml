@@ -6,6 +6,12 @@ on:
         description: Attempt that recorded the verified Web candidate
         value: ${{ jobs.gate.outputs.verified_attempt }}
     inputs:
+      tested_head:
+        type: string
+        required: true
+      pr_run:
+        type: string
+        required: true
       force_full:
         type: boolean
         default: false
@@ -19,6 +25,8 @@ permissions:
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   RUSTUP_TOOLCHAIN: '1.93.0'
+  TESTED_HEAD: ${{ inputs.tested_head }}
+  REHEARSAL_PR_RUN: ${{ inputs.pr_run }}
 jobs:
   scope:
     runs-on: ubuntu-latest
@@ -37,6 +45,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.TESTED_HEAD }}
           fetch-depth: 0
           persist-credentials: false
           sparse-checkout: /tools/ci/
@@ -44,23 +53,26 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          path: rehearsal
+          persist-credentials: false
+          sparse-checkout: /.github/experiments/rehearse-web-handoff.py
+          sparse-checkout-cone-mode: false
       - name: Select required checks from cumulative source changes
         env:
           GH_TOKEN: ${{ github.token }}
-          FORCE_FULL: ${{ inputs.force_full }}
-          PUBLISH_REQUESTED: ${{ inputs.publish }}
         run: |
+          test "$(git rev-parse HEAD)" = "$TESTED_HEAD"
+          base=$(git rev-parse HEAD^1)
           mkdir -p build/ci
-          args=()
-          if [ "$FORCE_FULL" = true ]; then args+=(--force-full); fi
-          if [ "$PUBLISH_REQUESTED" = true ]; then args+=(--publish); fi
-          python -B tools/ci/plan.py --head "$GITHUB_SHA" --event-name "$GITHUB_EVENT_NAME" --event-path "$GITHUB_EVENT_PATH" --repository "$GITHUB_REPOSITORY" "${args[@]}" > build/ci/test-plan.json
-      - name: Find successful verification of the merged pull request
+          python -B tools/ci/plan.py --base "$base" --head "$TESTED_HEAD" --event-name push --ref refs/heads/main --repository "$GITHUB_REPOSITORY" > build/ci/test-plan.json
+      - name: Find the successful PR receipt for the simulated main push
         id: pr
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !inputs.force_full
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B tools/ci/pr_reuse.py find --plan build/ci/test-plan.json --candidate build/ci/pr-candidate.json
+        run: python -B rehearsal/.github/experiments/rehearse-web-handoff.py
       - name: Download only the successful PR attempt's receipt
         id: receipt
         if: steps.pr.outputs.run_id != ''
@@ -81,13 +93,14 @@ jobs:
           if [ "$PR_LOOKUP" = success ]; then
             args=()
             if [ "$PR_DOWNLOAD" = success ]; then args+=(--proof build/ci/pr-proof/receipt.json); fi
-            python -B tools/ci/pr_reuse.py decide --plan build/ci/test-plan.json --candidate build/ci/pr-candidate.json "${args[@]}"
+            GITHUB_SHA="$TESTED_HEAD" python -B tools/ci/pr_reuse.py decide --plan build/ci/test-plan.json --candidate build/ci/pr-candidate.json "${args[@]}"
           fi
-          python -B tools/ci/gate.py outputs --plan build/ci/test-plan.json --head "$GITHUB_SHA" >> "$GITHUB_OUTPUT"
+          jq -e '.pr_reuse.number == 64' build/ci/test-plan.json >/dev/null
+          python -B tools/ci/gate.py outputs --plan build/ci/test-plan.json --head "$TESTED_HEAD" >> "$GITHUB_OUTPUT"
           python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: test-plan-${{ github.sha }}
+          name: test-plan-${{ env.TESTED_HEAD }}
           path: build/ci/test-plan.json
           overwrite: true
           if-no-files-found: error
@@ -100,17 +113,18 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.TESTED_HEAD }}
           fetch-depth: 0
           persist-credentials: false
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: test-plan-${{ github.sha }}
+          name: test-plan-${{ env.TESTED_HEAD }}
           path: build/ci
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
       - name: Documentation whitespace and repository links
-        run: python -B tools/ci/gate.py docs --plan build/ci/test-plan.json --head "$GITHUB_SHA"
+        run: python -B tools/ci/gate.py docs --plan build/ci/test-plan.json --head "$TESTED_HEAD"
   native-rules:
     needs: scope
     if: needs.scope.outputs.native == 'true' && needs.scope.outputs.reuse != 'true'
@@ -119,6 +133,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.TESTED_HEAD }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -148,7 +163,7 @@ jobs:
         run: tar -cf build/native-reference.tar -C build march-core
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: native-reference-${{ github.sha }}
+          name: native-reference-${{ env.TESTED_HEAD }}
           path: build/native-reference.tar
           overwrite: true
           retention-days: 3
@@ -182,6 +197,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.TESTED_HEAD }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -197,7 +213,7 @@ jobs:
           test -f tools/web-runtime/node_modules/pyodide/package.json
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: native-reference-${{ github.sha }}
+          name: native-reference-${{ env.TESTED_HEAD }}
           path: build
       - name: Restore this run's checked native reference
         run: tar -xf build/native-reference.tar -C build
@@ -208,7 +224,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
-          name: campaign-timings-${{ matrix.backend }}-${{ matrix.shard }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          name: campaign-timings-${{ matrix.backend }}-${{ matrix.shard }}-${{ env.TESTED_HEAD }}-attempt-${{ github.run_attempt }}
           path: build/ci/campaign-timings.json
           if-no-files-found: ignore
           retention-days: 7
@@ -236,13 +252,14 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.TESTED_HEAD }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: native-reference-${{ github.sha }}
+          name: native-reference-${{ env.TESTED_HEAD }}
           path: build
       - name: Restore this run's checked native reference
         run: tar -xf build/native-reference.tar -C build
@@ -251,12 +268,12 @@ jobs:
           SOAK_CASE: ${{ matrix.case }}
           SOAK_SEED: ${{ matrix.seed }}
           SOAK_BACKEND: ${{ matrix.backend }}
-        run: python -B tools/campaign-soak/ci.py fragment --case "$SOAK_CASE" --seed "$SOAK_SEED" --backend "$SOAK_BACKEND" --head "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" --output "build/soak-ci/${SOAK_CASE}-${SOAK_SEED}-${SOAK_BACKEND}.json" --progress
+        run: python -B tools/campaign-soak/ci.py fragment --case "$SOAK_CASE" --seed "$SOAK_SEED" --backend "$SOAK_BACKEND" --head "$TESTED_HEAD" --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" --output "build/soak-ci/${SOAK_CASE}-${SOAK_SEED}-${SOAK_BACKEND}.json" --progress
       - name: Retain replay diagnostics even after failure
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: campaign-soak-execution-${{ matrix.case }}-${{ matrix.seed }}-${{ matrix.backend }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          name: campaign-soak-execution-${{ matrix.case }}-${{ matrix.seed }}-${{ matrix.backend }}-${{ env.TESTED_HEAD }}-attempt-${{ github.run_attempt }}
           path: build/soak-ci
           if-no-files-found: ignore
           retention-days: 7
@@ -268,24 +285,25 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.TESTED_HEAD }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          pattern: campaign-soak-execution-*-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          pattern: campaign-soak-execution-*-${{ env.TESTED_HEAD }}-attempt-${{ github.run_attempt }}
           merge-multiple: false
           path: build/soak-ci
       - name: Require every execution and exact Python/Rust state, save and RNG parity
         env:
           EXECUTION_RESULT: ${{ needs.campaign-soak-replay.result }}
-        run: python -B tools/campaign-soak/ci.py merge --input-dir build/soak-ci --execution-result "$EXECUTION_RESULT" --head "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" --output build/soak/merged.json
+        run: python -B tools/campaign-soak/ci.py merge --input-dir build/soak-ci --execution-result "$EXECUTION_RESULT" --head "$TESTED_HEAD" --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" --output build/soak/merged.json
       - name: Retain mandatory parity gate diagnostics
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: campaign-soak-parity-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          name: campaign-soak-parity-${{ env.TESTED_HEAD }}-attempt-${{ github.run_attempt }}
           path: build/soak
           if-no-files-found: ignore
           retention-days: 7
@@ -299,6 +317,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.TESTED_HEAD }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -363,6 +382,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.TESTED_HEAD }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -378,12 +398,12 @@ jobs:
         run: npm ci --prefix tools/web-runtime --ignore-scripts
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: test-plan-${{ github.sha }}
+          name: test-plan-${{ env.TESTED_HEAD }}
           path: build/ci
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         if: needs.scope.outputs.native == 'true'
         with:
-          name: native-reference-${{ github.sha }}
+          name: native-reference-${{ env.TESTED_HEAD }}
           path: build
       - name: Restore the same native reference
         if: needs.scope.outputs.native == 'true'
@@ -396,7 +416,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
-          name: scoped-report-${{ matrix.lane }}-${{ github.sha }}
+          name: scoped-report-${{ matrix.lane }}-${{ env.TESTED_HEAD }}
           path: build/ci/scoped-report.json
           overwrite: true
           if-no-files-found: error
@@ -415,6 +435,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.TESTED_HEAD }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -428,15 +449,15 @@ jobs:
       - name: Build the candidate once and retain its identity
         id: identity
         run: |
-          python -B game/build_web.py --output build/web
-          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA")
+          GITHUB_SHA="$TESTED_HEAD" python -B game/build_web.py --output build/web
+          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$TESTED_HEAD")
           printf 'content_sha256=%s\n' "$content" >> "$GITHUB_OUTPUT"
       - name: Actual WASM campaign and CPU replay parity
         run: node tests/browser_engine_smoke.mjs build/web
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         id: candidate
         with:
-          name: candidate-web-${{ github.sha }}
+          name: candidate-web-${{ env.TESTED_HEAD }}
           path: build/web
           overwrite: true
           include-hidden-files: true
@@ -458,6 +479,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.TESTED_HEAD }}
           persist-credentials: false
           sparse-checkout: |
             /.gitignore
@@ -477,7 +499,7 @@ jobs:
       - uses: ./.github/actions/browser-tools
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: test-plan-${{ github.sha }}
+          name: test-plan-${{ env.TESTED_HEAD }}
           path: build/ci
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
@@ -487,7 +509,7 @@ jobs:
       - name: Require the exact immutable candidate
         env:
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
-        run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$TESTED_HEAD" --content-sha256 "$CONTENT_SHA"
       - name: Show the selected scope and execute actual browser controls
         env:
           BROWSER_PROJECT: ${{ matrix.project }}
@@ -502,7 +524,7 @@ jobs:
         with:
           # Stable per-commit names let a failed-job retry reuse the reports
           # from its unchanged successful sibling jobs.
-          name: browser-timing-${{ matrix.project }}-shard-${{ matrix.shard }}-${{ github.sha }}
+          name: browser-timing-${{ matrix.project }}-shard-${{ matrix.shard }}-${{ env.TESTED_HEAD }}
           path: build/browser-timings/${{ matrix.project }}-shard-${{ matrix.shard }}.json
           overwrite: true
           if-no-files-found: error
@@ -510,7 +532,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
-          name: browser-${{ matrix.project }}-shard-${{ matrix.shard }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          name: browser-${{ matrix.project }}-shard-${{ matrix.shard }}-${{ env.TESTED_HEAD }}-attempt-${{ github.run_attempt }}
           path: |
             build/browser-results
             build/browser-report
@@ -524,6 +546,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.TESTED_HEAD }}
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
@@ -534,7 +557,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
-          name: resupply-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          name: resupply-${{ env.TESTED_HEAD }}-attempt-${{ github.run_attempt }}
           path: build/resupply-browser-results
           if-no-files-found: ignore
           retention-days: 7
@@ -555,12 +578,12 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ env.TESTED_HEAD }}
           persist-credentials: false
           # Reuse needs only CI helpers. Full verification also reads browser coverage inputs.
           sparse-checkout: >-
             ${{ needs.scope.result == 'success' &&
-                (github.event_name == 'push' && github.ref == 'refs/heads/main' &&
-                 needs.scope.outputs.reuse == 'true' && '/tools/ci/' ||
+                (needs.scope.outputs.reuse == 'true' && '/tools/ci/' ||
                  needs.scope.outputs.mode == 'full' && env.FULL_GATE_SPARSE_PATHS) || '' }}
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
@@ -568,20 +591,20 @@ jobs:
           python-version: '3.13'
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: test-plan-${{ github.sha }}
+          name: test-plan-${{ env.TESTED_HEAD }}
           path: build/ci
       - name: Fail if any required group failed, was cancelled or was skipped
         env:
           JOB_RESULTS: ${{ toJSON(needs) }}
         run: |
           python -c 'import os,pathlib;pathlib.Path("build/ci/needs.json").write_text(os.environ["JOB_RESULTS"])'
-          python -B tools/ci/gate.py verify --plan build/ci/test-plan.json --needs build/ci/needs.json --head "$GITHUB_SHA"
+          python -B tools/ci/gate.py verify --plan build/ci/test-plan.json --needs build/ci/needs.json --head "$TESTED_HEAD"
           python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
       - name: Collect scoped Python reports from this run
         if: needs.scope.outputs.mode == 'scoped' && needs.scope.outputs.reuse != 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          pattern: scoped-report-*-${{ github.sha }}
+          pattern: scoped-report-*-${{ env.TESTED_HEAD }}
           path: build/scoped-reports
       - name: Verify complete scoped module and catalog coverage
         if: needs.scope.outputs.mode == 'scoped' && needs.scope.outputs.reuse != 'true'
@@ -594,7 +617,7 @@ jobs:
         if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          pattern: browser-timing-*-shard-*-${{ github.sha }}
+          pattern: browser-timing-*-shard-*-${{ env.TESTED_HEAD }}
           path: build/browser-timings
           merge-multiple: true
       - name: Verify complete timing coverage and report measured shard costs
@@ -602,12 +625,12 @@ jobs:
         env:
           TK2_TEST_PLAN: build/ci/test-plan.json
         run: |
-          node tools/browser-tests/aggregate-timings.mjs build/browser-timings --head "$GITHUB_SHA"
+          node tools/browser-tests/aggregate-timings.mjs build/browser-timings --head "$TESTED_HEAD"
           cat build/browser-timings/summary.md >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: needs.scope.outputs.web == 'true' && needs.scope.outputs.reuse != 'true'
         with:
-          name: browser-timing-summary-${{ github.sha }}
+          name: browser-timing-summary-${{ env.TESTED_HEAD }}
           path: build/browser-timings
           overwrite: true
           if-no-files-found: error
@@ -627,14 +650,14 @@ jobs:
           CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
         run: |
           python -B tools/ci/verified_web.py record --root build/web \
-            --record build/ci/verified-candidate.json --head "$GITHUB_SHA" \
+            --record build/ci/verified-candidate.json --head "$TESTED_HEAD" \
             --run-id "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT"
           printf 'attempt=%s\n' "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
       - name: Upload the verified candidate record
         if: needs.scope.outputs.web == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: verified-candidate-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          name: verified-candidate-${{ env.TESTED_HEAD }}-attempt-${{ github.run_attempt }}
           path: build/ci/verified-candidate.json
           if-no-files-found: error
           retention-days: 7

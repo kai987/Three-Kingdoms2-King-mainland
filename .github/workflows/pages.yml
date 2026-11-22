@@ -1,11 +1,16 @@
-name: Deploy playable Web campaign
+name: Rehearse PR 64 receipt reuse and Pages handoff
 
 on:
-  workflow_run:
-    workflows: [Web campaign checks]
-    types: [completed]
-    branches: [main]
   workflow_dispatch:
+    inputs:
+      tested_head:
+        description: Exact temporary merge commit verified by PR 64
+        type: string
+        required: true
+      pr_run:
+        description: Successful PR 64 workflow run
+        type: string
+        required: true
 
 permissions:
   contents: read
@@ -13,26 +18,23 @@ permissions:
   deployments: read
 
 concurrency:
-  group: pages
+  group: pr64-pages-rehearsal
   cancel-in-progress: false
 
 jobs:
   # Manual publication uses the same gates. Pushes reuse the checked artifact.
   verify-manual:
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/codex/rehearse-pr64-web-handoff'
     uses: ./.github/workflows/web-checks.yml
     with:
       force_full: true
       publish: true
+      tested_head: ${{ inputs.tested_head }}
+      pr_run: ${{ inputs.pr_run }}
 
   prepare:
     needs: verify-manual
-    if: >-
-      always() &&
-      ((github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && needs.verify-manual.result == 'success') ||
-       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' &&
-        github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main' &&
-        github.event.workflow_run.head_repository.full_name == github.repository))
+    if: github.ref == 'refs/heads/codex/rehearse-pr64-web-handoff' && needs.verify-manual.result == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -44,16 +46,16 @@ jobs:
       artifact: ${{ steps.identity.outputs.artifact }}
       archive_sha256: ${{ steps.archive.outputs.sha256 }}
     steps:
-      - name: Require the successful main commit to still be current
+      - name: Require the successfully tested PR merge to still be current
         id: identity
         env:
           GH_TOKEN: ${{ github.token }}
-          SOURCE_SHA: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
-          SOURCE_RUN: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.id || github.run_id }}
-          SOURCE_ATTEMPT: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.run_attempt || needs.verify-manual.outputs.verified_attempt }}
+          SOURCE_SHA: ${{ inputs.tested_head }}
+          SOURCE_RUN: ${{ github.run_id }}
+          SOURCE_ATTEMPT: ${{ needs.verify-manual.outputs.verified_attempt }}
         run: |
           set -euo pipefail
-          current=$(gh api "repos/${GITHUB_REPOSITORY}/commits/main" --jq .sha)
+          current=$(gh api "repos/${GITHUB_REPOSITORY}/pulls/64" --jq .merge_commit_sha)
           printf 'commit=%s\nrun=%s\nattempt=%s\n' "$SOURCE_SHA" "$SOURCE_RUN" "$SOURCE_ATTEMPT" >> "$GITHUB_OUTPUT"
           printf 'artifact=github-pages-%s\n' "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
           if [ "$SOURCE_SHA" = "$current" ]; then
@@ -128,71 +130,11 @@ jobs:
           set -euo pipefail
           checksum=$(sha256sum "$RUNNER_TEMP/artifact.tar")
           printf 'sha256=%s\n' "${checksum%% *}" >> "$GITHUB_OUTPUT"
-
-  deploy:
-    needs: prepare
-    # Automatic releases intentionally skip the manual-verification ancestor.
-    # Override the implicit success() check without deploying cancelled runs.
-    if: >-
-      always() && !cancelled() &&
-      needs.prepare.result == 'success' && needs.prepare.outputs.current == 'true' &&
-      needs.prepare.outputs.publish == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment_retry.outputs.page_url || steps.deployment.outputs.page_url }}
-    steps:
-      - name: Recheck main immediately before deployment
-        env:
-          GH_TOKEN: ${{ github.token }}
-          EXPECTED_SHA: ${{ needs.prepare.outputs.commit }}
-        run: test "$(gh api "repos/${GITHUB_REPOSITORY}/commits/main" --jq .sha)" = "$EXPECTED_SHA"
-      - name: Deploy verified artifact
-        id: deployment
-        # A failed-job rerun may reuse prepare's artifact from a previous attempt.
-        if: needs.prepare.outputs.artifact == format('github-pages-{0}', github.run_attempt)
-        continue-on-error: true
-        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
-        with:
-          artifact_name: ${{ needs.prepare.outputs.artifact }}
-      - name: Allow Pages to settle before retrying with a fresh artifact
-        id: retry_wait
-        if: steps.deployment.outcome == 'failure' || steps.deployment.outcome == 'skipped'
-        run: sleep 60
-      - name: Download the verified Pages archive for retry
-        if: steps.retry_wait.outcome == 'success'
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
-        with:
-          name: ${{ needs.prepare.outputs.artifact }}
-          path: ${{ runner.temp }}/pages-retry
-      - name: Require the retry archive to match the verified archive byte for byte
-        if: steps.retry_wait.outcome == 'success'
-        working-directory: ${{ runner.temp }}/pages-retry
-        env:
-          EXPECTED_SHA256: ${{ needs.prepare.outputs.archive_sha256 }}
-        run: printf '%s  artifact.tar\n' "$EXPECTED_SHA256" | sha256sum -c -
-      - name: Upload the same archive as a new Pages artifact
-        if: steps.retry_wait.outcome == 'success'
+      - name: Retain the rehearsal evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: github-pages-retry-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/pages-retry/artifact.tar
+          name: pages-handoff-evidence
+          path: |
+            verified-candidate/verified-candidate.json
+            verified-web/runtime/build.json
           if-no-files-found: error
-          retention-days: 1
-      - name: Recheck main immediately before the retry
-        if: steps.retry_wait.outcome == 'success'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          EXPECTED_SHA: ${{ needs.prepare.outputs.commit }}
-        run: test "$(gh api "repos/${GITHUB_REPOSITORY}/commits/main" --jq .sha)" = "$EXPECTED_SHA"
-      - name: Deploy fresh verified artifact
-        id: deployment_retry
-        if: steps.retry_wait.outcome == 'success'
-        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
-        with:
-          artifact_name: github-pages-retry-${{ github.run_attempt }}
