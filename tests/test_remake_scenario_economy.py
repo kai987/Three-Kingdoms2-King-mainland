@@ -19,7 +19,8 @@ from remake.starting_garrisons import frontier_cities, mobilize_reserves
 from campaign_fixtures import advance_month, record_garrison_charges
 
 FIELDS = ('gold', 'grain', 'reserves')
-HETAO_CITIES = {'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'liucheng', 'guonei', 'luzon'}
+POST_REVIEW_CITIES = {'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'liucheng', 'guonei', 'luzon',
+                      'nanan', 'xinping', 'beidi', 'guangwei'}
 
 
 def synchronize(game, state, **options):
@@ -143,6 +144,9 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                 expansion = self.expansion[data['id']]
                 expansion_garrisons = {person: city for city, people in expansion['garrisons'].items()
                                        for person in people}
+                if date == (227, 2):
+                    from remake.historical_chapters import LONGYOU_JOINERS, LONGYOU_GOVERNOR
+                    expansion_garrisons.update(dict.fromkeys((*LONGYOU_JOINERS, LONGYOU_GOVERNOR), 'tianshui'))
                 for row in data['initial_officers']:
                     # Reviewed additions draw from existing city reserves.
                     # Exhaustion can give partial or zero troops; unchanged
@@ -162,7 +166,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                         self.assertEqual(change['after']['status'], 'serving')
                         self.assertEqual(row['city'], expansion_garrisons.get(row['person_id'], change['after']['city']))
                 # The frozen retainer review predates the Hetao expansion.
-                reviewed_cities = set(data['active_cities']) - HETAO_CITIES
+                reviewed_cities = set(data['active_cities']) - POST_REVIEW_CITIES
                 reviewed_material = dict(
                     gold=sum(data['initial_city_resources'][city]['gold'] for city in reviewed_cities),
                     grain=sum(data['initial_city_resources'][city]['grain'] for city in reviewed_cities),

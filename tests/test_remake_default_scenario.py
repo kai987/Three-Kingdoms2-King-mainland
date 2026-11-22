@@ -81,7 +81,7 @@ class StaticDefaultManifestTests(unittest.TestCase):
         # Exercise the real manifest selection with tiny substituted assets;
         # do not copy the full release or regenerate any catalog for this test.
         rows = [dict(id=identity) for identity in identities]
-        with patch.object(WEB, 'static_allowlist', return_value={'index.html': 'index.html'}), \
+        with patch.object(WEB, 'static_allowlist', return_value={'index.html': 'index.html', 'wasm/march_core.wasm': 'wasm/march_core.wasm'}), \
                 patch.object(WEB, 'copy_pyodide'), \
                 patch.object(WEB, 'write_cloud_config'), \
                 patch.object(WEB, 'runtime_catalogs', return_value=(rows, {})), \

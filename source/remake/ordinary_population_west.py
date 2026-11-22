@@ -7,6 +7,22 @@ available. Each estimate covers the city and its immediate surroundings.
 OPENINGS = {
     # Guanzhong and Longyou. The drought in 194–195 reached the three capital
     # districts, and the 211–215 campaigns affected the passes and Longyou.
+    # Estimated local populations for the four smaller commandery seats.
+    'nanan': (
+        ((188, 6), 13_800), ((215, 8), 10_600), ((227, 2), 16_400),
+        ((228, 6), 12_300), ((263, 5), 19_700),
+    ),
+    'xinping': (
+        ((194, 6), 15_300), ((211, 7), 18_200), ((215, 8), 13_600),
+        ((234, 2), 21_500), ((263, 5), 26_100),
+    ),
+    'beidi': (
+        ((184, 2), 11_700), ((211, 7), 8_600), ((220, 1), 12_800),
+        ((249, 1), 16_700), ((263, 5), 19_300),
+    ),
+    'guangwei': (
+        ((220, 1), 14_600), ((228, 6), 11_900), ((249, 1), 17_700), ((263, 5), 20_500),
+    ),
     'anding': (
         ((184, 2), 26_400), ((191, 10), 21_800), ((196, 6), 15_100),
         ((211, 12), 11_700), ((227, 12), 23_100), ((228, 6), 18_600),
