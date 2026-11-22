@@ -58,9 +58,9 @@ def main():
     import serve
     catalog = resupply_catalog()
 
-    def fixture_session(paths):
+    def fixture_session(paths, **options):
         with patch.object(sessions, 'Catalog', return_value=catalog):
-            return RealSession([ROOT / 'controlled-resupply.json'])
+            return RealSession([ROOT / 'controlled-resupply.json'], **options)
 
     sessions.CampaignSession = fixture_session
     serve.main()
