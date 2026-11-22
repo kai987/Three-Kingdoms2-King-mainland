@@ -44,7 +44,7 @@ async function build({ground='game/map-source/hydrology-ground.png',output='game
   const context={view:{catalog},setupPreview:null,mapPosition:city=>city.position};vm.createContext(context);vm.runInContext(appSource,context);
   const add=(route,part,index,{smooth=false}={})=>{
    if(part.mode!=='land')return;
-   const d=context.landMapPath(part.points,{smooth,from:index===0?route.from:null,to:index===route.draw.length-1?route.to:null});
+   const d=context.landMapPath(part.points,{smooth,from:index===0&&!route.shared_junction?route.from:null,to:index===route.draw.length-1?route.to:null});
    if(!d)return;const key=[route.from,route.to].sort().join(':');
    dynamic.set(d,true);(routePaths[key]??=[]);if(!routePaths[key].includes(d))routePaths[key].push(d);
   };

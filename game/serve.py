@@ -37,7 +37,7 @@ EVENT_SCENE_IDS = ('ai-campaign', 'battle-result', 'battle-started', 'battle-sup
                    'historical-dingjun', 'historical-dong-zhuo-coalition',
                    'historical-dong-zhuo-relocation', 'historical-gaopingling', 'historical-goguryeo-expedition',
                    'historical-hanzhong', 'historical-hanzhong-preparation', 'historical-hefei',
-                   'historical-hefei-defense', 'historical-liaodong', 'historical-liyang-campaign',
+                   'historical-hefei-defense', 'historical-liaodong', 'historical-liyang-campaign', 'historical-longyou-response',
                    'historical-memorial', 'historical-nanzhong', 'historical-sun-jian-jingzhou',
                    'historical-sun-liu-alliance', 'historical-sun-liu-alliance-ended',
                    'historical-tongguan', 'historical-wei-invades-shu',

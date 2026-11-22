@@ -66,6 +66,7 @@ DETAILS = {
     'faction_coup_skipped': {'coup_id','reason','released_troops'},
     **{kind: set() for kind in historical_campaigns.EVENT_FACTIONS},
     historical_campaigns.DONG_ZHUO_RELOCATION: historical_campaigns.DONG_ZHUO_RELOCATION_DETAILS,
+    historical_campaigns.LONGYOU_RESPONSE: {'joined', 'governor_withdrew'},
     **{kind: set() for kind in three_visits.STAGES},
     southern_mission.DEPARTED: {'days', 'storm_days'},
     southern_mission.LANDED: {'can_build'},

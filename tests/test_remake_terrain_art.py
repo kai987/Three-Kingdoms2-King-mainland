@@ -15,7 +15,7 @@ from xml.etree import ElementTree as ET
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = 'game/config/terrain-art.json'
 NS = {'svg': 'http://www.w3.org/2000/svg'}
-CITY_POSITIONS_SHA = '276b966297eadab70e2655b0603b309aa4251bee5f718cf748153e326b26ddae'
+CITY_POSITIONS_SHA = 'acea6eb244f854a602f5594d33a6d62bddc1677c8ab321168a7e21876206076d'
 APPROVED_ART_RGBA_SHA = '5bbd57a0a685f6aa7fea017c1647925487edc35be062f2410c7b82dff10a2617'
 
 

@@ -14952,5 +14952,11 @@
       ]
     }
   ],
-  "shared_junctions": []
+  "shared_junctions": [
+    {
+      "id": "beidi-fengyi-junction",
+      "point": [526, 326],
+      "source_segment_indices": [71]
+    }
+  ]
 }

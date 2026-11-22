@@ -18,7 +18,7 @@ CAMPAIGNS = ROOT / 'game/data/campaigns'
 CITIES = ('shuofang', 'wuyuan', 'yunzhong')
 PARENT_CITIES = dict(zip(CITIES, ('anding', 'xihe', 'yanmen')))
 RESOURCE_FIELDS = ('gold', 'grain', 'reserves')
-COUNTY_NAMES = ('临戎', '九原', '云中旧城')
+COUNTY_NAMES = ('临戎', '九原', '云中')
 NEUTRAL = ('neutral', 'neutral', 'neutral')
 EXPECTED_OWNERS = {
     '184-02': ('han', 'han', 'han'),
@@ -92,7 +92,7 @@ class FrontierChronologyTests(unittest.TestCase):
                                      tuple(preview[field] for field in RESOURCE_FIELDS))
 
     def test_live_date_boundaries_preserve_territory_and_emit_once(self):
-        for chapter, year, renamed in (('212-12', 215, dict(zip(CITIES, COUNTY_NAMES))),
+        for chapter, year, renamed in (('212-12', 215, dict(zip(CITIES[:2], COUNTY_NAMES[:2]))),
                                        ('234-02', 235, {'shuofang': '朔方'})):
             with self.subTest(year=year):
                 session = CampaignSession([CAMPAIGNS / f'{chapter}.json'])

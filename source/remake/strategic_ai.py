@@ -67,6 +67,8 @@ class StrategicAI:
                       key=lambda i: (-self.state.officers[i].troops, ref_sort_key(i)))
 
     def army(self, city, target=None, *, transfer=False):
+        if historical_campaigns.hold_longyou_garrison(self.game, self.state, city):
+            return []
         available = self.available(city)
         # The objective itself is removed from the flank estimate. A sole
         # general may sally against its only weak neighbor, but cannot abandon

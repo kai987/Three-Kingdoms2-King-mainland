@@ -3,7 +3,7 @@
   "review_revision": "2026-11-08",
   "review_file": "game/config/references/scenario-history-review.json",
   "review_sha256": "1dd4f2fb0b91b9a22615912a07853a766506f777d5b99bbbb645b60f53aa82e4",
-  "presentation_sha256": "b7359e9afd0ee1ed19da37a69bef2a8608566da6d68589e42870d2aa7acd1a9f",
+  "presentation_sha256": "ff5db0f3f8a5c2f4110d2dfdce94f29f11fb8bca6763a7b46c930b3449a8525f",
   "scope": "Regional review and current-data consistency, not a complete attested city/month prefect list or a SAN14 export.",
   "boundary_definition": "Different opening owners connected by links, sea_links or travel_routes; each unordered city pair is listed once. These are network borders, not geographic administrative boundary polygons.",
   "historical_count": 23,
@@ -16,12 +16,12 @@
     "mainland235-01"
   ],
   "summary": {
-    "cities": 2913,
+    "cities": 2964,
     "factions": 285,
     "future_factions": 2,
     "scheduled_faction_foundings": 2,
     "scheduled_faction_coups": 1,
-    "boundary_links": 1648,
+    "boundary_links": 1654,
     "opening_officers": 9023,
     "new_factions": 43,
     "city_changes": 109,
@@ -30,12 +30,12 @@
     "officer_change_records": 831
   },
   "fictional_adaptation_summary": {
-    "cities": 633,
+    "cities": 643,
     "factions": 70,
     "future_factions": 0,
     "scheduled_faction_foundings": 0,
     "scheduled_faction_coups": 0,
-    "boundary_links": 414,
+    "boundary_links": 417,
     "opening_officers": 2219,
     "new_factions": 13,
     "city_changes": 14,
@@ -171,7 +171,7 @@
       "title": "184年2月 · 黄巾之乱",
       "title_ja": "184年2月 · 黄巾之乱",
       "catalog_file": "game/data/campaigns/184-02.json",
-      "catalog_sha256": "474f80af742ca252f9ba3ce2c9b1cc69759fb45496ec6346aeeeaeb65bf89c4a",
+      "catalog_sha256": "bd51f35a837368f4365eb93cb8b771700d19ff3f458f503da91b8e88f67692a9",
       "factions": [
         {
           "id": "ding_yuan",
@@ -5990,7 +5990,7 @@
       "title": "188年6月 · 漢朝搖搖欲墜",
       "title_ja": "揺らぐ漢朝",
       "catalog_file": "game/data/campaigns/188-06.json",
-      "catalog_sha256": "ee50b267326c6184f5429a402f33cf842c8f35bc407123751157de9aa0c96a26",
+      "catalog_sha256": "0c4aa2fc1cfb113049ea40c85a8c8c72fdb877b82b2383a60b217cccb9809712",
       "factions": [
         {
           "id": "ding_yuan",
@@ -6007,7 +6007,7 @@
           "person_id": "san14-candidate-0736",
           "city": "tianshui",
           "city_name": "漢陽",
-          "city_count": 1,
+          "city_count": 2,
           "officer_count": 14
         },
         {
@@ -6114,7 +6114,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 208017,
+      "initial_soldier_total": 208567,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -6163,7 +6163,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 124,
+      "city_count": 125,
       "city_owners": [
         {
           "city": "anding",
@@ -6554,6 +6554,12 @@
           "name": "吕宋",
           "owner": "neutral",
           "neutral_label": "可設城地點"
+        },
+        {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "dong_zhuo",
+          "neutral_label": null
         },
         {
           "city": "nanguang",
@@ -11986,7 +11992,7 @@
       "title": "190年1月 · 反董卓联盟",
       "title_ja": "190年1月 · 反董卓联盟",
       "catalog_file": "game/data/campaigns/190-01.json",
-      "catalog_sha256": "4275f6d5c6dfc0d6ab6e50e00a2a84050199754b6599e29a70135e12504c124e",
+      "catalog_sha256": "ebf7b8455ee3c1e109a851e5f68d995ddb4e2c85588fd70a0b335e6ce9899ebf",
       "factions": [
         {
           "id": "bao_xin",
@@ -12111,7 +12117,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 3,
+          "city_count": 4,
           "officer_count": 8
         },
         {
@@ -12254,7 +12260,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 244127,
+      "initial_soldier_total": 244677,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -12303,7 +12309,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 124,
+      "city_count": 125,
       "city_owners": [
         {
           "city": "anding",
@@ -12694,6 +12700,12 @@
           "name": "吕宋",
           "owner": "neutral",
           "neutral_label": "可設城地點"
+        },
+        {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "ma_teng",
+          "neutral_label": null
         },
         {
           "city": "nanguang",
@@ -20227,7 +20239,7 @@
       "title": "191年10月 · 二袁的意图",
       "title_ja": "191年10月 · 二袁的意图",
       "catalog_file": "game/data/campaigns/191-10.json",
-      "catalog_sha256": "934702301ceee4d33fdacb34ac3f92408414369be57f1ff59cbc0dba1edb83d8",
+      "catalog_sha256": "85421d8ff772f6b469f930971850661d2dceca9180d51a7a16daea94ef198aab",
       "factions": [
         {
           "id": "bao_xin",
@@ -20334,7 +20346,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 3,
+          "city_count": 4,
           "officer_count": 9
         },
         {
@@ -20459,7 +20471,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 257197,
+      "initial_soldier_total": 257747,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -20508,7 +20520,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 124,
+      "city_count": 125,
       "city_owners": [
         {
           "city": "anding",
@@ -20899,6 +20911,12 @@
           "name": "吕宋",
           "owner": "neutral",
           "neutral_label": "可設城地點"
+        },
+        {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "ma_teng",
+          "neutral_label": null
         },
         {
           "city": "nanguang",
@@ -28529,7 +28547,7 @@
       "title": "194年6月 · 群雄割据",
       "title_ja": "194年6月 · 群雄割据",
       "catalog_file": "game/data/campaigns/194-06.json",
-      "catalog_sha256": "71f20b5437572e98af0daee945ed527d1a0e5390b5e67cbc7dbe19b3b360121a",
+      "catalog_sha256": "238610ef3299e5744491978f686a888db9220047c0a77d5abe837f56759c1d6a",
       "factions": [
         {
           "id": "goguryeo",
@@ -28627,7 +28645,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 3,
+          "city_count": 4,
           "officer_count": 13
         },
         {
@@ -28761,7 +28779,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 252647,
+      "initial_soldier_total": 253197,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -28810,7 +28828,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 124,
+      "city_count": 125,
       "city_owners": [
         {
           "city": "anding",
@@ -29201,6 +29219,12 @@
           "name": "吕宋",
           "owner": "neutral",
           "neutral_label": "可設城地點"
+        },
+        {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "ma_teng",
+          "neutral_label": null
         },
         {
           "city": "nanguang",
@@ -37085,7 +37109,7 @@
       "title": "196年6月 · 曹操得勢",
       "title_ja": "曹操の台頭",
       "catalog_file": "game/data/campaigns/196-06.json",
-      "catalog_sha256": "9e3ed8352f12278e3580dd50c92aa345b8737c742f05fc088da9294acbb62511",
+      "catalog_sha256": "43ace91b425f985e8b99886c778242c4e185ad3c4e0856664273ae819a974b6d",
       "factions": [
         {
           "id": "goguryeo",
@@ -37147,7 +37171,7 @@
           "person_id": "san14-candidate-0893",
           "city": "jingzhao",
           "city_name": "长安",
-          "city_count": 5,
+          "city_count": 6,
           "officer_count": 15
         },
         {
@@ -37192,7 +37216,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 3,
+          "city_count": 4,
           "officer_count": 13
         },
         {
@@ -37308,7 +37332,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 251427,
+      "initial_soldier_total": 252597,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -37357,7 +37381,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 125,
+      "city_count": 127,
       "city_owners": [
         {
           "city": "anding",
@@ -37756,6 +37780,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "ma_teng",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "liu_zhang",
@@ -37969,6 +37999,12 @@
           "city": "xinggu",
           "name": "宛温县",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "li_jue",
           "neutral_label": null
         },
         {
@@ -38187,6 +38223,23 @@
           "owners": [
             "ma_teng",
             "yuan_shao"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "xinping"
+          ],
+          "owners": [
+            "ma_teng",
+            "li_jue"
           ],
           "modes": [
             "land"
@@ -45709,7 +45762,7 @@
       "title": "198年3月 · 呂布討伐戰",
       "title_ja": "呂布討伐戦",
       "catalog_file": "game/data/campaigns/198-03.json",
-      "catalog_sha256": "ed981dec65873ae531402a279fe96005696359322aee1b0f091fb7c8b45d1817",
+      "catalog_sha256": "a269bc28d833b573d8135532cea4697e0d27fbae17e48d4de2d9fbb1e18e6c0b",
       "factions": [
         {
           "id": "goguryeo",
@@ -45762,7 +45815,7 @@
           "person_id": "san14-candidate-0893",
           "city": "jingzhao",
           "city_name": "长安",
-          "city_count": 3,
+          "city_count": 4,
           "officer_count": 9
         },
         {
@@ -45798,7 +45851,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 3,
+          "city_count": 4,
           "officer_count": 16
         },
         {
@@ -45914,7 +45967,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 255587,
+      "initial_soldier_total": 256757,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -45959,7 +46012,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 125,
+      "city_count": 127,
       "city_owners": [
         {
           "city": "anding",
@@ -46358,6 +46411,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "ma_teng",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "liu_zhang",
@@ -46571,6 +46630,12 @@
           "city": "xinggu",
           "name": "宛温县",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "li_jue",
           "neutral_label": null
         },
         {
@@ -46789,6 +46854,23 @@
           "owners": [
             "ma_teng",
             "yuan_shao"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "xinping"
+          ],
+          "owners": [
+            "ma_teng",
+            "li_jue"
           ],
           "modes": [
             "land"
@@ -54077,7 +54159,7 @@
       "title": "200年1月 · 官渡之战",
       "title_ja": "200年1月 · 官渡之战",
       "catalog_file": "game/data/campaigns/200-01.json",
-      "catalog_sha256": "602dac15185aab1783c0b89ea075cfa66b25b380ead24085e8e741bccddc0b8e",
+      "catalog_sha256": "8a0e2bfc83147bf9349b180c1457dd634eaef1bd3c2bddac111f7a54024f36c5",
       "factions": [
         {
           "id": "goguryeo",
@@ -54130,7 +54212,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 3,
+          "city_count": 4,
           "officer_count": 17
         },
         {
@@ -54166,7 +54248,7 @@
           "person_id": "san14-candidate-0521",
           "city": "yingchuan",
           "city_name": "许县",
-          "city_count": 21,
+          "city_count": 22,
           "officer_count": 82
         },
         {
@@ -54210,7 +54292,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 273157,
+      "initial_soldier_total": 274527,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -54255,7 +54337,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 125,
+      "city_count": 127,
       "city_owners": [
         {
           "city": "anding",
@@ -54654,6 +54736,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "ma_teng",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "liu_zhang",
@@ -54867,6 +54955,12 @@
           "city": "xinggu",
           "name": "宛温县",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -55085,6 +55179,23 @@
           "owners": [
             "ma_teng",
             "yuan_shao"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "xinping"
+          ],
+          "owners": [
+            "ma_teng",
+            "wei"
           ],
           "modes": [
             "land"
@@ -61992,7 +62103,7 @@
       "title": "202年6月 · 河北爭亂",
       "title_ja": "河北争乱",
       "catalog_file": "game/data/campaigns/202-06.json",
-      "catalog_sha256": "e599a75793b99e99618d0fae3402179fb09352b3fa88396f2b740cd4a3107261",
+      "catalog_sha256": "20880f15e649527341ff781ad5cdd54c52a2ad22e9435d9739b7dd098be7337a",
       "factions": [
         {
           "id": "gao_gan",
@@ -62054,7 +62165,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 3,
+          "city_count": 4,
           "officer_count": 17
         },
         {
@@ -62090,7 +62201,7 @@
           "person_id": "san14-candidate-0521",
           "city": "yingchuan",
           "city_name": "许县",
-          "city_count": 24,
+          "city_count": 25,
           "officer_count": 89
         },
         {
@@ -62152,7 +62263,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 276022,
+      "initial_soldier_total": 277392,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -62197,7 +62308,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 125,
+      "city_count": 127,
       "city_owners": [
         {
           "city": "anding",
@@ -62596,6 +62707,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "ma_teng",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "liu_zhang",
@@ -62809,6 +62926,12 @@
           "city": "xinggu",
           "name": "宛温县",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -63027,6 +63150,23 @@
           "owners": [
             "ma_teng",
             "gao_gan"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "xinping"
+          ],
+          "owners": [
+            "ma_teng",
+            "wei"
           ],
           "modes": [
             "land"
@@ -69934,7 +70074,7 @@
       "title": "207年9月 · 三顾茅庐",
       "title_ja": "207年9月 · 三顾茅庐",
       "catalog_file": "game/data/campaigns/207-09.json",
-      "catalog_sha256": "427096987b24fbc47ad8bbd5b9515d427ca6967ac4f3232015c4c7c6d881bbb9",
+      "catalog_sha256": "7f3495bd4e2d98c6c8294c30f3c38f75c9ed8d9bf4d078c1e456556f65fe37e4",
       "factions": [
         {
           "id": "goguryeo",
@@ -69987,7 +70127,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 3,
+          "city_count": 4,
           "officer_count": 17
         },
         {
@@ -70023,7 +70163,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 51,
+          "city_count": 52,
           "officer_count": 135
         },
         {
@@ -70058,7 +70198,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 280047,
+      "initial_soldier_total": 281417,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -70099,7 +70239,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 125,
+      "city_count": 127,
       "city_owners": [
         {
           "city": "anding",
@@ -70498,6 +70638,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "ma_teng",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "liu_zhang",
@@ -70714,6 +70860,12 @@
           "neutral_label": null
         },
         {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xiping",
           "name": "西平亭",
           "owner": "neutral",
@@ -70925,6 +71077,23 @@
           "cities": [
             "anding",
             "xihe"
+          ],
+          "owners": [
+            "ma_teng",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "xinping"
           ],
           "owners": [
             "ma_teng",
@@ -78277,7 +78446,7 @@
       "title": "208年10月 · 赤壁之战",
       "title_ja": "208年10月 · 赤壁之战",
       "catalog_file": "game/data/campaigns/208-10.json",
-      "catalog_sha256": "e624d0a8574492c31cf406bd17316930700feddc141887edc62f76261bf761e6",
+      "catalog_sha256": "d711cba3e174c104e430638f30a6e561a1e93093749049cd80bc899f9758d18f",
       "factions": [
         {
           "id": "goguryeo",
@@ -78348,7 +78517,7 @@
           "person_id": "san14-candidate-0769",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 3,
+          "city_count": 4,
           "officer_count": 14
         },
         {
@@ -78384,7 +78553,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 56,
+          "city_count": 57,
           "officer_count": 171
         },
         {
@@ -78428,7 +78597,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 287902,
+      "initial_soldier_total": 289272,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -78469,7 +78638,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 127,
+      "city_count": 129,
       "city_owners": [
         {
           "city": "anding",
@@ -78868,6 +79037,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "ma_teng",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "liu_zhang",
@@ -79090,6 +79265,12 @@
           "neutral_label": null
         },
         {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xiping",
           "name": "西平亭",
           "owner": "neutral",
@@ -79307,6 +79488,23 @@
           "cities": [
             "anding",
             "xihe"
+          ],
+          "owners": [
+            "ma_teng",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "xinping"
           ],
           "owners": [
             "ma_teng",
@@ -86802,7 +87000,7 @@
       "title": "211年7月 · 潼關之戰",
       "title_ja": "潼関の戦い",
       "catalog_file": "game/data/campaigns/211-07-tongguan.json",
-      "catalog_sha256": "28c2e29e560487cd3f10a21b5baf0da8490b592d49727b40fab0340c9c43ef33",
+      "catalog_sha256": "2fe21ca93f91ea2dff3896a1c19e625e7ad4f9d9fdedb337c1d012cf9a66cbf1",
       "factions": [
         {
           "id": "goguryeo",
@@ -86846,7 +87044,7 @@
           "person_id": "san14-candidate-0769",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 5,
+          "city_count": 7,
           "officer_count": 15
         },
         {
@@ -86908,7 +87106,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 304090,
+      "initial_soldier_total": 305460,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -86949,7 +87147,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 127,
+      "city_count": 129,
       "city_owners": [
         {
           "city": "anding",
@@ -87348,6 +87546,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "ma_teng",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "liu_zhang",
@@ -87567,6 +87771,12 @@
           "city": "xinggu",
           "name": "宛温县",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {
@@ -94107,7 +94317,7 @@
       "title": "212年12月 · 入蜀爭奪戰",
       "title_ja": "入蜀争奪戦",
       "catalog_file": "game/data/campaigns/212-12.json",
-      "catalog_sha256": "20e87798e4a8d65455371522114fa01373e25871f28be2291232cf3fc970fc87",
+      "catalog_sha256": "9d185636e51d20f4d8e8a6b7cf75389a4637e0a11b5bddd86c5e552488d3b23d",
       "factions": [
         {
           "id": "goguryeo",
@@ -94178,7 +94388,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 55,
+          "city_count": 57,
           "officer_count": 160
         },
         {
@@ -94204,7 +94414,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 294225,
+      "initial_soldier_total": 295595,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -94245,7 +94455,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 127,
+      "city_count": 129,
       "city_owners": [
         {
           "city": "anding",
@@ -94644,6 +94854,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "liu_zhang",
@@ -94863,6 +95079,12 @@
           "city": "xinggu",
           "name": "宛温县",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -102424,7 +102646,7 @@
       "title": "215年8月 · 合淝之戰",
       "title_ja": "合肥の戦い",
       "catalog_file": "game/data/campaigns/215-08.json",
-      "catalog_sha256": "b47c4296ae189b9bec26f91dc5726793d58efa3ac1cd991a2645790144a9e7a2",
+      "catalog_sha256": "afa3b9d97cef6d632d89f89053d7d977adb2d733d53de52572bb5e64224789f7",
       "factions": [
         {
           "id": "goguryeo",
@@ -102468,7 +102690,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 66,
+          "city_count": 68,
           "officer_count": 163
         },
         {
@@ -102485,7 +102707,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 296112,
+      "initial_soldier_total": 297482,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -102526,7 +102748,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 128,
+      "city_count": 130,
       "city_owners": [
         {
           "city": "anding",
@@ -102925,6 +103147,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "shu",
@@ -103147,6 +103375,12 @@
           "neutral_label": null
         },
         {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xinxing",
           "name": "新兴",
           "owner": "wei",
@@ -103238,7 +103472,7 @@
         },
         {
           "city": "yunzhong",
-          "name": "云中旧城",
+          "name": "云中",
           "owner": "neutral",
           "neutral_label": "河套地方部众（中立）"
         },
@@ -108475,7 +108709,7 @@
       "title": "217年7月 · 汉中争夺战",
       "title_ja": "217年7月 · 汉中争夺战",
       "catalog_file": "game/data/campaigns/217-07.json",
-      "catalog_sha256": "968ee8eb2db59dd48abfc2778d719c4be1d4015ef80a3a82f5ae80762957f9e7",
+      "catalog_sha256": "c18a0b555502e11d13bac54837ceb7965d7d30ee04f697ea7ff82600966ee822",
       "factions": [
         {
           "id": "goguryeo",
@@ -108519,7 +108753,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 66,
+          "city_count": 68,
           "officer_count": 162
         },
         {
@@ -108536,7 +108770,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 297020,
+      "initial_soldier_total": 298390,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -108577,7 +108811,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 128,
+      "city_count": 130,
       "city_owners": [
         {
           "city": "anding",
@@ -108976,6 +109210,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "shu",
@@ -109198,6 +109438,12 @@
           "neutral_label": null
         },
         {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xinxing",
           "name": "新兴",
           "owner": "wei",
@@ -109289,7 +109535,7 @@
         },
         {
           "city": "yunzhong",
-          "name": "云中旧城",
+          "name": "云中",
           "owner": "neutral",
           "neutral_label": "河套地方部众（中立）"
         },
@@ -114607,7 +114853,7 @@
       "title": "219年7月 · 关羽包围网",
       "title_ja": "219年7月 · 关羽包围网",
       "catalog_file": "game/data/campaigns/219-07.json",
-      "catalog_sha256": "eecd7b518e832b7ece6696e04dfad9af9ea29fda0044c2f1e6bf9f9dc69bd8b2",
+      "catalog_sha256": "3278ca539ab4e397f3ae4ab64a775d6a0b99e8546c2026945e5d77193ca474f9",
       "factions": [
         {
           "id": "goguryeo",
@@ -114651,7 +114897,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 62,
+          "city_count": 64,
           "officer_count": 171
         },
         {
@@ -114668,7 +114914,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 294377,
+      "initial_soldier_total": 295747,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -114709,7 +114955,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 128,
+      "city_count": 130,
       "city_owners": [
         {
           "city": "anding",
@@ -115108,6 +115354,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "shu",
@@ -115330,6 +115582,12 @@
           "neutral_label": null
         },
         {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xinxing",
           "name": "新兴",
           "owner": "wei",
@@ -115421,7 +115679,7 @@
         },
         {
           "city": "yunzhong",
-          "name": "云中旧城",
+          "name": "云中",
           "owner": "neutral",
           "neutral_label": "河套地方部众（中立）"
         },
@@ -120813,7 +121071,7 @@
       "title": "221年7月 · 夷陵前夕",
       "title_ja": "221年7月 · 夷陵前夕",
       "catalog_file": "game/data/campaigns/221-07.json",
-      "catalog_sha256": "987aa07c960c05da6fbfdc701950cc7a9a8c72cf4a19b127e4ca1f66bfc9cb07",
+      "catalog_sha256": "6eb6653553444ddd98a1b68da979f017fc031975edf946c8367c023b796e00d8",
       "factions": [
         {
           "id": "goguryeo",
@@ -120857,7 +121115,7 @@
           "person_id": "san14-candidate-0526",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 65,
+          "city_count": 68,
           "officer_count": 143
         },
         {
@@ -120874,7 +121132,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 294077,
+      "initial_soldier_total": 296217,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -120915,7 +121173,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 128,
+      "city_count": 131,
       "city_owners": [
         {
           "city": "anding",
@@ -120945,6 +121203,12 @@
           "city": "baxi",
           "name": "阆中",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "beidi",
+          "name": "北地",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -121314,6 +121578,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "shu",
@@ -121536,6 +121806,12 @@
           "neutral_label": null
         },
         {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xinxing",
           "name": "新兴",
           "owner": "wei",
@@ -121627,7 +121903,7 @@
         },
         {
           "city": "yunzhong",
-          "name": "云中旧城",
+          "name": "云中",
           "owner": "neutral",
           "neutral_label": "河套地方部众（中立）"
         },
@@ -126724,7 +127000,7 @@
       "title": "225年7月 · 征伐南蠻",
       "title_ja": "南蛮征伐",
       "catalog_file": "game/data/campaigns/225-07.json",
-      "catalog_sha256": "d19d8271f51e471cf59f38ee71b078dcc3c5db0cf4a1ca6976b306c05a6c5879",
+      "catalog_sha256": "7c80bc6857e9c033d5c8f57de09f03408de092975de344037a651b0bcab3b5cf",
       "factions": [
         {
           "id": "goguryeo",
@@ -126777,7 +127053,7 @@
           "person_id": "san14-candidate-0526",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 65,
+          "city_count": 68,
           "officer_count": 127
         },
         {
@@ -126794,7 +127070,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 283732,
+      "initial_soldier_total": 285872,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -126835,7 +127111,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 128,
+      "city_count": 131,
       "city_owners": [
         {
           "city": "anding",
@@ -126865,6 +127141,12 @@
           "city": "baxi",
           "name": "阆中",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "beidi",
+          "name": "北地",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -127234,6 +127516,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "shu",
@@ -127456,6 +127744,12 @@
           "neutral_label": null
         },
         {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xinxing",
           "name": "新兴",
           "owner": "wei",
@@ -127547,7 +127841,7 @@
         },
         {
           "city": "yunzhong",
-          "name": "云中旧城",
+          "name": "云中",
           "owner": "neutral",
           "neutral_label": "河套地方部众（中立）"
         },
@@ -132740,7 +133034,7 @@
       "title": "227年2月 · 出师表",
       "title_ja": "227年2月 · 出师表",
       "catalog_file": "game/data/campaigns/227-02.json",
-      "catalog_sha256": "347938048313241906d08d412bd0cb0365b4f7c85eb117828a1af116844c9828",
+      "catalog_sha256": "0720e6ff10c49317f842665cedf17894a712b2ef152523aad405739c1aa9f386",
       "factions": [
         {
           "id": "goguryeo",
@@ -132775,7 +133069,7 @@
           "person_id": "san14-candidate-0501",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 65,
+          "city_count": 68,
           "officer_count": 149
         },
         {
@@ -132792,7 +133086,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 293870,
+      "initial_soldier_total": 296010,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -132833,7 +133127,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 128,
+      "city_count": 131,
       "city_owners": [
         {
           "city": "anding",
@@ -132863,6 +133157,12 @@
           "city": "baxi",
           "name": "阆中",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "beidi",
+          "name": "北地",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -133232,6 +133532,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "shu",
@@ -133454,6 +133760,12 @@
           "neutral_label": null
         },
         {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xinxing",
           "name": "新兴",
           "owner": "wei",
@@ -133545,7 +133857,7 @@
         },
         {
           "city": "yunzhong",
-          "name": "云中旧城",
+          "name": "云中",
           "owner": "neutral",
           "neutral_label": "河套地方部众（中立）"
         },
@@ -135094,10 +135406,10 @@
           "name": "姜维",
           "status": "serving",
           "faction": "wei",
-          "city": "yinping",
+          "city": "tianshui",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陰平道"
+          "city_name": "漢陽"
         },
         {
           "person_id": "san14-candidate-0204",
@@ -137104,10 +137416,10 @@
           "name": "马遵",
           "status": "serving",
           "faction": "wei",
-          "city": "runan",
+          "city": "tianshui",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "汝南"
+          "city_name": "漢陽"
         },
         {
           "person_id": "san14-candidate-0765",
@@ -137874,10 +138186,10 @@
           "name": "梁绪",
           "status": "serving",
           "faction": "wei",
-          "city": "yinping",
+          "city": "tianshui",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陰平道"
+          "city_name": "漢陽"
         },
         {
           "person_id": "san14-candidate-0974",
@@ -138181,7 +138493,7 @@
       "title": "234年2月 · 秋風五丈原",
       "title_ja": "秋風五丈原",
       "catalog_file": "game/data/campaigns/234-02.json",
-      "catalog_sha256": "7971fb7940ef399658f227def0d855c66bdad61cf3090e30dadb09e78b81a1d5",
+      "catalog_sha256": "4ffe17bf93ec05772daf11ecde80b6421631ba4c4391683e801fe4a0e23ffab0",
       "factions": [
         {
           "id": "goguryeo",
@@ -138216,7 +138528,7 @@
           "person_id": "san14-candidate-0501",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 63,
+          "city_count": 67,
           "officer_count": 130
         },
         {
@@ -138233,7 +138545,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 286890,
+      "initial_soldier_total": 289690,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -138266,7 +138578,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 128,
+      "city_count": 132,
       "city_owners": [
         {
           "city": "anding",
@@ -138296,6 +138608,12 @@
           "city": "baxi",
           "name": "阆中",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "beidi",
+          "name": "北地",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -138439,6 +138757,12 @@
         {
           "city": "guangling",
           "name": "广陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "广魏",
           "owner": "wei",
           "neutral_label": null
         },
@@ -138665,6 +138989,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "shu",
@@ -138887,6 +139217,12 @@
           "neutral_label": null
         },
         {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xinxing",
           "name": "新兴",
           "owner": "wei",
@@ -138978,7 +139314,7 @@
         },
         {
           "city": "yunzhong",
-          "name": "云中旧城",
+          "name": "云中",
           "owner": "neutral",
           "neutral_label": "河套地方部众（中立）"
         },
@@ -143132,7 +143468,7 @@
       "title": "238年1月 · 征讨辽东",
       "title_ja": "238年1月 · 征讨辽东",
       "catalog_file": "game/data/campaigns/238-01.json",
-      "catalog_sha256": "fb18aa55d91c3d3804a3742c776238385354cf6989b7a4d4d75856953855eb3d",
+      "catalog_sha256": "0e1380f5b719749e0c4af85f885aeeec8b5a9a917493526b7f74e3351e9e5f70",
       "factions": [
         {
           "id": "goguryeo",
@@ -143167,7 +143503,7 @@
           "person_id": "san14-candidate-0501",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 64,
+          "city_count": 68,
           "officer_count": 123
         },
         {
@@ -143184,7 +143520,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 287182,
+      "initial_soldier_total": 289982,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -143213,7 +143549,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 128,
+      "city_count": 132,
       "city_owners": [
         {
           "city": "anding",
@@ -143243,6 +143579,12 @@
           "city": "baxi",
           "name": "阆中",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "beidi",
+          "name": "北地",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -143386,6 +143728,12 @@
         {
           "city": "guangling",
           "name": "广陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "广魏",
           "owner": "wei",
           "neutral_label": null
         },
@@ -143612,6 +143960,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "shu",
@@ -143834,6 +144188,12 @@
           "neutral_label": null
         },
         {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xinxing",
           "name": "新兴",
           "owner": "wei",
@@ -143925,7 +144285,7 @@
         },
         {
           "city": "yunzhong",
-          "name": "云中旧城",
+          "name": "云中",
           "owner": "neutral",
           "neutral_label": "河套地方部众（中立）"
         },
@@ -148014,7 +148374,7 @@
       "title": "249年1月 · 正始之变",
       "title_ja": "249年1月 · 正始之变",
       "catalog_file": "game/data/campaigns/249-01.json",
-      "catalog_sha256": "9344b02cf6af74f09653a7b3545bfb3b4bccab3ba1bfb5a8fddd4e0aca308f12",
+      "catalog_sha256": "dfd7a775a3d27fcf2d0b8e9930af8081d5bbc819893265c66e037902782e048a",
       "factions": [
         {
           "id": "goguryeo",
@@ -148040,7 +148400,7 @@
           "person_id": "san14-candidate-0529",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 69,
+          "city_count": 73,
           "officer_count": 113
         },
         {
@@ -148057,7 +148417,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 277412,
+      "initial_soldier_total": 280212,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -148078,7 +148438,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 129,
+      "city_count": 133,
       "city_owners": [
         {
           "city": "anding",
@@ -148108,6 +148468,12 @@
           "city": "baxi",
           "name": "阆中",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "beidi",
+          "name": "北地",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -148257,6 +148623,12 @@
         {
           "city": "guangling",
           "name": "广陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "广魏",
           "owner": "wei",
           "neutral_label": null
         },
@@ -148481,6 +148853,12 @@
           "name": "吕宋",
           "owner": "neutral",
           "neutral_label": "可設城地點"
+        },
+        {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "wei",
+          "neutral_label": null
         },
         {
           "city": "nanguang",
@@ -148711,6 +149089,12 @@
           "neutral_label": null
         },
         {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xinxing",
           "name": "新兴",
           "owner": "wei",
@@ -148796,7 +149180,7 @@
         },
         {
           "city": "yunzhong",
-          "name": "云中旧城",
+          "name": "云中",
           "owner": "neutral",
           "neutral_label": "河套地方部众（中立）"
         },
@@ -152446,7 +152830,7 @@
       "title": "263年5月 · 蜀漢滅亡",
       "title_ja": "蜀漢の滅亡",
       "catalog_file": "game/data/campaigns/263-05.json",
-      "catalog_sha256": "e4f296bc4b61117d47acefd374f0eb53bac8e40e0f55ac952b254c19f3198006",
+      "catalog_sha256": "18ef5ddcffe09594b9256158eba7da4ece5da8c00c018a8932dd1bec1a1aa513",
       "factions": [
         {
           "id": "goguryeo",
@@ -152481,7 +152865,7 @@
           "person_id": "san14-candidate-0503",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 69,
+          "city_count": 73,
           "officer_count": 73
         },
         {
@@ -152498,7 +152882,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 243855,
+      "initial_soldier_total": 246655,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -152515,7 +152899,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 134,
+      "city_count": 138,
       "city_owners": [
         {
           "city": "anding",
@@ -152545,6 +152929,12 @@
           "city": "baxi",
           "name": "阆中",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "beidi",
+          "name": "北地",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -152694,6 +153084,12 @@
         {
           "city": "guangling",
           "name": "广陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "广魏",
           "owner": "wei",
           "neutral_label": null
         },
@@ -152944,6 +153340,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "shu",
@@ -153178,6 +153580,12 @@
           "neutral_label": null
         },
         {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xinxing",
           "name": "新兴",
           "owner": "wei",
@@ -153263,7 +153671,7 @@
         },
         {
           "city": "yunzhong",
-          "name": "云中旧城",
+          "name": "云中",
           "owner": "neutral",
           "neutral_label": "河套地方部众（中立）"
         },
@@ -156142,7 +156550,7 @@
       "title": "197年7月 · 皇帝呂布",
       "title_ja": "皇帝呂布",
       "catalog_file": "game/data/campaigns/197-07.json",
-      "catalog_sha256": "6f8293322e990d44016c35e15b0b2d8abc41909a9e94241e2be1f50e66974531",
+      "catalog_sha256": "7938e7fd2d3d06f42942ad2ca768850408c9ca09a069b623d1b179605bb0222c",
       "factions": [
         {
           "id": "goguryeo",
@@ -156204,7 +156612,7 @@
           "person_id": "san14-candidate-0893",
           "city": "jingzhao",
           "city_name": "长安",
-          "city_count": 6,
+          "city_count": 7,
           "officer_count": 12
         },
         {
@@ -156249,7 +156657,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 3,
+          "city_count": 4,
           "officer_count": 13
         },
         {
@@ -156365,7 +156773,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 248142,
+      "initial_soldier_total": 249312,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -156410,7 +156818,7 @@
       },
       "fictional": true,
       "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
-      "city_count": 126,
+      "city_count": 128,
       "city_owners": [
         {
           "city": "anding",
@@ -156809,6 +157217,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "ma_teng",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "liu_zhang",
@@ -157031,6 +157445,12 @@
           "neutral_label": null
         },
         {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "li_jue",
+          "neutral_label": null
+        },
+        {
           "city": "xiping",
           "name": "西平亭",
           "owner": "neutral",
@@ -157246,6 +157666,23 @@
           "owners": [
             "ma_teng",
             "yuan_shao"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "xinping"
+          ],
+          "owners": [
+            "ma_teng",
+            "li_jue"
           ],
           "modes": [
             "land"
@@ -164693,7 +165130,7 @@
       "title": "201年5月 · 華北霸者・袁紹",
       "title_ja": "華北の覇者・袁紹",
       "catalog_file": "game/data/campaigns/201-05.json",
-      "catalog_sha256": "d21d935bfe14a87b3dd831059c3cb49aa7df5315685817f757fb955895f41544",
+      "catalog_sha256": "ec1dbc7c1fcb8fda1937aae4b76fc25e9cc7ce998b8a59196aedcedfc4be2ccc",
       "factions": [
         {
           "id": "goguryeo",
@@ -164746,7 +165183,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 6,
+          "city_count": 8,
           "officer_count": 18
         },
         {
@@ -164826,7 +165263,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 269272,
+      "initial_soldier_total": 270642,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -164871,7 +165308,7 @@
       },
       "fictional": true,
       "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
-      "city_count": 126,
+      "city_count": 128,
       "city_owners": [
         {
           "city": "anding",
@@ -165270,6 +165707,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "ma_teng",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "liu_zhang",
@@ -165489,6 +165932,12 @@
           "city": "xinggu",
           "name": "宛温县",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {
@@ -171671,7 +172120,7 @@
       "title": "209年6月 · 志在千里",
       "title_ja": "志在千里",
       "catalog_file": "game/data/campaigns/209-06.json",
-      "catalog_sha256": "4676ff8a39ed399ef077bcd8fa0751f0b2b3782a6e1f9aebafbb14982b49d429",
+      "catalog_sha256": "2261e3607d2e81d416fdd88e861aae128006f962419f26ed86d7a54248c28d15",
       "factions": [
         {
           "id": "goguryeo",
@@ -171715,7 +172164,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 3,
+          "city_count": 4,
           "officer_count": 17
         },
         {
@@ -171751,7 +172200,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 63,
+          "city_count": 64,
           "officer_count": 165
         },
         {
@@ -171777,7 +172226,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 288082,
+      "initial_soldier_total": 289452,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -171818,7 +172267,7 @@
       },
       "fictional": true,
       "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
-      "city_count": 127,
+      "city_count": 129,
       "city_owners": [
         {
           "city": "anding",
@@ -172217,6 +172666,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "ma_teng",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "liu_zhang",
@@ -172439,6 +172894,12 @@
           "neutral_label": null
         },
         {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xiping",
           "name": "西平亭",
           "owner": "neutral",
@@ -172656,6 +173117,23 @@
           "cities": [
             "anding",
             "xihe"
+          ],
+          "owners": [
+            "ma_teng",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "xinping"
           ],
           "owners": [
             "ma_teng",
@@ -178492,7 +178970,7 @@
       "title": "210年11月 · 二分天下之計",
       "title_ja": "天下二分計",
       "catalog_file": "game/data/campaigns/210-11.json",
-      "catalog_sha256": "5fe9dd0459d92be47166ca3e793fb82688e28a9c502dbd41aa6e6b5a9da5f3ee",
+      "catalog_sha256": "106411e97e47f0baa4fb4e0a6573137f12f640f44ae36b6b04dc1d5410980a63",
       "factions": [
         {
           "id": "goguryeo",
@@ -178527,7 +179005,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 3,
+          "city_count": 4,
           "officer_count": 18
         },
         {
@@ -178563,7 +179041,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 56,
+          "city_count": 57,
           "officer_count": 165
         },
         {
@@ -178580,7 +179058,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 284807,
+      "initial_soldier_total": 286177,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -178621,7 +179099,7 @@
       },
       "fictional": true,
       "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
-      "city_count": 127,
+      "city_count": 129,
       "city_owners": [
         {
           "city": "anding",
@@ -179020,6 +179498,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "ma_teng",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "wu",
@@ -179242,6 +179726,12 @@
           "neutral_label": null
         },
         {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xiping",
           "name": "西平亭",
           "owner": "neutral",
@@ -179459,6 +179949,23 @@
           "cities": [
             "anding",
             "xihe"
+          ],
+          "owners": [
+            "ma_teng",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "xinping"
           ],
           "owners": [
             "ma_teng",
@@ -185313,7 +185820,7 @@
       "title": "212年6月 · 錦馬超展翅高飛",
       "title_ja": "錦馬超飛翔",
       "catalog_file": "game/data/campaigns/212-06.json",
-      "catalog_sha256": "c67b282c2e29b665433e25e6864309469c72c62f566017345e807262b2db2e3e",
+      "catalog_sha256": "c22fb92ac35205b1fc74b368a11eadd5befe9cb5a90f1e013fe63d02a4fe9c4a",
       "factions": [
         {
           "id": "cao_zhang",
@@ -185366,7 +185873,7 @@
           "person_id": "san14-candidate-0769",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 8,
+          "city_count": 10,
           "officer_count": 11
         },
         {
@@ -185428,7 +185935,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 300500,
+      "initial_soldier_total": 301870,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -185469,7 +185976,7 @@
       },
       "fictional": true,
       "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
-      "city_count": 127,
+      "city_count": 129,
       "city_owners": [
         {
           "city": "anding",
@@ -185868,6 +186375,12 @@
           "neutral_label": "可設城地點"
         },
         {
+          "city": "nanan",
+          "name": "南安",
+          "owner": "ma_teng",
+          "neutral_label": null
+        },
+        {
           "city": "nanguang",
           "name": "南广",
           "owner": "liu_zhang",
@@ -186087,6 +186600,12 @@
           "city": "xinggu",
           "name": "宛温县",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "xinping",
+          "name": "新平",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {

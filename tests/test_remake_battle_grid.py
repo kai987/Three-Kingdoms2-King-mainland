@@ -49,7 +49,7 @@ class BattleGridTests(unittest.TestCase):
     def test_all_thirty_original_grids_and_all_city_bindings_are_reused(self):
         maps, cities = grid._library()
         self.assertEqual(len(maps), 30)
-        self.assertEqual(len(cities), 136)
+        self.assertEqual(len(cities), 140)
         self.assertEqual(grid.field_id('test-target'), 'original-09')
         self.assertEqual(grid.field_id('shujun'), cities['shujun'])
         self.assertEqual(grid.field_id('shuofang'), 'original-02')
@@ -57,6 +57,9 @@ class BattleGridTests(unittest.TestCase):
         self.assertEqual(grid.field_id('yunzhong'), 'original-02')
         self.assertEqual(grid.field_id('xuantu'), grid.field_id('liaodong'))
         self.assertEqual(grid.field_id('liucheng'), grid.field_id('liaoxi'))
+        for city, template in (('nanan', 'longxi'), ('xinping', 'fufeng'),
+                               ('beidi', 'fengyi'), ('guangwei', 'tianshui')):
+            self.assertEqual(cities[city], cities[template])
         for row in maps.values():
             self.assertEqual((len(row['classes'][0]), len(row['classes'])), (31, 19))
             self.assertTrue(set(cell for line in row['classes'] for cell in line) <= set(range(6)))

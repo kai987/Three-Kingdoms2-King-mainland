@@ -151,6 +151,13 @@ const uri=png=>'data:image/png;base64,'+png.toString('base64');
    access[id]=simplify(points);
   }
   const land_roads=corridors.land_connections.map(({points,sections,...row})=>{
+   if(row.shared_junction){
+    const junction=row.shared_junction;
+    if(points||sections||!positions[row.from]||!positions[row.to]||
+       !Array.isArray(junction)||junction.length!==2||!junction.every(Number.isFinite))
+     throw Error('Invalid shared land-road junction: '+row.from+':'+row.to);
+    return {...row,draw:[{mode:'land',points:[junction,positions[row.to]]}]};
+   }
    if(points||sections){
     const matches=(a,b)=>a?.length===2&&b?.length===2&&a.every((v,i)=>v===b[i]);
     const parts=sections??[points];

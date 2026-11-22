@@ -605,7 +605,8 @@ def dispatch(game, state, payload, owner):
 
 
 def auto_dispatch_city(game, state, city_id):
-    if not _pool(state)['cities'][city_id]['policy']['enabled']:
+    if (not _pool(state)['cities'][city_id]['policy']['enabled']
+            or historical_campaigns.hold_longyou_garrison(game, state, state.cities[city_id])):
         return False
     from .march_supply import next_supply_days,required_grain
     rescues=[]
@@ -675,7 +676,8 @@ def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_
     engines, candidates = {}, []
     for source in state.cities.values():
         if (source.owner != owner or source.id == target.id or source.id in active_origins
-                or source.id in threatened or pool['receipts'].get('city:' + source.id, 0) > state.turn):
+                or source.id in threatened or pool['receipts'].get('city:' + source.id, 0) > state.turn
+                or historical_campaigns.hold_longyou_garrison(game, state, source)):
             continue
         row = pool['cities'][source.id]
         policy = row['policy']

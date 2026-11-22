@@ -585,9 +585,10 @@ function renderMap(){
  const board=preview?.map_cities||view.catalog.cities;
  const active=board.filter(c=>(preview?.active_cities||view.catalog.active_cities).includes(c.id));
  const factions=preview?.factions||view.catalog.factions;
- const goguryeo=factions.find(f=>f.id==='goguryeo');
- const mapCityLabel=id=>id===goguryeo?.city&&owners[id]===goguryeo.id&&goguryeo.captain
-  ?`${cityName(id)} · ${goguryeo.captain}`:cityName(id);
+ const mapCityName=id=>{
+  const name=cityName(id);
+  return ['jincheng','guonei'].includes(id)?name:name.replace(/[郡县縣国國道城亭]+$/u,'')||name;
+ };
  const ownerName=(id,city)=>{
   if(id==='neutral'){
    const history=(preview?.city_history||view.catalog.city_history)?.[city];
@@ -659,7 +660,7 @@ function renderMap(){
    :castleSprite(factionCastleColors(owner),position);
   const sprite=outpost?`<g transform="translate(${x} ${y}) scale(0.75)">${layers}</g>`:layers;
   const actionable=mapAction?.targets.includes(c.id);
-  return `<g role="button" tabindex="0" class="city-hit ${owner==='neutral'?'unowned':''} ${focused===c.id?'selected':''} ${preview&&owner===preview.faction?'preview-owned':''} ${mapAction?(actionable?'action-target':mapAction.kind==='depart'?'action-inspectable':'action-unavailable'):''}" data-city="${c.id}" data-owner="${owner}"${outpost?' data-city-kind="frontier_outpost"':''}${mapAction?` data-action-eligible="${!!actionable}"`:''} aria-label="${escapeHtml(cityName(c.id))}，${type?escapeHtml(type)+'，':''}${escapeHtml(ownerName(owner,c.id))}${actionable?'，可选择目标':''}"><title>${escapeHtml(cityName(c.id))} · ${type?escapeHtml(type)+' · ':''}${escapeHtml(ownerName(owner,c.id))}</title>${sprite}<rect class="city-hit-area" x="${x-21}" y="${y-21}" width="42" height="42" fill="transparent"/><rect class="city-outline" x="${x-20}" y="${y-11}" width="40" height="30"/></g>`;
+  return `<g role="button" tabindex="0" class="city-hit ${owner==='neutral'?'unowned':''} ${focused===c.id?'selected':''} ${preview&&owner===preview.faction?'preview-owned':''} ${mapAction?(actionable?'action-target':mapAction.kind==='depart'?'action-inspectable':'action-unavailable'):''}" data-city="${c.id}" data-owner="${owner}"${outpost?' data-city-kind="frontier_outpost"':''}${mapAction?` data-action-eligible="${!!actionable}"`:''} aria-label="${escapeHtml(mapCityName(c.id))}，${type?escapeHtml(type)+'，':''}${escapeHtml(ownerName(owner,c.id))}${actionable?'，可选择目标':''}"><title>${escapeHtml(mapCityName(c.id))} · ${type?escapeHtml(type)+' · ':''}${escapeHtml(ownerName(owner,c.id))}</title>${sprite}<rect class="city-hit-area" x="${x-21}" y="${y-21}" width="42" height="42" fill="transparent"/><rect class="city-outline" x="${x-20}" y="${y-11}" width="40" height="30"/></g>`;
  }).join('');
  const extras=preview?.road_additions||view.catalog.road_additions;
  const hazardous=!!(preview?preview.travel_hazards:view.catalog.travel_hazards);
@@ -692,16 +693,16 @@ function renderMap(){
  const roadAvailable=r=>{const n=date.year*12+date.month,w=r.availability;return (!w||(!w.from||n>=w.from[0]*12+w.from[1])&&(!w.to||n<w.to[0]*12+w.to[1]))&&!(r.closures||[]).some(p=>n>=p.from[0]*12+p.from[1]&&n<p.to[0]*12+p.to[1]);};
  const regionalRoads=(preview?.regional_roads||view.catalog.regional_roads||[]).filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)&&roadAvailable(r)).flatMap(r=>r.draw.map((part,index)=>{
   if(!firstAccess(part))return '';
-  const d=landMapPath(part.points,{from:index===0?r.from:null,to:index===r.draw.length-1?r.to:null});
+  const d=landMapPath(part.points,{from:index===0&&!r.shared_junction?r.from:null,to:index===r.draw.length-1?r.to:null});
   return `<g data-regional-road="${r.from}-${r.to}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;
  })).join('');
  const offsets=preview?.city_label_offsets||view.catalog.city_label_offsets||{};
- const labels=cityLabels==='none'?'':layoutCityLabels(active,offsets,world,mapCityLabel)
+ const labels=cityLabels==='none'?'':layoutCityLabels(active,offsets,world,mapCityName)
   .filter(({city:c})=>cityLabels==='all'||(['giant','large'].includes(cityLabels)?cityProfiles[c.id]?.tier===cityLabels:added.includes(c.id)||view.catalog.map_presentation.labelled_city_ids.includes(c.id)||c.id===focused))
   .map(({city,name,x,y,anchor})=>`<text class="map-city-name" x="${x}" y="${y}" text-anchor="${anchor}" data-city-label="${city.id}" aria-hidden="true">${escapeHtml(name)}</text>`).join('');
  const bridges=mapBridgeLayer([roads,expansionRoads,regionalRoads,navigableSeas,navigableRivers]);
  const labelName={major:'主城',giant:'巨大都市',large:'大都市',all:'全部',none:'关闭'}[cityLabels];
- const toolbar=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''} ${mapAction?.kind==='recruit'&&!mapAction.targets.includes(c.id)?'disabled':''}>${escapeHtml(cityName(c.id))} · ${escapeHtml(ownerName(owners[c.id],c.id))}</option>`).join('')}</select></label><button id="map-labels" data-label-mode="${cityLabels}" aria-label="切换城名显示" title="城名：${labelName}"><span class="map-labels-full">城名：${labelName}</span><span class="map-labels-compact">${{major:'名：主',giant:'名：巨',large:'名：大',all:'名：全',none:'名：隐'}[cityLabels]}</span></button></div>`;
+ const toolbar=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''} ${mapAction?.kind==='recruit'&&!mapAction.targets.includes(c.id)?'disabled':''}>${escapeHtml(mapCityName(c.id))} · ${escapeHtml(ownerName(owners[c.id],c.id))}</option>`).join('')}</select></label><button id="map-labels" data-label-mode="${cityLabels}" aria-label="切换城名显示" title="城名：${labelName}"><span class="map-labels-full">城名：${labelName}</span><span class="map-labels-compact">${{major:'名：主',giant:'名：巨',large:'名：大',all:'名：全',none:'名：隐'}[cityLabels]}</span></button></div>`;
  const marchMap=mapAction?.kind==='depart',marchRoutes=marchMap?`
  <defs>${mapMarchArrowMarker('map-march-arrow')}</defs>
  <g id="map-march-routes" aria-hidden="true" pointer-events="none"></g>`:'';

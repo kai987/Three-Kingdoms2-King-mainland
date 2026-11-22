@@ -6,7 +6,8 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
 const {execFileSync}=require('node:child_process');
 const ROOT=path.resolve(__dirname,'..'),read=p=>fs.readFileSync(path.join(ROOT,p));
 const json=p=>JSON.parse(read(p)),sha=b=>crypto.createHash('sha256').update(b).digest('hex');
-const key=p=>p.map(n=>Math.round(n*1e6)/1e6).join(','),pair=(a,b)=>[a,b].sort().join(':');
+// Chromium returns single-precision SVG endpoints. Normalize authored vertices the same way.
+const key=p=>p.map(n=>Math.round(Math.fround(n)*1e6)/1e6).join(','),pair=(a,b)=>[a,b].sort().join(':');
 function reversePath(d){
  const tokens=d.match(/[MLQ]|[-+]?(?:\d*\.\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?/g)||[];
  if(tokens.join('').replaceAll('+','')!==d.replace(/[\s,]/g,'').replaceAll('+',''))throw Error('Unsupported rendered SVG path');
@@ -92,7 +93,10 @@ async function build({output='game/config/route-geometry.json'}={}){
  ],{cwd:ROOT,encoding:'utf8',maxBuffer:16*1024*1024}));
  const current=canonical.data,positions=Object.fromEntries(current.cities.map(c=>[c.id,c.position]));
  const cityIds=new Map(current.cities.map(c=>[key(c.position),c.id])),cityPoints=new Set(cityIds.keys());
- const subpaths=(d,mode='land')=>mode==='land'?splitAtCityVertices(d,cityPoints):d.match(/M[^M]*/g)||[];
+ const spurs=new Map((current.regional_roads||[]).filter(r=>r.shared_junction)
+  .map(r=>[r.id??r.from+':'+r.to+':land',r]));
+ const junctions=new Set([...cityPoints,...[...spurs.values()].map(r=>key(r.shared_junction))]);
+ const subpaths=(d,mode='land')=>mode==='land'?splitAtCityVertices(d,junctions):d.match(/M[^M]*/g)||[];
  const app=read('game/app.js').toString(),pathSource=app.slice(app.indexOf('function smoothMapPath('),app.indexOf('function mapBackgroundHref('));
  const context={view:{catalog:current},setupPreview:null,mapPosition:c=>c.position};vm.createContext(context);vm.runInContext(pathSource,context);
  const corrected=JSON.parse(execFileSync('python3',['-B','-c',"import json,sys;sys.path.insert(0,'game');from road_centers import build;s=json.load(open('game/config/road-centers.json'));c=json.load(open('game/config/campaigns/shared.json'));print(json.dumps(build(s,{v['id']:v['position'] for v in c['catalog']['cities']})))"],{cwd:ROOT,encoding:'utf8'}));
@@ -108,6 +112,11 @@ async function build({output='game/config/route-geometry.json'}={}){
  for(const route of current.regional_roads||[]){
   // Added roads serve their own playable links. The baked legacy corridors
   // stay visible and keep their existing geometry, including shared stops.
+  if(route.shared_junction){
+   const d=context.landMapPath(route.draw[0].points,{to:route.to});
+   if(!strokes.some(stroke=>stroke.d===d))strokes.push({d,source:'branch:'+route.to});
+   continue;
+  }
   const expansion=Object.hasOwn(expansionCities,route.from)||Object.hasOwn(expansionCities,route.to);
   explicit(route,{smooth:true,legacyGraph:!expansion});
  }
@@ -149,7 +158,10 @@ async function build({output='game/config/route-geometry.json'}={}){
   // Active-city transit is now enforced by the travel graph. Prefer the
   // actual shortest painted corridor, rather than manufacturing a longer
   // city-free detour to preserve the former direct-edge abstraction.
-  const reviewed=constraints[id],found=reviewed?shortestVia(graph,[start,...reviewed.waypoints.map(key),end]):shortest(graph,start,end);
+  const waypoints=spurs.has(id)?[spurs.get(id).shared_junction]:constraints[id]?.waypoints;
+  const anchors=waypoints?[start,...waypoints.map(key),end]:null;
+  if(anchors?.some(point=>!graph.has(point)))throw Error('Missing rendered road junction for '+id+': '+anchors.filter(point=>!graph.has(point)).join('; '));
+  const found=anchors?shortestVia(graph,anchors):shortest(graph,start,end);
   if(!found){unmatched.push(id);continue;}
   compiled[id]={from:route.from,to:route.to,mode:'land',parts:[part('land',found.edges)],city_sections:partitionCityPieces(route.from,route.to,found.edges,measures,cityIds).map(s=>({from:s.from,to:s.to,parts:[part('land',s.pieces)]}))};
  }

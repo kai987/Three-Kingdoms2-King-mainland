@@ -85,6 +85,12 @@
     ]
   },
   "land_connections": [
+    {"from": "anding", "to": "xinping", "mode": "land", "terrain": "plain", "shared_junction": [402, 300.72], "history": {"classification": "branch_from_existing_late_han_corridor", "is_proven_direct_Han_road": false, "basis": "漆縣在涇水流域，以短支路接入安定至扶風的既有道路。"}, "availability": {"from": [194, 12]}},
+    {"from": "fufeng", "to": "xinping", "mode": "land", "terrain": "plain", "shared_junction": [402, 300.72], "history": {"classification": "branch_from_existing_late_han_corridor", "is_proven_direct_Han_road": false, "basis": "漆縣在涇水流域，以短支路接入安定至扶風的既有道路。"}, "availability": {"from": [194, 12]}},
+    {"from": "jingzhao", "to": "beidi", "mode": "land", "terrain": "plain", "shared_junction": [526, 326], "history": {"classification": "branch_from_existing_late_han_corridor", "is_proven_direct_Han_road": false, "basis": "魏北地治域在關中北側，以短支路接入長安至馮翊的既有道路。"}, "availability": {"from": [220, 11]}},
+    {"from": "fengyi", "to": "beidi", "mode": "land", "terrain": "plain", "shared_junction": [526, 326], "history": {"classification": "branch_from_existing_late_han_corridor", "is_proven_direct_Han_road": false, "basis": "魏北地治域在關中北側，以短支路接入長安至馮翊的既有道路。"}, "availability": {"from": [220, 11]}},
+    {"from": "tianshui", "to": "guangwei", "mode": "land", "terrain": "mountain", "shared_junction": [385.84, 350], "history": {"classification": "branch_from_existing_late_han_corridor", "is_proven_direct_Han_road": false, "basis": "臨渭位於天水以東，以短支路接入天水至扶風的既有道路。"}, "availability": {"from": [234, 2]}},
+    {"from": "fufeng", "to": "guangwei", "mode": "land", "terrain": "mountain", "shared_junction": [385.84, 350], "history": {"classification": "branch_from_existing_late_han_corridor", "is_proven_direct_Han_road": false, "basis": "臨渭位於天水以東，以短支路接入天水至扶風的既有道路。"}, "availability": {"from": [234, 2]}},
     {
       "from": "zangke",
       "to": "bajun",

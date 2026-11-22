@@ -3,6 +3,10 @@
 from typing import NamedTuple
 
 
+LONGYOU_RESPONSE = 'historical_longyou_response'
+LONGYOU_CITIES = ('nanan', 'tianshui', 'anding')
+LONGYOU_JOINERS = ('san14-candidate-0203', 'san14-candidate-0972', 'san14-candidate-0010')
+LONGYOU_GOVERNOR = 'san14-candidate-0764'
 DONG_ZHUO_RELOCATION = 'historical_dong_zhuo_relocation'
 WUHUAN_EXPEDITION = 'historical_wuhuan_expedition'
 GOGURYEO_EXPEDITION = 'historical_goguryeo_expedition'
@@ -164,6 +168,15 @@ CHAPTERS = {
         cities=('shujun', 'hanzhong'),
         people=('san14-candidate-0440', 'san14-candidate-0945'),
         note='諸葛亮上出師表。',
+    ),
+    LONGYOU_RESPONSE: Chapter(
+        start=(228, 1), end=(228, 3),
+        leaders=(('shu', 'san14-candidate-0945'), ('wei', 'san14-candidate-0501')),
+        holdings=(('hanzhong', 'shu'), *((city, 'wei') for city in LONGYOU_CITIES)),
+        officers=(('san14-candidate-0440', 'shu'),),
+        cities=LONGYOU_CITIES,
+        people=('san14-candidate-0440',),
+        note='諸葛亮出祁山，南安、天水、安定響應蜀漢。',
     ),
     'historical_wuzhang': Chapter(
         start=(234, 2), end=(234, 8),

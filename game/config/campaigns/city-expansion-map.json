@@ -20,6 +20,10 @@
     "taishan": {"position": [972, 263], "coordinates": [117.37, 36.22], "terrain": "mountain"},
     "xuantu": {"position": [1232, 29], "coordinates": [123.68, 41.83], "terrain": "plain"},
     "guonei": {"position": [1264, 67], "coordinates": [126.1762, 41.1387], "terrain": "mountain"},
+    "nanan": {"position": [332, 350], "coordinates": [104.85, 34.92], "terrain": "mountain"},
+    "xinping": {"position": [420, 304], "coordinates": [108.08, 35.04], "terrain": "plain"},
+    "beidi": {"position": [538, 293], "coordinates": [109.10, 34.89], "terrain": "plain"},
+    "guangwei": {"position": [385, 321], "coordinates": [106.02, 34.65], "terrain": "mountain"},
     "luzon": {"position": [1145, 949], "coordinates": [121.62, 18.21], "terrain": "plain"}
   }
 }

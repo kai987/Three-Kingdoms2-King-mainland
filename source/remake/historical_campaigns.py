@@ -1,9 +1,13 @@
 """Conditional historical campaigns and diplomacy."""
 
+from math import dist
+
 from .errors import GameError
-from .officers import transfer_officers
-from . import grain_units, capital_openings, city_development, command_books, facilities, treasures
-from .historical_chapters import CHAPTERS, DONG_ZHUO_RELOCATION, FRONTIER_SORTIES, WUHUAN_EXPEDITION
+from .officers import recruitment_loyalty, transfer_officers
+from . import grain_units, capital_openings, city_development, command_books, facilities, officer_relations, treasures
+from .historical_chapters import (
+    CHAPTERS, DONG_ZHUO_RELOCATION, FRONTIER_SORTIES, LONGYOU_CITIES, LONGYOU_GOVERNOR, LONGYOU_JOINERS, LONGYOU_RESPONSE, WUHUAN_EXPEDITION,
+)
 
 GUANDU = 'historical_guandu'
 ALLIANCE = 'historical_sun_liu_alliance'
@@ -244,6 +248,87 @@ def _marriage_transfer(game, state):
     return source.id, target.id
 
 
+def hold_longyou_garrison(game, state, city):
+    # Keep the three prefectures' AI garrisons in place for the imminent response.
+    date = (state.year, state.month, state.day)
+    if (city.id not in LONGYOU_CITIES or city.owner == state.player
+            or not (227, 12, 21) <= date <= (228, 3, 21)):
+        return False
+    _, _, factions, holdings = RULES[LONGYOU_RESPONSE]
+    return (_historical(game.catalog) and LONGYOU_RESPONSE not in state.extension.get(RECEIPTS, {})
+            and not allied(state, 'wei', 'shu') and _holds(state, holdings)
+            and _has_leaders(state, factions, LONGYOU_RESPONSE)
+            and _in_service(game, state, LONGYOU_RESPONSE))
+
+
+def _longyou_response(game, state):
+    """Change administrations and admit only the eligible historical officers."""
+    if state.phase != 'city' or allied(state, 'wei', 'shu'):
+        return None
+    cities = [state.cities[key] for key in LONGYOU_CITIES]
+    stationed = {i: city for city in cities for i in city.roster.officer_ids}
+    away = game._march_ids(state)
+    if away.intersection(stationed):
+        return None
+    leaders = state.extension['leaders']
+    free = state.extension['free_locations']
+    willing = {}
+    for pid in LONGYOU_JOINERS:
+        ident = game.catalog.ids.get(pid)
+        officer = state.officers.get(ident)
+        if officer is None or not officer.alive or ident in leaders.values():
+            continue
+        if officer.faction_id == 'wei' and ident in stationed:
+            willing[ident] = stationed[ident]
+        elif officer.faction_id is None and free.get(str(ident)) in LONGYOU_CITIES:
+            willing[ident] = state.cities[free[str(ident)]]
+
+    coords = game.catalog.data['city_coordinates']
+    homes = {city.id: city for city in state.cities.values()
+             if city.owner == 'wei' and city.id not in LONGYOU_CITIES}
+    room = {key: max(0, game.catalog.rules.city_officer_capacity - game._city_occupancy(state, city))
+            for key, city in homes.items()}
+    transfers = []
+    for city in cities:
+        unassigned = [ident for ident in city.roster.officer_ids if ident not in willing]
+        for key in sorted(homes, key=lambda key: (dist(coords[city.id], coords[key]), key)):
+            count = min(room[key], len(unassigned))
+            if count:
+                transfers.append((city, homes[key], unassigned[:count]))
+                room[key] -= count
+                del unassigned[:count]
+            if not unassigned:
+                break
+        if unassigned:
+            return None
+    for city, home, officers in transfers:
+        transfer_officers(city.roster, home.roster, officers)
+    for city in cities:
+        city.owner = 'shu'
+        city.action_used = True
+    joined = []
+    virtue = state.officers[leaders['shu']].profile.virtue
+    for ident, city in willing.items():
+        officer = state.officers[ident]
+        if ident not in stationed:
+            if game._city_occupancy(state, city) >= game.catalog.rules.city_officer_capacity:
+                continue
+            city.roster.officer_ids.append(ident)
+            del free[str(ident)]
+        officer.faction_id = 'shu'
+        officer.loyalty = recruitment_loyalty(virtue, officer.loyalty)
+        officer_relations.apply(game, state, ident)
+        state.extension['officer_actions'][str(ident)] = state.turn
+        joined.append(officer.person_id)
+    city_development.synchronize(game, state)
+    return dict(joined=joined, governor_withdrew=game.catalog.ids.get(LONGYOU_GOVERNOR) in stationed)
+
+
+def _longyou_people(kind, details):
+    return [*_event_people(kind), *details['joined'],
+            *([LONGYOU_GOVERNOR] if details['governor_withdrew'] else [])]
+
+
 def _relocate_court(state, cities):
     source, target = (state.cities[city] for city in cities)
     development = state.extension['city_development']['cities']
@@ -283,8 +368,10 @@ def _relocate_court(state, cities):
     return details
 
 
-def _record(game, state, receipts, kind, cities):
-    details = _relocate_court(state, cities) if kind == DONG_ZHUO_RELOCATION else None
+def _record(game, state, receipts, kind, cities, *, details=None):
+    if kind == DONG_ZHUO_RELOCATION:
+        details = _relocate_court(state, cities)
+    people = _longyou_people(kind, details) if kind == LONGYOU_RESPONSE else _event_people(kind)
     state.extension.setdefault(RECEIPTS, receipts)
     receipts[kind] = state.turn
     factions = EVENT_FACTIONS[kind]
@@ -293,7 +380,7 @@ def _record(game, state, receipts, kind, cities):
         for owner in factions:
             state.extension['ai_strategy'].pop(owner, None)
     game._emit_event(state, kind, city_ids=cities, factions=factions, audience='world',
-                     person_ids=_event_people(kind), details=details)
+                     person_ids=people, details=details)
     note = ('白狼山之戰已結束，曹軍控制柳城。'
             if kind == WUHUAN_EXPEDITION and _date(state) == (207, 9) else NOTES[kind])
     game._note(state, note)
@@ -399,13 +486,16 @@ def process(game, state):
         if (not _holds(state, holdings) or not _has_leaders(state, factions, kind)
                 or not _in_service(game, state, kind) or not _front_open(game, state, kind)):
             continue
+        details = _longyou_response(game, state) if kind == LONGYOU_RESPONSE else None
+        if kind == LONGYOU_RESPONSE and details is None:
+            continue
         if kind in FRONTIER_SORTIES and not _frontier_ready(game, state, kind):
             continue
         if kind == YILING and _alliance_active(state):
             _record(game, state, receipts, ALLIANCE_ENDED, ('badong', 'yidu'))
         cities = _marriage_transfer(game, state) if kind == MARRIAGE else EVENT_CITIES[kind]
         if cities:
-            _record(game, state, receipts, kind, cities)
+            _record(game, state, receipts, kind, cities, details=details)
 
 
 def process_battle(game, state):
@@ -477,6 +567,9 @@ def _priority_event(state):
     if YILING in receipts and _date(state) <= RULES[YILING][1] and not any(
             owner in ended for owner in EVENT_FACTIONS[YILING]):
         return YILING
+    if (LONGYOU_RESPONSE in receipts and (228, 1) <= _date(state) <= (228, 6)
+            and not {'wei', 'shu'}.intersection(ended)):
+        return LONGYOU_RESPONSE
     for kind in FRONT_PRIORITIES:
         if kind in receipts and _date(state) <= RULES[kind][1] and not any(
                 owner in ended for owner in EVENT_FACTIONS[kind]):
@@ -488,6 +581,8 @@ def priority_factions(state):
     event = _priority_event(state)
     if event in (SOUTH, YILING, *FRONT_PRIORITIES):
         return EVENT_FACTIONS[event][:1]
+    if event == LONGYOU_RESPONSE:
+        return ('wei',)
     return EVENT_FACTIONS.get(event, ())
 
 
@@ -499,8 +594,8 @@ def priority_targets(state, owner, targets):
     opponents = [faction for faction in sides
                  if faction != owner and not allied(state, owner, faction)]
     eligible = {key for key in targets if state.cities[key].owner in opponents}
-    if event in FRONT_PRIORITIES:
-        front = FRONTS[event][1]
+    if event == LONGYOU_RESPONSE or event in FRONT_PRIORITIES:
+        front = LONGYOU_CITIES if event == LONGYOU_RESPONSE else FRONTS[event][1]
         eligible.intersection_update(front)
         return eligible, next((city for city in front if city in eligible), None)
     if event == YILING:
@@ -622,11 +717,20 @@ def validate_event(catalog, state, row):
         cities_ok = len(cities) == 2 and cities[0] != cities[1]
     else:
         cities_ok = cities == list(EVENT_CITIES[kind])
-    details_ok = (_valid_relocation_details(row['details']) if kind == DONG_ZHUO_RELOCATION
-                  else row['details'] == {})
+    details = row['details']
+    people = list(_event_people(kind))
+    if kind == LONGYOU_RESPONSE and details:
+        joined = details.get('joined')
+        details_ok = (set(details) == {'joined', 'governor_withdrew'}
+                      and type(details['governor_withdrew']) is bool and isinstance(joined, list)
+                      and joined == [pid for pid in LONGYOU_JOINERS if pid in joined])
+        if details_ok:
+            people = _longyou_people(kind, details)
+    else:
+        details_ok = _valid_relocation_details(details) if kind == DONG_ZHUO_RELOCATION else details == {}
     if (type(turn) is not int or row['turn'] != turn or row['audience'] != 'world' or not details_ok
             or (row['year'], row['month']) != _turn_date(catalog, turn)
             or row['day'] != 1 + 10 * ((turn - 1) % 3)
             or row['factions'] != list(factions) or not cities_ok
-            or row['person_ids'] != list(_event_people(kind))):
+            or row['person_ids'] != people):
         raise ValueError('Historical campaign event')

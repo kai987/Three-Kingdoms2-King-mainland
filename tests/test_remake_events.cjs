@@ -47,10 +47,10 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
 }
 (async()=>{
  const sceneIds=Object.keys(KINDS).map(kind=>sceneForEvent(row(1,kind)));
- assert.equal(sceneIds.length,97);
+ assert.equal(sceneIds.length,98);
  for(const scene of sceneIds)assert.match(scene,/^[a-z-]+$/);
  sceneIds.push(sceneForEvent(row(1,'city_disaster',{details:{disaster:'flood'}})));
- assert.equal(new Set(sceneIds).size,98,'Each event kind and disaster variant owns a different scene');
+ assert.equal(new Set(sceneIds).size,99,'Each event kind and disaster variant owns a different scene');
  const scenesDir=require('node:path').join(__dirname,'../game/assets/event-scenes');
  assert.deepEqual(fs.readdirSync(scenesDir).filter(name=>name.endsWith('.webp')).sort(),
   sceneIds.map(scene=>scene+'.webp').sort(),'The renderer references every available event art asset exactly once');
@@ -64,6 +64,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
   ['march_weather',{risks:'monsoon_storm'},'march-weather'],
   ['officer_death',{},'memorial'],
   ['historical_memorial',{},'historical-memorial'],
+  ['historical_longyou_response',{},'historical-longyou-response'],
   ['historical_three_visits_second',{},'longzhong-second'],
   ['historical_longzhong',{},'longzhong-study']
  ])assert.equal(sceneForEvent(row(1,kind,{details})),scene);
@@ -626,6 +627,21 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
  const ai=h.events.description(row(99,'ai_campaign',{factions:['wei','shu'],details:{coordinated:true}}));assert(ai.includes('曹操勢力'));assert(!ai.startsWith('劉備勢力'));
  const capture=h.events.description(row(99,'city_captured',{factions:['wei','shu']}));assert(capture.includes('改為曹操勢力'));assert(!capture.includes('改為劉備勢力'));
  const founded=h.events.description(row(99,'city_founded',{city_ids:['home','enemy']}));assert(founded.startsWith('成都依年代建置'));assert(founded.includes('承接長安'));
+ const joiners=['san14-candidate-0203','san14-candidate-0972','san14-candidate-0010'];
+ const longyou=row(100,'historical_longyou_response',{year:228,month:1,audience:'world',
+  person_ids:['san14-candidate-0440',...joiners,'san14-candidate-0764'],city_ids:['nanan','tianshui','anding'],
+  factions:['shu','wei'],details:{joined:joiners,governor_withdrew:true}});
+ assert(validEvent(longyou));
+ assert(validEvent({...longyou,person_ids:['san14-candidate-0440'],details:{}}));
+ for(const joined of [[null], [...joiners,joiners[0]], [...joiners].reverse()])
+  assert(!validEvent({...longyou,details:{...longyou.details,joined}}));
+ assert(!validEvent({...longyou,person_ids:longyou.person_ids.slice(0,-1)}));
+ const peopleNames=['姜維','梁緒','尹賞'];
+ const longyouView=view([longyou]);
+ longyouView.catalog={...catalog,library:joiners.map((id,i)=>({person_id:id,name:peopleNames[i]}))};
+ h.events.observe(longyouView,{baseline:true});
+ assert(h.events.description(longyou).includes('本局加入蜀漢：姜維、梁緒、尹賞。'));
+ assert(h.events.description(longyou).includes('本局馬遵率部撤往魏境。'));
  const upgrade=row(100,'city_upgraded',{year:240,month:1,day:1,audience:'world',person_ids:[],city_ids:['home'],factions:['wei'],details:{from_tier:'large',to_tier:'giant',income:{gold:90,grain:180,reserves:45}}});
  assert(validEvent(upgrade));
  for(const bad of [{to_tier:'unknown'},{from_tier:'giant'},{income:{gold:-1,grain:180,reserves:45}},{unknown:1}])assert(!validEvent({...upgrade,details:{...upgrade.details,...bad}}));
@@ -671,5 +687,5 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
   assert(line.includes('劉禪'));assert(!line.includes('劉備'),'Event faction labels follow the live ruler, not the opening name');
  }
  assert.equal(JSON.stringify(inheritedView),inheritedBefore,'Bilingual event display never changes faction identity or state');inherited.events.dispose();
- console.log('events: 97 bilingual kinds, strict event snapshots, deduplicated visit control, read-only history, locale continuity and immutable presentation passed');
+ console.log('events: 98 bilingual kinds, strict event snapshots, deduplicated visit control, read-only history, locale continuity and immutable presentation passed');
 })().catch(error=>{console.error(error);process.exitCode=1});
