@@ -119,6 +119,35 @@ pub(crate) fn truthy(value: Option<&Value>) -> bool {
     }
 }
 
+fn restore_route_legs(request: &Value) -> Result<Value> {
+    let data = context(request)?;
+    let routes = field(request, "routes")?
+        .as_array()
+        .ok_or("Restore routes must be an array")?;
+    let checks = field(request, "checks")?
+        .as_array()
+        .ok_or("Restore checks must be an array")?;
+    let mut results = Vec::with_capacity(checks.len());
+    for check in checks {
+        let fields = check
+            .as_array()
+            .filter(|fields| fields.len() == 4)
+            .ok_or("A restore check needs route index, endpoints and month")?;
+        let index = usize::try_from(integer(&fields[0], "Invalid restore route index")?)
+            .map_err(|_| "Invalid restore route index")?;
+        let route = routes.get(index).ok_or("Unknown restore route index")?;
+        let source = fields[1].as_str().ok_or("Invalid restore source")?;
+        let target = fields[2].as_str().ok_or("Invalid restore target")?;
+        let leg = if hazards::allowed(&data, route, source, target)? {
+            hazards::evaluate(&data, route, source, target, &fields[3])?
+        } else {
+            Value::Null
+        };
+        results.push(leg);
+    }
+    Ok(Value::Array(results))
+}
+
 fn execute(request: &Value) -> Result<Value> {
     match string(request, "op")? {
         "register" => {
@@ -169,6 +198,7 @@ fn execute(request: &Value) -> Result<Value> {
                 field(request, "month")?,
             )
         }
+        "restore_route_legs" => restore_route_legs(request),
         "path" => paths::path(context(request)?.as_ref(), request),
         "strategic_routes" => paths::strategic_routes(context(request)?.as_ref(), request),
         "tactical_candidates" => tactical::candidates(request),

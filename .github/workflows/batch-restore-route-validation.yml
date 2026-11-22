@@ -1,0 +1,78 @@
+name: Batch Rust route validation in saves A/B
+
+on:
+  push:
+    branches: [codex/ci-batch-restore-route-validation]
+    paths:
+      - .github/workflows/batch-restore-route-validation.yml
+      - tools/ci-experiments/batch_restore_routes.py
+      - tools/ci-experiments/profile_restore_routes.py
+      - crates/march-core/src/lib.rs
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    defaults:
+      run:
+        shell: bash
+    env:
+      MARCH_CORE_BACKEND: rust
+      PYTHONHASHSEED: '0'
+    steps:
+      - name: Checkout experimental Rust extension and harness
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          path: experiment
+      - name: Checkout the exact #65 game source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: df2b51043bfccda36946c8c6d81bb68928eaefa4
+          persist-credentials: false
+          path: pinned
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - name: Build and fingerprint one experimental native artifact
+        run: |
+          rustup toolchain install 1.93.0 --profile minimal
+          cargo +1.93.0 build --manifest-path experiment/crates/march-core/Cargo.toml --target-dir "$RUNNER_TEMP/restore-route-target" --locked --release --lib
+          install -D "$RUNNER_TEMP/restore-route-target/release/libmarch_core.so" pinned/build/march-core/libmarch_core.so
+          mkdir -p evidence/native
+          cp pinned/build/march-core/libmarch_core.so evidence/native/
+          sha256sum pinned/build/march-core/libmarch_core.so > evidence/native.sha256
+          lscpu > evidence/runner.txt
+          uname -a >> evidence/runner.txt
+          python --version >> evidence/runner.txt
+      - name: Confirm valid and invalid saves in both variants
+        working-directory: pinned
+        run: |
+          for mode in check-baseline check-batch; do
+            python -B ../experiment/tools/ci-experiments/profile_restore_routes.py "$mode" /dev/null
+          done 2>&1 | tee ../evidence/restore-correctness.txt
+      - name: 217 with scalar restore route validation
+        working-directory: pinned
+        run: python -B ../experiment/tools/ci-experiments/profile_restore_routes.py baseline ../evidence/217-baseline.json --scenario 217
+      - name: 263 with batched restore route validation
+        working-directory: pinned
+        run: python -B ../experiment/tools/ci-experiments/profile_restore_routes.py batch ../evidence/263-batch.json --scenario 263
+      - name: 217 with batched restore route validation
+        working-directory: pinned
+        run: python -B ../experiment/tools/ci-experiments/profile_restore_routes.py batch ../evidence/217-batch.json --scenario 217
+      - name: 263 with scalar restore route validation
+        working-directory: pinned
+        run: python -B ../experiment/tools/ci-experiments/profile_restore_routes.py baseline ../evidence/263-baseline.json --scenario 263
+      - name: Verify ordered views, saves, restored RNG and reduced route calls
+        run: |
+          sha256sum -c evidence/native.sha256
+          python -B experiment/tools/ci-experiments/profile_restore_routes.py compare evidence
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: batch-restore-route-validation
+          path: evidence
+          retention-days: 14
