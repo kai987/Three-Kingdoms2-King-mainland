@@ -1,30 +1,86 @@
-name: Web campaign checks
+name: PR 61 command-books save profiling
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
-    inputs:
-      force_full:
-        description: Run every regression group
-        type: boolean
-        default: true
-  schedule:
-    # Daily full regression at 03:00 Japan time; verification only.
-    - cron: '0 18 * * *'
 
 permissions:
   contents: read
   actions: read
-  deployments: read
 
-concurrency:
-  group: web-checks-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || github.event_name == 'workflow_dispatch' && 'manual' || 'changes' }}
-  cancel-in-progress: true
+env:
+  FROZEN_SOURCE: 608497df72830c199cf22a7b789259529273ef56
+  FROZEN_TREE: 2e8f369677f9212e6671548ddf15eb5ce4354e70
+  SOURCE_RUN: '44157105611'
+  SOURCE_ARTIFACT: '14361851823'
+  ARCHIVE_SHA256: 383104c6fe4223055dd4523345b378cc6eec37913c052f020e812c6a744cb1d9
+  CONTENT_SHA256: 6eefa6274c3dae50891916c94ebed304e3b36c19240d82f70b31992bc717fa58
 
 jobs:
-  verify:
-    uses: ./.github/workflows/web-checks.yml
-    with:
-      force_full: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.force_full) }}
+  profile:
+    if: github.ref == 'refs/heads/codex/ci-command-books-save-profile'
+    name: Profile command-books on desktop and touch
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Check out the exact PR 61 merge tree
+        run: |
+          test "$(git rev-parse HEAD^)" = "$FROZEN_SOURCE"
+          git diff --exit-code "$FROZEN_SOURCE" HEAD -- . ':!.github/workflows/remake.yml' ':!.github/experiments/command-books-save-profile'
+          cp -R .github/experiments/command-books-save-profile "$RUNNER_TEMP/"
+          git switch --detach "$FROZEN_SOURCE"
+          test "$(git rev-parse 'HEAD^{tree}')" = "$FROZEN_TREE"
+          test -z "$(git status --porcelain)"
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: ./.github/actions/browser-tools
+      - name: Download and verify the original PR 61 release by artifact ID
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          api="repos/$GITHUB_REPOSITORY/actions/artifacts/$SOURCE_ARTIFACT"
+          gh api "$api" --jq '[.id,.name,.workflow_run.id,.digest,.expired]|@tsv' > "$RUNNER_TEMP/source-artifact.tsv"
+          printf '%s\t%s\t%s\t%s\tfalse\n' "$SOURCE_ARTIFACT" "verified-web-$FROZEN_SOURCE" "$SOURCE_RUN" "sha256:$ARCHIVE_SHA256" | diff - "$RUNNER_TEMP/source-artifact.tsv"
+          gh api "$api/zip" > "$RUNNER_TEMP/pr61-web.zip"
+          printf '%s  %s\n' "$ARCHIVE_SHA256" "$RUNNER_TEMP/pr61-web.zip" | sha256sum --check
+          mkdir -p build/web build/command-books-profile
+          unzip -q "$RUNNER_TEMP/pr61-web.zip" -d build/web
+          python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_SOURCE" --content-sha256 "$CONTENT_SHA256"
+          cp "$RUNNER_TEMP/source-artifact.tsv" build/command-books-profile/
+          printf 'runner=%s\nsource=%s\ntree=%s\ncontent_sha256=%s\n' "$RUNNER_NAME" "$FROZEN_SOURCE" "$FROZEN_TREE" "$CONTENT_SHA256" | tee build/command-books-profile/identity.txt
+      - name: Run the original command-books assertions on desktop and touch in sequence
+        run: |
+          scripts="$RUNNER_TEMP/command-books-save-profile"
+          out="$(pwd)/build/command-books-profile"
+          trap 'git restore -- tests/browser_ui.spec.mjs' EXIT
+          export TK2_COMMAND_BOOKS_PROBE="$scripts/probe.mjs"
+          python -B "$scripts/profile.py" patch
+          node --check tests/browser_ui.spec.mjs
+          title=$(node -e 'const row=require("./tools/browser-tests/cases.json").cases.find(x=>x.id==="command-books"); if(!row)process.exit(1); console.log(row.title+"$")')
+          status=0
+          for device in desktop-chromium touch-chromium; do
+            mkdir -p "$out/$device"
+            PLAYWRIGHT_JSON_OUTPUT_FILE="$out/$device/playwright.json" \
+              node tools/browser-tests/node_modules/@playwright/test/cli.js test \
+                --config tools/browser-tests/playwright.config.mjs --project "$device" \
+                --grep "$title" --reporter=list,json --output "$out/$device/browser" || status=1
+          done
+          exit "$status"
+      - name: Verify both passing tests and the unchanged Web release
+        shell: bash
+        run: |
+          test -z "$(git status --porcelain)"
+          python -B tools/ci/gate.py artifact --root build/web --head "$FROZEN_SOURCE" --content-sha256 "$CONTENT_SHA256"
+          python -B "$RUNNER_TEMP/command-books-save-profile/profile.py" report build/command-books-profile | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Retain the 52 timing samples and original test evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: command-books-save-profile-${{ github.run_attempt }}
+          path: build/command-books-profile
+          if-no-files-found: error
+          retention-days: 7
