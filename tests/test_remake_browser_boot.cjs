@@ -2,7 +2,7 @@
 /* Exercise shipped worker boot with real streams, gzip, SHA and bounded fake Pyodide. */
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const {webcrypto,createHash}=require('node:crypto'),{gzipSync}=require('node:zlib');
-const source=fs.readFileSync(path.join(__dirname,'../game/browser-engine-worker.js'),'utf8').replace(/^import \{loadPyodide\} from .*;\n/m,'');
+const source=fs.readFileSync(path.join(__dirname,'../game/browser-engine-worker.js'),'utf8').replace(/^import [^\n]+;\n/gm,'');
 const sha=raw=>createHash('sha256').update(raw).digest('hex');
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
 async function until(test){for(let count=0;count<80;count++){if(test())return;await flush();}throw Error('Worker fixture did not reach the expected checkpoint');}
@@ -10,13 +10,15 @@ function fixture({gateRuntime=false,failures={},mutateManifest,changeAsset,respo
  const bundle=Buffer.from('verified-python-archive'),preview=Buffer.from('[]'),assets=new Map(),rows=['first','second','third'].map(id=>{
   const raw=Buffer.from(JSON.stringify({id,exact_bytes:'save identity stays unchanged'}));assets.set(`runtime/catalogs/${id}.json.gz`,gzipSync(raw));return{id,url:`runtime/catalogs/${id}.json.gz`,path:`/tk2/game/data/campaigns/${id}.json`,sha256:sha(raw),bytes:raw.length};
  });
+ const wasm=fs.readFileSync(path.join(__dirname,'../game/wasm/march_core.wasm'));assets.set('wasm/march_core.wasm',wasm);
  const previewUrl='runtime/scenario-previews.json'+(compressedPreviews?'.gz':'');
- const manifest={schema:'tk2-browser-engine-v1',build_commit:'a'.repeat(40),pyodide_version:'314.0.7',python_bundle:{url:'runtime/python.zip',sha256:sha(bundle)},previews:{url:previewUrl,sha256:sha(preview),...(compressedPreviews?{encoding:'gzip',bytes:preview.length}:{})},catalogs:rows,initial_scenario:'first'};
+ const manifest={schema:'tk2-browser-engine-v1',build_commit:'a'.repeat(40),ai_wasm_sha256:sha(wasm),pyodide_version:'314.0.7',python_bundle:{url:'runtime/python.zip',sha256:sha(bundle)},previews:{url:previewUrl,sha256:sha(preview),...(compressedPreviews?{encoding:'gzip',bytes:preview.length}:{})},catalogs:rows,initial_scenario:'first'};
  mutateManifest?.(manifest);assets.set('runtime/engine-manifest.json',Buffer.from(JSON.stringify(manifest)));assets.set('runtime/python.zip',bundle);assets.set(previewUrl,compressedPreviews?gzipSync(preview):preview);changeAsset?.(assets);
  const messages=[],requests=[],writes=new Map(),removed=[],dispatches=[],compactDispatches=[],timers=[],unpacked=[];let runCount=0,releaseRuntime;
  const result=(revision,compact=false)=>({toJs:()=>({status:200,body:JSON.stringify({revision,game:null,...(compact?{view_cache:{token:'verified-catalog-token'}}:{})})}),destroy(){}});
  const bridge={dispatch_json(...args){dispatches.push(args);return result(dispatches.length);},dispatch_compact_json(...args){compactDispatches.push(args);return result(compactDispatches.length,true);}};
- const py={FS:{mkdirTree(){},writeFile(name,raw){writes.set(name,Buffer.from(raw));},unlink(name){removed.push(name);writes.delete(name);}},globals:{set(){}},unpackArchive(raw,type,options){unpacked.push({raw:Buffer.from(raw),type,options});},runPython(){runCount++;return bridge;}};
+ const globals=new Map();
+ const py={FS:{mkdirTree(){},writeFile(name,raw){writes.set(name,Buffer.from(raw));},unlink(name){removed.push(name);writes.delete(name);}},globals,unpackArchive(raw,type,options){unpacked.push({raw:Buffer.from(raw),type,options});},runPython(){runCount++;return bridge;}};
  const loadPyodide=()=>gateRuntime?new Promise(resolve=>{releaseRuntime=()=>resolve(py);}):Promise.resolve(py);
  const self={location:{href:'https://game.example/repo/browser-engine-worker.js'},postMessage:message=>messages.push(message)};
  const fetch=async(address,options)=>{
@@ -27,12 +29,12 @@ function fixture({gateRuntime=false,failures={},mutateManifest,changeAsset,respo
  };
  const context={self,loadPyodide,fetch,TextEncoder,TextDecoder,URL,Response,Blob,DecompressionStream,AbortController,Uint8Array,crypto:webcrypto,console,
   setTimeout(fn,ms){const timer={fn,ms,active:true};timers.push(timer);if(ms<30000)queueMicrotask(()=>{if(timer.active){timer.active=false;fn();}});return timer;},clearTimeout(timer){timer.active=false;}};
- vm.createContext(context);vm.runInContext(source+'\nglobalThis.workerTest={boot,catalog,loaded,assetUrl};',context);
- return{...context.workerTest,self,messages,requests,writes,removed,dispatches,compactDispatches,timers,unpacked,manifest,assets,get runCount(){return runCount;},releaseRuntime:()=>releaseRuntime()};
+ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(__dirname,'../game/march-abi.js'),'utf8'),context);vm.runInContext(source+'\nglobalThis.workerTest={boot,catalog,loaded,assetUrl};',context);
+ return{...context.workerTest,self,messages,requests,writes,removed,dispatches,compactDispatches,timers,unpacked,manifest,assets,globals,get runCount(){return runCount;},releaseRuntime:()=>releaseRuntime()};
 }
 (async()=>{
- const concurrent=fixture({gateRuntime:true});await until(()=>concurrent.requests.length===4);
- assert.deepEqual(concurrent.requests.map(row=>row.name).sort(),['runtime/engine-manifest.json','runtime/python.zip','runtime/scenario-previews.json','runtime/catalogs/first.json.gz'].sort(),'all verified startup assets download before Pyodide resolves');
+ const concurrent=fixture({gateRuntime:true});await until(()=>concurrent.requests.length===5);
+ assert.deepEqual(concurrent.requests.map(row=>row.name).sort(),['wasm/march_core.wasm','runtime/engine-manifest.json','runtime/python.zip','runtime/scenario-previews.json','runtime/catalogs/first.json.gz'].sort(),'all verified startup assets download before Pyodide resolves');
  const manifestRequest=concurrent.requests.find(row=>row.name==='runtime/engine-manifest.json');
  assert.equal(manifestRequest.options.cache,'no-store');assert.match(manifestRequest.url.searchParams.get('t'),/^\d+$/,'public manifest URL bypasses a stale CDN key');
  for(const row of [concurrent.manifest.python_bundle,concurrent.manifest.previews,concurrent.manifest.catalogs[0]]){
@@ -44,6 +46,12 @@ function fixture({gateRuntime=false,failures={},mutateManifest,changeAsset,respo
  assert(!concurrent.requests.some(row=>row.name.includes('second')||row.name.includes('third')),'other scenarios stay lazy');
  concurrent.releaseRuntime();await concurrent.boot;assert.equal(concurrent.runCount,1);assert.equal(concurrent.messages.find(row=>row.type==='ready').build_commit,concurrent.manifest.build_commit);assert.equal(concurrent.unpacked.length,1);
  assert.equal(concurrent.messages.find(row=>row.type==='ready').shared_scenarios,true);
+ const aiCall=concurrent.globals.get('_tk2_ai_call');
+ const unit={troops:300,martial:70,morale:70,spirit:100,guarded:false,stunned:false};
+ const combat=JSON.parse(aiCall(JSON.stringify({op:'tactical_candidates',friends:[unit],enemies:[unit],enemy_rank:[0],damage_percent:32})));
+ assert.equal(combat.ok,true);assert(combat.value[0].attacks[0]>0);
+ const corruptedCore=fixture({changeAsset:assets=>assets.set('wasm/march_core.wasm',Buffer.from('damaged'))});
+ await assert.rejects(corruptedCore.boot,/integrity/);assert.equal(corruptedCore.runCount,0);
  assert(concurrent.messages.some(row=>row.phase==='manifest'));assert(concurrent.messages.some(row=>row.phase==='loading'&&row.receivedBytes>0));assert(concurrent.messages.some(row=>row.phase==='initializing'));assert(!concurrent.messages.some(row=>'percent' in row));
  const downloaded=concurrent.requests.reduce((sum,row)=>sum+concurrent.assets.get(row.name).length,0);assert.equal(concurrent.messages.find(row=>row.phase==='initializing').receivedBytes,downloaded,'reported game-data bytes count actual fetched data and exclude the runtime');
  assert.equal(concurrent.writes.get(concurrent.manifest.catalogs[0].path).length,concurrent.manifest.catalogs[0].bytes);

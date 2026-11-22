@@ -51,7 +51,12 @@ fn discovered(request: &Value) -> Result<BTreeSet<&str>> {
     }
 }
 
-fn known_routes<'a>(data: &'a Value, request: &Value, active: &Cities) -> Result<Vec<&'a Value>> {
+fn known_routes<'a>(
+    data: &'a Value,
+    request: &Value,
+    active: &Cities,
+    excluded: &BTreeSet<&str>,
+) -> Result<Vec<&'a Value>> {
     let mut declared: Vec<_> = rows(data, "travel_routes")?.iter().collect();
     let found = discovered(request)?;
     for row in rows(data, "exploration_routes")? {
@@ -63,6 +68,13 @@ fn known_routes<'a>(data: &'a Value, request: &Value, active: &Cities) -> Result
     let month = request.get("month").and_then(Value::as_i64).unwrap_or(1);
     let mut result = vec![];
     for route in declared {
+        if route
+            .get("id")
+            .and_then(Value::as_str)
+            .is_some_and(|id| excluded.contains(id))
+        {
+            continue;
+        }
         if let (Some(year), Some(Value::Array(closures))) = (year, route.get("closures")) {
             let date = (year, month);
             let mut closed = false;
@@ -341,7 +353,7 @@ pub(crate) fn path(data: &Value, request: &Value) -> Result<Value> {
     {
         return Ok(Value::Null);
     }
-    let routes = known_routes(data, request, &cities)?;
+    let routes = known_routes(data, request, &cities, &BTreeSet::new())?;
     let month = request.get("month").unwrap_or(&Value::Null);
     if ["river", "sea", "special", "explore"].contains(&mode) {
         let mut candidates = vec![];
@@ -454,22 +466,74 @@ fn insert_direct<'a>(
     Ok(())
 }
 
-pub(crate) fn batch(data: &Value, request: &Value) -> Result<Value> {
-    let cities = Cities::read(request)?;
-    let player = field(request, "player")?;
-    let mut quotes = Map::new();
-    if cities.order.is_empty() {
-        return Ok(Value::Object(quotes));
+fn friendly_quotes(
+    source: &str,
+    player: &Value,
+    mode: &str,
+    cities: &Cities,
+    adjacency: &BTreeMap<String, Vec<Value>>,
+    targets: Option<&BTreeSet<String>>,
+    quotes: &mut Map<String, Value>,
+) -> Result<()> {
+    let mut emitted = 0;
+    let mut queue = initial(source);
+    let mut serial = 0;
+    let mut seen = BTreeSet::new();
+    while let Some(current) = queue.pop() {
+        if !seen.insert(current.city.clone()) {
+            continue;
+        }
+        // Neutral cities connect friendly destinations; they are not
+        // themselves transfer destinations or remote attack targets.
+        if !current.legs.is_empty()
+            && cities.owners.get(&current.city) == Some(player)
+            && targets.is_none_or(|wanted| wanted.contains(&current.city))
+        {
+            quotes.insert(
+                format!("{source}:{}:{mode}", current.city),
+                quote(&current.path, &current.legs)?,
+            );
+            emitted += 1;
+            if targets.is_some_and(|wanted| wanted.len() == emitted) {
+                break;
+            }
+        }
+        if let Some(legs) = adjacency.get(&current.city) {
+            for leg in legs {
+                let target = string(leg, "to")?;
+                if seen.contains(target)
+                    || !can_transit(cities.owners.get(target), player)
+                    || mode == "land" && string(leg, "mode")? != "land"
+                {
+                    continue;
+                }
+                // The batch owns each evaluated direction once. Search
+                // entries borrow those legs until a quote is emitted.
+                enqueue(&mut queue, &current, target, leg, &mut serial)?;
+            }
+        }
     }
-    let routes = known_routes(data, request, &cities)?;
-    let month = request.get("month").unwrap_or(&Value::Null);
+    Ok(())
+}
+
+fn adjacency(
+    data: &Value,
+    cities: &Cities,
+    routes: &[&Value],
+    month: &Value,
+    transfer_owner: Option<&Value>,
+) -> Result<BTreeMap<String, Vec<Value>>> {
     let mut adjacency: BTreeMap<String, Vec<Value>> =
         cities.order.iter().map(|id| (id.clone(), vec![])).collect();
-    for raw in &routes {
+    for raw in routes {
         let (a, b) = (string(raw, "from")?, string(raw, "to")?);
         for (a, b) in [(a, b), (b, a)] {
             if cities.owners.contains_key(a)
                 && cities.owners.contains_key(b)
+                && transfer_owner.is_none_or(|owner| {
+                    can_transit(cities.owners.get(a), owner)
+                        && can_transit(cities.owners.get(b), owner)
+                })
                 && hazards::allowed(data, raw, a, b)?
             {
                 if let Some(legs) = adjacency.get_mut(a) {
@@ -478,6 +542,77 @@ pub(crate) fn batch(data: &Value, request: &Value) -> Result<Value> {
             }
         }
     }
+    Ok(adjacency)
+}
+
+/// Answer only the requested friendly pairs, sharing both the direction-dependent
+/// leg costs and a shortest-path tree for destinations with the same origin.
+pub(crate) fn strategic_routes(data: &Value, request: &Value) -> Result<Value> {
+    let cities = Cities::read(request)?;
+    let owner = field(request, "owner")?;
+    let excluded = rows(request, "excluded")?
+        .iter()
+        .map(|id| {
+            id.as_str()
+                .ok_or_else(|| "Invalid excluded road".to_owned())
+        })
+        .collect::<Result<BTreeSet<_>>>()?;
+    let routes = known_routes(data, request, &cities, &excluded)?;
+    let graph = adjacency(
+        data,
+        &cities,
+        &routes,
+        field(request, "month")?,
+        Some(owner),
+    )?;
+    let mut targets_by_source = BTreeMap::<&str, BTreeSet<String>>::new();
+    for pair in field(request, "pairs")?
+        .as_array()
+        .ok_or("Expected city pairs")?
+    {
+        let pair = pair
+            .as_array()
+            .filter(|p| p.len() == 2)
+            .ok_or("Invalid city pair")?;
+        let source = pair[0].as_str().ok_or("Invalid origin")?;
+        let target = pair[1].as_str().ok_or("Invalid destination")?;
+        if source != target
+            && cities.owners.get(source) == Some(owner)
+            && cities.owners.get(target) == Some(owner)
+        {
+            targets_by_source
+                .entry(source)
+                .or_default()
+                .insert(target.to_owned());
+        }
+    }
+    let mut quotes = Map::new();
+    for (source, targets) in targets_by_source {
+        for mode in ["land", "fastest"] {
+            friendly_quotes(
+                source,
+                owner,
+                mode,
+                &cities,
+                &graph,
+                Some(&targets),
+                &mut quotes,
+            )?;
+        }
+    }
+    Ok(Value::Object(quotes))
+}
+
+pub(crate) fn batch(data: &Value, request: &Value) -> Result<Value> {
+    let cities = Cities::read(request)?;
+    let player = field(request, "player")?;
+    let mut quotes = Map::new();
+    if cities.order.is_empty() {
+        return Ok(Value::Object(quotes));
+    }
+    let routes = known_routes(data, request, &cities, &BTreeSet::new())?;
+    let month = request.get("month").unwrap_or(&Value::Null);
+    let adjacency = adjacency(data, &cities, &routes, month, None)?;
     let mut explorations: BTreeMap<String, Vec<Value>> =
         cities.order.iter().map(|id| (id.clone(), vec![])).collect();
     for raw in rows(data, "exploration_routes")? {
@@ -506,36 +641,7 @@ pub(crate) fn batch(data: &Value, request: &Value) -> Result<Value> {
             continue;
         }
         for mode in ["fastest", "land"] {
-            let mut queue = initial(source);
-            let mut serial = 0;
-            let mut seen = BTreeSet::new();
-            while let Some(current) = queue.pop() {
-                if !seen.insert(current.city.clone()) {
-                    continue;
-                }
-                // Neutral cities connect friendly destinations; they are not
-                // themselves transfer destinations or remote attack targets.
-                if !current.legs.is_empty() && cities.owners.get(&current.city) == Some(player) {
-                    quotes.insert(
-                        format!("{source}:{}:{mode}", current.city),
-                        quote(&current.path, &current.legs)?,
-                    );
-                }
-                if let Some(legs) = adjacency.get(&current.city) {
-                    for leg in legs {
-                        let target = string(leg, "to")?;
-                        if seen.contains(target)
-                            || !can_transit(cities.owners.get(target), player)
-                            || mode == "land" && string(leg, "mode")? != "land"
-                        {
-                            continue;
-                        }
-                        // The batch owns each evaluated direction once. Search
-                        // entries borrow those legs until a quote is emitted.
-                        enqueue(&mut queue, &current, target, leg, &mut serial)?;
-                    }
-                }
-            }
+            friendly_quotes(source, player, mode, &cities, &adjacency, None, &mut quotes)?;
             let legs = &adjacency[source];
             let targets: BTreeSet<_> = legs
                 .iter()

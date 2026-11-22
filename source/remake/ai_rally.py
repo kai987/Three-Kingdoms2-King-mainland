@@ -45,6 +45,7 @@ def reinforce(ai, city, target):
     if not limit or sum(row['survivors'] for row in _strongest(available_columns, limit)) >= required:
         return False
 
+    ai.reinforcement_quotes(city, fronts)
     choices = []
     for front in fronts:
         # A transfer already underway will be reconsidered on arrival.

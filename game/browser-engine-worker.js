@@ -1,9 +1,13 @@
 /* Fixed game operations only. No user code evaluation or cross-player state. */
 import {loadPyodide} from './vendor/pyodide/pyodide.mjs';
+import './march-abi.js';
 const base=new URL('.',self.location.href),decoder=new TextDecoder('utf-8',{fatal:true});
 let py,bridge,manifest,booting=true,stage='manifest',receivedBytes=0,runtimeReady=false;const loaded=new Set();
 function progress(extra={}){if(booting)self.postMessage({type:'progress',phase:stage,receivedBytes,runtimeReady,...extra});}
 function assetUrl(value,expected=null){
+ if(value==='wasm/march_core.wasm' && /^[a-f0-9]{64}$/.test(expected||'')){
+  const url=new URL(value,base);url.searchParams.set('v',expected);return url;
+ }
  if(typeof value!=='string'||!/^runtime\/[A-Za-z0-9_./-]+$/.test(value))throw Error('Invalid runtime asset');
  if(value.split('/').some(part=>!part||part==='.'||part==='..'))throw Error('Invalid runtime asset');
  const url=new URL(value,base);if(url.origin!==base.origin||!url.pathname.startsWith(base.pathname+'runtime/'))throw Error('Invalid runtime asset');
@@ -91,18 +95,24 @@ const boot=(async()=>{
  stage='loading';progress();
  // Only verified game assets run in parallel with Pyodide. No campaign or RNG
  // exists until every asset has passed its size and SHA checks.
- const [runtime,bundle,previews,initialData]=await Promise.all([
+ const [runtime,bundle,previews,initialData,aiCore]=await Promise.all([
   loadPyodide({indexURL:new URL('vendor/pyodide/',base).href}).then(value=>{runtimeReady=true;progress();return value;}),
   bytes(manifest.python_bundle.url,4*1024*1024,manifest.python_bundle.sha256).then(data=>verified(data,manifest.python_bundle.sha256)),
   previewData(manifest.previews),
-  catalogData(initial)
+  catalogData(initial),
+  bytes('wasm/march_core.wasm',4*1024*1024,manifest.ai_wasm_sha256)
+   .then(data=>verified(data,manifest.ai_wasm_sha256)).then(data=>WebAssembly.instantiate(data,{}))
+   .then(({instance})=>globalThis.Tk2MarchABI.createRawClient(instance))
  ]);
  py=runtime;stage='initializing';progress();py.unpackArchive(bundle,'zip',{extractDir:'/tk2'});installCatalog(initial,initialData);
+ py.globals.set('_tk2_ai_call',aiCore);
  py.globals.set('_tk2_paths',JSON.stringify(Object.fromEntries(manifest.catalogs.map(row=>[row.id,row.path]))));
  py.globals.set('_tk2_previews',decoder.decode(previews));py.globals.set('_tk2_initial',manifest.initial_scenario);
  bridge=py.runPython(`import sys, json, os
 sys.path.insert(0, '/tk2/source')
 os.environ['MARCH_CORE_BACKEND'] = 'python'
+from remake.ai_core import install_web
+install_web(_tk2_ai_call)
 from remake.browser_runtime import BrowserRuntime
 BrowserRuntime(json.loads(_tk2_paths), json.loads(_tk2_previews), _tk2_initial)`);
  booting=false;self.postMessage({type:'ready',build_commit:manifest.build_commit||null,shared_scenarios:true});

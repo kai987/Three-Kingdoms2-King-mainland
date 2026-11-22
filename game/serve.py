@@ -850,6 +850,7 @@ def main():
               '/assets/audio/original/battle.mp3': ('assets/audio/original/battle.mp3', 'audio/mpeg'),
               '/assets/audio/original/duel.mp3': ('assets/audio/original/duel.mp3', 'audio/mpeg'),
               '/march-core.js': ('march-core.js', 'text/javascript; charset=utf-8'),
+              '/march-abi.js': ('march-abi.js', 'text/javascript; charset=utf-8'),
               '/march-worker.js': ('march-worker.js', 'text/javascript; charset=utf-8'),
               '/wasm/march_core.wasm': ('wasm/march_core.wasm', 'application/wasm'),
               '/wasm/THIRD-PARTY-LICENSES.txt': ('wasm/THIRD-PARTY-LICENSES.txt', 'text/plain; charset=utf-8'),

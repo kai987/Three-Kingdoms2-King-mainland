@@ -117,6 +117,20 @@ class StrategicAI:
                                                       source.owner, mode, adjacent=adjacent)
         return self.quotes[key]
 
+    def reinforcement_quotes(self, source, targets):
+        from . import ai_core
+        if not targets or not ai_core.enabled():
+            return
+        pairs = [(source.id, dest.id) for dest in targets if any(
+            (source.id, dest.id, source.owner, mode, False, self.state.year, self.state.month)
+            not in self.quotes for mode in ('land', 'fastest'))]
+        if pairs:
+            quotes = ai_core.routes(self.game, self.state, source.owner, pairs)
+            for origin, dest in pairs:
+                for mode in ('land', 'fastest'):
+                    key = origin, dest, source.owner, mode, False, self.state.year, self.state.month
+                    self.quotes[key] = quotes.get(f'{origin}:{dest}:{mode}')
+
     def survivors(self, quote, ids):
         troops = [self.state.officers[i].troops for i in sorted(ids,key=ref_sort_key)]
         storm = False
@@ -461,6 +475,7 @@ class StrategicAI:
         if not ids:
             return False
         destinations = []
+        eligible = []
         for target in self.state.cities.values():
             if target.id == city.id or target.owner != city.owner:
                 continue
@@ -475,6 +490,9 @@ class StrategicAI:
             room = self.game.catalog.rules.city_officer_capacity-self.game._city_occupancy(self.state,target)-inbound
             if room <= 0:
                 continue
+            eligible.append((target, room))
+        self.reinforcement_quotes(city, [target for target, _ in eligible])
+        for target, room in eligible:
             for mode in ('land','fastest'):
                 quote = self.quote(city,target,mode,adjacent=False)
                 chosen = []

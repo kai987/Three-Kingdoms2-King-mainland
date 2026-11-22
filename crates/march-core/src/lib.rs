@@ -7,6 +7,7 @@
 
 mod hazards;
 mod paths;
+mod tactical;
 
 use serde_json::{json, Number, Value};
 use std::collections::BTreeMap;
@@ -169,6 +170,8 @@ fn execute(request: &Value) -> Result<Value> {
             )
         }
         "path" => paths::path(context(request)?.as_ref(), request),
+        "strategic_routes" => paths::strategic_routes(context(request)?.as_ref(), request),
+        "tactical_candidates" => tactical::candidates(request),
         "batch" => paths::batch(context(request)?.as_ref(), request),
         "allocate" => hazards::allocate_request(request),
         "survival_preview" => hazards::survival_preview(request),

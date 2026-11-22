@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 
 from .officers import ref_sort_key, experience_tier
+from . import ai_core
 
 
 @lru_cache(maxsize=1)
@@ -346,6 +347,61 @@ def _tactic_value(state, battle, actor, target, own, foe, terrain, tactic, attac
     return value * chance - cost * 1.8
 
 
+def _rust_candidates(state, battle, friends, enemies, own, damage_percent, game, allowed):
+    """Send the small live board once; keep unit identities and service rules in the engine."""
+    from . import battle_conditions, battle_grid as grid, battle_services
+
+    tactical = battle['extended'].get('tactical')
+    board = None
+    goals = {}
+    if tactical is not None:
+        field = grid._field(battle)
+        points = tactical['points'][own]
+        camp = field['camp']
+        board = dict(width=grid.COLUMNS, tiles=[tile for line in field['classes'] for tile in line],
+                     camp=camp[1] * grid.COLUMNS + camp[0] if own == 'attackers' else None, points=points,
+                     contact=points >= grid.ATTACK_COST and not battle['extended'].get('siege'))
+
+    def unit(person, friend):
+        ident = person['id']
+        support = _support(battle, person)
+        value = dict(troops=person['troops'], martial=person['martial'], morale=support.get('morale', 70),
+                     spirit=support.get('garrison_spirit', 100), guarded=bool(support['guard']),
+                     stunned=bool(support['stunned']))
+        if board:
+            position = tactical['positions'][str(ident)]
+            value['cell'] = position['y'] * grid.COLUMNS + position['x']
+            if (friend and points and (allowed is None or ident in allowed)
+                    and not battle_conditions.movement_blocked(battle, ident)):
+                value['costs'] = [grid.movement_cost(state, person, tile) for tile in range(6)]
+                sites = battle_services.seek(game, state, battle, person, own) if game is not None else []
+                goals[ident] = sites
+                value['sites'] = [dict(cell=site['y'] * grid.COLUMNS + site['x'], score=site['score']) for site in sites]
+        return value
+
+    ordered_enemies = sorted(enemies, key=lambda person: ref_sort_key(person['id']))
+    ranks = {person['id']: rank for rank, person in enumerate(ordered_enemies)}
+    result = ai_core.invoke('tactical_candidates', friends=[unit(p, True) for p in friends],
+                            enemies=[unit(p, False) for p in enemies], board=board,
+                            enemy_rank=[ranks[p['id']] for p in enemies], damage_percent=damage_percent)
+    averages, attacks, moves = {}, {}, {}
+    for actor, row in zip(friends, result, strict=True):
+        ident = actor['id']
+        for i, target in enumerate(enemies):
+            pair = ident, target['id']
+            averages[pair] = row['out'][i]
+            averages[target['id'], ident] = row['incoming'][i]
+            if row['attacks'][i] is not None:
+                attacks[pair] = row['attacks'][i]
+        moves[ident] = row['moves']
+        for move in row['moves']:
+            move.update(actor=ident, target=enemies[move['target']]['id'])
+            if 'site' in move:
+                site = goals[ident][move.pop('site')]
+                move['service_goal'] = {key: site[key] for key in ('kind', 'x', 'y')}
+    return averages, attacks, moves
+
+
 def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
                depth=1, responding=False, used=None, game=None, allowed_actors=None):
     """Enumerate real unit/target/tactic choices; ties are stable numeric IDs."""
@@ -361,8 +417,12 @@ def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
     friends, enemies = _active(battle, own), _active(battle, foe)
     # Damage averages are reused by every tactic score; the candidate search
     # stays bounded even when both sides deploy the maximum ten units.
-    averages={(a['id'],t['id']):expected_attack(battle,a,t,damage_percent)
-              for first,second in ((friends,enemies),(enemies,friends)) for a in first for t in second}
+    rust = ai_core.enabled()
+    if rust:
+        averages, attacks, _ = _rust_candidates(state, battle, friends, enemies, own, damage_percent, None, None)
+    else:
+        averages={(a['id'],t['id']):expected_attack(battle,a,t,damage_percent)
+                  for first,second in ((friends,enemies),(enemies,friends)) for a in first for t in second}
     attack=lambda a,t:averages[(a['id'],t['id'])]
     rows = []
     for actor in friends:
@@ -370,9 +430,11 @@ def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
             continue
         support = _support(battle, actor)
         for target in enemies:
-            damage = 0 if support['stunned'] else attack(actor, target)
-            rows.append(dict(kind='attack', actor=actor['id'], target=target['id'],
-                             tactic=None, score=_loss_value(target, damage) if damage else 0))
+            if rust:
+                score = attacks[actor['id'], target['id']]
+            else:
+                score = 0 if support['stunned'] else _loss_value(target, attack(actor, target))
+            rows.append(dict(kind='attack', actor=actor['id'], target=target['id'], tactic=None, score=score))
             if depth <= 0:
                 continue
             for tid in legal_tactics(state, battle, actor, target, own, foe, terrain, tactics):
@@ -444,8 +506,12 @@ def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percen
     friends, enemies = _active(battle, own), _active(battle, foe)
     if not friends or not enemies:
         return []
-    averages = {(a['id'], t['id']): expected_attack(battle, a, t, damage_percent)
-        for first, second in ((friends, enemies), (enemies, friends)) for a in first for t in second}
+    rust = ai_core.enabled()
+    if rust:
+        averages, attacks, moves = _rust_candidates(state, battle, friends, enemies, own, damage_percent, game, allowed_actors)
+    else:
+        averages = {(a['id'], t['id']): expected_attack(battle, a, t, damage_percent)
+            for first, second in ((friends, enemies), (enemies, friends)) for a in first for t in second}
     attack = lambda a, t: averages[(a['id'], t['id'])]
     rows = []
     for actor in friends:
@@ -456,7 +522,11 @@ def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percen
         service=battle_services.ai_action(game,state,battle,actor,own) if game is not None else None
         if service:rows.append(service)
         for target in enemies:
-            if not grid.attack_reason(battle, actor, target, own):
+            if rust:
+                pair = actor['id'], target['id']
+                if pair in attacks:
+                    rows.append(dict(kind='attack', actor=actor['id'], target=target['id'], tactic=None, score=attacks[pair]))
+            elif not grid.attack_reason(battle, actor, target, own):
                 damage, reply = expected_contact_exchange(battle, actor, target, damage_percent)
                 rows.append(dict(kind='attack', actor=actor['id'], target=target['id'],
                     tactic=None, score=(_loss_value(target, damage)-_loss_value(actor, reply)
@@ -471,6 +541,9 @@ def _grid_candidates(state, battle, own, foe, terrain, tactics, *, damage_percen
                         # fall back to a harmful re-cast that first frees it.
                         continue
                     rows.append(dict(kind='tactic', actor=actor['id'], target=target['id'], tactic=tid, score=value))
+        if rust:
+            rows.extend(moves[actor['id']])
+            continue
         from . import battle_conditions
         if row['points'][own] <= 0 or battle_conditions.movement_blocked(battle,actor['id']):
             continue

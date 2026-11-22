@@ -177,12 +177,20 @@ def reference(request, data=None):
                 value = route_allowed(data, args['route'], args['source'], args['target'])
             elif op == 'evaluate_leg':
                 value = evaluate_leg(data, args['route'], args['source'], args['target'], args['month'])
-            elif op in ('path', 'batch'):
+            elif op in ('path', 'batch', 'strategic_routes'):
                 travel = TravelCampaign()
                 travel.catalog = SimpleNamespace(data=data, links={frozenset(p) for p in data.get('links', [])})
                 state = route_state(args['cities'], args['month'], args.get('discovered', []), args.get('player', 'friendly'))
                 state.year = args.get('year')
-                if op == 'path':
+                if op == 'strategic_routes':
+                    excluded = set(args.get('excluded', ()))
+                    travel.catalog.data = {**data, **{key: [r for r in data.get(key, ()) if r['id'] not in excluded]
+                                                       for key in ('travel_routes','exploration_routes')}}
+                    value = {f'{a}:{b}:{mode}': quote for a,b in args['pairs']
+                             if state.cities[a].owner == args['owner']
+                             for mode in ('land','fastest')
+                             if (quote := travel._travel_path(state,a,b,args['owner'],mode))}
+                elif op == 'path':
                     value = travel._travel_path(state, args['source'], args['target'], args['owner'],
                                                 args['mode'], adjacent=args.get('adjacent', False))
                 else:
@@ -313,6 +321,10 @@ def vectors(configs):
         for discovered in ([], ['explore:a:b']):
             for month in (4, 7, 11):
                 base = dict(config=1, cities=cities, month=month, discovered=discovered)
+                for excluded in ([], [synthetic['travel_routes'][0]['id']]):
+                    yield f'strategic:{ownership}:{discovered}:{month}:{excluded}', dict(
+                        base, op='strategic_routes', owner='friendly', excluded=excluded,
+                        pairs=[[a,b] for a in keys for b in keys])
                 yield f'batch:tie:{ownership}:{discovered}:{month}', dict(base, op='batch', player='friendly')
                 for source in keys:
                     for target in keys + ['missing']:
