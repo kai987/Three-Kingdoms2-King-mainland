@@ -54,7 +54,7 @@ jobs:
           printf '{"ref":"refs/heads/main","before":"%s","after":"%s","forced":false}\n' "$FROZEN_BASE" "$FROZEN_SOURCE" > build/ci/push.json
           args=()
           if [ "$VARIANT" != reuse ]; then args+=(--force-full); fi
-          python -B tools/ci/plan.py --base "$FROZEN_BASE" --head "$FROZEN_SOURCE" --event-name push --event-path build/ci/push.json "${args[@]}" > build/ci/test-plan.json
+          python -B tools/ci/plan.py --base "$FROZEN_BASE" --head "$FROZEN_SOURCE" --event-name push --ref refs/heads/main --event-path build/ci/push.json "${args[@]}" > build/ci/test-plan.json
       - name: Find successful verification of the merged pull request
         id: pr
         if: inputs.variant == 'reuse'
