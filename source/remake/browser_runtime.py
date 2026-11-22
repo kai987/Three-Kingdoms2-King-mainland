@@ -95,7 +95,7 @@ class BrowserRuntime:
         self.catalog_paths = paths
         with using_backend('python'):
             self.session = CampaignSession([paths[initial_scenario]],
-                                           initial_scenario=initial_scenario)
+                                           initial_scenario=initial_scenario, record_journal=False)
         if self.session.game.catalog.data['id'] != initial_scenario:
             raise ValueError('Initial catalog identity does not match its index')
         self.session.catalogs = OrderedDict(self.session.catalogs)
@@ -159,6 +159,8 @@ class BrowserRuntime:
             if url.path == '/api/march-preview':
                 args = self._query(url, ('source', 'target', 'revision'))
                 return self.session.preview_march(**args)
+            if path == '/api/save?compact=1':
+                return self.session.export_save(compact=True)
             if url.query or '?' in path:
                 raise GameError('查询参数无效。')
             if url.path == '/api/state':

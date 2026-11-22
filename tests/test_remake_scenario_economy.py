@@ -16,7 +16,7 @@ from remake.city_economy import (apply_opening_sizes, frontier_outpost_at, incom
                                  profile_at, profiles_at, tier_at)
 from remake.officers import OFFICER_TROOP_CAP
 from remake.starting_garrisons import frontier_cities, mobilize_reserves
-from campaign_fixtures import advance_month
+from campaign_fixtures import advance_month, record_garrison_charges
 
 FIELDS = ('gold', 'grain', 'reserves')
 HETAO_CITIES = {'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'liucheng', 'guonei', 'luzon'}
@@ -293,8 +293,8 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         before = {key: tuple(getattr(c, field) for field in FIELDS) for key, c in game.state.cities.items()}
         rng = deepcopy(game.state.rng)
         recruited = game.state.soldiers['recruited']
-        dues = city_economy.garrison_grain(game, game.state)
-        advance_month(game)
+        with record_garrison_charges() as dues:
+            advance_month(game)
         expected_recruits = 0
         for key, city in game.state.cities.items():
             base = grain_units.stocks(game.catalog.data['city_income'][key]) if city.owner != 'neutral' else dict.fromkeys(FIELDS, 0)
@@ -340,18 +340,15 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         recruits = game.state.soldiers['recruited']
         rng = deepcopy(game.state.rng)
         # Opening the dated node splits actual stock; the following month also charges its garrison.
-        due_at_rollover = {}
-        settle = city_economy.settle_garrison_grain
-        def capture(game, state, outposts, dues):
-            due_at_rollover.update(dues)
-            return settle(game, state, outposts, dues)
-        from unittest.mock import patch
-        with patch.object(city_economy, 'settle_garrison_grain', side_effect=capture):
-            advance_month(game)
+        with record_garrison_charges() as due_at_rollover:
+            while game.state.day != 21:
+                game._complete_turn(game.state)
+            before_split = {field: getattr(parent, field) for field in FIELDS}
+            game._complete_turn(game.state)
         child = game.state.cities[key]
         income = grain_units.stocks(game.catalog.data['city_income'][key]) if child.owner != 'neutral' else dict.fromkeys(FIELDS, 0)
         for field in FIELDS:
-            self.assertEqual(getattr(child, field), max(0, before[field] // rule['resource_divisor'] + income[field] - (due_at_rollover[key] if field == 'grain' else 0)))
+            self.assertEqual(getattr(child, field), max(0, before_split[field] // rule['resource_divisor'] + income[field] - (due_at_rollover[key] if field == 'grain' else 0)))
         self.assertEqual(child.owner, changed_owner)
         self.assertNotEqual(child.owner, original_owner)
         self.assertEqual(game.state.rng, rng)

@@ -70,7 +70,7 @@ window.GameI18n=(()=>{
  // quantities, never a bare character inside a person, place or item name.
  // URLs and identifier-like tokens are kept byte-for-byte, including Chinese.
  function resourceText(value,language=locale){
-  const labels={gold:'資金',grain:'兵糧',reserves:language==='ja'?'予備兵':'預備兵'};
+  const labels={gold:'資金',grain:'糧',reserves:language==='ja'?'予備兵':'預備兵'};
   const label=source=>/^(?:金|錢|钱)$/.test(source)?labels.gold:labels.grain;
   const boundary='[\\s·・、，。；：:;／/|（）()「」『』【】\\[\\]{}=<>!?！？]';
   const amount='[+−-]?\\d[\\d,]*(?:\\.\\d+)?(?:\\s*[–—～~]\\s*\\d[\\d,]*(?:\\.\\d+)?)?';

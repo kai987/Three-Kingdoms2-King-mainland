@@ -5,11 +5,12 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign, Catalog, canonical
-from remake import facilities, treasures
+from remake import city_economy, facilities, treasures
 from remake.ai_rally import reinforce as reinforce_attack_front
 from remake.errors import GameError
 from remake.march_core import using_backend
@@ -196,7 +197,8 @@ class StrategicAITests(unittest.TestCase):
         game.command('new',dict(faction='shu',seed=2026,difficulty='normal'),0)
         source=game.state.cities['runan'];ids=set(source.roster.officer_ids);grain=source.grain
         before=deepcopy(game.state.soldiers)
-        self.ai_turn(game)
+        with record_garrison_charges() as dues:
+            self.ai_turn(game)
         moving=[m for m in game.state.extension['travel']['marches'] if m['source']=='runan']
         self.assertEqual(len(moving),1)
         self.assertEqual(moving[0]['kind'],'transfer')
@@ -208,7 +210,7 @@ class StrategicAITests(unittest.TestCase):
         self.assertEqual(source.grain,grain,'The command commits a copy; the old source object is untouched')
         live=game.state.cities['runan']
         loaded = march_grain(game.state, moving[0]['officers'], moving[0]['quote'])
-        self.assertEqual(live.grain,grain-loaded)
+        self.assertEqual(live.grain,grain-loaded-dues[source.id])
         self.assertEqual(moving[0]['supply']['loaded'], loaded)
         self.assertEqual(moving[0]['supply']['consumed'], loaded,
             'This one-day transfer has completed its actual route day at the next strategic phase')
@@ -381,6 +383,8 @@ class StrategicAITests(unittest.TestCase):
                 self.assertTrue(StrategicAI(game,game.state).provisioned(source,[ident],quote))
 
     def test_real_ai_reinforcement_waits_for_segment_food_then_refills_without_starvation(self):
+        # The only withdrawals in this exact-depot fixture are march refills.
+        self.enterContext(patch.object(city_economy, 'settle_turn_grain'))
         data=deepcopy(strategic_catalog(second=100,troops=999).data)
         used={r['person_id'] for r in data['initial_officers']}
         actual=json.loads((ROOT/'game/data/campaigns/217-07.json').read_text())

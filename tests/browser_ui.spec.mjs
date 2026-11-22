@@ -12,6 +12,20 @@ import {waitForSoldierStep} from './browser_soldier_step_wait.mjs';
 
 const browserScope=browserScopes.loadBrowserScope();
 
+function expandedDownload(raw){
+ const envelope=JSON.parse(raw);
+ if(envelope.version!==3)return envelope;
+ // Compare downloads to the diagnostic API using the engine's canonical number encoding.
+ const script=`import json,sys
+sys.path.insert(0, 'source')
+from remake.campaign import verified_save_content, digest
+value=verified_save_content(json.load(sys.stdin))
+print(json.dumps(dict(value,checksum=digest(value)),ensure_ascii=False))`;
+ return JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B','-c',script],{
+  cwd:new URL('../',import.meta.url),input:raw,encoding:'utf8',maxBuffer:32*1024*1024,
+ }));
+}
+
 const errors=new WeakMap();
 test.beforeEach(async({page},testInfo)=>{
  const observed=[];errors.set(page,observed);
@@ -56,7 +70,7 @@ async function assertOriginalEventArt(page,modal,kind){
  expect(source.origin).toBe(new URL(page.url()).origin);expect(source.pathname).toBe(expected.pathname);expect(source.pathname).toContain('/Three-Kingdoms2-King-mainland/assets/original-ui/');
  await expect(image).toHaveAttribute('data-original-ui-provenance','original-capture-derived');await expect(image).toHaveAttribute('alt',/原版/);
  const ja=await page.locator('html').getAttribute('lang')==='ja',captions={
-  equipment_bought:ja?/武具店.*購入/:/武具店.*購置/,grain_traded:ja?/市場.*兵糧.*取引/:/市場.*米糧交易/,
+  equipment_bought:ja?/武具店.*購入/:/武具店.*購置/,grain_traded:ja?/市場.*糧.*取引/:/市場.*米糧交易/,
   transport_departed:ja?/輸送隊.*出発/:/運輸隊出發/
  };
  await expect(modal.locator('.event-art-caption')).toContainText(captions[kind]);await expect(modal.locator('.event-map,.event-facility,.event-treasure,.event-original-icon')).toHaveCount(0);
@@ -505,7 +519,7 @@ test('faction resources show current allies and large factions receive 40 comman
  const ledger=page.locator('#inspector .faction-ledger');
  const allies=id=>ledger.locator('[data-faction-allies="'+id+'"]');
  await ledger.locator('summary').click();
- await expect(ledger.getByRole('columnheader')).toHaveText(['勢力','都市','同盟','現役','兵士','預備兵','金','兵糧']);
+ await expect(ledger.getByRole('columnheader')).toHaveText(['勢力','都市','同盟','現役','兵士','預備兵','金','糧']);
  await expect(allies('shu')).toHaveText('孫權');
  await expect(allies('wu')).toHaveText('劉備');
  await expect(allies('wei')).toHaveText('—');
@@ -541,7 +555,7 @@ test('faction resources show current allies and large factions receive 40 comman
 
 test('observer speed changes cadence without resuming a pause and city counts follow ownership',async({page})=>{
  await opening(page);
- const hanResources=/金\s*15,?680\s*·\s*兵糧\s*536,?740\s*·\s*兵士\s*23,?484\s*·\s*預備兵\s*11,?353\s*·\s*現役\s*49/;
+ const hanResources=/金\s*15,?680\s*·\s*糧\s*536,?740\s*·\s*兵士\s*23,?484\s*·\s*預備兵\s*11,?353\s*·\s*現役\s*49/;
  const openingResources=page.locator('.faction-choice [data-faction-resources="han"]');
  const openingSummary=page.locator('#setup-summary');
  const openingHan=page.locator('.faction-choice:has(input[value="han"])');
@@ -608,7 +622,7 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  };
  await ledger.locator('summary').press('Enter');
  const headers=ledger.getByRole('columnheader');
- await expect(headers).toHaveText(['勢力','都市','本據','同盟','現役','兵士','預備兵','金','兵糧'],{useInnerText:true});
+ await expect(headers).toHaveText(['勢力','都市','本據','同盟','現役','兵士','預備兵','金','糧'],{useInnerText:true});
  const han=ledger.locator('tr[data-faction-resources="han"]');
  await expect(han.locator('[data-faction-allies]')).toHaveText('—');
  await expect(han.locator('[data-faction-officers]')).toHaveText('49');
@@ -670,7 +684,7 @@ test('observer speed changes cadence without resuming a pause and city counts fo
  await expect(speed).toHaveAccessibleName('観戦速度');
  await expect(speed.locator('option')).toHaveText(['低速','標準','高速']);
  await expect(speed).toHaveValue('normal');
- await expect(headers).toHaveText(['勢力','都市','本拠','同盟','現役','兵士','予備兵','金','兵糧'],{useInnerText:true});
+ await expect(headers).toHaveText(['勢力','都市','本拠','同盟','現役','兵士','予備兵','金','糧'],{useInnerText:true});
  await checkLedgerColumns();
  await page.locator('#utility-menu summary').press('Enter');
  await page.clock.runFor(3600);
@@ -748,7 +762,7 @@ test('dialogs, language, limits, save/load and automatic recovery use the real c
  await expect(openingEvent).not.toBeVisible();
  await expect(page.locator('.city-command-tabs [role=tab]')).toHaveCount(4);
  const boxes=await page.locator('.city-command-tabs [role=tab]').evaluateAll(nodes=>nodes.map(node=>{const r=node.getBoundingClientRect();return {top:r.top,width:r.width,height:r.height};}));expect(Math.max(...boxes.map(r=>r.top))-Math.min(...boxes.map(r=>r.top))).toBeLessThanOrEqual(1);for(const box of boxes){expect(box.width).toBeGreaterThanOrEqual(44);expect(box.height).toBeGreaterThanOrEqual(44);}
- expect(await page.locator('#inspector .resources dt').allTextContents()).toEqual(['資金','兵糧','預備兵']);
+ expect(await page.locator('#inspector .resources dt').allTextContents()).toEqual(['資金','糧','預備兵']);
  const pairs=await page.locator('#inspector .resources .resource-pair').evaluateAll(nodes=>nodes.map(node=>{const a=node.querySelector('dt').getBoundingClientRect(),b=node.querySelector('dd').getBoundingClientRect();return{a:a.top,b:b.top};}));expect(pairs).toHaveLength(3);for(const pair of pairs)expect(Math.abs(pair.a-pair.b)).toBeLessThanOrEqual(3);
  for(const icon of await page.locator('.city-command-tabs img[data-original-ui]').all()){
   await expect(icon).toBeVisible();await expect.poll(()=>icon.evaluate(node=>node.complete&&node.naturalWidth>0)).toBe(true);
@@ -787,7 +801,7 @@ test('dialogs, language, limits, save/load and automatic recovery use the real c
  await page.locator('#dialog-language').selectOption('ja');
  await expect(page.locator('html')).toHaveAttribute('lang','ja');
  await expect(page.locator('#dialog-title')).toContainText('兵の編制',{useInnerText:true});
- expect(await page.locator('#inspector .resources dt').allTextContents()).toEqual(['資金','兵糧','予備兵']);
+ expect(await page.locator('#inspector .resources dt').allTextContents()).toEqual(['資金','糧','予備兵']);
  await expect(page.locator('#allocation-officer')).toHaveValue(officer);
  await page.locator('#dialog-language').selectOption('zh-Hant');
  await expect(page.locator('html')).toHaveAttribute('lang','zh-Hant');
@@ -797,7 +811,7 @@ test('dialogs, language, limits, save/load and automatic recovery use the real c
  const downloaded=page.waitForEvent('download');
  await page.locator('#save').click();
  const baseline=await readFile(await(await downloaded).path(),'utf8');
- expect(JSON.parse(baseline).format).toBe('three-kingdoms-remake-save');
+ expect(JSON.parse(baseline)).toMatchObject({format:'three-kingdoms-remake-save',version:3});
  await openAllocation(page);await setTroops(page,0);await closeDialog(page);
  await page.locator('#load').click();await page.locator('#load-local').click();
  await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
@@ -959,7 +973,7 @@ test('daily marching grain loads once and consumes actual days through visible t
  const exported=async()=>{
   const download=page.waitForEvent('download');
   await page.locator('#save').click();
-  return JSON.parse(await readFile(await(await download).path(),'utf8'));
+  return expandedDownload(await readFile(await(await download).path(),'utf8'));
  };
  await dismissEvents();
  await page.locator('#city-jump').selectOption('shujun');
@@ -1024,11 +1038,15 @@ test('daily marching grain loads once and consumes actual days through visible t
  expect(next.state.officers[officerText].health).toBe(initial.state.officers[officerText].health);
  expect(next.state.officers[officerText].loyalty).toBe(initial.state.officers[officerText].loyalty);
  expect(received).toBe(marched.supply.refills.reduce((sum,row)=>sum+row.grain,0));
- // No delegate was appointed and no monthly income is due: all food spent
- // this turn comes out of the travelling bag, never the origin store again.
+ // The origin pays its own garrison and resident bill on day 11.
+ const balance=await page.evaluate(async city=>{
+  const payload=await (await fetch('/api/state')).json();
+  return (payload.view||payload).catalog.city_grain_balance[city];
+ },source);
+ const localBill=Math.floor((balance.upkeep+balance.civilian)/3);
  expect(next.state.extension.domestic.factions.shu.civil).toBeNull();
  expect(next.state.extension.domestic.factions.shu.military).toBeNull();
- expect(next.state.cities[source].grain).toBe(departing.state.cities[source].grain);
+ expect(next.state.cities[source].grain).toBe(departing.state.cities[source].grain-localBill);
  expect(next.state.cities[source].owner).toBe('shu');
  await expect(live).toHaveAttribute('data-supply-loaded',String(loaded));
  await expect(live).toHaveAttribute('data-supply-consumed',String(consumed));
@@ -1296,7 +1314,7 @@ test('four DLC openings share two translated categories and preserve the separat
   const download=page.waitForEvent('download');await page.locator('#save').click();
   return readFile(await(await download).path(),'utf8');
  };
- const baseline=await exportSave(),saved=JSON.parse(baseline);
+ const baseline=await exportSave(),saved=expandedDownload(baseline);
  expect(saved.scenario).toBe('mainland202-06');
  expect(saved.state.player).toBe('yuan_shang');
  expect(saved.state.year).toBe(202);expect(saved.state.month).toBe(6);expect(saved.state.day).toBe(1);
@@ -1334,7 +1352,7 @@ test('four DLC openings share two translated categories and preserve the separat
  await expect(page.locator('#allocation-officer')).toContainText('馬超');
  await historyScreenshot(page,testInfo,'dlc-tongguan-playable-officers-tc');
  await closeDialog(page);
- const variant=JSON.parse(await exportSave());
+ const variant=expandedDownload(await exportSave());
  expect(variant.scenario).toBe('mainland211-07-tongguan');
  expect(variant.state.player).toBe('ma_teng');
  expect(variant.state.year).toBe(211);expect(variant.state.month).toBe(7);expect(variant.state.day).toBe(1);
@@ -1369,7 +1387,7 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
  };
  const exportSave=async()=>{
   const download=page.waitForEvent('download');await page.locator('#save').click();
-  return JSON.parse(await readFile(await(await download).path(),'utf8'));
+  return expandedDownload(await readFile(await(await download).path(),'utf8'));
  };
  await scenarios.selectOption('mainland211-07-tongguan');
  const han=page.locator('input[name=faction][value=han_sui]');
@@ -1520,7 +1538,7 @@ test('Jiangxia Changsha offers distinct inland water and land routes through rea
   const download=page.waitForEvent('download');await page.locator('#save').click();
   return readFile(await(await download).path(),'utf8');
  };
- const initial=JSON.parse(await exportSave());
+ const initial=expandedDownload(await exportSave());
  await clickCityCommand(page,'transfer');
  await expect(page.locator('#transfer-city')).toBeVisible();
  await page.locator('#transfer-city').selectOption('changsha');
@@ -1544,7 +1562,7 @@ test('Jiangxia Changsha offers distinct inland water and land routes through rea
  await historyScreenshot(page,testInfo,'river-upstream-select-ja');
  await page.locator('#confirm-transfer').click();
  await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
- const departing=await exportSave(),saved=JSON.parse(departing);
+ const departing=await exportSave(),saved=expandedDownload(departing);
  const column=saved.state.extension.travel.marches.find(row=>row.source==='jiangxia'&&row.target==='changsha');
  expect(column).toBeTruthy();expect(column.officers.map(String)).toEqual([ident]);
  expect(column.quote.modes).toEqual(['river']);expect(column.risks).toEqual([]);
@@ -1903,7 +1921,7 @@ async function verifyOpeningBatch(page,testInfo,batchId){
   await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
   await waitIdle(page);await dismissHistoryOpening(page);
   const download=page.waitForEvent('download');await page.locator('#save').click();
-  const saved=JSON.parse(await readFile(await(await download).path(),'utf8'));
+  const saved=expandedDownload(await readFile(await(await download).path(),'utf8'));
   expect(saved.scenario).toBe(scenario);
   if(addedRuler)expect(saved.state.player).toBe(addedRuler[0]);
   expect([saved.state.year,saved.state.month,saved.state.day]).toEqual([catalog.start_year,catalog.start_month,1]);
@@ -2067,7 +2085,7 @@ test('successful recruitment preserves source initial body and applies dynamic p
  await waitIdle(page);await dismissHistoryOpening(page);
  const exportSave=async()=>{
   const download=page.waitForEvent('download');await page.locator('#save').click();
-  return JSON.parse(await readFile(await(await download).path(),'utf8'));
+  return expandedDownload(await readFile(await(await download).path(),'utf8'));
  };
  const original=await exportSave(),target='463';
  expect(original.state.officers[target]).toMatchObject({person_id:'san14-candidate-0464',health:66,loyalty:0,faction_id:null});
@@ -2546,7 +2564,7 @@ test('actual equipment appears in city intelligence and person details with serv
  await page.locator('#cancel-setup').click();
  expect((await read()).save).toEqual(after.save,'Opening and live officer details never rewrite a running campaign');
 
- const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);const restored=await read();expect(restored.save).toEqual(JSON.parse(raw));expect(restored.view.catalog.equipment.officers[String(selection.ident)].weapon.id).toBe(selection.item.id);
+ const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);const restored=await read();expect(restored.save).toEqual(expandedDownload(raw));expect(restored.view.catalog.equipment.officers[String(selection.ident)].weapon.id).toBe(selection.item.id);
  expect(restored.view.catalog.equipment.officers[String(selection.ident)].attack_bonus).toBe(selection.quote.after.attack_bonus);expect(errors.get(page)).toEqual([]);
 });
 
@@ -2657,7 +2675,7 @@ test('city-specific battlefield keeps both armies visible and supports real batt
  const {save:committed,view:updated}=await tacticalSoldierExchange(page,{testInfo,label:'battle-native-soldier-contact'});
  expect(committed.state.battle.extended.tactical.points).toEqual(pending.state.battle.extended.tactical.points,'The complete soldier encounter uses only the original attack payment');
  await expect(canvas).toHaveJSProperty('width',1984);await expect(canvas).toHaveJSProperty('height',1536);const survivor=updated.game.battle.attackers.find(unit=>String(unit.id)===String(contact.actor));if(survivor?.troops>0)await expect(page.locator(`[data-actor="${contact.actor}"]`)).toBeEnabled();
- const snapshot=committed,download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');expect(JSON.parse(raw)).toEqual(snapshot);
+ const snapshot=committed,download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');expect(expandedDownload(raw)).toEqual(snapshot);
  await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'battle-acceptance.json',mimeType:'application/json',buffer:Buffer.from(raw)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();expect(await read()).toEqual(snapshot);
  await expect(canvas).toHaveJSProperty('width',1984);await expect(page.locator('[data-battle-skip]')).toBeHidden();
  await testInfo.attach('battle-layout-and-assets',{body:Buffer.from(JSON.stringify({geometry,fields},null,2)),contentType:'application/json'});
@@ -2721,7 +2739,7 @@ test('authoritative tactical movement, shared points and contact attacks persist
   await page.locator(`[data-actor="${actorId}"]`).click();await page.locator(`[data-target="${more.attack_targets[0]}"]`).click();await tacticalControl(page,'attack');await waitIdle(page);
   expect((await tacticalSave(page)).state.battle.extended.siege).toBeTruthy();await tacticalControl(page,'siege-withdraw');await tacticalSettle(page,{returnToMacro:true});attackCount++;
  }else if(!more.attack_targets.length)await expect(page.locator('#attack')).toBeDisabled();
- const saved={save:await tacticalSave(page)},download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');expect(JSON.parse(raw)).toEqual(saved.save);
+ const saved={save:await tacticalSave(page)},download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');expect(expandedDownload(raw)).toEqual(saved.save);
  await page.route('**/assets/battlefields/original-15.png*',route=>route.fulfill({status:200,contentType:'image/png',body:Buffer.from('deliberately undecodable test image')}));
  await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'tactical-grid-acceptance.json',mimeType:'application/json',buffer:Buffer.from(raw)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();
  const restored={save:await tacticalSave(page)};expect(restored.save).toEqual(saved.save,'Raw save reload retains every coordinate, AP balance, commander and RNG value');await expect(scene).toHaveAttribute('data-battlefield-id','original-15');await expect(canvas).toHaveJSProperty('width',1984);await expect(canvas).toHaveJSProperty('height',1536);await expect(page.locator('[data-battle-caption]')).toContainText('座標と移動のルールは変わりません');
@@ -2766,7 +2784,7 @@ test('faction command books can all be spent in one city and survive save reload
  expect(budget(policy)).toEqual(budget(beforePolicy));expect(policy.state.rng).toEqual(beforePolicy.state.rng);await closeDialog(page);
  const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');
  await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'spent-command-books.json',mimeType:'application/json',buffer:Buffer.from(raw)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();
- expect(await read()).toEqual(JSON.parse(raw),'Reload never grants the already-spent command books a second time');await expect(counter).toHaveAttribute('data-command-books-remaining','0');
+ expect(await read()).toEqual(expandedDownload(raw),'Reload never grants the already-spent command books a second time');await expect(counter).toHaveAttribute('data-command-books-remaining','0');
  const noOverflow=await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth);expect(noOverflow).toBe(true);await historyScreenshot(page,testInfo,'command-books-one-city-exhausted');
  await page.locator('#end-turn').click();await waitIdle(page);await dismiss();await page.locator('#run-ai').click();await waitIdle(page);await dismiss();
  if(await page.locator('#process-arrivals').isVisible()){await page.locator('#process-arrivals').click();await waitIdle(page);await dismiss();}
@@ -2775,7 +2793,7 @@ test('faction command books can all be spent in one city and survive save reload
  const identity=await page.evaluate(async()=>{const response=await fetch(new URL('runtime/build.json',location.href));const build=await response.json();return{worker:GameBrowserEngine.version,commit:build.commit,content_sha256:build.content_sha256,url:location.href};});
  for(const [label,save]of [['initial',initial],['next-turn',next]]){const file=testInfo.outputPath('command-books-'+label+'-save.json');await writeFile(file,JSON.stringify(save));await testInfo.attach('command-books-'+label+'-save',{path:file,contentType:'application/json'});}
  const spentFile=testInfo.outputPath('command-books-spent-raw-save.json');await writeFile(spentFile,raw);await testInfo.attach('command-books-spent-raw-save',{path:spentFile,contentType:'application/json'});
- const proof=testInfo.outputPath('command-books-identity-and-ledgers.json');await writeFile(proof,JSON.stringify({identity,initial:budget(initial),spent:budget(JSON.parse(raw)),next:budget(next),rng_before:initial.state.rng,rng_after_spending:spent.state.rng},null,2));await testInfo.attach('command-books-identity-and-ledgers',{path:proof,contentType:'application/json'});
+ const proof=testInfo.outputPath('command-books-identity-and-ledgers.json');await writeFile(proof,JSON.stringify({identity,initial:budget(initial),spent:budget(expandedDownload(raw)),next:budget(next),rng_before:initial.state.rng,rng_after_spending:spent.state.rng},null,2));await testInfo.attach('command-books-identity-and-ledgers',{path:proof,contentType:'application/json'});
  expect(errors.get(page)).toEqual([]);
 });
 
@@ -2836,9 +2854,9 @@ test('command-book confirmations and one paid city allocation flow preserve canc
  current=await read();expect(budget(current).used).toBe(budget(current).total);expect(active(current)).toBeTruthy();
  for(const ident of ids)current=await distribute(ident,'last-book-continuation');
  await historyScreenshot(page,testInfo,'allocation-last-book-paid-flow');
- const raw=await page.evaluate(async()=>{const response=await fetch('/api/save');if(!response.ok)throw Error('Raw save export failed');return response.text();});expect(JSON.parse(raw)).toEqual(current);
+ const raw=await page.evaluate(async()=>{const response=await fetch('/api/save');if(!response.ok)throw Error('Raw save export failed');return response.text();});expect(expandedDownload(raw)).toEqual(current);
  await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name:'paid-city-allocation.json',mimeType:'application/json',buffer:Buffer.from(raw)});await waitIdle(page);await expect(page.locator('#dialog')).toBeHidden();await page.locator('#city-jump').selectOption('shujun');
- expect(await read()).toEqual(JSON.parse(raw));await expect(page.locator('#continue-allocation')).toBeEnabled();await page.locator('#continue-allocation').click();await expect(page.locator('#dialog [data-command-book-cost]')).toHaveAttribute('data-command-book-cost','0');await distribute(ids[0],'loaded-continuation');await closeFlow();
+ expect(await read()).toEqual(expandedDownload(raw));await expect(page.locator('#continue-allocation')).toBeEnabled();await page.locator('#continue-allocation').click();await expect(page.locator('#dialog [data-command-book-cost]')).toHaveAttribute('data-command-book-cost','0');await distribute(ids[0],'loaded-continuation');await closeFlow();
  await expect(page.locator('#allocate')).toBeDisabled();await expect(page.locator('#recruit')).toBeDisabled();await expect(page.locator('#continue-allocation')).toHaveCount(0);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(errors.get(page)).toEqual([]);
  const file=testInfo.outputPath('paid-allocation-raw-save.json');await writeFile(file,raw);await testInfo.attach('paid-allocation-raw-save',{path:file,contentType:'application/json'});
@@ -2876,7 +2894,7 @@ test('succession updates live faction names and ruler portraits while historical
   const historical=page.locator('#setup-summary');await expect(historical.locator(`[data-portrait-person="${fixture.previous.person_id}"]`)).toBeVisible();await expect(historical).toContainText(await currentLabel(fixture.previous.name));await expect(historical.locator(`[data-portrait-person="${fixture.selected.person_id}"]`)).toHaveCount(0);expect(await tacticalSave(page)).toEqual(after,'A historical preview never rewrites the running ruler or faction');
   await page.locator('#cancel-setup').click();await inspect('[data-current-faction-label]');await verifyLive();
  }
- const raw=await page.evaluate(async()=>{const response=await fetch('/api/save');if(!response.ok)throw Error('Successor raw save failed');return response.text();});expect(JSON.parse(raw)).toEqual(after);
+ const raw=await page.evaluate(async()=>{const response=await fetch('/api/save');if(!response.ok)throw Error('Successor raw save failed');return response.text();});expect(expandedDownload(raw)).toEqual(after);
  await page.reload();await enterScenarioMenu(page);await load(raw,'actual-successor-roundtrip.json');await page.locator('#city-jump').selectOption(fixture.city);await inspect('[data-current-faction-label]');await verifyLive();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(errors.get(page)).toEqual([]);
  const file=testInfo.outputPath('actual-successor-raw-save.json');await writeFile(file,raw);await testInfo.attach('actual-successor-raw-save',{path:file,contentType:'application/json'});
@@ -3211,7 +3229,7 @@ test('Dong Zhuo relocation opens in February 190 with its own bilingual historic
   await expect(settlement.locator('[data-relocation-lost]')).toContainText(String(effects.lost[field]));
  }
  await expect(settlement.locator('[data-relocation-loot]')).toContainText(String(effects.loot.gold));
- await expect(settlement.locator('[data-relocation-loot]')).toContainText(`兵糧 ${effects.loot.grain}`);
+ await expect(settlement.locator('[data-relocation-loot]')).toContainText(`糧 ${effects.loot.grain}`);
  await expect(settlement.locator('[data-relocation-loot]')).toContainText(String(effects.loot.treasure));
  await expect(settlement.locator('[data-relocation-facilities]')).toContainText('50');
  await assertEventScene(page,event,'historical-dong-zhuo-relocation');
@@ -3222,7 +3240,7 @@ test('Dong Zhuo relocation opens in February 190 with its own bilingual historic
  await expect(event.locator('#event-description')).toContainText('宮殿・宗廟の焼失を三月');
  await expect(settlement.locator('[data-relocation-moved]')).toContainText(String(effects.moved.population));
  await expect(settlement.locator('[data-relocation-loot]')).toContainText(String(effects.loot.gold));
- await expect(settlement.locator('[data-relocation-loot]')).toContainText(`兵糧 ${effects.loot.grain}`);
+ await expect(settlement.locator('[data-relocation-loot]')).toContainText(`糧 ${effects.loot.grain}`);
  expect(await tacticalSave(page)).toEqual(saved);
  await historyScreenshot(page,testInfo,'dong-zhuo-relocation-ja',{fullPage:false});
  await tacticalDismiss(page);
@@ -3316,7 +3334,7 @@ test('Liu Bei can make three visits and recruit Zhuge Liang after restoring a sa
  await page.locator('#save-file').setInputFiles({name:'three-visits-first.json',mimeType:'application/json',buffer:Buffer.from(raw)});
  await waitIdle(page);
  await expect(page.locator('#dialog')).toBeHidden();
- expect(await liveProgress([startTurn])).toEqual(JSON.parse(raw));
+ expect(await liveProgress([startTurn])).toEqual(expandedDownload(raw));
  await showVisit(1);
  await expect(visit).toBeDisabled();
 

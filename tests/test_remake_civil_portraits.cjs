@@ -33,4 +33,18 @@ assert(fallback.civilHtml('clerk-1','文吏').includes('/enhanced/clerk-1.png'),
 for(const invalid of ['clerk-4','../clerk-1','clerk-1?x=1','https://evil.example/a.png','" onerror="x']){assert.equal(fallback.civilAsset(invalid),null);assert(!fallback.civilHtml(invalid,'文吏').includes('<img'));}
 assert(!fallback.civilHtml('clerk-1','文吏',{className:'" onerror="x'}).includes('onerror'));
 const staff=require('../game/civil-staff.js');assert(staff.portrait(pool.people[0]).includes('/assets/civil-staff/enhanced/clerk-1.png'));
+const fresh={people:Array.from({length:10},(_,i)=>({id:`clerk-${String(i+100).padStart(6,'0')}`,portrait:`clerk-${String(i+1).padStart(2,'0')}`}))};
+portraits.registerGenerated(fresh);
+for(const person of fresh.people){
+ const path=`/assets/civil-staff/white/${person.portrait}.png`;
+ assert.equal(portraits.asset(person.id).path,path);
+ assert.equal(portraits.asset(person.id).width,512);
+ assert(portraits.html(person.id,'文吏',{size:'battle'}).includes(path));
+ assert(portraits.civilHtml(person.portrait,'文吏',{className:'event-staff-face'}).includes(path));
+ assert(staff.portrait(person).includes(path));
+ assert(portraits.failAsset(person.id,path));
+ assert.equal(portraits.asset(person.id),null);
+ assert.equal(portraits.civilAsset(person.portrait),null);
+}
+for(const invalid of ['clerk-00','clerk-11','clerk-010','clerk-08.png','clerk-09?x=1'])assert.equal(fallback.civilAsset(invalid),null);
 console.log('civil portraits: three128x160 variants, original hashes/geometry/ink/palette, fixedclerkIDs, allportraitsurfaces, snapshotfallback, locale/escaping and read-only state passed');

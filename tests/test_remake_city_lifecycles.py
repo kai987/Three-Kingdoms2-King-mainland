@@ -67,7 +67,9 @@ class CityLifecycleTests(unittest.TestCase):
         self.assertIn('xinxing',game.view()['catalog']['active_cities'])
 
     def test_opening_inherits_actual_parent_owner_and_only_splits_resources(self):
-        game=self.start(self.fixture())
+        catalog=self.fixture()
+        catalog.data['facility_rules']['disasters_enabled']=False
+        game=self.start(catalog)
         parent=game.state.cities['taiyuan']
         for ident in list(parent.roster.officer_ids):
             recipient=next(c for c in game.state.cities.values() if c.owner==parent.owner

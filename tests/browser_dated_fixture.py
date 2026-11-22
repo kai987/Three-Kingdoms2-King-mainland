@@ -31,9 +31,9 @@ def main():
     sys.argv = [sys.argv[0], *remaining]
     catalog = dated_catalog(options.kind)
 
-    def fixture_session(paths):
+    def fixture_session(paths, **session_options):
         with patch.object(sessions, 'Catalog', return_value=catalog):
-            return RealSession([ROOT / ('controlled-dated-' + options.kind + '.json')])
+            return RealSession([ROOT / ('controlled-dated-' + options.kind + '.json')], **session_options)
 
     sessions.CampaignSession = fixture_session
     import serve

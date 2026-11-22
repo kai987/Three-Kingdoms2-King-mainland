@@ -195,12 +195,14 @@ class ConvoyRescueTests(unittest.TestCase):
         self.assertEqual(row['reason'],'resource_full');self.assertTrue(row['journeys'][0]['supply']['waiting'])
         elapsed=row['journeys'][0]['supply']['elapsed_days'];lost=game.state.soldiers['lost']
         rng=deepcopy(game.state.rng)
+        garrison_before=game.state.cities['nanjun'].reserves
         game._complete_turn(game.state)
+        garrison_losses=garrison_before-game.state.cities['nanjun'].reserves
         row=game.state.extension['logistics']['convoys'][0];bag=row['journeys'][0]['supply']
         self.assertEqual(bag['elapsed_days'],elapsed+10)
         self.assertGreater(bag['shortage_days'],0)
         self.assertLess(row['cargo']['reserves'],300)
-        self.assertEqual(game.state.soldiers['lost']-lost,sum(r['lost'] for r in bag['starvation']))
+        self.assertEqual(game.state.soldiers['lost']-lost,garrison_losses+sum(r['lost'] for r in bag['starvation']))
         self.assertEqual(game.state.rng,rng)
         saved=game.export_save();loaded=Campaign(game.catalog);loaded.load_save(saved,0)
         self.assertEqual(loaded.export_save(),saved)
@@ -243,6 +245,7 @@ class ConvoyRescueTests(unittest.TestCase):
             max_grain=0,max_reserves=0)),game.revision)
         game.command('dispatch_transport',dict(source='xiangyang',target='nanjun',officers=[999],
             cargo=dict(gold=100,grain=0,reserves=0),route_mode='land'),game.revision)
+        game.state.cities['xiangyang'].grain=10000
         game.state.cities['nanjun'].owner='wei'
         civil_staff.synchronize(game,game.state,checks=False)
         logistics.synchronize(game,game.state);domestic.synchronize(game,game.state)
@@ -314,6 +317,7 @@ class ConvoyRescueTests(unittest.TestCase):
         self.assertTrue(army['history'][-1]['supply']['retreat_requested'])
         self.assertEqual(army['quote']['path'],['nanjun','jiangxia','xiangyang'])
         if game.state.phase=='arrivals':game.command('arrivals',{},game.revision)
+        game.state.cities['xiangyang'].grain=100
         proposal=next(r for r in logistics.rescue_targets(game,game.state,'xiangyang') if r['march_id']==army['id'])
         self.assertTrue(proposal['can_dispatch'])
         self.assertEqual(proposal['city'],'jiangxia')

@@ -1,6 +1,7 @@
 /* Local civil employees are a separate identity pool, never historical officers. */
 'use strict';
 (function(root){
+ const civilEntry=(typeof module==='object'&&module.exports?require('./portraits.js'):root.GamePortraits)?.civilEntry;
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const choose=(locale,tc,ja)=>locale==='ja'?ja:tc;
  const specialtyLabels={commerce:['商務','商務'],farming:['農務','農務'],recruitment:['征募','募兵']};
@@ -15,9 +16,10 @@
  }
  function portrait(record,locale='zh-Hant',{className='civil-staff-portrait'}={}){
   if(!['civil-staff-portrait','event-staff-face'].includes(className))className='civil-staff-portrait';
-  const title=choose(locale,'架空文吏・共用像素肖像','架空の文吏・共用ドット肖像');
+  const title=choose(locale,'架空文吏・共用肖像','架空の文吏・共通肖像');
   if(root.GamePortraits?.civilHtml)return root.GamePortraits.civilHtml(record?.portrait,record?.name||'',{className,locale});
-  return /^clerk-[123]$/.test(record?.portrait||'')?`<img data-civil-portrait="${record.portrait}" class="${className}" src="${root.GamePaths?.asset(`/assets/civil-staff/enhanced/${record.portrait}.png`)||`/assets/civil-staff/enhanced/${record.portrait}.png`}" width="128" height="160" alt="${title}" loading="lazy" decoding="async">`:`<span class="${className} civil-staff-placeholder" role="img" aria-label="${title}">吏</span>`;
+  const row=civilEntry?.(record?.portrait),asset=row?.enhanced||row;
+  return asset?`<img data-civil-portrait="${record.portrait}" class="${className}" src="${escape(root.GamePaths?.asset(asset.path)||asset.path)}" width="${asset.width}" height="${asset.height}" alt="${title}" loading="lazy" decoding="async">`:`<span class="${className} civil-staff-placeholder" role="img" aria-label="${title}">吏</span>`;
  }
  function stat(value){return Number.isInteger(value)&&value>=0?value:'—';}
  function attributes(record,locale='zh-Hant',isRuler=record?.is_ruler===true){

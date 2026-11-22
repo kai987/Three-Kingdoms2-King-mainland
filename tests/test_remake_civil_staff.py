@@ -109,6 +109,20 @@ class CivilStaffTests(unittest.TestCase):
             self.assertEqual({profile[field] for profile in profiles}, set(range(60, high + 1)))
         self.assertEqual(state, before)
 
+    def test_portrait_draw_covers_each_gender_pool_without_changing_existing_identity_inputs(self):
+        game, state = fixture()
+        before = deepcopy(state)
+        seen = {'male': set(), 'female': set()}
+        for number in range(1, 129):
+            person = staff._immutable_record(game, state, number)
+            previous = staff._immutable_record(game, state, number, legacy_portrait=True)
+            self.assertEqual({k: v for k, v in person.items() if k not in {'gender', 'portrait'}},
+                             {k: v for k, v in previous.items() if k != 'portrait'})
+            seen[person['gender']].add(person['portrait'])
+        self.assertEqual(seen, dict(male={f'clerk-{n:02d}' for n in range(1, 8)},
+                                    female={'clerk-08', 'clerk-09', 'clerk-10'}))
+        self.assertEqual(state, before)
+
     def test_marching_roster_and_confirmed_near_arrivals_prevent_false_empty_city_offer(self):
         game, state = fixture()
         state.cities['one'].roster.officer_ids.append(3)

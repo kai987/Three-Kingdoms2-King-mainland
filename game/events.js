@@ -3,6 +3,7 @@
 (function(root){
  const CITY_POPULATION_LIMIT=1999999;
  const RELOCATION_LOOT_LIMITS={gold:50000,grain:100000,treasure:99};
+ const civilEntry=(typeof module==='object'&&module.exports?require('./portraits.js'):root.GamePortraits)?.civilEntry;
  const CHAPTER_TEXT=Object.freeze({
   historical_youzhou_pacification:{
    title:["劉虞出鎮幽州","劉虞、幽州に赴任"],
@@ -453,7 +454,7 @@
   if(required.some(k=>!Object.hasOwn(d,k)))return false;
   if(Object.hasOwn(d,'staff_id')&&(typeof d.staff_id!=='string'||!/^clerk-[0-9]{6,12}$/.test(d.staff_id)||Number(d.staff_id.slice(6))<1))return false;
   if(Object.hasOwn(d,'name')&&(typeof d.name!=='string'||!d.name.trim()||d.name.length>40||/[\u0000-\u001f\u007f]/u.test(d.name)))return false;
-  if(Object.hasOwn(d,'portrait')&&!['clerk-1','clerk-2','clerk-3'].includes(d.portrait))return false;
+  if(Object.hasOwn(d,'portrait')&&!civilEntry?.(d.portrait))return false;
   if(Object.hasOwn(d,'reason')&&(typeof d.reason!=='string'||!/^[a-z_]{1,80}$/.test(d.reason)))return false;
   for(const k of ['amount','paid'])if(Object.hasOwn(d,k)&&(!Number.isInteger(d[k])||d[k]<0||d[k]>100000000))return false;
   if(Object.hasOwn(d,'bonus')&&(!d.bonus||typeof d.bonus!=='object'||Array.isArray(d.bonus)||Object.keys(d.bonus).sort().join(',')!=='gold,grain,reserves'||Object.values(d.bonus).some(n=>!Number.isInteger(n)||n<0||n>100000000)))return false;
@@ -789,8 +790,13 @@
     return `<figure class="event-person">${portraits.html(id,name,{size:'duel'})}<figcaption>${escape(name)}</figcaption></figure>`;
    }).join('');
    if(STAFF.has(row.kind)){
-    const staff=[...new Map(rows.filter(e=>/^clerk-[0-9]{6,12}$/.test(e.details.staff_id||'')&&['clerk-1','clerk-2','clerk-3'].includes(e.details.portrait)).map(e=>[e.details.staff_id,e.details])).values()].slice(0,4);
-    people+=staff.map(d=>`<figure class="event-person" data-event-staff="${escape(d.staff_id)}">${portraits?.civilHtml?portraits.civilHtml(d.portrait,d.name,{className:'event-staff-face',locale:locale()}):`<img class="event-staff-face" src="${root.GamePaths?.asset(`/assets/civil-staff/${d.portrait}.png`)||`/assets/civil-staff/${d.portrait}.png`}" width="32" height="40" alt="${escape(text(`${label(d.name)}・架空文吏共用像素肖像`,`${label(d.name)}・架空文官の共通ドット肖像`))}"/>`}<figcaption>${escape(label(d.name))}</figcaption></figure>`).join('');
+    const staff=[...new Map(rows.filter(e=>/^clerk-[0-9]{6,12}$/.test(e.details.staff_id||'')&&civilEntry?.(e.details.portrait)).map(e=>[e.details.staff_id,e.details])).values()].slice(0,4);
+    people+=staff.map(d=>{
+     const asset=civilEntry(d.portrait),name=label(d.name);
+     const face=portraits?.civilHtml?portraits.civilHtml(d.portrait,d.name,{className:'event-staff-face',locale:locale()}):
+      `<img class="event-staff-face" src="${escape(root.GamePaths?.asset(asset.path)||asset.path)}" width="${asset.width}" height="${asset.height}" alt="${escape(text(`${name}・架空文吏共用肖像`,`${name}・架空文官の共通肖像`))}"/>`;
+     return `<figure class="event-person" data-event-staff="${escape(d.staff_id)}">${face}<figcaption>${escape(name)}</figcaption></figure>`;
+    }).join('');
    }
    const backdropId=sceneForEvent(row);
    const [titleTc,titleJa]=KINDS[row.kind];

@@ -144,6 +144,7 @@ def synchronize(game, state):
         ref = next((key for key in state.officers if str(key) == ident), None)
         if ref is None or not state.officers[ref].alive or ident not in travelling:
             pool['unit_morale'].pop(ident)
+            pool.get('march_spirit', {}).pop(ident, None)
     cutoff = max(0, state.turn - 12)
     for faction in list(pool['attempts']):
         rows = pool['attempts'][faction]
@@ -239,8 +240,11 @@ def on_departure(game, state, ids, city_id):
     if 'domestic' not in state.extension:
         return
     values = _pool(state)['unit_morale']
+    spirit = state.extension.get('city_development', {}).get('cities', {}).get(city_id, {}).get('garrison_spirit', 100)
     for ident in ids:
         values[str(ident)] = morale(state, city_id)
+        if spirit < 100:
+            _pool(state).setdefault('march_spirit', {})[str(ident)] = spirit
 
 
 def _garrison_troops(game, state, city, *, exclude=()):
@@ -274,6 +278,7 @@ def on_arrival(game, state, ids, city_id):
         _pool(state)['cities'][city_id]['morale'] = (before * morale(state, city_id) + incoming) // (before + amount)
     for ident in ids:
         values.pop(str(ident), None)
+        _pool(state).get('march_spirit', {}).pop(str(ident), None)
 
 
 def _income(game, city_id, state=None):
@@ -773,7 +778,7 @@ def view(game, state):
 
 def validate(game, state):
     pool = _pool(state)
-    if not isinstance(pool, dict) or set(pool) != {'schema', 'factions', 'cities', 'unit_morale', 'attempts', 'reports'} or pool['schema'] != SCHEMA:
+    if not isinstance(pool, dict) or set(pool) - {'march_spirit'} != {'schema', 'factions', 'cities', 'unit_morale', 'attempts', 'reports'} or pool['schema'] != SCHEMA:
         raise ValueError('Domestic schema')
     owners = set(game.catalog.factions) - {'neutral'}
     if not isinstance(pool['factions'], dict) or set(pool['factions']) != owners:
@@ -812,6 +817,10 @@ def validate(game, state):
                 raise ValueError('Domestic turn receipt')
     if not isinstance(pool['unit_morale'], dict) or len(pool['unit_morale']) > len(state.officers):
         raise ValueError('Domestic unit morale')
+    spirit = pool.get('march_spirit', {})
+    if (not isinstance(spirit, dict) or not spirit.keys() <= pool['unit_morale'].keys()
+            or any(not _integer(v, 0, 99) for v in spirit.values())):
+        raise ValueError('Invalid march spirit')
     keys = {str(i) for i in state.officers}
     if any(key not in keys or not _integer(value, 0, 100) for key, value in pool['unit_morale'].items()):
         raise ValueError('Domestic unit morale identity')

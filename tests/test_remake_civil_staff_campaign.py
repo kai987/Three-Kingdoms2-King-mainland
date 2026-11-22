@@ -202,6 +202,47 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.assertGreater(self.pool(game)['rng']['draws'], 0, 'Monthly shortage generation actually exercised its independent stream')
         self.assertEqual(game.state.rng.draws, 0)
 
+    def test_portraits_survive_hiring_and_reload_for_both_genders_and_prior_saves(self):
+        catalog = staff_catalog(free=False)
+        seen = set()
+        for seed in range(1, 25):
+            game = Campaign(catalog)
+            self.cmd(game, 'new', faction='shu', seed=seed)
+            original = deepcopy(self.pool(game)['cities']['nanjun']['candidate'])
+            gender, portrait = original['gender'], original['portrait']
+            if gender in seen:
+                continue
+            seen.add(gender)
+            self.assertIn(portrait, civil_staff.PORTRAIT_POOLS[gender])
+            restored = Campaign(catalog)
+            restored.load_save(game.export_save(), 0)
+            self.assertEqual(self.pool(restored)['cities']['nanjun']['candidate'], original)
+            ident = self.hire(restored)
+            hired = Campaign(catalog)
+            hired.load_save(restored.export_save(), 0)
+            person = self.pool(hired)['people'][ident]
+            self.assertEqual((person['gender'], person['portrait']), (gender, portrait))
+            history = hired.state.extension['events']['items']
+            self.assertEqual([e['details']['portrait'] for e in history if e['details'].get('staff_id') == ident],
+                             [portrait, portrait])
+            if len(seen) == 2:
+                break
+        self.assertEqual(seen, {'male', 'female'})
+
+        generate = civil_staff._immutable_record
+        def with_old_portrait(campaign, state, number):
+            return generate(campaign, state, number, legacy_portrait=True)
+
+        with patch.object(civil_staff, '_immutable_record', side_effect=with_old_portrait):
+            old = self.new(free=False, extra=True)
+            ident = self.hire(old)
+            saved = old.export_save()
+        restored = Campaign(old.catalog)
+        restored.load_save(saved, 0)
+        self.assertEqual(restored.export_save(), saved)
+        self.assertIn(self.pool(restored)['people'][ident]['portrait'], civil_staff.LEGACY_PORTRAITS)
+        self.assertIn(self.pool(restored)['cities']['runan']['candidate']['portrait'], civil_staff.LEGACY_PORTRAITS)
+
     def test_load_upgrades_legacy_candidates_and_employees_without_replaying_rng(self):
         generate = civil_staff._immutable_record
         empty = civil_staff.empty
@@ -265,7 +306,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
                             for e in game.state.extension['events']['items']))
         other = self.new()
         self.hire(other)
-        for mutation in ('virtue', 'historical_id', 'troops', 'rng', 'payroll'):
+        for mutation in ('virtue', 'historical_id', 'troops', 'rng', 'payroll', 'gender', 'portrait'):
             with self.subTest(mutation=mutation):
                 save = other.export_save()
                 pool = save['state']['extension']['civil_staff']
@@ -274,6 +315,8 @@ class CivilStaffCampaignTests(unittest.TestCase):
                 elif mutation == 'historical_id': employee['id'] = str(next(iter(other.state.officers)))
                 elif mutation == 'troops': employee['troops'] = 1
                 elif mutation == 'rng': pool['rng']['draws'] = -1
+                elif mutation == 'gender': employee['gender'] = 'female' if employee['gender'] == 'male' else 'male'
+                elif mutation == 'portrait': employee['portrait'] = 'clerk-08' if employee['gender'] == 'male' else 'clerk-01'
                 else: pool['last_payroll_month'] += 1
                 save['checksum'] = digest({k: v for k, v in save.items() if k != 'checksum'})
                 before, revision = other.export_save(), other.revision

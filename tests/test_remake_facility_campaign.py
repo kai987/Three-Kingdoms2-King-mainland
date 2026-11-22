@@ -21,7 +21,7 @@ from remake.errors import GameError
 from remake.march_core import using_backend,invoke,CoreUnavailable
 from remake.session import CampaignSession
 from remake.view_transport import ViewTransport
-from campaign_fixtures import controlled_catalog, arrange_contact
+from campaign_fixtures import controlled_catalog, arrange_contact, record_garrison_charges
 from test_remake_civil_staff_campaign import staff_catalog
 from test_remake_tactical_ai import successful_rng
 
@@ -189,13 +189,14 @@ class FacilityCampaignTests(unittest.TestCase):
         game.state.officers[146].health=0
         self.advance(game,2)
         before=deepcopy(game.state);income=income_at(game.catalog.data,source.id,before.year,8)
-        self.advance(game)
+        with record_garrison_charges() as paid:
+            self.advance(game)
         events=[event for event in game.state.extension['events']['items'] if event['kind']=='city_disaster']
         self.assertEqual(len(events),1)
         receipt=events[0]['details'];current=game.state.cities[source.id]
         self.assertEqual(receipt['disaster'],'drought');self.assertEqual(receipt['rate'],10)
         self.assertEqual(current.gold,before.cities[source.id].gold+income['gold'])
-        self.assertEqual(current.grain,before.cities[source.id].grain+income['grain']-192-receipt['grain'])
+        self.assertEqual(current.grain,before.cities[source.id].grain+income['grain']-paid[source.id]-receipt['grain'])
         self.assertEqual(current.reserves,before.cities[source.id].reserves+income['reserves']-receipt['reserves'])
         self.assertEqual(game.state.soldiers['lost']-before.soldiers['lost'],receipt['reserves'])
         self.assertEqual(game.state.officers[146].health,8,'Only established monthly healing changes the wounded officer')
@@ -226,10 +227,11 @@ class FacilityCampaignTests(unittest.TestCase):
         before=deepcopy(game.state.cities['xiangyang'])
         base=income_at(game.catalog.data,'xiangyang',game.state.year,6)
         expected=facilities.adjusted_income(game.state,'xiangyang',base)
-        self.advance(game)
+        with record_garrison_charges() as paid:
+            self.advance(game)
         current=game.state.cities['xiangyang']
         self.assertEqual(current.gold,before.gold+expected['gold'])
-        self.assertEqual(current.grain,before.grain+expected['grain']-192)
+        self.assertEqual(current.grain,before.grain+expected['grain']-paid['xiangyang'])
         self.assertEqual(current.reserves,before.reserves+expected['reserves'])
         self.restore(game)
 

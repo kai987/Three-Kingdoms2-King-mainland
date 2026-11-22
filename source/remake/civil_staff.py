@@ -19,7 +19,12 @@ RULES = dict(hire_gold=60, monthly_salary=5, candidate_months=3,
              large_target=3, single_probability=60, large_probability=30,
              guaranteed_after_misses=3, income_bonus_cap_percent=15)
 SPECIALTIES = ('commerce', 'farming', 'recruitment')
-PORTRAITS = ('clerk-1', 'clerk-2', 'clerk-3')
+LEGACY_PORTRAITS = ('clerk-1', 'clerk-2', 'clerk-3')
+PORTRAIT_POOLS = {
+    'male': tuple(f'clerk-{number:02d}' for number in range(1, 8)),
+    'female': tuple(f'clerk-{number:02d}' for number in range(8, 11)),
+}
+PORTRAITS = LEGACY_PORTRAITS + PORTRAIT_POOLS['male'] + PORTRAIT_POOLS['female']
 _ID = re.compile(r'clerk-([0-9]{6,12})\Z')
 _CITY_FIELDS = {'owner', 'owner_since_tick', 'shortage_since_month',
                 'zero_since_tick', 'last_checked_month', 'misses',
@@ -132,7 +137,7 @@ def initialize(campaign, state):
     synchronize(campaign, state, opening=True)
 
 
-def _immutable_record(campaign, state, number, *, legacy=False):
+def _immutable_record(campaign, state, number, *, legacy=False, legacy_portrait=False):
     """Independent per-ID source; validation can verify generated attributes."""
     random = _seed(f'{SCHEMA}:person:{state.seed}:{number}')
 
@@ -149,7 +154,7 @@ def _immutable_record(campaign, state, number, *, legacy=False):
     else:
         raise ValueError('Civil staff name pool unavailable')
     health = 60 + draw() % 21
-    portrait = PORTRAITS[draw() % len(PORTRAITS)]
+    portrait_roll = draw()
     specialty = SPECIALTIES[draw() % len(SPECIALTIES)]
     martial_strength = 10 + draw() % 26
     intellect_roll = draw()
@@ -161,8 +166,16 @@ def _immutable_record(campaign, state, number, *, legacy=False):
         virtue += draw() % 11
     profile = dict(health_max=health, martial_strength=martial_strength,
                    intellect=intellect, virtue=virtue)
-    return dict(id=f'clerk-{number:06d}', name=name, portrait=portrait,
-                specialty=specialty, profile=profile)
+    person = dict(id=f'clerk-{number:06d}', name=name, specialty=specialty, profile=profile)
+    if legacy or legacy_portrait:
+        person['portrait'] = LEGACY_PORTRAITS[portrait_roll % len(LEGACY_PORTRAITS)]
+    else:
+        # A separate draw leaves names, abilities and the appearance RNG intact.
+        gender_roll = _seed(f'{SCHEMA}:gender:{state.seed}:{number}') % 10
+        gender = 'male' if gender_roll < 7 else 'female'
+        portraits = PORTRAIT_POOLS[gender]
+        person.update(gender=gender, portrait=portraits[portrait_roll % len(portraits)])
+    return person
 
 
 def definition(person):
@@ -574,7 +587,7 @@ def validate(campaign, state, *, allow_legacy_profiles=False):
 
     def record(person, employee=False):
         fields = _EMPLOYEE_FIELDS if employee else _RECORD_FIELDS
-        if not isinstance(person, dict) or set(person) != fields:
+        if not isinstance(person, dict) or set(person) - {'gender'} != fields:
             raise ValueError('Civil staff person fields')
         match = _ID.fullmatch(person['id']) if isinstance(person['id'], str) else None
         if match is None or person['id'] in seen:
@@ -584,8 +597,12 @@ def validate(campaign, state, *, allow_legacy_profiles=False):
             raise ValueError('Civil staff sequence')
         seen.add(person['id'])
         expected = _immutable_record(campaign, state, number)
+        if 'gender' not in person and 'gender' in expected:
+            expected = _immutable_record(campaign, state, number, legacy_portrait=True)
+        if ('gender' in person) != ('gender' in expected):
+            raise ValueError('Civil staff gender field')
         if any(person.get(key) != value for key, value in expected.items()):
-            if not allow_legacy_profiles or any(person.get(key) != value for key, value in
+            if 'gender' in person or not allow_legacy_profiles or any(person.get(key) != value for key, value in
                     _immutable_record(campaign, state, number, legacy=True).items()):
                 raise ValueError('Civil staff generated identity/profile')
             migrations.append((person, expected['profile']))

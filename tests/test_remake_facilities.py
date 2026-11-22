@@ -5,6 +5,7 @@ from pathlib import Path
 import sys
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
@@ -279,6 +280,18 @@ class FacilityTests(unittest.TestCase):
         self.reset(game,state)
         self.assertEqual(command_books.remaining(state,'one'),3)
         facilities.trade(game,state,dict(city=city.id,actor=1,direction='buy',batches=1),'one')
+
+    def test_six_disaster_months_and_twenty_percent_threshold(self):
+        for month in range(1,13):
+            for roll in (19,20):
+                game,state = fixture()
+                state.year += 1
+                state.month = month
+                with patch.object(state.rng,'next',return_value=roll):
+                    rows=facilities.month_rollover(game,state)
+                active = 5 <= month <= 10 and roll < 20
+                self.assertEqual({r['city'] for r in rows}, {'capital','border','enemy'} if active else set())
+                self.assertTrue(all(r['disaster']==('flood' if month<=7 else 'drought') for r in rows))
 
     def test_monthly_disasters_are_bounded_once_and_do_not_touch_officers_or_cargo(self):
         for kind,month in (('flood',5),('drought',8)):

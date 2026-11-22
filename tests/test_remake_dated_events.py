@@ -9,7 +9,8 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import city_economy, dated_events
+from remake import dated_events
+from campaign_fixtures import record_garrison_charges
 from campaign_dated_fixtures import dated_catalog, SONG, BIAN, BEIGONG, LI, HAN
 
 
@@ -81,14 +82,14 @@ class DatedEventsTests(unittest.TestCase):
         before=deepcopy(game.state)
         # Monthly settlement is disabled income in this controlled source. The
         # calendar method bypasses unrelated AI choices, not the event service.
-        with patch.object(game.state.rng,'next',side_effect=AssertionError('founding used RNG')):
+        with record_garrison_charges() as dues, patch.object(game.state.rng,'next',side_effect=AssertionError('founding used RNG')):
             game._complete_turn(game.state)
         game._reconcile_factions(game.state);game.validate(game.state)
         self.assertEqual(game.state.officers.keys(),before.officers.keys())
         self.assertEqual(game.state.soldiers,before.soldiers)
         for city in game.state.cities.values():
             prior=before.cities[city.id]
-            self.assertEqual((city.gold,city.grain),(prior.gold,prior.grain-city_economy.garrison_grain(game,before)[city.id]))
+            self.assertEqual((city.gold,city.grain),(prior.gold,prior.grain-dues[city.id]))
             if city.id in {'jincheng','tianshui','longxi'}:
                 assigned=sum(game.state.officers[i].troops for i in city.roster.officer_ids)
                 self.assertEqual(city.reserves+assigned,prior.reserves)

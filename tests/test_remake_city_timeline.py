@@ -12,14 +12,14 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 sys.path.insert(0, str(ROOT / 'game'))
 from remake.campaign import Campaign, Catalog, GameError, digest
-from remake import grain_units, city_economy
+from remake import grain_units
 from remake.city_economy import income_at, profile_at
 from remake.map_presentation import city_names
 from remake.session import CampaignSession
 from remake.view_transport import ViewTransport
 import remake.session as sessions
 from build_campaigns import apply_patch as source_patch
-from campaign_fixtures import controlled_catalog
+from campaign_fixtures import controlled_catalog, record_garrison_charges
 
 
 def read(path):
@@ -48,9 +48,9 @@ def timeline_catalog(start):
                             for index, owner in enumerate(('wei', 'shu'))}
     data['appearance_locations'] = {row['person_id']: row['city'] for row in data['initial_officers']}
     data['initial_city_resources'] = dict(qiao=dict(gold=101, grain=205, reserves=0),
-                                         dongjun=dict(gold=0, grain=0, reserves=0))
+                                         dongjun=dict(gold=0, grain=205, reserves=0))
     data['city_income'] = dict(qiao=dict(gold=35, grain=90, reserves=0),
-                              dongjun=dict(gold=0, grain=0, reserves=0))
+                              dongjun=dict(gold=0, grain=205, reserves=0))
     data['city_scale_rules'] = read('game/config/city-scale-rules.json')
     data['city_profiles']['qiao']['tier'] = 'normal'
     with grain_units.using({}):
@@ -119,6 +119,7 @@ class CityTimelineTests(unittest.TestCase):
     def test_219_real_month_rollover_changes_only_display_name_once(self):
         game = self.new_game((218, 12))
         initial = game.to_dict()
+        dues = self.enterContext(record_garrison_charges())
         self.assertEqual(city_names(game.catalog, 218, 12)['qiao'], '小沛')
         for day in (11, 21):
             next_turn(game)
@@ -133,7 +134,7 @@ class CityTimelineTests(unittest.TestCase):
         self.assertEqual(event['factions'], ['wei'])
         self.assertEqual(event['audience'], 'world')
         self.assertEqual(dated_events(game, 'city_upgraded'), [])
-        self.assertEqual((game.state.cities['qiao'].gold, game.state.cities['qiao'].grain), (136, 2882))
+        self.assertEqual((game.state.cities['qiao'].gold, game.state.cities['qiao'].grain), (136, 2950 - dues['qiao']))
         self.assertEqual(game.state.cities['qiao'].owner, initial['cities']['qiao']['owner'])
         self.assertEqual(game.to_dict()['officers'], after_monthly_healing(initial['officers']))
         self.assertEqual(game.to_dict()['soldiers'], initial['soldiers'])
@@ -149,10 +150,11 @@ class CityTimelineTests(unittest.TestCase):
     def test_221_real_rollover_upgrades_qiao_and_only_adds_current_month_income(self):
         game = self.new_game((220, 12))
         initial = game.to_dict()
+        dues = self.enterContext(record_garrison_charges())
         for _ in range(3):
             next_turn(game)
         self.assertEqual((game.state.year, game.state.month, game.state.day), (221, 1, 1))
-        self.assertEqual((game.state.cities['qiao'].gold, game.state.cities['qiao'].grain), (171, 3782))
+        self.assertEqual((game.state.cities['qiao'].gold, game.state.cities['qiao'].grain), (171, 3850 - dues['qiao']))
         event, = dated_events(game, 'city_upgraded')
         self.assertEqual(event['city_ids'], ['qiao'])
         self.assertEqual(event['details'], dict(from_tier='normal', to_tier='large',
@@ -164,7 +166,7 @@ class CityTimelineTests(unittest.TestCase):
         for _ in range(3):
             next_turn(game)
         self.assertEqual(dated_events(game, 'city_upgraded'), [event])
-        self.assertEqual((game.state.cities['qiao'].gold, game.state.cities['qiao'].grain), (241, 5514))
+        self.assertEqual((game.state.cities['qiao'].gold, game.state.cities['qiao'].grain), (241, 5650 - dues['qiao']))
 
     def test_late_opening_never_backfills_name_or_size_events(self):
         for start, tier in (((219, 1), 'normal'), ((221, 1), 'large'), ((225, 7), 'large')):
