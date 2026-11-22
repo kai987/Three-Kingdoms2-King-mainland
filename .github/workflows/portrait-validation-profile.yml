@@ -1,0 +1,73 @@
+name: Portrait validation profile
+
+on:
+  push:
+    branches: [codex/ci-portrait-validation-profile]
+    paths: [.github/workflows/portrait-validation-profile.yml, tools/ci-experiments/profile_portraits.py]
+
+permissions:
+  contents: read
+
+jobs:
+  profile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout profiling harness
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          path: experiment
+      - name: Checkout #65 merge and its original portrait inputs
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: df2b51043bfccda36946c8c6d81bb68928eaefa4
+          persist-credentials: false
+          path: pinned
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - name: Build the pinned native marching backend
+        working-directory: pinned
+        run: |
+          rustup toolchain install 1.93.0 --profile minimal
+          cargo +1.93.0 build --manifest-path crates/march-core/Cargo.toml --target-dir build/march-core-target --locked --release --lib
+          install -D build/march-core-target/release/libmarch_core.so build/march-core/libmarch_core.so
+      - name: Record the shared runner
+        run: |
+          mkdir -p evidence
+          lscpu > evidence/runner.txt
+          uname -a >> evidence/runner.txt
+          free -h >> evidence/runner.txt
+      - name: Profile unchanged portrait suite with Python backend
+        working-directory: pinned
+        env:
+          MARCH_CORE_BACKEND: python
+        run: python -B ../experiment/tools/ci-experiments/profile_portraits.py ../evidence/python.json
+      - name: Profile unchanged portrait suite with Rust backend
+        working-directory: pinned
+        env:
+          MARCH_CORE_BACKEND: rust
+        run: python -B ../experiment/tools/ci-experiments/profile_portraits.py ../evidence/rust.json
+      - name: Check identical inputs, coverage and decoded output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          python, rust = (json.loads(Path(f'evidence/{backend}.json').read_text()) for backend in ('python', 'rust'))
+          for field in ('source', 'objects', 'runner', 'python', 'tests', 'test_ids', 'skips', 'calls',
+                        'png_unique', 'png_sequence_sha256'):
+              assert python[field] == rust[field], field
+          def builds(report):
+              return [(row['result_sha256'], row['unique_png'], row['calls']) for row in report['builds']]
+          assert builds(python) == builds(rust), 'manifest rebuilds'
+          assert [row['backend']['engine'] for row in (python, rust)] == ['python', 'rust']
+          print(f'{python["tests"]} tests per backend. Decoded bytes, manifest digests and coverage match.')
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: portrait-validation-profile
+          path: evidence
+          retention-days: 14
