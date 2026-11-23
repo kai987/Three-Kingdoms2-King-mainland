@@ -8,14 +8,16 @@ const developed=row('city_developed',{actor:'person-a',development:'land',gold:2
 const unrest=row('civil_unrest',{governance:19,category:'population',gold_loss:0,grain_loss:0,population_loss:400,land_loss:0,industry_loss:0},{person_ids:[]});
 const exhausted=row('battle_supply_exhausted',{battle_id:'battle-12',side:'attackers',days:3,grain:0,daily_grain:10,missing_units:2500,outcome:'retreat'},{person_ids:[],city_ids:['home','enemy'],factions:['shu','wei']});
 const traded=row('grain_traded',{actor:'person-a',direction:'buy',batches:3,grain:300,gold:30,rate:10,battle_id:'battle-3',side:'attackers',destination:'battle'});
+const emergency=row('grain_traded',{actor:'person-a',direction:'buy',batches:2,grain:123,gold:13,rate:10,emergency:true});
 function rejectDetails(event,changes){
  for(const change of changes)assert.equal(events.validEvent({...event,details:{...event.details,...change}}),false,JSON.stringify(change));
  for(const field of Object.keys(event.details)){const details={...event.details};delete details[field];assert.equal(events.validEvent({...event,details}),false,'Missing '+field);}
 }
-for(const event of [developed,unrest,exhausted,traded]){
+for(const event of [developed,unrest,exhausted,traded,emergency]){
  assert(events.validEvent(event),event.kind);
  for(const change of [{audience:'world'},{city_ids:[]},{factions:[]},{city_ids:['']},{factions:['']},{person_ids:['']}])assert(!events.validEvent({...event,...change}),event.kind+JSON.stringify(change));
 }
+rejectDetails(emergency,[{emergency:false},{batches:1},{gold:12},{direction:'sell'}]);
 for(const change of [{development:'industry'},
  {before:999,after:999,gain:0,governance_after:61},
  {governance_before:100,governance_after:100},

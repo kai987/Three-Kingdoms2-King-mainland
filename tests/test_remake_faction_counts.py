@@ -12,6 +12,7 @@ sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import SeedRng
 from remake import civil_staff
 from remake.officers import OFFICER_TROOP_CAP
+from remake.san14_opening_forces import OPENING_TROOPS
 from remake.session import CampaignSession,faction_officer_counts,faction_resources
 from remake import capital_openings
 from remake.starting_garrisons import mobilize_reserves
@@ -48,17 +49,21 @@ class FactionOfficerCountTests(unittest.TestCase):
                 self.assertEqual(stock, {field: capital.get(field, value) for field, value in baseline_stocks[city].items()})
             expected_troops = Counter()
             baseline_troops = Counter()
+            targets = OPENING_TROOPS[row['id']]
             for member in catalog.data['initial_officers']:
                 owner = catalog.data['initial_owners'][member['city']]
                 person = member['person_id']
                 self.assertLessEqual(troop_plan[person], OFFICER_TROOP_CAP, (row['id'], person))
-                if capital_openings.opening(catalog.data, member['city']).get('troop_percent', 100) >= 100:
+                if (owner not in targets
+                        and capital_openings.opening(catalog.data, member['city']).get('troop_percent', 100) >= 100):
                     self.assertGreaterEqual(troop_plan[person], baseline_plan[person], (row['id'], person))
                 expected_troops[owner] += troop_plan[person]
                 baseline_troops[owner] += baseline_plan[person]
             for side, resources in row['faction_resources'].items():
                 self.assertEqual(resources['troops'], expected_troops[side], (row['id'], side))
-                if baseline_troops[side]:
+                if side in targets:
+                    self.assertEqual(resources['troops'], min(targets[side], expected[side] * OFFICER_TROOP_CAP))
+                elif baseline_troops[side]:
                     self.assertGreater(resources['troops'], sum(baseline_plan[m['person_id']] * capital_openings.opening(catalog.data, m['city']).get('troop_percent', 100) // 100 for m in catalog.data['initial_officers'] if catalog.data['initial_owners'][m['city']] == side), (row['id'], side))
                 else:
                     self.assertEqual(resources['troops'], 0, (row['id'], side))
@@ -84,20 +89,22 @@ class FactionOfficerCountTests(unittest.TestCase):
         self.assertEqual(session.view()['catalog']['faction_resources'], opening)
         self.assertEqual(session.export_save(),saved)
 
-    def test_existing_save_keeps_preincrease_troops_on_load(self):
+    def test_existing_save_keeps_previous_opening_troops_on_load(self):
         path=ROOT/'game/data/campaigns/200-01.json'
         previous=CampaignSession([path])
-        with patch('remake.campaign.resolve_opening_garrisons', mobilize_reserves):
+        with patch.dict(OPENING_TROOPS, clear=True):
             before=previous.command('new', dict(faction='wei', seed=2026), 0)
         save=previous.export_save()
+        self.assertEqual(before['catalog']['faction_resources']['yuan_shao']['troops'], 52892)
+        self.assertEqual(before['catalog']['faction_resources']['wei']['troops'], 49553)
 
         current=CampaignSession([path])
         current.load_save(save, 0)
         self.assertEqual(current.export_save(), save)
         self.assertEqual(current.view()['catalog']['faction_resources'], before['catalog']['faction_resources'])
         opening=current.command('new', dict(faction='wei', seed=2026), current.revision)['catalog']
-        self.assertEqual(opening['faction_resources']['yuan_shao']['troops'], 52892)
-        self.assertEqual(opening['faction_resources']['wei']['troops'], 49553)
+        self.assertEqual(opening['faction_resources']['yuan_shao']['troops'], 174000)
+        self.assertEqual(opening['faction_resources']['wei']['troops'], 87000)
 
     def test_in_transit_officers_are_counted_once(self):
         session=self.session();before=session.view()['catalog']

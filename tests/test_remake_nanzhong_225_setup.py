@@ -96,7 +96,7 @@ class Nanzhong225SetupTests(unittest.TestCase):
     def test_other_garrisons_and_total_membership_are_preserved_without_duplicates(self):
         game = self.game()
         self.assertEqual(len(self.catalog.data['initial_officers']), 320)
-        self.assertEqual(len(self.catalog.data['initial_free_officers']), 78)
+        self.assertEqual(len(self.catalog.data['initial_free_officers']), 91)
         self.assertEqual(Counter(o.faction_id for o in game.state.officers.values()
                                  if o.faction_id),
                          dict(wei=127, shu=82, wu=79, nanman=16, shi_xie=7, gongsun=6, goguryeo=3))

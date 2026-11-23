@@ -87,8 +87,8 @@ def build_initials(people, original_records, appearance_profiles=None):
 
 
 def _initial(game, officer):
-    value=deepcopy(game.catalog.data.get('equipment_initial',{}).get(officer.person_id,
-        _normal(officer.profile)))
+    initials = game.catalog.data.get('equipment_initial', {})
+    value = deepcopy(initials[officer.person_id]) if officer.person_id in initials else _normal(officer.profile)
     item('weapon',value['weapon_id']);item('armor',value['armor_id'])
     return value
 
@@ -339,11 +339,11 @@ def initial_view(game,person_id):
     row=game.catalog.by_id[game.catalog.ids[person_id]]
     profile=game.catalog.profiles[row['runtime_id']]
     officer=SimpleNamespace(profile=profile,person_id=person_id,
-        health=row.get('initialization',{}).get('health',profile.health_max),
-        **{k:v for k,v in _initial(game,SimpleNamespace(person_id=person_id,profile=profile)).items()
-           if k in ('weapon_id','armor_id')})
+        health=row.get('initialization',{}).get('health',profile.health_max))
+    initial = _initial(game, officer)
+    officer.weapon_id, officer.armor_id = initial['weapon_id'], initial['armor_id']
     return dict(combat_stats(officer),scope='initial',person_id=person_id,
-        initial=_initial(game,officer),owned=[])
+        initial=initial,owned=[])
 
 
 def view(game,state):

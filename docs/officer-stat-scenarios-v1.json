@@ -21,9 +21,9 @@
     "serving": 9165,
     "rulers": 360,
     "ordinary_serving": 8805,
-    "free": 2399,
-    "total_instantiated": 11564,
-    "initial_health_changed": 2919,
+    "free": 2644,
+    "total_instantiated": 11809,
+    "initial_health_changed": 2937,
     "health_cap_increased": 1237,
     "ordinary_loyalty_changed": 1697,
     "source_context_applied": 1561,
@@ -48,8 +48,8 @@
       "serving": 140,
       "rulers": 11,
       "ordinary_serving": 129,
-      "free": 154,
-      "total_instantiated": 294,
+      "free": 164,
+      "total_instantiated": 304,
       "initial_health_changed": 61,
       "health_cap_increased": 25,
       "ordinary_loyalty_changed": 15,
@@ -207,7 +207,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "6372055c143ab66ccff6154fea0e562f329c0aeccf88b293d8441a186746e1ef",
+      "opening_save_sha256": "ade7478333592251afcb420f5b61299cbeaac497de803e63e4a13aa1415a91ac",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -1296,8 +1296,8 @@
       "serving": 117,
       "rulers": 13,
       "ordinary_serving": 104,
-      "free": 230,
-      "total_instantiated": 347,
+      "free": 240,
+      "total_instantiated": 357,
       "initial_health_changed": 86,
       "health_cap_increased": 36,
       "ordinary_loyalty_changed": 12,
@@ -1455,7 +1455,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "9bb916c0714e7b218590d86dae82598b2f8c911125e641d690782bd01c27f65f",
+      "opening_save_sha256": "f06621080412a11109773d4dcb4b4afe8cdf291658d453e2861860fc2da2a655",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -2898,8 +2898,8 @@
       "serving": 266,
       "rulers": 29,
       "ordinary_serving": 237,
-      "free": 133,
-      "total_instantiated": 399,
+      "free": 140,
+      "total_instantiated": 406,
       "initial_health_changed": 103,
       "health_cap_increased": 42,
       "ordinary_loyalty_changed": 55,
@@ -3057,7 +3057,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "ec9294d47546f8f9ec2545d8f70d2fd0dcc018402e7227e32867a731e173c053",
+      "opening_save_sha256": "d202537842d7d32dd66b543eb5230df0317f1d04d30d3b89bfaa880bbad94fe4",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -4602,7 +4602,7 @@
           "runtime_id": 768,
           "name": "马超",
           "role": "serving",
-          "city": "anding",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0168",
           "previous_initial_health": 80,
@@ -4721,7 +4721,7 @@
           "runtime_id": 829,
           "name": "庞德",
           "role": "serving",
-          "city": "tianshui",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0169",
           "previous_initial_health": 80,
@@ -5028,8 +5028,8 @@
       "serving": 316,
       "rulers": 25,
       "ordinary_serving": 291,
-      "free": 95,
-      "total_instantiated": 411,
+      "free": 102,
+      "total_instantiated": 418,
       "initial_health_changed": 105,
       "health_cap_increased": 41,
       "ordinary_loyalty_changed": 66,
@@ -5187,7 +5187,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "a8cd7b939fd9f1a9fd7601eb7acb6d2ba4927a6256fdd7fe2d86e372966522e2",
+      "opening_save_sha256": "b8404a8b85f90c5d250766930d9d7441796bce9838615dce8107d4907145cfa0",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -6787,7 +6787,7 @@
           "runtime_id": 768,
           "name": "马超",
           "role": "serving",
-          "city": "anding",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0168",
           "previous_initial_health": 80,
@@ -6890,7 +6890,7 @@
           "runtime_id": 829,
           "name": "庞德",
           "role": "serving",
-          "city": "tianshui",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0169",
           "previous_initial_health": 80,
@@ -7229,8 +7229,8 @@
       "serving": 305,
       "rulers": 25,
       "ordinary_serving": 280,
-      "free": 123,
-      "total_instantiated": 428,
+      "free": 128,
+      "total_instantiated": 433,
       "initial_health_changed": 113,
       "health_cap_increased": 44,
       "ordinary_loyalty_changed": 64,
@@ -7388,7 +7388,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "83f04c42ec795c5d8f823924bd8146462ae8c5432067e7692256f7363a391be6",
+      "opening_save_sha256": "9b4ee1e5ddffb3acc71474b7487d6359722d8778a56af7cb0c744b2ced52c3c1",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -9059,7 +9059,7 @@
           "runtime_id": 759,
           "name": "马休",
           "role": "serving",
-          "city": "tianshui",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0232",
           "previous_initial_health": 80,
@@ -9075,7 +9075,7 @@
           "runtime_id": 768,
           "name": "马超",
           "role": "serving",
-          "city": "tianshui",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0168",
           "previous_initial_health": 80,
@@ -9098,7 +9098,7 @@
           "runtime_id": 769,
           "name": "马铁",
           "role": "serving",
-          "city": "anding",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0211",
           "previous_initial_health": 80,
@@ -9194,7 +9194,7 @@
           "runtime_id": 829,
           "name": "庞德",
           "role": "serving",
-          "city": "tianshui",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0169",
           "previous_initial_health": 80,
@@ -9529,8 +9529,8 @@
       "serving": 293,
       "rulers": 24,
       "ordinary_serving": 269,
-      "free": 159,
-      "total_instantiated": 452,
+      "free": 163,
+      "total_instantiated": 456,
       "initial_health_changed": 125,
       "health_cap_increased": 50,
       "ordinary_loyalty_changed": 79,
@@ -9702,7 +9702,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "4f78c21a99aabf5adeef513cf1732f8944d0b9fcac0aec41843c2cd74ef76efc",
+      "opening_save_sha256": "a25f57020ecccf9530e0fda1f90ad138bf983c234293f4574d4bfc363497ef82",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -11616,7 +11616,7 @@
           "runtime_id": 759,
           "name": "马休",
           "role": "serving",
-          "city": "tianshui",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0232",
           "previous_initial_health": 80,
@@ -11632,7 +11632,7 @@
           "runtime_id": 768,
           "name": "马超",
           "role": "serving",
-          "city": "tianshui",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0168",
           "previous_initial_health": 80,
@@ -11655,7 +11655,7 @@
           "runtime_id": 769,
           "name": "马铁",
           "role": "serving",
-          "city": "anding",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0211",
           "previous_initial_health": 80,
@@ -11774,7 +11774,7 @@
           "runtime_id": 829,
           "name": "庞德",
           "role": "serving",
-          "city": "tianshui",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0169",
           "previous_initial_health": 80,
@@ -12141,8 +12141,8 @@
       "serving": 290,
       "rulers": 24,
       "ordinary_serving": 266,
-      "free": 171,
-      "total_instantiated": 461,
+      "free": 174,
+      "total_instantiated": 464,
       "initial_health_changed": 129,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 73,
@@ -12216,7 +12216,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "1c79842060071541252794970805754d19e811d948f1598d1d5943ded3fb72e8",
+      "opening_save_sha256": "05340ab7ce8e4b833533711e0ca3677aad972b7ef05ce86f2f35c0efe333115b",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -14031,7 +14031,7 @@
           "runtime_id": 759,
           "name": "马休",
           "role": "serving",
-          "city": "tianshui",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0232",
           "previous_initial_health": 80,
@@ -14063,7 +14063,7 @@
           "runtime_id": 768,
           "name": "马超",
           "role": "serving",
-          "city": "tianshui",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0168",
           "previous_initial_health": 80,
@@ -14086,7 +14086,7 @@
           "runtime_id": 769,
           "name": "马铁",
           "role": "serving",
-          "city": "anding",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0211",
           "previous_initial_health": 80,
@@ -14221,7 +14221,7 @@
           "runtime_id": 829,
           "name": "庞德",
           "role": "serving",
-          "city": "tianshui",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0169",
           "previous_initial_health": 80,
@@ -14604,8 +14604,8 @@
       "serving": 308,
       "rulers": 22,
       "ordinary_serving": 286,
-      "free": 146,
-      "total_instantiated": 454,
+      "free": 149,
+      "total_instantiated": 457,
       "initial_health_changed": 129,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 83,
@@ -14777,7 +14777,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "970a041c70b6886ed9dc143da68d9da4c610c802c7364a7edce5cab13674def3",
+      "opening_save_sha256": "11e66aaa0851e4f0046750836da8444c6a943528bc79fc972be13953a4cbf545",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -16661,7 +16661,7 @@
           "runtime_id": 759,
           "name": "马休",
           "role": "serving",
-          "city": "anding",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0232",
           "previous_initial_health": 80,
@@ -16716,7 +16716,7 @@
           "runtime_id": 769,
           "name": "马铁",
           "role": "serving",
-          "city": "anding",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0211",
           "previous_initial_health": 80,
@@ -17257,9 +17257,9 @@
       "serving": 322,
       "rulers": 14,
       "ordinary_serving": 308,
-      "free": 119,
-      "total_instantiated": 441,
-      "initial_health_changed": 130,
+      "free": 125,
+      "total_instantiated": 447,
+      "initial_health_changed": 131,
       "health_cap_increased": 54,
       "ordinary_loyalty_changed": 94,
       "source_context_applied": 86,
@@ -17416,7 +17416,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "67b5af3c909d9c33c62b2e95af68a32aa56b4f0f206f3cc0eec04f4691fccce0",
+      "opening_save_sha256": "0b3f1c6deaeb3009f42aea6ad5cd25f2325f24d35548775bd7ee537284a9a707",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -19316,7 +19316,7 @@
           "runtime_id": 759,
           "name": "马休",
           "role": "serving",
-          "city": "anding",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0232",
           "previous_initial_health": 80,
@@ -19332,7 +19332,7 @@
           "runtime_id": 765,
           "name": "马岱",
           "role": "serving",
-          "city": "tianshui",
+          "city": "anding",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0192",
           "previous_initial_health": 80,
@@ -19348,7 +19348,7 @@
           "runtime_id": 768,
           "name": "马超",
           "role": "serving",
-          "city": "tianshui",
+          "city": "anding",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0168",
           "previous_initial_health": 80,
@@ -19371,7 +19371,7 @@
           "runtime_id": 769,
           "name": "马铁",
           "role": "serving",
-          "city": "anding",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0211",
           "previous_initial_health": 80,
@@ -19522,7 +19522,7 @@
           "runtime_id": 829,
           "name": "庞德",
           "role": "serving",
-          "city": "tianshui",
+          "city": "anding",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0169",
           "previous_initial_health": 80,
@@ -19824,7 +19824,7 @@
           "runtime_id": 968,
           "name": "梁兴",
           "role": "serving",
-          "city": "anding",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0204",
           "previous_initial_health": 80,
@@ -19914,6 +19914,22 @@
           "previous_loyalty": 0,
           "loyalty": 0,
           "loyalty_reason": "free"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -19928,9 +19944,9 @@
       "serving": 309,
       "rulers": 14,
       "ordinary_serving": 295,
-      "free": 128,
-      "total_instantiated": 437,
-      "initial_health_changed": 126,
+      "free": 134,
+      "total_instantiated": 443,
+      "initial_health_changed": 127,
       "health_cap_increased": 51,
       "ordinary_loyalty_changed": 90,
       "source_context_applied": 81,
@@ -19989,7 +20005,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "31d19e1d0009a6b4d1613712366bc2ad3f43b753ef4743429ea2186fcb9d1705",
+      "opening_save_sha256": "4d99d6c00166548666b0e032b207bd8e005baff3b4b0dd3e145d30de771faa48",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -22439,6 +22455,22 @@
           "previous_loyalty": 80,
           "loyalty": 89,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -22453,9 +22485,9 @@
       "serving": 329,
       "rulers": 17,
       "ordinary_serving": 312,
-      "free": 113,
-      "total_instantiated": 442,
-      "initial_health_changed": 126,
+      "free": 119,
+      "total_instantiated": 448,
+      "initial_health_changed": 127,
       "health_cap_increased": 51,
       "ordinary_loyalty_changed": 72,
       "source_context_applied": 63,
@@ -22612,7 +22644,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "52ea3517951be7ec4e8af2c4d5c4e75a4940dbe10bc4113540f575115a10e251",
+      "opening_save_sha256": "3dc688a5724d05fede11edfdddd74c34a126f8e321731add2a5d90611ddb0e06",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -24411,7 +24443,7 @@
           "runtime_id": 759,
           "name": "马休",
           "role": "serving",
-          "city": "anding",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0232",
           "previous_initial_health": 80,
@@ -24466,7 +24498,7 @@
           "runtime_id": 769,
           "name": "马铁",
           "role": "serving",
-          "city": "anding",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0211",
           "previous_initial_health": 80,
@@ -25009,6 +25041,22 @@
           "previous_loyalty": 0,
           "loyalty": 0,
           "loyalty_reason": "free"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -25023,9 +25071,9 @@
       "serving": 356,
       "rulers": 13,
       "ordinary_serving": 343,
-      "free": 93,
-      "total_instantiated": 449,
-      "initial_health_changed": 128,
+      "free": 99,
+      "total_instantiated": 455,
+      "initial_health_changed": 129,
       "health_cap_increased": 54,
       "ordinary_loyalty_changed": 92,
       "source_context_applied": 84,
@@ -25182,7 +25230,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "0f18bc32690fc15c78217de5e4612748d34debd9104668d7a719e1bcc2910c0c",
+      "opening_save_sha256": "3f913f65e425aaf497f23a7e9546d7a5b435ae51fd8212a2578048a47fea78b9",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -26956,7 +27004,7 @@
           "runtime_id": 759,
           "name": "马休",
           "role": "serving",
-          "city": "anding",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0232",
           "previous_initial_health": 80,
@@ -27011,7 +27059,7 @@
           "runtime_id": 769,
           "name": "马铁",
           "role": "serving",
-          "city": "anding",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0211",
           "previous_initial_health": 80,
@@ -27625,6 +27673,22 @@
           "previous_loyalty": 80,
           "loyalty": 89,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -27639,9 +27703,9 @@
       "serving": 398,
       "rulers": 16,
       "ordinary_serving": 382,
-      "free": 53,
-      "total_instantiated": 451,
-      "initial_health_changed": 126,
+      "free": 59,
+      "total_instantiated": 457,
+      "initial_health_changed": 127,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 90,
       "source_context_applied": 84,
@@ -27854,7 +27918,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "0c63bd1dc28ab9943a32dbe7273ae583c0cd7c405488885879146a30e87086e7",
+      "opening_save_sha256": "0bfdbbccfe8acb33ceb9582969a896c55afdfa36c623e161a97654ea2434ad5a",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -30235,6 +30299,22 @@
           "previous_loyalty": 80,
           "loyalty": 89,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -30249,9 +30329,9 @@
       "serving": 398,
       "rulers": 11,
       "ordinary_serving": 387,
-      "free": 46,
-      "total_instantiated": 444,
-      "initial_health_changed": 127,
+      "free": 52,
+      "total_instantiated": 450,
+      "initial_health_changed": 128,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 94,
       "source_context_applied": 88,
@@ -30310,7 +30390,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "3a55358e7679c7341de618df24b37eee34c08c85315d53d2860fca7df8ad737b",
+      "opening_save_sha256": "53d2752db1aecdf8f0e8aff3a050376fbde1d3d9d899a31a0c31982d76873d4d",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -32075,7 +32155,7 @@
           "runtime_id": 759,
           "name": "马休",
           "role": "serving",
-          "city": "anding",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0232",
           "previous_initial_health": 80,
@@ -32146,7 +32226,7 @@
           "runtime_id": 769,
           "name": "马铁",
           "role": "serving",
-          "city": "anding",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0211",
           "previous_initial_health": 80,
@@ -32714,6 +32794,22 @@
           "previous_loyalty": 80,
           "loyalty": 89,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -32728,9 +32824,9 @@
       "serving": 387,
       "rulers": 9,
       "ordinary_serving": 378,
-      "free": 60,
-      "total_instantiated": 447,
-      "initial_health_changed": 129,
+      "free": 70,
+      "total_instantiated": 457,
+      "initial_health_changed": 130,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 80,
       "source_context_applied": 75,
@@ -32817,7 +32913,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "dbf364f0fbe199d1abfc560cf24fa5ddcd5484235d7f90f9e8a8863408533da2",
+      "opening_save_sha256": "b5fe4b039ad05433d78e4d075a905e1c9ed7184afecf2d4b1850022f5ceb9a41",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -34591,7 +34687,7 @@
           "runtime_id": 759,
           "name": "马休",
           "role": "serving",
-          "city": "tianshui",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0232",
           "previous_initial_health": 80,
@@ -34662,7 +34758,7 @@
           "runtime_id": 769,
           "name": "马铁",
           "role": "serving",
-          "city": "tianshui",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0211",
           "previous_initial_health": 80,
@@ -35191,6 +35287,22 @@
           "previous_loyalty": 80,
           "loyalty": 89,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -35205,9 +35317,9 @@
       "serving": 396,
       "rulers": 11,
       "ordinary_serving": 385,
-      "free": 41,
-      "total_instantiated": 437,
-      "initial_health_changed": 127,
+      "free": 51,
+      "total_instantiated": 447,
+      "initial_health_changed": 128,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 89,
       "source_context_applied": 84,
@@ -35406,7 +35518,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "b953a77e9b21cc138bc911c48f8b8bb466e6b3b7d2c00e090e4ad06c4e6eb8c2",
+      "opening_save_sha256": "0a386a51d6adc21be8b5534870bb23f071db7aef2d26026e0f848a26444c8989",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -37386,7 +37498,7 @@
           "runtime_id": 829,
           "name": "庞德",
           "role": "serving",
-          "city": "fufeng",
+          "city": "wuwei",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0169",
           "previous_initial_health": 80,
@@ -37787,6 +37899,22 @@
           "previous_loyalty": 80,
           "loyalty": 89,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -37801,9 +37929,9 @@
       "serving": 388,
       "rulers": 12,
       "ordinary_serving": 376,
-      "free": 42,
-      "total_instantiated": 430,
-      "initial_health_changed": 122,
+      "free": 52,
+      "total_instantiated": 440,
+      "initial_health_changed": 123,
       "health_cap_increased": 50,
       "ordinary_loyalty_changed": 79,
       "source_context_applied": 75,
@@ -37876,7 +38004,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "2d13134b2cd399ed6aaf8cc39bfb6eb78f0c40b68cc03a55fa88629bf3fdb3ec",
+      "opening_save_sha256": "1586af949052574f928ae519490e0ffd1567182a073b4db371182fbb85b97424",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -40091,6 +40219,22 @@
           "previous_loyalty": 80,
           "loyalty": 89,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -40105,9 +40249,9 @@
       "serving": 369,
       "rulers": 10,
       "ordinary_serving": 359,
-      "free": 54,
-      "total_instantiated": 423,
-      "initial_health_changed": 120,
+      "free": 64,
+      "total_instantiated": 433,
+      "initial_health_changed": 121,
       "health_cap_increased": 50,
       "ordinary_loyalty_changed": 75,
       "source_context_applied": 70,
@@ -40320,7 +40464,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "7695a29713e1b5cf3c203953de3ebca44aa99aa573dc2dc3343d28d1b9ec3e27",
+      "opening_save_sha256": "cf70bba8bc7625d197bdfbcc1e6adcbb7f21273bf3cab610cd08a41dc380abcf",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -42550,6 +42694,22 @@
           "previous_loyalty": 80,
           "loyalty": 89,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -42564,9 +42724,9 @@
       "serving": 371,
       "rulers": 6,
       "ordinary_serving": 365,
-      "free": 53,
-      "total_instantiated": 424,
-      "initial_health_changed": 120,
+      "free": 63,
+      "total_instantiated": 434,
+      "initial_health_changed": 121,
       "health_cap_increased": 52,
       "ordinary_loyalty_changed": 66,
       "source_context_applied": 62,
@@ -42723,7 +42883,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "e40cc5ccf02799d2b73f6089d11793d8e8856121cae87f53230942f7e4aaabc9",
+      "opening_save_sha256": "b8a1091562b45060ba556efeb6359f8f6a2770b72815255826caae0a19348b68",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -44907,6 +45067,22 @@
           "previous_loyalty": 80,
           "loyalty": 89,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -44921,9 +45097,9 @@
       "serving": 375,
       "rulers": 6,
       "ordinary_serving": 369,
-      "free": 55,
-      "total_instantiated": 430,
-      "initial_health_changed": 116,
+      "free": 66,
+      "total_instantiated": 441,
+      "initial_health_changed": 117,
       "health_cap_increased": 55,
       "ordinary_loyalty_changed": 63,
       "source_context_applied": 59,
@@ -45080,7 +45256,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "48e96c8b9bfd0b4b3c07b31aa6f8c95ac8046f598164b4669c209cd874105a44",
+      "opening_save_sha256": "9586c5124d44e0b942d072eb51ae4681f3d57dfe40d374478a811be2b3e312f4",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -47183,6 +47359,22 @@
           "previous_loyalty": 80,
           "loyalty": 85,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -47197,9 +47389,9 @@
       "serving": 397,
       "rulers": 6,
       "ordinary_serving": 391,
-      "free": 42,
-      "total_instantiated": 439,
-      "initial_health_changed": 117,
+      "free": 54,
+      "total_instantiated": 451,
+      "initial_health_changed": 118,
       "health_cap_increased": 56,
       "ordinary_loyalty_changed": 63,
       "source_context_applied": 59,
@@ -47356,7 +47548,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "e2528d2bdb1b4d1c9b8a4fc74ca5964d6fd8e507bdb66c86d495098e7d61da59",
+      "opening_save_sha256": "ecd1efc7794513c7c8d7bd947a074746a1724a422df8bba6c68590e7b50a47f1",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -49471,6 +49663,22 @@
           "previous_loyalty": 80,
           "loyalty": 85,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -49485,9 +49693,9 @@
       "serving": 359,
       "rulers": 6,
       "ordinary_serving": 353,
-      "free": 53,
-      "total_instantiated": 412,
-      "initial_health_changed": 100,
+      "free": 68,
+      "total_instantiated": 427,
+      "initial_health_changed": 101,
       "health_cap_increased": 49,
       "ordinary_loyalty_changed": 48,
       "source_context_applied": 46,
@@ -49644,7 +49852,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "78428fe2d4efd946bf4285e709a19f53e6f96e3319ebf3e4079b531ab14d3f65",
+      "opening_save_sha256": "502d44a7714d6c9777547ff6bb9dd41adbfecb466bcdb322cba934f9d9affca2",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -51339,6 +51547,22 @@
           "previous_loyalty": 80,
           "loyalty": 81,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -51353,9 +51577,9 @@
       "serving": 320,
       "rulers": 7,
       "ordinary_serving": 313,
-      "free": 78,
-      "total_instantiated": 398,
-      "initial_health_changed": 87,
+      "free": 91,
+      "total_instantiated": 411,
+      "initial_health_changed": 88,
       "health_cap_increased": 42,
       "ordinary_loyalty_changed": 37,
       "source_context_applied": 38,
@@ -51512,7 +51736,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "70356ac175e8ce7fd8eade3796438124d4e09aa42311ba24f816a4295222c558",
+      "opening_save_sha256": "39cf3aa58088c9161fe642eda8b90740fa487523fe3a98c6fe9bd4437df8e833",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -52924,6 +53148,22 @@
           "previous_loyalty": 80,
           "loyalty": 81,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -52938,9 +53178,9 @@
       "serving": 334,
       "rulers": 5,
       "ordinary_serving": 329,
-      "free": 37,
-      "total_instantiated": 371,
-      "initial_health_changed": 77,
+      "free": 50,
+      "total_instantiated": 384,
+      "initial_health_changed": 78,
       "health_cap_increased": 38,
       "ordinary_loyalty_changed": 32,
       "source_context_applied": 33,
@@ -53097,7 +53337,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "6969ab55a7106b93d22828df25cbd45f9c1332189a65d16ccd9bb45f112d80bd",
+      "opening_save_sha256": "18ce4d4eb90819befdeed550ffb04074bca691efb1f002c2ead611d8f2113166",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -54353,6 +54593,22 @@
           "previous_loyalty": 80,
           "loyalty": 81,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -54367,9 +54623,9 @@
       "serving": 307,
       "rulers": 5,
       "ordinary_serving": 302,
-      "free": 17,
-      "total_instantiated": 324,
-      "initial_health_changed": 56,
+      "free": 27,
+      "total_instantiated": 334,
+      "initial_health_changed": 57,
       "health_cap_increased": 24,
       "ordinary_loyalty_changed": 23,
       "source_context_applied": 24,
@@ -54526,7 +54782,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "319718129f23e0f5ffbeaa08b4d97163fb5441849ac0152107d6019ec6f880e8",
+      "opening_save_sha256": "8a3fe29ed447f1ca1b5faad59718405aee26a2d04a0a056c6e862fdb0b155f1f",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -55446,6 +55702,22 @@
           "previous_loyalty": 80,
           "loyalty": 80,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -55460,9 +55732,9 @@
       "serving": 304,
       "rulers": 5,
       "ordinary_serving": 299,
-      "free": 17,
-      "total_instantiated": 321,
-      "initial_health_changed": 55,
+      "free": 31,
+      "total_instantiated": 335,
+      "initial_health_changed": 56,
       "health_cap_increased": 22,
       "ordinary_loyalty_changed": 22,
       "source_context_applied": 23,
@@ -55549,7 +55821,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "bd05097de58cce7cc75f53500b41ae0d0a6c4240f782b95f945fe70f2b6ec4ca",
+      "opening_save_sha256": "c257d4a10feae3173d36ad0d39ada1ca73a19bdd9dec480c616d4ea706c53604",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -56453,6 +56725,22 @@
           "previous_loyalty": 80,
           "loyalty": 80,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "historical-wang-jian-liaodong",
+          "runtime_id": 1044,
+          "name": "王建",
+          "role": "free",
+          "city": "liaodong",
+          "faction": null,
+          "source_row_id": "cnblogs-line-0229",
+          "previous_initial_health": 80,
+          "initial_health": 42,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         }
       ]
     },
@@ -56467,8 +56755,8 @@
       "serving": 299,
       "rulers": 5,
       "ordinary_serving": 294,
-      "free": 14,
-      "total_instantiated": 313,
+      "free": 24,
+      "total_instantiated": 323,
       "initial_health_changed": 46,
       "health_cap_increased": 18,
       "ordinary_loyalty_changed": 23,
@@ -56626,7 +56914,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "14fe680f1b58157515a3574102252c6efcaa94628a566e58d4dd689da5762e09",
+      "opening_save_sha256": "0e0f2fbd47bd291820841ab52d78da40357b54be235fd76f5a27b5beb639d8f6",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -57446,8 +57734,8 @@
       "serving": 248,
       "rulers": 4,
       "ordinary_serving": 244,
-      "free": 40,
-      "total_instantiated": 288,
+      "free": 52,
+      "total_instantiated": 300,
       "initial_health_changed": 26,
       "health_cap_increased": 12,
       "ordinary_loyalty_changed": 14,
@@ -57605,7 +57893,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "d7cd5f6083cc605c8afe2daca5d1d3f4a794b786f84ae39deb771ca20714278d",
+      "opening_save_sha256": "79f3fa6c0201837c975c4a10841cb1af0496db817dfdf4f8df94872ff8e2154b",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -58287,7 +58575,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "45c04a2cd9b4930d318c6c00927a2f38bf969ca42b1c083f09ec2b1ed2c88fb5",
+      "opening_save_sha256": "a9a83536543f3f4161d596521d1924d123579acfbcf9cb254e3e2cf3440e8f8f",
       "changed_people": [
         {
           "person_id": "san14-candidate-0348",

@@ -22,7 +22,7 @@ from remake import battle_grid
 from remake.officers import recruitment_loyalty
 
 
-def _base(seed=20261029, *, prepare_enemy=False):
+def _base(seed=20261029, *, prepare_enemy=False, field_enemy_limit=None):
     game = Campaign(Catalog(ROOT / 'game/data/campaigns/208-10.json'))
     game.command('new', dict(faction='wei', seed=seed), game.revision)
     city = game.state.cities['jiujiang']
@@ -51,6 +51,15 @@ def _base(seed=20261029, *, prepare_enemy=False):
         assert enemy_city.reserves + sum(game.state.officers[i].troops for i in enemy_city.roster.officer_ids) == prior_mass
         assert game.state.rng == prior_rng
     state = game.state
+    if field_enemy_limit is not None:
+        # Keep the controlled three-way contact between comparable teams
+        # when the scenario's opening garrison is increased.
+        enemy_city = state.cities['danyang']
+        for ident in enemy_city.roster.officer_ids:
+            officer = state.officers[ident]
+            surplus = max(0, officer.troops - field_enemy_limit)
+            officer.troops -= surplus
+            enemy_city.reserves += surplus
     game._start_expanded_battle(state, state.cities['jiujiang'], state.cities['danyang'], ids)
     state.phase = 'battle'
     return game, actor, strategist
@@ -110,7 +119,7 @@ def field_fixture():
 
 
 def contact_fixture():
-    game, actor, _ = _base()
+    game, actor, _ = _base(field_enemy_limit=1000)
     battle = game.state.battle
     target = battle['defenders'][0]['id']
     _contact(game, actor, target)

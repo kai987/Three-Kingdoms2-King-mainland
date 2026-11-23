@@ -17,7 +17,7 @@ MAXIMUM = 40
 COSTS = dict(recruit=1, recruit_officer=1, persuade_officer=1, staff_recruit=1,
              hire_staff=1, depart=1, transfer=1, dispatch_transport=1, diplomacy=1,
              search_treasure=1, reward_officer=1, sell_treasure=1,
-             develop_land=1, develop_industry=1, develop_population=1,
+             develop_land=1, develop_industry=1, develop_population=1, organize_city=1,
              develop_town=1, treat_officer=1, study_officer=1, trade_grain=1,
              buy_equipment=1, improve_prevention=1, equip_owned=1,
              allocate=1, resupply_march=1, transport_treasure=1,

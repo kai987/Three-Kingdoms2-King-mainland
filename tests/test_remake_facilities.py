@@ -358,6 +358,24 @@ class FacilityTests(unittest.TestCase):
             self.fails(game,state,facilities.set_policy,dict(faction='one',policy=patch))
         self.fails(game,state,facilities.set_policy,dict(faction='two',policy=dict(enabled=True)))
 
+    def test_auto_trade_buys_grain_before_paying_for_treatment(self):
+        game, state = fixture()
+        state.player = 'two'
+        state.phase = 'ai'
+        policy = state.extension['facilities']['factions']['one']
+        policy.update(enabled=True, auto_trade=True, auto_prevent=False, auto_treat=True,
+                      gold_budget=50)
+        city = state.cities['capital']
+        city.grain = 0
+        state.cities['border'].grain = policy['grain_target']
+        state.officers[2].health = 0
+
+        results = facilities.auto_turn(game, state, 'one')
+
+        self.assertEqual((results[0]['city'], results[0]['direction']), ('capital', 'buy'))
+        self.assertGreater(city.grain, 0)
+        self.assertEqual(state.officers[2].health, 0)
+
     def test_ai_healing_trading_equipment_development_and_study_all_use_services(self):
         for task in ('treat','trade','equip','develop','study'):
             with self.subTest(task=task):

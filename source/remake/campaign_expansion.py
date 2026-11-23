@@ -146,7 +146,15 @@ class ExpandedCampaign:
         ignore_death = (state.extension.get('lifespan') == 'none'
                         and person.death_year is not None
                         and person.death_year >= self.catalog.data['start_year'])
-        return year_state(three_visits.runtime_definition(state, person), state.year, ignore_death=ignore_death)
+        person = three_visits.runtime_definition(state, person)
+        correction = self.catalog.appearance_year_corrections.get(person.person_id)
+        if correction and correction[0] <= state.year < correction[1]:
+            ident = self.catalog.ids[person.person_id]
+            if ident in state.officers:
+                # A save may already contain someone born and recruited under
+                # the older debut date. Future spawns still use the new date.
+                person = replace(person, service_year=correction[0])
+        return year_state(person, state.year, ignore_death=ignore_death)
 
     def _neighbors(self, city, state=None):
         from .route_hazards import _python_route_allowed

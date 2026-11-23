@@ -217,7 +217,7 @@ class SongJianLuXingTests(unittest.TestCase):
         self.assertEqual(sum(c.reserves for c in state.cities.values())
                          + sum(o.troops for o in state.officers.values()), expected_total)
         self.assertEqual(len(game.catalog.data['initial_officers']), 135 + 3 + 2)
-        self.assertEqual(len(game.catalog.data['initial_free_officers']), 156 - 2)
+        self.assertEqual(len(game.catalog.data['initial_free_officers']), 156 - 2 + 10)
         game.validate(state)
 
     def test_seventeen_lifetime_openings_include_five_if_and_keep_longxi_name(self):

@@ -448,6 +448,8 @@ def _target_key(state, policy, choice, city_id):
 
 
 def personnel_targets(game, state, city_id):
+    from .historical_campaigns import allied
+
     city = state.cities[city_id]
     row = appointments(state, city.owner)
     if not row or not command_books.can_spend(state, city.owner) or game._city_occupancy(state, city) >= game.catalog.rules.city_officer_capacity:
@@ -469,6 +471,9 @@ def personnel_targets(game, state, city_id):
         for ident in candidates:
             if ident in policy['excluded_targets']:
                 continue
+            if (method == 'persuade_officer' and city.owner != state.player
+                    and allied(state, city.owner, state.officers[ident].faction_id)):
+                continue
             receipt = attempts.get(str(ident))
             if receipt and (receipt['turn'] == state.turn or receipt['retry_turn'] > state.turn):
                 continue
@@ -484,7 +489,27 @@ def faction_personnel_targets(game, state, owner, city_ids=None):
     choices = [dict(choice, city=key) for key, city in state.cities.items()
                if city.owner == owner and (allowed is None or key in allowed)
                for choice in personnel_targets(game, state, key)]
-    choices.sort(key=lambda choice: _target_key(state, policy, choice, choice['city']))
+    if choices and owner != state.player:
+        # A captive returned this turn should have time to rejoin their faction.
+        returned = {event['person_ids'][-1] for event in state.extension['events']['items']
+                    if event['turn'] == state.turn and event['kind'] == 'diplomacy_result'
+                    and event['details']['action'] == 'return_captives' and event['details']['success']}
+        choices = [choice for choice in choices
+                   if choice['method'] != 'persuade_officer' or state.officers[choice['id']].person_id not in returned]
+        fields = ('martial_strength', 'intellect', 'virtue')
+        roster = [officer.profile for officer in state.officers.values()
+                  if officer.alive and officer.faction_id == owner]
+        deficit = [100 - sum(getattr(profile, field) for profile in roster) // max(1, len(roster))
+                   for field in fields]
+
+        def ai_rank(choice):
+            profile = state.officers[choice['id']].profile
+            contribution = max(need * getattr(profile, field) for field, need in zip(fields, deficit))
+            return -contribution * choice['chance'], _target_key(state, policy, choice, choice['city'])
+
+        choices.sort(key=ai_rank)
+    else:
+        choices.sort(key=lambda choice: _target_key(state, policy, choice, choice['city']))
     # A target may be approachable from several friendly cities. Only publish
     # its best affordable approach for each actor/method, never duplicate rolls.
     seen = set()
@@ -596,7 +621,7 @@ def _hire_staff(game, state, owner, city_ids):
 
 
 def prioritize_grain(game, state, owner, outlook=None):
-    from . import grain_relief
+    from . import diplomacy, grain_relief
 
     if outlook is None:
         outlook = grain_relief.recovery(game, state, owner)
@@ -604,12 +629,18 @@ def prioritize_grain(game, state, owner, outlook=None):
     if post and post['civil'] is not None:
         grain_relief.dispatch(game, state, owner)
         if outlook[1] and _present(game, state, state.cities[next(iter(outlook[1]))], post['civil']):
-            grain_relief.invest(game, state, owner, grain_relief.recovery(game, state, owner))
+            updated = grain_relief.recovery(game, state, owner)
+            if (grain_relief.imminent_shortages(updated[1])
+                    and diplomacy.request_available_grain(game, state, owner)):
+                updated = grain_relief.recovery(game, state, owner)
+            grain_relief.invest(game, state, owner, updated)
     return outlook
 
 
 def run_automatic(game, state, owner, *, outlook=None):
     """Spend the faction's remaining orders under the shared policy, once per turn."""
+    from . import grain_relief
+
     synchronize(game, state)
     if owner not in game.catalog.factions or owner == 'neutral' or owner in state.extension.get('ended_factions', []):
         return
@@ -631,6 +662,8 @@ def run_automatic(game, state, owner, *, outlook=None):
     if eligible and owner == state.player:
         outlook = prioritize_grain(game, state, owner, outlook)
     statewide, shortages = outlook or (None, {})
+    food_priority = grain_relief.imminent_shortages(shortages)
+    discretionary_cities = [key for key in eligible if key not in food_priority]
     for task in policy['task_order']:
         if task == 'personnel':
             # Rank across the entire faction before committing. Lexical city
@@ -638,14 +671,14 @@ def run_automatic(game, state, owner, *, outlook=None):
             for _ in range(command_books.MAXIMUM):
                 if not command_books.can_spend(state, owner):
                     break
-                choices = faction_personnel_targets(game, state, owner, eligible)
+                choices = faction_personnel_targets(game, state, owner, discretionary_cities)
                 if not choices:
                     break
                 choice = choices[0]
                 _personnel(game, state, state.cities[choice['city']], choice)
             if policy['auto_recruit'] and 'civil_staff' in state.extension:
                 for _ in range(command_books.MAXIMUM):
-                    if not _hire_staff(game, state, owner, eligible):
+                    if not _hire_staff(game, state, owner, discretionary_cities):
                         break
         elif task == 'recruit' and policy['recruit_enabled'] and statewide is None:
             for _ in range(command_books.MAXIMUM):
@@ -667,7 +700,7 @@ def run_automatic(game, state, owner, *, outlook=None):
                     break
         elif task == 'transport' and 'logistics' in state.extension:
             from . import logistics
-            for key in eligible:
+            for key in discretionary_cities:
                 if command_books.can_spend(state, owner, 'dispatch_transport'):
                     logistics.auto_dispatch_city(game, state, key)
 
@@ -679,17 +712,20 @@ def finish_faction_turn(game, state, owner, *, automatic=True, outlook=None):
         outlook = grain_relief.recovery(game, state, owner)
     statewide, shortages = outlook
     hold_grain = {key for key, city in state.cities.items() if city.owner == owner} if statewide is not None else shortages
+    food_priority = grain_relief.imminent_shortages(shortages)
     if automatic:
         run_automatic(game, state, owner, outlook=outlook)
-        if owner != state.player and not shortages:
-            from . import city_development
-            city_development.auto_turn(game, state, owner)
         from . import facilities
         facilities.synchronize(game,state)
-        facilities.auto_turn(game, state, owner, hold_grain=hold_grain)
+        facilities.auto_turn(game, state, owner, hold_grain=hold_grain, food_priority=food_priority,
+                             allow_stockpiling=(owner == state.player or not grain_units.current_rations()))
         from . import treasures
         treasures.synchronize(game,state)
-        treasures.auto_turn(game,state,owner)
+        treasures.auto_turn(game, state, owner, food_priority=food_priority)
+        if owner != state.player:
+            from . import city_development
+            treasures.ai_idle_turn(game, state, owner, food_priority=food_priority)
+            city_development.auto_turn(game, state, owner, shortages=shortages)
     synchronize(game, state)
     summary = dict(gold=0, grain=0, reserves=0, morale=0, cities=0, reason='turn')
     first_city = None

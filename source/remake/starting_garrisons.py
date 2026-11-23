@@ -5,6 +5,7 @@ from . import capital_openings
 from .officers import OFFICER_TROOP_CAP
 from .route_hazards import allocate_survivors
 from .route_network import available, effective
+from .san14_opening_forces import OPENING_TROOPS
 
 
 # Additional percentage points for the named powers at documented mobilizations.
@@ -99,6 +100,50 @@ def mobilize_reserves(catalog, *, frontier=None):
     return resources, troops
 
 
+def _distribute_troops(garrison, target):
+    total = sum(garrison)
+    if target < total:
+        return allocate_survivors(garrison, target, total)
+
+    revised = garrison.copy()
+    remaining = target - total
+    while remaining:
+        available = [i for i, count in enumerate(revised) if count < OFFICER_TROOP_CAP]
+        weights = [garrison[i] for i in available]
+        # Officers who were already leading troops take reinforcements first.
+        if not any(weights):
+            weights = [1] * len(available)
+        weight_total = sum(weights)
+        scale = (remaining + weight_total - 1) // weight_total
+        shares = allocate_survivors([weight * scale for weight in weights],
+                                    remaining, weight_total * scale)
+        for i, share in zip(available, shares):
+            added = min(share, OFFICER_TROOP_CAP - revised[i])
+            revised[i] += added
+            remaining -= added
+    return revised
+
+
+def _apply_reference_totals(catalog, troops):
+    data = catalog.data
+    if (not (data.get('main_scenario') or {}).get('roster_complete')
+            or data.get('officer_count', 0) < 1083):
+        return
+    targets = OPENING_TROOPS.get(data['id'])
+    if targets is None:
+        return
+
+    rosters = defaultdict(list)
+    for row in data['initial_officers']:
+        rosters[data['initial_owners'][row['city']]].append(row['person_id'])
+    for faction, target in targets.items():
+        roster = sorted(rosters[faction], key=catalog.ids.__getitem__)
+        # Keep reserves and per-officer limits independent of the reference game.
+        target = min(target, len(roster) * OFFICER_TROOP_CAP)
+        garrison = [troops[person] for person in roster]
+        troops.update(zip(roster, _distribute_troops(garrison, target)))
+
+
 def resolve(catalog):
     """Return effective opening stocks and officer strengths without drawing RNG."""
     data = catalog.data
@@ -135,4 +180,5 @@ def resolve(catalog):
         else:
             continue
         troops.update(zip(roster, revised))
+    _apply_reference_totals(catalog, troops)
     return resources, troops

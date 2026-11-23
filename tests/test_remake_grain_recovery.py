@@ -3,7 +3,7 @@ from pathlib import Path
 import unittest
 
 from test_remake_diplomacy import diplomacy_catalog
-from remake import city_economy, domestic, grain_relief, grain_units, march_supply
+from remake import city_economy, command_books, domestic, facilities, grain_relief, grain_units, march_supply, treasures
 from remake.campaign import Campaign, Catalog
 from remake.strategic_ai import StrategicAI
 
@@ -46,11 +46,35 @@ class GrainRecoveryTests(unittest.TestCase):
         receipt = next(row for row in game.state.extension['events']['items'] if row['kind'] == 'grain_traded')
         self.assertEqual(receipt['city_ids'], ['jiangxia'])
         self.assertEqual(receipt['details']['direction'], 'buy')
-        self.assertEqual(receipt['details']['grain'], receipt['details']['batches'] * 1000)
+        self.assertTrue(receipt['details']['emergency'])
+        limit = 2 * grain_relief.forecasts(game, game.state, 'shu')[city.id].monthly
+        self.assertEqual(receipt['details']['grain'], limit)
         self.assertEqual(game.state.cities['jiangxia'].grain, receipt['details']['grain'])
         self.assertEqual(game.state.cities['jiangxia'].gold, old_gold - receipt['details']['gold'])
         self.assertEqual(game.state.extension['command_books']['factions']['shu']['orders'][0]['kind'],
                          'trade_grain')
+
+    def test_urgent_purchase_can_spend_the_gold_reserve(self):
+        game = self.start()
+        state = game.state
+        city = state.cities['jiangxia']
+        town = state.extension['facilities']['cities'][city.id]['town']
+        rate = facilities.market_rate(game, town, 'buy', state.month)
+        city.gold = 1
+        city.grain = 0
+        domestic.appointments(state, 'shu')['civil'] = 146
+
+        game.command('end_turn', {}, game.revision)
+
+        receipt = next(row for row in game.state.extension['events']['items']
+                       if row['kind'] == 'grain_traded' and row['city_ids'] == [city.id])
+        self.assertEqual(receipt['details']['grain'], 1000 // rate)
+        self.assertEqual(receipt['details']['gold'], 1)
+        self.assertEqual(game.state.cities[city.id].gold, 0)
+        save = game.export_save(compact=True)
+        restored = Campaign(game.catalog)
+        restored.load_save(save, 0)
+        self.assertEqual(restored.export_save(compact=True), save)
 
     def test_low_faction_stock_seeks_nearby_alliance_and_pauses_offensive_plan(self):
         game = self.start()
@@ -76,8 +100,27 @@ class GrainRecoveryTests(unittest.TestCase):
         data = Catalog(path).data
         self.assertTrue(city_economy.frontier_outpost_at(data, 'shuofang', 217, 7))
         self.assertEqual(city_economy.garrison_grain_cost(data, 'shuofang', 217, 7, 1000, 1000), 600)
-        self.assertEqual(city_economy.garrison_grain_cost(data, 'jiangxia', 217, 7, 1000, 1000), 348)
-        self.assertEqual(city_economy.civilian_grain(1000), 60)
+        self.assertEqual(city_economy.garrison_grain_cost(data, 'jiangxia', 217, 7, 1000, 1000), 270)
+        self.assertEqual(city_economy.civilian_grain(1000), 30)
         self.assertEqual(march_supply.required_grain(100, 1, 10, 50), 50)
         with grain_units.using({'extension': {'grain_scale': 10}}):
             self.assertEqual(march_supply.required_grain(100, 1, 10, 50), 25)
+
+    def test_ai_fills_its_orders_without_spending_the_hungry_city_treasury(self):
+        game = self.start()
+        state = game.state
+        city = state.cities['nanyang']
+        city.gold = city.grain = 0
+        state.extension['treasury']['factions'][city.owner]['treasure_floor'] = treasures.count(state, city.id)
+        old_troops = city.reserves
+        row = state.extension['city_development']['cities'][city.id]
+        previous, orders = row['governance'], command_books.remaining(state, city.owner)
+        state.phase = 'ai'
+
+        domestic.finish_faction_turn(game, state, city.owner)
+
+        ledger = state.extension['command_books']['factions'][city.owner]
+        self.assertEqual([order['kind'] for order in ledger['orders']], ['organize_city'] * orders)
+        self.assertEqual(row['governance'], previous + orders)
+        self.assertEqual((city.gold, city.grain, city.reserves), (0, 0, old_troops))
+        game.validate(state)

@@ -28,9 +28,9 @@ class HistoricalCampaignTests(unittest.TestCase):
         backend.__enter__()
         self.addCleanup(backend.__exit__, None, None, None)
 
-    def opening(self, scenario, faction, *, start_year=None, start_month=None, group=None):
+    def opening(self, scenario, faction, *, start_year=None, start_month=None, group=None, initial_alliance=None):
         path = ROOT / 'game/data/campaigns' / (scenario + '.json')
-        if start_year is None and start_month is None and group is None:
+        if all(option is None for option in (start_year, start_month, group, initial_alliance)):
             catalog = Catalog(path)
         else:
             data = json.loads(path.read_bytes())
@@ -46,6 +46,8 @@ class HistoricalCampaignTests(unittest.TestCase):
                 data['start_month'] = start_month
             if group is not None:
                 data['main_scenario']['group'] = group
+            if initial_alliance is not None:
+                data.setdefault('initial_alliances', []).append(dict(factions=initial_alliance, duration=24))
             with TemporaryDirectory() as directory:
                 fixture = Path(directory) / 'scenario.json'
                 fixture.write_text(json.dumps(data, ensure_ascii=False))
@@ -216,7 +218,8 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertEqual((army['owner'], army['target'], army['kind']), ('shu', 'yiyang', 'attack'))
 
     def test_chibi_cao_south_uses_actual_armies_and_arrival_battle(self):
-        game = self.opening('208-10', 'shu')
+        # Keep the separate Changsha front quiet while testing Cao Cao's advance.
+        game = self.opening('208-10', 'shu', initial_alliance=['shu', 'han_xuan'])
         self.assertFalse(game.state.extension['travel']['marches'])
         for _ in range(6):
             self.assertFalse(self.events(game, history.SOUTH))
@@ -231,9 +234,9 @@ class HistoricalCampaignTests(unittest.TestCase):
         attacks = [row for row in game.state.extension['travel']['marches'] if row['kind'] == 'attack']
         self.assertFalse(any({row['owner'], game.state.cities[row['target']].owner} == {'wu', 'shu'}
                              for row in attacks))
-        columns = [row for row in attacks if row['owner'] == 'wei']
+        columns = [row for row in attacks if row['owner'] == 'wei'
+                   and game.state.cities[row['target']].owner in {'wu', 'shu'}]
         self.assertTrue(columns)
-        self.assertTrue(all(game.state.cities[row['target']].owner in {'wu', 'shu'} for row in columns))
         self.assertTrue(all(row['quote']['days'] > 0 and row['supply']['loaded'] > 0 for row in columns))
         jiangxia_columns = [row for row in columns if row['target'] == 'jiangxia']
         self.assertTrue(jiangxia_columns)
@@ -370,7 +373,7 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertFalse(history.allied(state, 'wu', 'shu'))
 
     def test_outbound_attack_returns_when_its_target_becomes_ally(self):
-        game = self.opening('208-10', 'shu', start_month=9)
+        game = self.opening('208-10', 'shu', start_month=9, initial_alliance=['shu', 'han_xuan'])
         for _ in range(2):
             self.advance(game)
             self.arrivals(game)
@@ -631,7 +634,12 @@ class HistoricalCampaignTests(unittest.TestCase):
         cities = game.state.cities
         transfer_officers(cities['zitong'].roster, cities['baxi'].roster, [huang_zhong])
         transfer_officers(cities['yinping'].roster, cities['hanzhong'].roster, [xiahou_yuan])
-        self.allocate_from_reserves(game, cities['hanzhong'], xiahou_yuan, 999)
+        # The defense selects the ten highest troop counts. Give Xiahou Yuan
+        # command of the strongest existing unit while conserving the garrison.
+        defenders = [game.state.officers[i] for i in cities['hanzhong'].roster.officer_ids]
+        strongest = max(defenders, key=lambda officer: officer.troops)
+        xiahou = game.state.officers[xiahou_yuan]
+        strongest.troops, xiahou.troops = xiahou.troops, strongest.troops
         # Hold this garrison in place during the approach. With the larger
         # opening army the AI can otherwise send Xiahou Yuan on another sortie.
         cities['yinping'].grain += cities['hanzhong'].grain

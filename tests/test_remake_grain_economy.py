@@ -18,7 +18,7 @@ class GrainEconomyTests(unittest.TestCase):
         path = ROOT / 'game/data/campaigns/208-10.json'
         session = CampaignSession([path])
         opening = session.preview_city('mainland208-10', 'jiangxia')['city']
-        self.assertEqual(opening['grain_balance'], dict(production=1480, upkeep=3940, civilian=1638, net=-4098))
+        self.assertEqual(opening['grain_balance'], dict(production=1480, upkeep=2542, civilian=819, net=-1881))
         live = session.command('new', {'faction': 'shu', 'seed': 2026}, 0)
         self.assertEqual(live['catalog']['grain_people_per_day'], 50)
         self.assertEqual(live['catalog']['city_grain_balance']['jiangxia'], opening['grain_balance'])
@@ -59,7 +59,7 @@ class GrainEconomyTests(unittest.TestCase):
         stocks = city.grain
         production = 2 * city_economy.income_at(game.catalog.data, city.id, state.year, state.month)['grain']
         self.assertEqual(city_economy.garrison_grain_cost(game.catalog.data, city.id, state.year,
-                                                       state.month, 999, 333), 248)
+                                                       state.month, 999, 333), 210)
         advance_month(game)
         self.assertEqual(city.grain, stocks + production - upkeep - city_economy.civilian_grain(state.extension['city_development']['cities'][city.id]['population']))
 

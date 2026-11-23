@@ -6,8 +6,6 @@ existing damage scale: starter equipment adds zero, rather than changing every
 old battle when shops become available. Price/stock and damage adaptations are
 explicitly distinguished from a byte-for-byte NES implementation.
 """
-from copy import deepcopy
-
 SOURCE = 'https://www.cnblogs.com/strick/p/10171248.html'
 
 
@@ -59,7 +57,8 @@ def item(slot, ident):
     rows = WEAPONS if slot == 'weapon' else ARMORS
     if not 0 <= ident < len(rows):
         raise ValueError('Invalid equipment identity')
-    return deepcopy(rows[ident])
+    # The published item fields are all strings, integers or None.
+    return rows[ident].copy()
 
 
 def stock(town, slot):
@@ -68,7 +67,7 @@ def stock(town, slot):
     if town < 2:
         return []
     rows = WEAPONS if slot == 'weapon' else ARMORS
-    return [deepcopy(row) for row in rows
+    return [row.copy() for row in rows
             if row['price'] is not None and (town == 3 or row['power'] <= 10)]
 
 

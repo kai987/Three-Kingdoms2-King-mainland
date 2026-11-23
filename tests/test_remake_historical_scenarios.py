@@ -17,6 +17,7 @@ sys.path.insert(0, str(ROOT / 'source'))
 
 from remake.campaign import Campaign, Catalog
 from remake.dated_events import visible_factions
+from remake.san14_appearance_reference import YEARS
 from remake.session import CampaignSession, faction_officer_counts, faction_resources
 from remake.starting_garrisons import mobilize_reserves
 
@@ -107,6 +108,81 @@ class HistoricalScenarioTests(unittest.TestCase):
         row = next(row for row in game.catalog.data['initial_officers']
                    if row['person_id'] == person_id)
         self.assertIs(row['ruler'], True)
+
+    def test_san14_debut_and_age_fifteen_fallback_are_effective(self):
+        game = self.game('200-01', 'ma_teng')
+        for pid, person in game.catalog.definitions.items():
+            if pid == 'san14-candidate-0570':
+                expected = 221  # historical crown prince appointment
+            elif pid.startswith('san14-candidate-'):
+                expected = YEARS[int(pid.rsplit('-', 1)[1]) - 1]
+            else:
+                expected = person.birth_year + 15
+            self.assertEqual(person.service_year, expected, pid)
+        liu_fu = game.catalog.ids['historical-liu-fu-liaodong']
+        self.assertEqual(game.state.extension['free_locations'][str(liu_fu)], 'liaodong')
+
+    def test_guandu_opening_has_the_full_san14_western_roster(self):
+        game = self.game('200-01', 'han_sui')
+        base = json.loads((ROOT / 'game/config/references/san14-roster.json').read_text())['officers']
+        expected = {row['person_id'] for row in base
+                    if row['scenario_states']['san14-200-01']['ruler_source_name'] == '馬騰'}
+        rosters = {owner: {game.state.officers[ident].person_id
+                           for city in game.state.cities.values() if city.owner == owner
+                           for ident in city.roster.officer_ids}
+                   for owner in ('ma_teng', 'han_sui')}
+        self.assertEqual(rosters['han_sui'], HAN_SUI_OFFICERS)
+        self.assertEqual(rosters['ma_teng'], expected - HAN_SUI_OFFICERS)
+        self.assertEqual(len(rosters['ma_teng']), 17)
+        stations = {
+            'wuwei': ('马腾', '傅干', '马休', '马铁'),
+            'anding': ('马超', '马岱', '庞德', '马云𫘧', '杨氏', '成宜', '程银'),
+            'tianshui': ('侯选', '张横', '马玩', '杨秋', '李堪', '梁兴'),
+            'jincheng': ('韩遂', '阎行', '成公英'),
+        }
+        session = CampaignSession([game.catalog.path])
+        for city, names in stations.items():
+            with self.subTest(city=city):
+                roster = game.state.cities[city].roster.officer_ids
+                self.assertCountEqual([game.catalog.name(ident) for ident in roster], names)
+                preview = session.preview_city('mainland200-01', city)['city']
+                self.assertCountEqual([row['name'] for row in preview['officers']], names)
+        ma_chao = game.catalog.ids['san14-candidate-0769']
+        self.assertEqual(game.state.extension['treasury']['cities']['anding']['governor'], ma_chao)
+        self.assertEqual(session.preview_city('mainland200-01', 'anding')['city']['governor'], ma_chao)
+
+    def test_reviewed_frontline_rulers_have_support_without_emptying_other_cities(self):
+        from remake.san14_opening_posts import WUWEI_COMPANIONS
+
+        wuwei_chapters = {'mainland190-01', 'mainland191-10', *WUWEI_COMPANIONS}
+        for scenario in sorted(wuwei_chapters | {'mainland212-06'}):
+            with self.subTest(scenario=scenario):
+                catalog = self.catalogs[scenario]
+                before = json.loads(catalog.path.read_text())
+                after = catalog.data
+                before_rosters = Counter(row['city'] for row in before['initial_officers'])
+                after_rosters = Counter(row['city'] for row in after['initial_officers'])
+                self.assertEqual(before_rosters.keys(), after_rosters.keys())
+                self.assertEqual(before['initial_owners'], after['initial_owners'])
+                targets = ['wuwei'] if scenario in wuwei_chapters else ['taiyuan']
+                if scenario in ('mainland190-01', 'mainland191-10'):
+                    targets.append('yan')
+                if scenario == 'mainland202-06':
+                    targets.append('taiyuan')
+                for city in targets:
+                    self.assertEqual(before_rosters[city], 1)
+                    self.assertGreater(after_rosters[city], 1)
+                old = {row['person_id']: row for row in before['initial_officers']}
+                for row in after['initial_officers']:
+                    previous = old.pop(row['person_id'])
+                    expected_owner = before['initial_owners'][previous['city']]
+                    if scenario == 'mainland202-06' and row['person_id'] == 'san14-candidate-0253':
+                        self.assertEqual((expected_owner, row['city']), ('yuan_shang', 'taiyuan'))
+                        expected_owner = 'gao_gan'
+                    self.assertEqual(after['initial_owners'][row['city']], expected_owner)
+                    if previous['ruler']:
+                        self.assertEqual(previous, row)
+                self.assertFalse(old)
 
     def test_yongzhou_dates_stocks_and_topology_in_every_opening(self):
         specs = {'nanan': ((188, 1), {'longxi', 'tianshui'}),

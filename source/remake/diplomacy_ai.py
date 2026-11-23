@@ -1,7 +1,7 @@
 """Read-only strategy for the same diplomacy orders available to players."""
 from collections import defaultdict
 
-from . import command_books, diplomacy, grain_units, historical_campaigns
+from . import command_books, diplomacy, grain_relief, grain_units, historical_campaigns
 from .officers import ref_sort_key
 
 TREATY_TURNS = 12
@@ -116,7 +116,10 @@ def orders(ai, owner):
     own_borders = border_owners.get(owner, set())
     discretionary = command_books.remaining(state, owner) > command_books.cost('diplomacy')
     proposals = []
-    recovering = ai.grain_outlook(owner)[0] is not None
+    runway, shortages = ai.grain_outlook(owner)
+    recovering = runway is not None
+    food_priority = grain_relief.imminent_shortages(shortages)
+    donors = [city for city in cities if city['id'] not in food_priority]
 
     def add(rank, target, action, **fields):
         proposals.append((rank, target, dict(base, action=action, target=target) | fields))
@@ -134,7 +137,7 @@ def orders(ai, owner):
                 if actions['alliance']:
                     add(0, target, 'alliance', duration=TREATY_TURNS)
                 elif can_gift and score < diplomacy.NORMAL:
-                    gift = _gift(state, cities, holdings[target], score, diplomacy.NORMAL, resources=('gold',))
+                    gift = _gift(state, donors, holdings[target], score, diplomacy.NORMAL, resources=('gold',))
                     if gift:
                         add(1, target, 'goodwill', **gift)
             continue
@@ -148,7 +151,7 @@ def orders(ai, owner):
             elif can_gift:
                 desired = next(value for value in range(score + 1, 101)
                                if diplomacy.can_recover(value, envoy['intellect'], envoy['virtue']))
-                gift = _gift(state, cities, holdings[target], score, desired)
+                gift = _gift(state, donors, holdings[target], score, desired)
                 if gift:
                     add(3, target, 'goodwill', **gift)
                 # Do not propose a second gift for the same pair.
@@ -177,7 +180,7 @@ def orders(ai, owner):
             continue
         # A treaty needs a third enemy. Two remaining sides cannot renew it.
         if can_gift and score < diplomacy.FRIENDLY:
-            gift = _gift(state, cities, holdings[target], score, diplomacy.FRIENDLY)
+            gift = _gift(state, donors, holdings[target], score, diplomacy.FRIENDLY)
             if gift:
                 add(4, target, 'goodwill', **gift)
         if actions['alliance']:

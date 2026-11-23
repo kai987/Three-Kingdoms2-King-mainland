@@ -45,23 +45,25 @@ def _battle_ids(state):
             for unit in (state.battle or {}).get(side, [])}
 
 
-def _present(game, state, city, ident, *, unused=False):
+def _present(game, state, city, ident, *, unused=False, away=None):
     person = state.officers.get(ident)
     paid = state.extension.get('civil_staff', {}).get('people', {}).get(ident, {}).get('working', True)
-    return bool(person is not None and ident in city.roster.officer_ids
-        and city.owner != 'neutral' and person.faction_id == city.owner
-        and person.alive and person.health > 0 and paid and ident not in game._march_ids(state)
-        and ident not in _battle_ids(state))
+    if (person is None or ident not in city.roster.officer_ids or city.owner == 'neutral'
+            or person.faction_id != city.owner or not person.alive or person.health <= 0 or not paid):
+        return False
+    if away is not None:
+        return ident not in away
+    return ident not in game._march_ids(state) and ident not in _battle_ids(state)
 
 
-def _governor(game, state, city, row=None):
+def _governor(game, state, city, row=None, *, away=None):
     if city.owner == 'neutral':
         return None
     if (row and row['owner'] == city.owner and row['governor_mode'] == 'manual'
-            and _present(game, state, city, row['governor'])):
+            and _present(game, state, city, row['governor'], away=away)):
         return row['governor']
     leader = state.extension.get('leaders', {}).get(city.owner)
-    eligible = [ident for ident in city.roster.officer_ids if _present(game, state, city, ident)]
+    eligible = [ident for ident in city.roster.officer_ids if _present(game, state, city, ident, away=away)]
     if leader in eligible:
         return leader
     return min(eligible, key=lambda ident: (-state.officers[ident].profile.virtue,
@@ -106,14 +108,15 @@ def empty(game, state):
 def synchronize(game, state):
     """Reconcile actual owners and governors; never mint, spend, work or draw."""
     pool = _pool(state)
+    away = game._march_ids(state) | _battle_ids(state)
     for key, city in state.cities.items():
         row = pool['cities'].setdefault(key,
             dict(owner=city.owner, treasure=0, governor=None, governor_mode='auto'))
         if row['owner'] != city.owner:
             row.update(owner=city.owner, governor=None, governor_mode='auto')
-        if row['governor_mode'] == 'manual' and not _present(game, state, city, row['governor']):
+        if row['governor_mode'] == 'manual' and not _present(game, state, city, row['governor'], away=away):
             row['governor_mode'] = 'auto'
-        row['governor'] = _governor(game, state, city, row)
+        row['governor'] = _governor(game, state, city, row, away=away)
 
 
 def count(state, city_id):
@@ -354,7 +357,7 @@ def set_policy(game, state, payload, owner):
     _pool(state)['factions'][owner] = revised
 
 
-def auto_turn(game, state, owner):
+def auto_turn(game, state, owner, *, food_priority=()):
     """One deterministic faction pass, using the ordinary reward service."""
     pool = _pool(state)
     if owner not in pool['factions'] or not _ready(state, owner) or pool['auto_turns'][owner] == state.turn:
@@ -386,7 +389,7 @@ def auto_turn(game, state, owner):
                 if not command_books.can_spend(state, owner, 'reward_officer'):
                     break
                 if kind == 'gold':
-                    if maximum < 1:
+                    if key in food_priority or maximum < 1:
                         continue
                     gap = policy['target_loyalty'] - state.officers[target].loyalty
                     amount = next((n for n in range(1, maximum + 1)
@@ -405,7 +408,7 @@ def auto_turn(game, state, owner):
     return results
 
 
-def ai_idle_turn(game, state, owner):
+def ai_idle_turn(game, state, owner, *, food_priority=()):
     """Choose idle work, then use exactly the same search/sale services.
 
     This is a caller-selected AI strategy, never an implicit player policy.
@@ -432,7 +435,7 @@ def ai_idle_turn(game, state, owner):
                              stock - policy['treasure_floor'], (LIMIT - city.gold) // 100)
                 if amount and command_books.can_spend(state, owner, 'sell_treasure'):
                     results.append(sell(game, state, dict(city=key, actor=actor, amount=amount), owner))
-            elif (command_books.can_spend(state, owner, 'search_treasure') and stock < 2 and city.gold >= policy['gold_floor'] + RULES['search_gold']
+            elif (key not in food_priority and command_books.can_spend(state, owner, 'search_treasure') and stock < 2 and city.gold >= policy['gold_floor'] + RULES['search_gold']
                   and pool['ledger']['found'] < LIMIT):
                 results.append(search(game, state, dict(city=key, actor=actor), owner))
         if len(results) == completed:
@@ -447,11 +450,12 @@ def view(game, state):
     pool = _pool(state)
     result['ledger'] = dict(pool['ledger'])
     result['factions'] = {owner: dict(policy=dict(policy)) for owner, policy in pool['factions'].items()}
+    away = game._march_ids(state) | _battle_ids(state)
     for key, city in state.cities.items():
         saved = pool['cities'][key]
-        governor = _governor(game, state, city, saved)
-        candidates = sorted((i for i in city.roster.officer_ids if _present(game, state, city, i)), key=ref_sort_key)
-        actors = [i for i in candidates if _present(game, state, city, i, unused=True)]
+        governor = _governor(game, state, city, saved, away=away)
+        candidates = sorted((i for i in city.roster.officer_ids if _present(game, state, city, i, away=away)), key=ref_sort_key)
+        actors = [i for i in candidates if _present(game, state, city, i, unused=True, away=away)]
         ready = _ready(state, city.owner) and command_books.can_spend(state, city.owner)
         actor_ready = governor in actors
         amount = count(state, key)
@@ -464,12 +468,14 @@ def view(game, state):
             intervals = []
             virtue = state.officers[governor].profile.virtue if governor is not None else 0
             if governor is not None:
-                for gold in range(1, gold_max + 1):
-                    gain = _gold_gain(virtue, gold, 100 - target.loyalty)
-                    if intervals and intervals[-1]['gain'] == gain:
-                        intervals[-1]['max'] = gold
-                    else:
-                        intervals.append(dict(min=gold, max=gold, gain=gain, loyalty=target.loyalty + gain))
+                gap = 100 - target.loyalty
+                gold = 1
+                while gold <= gold_max:
+                    gain = _gold_gain(virtue, gold, gap)
+                    # All amounts through this boundary have the same rounded gain.
+                    end = gold_max if gain == gap else min(gold_max, 3000 * gain // (50 + virtue))
+                    intervals.append(dict(min=gold, max=end, gain=gain, loyalty=target.loyalty + gain))
+                    gold = end + 1
             treasure_gain = min(100 - target.loyalty, 5 + virtue // 20)
             targets.append(dict(id=ident, loyalty=target.loyalty,
                 gold_max=gold_max if governor is not None else 0,

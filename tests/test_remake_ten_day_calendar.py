@@ -3,6 +3,7 @@ from copy import deepcopy
 from pathlib import Path
 import sys
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
@@ -48,6 +49,34 @@ class TenDayCalendarTests(unittest.TestCase):
                 tuple(stocks[key][i] + income[field] - (paid[key] if field == 'grain' else 0) for i, field in enumerate(('gold', 'grain', 'reserves'))))
         self.assertEqual(officer.health,
             min(officer.profile.health_max, officer.profile.health_max - 20 + game.catalog.data['rules']['monthly_heal']))
+
+    def test_player_and_observer_charge_once_each_turn_including_month_end(self):
+        for faction in ('shu', 'observer'):
+            with self.subTest(faction=faction):
+                game = Campaign(self.game.catalog)
+                game.command('new', dict(faction=faction, seed=2026), 0)
+                with (patch.object(game, '_ai', wraps=game._ai) as ai,
+                      patch.object(game, '_monthly_calendar', wraps=game._monthly_calendar) as monthly,
+                      patch.object(city_economy, 'settle_turn_grain', wraps=city_economy.settle_turn_grain) as grain):
+                    for turn in (1, 2, 3):
+                        if faction == 'observer':
+                            command, payload = 'observe_turn', {}
+                        else:
+                            game.command('end_turn', {}, game.revision)
+                            command, payload = 'ai', {'turn': turn}
+                        revision = game.revision
+                        game.command(command, payload, revision)
+                        self.assertEqual(game.state.turn, turn + 1)
+                        saved = game.export_save()
+                        game.view()
+                        if faction == 'observer':
+                            with self.assertRaises(GameError):
+                                game.command(command, payload, revision)
+                        else:
+                            game.command(command, payload, revision)
+                        self.assertEqual(game.export_save(), saved)
+                        self.assertEqual((ai.call_count, grain.call_count, monthly.call_count),
+                                         (turn, turn, turn // 3))
 
     def test_new_year_and_lifetime_receipts_only_at_december_lower_to_january_upper(self):
         game = self.game

@@ -358,11 +358,12 @@ def tactic_terrain_reason(battle, actor, target, tid):
     if victim is None:
         return '請選擇有效的敵方部隊。'
     target_class = tile_class(battle, victim)
-    positions = battle['extended']['tactical']['positions']
-    point = positions[str(victim['id'])]
-    neighbors = [unit for unit in battle[other] if unit['id'] != victim['id'] and _live(battle, unit)
-        and abs(positions[str(unit['id'])]['x']-point['x'])
-            + abs(positions[str(unit['id'])]['y']-point['y']) == 1]
+    if tid in (7, 10, 12, 14):
+        positions = battle['extended']['tactical']['positions']
+        point = positions[str(victim['id'])]
+        neighbors = [unit for unit in battle[other] if unit['id'] != victim['id'] and _live(battle, unit)
+            and abs(positions[str(unit['id'])]['x']-point['x'])
+                + abs(positions[str(unit['id'])]['y']-point['y']) == 1]
     if tid == 0 and target_class not in (0, 2):
         return '火計的目標必須位於森林或平地。'
     if tid in (1, 2, 3) and target_class not in (0, 4):

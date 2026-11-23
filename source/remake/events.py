@@ -31,7 +31,7 @@ FACILITY_DETAILS = {
     'town_developed': {'actor','from_town','to_town','gold'},
     'officer_treated': {'actor','target','gold','before','after'},
     'officer_studied': {'actor','target','gold','before','after','bonus'},
-    'grain_traded': {'actor','direction','batches','grain','gold','rate','battle_id','side','destination'},
+    'grain_traded': {'actor','direction','batches','grain','gold','rate','battle_id','side','destination','emergency'},
     'equipment_bought': {'actor','target','slot','item','previous','gold'},
     'prevention_improved': {'actor','gold','gain','repair','preparedness_before',
         'preparedness_after','damage_before','damage_after'},
@@ -151,8 +151,11 @@ def _validate_equipment_event(row):
 def _validate_facility_event(row):
     d, kind = row['details'], row['kind']
     fields = FACILITY_DETAILS[kind]
-    if kind == 'grain_traded' and not set(d) & BATTLE_TRADE_DETAILS:
-        fields = fields - BATTLE_TRADE_DETAILS
+    if kind == 'grain_traded':
+        if not set(d) & BATTLE_TRADE_DETAILS:
+            fields = fields - BATTLE_TRADE_DETAILS
+        if 'emergency' not in d:
+            fields = fields - {'emergency'}
     if (set(d) != fields or row['audience'] != 'player'
             or len(row['city_ids']) != 1 or len(row['factions']) != 1):
         raise ValueError('Facility event fields')
@@ -170,8 +173,15 @@ def _validate_facility_event(row):
         if kind=='officer_studied':
             valid=valid and number('bonus',1,88) and 5<=d['after']-d['before']<=12
     elif kind=='grain_traded':
-        valid=(d['direction'] in ('buy','sell') and number('batches',1,1000)
-            and number('rate',1,100) and d['grain']==d['batches']*grain_units.amount(100) and d['gold']==d['batches']*d['rate'])
+        batch = grain_units.amount(100)
+        valid = (d['direction'] in ('buy','sell') and number('batches',1,1000)
+                 and number('rate',1,100) and number('grain',1,1000 * batch))
+        if 'emergency' in d:
+            valid = (valid and d['emergency'] is True and d['direction'] == 'buy' and 'battle_id' not in d
+                     and d['batches'] == (d['grain'] + batch - 1) // batch
+                     and d['gold'] == (d['grain'] * d['rate'] + batch - 1) // batch)
+        else:
+            valid = valid and d['grain'] == d['batches'] * batch and d['gold'] == d['batches'] * d['rate']
         if 'battle_id' in d:
             valid=(valid and d['direction']=='buy' and d['destination']=='battle'
                 and d['side'] in ('attackers','defenders') and isinstance(d['battle_id'],str)

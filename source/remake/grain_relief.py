@@ -7,6 +7,7 @@ from .errors import GameError
 
 WARNING_TURNS = 3
 AID_MONTHS = 2
+EMERGENCY_MONTHS = 2
 RECOVERY_TURNS = 9
 
 
@@ -258,9 +259,13 @@ def recovery_view(game, state, owner):
     return dict(turns=runway, cities={key: row.zero_in for key, row in cities.items()})
 
 
+def imminent_shortages(shortages):
+    return {key for key, row in shortages.items() if row.zero_in <= WARNING_TURNS}
+
+
 def invest(game, state, owner, outlook):
     """Buy grain for immediate gaps and develop land ahead of later shortages."""
-    from . import city_development, facilities
+    from . import city_development
     from .officers import ref_sort_key
 
     _, cities = outlook
@@ -277,16 +282,20 @@ def invest(game, state, owner, outlook):
         if not actors:
             continue
         actor = min(actors, key=lambda i: (-state.officers[i].profile.intellect, ref_sort_key(i)))
-        budget = max(0, city.gold - policy['gold_floor'])
-        market = facilities._trade_quote(game, city, pool['cities'][key]['town'], 'buy', state.month)
-        batch = market['batch_grain']
-        gap = max((gap for _, gap in forecast.gaps), default=0)
-        batches = min(market['max_batches'], budget // market['rate'], (gap + batch - 1) // batch)
+        if forecast.zero_in <= WARNING_TURNS:
+            limit = forecast.monthly * EMERGENCY_MONTHS
+            gap = max((gap for ahead, gap in forecast.gaps
+                       if ahead <= EMERGENCY_MONTHS * WARNING_TURNS), default=0)
+            if not gap and city.grain == 0:
+                gap = city_economy.turn_rations(forecast.monthly, 1)
+            if gap:
+                facilities.buy_emergency_grain(game, state, key, actor, owner, min(limit, gap))
+            continue
+
+        regular_budget = max(0, city.gold - policy['gold_floor'])
         order = dict(city=key, actor=actor, kind='develop_land')
         land = city_development.quote(game, state, key, actor, order['kind'], owner)
-        can_develop = (land['eligible'] and land['gain_max'] and land['gold_max'] <= budget
+        can_develop = (land['eligible'] and land['gain_max'] and land['gold_max'] <= regular_budget
                        and domestic._income(game, key, state)['grain'] > 0)
-        if can_develop and (forecast.zero_in > WARNING_TURNS or not batches):
+        if can_develop:
             city_development.execute(game, state, order, owner)
-        elif batches:
-            facilities.trade(game, state, dict(city=key, actor=actor, direction='buy', batches=batches), owner)

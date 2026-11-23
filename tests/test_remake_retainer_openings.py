@@ -247,27 +247,23 @@ class RetainerOpeningTests(unittest.TestCase):
         officer = game.state.officers[self.catalogs['238-01'].ids['historical-wang-jian-liaodong']]
         self.assertEqual((officer.health, officer.loyalty), (42, 80))
 
-    def test_early_campaign_can_reach_late_same_year_service_and_death_once(self):
-        # Isolate the real appearance service at exact date boundaries. This
-        # catches a window that exists in metadata but cannot create its person
-        # because service and death share238 and the review flag was omitted.
-        late = ('historical-wang-jian-liaodong', 'historical-bi-sheng',
-                'historical-gongsun-xiu')
+    def test_early_campaign_can_reach_late_liaodong_service_and_death_year_boundaries(self):
+        late = {'historical-wang-jian-liaodong': (200, 42),
+                'historical-bi-sheng': (200, 80), 'historical-gongsun-xiu': (234, 80)}
         catalog = self.catalogs['184-02']
-        for year in (237, 238, 239):
+        for year in (199, 200, 233, 234, 238, 239):
             with self.subTest(year=year):
                 game = self.game('184-02')
                 game.state.year, game.state.month = year, 1
                 rng = game.state.rng.state, game.state.rng.draws
                 game._spawn_eligible(game.state)
-                for pid in late:
+                for pid, (debut, health) in late.items():
                     ident = catalog.ids[pid]
-                    if year == 238:
+                    if debut <= year <= 238:
                         self.assertIn(ident, game.state.officers)
                         self.assertIsNone(game.state.officers[ident].faction_id)
                         self.assertEqual(game.state.extension['free_locations'][str(ident)], 'liaodong')
-                        self.assertEqual(game.state.officers[ident].health,
-                                         42 if pid == 'historical-wang-jian-liaodong' else 80)
+                        self.assertEqual(game.state.officers[ident].health, health)
                     else:
                         self.assertNotIn(ident, game.state.officers)
                 saved = canonical(game.export_save())

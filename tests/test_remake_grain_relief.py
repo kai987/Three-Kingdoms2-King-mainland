@@ -100,3 +100,40 @@ class GrainReliefTests(unittest.TestCase):
         self.assertEqual(self.request(game)['aid_reason'], 'insufficient_surplus')
         self.assertEqual(game.state.cities[donor.id].grain, donor_stock)
         self.assertEqual(game.state.cities['jiangxia'].grain, 0)
+
+    def test_delegated_supply_uses_available_ally_aid_before_paying_at_market(self):
+        game = self.start()
+        state = game.state
+        city = state.cities['jiangxia']
+        city.grain = 0
+        domestic.appointments(state, 'shu')['civil'] = 146
+        gold = city.gold
+        expected = 2 * self.forecast(game, city.id).monthly
+
+        game.command('end_turn', {}, game.revision)
+
+        receipt = next(row for row in game.state.extension['events']['items']
+                       if row['kind'] == 'diplomacy_result' and row['city_ids'] == [city.id])
+        self.assertEqual(receipt['details']['aid_reason'], 'accepted')
+        self.assertEqual(game.state.cities[city.id].grain, expected)
+        self.assertEqual(game.state.cities[city.id].gold, gold)
+        self.assertFalse(any(row['kind'] == 'grain_traded' and row['city_ids'] == [city.id]
+                             for row in game.state.extension['events']['items']))
+
+    def test_delegated_supply_buys_after_ally_refuses(self):
+        game = self.start()
+        state = game.state
+        city = state.cities['jiangxia']
+        city.grain = 0
+        state.cities['nanjun'].grain = 0
+        domestic.appointments(state, 'shu')['civil'] = 146
+        limit = 2 * self.forecast(game, city.id).monthly
+        self.assertEqual(self.request(game)['aid_reason'], 'insufficient_surplus')
+
+        game.command('end_turn', {}, game.revision)
+
+        events = [row for row in game.state.extension['events']['items'] if row['city_ids'] == [city.id]]
+        self.assertEqual([row['kind'] for row in events], ['diplomacy_result', 'grain_traded'])
+        self.assertTrue(events[-1]['details']['emergency'])
+        self.assertGreater(events[-1]['details']['grain'], 0)
+        self.assertLessEqual(events[-1]['details']['grain'], limit)

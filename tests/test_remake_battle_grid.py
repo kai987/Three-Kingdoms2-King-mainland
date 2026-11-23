@@ -9,10 +9,11 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake import battle_grid as grid
+from remake import tactical_ai
 from remake.campaign import SeedRng
 from remake.campaign_expansion import TACTICS
 from remake.errors import GameError
-from remake.tactical_ai import candidates, choose_action, tactic_reason, maximum_tactic
+from remake.tactical_ai import candidates, choose_action, legal_tactics, tactic_reason, maximum_tactic
 
 
 def fixture(attackers=1, defenders=2):
@@ -239,6 +240,39 @@ class BattleGridTests(unittest.TestCase):
             for tier, expected in tiers:
                 officer.tier = tier
                 self.assertEqual(maximum_tactic(officer), expected, (person, tier))
+
+    def test_bulk_tactic_choices_match_individual_reasons_and_list_order(self):
+        _, state, battle = fixture()
+        actor, target = battle['attackers'][0], battle['defenders'][0]
+        position(battle, actor['id'], 5, 5)
+        position(battle, target['id'], 6, 5)
+        battle['extended']['tactical']['points']['attackers'] = 20
+        with patch.object(grid, '_field', return_value=plain()):
+            for stunned in (0, 1):
+                battle['extended']['support'][str(actor['id'])]['stunned'] = stunned
+                args = state, battle, actor, target, 'attackers', 'defenders', 'plain'
+                for choices in (TACTICS, tuple(reversed(TACTICS)), TACTICS[::2]):
+                    expected = [i for i, tactic in enumerate(choices) if not tactic_reason(*args, tactic)]
+                    self.assertEqual(legal_tactics(*args, choices), expected)
+
+    def test_standard_tactic_batch_checks_shared_conditions_at_most_once(self):
+        _, state, battle = fixture()
+        actor, target = battle['attackers'][0], battle['defenders'][0]
+        position(battle, actor['id'], 5, 5)
+        position(battle, target['id'], 6, 5)
+        battle['extended']['tactical']['points']['attackers'] = 20
+        args = state, battle, actor, target, 'attackers', 'defenders', 'plain'
+        with patch.object(grid, '_field', return_value=plain()):
+            for stunned in (0, 1, 0):
+                battle['extended']['support'][str(actor['id'])]['stunned'] = stunned
+                expected = [i for i, tactic in enumerate(TACTICS) if not tactic_reason(*args, tactic)]
+                self.assertEqual(bool(expected), not stunned)
+                with (patch.object(tactical_ai, '_active', wraps=tactical_ai._active) as active,
+                      patch.object(tactical_ai, 'maximum_tactic', wraps=maximum_tactic) as learned):
+                    self.assertEqual(legal_tactics(*args, TACTICS), expected)
+                for side in grid.SIDES:
+                    self.assertLessEqual(sum(call.args[1] == side for call in active.call_args_list), 1)
+                self.assertLessEqual(learned.call_count, 1)
 
     def test_saved_point_ceiling_uses_opening_army_not_reduced_live_troops(self):
         game, state, battle = fixture(attackers=3)
