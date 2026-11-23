@@ -3134,7 +3134,9 @@ test('published event backdrops decode from the verified web build',async({page}
   }
   return sizes;
  },{all:browserScope.full,updates});
- expect(result).toHaveLength(browserScope.full||!updates.length?99:updates.length);
+ const fullInventory=browserScope.full||!updates.length;
+ expect(result).toHaveLength(fullInventory?100:updates.length);
+ if(fullInventory)expect(result.map(([path])=>path)).toContain('assets/event-scenes/city-harvest.webp');
  for(const [path,width,height]of result)expect(width>height&&height>0,path).toBe(true);
 });
 
