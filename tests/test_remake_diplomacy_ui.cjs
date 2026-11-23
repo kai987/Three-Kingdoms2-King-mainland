@@ -58,6 +58,14 @@ async function test(){
  await command({action:'return_captives',prisoner:'clerk-000001'});
  select('action','request_attack');assert.match(current.body,/襄陽/);
  await command({action:'request_attack',attack_city:'xiangyang'});
+ view.catalog.diplomacy.grain_relief={xiangyang:{id:'xiangyang',amount:2400,zero_in:3}};
+ target.actions.request_grain=true;
+ target.grain_request_number=4;
+ target.grain_request_friendly=false;
+ assert(ui.open({aidCity:'xiangyang'}));
+ assert.match(current.body,/襄陽 · 糧 2400/);
+ assert.match(current.body,/第 4 次求援.*低於友好/);
+ await command({action:'request_grain',aid_city:'xiangyang'});
  select('action','surrender');await command({action:'surrender'});
  target.actions.surrender=false;
  const submitted=submissions.length;
@@ -75,6 +83,6 @@ async function test(){
  view.game.player='observer';
  assert(!ui.canOpen());assert(!ui.open());assert.equal(await element('submit').onclick(),false);
  ui.dispose();assert.equal(listeners.size,0);
- console.log('diplomacy UI: bilingual stage and alliance, all five canonical payloads, live eligibility and command-book guards passed');
+ console.log('diplomacy UI: bilingual stage and alliance, all six canonical payloads, live eligibility and command-book guards passed');
 }
 test().catch(error=>{console.error(error);process.exitCode=1;});

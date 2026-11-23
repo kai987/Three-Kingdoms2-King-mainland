@@ -108,7 +108,7 @@
   historical_longyou_response:{
    title:["祁山北伐・隴右三郡響應","祁山への北伐・隴右三郡の呼応"],
    counts:[2,1,3],
-   text:["建興六年春，諸葛亮出祁山，南安、天水、安定響應蜀漢。三地轉歸蜀漢。天水太守馬遵與南安太守先後東撤。姜維與功曹梁緒、主簿尹賞、主記梁虔投奔諸葛亮。史實中張郃在街亭擊敗馬謖，曹魏隨後平定三地。在本戰役中，能否奪回由其後的戰局決定。","建興6年の春、諸葛亮は祁山に出兵し、南安・天水・安定が蜀漢に呼応しました。三地は蜀漢の支配下に入りました。天水太守の馬遵と南安太守は東へ退きました。姜維と功曹の梁緒、主簿の尹賞、主記の梁虔は諸葛亮のもとに身を寄せました。史実では張郃が街亭で馬謖を破り、魏が三地を平定しました。この戦役での奪還は、その後の戦況によります。"],
+   text:["建興六年春，諸葛亮出祁山，南安、天水、安定響應蜀漢。三地轉歸蜀漢。天水太守馬遵與南安太守先後東撤。姜維與功曹梁緒、主簿尹賞、主記梁虔投奔諸葛亮。《魏略》亦記上官子脩隨姜維回冀縣。史實中張郃在街亭擊敗馬謖，曹魏隨後平定三地。在本戰役中，能否奪回由其後的戰局決定。","建興6年の春、諸葛亮は祁山に出兵し、南安・天水・安定が蜀漢に呼応しました。三地は蜀漢の支配下に入りました。天水太守の馬遵と南安太守は東へ退きました。姜維と功曹の梁緒、主簿の尹賞、主記の梁虔は諸葛亮のもとに身を寄せました。『魏略』は上官子脩も姜維と共に冀県に戻ったと記します。張郃が街亭で馬謖を破り、魏が三地を平定しました。この戦役での奪還は、その後の戦況によります。"],
    sources:[["《三國志》姜維傳","https://zh.wikisource.org/zh-hant/三國志/卷44#姜維"],["《三國志》曹真傳","https://zh.wikisource.org/wiki/三國志/卷09#曹真"],["《三國志》張既傳注引《魏略》","https://zh.wikisource.org/wiki/三國志/卷15#張既"],["《三國志》張郃傳","https://zh.wikisource.org/wiki/三國志/卷17#張郃"]]
   },
   historical_wuzhang:{
@@ -169,7 +169,7 @@
   historical_liaodong:['魏軍征討遼東','魏軍の遼東遠征'],
   city_founded:['新城建置','新都市の開設'],city_captured:['城池易主','都市の陥落'],
   city_upgraded:['都市擴建','都市の発展'],city_renamed:['城名顯示變更','都市名表示の変更'],
-  city_developed:['都市開發','都市の開発'],civil_unrest:['統治不穩','統治の不安定化'],
+  city_developed:['都市開發','都市の開発'],civil_unrest:['統治不穩','統治の不安定化'],city_harvest:['九月豐收','九月の豊作'],
   battle_started:['戰鬥開始','戦闘開始'],battle_result:['戰果揭曉','戦闘の結果'],battle_supply_exhausted:['戰場兵糧耗盡','戦場の兵糧切れ'],
   duel_started:['單挑交鋒','一騎討ち開始'],duel_result:['單挑結果','一騎討ちの結果'],
   tactic:['計略發動','計略の発動'],march_weather:['行軍遇險','行軍中の災害'],
@@ -215,7 +215,8 @@
   wedding:['婚禮堂上的紅幔與燈火','婚礼の広間を飾る赤い幕と灯り'],
   memorial:['供奉牌位的廳堂','位牌を安置した広間'],
   flood:['遭洪水淹沒的城郊','洪水に見舞われた町外れ'],
-  drought:['乾旱開裂的田地','干ばつでひび割れた農地']
+  drought:['乾旱開裂的田地','干ばつでひび割れた農地'],
+  'city-harvest':['農人收割金黃稻穀並用牛車運往糧倉','農民が黄金色の稲を刈り、牛車で倉へ運ぶ様子']
  });
  function sceneForEvent(row){
   if(!Object.hasOwn(KINDS,row?.kind))return undefined;
@@ -251,13 +252,22 @@
  const WORLD=new Set(['campaign_start','officer_appeared','officer_death','succession','faction_ended','faction_founded','faction_founding_skipped','faction_coup','faction_coup_skipped',...Object.keys(HISTORICAL_CAMPAIGNS),'city_founded','city_upgraded','city_renamed','city_captured','new_year','campaign_victory','campaign_defeat']);
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const clone=value=>JSON.parse(JSON.stringify(value));
- function validEvent(row,cityCount=Number.MAX_SAFE_INTEGER,denominator=1000){
+ function validEvent(row,cityCount=Number.MAX_SAFE_INTEGER,denominator=1000,grainScale=denominator===50?10:1000/denominator){
   if(row?.kind==='diplomacy_result'&&!validDiplomacyEvent(row))return false;
   if(Object.hasOwn(SOUTHERN_MISSION,row?.kind)&&!validSouthernMission(row))return false;
+  if(row?.kind==='city_harvest'&&!validHarvest(row,cityCount))return false;
   return !!row&&Number.isSafeInteger(row.id)&&row.id>0&&Object.hasOwn(KINDS,row.kind)&&['player','world'].includes(row.audience)&&
    Number.isSafeInteger(row.year)&&row.year>0&&Number.isInteger(row.month)&&row.month>=1&&row.month<=12&&[1,11,21].includes(row.day)&&Number.isSafeInteger(row.turn)&&row.turn>0&&
    ['person_ids','city_ids','factions'].every(key=>Array.isArray(row[key])&&row[key].every(id=>typeof id==='string'&&id.length<=128))&&
-   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row,cityCount))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row,denominator))&&(!CITY_OPERATIONS.has(row.kind)||validCityDevelopmentEvent(row))&&(row.kind!=='battle_supply_exhausted'||validBattleSupplyEvent(row,denominator))&&(row.kind!=='battle_result'||!Object.hasOwn(row.details,'coalition')||validCoalitionCapture(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row,cityCount))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(!Object.hasOwn(HISTORICAL_CAMPAIGNS,row.kind)||validHistoricalCampaign(row,denominator))&&(!Object.hasOwn(THREE_VISITS,row.kind)||validThreeVisit(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row))&&(row.kind!=='tactic'||validTacticEvent(row));
+   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row,cityCount))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row,grainScale))&&(!CITY_OPERATIONS.has(row.kind)||validCityDevelopmentEvent(row))&&(row.kind!=='battle_supply_exhausted'||validBattleSupplyEvent(row,denominator))&&(row.kind!=='battle_result'||!Object.hasOwn(row.details,'coalition')||validCoalitionCapture(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row,cityCount))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(!Object.hasOwn(HISTORICAL_CAMPAIGNS,row.kind)||validHistoricalCampaign(row,grainScale))&&(!Object.hasOwn(THREE_VISITS,row.kind)||validThreeVisit(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row))&&(row.kind!=='tactic'||validTacticEvent(row));
+ }
+ function validHarvest(row,cityCount){
+  const {details,city_ids:cities,person_ids:people,factions}=row;
+  return row.audience==='player'&&row.month===10&&row.day===1&&
+   Array.isArray(cities)&&cities.length>0&&cities.length<=cityCount&&new Set(cities).size===cities.length&&
+   Array.isArray(people)&&people.length===0&&Array.isArray(factions)&&factions.length===1&&
+   details&&Object.keys(details).join(',')==='bonuses'&&Array.isArray(details.bonuses)&&
+   details.bonuses.length===cities.length&&details.bonuses.every(value=>Number.isSafeInteger(value)&&value>=0&&value<=100000000);
  }
  function validSouthernMission(row){
   const {details:d,kind,year,person_ids:people}=row;
@@ -280,17 +290,21 @@
  }
  function validDiplomacyEvent(row){
   const d=row.details;
+  const aid=d?.action==='request_grain';
+  const fields=aid?'action,aid_reason,duration,grain,request_number,score,success':'action,duration,score,success';
   return row.factions?.length===2&&
-   d&&Object.keys(d).sort().join(',')==='action,duration,score,success'&&
-   ['goodwill','alliance','return_captives','request_attack','surrender'].includes(d.action)&&
+   d&&Object.keys(d).sort().join(',')===fields&&
+   ['goodwill','alliance','return_captives','request_attack','request_grain','surrender'].includes(d.action)&&
+   (!aid||Number.isSafeInteger(d.grain)&&d.grain>0&&Number.isSafeInteger(d.request_number)&&d.request_number>0&&
+    ['accepted','insufficient_surplus','relations'].includes(d.aid_reason)&&d.success===(d.aid_reason==='accepted'))&&
    typeof d.success==='boolean'&&Number.isInteger(d.score)&&d.score>=0&&d.score<=100&&
    Number.isInteger(d.duration)&&(d.action==='alliance'?d.duration>=1&&d.duration<=72:d.duration===0)&&
    row.city_ids?.length===(d.action==='request_attack'?2:1)&&row.person_ids?.length===(d.action==='return_captives'?2:1);
  }
- function validHistoricalCampaign(row,denominator){
+ function validHistoricalCampaign(row,grainScale){
   const validIds=(ids,min,max)=>ids.length>=min&&ids.length<=max&&ids.every(id=>id.length>0&&id.trim()===id)&&new Set(ids).size===ids.length;
   if(row.kind==='historical_longyou_response'){
-   const d=row.details, eligible=['san14-candidate-0203','san14-candidate-0972','san14-candidate-0010'];
+   const d=row.details, eligible=['san14-candidate-0203','san14-candidate-0972','san14-candidate-0010','san14-candidate-0408'];
    if(row.audience!=='world'||row.year!==228||row.month>3||
       row.factions.join(',')!=='shu,wei'||row.city_ids.join(',')!=='nanan,tianshui,anding')return false;
    if(!Object.keys(d).length)return row.person_ids.join(',')==='san14-candidate-0440';
@@ -300,11 +314,11 @@
     row.person_ids.join(',')===['san14-candidate-0440',...d.joined,...(d.governor_withdrew?['san14-candidate-0764']:[])].join(',');
   }
   const [factions,people,cities]=HISTORICAL_CAMPAIGNS[row.kind];
-  const validDetails=row.kind==='historical_dong_zhuo_relocation'?validDongZhuoRelocation(row,denominator):Object.keys(row.details).length===0;
+  const validDetails=row.kind==='historical_dong_zhuo_relocation'?validDongZhuoRelocation(row,grainScale):Object.keys(row.details).length===0;
   return row.audience==='world'&&validDetails&&
    validIds(row.person_ids,people??1,people??4)&&validIds(row.city_ids,cities??1,cities??8)&&validIds(row.factions,factions,factions);
  }
- function validDongZhuoRelocation(row,denominator){
+ function validDongZhuoRelocation(row,grainScale){
   if(row.year!==190||row.month!==2||row.factions[0]!=='dong_zhuo'||row.person_ids[0]!=='san14-candidate-0736'||
      row.city_ids[0]!=='henan'||row.city_ids[1]!=='jingzhao')return false;
   const d=row.details,keys=Object.keys(d);
@@ -326,7 +340,7 @@
    if(!loot||typeof loot!=='object'||Array.isArray(loot))return false;
    const lootFields=Object.hasOwn(loot,'grain')?['gold','grain','treasure']:['gold','treasure'];
    if(Object.keys(loot).sort().join(',')!==lootFields.join(',')||
-      lootFields.some(field=>!inRange(loot[field],0,RELOCATION_LOOT_LIMITS[field]*(field==='grain'?1000/denominator:1))))return false;
+      lootFields.some(field=>!inRange(loot[field],0,RELOCATION_LOOT_LIMITS[field]*(field==='grain'?grainScale:1))))return false;
   }
   return [moved,lost].every(amounts=>amounts&&typeof amounts==='object'&&!Array.isArray(amounts)&&
    Object.keys(amounts).sort().join(',')===Object.keys(limits).join(',')&&
@@ -376,14 +390,14 @@
   return row.kind==='faction_founded'?d.reason==='formed'&&d.reserves<=1000*row.person_ids.length:
    ['city_occupied','leader_unavailable'].includes(d.reason)&&d.reserves===0;
  }
- function validFacilityEvent(row,denominator){
+ function validFacilityEvent(row,grainScale){
   const d=row.details,k=row.kind,fields={town_developed:['actor','from_town','to_town','gold'],officer_treated:['actor','target','gold','before','after'],officer_studied:['actor','target','gold','before','after','bonus'],grain_traded:['actor','direction','batches','grain','gold','rate'],equipment_bought:['actor','target','slot','item','previous','gold'],prevention_improved:['actor','gold','gain','repair','preparedness_before','preparedness_after','damage_before','damage_after'],city_disaster:['disaster','gold','grain','reserves','rate','preparedness_before','preparedness_after','damage_before','damage_after']}[k];
   if(k==='grain_traded'&&['battle_id','side','destination'].some(key=>Object.hasOwn(d,key)))fields.push('battle_id','side','destination');
   const num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max,people=k==='city_disaster'?[]:[...new Set([d.actor,...(Object.hasOwn(d,'target')?[d.target]:[])])];
   if(row.audience!=='player'||row.city_ids.length!==1||!row.city_ids[0]||row.factions.length!==1||!row.factions[0]||people.some(id=>typeof id!=='string'||!id)||Object.keys(d).sort().join(',')!==fields.sort().join(',')||JSON.stringify(row.person_ids)!==JSON.stringify(people)||!num('gold',0,100000000))return false;
   if(k==='town_developed')return num('from_town',1,2)&&d.to_town===d.from_town+1&&d.gold>0;
   if(k==='officer_treated'||k==='officer_studied')return num('before',k==='officer_treated'?0:1,k==='officer_treated'?99:79)&&num('after',1,k==='officer_treated'?99:89)&&d.after>d.before&&d.gold>0&&(k==='officer_treated'||num('bonus',1,88)&&d.after-d.before>=5&&d.after-d.before<=12);
-  if(k==='grain_traded')return ['buy','sell'].includes(d.direction)&&num('batches',1,1000)&&num('rate',1,100)&&d.grain===d.batches*100000/denominator&&d.gold===d.batches*d.rate&&(!Object.hasOwn(d,'battle_id')||d.direction==='buy'&&d.destination==='battle'&&['attackers','defenders'].includes(d.side)&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id));
+  if(k==='grain_traded')return ['buy','sell'].includes(d.direction)&&num('batches',1,1000)&&num('rate',1,100)&&d.grain===d.batches*100*grainScale&&d.gold===d.batches*d.rate&&(!Object.hasOwn(d,'battle_id')||d.direction==='buy'&&d.destination==='battle'&&['attackers','defenders'].includes(d.side)&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id));
   if(k==='equipment_bought')return ['weapon','armor'].includes(d.slot)&&num('item',0,d.slot==='weapon'?28:7)&&num('previous',0,d.slot==='weapon'?28:7)&&d.item!==d.previous&&d.gold>0;
   if(!['preparedness_before','preparedness_after'].every(key=>num(key,0,99))||!['damage_before','damage_after'].every(key=>num(key,0,50)))return false;
   if(k==='prevention_improved')return num('gain',0,99)&&num('repair',0,50)&&num('gold',1,100)&&d.preparedness_after-d.preparedness_before===d.gain&&d.damage_before-d.damage_after===d.repair;
@@ -481,18 +495,19 @@
  function campaignKey(view){return view?.game?JSON.stringify([view.catalog?.scenario_id||view.catalog?.title||'',view.game.seed,view.game.player]):null;}
  function eventRows(view){
   const rows=view?.game?.extension?.events?.items,cityCount=view?.catalog?.cities?.length,denominator=view?.catalog?.grain_people_per_day;
-  return Array.isArray(rows)?rows.filter(row=>validEvent(row,cityCount,denominator)).sort((a,b)=>a.id-b.id):[];
+  return Array.isArray(rows)?rows.filter(row=>validEvent(row,cityCount,denominator,view?.catalog?.grain_scale)).sort((a,b)=>a.id-b.id):[];
  }
  function historyRows(view){
   const rows=new Map(eventRows(view).map(row=>[row.id,row]));
   const milestones=view?.game?.extension?.events?.milestones;
   if(Array.isArray(milestones))for(const row of milestones){
-   if(MILESTONES.has(row?.kind)&&!rows.has(row.id)&&validEvent(row,view?.catalog?.cities?.length,view?.catalog?.grain_people_per_day))rows.set(row.id,row);
+   if(MILESTONES.has(row?.kind)&&!rows.has(row.id)&&validEvent(row,view?.catalog?.cities?.length,view?.catalog?.grain_people_per_day,view?.catalog?.grain_scale))rows.set(row.id,row);
   }
   return [...rows.values()].sort((a,b)=>b.id-a.id);
  }
  function automatic(row,player,inlineBattle=false){
   if(player==='observer')return Object.hasOwn(HISTORICAL_CAMPAIGNS,row.kind)||['campaign_victory','campaign_defeat'].includes(row.kind);
+  if(row.kind==='city_harvest')return row.factions.includes(player);
   if(row.kind==='tactic'&&inlineBattle)return false;
   return STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)||TREASURY.has(row.kind)||FACILITIES.has(row.kind)||CITY_OPERATIONS.has(row.kind)||EQUIPMENT.has(row.kind)?row.factions.includes(player):row.audience==='player'||WORLD.has(row.kind)||row.factions.includes(player);
  }
@@ -560,6 +575,11 @@
      if(d.action==='goodwill')return text(`${envoy}向${f}送上禮物，外交感情升至${d.score}。`,`${envoy}が${f}に贈り物を届け、外交感情が${d.score}に上がりました。`);
      if(d.action==='alliance')return text(`${envoy}與${f}締結${d.duration}旬同盟。同盟期間互不出征，可通過盟友領地調動。`,`${envoy}が${f}と${d.duration}旬の同盟を締結しました。同盟中は互いに攻撃せず、同盟領を経由して移動できます。`);
      if(d.action==='request_attack')return text(`${sender}請${f}優先評估向${targetCity}出征。須備足兵力與兵糧才會發兵。`,`${sender}は${f}に${targetCity}への出陣を要請しました。兵力と兵糧がそろえば出陣します。`);
+     if(d.action==='request_grain'){
+      if(d.success)return text(`${f}向${n.cities[0]}撥出兩個月用糧（${d.grain}），外交感情為${d.score}。`,`${f}が${n.cities[0]}に2か月分の食糧（${d.grain}）を送り、外交感情は${d.score}になりました。`);
+      const reason=d.aid_reason==='insufficient_surplus'?text('餘糧不足','余剰食糧が不足しているため'):text('外交關係低於友好','外交関係が友好未満のため');
+      return text(`${f}因${reason}，拒絕援助${n.cities[0]}。外交感情為${d.score}。`,`${f}は${reason}、${n.cities[0]}への援助を断りました。外交感情は${d.score}です。`);
+     }
      if(d.action==='return_captives')return d.success?text(`${f}已將${prisoner}交還${sender}。`,`${f}は${prisoner}を${sender}に返還しました。`):text(`${f}拒絕向${sender}交還${prisoner}。`,`${f}は${sender}への${prisoner}の返還を拒みました。`);
      return text(`${f}接受${sender}的勸降，其城池、庫存及在籍武將轉歸${sender}。`,`${f}は${sender}の降伏勧告を受け入れ、所属都市・備蓄・在籍武将が${sender}に加わりました。`);
     }
@@ -585,6 +605,11 @@
     }
     case 'prevention_improved':return text(`${p}完成${c}防災整備，花費${d.gold}金；防災${d.preparedness_before} → ${d.preparedness_after}，災損${d.damage_before} → ${d.damage_after}。`,`${p}が${c}の防災整備を行いました。支出は資金${d.gold}、防災${d.preparedness_before} → ${d.preparedness_after}、被災度${d.damage_before} → ${d.damage_after}です。`);
     case 'city_disaster':return text(`${c}發生${d.disaster==='flood'?'洪水':'旱災'}。本次實損：金${d.gold}、糧${d.grain}、預備兵${d.reserves}；防災${d.preparedness_before} → ${d.preparedness_after}，災損${d.damage_before} → ${d.damage_after}。在途貨物與武將帶兵不受這項城內結算影響。`,`${c}で${d.disaster==='flood'?'洪水':'干ばつ'}が発生しました。実損は資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}。防災${d.preparedness_before} → ${d.preparedness_after}、被災度${d.damage_before} → ${d.damage_after}です。輸送中の貨物や武将の配下兵は、この都市精算では減少しません。`);
+    case 'city_harvest':{
+     const total=(d.bonuses||[]).reduce((sum,bonus)=>sum+bonus,0);
+     return text(`今年未遇洪水或旱災的 ${row.city_ids.length} 座都市九月豐收，產糧增加 20%，共入庫 ${total} 糧。`,
+      `今年、洪水や干ばつのなかった ${row.city_ids.length} 都市が九月に豊作となりました。九月の糧生産が20%増え、合計 ${total} の糧を備蓄しました。`);
+    }
     case 'treasure_found':return text(`${p}在${c}尋得寶1件，已入本城寶庫。本次花費20金，搜尋成功率${d.chance}%。`,`${p}が${c}で宝を1個発見し、都市の宝庫に収めました。探索費用は資金20、成功率は${d.chance}%でした。`);
     case 'treasure_search_failed':return text(`${p}在${c}尋寶未果。本次花費20金，成功率${d.chance}%；已使用本城與執行武將的本旬行動。`,`${p}は${c}で宝を発見できませんでした。費用は資金20、成功率は${d.chance}%。都市と実行武将の今旬の行動を使用しました。`);
     case 'treasure_sold':return text(`${c}出售寶${d.amount}件，取得金${d.gold}，款項已入本城。`,`${c}で宝${d.amount}個を売却し、資金${d.gold}を都市に収めました。`);
@@ -850,7 +875,8 @@
   }
   function render(rows=active){
    if(!rows||!modal||disposed)return;
-   const row=rows[0],count=rows.length>1?text(` · 共${rows.length}項`,` · ${rows.length}件`):'',cities=[...new Set(rows.flatMap(e=>names(e,false).cities))].join(text('、','・'));
+   const row=rows[0],count=rows.length>1?text(` · 共${rows.length}項`,` · ${rows.length}件`):'';
+   const cities=row.kind==='city_harvest'?'':[...new Set(rows.flatMap(e=>names(e,false).cities))].join(text('、','・'));
    const dialogue=options.dialogue||root.GameDialogue,progress=view?.catalog?.three_visits;
    const visit=options.onVisit&&!historyMode&&row.kind==='historical_three_visits'&&progress?.can_visit&&progress.next_visit===1
     ? `<button class="primary" data-event-visit autofocus>${text('前往隆中拜訪','隆中へ訪ねる')}</button>` : '';
@@ -859,7 +885,7 @@
    const kicker=historyMode?text('事件回顧','出来事の記録'):`${text('戰役事件','戦役の出来事')} · ${shown}/${total}`;
    const actions=historyMode?`<button type="button" class="primary" data-event-history-back>${text('返回事件列表','一覧へ戻る')}</button>`:
     `${visit}${settlement}${queue.length?`<button data-event-skip>${text('略過本批','この一括表示を終了')}</button>`:''}<button data-event-next${visit||settlement?'':' class="primary" autofocus'}>${queue.length?text('下一則','次へ'):text('返回戰役','戦役に戻る')}</button>`;
-   modal.innerHTML=`<div data-event-root data-event-kind="${row.kind}" data-l10n-native="${locale()}"><div class="event-heading"><div><p class="event-kicker">${escape(kicker)}</p><h2 id="event-title">${escape(eventTitle(row))}${escape(count)}</h2></div>${languagePicker()}</div><p class="event-date">${eventDate(row)}${cities?`<span class="event-location"> · ${escape(cities)}</span>`:''}</p>${illustration(rows)}<div id="event-description" class="event-description">${rows.map(e=>`${relocationEffects(e)}${dialogue?.html&&dialogue?.event?dialogue.html(dialogue.event(e,view,locale(),i18n),{language:locale(),portraits}):''}<p class="event-facts">${escape(description(e))}</p>${historicalIntroduction(e)}`).join('')}</div><div class="dialog-actions event-actions">${actions}</div></div>`;
+   modal.innerHTML=`<div data-event-root data-event-kind="${row.kind}" data-l10n-native="${locale()}"><div class="event-heading"><div><p class="event-kicker">${escape(kicker)}</p><h2 id="event-title">${escape(eventTitle(row))}${escape(count)}</h2></div>${languagePicker()}</div><p class="event-date">${eventDate(row)}${cities?`<span class="event-location"> · ${escape(cities)}</span>`:''}</p>${illustration(rows)}<div id="event-description" class="event-description">${rows.map(e=>`${relocationEffects(e)}${dialogue?.html&&dialogue?.event?dialogue.html(dialogue.event(e,view,locale(),i18n),{language:locale(),portraits}):''}<p class="event-facts">${escape(description(e))}</p>${harvestEffects(e)}${historicalIntroduction(e)}`).join('')}</div><div class="dialog-actions event-actions">${actions}</div></div>`;
    if(historyMode){
     const back=modal.querySelector('[data-event-history-back]');
     if(back)back.onclick=backToHistory;
@@ -882,6 +908,14 @@
    const skip=modal.querySelector('[data-event-skip]');if(skip)skip.onclick=clear;
    show(visit?'[data-event-visit]':settlement?'[data-event-settlement]':'[data-event-next]');
   }
+  function harvestEffects(row){
+   if(row.kind!=='city_harvest')return '';
+   const {cities}=names(row,false);
+   const receipts=cities.map((city,index)=>`<tr><th scope="row">${escape(city)}</th><td>+${row.details.bonuses[index]}</td></tr>`).join('');
+   return `<div class="event-harvest-cities" tabindex="0" role="region" aria-label="${text('豐收都市','豊作の都市')}"><table>
+    <thead><tr><th scope="col">${text('都市','都市')}</th><th scope="col">${text('增加的糧','増加した糧')}</th></tr></thead><tbody>${receipts}</tbody>
+    </table></div>`;
+  }
   function renderHistory(focus='[data-event-history-filter]'){
    const player=view?.game?.player,hasFaction=!!player&&player!=='observer';
    const filters=Object.entries(HISTORY_FILTERS).filter(([id])=>id!=='own'||hasFaction);
@@ -892,7 +926,9 @@
     return true;
    });
    const entries=rows.map(row=>{
-    const {cities,factions}=names(row,false),context=[cities.join(' → '),factions.join(text('、','・'))].filter(Boolean).join(' · ');
+    const {cities,factions}=names(row,false);
+    const locations=row.kind==='city_harvest'?text(`${cities.length} 座都市`,`${cities.length} 都市`):cities.join(' → ');
+    const context=[locations,factions.join(text('、','・'))].filter(Boolean).join(' · ');
     return `<li><button type="button" data-event-history-entry="${row.id}"><span class="event-history-entry-title">${escape(eventTitle(row))}</span><span class="event-history-entry-context">${eventDate(row)}${context?` · ${escape(context)}`:''}</span></button></li>`;
    }).join('');
    modal.innerHTML=`<div data-event-root data-event-history-list data-l10n-native="${locale()}"><div class="event-heading"><h2 id="event-title">${text('事件回顧','出来事の記録')}</h2>${languagePicker()}</div><div class="event-history-tools"><label class="event-history-filter">${text('篩選','絞り込み')}<select data-event-history-filter>${filters.map(([id,caption])=>`<option value="${id}"${id===historyFilter?' selected':''}>${text(...caption)}</option>`).join('')}</select></label><button type="button" data-event-history-close>${text('返回戰役','戦役に戻る')}</button></div>${entries?`<ul class="event-history-entries">${entries}</ul>`:`<p class="event-history-empty" role="status">${text('沒有符合條件的事件。','該当する出来事はありません。')}</p>`}</div>`;

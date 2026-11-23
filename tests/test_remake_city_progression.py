@@ -47,8 +47,8 @@ def growth_catalog(start=(239, 12)):
     data['faction_rulers'] = {owner: members[index * 3]['runtime_id']
                              for index, owner in enumerate(('wei', 'shu'))}
     data['appearance_locations'] = {row['person_id']: row['city'] for row in data['initial_officers']}
-    data['initial_city_resources'] = {'danyang': dict(gold=101, grain=205, reserves=0),
-                                      'nanyang': dict(gold=0, grain=205, reserves=0)}
+    data['initial_city_resources'] = {'danyang': dict(gold=101, grain=2050, reserves=0),
+                                      'nanyang': dict(gold=0, grain=2050, reserves=0)}
     data['city_income'] = {'danyang': dict(gold=35, grain=90, reserves=0),
                            'nanyang': dict(gold=0, grain=205, reserves=0)}
     with grain_units.using({}):
@@ -84,13 +84,14 @@ class CityProgressionTests(unittest.TestCase):
     def test_three_real_ten_day_turns_upgrade_once_and_add_only_the_new_months_income(self):
         game = self.new_game()
         initial = game.to_dict()
+        opening_grain = initial['cities']['danyang']['grain']
         dues = self.enterContext(record_garrison_charges())
         self.assertEqual(upgrades(game), [])
         for day in (11, 21):
             previous_turn = next_turn(game)
             self.assertEqual((game.state.year, game.state.month, game.state.day), (239, 12, day))
             self.assertEqual(game.state.cities['danyang'].gold, 101)
-            self.assertEqual(game.state.cities['danyang'].grain, 2050 - dues['danyang'])
+            self.assertEqual(game.state.cities['danyang'].grain, opening_grain - dues['danyang'])
             self.assertEqual(upgrades(game), [])
             saved = game.export_save()
             game.command('ai', dict(turn=previous_turn), -1)
@@ -98,8 +99,8 @@ class CityProgressionTests(unittest.TestCase):
         previous_turn = next_turn(game)
         self.assertEqual((game.state.year, game.state.month, game.state.day, game.state.turn), (240, 1, 1, 4))
         city = game.state.cities['danyang']
-        self.assertEqual((city.gold, city.grain, city.reserves), (154, 3400 - dues['danyang'], 0),
-                         'Only 53 gold/135 grain income is added; no opening stock or free soldiers')
+        self.assertEqual((city.gold, city.grain, city.reserves), (154, opening_grain + 2700 - dues['danyang'], 0),
+                         'Only 53 gold/2700 grain income is added; no opening stock or free soldiers')
         self.assertEqual(city.owner, 'wei', 'Growth must retain actual ownership instead of historical Wu')
         self.assertEqual(game.to_dict()['soldiers'], initial['soldiers'])
         self.assertEqual(game.to_dict()['rng'], initial['rng'])
@@ -114,7 +115,7 @@ class CityProgressionTests(unittest.TestCase):
         self.assertEqual(event['factions'], ['wei'])
         self.assertEqual(event['audience'], 'world')
         self.assertEqual(event['details'], dict(from_tier='large', to_tier='giant',
-                                               income=dict(gold=53, grain=1350, reserves=0)))
+                                               income=dict(gold=53, grain=2700, reserves=0)))
         saved, revision = game.export_save(), game.revision
         game.command('ai', dict(turn=previous_turn), revision - 1)
         self.assertEqual(game.export_save(), saved)
@@ -128,7 +129,8 @@ class CityProgressionTests(unittest.TestCase):
             next_turn(twin)
         self.assertEqual((twin.state.year, twin.state.month, twin.state.day), (240, 2, 1))
         self.assertEqual(upgrades(twin), [event], 'The next monthly settlement must not repeat the upgrade')
-        self.assertEqual((twin.state.cities['danyang'].gold, twin.state.cities['danyang'].grain), (207, 4750 - dues['danyang']))
+        self.assertEqual((twin.state.cities['danyang'].gold, twin.state.cities['danyang'].grain),
+                         (207, opening_grain + 5400 - dues['danyang']))
 
     def test_a_post_240_opening_is_already_giant_and_never_replays_the_upgrade(self):
         for start in ((240, 1), (249, 1)):
@@ -137,11 +139,13 @@ class CityProgressionTests(unittest.TestCase):
                 self.assertEqual(game.catalog.data['city_profiles']['danyang']['tier'], 'giant')
                 self.assertEqual(game.catalog.data['city_income']['danyang'], dict(gold=53, grain=135, reserves=0))
                 self.assertEqual(upgrades(game), [])
+                opening_grain = game.state.cities['danyang'].grain
                 with record_garrison_charges() as dues:
                     for _ in range(3):
                         next_turn(game)
                 self.assertEqual(upgrades(game), [])
-                self.assertEqual((game.state.cities['danyang'].gold, game.state.cities['danyang'].grain), (154, 3400 - dues['danyang']))
+                self.assertEqual((game.state.cities['danyang'].gold, game.state.cities['danyang'].grain),
+                                 (154, opening_grain + 2700 - dues['danyang']))
 
     def test_compact_session_views_update_size_and_income_with_the_same_cached_catalog(self):
         catalog = growth_catalog()
@@ -152,7 +156,7 @@ class CityProgressionTests(unittest.TestCase):
         opening = session.view()
         first = transport.pack(opening, catalog.sha256)
         self.assertEqual(opening['catalog']['city_profiles']['danyang']['tier'], 'large')
-        self.assertEqual(opening['catalog']['city_income']['danyang'], dict(gold=35, grain=900, reserves=0))
+        self.assertEqual(opening['catalog']['city_income']['danyang'], dict(gold=35, grain=1800, reserves=0))
         for field in ('city_profiles', 'city_income'):
             self.assertNotIn(field, first['static_catalog'])
         known = first['catalog_token'] + ':' + first['quote_token']
@@ -164,7 +168,7 @@ class CityProgressionTests(unittest.TestCase):
         self.assertNotIn('static_catalog', wire)
         self.assertEqual(wire['catalog_token'], first['catalog_token'])
         self.assertEqual(wire['view']['catalog']['city_profiles']['danyang']['tier'], 'giant')
-        self.assertEqual(wire['view']['catalog']['city_income']['danyang'], dict(gold=53, grain=1350, reserves=0))
+        self.assertEqual(wire['view']['catalog']['city_income']['danyang'], dict(gold=53, grain=2700, reserves=0))
         for field in ('city_profiles', 'city_income'):
             self.assertEqual(wire['view']['catalog'][field], current['catalog'][field])
         self.assertEqual(current['catalog']['scenarios'][0]['city_profiles']['danyang']['tier'], 'large',
@@ -174,7 +178,7 @@ class CityProgressionTests(unittest.TestCase):
         self.assertEqual(session.export_save(), saved, 'Full/compact view reads must not modify state or RNG')
         restored = session.load_save(saved, session.revision)
         self.assertEqual(restored['catalog']['city_profiles']['danyang']['tier'], 'giant')
-        self.assertEqual(restored['catalog']['city_income']['danyang'], dict(gold=53, grain=1350, reserves=0))
+        self.assertEqual(restored['catalog']['city_income']['danyang'], dict(gold=53, grain=2700, reserves=0))
         self.assertEqual(session.export_save(), saved)
 
     def test_forged_growth_event_date_tier_or_income_is_rejected_atomically(self):
@@ -182,6 +186,13 @@ class CityProgressionTests(unittest.TestCase):
         for _ in range(3):
             next_turn(game)
         original, revision = game.export_save(), game.revision
+        older = deepcopy(original)
+        event = next(row for row in older['state']['extension']['events']['items'] if row['kind'] == 'city_upgraded')
+        event['details']['income']['grain'] = 1350
+        older['checksum'] = digest({key: value for key, value in older.items() if key != 'checksum'})
+        restored = Campaign(game.catalog)
+        restored.load_save(older, 0)
+        self.assertEqual(restored.export_save(), older)
         for field, value in (('day', 11), ('month', 2), ('to_tier', 'normal'), ('income', dict(gold=999, grain=999, reserves=1))):
             with self.subTest(field=field):
                 bad = deepcopy(original)

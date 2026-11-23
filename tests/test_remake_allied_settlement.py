@@ -2,7 +2,7 @@
 
 import unittest
 
-from remake import battle_grid, battle_supply
+from remake import battle_grid, battle_supply, grain_units
 from remake.campaign import Campaign
 from test_remake_allied_travel import _alliance, _catalog
 
@@ -25,10 +25,11 @@ class AlliedSettlementTests(unittest.TestCase):
         shu, wu = shu_home.roster.officer_ids[0], wu_home.roster.officer_ids[0]
         shu_home.grain -= 60
         wu_home.grain -= 90
+        ration_units = grain_units.denominator()
         game._start_expanded_battle(state, shu_home, target, [shu, wu], paid=True,
             march_supply=dict(remaining=150, credit_units=0),
             coalition=dict(sources={str(shu): shu_home.id, str(wu): wu_home.id},
-                           provisions={'shu': 6_000, 'wu': 9_000}))
+                           provisions={'shu': 60 * ration_units, 'wu': 90 * ration_units}))
         battle = state.battle
         wu_home.grain -= 30
         battle_supply.receive(state, battle, 'attackers', 30, contributor='wu')

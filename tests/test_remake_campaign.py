@@ -61,7 +61,7 @@ class CampaignTests(unittest.TestCase):
     def test_real_high_ids_and_current_roster_rules(self):
         self.assertEqual(self.game.catalog.name(255), '阿会喃')
         self.assertEqual(self.game.catalog.name(999), '伊籍')
-        self.assertEqual(len(self.game.catalog.definitions), 1082)
+        self.assertEqual(len(self.game.catalog.definitions), 1083)
         self.assertEqual(len(self.game.state.officers), 7)
         self.assertEqual(self.game.catalog.rules.city_officer_capacity, 99)
         self.game.validate(self.game.state)
@@ -89,7 +89,7 @@ class CampaignTests(unittest.TestCase):
         row=self.game.state.extension['travel']['marches'][0]
         self.assertEqual(self.game.state.cities['xiangyang'].grain,
                          38000-row['supply']['loaded'])
-        self.assertEqual(row['supply']['loaded'],estimate(self.game.state,[999],row['quote'])+210)
+        self.assertEqual(row['supply']['loaded'],estimate(self.game.state,[999],row['quote'])+420)
         self.assertEqual(row['supply']['consumed'],0)
         self.assertEqual(self.game.state.soldiers, ledger)
         self.assertIn(999, self.game.state.cities['xiangyang'].roster.officer_ids)

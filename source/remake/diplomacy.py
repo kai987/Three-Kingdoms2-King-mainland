@@ -1,7 +1,7 @@
 """Faction diplomacy, captives and treaties in the ten-day campaign."""
 from copy import deepcopy
 
-from . import command_books, logistics, officer_relations, treasures
+from . import command_books, grain_relief, logistics, officer_relations, treasures
 from . import grain_units
 from .errors import GameError
 from .officers import deserialize_officer_ref, parse_officer_ref, ref_sort_key, recruitment_loyalty
@@ -11,6 +11,8 @@ MAX_TURNS = 72
 REQUEST_TURNS = 6
 NORMAL = 50
 FRIENDLY = 65
+GRAIN_AID_GUARANTEED = 3
+GRAIN_AID_RELATION_CHANGE = 5
 STAGES = ((85, 'intimate'), (FRIENDLY, 'friendly'), (NORMAL, 'normal'),
           (35, 'discord'), (20, 'hostile'), (0, 'hateful'))
 LIMITS = {'gold': (5000, 100), 'grain': (20000, 400), 'treasure': (9, 1)}
@@ -19,6 +21,7 @@ PARAMETERS = {
     'alliance': {'duration'},
     'return_captives': {'prisoner'},
     'request_attack': {'attack_city'},
+    'request_grain': {'aid_city'},
     'surrender': set(),
 }
 
@@ -177,7 +180,7 @@ def _can_surrender(state, score, cities, enemy):
             and faction_power(state, cities) >= ratio * faction_power(state, enemy))
 
 
-def _options(game, state, owner, target, own, other):
+def _options(game, state, owner, target, own, other, aid_cities=()):
     from . import historical_campaigns
     historical = historical_campaigns.historical_allied(state, owner, target)
     end = expiry(state, owner, target)
@@ -195,12 +198,16 @@ def _options(game, state, owner, target, own, other):
                         and not historical_campaigns.allied(state, target, enemy.owner)
                         and not historical_campaigns.allied(state, owner, enemy.owner)):
                     attacks.add(key)
+    aid_number = _section(state, 'grain_aid').get(f'{owner}|{target}', 0) + 1
     return dict(id=target, stage=stage(score), score=score, alliance=pact, attack_cities=sorted(attacks),
+                grain_request_number=aid_number,
+                grain_request_friendly=relation(state, owner, target) >= FRIENDLY,
                 captives=[dict(id=i, name=game.person_name(state, i)) for i, _ in prisoners],
                 actions=dict(goodwill=score<100, alliance=pact is None and score>=NORMAL
                              and not _rupture_now(state, _pair(owner, target)),
                              return_captives=bool(prisoners and _return_city(game, state, own)),
                              request_attack=bool(attacks and not requested_target(state, target)),
+                             request_grain=bool(pact and any(city['amount'] for city in aid_cities)),
                              surrender=pact is None and _can_surrender(state, score, own, other)))
 
 
@@ -228,7 +235,9 @@ def command_options(game, state, owner):
     for city in state.cities.values():
         if city.owner not in {owner, 'neutral'}:
             by_owner.setdefault(city.owner, []).append(city)
-    result['targets'] = [_options(game, state, owner, target, own, sorted(cities, key=lambda c: c.id))
+    aid = grain_relief.aid_cities(game, state, owner) if owner == state.player else {}
+    result['grain_relief'] = aid
+    result['targets'] = [_options(game, state, owner, target, own, sorted(cities, key=lambda c: c.id), aid.values())
                          for target, cities in sorted(by_owner.items())]
     result['can_command'] = bool(result['cities'] and result['targets'] and command_books.can_spend(state, owner, 'diplomacy')
                                  and owner not in state.extension['pending_succession'])
@@ -317,6 +326,32 @@ def _accept_surrender(game, state, owner, target, other):
     game._reconcile_factions(state)
 
 
+def _request_grain(game, state, owner, target, city, amount):
+    # Track each requesting faction and ally separately, including refusals.
+    records = _pool(state).setdefault('grain_aid', {})
+    key = f'{owner}|{target}'
+    number = records[key] = records.get(key, 0) + 1
+    stocks = grain_relief.allied_stocks(game, state, target)
+    if sum(surplus for surplus, _ in stocks) < amount:
+        reason = 'insufficient_surplus'
+    elif number > GRAIN_AID_GUARANTEED and relation(state, owner, target) < FRIENDLY:
+        reason = 'relations'
+    else:
+        reason = 'accepted'
+        remaining = amount
+        for surplus, donor in stocks:
+            transfer = min(surplus, remaining)
+            donor.grain -= transfer
+            remaining -= transfer
+            if not remaining:
+                break
+        city.grain += amount
+    success = reason == 'accepted'
+    score = _change_relation(state, owner, target,
+        GRAIN_AID_RELATION_CHANGE if success else -GRAIN_AID_RELATION_CHANGE)
+    return success, score, dict(grain=amount, request_number=number, aid_reason=reason)
+
+
 def execute(game, state, payload, owner):
     action = payload.get('action')
     if type(action) is not str or action not in PARAMETERS or set(payload) != {'action','city','envoy','target'} | PARAMETERS[action]:
@@ -339,12 +374,25 @@ def execute(game, state, payload, owner):
     if ident not in available or not other:
         raise GameError('請選擇可行動的本城使者及仍有城池的勢力。')
     envoy = available[ident]
-    option = _options(game, state, owner, target, own, other)
+    aid = {}
+    if action == 'request_grain':
+        from . import historical_campaigns
+        if not player_turn or not historical_campaigns.allied(state, owner, target):
+            raise GameError('只能向同盟勢力請求糧援。')
+        key = payload['aid_city']
+        if type(key) is not str:
+            raise GameError('請選擇本方缺糧的城池。')
+        aid = grain_relief.aid_cities(game, state, owner)
+        if not aid.get(key, {}).get('amount'):
+            raise GameError('該城未面臨缺糧，或本方有足夠的糧可及時調撥。')
+    option = _options(game, state, owner, target, own, other, aid.values())
     if not option['actions'][action]:
         raise GameError('目前外交感情或戰局條件不符合。')
     command_books.require(state, owner, 'diplomacy')
     target_name = game.faction_name(state, target)
     score, success, duration, person, attack_city = option['score'], True, 0, None, None
+    details = {}
+    event_city = city_id
     if action == 'goodwill':
         score = _goodwill(state, city, envoy, target, other, score, payload)
     elif action == 'alliance':
@@ -362,6 +410,10 @@ def execute(game, state, payload, owner):
             enemy=state.cities[attack_city].owner, until=state.turn+REQUEST_TURNS,
             after_march=state.extension['travel']['counter'])
         state.extension['ai_strategy'].pop(target, None)
+    elif action == 'request_grain':
+        event_city = payload['aid_city']
+        success, score, details = _request_grain(
+            game, state, owner, target, state.cities[event_city], aid[event_city]['amount'])
     elif ai_turn:
         # An AI turn can try another order after a rejection. Surrender may
         # return several columns or convoys before finding one that cannot dock.
@@ -374,11 +426,11 @@ def execute(game, state, payload, owner):
     state.extension['officer_actions'][str(ident)] = state.turn
     result = '達成' if success else '遭拒'
     names = {'goodwill':'親善','alliance':'同盟','return_captives':'歸還俘虜',
-             'request_attack':'請求攻擊','surrender':'勸告投降'}
+             'request_attack':'請求攻擊','request_grain':'請求糧援','surrender':'勸告投降'}
     game._note(state, f'{game.person_name(state, ident)}向{target_name}提出{names[action]}，結果：{result}。')
     game._emit_event(state, 'diplomacy_result', person_ids=list(dict.fromkeys([envoy.person_id]+([person] if person else []))),
-        city_ids=[city_id]+([attack_city] if attack_city else []), factions=[owner,target],
-        details=dict(action=action, success=success, score=score, duration=duration),
+        city_ids=[event_city]+([attack_city] if attack_city else []), factions=[owner,target],
+        details=dict(action=action, success=success, score=score, duration=duration, **details),
         audience='world' if ai_turn else 'player')
 
 
@@ -387,9 +439,14 @@ def validate(game, state):
         return
     data = state.extension[KEY]
     factions = set(game.catalog.factions) - {'neutral'}
-    if (not isinstance(data, dict) or set(data) != {'relations','treaties','prisoners','requests'}
+    required = {'relations', 'treaties', 'prisoners', 'requests'}
+    if (not isinstance(data, dict) or set(data) - {'grain_aid'} != required
             or any(not isinstance(section, dict) for section in data.values())):
         raise ValueError('Invalid diplomacy records')
+    for key, count in data.get('grain_aid', {}).items():
+        pair = key.split('|')
+        if len(pair) != 2 or len(set(pair)) != 2 or not set(pair) <= factions or type(count) is not int or count < 1:
+            raise ValueError('Invalid grain aid requests')
     for name, cap in (('relations',100), ('treaties',state.turn+MAX_TURNS)):
         for key, value in data[name].items():
             pair = key.split('|')

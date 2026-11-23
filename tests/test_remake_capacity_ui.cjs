@@ -5,7 +5,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const root=path.resolve(__dirname,'..'),source=fs.readFileSync(path.join(root,'game/app.js'),'utf8');
 const elements=new Map(),element=selector=>{
  if(selector==='#transfer-estimate'||selector==='#route-mode')return null;
- if(!elements.has(selector))elements.set(selector,{innerHTML:'',value:'',disabled:false,attributes:{},classList:{add(){},remove(){}},setAttribute(key,value){this.attributes[key]=String(value);},focus(){this.focused=true;},insertAdjacentHTML(){}});
+ if(!elements.has(selector))elements.set(selector,{innerHTML:'',value:'',disabled:false,attributes:{},classList:{add(){},remove(){}},setAttribute(key,value){this.attributes[key]=String(value);},focus(){this.focused=true;},insertAdjacentHTML(){},querySelector(){return null;}});
  return elements.get(selector);
 };
 let picked=[],lastDialog=null,lastNotice=null,lastCommand=null;
@@ -20,6 +20,7 @@ vm.runInContext(source.slice(source.indexOf('const capacity='),source.indexOf('\
 vm.runInContext(source.slice(source.indexOf('const unbuiltSettlement='),source.indexOf(';',source.indexOf('const unbuiltSettlement='))+1),context);
 context.GameI18n.t=String;
 vm.runInContext(source.slice(source.indexOf('function battleText('),source.indexOf('function battleTactical(')),context);
+vm.runInContext(source.slice(source.indexOf('function cityGrainWarning('),source.indexOf('function diplomacyInterface(')),context);
 
 vm.runInContext(source.slice(source.indexOf('function officerAttributes('),source.indexOf('// Classify actual runtime entry')),context);
 async function weightedTransferChecks(){
@@ -29,7 +30,7 @@ async function weightedTransferChecks(){
  };
  const people=Object.fromEntries([999,0,300].map((troops,id)=>[id,{alive:true,health:80,troops,
   loyalty:80,experience:0,profile:{martial_strength:90-id,intellect:70,virtue:60}}]));
- const origin={id:'home',owner:'wei',grain:10,roster:{officer_ids:[0,1,2]}},destination={id:'away',owner:'wei',roster:{officer_ids:[]}},
+ const origin={id:'home',owner:'wei',grain:200,roster:{officer_ids:[0,1,2]}},destination={id:'away',owner:'wei',roster:{officer_ids:[]}},
   full={id:'full',owner:'wei',roster:{officer_ids:[3,4,5]}},blocked={id:'blocked',owner:'wei',roster:{officer_ids:[]}};
  const quotes={};
  for(const to of ['away','full'])for(const [mode,days]of [['fastest',20],['land',20],['sea',30],['explore',20]])quotes[`home:${to}:${mode}`]={days};
@@ -60,21 +61,21 @@ async function weightedTransferChecks(){
   supply=amount=>assert(get('#transfer-supply').innerHTML.includes(`data-supply-loaded="${amount}"`));
  const before=JSON.stringify(fixture.view.game);
  fixture.transferCity(origin);
- assert(input(0).disabled,'999 troops plus the officer need 22 grain for 20 days, not the old five-grain person fee');
+ assert(input(0).disabled,'999 troops plus the officer need 440 grain for 20 days');
  assert(!input(1).disabled&&!input(2).disabled,'Zero-troop officers and smaller units use their actual lower food budget');
  assert(get('#confirm-transfer').disabled);
- click(1);supply(2);assert(!input(2).disabled);
- click(2);supply(10);assert.deepEqual(checked(),[1,2]);assert(!get('#confirm-transfer').disabled,'The exact combined loading budget can be submitted');
+ click(1);supply(40);assert(!input(2).disabled);
+ click(2);supply(200);assert.deepEqual(checked(),[1,2]);assert(!get('#confirm-transfer').disabled,'The exact combined loading budget can be submitted');
  get('#route-mode').value='sea';get('#route-mode').onchange();
- assert.deepEqual(checked(),[1],'A longer route trims the latest selection instead of submitting an unaffordable convoy');supply(3);
+ assert.deepEqual(checked(),[1],'A longer route trims the latest selection instead of submitting an unaffordable convoy');supply(60);
  assert(input(0).disabled&&input(2).disabled);
  get('#route-mode').value='explore';get('#route-mode').onchange();
  assert(get('#confirm-transfer').disabled,'An affordable zero-troop group still cannot explore unknown sea routes');
- click(2);supply(10);assert(!get('#confirm-transfer').disabled);
+ click(2);supply(200);assert(!get('#confirm-transfer').disabled);
  get('#transfer-city').value='full';get('#transfer-city').onchange();
  assert.deepEqual(checked(),[]);assert(inputs.every(row=>row.disabled));assert(get('#confirm-transfer').disabled,'Destination space is independent of the grain limit');
  get('#transfer-city').value='away';get('#transfer-city').onchange();
- get('#route-mode').value='fastest';get('#route-mode').onchange();click(1);click(2);supply(10);
+ get('#route-mode').value='fastest';get('#route-mode').onchange();click(1);click(2);supply(200);
  get('#transfer-city').value='blocked';get('#transfer-city').onchange();
  assert.deepEqual(checked(),[]);assert(inputs.every(row=>row.disabled));assert(get('#confirm-transfer').disabled);
  assert.equal(get('#transfer-supply').innerHTML,'','A disconnected destination must clear the previous route\'s loading estimate');

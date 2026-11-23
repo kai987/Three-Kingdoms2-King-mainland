@@ -544,7 +544,7 @@ def _journey(game, state, source, target, mode, quote, ids, reserves, *, from_ca
         supply=create(state, ids, quote, reserves, from_cargo=from_cargo,initial_grain=initial_grain))
 
 
-def dispatch(game, state, payload, owner):
+def dispatch(game, state, payload, owner, *, emergency_grain=None):
     if (not isinstance(payload, dict) or set(payload) - {'source', 'target', 'officers', 'cargo', 'route_mode','target_march'}
             or not isinstance(payload.get('source'), str) or not isinstance(payload.get('target'), str)
             or payload['source'] not in state.cities or payload['target'] not in state.cities):
@@ -592,10 +592,10 @@ def dispatch(game, state, payload, owner):
         raise GameError('押运后未达到本城保留武将人数。')
     if any(cargo[field] > policy['max_' + field] for field in _CITY_FIELDS) or len(ids) > policy['max_officers']:
         raise GameError('运输队超过本城的单次运输上限。')
-    checked_fields={'grain'} if army is not None else _CITY_FIELDS
+    checked_fields = {'grain'} if army is not None or emergency_grain is not None else _CITY_FIELDS
     if any(getattr(source, field) - cargo[field] < policy['reserve_' + field] for field in checked_fields):
         raise GameError('运输后未达到本城保留物资数量。')
-    grain = _rations(state, quote, ids, cargo)
+    grain = _rations(state, quote, ids, cargo) if emergency_grain is None else emergency_grain
     if source.grain - cargo['grain'] - grain < policy['reserve_grain']:
         raise GameError('运输队粮食不足，或低于本城保留量。')
     if cargo['treasure'] > _treasure_count(state,source.id):
@@ -615,7 +615,8 @@ def dispatch(game, state, payload, owner):
     row = dict(id=pool['next_id'], owner=owner, source=source.id, target=target.id,
         original_target=target.id, officers=list(ids), original_officers=list(ids), cargo=deepcopy(cargo),
         initial_cargo=deepcopy(cargo), morale=domestic.morale(state, source.id), status='outbound',
-        journeys=[_journey(game, state, source.id, target.id, mode, quote, ids, cargo['reserves'])],
+        journeys=[_journey(game, state, source.id, target.id, mode, quote, ids, cargo['reserves'],
+                           initial_grain=grain)],
         checked_turn=0, reason='outbound',target_march=target_march,
         delivery_done=False,delivered=_empty_cargo(),cargo_ledger=[],
         route_policy={k:policy[k] for k in ('allow_sea','allow_special')})

@@ -47,14 +47,25 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
 }
 (async()=>{
  const sceneIds=Object.keys(KINDS).map(kind=>sceneForEvent(row(1,kind)));
- assert.equal(sceneIds.length,98);
+ assert.equal(sceneIds.length,99);
  for(const scene of sceneIds)assert.match(scene,/^[a-z-]+$/);
  sceneIds.push(sceneForEvent(row(1,'city_disaster',{details:{disaster:'flood'}})));
- assert.equal(new Set(sceneIds).size,99,'Each event kind and disaster variant owns a different scene');
+ assert.equal(new Set(sceneIds).size,100,'Each event kind and disaster variant owns a different scene');
  const scenesDir=require('node:path').join(__dirname,'../game/assets/event-scenes');
  assert.deepEqual(fs.readdirSync(scenesDir).filter(name=>name.endsWith('.webp')).sort(),
   sceneIds.map(scene=>scene+'.webp').sort(),'The renderer references every available event art asset exactly once');
  assert.equal(sceneForEvent({kind:'unknown_event'}),undefined);
+ const harvestRow=row(1,'city_harvest',{month:10,person_ids:[],city_ids:['home','enemy'],details:{bonuses:[148,225]}});
+ assert(validEvent(harvestRow,2));
+ assert(!validEvent({...harvestRow,details:{bonuses:[148]}},2));
+ assert(!validEvent({...harvestRow,month:9},2));
+ const harvest=fixture();
+ harvest.events.observe(view([harvestRow]),{newGame:true});harvest.drain();
+ assertScene(harvest.modal.innerHTML,'city-harvest');
+ assert.match(harvest.modal.innerHTML,/共入庫 373 糧/);
+ assert.match(harvest.modal.innerHTML,/<th scope="row">成都<\/th><td>\+148<\/td>/);
+ assert.match(harvest.modal.innerHTML,/<th scope="row">長安<\/th><td>\+225<\/td>/);
+ harvest.events.dispose();
  for(const [kind,details,scene] of [
   ['city_disaster',{disaster:'flood'},'flood'],
   ['city_disaster',{disaster:'drought'},'drought'],
@@ -687,5 +698,5 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
   assert(line.includes('劉禪'));assert(!line.includes('劉備'),'Event faction labels follow the live ruler, not the opening name');
  }
  assert.equal(JSON.stringify(inheritedView),inheritedBefore,'Bilingual event display never changes faction identity or state');inherited.events.dispose();
- console.log('events: 98 bilingual kinds, strict event snapshots, deduplicated visit control, read-only history, locale continuity and immutable presentation passed');
+ console.log('events: 99 bilingual kinds, strict event snapshots, deduplicated visit control, read-only history, locale continuity and immutable presentation passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

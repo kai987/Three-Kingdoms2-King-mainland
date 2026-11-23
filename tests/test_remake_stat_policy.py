@@ -110,13 +110,13 @@ class CampaignStatPolicyTests(unittest.TestCase):
             for row in read('game/config/references/san14-dlc-abilities.json')['abilities']}
         cls.abilities = cls.base_abilities | cls.dlc_abilities
 
-    def test_base_and_dlc_charisma_values_win_and_only78_missing_values_use60(self):
-        self.assertEqual(len(self.people), 1082)
+    def test_base_and_dlc_charisma_values_win_and_only79_missing_values_use60(self):
+        self.assertEqual(len(self.people), 1083)
         self.assertEqual(len(self.base_abilities), 1000)
         self.assertEqual(len(self.dlc_abilities), 4)
         self.assertEqual(len(self.abilities), 1004)
         missing = set(self.people) - set(self.abilities)
-        self.assertEqual(len(missing), 78)
+        self.assertEqual(len(missing), 79)
         for pid, person in self.people.items():
             with self.subTest(person=pid):
                 prior = person['pre_campaign_stat_policy_v1']
@@ -204,7 +204,7 @@ class CampaignStatPolicyTests(unittest.TestCase):
                     self.assertEqual(appearance_values(profile, policy, faction_id=side)['loyalty'], source['value'])
         self.assertGreater(numeric_contexts, 0)
         self.assertGreater(ruler_markers, 0)
-        self.assertEqual(unmatched, 858)
+        self.assertEqual(unmatched, 859)
 
     def test_offline_validator_rejects_old_virtue_and_forged_source_initialization(self):
         officer_stat_sources.validate_campaign_stats(self.people, self.reference)

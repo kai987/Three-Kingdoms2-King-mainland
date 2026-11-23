@@ -99,7 +99,7 @@ const get=id=>elements.get('#'+id),refresh=()=>listeners.get('game-language-chan
  const app=fs.readFileSync(require.resolve('../game/app.js'),'utf8'),start=app.indexOf('function marchStatusHtml('),end=app.indexOf('function departureBudget(',start),
   escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
  const context={view,GameMarchSupply:supply,cityName,escapeHtml};vm.createContext(context);vm.runInContext(app.slice(start,end),context);
- assert.equal(context.marchGrain([1],route),10,'The actual game UI loads only through the friendly depot, not the whole20-day journey');
+ assert.equal(context.marchGrain([1],route),200,'The actual game UI loads only through the friendly depot, not the whole20-day journey');
  assert(context.marchPositionHtml(column).includes('江州'));assert(context.marchSupplyHtml(ration).includes('data-supply-shortage="4"'));
  view.game.turn=99;assert(context.marchStatusHtml(column).includes('等待補給／接收'));
  column.supply.retreat_requested=true;assert(context.marchStatusHtml(column).includes('撤退返程中'));

@@ -3,7 +3,7 @@
   "policy": "Existing logical legs only. Actual rendered SVG curves; no straight-line fallback. Land city_sections identify exact intermediate city stops; runtime must enforce active-city transit. Geographic conversion belongs to the campaign compiler.",
   "sources": {
     "game/build_route_geometry.cjs": "9fe9c8ffc205893a70410f11f63d84c9c85aa7a446b38645383673350207b53e",
-    "game/build_campaigns.py": "5f16d1355de05f3d8ea58980e40d690ba69340725debe2954958fb77dca4f30c",
+    "game/build_campaigns.py": "230c96f838e20bda5b60dee854445ec3329967adf923e38474ccd959e816476a",
     "game/config/road-centers.json": "7878a02ffde949418a1eec6c5ba82ebd4ca4b25f5a76b4d1da562cfe97da1a5e",
     "game/road_centers.py": "16e16ab039fe15605f27d9e46df18ad945014b2aec9f5dd9eb4e9df32f74cdea",
     "game/config/navigation-geometry.json": "a50820fbf5bb5497d244ab09b43a4c48db38ff749734b4d80901f072ae059fdb",

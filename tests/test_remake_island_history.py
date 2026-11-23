@@ -58,7 +58,7 @@ def island_catalog(start, occupied=None):
     data['faction_rulers'] = {side: people[index * 3]['runtime_id']
         for index, side in enumerate(('wei', 'shu'))}
     data['appearance_locations'] = {p['person_id']: p['city'] for p in data['initial_officers']}
-    data['initial_city_resources'] = {city: dict(gold=100, grain=200, reserves=0) for city in active}
+    data['initial_city_resources'] = {city: dict(gold=100, grain=20_000, reserves=0) for city in active}
     data['city_income'] = {city: dict(gold=0, grain=0, reserves=0) for city in active}
     history = read('game/config/campaigns/shared.json')['catalog']['city_history']
     for city in ISLANDS:
@@ -147,8 +147,8 @@ class IslandHistoryTests(unittest.TestCase):
                 for city in ISLANDS:
                     self.assertEqual(game.state.cities[city].owner, 'neutral')
                     expected_city = deepcopy(before['cities'][city])
-                expected_city['grain'] -= paid[city]
-                self.assertEqual(game.to_dict()['cities'][city], expected_city)
+                    expected_city['grain'] -= paid[city]
+                    self.assertEqual(game.to_dict()['cities'][city], expected_city)
                 self.assertEqual(game.to_dict()['officers'], after_monthly_healing(before['officers']))
                 self.assertEqual(game.to_dict()['rng'], before['rng'])
                 self.assertEqual(game.to_dict()['soldiers'], before['soldiers'])

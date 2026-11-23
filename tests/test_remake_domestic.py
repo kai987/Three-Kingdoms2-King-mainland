@@ -33,6 +33,10 @@ def domestic_catalog():
     # Isolate turn logic from any fortuitous persuasion targets.
     data['rules']['persuade_officer_gold'] = 100000000
     data['city_income']['xiangyang'] = dict(gold=100, grain=300, reserves=0)
+    # These delegation fixtures exercise normal work under stocked granaries.
+    for key, stock in data['initial_city_resources'].items():
+        if data['initial_owners'][key] == 'shu':
+            stock['grain'] *= 2
     with tempfile.TemporaryDirectory() as tmp:
         path = Path(tmp) / 'domestic.json'
         path.write_text(json.dumps(data, ensure_ascii=False))
@@ -92,7 +96,7 @@ class DomesticTests(unittest.TestCase):
             self.assertEqual(game.export_save(), snapshot)
             game._complete_turn(game.state)
         self.assertEqual(intellect, 99)
-        self.assertEqual((city.gold, city.grain), (start[0] + 150, start[1] + 4500 - paid['xiangyang']))
+        self.assertEqual((city.gold, city.grain), (start[0] + 150, start[1] + 9000 - paid['xiangyang']))
         snapshot = game.export_save()
         domestic.month_rollover(game, game.state)
         self.assertEqual(game.export_save(), snapshot)
@@ -111,7 +115,7 @@ class DomesticTests(unittest.TestCase):
                 officer = state.officers[civil]
                 officer.profile = replace(officer.profile, intellect=intellect)
                 preview = domestic.view(game, state)['cities']['xiangyang']['monthly_bonus_preview']
-                self.assertEqual(preview, dict(gold=gold, grain=grain))
+                self.assertEqual(preview, dict(gold=gold, grain=2 * grain))
 
         self.assertEqual(state.officers[military].profile.intellect, 75)
         game.command('set_domestic', dict(faction='shu', civil=military, military=civil), game.revision)
@@ -135,11 +139,11 @@ class DomesticTests(unittest.TestCase):
 
         # One full duty at 20%, one half duty at 50%, and one missed duty.
         city = state.cities['xiangyang']
-        self.assertEqual((city.gold, city.grain), (start[0] + 115, start[1] + 3450 - paid['xiangyang']))
+        self.assertEqual((city.gold, city.grain), (start[0] + 115, start[1] + 6900 - paid['xiangyang']))
         self.assertNotIn('income_rate_units', state.extension['domestic']['cities'][city.id])
 
     def test_midmonth_old_save_keeps_earned_income_then_uses_new_rate(self):
-        for older_rate, gold, grain in ((40, 146, 4400), (50, 150, 4500)):
+        for older_rate, gold, grain in ((40, 146, 8800), (50, 150, 9000)):
             with self.subTest(older_rate=older_rate):
                 game = self.game()
                 self.appoint(game)

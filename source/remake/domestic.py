@@ -9,6 +9,7 @@ Only committed faction-turn and calendar hooks perform work. Views are pure.
 from copy import deepcopy
 
 from . import grain_units
+from .city_economy import monthly_income as _income
 from .errors import GameError
 from . import command_books
 from .officers import OFFICER_TROOP_CAP, parse_officer_ref
@@ -279,19 +280,6 @@ def on_arrival(game, state, ids, city_id):
     for ident in ids:
         values.pop(str(ident), None)
         _pool(state).get('march_spirit', {}).pop(str(ident), None)
-
-
-def _income(game, city_id, state=None):
-    value = game.catalog.data.get('city_income', {}).get(city_id,
-        dict(gold=game.catalog.data['rules'].get('monthly_gold_income', 0),
-             grain=grain_units.amount(game.catalog.data['rules'].get('monthly_grain_income', 0)), reserves=0))
-    if state is not None:
-        from .city_economy import income_at
-        from .facilities import adjusted_income
-        from .city_development import adjust_income
-        value=adjusted_income(state,city_id,adjust_income(game,state,city_id,
-            income_at(game.catalog.data,city_id,state.year,state.month) or value))
-    return value
 
 
 def _civil_income_units(intellect):
@@ -607,7 +595,20 @@ def _hire_staff(game, state, owner, city_ids):
     return False
 
 
-def run_automatic(game, state, owner):
+def prioritize_grain(game, state, owner, outlook=None):
+    from . import grain_relief
+
+    if outlook is None:
+        outlook = grain_relief.recovery(game, state, owner)
+    post = appointments(state, owner)
+    if post and post['civil'] is not None:
+        grain_relief.dispatch(game, state, owner)
+        if outlook[1] and _present(game, state, state.cities[next(iter(outlook[1]))], post['civil']):
+            grain_relief.invest(game, state, owner, grain_relief.recovery(game, state, owner))
+    return outlook
+
+
+def run_automatic(game, state, owner, *, outlook=None):
     """Spend the faction's remaining orders under the shared policy, once per turn."""
     synchronize(game, state)
     if owner not in game.catalog.factions or owner == 'neutral' or owner in state.extension.get('ended_factions', []):
@@ -627,6 +628,9 @@ def run_automatic(game, state, owner):
             continue
         row['last_auto_turn'] = state.turn
         eligible.append(key)
+    if eligible and owner == state.player:
+        outlook = prioritize_grain(game, state, owner, outlook)
+    statewide, shortages = outlook or (None, {})
     for task in policy['task_order']:
         if task == 'personnel':
             # Rank across the entire faction before committing. Lexical city
@@ -643,10 +647,12 @@ def run_automatic(game, state, owner):
                 for _ in range(command_books.MAXIMUM):
                     if not _hire_staff(game, state, owner, eligible):
                         break
-        elif task == 'recruit' and policy['recruit_enabled']:
+        elif task == 'recruit' and policy['recruit_enabled'] and statewide is None:
             for _ in range(command_books.MAXIMUM):
                 remaining = command_books.remaining(state, owner)
                 for key in eligible:
+                    if key in shortages:
+                        continue
                     city = state.cities[key]
                     if not command_books.can_spend(state, owner, 'recruit'):
                         break
@@ -666,16 +672,21 @@ def run_automatic(game, state, owner):
                     logistics.auto_dispatch_city(game, state, key)
 
 
-def finish_faction_turn(game, state, owner, *, automatic=True):
+def finish_faction_turn(game, state, owner, *, automatic=True, outlook=None):
     """After manual commands and before the calendar advances, once per city."""
+    from . import grain_relief
+    if outlook is None:
+        outlook = grain_relief.recovery(game, state, owner)
+    statewide, shortages = outlook
+    hold_grain = {key for key, city in state.cities.items() if city.owner == owner} if statewide is not None else shortages
     if automatic:
-        run_automatic(game, state, owner)
-        if owner != state.player:
+        run_automatic(game, state, owner, outlook=outlook)
+        if owner != state.player and not shortages:
             from . import city_development
             city_development.auto_turn(game, state, owner)
         from . import facilities
         facilities.synchronize(game,state)
-        facilities.auto_turn(game,state,owner)
+        facilities.auto_turn(game, state, owner, hold_grain=hold_grain)
         from . import treasures
         treasures.synchronize(game,state)
         treasures.auto_turn(game,state,owner)
@@ -686,6 +697,8 @@ def finish_faction_turn(game, state, owner, *, automatic=True):
     if not post:
         return
     policy = post['policy']
+    from . import logistics
+    frontiers = {city.id for city in logistics._fronts(game, state, owner)} if hold_grain else set()
     for key, city in sorted(state.cities.items()):
         if city.owner != owner:
             continue
@@ -716,8 +729,9 @@ def finish_faction_turn(game, state, owner, *, automatic=True):
                 row.pop('income_extra_units', None)
         # Active jobs, including explicitly configured reserve transports, have
         # first claim. Assign only the local remainder before training it.
-        allocate_garrison(game, state, key)
-        if policy['training_enabled']:
+        if key not in hold_grain or key in frontiers:
+            allocate_garrison(game, state, key)
+        if key not in hold_grain and policy['training_enabled']:
             quote = training_preview(game, state, key)
             if quote['gain']:
                 city.gold -= quote['gold']

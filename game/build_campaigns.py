@@ -138,6 +138,68 @@ def relocate_opening_officer(data, officer, city_id, owner, basis):
     data['appearance_locations'][person_id] = city_id
 
 
+def apply_historical_governors(data, posts):
+    """Resolve dated appointments against the playable scenario and its ownership."""
+    date = data['start_year'], data['start_month']
+    owner = data['initial_owners']
+    active = set(data['active_cities'])
+    officers = {row['person_id']: row for row in data['initial_officers']}
+    assignments = {}
+    for post in posts:
+        city, pid = post['city'], post['person_id']
+        officer = officers.get(pid)
+        if (not tuple(post['start']) <= date <= tuple(post['end']) or city not in active
+                or officer is None or owner[city] == 'neutral'
+                or owner[city] != owner[officer['city']]):
+            continue
+        if officer['city'] != city:
+            if officer['ruler'] or data['main_scenario']['group'] == 'if':
+                continue
+            if sum(row['city'] == city for row in officers.values()) >= 99:
+                continue
+            relocate_opening_officer(data, officer, city, owner[city], 'historical_prefect_opening')
+            data['era_assignments'][pid]['placement_review'] = dict(
+                basis='historical_prefect_opening', source_urls=[post['source']],
+                note='按有記載的郡府任職設置開局駐地。月界採劇本開局日期。',
+                reference_date=list(date), reference_scenario=data['id'],
+                historical_certainty='historical_career_with_opening_station_inference')
+        if city in assignments:
+            raise ValueError(f"{data['id']}: overlapping historical governors at {city}")
+        assignments[city] = dict(person_id=pid, source=post['source'])
+    data['initial_governors'] = assignments
+
+
+def apply_longxi_staff(data, pid, people, source):
+    """Introduce Ma Yong at the historical Longyou opening with no assigned troops."""
+    date = [data['start_year'], data['start_month']]
+    serving = data['id'] == 'mainland227-02'
+    city = 'longxi' if serving else None
+    status = 'serving' if serving else 'scenario_excluded'
+    basis = 'historical_longxi_staff' if serving else 'explicit_scenario_scope'
+    note = people[pid]['chronology_basis']
+    data['appearance_windows'][pid] = []
+    data['era_assignments'][pid] = dict(
+        source_status='historical_named_supplement', source_ruler=None, source_city=None,
+        status=status, year_state='available' if serving else 'not_appeared',
+        faction='wei' if serving else None, city=city,
+        reason=note, death_year_resolved=False, planning_complete=True, placement_basis=basis,
+        **({} if serving else {'exclusion_kind': 'explicit_scenario_scope'}),
+        posting_reference=None, membership_revision=None,
+        placement_review=dict(basis=basis, source_urls=[source], note=note,
+                              reference_date=date if serving else None,
+                              historical_certainty='historical_career_with_opening_station_inference'
+                              if serving else 'explicit_scenario_scope'),
+        appearance_plan=dict(start=date if serving else None,
+                             end=[people[pid]['death_year'], 12] if serving else None, city=city,
+                             status='serving' if serving else 'excluded', basis=basis))
+    if serving:
+        if data['initial_owners']['longxi'] != 'wei':
+            raise ValueError('The reviewed Longxi staff require a Wei opening')
+        data['appearance_locations'][pid] = city
+        data['initial_officers'].append(dict(person_id=pid, city=city, troops=0, ruler=False,
+                                             resolve_death_year=False))
+
+
 def summarize_placement(data):
     """Count effective placements after the shared and scenario sources are merged."""
     people = len(data['people'])
@@ -505,6 +567,8 @@ def load_sources(*, timing=True):
     if index.get('schema') != 'tk2-campaign-sources-v1' or people.get('schema') != 'tk2-campaign-people-v1' or shared.get('schema') != 'tk2-campaign-shared-v1':
         raise ValueError('Unknown canonical campaign source schema')
     order, persons = people['order'], people['people']
+    governors = read('game/config/campaigns/historical-governors.json')
+    staff = governors['longxi_staff']
     validate_public_reference(public_stats, persons)
     dlc_people = {row['person_id'] for row in san14_dlc_abilities['abilities']}
     last_early_opening = tuple(early_shu_openings['after'])
@@ -562,6 +626,8 @@ def load_sources(*, timing=True):
         place_faction_officers(data, present, current_people)
         apply_early_shu_openings(data, early_shu_openings, current_people)
         place_southern_envoys(data, southern_envoys, current_people)
+        apply_longxi_staff(data, staff, current_people, current_people[staff]['ability_source']['source_urls'][0])
+        apply_historical_governors(data, governors['posts'])
         original_people = validate_original_virtue(current_people, original_stats, original_identities)
         stat_counts = validate_campaign_stats(current_people, public_stats, san14_abilities, san14_dlc_abilities)
         data['coverage'].update(

@@ -274,7 +274,12 @@ class TacticalAiTests(unittest.TestCase):
                     extra=1000-unit['troops'];unit['troops']=unit['start']=1000
                     state.officers[unit['id']].troops=1000
                     state.soldiers['recruited']+=extra
-            from remake import siege
+            from remake import battle_supply, siege
+            # Load provisions for the resized fixture using the ordinary service.
+            previous = state.battle['extended'].pop('supply')
+            for side in previous['sides'].values():
+                state.cities[side['origin']].grain += side['loaded']
+            battle_supply.initialize(state, state.battle)
             with patch.object(game,'_perform_battle_action',wraps=game._perform_battle_action) as execute, \
                     patch.object(siege,'_hit',wraps=siege._hit) as hit:
                 game._resolve_ai_battle(state)

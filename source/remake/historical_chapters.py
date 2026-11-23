@@ -5,7 +5,7 @@ from typing import NamedTuple
 
 LONGYOU_RESPONSE = 'historical_longyou_response'
 LONGYOU_CITIES = ('nanan', 'tianshui', 'anding')
-LONGYOU_JOINERS = ('san14-candidate-0203', 'san14-candidate-0972', 'san14-candidate-0010')
+LONGYOU_JOINERS = ('san14-candidate-0203', 'san14-candidate-0972', 'san14-candidate-0010', 'san14-candidate-0408')
 LONGYOU_GOVERNOR = 'san14-candidate-0764'
 DONG_ZHUO_RELOCATION = 'historical_dong_zhuo_relocation'
 WUHUAN_EXPEDITION = 'historical_wuhuan_expedition'

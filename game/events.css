@@ -4,6 +4,10 @@
 #event-dialog .event-heading h2{font-size:32px;margin:0}
 #event-dialog .event-kicker{font-size:14px;margin:0 0 8px}
 #event-dialog .event-date{margin:12px 0;font-size:17px}
+.event-harvest-cities{max-height:16rem;overflow:auto;margin:12px 0}
+.event-harvest-cities table{width:100%;border-collapse:collapse}
+.event-harvest-cities th,.event-harvest-cities td{padding:6px 8px;border-bottom:1px solid;text-align:start}
+.event-harvest-cities :is(th,td):last-child{text-align:end}
 .event-art{position:relative;border:3px solid #000;background:#000;overflow:hidden;min-height:208px}
 .event-art-scene{margin-bottom:16px}
 .event-scene{display:block;width:100%;height:240px;object-fit:cover;object-position:center}

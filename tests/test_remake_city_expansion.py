@@ -108,11 +108,13 @@ class CityExpansionTests(unittest.TestCase):
                     self.assertTrue(game._city_occupancy(state, state.cities[city]) <= 99, city)
                     if state.cities[city].owner == 'neutral':
                         self.assertEqual(state.cities[city].roster.officer_ids, [])
+                governor_cities = {post['person_id']: city for city, post in catalog.data['initial_governors'].items()}
                 for city, people in plan['garrisons'].items():
                     for person in people:
                         officer = state.officers[catalog.ids[person]]
-                        self.assertIn(catalog.ids[person], state.cities[city].roster.officer_ids)
-                        self.assertEqual(officer.faction_id, state.cities[city].owner)
+                        station = state.cities[governor_cities.get(person, city)]
+                        self.assertIn(catalog.ids[person], station.roster.officer_ids)
+                        self.assertEqual(officer.faction_id, station.owner)
                         self.assertTrue(officer.alive)
                 self.assertEqual(state.rng.draws, 0)
 

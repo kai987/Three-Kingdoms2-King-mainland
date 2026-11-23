@@ -98,6 +98,12 @@
    set('facility-trade-max',pending||!trade||tradeMaximum()<1);
    set('facility-trade',!ready||!source?.services?.includes('market')||active.batches<1||active.batches>tradeMaximum());
    const tradePreview=query('#facility-trade-preview');if(tradePreview)tradePreview.textContent=trade?text(`${active.direction==='buy'?'購入':'出售'}兵糧 ${active.batches*trade.batch_grain}，${active.direction==='buy'?'花費':'收入'}金錢 ${active.batches*trade.rate}。`,`兵糧${active.batches*trade.batch_grain}を${active.direction==='buy'?'購入':'売却'}し、資金${active.batches*trade.rate}を${active.direction==='buy'?'支出':'取得'}します。`):text('目前沒有可交易的報價。','現在、取引できる見積りがありません。');
+   const prices=query('#facility-market-prices');
+   if(prices&&source?.trade?.buy&&source.trade.sell){
+    const {buy,sell}=source.trade,month=getView()?.game?.month;
+    prices.textContent=text(`${shown(month)} 月糧價 · 每批 ${shown(buy.batch_grain)} 糧 · 買入 ${shown(buy.rate)} 金 · 賣出 ${shown(sell.rate)} 金`,
+     `${shown(month)}月の相場 ・ 1口 ${shown(buy.batch_grain)} 糧 ・ 買値 ${shown(buy.rate)} 金 ・ 売値 ${shown(sell.rate)} 金`);
+   }
    const prevention=query('#facility-prevention-preview');if(prevention)prevention.textContent=prevent?text(`費用：金${range(prevent.gold_min,prevent.gold_max)}；防災 +${range(prevent.gain_min,prevent.gain_max)} → ${range(prevent.preparedness_min,prevent.preparedness_max)}；損傷 → ${range(prevent.damage_min,prevent.damage_max)}。`,`費用：資金${range(prevent.gold_min,prevent.gold_max)}。防災+${range(prevent.gain_min,prevent.gain_max)} → ${range(prevent.preparedness_min,prevent.preparedness_max)}、損傷 → ${range(prevent.damage_min,prevent.damage_max)}。`):text('請選擇可執行防災的武將。','防災を実行できる武将を選択してください。');
    const actorSummary=query('#facility-actor-summary');if(actorSummary)actorSummary.textContent=active.actor===null?'':officerLabel(active.actor);
    const status=query('#facility-boundary');if(status)status.textContent=boundary();
@@ -117,8 +123,7 @@
     return `<fieldset><legend>${text('學問所求學','学問所で学ぶ')}</legend>${select('facility-student',text('求學武將','学ぶ武将'),active.student,[...(source.students||[])].sort((a,b)=>b.before-a.before||stable(a.id,b.id)).map(p=>[p.id,officerLabel(p.id)]))}<p class="small" id="facility-study-preview">${quote?text(`花費金${shown(quote.gold)}；知 ${shown(quote.before)} → ${range(quote.after_min,quote.after_max)}（增加${range(quote.gain_min,quote.gain_max)}）。知80以上不能再求學。`,`資金${shown(quote.gold)}を使い、知${shown(quote.before)} → ${range(quote.after_min,quote.after_max)}（+${range(quote.gain_min,quote.gain_max)}）。知80以上は学べません。`):text('本城沒有可求學的武將。','この都市に学べる武将はいません。')}</p></fieldset>`;
    }
    if(active.service==='market'){
-    const quote=source.trade?.[active.direction];
-    return `<fieldset><legend>${text('市場兵糧買賣','市場で兵糧を売買')}</legend>${select('facility-trade-direction',text('交易方向','取引の種類'),active.direction,[['buy',text('買進兵糧','兵糧を購入')],['sell',text('出售兵糧','兵糧を売却')]])}<p class="small">${quote?text(`每批兵糧${shown(quote.batch_grain)}，金錢${shown(quote.rate)}。`,`1口は兵糧${shown(quote.batch_grain)}、資金${shown(quote.rate)}です。`):''}</p><div class="facility-amount">${number('facility-trade-batches',text('交易批數','取引口数'),active.batches,tradeMaximum(),tradeMaximum()>0?1:0)}<button type="button" id="facility-trade-max">${text('最大值','最大')}</button></div><p class="small" id="facility-trade-limit"></p><p id="facility-trade-preview" role="status" aria-live="polite"></p></fieldset>`;
+    return `<fieldset><legend>${text('市場兵糧買賣','市場で兵糧を売買')}</legend><p class="small" id="facility-market-prices"></p>${select('facility-trade-direction',text('交易方向','取引の種類'),active.direction,[['buy',text('買進兵糧','兵糧を購入')],['sell',text('出售兵糧','兵糧を売却')]])}<div class="facility-amount">${number('facility-trade-batches',text('交易批數','取引口数'),active.batches,tradeMaximum(),tradeMaximum()>0?1:0)}<button type="button" id="facility-trade-max">${text('最大值','最大')}</button></div><p class="small" id="facility-trade-limit"></p><p id="facility-trade-preview" role="status" aria-live="polite"></p></fieldset>`;
    }
    if(active.service==='armory'){
     const quote=equipmentQuote(),stock=source.stock?.[active.slot]||[];

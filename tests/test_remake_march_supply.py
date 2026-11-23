@@ -164,11 +164,11 @@ class MarchSupplyTests(unittest.TestCase):
         game.command('allocate', dict(city=source.id, officer=ident, troops=10000), game.revision)
         _, march = self.queue(game)
         self.assertEqual(march['supply']['troops'], 10000)
-        self.assertEqual(march['supply']['loaded'], 5555)  # 2,525 march + 3,030 battle
+        self.assertEqual(march['supply']['loaded'], 11110)  # 5,050 march + 6,060 battle
         game = self.restore(game)
         self.advance(game)
         march = game.state.extension['travel']['marches'][0]
-        self.assertEqual(march['supply']['consumed'], 1010)
+        self.assertEqual(march['supply']['consumed'], 2020)
         self.assertEqual(game.state.officers[ident].troops, 10000)
         self.restore(game)
 

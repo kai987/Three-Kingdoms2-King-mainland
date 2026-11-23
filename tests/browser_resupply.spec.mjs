@@ -56,7 +56,7 @@ async function depart(page){
  const ident=await officer.getAttribute('value');await officer.check();
  const food=page.locator('#transfer-supply [data-supply-loaded]'),loaded=Number(await food.getAttribute('data-supply-loaded')),
   units=initial.state.officers[ident].troops+100;
- expect(loaded).toBe(Math.ceil(units*10/100));expect(loaded).toBeLessThan(Math.ceil(units*30/100));
+ expect(loaded).toBe(Math.ceil(units*10/50));expect(loaded).toBeLessThan(Math.ceil(units*30/50));
  await page.locator('#confirm-transfer').click();await idle(page);await expect(page.locator('#dialog')).not.toBeVisible();
  const after=await saved(page),column=after.state.extension.travel.marches[0];
  expect(column.quote.path).toEqual(['nanyang','nanjun','bajun']);expect(column.supply.loaded).toBe(loaded);

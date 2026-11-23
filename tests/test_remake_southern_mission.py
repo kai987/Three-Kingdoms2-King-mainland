@@ -137,7 +137,7 @@ class SouthernMissionTests(unittest.TestCase):
         city = game.state.cities['kuaiji']
         domestic.add_reserves(game, game.state, city, 40_000, recruited=True)
         city.gold += 100_000
-        city.grain += 100_000
+        city.grain += 500_000
         game.validate(game.state)
         # Choose a storm with the real two-stage weather rule while keeping the
         # rest of the campaign deterministic independently of monthly draws.
@@ -165,7 +165,7 @@ class SouthernMissionTests(unittest.TestCase):
         self.assertTrue(paused['paused'])
         self.assertEqual(paused['worked'], 0)
         game = self.round_trip(game)
-        game.state.cities['kuaiji'].grain = 80_000
+        game.state.cities['kuaiji'].grain = 500_000
         for worked in range(10, 90, 10):
             self.next_turn(game)
             self.assertEqual(mission.view(game, game.state)['worked'], worked)

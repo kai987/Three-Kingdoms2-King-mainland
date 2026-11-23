@@ -266,6 +266,7 @@ class HazardMarchTests(unittest.TestCase):
         self.set_troops(game,ids,900)
         game.command('transfer',dict(source='yinping',target='shujun',officers=ids,route_mode='special'),game.revision)
         target=game.state.cities['shujun']
+        target.grain=1_000_000
         self.fill(game,target)
         self.arrive(game)
         self.assertTrue(game.state.extension['travel']['marches'][0]['risks'][0]['applied'])

@@ -557,6 +557,21 @@
         "save"
       ]
     },
+    "tests/test_remake_grain_recovery.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "logistics"
+      ]
+    },
+    "tests/test_remake_grain_relief.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "logistics",
+        "save"
+      ]
+    },
     "tests/test_remake_han_sui_if.py": {
       "tier": "related",
       "groups": [
@@ -618,6 +633,14 @@
         "mainland238-01",
         "mainland249-01",
         "mainland263-05"
+      ]
+    },
+    "tests/test_remake_historical_governors.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "people",
+        "scenarios"
       ]
     },
     "tests/test_remake_historical_scenarios.py": {

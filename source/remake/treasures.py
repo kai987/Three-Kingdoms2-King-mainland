@@ -86,10 +86,15 @@ def opening_stock(data, city_id, owner, year, month):
 
 def empty(game, state):
     cities = {}
+    posts = game.catalog.data.get('initial_governors', {})
     for key, city in state.cities.items():
         amount = opening_stock(game.catalog.data, key, city.owner, state.year, state.month)
+        post = posts.get(key)
+        incumbent = game.catalog.ids[post['person_id']] if post else None
+        appointed = incumbent is not None and _present(game, state, city, incumbent)
         cities[key] = dict(owner=city.owner, treasure=amount,
-                           governor=_governor(game, state, city), governor_mode='auto')
+                           governor=incumbent if appointed else _governor(game, state, city),
+                           governor_mode='manual' if appointed else 'auto')
     owners = set(game.catalog.factions) - {'neutral'}
     return dict(schema=SCHEMA, cities=cities,
         factions={owner: deepcopy(DEFAULT_POLICY) for owner in sorted(owners)},

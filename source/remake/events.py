@@ -60,6 +60,7 @@ DETAILS = {
     'city_upgraded': {'from_tier','to_tier','income'},
     'city_renamed': {'from_name', 'to_name'},
     'city_captured': {'previous_owner'},
+    'city_harvest': {'bonuses'},
     'faction_founded': {'founding_id','reason','reserves'},
     'faction_founding_skipped': {'founding_id','reason','reserves'},
     'faction_coup': {'coup_id','reason','released_troops'},
@@ -92,7 +93,7 @@ DETAILS = {
     'battle_supply_exhausted': BATTLE_SUPPLY_DETAILS,
     'equipment_acquired':EQUIPMENT_DETAILS,
     'domestic_report': {'gold','grain','reserves','morale','cities','reason'},
-    'diplomacy_result': {'action','success','score','duration'},
+    'diplomacy_result': {'action','success','score','duration','grain','request_number','aid_reason'},
 }
 
 
@@ -501,7 +502,7 @@ def transition(campaign, before, after, kind, payload):
             emit(campaign, after, 'city_founded', city_ids=[city, rule['parent']],
                  factions=[value.owner], details=dict(parent=rule['parent']), audience='world')
         elif (before.year,before.month)!=(after.year,after.month):
-            from .city_economy import tier_at,income_at
+            from .city_economy import income_at, scale_monthly_grain, tier_at
             from .map_presentation import city_names
             if campaign.catalog.data.get('city_history', {}).get(city, {}).get('announce_name_changes') is True:
                 old_name = city_names(campaign.catalog, before.year, before.month)[city]
@@ -512,9 +513,10 @@ def transition(campaign, before, after, kind, payload):
             previous=tier_at(campaign.catalog.data,city,before.year,before.month)
             current=tier_at(campaign.catalog.data,city,after.year,after.month)
             if current!=previous:
+                income = income_at(campaign.catalog.data,city,after.year,after.month)
                 emit(campaign,after,'city_upgraded',city_ids=[city],factions=[value.owner],
                      details=dict(from_tier=previous,to_tier=current,
-                                  income=income_at(campaign.catalog.data,city,after.year,after.month)),audience='world')
+                                  income=scale_monthly_grain(income)),audience='world')
     for faction, leader in sorted(after.extension['leaders'].items()):
         previous = before.extension['leaders'].get(faction)
         if leader is not None and leader != previous and faction not in after.extension.get('pending_succession', {}) and kind != 'choose_successor':
@@ -576,10 +578,12 @@ def validate(campaign, state):
                 raise ValueError('Campaign event date')
         if type(row['day']) is not int or row['day'] not in (1, 11, 21) or (row['year'], row['month'], row['day']) > (state.year, state.month, state.day):
             raise ValueError('Campaign event calendar')
+        harvest = row['kind'] == 'city_harvest'
         for key, allowed in [('person_ids', {*campaign.catalog.definitions, *state.extension.get('civil_staff', {}).get('people', {})}), ('city_ids', campaign.catalog.map_cities),
                              ('factions', {*campaign.catalog.factions, 'neutral'})]:
             values = row[key]
-            if not isinstance(values, list) or len(values) > 99 or any(not isinstance(v, str) or v not in allowed for v in values) or len(set(values)) != len(values):
+            limit = len(allowed) if harvest and key == 'city_ids' else 99
+            if not isinstance(values, list) or len(values) > limit or any(not isinstance(v, str) or v not in allowed for v in values) or len(set(values)) != len(values):
                 raise ValueError('Campaign event references')
         if row['audience'] not in {'player', 'world'} or not isinstance(row['details'], dict) or not set(row['details']) <= DETAILS[row['kind']]:
             raise ValueError('Campaign event payload')
@@ -594,7 +598,8 @@ def validate(campaign, state):
             if isinstance(value, str):
                 return len(value) <= 500
             if isinstance(value, list):
-                return len(value) <= 99 and all(value_ok(v, depth+1) for v in value)
+                limit = len(campaign.catalog.map_cities) if harvest else 99
+                return len(value) <= limit and all(value_ok(v, depth+1) for v in value)
             if isinstance(value, dict):
                 return len(value) <= 10 and all(isinstance(k, str) and len(k) <= 80 and value_ok(v, depth+1) for k, v in value.items())
             return False
@@ -610,6 +615,14 @@ def validate(campaign, state):
             _validate_treasury_event(row)
         if row['kind'] in FACILITY_DETAILS:
             _validate_facility_event(row)
+        if harvest:
+            bonuses = row['details'].get('bonuses')
+            if (row['month'] != 10 or row['day'] != 1 or row['audience'] != 'player'
+                    or row['person_ids'] or row['factions'] != [state.player] or state.player == observer.SEAT
+                    or not row['city_ids'] or not isinstance(bonuses, list)
+                    or len(bonuses) != len(row['city_ids'])
+                    or any(type(bonus) is not int or not 0 <= bonus <= 100000000 for bonus in bonuses)):
+                raise ValueError('City harvest receipts')
         if row['kind'] in CITY_DEVELOPMENT_DETAILS:
             _validate_city_development_event(row)
         if row['kind']=='battle_supply_exhausted':
@@ -629,7 +642,9 @@ def validate(campaign, state):
         if row['kind']=='diplomacy_result':
             from .diplomacy import MAX_TURNS, PARAMETERS
             d = row['details']
-            if (set(d) != DETAILS[row['kind']] or d['action'] not in PARAMETERS
+            grain_aid = d.get('action') == 'request_grain'
+            detail_fields = DETAILS[row['kind']] if grain_aid else {'action', 'success', 'score', 'duration'}
+            if (set(d) != detail_fields or d['action'] not in PARAMETERS
                     or type(d['success']) is not bool or type(d['score']) is not int
                     or not 0 <= d['score'] <= 100 or type(d['duration']) is not int
                     or (not 1 <= d['duration'] <= MAX_TURNS if d['action']=='alliance' else d['duration']!=0)
@@ -637,6 +652,11 @@ def validate(campaign, state):
                     or len(row['city_ids']) != (2 if d['action']=='request_attack' else 1)
                     or len(row['person_ids']) != (2 if d['action']=='return_captives' else 1)):
                 raise ValueError('Diplomacy event receipt')
+            if grain_aid and (type(d['grain']) is not int or d['grain'] < 1
+                    or type(d['request_number']) is not int or d['request_number'] < 1
+                    or d['aid_reason'] not in ('accepted', 'relations', 'insufficient_surplus')
+                    or d['success'] != (d['aid_reason'] == 'accepted')):
+                raise ValueError('Grain aid event receipt')
         if row['kind'] in historical_campaigns.EVENT_FACTIONS:
             historical_campaigns.validate_event(campaign.catalog,state,row)
         if row['kind'] in three_visits.STAGES:
@@ -673,17 +693,20 @@ def validate(campaign, state):
                     or not 0 <= row['details']['treasure'] <= 99):
                 raise ValueError('Transport treasure receipt')
         if row['kind']=='city_upgraded':
-            from .city_economy import tier_at,income_at
+            from .city_economy import income_at, scale_monthly_grain, tier_at
             details=row['details']
             if (set(details)!=DETAILS[row['kind']] or len(row['city_ids'])!=1 or row['person_ids']
                     or len(row['factions'])!=1 or row['audience']!='world'):
                 raise ValueError('City size event fields')
             city=row['city_ids'][0]
             previous_year,previous_month=(row['year'],row['month']-1) if row['month']>1 else (row['year']-1,12)
+            base_income = income_at(campaign.catalog.data,city,row['year'],row['month'])
+            # Existing receipts keep the production that was shown when issued.
+            accepted_income = (base_income, scale_monthly_grain(base_income))
             if (details['from_tier']!=tier_at(campaign.catalog.data,city,previous_year,previous_month)
                     or details['to_tier']!=tier_at(campaign.catalog.data,city,row['year'],row['month'])
                     or details['from_tier']==details['to_tier'] or row['day']!=1
-                    or details['income']!=income_at(campaign.catalog.data,city,row['year'],row['month'])):
+                    or details['income'] not in accepted_income):
                 raise ValueError('City size event date or income')
         if row['kind'] == 'city_renamed':
             from .map_presentation import city_names

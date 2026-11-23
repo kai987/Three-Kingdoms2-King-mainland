@@ -11,7 +11,6 @@ from campaign_fixtures import advance_month, controlled_catalog
 from remake.campaign import Campaign
 from remake.city_development import LIMITS
 from remake.city_economy import frontier_maintenance, frontier_outposts_view, garrison_grain_cost, income_at, profile_at, civilian_grain, settle_turn_grain
-from remake.march_supply import cost
 from remake.session import CampaignSession
 
 
@@ -45,7 +44,7 @@ class FrontierEconomyTests(unittest.TestCase):
                 pop = original['extension']['city_development']['cities']
                 civilian = civilian_grain(pop['nanyang']['population'])
                 ordinary = civilian + garrison_grain_cost(game.catalog.data, 'nanyang', 217, 11, troops, 0)
-                frontier = civilian + cost(troops + 17, 0, 30)
+                frontier = civilian + ((troops + 17) * 3 + 9) // 10
                 expected = ordinary * 2 // 3 + frontier - frontier * 2 // 3
                 advance_month(game)
                 state = game.state
@@ -53,10 +52,12 @@ class FrontierEconomyTests(unittest.TestCase):
                 outpost_start, rear_start = (original['cities'][key] for key in ('nanyang', 'nanjun'))
                 self.assertEqual((state.year, state.month), (217, 12))
                 self.assertEqual(outpost.gold, outpost_start['gold'] + 35)
-                self.assertEqual(outpost.grain, outpost_start['grain'] + 900 - expected)
+                self.assertEqual(outpost.grain, outpost_start['grain'] + 1800 - expected)
                 self.assertEqual(outpost.reserves, outpost_start['reserves'] + 17)
                 self.assertEqual(rear.gold, rear_start['gold'] + 35 - 15)
-                self.assertEqual(rear.grain, rear_start['grain'] + 855 - civilian_grain(pop['nanjun']['population']))
+                rear_civilian = civilian_grain(pop['nanjun']['population'])
+                rear_garrison = garrison_grain_cost(game.catalog.data, 'nanjun', 217, 12, 120, 1200)
+                self.assertEqual(rear.grain, rear_start['grain'] + 1800 - rear_civilian - rear_garrison)
                 self.assertEqual(state.soldiers, dict(original['soldiers'], recruited=17))
                 self.assertEqual(sum(state.officers[i].troops for i in outpost.roster.officer_ids), troops)
 
@@ -67,7 +68,7 @@ class FrontierEconomyTests(unittest.TestCase):
                 self.assertEqual(outpost.gold, before_restore['nanyang']['gold'] + 35)
                 ordinary = civilian + garrison_grain_cost(game.catalog.data, 'nanyang', 218, 1, troops, 34)
                 expected = frontier * 2 // 3 + ordinary - ordinary * 2 // 3
-                self.assertEqual(outpost.grain, before_restore['nanyang']['grain'] + 900 - expected)
+                self.assertEqual(outpost.grain, before_restore['nanyang']['grain'] + 1800 - expected)
                 self.assertEqual(rear.gold, before_restore['nanjun']['gold'] + 35)
                 self.assertEqual(outpost.owner, 'wei')
 
@@ -81,10 +82,10 @@ class FrontierEconomyTests(unittest.TestCase):
         start = outpost.gold, outpost.grain, outpost.reserves, rear.gold
         advance_month(game)
         people = civilian_grain(development['population'])
-        after = people + cost(34, 0, 30)
+        after = people + 11  # 34 reserves, each at 50% of the basic ration for 30 days
         need = people * 2 // 3 + after - after * 2 // 3
         self.assertEqual((outpost.gold, outpost.grain, outpost.reserves, rear.gold),
-                         (start[0] + 70, start[1] + 1800 - need, start[2] + 34, start[3] + 35 - 30))
+                         (start[0] + 70, start[1] + 3600 - need, start[2] + 34, start[3] + 35 - 30))
         self.assertEqual(frontier_outposts_view(game.catalog.data, state)[outpost.id]['monthly_maintenance'], 30)
         self.assertEqual(development['baseline']['population'] * 2, development['population'])
         game.validate(state)
@@ -102,6 +103,8 @@ class FrontierEconomyTests(unittest.TestCase):
                 state = game.state
                 development = state.extension['city_development']['cities']['nanyang']
                 development['population'] = population
+                # Keep the test at the assigned population through month-end.
+                state.cities['nanyang'].grain += civilian_grain(population)
                 game.validate(state)
                 rear = state.cities['nanjun']
                 opening_gold = rear.gold
@@ -159,14 +162,14 @@ class FrontierEconomyTests(unittest.TestCase):
             path = Path(tmp) / 'frontier.json'
             path.write_text(json.dumps(data, ensure_ascii=False))
             session = CampaignSession([path])
-        income = dict(data['city_income']['nanyang'], grain=900)
+        income = dict(data['city_income']['nanyang'], grain=1800)
         setup = dict(monthly_maintenance=15, sponsor_city='nanjun')
         opening = session.preview_city(data['id'], 'nanyang')['city']
         self.assertEqual(opening['profile']['kind'], 'frontier_outpost')
         self.assertEqual(opening['income'], income)
         self.assertEqual(opening['frontier_outpost'], setup)
         self.assertNotIn('kind', profile_at(data, 'nanyang', 217, 11))
-        self.assertEqual(income_at(data, 'nanyang', 218, 1), income)
+        self.assertEqual(income_at(data, 'nanyang', 218, 1), dict(income, grain=900))
         result = session.command('new', dict(faction='wei', seed=310), 0)['catalog']
         self.assertEqual(result['frontier_outposts']['nanyang'], setup)
         self.assertEqual(result['city_income']['nanyang'], income)

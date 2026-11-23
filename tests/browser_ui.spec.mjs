@@ -1021,7 +1021,7 @@ test('daily marching grain loads once and consumes actual days through visible t
   if(initial.state.cities[column.quote.path[index+1]]?.owner===initial.state.player)break;
  }
  expect(firstStage).toBeLessThan(column.quote.days);
- expect(loaded).toBe(Math.ceil(units*firstStage/100));
+ expect(loaded).toBe(Math.ceil(units*firstStage/50));
  expect(column.supply).toMatchObject({loaded,received:0,consumed:0,remaining:loaded,elapsed_days:0,route_days:0});
  expect(departing.state.cities[source].grain).toBe(startingGrain-loaded);
  const live=page.locator(`[data-march="${column.id}"] [data-supply-loaded]`);
@@ -1038,7 +1038,7 @@ test('daily marching grain loads once and consumes actual days through visible t
  expect([next.state.year,next.state.month,next.state.day]).toEqual([217,7,11]);
  const marched=next.state.extension.travel.marches.find(row=>row.id===column.id);
  expect(marched).toBeTruthy();
- const elapsed=Math.min(10,column.quote.days),consumed=Math.ceil(units*elapsed/100),received=marched.supply.received;
+ const elapsed=Math.min(10,column.quote.days),consumed=Math.ceil(units*elapsed/50),received=marched.supply.received;
  expect(marched.supply).toMatchObject({loaded,consumed,remaining:loaded+received-consumed,elapsed_days:elapsed,route_days:elapsed,shortage_days:0,lost:0});
  expect(next.state.officers[officerText].health).toBe(initial.state.officers[officerText].health);
  expect(next.state.officers[officerText].loyalty).toBe(initial.state.officers[officerText].loyalty);
@@ -1075,6 +1075,7 @@ test('city size labels and the report adapt to available space while retaining m
   if(mode==='all'){
    for(const city of ['shuofang','wuyuan','yunzhong'])
     await expect(page.locator(`[data-city-label="${city}"]`)).toHaveCount(1);
+   await expect(page.locator('[data-city-label=liucheng]')).toHaveText('柳城');
   }
  }
  await labels.click();await labels.click();
@@ -1475,7 +1476,7 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
  await scenarios.selectOption('mainland194-06');await page.locator('input[name=faction][value=wei]').check();
  expect(await factionFill('shujun','liu_zhang')).toBe(yiFill);
  await expect(marker('jiyin')).toHaveAttribute('data-owner','wei');
- await expect(marker('jiyin')).toHaveAttribute('aria-label',/^鄄，曹操$/);
+ await expect(marker('jiyin')).toHaveAttribute('aria-label',/^鄄城，曹操$/);
  // Zhang Miao's allied army is independently selectable, rather than an
  // ordinary Lü Bu garrison. Cao Cao still opens in the Juancheng proxy.
  await expect(marker('chenliu')).toHaveAttribute('data-owner','zhang_miao');
@@ -2287,7 +2288,7 @@ test('manual treasure transport preserves cargo, rations and saved travel while 
  const quote=convoy.journeys[0].quote;
  expect(quote.days).toBe(expectedTransport.days);expect(quote.modes).toEqual(expectedTransport.modes);
  let stageDays=0;for(let index=0;index<quote.routes.length;index++){stageDays+=quote.routes[index].days;if(before.state.cities[quote.path[index+1]]?.owner==='shu')break;}
- const units=convoy.officers.reduce((sum,id)=>sum+before.state.officers[id].troops+100,0),rations=Math.ceil(units*stageDays/100);
+ const units=convoy.officers.reduce((sum,id)=>sum+before.state.officers[id].troops+100,0),rations=Math.ceil(units*stageDays/50);
  expect(rations).toBe(expectedTransport.cost_grain);
  expect(convoy.journeys[0].supply).toMatchObject({loaded:rations,consumed:0,remaining:rations});
  expect(departing.state.cities[source].grain).toBe(before.state.cities[source].grain-rations);
@@ -2452,11 +2453,15 @@ test('a natural August drought shows bilingual illustrated losses and preserves 
   // damage factor. Check both integer stages instead of assuming intact land.
   const development=current.save.state.extension.city_development.cities[city],baseline=development.baseline;
   const tax=value=>value<=50?50:value<=70?60:value<=80?70:value<=90?80:value<100?90:100;
-  const production=(row,field)=>(row.population/100)*(60+Math.floor(row[field]/3))*tax(row.governance);
+  const production=(row,field)=>Math.floor(row.population/(field==='land'?300:100))*
+   (60+Math.floor(row[field]/(field==='land'?1:3)))*tax(row.governance);
   expect(development.land).toBeLessThan(baseline.land);
   for(const resource of ['gold','grain','reserves']){
-   const adjusted=resource==='reserves'?Math.floor(original.income[city][resource]*development.population/baseline.population):Math.floor(original.income[city][resource]*production(development,resource==='gold'?'industry':'land')/production(baseline,resource==='gold'?'industry':'land'));
-   expect(current.income[city][resource]).toBe(Math.floor(adjusted*(100-actual.damage)/100));
+   const multiplier=resource==='grain'?2:1, base=original.income[city][resource]/multiplier;
+   const field=resource==='gold'?'industry':'land';
+   const adjusted=resource==='reserves'?Math.floor(base*development.population/baseline.population):
+    Math.floor(base*production(development,field)/production(baseline,field));
+   expect(current.income[city][resource]).toBe(multiplier*Math.floor(adjusted*(100-actual.damage)/100));
   }
  }
  const live=current.save.state,currentSoldiers=Object.values(live.cities).reduce((sum,c)=>sum+c.reserves,0)+Object.values(live.officers).reduce((sum,o)=>sum+o.troops,0)+(live.extension.logistics?.convoys||[]).reduce((sum,c)=>sum+c.cargo.reserves,0);
@@ -3092,7 +3097,7 @@ test('march preview discloses a downstream depot shortage before moving officers
  const after=await tacticalSave(page);
  const march=after.state.extension.travel.marches.find(row=>row.source==='shujun'&&row.target==='nanjun');
  expect(march).toMatchObject({officers:[370],quote:{days:56,path:['shujun','qianwei','jiangyang','bajun','fuling','badong','nanjun']}});
- expect(march.supply.loaded).toBe(Math.ceil((before.state.officers[370].troops+100)*4/100));
+ expect(march.supply.loaded).toBe(Math.ceil((before.state.officers[370].troops+100)*4/50));
  expect(after.state.cities.shujun.grain).toBe(before.state.cities.shujun.grain-march.supply.loaded);
  expect(after.state.cities.guanghan.grain).toBe(0);
  const inTransit=page.locator(`[data-march="${march.id}"] button[data-march-officer="370"]`);
@@ -3129,7 +3134,9 @@ test('published event backdrops decode from the verified web build',async({page}
   }
   return sizes;
  },{all:browserScope.full,updates});
- expect(result).toHaveLength(browserScope.full||!updates.length?99:updates.length);
+ const fullInventory=browserScope.full||!updates.length;
+ expect(result).toHaveLength(fullInventory?100:updates.length);
+ if(fullInventory)expect(result.map(([path])=>path)).toContain('assets/event-scenes/city-harvest.webp');
  for(const [path,width,height]of result)expect(width>height&&height>0,path).toBe(true);
 });
 
