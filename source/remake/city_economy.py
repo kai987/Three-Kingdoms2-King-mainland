@@ -172,12 +172,12 @@ def garrison_grain_cost(data, city_id, year, month, active, reserves):
     if frontier_outpost_at(data, city_id, year, month):
         active_rate = reserve_rate = 50 if grain_units.current_rations() else 100
     else:
-        active_rate, reserve_rate = (33, 25) if grain_units.current_rations() else (25, 10)
+        active_rate, reserve_rate = (30, 15) if grain_units.current_rations() else (25, 10)
     return ((active * active_rate + reserves * reserve_rate) * days + rate - 1) // rate
 
 
 def civilian_grain(population):
-    percent = 10 if grain_units.current_rations() else 1
+    percent = 5 if grain_units.current_rations() else 1
     divisor = 100 * grain_units.denominator()
     return (30 * population * percent + divisor - 1) // divisor
 

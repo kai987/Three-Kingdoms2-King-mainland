@@ -1024,18 +1024,23 @@ def _return(game, state, row, reason):
         _pool(state)['convoys'].remove(row)
         return
     choices=[]
-    for city in friendly:
+    # Once the convoy can return home no other route can rank above it.
+    for city in sorted(friendly, key=lambda city: city.id != row['source']):
         additional=sum(i not in city.roster.officer_ids for i in row['officers'])
         if game._city_occupancy(state,city)+additional>game.catalog.rules.city_officer_capacity:
             continue
         if city.id==here:
             choices.append((city.id!=row['source'],0,city.id,'land',game._quote([here],[])))
+            if city.id == row['source']:
+                break
             continue
         origin=copy(state.cities[here]);origin.owner=row['owner']
         selected=_safe_quote(game,state,origin,city,row['route_policy'])
         if selected:
             mode,quote=selected
             choices.append((city.id!=row['source'],quote['days'],city.id,mode,quote))
+            if city.id == row['source']:
+                break
     if not choices:
         row.update(status='waiting',reason='no_return_route')
         row['journeys'][-1]['supply']['waiting']=True

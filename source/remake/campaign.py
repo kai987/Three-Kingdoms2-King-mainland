@@ -137,8 +137,10 @@ class Catalog:
             raise ValueError('Current geographic and hazard travel rules are required')
         if self.data.get('calendar_rules') != {'turn_days': 10, 'month_days': 30, 'turn_start_days': [1, 11, 21], 'monthly_settlement': 'month_rollover'}:
             raise ValueError('Current campaigns require fixed ten-day turns')
-        from . import succession
-        self.appearance_year_corrections = succession.apply_appearance_corrections(self.data)
+        from . import san14_appearance_reference, san14_opening_posts, succession
+        self.appearance_year_corrections = san14_appearance_reference.apply(self.data)
+        self.appearance_year_corrections.update(succession.apply_appearance_corrections(self.data))
+        san14_opening_posts.apply(self.data)
         r = self.data['rules']
         self.rules = GameRules(r['city_officer_capacity'], r['battle_officers_per_side'], r['runtime_capacity'])
         self.by_id, self.definitions, self.profiles = {}, {}, {}

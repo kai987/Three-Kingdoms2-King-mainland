@@ -166,10 +166,11 @@ def audit():
                                  for field in CANONICAL_FIELDS}
             check(all(compiled[field] == expected_identity[field] for field in CANONICAL_FIELDS),
                   scenario_id + ': canonical person identity/date mismatch: ' + pid)
-            correction = RUNTIME_SERVICE_YEARS.get(pid)
-            if correction and expected_identity['service_year'] == correction[0]:
-                expected_identity.update(service_year=correction[1],
-                                         chronology_basis='historical_succession_appearance_correction')
+            correction = catalog.appearance_year_corrections.get(pid)
+            if correction:
+                expected_identity['service_year'] = correction[1]
+                if correction == RUNTIME_SERVICE_YEARS.get(pid):
+                    expected_identity['chronology_basis'] = 'historical_succession_appearance_correction'
             check(all(person[field] == expected_identity[field] for field in CANONICAL_FIELDS),
                   scenario_id + ': runtime person identity/date mismatch: ' + pid)
             check(all(person[field] == canonical_person[field]

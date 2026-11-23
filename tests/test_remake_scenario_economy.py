@@ -15,6 +15,7 @@ from remake import grain_units, city_economy, capital_openings, civil_staff, dom
 from remake.city_economy import (apply_opening_sizes, frontier_outpost_at, income_at, incomes_at,
                                  profile_at, profiles_at, tier_at)
 from remake.officers import OFFICER_TROOP_CAP
+from remake.san14_opening_forces import OPENING_TROOPS
 from remake.starting_garrisons import frontier_cities, mobilize_reserves
 from campaign_fixtures import advance_month, record_garrison_charges
 
@@ -128,7 +129,8 @@ class DatedScenarioEconomyTests(unittest.TestCase):
             self.assertEqual(actual, {pid: opening_troops[pid] for pid in opening})
             self.assertTrue(all(opening[pid] <= old_troops[pid] and 0 <= troops <= OFFICER_TROOP_CAP
                                 for pid, troops in actual.items()))
-            if not capital or capital['troop_percent'] >= 100:
+            if (city.owner not in OPENING_TROOPS.get(data['id'], {})
+                    and (not capital or capital['troop_percent'] >= 100)):
                 self.assertTrue(all(old_troops[pid] <= troops for pid, troops in actual.items()))
             self.assertGreaterEqual(mobilized_reserves, (stocks['reserves'] * 40 + 99) // 100)
 
@@ -281,6 +283,23 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                                         for city in game.state.cities.values()))
                     starts += 1
         self.assertGreaterEqual(starts, 200)
+
+    def test_all_reference_garrisons_match_openings_up_to_officer_capacity(self):
+        self.assertEqual(set(OPENING_TROOPS), {catalog.data['id'] for catalog in self.catalogs.values()})
+        for date, catalog in self.catalogs.items():
+            _, troops = catalog.opening_garrisons
+            totals, capacity = Counter(), Counter()
+            for row in catalog.data['initial_officers']:
+                faction = catalog.data['initial_owners'][row['city']]
+                totals[faction] += troops[row['person_id']]
+                capacity[faction] += OFFICER_TROOP_CAP
+            for faction, source_count in OPENING_TROOPS[catalog.data['id']].items():
+                with self.subTest(date=date, faction=faction):
+                    self.assertGreater(capacity[faction], 0)
+                    self.assertEqual(totals[faction], min(source_count, capacity[faction]))
+            if date == (200, 1):
+                self.assertEqual((totals['yuan_shao'], totals['wei']), (174_000, 87_000))
+                self.assertEqual(totals['ma_teng'] + totals['han_sui'], 32_000)
 
     def test_monthly_income_and_real_spending_preserve_live_stocks_and_rng(self):
         game = self.game(city_disasters=False)

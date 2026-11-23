@@ -284,25 +284,40 @@ class DevelopmentTests(unittest.TestCase):
         self.assertEqual((row['land'], row['industry'], row['governance']), (365, 405, 70))
         self.assertEqual(state.rng.draws, before_draws)
 
-    def test_ai_uses_same_service_once_and_never_acts_for_player(self):
+    def test_ai_uses_each_remaining_book_and_never_acts_for_player(self):
         game, state = setup()
         before = deepcopy(state)
         self.assertEqual(development.auto_turn(game, state, 'one'), [])
         self.assertEqual(before, state)
         state.phase = 'ai'
-        state.rng = SequenceRng([4, 7])
+        orders = command_books.remaining(state, 'two')
+        state.rng = SequenceRng([4, 7] * orders)
         direct = deepcopy(state)
         result = development.auto_turn(game, state, 'two')
-        self.assertEqual(len(result), 1)
-        field = result[0]['development']
-        development.execute(game, direct, dict(city='enemy', actor=6,
-            kind=next(kind for kind, value in development.ACTIONS.items() if value == field)), 'two')
-        self.assertEqual(result[0]['gold'], direct.events[-1]['details']['gold'])
+        self.assertEqual(len(result), orders)
+        self.assertEqual(command_books.remaining(state, 'two'), 0)
+        for receipt in result:
+            kind = next(kind for kind, field in development.ACTIONS.items() if field == receipt['development'])
+            development.execute(game, direct, dict(city='enemy', actor=6, kind=kind), 'two')
+            self.assertEqual(receipt['gold'], direct.events[-1]['details']['gold'])
         self.assertEqual(state.cities['enemy'].gold, direct.cities['enemy'].gold)
         self.assertEqual(state.extension['city_development']['cities'], direct.extension['city_development']['cities'])
         before = deepcopy(state)
         self.assertEqual(development.auto_turn(game, state, 'two'), [])
         self.assertEqual(before, state)
+
+    def test_ai_repairs_its_weak_industry_before_other_development(self):
+        game, state = setup()
+        state.phase = 'ai'
+        city = state.extension['city_development']['cities']['enemy']
+        city['industry'] = 2
+        state.rng = SequenceRng([0, 0] * command_books.remaining(state, 'two'))
+
+        result = development.auto_turn(game, state, 'two')
+
+        self.assertEqual(result[0]['development'], 'industry')
+        self.assertGreater(city['industry'], 2)
+        self.assertEqual(command_books.remaining(state, 'two'), 0)
 
     def test_ownership_preserves_metrics_and_validation_rejects_tampered_schema(self):
         game, state = setup()
@@ -498,7 +513,8 @@ class DevelopmentCampaignTests(unittest.TestCase):
             while game.state.phase == 'ai':
                 game.command('ai', dict(turn=turn), game.revision)
         self.assertTrue(calls, 'A real faction AI must actually commit development, not just quote it')
-        self.assertEqual(len(calls), len({owner for owner, _ in calls}), 'At most one development per faction turn')
+        self.assertGreater(len(calls), len({owner for owner, _ in calls}),
+                           'A faction with remaining orders can develop more than once')
         game.validate(game.state)
 
     def test_all_29_real_openings_pure_income_identity_and_three_saved_developments(self):

@@ -393,11 +393,17 @@
  function validFacilityEvent(row,grainScale){
   const d=row.details,k=row.kind,fields={town_developed:['actor','from_town','to_town','gold'],officer_treated:['actor','target','gold','before','after'],officer_studied:['actor','target','gold','before','after','bonus'],grain_traded:['actor','direction','batches','grain','gold','rate'],equipment_bought:['actor','target','slot','item','previous','gold'],prevention_improved:['actor','gold','gain','repair','preparedness_before','preparedness_after','damage_before','damage_after'],city_disaster:['disaster','gold','grain','reserves','rate','preparedness_before','preparedness_after','damage_before','damage_after']}[k];
   if(k==='grain_traded'&&['battle_id','side','destination'].some(key=>Object.hasOwn(d,key)))fields.push('battle_id','side','destination');
+  if(k==='grain_traded'&&Object.hasOwn(d,'emergency'))fields.push('emergency');
   const num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max,people=k==='city_disaster'?[]:[...new Set([d.actor,...(Object.hasOwn(d,'target')?[d.target]:[])])];
   if(row.audience!=='player'||row.city_ids.length!==1||!row.city_ids[0]||row.factions.length!==1||!row.factions[0]||people.some(id=>typeof id!=='string'||!id)||Object.keys(d).sort().join(',')!==fields.sort().join(',')||JSON.stringify(row.person_ids)!==JSON.stringify(people)||!num('gold',0,100000000))return false;
   if(k==='town_developed')return num('from_town',1,2)&&d.to_town===d.from_town+1&&d.gold>0;
   if(k==='officer_treated'||k==='officer_studied')return num('before',k==='officer_treated'?0:1,k==='officer_treated'?99:79)&&num('after',1,k==='officer_treated'?99:89)&&d.after>d.before&&d.gold>0&&(k==='officer_treated'||num('bonus',1,88)&&d.after-d.before>=5&&d.after-d.before<=12);
-  if(k==='grain_traded')return ['buy','sell'].includes(d.direction)&&num('batches',1,1000)&&num('rate',1,100)&&d.grain===d.batches*100*grainScale&&d.gold===d.batches*d.rate&&(!Object.hasOwn(d,'battle_id')||d.direction==='buy'&&d.destination==='battle'&&['attackers','defenders'].includes(d.side)&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id));
+  if(k==='grain_traded'){
+   const batch=100*grainScale;
+   if(!['buy','sell'].includes(d.direction)||!num('batches',1,1000)||!num('rate',1,100)||!num('grain',1,1000*batch))return false;
+   if(Object.hasOwn(d,'emergency'))return d.emergency===true&&d.direction==='buy'&&!Object.hasOwn(d,'battle_id')&&d.batches===Math.ceil(d.grain/batch)&&d.gold===Math.ceil(d.grain*d.rate/batch);
+   return d.grain===d.batches*batch&&d.gold===d.batches*d.rate&&(!Object.hasOwn(d,'battle_id')||d.direction==='buy'&&d.destination==='battle'&&['attackers','defenders'].includes(d.side)&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id));
+  }
   if(k==='equipment_bought')return ['weapon','armor'].includes(d.slot)&&num('item',0,d.slot==='weapon'?28:7)&&num('previous',0,d.slot==='weapon'?28:7)&&d.item!==d.previous&&d.gold>0;
   if(!['preparedness_before','preparedness_after'].every(key=>num(key,0,99))||!['damage_before','damage_after'].every(key=>num(key,0,50)))return false;
   if(k==='prevention_improved')return num('gain',0,99)&&num('repair',0,50)&&num('gold',1,100)&&d.preparedness_after-d.preparedness_before===d.gain&&d.damage_before-d.damage_after===d.repair;

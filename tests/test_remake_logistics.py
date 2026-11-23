@@ -423,6 +423,23 @@ class LogisticsTests(unittest.TestCase):
             self.assertFalse(logistics.auto_dispatch_city(game, game.state, source.id))
             self.assertEqual(before, game.export_save())
 
+    def test_convoy_already_at_home_skips_searching_other_friendly_cities(self):
+        game = self.game()
+        source = game.state.cities['xiangyang']
+        stocks = source.gold, source.grain, source.reserves
+        self.dispatch(game)
+        row, = game.state.extension['logistics']['convoys']
+        self.assertEqual(game.state.cities['nanjun'].owner, row['owner'])
+        row['journeys'][-1]['supply']['retreat_requested'] = True
+        with patch.object(logistics, '_safe_quote', wraps=logistics._safe_quote) as search:
+            logistics.resolve_supply_retreats(game, game.state)
+            search.assert_not_called()
+        self.assertFalse(game.state.extension['logistics']['convoys'])
+        source = game.state.cities['xiangyang']
+        self.assertEqual((source.gold, source.grain, source.reserves), stocks)
+        self.assertIn(999, source.roster.officer_ids)
+        game.validate(game.state)
+
     def test_target_capture_returns_over_real_time_and_does_not_reserve_enemy_slots(self):
         game = self.game()
         origin = deepcopy(game.state.cities['xiangyang'])

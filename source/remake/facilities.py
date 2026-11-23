@@ -333,6 +333,26 @@ def trade(game, state, payload, owner):
     if not _int(batches, 1, quote['max_batches']):
         raise GameError('兵糧交易數量超出可用庫存或上限。')
     gold, grain = batches * quote['rate'], batches * quote['batch_grain']
+    return _settle_grain_trade(game, state, city, actor, direction, batches, grain, gold, quote['rate'])
+
+
+def buy_emergency_grain(game, state, city, actor, owner, limit):
+    """Fill up to the ration limit, with partial lots priced at the current rate."""
+    city = _city(game, state, city, owner, service='market', kind='trade_grain')
+    actor = _actor(game, state, city, actor)
+    town = _pool(state)['cities'][city.id]['town']
+    rate = market_rate(game, town, 'buy', state.month)
+    batch = _rule(game, 'trade_batch_grain')
+    grain = min(limit, city.gold * batch // rate, LIMIT - city.grain,
+                _rule(game, 'trade_max_batches') * batch)
+    if grain > 0:
+        batches = (grain + batch - 1) // batch
+        gold = (grain * rate + batch - 1) // batch
+        return _settle_grain_trade(game, state, city, actor, 'buy', batches, grain, gold, rate,
+                                   emergency=True)
+
+
+def _settle_grain_trade(game, state, city, actor, direction, batches, grain, gold, rate, *, emergency=False):
     if direction == 'buy':
         _charge(state, city, actor, gold, kind='trade_grain')
         city.grain += grain
@@ -341,7 +361,9 @@ def trade(game, state, payload, owner):
         city.gold += gold
         city.grain -= grain
     details = dict(actor=state.officers[actor].person_id, direction=direction,
-        batches=batches, grain=grain, gold=gold, rate=quote['rate'])
+        batches=batches, grain=grain, gold=gold, rate=rate)
+    if emergency:
+        details['emergency'] = True
     _emit(game, state, 'grain_traded', city, [actor], details)
     return details
 
@@ -576,7 +598,7 @@ def month_rollover(game, state):
     return results
 
 
-def auto_turn(game, state, owner, *, hold_grain=()):
+def auto_turn(game, state, owner, *, hold_grain=(), food_priority=(), allow_stockpiling=True):
     pool = _pool(state)
     if owner not in pool['factions'] or not _ready(state, owner) or pool['auto_turns'][owner] == state.turn:
         return []
@@ -588,7 +610,7 @@ def auto_turn(game, state, owner, *, hold_grain=()):
     for _ in range(command_books.MAXIMUM):
         completed = len(results)
         for key, city in sorted(state.cities.items()):
-            if city.owner != owner or not command_books.can_spend(state, owner):
+            if city.owner != owner or key in food_priority or not command_books.can_spend(state, owner):
                 continue
             actors = [i for i in city.roster.officer_ids
                 if _resident(game, state, city, i, working=True, unused=True, healthy=True)]
@@ -598,8 +620,16 @@ def auto_turn(game, state, owner, *, hold_grain=()):
                 -state.officers[i].profile.virtue, ref_sort_key(i)))
             row, available = pool['cities'][key], min(budget, max(0, city.gold-policy['gold_floor']))
             choice = None
+            can_trade = policy['auto_trade'] and command_books.can_spend(state, owner, 'trade_grain')
+            if can_trade and allow_stockpiling and city.grain < policy['grain_target']:
+                quote = _trade_quote(game, city, row['town'], 'buy', state.month)
+                batch = quote['batch_grain']
+                batches = min(quote['max_batches'], available // quote['rate'],
+                              (policy['grain_target'] - city.grain + batch - 1) // batch)
+                if batches:
+                    choice = (trade, dict(city=key, actor=actor, direction='buy', batches=batches))
             prevention = _prevention_quote(game, city, row, state.officers[actor])
-            if (command_books.can_spend(state, owner, 'improve_prevention') and policy['auto_prevent'] and (row['damage'] or row['preparedness'] < policy['target_preparedness'])
+            if (choice is None and command_books.can_spend(state, owner, 'improve_prevention') and policy['auto_prevent'] and (row['damage'] or row['preparedness'] < policy['target_preparedness'])
                     and prevention['gold_max'] <= available
                     and (prevention['gain_max'] > 0 or row['damage'])):
                 choice = (prevent, dict(city=key, actor=actor))
@@ -608,18 +638,13 @@ def auto_turn(game, state, owner, *, hold_grain=()):
             if choice is None and command_books.can_spend(state, owner, 'treat_officer') and policy['auto_treat'] and patients and _rule(game, 'medical_gold') <= available:
                 patient = min(patients, key=lambda i: (state.officers[i].health, ref_sort_key(i)))
                 choice = (treat, dict(city=key, actor=actor, officer=patient))
-            if choice is None and command_books.can_spend(state, owner, 'trade_grain') and policy['auto_trade']:
-                buy_quote, sell_quote = (_trade_quote(game, city, row['town'], direction, state.month)
-                                         for direction in ('buy', 'sell'))
-                batches = min(buy_quote['max_batches'], available // buy_quote['rate'],
-                    max(0, policy['grain_target']-city.grain+buy_quote['batch_grain']-1)//buy_quote['batch_grain'])
-                if city.grain < policy['grain_target'] and batches > 0:
-                    choice = (trade, dict(city=key, actor=actor, direction='buy', batches=batches))
-                elif key not in hold_grain and city.gold < policy['gold_floor'] and city.grain > policy['grain_target']:
-                    batches = min(sell_quote['max_batches'], (city.grain-policy['grain_target'])//sell_quote['batch_grain'],
-                        (policy['gold_floor']-city.gold+sell_quote['rate']-1)//sell_quote['rate'])
-                    if batches:
-                        choice = (trade, dict(city=key, actor=actor, direction='sell', batches=batches))
+            if (choice is None and can_trade and key not in hold_grain
+                    and city.gold < policy['gold_floor'] and city.grain > policy['grain_target']):
+                quote = _trade_quote(game, city, row['town'], 'sell', state.month)
+                batches = min(quote['max_batches'], (city.grain-policy['grain_target'])//quote['batch_grain'],
+                    (policy['gold_floor']-city.gold+quote['rate']-1)//quote['rate'])
+                if batches:
+                    choice = (trade, dict(city=key, actor=actor, direction='sell', batches=batches))
             if choice is None and policy['auto_equip'] and row['town'] >= 2:
                 people = sorted((i for i in city.roster.officer_ids if _resident(game,state,city,i)),
                     key=lambda i: (-state.officers[i].profile.martial_strength, ref_sort_key(i)))

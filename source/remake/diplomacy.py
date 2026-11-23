@@ -326,18 +326,66 @@ def _accept_surrender(game, state, owner, target, other):
     game._reconcile_factions(state)
 
 
+def _grain_aid_reason(state, owner, target, amount, stocks):
+    if sum(surplus for surplus, _ in stocks) < amount:
+        return 'insufficient_surplus'
+    prior = _section(state, 'grain_aid').get(f'{owner}|{target}', 0)
+    if prior >= GRAIN_AID_GUARANTEED and relation(state, owner, target) < FRIENDLY:
+        return 'relations'
+    return 'accepted'
+
+
+def request_available_grain(game, state, owner):
+    """Use the normal diplomacy order for allies able and willing to help."""
+    from . import historical_campaigns
+
+    allies = sorted({city.owner for city in state.cities.values()
+                     if city.owner not in (owner, 'neutral')
+                     and historical_campaigns.allied(state, owner, city.owner)},
+                    key=lambda target: (-relation(state, owner, target), target))
+    if not allies or not command_books.can_spend(state, owner, 'diplomacy'):
+        return False
+    requests = grain_relief.aid_cities(game, state, owner)
+    answered = {event['city_ids'][0] for event in state.extension['events']['items']
+                if event['turn'] == state.turn and event['kind'] == 'diplomacy_result'
+                and event['factions'][0] == owner and event['details']['action'] == 'request_grain'}
+    own = _holdings(state, owner)
+    received = False
+    for key, request in requests.items():
+        amount = request['amount']
+        if not amount or key in answered:
+            continue
+        if not command_books.can_spend(state, owner, 'diplomacy'):
+            break
+        travelling = game._march_ids(state)
+        envoy = min(((city.id, officer) for city in own for officer in _envoys(state, city, travelling)),
+                    key=lambda pair: (-pair[1].profile.intellect - pair[1].profile.virtue,
+                                      pair[0], ref_sort_key(pair[1].runtime_id)), default=None)
+        if envoy is None:
+            break
+        for target in allies:
+            stocks = grain_relief.allied_stocks(game, state, target)
+            if _grain_aid_reason(state, owner, target, amount, stocks) != 'accepted':
+                continue
+            city, officer = envoy
+            try:
+                execute(game, state, dict(action='request_grain', city=city, envoy=officer.runtime_id,
+                                         target=target, aid_city=key), owner)
+            except GameError:
+                continue
+            received = True
+            break
+    return received
+
+
 def _request_grain(game, state, owner, target, city, amount):
     # Track each requesting faction and ally separately, including refusals.
     records = _pool(state).setdefault('grain_aid', {})
     key = f'{owner}|{target}'
-    number = records[key] = records.get(key, 0) + 1
     stocks = grain_relief.allied_stocks(game, state, target)
-    if sum(surplus for surplus, _ in stocks) < amount:
-        reason = 'insufficient_surplus'
-    elif number > GRAIN_AID_GUARANTEED and relation(state, owner, target) < FRIENDLY:
-        reason = 'relations'
-    else:
-        reason = 'accepted'
+    reason = _grain_aid_reason(state, owner, target, amount, stocks)
+    number = records[key] = records.get(key, 0) + 1
+    if reason == 'accepted':
         remaining = amount
         for surplus, donor in stocks:
             transfer = min(surplus, remaining)
@@ -377,7 +425,7 @@ def execute(game, state, payload, owner):
     aid = {}
     if action == 'request_grain':
         from . import historical_campaigns
-        if not player_turn or not historical_campaigns.allied(state, owner, target):
+        if not historical_campaigns.allied(state, owner, target):
             raise GameError('只能向同盟勢力請求糧援。')
         key = payload['aid_city']
         if type(key) is not str:

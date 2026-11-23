@@ -57,18 +57,20 @@ def _active(battle, side):
             and str(unit['id']) not in battle['extended']['surrenders']]
 
 
-def tactic_reason(state, battle, actor, target, own, foe, terrain, tactic):
-    """Player-compatible legality; usefulness (e.g. an empty granary) is scored."""
+def _caster_target_reason(state, battle, actor, target, own, foe):
     if state.phase != 'battle' or battle['outcome']:
         return '当前没有待操作的战斗。'
     if battle['extended']['duel']:
         return '请先完成或退出当前单挑。'
     if actor not in _active(battle, own) or target not in _active(battle, foe):
         return '请选择未行动的本方部队与有效敌军。'
-    _, cost, effect, _ = tactic
-    support = _support(battle, actor)
-    if support['stunned']:
+    if _support(battle, actor)['stunned']:
         return '该部队受扰乱，不能施计；可执行普通行动恢复。'
+    return ''
+
+
+def _effect_reason(state, battle, actor, target, own, terrain, tactic, learned_id=None):
+    _, cost, effect, _ = tactic
     if effect=='surrender':
         from .battle_allegiance import reason
         failure=reason(state,battle,target,own,actor=actor)
@@ -76,14 +78,16 @@ def tactic_reason(state, battle, actor, target, own, foe, terrain, tactic):
     if 'tactical' in battle['extended']:
         from . import battle_grid
         from .campaign_expansion import TACTICS
-        tid = next((index for index, row in enumerate(TACTICS) if row == tactic), None)
+        tid = learned_id
         if tid is None:
-            return '計略編號無效。'
-        if tid > maximum_tactic(state.officers[actor['id']]):
-            return '此武將尚未習得這項計略。'
+            tid = next((index for index, row in enumerate(TACTICS) if row == tactic), None)
+            if tid is None:
+                return '計略編號無效。'
+            if tid > maximum_tactic(state.officers[actor['id']]):
+                return '此武將尚未習得這項計略。'
         reason = battle_grid.tactic_range_reason(battle, actor, target, tid)
         return reason or battle_grid.tactic_terrain_reason(battle, actor, target, tid)
-    if support['energy'] < cost:
+    if _support(battle, actor)['energy'] < cost:
         return '计略气力不足。'
     if effect in {'water', 'chain', 'flood'} and terrain != 'water':
         return '此计略需要水地形。'
@@ -96,9 +100,23 @@ def tactic_reason(state, battle, actor, target, own, foe, terrain, tactic):
     return ''
 
 
+def tactic_reason(state, battle, actor, target, own, foe, terrain, tactic):
+    """Player-compatible legality; usefulness (e.g. an empty granary) is scored."""
+    return (_caster_target_reason(state, battle, actor, target, own, foe)
+            or _effect_reason(state, battle, actor, target, own, terrain, tactic))
+
+
 def legal_tactics(state, battle, actor, target, own, foe, terrain, tactics):
+    if _caster_target_reason(state, battle, actor, target, own, foe):
+        return []
+    if 'tactical' in battle['extended']:
+        from .campaign_expansion import TACTICS
+        if tactics is TACTICS:
+            learned = maximum_tactic(state.officers[actor['id']]) + 1
+            return [tid for tid, tactic in enumerate(tactics[:learned])
+                    if not _effect_reason(state, battle, actor, target, own, terrain, tactic, tid)]
     return [index for index, tactic in enumerate(tactics)
-            if not tactic_reason(state, battle, actor, target, own, foe, terrain, tactic)]
+            if not _effect_reason(state, battle, actor, target, own, terrain, tactic)]
 
 
 def expected_attack(battle, actor, target, damage_percent=32):

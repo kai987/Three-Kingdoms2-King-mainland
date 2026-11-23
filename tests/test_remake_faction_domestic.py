@@ -11,7 +11,7 @@ sys.path[:0] = [str(ROOT / 'source'), str(ROOT / 'tests')]
 from remake import grain_units
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import city_economy, civil_staff, domestic, logistics, treasures
+from remake import city_economy, civil_staff, diplomacy, domestic, logistics, treasures
 from remake.officers import YearState, year_state
 from campaign_fixtures import record_garrison_charges, controlled_catalog
 
@@ -359,6 +359,28 @@ class FactionDomesticTests(unittest.TestCase):
         domestic.run_automatic(game, state, 'shu')
         self.assertEqual(game.export_save(), saved)
         game.validate(state)
+
+    def test_ai_can_persuade_a_neighbouring_officer_until_their_faction_becomes_an_ally(self):
+        game = self.game(player='wei')
+        state = game.state
+        state.phase = 'ai'
+        domestic.auto_assign(game, state, 'shu')
+        post = domestic.appointments(state, 'shu')
+        source = state.cities['xiangyang']
+        target = next(ident for ident in source.roster.officer_ids
+                      if ident not in (post['civil'], post['military'], state.extension['leaders']['shu']))
+        source.roster.officer_ids.remove(target)
+        state.cities['jiangxia'].roster.officer_ids.append(target)
+        state.officers[target].faction_id = 'wu'
+        state.officers[target].loyalty = 20
+
+        def targets():
+            return {choice['id'] for choice in domestic.personnel_targets(game, state, 'nanjun')
+                    if choice['method'] == 'persuade_officer'}
+
+        self.assertIn(target, targets())
+        diplomacy._pool(state)['treaties']['shu|wu'] = state.turn + 12
+        self.assertNotIn(target, targets())
 
     def test_ai_selects_exactly_one_pair_globally_and_uses_same_city_services(self):
         game = self.game(player='wei')

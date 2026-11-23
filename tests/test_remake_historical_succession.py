@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 from unittest.mock import patch
 
-from remake import dated_events, strategic_ai, succession
+from remake import dated_events, san14_appearance_reference, strategic_ai, succession
 from remake.campaign import Campaign, Catalog, GameError, digest
 
 
@@ -288,9 +288,9 @@ class HistoricalSuccessionTests(unittest.TestCase):
             with self.subTest(faction=faction):
                 game = opening('249-01', faction)
                 father, heir = (game.catalog.ids[person(number)] for number in (553, 578))
-                advance_to(game, 251, 12, 21)
+                advance_to(game, 249, 12, 21)
                 self.assertNotIn(heir, game.state.officers)
-                advance_to(game, 252, 1)
+                advance_to(game, 250, 1)
                 self.assertEqual(game.state.extension['free_locations'][str(heir)], 'danyang')
                 advance_to(game, 252, 3, 21)
                 self.assertTrue(game.state.officers[father].alive)
@@ -372,7 +372,8 @@ class HistoricalSuccessionTests(unittest.TestCase):
         self.assertIsNone(game.state.officers[heir].faction_id)
 
     def test_old_mid_252_save_loads_and_joins_the_new_calendar(self):
-        with patch.object(succession, 'apply_appearance_corrections', return_value={}), \
+        with patch.object(san14_appearance_reference, 'apply', return_value={}), \
+                patch.object(succession, 'apply_appearance_corrections', return_value={}), \
                 patch.object(succession, 'process_ruler_death'):
             old_catalog = Catalog(CATALOGS / '249-01.json')
             old_game = Campaign(old_catalog)
@@ -389,13 +390,13 @@ class HistoricalSuccessionTests(unittest.TestCase):
         new_game = Campaign(scenario('249-01'))
         self.assertEqual(old_catalog.sha256, new_game.catalog.sha256)
         new_game.load_save(old_save, 0)
-        self.assertIn(f'service_eligible:{person(578)}:252', new_game.state.year_events)
+        self.assertIn(f'service_eligible:{person(578)}:250', new_game.state.year_events)
         self.assertEqual(new_game.state.extension['leaders']['wu'], father)
         advance_to(new_game, 252, 5)
         self.assert_pending_recruit(new_game, 'wu', heir, 'danyang')
         new_game.validate(new_game.state)
         new_game.load_save(old_later_save, new_game.revision)
-        self.assertIn(f'service_eligible:{person(578)}:252', new_game.state.year_events)
+        self.assertIn(f'service_eligible:{person(578)}:250', new_game.state.year_events)
         self.assertNotIn(f'service_eligible:{person(578)}:253', new_game.state.year_events)
         self.assertEqual(new_game.state.extension['leaders']['wu'], heir)
 

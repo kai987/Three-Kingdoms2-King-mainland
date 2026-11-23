@@ -95,6 +95,23 @@ class TreasuresTests(unittest.TestCase):
         view['factions']['one']['policy']['enabled'] = True
         self.assertEqual(state, before, 'View containers cannot alias mutable treasury policy or quotes')
 
+    def test_all_cities_share_one_absence_scan_and_see_same_turn_departures(self):
+        game, state = fixture()
+        for away in (False, True, False):
+            with self.subTest(away=away):
+                state.extension['travel']['marches'] = [dict(officers=[1])] if away else []
+                state.battle = dict(attackers=[dict(id=2)], defenders=[]) if away else None
+                for operation in (treasures.synchronize, treasures.view):
+                    with (patch.object(game, '_march_ids', wraps=game._march_ids) as marches,
+                          patch.object(treasures, '_battle_ids', wraps=treasures._battle_ids) as battles):
+                        result = operation(game, state)
+                    self.assertLessEqual(marches.call_count, 1, operation.__name__)
+                    self.assertLessEqual(battles.call_count, 1, operation.__name__)
+                    rows = (state.extension['treasury'] if result is None else result)['cities']
+                    self.assertEqual(rows['capital']['governor'], 3 if away else 1)
+                    if result is not None:
+                        self.assertEqual(rows['capital']['eligible_actors'], [3] if away else [1, 2, 3])
+
     def test_changan_opening_treasure_matches_preview_and_initial_ledger(self):
         expected = {'190-01': 4, '191-10': 99, '194-06': 46, '196-06': 18,
                     '197-07': 12, '198-03': 8, '200-01': 4}
@@ -210,7 +227,11 @@ class TreasuresTests(unittest.TestCase):
         game, state = fixture()
         state.officers[2].loyalty = 98
         before = deepcopy(state)
-        target = next(r for r in treasures.view(game, state)['cities']['capital']['reward_targets'] if r['id'] == 2)
+        with patch.object(treasures, '_gold_gain', wraps=treasures._gold_gain) as quotes:
+            cities = treasures.view(game, state)['cities']
+        intervals = sum(len(r['gold_rewards']) for city in cities.values() for r in city['reward_targets'])
+        self.assertLessEqual(quotes.call_count, intervals)
+        target = next(r for r in cities['capital']['reward_targets'] if r['id'] == 2)
         self.assertEqual(state, before)
         for amount in range(1, 101):
             interval, = [r for r in target['gold_rewards'] if r['min'] <= amount <= r['max']]

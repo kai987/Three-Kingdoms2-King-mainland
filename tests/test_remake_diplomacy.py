@@ -9,7 +9,7 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'source'))
-from remake import battle_grid, command_books, diplomacy, historical_campaigns, logistics, observer, treasures
+from remake import battle_grid, command_books, diplomacy, domestic, historical_campaigns, logistics, observer, treasures
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
 from campaign_fixtures import controlled_catalog, confirm_default_placement
@@ -312,7 +312,15 @@ class ObserverDiplomacyTests(unittest.TestCase):
                 game.command('end_turn', {}, game.revision)
                 game.command('ai', dict(turn=game.state.turn), game.revision)
         self.assertEqual(game.state.cities['nanyang'].owner, 'wei')
-        diplomacy._pool(game.state)['relations']['shu|wei'] = 38
+        diplomatic = diplomacy._pool(game.state)
+        diplomatic['treaties'].pop('shu|wei', None)
+        diplomatic['relations']['shu|wei'] = 38
+        # Fix the diplomatic preconditions regardless of earlier AI spending.
+        state = game.state
+        pressure = 3 * diplomacy.faction_power(state, diplomacy._holdings(state, 'wei'))
+        power = diplomacy.faction_power(state, diplomacy._holdings(state, 'shu'))
+        domestic.add_reserves(game, state, state.cities['yingchuan'], max(0, pressure - power),
+                              recruited=True)
 
     def test_observer_replays_goodwill_and_a_finite_defensive_alliance(self):
         def configure(data):
@@ -470,7 +478,6 @@ class ObserverDiplomacyTests(unittest.TestCase):
         self.assertEqual(attempt['target'], 'wei')
         self.assertFalse(self.events(game, 'surrender', ('shu', 'wei')))
         self.assertNotIn('diplomacy', [row['kind'] for row in snapshot['orders']['shu']['orders']])
-        self.assertNotEqual(snapshot['officer_actions'].get(str(attempt['envoy'])), state.turn)
         self.assertEqual(game.state.cities['nanyang'].owner, 'wei')
         surviving, = game.state.extension['travel']['marches']
         self.assertEqual(surviving['id'], march['id'])

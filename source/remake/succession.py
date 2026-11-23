@@ -47,19 +47,26 @@ def apply_appearance_corrections(data):
 
 
 def migrate_appearance_receipts(catalog, state):
-    """Move only the two corrected service-year receipts in pre-existing saves."""
+    """Move the superseded service-year receipts in pre-existing saves."""
     opening = catalog.data['start_year']
+    existing = set(state.year_events)
+    removed, added = set(), []
     for pid, (old, new) in catalog.appearance_year_corrections.items():
-        old_key = f'service_eligible:{pid}:{old}'
         new_key = f'service_eligible:{pid}:{new}'
-        old_due = opening < old <= state.calendar_cursor
+        if new_key in existing:
+            continue
         new_due = opening < new <= state.calendar_cursor
-        if old_due and state.year_events.count(old_key) == 1 and new_key not in state.year_events:
-            state.year_events.remove(old_key)
-            if new_due:
-                state.year_events.append(new_key)
-        elif new_due and not old_due and new_key not in state.year_events and old_key not in state.year_events:
-            state.year_events.append(new_key)
+        previous = {old}
+        if pid == _person(578) and new == 250:
+            previous.add(252)
+        old_keys = {f'service_eligible:{pid}:{year}' for year in previous
+                    if opening < year <= state.calendar_cursor}
+        known_previous = existing & old_keys
+        removed.update(known_previous)
+        if new_due and (known_previous or len(old_keys) < len(previous)):
+            added.append(new_key)
+    if removed or added:
+        state.year_events[:] = [key for key in state.year_events if key not in removed] + added
 
 
 def process_ruler_death(game, state):

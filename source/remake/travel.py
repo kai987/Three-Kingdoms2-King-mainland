@@ -143,6 +143,12 @@ class TravelCampaign:
                 return None
             leg = min(legs,key=lambda row:(row['days'],row['distance_km'],row['id']))
             return self._quote([source,target],[leg])
+        adjoining = {}
+        for route in routes:
+            if mode == 'land' and route['mode'] != 'land':
+                continue
+            for endpoint in (route['from'], route['to']):
+                adjoining.setdefault(endpoint, []).append(route)
         serial = count()
         queue = [(0,0,source,next(serial),[source],[])]
         seen = set()
@@ -153,9 +159,7 @@ class TravelCampaign:
             seen.add(here)
             if here == target and legs:
                 return self._quote(path,legs)
-            for raw in routes:
-                if here not in (raw['from'],raw['to']) or mode=='land' and raw['mode']!='land':
-                    continue
+            for raw in adjoining.get(here, ()):
                 nxt = raw['to'] if here==raw['from'] else raw['from']
                 if nxt not in state.cities or nxt in seen:
                     continue
@@ -329,7 +333,8 @@ class TravelCampaign:
                 continue
             ids=row['officers']
             choices=[]
-            for city in state.cities.values():
+            # A reachable home outranks every other retreat destination.
+            for city in sorted(state.cities.values(), key=lambda city: city.id != row['source']):
                 if city.owner!=row['owner'] or (city.id!=row['source'] and
                         self._city_occupancy(state,city)+len(ids)>self.catalog.rules.city_officer_capacity):
                     continue
@@ -348,6 +353,8 @@ class TravelCampaign:
                             quote=self._quote([here,city.id],[evaluate_leg(self.catalog.data,raw,here,city.id,state.month)])
                 if quote is not None:
                     choices.append((city.id!=row['source'],quote['days'],city.id,quote))
+                    if city.id == row['source']:
+                        break
             if not choices:
                 if row['reason']!='no_return_route':
                     self._supply_event(state,'march_retreat',unit_kind='march',unit_id=row['id'],

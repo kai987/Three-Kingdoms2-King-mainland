@@ -429,9 +429,11 @@ def month_rollover(game, state):
     return results
 
 
-def auto_turn(game, state, owner):
-    """AI selects a weak productive field, using the very same paid service."""
+def auto_turn(game, state, owner, *, shortages=None):
+    """Use each remaining order on the best affordable city improvement."""
     from .facilities import _ready, _resident
+    from .grain_relief import imminent_shortages
+
     rules = _rules(game)
     if (owner == state.player or not rules['enabled'] or not rules['ai_enabled']
             or not _ready(state, owner) or not command_books.can_spend(state, owner)):
@@ -441,26 +443,78 @@ def auto_turn(game, state, owner):
     if pool['auto_turns'].get(owner) == state.turn:
         return []
     pool['auto_turns'][owner] = state.turn
-    options = []
-    for key, city in sorted(state.cities.items()):
-        if city.owner != owner:
+    cities = {key: city for key, city in state.cities.items() if city.owner == owner}
+    rows = {key: pool['cities'][key] for key in cities}
+    totals = {field: sum(row[field] for row in rows.values()) for field in ACTIONS.values()}
+    baselines = {field: max(1, sum(row['baseline'][field] for row in rows.values())) for field in totals}
+    shortages = shortages or {}
+    urgent = imminent_shortages(shortages)
+    gold_floor = rules['ai_gold_floor']
+    developers = {}
+    for key, city in cities.items():
+        if key in urgent or city.gold < gold_floor + _gold_choices(1)[-1]:
             continue
         actors = [ident for ident in city.roster.officer_ids if _resident(game, state, city, ident, working=True, healthy=True)]
-        if not actors:
+        if actors:
+            by_cost = {}
+            for ident in sorted(actors, key=lambda ident: (-_profile(game, state, ident).intellect, ref_sort_key(ident))):
+                cost = _gold_choices(_profile(game, state, ident).intellect)[-1]
+                by_cost.setdefault(cost, ident)
+            developers[key] = tuple(by_cost.items())
+
+    def rank(key, field):
+        city, row = cities[key], rows[key]
+        priority = (0 if field == 'land' and key in shortages else
+                    1 if field == 'industry' and city.gold <= 2 * gold_floor else 2)
+        local = row[field] * 10000 // max(1, row['baseline'][field])
+        faction = totals[field] * 10000 // baselines[field]
+        return priority, local + faction, row['governance'], key, field
+
+    def fields(key):
+        row = rows[key]
+        return (field for field in totals if row[field] < LIMITS[field]
+                and (field != 'population' or key not in shortages))
+
+    results = []
+    upkeep = {}
+    kinds = {field: kind for kind, field in ACTIONS.items()}
+    for _ in range(command_books.remaining(state, owner)):
+        affordable = {key: next((ident for cost, ident in actors if cities[key].gold >= gold_floor + cost), None)
+                      for key, actors in developers.items()}
+        paid = min((rank(key, field) for key, actor in affordable.items()
+                    if actor is not None for field in fields(key)), default=None)
+        if paid:
+            *_, key, field = paid
+            receipt = execute(game, state, dict(city=key, kind=kinds[field], actor=affordable[key]), owner)
+            totals[field] += receipt['gain']
+            results.append(dict(city=key, **receipt))
             continue
-        actor = min(actors, key=lambda ident: (-_profile(game, state, ident).intellect, ref_sort_key(ident)))
-        row = pool['cities'][key]
-        governor_bonus_percent = _governor_bonus_percent(game, state, city)
-        for kind, field in ACTIONS.items():
-            offer = _quote(game, state, city, actor, kind, owner, governor_bonus_percent)
-            if offer['eligible'] and city.gold-offer['gold_max'] >= rules['ai_gold_floor']:
-                # Cross-products keep ordering deterministic and avoid floats.
-                weakness = row[field]*10000//max(1, row['baseline'][field])
-                options.append((row['governance'], weakness, key, kind, actor))
-    if not options:
-        return []
-    _, _, key, kind, actor = min(options)
-    return [dict(city=key, **execute(game, state, dict(city=key, kind=kind, actor=actor), owner))]
+
+        # Local officials can direct basic work with one order and no treasury
+        # expense. This also gives a hungry city work while its gold buys food.
+        candidates = [(row['governance'], key) for key, row in rows.items() if row['governance'] < LIMITS['governance']]
+        if candidates:
+            _, key = min(candidates)
+            field = 'governance'
+        else:
+            unpaid = min((rank(key, field) for key in rows for field in fields(key)), default=None)
+            if unpaid is None:
+                break
+            *_, key, field = unpaid
+        row = rows[key]
+        before = row[field]
+        row[field] = min(LIMITS[field], before + (POPULATION_UNIT if field == 'population' else 1))
+        gain = row[field] - before
+        command_books.spend(state, cities[key], 'organize_city')
+        if field in totals:
+            totals[field] += gain
+        upkeep[key, field] = upkeep.get((key, field), 0) + gain
+        results.append(dict(city=key, development=field, before=before, after=row[field], gain=gain, gold=0))
+
+    labels = {'governance': '統治度', 'land': '土地', 'industry': '產業', 'population': '人口'}
+    for (key, field), gain in upkeep.items():
+        game._note(state, f'{game.catalog.map_cities[key]["name"]}整頓城政，{labels[field]}增加{gain}。')
+    return results
 
 
 def view(game, state):
