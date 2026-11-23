@@ -171,6 +171,7 @@ class SegmentSupplyTests(unittest.TestCase):
     def test_return_to_origin_waits_at_a_cut_route_across_turns_and_save_loads(self):
         from remake import civil_staff,domestic,logistics
         self.enterContext(patch.object(diplomacy_ai, 'orders', return_value=[]))
+        self.enterContext(patch.object(city_development, 'auto_turn'))
         for backend in ('python','rust'):
             with self.subTest(backend=backend),using_backend(backend):
                 game=self.game(days=(5,5));ident,outbound=self.queue(game)

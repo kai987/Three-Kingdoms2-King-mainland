@@ -440,6 +440,21 @@ class LogisticsTests(unittest.TestCase):
         self.assertIn(999, source.roster.officer_ids)
         game.validate(game.state)
 
+    def test_convoy_can_plan_a_retreat_from_a_captured_stop_during_ai(self):
+        game = self.game()
+        state = game.state
+        home, captured = state.cities['xiangyang'], state.cities['nanjun']
+        captured.owner = 'wei'
+        state.phase = 'ai'
+        returning = deepcopy(captured)
+        returning.owner = home.owner
+        policy = dict(allow_sea=False, allow_special=False)
+        with patch.object(logistics, '_supply_routes', wraps=logistics._supply_routes) as batch:
+            mode, quote = logistics._safe_quote(game, state, returning, home, policy)
+            batch.assert_not_called()
+        self.assertEqual(mode, 'land')
+        self.assertEqual(quote['path'], ['nanjun', 'xiangyang'])
+
     def test_target_capture_returns_over_real_time_and_does_not_reserve_enemy_slots(self):
         game = self.game()
         origin = deepcopy(game.state.cities['xiangyang'])

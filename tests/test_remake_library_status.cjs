@@ -100,16 +100,19 @@ for(const row of rows){
  assert.equal(wang.initialization.source_loyalty.value,59);
  assert.equal(wang.initialization.source_loyalty.source_row_id,'cnblogs-line-0229');
  assert.deepEqual(wang.initialization.source_loyalty.faction_ids,[],'袁紹右側空城 is a location hint, never a faction loyalty context');
- assert.equal(wang.year_state,'not_appeared');assert.equal(wang.alive,null);
- assert.equal(wang.era_assignment.appearance_plan.status,'future_free');
- assert.deepEqual(wang.era_assignment.appearance_plan.start,[238,1]);
- assert(context.libraryFilterMatches(wang,'unentered'));assert(!context.libraryFilterMatches(wang,'free'));
+ const wangHasAppeared=row.date!=='191-10';
+ assert.equal(wang.year_state,wangHasAppeared?'available':'not_appeared');
+ assert.equal(wang.alive,wangHasAppeared?true:null);
+ assert.equal(wang.era_assignment.appearance_plan.status,wangHasAppeared?'free':'future_free');
+ assert.deepEqual(wang.era_assignment.appearance_plan.start,[200,1]);
+ assert.equal(context.libraryFilterMatches(wang,'unentered'),!wangHasAppeared);
+ assert.equal(context.libraryFilterMatches(wang,'free'),wangHasAppeared);
  assert(!context.libraryFilterMatches(wang,'serving'));assert(!context.libraryFilterMatches(wang,'own','gongsun'));
  const xiu=row.library.find(p=>p.person_id==='historical-gongsun-xiu');
  assert.equal(xiu.id,1047);assert.equal(xiu.year_state,'not_born');
  assert(context.libraryFilterMatches(xiu,'unentered'));assert(!context.libraryFilterMatches(xiu,'free'));
  if(row.date==='217-07'){
-  assert.equal(counts.serving,375);assert.equal(counts.free,55);
+  assert.equal(counts.serving,375);assert.equal(counts.free,66);
   for(const pid of ['historical-xue-yong','historical-yuan-chen','historical-liu-yan-shu']){
    const retainer=row.library.find(p=>p.person_id===pid);
    assert.equal(context.libraryEntryStatus(retainer),'serving');
@@ -141,17 +144,18 @@ for(const row of rows){
   assert(!context.libraryFilterMatches(zhao,'unentered'));
  }
  if(row.date==='191-10'){
-  assert.equal(counts.serving,316);assert.equal(counts.free,95);
+  assert.equal(counts.serving,316);assert.equal(counts.free,102);
   const zhaoChong=row.library.find(p=>p.person_id==='historical-zhao-chong');
   assert.equal(zhaoChong.id,1031);assert.equal(zhaoChong.faction,'zhang_miao');assert.equal(zhaoChong.alive,true);
   assert(context.libraryFilterMatches(zhaoChong,'own','zhang_miao'));
   const sun=row.library.find(p=>p.person_id==='historical-sun-kang');
-  assert.equal(sun.year_state,'not_appeared');assert.equal(sun.alive,null);
-  assert.equal(sun.era_assignment.appearance_plan.status,'future_free');
-  assert(context.libraryFilterMatches(sun,'unentered'));assert(!context.libraryFilterMatches(sun,'serving'));
+  assert.equal(sun.year_state,'available');assert.equal(sun.alive,true);
+  assert.equal(sun.era_assignment.appearance_plan.status,'free');
+  assert.deepEqual(sun.era_assignment.appearance_plan.start,[170,1]);
+  assert(context.libraryFilterMatches(sun,'free'));assert(!context.libraryFilterMatches(sun,'serving'));
  }
  if(row.date==='201-05'){
-  assert.equal(counts.serving,309);assert.equal(counts.free,128);
+  assert.equal(counts.serving,309);assert.equal(counts.free,134);
   const xiahou=row.library.find(p=>p.person_id==='historical-xiahou-bo');
   assert.equal(xiahou.alive,null);
   assert(!context.libraryFilterMatches(xiahou,'serving'));

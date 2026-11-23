@@ -281,7 +281,9 @@ def _supply_routes(game, state, owner, pairs, policy):
 
 
 def _safe_quote(game, state, source, target, policy, *, quotes=None):
-    if quotes is None and state.phase == 'ai':
+    # The strategic batch accepts friendly origins. An escort may have to
+    # return from a stop that changed hands after it set out.
+    if quotes is None and state.phase == 'ai' and state.cities[source.id].owner == source.owner:
         quotes = _supply_routes(game, state, source.owner, [(source.id, target.id)], policy)
     choices = []
     # Ocean permission never disables a safe inland shipping route. Retain

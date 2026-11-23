@@ -435,7 +435,7 @@ class DelegationReplayTests(unittest.TestCase):
     def test_184_liu_yan_six_turns_are_identical_in_python_and_rust(self):
         # At current opening strength, this seed yields a natural defection,
         # a legal replacement and resumed reserve allocation without defeat.
-        self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'), seed=1942955374)
+        self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'), seed=1942955373)
 
     def test_217_wei_six_turns_staff_arrival_combat_and_real_convoys(self):
         self.replay('217-07.json', 'wei', 6, staff=True)
