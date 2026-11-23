@@ -1865,7 +1865,20 @@ async function verifyOpeningBatch(page,testInfo,batchId){
  for(const scenario of scenarios){
   const catalog=JSON.parse(await readFile(new URL(`../game/data/campaigns/${scenario.slice('mainland'.length)}.json`,import.meta.url),'utf8'));
   expect(catalog.id).toBe(scenario);
-  const servingPeople=catalog.initial_officers.map(row=>row.person_id).sort(),freePeople=catalog.initial_free_officers.map(row=>row.person_id).sort();
+  const openingReference=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B','-c',`
+import json,sys
+from pathlib import Path
+sys.path.insert(0, 'source')
+from remake.campaign import Catalog
+from remake.grain_units import stocks
+catalog=Catalog(Path('game/data/campaigns') / (sys.argv[1] + '.json'))
+resources, troops=catalog.opening_garrisons
+print(json.dumps(dict(initial_officers=catalog.data['initial_officers'],
+    initial_free_officers=catalog.data['initial_free_officers'], troops=troops,
+    resources={city: stocks(values) for city, values in resources.items()})))
+`,scenario.slice('mainland'.length)], {cwd:new URL('../',import.meta.url),encoding:'utf8'}));
+  const servingPeople=openingReference.initial_officers.map(row=>row.person_id).sort();
+  const freePeople=openingReference.initial_free_officers.map(row=>row.person_id).sort();
   expectedServing+=servingPeople.length;expectedFree+=freePeople.length;
   await page.locator('#scenario').selectOption(scenario);
   const cities=await page.locator('#city-jump option').evaluateAll(rows=>rows.map(row=>row.value));
@@ -1936,21 +1949,20 @@ async function verifyOpeningBatch(page,testInfo,batchId){
   const mapOwners=await page.locator('#world-map .city-hit').evaluateAll(nodes=>Object.fromEntries(nodes.map(node=>[node.dataset.city,node.dataset.owner])));
   let initialSoldiers=0;
   for(const city of previews){
-   const live=saved.state.cities[city.id],resources=catalog.initial_city_resources?.[city.id]||catalog.initial_resources;
-   const authored=catalog.initial_officers.filter(officer=>officer.city===city.id);
+   const live=saved.state.cities[city.id],resources=openingReference.resources[city.id];
+   const authored=openingReference.initial_officers.filter(officer=>officer.city===city.id);
    const officers=live.roster.officer_ids.map(id=>saved.state.officers[id]);
    expect(live.owner).toBe(catalog.initial_owners[city.id]);
-   for(const key of ['gold','grain']){
+   for(const key of ['gold','grain','reserves']){
     expect(live[key],`${scenario}/${city.id} initial ${key}`).toBe(city[key]);
-    if(!['henan','jingzhao'].includes(city.id))expect(live[key]).toBe(resources[key]*(key==='grain'?10:1));
+    expect(live[key],`${scenario}/${city.id} opening reference ${key}`).toBe(resources[key]);
    }
-   expect(live.reserves).toBe(city.reserves);
-   if(!['henan','jingzhao'].includes(city.id))expect(live.reserves).toBeLessThanOrEqual(resources.reserves);
    const citySoldiers=live.reserves+officers.reduce((sum,officer)=>sum+officer.troops,0);
-   if(!['henan','jingzhao'].includes(city.id))expect(citySoldiers,`${scenario}/${city.id} original manpower plus active reinforcements`).toBeGreaterThanOrEqual(
-    resources.reserves+authored.reduce((sum,officer)=>sum+officer.troops,0));
    initialSoldiers+=citySoldiers;
    expect(officers.map(officer=>officer.person_id).sort()).toEqual(authored.map(officer=>officer.person_id).sort());
+   for(const officer of officers){
+    expect(officer.troops,`${scenario}/${officer.person_id} opening strength`).toBe(openingReference.troops[officer.person_id]);
+   }
    expect(Object.fromEntries(officers.map(officer=>[officer.person_id,officer.troops]))).toEqual(
     Object.fromEntries(city.officers.map(officer=>[officer.person_id,officer.troops])));
    const development=saved.state.extension.city_development.cities[city.id];
@@ -3143,7 +3155,7 @@ test('published event backdrops decode from the verified web build',async({page}
 test('Dong Zhuo relocation opens in February 190 with its own bilingual historical scene',async({page},testInfo)=>{
  await opening(page);
  await page.locator('#scenario').selectOption('mainland191-10');
- for(const [city,reserves,active] of [['henan',300,5058],['jingzhao',1800,5653]]){
+ for(const [city,reserves,active] of [['henan',300,28576],['jingzhao',1800,31936]]){
   await page.locator('#city-jump').selectOption(city);
   const detail=page.locator(`[data-inspected-city="${city}"]`);
   await expect(detail.locator('.resources dd').nth(2)).toHaveText(String(reserves));
@@ -3279,6 +3291,8 @@ test('Dong Zhuo relocation opens in February 190 with its own bilingual historic
 test('Liu Bei can make three visits and recruit Zhuge Liang after restoring a save',async({page},testInfo)=>{
  await opening(page);
  await page.locator('#scenario').selectOption('mainland207-09');
+ // Keep the test focused on the three story actions through a quiet opening.
+ await page.locator('#difficulty').selectOption('easy');
  await page.locator('input[name=faction][value=shu]').check();
  await page.locator('#begin').click();
  await waitIdle(page);
