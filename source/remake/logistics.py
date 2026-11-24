@@ -36,6 +36,10 @@ _REASONS.add('insufficient_grain')
 _REASONS.update({'army_missing','army_changed','rendezvous_wait','rendezvous_missed',
                  'delivered','escort_return','retreat'})
 _CARGO_KINDS = {'weather','rations','starvation','delivered','army_supply','bag_return'}
+LOSS_FIELD = 'cargo_loss_remainder'
+RECEIPT_FIELDS = {'cargo_dispatched','cargo_received','cargo_rations','cargo_route_loss',
+                  'cargo_weather_loss','cargo_delivered','cargo_returned','cargo_remaining',
+                  'cargo_abandoned','cargo_loss_remainder','escort_base_grain','escort_extra_grain'}
 
 
 def _int(value, low, high):
@@ -96,12 +100,12 @@ def _arrived(journey):
 
 def _cargo_change(row, kind, new_cargo, day, reference=None):
     """Every cargo mutation is replayable, including weather/food interleaving."""
-    if kind not in _CARGO_KINDS or set(new_cargo) != _CARGO_FIELDS:
+    if kind not in (_CARGO_KINDS | {'route_loss'}) or set(new_cargo) != _CARGO_FIELDS:
         raise ValueError('Logistics cargo operation')
     if any(not _int(n,0,99 if key=='treasure' else LIMIT) for key,n in new_cargo.items()):
         raise ValueError('Logistics cargo operation bounds')
     before = deepcopy(row['cargo'])
-    if before == new_cargo:
+    if before == new_cargo and kind != 'route_loss':
         return
     row['cargo_ledger'].append(dict(kind=kind,day=day,before=before,
                                     after=deepcopy(new_cargo),reference=reference))
@@ -114,12 +118,19 @@ def advance_supply(game, state, row, through_turn=None, *, absolute_tick=None, p
     def changed(kind, new_cargo, day):
         _cargo_change(row,kind,new_cargo,day,dict(journey=len(row['journeys'])-1,tick=day))
         cargo.clear();cargo.update(new_cargo)
+    def apply_loss(rate, day):
+        if not rate or not cargo['grain']:
+            return
+        lost, credit = logistics_rules.cargo_loss(cargo['grain'], rate, row[LOSS_FIELD])
+        changed('route_loss',dict(cargo,grain=cargo['grain']-lost),day)
+        row[LOSS_FIELD] = credit
     unit=row
     if row['journeys'][-1]['supply'].get('retreat_requested') and current_city(row['journeys'][-1]) is not None:
         unit=dict(row,hold=True)
         row['journeys'][-1]['supply']['waiting']=True
     spent=advance_unit(game,state,unit,row['journeys'][-1],through_turn,
                         unit_kind='convoy',cargo=cargo,on_cargo_change=changed,
+                        on_cargo_day=apply_loss if LOSS_FIELD in row else None,
                         absolute_tick=absolute_tick,parts=parts)
     journey=row['journeys'][-1]
     remaining=max(0,journey['quote']['days']-journey['supply']['route_days'])
@@ -203,12 +214,46 @@ def set_policy(game, state, payload, owner):
     _pool(state)['cities'][city.id]['policy'] = revised
 
 
-def _inbound(state, key):
+def projected_grain(game, quote, grain, *, progress=0, remainder=0):
+    if not grain:
+        return 0
+    rules=game.catalog.data['travel_rules'] if game is not None else None
+    parts=logistics_rules.plan(quote,rules)
+    return logistics_rules.estimate_cargo(grain,parts,quote['days']-progress,
+                                          start=progress,remainder=remainder)[0]
+
+
+def inbound_grain(game,row):
+    grain=row['cargo']['grain']
+    if LOSS_FIELD not in row:
+        return grain
+    journey=row['journeys'][-1]
+    return projected_grain(game,journey['quote'],grain,progress=journey['supply']['route_days'],
+                           remainder=row[LOSS_FIELD])
+
+
+def gross_shipment(game, quote, needed, capacity):
+    """Smallest legal load expected to reach the quota, or the full capacity."""
+    if not needed or not capacity:
+        return 0
+    if projected_grain(game,quote,capacity)<needed:
+        return capacity
+    low,high=needed,capacity
+    while low<high:
+        candidate=(low+high)//2
+        if projected_grain(game,quote,candidate)>=needed:
+            high=candidate
+        else:
+            low=candidate+1
+    return low
+
+
+def _inbound(state, key, *, game=None):
     rows = [row for row in _pool(state)['convoys'] if row['target'] == key
             and row['owner'] == state.cities[key].owner and not row['delivery_done']
             and row['target_march'] is None and row['status'] != 'returning']
-    return dict(**{field: sum(r['cargo'][field] for r in rows) for field in _CARGO_FIELDS},
-                officers=0)
+    result={field:sum(r['cargo'][field] for r in rows) for field in _CARGO_FIELDS-{'grain'}}
+    return dict(result,grain=sum(inbound_grain(game,r) for r in rows),officers=0)
 
 
 def _fronts(game, state, owner):
@@ -520,11 +565,42 @@ def treasure_transport(game, state, city_id, *, quote_cache=None):
     return result
 
 
+def grain_receipt(row, *, returned=False, abandoned=False):
+    cargo = row['cargo']['grain']
+    bags = [journey['supply'] for journey in row['journeys']]
+    basic = sum(book.get('base_consumed',book['consumed']) for book in bags)
+    result=dict(cargo_dispatched=row['initial_cargo']['grain'],cargo_received=0,cargo_rations=0,
+        cargo_route_loss=0,cargo_weather_loss=0,cargo_delivered=row['delivered']['grain'],
+        cargo_returned=cargo if returned else 0,cargo_abandoned=cargo if abandoned else 0,
+        cargo_remaining=0 if returned or abandoned else cargo,cargo_loss_remainder=row[LOSS_FIELD],
+        escort_base_grain=basic,escort_extra_grain=sum(book['consumed'] for book in bags)-basic)
+    fields={'rations':'cargo_rations','route_loss':'cargo_route_loss','weather':'cargo_weather_loss',
+            'bag_return':'cargo_received'}
+    for entry in row['cargo_ledger']:
+        field=fields.get(entry['kind'])
+        if field:
+            change=entry['before']['grain']-entry['after']['grain']
+            result[field]+=-change if entry['kind']=='bag_return' else change
+    return result
+
+
+def valid_grain_receipt(values):
+    if not isinstance(values,dict) or set(values)!=RECEIPT_FIELDS or not all(
+            _int(values[field],0,16*LIMIT) for field in RECEIPT_FIELDS):
+        return False
+    return (values[LOSS_FIELD]<logistics_rules.LOSS_SCALE and
+            values['cargo_dispatched']+values['cargo_received']==sum(values[field] for field in
+                ('cargo_rations','cargo_route_loss','cargo_weather_loss','cargo_delivered',
+                 'cargo_returned','cargo_abandoned','cargo_remaining')))
+
+
 def _event(game, state, kind, row, *, lost=0, reason='outbound',amounts=None):
     reports = _pool(state)['reports']
     values=row['cargo'] if amounts is None else amounts
     details = dict(convoy_id=row['id'], gold=values['gold'], grain=values['grain'],
                    reserves=values['reserves'], treasure=values.get('treasure',0), lost=lost, reason=reason)
+    if LOSS_FIELD in row:
+        details['grain_receipt']=grain_receipt(row,returned=reason=='returned',abandoned=reason=='no_friendly_city')
     reports.append(dict(turn=state.turn, owner=row['owner'], source=row['source'], target=row['target'],
                         kind=kind, details=details))
     reports[:] = reports[-100:]
@@ -620,6 +696,8 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None):
         checked_turn=0, reason='outbound',target_march=target_march,
         delivery_done=False,delivered=_empty_cargo(),cargo_ledger=[],
         route_policy={k:policy[k] for k in ('allow_sea','allow_special')})
+    if logistics_rules.version(state)==logistics_rules.CURRENT:
+        row[LOSS_FIELD]=0
     pool['next_id'] += 1
     pool['cities'][source.id]['last_dispatch_turn'] = state.turn
     pool['convoys'].append(row)
@@ -741,7 +819,9 @@ def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_
                 continue
             grain = min(grain, source.grain - policy['reserve_grain'] - rations)
             if gold or (grain_need and grain > 0):
-                delivered = min(grain, grain_need)
+                delivered = (projected_grain(game,quote,grain)
+                             if logistics_rules.version(state)==logistics_rules.CURRENT else grain)
+                delivered=min(delivered,grain_need)
                 coverage = (gold * 100 // max(1, gold_need)
                             + delivered * 100 // max(1, grain_need))
                 # A useful shipment next turn can beat a full load many turns away.
@@ -749,11 +829,11 @@ def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_
                 priority = (-(coverage * 100 // quote['turns']) if require_return
                             else int(gold < gold_need or delivered < grain_need))
                 candidates.append((priority, quote['days'], -coverage, -delivered,
-                                   source.id, mode, escort, gold, grain))
+                                   source.id, mode, escort, gold, grain, quote))
     if not candidates:
         return False
 
-    for _, _, _, _, source_id, mode, escort, gold, grain in sorted(candidates):
+    for _, _, _, _, source_id, mode, escort, gold, grain, outbound_quote in sorted(candidates,key=lambda row:row[:-1]):
         source = state.cities[source_id]
         policy = pool['cities'][source_id]['policy']
         selected = _safe_quote(game, state, target, source, policy,
@@ -762,9 +842,12 @@ def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_
                                and selected[1]['turns'] > max_turns):
             continue
         return_rations = _rations(game, state, selected[1], [escort], _empty_cargo()) if selected else 0
-        cargo = dict(_empty_cargo(), gold=gold,
-                     grain=min(grain, grain_need + return_rations) if grain_need else 0)
-        if require_return and target.grain + cargo['grain'] < return_rations:
+        wanted=grain_need+return_rations if grain_need else 0
+        weighted=logistics_rules.version(state)==logistics_rules.CURRENT
+        load=gross_shipment(game,outbound_quote,wanted,grain) if weighted else min(grain,wanted)
+        cargo=dict(_empty_cargo(),gold=gold,grain=load)
+        if require_return and target.grain + (projected_grain(game,outbound_quote,load)
+                                               if weighted else load) < return_rations:
             continue
         dispatch(game, state, dict(source=source_id, target=target.id, officers=[escort],
                                    cargo=cargo, route_mode=mode), owner)
@@ -1136,22 +1219,66 @@ def view(game, state, *, travel_quotes=None):
     return result
 
 
-def _validate_cargo(row,state):
+def _daily_cargo_rates(game,row):
+    for index,journey in enumerate(row['journeys']):
+        quote=journey['quote']
+        parts=logistics_rules.plan(quote,game.catalog.data.get('travel_rules',{}))
+        boundaries={0}
+        node=0
+        for leg in quote['routes']:
+            node+=leg['days']
+            boundaries.add(node)
+        progress=0
+        tick=journey['supply']['start_tick']
+        for period in journey['supply']['periods']:
+            for meal in period['days']:
+                tick+=1
+                if meal is None:
+                    continue
+                _,_,moved,_=meal
+                if moved or progress not in boundaries:
+                    weight=logistics_rules.weight(parts,progress,1,rates=logistics_rules.CARGO_GRAIN_LOSS_BPS)
+                    if weight:
+                        yield tick,index,weight
+                progress+=moved
+
+
+def _validate_cargo(row,state,game):
     ledger=row['cargo_ledger']
     if not isinstance(ledger,list) or len(ledger)>100000:
         raise ValueError('Logistics cargo ledger')
     cargo=deepcopy(row['initial_cargo']);delivered=_empty_cargo()
+    weighted=LOSS_FIELD in row
+    daily=iter(_daily_cargo_rates(game,row)) if weighted else iter(())
+    due=next(daily,None)
+    credit=0
+    kinds=_CARGO_KINDS | {'route_loss'} if weighted else _CARGO_KINDS
     rations={};returns={};seen_weather=set();previous_tick=-1
     for entry in ledger:
         if (not isinstance(entry,dict) or set(entry)!={'kind','day','before','after','reference'}
-                or entry['kind'] not in _CARGO_KINDS or not _int(entry['day'],0,(state.turn-1)*10)
+                or entry['kind'] not in kinds or not _int(entry['day'],0,(state.turn-1)*10)
                 or entry['day']<previous_tick or entry['before']!=cargo
                 or not isinstance(entry['after'],dict) or set(entry['after'])!=_CARGO_FIELDS
                 or any(not _int(n,0,99 if key=='treasure' else LIMIT) for key,n in entry['after'].items())):
             raise ValueError('Logistics cargo operation chain')
         previous_tick=entry['day'];after=entry['after'];reference=entry['reference'];kind=entry['kind']
         if not isinstance(reference,dict):raise ValueError('Logistics cargo operation reference')
-        if kind=='weather':
+        # Meals take from the load before its route loss. Weather and unloading
+        # are later in that day's sequence. A zero-grain day keeps the fraction.
+        while due and (due[0]<previous_tick or due[0]==previous_tick and not (
+                kind in {'rations','starvation','route_loss'} and reference.get('journey')==due[1])):
+            if cargo['grain']:
+                raise ValueError('Logistics missing daily cargo loss')
+            due=next(daily,None)
+        if kind=='route_loss':
+            if (due is None or not cargo['grain'] or previous_tick!=due[0]
+                    or reference!={'tick':due[0],'journey':due[1]}):
+                raise ValueError('Logistics cargo loss service day')
+            lost,credit=logistics_rules.cargo_loss(cargo['grain'],due[2],credit)
+            if after!=dict(cargo,grain=cargo['grain']-lost):
+                raise ValueError('Logistics daily cargo loss arithmetic')
+            due=next(daily,None)
+        elif kind=='weather':
             if set(reference)!={'journey','risk'} or not _int(reference['journey'],0,len(row['journeys'])-1):
                 raise ValueError('Logistics weather cargo reference')
             j=reference['journey'];n=reference['risk'];journey=row['journeys'][j]
@@ -1196,6 +1323,8 @@ def _validate_cargo(row,state):
                 raise ValueError('Logistics marching army delivery')
             delivered['grain']+=amount
         cargo=deepcopy(after)
+    if weighted and (credit!=row[LOSS_FIELD] or due and cargo['grain']):
+        raise ValueError('Logistics cargo loss remainder or missing service day')
     if cargo!=row['cargo'] or delivered!=row['delivered'] or not row['delivery_done'] and any(delivered.values()):
         raise ValueError('Logistics cargo delivery balance')
     for index,journey in enumerate(row['journeys']):
@@ -1266,8 +1395,11 @@ def validate(game, state):
     if not isinstance(pool['convoys'], list) or len(pool['convoys']) > len(state.cities):
         raise ValueError('Logistics convoy bounds')
     seen, people, origins = set(), set(), set()
+    weighted=logistics_rules.version(state)==logistics_rules.CURRENT
+    row_fields=_ROW_FIELDS | {LOSS_FIELD} if weighted else _ROW_FIELDS
     for row in pool['convoys']:
-        if (not isinstance(row, dict) or set(row) != _ROW_FIELDS or not _int(row['id'], 1, pool['next_id'] - 1)
+        if (not isinstance(row, dict) or set(row) != row_fields or not _int(row['id'], 1, pool['next_id'] - 1)
+                or weighted and not _int(row[LOSS_FIELD],0,logistics_rules.LOSS_SCALE-1)
                 or row['id'] in seen or row['source'] in origins or row['owner'] not in game.catalog.factions
                 or any(row[key] not in state.cities for key in ('source', 'target', 'original_target'))
                 or row['status'] not in {'outbound', 'returning', 'waiting'} or row['reason'] not in _REASONS
@@ -1393,7 +1525,7 @@ def validate(game, state):
                     after_values = allocate_survivors(before_values, risk['survival_numerator'], risk['survival_denominator'])
                     if any(risk['after'][key] != n for key, n in zip(keys, after_values)) or risk['lost'] != sum(before_values) - sum(after_values):
                         raise ValueError('Logistics hazard arithmetic')
-        _validate_cargo(row,state)
+        _validate_cargo(row,state,game)
         _validate_strength(row,state)
     if not isinstance(pool['receipts'], dict) or len(pool['receipts']) > len(state.officers) + len(state.cities):
         raise ValueError('Logistics arrival receipt bounds')
@@ -1408,7 +1540,9 @@ def validate(game, state):
                 or row['source'] not in state.cities or row['target'] not in state.cities
                 or row['kind'] not in {'transport_departed', 'transport_arrived', 'transport_returned', 'transport_weather'}
                 or not isinstance(row['details'], dict)
-                or set(row['details']) != {'convoy_id', 'gold', 'grain', 'reserves', 'treasure', 'lost', 'reason'}
+                or set(row['details']) != ({'convoy_id','gold','grain','reserves','treasure','lost','reason'}
+                                          | ({'grain_receipt'} if weighted else set()))
+                or weighted and not valid_grain_receipt(row['details']['grain_receipt'])
                 or not _int(row['details']['convoy_id'], 1, pool['next_id'] - 1)
                 or row['details']['reason'] not in _REASONS
                 or any(not _int(row['details'][field], 0, LIMIT) for field in ('gold', 'grain', 'reserves', 'lost'))

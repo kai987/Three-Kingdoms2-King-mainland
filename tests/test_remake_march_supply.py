@@ -316,13 +316,18 @@ class ConvoySupplyTests(unittest.TestCase):
         return_food=sum(r['grain'] for r in returning['refills'] if r['kind']=='cargo')
         self.assertGreater(return_food,0)
         self.assertEqual(returning['received'],return_food)
-        self.assertEqual(row['cargo']['grain'],200-return_food)
+        outward_loss=logistics.grain_receipt(row)['cargo_route_loss']
+        self.assertEqual(row['cargo']['grain'],200-return_food-outward_loss)
         saved = game.export_save()
         loaded = Campaign(game.catalog); loaded.load_save(saved,0)
         self.assertEqual(loaded.export_save(),saved)
         self.advance_due(loaded)
         self.assertFalse(loaded.state.extension['logistics']['convoys'])
-        self.assertEqual(loaded.state.cities['xiangyang'].grain,before-budget-return_food-dues['xiangyang'])
+        returned=next(row['details']['grain_receipt'] for row in reversed(loaded.state.extension['logistics']['reports'])
+                      if row['kind']=='transport_returned' and row['details']['reason']=='returned')
+        food=returned['escort_base_grain']+returned['escort_extra_grain']
+        self.assertEqual(loaded.state.cities['xiangyang'].grain,
+                         before-food-returned['cargo_route_loss']-dues['xiangyang'])
 
     def test_no_grain_for_return_walks_and_suffers_hunger_without_free_trip_or_negative_cargo(self):
         game = self.game()

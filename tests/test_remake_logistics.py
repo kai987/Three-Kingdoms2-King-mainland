@@ -107,7 +107,7 @@ class LogisticsTests(unittest.TestCase):
                                                          protected_officers=spare[:1], max_turns=2))
         row, = state.extension['logistics']['convoys']
         self.assertEqual((row['source'], row['target'], row['officers']), (source.id, target.id, spare[1:]))
-        self.assertEqual(row['cargo'], dict(gold=0, grain=3505, reserves=0, treasure=0))
+        self.assertEqual(row['cargo'], dict(gold=0, grain=3522, reserves=0, treasure=0))
         self.assertEqual(source.grain, 10000 - row['cargo']['grain'] - row['journeys'][0]['supply']['loaded'])
         self.assertGreaterEqual(source.grain, 5000)
         self.assertEqual(target.grain, 2000)
@@ -264,7 +264,7 @@ class LogisticsTests(unittest.TestCase):
         self.assertEqual(target.gold, destination['gold'] + 100)
         row=game.state.extension['logistics']['convoys'][0]
         return_food=sum(r['grain'] for r in row['journeys'][-1]['supply']['refills'] if r['kind']=='city')
-        self.assertEqual(target.grain, destination['grain'] + 200 - return_food - dues['nanjun'])
+        self.assertEqual(target.grain, destination['grain'] + 199 - return_food - dues['nanjun'])
         self.assertEqual(target.reserves, destination['reserves'] + 300)
         self.assertTrue(row['delivery_done']);self.assertEqual(row['status'],'returning')
         self.assertNotIn(999,target.roster.officer_ids)

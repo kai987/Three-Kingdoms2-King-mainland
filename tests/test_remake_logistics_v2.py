@@ -10,7 +10,8 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'source'))
 
-from remake import logistics_rules as rules, march_supply
+from remake import logistics, logistics_rules as rules, march_supply
+from test_remake_march_supply import supply_catalog
 from remake.campaign import Campaign, Catalog
 from remake.march_core import enabled, using_backend
 from remake.route_hazards import evaluate_leg
@@ -122,6 +123,76 @@ class MarchRationTests(unittest.TestCase):
                 restored.load_save(saved,0)
                 self.assertEqual(restored.export_save(compact=compact),saved)
                 self.assertEqual(rules.version(restored.state),version)
+
+
+class CargoLossTests(unittest.TestCase):
+    def test_requested_cargo_delivery_sizes(self):
+        expected = dict(plain=86_039,mountain=73_970,desert=63_546,river_downstream=97_044,
+                        river_still=95_597,river_upstream=94_171,sea=94_171,node_wait=100_000,embark=100_000)
+        for terrain, amount in expected.items():
+            parts = [(terrain,30*rules.DAY_TICKS)]
+            self.assertEqual(rules.estimate_cargo(100_000,parts,30)[0],amount)
+        parts=[('plain',250*rules.DAY_TICKS)]
+        self.assertEqual(rules.estimate_cargo(1,parts,250)[0],0)
+        self.assertEqual(rules.estimate_cargo(0,parts,250,remainder=3),(0,3))
+
+    def test_one_thousand_seeded_cargo_flows(self):
+        rng=random.Random(20261125)
+        modes=tuple(rules.CARGO_GRAIN_LOSS_BPS)
+        for _ in range(1000):
+            dispatched=rng.randrange(100_001)
+            remaining=dispatched
+            received=unloaded=rations=weather=loss=credit=0
+            for _ in range(rng.randrange(1,50)):
+                mode=rng.choice(modes)
+                share=rng.randint(0,rules.DAY_TICKS)
+                rate=rules.CARGO_GRAIN_LOSS_BPS[mode]*share
+                rations_now=min(remaining,rng.randrange(10))
+                rations+=rations_now;remaining-=rations_now
+                direct=Fraction(remaining*rate+credit,rules.LOSS_SCALE)
+                lost,credit=rules.cargo_loss(remaining,rate,credit)
+                self.assertEqual(lost,direct.numerator//direct.denominator)
+                remaining-=lost;loss+=lost
+                if rng.randrange(6)==0:
+                    add=rng.randrange(500)
+                    received+=add;remaining+=add
+                    remaining,weather_now=divmod(remaining,2)[0],(remaining+1)//2
+                    weather+=weather_now
+                    out=remaining//4
+                    remaining-=out;unloaded+=out
+                self.assertGreaterEqual(remaining,0)
+                self.assertEqual(dispatched+received,rations+weather+loss+unloaded+remaining)
+
+    def test_real_dispatch_roundtrip_and_atomic_validation(self):
+        game=Campaign(supply_catalog(transfer=True,days=25))
+        game.command('new',dict(faction='shu',seed=2026),0)
+        payload=dict(source='xiangyang',target='nanjun',officers=[999],
+                     cargo=dict(grain=500,gold=0,reserves=0),route_mode='land')
+        game.command('dispatch_transport',payload,game.revision)
+        for _ in range(3):
+            game._complete_turn(game.state)
+            game.validate(game.state)
+        convoy=game.state.extension['logistics']['convoys'][0]
+        check=logistics.grain_receipt(convoy)
+        expected,credit=rules.estimate_cargo(500,[('plain',25*rules.DAY_TICKS)],25)
+        self.assertEqual((convoy['cargo']['grain'],convoy[logistics.LOSS_FIELD]),(expected,credit))
+        self.assertEqual(check['cargo_route_loss'],500-expected)
+        self.assertTrue(logistics.valid_grain_receipt(check))
+        for compact in (False,True):
+            data=game.export_save(compact=compact)
+            restored=Campaign(game.catalog)
+            restored.load_save(data,0)
+            self.assertEqual(restored.export_save(compact=compact),data)
+        old=game.export_save()
+        game._process_march_supply(game.state)
+        self.assertEqual(game.export_save(),old)
+        game.state.phase='arrivals'
+        game.command('arrivals',{},game.revision)
+        received=next(report['details'] for report in game.state.extension['logistics']['reports']
+                      if report['kind']=='transport_arrived')['grain_receipt']
+        self.assertEqual(received['cargo_delivered'],expected)
+        self.assertEqual(received['cargo_route_loss'],500-expected)
+        self.assertTrue(logistics.valid_grain_receipt(received))
 
 
 if __name__ == '__main__':
