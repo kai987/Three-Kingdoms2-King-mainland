@@ -185,7 +185,7 @@ class DesperateDuelTests(unittest.TestCase):
                 with patch.object(tactical_fixture, 'controlled_catalog', side_effect=original_stat_catalog), \
                         pre_relationship_opening(), pre_city_development_opening(), pre_battle_provisions(), pre_directional_deployment():
                     game = active_duel(row['seed'])
-                    game.state.battle['extended'].pop('experience_contributions')
+                    game.state.battle['extended'].pop('experience_v1')
                     orders_before = deepcopy(game.state.extension['command_books'])
                     scene = self.perform(game, row['move'])
                 self.assertEqual(game.state.extension['command_books'], orders_before,

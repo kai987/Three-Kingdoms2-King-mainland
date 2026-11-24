@@ -2,7 +2,7 @@
 
 import unittest
 
-from remake import battle_grid, battle_supply, grain_units
+from remake import battle_experience, battle_grid, battle_supply, grain_units
 from remake.campaign import Campaign
 from test_remake_allied_travel import _alliance, _catalog
 
@@ -33,8 +33,12 @@ class AlliedSettlementTests(unittest.TestCase):
         battle = state.battle
         wu_home.grain -= 30
         battle_supply.receive(state, battle, 'attackers', 30, contributor='wu')
+        defender = battle['defenders'][0]['id']
         battle['attackers'][0]['troops'] -= 11
+        battle_experience.attack(battle, defender, shu, 11)
         battle['attackers'][1]['troops'] -= 7
+        battle_experience.attack(battle, defender, wu, 7)
+        before_xp = {i: state.officers[i].experience for i in (shu, wu, defender)}
 
         # Set the exact occupation reached by Wu; the living defender will be displaced.
         x, y = battle_grid._field(battle)['camp']
@@ -78,6 +82,12 @@ class AlliedSettlementTests(unittest.TestCase):
                          dict(captor='wu', ally='shu', troops=troops,
                               shares=[captor_share, contributor_share], returns=['nanjun']))
         self.assertEqual(state.soldiers['lost'], 18)
+        report = event['details']['experience']
+        attackers = report['sides']['attackers']
+        self.assertEqual({row['id'] for row in attackers['officers'] if row['eligible']}, {shu, wu})
+        self.assertEqual(sum(row['experience'] for row in attackers['officers']), attackers['experience'])
+        for ident, before in before_xp.items():
+            self.assertEqual(state.officers[ident].experience, min(49_999, before + report['applied'][str(ident)] * 50))
         game.validate(state)
         settled = game.export_save()
         game.command('settle', {'battle_id': battle['id']}, game.revision)

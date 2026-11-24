@@ -3,16 +3,21 @@
 from fractions import Fraction
 from math import isqrt
 
+from . import battle_experience_v1 as v1
 from .officers import OFFICER_TROOP_CAP, integer, ref_sort_key
 
 
 FIELD = 'experience_contributions'
+V1_FIELD = v1.FIELD
 SIDES = ('attackers', 'defenders')
 RAW_PER_POINT = 50
 MAX_POINTS = 50
 
 
-def initialize(battle):
+initialize = v1.initialize
+
+
+def initialize_legacy(battle):
     battle['extended'][FIELD] = dict(officers={}, conversions={}, injured=False, voluntary_withdrawal=False)
 
 
@@ -20,8 +25,19 @@ def _row(ledger, ident):
     return ledger['officers'].setdefault(str(ident), dict(damage=0))
 
 
-def attack(battle, actor, target, losses=0, *, injured=False):
-    """Commit one attributed attack after its actual damage is known."""
+def _opposing(battle, actor, target):
+    return any(unit['id'] == target for unit in battle['attackers']) != any(
+        unit['id'] == actor for unit in battle['attackers'])
+
+
+def attack(battle, actor, target, losses=0, *, injured=False, ordinary=True, cause='attack'):
+    """Commit an attributed attack after actual troop loss is known."""
+    if V1_FIELD in battle['extended']:
+        if losses and _opposing(battle, actor, target):
+            v1.record(battle, 'damage', actor=actor, target=target, amount=losses, ordinary=ordinary, cause=cause)
+        elif losses:
+            v1.record(battle, 'loss', target=target, amount=losses, cause=cause)
+        return
     ledger = battle['extended'].get(FIELD)
     if ledger is None:
         return
@@ -30,7 +46,50 @@ def attack(battle, actor, target, losses=0, *, injured=False):
     ledger['injured'] |= injured
 
 
+def effect(battle, actor, target):
+    v1.record(battle, 'effect', actor=actor, target=target)
+
+
+def duel_hit(battle, state, actor, target, hp_before, hp_after):
+    if hp_after < hp_before:
+        # The engine stores 1 HP for a routed general. A hit that caused that
+        # rout exhausted the remaining effective HP.
+        remaining = 0 if hp_after == 1 else hp_after
+        v1.record(battle, 'duel', actor=actor, target=target, amount=hp_before-remaining,
+                  maximum=state.officers[target].profile.health_max, hp_before=hp_before)
+
+
+def duel_defeat(battle, actor, target, amount, *, opposing):
+    if V1_FIELD in battle['extended']:
+        if opposing:
+            events = battle['extended'][V1_FIELD]['events']
+            cause = next((event['id'] for event in reversed(events)
+                          if event['kind'] == 'duel' and event['actor'] == actor and event['target'] == target), None)
+            v1.record(battle, 'defeat', actor=actor, target=target, amount=amount, cause_event=cause)
+        elif amount:
+            # The tactical unit is cleared immediately after this receipt.
+            v1.record(battle, 'defeat_self', target=target, amount=amount, cause='duel_self_damage')
+    elif opposing:
+        attack(battle, actor, target, amount)
+
+
+def arrive(battle, side, unit):
+    v1.record(battle, 'arrive', ident=unit['id'], side=side, amount=unit['troops'])
+
+
+def depart(battle, ident):
+    v1.record(battle, 'retreat', ident=ident)
+
+
+def withdraw_side(battle):
+    if V1_FIELD in battle['extended']:
+        for unit in battle[battle['extended']['withdrawn']]:
+            if str(unit['id']) not in battle['extended']['surrenders']:
+                depart(battle, unit['id'])
+
+
 def voluntary_withdrawal(battle):
+    withdraw_side(battle)
     ledger = battle['extended'].get(FIELD)
     if ledger is not None:
         ledger['voluntary_withdrawal'] = True
@@ -41,6 +100,9 @@ def _original_side(battle, ident, current):
 
 
 def convert(battle, actor, target, foe):
+    if V1_FIELD in battle['extended']:
+        v1.record(battle, 'conversion', actor=actor['id'], target=target['id'], amount=target['troops'])
+        return
     ledger = battle['extended'].get(FIELD)
     if ledger is None:
         return
@@ -173,6 +235,38 @@ def awards(state, battle, losses):
                               _weight(unit, ledger['officers'], surrendered, enemy_troops))
         _distribute(remaining - bonus + unused, weights, limits, totals)
     return totals
+
+
+def result(battle, status):
+    report, awards = v1.settle(battle['extended'][V1_FIELD])
+    report.update(battle_id=battle['id'], status=status)
+    return report, awards
+
+
+def archive_report(report, applied):
+    """Persist display scores without changing the checksum across JSON clients."""
+    def encode(value):
+        if type(value) is float:
+            return str(value)
+        if isinstance(value, list):
+            return [encode(item) for item in value]
+        if isinstance(value, dict):
+            return {key: encode(item) for key, item in value.items()}
+        return value
+
+    return dict(encode(report), applied=applied)
+
+
+def validate_load(battle):
+    if V1_FIELD not in battle['extended']:
+        return
+    replay = v1.Replay(battle['extended'][V1_FIELD])
+    deployed = {unit['id']: side for side in SIDES for unit in battle[side]}
+    present = {ident for ident, column in replay.columns.items() if column.present}
+    if (FIELD in battle['extended'] or replay.day > battle['round']
+            or not present <= deployed.keys() <= replay.columns.keys()
+            or any(replay.columns[ident].side != side for ident, side in deployed.items())):
+        raise ValueError('Experience journal and battle disagree')
 
 
 def validate(battle):

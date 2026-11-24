@@ -13,7 +13,7 @@ from remake.campaign_expansion import TACTICS
 from remake.errors import GameError
 from remake import battle_grid, presentation, siege
 from remake.session import CampaignSession
-from campaign_fixtures import arrange_contact, arrange_tactic, controlled_catalog
+from campaign_fixtures import arrange_contact, arrange_tactic, controlled_catalog, stage_battle_troops
 from test_remake_tactical_ai import battle, actors, successful_rng
 from test_remake_civil_staff_campaign import staff_catalog
 
@@ -185,7 +185,7 @@ class BattlePresentationTests(unittest.TestCase):
             with self.subTest(routed=routed):
                 game=battle(three_enemies=False);b,actor,target,_,_=actors(game)
                 b['extended']['ambush']=dict(actor=target['id'])
-                if routed:actor['troops']=1
+                if routed:stage_battle_troops(b,actor,1)
                 scenes=self.perform(game,'attack',battle_id=b['id'],actor=actor['id'],target=target['id'])
                 trap=scenes[0]
                 self.assertEqual((trap['kind'],trap['actor'],trap['target']),('ambush',target['id'],actor['id']))

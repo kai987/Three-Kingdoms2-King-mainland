@@ -12,7 +12,7 @@ from copy import deepcopy
 sys.path[:0]=['source','tests']
 from remake.campaign import Campaign,SeedRng
 from remake.campaign_expansion import TACTICS
-from remake import battle_grid
+from remake import battle_experience,battle_grid
 from remake.tactical_ai import tactic_reason
 from test_remake_tactical_ai import battle,actors,successful_rng
 from test_remake_generated_officers import GeneratedOfficerTests
@@ -44,6 +44,7 @@ def scene_battle(terrain='plain',three_enemies=True):
   b['extended']['support'][str(ident)]=dict(health=officer.health,energy=18,stunned=0,guard=0,morale=70)
   del b['extended']['tactical']['positions'][str(old['id'])]
  b['attackers'][0]=replacement;b['extended']['tactical']['positions'][str(ident)]=old_point
+ battle_experience.initialize(b)
  return game
 def arrange(game,tid=None):
  # Isolated presentation fixtures use explicit legal contact cells. They do

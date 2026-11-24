@@ -31,6 +31,7 @@ from remake import battle_conditions as conditions,battle_grid,events,tactic_eff
 from remake.campaign import Campaign,Catalog,canonical
 from remake.campaign_expansion import TACTICS
 from browser_soldier_fixture import _positions,_save
+from campaign_fixtures import stage_battle_troops
 
 ACTOR=439
 TARGET_CITY='fufeng'
@@ -172,7 +173,7 @@ def fixtures():
 
     # Stage a one-soldier survivor for this specific zero-troop regression.
     # The real public waits then apply all damage, draws, XP and expiry.
-    next(unit for unit in battle['defenders'] if unit['id']==target)['troops']=1
+    stage_battle_troops(battle,next(unit for unit in battle['defenders'] if unit['id']==target),1)
     while conditions.remaining(game.state.battle,target)>1:
         with patch('remake.tactical_ai.choose_action',return_value=WAIT):
             _command(game,'battle_wait',battle_id=game.state.battle['id'])

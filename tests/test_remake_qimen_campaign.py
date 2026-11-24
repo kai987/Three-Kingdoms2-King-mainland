@@ -19,7 +19,7 @@ from remake import battle_conditions as conditions,battle_grid,battle_supply,bat
 from remake.campaign import Campaign,SeedRng
 from remake.errors import GameError
 from remake.officers import experience_tier
-from campaign_fixtures import arrange_contact
+from campaign_fixtures import arrange_contact, stage_battle_troops
 from test_remake_chain_campaign import prepared as chain_prepared,command,seed_for,wait_day,rehash,ZHU_GE
 
 
@@ -125,7 +125,7 @@ class QimenCampaignTests(unittest.TestCase):
         self.assertEqual(game.state.rng,rng);self.assertEqual(game.state.rng.draws,3)
         self.assertEqual(game.state.officers[ZHU_GE].experience,before_exp)
         self.assertEqual(game.state.officers[ZHU_GE].tier,experience_tier(before_exp))
-        self.assertEqual(battle['extended'][battle_experience.FIELD]['officers'][str(ZHU_GE)]['damage'],
+        self.assertEqual(battle_experience.v1.Replay(battle['extended'][battle_experience.V1_FIELD]).rows[(ZHU_GE, own)].kills,
                          sum(tick['loss'] for tick in ticks))
         self.assertEqual(game.state.officers[ZHU_GE].profile,profile)
         self.assertEqual(battle['extended']['support'],health)
@@ -157,7 +157,7 @@ class QimenCampaignTests(unittest.TestCase):
         game,roles,_,_=prepared();cast(game,roles);battle=game.state.battle
         # Prior casualties are an explicit bounded fixture; the actual next
         # daily service must saturate, retain the slot and later sample at0.
-        unit(battle,roles['center'])['troops']=1
+        stage_battle_troops(battle,unit(battle,roles['center']),1)
         before_count=conditions.remaining(battle,roles['center']);before_draws=game.state.rng.draws
         wait_day(game);battle=game.state.battle
         self.assertEqual(unit(battle,roles['center'])['troops'],0)
@@ -186,7 +186,7 @@ class QimenCampaignTests(unittest.TestCase):
 
     def test_zero_soldier_hp_one_source_still_drives_damage_and_experience(self):
         game,roles,_,_=prepared('defenders');cast(game,roles);battle=game.state.battle
-        unit(battle,ZHU_GE)['troops']=0;battle['extended']['support'][str(ZHU_GE)]['health']=1
+        stage_battle_troops(battle,unit(battle,ZHU_GE),0);battle['extended']['support'][str(ZHU_GE)]['health']=1
         self.assertEqual(conditions.qimen_source(game.state,battle),ZHU_GE)
         # Select a real seeded nonlethal first loss so this case also proves
         # positive XP still goes to the present zero-soldier commander.
@@ -195,7 +195,8 @@ class QimenCampaignTests(unittest.TestCase):
         wait_day(game)
         self.assertEqual(game.state.rng.draws,draws+1)
         self.assertEqual(game.state.officers[ZHU_GE].experience,before_exp)
-        self.assertGreater(game.state.battle['extended'][battle_experience.FIELD]['officers'][str(ZHU_GE)]['damage'],0)
+        journal=game.state.battle['extended'][battle_experience.V1_FIELD]
+        self.assertGreater(battle_experience.v1.Replay(journal).rows[(ZHU_GE,'defenders')].kills,0)
         self.assertEqual(conditions.qimen_source(game.state,game.state.battle),ZHU_GE)
         game.validate(game.state)
 
@@ -205,14 +206,15 @@ class QimenCampaignTests(unittest.TestCase):
                 game,roles,own,_=prepared('defenders');cast(game,roles);battle=game.state.battle
                 conditions.apply(battle,roles['near'],own)
                 if mode=='absent':
+                    battle_experience.depart(battle,ZHU_GE)
                     battle['defenders'].remove(unit(battle,ZHU_GE))
                     battle['extended']['support'].pop(str(ZHU_GE))
-                    battle['extended'][battle_experience.FIELD]['officers'].pop(str(ZHU_GE))
                     battle['extended']['tactical']['positions'].pop(str(ZHU_GE))
                     battle['used'][:]=[ident for ident in battle['used']if ident!=ZHU_GE]
                     conditions.drop_removed(battle)  # Actual removed-slot boundary prunes order.
                 else:
                     commander=unit(battle,ZHU_GE);commander['troops']=0
+                    battle_experience.depart(battle,ZHU_GE)
                     battle['extended']['surrenders'][str(ZHU_GE)]=commander['start']
                 game._reconcile_factions(game.state);game.validate(game.state)
                 self.assertIsNone(conditions.qimen_source(game.state,battle))
