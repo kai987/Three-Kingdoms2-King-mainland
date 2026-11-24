@@ -69,7 +69,9 @@ class PreLogisticsCampaign(Campaign):
 
     def _new(self, *args, **kwargs):
         state=super()._new(*args,**kwargs)
+        from remake import logistics_strategy
         state.extension.pop(logistics_rules.FIELD,None)
+        state.extension.pop(logistics_strategy.FIELD,None)
         return state
 
 

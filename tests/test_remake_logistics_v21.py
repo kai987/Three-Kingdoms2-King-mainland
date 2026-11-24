@@ -2,6 +2,7 @@
 from pathlib import Path
 from random import Random
 from unittest import TestCase
+from unittest.mock import patch
 
 from test_remake_diplomacy import diplomacy_catalog
 
@@ -226,6 +227,30 @@ class LogisticsV21Tests(TestCase):
         migrated.load_save(old,0)
         migrated.command('observe_turn',{},migrated.revision)
         self.assertEqual(migrated.export_save(compact=True),legacy.export_save(compact=True))
+
+    def test_diplomatic_city_transfers_do_not_reuse_old_faction_budgets(self):
+        # Normal observer commands reproduce the same-turn transfer from the
+        # real multi-seed benchmark. No patched event, holdings or RNG.
+        game = Headless(Catalog(ROOT/'game/data/campaigns/190-01.json'))
+        game.command('new', dict(faction='observer',seed=2028,difficulty='normal'),0)
+        for _ in range(18):
+            game.command('observe_turn',{},game.revision)
+        self.assertEqual(game.state.turn,19)
+        save = game.export_save(compact=True)
+        again = Headless(game.catalog)
+        again.load_save(save,0)
+        self.assertEqual(again.export_save(compact=True),save)
+
+    def test_faction_forecast_reuses_month_quotes_and_leaves_state_unchanged(self):
+        game=self.start()
+        state=game.state
+        before=game.export_save()
+        owned=sum(city.owner=='shu' for city in state.cities.values())
+        with patch.object(city_economy,'monthly_income',wraps=city_economy.monthly_income) as monthly:
+            result=economy.plan(game,state,'shu')
+        self.assertEqual(len(result.budgets),owned)
+        self.assertLessEqual(monthly.call_count,4*owned)
+        self.assertEqual(game.export_save(),before)
 
     def test_1000_random_commitment_batches(self):
         rng=Random(401)

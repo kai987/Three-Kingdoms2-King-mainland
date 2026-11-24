@@ -122,6 +122,12 @@ class LogisticsTests(unittest.TestCase):
         self.assertTrue(game.state.extension['logistics']['convoys'][0]['delivery_done'])
 
     def test_observer_resupplies_a_stranded_attack_through_to_victory(self):
+        from remake import logistics_strategy
+        for stage in (0,logistics_strategy.WAR):
+            with self.subTest(stage=stage), logistics_strategy.experiment(stage):
+                self.assert_resupplied_victory(stage)
+
+    def assert_resupplied_victory(self, stage):
         data = transport_catalog(rear=True).data
         data['rules']['ai_max_attacks_per_turn'] = 3
         data['initial_owners']['nanyang'] = 'shu'
@@ -141,8 +147,14 @@ class LogisticsTests(unittest.TestCase):
         reports = game.state.extension['logistics']['reports']
         arrival, = [row for row in reports if row['kind'] == 'transport_arrived']
         self.assertEqual((arrival['source'], arrival['target']), ('xiangyang', 'nanjun'))
-        self.assertGreaterEqual(game.state.cities['nanjun'].grain,
-                                required_grain(6000, 1, 1 + BUDGET_DAYS))
+        received = game.state.cities['nanjun'].grain
+        old_reserve = required_grain(6000, 1, 1 + BUDGET_DAYS)
+        if stage:
+            self.assertGreater(received, 0)
+            self.assertLess(received, old_reserve)
+            self.assertEqual(received, arrival['details']['grain'])
+        else:
+            self.assertGreaterEqual(received,old_reserve)
         self.assertFalse(game.state.settled_battles)
 
         # Recruitment and city dues can change the full reserve requirement

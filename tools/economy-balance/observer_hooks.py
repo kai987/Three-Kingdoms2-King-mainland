@@ -94,7 +94,7 @@ class Hooks:
             (grain_relief, {'dispatch': self.emergency, 'forecasts': self.forecast, '_deliveries': self.deliveries,
                             'recovery': self.recovery}),
             (diplomacy, {'_request_grain': self.allied_request}),
-            (domestic, {'add_reserves': self.reserves}),
+            (domestic, {'add_reserves': self.reserves, 'allocate_garrison': self.reserve_assignment}),
             (strategic_ai.StrategicAI, {'plan': self.plan, 'attack_option': self.attack_option, 'safe': self.safe_attack,
                                        'provisioned': self.provisioned, 'war_budget': self.war_budget,
                                        'depart': self.depart, 'quote': self.quote_queries}),
@@ -348,6 +348,15 @@ class Hooks:
             self.t.troops(state, city.owner, 'natural_monthly_reserves', target=city.id,
                           reserves=city.reserves - before)
         return value
+
+    def reserve_assignment(self, real, game, state, city_id, **kwargs):
+        city = state.cities[city_id]
+        before = city.reserves
+        result = real(game, state, city_id, **kwargs)
+        added = before-city.reserves
+        if added > 0:
+            self.t.troops(state, city.owner, 'reserve_allocation', target=city_id, active=added)
+        return result
 
     def manual_recruit(self, real, game, state, payload):
         city = state.cities.get(payload.get('city'))

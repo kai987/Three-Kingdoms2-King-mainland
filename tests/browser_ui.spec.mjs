@@ -487,6 +487,37 @@ test('recovery callback waits for title Start',async({page},testInfo)=>{
  expect(errors.get(page)).toEqual([]);
 });
 
+test('logistics V2.1 displays faction and city budgets in both languages',async({page},testInfo)=>{
+ await opening(page);
+ await page.locator('#scenario').selectOption('mainland208-10');
+ await page.locator('input[name=faction][value=wei]').check();
+ await page.locator('#begin').click();
+ await waitIdle(page);await tacticalDismiss(page);
+ const campaign=await page.evaluate(()=>({title:document.title,path:location.pathname}));
+ expect(campaign.path).toContain('/Three-Kingdoms2-King-mainland/');
+ expect(campaign.title).toContain('戰役');
+ const overview=page.locator('#inspector [data-faction-logistics]');
+ await overview.locator('summary').click();
+ await expect(overview.getByRole('columnheader',{name:'軍糧承諾'})).toBeVisible();
+ await expect(overview.getByRole('rowheader').filter({hasText:'曹操'})).toBeVisible();
+ await historyScreenshot(page,testInfo,'faction-logistics-v21',{fullPage:false});
+ await page.locator('#city-information').click();
+ const detail=page.locator('.city-information');
+ const summary=detail.locator('[data-city-logistics][data-locale-only="zh-Hant"]');
+ await summary.locator('summary').click();
+ await expect(summary.getByText('最低生存儲糧',{exact:true})).toBeVisible();
+ await expect(summary.getByText('實駐現役／超出供養',{exact:true})).toBeVisible();
+ await page.locator('#dialog-language').selectOption('ja');
+ const japanese=detail.locator('[data-city-logistics][data-locale-only="ja"]');
+ if(!await japanese.evaluate(node=>node.open))await japanese.locator('summary').click();
+ await expect(japanese.getByText('最低生活備蓄',{exact:true})).toBeVisible();
+ const forecast=japanese.getByText('次の不足見込み',{exact:true});
+ await forecast.scrollIntoViewIfNeeded();
+ await expect(forecast).toBeInViewport();
+ expect(errors.get(page)).toEqual([]);
+ await historyScreenshot(page,testInfo,'city-logistics-v21',{fullPage:false});
+});
+
 test('faction resources show current allies and large factions receive 40 command books',async({page})=>{
  await opening(page);
  const scenarios=page.locator('#scenario');

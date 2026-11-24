@@ -1243,3 +1243,6 @@ dialog:has([data-domestic-dialog]) .dialog-actions{position:sticky;bottom:-24px;
 .city-logistics-summary{margin-block:0.55rem}
 .city-logistics-summary dl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0.3rem 0.7rem}
 .city-logistics-summary dd{margin:0;text-align:end}
+
+.faction-logistics-overview{margin-top:.5rem}
+.faction-logistics-overview th,.faction-logistics-overview td{text-align:center;padding:.35rem .5rem;white-space:nowrap}

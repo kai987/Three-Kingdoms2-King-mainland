@@ -26,7 +26,7 @@ METRICS = ('grain_bought', 'emergency_grain_bought', 'battle_grain_bought', 'gra
            'postbattle_recruit_gold', 'postbattle_recruit_grain', 'market_city_turns',
            'all_city_turns', 'owned_city_turns', 'active_faction_turns')
 LOGISTICS = ('ai_sorties', 'battle_retreats', 'march_rations', 'march_base_rations', 'march_food_missing_days',
-             'march_hunger_losses', 'convoy_rations', 'convoy_hunger_losses',
+             'march_hunger_losses', 'convoy_rations', 'convoy_hunger_losses', 'convoy_base_rations',
              'convoy_dispatched', 'convoy_arrived', 'convoy_returned', 'convoy_grain_sent',
              'convoy_grain_arrived', 'convoy_route_grain_loss', 'convoy_cargo_rations', 'convoy_weather_grain_loss',
              'ai_recruit_quotes', 'ai_recruit_quote_capped', 'ai_sortie_quotes', 'ai_sortie_quote_blocked',
@@ -96,7 +96,8 @@ class RecordedCampaign(HeadlessCampaign):
                          source=source, target=target, outcome=details['outcome'], deaths=details['lost'],
                          surrendered=details['surrendered'], days=supply['days'] if supply else None,
                          rations=sum(book['consumed'] for book in supply['sides'].values()) if supply else None,
-                         grain_burned=sum(battle_supply.burned(book) for book in supply['sides'].values()) if supply else None))
+                         grain_burned=sum(battle_supply.burned(book) for book in supply['sides'].values()) if supply else None,
+                         supply_settlement=supply.get('settlement') if supply else None))
         elif kind == 'city_captured':
             self.captured(event['city_ids'][0], state)
         return event
@@ -260,7 +261,10 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
                 journey.get('source'), journey['target'], active=ledger['lost'] - before['lost'] - reserve_loss,
                 reserves=reserve_loss, reference=unit['id'])
         if is_convoy:
-            stats.update(convoy_rations=used,convoy_hunger_losses=ledger['lost']-before['lost'],
+            stats.update(convoy_rations=used,
+                         convoy_base_rations=ledger.get('base_consumed',0)-before['base_consumed']
+                             if 'base_consumed' in ledger else used,
+                         convoy_hunger_losses=ledger['lost']-before['lost'],
                          convoy_days=ledger['elapsed_days']-before['elapsed_days'])
         else:
             stats.update(march_rations=used,march_base_rations=ledger.get('base_consumed',0)-before['base_consumed']
@@ -500,6 +504,13 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
                                      ai_strategy=state.extension.get('ai_logistics_strategy_version', 'legacy')),
                   catalog_sha256=catalog.sha256, last_date=[state.year,state.month,state.day],
                   seconds=round(monotonic()-started,2), failure=failure)
+    with grain_units.using(state):
+        result['terminal'] = dict(
+            convoy_loads=[dict(id=row['id'],status=row['status'],owner=row['owner'],source=row['source'],
+                               target=row['target'],cargo_grain=row['cargo']['grain'],
+                               escort_bag=row['journeys'][-1]['supply']['remaining'])
+                          for row in state.extension.get('logistics',{}).get('convoys',())],
+            monthly_garrison_grain=sum(economy.garrison_grain(game,state).values()))
     result['performance'] = dict(measured_turns=len(timings),
         mean_turn_seconds=round(sum(timings)/len(timings),6) if timings else None,
         max_turn_seconds=round(max(timings),6) if timings else None,

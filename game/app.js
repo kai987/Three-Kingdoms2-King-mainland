@@ -169,7 +169,7 @@ function factionLedger({observer=false}={}){
  return `<details class="faction-ledger"><summary>各势力资源</summary>
  <p class="small">${battleText('物資按目前所屬都市的庫存合計。','物資は現在支配する都市の備蓄を合計しています。')}</p>
  <p class="small">${battleText('兵士為武將所率的兵力，現役為在籍武將人數。行軍與戰鬥中的人員也計入。','兵士は武将が率いる兵の数、現役は所属武将の人数です。行軍中・戦闘中の部隊も集計に含まれます。')}</p>
- <div class="faction-ledger-scroll"><table${observer?' class="faction-ledger-with-base"':''}><thead><tr><th scope="col">势力</th><th scope="col"${observer?' aria-sort="descending"':''}>都市</th>${observer?`<th scope="col">${battleText('本據','本拠')}</th>`:''}<th scope="col">同盟</th><th scope="col">現役</th><th scope="col">兵士</th><th scope="col">預備兵</th><th scope="col" data-l10n-literal>金</th><th scope="col">兵糧</th></tr></thead><tbody>${rows}</tbody></table></div>${logisticsView}</details>`;
+ <div class="faction-ledger-scroll"><table${observer?' class="faction-ledger-with-base"':''}><thead><tr><th scope="col">势力</th><th scope="col"${observer?' aria-sort="descending"':''}>都市</th>${observer?`<th scope="col">${battleText('本據','本拠')}</th>`:''}<th scope="col">同盟</th><th scope="col">現役</th><th scope="col">兵士</th><th scope="col">預備兵</th><th scope="col" data-l10n-literal>金</th><th scope="col">兵糧</th></tr></thead><tbody>${rows}</tbody></table></div></details>${logisticsView}`;
 }
 function routeRisk(quote){
  const lines=(quote.routes||[]).filter(r=>r.hazard).map(r=>{

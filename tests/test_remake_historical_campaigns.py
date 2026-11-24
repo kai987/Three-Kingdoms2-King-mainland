@@ -71,7 +71,9 @@ class HistoricalCampaignTests(unittest.TestCase):
             # The historical opening oracles pin dispatch turns and targets
             # under the original affordability rule.
             from remake.logistics_rules import FIELD
+            from remake import logistics_strategy
             game.state.extension.pop(FIELD)
+            game.state.extension.pop(logistics_strategy.FIELD,None)
         return game
 
     def advance(self, game):

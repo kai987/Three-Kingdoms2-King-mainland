@@ -22,7 +22,7 @@ FILES = {
                 'actual_arrival_date actual_route_date actual_grain grain_loaded cargo_reserves officers route'),
     'troop-flows': 'owner source target kind active reserves count officers reference',
     'battles': ('battle_id attacker defender source target outcome deaths surrendered days rations '
-                'grain_burned'),
+                'grain_burned supply_settlement'),
     'route-changes': ('unit_kind unit_id owner source old_target new_target reason status '
                       'old_remaining_days new_days old_remaining_grain new_grain old_path new_path'),
     'war-quotes': ('stage plan_key owner source target mode officers troops grain gold '

@@ -779,9 +779,14 @@ def _open_ai_queue(campaign, state):
                 diplomacy.execute(campaign, state, payload, owner)
             except GameError:
                 continue
-            planner.quotes.clear()
             if state.phase != 'ai':
                 return
+            if planner.v21:
+                # A treaty or surrender can change holdings, available
+                # officers and transit permissions inside the same AI phase.
+                planner = StrategicAI(campaign,state)
+            else:
+                planner.quotes.clear()
             break
 
     x = state.extension
