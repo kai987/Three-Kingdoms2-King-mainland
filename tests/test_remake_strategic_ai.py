@@ -10,7 +10,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign, Catalog, canonical
-from remake import city_economy, facilities, treasures
+from remake import city_economy, facilities, logistics_rules, treasures
 from remake.ai_rally import reinforce as reinforce_attack_front
 from remake.errors import GameError
 from remake.march_core import using_backend
@@ -64,9 +64,18 @@ def strategic_catalog(*, defenders=1, troops=900, second=700, budget=3, unsafe=F
     return catalog_from_data(data)
 
 
+class PreLogisticsCampaign(Campaign):
+    """Preserve the exact pre-V2 strategic fixtures and their ration boundaries."""
+
+    def _new(self, *args, **kwargs):
+        state=super()._new(*args,**kwargs)
+        state.extension.pop(logistics_rules.FIELD,None)
+        return state
+
+
 class StrategicAITests(unittest.TestCase):
     def new(self, **options):
-        game=Campaign(strategic_catalog(**options))
+        game=PreLogisticsCampaign(strategic_catalog(**options))
         game.command('new',dict(faction='shu',seed=2026,difficulty='normal'),0)
         return game
 
@@ -77,7 +86,7 @@ class StrategicAITests(unittest.TestCase):
         game.command('ai',dict(turn=turn),game.revision)
 
     def resume(self,game):
-        saved=game.export_save();other=Campaign(game.catalog);other.load_save(saved,0)
+        saved=game.export_save();other=PreLogisticsCampaign(game.catalog);other.load_save(saved,0)
         self.assertEqual(other.export_save(),saved)
         return other
 
@@ -193,7 +202,7 @@ class StrategicAITests(unittest.TestCase):
         actual=json.loads((ROOT/'game/data/campaigns/217-07.json').read_text())
         extra=next(r for r in actual['initial_officers'] if r['person_id'] not in used)
         data['initial_officers'].append(dict(extra,city='runan',troops=600,ruler=False))
-        game=Campaign(catalog_from_data(data))
+        game=PreLogisticsCampaign(catalog_from_data(data))
         game.command('new',dict(faction='shu',seed=2026,difficulty='normal'),0)
         source=game.state.cities['runan'];ids=set(source.roster.officer_ids);grain=source.grain
         before=deepcopy(game.state.soldiers)
@@ -224,7 +233,7 @@ class StrategicAITests(unittest.TestCase):
             route.update(days=days,distance_km=days*30,land_km=days*30)
             for backend in ('python','rust'):
                 with self.subTest(days=days,backend=backend), using_backend(backend):
-                    game=Campaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
+                    game=PreLogisticsCampaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
                     source,target=(game.state.cities[k] for k in ('nanyang','xiangyang'))
                     source.grain=required
                     before=game.export_save()
@@ -247,7 +256,7 @@ class StrategicAITests(unittest.TestCase):
         second.update(days=40,distance_km=1200,land_km=1200)
         for backend in ('python','rust'):
             with self.subTest(backend=backend), using_backend(backend):
-                game=Campaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
+                game=PreLogisticsCampaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
                 game._complete_turn(game.state);game._complete_turn(game.state)
                 self.assertEqual((game.state.month,game.state.day),(6,21))
                 source,target=(game.state.cities[k] for k in ('nanyang','xiangyang'))
@@ -316,7 +325,7 @@ class StrategicAITests(unittest.TestCase):
             route.update(days=20,distance_km=600,land_km=600)
         for backend in ('python','rust'):
             with self.subTest(backend=backend), using_backend(backend):
-                game=Campaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
+                game=PreLogisticsCampaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
                 source=game.state.cities['runan'];source.grain=260
                 before=game.export_save()
                 self.assertFalse(StrategicAI(game,game.state).reinforce(source,dict(target=None)))
@@ -348,7 +357,7 @@ class StrategicAITests(unittest.TestCase):
                         for row in data['initial_officers']:
                             if row['city']=='nanyang':row['city']='runan'
                         next(f for f in data['factions'] if f['id']=='wei')['city']='runan'
-                    game=Campaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
+                    game=PreLogisticsCampaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
                     source,middle,target=(game.state.cities[k] for k in ('runan','nanyang','yingchuan'))
                     ident=next(i for i in source.roster.officer_ids if game.state.officers[i].troops==600)
                     quote=game._travel_path(game.state,source.id,target.id,'wei','land')
@@ -376,7 +385,7 @@ class StrategicAITests(unittest.TestCase):
                 data['links']=[[a,b] for a,b,_ in pairs]
                 data['travel_routes']=[dict(id=f'credit:{a}:{b}',**{'from':a,'to':b},mode='land',terrain='plain',
                     days=days,distance_km=30,land_km=30,sea_km=0) for a,b,days in pairs]
-                game=Campaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
+                game=PreLogisticsCampaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
                 source=game.state.cities['runan'];source.grain=1;game.state.cities['nanyang'].grain=0
                 ident=next(i for i in source.roster.officer_ids if game.state.officers[i].troops==300)
                 quote=game._travel_path(game.state,'runan','yingchuan','wei','land')
@@ -397,7 +406,7 @@ class StrategicAITests(unittest.TestCase):
             days=days,distance_km=days*30,land_km=days*30,sea_km=0) for a,b,days in pairs]
         for backend in ('python','rust'):
             with self.subTest(backend=backend), using_backend(backend):
-                game=Campaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
+                game=PreLogisticsCampaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
                 source,middle,target=(game.state.cities[k] for k in ('runan','nanyang','yingchuan'))
                 source.grain=280;middle.grain=260
                 plan=dict(target='xiangyang')
@@ -441,7 +450,7 @@ class StrategicAITests(unittest.TestCase):
         data['city_coordinates']['xiangyang']=[112,32]
         data['travel_routes'].append(dict(id='safe-longer-road',**{'from':'nanyang','to':'xiangyang'},
             mode='land',terrain='plain',days=50,distance_km=1500,land_km=1500,sea_km=0))
-        game=Campaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
+        game=PreLogisticsCampaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
         ai=StrategicAI(game,game.state)
         option=ai.attack_option(game.state.cities['nanyang'],game.state.cities['xiangyang'])
         self.assertEqual(option['mode'],'land')
@@ -493,7 +502,7 @@ class StrategicAITests(unittest.TestCase):
         for level,expected in (('easy',0),('normal',1),('hard',1)):
             with self.subTest(difficulty=level):
                 catalog=strategic_catalog()
-                game=Campaign(catalog);game.command('new',dict(faction='shu',seed=2026,difficulty=level),0)
+                game=PreLogisticsCampaign(catalog);game.command('new',dict(faction='shu',seed=2026,difficulty=level),0)
                 before=deepcopy(game.state.soldiers)
                 self.ai_turn(game)
                 attacks=[m for m in game.state.extension['travel']['marches'] if m['kind']=='attack']
@@ -576,7 +585,7 @@ class StrategicAITests(unittest.TestCase):
         games=[]
         for backend in ('python','rust'):
             with using_backend(backend):
-                game=Campaign(catalog);game.command('new',dict(faction='shu',seed=2026,difficulty='normal'),0)
+                game=PreLogisticsCampaign(catalog);game.command('new',dict(faction='shu',seed=2026,difficulty='normal'),0)
                 for turn in range(16):
                     if game.state.phase=='arrivals':game.command('arrivals',{},game.revision)
                     self.ai_turn(game)
@@ -603,7 +612,7 @@ class StrategicAITests(unittest.TestCase):
                 # With the faction-wide officials, seed3 produces actual
                 # casualties. A surrender-only outcome would not exercise the
                 # casualty/save ledger that this long replay must cover.
-                game=Campaign(catalog);game.command('new',dict(faction='shu',seed=3),0)
+                game=PreLogisticsCampaign(catalog);game.command('new',dict(faction='shu',seed=3),0)
                 for _ in range(18):
                     if game.state.phase=='arrivals':game.command('arrivals',{},game.revision)
                     self.assertEqual(game.state.phase,'city')
@@ -621,7 +630,7 @@ class StrategicAITests(unittest.TestCase):
 
 class ObserverCampaignTests(unittest.TestCase):
     def start(self, faction='observer', catalog=None):
-        game = Campaign(catalog or strategic_catalog())
+        game = PreLogisticsCampaign(catalog or strategic_catalog())
         game.command('new', dict(faction=faction, seed=2026), 0)
         return game
 
@@ -646,7 +655,7 @@ class ObserverCampaignTests(unittest.TestCase):
                             for order in game.state.extension['travel']['marches']))
 
         saved = game.export_save()
-        restored = Campaign(game.catalog)
+        restored = PreLogisticsCampaign(game.catalog)
         restored.load_save(saved, 0)
         self.assertEqual(restored.export_save(), saved)
         self.advance(game)
@@ -707,7 +716,7 @@ class ObserverCampaignTests(unittest.TestCase):
             game.command('observe_turn', {}, revision)
         self.assertEqual(game.revision, revision)
         self.assertEqual(game.export_save(), final_save)
-        restored = Campaign(game.catalog)
+        restored = PreLogisticsCampaign(game.catalog)
         view = restored.load_save(final_save, 0)
         self.assertEqual(view['catalog']['observer_winner'], 'wei')
         self.assertEqual(restored.export_save(), final_save)

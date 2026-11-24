@@ -3,6 +3,7 @@
 const commandBookFixture=require('./fixtures/command-books.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),{spawnSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..'),source=fs.readFileSync(path.join(root,'game/app.js'),'utf8');
+const logisticsVersion=source.match(/^const usesLogisticsV2=.*;$/m)[0];
 const elements=new Map(),element=selector=>{
  if(selector==='#transfer-estimate'||selector==='#route-mode')return null;
  if(!elements.has(selector))elements.set(selector,{innerHTML:'',value:'',disabled:false,attributes:{},classList:{add(){},remove(){}},setAttribute(key,value){this.attributes[key]=String(value);},focus(){this.focused=true;},insertAdjacentHTML(){},querySelector(){return null;}});
@@ -15,6 +16,7 @@ officers[100]={...officers[0],faction_id:null};
 const context={refreshPersonnelDialogue(){},clearDialogueFeedback(){},GameOfficerChoices:require('../game/officer-choice.js'),GameOfficerSelection:require('../game/officer-selection.js'),GameI18n:{apply(){}},view:{catalog:{rules:{city_officer_capacity:99,battle_officers_per_side:10,expanded_campaign:true},city_profiles:{},city_income:{},map_presentation:{city_names:{}},links:[['home','enemy']],recruitable:{home:[100]},persuadable:{home:[]}},game:{player:'wei',turn:1,cities:{home,away,enemy},officers,extension:{officer_actions:{}}}},selectedCity:'home',actor:null,target:null,$:element,escapeHtml:String,name:id=>'武将'+id,portraitHtml:()=>'<i></i>',faction:String,cityName:String,cityEconomyNote:()=>'',resourceSummary:()=>'',marching:()=>new Set(),watchRouteDialog(){},notice(text,error){lastNotice={text,error};},command(kind,payload){lastCommand={kind,payload};return Promise.resolve(true);},render(){},dialog:{querySelectorAll:()=>picked.map(input=>Object.assign(input,{addEventListener(){}})),close(){}},openDialog(title,body){lastDialog={title,body};element('#departure-target').value='enemy';element('#transfer-city').value='away';element('#recruit-mode').value='recruit_officer';}};
 context.GameCommandBooks=commandBookFixture.api;commandBookFixture.attach(context.view);
 vm.createContext(context);
+vm.runInContext(logisticsVersion,context);
 context.isRuler=id=>context.GameOfficerChoices.isRuler(id,context.view.game.extension?.leaders);
 vm.runInContext(source.slice(source.indexOf('const capacity='),source.indexOf('\nconst marching=')),context);
 vm.runInContext(source.slice(source.indexOf('const unbuiltSettlement='),source.indexOf(';',source.indexOf('const unbuiltSettlement='))+1),context);
@@ -55,7 +57,8 @@ async function weightedTransferChecks(){
   }
  };
  fixture.GameCommandBooks=commandBookFixture.api;commandBookFixture.attach(fixture.view);
- vm.createContext(fixture);vm.runInContext(source.slice(source.indexOf('function officerAttributes('),source.indexOf('// Classify actual runtime entry')),fixture);
+ vm.createContext(fixture);vm.runInContext(logisticsVersion,fixture);
+ vm.runInContext(source.slice(source.indexOf('function officerAttributes('),source.indexOf('// Classify actual runtime entry')),fixture);
  const checked=()=>inputs.filter(input=>input.checked).map(input=>Number(input.value)),input=id=>inputs.find(input=>Number(input.value)===id),
   click=id=>{const row=input(id);assert(!row.disabled,'User can only activate affordable eligible officers');row.checked=!row.checked;row.change();},
   supply=amount=>assert(get('#transfer-supply').innerHTML.includes(`data-supply-loaded="${amount}"`));

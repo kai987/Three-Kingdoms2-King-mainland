@@ -987,6 +987,13 @@ test('daily marching grain loads once and consumes actual days through visible t
  expect(initial.state.extension.domestic.factions.shu.military).toBeNull();
  expect(initial.state.day).toBe(1);
  const startingGrain=initial.state.cities[source].grain;
+ expect(initial.state.extension.logistics_rules_version).toBe(2);
+ await page.locator('#city-information').click();
+ const logistics=page.locator('#dialog [data-city-logistics]:visible');
+ await expect(logistics).toHaveCount(1);
+ await logistics.locator('summary').click();
+ await expect(logistics.locator('dl')).toBeVisible();
+ await closeDialog(page);
  await clickCityCommand(page,'transfer');
  await expect(page.locator('#transfer-city')).toBeVisible();
  await page.locator('#transfer-city').selectOption(target);
@@ -998,6 +1005,12 @@ test('daily marching grain loads once and consumes actual days through visible t
  expect(officerText).toBeTruthy();
  expect(initial.state.officers[officerText].alive).toBe(true);
  await officer.check();
+ const cheapest=page.locator('#route-mode option[value=minimum_grain]');
+ await expect(cheapest).toHaveCount(1);
+ await page.locator('#route-mode').selectOption('minimum_grain');
+ await expect(page.locator('[data-logistics-quote]')).toBeVisible();
+ await expect(page.locator('[data-logistics-quote]')).toContainText(/最低耗糧|最小消費/);
+ await page.locator('#route-mode').selectOption(await landOption.getAttribute('value'));
  const preview=page.locator('#transfer-supply [data-supply-loaded]');
  await expect(preview).toHaveCount(1);
  const loaded=Number(await preview.getAttribute('data-supply-loaded'));
@@ -1021,7 +1034,17 @@ test('daily marching grain loads once and consumes actual days through visible t
   if(initial.state.cities[column.quote.path[index+1]]?.owner===initial.state.player)break;
  }
  expect(firstStage).toBeLessThan(column.quote.days);
- expect(loaded).toBe(Math.ceil(units*firstStage/50));
+ const weighted=(duration)=>{
+  let days=duration,total=0;
+  for(const leg of column.quote.routes){
+   const part=Math.min(days,leg.days);
+   total+=part*({plain:125,mountain:150,desert:150})[leg.terrain];
+   days-=part;
+   if(!days)break;
+  }
+  return Math.ceil(units*total/5000);
+ };
+ expect(loaded).toBe(weighted(firstStage));
  expect(column.supply).toMatchObject({loaded,received:0,consumed:0,remaining:loaded,elapsed_days:0,route_days:0});
  expect(departing.state.cities[source].grain).toBe(startingGrain-loaded);
  const live=page.locator(`[data-march="${column.id}"] [data-supply-loaded]`);
@@ -1038,7 +1061,7 @@ test('daily marching grain loads once and consumes actual days through visible t
  expect([next.state.year,next.state.month,next.state.day]).toEqual([217,7,11]);
  const marched=next.state.extension.travel.marches.find(row=>row.id===column.id);
  expect(marched).toBeTruthy();
- const elapsed=Math.min(10,column.quote.days),consumed=Math.ceil(units*elapsed/50),received=marched.supply.received;
+ const elapsed=Math.min(10,column.quote.days),consumed=weighted(elapsed),received=marched.supply.received;
  expect(marched.supply).toMatchObject({loaded,consumed,remaining:loaded+received-consumed,elapsed_days:elapsed,route_days:elapsed,shortage_days:0,lost:0});
  expect(next.state.officers[officerText].health).toBe(initial.state.officers[officerText].health);
  expect(next.state.officers[officerText].loyalty).toBe(initial.state.officers[officerText].loyalty);

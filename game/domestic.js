@@ -185,7 +185,11 @@
    const state=row('logistics');if(!state)return;const p=active.draft.policy,view=getView(),cities=Object.values(view.game.cities).filter(c=>c.owner===view.game.player&&c.id!==active.city),preview=state.preview,reason=reasons[state.blocked_reason];
    const labels={reserve_gold:['本城保留金錢','この都市に残す資金'],reserve_grain:['本城保留兵糧','この都市に残す兵糧'],reserve_reserves:['本城保留預備兵','この都市に残す予備兵'],reserve_officers:['本城保留人數','この都市に残す人数'],target_gold:['目的城金錢目標','目的都市の資金目標'],target_grain:['目的城兵糧目標','目的都市の兵糧目標'],target_reserves:['目的城預備兵目標','目的都市の予備兵目標'],target_officers:['目的城常駐武將目標','目的都市の常駐武将目標'],max_gold:['單隊最多金錢','一隊の資金上限'],max_grain:['單隊最多兵糧','一隊の兵糧上限'],max_reserves:['單隊最多預備兵','一隊の予備兵上限'],max_officers:['單次押運武將上限','一隊の護送武将数上限']};
    const versioned=!!preview&&view.game.extension?.logistics_rules_version===2&&typeof options.routePreview==='function';
-   const routeControls=versioned?'<label>'+text('運輸路線比較','輸送経路の比較')+' <select id="convoy-route-mode"><option value="'+escape(preview.route_mode)+'">'+text('方針路線','方針の経路')+'</option><option value="minimum_grain">'+text('最低耗糧','兵糧消費最小')+'</option></select></label><p class="small" id="convoy-route-quote" role="status"></p>':'';
+   const modes=versioned?[...new Set([preview.route_mode,'fastest','minimum_grain'])]:[];
+   const modeNames={fastest:text('最快','最速'),minimum_grain:text('最低耗糧','兵糧消費最小')};
+   const routeControls=versioned?select('convoy-route-mode',text('運輸路線比較','輸送経路の比較'),
+    preview.route_mode,modes.map(mode=>[mode,modeNames[mode]||text('方針路線','方針の経路')]))+
+    '<p class="small" id="convoy-route-quote" role="status"></p>':'';
    const previewBody=preview?`<p>${text('已儲存方針的本次預覽','保存済み方針による今回の予測')}：${escape(label(cityName(preview.target)))}</p><p>${escape(cargoText(preview.cargo))}</p><p>${text('押運武將','護送武将')}：${(preview.officers||[]).map(id=>escape(label(name(id)))).join('、')}</p><p>${preview.quote?.days??'—'}${text('日','日')} · ${text('首段預裝口糧','最初の補給地までの携行兵糧')} ${preview.cost_grain??0}</p><p class="small">${text('口糧與貨糧分開計帳，途中友城依庫存補給，等待也每日耗糧。押運人員不占目的城名額，卸貨後自動實際返原城；永久增員請使用調動。','携行兵糧と貨物は分け、途中の友軍都市で在庫から補給し、待機中も毎日消費します。護送武将は目的都市の定員に含めず、荷下ろし後に出発都市へ実際に帰還します。恒久的な増員は武将移動を使ってください。')}</p>`:`<p>${reason?reason[locale()==='ja'?1:0]:text('暫無可派出的運輸隊。','現在、派遣できる輸送隊はありません。')}</p>`;
    const body=`<div data-domestic-dialog="logistics" data-l10n-native="${locale()}">${bookHint('dispatch_transport')}<p>${text('物資從出發城扣除後計入在途，抵達才入庫；人員與預備兵不會重複計算。保留委任官、守軍和必要支出，已在途的補給會扣除目的城需求。','物資は出発都市から差し引いて輸送中に計上し、到着時に入庫します。武将・予備兵は重複計上しません。担当官・守備隊・必要経費を残し、輸送中の補給は目的都市の不足分から控除します。')}</p>${rescueControls(state)}${treasureControls(state)}${check('logistics-enabled',text('啟用自動支援前線','前線への自動支援を有効にする'),p.enabled)}${select('logistics-target',text('前線目的城','前線の目的都市'),p.target_city,[[null,text('暫不指定','指定しない')],...cities.map(c=>[c.id,label(cityName(c.id))])])}<p class="small">${text('常駐武將不足時，自動支援可另派永久調任；貨物由押運隊運送，押運完成後返回原城。','常駐武将が不足する場合、自動支援では別途、恒久的な異動を行います。貨物は護送隊が運び、荷下ろし後に出発都市へ戻ります。')}</p><fieldset><legend>${text('本城保留量','出発都市の保持量')}</legend><div class="domestic-input-grid">${['reserve_gold','reserve_grain','reserve_reserves','reserve_officers'].map(key=>number('logistics-'+key,text(...labels[key]),p[key],personFields.includes(key)?99:100000000)).join('')}</div></fieldset><fieldset><legend>${text('目的城目標量','目的都市の目標量')}</legend><div class="domestic-input-grid">${['target_gold','target_grain','target_reserves','target_officers'].map(key=>number('logistics-'+key,text(...labels[key]),p[key],personFields.includes(key)?99:100000000)).join('')}</div></fieldset><fieldset><legend>${text('每隊運輸上限','一隊の輸送上限')}</legend><div class="domestic-input-grid">${['max_gold','max_grain','max_reserves','max_officers'].map(key=>number('logistics-'+key,text(...labels[key]),p[key],personFields.includes(key)?99:100000000,key==='max_officers'?1:0)).join('')}</div></fieldset>${check('logistics-sea',text('允許已知海路（可能有季風與嚴重減員）','既知の海路を許可（季節風・大規模な損耗の可能性）'),p.allow_sea)}${check('logistics-special',text('允許陰平道／子午谷等險道','陰平道・子午谷などの険路を許可'),p.allow_special)}<p class="small">${text('不自動探索未知航路。目的城易主、道路中斷或滿員時，依實際狀態等待或返程。','未知航路は自動探索しません。目的都市の所属変更・経路遮断・定員超過時は、実際の状況に応じて待機または帰還します。')}</p><div class="domestic-preview">${previewBody}${routeControls}${logisticsSummary(view,active.city)}<p class="small">${text('抵達途中：','到着予定：')}${escape(cargoText(state.inbound))} · ${state.inbound?.officers??0}${text('人','人')}</p></div>${feedback()}${convoyList(active.city)}${reports('logistics')}</div>`;
    if(openDialog(text(`前線支援 · ${label(cityName(active.city))}`,`前線支援・${label(cityName(active.city))}`),body,`<button data-cancel>${text('返回戰役','戦役へ戻る')}</button><button id="open-domestic">${text('勢力內政委任','勢力の内政担当')}</button><button id="dispatch-logistics" ${!canWrite()||!bookReady('dispatch_transport')||!state.can_dispatch||!preview?'disabled':''}>${text('依預覽派出','予測内容で派遣')}</button><button id="save-logistics" class="primary" ${!canWrite()?'disabled':''}>${text('儲存支援方針','支援方針を保存')}</button>`)===undefined)return;
@@ -195,7 +199,7 @@
    query('#save-logistics').onclick=()=>submit('set_logistics',{city:active.city,policy:clone(p)});
    let chosen=preview?.route_mode,previewReady=!versioned;
    const routeSelect=query('#convoy-route-mode');
-   if(routeSelect){
+   if(versioned&&routeSelect){
     const display=query('#convoy-route-quote'),dispatchButton=query('#dispatch-logistics');
     const update=async()=>{
      const revision=getView().revision,token=active,mode=routeSelect.value;
@@ -224,6 +228,9 @@
    query('#dispatch-logistics').onclick=()=>{const current=row('logistics');if(!canWrite()||!previewReady||!current?.can_dispatch||!current.preview)return;const q=current.preview;
     const route=chosen||q.route_mode;if(!['land','fastest','sea','special','river','minimum_grain'].includes(route))return;
     return submit('dispatch_transport',{source:active.city,target:q.target,officers:q.officers,cargo:clone(q.cargo),route_mode:route});};
+   bindRescue(state);
+   bindTreasure(state);
+   i18n?.apply?.();
   }
   async function submit(kind,payload,{treasureContext=null}={}){
    if(treasureContext!==null&&(treasureContext!==treasureIdentity()||active?.treasureContext!==treasureContext))return false;

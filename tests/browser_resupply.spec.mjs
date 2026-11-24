@@ -54,9 +54,11 @@ async function depart(page){
  await page.locator('#transfer').click();await page.locator('#transfer-city').selectOption('bajun');
  const ruler=String(initial.state.extension.leaders.shu),officer=page.locator(`input[name=transfer-officer]:enabled:not([value="${ruler}"])`).first();
  const ident=await officer.getAttribute('value');await officer.check();
- const food=page.locator('#transfer-supply [data-supply-loaded]'),loaded=Number(await food.getAttribute('data-supply-loaded')),
+ const food=page.locator('#transfer-supply [data-supply-loaded]');await expect(food).toHaveCount(1);
+ const loaded=Number(await food.getAttribute('data-supply-loaded')),
   units=initial.state.officers[ident].troops+100;
- expect(loaded).toBe(Math.ceil(units*10/50));expect(loaded).toBeLessThan(Math.ceil(units*30/50));
+ expect(initial.state.extension.logistics_rules_version).toBe(2);
+ expect(loaded).toBe(Math.ceil(units*10*125/5000));expect(loaded).toBeLessThan(Math.ceil(units*30/50));
  await page.locator('#confirm-transfer').click();await idle(page);await expect(page.locator('#dialog')).not.toBeVisible();
  const after=await saved(page),column=after.state.extension.travel.marches[0];
  expect(column.quote.path).toEqual(['nanyang','nanjun','bajun']);expect(column.supply.loaded).toBe(loaded);
@@ -92,13 +94,17 @@ test('a real courier feeds a waiting column at a city and its escorts return hom
  for(const escort of escorts)expect(snapshot.state.cities.jiangxia.roster.officer_ids.map(String)).toContain(escort);
  await nextTurn(page);await arrivals(page);snapshot=await saved(page);
  army=snapshot.state.extension.travel.marches.find(row=>row.id===column.id);
- expect(army.supply.received).toBeGreaterThanOrEqual(200);
- expect(army.supply.refills.some(row=>row.kind==='convoy'&&row.grain===200)).toBe(true);
+ const returning=snapshot.state.extension.logistics.convoys.find(row=>row.id===convoy.id);
+ const cargoLoss=returning.cargo_ledger.filter(row=>row.kind==='route_loss'||row.kind==='weather'||row.kind==='rations')
+  .reduce((total,row)=>total+row.before.grain-row.after.grain,0);
+ const delivered=200-cargoLoss;
+ expect(cargoLoss).toBeGreaterThan(0);
+ expect(army.supply.received).toBeGreaterThanOrEqual(delivered);
+ expect(army.supply.refills.some(row=>row.kind==='convoy'&&row.grain===delivered)).toBe(true);
  expect(army.supply.shortage_days).toBeGreaterThan(0);expect(army.supply.shortage_days).toBeLessThan(10);
  expect(army.supply.route_days).toBeGreaterThan(10);expect(army.supply.retreat_requested).toBe(false);
  expect(snapshot.state.officers[ident].alive).toBe(true);
- const returning=snapshot.state.extension.logistics.convoys.find(row=>row.id===convoy.id);
- expect(returning.delivery_done).toBe(true);expect(returning.delivered.grain).toBe(200);expect(returning.status).toBe('returning');
+ expect(returning.delivery_done).toBe(true);expect(returning.delivered.grain).toBe(delivered);expect(returning.status).toBe('returning');
  expect(returning.target).toBe('jiangxia');
  for(const escort of escorts){
   expect(snapshot.state.cities.jiangxia.roster.officer_ids.map(String)).toContain(escort);

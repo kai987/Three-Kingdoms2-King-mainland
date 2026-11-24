@@ -1491,12 +1491,15 @@ function logisticsPreviewForDialog(element,purpose){
   return undefined;
  };
 }
+function logisticsTiming(timings,ticksPerDay,percent){
+ const labels={plain:['平原','平地'],mountain:['山地','山地'],desert:['沙漠','砂漠'],river_downstream:['順流','下り'],river_still:['靜水','静水'],river_upstream:['逆流','上り'],sea:['海路','海路'],embark:['登船','乗船'],node_wait:['等待','待機']};
+ return Object.entries(timings).map(([mode,ticks])=>battlePlain(...(labels[mode]||[mode,mode]))+' '+
+  String(ticks/ticksPerDay)+battlePlain('日','日')+(percent[mode]?' ('+percent[mode]+'%)':'')).join(' · ');
+}
 function logisticsQuoteHtml(quote,comparison){
  const q=quote?.logistics;
  if(!q)return '';
- const labels={plain:['平原','平地'],mountain:['山地','山地'],desert:['沙漠','砂漠'],river_downstream:['順流','下り'],river_still:['靜水','静水'],river_upstream:['逆流','上り'],sea:['海路','海路'],embark:['登船','乗船'],node_wait:['等待','待機']};
- const times=Object.entries(q.time_ticks).map(([mode,ticks])=>
-  battleText(...(labels[mode]||[mode,mode]))+' '+String(ticks/q.ticks_per_day)+battleText('日','日')+(q.percent[mode]?' ('+q.percent[mode]+'%)':'')).join(' · ');
+ const times=logisticsTiming(q.time_ticks,q.ticks_per_day,q.percent);
  const line=(value,title)=>value?title+' '+value.days+battleText('日 · ','日・')+value.logistics.total_grain+battleText('糧','兵糧'):'';
  return '<div class="small" data-logistics-quote data-march-grain="'+q.total_grain+'"><p>'+battleText(
   '基礎口糧 '+q.base_grain+' · 額外後勤 '+q.extra_grain+' · 返程糧 '+(q.return_grain??'—'),
@@ -2104,26 +2107,41 @@ function openBattleReinforcements(){
  function renderSource(){
   const row=options.sources.find(row=>row.city===source.value);
   const modes={land:['陸路','陸路'],river:['水路','水路'],sea:['海路','海路']};
-  $('#battle-reinforce-options').innerHTML=`<label>${battleText('行軍路線','行軍経路')} <select id="battle-reinforce-route">${row.routes.map(route=>`<option value="${escapeHtml(route.id)}">${battlePlain(...(modes[route.mode]||[route.mode,route.mode]))} · ${route.days} ${battlePlain('日','日')}</option>`).join('')}</select></label><fieldset><legend>${battleText(`選擇武將（最多 ${options.remaining} 名）`,`武将を選択（最大 ${options.remaining} 名）`)}</legend>${row.officers.map(id=>`<label class="domestic-toggle"><input type="checkbox" data-reinforce-officer="${escapeHtml(id)}">${escapeHtml(officerChoiceText(id))}</label>`).join('')}</fieldset>`;
+  const shortcuts=usesLogisticsV2()&&row.routes.length>1?`<button type="button" id="reinforce-fastest">${battleText('最快','最速')}</button><button type="button" id="reinforce-minimum">${battleText('最低耗糧','最小消費')}</button>`:'';
+  $('#battle-reinforce-options').innerHTML=`<label>${battleText('行軍路線','行軍経路')} <select id="battle-reinforce-route">${row.routes.map(route=>`<option value="${escapeHtml(route.id)}">${battlePlain(...(modes[route.mode]||[route.mode,route.mode]))} · ${route.days} ${battlePlain('日','日')}</option>`).join('')}</select></label>${shortcuts}<fieldset><legend>${battleText(`選擇武將（最多 ${options.remaining} 名）`,`武将を選択（最大 ${options.remaining} 名）`)}</legend>${row.officers.map(id=>`<label class="domestic-toggle"><input type="checkbox" data-reinforce-officer="${escapeHtml(id)}">${escapeHtml(officerChoiceText(id))}</label>`).join('')}</fieldset>`;
   const routeSelect=$('#battle-reinforce-route');
   const checks=[...document.querySelectorAll('#battle-reinforce-options [data-reinforce-officer]')];
+  let fastest,cheapest;
   function update(){
    const route=row.routes.find(route=>route.id===routeSelect.value);
    const ids=checks.filter(input=>input.checked).map(input=>GameOfficerChoices.ref(input.dataset.reinforceOfficer));
    const troops=ids.reduce((sum,id)=>sum+view.game.officers[String(id)].troops+100,0);
    const rationCost=plan=>plan.provisions?Math.ceil(troops*(plan.provisions.outbound+plan.provisions.returning)/plan.provisions.denominator):Math.ceil(troops*2*plan.days/options.denominator);
-   const grain=rationCost(route),minimum=Math.min(...row.routes.map(rationCost));
+   fastest=row.routes[0];
+   cheapest=row.routes.reduce((best,current)=>rationCost(current)<rationCost(best)?current:best,fastest);
+   const grain=rationCost(route);
    const short=grain>row.grain;
    const allowed=ids.length>0&&ids.length<=options.remaining&&!short&&view.game.battle?.id===battleId;
    confirm.disabled=!allowed;
    request=allowed?{battle_id:battleId,source:row.city,route:route.id,officers:ids}:null;
+   const p=route.provisions;
+   const base=Math.ceil(troops*route.days/options.denominator);
+   const outbound=p?Math.ceil(troops*p.outbound/p.denominator):base;
+   const detail=p?.modes?battlePlain(
+    ` · ${route.distance_km}km · 基礎 ${base} · 額外 ${outbound-base} · 預留返程 ${grain-outbound} · `,
+    `・${route.distance_km}km・基本 ${base}・追加 ${outbound-base}・帰路 ${grain-outbound}・`)+
+    logisticsTiming(p.modes,p.ticks_per_day,p.percent):'';
    $('#battle-reinforce-quote').textContent=battlePlain(
-    `預計第${route.arrival}日抵達 · 往返備糧 ${grain}／庫存 ${row.grain} · 最低 ${minimum} · 1 本命令書${short?' · 糧不足':''}`,
-    `第${route.arrival}日到着予定・往復の糧 ${grain}／備蓄 ${row.grain}・最小 ${minimum}・命令書1冊${short?'・糧不足':''}`);
+    `預計第${route.arrival}日抵達 · 往返備糧 ${grain}／庫存 ${row.grain} · 最快 ${fastest.days}日／${rationCost(fastest)}糧 · 最低耗糧 ${cheapest.days}日／${rationCost(cheapest)}糧 · 1 本命令書${short?' · 糧不足':''}`,
+    `第${route.arrival}日到着予定・往復の糧 ${grain}／備蓄 ${row.grain}・最速 ${fastest.days}日／${rationCost(fastest)}糧・最小 ${cheapest.days}日／${rationCost(cheapest)}糧・命令書1冊${short?'・糧不足':''}`)+detail;
   }
   routeSelect.onchange=update;
   for(const input of checks)input.onchange=update;
   update();
+  if(shortcuts){
+   $('#reinforce-fastest').onclick=()=>{routeSelect.value=fastest.id;update();};
+   $('#reinforce-minimum').onclick=()=>{routeSelect.value=cheapest.id;update();};
+  }
  }
  source.onchange=renderSource;
  confirm.onclick=async()=>{if(request&&await command('battle_reinforce',request))dialog.close();};

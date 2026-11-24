@@ -10,7 +10,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'source'))
 
-from remake import logistics, logistics_rules as rules, march_supply
+from remake import logistics, logistics_rules as rules, march_supply, military_budget, city_economy
 from test_remake_march_supply import supply_catalog
 from remake.campaign import Campaign, Catalog
 from remake.march_core import enabled, using_backend
@@ -195,6 +195,51 @@ class CargoLossTests(unittest.TestCase):
         self.assertEqual(received['cargo_delivered'],expected)
         self.assertEqual(received['cargo_route_loss'],500-expected)
         self.assertTrue(logistics.valid_grain_receipt(received))
+
+
+class MilitaryBudgetTests(unittest.TestCase):
+    def test_recruitment_search_preserves_next_bill_and_available_grain_in_1000_cases(self):
+        game=Campaign(supply_catalog(transfer=True,days=25))
+        game.command('new',dict(faction='shu',seed=2026),0)
+        state=game.state
+        city=state.cities['xiangyang']
+        budget=military_budget.budgets(game,state,city.owner)[city.id]
+        rng=random.Random(20261127)
+        for _ in range(1000):
+            city.grain=rng.randrange(25_000)
+            city.reserves=rng.randrange(4000)
+            requested=rng.randrange(2000)
+            budget.update(threatened=bool(rng.randrange(2)),regular=rng.randrange(3000),
+                          timely=rng.randrange(3000))
+            before=(city.grain,city.gold,city.reserves,state.rng.draws)
+            result=military_budget.recruitment(game,state,city,requested,budget)
+            self.assertEqual(before,(city.grain,city.gold,city.reserves,state.rng.draws))
+            self.assertEqual(result,military_budget.recruitment(game,state,city,requested,budget))
+            self.assertLessEqual(0,result)
+            self.assertLessEqual(result,requested)
+            if result:
+                garrison=military_budget.garrison(game,state,city,budget['active'],city.reserves+result)
+                next_bill=city_economy.turn_rations(budget['residents']+budget['wage_grain']+garrison,1)
+                self.assertGreaterEqual(city.grain,next_bill+3*result)
+
+    def test_sortie_has_legal_return_and_cannot_count_a_future_purchase(self):
+        game=Campaign(supply_catalog(transfer=True,days=25))
+        game.command('new',dict(faction='shu',seed=2026),0)
+        state=game.state
+        city,target=state.cities['xiangyang'],state.cities['nanjun']
+        ids=[999]
+        go=game._travel_path(state,city.id,target.id,city.owner,'land')
+        back=game._travel_path(state,target.id,city.id,city.owner,'land')
+        self.assertTrue(go and back)
+        city.grain=0
+        before=deepcopy(state)
+        quote=military_budget.sortie(game,state,city,target,ids,go,back)
+        self.assertGreater(quote['returning'],0)
+        self.assertFalse(quote['can_depart'])
+        self.assertEqual(state,before)
+        city.grain=quote['required_grain']
+        city.gold=quote['required_gold']
+        self.assertTrue(military_budget.sortie(game,state,city,target,ids,go,back)['can_depart'])
 
 
 def route_case(*,plain_days=10,water_days=10,terrain='plain',stock=100_000,one_way=False):

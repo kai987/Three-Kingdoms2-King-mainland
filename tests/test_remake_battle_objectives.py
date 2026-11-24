@@ -6,7 +6,7 @@ import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
-from remake import battle_grid, battle_services, battle_allegiance, officer_relations
+from remake import battle_grid, battle_services, battle_allegiance, logistics_rules, officer_relations
 from remake.campaign import Campaign, digest
 from remake.errors import GameError
 from remake.officers import recruitment_loyalty, year_state, YearState
@@ -183,7 +183,7 @@ class CoalitionBattleTests(unittest.TestCase):
         game._start_expanded_battle(state,state.cities['jiangxia'],state.cities['nanyang'],
             [ally,player],paid=True,manual_deployment=placement,march_supply=dict(remaining=200,credit_units=0),
             coalition=dict(sources={str(ally):'jiangxia',str(player):'xiangyang'},
-                           provisions=dict(wu=5000,shu=5000)))
+                           provisions={owner:5000*logistics_rules.RATION_SCALE for owner in ('wu','shu')}))
         game.validate(state)
         return game,ally,player
 
