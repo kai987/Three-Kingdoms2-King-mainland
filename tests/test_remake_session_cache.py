@@ -38,9 +38,11 @@ class SessionPreviewCacheTests(unittest.TestCase):
 
     def test_fresh_preview_containers_cannot_corrupt_cached_openings(self):
         session=CampaignSession(self.paths)
-        expected=deepcopy(session.view()['catalog']['scenarios'])
+        expected=deepcopy(session.view()['catalog'])
         catalog_hashes={key:digest(c.data) for key,c in session.catalogs.items()}
-        previews=session.view()['catalog']['scenarios'];row=previews[0];side=next(iter(row['faction_resources']))
+        catalog=session.view()['catalog']
+        previews=catalog['scenarios'];row=previews[0];side=next(iter(row['faction_resources']))
+        catalog['city_income']['shujun']['grain']=-1
         row['id']='corrupt';row['initial_owners']['nanyang']='corrupt'
         row['active_cities'].clear();row['city_names'].clear()
         row['map_cities'].clear();row['factions'].clear()
@@ -48,7 +50,11 @@ class SessionPreviewCacheTests(unittest.TestCase):
         row['faction_resources'][side]['gold']=-1
         row['faction_officers'][side]=-1;row['faction_colors'][side]='#000000'
         previews.pop()
-        self.assertEqual(session.view()['catalog']['scenarios'],expected)
+        current=session.view()['catalog']
+        self.assertEqual(current['scenarios'],expected['scenarios'])
+        self.assertEqual(current['city_income'],expected['city_income'])
+        current_opening=session.preview_city(current['scenario_id'],'shujun')['city']
+        self.assertEqual(current['city_income']['shujun'],current_opening['income'])
         self.assertEqual({key:digest(c.data) for key,c in session.catalogs.items()},catalog_hashes)
         self.assertEqual(session.revision,0);self.assertIsNone(session.to_dict())
 

@@ -825,11 +825,38 @@ font:inherit
 .library-tools select{
 font-size:16px
 }
+.library-table-scroll{
+overflow-x:auto;
+max-width:100%
+}
 .library-table{
 width:100%;
+min-width:36rem;
 border-collapse:collapse;
 font-size:16px
 }
+.library-sort{
+display:inline-flex;
+align-items:center;
+gap:3px;
+min-height:36px;
+padding:3px 2px;
+border:0;
+white-space:nowrap
+}
+.library-sort:focus-visible{
+outline-offset:-2px
+}
+.library-sort-indicator{
+display:inline-block;
+width:1em;
+text-align:center
+}
+.library-sort-indicator::before{content:"↕";color:var(--muted,#63534c)}
+.library-table th[aria-sort="ascending"] .library-sort-indicator::before{content:"↑";color:currentColor}
+.library-table th[aria-sort="descending"] .library-sort-indicator::before{content:"↓";color:currentColor}
+.library-table td:nth-child(n+2):nth-child(-n+8){white-space:nowrap}
+.library-entry-summary details p{margin:.5em 0}
 .library-table th,.library-table td{
 text-align:left;
 padding:6px 4px;

@@ -4,7 +4,7 @@ from . import grain_units, southern_mission
 from .campaign import Campaign, Catalog, GameError, verified_save_content
 from .map_presentation import city_names,presentation,faction_colors
 from .city_economy import (frontier_outposts_view, garrison_grain, garrison_grain_cost, grain_balance,
-                           income_at, incomes_at, monthly_income, profile_at, profiles_at, scale_monthly_grain)
+                           monthly_income, opening_monthly_income, profile_at, profiles_at)
 from .officer_relations import opening_values
 from .dated_events import visible_factions
 from .treasures import opening_stock as opening_treasure_stock
@@ -107,6 +107,9 @@ class CampaignSession:
         self.game=Campaign(self.catalogs[initial_scenario], record_journal=self.record_journal)
         self.lock=RLock()
         self._opening_previews=None
+        # Before a campaign starts, income depends only on the selected
+        # catalog and the current default grain rules. Live views use state.
+        self._opening_incomes={}
 
     @property
     def revision(self): return self.game.revision
@@ -150,8 +153,12 @@ class CampaignSession:
                 for key, city in state.cities.items()
             }
         else:
-            result['catalog']['city_income'] = {key: scale_monthly_grain(income)
-                                                for key, income in incomes_at(self.game.catalog.data, year, month).items()}
+            scenario = self.game.catalog.data['id']
+            if scenario not in self._opening_incomes:
+                self._opening_incomes[scenario] = {key: opening_monthly_income(self.game, key)
+                    for key in self.game.catalog.data.get('city_income', {})}
+            result['catalog']['city_income'] = {key: dict(income)
+                for key, income in self._opening_incomes[scenario].items()}
         result['catalog']['road_additions']=self.game.catalog.data.get('road_additions',[])
         result['catalog']['world']=self.game.catalog.data.get('world')
         result['catalog']['scenario_id']=self.game.catalog.data['id']
@@ -241,7 +248,7 @@ class CampaignSession:
             stocks,troops=c.opening_garrisons
             from .equipment import initial_view
             from .city_development import opening_view
-            from .facilities import income_after_damage, opening_view as opening_facilities
+            from .facilities import opening_view as opening_facilities
             preview_game=self.game if c is self.game.catalog else Campaign(c)
             for row in d['initial_officers']:
                 if row['city']!=city:continue
@@ -258,14 +265,13 @@ class CampaignSession:
             treasure = opening_treasure_stock(d,city,owner,d['start_year'],d['start_month'])
             facilities=opening_facilities(d,city)
             facilities['services']=['hospital','market']+(['school','armory'] if facilities['town']>=2 else [])
-            income = scale_monthly_grain(income_after_damage(
-                income_at(d,city,d['start_year'],d['start_month']), facilities['damage']))
+            development = opening_view(c, city)
+            income = opening_monthly_income(preview_game, city, development=development, facility=facilities)
             history=d.get('city_history',{}).get(city,{})
             neutral_name=history.get('neutral_label') or ('地方汉郡（中立）' if history.get('opening',{}).get('basis')=='unmapped_local_han_administration' else '无主')
             frontier=frontier_outposts_view(d).get(city)
             upkeep = garrison_grain_cost(d, city, d['start_year'], d['start_month'],
                                          sum(o['troops'] for o in officers), stocks[city]['reserves'])
-            development = opening_view(c, city)
             balance = grain_balance(income['grain'], upkeep, owner, development['population'])
             prefect = d.get('initial_governors', {}).get(city)
             governor = c.ids[prefect['person_id']] if prefect else None

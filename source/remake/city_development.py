@@ -251,14 +251,18 @@ def _production(row, field, difficulty, *, opening_land, minimum_population_step
     return population_steps * development_factor * tax_rate(row['governance'])
 
 
-def adjust_income(game, state, city_id, income):
+def adjust_income(game, state, city_id, income, *, opening=None):
     """Scale established dated production relative to immutable opening data."""
     result = dict(income)
     if not _rules(game)['enabled']:
         return result
-    row = _row(game, state, city_id)
-    baseline = row['baseline']
-    difficulty = state.extension.get('difficulty', 'normal')
+    if state is None:
+        row = baseline = opening if opening is not None else opening_view(game.catalog, city_id)
+        difficulty = 'normal'
+    else:
+        row = _row(game, state, city_id)
+        baseline = row['baseline']
+        difficulty = state.extension.get('difficulty', 'normal')
     for resource, field in (('gold', 'industry'), ('grain', 'land')):
         if resource in result:
             numerator = _production(row, field, difficulty, opening_land=baseline['land'])
