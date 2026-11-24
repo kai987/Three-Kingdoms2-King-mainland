@@ -57,7 +57,9 @@ def configure_catalog(data):
     if data['id'] != SCENARIO:
         return
     people = data['people']
-    if any(row['runtime_id'] == CAI_YANG_ID or row['person_id'] == CAI_YANG for row in people):
+    existing = [row for row in people
+                if row['runtime_id'] == CAI_YANG_ID or row['person_id'] == CAI_YANG]
+    if existing and [(row['runtime_id'], row['person_id']) for row in existing] != [(CAI_YANG_ID, CAI_YANG)]:
         raise ValueError('Runan officer identity is already in use')
     gong = next((row for row in people if row['person_id'] == GONG_DU), None)
     if gong is None:
@@ -69,6 +71,8 @@ def configure_catalog(data):
     for row in data.get('initial_free_officers', ()):
         if row['person_id'] == GONG_DU:
             row['resolve_death_year'] = False
+    if existing:
+        return  # A catalog derived from a loaded catalog already includes Cai Yang.
     cai_source = 'https://zh.wikisource.org/zh-hant/三國志/卷32'
     people.append(dict(
         person_id=CAI_YANG, runtime_id=CAI_YANG_ID, name='蔡阳', aliases=['蔡陽', '蔡揚', '蔡扬', 'さいよう'],
