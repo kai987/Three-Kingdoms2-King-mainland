@@ -1334,12 +1334,13 @@ class ExpandedCampaign:
                 'recruitable':{c.id:self._free_candidates(state,c) for c in state.cities.values() if c.owner==state.player} if state else {}}
 
     def _validate_expansion(self,state):
-        from . import economy_rules, grain_market, payroll
+        from . import economy_rules, grain_market, logistics_rules, payroll
         x=state.extension
         fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events','civil_staff','pending_succession','domestic','logistics','treasury','facilities','equipment','command_books'}
         if 'city_development' in x:fields.add('city_development')
         if payroll.FIELD in x:fields.add(payroll.FIELD)
         if economy_rules.FIELD in x:fields.add(economy_rules.FIELD)
+        if logistics_rules.FIELD in x:fields.add(logistics_rules.FIELD)
         if grain_market.FIELD in x:fields.add(grain_market.FIELD)
         if battle_reinforcements.RETURNS in x:fields.add(battle_reinforcements.RETURNS)
         from . import dated_events, succession
@@ -1473,6 +1474,7 @@ class ExpandedCampaign:
 
     def _validate_battle_coalition(self,state,battle):
         from .march_supply import denominator, LIMIT
+        from .battle_supply import credit_scale
 
         ext=battle['extended']
         coalition=ext['coalition']
@@ -1509,7 +1511,7 @@ class ExpandedCampaign:
         if set(provisions)!=owners or 'supply' not in ext:
             raise ValueError('Invalid coalition provision owners')
         for amount in provisions.values():
-            integer(amount,0,(LIMIT*denominator()+denominator()-1)*len(sources),'coalition provisions')
+            integer(amount,0,(LIMIT+1)*denominator()*credit_scale(ext['supply'])*len(sources)-1,'coalition provisions')
         supply=ext['supply']['sides']['attackers']
-        if sum(provisions.values())!=supply['loaded']*denominator()+supply['initial_credit']:
+        if sum(provisions.values())!=supply['loaded']*denominator()*credit_scale(ext['supply'])+supply['initial_credit']:
             raise ValueError('Invalid coalition provision balance')

@@ -7,6 +7,7 @@ import unittest
 from unittest.mock import patch
 
 from campaign_fixtures import controlled_catalog
+from remake.march_supply import book_denominator
 from remake.campaign import Campaign, Catalog
 from remake.errors import GameError
 from remake.strategic_ai import StrategicAI
@@ -76,7 +77,7 @@ class AlliedAttackTravelTests(unittest.TestCase):
         self.assertEqual((waiting['status'], waiting['reason']), ('waiting','allied_rendezvous'))
         self.assertEqual(waiting['supply']['route_days'], waiting['quote']['days'])
         self.assertLess(approaching['supply']['route_days'], approaching['quote']['days'])
-        waiting_nutrition = waiting['supply']['remaining'] * 1000 + waiting['supply']['credit_units']
+        waiting_nutrition = waiting['supply']['remaining'] * book_denominator(waiting['supply']) + waiting['supply']['credit_units']
         self.assertEqual(approaching['target'], target.id)
         saved = game.export_save()
         game.load_save(saved, game.revision)

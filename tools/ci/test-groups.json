@@ -732,6 +732,10 @@
         "logistics"
       ]
     },
+    "tests/test_remake_logistics_v2.py": {
+      "tier": "related",
+      "groups": ["economy", "logistics", "battle", "save"]
+    },
     "tests/test_remake_luzon_settlement.py": {
       "tier": "related",
       "groups": [

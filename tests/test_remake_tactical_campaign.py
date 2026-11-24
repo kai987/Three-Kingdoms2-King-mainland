@@ -135,7 +135,8 @@ class TacticalCampaignTests(unittest.TestCase):
         source = next(row for row in offer['sources'] if row['city'] == 'xiangyang')
         route, officer = source['routes'][0], source['officers'][0]
         grain = state.cities[source['city']].grain
-        cost = march_supply.cost(state.officers[officer].troops, 1, route['days'] * 2)
+        units = state.officers[officer].troops + 100
+        cost = (units * route['days'] * 2 * 125 + 4999)//5000
         book = state.extension['command_books']['factions']['shu']['used']
         self.command('battle_reinforce', battle_id=battle['id'], source=source['city'],
                      route=route['id'], officers=[officer])
@@ -183,8 +184,11 @@ class TacticalCampaignTests(unittest.TestCase):
         row, = game.state.extension[battle_reinforcements.RETURNS]
         self.assertEqual((row['officers'], row['source'], row['route'], row['remaining']),
                          ([officer], source['city'], route['id'], 1))
-        self.assertEqual(row['grain'], march_supply.cost(game.state.officers[officer].troops, 1, 2*route['days'])
-                         - march_supply.cost(game.state.officers[officer].troops, 1, 2))
+        units = game.state.officers[officer].troops + 100
+        full = (units * 2 * route['days'] * 125 + 4999)//5000
+        outbound = (units * 125 + 4999)//5000
+        self.assertEqual(row['grain'], full-outbound)
+        self.assertEqual(row['rations']['initial_credit'], outbound*5_000_000-units*125_000)
         self.assertIn(officer, game._march_ids(game.state))
         restored = Campaign(game.catalog)
         restored.load_save(game.export_save(compact=True), 0)

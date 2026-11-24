@@ -4,15 +4,16 @@ from itertools import count
 from math import gcd
 
 from .historical_campaigns import transit_allowed
-from .march_supply import denominator, OFFICER_UNITS, estimate
+from . import logistics_rules as rules
+from .march_supply import denominator, OFFICER_UNITS, estimate, travel_rules
 from .route_hazards import evaluate_leg, route_allowed
 
 
-def _remaining(state, owner, city, balance, units, days):
+def _remaining(state, owner, city, balance, units, weight, divisor):
     """Carry fractional meal credit across our resupply checkpoints."""
-    remaining = balance - units * days
+    remaining = balance - units * weight
     if remaining >= 0 and state.cities[city].owner == owner:
-        return state.cities[city].grain * denominator() + remaining % denominator()
+        return state.cities[city].grain * divisor + remaining % divisor
     return remaining
 
 
@@ -34,23 +35,23 @@ def _routes(game, state, owner, mode):
     return outbound, incoming
 
 
-def _next_depot_days(state, owner, target, units, incoming):
+def _next_depot_weight(state, owner, target, units, incoming, weight, divisor, weighted):
     """Prune dead ends using the largest possible fractional ration credit."""
     queue = [(0, target)]
-    max_credit = denominator() - gcd(denominator(), units)
+    max_credit = divisor - (1 if weighted else gcd(divisor, units))
     distance = {}
     while queue:
         days, here = heappop(queue)
         city = state.cities[here]
         if city.owner == owner:
-            if days * units > city.grain * denominator() + max_credit:
+            if days * units > city.grain * divisor + max_credit:
                 continue
             days = 0
         if here in distance and days >= distance[here]:
             continue
         distance[here] = days
         for leg in incoming[here]:
-            heappush(queue, (days + leg['days'], leg['from']))
+            heappush(queue, (days + weight(leg), leg['from']))
     return distance
 
 
@@ -77,21 +78,31 @@ def detour(game, state, source, target, ids, mode, primary):
     units = sum(state.officers[ident].troops + OFFICER_UNITS for ident in ids)
     # The ordinary forecast starts with exactly the initial leg budget. Only
     # a downstream shortage calls for this alternate route search.
-    balance = estimate(state, ids, primary) * denominator()
+    weighted = rules.version(state) == rules.CURRENT
+    divisor = denominator() * (rules.RATION_SCALE if weighted else 1)
+    weights = {}
+    def weight(leg):
+        if not weighted:
+            return leg['days']
+        key = leg['id'], leg['from']
+        if key not in weights:
+            weights[key] = rules.weight(rules.leg_parts(leg, travel_rules(game)))
+        return weights[key]
+    balance = estimate(state, ids, primary, game=game) * divisor
     for leg in primary['routes']:
-        balance = _remaining(state, owner, leg['to'], balance, units, leg['days'])
+        balance = _remaining(state, owner, leg['to'], balance, units, weight(leg), divisor)
         if balance < 0:
             break
     else:
         return None
 
     outbound, incoming = _routes(game, state, owner, mode)
-    next_depot = _next_depot_days(state, owner, target, units, incoming)
+    next_depot = _next_depot_weight(state, owner, target, units, incoming, weight, divisor, weighted)
     if source not in next_depot:
         return None
     lower_bound = _distance_to_target(target, incoming, next_depot)
     serial = count()
-    balance = state.cities[source].grain * denominator()
+    balance = state.cities[source].grain * divisor
     queue = [(lower_bound[source], 0, 0, next(serial), source, balance, [source], [])]
     labels = {}
     while queue:
@@ -108,9 +119,9 @@ def detour(game, state, source, target, ids, mode, primary):
         for leg in outbound[here]:
             city = leg['to']
             if (city in visited or city not in next_depot
-                    or units * (leg['days'] + next_depot[city]) > balance):
+                    or units * (weight(leg) + next_depot[city]) > balance):
                 continue
-            remaining = _remaining(state, owner, city, balance, units, leg['days'])
+            remaining = _remaining(state, owner, city, balance, units, weight(leg), divisor)
             travel_days = days + leg['days']
             heappush(queue, (travel_days + lower_bound[city], travel_days, distance + leg['distance_km'],
                              next(serial), city, remaining, path + [city], legs + [leg]))

@@ -107,7 +107,7 @@ class LogisticsTests(unittest.TestCase):
                                                          protected_officers=spare[:1], max_turns=2))
         row, = state.extension['logistics']['convoys']
         self.assertEqual((row['source'], row['target'], row['officers']), (source.id, target.id, spare[1:]))
-        self.assertEqual(row['cargo'], dict(gold=0, grain=3504, reserves=0, treasure=0))
+        self.assertEqual(row['cargo'], dict(gold=0, grain=3505, reserves=0, treasure=0))
         self.assertEqual(source.grain, 10000 - row['cargo']['grain'] - row['journeys'][0]['supply']['loaded'])
         self.assertGreaterEqual(source.grain, 5000)
         self.assertEqual(target.grain, 2000)

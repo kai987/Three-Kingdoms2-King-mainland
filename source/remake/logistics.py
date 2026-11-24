@@ -7,7 +7,7 @@ from copy import copy, deepcopy
 
 from . import grain_units
 from .errors import GameError
-from . import command_books, historical_campaigns
+from . import command_books, logistics_rules, historical_campaigns
 from .officers import OFFICER_TROOP_CAP, parse_officer_ref
 from .route_hazards import allocate_survivors, _python_route_allowed
 from .restore_routes import validators as route_validators
@@ -108,7 +108,7 @@ def _cargo_change(row, kind, new_cargo, day, reference=None):
     row['cargo'] = deepcopy(new_cargo)
 
 
-def advance_supply(game, state, row, through_turn=None, *, absolute_tick=None):
+def advance_supply(game, state, row, through_turn=None, *, absolute_tick=None, parts=None):
     from .march_supply import advance_unit,current_city
     cargo=deepcopy(row['cargo'])
     def changed(kind, new_cargo, day):
@@ -120,7 +120,7 @@ def advance_supply(game, state, row, through_turn=None, *, absolute_tick=None):
         row['journeys'][-1]['supply']['waiting']=True
     spent=advance_unit(game,state,unit,row['journeys'][-1],through_turn,
                         unit_kind='convoy',cargo=cargo,on_cargo_change=changed,
-                        absolute_tick=absolute_tick)
+                        absolute_tick=absolute_tick,parts=parts)
     journey=row['journeys'][-1]
     remaining=max(0,journey['quote']['days']-journey['supply']['route_days'])
     journey['arrival_turn']=(journey['supply']['clock_tick']+remaining+9)//10+1
@@ -319,9 +319,9 @@ def _present_count(game, state, source):
                and i not in busy for i in source.roster.officer_ids)
 
 
-def _rations(state, quote, ids, cargo):
+def _rations(game, state, quote, ids, cargo):
     from .march_supply import estimate
-    return estimate(state, ids, quote, cargo['reserves'])
+    return estimate(state, ids, quote, cargo['reserves'], game=game)
 
 
 def _army(state, ident, owner):
@@ -367,7 +367,7 @@ def _meeting_quote(game, state, source, army, policy):
 
 
 def rescue_targets(game, state, city_id):
-    from .march_supply import current_city,next_city,next_supply_days,required_grain
+    from .march_supply import current_city,next_city,remaining_requirement
     source=state.cities[city_id]
     policy=_pool(state)['cities'][city_id]['policy']
     eligible=sorted(_eligible(game,state,source),key=lambda i:(-state.officers[i].profile.martial_strength,_key(i)))
@@ -378,9 +378,7 @@ def rescue_targets(game, state, city_id):
         if army['owner']!=source.owner or source.owner=='neutral':
             continue
         supply=army['supply']
-        remaining_days=next_supply_days(state,army['quote'],army['owner'],supply.get('route_days',0))
-        troops=sum(state.officers[i].troops for i in army['officers'])
-        need=max(0,required_grain(troops,len(army['officers']),max(10,remaining_days))-supply['remaining'])
+        need=max(0,remaining_requirement(game,state,army,minimum_days=10)-supply['remaining'])
         row=dict(march_id=army['id'],location_city=current_city(army),next_city=next_city(army),
             city=None,target_city=army['target'],quote=None,route_mode='land',officers=list(ids),
             max_grain=0,needed_grain=need,cost_grain=0,can_dispatch=False,
@@ -396,7 +394,7 @@ def rescue_targets(game, state, city_id):
         if not reason and selected is None:reason='no_route'
         if selected:
             city,mode,quote=selected
-            cost=_rations(state,quote,ids,dict(reserves=0))
+            cost=_rations(game, state,quote,ids,dict(reserves=0))
             maximum=min(policy['max_grain'],max(0,source.grain-policy['reserve_grain']-cost))
             row.update(city=city,quote=deepcopy(quote),route_mode=mode,cost_grain=cost,
                        max_grain=maximum,eta_turn=state.turn+quote['turns'])
@@ -450,7 +448,7 @@ def preview(game, state, city_id):
     if selected is None:
         return None, 'no_route'
     mode, quote = selected
-    grain = _rations(state, quote, ids, cargo)
+    grain = _rations(game, state, quote, ids, cargo)
     if source.grain - cargo['grain'] - grain < policy['reserve_grain']:
         cargo['grain'] = max(0, source.grain - grain - policy['reserve_grain'])
     if source.grain - cargo['grain'] - grain < policy['reserve_grain']:
@@ -512,7 +510,7 @@ def treasure_transport(game, state, city_id, *, quote_cache=None):
         if reason is None and selected is None: reason = 'no_route'
         if selected:
             mode, quote = selected
-            cost = _rations(state, quote, ids, _empty_cargo())
+            cost = _rations(game, state, quote, ids, _empty_cargo())
             if source.grain-cost < policy['reserve_grain']: reason = 'insufficient_grain'
         result['targets'].append(dict(target=target.id, officers=list(ids),
             days=quote['days'] if quote else None,modes=list(quote['modes']) if quote else [],
@@ -536,14 +534,14 @@ def _event(game, state, kind, row, *, lost=0, reason='outbound',amounts=None):
             person_ids=[state.officers[i].person_id for i in ids], factions=[row['owner']], details=details)
 
 
-def _journey(game, state, source, target, mode, quote, ids, reserves, *, from_cargo=False,initial_grain=None):
+def _journey(game, state, source, target, mode, quote, ids, reserves, *, from_cargo=False,initial_grain=None,previous=None):
     from .march_supply import create
     return dict(source=source, target=target, mode=mode, quote=deepcopy(quote),
         departure_turn=state.turn, arrival_turn=state.turn + quote['turns'],
         departure_year=state.year, departure_month=state.month, departure_day=state.day,
         risks=game._march_risks(quote, state.rng),
         departure_troops={str(i):state.officers[i].troops for i in ids},
-        supply=create(state, ids, quote, reserves, from_cargo=from_cargo,initial_grain=initial_grain))
+        supply=create(state, ids, quote, reserves, game=game, from_cargo=from_cargo,initial_grain=initial_grain,previous=previous))
 
 
 def dispatch(game, state, payload, owner, *, emergency_grain=None):
@@ -597,7 +595,7 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None):
     checked_fields = {'grain'} if army is not None or emergency_grain is not None else _CITY_FIELDS
     if any(getattr(source, field) - cargo[field] < policy['reserve_' + field] for field in checked_fields):
         raise GameError('运输后未达到本城保留物资数量。')
-    grain = _rations(state, quote, ids, cargo) if emergency_grain is None else emergency_grain
+    grain = _rations(game, state, quote, ids, cargo) if emergency_grain is None else emergency_grain
     if source.grain - cargo['grain'] - grain < policy['reserve_grain']:
         raise GameError('运输队粮食不足，或低于本城保留量。')
     if cargo['treasure'] > _treasure_count(state,source.id):
@@ -633,15 +631,14 @@ def auto_dispatch_city(game, state, city_id):
     if (not _pool(state)['cities'][city_id]['policy']['enabled']
             or historical_campaigns.hold_longyou_garrison(game, state, state.cities[city_id])):
         return False
-    from .march_supply import next_supply_days,required_grain
+    from .march_supply import remaining_requirement
     rescues=[]
     for proposed in rescue_targets(game,state,city_id):
         army=_army(state,proposed['march_id'],state.cities[city_id].owner)
         if not proposed['can_dispatch'] or army is None:
             continue
         supply=army['supply']
-        days=next_supply_days(state,army['quote'],army['owner'],supply.get('route_days',0))
-        need=required_grain(sum(state.officers[i].troops for i in army['officers']),len(army['officers']),days)
+        need=remaining_requirement(game,state,army)
         if not (supply.get('waiting') or supply.get('shortage_streak') or supply['remaining']<need):
             continue
         rescues.append((-supply.get('shortage_streak',0),proposed['quote']['days'],army['id'],proposed))
@@ -739,7 +736,7 @@ def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_
             mode, quote = selected
             if max_turns is not None and quote['turns'] > max_turns:
                 continue
-            rations = _rations(state, quote, [escort], _empty_cargo())
+            rations = _rations(game, state, quote, [escort], _empty_cargo())
             if source.grain - rations < policy['reserve_grain']:
                 continue
             grain = min(grain, source.grain - policy['reserve_grain'] - rations)
@@ -764,7 +761,7 @@ def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_
         if require_return and (selected is None or max_turns is not None
                                and selected[1]['turns'] > max_turns):
             continue
-        return_rations = _rations(state, selected[1], [escort], _empty_cargo()) if selected else 0
+        return_rations = _rations(game, state, selected[1], [escort], _empty_cargo()) if selected else 0
         cargo = dict(_empty_cargo(), gold=gold,
                      grain=min(grain, grain_need + return_rations) if grain_need else 0)
         if require_return and target.grain + cargo['grain'] < return_rations:
@@ -797,7 +794,7 @@ def _auto_transfer_city(game,state,city_id):
     chosen=[]
     for ident in sorted(_eligible(game,state,source),key=lambda i:(-state.officers[i].profile.martial_strength,_key(i))):
         if len(chosen)>=slots:break
-        if _rations(state,quote,[*chosen,ident],dict(reserves=0))<=max(0,source.grain-policy['reserve_grain']):
+        if _rations(game, state,quote,[*chosen,ident],dict(reserves=0))<=max(0,source.grain-policy['reserve_grain']):
             chosen.append(ident)
     if not chosen:return False
     game._queue_march(state,source,target,chosen,'transfer',mode)
@@ -987,12 +984,11 @@ def _begin_journey(game,state,row,here,target,mode,quote,*,status,reason):
         _cargo_change(row,'bag_return',dict(row['cargo'],grain=row['cargo']['grain']+remaining),
             (state.turn-1)*10,dict(journey=len(row['journeys'])-1))
     close(previous['supply'],state.turn)
-    journey=_journey(game,state,here,target,mode,quote,row['officers'],row['cargo']['reserves'],initial_grain=0)
+    journey=_journey(game,state,here,target,mode,quote,row['officers'],row['cargo']['reserves'],initial_grain=0,previous=previous['supply'])
     row['journeys'].append(journey)
     row.update(status=status,target=target,reason=reason)
-    from .march_supply import initial_days,required_grain
-    need=required_grain(sum(state.officers[i].troops for i in row['officers']),len(row['officers']),
-                        initial_days(state,quote,row['owner']),row['cargo']['reserves'])
+    from .march_supply import estimate
+    need=estimate(state,row['officers'],quote,row['cargo']['reserves'],game=game)
     amount=min(need,row['cargo']['grain'])
     if amount:
         _cargo_change(row,'rations',dict(row['cargo'],grain=row['cargo']['grain']-amount),
@@ -1348,8 +1344,8 @@ def validate(game, state):
             if game._quote(quote['path'], legs) != quote:
                 raise ValueError('Logistics route arithmetic')
             from .march_supply import validate as validate_supply,validate_departures
-            validate_supply(journey['supply'],quote,journey['departure_turn'],state.turn)
-            validate_departures(journey['supply'],quote,returning=index>0)
+            validate_supply(journey['supply'],quote,journey['departure_turn'],state.turn,game=game,version=logistics_rules.version(state))
+            validate_departures(journey['supply'],quote,returning=index>0,game=game)
             supply = journey['supply']
             manifest=journey['departure_troops']
             if (not isinstance(manifest,dict) or not set(manifest)<={str(i) for i in row['original_officers']}
@@ -1358,7 +1354,10 @@ def validate(game, state):
                 raise ValueError('Logistics departure troop snapshot')
             if (supply['officers'] > len(row['original_officers'])
                     or index == 0 and (supply['officers'] != len(row['original_officers'])
-                        or supply['reserves'] != row['initial_cargo']['reserves'] or supply['from_cargo'])
+                        or supply['reserves'] != row['initial_cargo']['reserves'] or supply['from_cargo']
+                        or supply.get('initial_credit',0))
+                    or index>0 and 'initial_credit' in supply and
+                        supply['initial_credit']!=journeys[index-1]['supply']['credit_units']
                     or index > 0 and supply['loaded']
                     or index < len(journeys)-1 and (supply['remaining'] or supply['closed_tick'] is None)
                     or index == len(journeys)-1 and (supply['returned_to_cargo'] or supply['closed_tick'] is not None)):

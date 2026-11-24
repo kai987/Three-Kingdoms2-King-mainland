@@ -1,5 +1,6 @@
 """Deterministic daily food, real checkpoints and auditable starvation."""
 from copy import deepcopy
+from . import logistics_rules as rules
 from .grain_units import denominator
 from .historical_campaigns import transit_allowed
 from .officers import OFFICER_TROOP_CAP
@@ -9,11 +10,13 @@ LIMIT=100000000
 MAX_DAILY_UNITS=LIMIT+99*(OFFICER_TROOP_CAP+OFFICER_UNITS)
 MAX_TRAVELLING_SOLDIERS=LIMIT+99*OFFICER_TROOP_CAP
 SCHEMA='tk2-segment-supply-v2'
+WEIGHTED_SCHEMA='tk2-segment-supply-v3'
 RETREAT_DAYS=10
 _FIELDS={'schema','troops','officers','reserves','elapsed_days','route_days','loaded','received',
  'consumed','remaining','from_cargo','returned_to_cargo','credit_units','start_tick','clock_tick',
  'closed_tick','last_turn','waiting','shortage_days','shortage_streak','lost','retreat_requested',
  'refills','starvation','periods','ration_manifests'}
+_WEIGHTED_FIELDS={'initial_credit','base_consumed'}
 
 
 def cost(troops,officers,days,reserves=0):
@@ -23,8 +26,33 @@ def cost(troops,officers,days,reserves=0):
 required_grain=cost
 
 
-def quote_supply(quote,total_troops,officer_count,reserves=0):
-    return cost(total_troops,officer_count,quote['days'],reserves)
+def book_version(supply):
+    return rules.CURRENT if supply['schema']==WEIGHTED_SCHEMA else rules.LEGACY
+
+
+def book_denominator(supply):
+    return denominator() * (rules.RATION_SCALE if book_version(supply)==rules.CURRENT else 1)
+
+
+def travel_rules(game):
+    return game.catalog.data.get('travel_rules', {}) if game is not None else {}
+
+
+def ration_units(state, ids, reserves=0):
+    return sum(state.officers[i].troops for i in ids) + OFFICER_UNITS * len(ids) + reserves
+
+
+def route_weight(quote, days, *, offset=0, game=None, version=rules.LEGACY):
+    if version==rules.LEGACY:
+        return days
+    return rules.weight(rules.plan(quote, travel_rules(game)), offset, days)
+
+
+def quote_supply(quote,total_troops,officer_count,reserves=0,*,game=None,version=rules.LEGACY,days=None):
+    days=quote['days'] if days is None else days
+    denominator_units=denominator() * (rules.RATION_SCALE if version==rules.CURRENT else 1)
+    return rules.ceil_div((total_troops + OFFICER_UNITS*officer_count + reserves) *
+                          route_weight(quote,days,game=game,version=version),denominator_units)
 
 
 def next_supply_days(state,quote,owner,route_days=0):
@@ -43,19 +71,38 @@ def initial_days(state,quote,owner=None):
     return next_supply_days(state,quote,owner or state.cities[quote['path'][0]].owner)
 
 
-def estimate(state,ids,quote,reserves=0):
-    return cost(sum(state.officers[i].troops for i in ids),len(ids),initial_days(state,quote),reserves)
+def estimate(state,ids,quote,reserves=0,*,game=None,version=None):
+    version=rules.version(state) if version is None else version
+    return quote_supply(quote,sum(state.officers[i].troops for i in ids),len(ids),reserves,
+                        version=version,game=game,days=initial_days(state,quote))
 
 
-def create(state,ids,quote,reserves=0,*,from_cargo=False,initial_grain=None):
-    loaded=estimate(state,ids,quote,reserves) if initial_grain is None else initial_grain
+def remaining_requirement(game,state,journey,*,minimum_days=0,reserves=0):
+    supply,quote=journey['supply'],journey['quote']
+    progress=supply['route_days']
+    days=next_supply_days(state,quote,journey['owner'],progress)
+    version=book_version(supply)
+    unit_scale=rules.RATION_SCALE if version==rules.CURRENT else 1
+    travel_weight=route_weight(quote,days,offset=progress,game=game,version=version)
+    travel_weight+=max(0,minimum_days-days)*unit_scale
+    return max(0,rules.ceil_div(ration_units(state,journey['officers'],reserves)*travel_weight-supply['credit_units'],
+                               book_denominator(supply)))
+
+
+def create(state,ids,quote,reserves=0,*,game=None,from_cargo=False,initial_grain=None,previous=None):
+    version=rules.version(state) if previous is None else book_version(previous)
+    loaded=estimate(state,ids,quote,reserves,game=game,version=version) if initial_grain is None else initial_grain
     tick=(state.turn-1)*10
-    return dict(schema=SCHEMA,troops=sum(state.officers[i].troops for i in ids),officers=len(ids),
+    supply=dict(schema=SCHEMA,troops=sum(state.officers[i].troops for i in ids),officers=len(ids),
         reserves=reserves,elapsed_days=0,route_days=0,loaded=loaded,received=0,consumed=0,
         remaining=loaded,from_cargo=loaded if from_cargo else 0,returned_to_cargo=0,credit_units=0,
         start_tick=tick,clock_tick=tick,closed_tick=None,last_turn=state.turn,waiting=False,
         shortage_days=0,shortage_streak=0,lost=0,retreat_requested=False,refills=[],starvation=[],periods=[],
         ration_manifests=[dict(tick=tick+1,troops={str(i):state.officers[i].troops for i in ids},reserves=reserves)])
+    if version==rules.CURRENT:
+        credit=previous['credit_units'] if previous else 0
+        supply.update(schema=WEIGHTED_SCHEMA,credit_units=credit,initial_credit=credit,base_consumed=0)
+    return supply
 
 
 def current_city(journey):
@@ -102,12 +149,17 @@ def close(supply,turn):
     supply['closed_tick']=(turn-1)*10
 
 
-def _meal(supply,units):
-    needed=max(0,units-supply['credit_units'])
-    used=min(supply['remaining'],(needed + denominator() - 1)//denominator())
-    available=supply['credit_units']+used*denominator()
-    missing=max(0,units-available)
-    supply['credit_units']=max(0,available-units)
+def _meal(supply,units,weighted=None):
+    divisor=book_denominator(supply)
+    charge=units if weighted is None else units*weighted
+    prior=supply['credit_units']
+    used=min(supply['remaining'],rules.ceil_div(max(0,charge-prior),divisor))
+    available=prior+used*divisor
+    missing=max(0,charge-available)
+    if weighted is not None:
+        basic=units*rules.RATION_SCALE
+        supply['base_consumed']+=min(used,rules.ceil_div(max(0,basic-prior),divisor))
+    supply['credit_units']=max(0,available-charge)
     supply['remaining']-=used;supply['consumed']+=used;supply['elapsed_days']+=1
     if missing:
         supply['shortage_days']+=1;supply['shortage_streak']+=1
@@ -136,10 +188,14 @@ def _completion_tick(supply,days):
 
 
 def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',cargo=None,
-                 on_cargo_change=None,absolute_tick=None):
+                 on_cargo_change=None,on_cargo_day=None,absolute_tick=None,parts=None):
     supply=journey['supply'];quote=journey['quote']
     target=absolute_tick if absolute_tick is not None else ((through_turn or state.turn)-1)*10
     if supply['closed_tick'] is not None:return 0
+    weighted=book_version(supply)==rules.CURRENT
+    if weighted and parts is None:
+        parts=rules.plan(quote,travel_rules(game))
+    divisor=book_denominator(supply)
     spent=0
     for tick in range(supply['clock_tick']+1,target+1):
         if supply['route_days']>=quote['days'] and not supply['waiting']:
@@ -164,9 +220,15 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
             else:
                 supply['ration_manifests'].append(manifest)
         city_id=current_city(journey)
+        progress=supply['route_days']
         distance=next_supply_days(state,quote,unit['owner'],supply['route_days'])
-        budget_days=10 if supply['route_days']>=quote['days'] else distance
-        wanted=max(0,(units*max(1,budget_days)-supply['credit_units'] + denominator() - 1)//denominator()-supply['remaining'])
+        if weighted:
+            leg_budget=rules.weight(parts,progress,distance)
+            budget=leg_budget or (10 if progress>=quote['days'] else 1)*rules.RATION_SCALE
+        else:
+            leg_budget=distance
+            budget=10 if progress>=quote['days'] else max(1,distance)
+        wanted=max(0,rules.ceil_div(units*budget-supply['credit_units'],divisor)-supply['remaining'])
         if wanted and city_id and state.cities[city_id].owner==unit['owner']:
             city=state.cities[city_id];amount=min(wanted,city.grain,LIMIT-supply['remaining'])
             if amount:
@@ -184,11 +246,14 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
         blocked=(upcoming is not None and upcoming!=quote['path'][-1]
                  and not transit_allowed(state,unit['owner'],state.cities[upcoming].owner))
         if blocked:supply['retreat_requested']=True;unit['reason']='route_blocked'
-        enough=supply['remaining']*denominator()+supply['credit_units']>=units*distance
+        enough=supply['remaining']*divisor+supply['credit_units']>=units*leg_budget
         moving=(supply['route_days']<quote['days'] and not blocked and not unit.get('hold')
                 and not (supply['retreat_requested'] and city_id is not None and unit.get('status')!='returning')
                 and (city_id is None or enough or unit.get('status')=='returning'))
-        used,missing=_meal(supply,units);spent+=used
+        moving_or_on_leg=moving or city_id is None
+        rate=rules.weight(parts,progress,1) if weighted and moving_or_on_leg else (
+            rules.RATION_SCALE if weighted else None)
+        used,missing=_meal(supply,units,rate);spent+=used
         if moving:supply['route_days']+=1
         supply['waiting']=(not moving and supply['route_days']<quote['days']) or (
             supply['waiting'] and supply['route_days']>=quote['days'])
@@ -205,6 +270,8 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
                 after_risks=sum(bool(r['applied']) for r in journey.get('risks',[])),
                 before=before,after=after,reserves_before=reserves,reserves_after=reserve_after,lost=lost))
             supply['lost']+=lost;state.soldiers['lost']+=lost
+        if on_cargo_day is not None and weighted and moving_or_on_leg:
+            on_cargo_day(rules.weight(parts,progress,1,rates=rules.CARGO_GRAIN_LOSS_BPS),tick)
         _record(supply,tick,[units,used,int(moving),missing])
         if tick%10==0:
             recent=[r for r in supply['starvation'] if tick-10<r['tick']<=tick]
@@ -215,13 +282,15 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
     return spent
 
 
-def consume(supply,departure_turn,quote,through_turn):
+def consume(supply,departure_turn,quote,through_turn,*,game=None):
     """Pure meal-rounding helper; gameplay uses the shared daily service."""
     spent=0
+    parts=rules.plan(quote,travel_rules(game)) if book_version(supply)==rules.CURRENT else None
     for tick in range(supply['clock_tick']+1,(through_turn-1)*10+1):
         if supply['route_days']>=quote['days']:_record(supply,tick,None);continue
         units=supply['troops']+100*supply['officers']+supply['reserves']
-        used,missing=_meal(supply,units);supply['route_days']+=1;spent+=used
+        rate=rules.weight(parts,supply['route_days'],1) if parts is not None else None
+        used,missing=_meal(supply,units,rate);supply['route_days']+=1;spent+=used
         _record(supply,tick,[units,used,1,missing])
     return spent
 
@@ -234,13 +303,22 @@ def process_march_supply(game,state,through_turn=None):
     if not clocks or min(clocks)>=target:return 0
     used=0
     from . import logistics
+    plans={}
+    def plan_for(journey):
+        if book_version(journey['supply'])!=rules.CURRENT:
+            return None
+        key=id(journey)
+        if key not in plans:
+            plans[key]=rules.plan(journey['quote'],travel_rules(game))
+        return plans[key]
     for tick in range(min(clocks)+1,target+1):
         for row in list(rows):
             if row['supply']['clock_tick']<tick:
-                used+=advance_unit(game,state,row,row,through_turn,absolute_tick=tick)
+                used+=advance_unit(game,state,row,row,through_turn,absolute_tick=tick,parts=plan_for(row))
         for row in list(convoys):
             if row['journeys'][-1]['supply']['clock_tick']<tick:
-                used+=logistics.advance_supply(game,state,row,through_turn,absolute_tick=tick)
+                used+=logistics.advance_supply(game,state,row,through_turn,absolute_tick=tick,
+                                              parts=plan_for(row['journeys'][-1]))
         logistics.rendezvous(game,state,tick=tick)
     for row in rows:
         remaining=row['quote']['days']-row['supply']['route_days']
@@ -248,10 +326,24 @@ def process_march_supply(game,state,through_turn=None):
     return used
 
 
-def validate(supply,quote,departure_turn,state_turn):
-    if not isinstance(supply,dict) or set(supply)!=_FIELDS or supply['schema']!=SCHEMA:
+def validate(supply,quote,departure_turn,state_turn,*,game=None,version=None):
+    if not isinstance(supply,dict) or supply.get('schema') not in (SCHEMA,WEIGHTED_SCHEMA):
         raise ValueError('Segment supply fields')
-    numbers=_FIELDS-{'schema','waiting','retreat_requested','refills','starvation','periods','closed_tick','ration_manifests'}
+    actual_version=book_version(supply)
+    weighted=actual_version==rules.CURRENT
+    fields=_FIELDS | _WEIGHTED_FIELDS if weighted else _FIELDS
+    if set(supply)!=fields or version is not None and actual_version!=version:
+        raise ValueError('Segment supply fields or rules')
+    divisor=book_denominator(supply)
+    max_missing=MAX_DAILY_UNITS * (max(rules.MARCH_SUPPLY_PERCENT.values())*rules.DAY_TICKS if weighted else 1)
+    parts=rules.plan(quote,travel_rules(game)) if weighted else None
+    nodes={}
+    if 'path' in quote:
+        nodes[0]=quote['path'][0]
+        distance=0
+        for index,leg in enumerate(quote['routes']):
+            distance+=leg['days'];nodes[distance]=quote['path'][index+1]
+    numbers=fields-{'schema','waiting','retreat_requested','refills','starvation','periods','closed_tick','ration_manifests'}
     if any(type(supply[k])is not int or not 0<=supply[k]<=
            (MAX_TRAVELLING_SOLDIERS if k=='lost' else LIMIT) for k in numbers):
         raise ValueError('Segment supply integers')
@@ -262,7 +354,8 @@ def validate(supply,quote,departure_turn,state_turn):
         raise ValueError('Segment supply closed clock')
     end=(state_turn-1)*10 if closed is None else closed
     if (supply['start_tick']!=(departure_turn-1)*10 or supply['clock_tick']!=end
-        or supply['last_turn']!=end//10+1 or supply['credit_units']>=denominator()
+        or supply['last_turn']!=end//10+1 or supply['credit_units']>=divisor
+        or supply.get('initial_credit',0)>=divisor
         or supply['route_days']>quote['days'] or supply['officers']>99
         or supply['troops']>supply['officers']*OFFICER_TROOP_CAP or supply['from_cargo']>supply['loaded']):
         raise ValueError('Segment supply clock or manifest')
@@ -292,7 +385,8 @@ def validate(supply,quote,departure_turn,state_turn):
         previous_tick=manifest['tick']
     if manifests[0]['tick']!=supply['start_tick']+1:
         raise ValueError('Segment initial ration clock')
-    elapsed=progress=paid=credit=shortage=streak=manifest_index=0;hungry_ticks=[]
+    elapsed=progress=paid=base_paid=shortage=streak=manifest_index=0;hungry_ticks=[]
+    credit=supply.get('initial_credit',0)
     inventory=supply['loaded'];receipt_index=0
     ordered=sorted(refills,key=lambda r:r['tick'])
     positions={supply['start_tick']:0}
@@ -314,15 +408,21 @@ def validate(supply,quote,departure_turn,state_turn):
                 continue
             if (not isinstance(meal,list) or len(meal)!=4
                     or any(type(n)is not int or not 0<=n<=bound
-                           for n,bound in zip(meal,(MAX_DAILY_UNITS,LIMIT,1,MAX_DAILY_UNITS)))):
+                           for n,bound in zip(meal,(MAX_DAILY_UNITS,LIMIT,1,max_missing)))):
                 raise ValueError('Segment supply daily meal')
-            units,used,moved,missing=meal;balance=credit+used*denominator()-units+missing
+            units,used,moved,missing=meal
+            charge=units
+            if weighted:
+                rate=rules.weight(parts,progress,1) if moved or nodes and progress not in nodes else rules.RATION_SCALE
+                charge*=rate
+                base_paid+=min(used,rules.ceil_div(max(0,units*rules.RATION_SCALE-credit),divisor))
+            balance=credit+used*divisor-charge+missing
             while manifest_index+1<len(manifests) and manifests[manifest_index+1]['tick']<=tick:
                 manifest_index+=1
             actual=manifests[manifest_index]
             if units!=sum(actual['troops'].values())+100*len(actual['troops'])+actual['reserves']:
                 raise ValueError('Segment ration units do not match travelling people')
-            if moved not in (0,1) or missing>units or not 0<=balance<denominator() or missing and balance:
+            if moved not in (0,1) or missing>charge or not 0<=balance<divisor or missing and balance:
                 raise ValueError('Segment supply meal arithmetic')
             if used>inventory:raise ValueError('Meal spent grain before it was delivered')
             inventory-=used
@@ -332,10 +432,7 @@ def validate(supply,quote,departure_turn,state_turn):
             if progress==quote['days'] and completed is None:completed=tick
             if missing:shortage+=1;streak+=1;hungry_ticks.append(tick)
             else:streak=0
-    if 'path' in quote:
-        nodes={0:quote['path'][0]};distance=0
-        for index,leg in enumerate(quote['routes']):
-            distance+=leg['days'];nodes[distance]=quote['path'][index+1]
+    if nodes:
         for receipt in refills:
             if receipt['kind']=='city' and nodes.get(positions.get(receipt['tick']))!=receipt['source']:
                 raise ValueError('City supplied a unit that was elsewhere')
@@ -355,13 +452,14 @@ def validate(supply,quote,departure_turn,state_turn):
             raise ValueError('Segment supply hunger arithmetic')
         lost+=row['lost']
     if (supply['elapsed_days']!=elapsed or supply['route_days']!=progress or supply['credit_units']!=credit
-        or supply['consumed']!=paid or supply['shortage_days']!=shortage or supply['shortage_streak']!=streak
+        or supply['consumed']!=paid or weighted and supply['base_consumed']!=base_paid
+        or supply['shortage_days']!=shortage or supply['shortage_streak']!=streak
         or supply['lost']!=lost or supply['received']!=sum(r['grain'] for r in refills)
         or supply['remaining']+paid+supply['returned_to_cargo']!=supply['loaded']+supply['received']):
         raise ValueError('Segment supply inventory accounting')
 
 
-def validate_departures(supply,quote,*,returning=False):
+def validate_departures(supply,quote,*,returning=False,game=None):
     """Require the next physical leg's food before an outbound node departure.
 
     Historical ownership may change after a journey. The runtime budgets as far
@@ -370,22 +468,30 @@ def validate_departures(supply,quote,*,returning=False):
     A retreat may deliberately leave without enough food to reach safety.
     """
     if returning:return
+    weighted=book_version(supply)==rules.CURRENT
+    divisor=book_denominator(supply)
+    parts=rules.plan(quote,travel_rules(game)) if weighted else None
     starts={};distance=0
     for leg in quote['routes']:
-        starts[distance]=leg['days'];distance+=leg['days']
+        starts[distance]=rules.weight(parts,distance,leg['days']) if weighted else leg['days']
+        distance+=leg['days']
     receipts={}
     for row in supply['refills']:
         receipts[row['tick']]=receipts.get(row['tick'],0)+row['grain']
-    inventory=supply['loaded'];credit=progress=0;tick=supply['start_tick']
+    inventory=supply['loaded'];credit=supply.get('initial_credit',0);progress=0;tick=supply['start_tick']
     for period in supply['periods']:
         for meal in period['days']:
             inventory+=receipts.get(tick,0);tick+=1
             if meal is None:continue
             units,used,moved,missing=meal
-            if moved and progress in starts and inventory*denominator()+credit<units*starts[progress]:
+            if moved and progress in starts and inventory*divisor+credit<units*starts[progress]:
                 raise ValueError('Outbound departure cannot fund its next physical leg')
             inventory-=used
-            credit=max(0,credit+used*denominator()-units+missing)
+            charge=units
+            if weighted:
+                rate=rules.weight(parts,progress,1) if moved or progress<quote['days'] and progress not in starts else rules.RATION_SCALE
+                charge*=rate
+            credit=max(0,credit+used*divisor-charge+missing)
             progress+=moved
 
 

@@ -14,7 +14,8 @@ from . import command_books, diplomacy, diplomacy_ai, historical_campaigns, offi
 from .officers import integer, recruitment_loyalty, ref_sort_key
 from . import civil_staff
 from . import grain_relief, grain_units
-from .march_supply import denominator, OFFICER_UNITS, estimate as march_grain, next_supply_days, required_grain
+from .march_supply import denominator, OFFICER_UNITS, estimate as march_grain, next_supply_days, required_grain, travel_rules
+from . import logistics_rules
 from .route_hazards import allocate_survivors
 
 
@@ -170,23 +171,28 @@ class StrategicAI:
         """
         if not quote:
             return False
-        loaded = march_grain(self.state, ids, quote)
+        loaded = march_grain(self.state, ids, quote, game=self.game)
         if city.grain < loaded:
             return False
         units = sum(self.state.officers[i].troops for i in ids) + OFFICER_UNITS * len(ids)
-        credit, progress = loaded * denominator(), 0
+        weighted = logistics_rules.version(self.state) == logistics_rules.CURRENT
+        parts = logistics_rules.plan(quote, travel_rules(self.game)) if weighted else None
+        divisor = denominator() * (logistics_rules.RATION_SCALE if weighted else 1)
+        credit, progress = loaded * divisor, 0
         for index, leg in enumerate(quote['routes']):
+            weight = logistics_rules.weight(parts, progress, leg['days']) if weighted else leg['days']
             progress += leg['days']
-            credit -= units * leg['days']
+            credit -= units * weight
             if credit < 0:
                 return False
             checkpoint = self.state.cities[quote['path'][index + 1]]
             if index < len(quote['routes']) - 1 and checkpoint.owner == city.owner:
                 days = next_supply_days(self.state, quote, city.owner, progress)
-                needed = max(0, (units * days - credit + denominator() - 1) // denominator())
+                weight = logistics_rules.weight(parts, progress, days) if weighted else days
+                needed = max(0, (units * weight - credit + divisor - 1) // divisor)
                 if checkpoint.grain < needed:
                     return False
-                credit += needed * denominator()
+                credit += needed * divisor
         return True
 
     def attack_option(self, city, target, *, require_grain=True):
@@ -299,7 +305,7 @@ class StrategicAI:
                     scheduled = [(o, self.quote(self.state.cities[o['source']], target,
                         o['mode'], adjacent=True, departure=o['departure_turn'])) for o in orders]
                     days = sum(quote['days'] for _, quote in scheduled)
-                    supply = sum(march_grain(self.state, order['officers'], quote)
+                    supply = sum(march_grain(self.state, order['officers'], quote, game=self.game)
                                  for order, quote in scheduled)
                     score = min(power-required,required//3)-days*3-supply*2//grain_units.amount(1)+min(200,target.gold//20+target.grain//grain_units.amount(200))
                     feasible.append((-score, size, target.id, tuple(o['source'] for o in members), orders))
@@ -414,7 +420,7 @@ class StrategicAI:
                 option = self.attack_option(source, target, require_grain=False)
                 if option is None:
                     continue
-                grain = march_grain(self.state, option['officers'], option['quote'])
+                grain = march_grain(self.state, option['officers'], option['quote'], game=self.game)
                 if source.grain >= grain:
                     continue
                 supporting = [strength for strength, city_id in ready if city_id != source.id]
