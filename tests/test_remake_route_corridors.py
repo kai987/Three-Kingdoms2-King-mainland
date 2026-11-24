@@ -232,6 +232,63 @@ class RouteCorridorTests(unittest.TestCase):
                              + len(self.navigation.get('river_routes', [])) + 1)
             self.assertEqual(compiled['yizhou:luzon:sea']['mode'], 'sea')
 
+    def test_northwest_city_positions_follow_the_yellow_and_wei_banks(self):
+        catalog = self.catalogs[0]
+        positions = {city: row['position'] for city, row in catalog.map_cities.items()}
+        ground = ROOT / 'game/map-source/hydrology-ground.png'
+        (width, _), rgba = png_pixels(ground.read_bytes(), (1352, 1024))
+        for city in ('jincheng', 'longxi', 'nanan', 'tianshui'):
+            with self.subTest(city=city):
+                x, y = positions[city]
+                water = []
+                for row in range(y - 25, y + 16):
+                    i = (row * width + x) * 4
+                    red, green, blue = rgba[i:i+3]
+                    if blue >= 120 and blue > max(red, green) + 40:
+                        water.append(row)
+                self.assertTrue(water)
+                self.assertLess(max(water), y - 8)
+
+        hanyang_x, hanyang_y = positions['tianshui']
+        wudu_x, wudu_y = positions['wudu']
+        self.assertGreater(wudu_y, hanyang_y + 30)
+        self.assertLess(abs(wudu_x - hanyang_x), 16)
+
+    def test_northwest_route_geometry_reuses_junctions_and_reaches_the_new_sites(self):
+        catalog = self.catalogs[-1]
+        positions = {city: row['position'] for city, row in catalog.map_cities.items()}
+        geometry = self.geometry['routes']
+        timed_routes = {route['id']: route for route in catalog.data['travel_routes']}
+        for identity in ('jincheng:longxi:land', 'hanzhong:wudu:land', 'longxi:tianshui:land',
+                         'fufeng:tianshui:land', 'jincheng:wuwei:land', 'wuwei:zhangye:land',
+                         'zhangye:xihai:land', 'jincheng:shuofang:river'):
+            with self.subTest(route=identity):
+                route = geometry[identity]
+                first, last = route['parts'][0], route['parts'][-1]
+                self.assertEqual(first['start'], positions[route['from']])
+                self.assertEqual(last['end'], positions[route['to']])
+                self.assertTrue(all(a['end'] == b['start'] for a, b in pairwise(route['parts'])))
+                measured = timed_routes[identity]['timing_geometry']['parts']
+                self.assertEqual([part['length_px'] for part in measured],
+                                 [part['length_px'] for part in route['parts']])
+
+        sections = geometry['longxi:tianshui:land']['city_sections']
+        self.assertEqual([(row['from'], row['to']) for row in sections],
+                         [('longxi', 'nanan'), ('nanan', 'tianshui')])
+
+        for west, east in (('tianshui:guangwei:land', 'fufeng:guangwei:land'),
+                           ('wuwei:xijun:land', 'zhangye:xijun:land')):
+            self.assertEqual(geometry[west]['parts'][0]['pieces'][-1],
+                             geometry[east]['parts'][0]['pieces'][-1])
+
+        routes = read('game/config/map-source.json')['presentation']['expansion_connections']
+        shared_roads = {(route['from'], route['to']): [part['points'] for part in route['draw']]
+                   for route in routes if (route['from'], route['to']) in
+                   {('xiping', 'wuwei'), ('xiping', 'jincheng'), ('wuwei', 'jincheng')}}
+        west, north = shared_roads['xiping', 'wuwei']
+        self.assertEqual(shared_roads['xiping', 'jincheng'], [west, shared_roads['wuwei', 'jincheng'][1]])
+        self.assertEqual(shared_roads['wuwei', 'jincheng'][0], north[::-1])
+
     def test_new_roads_share_one_northern_approach_and_are_explicit_mountain_game_corridors(self):
         expected = {'bajun', 'fuling'}
         for catalog in self.catalogs:

@@ -548,6 +548,9 @@ class DevelopmentCampaignTests(unittest.TestCase):
         session = CampaignSession(paths)
         examples, reviewed_baselines = {}, {}
         ordinary_cities = set()
+        commanderies = json.loads((ROOT/'game/config/campaigns/commandery-history.json').read_text())
+        regional_openings = set(commanderies['new_sites'])
+        guangwei_series_start = development._ORDINARY_CITY_OPENINGS['guangwei'][0][0]
         for path in paths:
             with self.subTest(scenario=path.stem):
                 catalog = session.catalogs['mainland' + path.stem]
@@ -603,7 +606,11 @@ class DevelopmentCampaignTests(unittest.TestCase):
                     self.assertEqual({field: expected[field] for field in development.LIMITS if field != 'population'},
                                      {field: reviewed[field] for field in development.LIMITS if field != 'population'})
                     date = (game.state.year, game.state.month)
-                    if tier_at(catalog.data, key, *date) == 'normal' and key not in ('wuchang', 'guonei', 'luzon'):
+                    # New commanderies use regional development baselines. Yongyang
+                    # also predates the dated Guangwei population series at this site.
+                    regional = key in regional_openings or (key == 'guangwei' and date < guangwei_series_start)
+                    if (tier_at(catalog.data, key, *date) == 'normal' and not regional
+                            and key not in ('wuchang', 'guonei', 'luzon')):
                         ordinary_cities.add(key)
                         self.assertIn(key, development._ORDINARY_CITY_OPENINGS)
                         anchors = development._ORDINARY_CITY_OPENINGS[key]

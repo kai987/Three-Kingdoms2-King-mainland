@@ -278,32 +278,35 @@ def apply_city_chronology(data, review, people_by_id):
             for person, row in serving.items() if row['city'] == city]
 
 
+def append_expansion_city(data, city_id, name, parent, location):
+    data['cities'].append(dict(id=city_id, name=name, position=location['position'], terrain=location['terrain']))
+    data['city_coordinates'][city_id] = location['coordinates']
+    data['added_city_ids'].append(city_id)
+    profile = deepcopy(data['city_profiles'][parent])
+    parent_scale = TIER_MULTIPLIERS[profile['tier']]
+    profile.update(tier='normal', label=TIER_LABELS['normal'], reference_income=None,
+                   basis='historical_city_expansion_regional_balance',
+                   is_SAN14_starting_resources=False, economy_source_ids=[],
+                   economy_numeric_basis='authorial_remake_balance_not_historical_measurement')
+    for key in ('tier_basis', 'tier_date_precision'):
+        profile.pop(key, None)
+    data['city_profiles'][city_id] = profile
+    data['initial_city_resources'][city_id] = {
+        field: value // (2 * parent_scale)
+        for field, value in data['initial_city_resources'][parent].items()}
+    data['city_income'][city_id] = {
+        field: value // parent_scale for field, value in data['city_income'][parent].items()}
+
+
 def apply_city_expansion(data, locations, opening, notes, people_by_id):
     """Append reviewed cities without editing the inherited map or IF overrides."""
     date = data['start_year'], data['start_month']
     outposts = data.setdefault('frontier_outposts', {})
     for city_id, (name, parent) in EXPANSION_CITIES.items():
-        loc = locations[city_id]
-        data['cities'].append(dict(id=city_id, name=name, position=loc['position'], terrain=loc['terrain']))
-        data['city_coordinates'][city_id] = loc['coordinates']
+        append_expansion_city(data, city_id, name, parent, locations[city_id])
         history = data['city_history'].setdefault(city_id, {})
         history.setdefault('detail', notes[city_id]['basis'])
         history['sources'] = list(dict.fromkeys([*history.get('sources', []), *notes[city_id]['sources']]))
-        data['added_city_ids'].append(city_id)
-        profile = deepcopy(data['city_profiles'][parent])
-        parent_scale = TIER_MULTIPLIERS[profile['tier']]
-        profile.update(tier='normal', label=TIER_LABELS['normal'], reference_income=None,
-                       basis='historical_city_expansion_regional_balance',
-                       is_SAN14_starting_resources=False, economy_source_ids=[],
-                       economy_numeric_basis='authorial_remake_balance_not_historical_measurement')
-        for key in ('tier_basis', 'tier_date_precision'):
-            profile.pop(key, None)
-        data['city_profiles'][city_id] = profile
-        data['initial_city_resources'][city_id] = {
-            field: value // (2 * parent_scale)
-            for field, value in data['initial_city_resources'][parent].items()}
-        data['city_income'][city_id] = {
-            field: value // parent_scale for field, value in data['city_income'][parent].items()}
         if rule := notes[city_id].get('frontier_outpost'):
             outposts[city_id] = deepcopy(rule)
             if frontier_outpost_at(data, city_id, *date):
@@ -370,6 +373,68 @@ def apply_city_expansion(data, locations, opening, notes, people_by_id):
                 person_id=person_id, name=people_by_id[person_id]['name'], basis=basis))
     if transfers != set(moves):
         raise ValueError(f'{data["id"]}: unused expansion transfers')
+
+
+def apply_commandery_openings(data, sites, existing_sites, locations):
+    """Apply dated administration to the opening; running play retains its actual rulers."""
+    date = data['start_year'], data['start_month']
+    owners = data['initial_owners']
+    active = data['active_cities']
+    posted = {row['city'] for field in ('initial_officers', 'initial_free_officers') for row in data[field]}
+    faction_ids = {row['id'] for row in data['factions']} | {'neutral'}
+    for city, row in {**sites, **existing_sites}.items():
+        parent = row['parent']
+        if city in sites:
+            append_expansion_city(data, city, row['name'], parent, locations[city])
+        history = data['city_history'].setdefault(city, {})
+        sources = [*row['sources']]
+        for source in history.get('sources', []):
+            if source not in sources:
+                sources.append(source)
+        history.update(detail=row['detail'], detail_ja=row['detail_ja'],
+                       administrative_names=row['administrative_names'], sources=sources)
+        if 'names' in row:
+            history['names'] = row['names']
+        if 'label_offset' in row:
+            data['city_label_offsets'][city] = row['label_offset']
+        founding, retirement = row.get('founding'), row.get('retirement')
+        if founding:
+            data['city_foundings'][city] = dict(founding, parent=parent, resource_divisor=4,
+                                               date_note=row['detail'], source=row['sources'][0])
+        if retirement:
+            data['city_retirements'][city] = dict(retirement, parent=parent, scope='scenario_opening_only')
+        in_use = founding is None or date >= (founding['year'], founding['month'])
+        if retirement and date >= (retirement['year'], retirement['month']):
+            in_use = 'reopens' in retirement and date >= tuple(retirement['reopens'])
+        if not in_use:
+            if city in posted or any(row['city'] == city for row in data['factions']):
+                raise ValueError(f"{data['id']}: opening posting at inactive commandery {city}")
+            if city in active:
+                active.remove(city)
+            owners.pop(city, None)
+            history['opening'] = dict(owner=None, basis='outside_commandery_period', note=row['detail'])
+            continue
+        if city not in active:
+            active.append(city)
+        owner = owners.get(city, owners[parent])
+        if data['main_scenario']['group'] != 'if':
+            for period in row.get('owner_since', ()):
+                if date >= tuple(period['from_date']):
+                    owner = period['owner']
+        else:
+            # Keep the local IF control where this opening already assigned a ruler.
+            for period in row.get('owner_since', ()):
+                if owner == 'neutral' and date >= tuple(period['from_date']):
+                    owner = owners[parent] if owners[parent] != 'neutral' else period['owner']
+        owner = row.get('opening_owners', {}).get(data['id'], owner)
+        if owner not in faction_ids or (city in posted and owner != owners.get(city)):
+            raise ValueError(f"{data['id']}: invalid reviewed commandery owner at {city}")
+        owners[city] = owner
+        history['opening'] = dict(owner=owner, note=row['detail'],
+            basis=('fictional_scenario_adaptation' if data['main_scenario']['group'] == 'if'
+                   else 'unmapped_local_han_administration' if owner == 'neutral' and date < (220, 11)
+                   else 'reviewed_regional_opening'))
+    data['city_count'] = len(data['cities'])
 
 
 def apply_early_shu_openings(data, opening, people):
@@ -540,6 +605,8 @@ def load_sources(*, timing=True):
     city_chronology = read('game/config/campaigns/city-chronology-openings.json')
     expansion_map = read('game/config/campaigns/city-expansion-map.json')['cities']
     expansion_openings = read('game/config/campaigns/city-expansion-openings.json')
+    commanderies = read('game/config/campaigns/commandery-history.json')
+    new_commandery_sites, existing_commandery_sites = commanderies['new_sites'], commanderies['existing_sites']
     early_shu_openings = read('game/config/campaigns/early-shu-openings.json')
     southern_envoys = read('game/config/campaigns/wu-southern-envoys.json')
     canonical_index = read('game/config/campaigns/index.json')
@@ -557,10 +624,17 @@ def load_sources(*, timing=True):
             or (set(city_chronology['garrisons']) | set(city_chronology['free_locations'])) - scenario_ids):
         raise ValueError('Incomplete reviewed city chronology')
     if (expansion_openings.get('schema') != 'tk2-city-expansion-openings-v1'
-            or set(expansion_map) != {*EXPANSION_CITIES, 'luzon'}
+            or set(expansion_map) != {*EXPANSION_CITIES, *new_commandery_sites, 'luzon'}
             or set(expansion_openings['scenarios']) != scenario_ids
             or set(expansion_openings['notes']) != set(EXPANSION_CITIES)):
         raise ValueError('Incomplete reviewed historical city expansion')
+    board = {city['id'] for city in shared['catalog']['cities']} | set(EXPANSION_CITIES)
+    if (commanderies.get('schema') != 'tk2-commandery-history-v1'
+            or set(new_commandery_sites) & board or set(existing_commandery_sites) - board
+            or any(row['parent'] not in board or not row['sources'] or not row['administrative_names']
+                   or set(row.get('opening_owners', {})) - scenario_ids
+                   for row in (*new_commandery_sites.values(), *existing_commandery_sites.values()))):
+        raise ValueError('Incomplete commandery review')
     original_identities = read('game/config/portrait-identity-map.json')
     if sha256((ROOT/'game/config/portrait-identity-map.json').read_bytes()).hexdigest() != original_stats['identity_source_sha256']:
         raise ValueError('Original officer identity source differs')
@@ -623,6 +697,7 @@ def load_sources(*, timing=True):
                 if officer['person_id'] in (*LONGYOU_JOINERS, LONGYOU_GOVERNOR):
                     relocate_opening_officer(data, officer, 'tianshui', 'wei', 'longyou_historical_prefecture_staff')
         add_luzon_settlement(data, expansion_map['luzon'])
+        apply_commandery_openings(data, new_commandery_sites, existing_commandery_sites, expansion_map)
         place_faction_officers(data, present, current_people)
         apply_early_shu_openings(data, early_shu_openings, current_people)
         place_southern_envoys(data, southern_envoys, current_people)

@@ -135,7 +135,9 @@ class MarchPreviewTests(unittest.TestCase):
 
     def test_temporarily_closed_and_not_yet_open_corridors(self):
         session = opening('207-09', 'wei')
-        # The chapter starts in September. Exercise the documented June/July transition.
+        # Exercise the June/July route restrictions before Liaoxi became friendly.
+        # An owned destination now also has a quicker transfer via Youbeiping.
+        session.game.state.cities['liaoxi'].owner = 'wuhuan'
         for month, reason, date, active, restricted in (
             (6, 'not_yet_open', [207, 7], 'liaoxi:yuyang:land', 'yuyang:liaoxi:lulong:land'),
             (7, 'closed', [207, 8], 'yuyang:liaoxi:lulong:land', 'liaoxi:yuyang:land'),

@@ -3,7 +3,7 @@
   "review_revision": "2026-11-08",
   "review_file": "game/config/references/scenario-history-review.json",
   "review_sha256": "1dd4f2fb0b91b9a22615912a07853a766506f777d5b99bbbb645b60f53aa82e4",
-  "presentation_sha256": "12707877fb471d725e7b531e13afa848dc39f05d5bea35b294e256f436faebe4",
+  "presentation_sha256": "242e4349f6952057d242219a48b3b0447266c30194e8043c3b28c24223c5b6ca",
   "scope": "Regional review and current-data consistency, not a complete attested city/month prefect list or a SAN14 export.",
   "boundary_definition": "Different opening owners connected by links, sea_links or travel_routes; each unordered city pair is listed once. These are network borders, not geographic administrative boundary polygons.",
   "historical_count": 23,
@@ -16,12 +16,12 @@
     "mainland235-01"
   ],
   "summary": {
-    "cities": 2964,
+    "cities": 3213,
     "factions": 285,
     "future_factions": 2,
     "scheduled_faction_foundings": 2,
     "scheduled_faction_coups": 1,
-    "boundary_links": 1654,
+    "boundary_links": 1702,
     "opening_officers": 9024,
     "new_factions": 43,
     "city_changes": 109,
@@ -30,12 +30,12 @@
     "officer_change_records": 831
   },
   "fictional_adaptation_summary": {
-    "cities": 643,
+    "cities": 692,
     "factions": 70,
     "future_factions": 0,
     "scheduled_faction_foundings": 0,
     "scheduled_faction_coups": 0,
-    "boundary_links": 417,
+    "boundary_links": 423,
     "opening_officers": 2219,
     "new_factions": 13,
     "city_changes": 14,
@@ -171,7 +171,7 @@
       "title": "184年2月 · 黄巾之乱",
       "title_ja": "184年2月 · 黄巾之乱",
       "catalog_file": "game/data/campaigns/184-02.json",
-      "catalog_sha256": "c9442dc13e702ab3ccf4171063c4a95e5736fd43e4f23eced0aa7934643a3e2c",
+      "catalog_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
       "factions": [
         {
           "id": "ding_yuan",
@@ -215,7 +215,7 @@
           "person_id": "san14-candidate-0132",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 11,
+          "city_count": 14,
           "officer_count": 49
         },
         {
@@ -422,7 +422,7 @@
           "current_after": 1860
         }
       ],
-      "initial_soldier_total": 213102,
+      "initial_soldier_total": 214902,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -471,7 +471,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 124,
+      "city_count": 128,
       "city_owners": [
         {
           "city": "anding",
@@ -548,12 +548,6 @@
         {
           "city": "dai",
           "name": "代郡",
-          "owner": "neutral",
-          "neutral_label": null
-        },
-        {
-          "city": "daifang",
-          "name": "带方",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -804,9 +798,21 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
           "owner": "neutral",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "han",
           "neutral_label": null
         },
         {
@@ -842,6 +848,12 @@
         {
           "city": "longxi",
           "name": "陇西",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -885,6 +897,12 @@
           "city": "nanyang",
           "name": "宛城",
           "owner": "yellow_turban",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
+          "owner": "han",
           "neutral_label": null
         },
         {
@@ -1137,6 +1155,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "neutral",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "han",
           "neutral_label": null
         },
         {
@@ -2213,6 +2237,40 @@
         },
         {
           "cities": [
+            "jiyin",
+            "liang"
+          ],
+          "owners": [
+            "neutral",
+            "han"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "lean",
+            "taishan"
+          ],
+          "owners": [
+            "neutral",
+            "han"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "liaodong",
             "xuantu"
           ],
@@ -2236,6 +2294,23 @@
           "owners": [
             "neutral",
             "wuhuan"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "liaoxi",
+            "youbeiping"
+          ],
+          "owners": [
+            "neutral",
+            "han"
           ],
           "modes": [
             "land"
@@ -2281,6 +2356,23 @@
         },
         {
           "cities": [
+            "lu",
+            "taishan"
+          ],
+          "owners": [
+            "neutral",
+            "han"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "nanyang",
             "xiangyang"
           ],
@@ -2304,6 +2396,40 @@
           "owners": [
             "yellow_turban",
             "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "pengcheng",
+            "shanyang"
+          ],
+          "owners": [
+            "han",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "pengcheng",
+            "xiapi"
+          ],
+          "owners": [
+            "han",
+            "wu"
           ],
           "modes": [
             "land"
@@ -2612,6 +2738,23 @@
           "owners": [
             "neutral",
             "han"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "youbeiping",
+            "yuyang"
+          ],
+          "owners": [
+            "han",
+            "gongsun_zan"
           ],
           "modes": [
             "land"
@@ -5990,7 +6133,7 @@
       "title": "188年6月 · 漢朝搖搖欲墜",
       "title_ja": "揺らぐ漢朝",
       "catalog_file": "game/data/campaigns/188-06.json",
-      "catalog_sha256": "139efce59564ce633edbfb62d8ae0275d07d4853a62ba454d80399129f205a7a",
+      "catalog_sha256": "47a2befe11315e84474a90ec3f7b4412b6c12efe2ad257bc7f46bf9c06e2ddbc",
       "factions": [
         {
           "id": "ding_yuan",
@@ -6025,7 +6168,7 @@
           "person_id": "san14-candidate-0132",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 8,
+          "city_count": 10,
           "officer_count": 49
         },
         {
@@ -6114,7 +6257,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 208567,
+      "initial_soldier_total": 210517,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -6163,7 +6306,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 125,
+      "city_count": 129,
       "city_owners": [
         {
           "city": "anding",
@@ -6240,12 +6383,6 @@
         {
           "city": "dai",
           "name": "代郡",
-          "owner": "neutral",
-          "neutral_label": null
-        },
-        {
-          "city": "daifang",
-          "name": "带方",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -6496,9 +6633,21 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
           "owner": "neutral",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "han",
           "neutral_label": null
         },
         {
@@ -6535,6 +6684,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -6583,6 +6738,12 @@
           "city": "nanyang",
           "name": "宛城",
           "owner": "neutral",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
+          "owner": "han",
           "neutral_label": null
         },
         {
@@ -6834,6 +6995,12 @@
         {
           "city": "yongchang",
           "name": "永昌",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -7777,6 +7944,40 @@
         },
         {
           "cities": [
+            "jiyin",
+            "liang"
+          ],
+          "owners": [
+            "neutral",
+            "han"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "lean",
+            "taishan"
+          ],
+          "owners": [
+            "neutral",
+            "han"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "liaodong",
             "liaoxi"
           ],
@@ -7828,6 +8029,23 @@
         },
         {
           "cities": [
+            "liaoxi",
+            "youbeiping"
+          ],
+          "owners": [
+            "zhang_chun",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "liucheng",
             "yuyang"
           ],
@@ -7867,6 +8085,57 @@
           ],
           "owners": [
             "song_jian",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "lu",
+            "taishan"
+          ],
+          "owners": [
+            "neutral",
+            "han"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "pengcheng",
+            "shanyang"
+          ],
+          "owners": [
+            "han",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "pengcheng",
+            "xiapi"
+          ],
+          "owners": [
+            "han",
             "neutral"
           ],
           "modes": [
@@ -8140,6 +8409,23 @@
           ],
           "owners": [
             "liu_yu",
+            "zhang_chun"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "youbeiping",
+            "yuyang"
+          ],
+          "owners": [
+            "neutral",
             "zhang_chun"
           ],
           "modes": [
@@ -11992,7 +12278,7 @@
       "title": "190年1月 · 反董卓联盟",
       "title_ja": "190年1月 · 反董卓联盟",
       "catalog_file": "game/data/campaigns/190-01.json",
-      "catalog_sha256": "88f9b36364df12adb3f87ebf3eaa274639e53d23537918fd3f8b2f3b62c0b1a7",
+      "catalog_sha256": "5b79c8dcca15cb542b823eeae2a4b4c2699068b6d41a5c261477ee0389bb5610",
       "factions": [
         {
           "id": "bao_xin",
@@ -12036,7 +12322,7 @@
           "person_id": "san14-candidate-0266",
           "city": "yuyang",
           "city_name": "渔阳",
-          "city_count": 2,
+          "city_count": 3,
           "officer_count": 13
         },
         {
@@ -12171,7 +12457,7 @@
           "person_id": "san14-candidate-0724",
           "city": "xiapi",
           "city_name": "下邳",
-          "city_count": 2,
+          "city_count": 3,
           "officer_count": 12
         },
         {
@@ -12260,7 +12546,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 244677,
+      "initial_soldier_total": 245967,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -12309,7 +12595,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 125,
+      "city_count": 129,
       "city_owners": [
         {
           "city": "anding",
@@ -12387,12 +12673,6 @@
           "city": "dai",
           "name": "代郡",
           "owner": "liu_yu",
-          "neutral_label": null
-        },
-        {
-          "city": "daifang",
-          "name": "带方",
-          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -12642,8 +12922,20 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -12681,6 +12973,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -12729,6 +13027,12 @@
           "city": "nanyang",
           "name": "宛城",
           "owner": "yuan_shu",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
+          "owner": "tao_qian",
           "neutral_label": null
         },
         {
@@ -12984,6 +13288,12 @@
           "neutral_label": null
         },
         {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "gongsun_zan",
+          "neutral_label": null
+        },
+        {
           "city": "yuexi",
           "name": "越巂",
           "owner": "liu_yan",
@@ -13235,24 +13545,6 @@
         {
           "cities": [
             "beihai",
-            "daifang"
-          ],
-          "owners": [
-            "kong_rong",
-            "neutral"
-          ],
-          "modes": [
-            "sea"
-          ],
-          "link_sources": [
-            "links",
-            "sea_links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "beihai",
             "donghai"
           ],
           "owners": [
@@ -13481,6 +13773,23 @@
           "owners": [
             "zhang_miao",
             "liu_dai"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "chenliu",
+            "liang"
+          ],
+          "owners": [
+            "zhang_miao",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -14500,6 +14809,23 @@
         {
           "cities": [
             "jiyin",
+            "liang"
+          ],
+          "owners": [
+            "liu_dai",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jiyin",
             "shanyang"
           ],
           "owners": [
@@ -14521,6 +14847,23 @@
           ],
           "owners": [
             "tao_qian",
+            "liu_dai"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "lean",
+            "taishan"
+          ],
+          "owners": [
+            "neutral",
             "liu_dai"
           ],
           "modes": [
@@ -14687,6 +15030,40 @@
         },
         {
           "cities": [
+            "lu",
+            "shanyang"
+          ],
+          "owners": [
+            "neutral",
+            "yuan_yi"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "lu",
+            "taishan"
+          ],
+          "owners": [
+            "neutral",
+            "liu_dai"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "nanjun",
             "wuling"
           ],
@@ -14744,6 +15121,23 @@
           "owners": [
             "yuan_shu",
             "liu_biao"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "pengcheng",
+            "shanyang"
+          ],
+          "owners": [
+            "tao_qian",
+            "yuan_yi"
           ],
           "modes": [
             "land"
@@ -20239,7 +20633,7 @@
       "title": "191年10月 · 二袁的意图",
       "title_ja": "191年10月 · 二袁的意图",
       "catalog_file": "game/data/campaigns/191-10.json",
-      "catalog_sha256": "b7014222a71536f4e0fd0700a9d9262cc00da9f34f912fcee72c93bd4a825f9d",
+      "catalog_sha256": "160d8833a76c70883a6e719300fe3c80fc44aa3d3d130323b9278072da9b7026",
       "factions": [
         {
           "id": "bao_xin",
@@ -20283,7 +20677,7 @@
           "person_id": "san14-candidate-0266",
           "city": "yuyang",
           "city_name": "渔阳",
-          "city_count": 2,
+          "city_count": 3,
           "officer_count": 14
         },
         {
@@ -20391,7 +20785,7 @@
           "person_id": "san14-candidate-0724",
           "city": "xiapi",
           "city_name": "下邳",
-          "city_count": 2,
+          "city_count": 3,
           "officer_count": 15
         },
         {
@@ -20471,7 +20865,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 257747,
+      "initial_soldier_total": 259187,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -20520,7 +20914,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 125,
+      "city_count": 129,
       "city_owners": [
         {
           "city": "anding",
@@ -20598,12 +20992,6 @@
           "city": "dai",
           "name": "代郡",
           "owner": "liu_yu",
-          "neutral_label": null
-        },
-        {
-          "city": "daifang",
-          "name": "带方",
-          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -20853,8 +21241,20 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -20892,6 +21292,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -20940,6 +21346,12 @@
           "city": "nanyang",
           "name": "宛城",
           "owner": "yuan_shu",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
+          "owner": "tao_qian",
           "neutral_label": null
         },
         {
@@ -21195,6 +21607,12 @@
           "neutral_label": null
         },
         {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "gongsun_zan",
+          "neutral_label": null
+        },
+        {
           "city": "yuexi",
           "name": "越巂",
           "owner": "liu_yan",
@@ -21429,24 +21847,6 @@
         {
           "cities": [
             "beihai",
-            "daifang"
-          ],
-          "owners": [
-            "kong_rong",
-            "neutral"
-          ],
-          "modes": [
-            "sea"
-          ],
-          "link_sources": [
-            "links",
-            "sea_links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "beihai",
             "donghai"
           ],
           "owners": [
@@ -21658,6 +22058,23 @@
           "owners": [
             "zhang_miao",
             "liu_dai"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "chenliu",
+            "liang"
+          ],
+          "owners": [
+            "zhang_miao",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -22659,6 +23076,23 @@
         {
           "cities": [
             "jiyin",
+            "liang"
+          ],
+          "owners": [
+            "liu_dai",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jiyin",
             "shanyang"
           ],
           "owners": [
@@ -22680,6 +23114,23 @@
           ],
           "owners": [
             "tao_qian",
+            "liu_dai"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "lean",
+            "taishan"
+          ],
+          "owners": [
+            "neutral",
             "liu_dai"
           ],
           "modes": [
@@ -22846,6 +23297,40 @@
         },
         {
           "cities": [
+            "lu",
+            "shanyang"
+          ],
+          "owners": [
+            "neutral",
+            "yuan_yi"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "lu",
+            "taishan"
+          ],
+          "owners": [
+            "neutral",
+            "liu_dai"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "nanjun",
             "wuling"
           ],
@@ -22903,6 +23388,23 @@
           "owners": [
             "yuan_shu",
             "liu_biao"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "pengcheng",
+            "shanyang"
+          ],
+          "owners": [
+            "tao_qian",
+            "yuan_yi"
           ],
           "modes": [
             "land"
@@ -28547,7 +29049,7 @@
       "title": "194年6月 · 群雄割据",
       "title_ja": "194年6月 · 群雄割据",
       "catalog_file": "game/data/campaigns/194-06.json",
-      "catalog_sha256": "7652b849e1ee2b6a53d2808a180a27f4542029f6d27a50e3e55da81aa6656279",
+      "catalog_sha256": "fe3a6a48bbeaf4b8cc32045dadbd2e3e8b062a23f546afc79bc2d9b704d804b7",
       "factions": [
         {
           "id": "goguryeo",
@@ -28573,7 +29075,7 @@
           "person_id": "san14-candidate-0266",
           "city": "yuyang",
           "city_name": "渔阳",
-          "city_count": 5,
+          "city_count": 6,
           "officer_count": 12
         },
         {
@@ -28636,7 +29138,7 @@
           "person_id": "san14-candidate-0987",
           "city": "dongjun",
           "city_name": "濮阳",
-          "city_count": 4,
+          "city_count": 5,
           "officer_count": 21
         },
         {
@@ -28645,7 +29147,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 4,
+          "city_count": 5,
           "officer_count": 13
         },
         {
@@ -28681,7 +29183,7 @@
           "person_id": "san14-candidate-0724",
           "city": "xiapi",
           "city_name": "下邳",
-          "city_count": 4,
+          "city_count": 5,
           "officer_count": 11
         },
         {
@@ -28726,7 +29228,7 @@
           "person_id": "san14-candidate-0035",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 18,
+          "city_count": 19,
           "officer_count": 45
         },
         {
@@ -28779,7 +29281,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 253197,
+      "initial_soldier_total": 255872,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -28828,7 +29330,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 125,
+      "city_count": 131,
       "city_owners": [
         {
           "city": "anding",
@@ -28906,12 +29408,6 @@
           "city": "dai",
           "name": "代郡",
           "owner": "gongsun_zan",
-          "neutral_label": null
-        },
-        {
-          "city": "daifang",
-          "name": "带方",
-          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -29002,6 +29498,12 @@
           "city": "guangling",
           "name": "广陵",
           "owner": "tao_qian",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "永阳",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {
@@ -29161,8 +29663,20 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "yuan_shao",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
           "owner": "neutral",
           "neutral_label": null
         },
@@ -29200,6 +29714,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "lubu",
           "neutral_label": null
         },
         {
@@ -29248,6 +29768,12 @@
           "city": "nanyang",
           "name": "宛城",
           "owner": "liu_biao",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
+          "owner": "tao_qian",
           "neutral_label": null
         },
         {
@@ -29431,6 +29957,12 @@
           "neutral_label": null
         },
         {
+          "city": "xijun",
+          "name": "日勒",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "xincheng",
           "name": "房陵",
           "owner": "neutral",
@@ -29500,6 +30032,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "gongsun_zan",
           "neutral_label": null
         },
         {
@@ -29737,24 +30275,6 @@
         {
           "cities": [
             "beihai",
-            "daifang"
-          ],
-          "owners": [
-            "kong_rong",
-            "neutral"
-          ],
-          "modes": [
-            "sea"
-          ],
-          "link_sources": [
-            "links",
-            "sea_links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "beihai",
             "donghai"
           ],
           "owners": [
@@ -29913,6 +30433,23 @@
           "owners": [
             "zhang_miao",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "chenliu",
+            "liang"
+          ],
+          "owners": [
+            "zhang_miao",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -30328,6 +30865,23 @@
           "modes": [
             "land",
             "river"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "fufeng",
+            "guangwei"
+          ],
+          "owners": [
+            "li_jue",
+            "ma_teng"
+          ],
+          "modes": [
+            "land"
           ],
           "link_sources": [
             "links",
@@ -31021,6 +31575,23 @@
         {
           "cities": [
             "jiyin",
+            "liang"
+          ],
+          "owners": [
+            "wei",
+            "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jiyin",
             "shanyang"
           ],
           "owners": [
@@ -31094,6 +31665,23 @@
           ],
           "owners": [
             "tao_qian",
+            "lubu"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "lean",
+            "taishan"
+          ],
+          "owners": [
+            "yuan_shao",
             "lubu"
           ],
           "modes": [
@@ -31319,6 +31907,23 @@
           "owners": [
             "liu_biao",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "pengcheng",
+            "shanyang"
+          ],
+          "owners": [
+            "tao_qian",
+            "lubu"
           ],
           "modes": [
             "land"
@@ -31611,6 +32216,23 @@
           "owners": [
             "liu_biao",
             "liu_zhang"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "wuwei",
+            "xijun"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -37109,7 +37731,7 @@
       "title": "196年6月 · 曹操得勢",
       "title_ja": "曹操の台頭",
       "catalog_file": "game/data/campaigns/196-06.json",
-      "catalog_sha256": "9073f9a8e81bd0b56a9b7148d434392ddbc341d6422252c0fe562c012945a0c1",
+      "catalog_sha256": "35966476dfce77d0b2cd6f06de126f0acdf57c6c0da45fd6519b06be306c2882",
       "factions": [
         {
           "id": "goguryeo",
@@ -37135,7 +37757,7 @@
           "person_id": "san14-candidate-0266",
           "city": "yuyang",
           "city_name": "渔阳",
-          "city_count": 5,
+          "city_count": 6,
           "officer_count": 11
         },
         {
@@ -37207,7 +37829,7 @@
           "person_id": "san14-candidate-0987",
           "city": "qiao",
           "city_name": "小沛",
-          "city_count": 4,
+          "city_count": 5,
           "officer_count": 17
         },
         {
@@ -37216,7 +37838,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 4,
+          "city_count": 5,
           "officer_count": 13
         },
         {
@@ -37234,7 +37856,7 @@
           "person_id": "san14-candidate-0952",
           "city": "xiapi",
           "city_name": "下邳",
-          "city_count": 4,
+          "city_count": 5,
           "officer_count": 17
         },
         {
@@ -37261,7 +37883,7 @@
           "person_id": "san14-candidate-0521",
           "city": "chenliu",
           "city_name": "陈留",
-          "city_count": 4,
+          "city_count": 5,
           "officer_count": 32
         },
         {
@@ -37288,7 +37910,7 @@
           "person_id": "san14-candidate-0035",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 19,
+          "city_count": 20,
           "officer_count": 46
         },
         {
@@ -37332,7 +37954,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 252597,
+      "initial_soldier_total": 256107,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -37381,7 +38003,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 127,
+      "city_count": 134,
       "city_owners": [
         {
           "city": "anding",
@@ -37459,12 +38081,6 @@
           "city": "dai",
           "name": "代郡",
           "owner": "gongsun_zan",
-          "neutral_label": null
-        },
-        {
-          "city": "daifang",
-          "name": "带方",
-          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -37555,6 +38171,12 @@
           "city": "guangling",
           "name": "广陵",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "永阳",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {
@@ -37720,9 +38342,21 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "yuan_shao",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
           "owner": "neutral",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -37759,6 +38393,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "lubu",
           "neutral_label": null
         },
         {
@@ -37807,6 +38447,12 @@
           "city": "nanyang",
           "name": "宛城",
           "owner": "liu_biao",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
+          "owner": "shu",
           "neutral_label": null
         },
         {
@@ -37984,9 +38630,21 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
           "owner": "yuan_shao",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -38065,6 +38723,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "gongsun_zan",
           "neutral_label": null
         },
         {
@@ -38313,24 +38977,6 @@
           ],
           "link_sources": [
             "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "beihai",
-            "daifang"
-          ],
-          "owners": [
-            "kong_rong",
-            "neutral"
-          ],
-          "modes": [
-            "sea"
-          ],
-          "link_sources": [
-            "links",
-            "sea_links",
             "travel_routes"
           ]
         },
@@ -38909,6 +39555,23 @@
           "modes": [
             "land",
             "river"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "fufeng",
+            "guangwei"
+          ],
+          "owners": [
+            "li_jue",
+            "ma_teng"
+          ],
+          "modes": [
+            "land"
           ],
           "link_sources": [
             "links",
@@ -39618,6 +40281,23 @@
         },
         {
           "cities": [
+            "jiyin",
+            "liang"
+          ],
+          "owners": [
+            "lubu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "kuaiji",
             "nanhai"
           ],
@@ -39675,6 +40355,23 @@
           ],
           "owners": [
             "shu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "lean",
+            "taishan"
+          ],
+          "owners": [
+            "yuan_shao",
             "wei"
           ],
           "modes": [
@@ -39841,6 +40538,23 @@
         },
         {
           "cities": [
+            "lu",
+            "taishan"
+          ],
+          "owners": [
+            "lubu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "lujiang",
             "poyang"
           ],
@@ -39918,6 +40632,23 @@
           "owners": [
             "liu_biao",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "pengcheng",
+            "shanyang"
+          ],
+          "owners": [
+            "shu",
+            "lubu"
           ],
           "modes": [
             "land"
@@ -40262,6 +40993,23 @@
           "owners": [
             "liu_biao",
             "liu_zhang"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "wuwei",
+            "xijun"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -45762,7 +46510,7 @@
       "title": "198年3月 · 呂布討伐戰",
       "title_ja": "呂布討伐戦",
       "catalog_file": "game/data/campaigns/198-03.json",
-      "catalog_sha256": "e5b20f6ed0d04b5c5e6a6532072540db2002ccb6ae29a900aa3623e56b4372c7",
+      "catalog_sha256": "04b91b99b34b9a2bd131425a56f2be87cc202adc4b4010968713496987bb4541",
       "factions": [
         {
           "id": "goguryeo",
@@ -45788,7 +46536,7 @@
           "person_id": "san14-candidate-0266",
           "city": "yuyang",
           "city_name": "渔阳",
-          "city_count": 5,
+          "city_count": 6,
           "officer_count": 11
         },
         {
@@ -45842,7 +46590,7 @@
           "person_id": "san14-candidate-0987",
           "city": "xiapi",
           "city_name": "下邳",
-          "city_count": 1,
+          "city_count": 2,
           "officer_count": 16
         },
         {
@@ -45851,7 +46599,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 4,
+          "city_count": 5,
           "officer_count": 16
         },
         {
@@ -45887,7 +46635,7 @@
           "person_id": "san14-candidate-0521",
           "city": "yingchuan",
           "city_name": "许县",
-          "city_count": 12,
+          "city_count": 14,
           "officer_count": 40
         },
         {
@@ -45914,7 +46662,7 @@
           "person_id": "san14-candidate-0035",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 19,
+          "city_count": 20,
           "officer_count": 45
         },
         {
@@ -45967,7 +46715,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 256757,
+      "initial_soldier_total": 259967,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -46012,7 +46760,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 127,
+      "city_count": 134,
       "city_owners": [
         {
           "city": "anding",
@@ -46090,12 +46838,6 @@
           "city": "dai",
           "name": "代郡",
           "owner": "gongsun_zan",
-          "neutral_label": null
-        },
-        {
-          "city": "daifang",
-          "name": "带方",
-          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -46186,6 +46928,12 @@
           "city": "guangling",
           "name": "广陵",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "永阳",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {
@@ -46351,9 +47099,21 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "yuan_shao",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
           "owner": "neutral",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -46390,6 +47150,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -46438,6 +47204,12 @@
           "city": "nanyang",
           "name": "宛城",
           "owner": "zhang_xiu",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
+          "owner": "lubu",
           "neutral_label": null
         },
         {
@@ -46615,9 +47387,21 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
           "owner": "yuan_shao",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -46696,6 +47480,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "gongsun_zan",
           "neutral_label": null
         },
         {
@@ -46944,24 +47734,6 @@
           ],
           "link_sources": [
             "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "beihai",
-            "daifang"
-          ],
-          "owners": [
-            "wei",
-            "neutral"
-          ],
-          "modes": [
-            "sea"
-          ],
-          "link_sources": [
-            "links",
-            "sea_links",
             "travel_routes"
           ]
         },
@@ -47506,6 +48278,23 @@
           "modes": [
             "land",
             "river"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "fufeng",
+            "guangwei"
+          ],
+          "owners": [
+            "li_jue",
+            "ma_teng"
+          ],
+          "modes": [
+            "land"
           ],
           "link_sources": [
             "links",
@@ -48214,6 +49003,23 @@
         },
         {
           "cities": [
+            "lean",
+            "taishan"
+          ],
+          "owners": [
+            "yuan_shao",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "lelang",
             "liaodong"
           ],
@@ -48462,6 +49268,23 @@
           "owners": [
             "zhang_xiu",
             "liu_biao"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "pengcheng",
+            "shanyang"
+          ],
+          "owners": [
+            "lubu",
+            "wei"
           ],
           "modes": [
             "land"
@@ -48789,6 +49612,23 @@
           "owners": [
             "liu_biao",
             "liu_zhang"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "wuwei",
+            "xijun"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -54159,7 +54999,7 @@
       "title": "200年1月 · 官渡之战",
       "title_ja": "200年1月 · 官渡之战",
       "catalog_file": "game/data/campaigns/200-01.json",
-      "catalog_sha256": "459b28dab0443f0274cbdfbd461acd6a1431b8d4bf45a2ccec91f2374bc3a679",
+      "catalog_sha256": "6c6ba7f2dafb4b6dec0922383456b33231baf8bdbeb8f9ffeded1beed428ea60",
       "factions": [
         {
           "id": "goguryeo",
@@ -54212,7 +55052,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 4,
+          "city_count": 5,
           "officer_count": 17
         },
         {
@@ -54248,7 +55088,7 @@
           "person_id": "san14-candidate-0521",
           "city": "yingchuan",
           "city_name": "许县",
-          "city_count": 22,
+          "city_count": 27,
           "officer_count": 82
         },
         {
@@ -54275,7 +55115,7 @@
           "person_id": "san14-candidate-0035",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 26,
+          "city_count": 28,
           "officer_count": 55
         },
         {
@@ -54292,7 +55132,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 274527,
+      "initial_soldier_total": 278987,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -54337,7 +55177,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 127,
+      "city_count": 136,
       "city_owners": [
         {
           "city": "anding",
@@ -54406,6 +55246,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -54418,12 +55264,6 @@
           "neutral_label": null
         },
         {
-          "city": "daifang",
-          "name": "带方",
-          "owner": "neutral",
-          "neutral_label": null
-        },
-        {
           "city": "dangqu",
           "name": "宕渠",
           "owner": "liu_zhang",
@@ -54433,6 +55273,12 @@
           "city": "danyang",
           "name": "秣陵",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -54511,6 +55357,12 @@
           "city": "guangling",
           "name": "广陵",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "永阳",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {
@@ -54676,9 +55528,21 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "yuan_shao",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
           "owner": "neutral",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -54715,6 +55579,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -54762,6 +55632,12 @@
         {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -54940,9 +55816,21 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
           "owner": "yuan_shao",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -55021,6 +55909,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "yuan_shao",
           "neutral_label": null
         },
         {
@@ -55275,18 +56169,17 @@
         {
           "cities": [
             "beihai",
-            "daifang"
+            "dongguan"
           ],
           "owners": [
             "yuan_shao",
-            "neutral"
+            "wei"
           ],
           "modes": [
-            "sea"
+            "land"
           ],
           "link_sources": [
             "links",
-            "sea_links",
             "travel_routes"
           ]
         },
@@ -55573,6 +56466,23 @@
           "owners": [
             "wei",
             "yuan_shao"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "fufeng",
+            "guangwei"
+          ],
+          "owners": [
+            "wei",
+            "ma_teng"
           ],
           "modes": [
             "land"
@@ -56249,6 +57159,23 @@
         },
         {
           "cities": [
+            "lean",
+            "taishan"
+          ],
+          "owners": [
+            "yuan_shao",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "lelang",
             "liaodong"
           ],
@@ -56471,6 +57398,23 @@
         },
         {
           "cities": [
+            "pengcheng",
+            "xiapi"
+          ],
+          "owners": [
+            "wei",
+            "shu"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "qi",
             "shanyang"
           ],
@@ -56649,6 +57593,23 @@
           "owners": [
             "liu_biao",
             "liu_zhang"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "wuwei",
+            "xijun"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -62103,7 +63064,7 @@
       "title": "202年6月 · 河北爭亂",
       "title_ja": "河北争乱",
       "catalog_file": "game/data/campaigns/202-06.json",
-      "catalog_sha256": "290bbe77b1ef8cf24111afbad4ae0e16582b9dc825cc718c1b9512a452dd0c23",
+      "catalog_sha256": "4455518219a681bfda2833da75ad90025eb9217ec2e96f8378a03a0c00a0a783",
       "factions": [
         {
           "id": "gao_gan",
@@ -62165,7 +63126,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 4,
+          "city_count": 5,
           "officer_count": 17
         },
         {
@@ -62201,7 +63162,7 @@
           "person_id": "san14-candidate-0521",
           "city": "yingchuan",
           "city_name": "许县",
-          "city_count": 25,
+          "city_count": 30,
           "officer_count": 89
         },
         {
@@ -62237,7 +63198,7 @@
           "person_id": "san14-candidate-0037",
           "city": "beihai",
           "city_name": "北海",
-          "city_count": 5,
+          "city_count": 6,
           "officer_count": 6
         },
         {
@@ -62246,7 +63207,7 @@
           "person_id": "san14-candidate-0029",
           "city": "yan",
           "city_name": "蓟",
-          "city_count": 6,
+          "city_count": 7,
           "officer_count": 4
         },
         {
@@ -62263,7 +63224,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 277392,
+      "initial_soldier_total": 281877,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -62308,7 +63269,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 127,
+      "city_count": 136,
       "city_owners": [
         {
           "city": "anding",
@@ -62377,6 +63338,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -62389,12 +63356,6 @@
           "neutral_label": null
         },
         {
-          "city": "daifang",
-          "name": "带方",
-          "owner": "neutral",
-          "neutral_label": null
-        },
-        {
           "city": "dangqu",
           "name": "宕渠",
           "owner": "liu_zhang",
@@ -62404,6 +63365,12 @@
           "city": "danyang",
           "name": "秣陵",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -62482,6 +63449,12 @@
           "city": "guangling",
           "name": "广陵",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "永阳",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {
@@ -62647,9 +63620,21 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "yuan_tan",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
           "owner": "neutral",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -62686,6 +63671,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -62733,6 +63724,12 @@
         {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -62911,9 +63908,21 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
           "owner": "gao_gan",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -62992,6 +64001,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "yuan_xi",
           "neutral_label": null
         },
         {
@@ -63263,18 +64278,17 @@
         {
           "cities": [
             "beihai",
-            "daifang"
+            "dongguan"
           ],
           "owners": [
             "yuan_tan",
-            "neutral"
+            "wei"
           ],
           "modes": [
-            "sea"
+            "land"
           ],
           "link_sources": [
             "links",
-            "sea_links",
             "travel_routes"
           ]
         },
@@ -63663,6 +64677,23 @@
           "owners": [
             "yuan_xi",
             "yuan_shang"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "fufeng",
+            "guangwei"
+          ],
+          "owners": [
+            "wei",
+            "ma_teng"
           ],
           "modes": [
             "land"
@@ -64287,6 +65318,23 @@
         },
         {
           "cities": [
+            "lean",
+            "taishan"
+          ],
+          "owners": [
+            "yuan_tan",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "lelang",
             "liaodong"
           ],
@@ -64705,6 +65753,23 @@
           "owners": [
             "liu_biao",
             "liu_zhang"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "wuwei",
+            "xijun"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -70074,7 +71139,7 @@
       "title": "207年9月 · 三顾茅庐",
       "title_ja": "207年9月 · 三顾茅庐",
       "catalog_file": "game/data/campaigns/207-09.json",
-      "catalog_sha256": "221890283ee6f1c9c3634e8d8daaba1634fb9b78c69e51155c49e92679b9cc05",
+      "catalog_sha256": "d1fbce9fa0a630bccf91f0a7808e19f1ec1f8e214195ad6af42d57bb5ce0605e",
       "factions": [
         {
           "id": "goguryeo",
@@ -70091,7 +71156,7 @@
           "person_id": "san14-candidate-0264",
           "city": "liaodong",
           "city_name": "襄平",
-          "city_count": 2,
+          "city_count": 4,
           "officer_count": 3
         },
         {
@@ -70127,7 +71192,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 4,
+          "city_count": 5,
           "officer_count": 17
         },
         {
@@ -70163,7 +71228,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 52,
+          "city_count": 59,
           "officer_count": 135
         },
         {
@@ -70198,7 +71263,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 281417,
+      "initial_soldier_total": 286847,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -70239,7 +71304,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 127,
+      "city_count": 137,
       "city_owners": [
         {
           "city": "anding",
@@ -70308,6 +71373,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -70322,7 +71393,7 @@
         {
           "city": "daifang",
           "name": "带方",
-          "owner": "neutral",
+          "owner": "gongsun",
           "neutral_label": null
         },
         {
@@ -70335,6 +71406,12 @@
           "city": "danyang",
           "name": "秣陵",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -70413,6 +71490,12 @@
           "city": "guangling",
           "name": "广陵",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "永阳",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {
@@ -70578,9 +71661,21 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
-          "owner": "neutral",
+          "owner": "gongsun",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -70617,6 +71712,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -70664,6 +71765,12 @@
         {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -70842,9 +71949,21 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -70923,6 +72042,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -71181,7 +72306,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -71199,7 +72324,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -71360,6 +72485,23 @@
           ],
           "modes": [
             "sea"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "fufeng",
+            "guangwei"
+          ],
+          "owners": [
+            "wei",
+            "ma_teng"
+          ],
+          "modes": [
+            "land"
           ],
           "link_sources": [
             "links",
@@ -71897,23 +73039,6 @@
         },
         {
           "cities": [
-            "lelang",
-            "liaodong"
-          ],
-          "owners": [
-            "neutral",
-            "gongsun"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
             "liaodong",
             "liaoxi"
           ],
@@ -72229,6 +73354,23 @@
           "owners": [
             "liu_biao",
             "liu_zhang"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "wuwei",
+            "xijun"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -78446,7 +79588,7 @@
       "title": "208年10月 · 赤壁之战",
       "title_ja": "208年10月 · 赤壁之战",
       "catalog_file": "game/data/campaigns/208-10.json",
-      "catalog_sha256": "4f63ddd5b98b40421777792307055bb684f3983987651df93129590e31008612",
+      "catalog_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
       "factions": [
         {
           "id": "goguryeo",
@@ -78463,7 +79605,7 @@
           "person_id": "san14-candidate-0264",
           "city": "liaodong",
           "city_name": "襄平",
-          "city_count": 2,
+          "city_count": 4,
           "officer_count": 3
         },
         {
@@ -78517,7 +79659,7 @@
           "person_id": "san14-candidate-0769",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 4,
+          "city_count": 5,
           "officer_count": 14
         },
         {
@@ -78553,7 +79695,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 57,
+          "city_count": 65,
           "officer_count": 171
         },
         {
@@ -78597,7 +79739,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 289272,
+      "initial_soldier_total": 295501,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -78638,7 +79780,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 129,
+      "city_count": 140,
       "city_owners": [
         {
           "city": "anding",
@@ -78707,6 +79849,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -78721,7 +79869,7 @@
         {
           "city": "daifang",
           "name": "带方",
-          "owner": "neutral",
+          "owner": "gongsun",
           "neutral_label": null
         },
         {
@@ -78734,6 +79882,12 @@
           "city": "danyang",
           "name": "秣陵",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -78812,6 +79966,12 @@
           "city": "guangling",
           "name": "广陵",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "永阳",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {
@@ -78977,9 +80137,21 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
-          "owner": "neutral",
+          "owner": "gongsun",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -79016,6 +80188,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -79061,8 +80239,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -79241,9 +80431,21 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -79334,6 +80536,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -79610,7 +80818,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -79628,7 +80836,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -79860,6 +81068,23 @@
           ],
           "modes": [
             "sea"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "fufeng",
+            "guangwei"
+          ],
+          "owners": [
+            "wei",
+            "ma_teng"
+          ],
+          "modes": [
+            "land"
           ],
           "link_sources": [
             "links",
@@ -80482,23 +81707,6 @@
         },
         {
           "cities": [
-            "lelang",
-            "liaodong"
-          ],
-          "owners": [
-            "neutral",
-            "gongsun"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
             "liaodong",
             "liaoxi"
           ],
@@ -80779,6 +81987,23 @@
           "owners": [
             "jin_xuan",
             "liu_zhang"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "wuwei",
+            "xijun"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -87000,7 +88225,7 @@
       "title": "211年7月 · 潼關之戰",
       "title_ja": "潼関の戦い",
       "catalog_file": "game/data/campaigns/211-07-tongguan.json",
-      "catalog_sha256": "548283994c9fb23bef76494fe5a58e7eddbe11c7f663bca2a47b505877ed30ea",
+      "catalog_sha256": "195dac335055509ffb36ea8b78841f6cb9ace4f034a19761a455bfa834073b9c",
       "factions": [
         {
           "id": "goguryeo",
@@ -87017,7 +88242,7 @@
           "person_id": "san14-candidate-0264",
           "city": "liaodong",
           "city_name": "襄平",
-          "city_count": 2,
+          "city_count": 4,
           "officer_count": 4
         },
         {
@@ -87044,7 +88269,7 @@
           "person_id": "san14-candidate-0769",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 7,
+          "city_count": 8,
           "officer_count": 15
         },
         {
@@ -87080,7 +88305,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 51,
+          "city_count": 59,
           "officer_count": 166
         },
         {
@@ -87106,7 +88331,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 305460,
+      "initial_soldier_total": 312484,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -87147,7 +88372,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 129,
+      "city_count": 140,
       "city_owners": [
         {
           "city": "anding",
@@ -87216,6 +88441,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -87230,7 +88461,7 @@
         {
           "city": "daifang",
           "name": "带方",
-          "owner": "neutral",
+          "owner": "gongsun",
           "neutral_label": null
         },
         {
@@ -87243,6 +88474,12 @@
           "city": "danyang",
           "name": "秣陵",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -87321,6 +88558,12 @@
           "city": "guangling",
           "name": "广陵",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "永阳",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {
@@ -87486,9 +88729,21 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
-          "owner": "neutral",
+          "owner": "gongsun",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -87525,6 +88780,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -87570,8 +88831,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -87750,9 +89023,21 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -87843,6 +89128,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -88085,7 +89376,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -88103,7 +89394,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -88785,23 +90076,6 @@
         },
         {
           "cities": [
-            "lelang",
-            "liaodong"
-          ],
-          "owners": [
-            "neutral",
-            "gongsun"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
             "liaodong",
             "liaoxi"
           ],
@@ -89048,6 +90322,23 @@
           "owners": [
             "shu",
             "liu_zhang"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "wuwei",
+            "xijun"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -94317,7 +95608,7 @@
       "title": "212年12月 · 入蜀爭奪戰",
       "title_ja": "入蜀争奪戦",
       "catalog_file": "game/data/campaigns/212-12.json",
-      "catalog_sha256": "9ac9121a44c2c0ef8da8e894740d0e16a3dcfdbff54a6527abd985495ea18872",
+      "catalog_sha256": "4cf23d78c069376236abdd71ad6555ad3145ea2ae53c628960dee6881c180f23",
       "factions": [
         {
           "id": "goguryeo",
@@ -94334,7 +95625,7 @@
           "person_id": "san14-candidate-0264",
           "city": "liaodong",
           "city_name": "襄平",
-          "city_count": 2,
+          "city_count": 4,
           "officer_count": 4
         },
         {
@@ -94388,7 +95679,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 57,
+          "city_count": 66,
           "officer_count": 160
         },
         {
@@ -94414,7 +95705,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 295595,
+      "initial_soldier_total": 302622,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -94455,7 +95746,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 129,
+      "city_count": 140,
       "city_owners": [
         {
           "city": "anding",
@@ -94524,6 +95815,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -94538,7 +95835,7 @@
         {
           "city": "daifang",
           "name": "带方",
-          "owner": "neutral",
+          "owner": "gongsun",
           "neutral_label": null
         },
         {
@@ -94551,6 +95848,12 @@
           "city": "danyang",
           "name": "建业",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -94628,6 +95931,12 @@
         {
           "city": "guangling",
           "name": "广陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "永阳",
           "owner": "wei",
           "neutral_label": null
         },
@@ -94794,9 +96103,21 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
-          "owner": "neutral",
+          "owner": "gongsun",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -94833,6 +96154,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -94878,8 +96205,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -95058,9 +96397,21 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -95151,6 +96502,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -95393,7 +96750,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -95411,7 +96768,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -96068,23 +97425,6 @@
           "link_sources": [
             "links",
             "sea_links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "lelang",
-            "liaodong"
-          ],
-          "owners": [
-            "neutral",
-            "gongsun"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
             "travel_routes"
           ]
         },
@@ -102646,7 +103986,7 @@
       "title": "215年8月 · 合淝之戰",
       "title_ja": "合肥の戦い",
       "catalog_file": "game/data/campaigns/215-08.json",
-      "catalog_sha256": "146f99a83b0f2648c4ec35fca1d04fd20687e29ccce78aaa8aba5a7af70f70ee",
+      "catalog_sha256": "8b51331cebd069a756803d79408663ccdcc7008d58b69bfe54737dcc3f60686a",
       "factions": [
         {
           "id": "goguryeo",
@@ -102663,7 +104003,7 @@
           "person_id": "san14-candidate-0264",
           "city": "liaodong",
           "city_name": "襄平",
-          "city_count": 2,
+          "city_count": 4,
           "officer_count": 5
         },
         {
@@ -102690,7 +104030,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 68,
+          "city_count": 81,
           "officer_count": 163
         },
         {
@@ -102707,7 +104047,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 297482,
+      "initial_soldier_total": 305824,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -102748,7 +104088,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 130,
+      "city_count": 143,
       "city_owners": [
         {
           "city": "anding",
@@ -102817,6 +104157,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -102831,7 +104177,7 @@
         {
           "city": "daifang",
           "name": "带方",
-          "owner": "neutral",
+          "owner": "gongsun",
           "neutral_label": null
         },
         {
@@ -102844,6 +104190,12 @@
           "city": "danyang",
           "name": "建业",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -103087,9 +104439,33 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
-          "owner": "neutral",
+          "owner": "gongsun",
+          "neutral_label": null
+        },
+        {
+          "city": "leling",
+          "name": "乐陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "leping",
+          "name": "乐平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -103125,6 +104501,12 @@
         {
           "city": "longxi",
           "name": "陇西",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
           "owner": "wei",
           "neutral_label": null
         },
@@ -103171,8 +104553,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -103351,8 +104745,20 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
           "owner": "wei",
           "neutral_label": null
         },
@@ -103453,6 +104859,12 @@
           "neutral_label": null
         },
         {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "yuexi",
           "name": "越巂",
           "owner": "shu",
@@ -103492,6 +104904,12 @@
           "city": "zangke",
           "name": "牂牁",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "zhangwu",
+          "name": "章武",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -103607,7 +105025,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -103625,7 +105043,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -104095,23 +105513,6 @@
           "link_sources": [
             "links",
             "sea_links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "lelang",
-            "liaodong"
-          ],
-          "owners": [
-            "neutral",
-            "gongsun"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
             "travel_routes"
           ]
         },
@@ -108709,7 +110110,7 @@
       "title": "217年7月 · 汉中争夺战",
       "title_ja": "217年7月 · 汉中争夺战",
       "catalog_file": "game/data/campaigns/217-07.json",
-      "catalog_sha256": "1a8e15862ea408f5d5bdc4fbd5c5471d86261e3318e1cc83685c25aa9de1b0ba",
+      "catalog_sha256": "f09ec6459b1f11ee1d979ba0abf63b1807d604f2a17e6b9ccf8d6891bffd01eb",
       "factions": [
         {
           "id": "goguryeo",
@@ -108726,7 +110127,7 @@
           "person_id": "san14-candidate-0264",
           "city": "liaodong",
           "city_name": "襄平",
-          "city_count": 2,
+          "city_count": 4,
           "officer_count": 6
         },
         {
@@ -108753,7 +110154,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 68,
+          "city_count": 81,
           "officer_count": 162
         },
         {
@@ -108770,7 +110171,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 298390,
+      "initial_soldier_total": 306737,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -108811,7 +110212,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 130,
+      "city_count": 143,
       "city_owners": [
         {
           "city": "anding",
@@ -108880,6 +110281,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -108894,7 +110301,7 @@
         {
           "city": "daifang",
           "name": "带方",
-          "owner": "neutral",
+          "owner": "gongsun",
           "neutral_label": null
         },
         {
@@ -108907,6 +110314,12 @@
           "city": "danyang",
           "name": "建业",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -109150,9 +110563,33 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
-          "owner": "neutral",
+          "owner": "gongsun",
+          "neutral_label": null
+        },
+        {
+          "city": "leling",
+          "name": "乐陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "leping",
+          "name": "乐平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -109188,6 +110625,12 @@
         {
           "city": "longxi",
           "name": "陇西",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
           "owner": "wei",
           "neutral_label": null
         },
@@ -109234,8 +110677,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -109414,8 +110869,20 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
           "owner": "wei",
           "neutral_label": null
         },
@@ -109516,6 +110983,12 @@
           "neutral_label": null
         },
         {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "yuexi",
           "name": "越巂",
           "owner": "shu",
@@ -109555,6 +111028,12 @@
           "city": "zangke",
           "name": "牂牁",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "zhangwu",
+          "name": "章武",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -109670,7 +111149,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -109688,7 +111167,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -110158,23 +111637,6 @@
           "link_sources": [
             "links",
             "sea_links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "lelang",
-            "liaodong"
-          ],
-          "owners": [
-            "neutral",
-            "gongsun"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
             "travel_routes"
           ]
         },
@@ -114853,7 +116315,7 @@
       "title": "219年7月 · 关羽包围网",
       "title_ja": "219年7月 · 关羽包围网",
       "catalog_file": "game/data/campaigns/219-07.json",
-      "catalog_sha256": "242042e8677d77796dd37290b47267fdeb51720370fd8d4d5704084b89d39915",
+      "catalog_sha256": "6562a758571aad5d285758be5d732f77c896049eb6d02e02e711348a0a5b1be6",
       "factions": [
         {
           "id": "goguryeo",
@@ -114870,7 +116332,7 @@
           "person_id": "san14-candidate-0264",
           "city": "liaodong",
           "city_name": "襄平",
-          "city_count": 2,
+          "city_count": 4,
           "officer_count": 7
         },
         {
@@ -114897,7 +116359,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 64,
+          "city_count": 78,
           "officer_count": 171
         },
         {
@@ -114914,7 +116376,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 295747,
+      "initial_soldier_total": 304791,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -114955,7 +116417,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 130,
+      "city_count": 144,
       "city_owners": [
         {
           "city": "anding",
@@ -115024,6 +116486,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -115038,7 +116506,7 @@
         {
           "city": "daifang",
           "name": "带方",
-          "owner": "neutral",
+          "owner": "gongsun",
           "neutral_label": null
         },
         {
@@ -115051,6 +116519,12 @@
           "city": "danyang",
           "name": "建业",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -115294,9 +116768,33 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
-          "owner": "neutral",
+          "owner": "gongsun",
+          "neutral_label": null
+        },
+        {
+          "city": "leling",
+          "name": "乐陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "leping",
+          "name": "乐平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -115332,6 +116830,12 @@
         {
           "city": "longxi",
           "name": "陇西",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
           "owner": "wei",
           "neutral_label": null
         },
@@ -115378,8 +116882,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -115558,8 +117074,20 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
           "owner": "wei",
           "neutral_label": null
         },
@@ -115648,6 +117176,12 @@
           "neutral_label": null
         },
         {
+          "city": "yiyang_runan",
+          "name": "弋阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "yizhou",
           "name": "夷洲",
           "owner": "neutral",
@@ -115657,6 +117191,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -115699,6 +117239,12 @@
           "city": "zangke",
           "name": "牂牁",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "zhangwu",
+          "name": "章武",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -115780,7 +117326,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -115798,7 +117344,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -116171,6 +117717,23 @@
         },
         {
           "cities": [
+            "jiangxia",
+            "yiyang_runan"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "jiaozhi",
             "kuaiji"
           ],
@@ -116290,23 +117853,6 @@
         },
         {
           "cities": [
-            "lelang",
-            "liaodong"
-          ],
-          "owners": [
-            "neutral",
-            "gongsun"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
             "liaodong",
             "liaoxi"
           ],
@@ -116399,6 +117945,23 @@
           "owners": [
             "shu",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "nanxiang",
+            "xincheng"
+          ],
+          "owners": [
+            "wei",
+            "shu"
           ],
           "modes": [
             "land"
@@ -121071,7 +122634,7 @@
       "title": "221年7月 · 夷陵前夕",
       "title_ja": "221年7月 · 夷陵前夕",
       "catalog_file": "game/data/campaigns/221-07.json",
-      "catalog_sha256": "c3304dfbf5b7746e7a6989b37159c2026596b237117a8c32bd687dfff7db4f0d",
+      "catalog_sha256": "b2c57117aed0744898419336bf02bf9e49884ea0ba7947a0635e5de51e044f62",
       "factions": [
         {
           "id": "goguryeo",
@@ -121088,7 +122651,7 @@
           "person_id": "san14-candidate-0263",
           "city": "liaodong",
           "city_name": "襄平",
-          "city_count": 2,
+          "city_count": 4,
           "officer_count": 6
         },
         {
@@ -121115,7 +122678,7 @@
           "person_id": "san14-candidate-0526",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 68,
+          "city_count": 84,
           "officer_count": 143
         },
         {
@@ -121132,7 +122695,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 296217,
+      "initial_soldier_total": 307487,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -121173,7 +122736,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 131,
+      "city_count": 147,
       "city_owners": [
         {
           "city": "anding",
@@ -121248,6 +122811,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -121262,7 +122831,7 @@
         {
           "city": "daifang",
           "name": "带方",
-          "owner": "neutral",
+          "owner": "gongsun",
           "neutral_label": null
         },
         {
@@ -121275,6 +122844,12 @@
           "city": "danyang",
           "name": "建业",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -121352,6 +122927,18 @@
         {
           "city": "guangling",
           "name": "广陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangping",
+          "name": "广平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "广魏",
           "owner": "wei",
           "neutral_label": null
         },
@@ -121518,9 +123105,33 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
-          "owner": "neutral",
+          "owner": "gongsun",
+          "neutral_label": null
+        },
+        {
+          "city": "leling",
+          "name": "乐陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "leping",
+          "name": "乐平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -121556,6 +123167,12 @@
         {
           "city": "longxi",
           "name": "陇西",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
           "owner": "wei",
           "neutral_label": null
         },
@@ -121602,8 +123219,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -121777,13 +123406,25 @@
         },
         {
           "city": "xicheng",
-          "name": "西城",
+          "name": "魏兴",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xihai",
+          "name": "西海",
           "owner": "wei",
           "neutral_label": null
         },
         {
           "city": "xihe",
           "name": "西河",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
           "owner": "wei",
           "neutral_label": null
         },
@@ -121872,6 +123513,12 @@
           "neutral_label": null
         },
         {
+          "city": "yiyang_runan",
+          "name": "弋阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "yizhou",
           "name": "夷洲",
           "owner": "neutral",
@@ -121881,6 +123528,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -121923,6 +123576,12 @@
           "city": "zangke",
           "name": "牂牁",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "zhangwu",
+          "name": "章武",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -122055,7 +123714,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -122073,7 +123732,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -122412,6 +124071,23 @@
         },
         {
           "cities": [
+            "jiangxia",
+            "yiyang_runan"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "jiaozhi",
             "kuaiji"
           ],
@@ -122526,23 +124202,6 @@
           "link_sources": [
             "links",
             "sea_links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "lelang",
-            "liaodong"
-          ],
-          "owners": [
-            "neutral",
-            "gongsun"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
             "travel_routes"
           ]
         },
@@ -124617,7 +126276,7 @@
           "city": "xicheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "西城"
+          "city_name": "魏兴"
         },
         {
           "person_id": "san14-candidate-0457",
@@ -127000,7 +128659,7 @@
       "title": "225年7月 · 征伐南蠻",
       "title_ja": "南蛮征伐",
       "catalog_file": "game/data/campaigns/225-07.json",
-      "catalog_sha256": "8bd724656791cc645e10ce49944d66c9fa46019bc2f2ce8bd2334f7c8cfb670a",
+      "catalog_sha256": "09678281bce9c669fb0968aba165f659eb23a7a6273b2568eb2ffff3954d0d6e",
       "factions": [
         {
           "id": "goguryeo",
@@ -127017,7 +128676,7 @@
           "person_id": "san14-candidate-0263",
           "city": "liaodong",
           "city_name": "襄平",
-          "city_count": 2,
+          "city_count": 4,
           "officer_count": 6
         },
         {
@@ -127053,7 +128712,7 @@
           "person_id": "san14-candidate-0526",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 68,
+          "city_count": 85,
           "officer_count": 127
         },
         {
@@ -127070,7 +128729,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 285872,
+      "initial_soldier_total": 298022,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -127111,7 +128770,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 131,
+      "city_count": 148,
       "city_owners": [
         {
           "city": "anding",
@@ -127186,6 +128845,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -127200,7 +128865,7 @@
         {
           "city": "daifang",
           "name": "带方",
-          "owner": "neutral",
+          "owner": "gongsun",
           "neutral_label": null
         },
         {
@@ -127213,6 +128878,12 @@
           "city": "danyang",
           "name": "建业",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -127290,6 +128961,18 @@
         {
           "city": "guangling",
           "name": "广陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangping",
+          "name": "广平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "广魏",
           "owner": "wei",
           "neutral_label": null
         },
@@ -127456,9 +129139,33 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
-          "owner": "neutral",
+          "owner": "gongsun",
+          "neutral_label": null
+        },
+        {
+          "city": "leling",
+          "name": "乐陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "leping",
+          "name": "乐平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -127494,6 +129201,12 @@
         {
           "city": "longxi",
           "name": "陇西",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
           "owner": "wei",
           "neutral_label": null
         },
@@ -127540,8 +129253,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -127596,6 +129321,12 @@
         {
           "city": "runan",
           "name": "汝南",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "ruyin",
+          "name": "汝阴",
           "owner": "wei",
           "neutral_label": null
         },
@@ -127715,13 +129446,25 @@
         },
         {
           "city": "xicheng",
-          "name": "西城",
+          "name": "魏兴",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xihai",
+          "name": "西海",
           "owner": "wei",
           "neutral_label": null
         },
         {
           "city": "xihe",
           "name": "西河",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
           "owner": "wei",
           "neutral_label": null
         },
@@ -127810,6 +129553,12 @@
           "neutral_label": null
         },
         {
+          "city": "yiyang_runan",
+          "name": "弋阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "yizhou",
           "name": "夷洲",
           "owner": "neutral",
@@ -127819,6 +129568,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -127861,6 +129616,12 @@
           "city": "zangke",
           "name": "牂牁",
           "owner": "nanman",
+          "neutral_label": null
+        },
+        {
+          "city": "zhangwu",
+          "name": "章武",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -128010,7 +129771,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -128028,7 +129789,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -128384,6 +130145,23 @@
         },
         {
           "cities": [
+            "jiangxia",
+            "yiyang_runan"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "jianning",
             "zhuti"
           ],
@@ -128515,23 +130293,6 @@
           "link_sources": [
             "links",
             "sea_links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "lelang",
-            "liaodong"
-          ],
-          "owners": [
-            "neutral",
-            "gongsun"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
             "travel_routes"
           ]
         },
@@ -130610,7 +132371,7 @@
           "city": "xicheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "西城"
+          "city_name": "魏兴"
         },
         {
           "person_id": "san14-candidate-0457",
@@ -133034,7 +134795,7 @@
       "title": "227年2月 · 出师表",
       "title_ja": "227年2月 · 出师表",
       "catalog_file": "game/data/campaigns/227-02.json",
-      "catalog_sha256": "5339397164919cf3993bf70194aa7e9b2620a2c43b37955c2f30059ae8731c99",
+      "catalog_sha256": "f74801b000dba443e84a965af69979899f7e53497872b661996eaddbac75f1e8",
       "factions": [
         {
           "id": "goguryeo",
@@ -133051,7 +134812,7 @@
           "person_id": "san14-candidate-0263",
           "city": "liaodong",
           "city_name": "襄平",
-          "city_count": 2,
+          "city_count": 4,
           "officer_count": 8
         },
         {
@@ -133069,7 +134830,7 @@
           "person_id": "san14-candidate-0501",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 68,
+          "city_count": 85,
           "officer_count": 150
         },
         {
@@ -133086,7 +134847,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 296010,
+      "initial_soldier_total": 308365,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -133127,7 +134888,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 131,
+      "city_count": 148,
       "city_owners": [
         {
           "city": "anding",
@@ -133202,6 +134963,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -133216,7 +134983,7 @@
         {
           "city": "daifang",
           "name": "带方",
-          "owner": "neutral",
+          "owner": "gongsun",
           "neutral_label": null
         },
         {
@@ -133229,6 +134996,12 @@
           "city": "danyang",
           "name": "建业",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -133306,6 +135079,18 @@
         {
           "city": "guangling",
           "name": "广陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangping",
+          "name": "广平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "广魏",
           "owner": "wei",
           "neutral_label": null
         },
@@ -133472,9 +135257,33 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
-          "owner": "neutral",
+          "owner": "gongsun",
+          "neutral_label": null
+        },
+        {
+          "city": "leling",
+          "name": "乐陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "leping",
+          "name": "乐平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -133510,6 +135319,12 @@
         {
           "city": "longxi",
           "name": "陇西",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
           "owner": "wei",
           "neutral_label": null
         },
@@ -133556,8 +135371,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -133612,6 +135439,12 @@
         {
           "city": "runan",
           "name": "汝南",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "ruyin",
+          "name": "汝阴",
           "owner": "wei",
           "neutral_label": null
         },
@@ -133731,13 +135564,25 @@
         },
         {
           "city": "xicheng",
-          "name": "西城",
+          "name": "魏兴",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xihai",
+          "name": "西海",
           "owner": "wei",
           "neutral_label": null
         },
         {
           "city": "xihe",
           "name": "西河",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
           "owner": "wei",
           "neutral_label": null
         },
@@ -133826,6 +135671,12 @@
           "neutral_label": null
         },
         {
+          "city": "yiyang_runan",
+          "name": "弋阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "yizhou",
           "name": "夷洲",
           "owner": "neutral",
@@ -133835,6 +135686,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -133877,6 +135734,12 @@
           "city": "zangke",
           "name": "牂牁",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "zhangwu",
+          "name": "章武",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -134009,7 +135872,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -134027,7 +135890,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -134348,6 +136211,23 @@
         },
         {
           "cities": [
+            "jiangxia",
+            "yiyang_runan"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "jiaozhi",
             "xinggu"
           ],
@@ -134428,23 +136308,6 @@
           "link_sources": [
             "links",
             "sea_links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "lelang",
-            "liaodong"
-          ],
-          "owners": [
-            "neutral",
-            "gongsun"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
             "travel_routes"
           ]
         },
@@ -136339,7 +138202,7 @@
           "city": "xicheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "西城"
+          "city_name": "魏兴"
         },
         {
           "person_id": "san14-candidate-0457",
@@ -138503,7 +140366,7 @@
       "title": "234年2月 · 秋風五丈原",
       "title_ja": "秋風五丈原",
       "catalog_file": "game/data/campaigns/234-02.json",
-      "catalog_sha256": "e06c91e134f1c4cb299f8155519409183da047bd98b4b52093ddc7e64ea25625",
+      "catalog_sha256": "1e2fe4d33f641459b8911f0d1f77f7f8e80031cd4ca289d8dfdb41fb6cd3f598",
       "factions": [
         {
           "id": "goguryeo",
@@ -138538,7 +140401,7 @@
           "person_id": "san14-candidate-0501",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 67,
+          "city_count": 83,
           "officer_count": 130
         },
         {
@@ -138555,7 +140418,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 289690,
+      "initial_soldier_total": 301157,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -138588,7 +140451,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 132,
+      "city_count": 148,
       "city_owners": [
         {
           "city": "anding",
@@ -138663,6 +140526,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -138690,6 +140559,12 @@
           "city": "danyang",
           "name": "建业",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -138767,6 +140642,12 @@
         {
           "city": "guangling",
           "name": "广陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangping",
+          "name": "广平",
           "owner": "wei",
           "neutral_label": null
         },
@@ -138939,9 +140820,33 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
           "owner": "gongsun",
+          "neutral_label": null
+        },
+        {
+          "city": "leling",
+          "name": "乐陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "leping",
+          "name": "乐平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -138977,6 +140882,12 @@
         {
           "city": "longxi",
           "name": "陇西",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
           "owner": "wei",
           "neutral_label": null
         },
@@ -139023,8 +140934,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -139079,6 +141002,12 @@
         {
           "city": "runan",
           "name": "汝南",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "ruyin",
+          "name": "汝阴",
           "owner": "wei",
           "neutral_label": null
         },
@@ -139198,13 +141127,25 @@
         },
         {
           "city": "xicheng",
-          "name": "西城",
+          "name": "魏兴",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xihai",
+          "name": "西海",
           "owner": "wei",
           "neutral_label": null
         },
         {
           "city": "xihe",
           "name": "西河",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
           "owner": "wei",
           "neutral_label": null
         },
@@ -139293,6 +141234,12 @@
           "neutral_label": null
         },
         {
+          "city": "yiyang_runan",
+          "name": "弋阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "yizhou",
           "name": "夷洲",
           "owner": "neutral",
@@ -139302,6 +141249,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -139344,6 +141297,12 @@
           "city": "zangke",
           "name": "牂牁",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "zhangwu",
+          "name": "章武",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -139749,6 +141708,23 @@
           "cities": [
             "jiangxia",
             "yiyang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jiangxia",
+            "yiyang_runan"
           ],
           "owners": [
             "wu",
@@ -142208,7 +144184,7 @@
           "city": "xicheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "西城"
+          "city_name": "魏兴"
         },
         {
           "person_id": "san14-candidate-0684",
@@ -143478,7 +145454,7 @@
       "title": "238年1月 · 征讨辽东",
       "title_ja": "238年1月 · 征讨辽东",
       "catalog_file": "game/data/campaigns/238-01.json",
-      "catalog_sha256": "0b8da792f5755f4a5824aa3088bd314b5df7b6f467584f619985c0a3dbfdfd37",
+      "catalog_sha256": "35a2b26d69eb44dc7afff7f62ec69ebfac42167e84884dfc9b101f11c39010e6",
       "factions": [
         {
           "id": "goguryeo",
@@ -143513,7 +145489,7 @@
           "person_id": "san14-candidate-0501",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 68,
+          "city_count": 84,
           "officer_count": 123
         },
         {
@@ -143530,7 +145506,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 289982,
+      "initial_soldier_total": 301637,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -143559,7 +145535,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 132,
+      "city_count": 148,
       "city_owners": [
         {
           "city": "anding",
@@ -143634,6 +145610,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -143661,6 +145643,12 @@
           "city": "danyang",
           "name": "建业",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -143738,6 +145726,12 @@
         {
           "city": "guangling",
           "name": "广陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangping",
+          "name": "广平",
           "owner": "wei",
           "neutral_label": null
         },
@@ -143910,9 +145904,33 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
           "owner": "gongsun",
+          "neutral_label": null
+        },
+        {
+          "city": "leling",
+          "name": "乐陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "leping",
+          "name": "乐平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -143948,6 +145966,12 @@
         {
           "city": "longxi",
           "name": "陇西",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
           "owner": "wei",
           "neutral_label": null
         },
@@ -143994,8 +146018,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -144050,6 +146086,12 @@
         {
           "city": "runan",
           "name": "汝南",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "ruyin",
+          "name": "汝阴",
           "owner": "wei",
           "neutral_label": null
         },
@@ -144169,13 +146211,25 @@
         },
         {
           "city": "xicheng",
-          "name": "西城",
+          "name": "魏兴",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xihai",
+          "name": "西海",
           "owner": "wei",
           "neutral_label": null
         },
         {
           "city": "xihe",
           "name": "西河",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
           "owner": "wei",
           "neutral_label": null
         },
@@ -144264,6 +146318,12 @@
           "neutral_label": null
         },
         {
+          "city": "yiyang_runan",
+          "name": "弋阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "yizhou",
           "name": "夷洲",
           "owner": "neutral",
@@ -144273,6 +146333,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -144315,6 +146381,12 @@
           "city": "zangke",
           "name": "牂牁",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "zhangwu",
+          "name": "章武",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -144703,6 +146775,23 @@
           "cities": [
             "jiangxia",
             "yiyang"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jiangxia",
+            "yiyang_runan"
           ],
           "owners": [
             "wu",
@@ -148063,7 +150152,7 @@
           "city": "xicheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "西城"
+          "city_name": "魏兴"
         },
         {
           "person_id": "san14-candidate-0985",
@@ -148384,7 +150473,7 @@
       "title": "249年1月 · 正始之变",
       "title_ja": "249年1月 · 正始之变",
       "catalog_file": "game/data/campaigns/249-01.json",
-      "catalog_sha256": "d2c575c40e679dede0c5dda721a194e55f9a7253f8f6a457ecc6775caa070714",
+      "catalog_sha256": "24c2385c8f739fb463190dff95f9b3e98f76de8c83ca450ad7b95ecce2cdf6e9",
       "factions": [
         {
           "id": "goguryeo",
@@ -148410,7 +150499,7 @@
           "person_id": "san14-candidate-0529",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 73,
+          "city_count": 89,
           "officer_count": 113
         },
         {
@@ -148427,7 +150516,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 280212,
+      "initial_soldier_total": 292249,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -148448,7 +150537,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 133,
+      "city_count": 149,
       "city_owners": [
         {
           "city": "anding",
@@ -148529,6 +150618,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -148556,6 +150651,12 @@
           "city": "danyang",
           "name": "建业",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -148633,6 +150734,12 @@
         {
           "city": "guangling",
           "name": "广陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangping",
+          "name": "广平",
           "owner": "wei",
           "neutral_label": null
         },
@@ -148805,8 +150912,32 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "leling",
+          "name": "乐陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "leping",
+          "name": "乐平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
           "owner": "wei",
           "neutral_label": null
         },
@@ -148843,6 +150974,12 @@
         {
           "city": "longxi",
           "name": "陇西",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
           "owner": "wei",
           "neutral_label": null
         },
@@ -148889,8 +151026,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -148951,6 +151100,12 @@
         {
           "city": "runan",
           "name": "汝南",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "ruyin",
+          "name": "汝阴",
           "owner": "wei",
           "neutral_label": null
         },
@@ -149070,13 +151225,25 @@
         },
         {
           "city": "xicheng",
-          "name": "西城",
+          "name": "魏兴",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xihai",
+          "name": "西海",
           "owner": "wei",
           "neutral_label": null
         },
         {
           "city": "xihe",
           "name": "西河",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
           "owner": "wei",
           "neutral_label": null
         },
@@ -149159,6 +151326,12 @@
           "neutral_label": null
         },
         {
+          "city": "yiyang_runan",
+          "name": "弋阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "yizhou",
           "name": "夷洲",
           "owner": "neutral",
@@ -149168,6 +151341,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -149210,6 +151389,12 @@
           "city": "zangke",
           "name": "牂牁",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "zhangwu",
+          "name": "章武",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -149538,6 +151723,23 @@
             "river"
           ],
           "link_sources": [
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jiangxia",
+            "yiyang_runan"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
             "travel_routes"
           ]
         },
@@ -151724,7 +153926,7 @@
           "city": "xicheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "西城"
+          "city_name": "魏兴"
         },
         {
           "person_id": "san14-candidate-0695",
@@ -152840,7 +155042,7 @@
       "title": "263年5月 · 蜀漢滅亡",
       "title_ja": "蜀漢の滅亡",
       "catalog_file": "game/data/campaigns/263-05.json",
-      "catalog_sha256": "527b94fb02ade1706ea66d7819e9bccd9010409bf3d3a6f2633d50dd047c3c95",
+      "catalog_sha256": "eb74cb3561cf21bb9434301445d78f5eb6ade1d5f8df34177f790dc0b40f0a3f",
       "factions": [
         {
           "id": "goguryeo",
@@ -152875,7 +155077,7 @@
           "person_id": "san14-candidate-0503",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 73,
+          "city_count": 87,
           "officer_count": 73
         },
         {
@@ -152892,7 +155094,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 246655,
+      "initial_soldier_total": 256832,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -152909,7 +155111,7 @@
       },
       "fictional": false,
       "adaptation_scope": null,
-      "city_count": 138,
+      "city_count": 152,
       "city_owners": [
         {
           "city": "anding",
@@ -152990,6 +155192,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -153017,6 +155225,12 @@
           "city": "danyang",
           "name": "建业",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -153094,6 +155308,12 @@
         {
           "city": "guangling",
           "name": "广陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangping",
+          "name": "广平",
           "owner": "wei",
           "neutral_label": null
         },
@@ -153278,8 +155498,32 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "leling",
+          "name": "乐陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "leping",
+          "name": "乐平",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
           "owner": "wei",
           "neutral_label": null
         },
@@ -153332,6 +155576,12 @@
           "neutral_label": null
         },
         {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lujiang",
           "name": "庐江",
           "owner": "wu",
@@ -153374,8 +155624,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -153561,13 +155823,25 @@
         },
         {
           "city": "xicheng",
-          "name": "西城",
+          "name": "魏兴",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xihai",
+          "name": "西海",
           "owner": "wei",
           "neutral_label": null
         },
         {
           "city": "xihe",
           "name": "西河",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
           "owner": "wei",
           "neutral_label": null
         },
@@ -153650,6 +155924,12 @@
           "neutral_label": null
         },
         {
+          "city": "yiyang_runan",
+          "name": "弋阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "yizhou",
           "name": "夷洲",
           "owner": "neutral",
@@ -153659,6 +155939,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "shu",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -154065,6 +156351,23 @@
             "river"
           ],
           "link_sources": [
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jiangxia",
+            "yiyang_runan"
+          ],
+          "owners": [
+            "wu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
             "travel_routes"
           ]
         },
@@ -155075,7 +157378,7 @@
           "city": "xicheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "西城"
+          "city_name": "魏兴"
         },
         {
           "person_id": "san14-candidate-0316",
@@ -156560,7 +158863,7 @@
       "title": "197年7月 · 皇帝呂布",
       "title_ja": "皇帝呂布",
       "catalog_file": "game/data/campaigns/197-07.json",
-      "catalog_sha256": "d428ebd0ca30e2a927af951104b1374f49e705ce9284ab5df904959cfa377da3",
+      "catalog_sha256": "a236a3bde6107980bf24a5fdf6d5df28fe6d0a183bfd95ec8b76c74f74a407bf",
       "factions": [
         {
           "id": "goguryeo",
@@ -156586,7 +158889,7 @@
           "person_id": "san14-candidate-0266",
           "city": "yuyang",
           "city_name": "渔阳",
-          "city_count": 5,
+          "city_count": 6,
           "officer_count": 11
         },
         {
@@ -156658,7 +158961,7 @@
           "person_id": "san14-candidate-0987",
           "city": "jiujiang",
           "city_name": "寿春",
-          "city_count": 9,
+          "city_count": 11,
           "officer_count": 43
         },
         {
@@ -156667,7 +158970,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 4,
+          "city_count": 5,
           "officer_count": 13
         },
         {
@@ -156712,7 +159015,7 @@
           "person_id": "san14-candidate-0521",
           "city": "chenliu",
           "city_name": "陈留",
-          "city_count": 3,
+          "city_count": 4,
           "officer_count": 33
         },
         {
@@ -156739,7 +159042,7 @@
           "person_id": "san14-candidate-0035",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 19,
+          "city_count": 20,
           "officer_count": 43
         },
         {
@@ -156783,7 +159086,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 249312,
+      "initial_soldier_total": 252522,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -156828,7 +159131,7 @@
       },
       "fictional": true,
       "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
-      "city_count": 128,
+      "city_count": 135,
       "city_owners": [
         {
           "city": "anding",
@@ -156906,12 +159209,6 @@
           "city": "dai",
           "name": "代郡",
           "owner": "gongsun_zan",
-          "neutral_label": null
-        },
-        {
-          "city": "daifang",
-          "name": "带方",
-          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -157002,6 +159299,12 @@
           "city": "guangling",
           "name": "广陵",
           "owner": "lubu",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "永阳",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {
@@ -157167,9 +159470,21 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "yuan_shao",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
           "owner": "neutral",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -157206,6 +159521,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "lubu",
           "neutral_label": null
         },
         {
@@ -157254,6 +159575,12 @@
           "city": "nanyang",
           "name": "宛城",
           "owner": "zhang_xiu",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
+          "owner": "lubu",
           "neutral_label": null
         },
         {
@@ -157431,9 +159758,21 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
           "owner": "yuan_shao",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -157518,6 +159857,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "gongsun_zan",
           "neutral_label": null
         },
         {
@@ -157749,24 +160094,6 @@
           ],
           "link_sources": [
             "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "beihai",
-            "daifang"
-          ],
-          "owners": [
-            "kong_rong",
-            "neutral"
-          ],
-          "modes": [
-            "sea"
-          ],
-          "link_sources": [
-            "links",
-            "sea_links",
             "travel_routes"
           ]
         },
@@ -158358,6 +160685,23 @@
           "owners": [
             "gongsun_zan",
             "yuan_shao"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "fufeng",
+            "guangwei"
+          ],
+          "owners": [
+            "li_jue",
+            "ma_teng"
           ],
           "modes": [
             "land"
@@ -159001,6 +161345,23 @@
         },
         {
           "cities": [
+            "jiyin",
+            "liang"
+          ],
+          "owners": [
+            "lubu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "kuaiji",
             "nanhai"
           ],
@@ -159075,6 +161436,23 @@
           ],
           "owners": [
             "zang_ba",
+            "lubu"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "lean",
+            "taishan"
+          ],
+          "owners": [
+            "yuan_shao",
             "lubu"
           ],
           "modes": [
@@ -159679,6 +162057,23 @@
           "owners": [
             "liu_biao",
             "liu_zhang"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "wuwei",
+            "xijun"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -165140,7 +167535,7 @@
       "title": "201年5月 · 華北霸者・袁紹",
       "title_ja": "華北の覇者・袁紹",
       "catalog_file": "game/data/campaigns/201-05.json",
-      "catalog_sha256": "4b6794c002d52396a98e463ee89c75efb1a74368209985ba849075c8e1aaeb8a",
+      "catalog_sha256": "d3e3b0deae1bf3f5cc382abd1339ad4ee62b62481a8f70b29a027bc3ecde4dd0",
       "factions": [
         {
           "id": "goguryeo",
@@ -165193,7 +167588,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 8,
+          "city_count": 9,
           "officer_count": 18
         },
         {
@@ -165211,7 +167606,7 @@
           "person_id": "san14-candidate-0952",
           "city": "yingchuan",
           "city_name": "许县",
-          "city_count": 2,
+          "city_count": 3,
           "officer_count": 15
         },
         {
@@ -165256,7 +167651,7 @@
           "person_id": "san14-candidate-0035",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 45,
+          "city_count": 51,
           "officer_count": 46
         },
         {
@@ -165273,7 +167668,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 270642,
+      "initial_soldier_total": 275117,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -165318,7 +167713,7 @@
       },
       "fictional": true,
       "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
-      "city_count": 128,
+      "city_count": 137,
       "city_owners": [
         {
           "city": "anding",
@@ -165387,6 +167782,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "yuan_shao",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "shu",
@@ -165399,12 +167800,6 @@
           "neutral_label": null
         },
         {
-          "city": "daifang",
-          "name": "带方",
-          "owner": "neutral",
-          "neutral_label": null
-        },
-        {
           "city": "dangqu",
           "name": "宕渠",
           "owner": "liu_zhang",
@@ -165414,6 +167809,12 @@
           "city": "danyang",
           "name": "秣陵",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "yuan_shao",
           "neutral_label": null
         },
         {
@@ -165492,6 +167893,12 @@
           "city": "guangling",
           "name": "广陵",
           "owner": "yuan_shao",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "永阳",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {
@@ -165657,9 +168064,21 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "yuan_shao",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
           "owner": "neutral",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "shu",
           "neutral_label": null
         },
         {
@@ -165696,6 +168115,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "yuan_shao",
           "neutral_label": null
         },
         {
@@ -165744,6 +168169,12 @@
           "city": "nanyang",
           "name": "宛城",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
+          "owner": "yuan_shao",
           "neutral_label": null
         },
         {
@@ -165921,9 +168352,21 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
           "owner": "yuan_shao",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -166008,6 +168451,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "yuan_shao",
           "neutral_label": null
         },
         {
@@ -166205,24 +168654,6 @@
           ],
           "link_sources": [
             "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "beihai",
-            "daifang"
-          ],
-          "owners": [
-            "yuan_shao",
-            "neutral"
-          ],
-          "modes": [
-            "sea"
-          ],
-          "link_sources": [
-            "links",
-            "sea_links",
             "travel_routes"
           ]
         },
@@ -167001,6 +169432,23 @@
         },
         {
           "cities": [
+            "jiyin",
+            "liang"
+          ],
+          "owners": [
+            "yuan_shao",
+            "shu"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
             "kuaiji",
             "yizhou"
           ],
@@ -167402,6 +169850,23 @@
           "owners": [
             "liu_biao",
             "liu_zhang"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "wuwei",
+            "xijun"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -172130,7 +174595,7 @@
       "title": "209年6月 · 志在千里",
       "title_ja": "志在千里",
       "catalog_file": "game/data/campaigns/209-06.json",
-      "catalog_sha256": "8f3c81bbf393cbf46e427b6990eb02314c14d67d92f0755a41aa75f3d72e2b2d",
+      "catalog_sha256": "e92c1ea1c50e4036d01b4c138643df565023c195758cfa820322ce9ae5d3f3fb",
       "factions": [
         {
           "id": "goguryeo",
@@ -172147,7 +174612,7 @@
           "person_id": "san14-candidate-0264",
           "city": "liaodong",
           "city_name": "襄平",
-          "city_count": 2,
+          "city_count": 4,
           "officer_count": 3
         },
         {
@@ -172174,7 +174639,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 4,
+          "city_count": 5,
           "officer_count": 17
         },
         {
@@ -172210,7 +174675,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 64,
+          "city_count": 72,
           "officer_count": 165
         },
         {
@@ -172236,7 +174701,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 289452,
+      "initial_soldier_total": 295689,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -172277,7 +174742,7 @@
       },
       "fictional": true,
       "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
-      "city_count": 129,
+      "city_count": 140,
       "city_owners": [
         {
           "city": "anding",
@@ -172346,6 +174811,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -172360,7 +174831,7 @@
         {
           "city": "daifang",
           "name": "带方",
-          "owner": "neutral",
+          "owner": "gongsun",
           "neutral_label": null
         },
         {
@@ -172372,6 +174843,12 @@
         {
           "city": "danyang",
           "name": "秣陵",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
           "owner": "wei",
           "neutral_label": null
         },
@@ -172451,6 +174928,12 @@
           "city": "guangling",
           "name": "广陵",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "永阳",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {
@@ -172616,9 +175099,21 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
-          "owner": "neutral",
+          "owner": "gongsun",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -172655,6 +175150,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -172700,8 +175201,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -172880,9 +175393,21 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -172973,6 +175498,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -173249,7 +175780,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -173267,7 +175798,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -173392,6 +175923,23 @@
           ],
           "modes": [
             "sea"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "fufeng",
+            "guangwei"
+          ],
+          "owners": [
+            "wei",
+            "ma_teng"
+          ],
+          "modes": [
+            "land"
           ],
           "link_sources": [
             "links",
@@ -173863,23 +176411,6 @@
         },
         {
           "cities": [
-            "lelang",
-            "liaodong"
-          ],
-          "owners": [
-            "neutral",
-            "gongsun"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
             "liaodong",
             "liaoxi"
           ],
@@ -174162,6 +176693,23 @@
           "owners": [
             "shu",
             "liu_zhang"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "wuwei",
+            "xijun"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -178980,7 +181528,7 @@
       "title": "210年11月 · 二分天下之計",
       "title_ja": "天下二分計",
       "catalog_file": "game/data/campaigns/210-11.json",
-      "catalog_sha256": "2e565d0c71967e7d6884e528422a49f2c0b7c14766d7f3ee7b254c7cd177975f",
+      "catalog_sha256": "7272fe2fcaa911d4cc444c7d19ffc450e789902bfa78a08c7474b43c5d330762",
       "factions": [
         {
           "id": "goguryeo",
@@ -178997,7 +181545,7 @@
           "person_id": "san14-candidate-0264",
           "city": "liaodong",
           "city_name": "襄平",
-          "city_count": 2,
+          "city_count": 4,
           "officer_count": 3
         },
         {
@@ -179015,7 +181563,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 4,
+          "city_count": 5,
           "officer_count": 18
         },
         {
@@ -179051,7 +181599,7 @@
           "person_id": "san14-candidate-0521",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 57,
+          "city_count": 65,
           "officer_count": 165
         },
         {
@@ -179068,7 +181616,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 286177,
+      "initial_soldier_total": 292414,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -179109,7 +181657,7 @@
       },
       "fictional": true,
       "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
-      "city_count": 129,
+      "city_count": 140,
       "city_owners": [
         {
           "city": "anding",
@@ -179178,6 +181726,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -179192,7 +181746,7 @@
         {
           "city": "daifang",
           "name": "带方",
-          "owner": "neutral",
+          "owner": "gongsun",
           "neutral_label": null
         },
         {
@@ -179205,6 +181759,12 @@
           "city": "danyang",
           "name": "秣陵",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -179283,6 +181843,12 @@
           "city": "guangling",
           "name": "广陵",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "永阳",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {
@@ -179448,9 +182014,21 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
-          "owner": "neutral",
+          "owner": "gongsun",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -179487,6 +182065,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -179532,8 +182116,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -179712,9 +182308,21 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -179805,6 +182413,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -180030,7 +182644,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -180048,7 +182662,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -180174,6 +182788,23 @@
           ],
           "modes": [
             "sea"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "fufeng",
+            "guangwei"
+          ],
+          "owners": [
+            "wei",
+            "ma_teng"
+          ],
+          "modes": [
+            "land"
           ],
           "link_sources": [
             "links",
@@ -180641,23 +183272,6 @@
         },
         {
           "cities": [
-            "lelang",
-            "liaodong"
-          ],
-          "owners": [
-            "neutral",
-            "gongsun"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
             "liaodong",
             "liaoxi"
           ],
@@ -180938,6 +183552,23 @@
           "owners": [
             "shu",
             "wu"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "wuwei",
+            "xijun"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -185830,7 +188461,7 @@
       "title": "212年6月 · 錦馬超展翅高飛",
       "title_ja": "錦馬超飛翔",
       "catalog_file": "game/data/campaigns/212-06.json",
-      "catalog_sha256": "3d533086c65a4d38f7c8c58f68cecffac442373f693fb5c817eafd6532b192c4",
+      "catalog_sha256": "20d6f7c5589432a3b3c7d9252e343f51c57ee38e48e48b32d46c59f429f6f148",
       "factions": [
         {
           "id": "cao_zhang",
@@ -185856,7 +188487,7 @@
           "person_id": "san14-candidate-0264",
           "city": "liaodong",
           "city_name": "襄平",
-          "city_count": 2,
+          "city_count": 4,
           "officer_count": 4
         },
         {
@@ -185883,7 +188514,7 @@
           "person_id": "san14-candidate-0769",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 10,
+          "city_count": 11,
           "officer_count": 11
         },
         {
@@ -185919,7 +188550,7 @@
           "person_id": "san14-candidate-0526",
           "city": "wei",
           "city_name": "邺",
-          "city_count": 46,
+          "city_count": 54,
           "officer_count": 154
         },
         {
@@ -185945,7 +188576,7 @@
       "scheduled_faction_foundings": [],
       "scheduled_faction_coups": [],
       "resource_adjustments": [],
-      "initial_soldier_total": 301870,
+      "initial_soldier_total": 308894,
       "historical_exit_dates": {
         "historical-song-jian": [
           214,
@@ -185986,7 +188617,7 @@
       },
       "fictional": true,
       "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
-      "city_count": 129,
+      "city_count": 140,
       "city_owners": [
         {
           "city": "anding",
@@ -186055,6 +188686,12 @@
           "neutral_label": null
         },
         {
+          "city": "chengyang",
+          "name": "城阳",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "chenliu",
           "name": "陈留",
           "owner": "wei",
@@ -186069,7 +188706,7 @@
         {
           "city": "daifang",
           "name": "带方",
-          "owner": "neutral",
+          "owner": "gongsun",
           "neutral_label": null
         },
         {
@@ -186082,6 +188719,12 @@
           "city": "danyang",
           "name": "建业",
           "owner": "wu",
+          "neutral_label": null
+        },
+        {
+          "city": "dongguan",
+          "name": "东莞",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -186160,6 +188803,12 @@
           "city": "guangling",
           "name": "广陵",
           "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "guangwei",
+          "name": "永阳",
+          "owner": "ma_teng",
           "neutral_label": null
         },
         {
@@ -186325,9 +188974,21 @@
           "neutral_label": null
         },
         {
+          "city": "lean",
+          "name": "乐安",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "lelang",
           "name": "乐浪",
-          "owner": "neutral",
+          "owner": "gongsun",
+          "neutral_label": null
+        },
+        {
+          "city": "liang",
+          "name": "梁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -186364,6 +189025,12 @@
           "city": "longxi",
           "name": "陇西",
           "owner": "song_jian",
+          "neutral_label": null
+        },
+        {
+          "city": "lu",
+          "name": "鲁",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -186409,8 +189076,20 @@
           "neutral_label": null
         },
         {
+          "city": "nanxiang",
+          "name": "南乡",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
           "city": "nanyang",
           "name": "宛城",
+          "owner": "wei",
+          "neutral_label": null
+        },
+        {
+          "city": "pengcheng",
+          "name": "彭城",
           "owner": "wei",
           "neutral_label": null
         },
@@ -186589,9 +189268,21 @@
           "neutral_label": null
         },
         {
+          "city": "xihai",
+          "name": "西海",
+          "owner": "neutral",
+          "neutral_label": null
+        },
+        {
           "city": "xihe",
           "name": "西河",
           "owner": "cao_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "xijun",
+          "name": "日勒",
+          "owner": "neutral",
           "neutral_label": null
         },
         {
@@ -186682,6 +189373,12 @@
           "city": "yongchang",
           "name": "永昌",
           "owner": "liu_zhang",
+          "neutral_label": null
+        },
+        {
+          "city": "youbeiping",
+          "name": "右北平",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -186907,7 +189604,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -186925,7 +189622,7 @@
           ],
           "owners": [
             "wei",
-            "neutral"
+            "gongsun"
           ],
           "modes": [
             "sea"
@@ -187744,23 +190441,6 @@
         },
         {
           "cities": [
-            "lelang",
-            "liaodong"
-          ],
-          "owners": [
-            "neutral",
-            "gongsun"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
             "liaodong",
             "liaoxi"
           ],
@@ -188041,6 +190721,23 @@
           "owners": [
             "shu",
             "liu_zhang"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "wuwei",
+            "xijun"
+          ],
+          "owners": [
+            "ma_teng",
+            "neutral"
           ],
           "modes": [
             "land"

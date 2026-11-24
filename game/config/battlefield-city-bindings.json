@@ -17,7 +17,7 @@
       "role": "Literal source labels only; not a positional join."
     }
   ],
-  "city_count": 140,
+  "city_count": 158,
   "original_map_count": 30,
   "templates": {
     "original-00": {
@@ -1071,6 +1071,114 @@
       "kind": "regional_reuse",
       "reason_tc": "呂宋使用與夷洲相同的原版「交州」水陸戰場模板。",
       "reason_ja": "ルソンは夷洲と同じ原作「交州」の水陸戦場を共用します。"
+    },
+    "liang": {
+      "map_id": "original-11",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "pengcheng": {
+      "map_id": "original-10",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "ruyin": {
+      "map_id": "original-14",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "xihai": {
+      "map_id": "original-06",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "nanxiang": {
+      "map_id": "original-13",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "yiyang_runan": {
+      "map_id": "original-14",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "lu": {
+      "map_id": "original-11",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "leling": {
+      "map_id": "original-03",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "zhangwu": {
+      "map_id": "original-04",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "youbeiping": {
+      "map_id": "original-01",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "guangping": {
+      "map_id": "original-04",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "lean": {
+      "map_id": "original-03",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "leping": {
+      "map_id": "original-02",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "xijun": {
+      "map_id": "original-06",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "chengyang": {
+      "map_id": "original-03",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "shixing": {
+      "map_id": "original-22",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "shian": {
+      "map_id": "original-24",
+      "kind": "regional_reuse",
+      "reason_tc": "沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "隣接都市と同じ地域の戦場テンプレートを共用します。"
+    },
+    "dongguan": {
+      "map_id": "original-10",
+      "kind": "regional_reuse",
+      "reason_tc": "東莞沿用相鄰城池的區域戰場模板。",
+      "reason_ja": "東莞は隣接都市と同じ地域の戦場テンプレートを共用します。"
     }
   }
 }

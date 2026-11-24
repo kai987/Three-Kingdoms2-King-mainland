@@ -173,31 +173,25 @@
       "mode": "land",
       "terrain": "mountain",
       "shared_junction": [
-        385.84,
-        350
+        397,
+        334
       ],
       "history": {
         "classification": "branch_from_existing_late_han_corridor",
         "is_proven_direct_Han_road": false,
         "basis": "臨渭位於天水以東，以短支路接入天水至扶風的既有道路。"
       },
-      "availability": {
-        "from": [
-          234,
-          2
-        ]
-      },
       "draw": [
         {
           "mode": "land",
           "points": [
             [
-              385.84,
-              350
+              397,
+              334
             ],
             [
-              385,
-              321
+              388,
+              292
             ]
           ]
         }
@@ -209,31 +203,25 @@
       "mode": "land",
       "terrain": "mountain",
       "shared_junction": [
-        385.84,
-        350
+        397,
+        334
       ],
       "history": {
         "classification": "branch_from_existing_late_han_corridor",
         "is_proven_direct_Han_road": false,
         "basis": "臨渭位於天水以東，以短支路接入天水至扶風的既有道路。"
       },
-      "availability": {
-        "from": [
-          234,
-          2
-        ]
-      },
       "draw": [
         {
           "mode": "land",
           "points": [
             [
-              385.84,
-              350
+              397,
+              334
             ],
             [
-              385,
-              321
+              388,
+              292
             ]
           ]
         }
@@ -2304,6 +2292,1152 @@
             [
               1264,
               67
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "chenliu",
+      "to": "liang",
+      "mode": "land",
+      "terrain": "plain",
+      "shared_junction": [
+        880,
+        330
+      ],
+      "history": {
+        "classification": "branch_from_existing_late_han_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "睢陽在陳留以東，以支路接入陳留與濟陰的平原道路。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              880,
+              330
+            ],
+            [
+              860,
+              340
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "jiyin",
+      "to": "liang",
+      "mode": "land",
+      "terrain": "plain",
+      "shared_junction": [
+        880,
+        330
+      ],
+      "history": {
+        "classification": "branch_from_existing_late_han_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "睢陽在陳留以東，以支路接入陳留與濟陰的平原道路。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              880,
+              330
+            ],
+            [
+              860,
+              340
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "shanyang",
+      "to": "pengcheng",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "彭城自昌邑往東南，通往泗水中游。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              917,
+              306
+            ],
+            [
+              925,
+              320
+            ],
+            [
+              940,
+              326
+            ],
+            [
+              949,
+              335
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "pengcheng",
+      "to": "xiapi",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "自彭城沿泗水流域向東南接下邳。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              949,
+              335
+            ],
+            [
+              964,
+              339
+            ],
+            [
+              982,
+              342
+            ],
+            [
+              996,
+              351
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "runan",
+      "to": "ruyin",
+      "mode": "land",
+      "terrain": "plain",
+      "shared_junction": [
+        859,
+        401
+      ],
+      "history": {
+        "classification": "branch_from_existing_late_han_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "汝陰在汝南郡治以東，以支路接入汝南至譙。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              859,
+              401
+            ],
+            [
+              876,
+              392
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "qiao",
+      "to": "ruyin",
+      "mode": "land",
+      "terrain": "plain",
+      "shared_junction": [
+        859,
+        401
+      ],
+      "history": {
+        "classification": "branch_from_existing_late_han_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "汝陰在汝南郡治以東，以支路接入汝南至譙。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              859,
+              401
+            ],
+            [
+              876,
+              392
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "zhangye",
+      "to": "xihai",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "從張掖出河西走廊向北至居延，轉接黑河流域。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              208,
+              104
+            ],
+            [
+              217,
+              82
+            ],
+            [
+              231,
+              70
+            ],
+            [
+              236,
+              55
+            ],
+            [
+              244,
+              40
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "nanyang",
+      "to": "nanxiang",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "從南陽盆地西行進入丹江下游、淅川一帶。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              709,
+              400
+            ],
+            [
+              687,
+              409
+            ],
+            [
+              672,
+              417
+            ],
+            [
+              655,
+              424
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "xincheng",
+      "to": "nanxiang",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "丹江谷地向西接上庸一帶的山間廊道。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              610,
+              427
+            ],
+            [
+              628,
+              422
+            ],
+            [
+              643,
+              421
+            ],
+            [
+              655,
+              424
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "runan",
+      "to": "yiyang_runan",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "從汝南平原向東南接弋陽郡治一帶。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              835,
+              410
+            ],
+            [
+              829,
+              429
+            ],
+            [
+              827,
+              441
+            ],
+            [
+              827,
+              448
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "jiangxia",
+      "to": "yiyang_runan",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "在大別山一帶設江夏和弋陽之間的區域山路。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              817,
+              496
+            ],
+            [
+              818,
+              480
+            ],
+            [
+              827,
+              464
+            ],
+            [
+              827,
+              448
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "shanyang",
+      "to": "lu",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "昌邑以東沿魯南平原至曲阜。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              917,
+              306
+            ],
+            [
+              932,
+              308
+            ],
+            [
+              944,
+              307
+            ],
+            [
+              957,
+              310
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "taishan",
+      "to": "lu",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "魯縣往北接泰山南麓。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              972,
+              263
+            ],
+            [
+              965,
+              277
+            ],
+            [
+              963,
+              293
+            ],
+            [
+              957,
+              310
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "pingyuan",
+      "to": "leling",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "厭次由平原郡東側的平原道路接入。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              918,
+              202
+            ],
+            [
+              930,
+              215
+            ],
+            [
+              933,
+              224
+            ],
+            [
+              940,
+              227
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "jinan",
+      "to": "leling",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "厭次向東接濟南的平原道路。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              973,
+              227
+            ],
+            [
+              962,
+              229
+            ],
+            [
+              940,
+              227
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "hejian",
+      "to": "zhangwu",
+      "mode": "land",
+      "terrain": "plain",
+      "shared_junction": [
+        912,
+        165
+      ],
+      "history": {
+        "classification": "branch_from_existing_late_han_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "東平舒在河間至南皮幹道北側，以單一支路接入。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              912,
+              165
+            ],
+            [
+              918,
+              134
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "bohai",
+      "to": "zhangwu",
+      "mode": "land",
+      "terrain": "plain",
+      "shared_junction": [
+        912,
+        165
+      ],
+      "history": {
+        "classification": "branch_from_existing_late_han_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "東平舒在河間至南皮幹道北側，以單一支路接入。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              912,
+              165
+            ],
+            [
+              918,
+              134
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "yuyang",
+      "to": "youbeiping",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "右北平郡治土垠通往漁陽，沿燕山南麓向西。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              965,
+              66
+            ],
+            [
+              986,
+              75
+            ],
+            [
+              1001,
+              87
+            ],
+            [
+              1014,
+              99
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "youbeiping",
+      "to": "liaoxi",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "土垠向東接遼西的沿山走廊。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              1014,
+              99
+            ],
+            [
+              1022,
+              106
+            ],
+            [
+              1027,
+              118
+            ],
+            [
+              1037,
+              127
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "julu",
+      "to": "guangping",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "曲梁向北接鉅鹿平原。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              826,
+              210
+            ],
+            [
+              822,
+              223
+            ],
+            [
+              824,
+              230
+            ],
+            [
+              829,
+              243
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "wei",
+      "to": "guangping",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "曲梁由鄴向東北沿平原道路接入。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              796,
+              254
+            ],
+            [
+              805,
+              251
+            ],
+            [
+              815,
+              247
+            ],
+            [
+              829,
+              243
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "qi",
+      "to": "lean",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "樂安取高苑一帶，與臨淄間設平原道路。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              1010,
+              233
+            ],
+            [
+              1007,
+              247
+            ],
+            [
+              1004,
+              252
+            ],
+            [
+              1005,
+              259
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "taishan",
+      "to": "lean",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "高苑向西南接泰山方向。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              972,
+              263
+            ],
+            [
+              984,
+              259
+            ],
+            [
+              992,
+              260
+            ],
+            [
+              1005,
+              259
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "shangdang",
+      "to": "leping",
+      "mode": "land",
+      "terrain": "mountain",
+      "shared_junction": [
+        736,
+        232.047715405016
+      ],
+      "history": {
+        "classification": "branch_from_existing_late_han_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "樂平治沾，從并州南北幹道以支路接入。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              736,
+              232.047715405016
+            ],
+            [
+              747,
+              225
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "taiyuan",
+      "to": "leping",
+      "mode": "land",
+      "terrain": "mountain",
+      "shared_junction": [
+        736,
+        232.047715405016
+      ],
+      "history": {
+        "classification": "branch_from_existing_late_han_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "樂平治沾，從并州南北幹道以支路接入。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              736,
+              232.047715405016
+            ],
+            [
+              747,
+              225
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "wuwei",
+      "to": "xijun",
+      "mode": "land",
+      "terrain": "plain",
+      "shared_junction": [
+        222,
+        164
+      ],
+      "history": {
+        "classification": "branch_from_existing_late_han_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "西郡以日勒一帶為節點，兩端共用河西走廊既有幹道。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              222,
+              164
+            ],
+            [
+              236,
+              143
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "zhangye",
+      "to": "xijun",
+      "mode": "land",
+      "terrain": "plain",
+      "shared_junction": [
+        222,
+        164
+      ],
+      "history": {
+        "classification": "branch_from_existing_late_han_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "西郡以日勒一帶為節點，兩端共用河西走廊既有幹道。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              222,
+              164
+            ],
+            [
+              236,
+              143
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "beihai",
+      "to": "dongguan",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "自北海以南接入東莞沂水河谷，再經東莞通城陽。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              1046,
+              250
+            ],
+            [
+              1043,
+              260
+            ],
+            [
+              1038,
+              275
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "langya",
+      "to": "chengyang",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "自琅邪向東接東武一帶。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              1005,
+              291
+            ],
+            [
+              1027,
+              291
+            ],
+            [
+              1042,
+              296
+            ],
+            [
+              1052,
+              300
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "guiyang",
+      "to": "shixing",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "桂陽南行越嶺，通往曲江一帶。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              730,
+              671
+            ],
+            [
+              735,
+              692
+            ],
+            [
+              742,
+              709
+            ],
+            [
+              749,
+              723
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "nanhai",
+      "to": "shixing",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "沿北江谷地向北到曲江一帶。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              741,
+              775
+            ],
+            [
+              742,
+              756
+            ],
+            [
+              749,
+              739
+            ],
+            [
+              749,
+              723
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "lingling",
+      "to": "shian",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "由零陵向西南越湘桂走廊抵始安。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              656,
+              655
+            ],
+            [
+              637,
+              666
+            ],
+            [
+              613,
+              686
+            ],
+            [
+              602,
+              704
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "linhe",
+      "to": "shian",
+      "mode": "land",
+      "terrain": "mountain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "始安由桂江上游向東南接臨賀。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              658,
+              728
+            ],
+            [
+              638,
+              719
+            ],
+            [
+              620,
+              714
+            ],
+            [
+              602,
+              704
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "langya",
+      "to": "dongguan",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "開陽向北通沂水河谷，接東莞原郡治一帶。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              1005,
+              291
+            ],
+            [
+              1013,
+              283
+            ],
+            [
+              1020,
+              278
+            ],
+            [
+              1038,
+              275
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "from": "dongguan",
+      "to": "chengyang",
+      "mode": "land",
+      "terrain": "plain",
+      "history": {
+        "classification": "authorial_commandery_road_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "沂水谷地向東連接城陽東武。"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              1038,
+              275
+            ],
+            [
+              1044,
+              284
+            ],
+            [
+              1048,
+              290
+            ],
+            [
+              1052,
+              300
             ]
           ]
         }
@@ -13873,8 +15007,8 @@
           "access_id": "jincheng",
           "points": [
             [
-              278,
-              256
+              280,
+              306
             ],
             [
               292,
@@ -42395,7 +43529,7 @@
   },
   "river_network": {
     "schema": "tk2-river-network-compiled-v1",
-    "source_sha256": "6c3351ee9f6f1451af34d7a3cb9562508e3f28a5d367fb834e20a0a55e049907",
+    "source_sha256": "1d013d7c41c2c08b4de52f36f257a6ea37e45394faffcf8a48f4dfaaec0fce90",
     "reach_count": 59
   }
 }

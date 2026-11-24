@@ -10,6 +10,7 @@ import argparse
 from collections import Counter
 from hashlib import sha256
 import json
+from functools import lru_cache
 from pathlib import Path
 import sys
 from types import SimpleNamespace
@@ -19,7 +20,7 @@ from types import SimpleNamespace
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from ruler_audit import (LATER_EXPANSION_CITIES, check_added_factions, city_names, date_parts,
+from ruler_audit import (LATER_EXPANSION_CITIES, OPENING_CONFIG, check_added_factions, city_names, date_parts,
                          frozen_material_totals, indexed, is_fictional, material_totals, read,
                          require, reviewed_expansion_post, text, urls)
 from remake.dated_events import validate_source, visible_factions
@@ -45,6 +46,19 @@ WANG_JIAN_LOYALTY_SOURCE = dict(value=59, display='59', source_faction_label='è¢
 STATE_FIELDS = ('status', 'faction', 'city', 'ruler', 'troops')
 CHRONOLOGY_FIELDS = ('birth_year', 'service_year', 'death_year', 'chronology_basis')
 CHRONOLOGY_OVERRIDES = {*CHRONOLOGY_FIELDS, 'chronology_design', 'scenario_chronology_override'}
+
+
+@lru_cache(maxsize=1)
+def korean_review_owners():
+    """Read the two pre-expansion ownership values covered by the frozen review."""
+    shared = read(OPENING_CONFIG / 'shared.json')['catalog']['initial_owners']
+    result = {}
+    for row in read(OPENING_CONFIG / 'index.json')['scenarios']:
+        patch = read(OPENING_CONFIG / row['file'])['overrides']
+        board = patch.get('set', {}).get('initial_owners', shared)
+        overrides = patch.get('update', {}).get('initial_owners', {}).get('set', {})
+        result[row['id']] = {key: overrides.get(key, board[key]) for key in ('lelang', 'daifang')}
+    return result
 
 
 def digest(value):
@@ -222,6 +236,8 @@ def check_catalog(data, decision, canonical_people, order, scope, presentation=N
     # The frozen retainer review predates these independent map additions.
     reviewed_owners = {city: owner for city, owner in data['initial_owners'].items()
                        if city not in LATER_EXPANSION_CITIES}
+    if {'lelang', 'daifang'} <= cities.keys():
+        reviewed_owners.update(korean_review_owners()[ident])
     require(digest(reviewed_owners) == decision.get('owners_sha256'),
             label + 'frozen city owners differ')
     reviewed_rulers = {fid: ruler for fid, ruler in data['faction_rulers'].items() if fid not in added_rulers}

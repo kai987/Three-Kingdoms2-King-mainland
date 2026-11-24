@@ -73,13 +73,13 @@ class MapPresentationTests(unittest.TestCase):
     def test_background_and_native_mask_are_auditable_and_rebuild_is_deterministic(self):
         meta=presentation()
         self.assertEqual(meta['colors']['neutral'],'#ffffff')
-        self.assertTrue({'danyang','yingchuan','shujun','yinping'}<=set(meta['labelled_city_ids']))
+        self.assertTrue({'danyang','yingchuan','shujun','yinping','jincheng','longxi','tianshui','wudu'}<=set(meta['labelled_city_ids']))
         self.assertEqual(meta['background_sha256'],hashlib.sha256((ROOT/'game'/meta['background'].lstrip('/')).read_bytes()).hexdigest())
         source=json.loads((ROOT/'game/config/map-source.json').read_text())
         self.assertEqual(source['schema'],'tk2-map-source-v1')
         ground_sha=hashlib.sha256((ROOT/'game/map-source/hydrology-ground.png').read_bytes()).hexdigest()
         self.assertEqual(meta['inactive_castle_ground_sha256'],ground_sha)
-        self.assertEqual(meta['inactive_castle_ids'],['yiyang','yidu','xindu'])
+        self.assertEqual(meta['inactive_castle_ids'],['yiyang','yidu','xindu','daifang'])
         self.assertEqual(meta['inactive_castle_ground'],'/assets/map-city-ground.png')
         base=deepcopy(meta);base.pop('road_center_corrections');base.pop('road_bridges');base.pop('inactive_castle_ground_sha256');base.pop('city_road_bed')
         self.assertEqual(source['presentation'],base)
@@ -107,7 +107,7 @@ class MapPresentationTests(unittest.TestCase):
         self.assertEqual(meta['schema'],'tk2-road-center-corrections-v1')
         self.assertEqual(meta['backgrounds'],{'/assets/map-navigation.png':'/assets/map-road-centers.png'})
         self.assertEqual(len(meta['hubs']),58)
-        self.assertEqual(meta['summary'],dict(reviewed_hubs=58,visible_hubs=12,changed_segments=340,
+        self.assertEqual(meta['summary'],dict(reviewed_hubs=58,visible_hubs=12,changed_segments=345,
                                              deleted_spokes=162,protected_hubs=0))
         for field in ('ground','provenance','protected_hubs','changes','removed_obsolete_paths','mask_d','paint_d','corridor_repairs'):
             self.assertNotIn(field,meta,'The compact center audit does not duplicate full source metadata')

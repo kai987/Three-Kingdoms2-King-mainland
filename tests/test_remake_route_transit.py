@@ -227,11 +227,25 @@ class HistoricalTransitTests(unittest.TestCase):
         self.assertEqual(len(files), 29)
         legacy = json.loads((ROOT/'game/config/campaigns/shared.json').read_text())['catalog']['cities']
         legacy_ids = {city['id'] for city in legacy}
+        approved_relocations = {
+            'qi': [1014, 213], 'bohai': [924, 157], 'beihai': [1054, 219],
+            'lelang': [1290, 182], 'daifang': [1292, 226], 'liaoxi': [1061, 121],
+            'jinan': [970, 214], 'jingzhao': [497, 354], 'fengyi': [567, 327],
+            'jincheng': [278, 256], 'longxi': [306, 330], 'tianshui': [370, 362],
+            'wudu': [304, 364], 'wuwei': [200, 182],
+        }
+        northwest = {
+            'jincheng': [280, 306], 'longxi': [312, 313], 'nanan': [346, 325],
+            'tianshui': [378, 338], 'wudu': [373, 390], 'wuwei': [253, 188],
+            'guangwei': [388, 292], 'xihai': [244, 40],
+        }
         for path in files:
             data = json.loads(path.read_text())
             with self.subTest(scenario=path.stem):
-                self.assertEqual(digest({city['id']: city['position'] for city in data['cities']
-                                         if city['id'] in legacy_ids} | {'qi': [1014, 213], 'bohai': [924, 157], 'beihai': [1054, 219], 'lelang': [1290, 182], 'daifang': [1292, 226], 'liaoxi': [1061, 121], 'jinan': [970, 214]} | {'jingzhao': [497, 354], 'fengyi': [567, 327]}), POSITIONS_SHA)
+                positions = {city['id']: city['position'] for city in data['cities']}
+                self.assertEqual({city: positions[city] for city in northwest}, northwest)
+                self.assertEqual(digest({city: positions[city] for city in legacy_ids}
+                                        | approved_relocations), POSITIONS_SHA)
                 self.assertEqual(digest(dict(data['travel_hazards'], coastal_cities=[x for x in data['travel_hazards']['coastal_cities'] if x not in ('luzon', 'donglai')])), HAZARDS_SHA)
 
 

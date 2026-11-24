@@ -123,8 +123,8 @@
         "id": "wuwei",
         "name": "武威",
         "position": [
-          200,
-          182
+          253,
+          188
         ],
         "terrain": "mountain"
       },
@@ -150,8 +150,8 @@
         "id": "jincheng",
         "name": "金城",
         "position": [
-          278,
-          256
+          280,
+          306
         ],
         "terrain": "plain"
       },
@@ -366,8 +366,8 @@
         "id": "tianshui",
         "name": "天水",
         "position": [
-          370,
-          362
+          378,
+          338
         ],
         "terrain": "mountain"
       },
@@ -447,8 +447,8 @@
         "id": "wudu",
         "name": "武都",
         "position": [
-          304,
-          364
+          373,
+          390
         ],
         "terrain": "mountain"
       },
@@ -897,8 +897,8 @@
         "id": "longxi",
         "name": "陇西",
         "position": [
-          306,
-          330
+          312,
+          313
         ],
         "terrain": "mountain"
       },
@@ -57037,6 +57037,26 @@
       }
     ],
     "city_label_offsets": {
+      "nanan": [
+        0,
+        -26,
+        "middle"
+      ],
+      "longxi": [
+        -2,
+        40,
+        "middle"
+      ],
+      "tianshui": [
+        0,
+        38,
+        "middle"
+      ],
+      "wudu": [
+        -25,
+        9,
+        "end"
+      ],
       "hejian": [
         -8,
         32,

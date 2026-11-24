@@ -62,6 +62,8 @@ def expansion_material(data):
     # These baselines predate opening the old county seats. Their existing
     # late-game stocks were already counted at the original opening dates.
     date = (data['start_year'], data['start_month'])
+    new_sites = json.loads((source / 'commandery-history.json').read_text())['new_sites']
+    opened |= set(data['active_cities']) & (new_sites.keys() | {'guangwei'})
     for city, former_opening in (('wuchang', (221, 4)), ('jianan', (260, 10))):
         if city in data['active_cities'] and date < former_opening:
             opened.add(city)
@@ -77,7 +79,8 @@ def expansion_material(data):
                                      if tuple(officer['start']) <= date <= tuple(officer['end']))
     gold, grain, reserves = (sum(data['initial_city_resources'][city][field] for city in opened)
                              for field in ('gold', 'grain', 'reserves'))
-    return gold, grain, reserves + additional_troops
+    omitted = data['initial_city_resources']['daifang'] if 'daifang' not in data['active_cities'] else dict(gold=0, grain=0, reserves=0)
+    return gold - omitted['gold'], grain - omitted['grain'], reserves + additional_troops - omitted['reserves']
 
 
 class HistoricalScenarioTests(unittest.TestCase):
@@ -192,27 +195,32 @@ class HistoricalScenarioTests(unittest.TestCase):
         specs = {'nanan': ((188, 1), {'longxi', 'tianshui'}),
                  'xinping': ((194, 12), {'anding', 'fufeng'}),
                  'beidi': ((220, 11), {'jingzhao', 'fengyi'}),
-                 'guangwei': ((234, 2), {'tianshui', 'fufeng'})}
+                 'guangwei': ((220, 11), {'tianshui', 'fufeng'})}
         openings = json.loads((ROOT / 'game/config/campaigns/city-expansion-openings.json').read_text())
         from remake.route_network import effective
 
         for scenario, catalog in self.catalogs.items():
             data = catalog.data
             date = data['start_year'], data['start_month']
-            active = catalog.active_city_ids(*date)
+            active = set(catalog.active_city_ids(*date))
             routes = effective(data['travel_routes'], active, *date)
-            pairs = {frozenset((route['from'], route['to'])) for route in routes if route['mode'] == 'land'}
+            pairs = {frozenset((route['from'], route['to'])) for route in routes
+                     if route['mode'] == 'land' and {route['from'], route['to']} <= active}
             for city, (opening, neighbors) in specs.items():
                 with self.subTest(scenario=scenario, city=city):
-                    self.assertEqual(city in active, date >= opening)
+                    yongyang_period = city == 'guangwei' and (193, 12) <= date < (214, 1)
+                    self.assertEqual(city in active, date >= opening or yongyang_period)
                     if city not in active:
                         self.assertNotIn(city, data['initial_owners'])
                         self.assertFalse(any(city in pair for pair in pairs))
                         continue
                     source = openings['scenarios'][scenario]
-                    self.assertEqual(data['initial_owners'][city], source['owners'][city])
-                    self.assertEqual(data['initial_city_resources'][city], source['resources'][city])
-                    self.assertGreater(min(source['resources'][city].values()), 0)
+                    if city == 'guangwei' and city not in source['owners']:
+                        self.assertEqual(data['initial_owners'][city], data['initial_owners']['tianshui'])
+                    else:
+                        self.assertEqual(data['initial_owners'][city], source['owners'][city])
+                        self.assertEqual(data['initial_city_resources'][city], source['resources'][city])
+                    self.assertGreater(min(data['initial_city_resources'][city].values()), 0)
                     self.assertTrue(all(frozenset((city, other)) in pairs for other in neighbors))
             self.assertEqual(frozenset(('longxi', 'tianshui')) in pairs, date < specs['nanan'][0])
 
@@ -858,8 +866,10 @@ class FrozenRulerAuditNegativeTests(unittest.TestCase):
 
     def expected_material(self):
         stocks = [self.data['initial_city_resources'][city] for city in (
-            'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'liucheng', 'guonei', 'nanan')]
-        gold, grain, soldiers = (sum(city[field] for city in stocks) for field in ('gold', 'grain', 'reserves'))
+            'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'liucheng', 'guonei', 'nanan',
+            'liang', 'pengcheng', 'lu', 'youbeiping', 'lean', 'xijun', 'guangwei')]
+        missing = self.data['initial_city_resources']['daifang']
+        gold, grain, soldiers = (sum(city[field] for city in stocks) - missing[field] for field in ('gold', 'grain', 'reserves'))
         soldiers += 5050 + 2480  # The 194 Wuhuan and Goguryeo frontier garrisons.
         frozen = self.decision['material']
         return dict(gold=frozen['gold'] + gold, grain=frozen['grain'] + grain,
@@ -958,8 +968,8 @@ class FrozenRulerAuditNegativeTests(unittest.TestCase):
 
     def test_unopened_future_city_stocks_are_outside_active_world_material_totals(self):
         data = deepcopy(self.data)
-        inactive = next(city for city in data['initial_city_resources'] if city not in data['active_cities'])
-        data['initial_city_resources'][inactive]['reserves'] += 100
+        self.assertNotIn('xinxing', data['active_cities'])
+        data['initial_city_resources']['xinxing']['reserves'] += 100
         self.assertEqual(self.check_copy(data)['material'], self.expected_material())
 
     def test_reviewed_lifetime_and_its_evidence_basis_cannot_silently_drift(self):

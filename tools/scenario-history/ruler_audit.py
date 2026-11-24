@@ -34,11 +34,12 @@ REPORT_MD = ROOT / 'docs/ruler-affiliation-audit-20261027.md'
 EXPECTED_SCENARIOS = 29
 EXPECTED_POOL = 67
 EXPECTED_PEOPLE = 1083
+OPENING_CONFIG = ROOT / 'game/config/campaigns'
 FRONTIER_CAPITALS = frozenset(('guonei', 'liucheng'))
 LATER_EXPANSION_CITIES = FRONTIER_CAPITALS | frozenset((
     'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'luzon',
-    'nanan', 'xinping', 'beidi', 'guangwei'))
-OPENING_CONFIG = ROOT / 'game/config/campaigns'
+    'nanan', 'xinping', 'beidi', 'guangwei')) | frozenset(json.loads(
+        (OPENING_CONFIG / 'commandery-history.json').read_text())['new_sites'])
 LOCATION_FIELDS = ('status', 'faction', 'city')
 STATE_FIELDS = (*LOCATION_FIELDS, 'ruler')
 
@@ -138,7 +139,10 @@ def material_totals(data, active, troop_cities=None):
 
 def frozen_material_totals(data, active):
     """Compare the historical review's original board and carried soldiers."""
-    return material_totals(data, active - LATER_EXPANSION_CITIES, active - FRONTIER_CAPITALS)
+    # The original review included Daifang's authored stock in every opening.
+    original_stocks = (active - LATER_EXPANSION_CITIES) | ({'daifang'} & data['initial_city_resources'].keys())
+    return material_totals(data, original_stocks,
+                           active - FRONTIER_CAPITALS)
 
 
 @lru_cache(maxsize=1)

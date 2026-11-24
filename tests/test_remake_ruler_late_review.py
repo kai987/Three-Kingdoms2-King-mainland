@@ -135,6 +135,7 @@ class LateRulerReviewTests(unittest.TestCase):
                          {MA_CHAO: 226, GAO_DING: 251, LIU_DAI: 202, KANG: 210})
 
     def test_ruler_swap_keeps_identity_captain_retainer_and_real_troop_totals(self):
+        commanderies = json.loads((ROOT/'game/config/campaigns/commandery-history.json').read_text())
         for chapter, expected in KANG_OPENINGS.items():
             with self.subTest(chapter=chapter):
                 game = self.game(chapter, 'gongsun')
@@ -173,6 +174,10 @@ class LateRulerReviewTests(unittest.TestCase):
                 opened_counties = {city for city, owner in self.chronology[scenario].items()
                                    if owner is not None}
                 new_cities = self.expansion[scenario]['owners'].keys() | opened_counties | {'liucheng', 'guonei', 'luzon'}
+                active = set(catalog.data['active_cities'])
+                new_cities.update(commanderies['new_sites'].keys() & active)
+                if catalog.data['start_year'] < 220 and 'guangwei' in active:
+                    new_cities.add('guangwei')
                 added_reserves = sum(catalog.data['initial_city_resources'][city]['reserves']
                                      for city in new_cities)
                 old_total = expected['soldiers'] + added_reserves + sum(row['troops'] for row in catalog.data['initial_officers'] if row['city'] in ('liucheng', 'guonei'))

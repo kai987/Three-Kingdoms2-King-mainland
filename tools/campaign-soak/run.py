@@ -248,8 +248,9 @@ class Replay:
                 han_continuity = game.catalog.data['id'] == 'mainland184-02' and state.player == 'han'
                 emergency_recruitment = han_continuity and economy_rules.version(state) == economy_rules.CURRENT
                 if emergency_recruitment:
-                    # Fill the thin opening garrisons before scheduling transports or training.
-                    task_order = ['personnel', 'recruit', 'transport']
+                    # The expanded opening has more fronts. Use the shared books
+                    # to fill short garrisons before running personnel or convoy orders.
+                    task_order = ['recruit', 'personnel', 'transport']
                 elif han_continuity:
                     task_order = ['personnel', 'transport', 'recruit']
                 else:
@@ -257,7 +258,8 @@ class Replay:
                 self.command('set_domestic', faction=state.player, civil=civil, military=military,
                     policy=dict(auto_recruit=True, auto_persuade=True, min_chance=20,
                         recruit_enabled=True, training_enabled=not emergency_recruitment,
-                        reserve_target=2000, recruit_budget=100,
+                        reserve_target=4000 if emergency_recruitment else 2000,
+                        recruit_budget=250 if emergency_recruitment else 100,
                         task_order=task_order))
         game, state = self.game, self.game.state
         post = domestic.appointments(state, state.player)
