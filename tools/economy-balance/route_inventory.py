@@ -83,5 +83,3 @@ def _static_route(route_key, instance, quotes):
         dates_available=raw.get('availability'), closures=raw.get('closures', []),
         configured_history=raw.get('history'), configured_geo_waypoints=raw.get('geo'), river_segments=raw.get('river_segments', []),
     )
-
-
