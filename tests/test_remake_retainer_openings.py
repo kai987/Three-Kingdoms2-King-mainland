@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 sys.path.insert(0, str(ROOT / 'game'))
 from build_campaigns import load_sources
+from remake import runan_campaign
 from remake.campaign import Campaign, Catalog, canonical
 from remake.session import CampaignSession, faction_officer_counts
 from remake.starting_garrisons import mobilize_reserves
@@ -96,9 +97,10 @@ class RetainerOpeningTests(unittest.TestCase):
         self.assertNotIn(1005, {p['runtime_id'] for p in self.people.values()})
         for chapter, catalog in self.catalogs.items():
             with self.subTest(chapter=chapter):
-                self.assertEqual(tuple(catalog.ids), tuple(self.pool['order']))
-                self.assertEqual(set(catalog.data['era_assignments']), set(self.people))
-                self.assertEqual(set(catalog.data['appearance_windows']), set(self.people))
+                supplement = (runan_campaign.CAI_YANG,) if catalog.data['id'] == runan_campaign.SCENARIO else ()
+                self.assertEqual(tuple(catalog.ids), (*self.pool['order'], *supplement))
+                self.assertEqual(set(catalog.data['era_assignments']), set(self.people) | set(supplement))
+                self.assertEqual(set(catalog.data['appearance_windows']), set(self.people) | set(supplement))
                 self.assertEqual(catalog.rules.city_officer_capacity, 99)
                 self.assertEqual(catalog.rules.battle_officers_per_side, 10)
 

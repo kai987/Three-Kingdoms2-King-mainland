@@ -15,6 +15,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 
+from remake import runan_campaign
 from remake.campaign import Campaign, Catalog
 from remake.dated_events import visible_factions
 from remake.san14_appearance_reference import YEARS
@@ -114,6 +115,9 @@ class HistoricalScenarioTests(unittest.TestCase):
         for pid, person in game.catalog.definitions.items():
             if pid == 'san14-candidate-0570':
                 expected = 221  # historical crown prince appointment
+            elif pid == runan_campaign.CAI_YANG:
+                expected = 200  # recruited only for the Guandu campaign
+                self.assertEqual(game.catalog.data['appearance_windows'][pid][0]['start'], [200, 7])
             elif pid.startswith('san14-candidate-'):
                 expected = YEARS[int(pid.rsplit('-', 1)[1]) - 1]
             else:
@@ -496,8 +500,12 @@ class HistoricalScenarioTests(unittest.TestCase):
         self.assertEqual(len(historical), 23)
         for catalog in self.catalogs.values():
             with self.subTest(chapter=catalog.data['id']):
-                self.assertEqual(set(catalog.ids), set(self.people))
+                supplement = {runan_campaign.CAI_YANG} if catalog.data['id'] == runan_campaign.SCENARIO else set()
+                self.assertEqual(set(catalog.ids), set(self.people) | supplement)
                 for row in catalog.data['people']:
+                    if row['person_id'] in supplement:
+                        self.assertEqual(row['runtime_id'], runan_campaign.CAI_YANG_ID)
+                        continue
                     original = self.people[row['person_id']]
                     self.assertEqual(row['runtime_id'], original['runtime_id'])
                     self.assertEqual(row['profile'], original['profile'])

@@ -88,13 +88,24 @@ def configure_catalog(data):
     data.setdefault('appearance_windows', {})[CAI_YANG] = [
         dict(start=list(JULY), end=[201, 9], city='yingchuan', faction='wei', resolve_death_year=True)]
     basis = 'historical_runan_campaign'
+    certainty = 'historical_career_with_opening_station_inference'
     data['era_assignments'][CAI_YANG] = dict(
         source_status='historical_named_supplement', status='future', year_state='available',
         faction='wei', city='yingchuan', death_year_resolved=False,
         placement_basis=basis, planning_complete=True, posting_reference=None,
-        placement_review=dict(basis=basis, source_urls=[cai_source],
+        placement_review=dict(basis=basis, historical_certainty=certainty, source_urls=[cai_source],
                               note='遊戲安排七月起在曹軍出仕，準備汝南征討。'),
         appearance_plan=dict(start=list(JULY), end=[201, 9], city='yingchuan', status='future', basis=basis))
+    if completion := data.get('placement_completion'):
+        completion['people'] += 1
+        completion['future_plans'] += 1
+        completion['reference_classes'][certainty] = completion['reference_classes'].get(certainty, 0) + 1
+        completion['bases'][basis] = 1
+    if coverage := data.get('coverage'):
+        for key in ('library', 'configured_profiles', 'health_configured', 'affinity_configured',
+                    'default_virtue_profiles', 'new_historical_people', 'placement_plans', 'future_plans'):
+            if key in coverage:
+                coverage[key] += 1
     from .equipment import build_initials
     data['equipment_initial'].update(build_initials(people[-1:], ()))
 
