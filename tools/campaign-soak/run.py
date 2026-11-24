@@ -21,14 +21,14 @@ from remake.difficulty import get_settings
 from remake.march_core import using_backend
 from remake.officers import ref_sort_key
 from remake.tactical_ai import choose_action
-from remake import battle_grid, battle_placement, battle_reinforcements, command_books, domestic, logistics
+from remake import battle_grid, battle_placement, battle_reinforcements, command_books, domestic, logistics, march_supply
 
 CASES = {
     'early': dict(scenario='184-02', faction='yellow_turban', turns=72),
     'middle': dict(scenario='217-07', faction='wei', turns=144),
     'late': dict(scenario='263-05', faction='wu', turns=72),
 }
-POLICY = 'defensive-administrator-v4-han-personnel-first'
+POLICY = 'defensive-administrator-v5-han-reinforcements'
 
 
 class HeadlessCampaign(Campaign):
@@ -173,6 +173,8 @@ class Replay:
                             kind:'advance' for kind in ('infantry','archer','cavalry','general')})
                     else:self.command('siege_step',battle_id=battle['id'])
                     continue
+                if self.reinforce_han_defense():
+                    continue
                 own, foe = game._player_sides(state)
                 allowed = {unit['id'] for unit in battle[own] if battle_grid.player_controls(state, battle, unit)}
                 choice = choose_action(state, battle, own, foe,
@@ -193,6 +195,41 @@ class Replay:
             else:
                 raise AssertionError(f'Unhandled phase {state.phase}')
         raise AssertionError(f'Phase resolution exceeded {limit} ordinary commands; recent={self.recent_commands}')
+
+    def reinforce_han_defense(self):
+        game, state = self.game, self.game.state
+        battle = state.battle
+        if (game.catalog.data['id'] != 'mainland184-02' or state.player != 'han'
+                or battle['defender'] != state.player or battle['round'] > 3):
+            return False
+        offer = battle_reinforcements.view(game, state, battle)
+        if (not offer or any(row['owner'] == state.player for row in offer['pending'])
+                or any(row['owner'] == state.player for row in battle_reinforcements.joined(battle).values())):
+            return False
+        if sum(u['troops'] for u in battle['defenders']) >= sum(u['troops'] for u in battle['attackers']):
+            return False
+        threatened = {row['target'] for row in state.extension['travel']['marches']
+                      if row['kind'] == 'attack' and row['owner'] != state.player}
+        options = []
+        for source in offer['sources']:
+            if source['city'] in threatened:
+                continue
+            route = source['routes'][0]
+            if route['days'] > 15:
+                continue
+            officers = sorted(source['officers'], key=lambda i: (-state.officers[i].troops, ref_sort_key(i)))
+            officers = officers[:min(4, offer['remaining'])]
+            while officers:
+                troops = sum(state.officers[i].troops for i in officers)
+                if march_supply.cost(troops, len(officers), 2 * route['days']) <= source['grain']:
+                    options.append((route['days'], -troops, source['city'], route['id'], officers))
+                    break
+                officers.pop()
+        if not options:
+            return False
+        _, _, city, route, officers = min(options)
+        self.command('battle_reinforce', battle_id=battle['id'], source=city, route=route, officers=officers)
+        return True
 
     def administer(self):
         game, state = self.game, self.game.state
