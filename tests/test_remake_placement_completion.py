@@ -96,15 +96,21 @@ class PlacementCompletionTests(unittest.TestCase):
                 self.assertNotIn('content_generation', data)
                 self.assertEqual(catalog.rules.city_officer_capacity, 99)
                 self.assertEqual(catalog.rules.battle_officers_per_side, 10)
-                self.assertEqual(len(data['people']), 1083)
+                runan_person = 'historical-cai-yang-runan'
+                supplement = {runan_person: 1199} if date == (200, 1) else {}
+                self.assertEqual(len(data['people']), 1083 + len(supplement))
                 for key in shared_board:
                     self.assertEqual(data[key], stable.data[key], key)
                 foundings = dict(stable.data['city_foundings'])
                 if data['main_scenario']['group'] == 'if' and date[:2] < (208, 1):
                     foundings.pop('xindu')
                 self.assertEqual(data['city_foundings'], foundings)
-                self.assertEqual(set(catalog.ids), set(portrait_people))
+                self.assertEqual(set(catalog.ids), set(portrait_people) | set(supplement))
                 for person in data['people']:
+                    if person['person_id'] in supplement:
+                        self.assertEqual(person['runtime_id'], supplement[person['person_id']])
+                        self.assertTrue((ROOT / 'game/assets/portraits/original/083.png').is_file())
+                        continue
                     self.assertEqual(person['runtime_id'], stable.ids[person['person_id']])
                     self.assertIsNotNone(person['profile']['virtue'])
                     self.assertIn(portrait_people[person['person_id']]['kind'], ('nes_original', 'generated', 'generic_placeholder'))

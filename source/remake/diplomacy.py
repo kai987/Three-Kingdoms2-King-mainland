@@ -1,7 +1,7 @@
 """Faction diplomacy, captives and treaties in the ten-day campaign."""
 from copy import deepcopy
 
-from . import command_books, grain_relief, logistics, officer_relations, treasures
+from . import command_books, grain_relief, logistics, officer_relations, succession, treasures
 from . import grain_units
 from .errors import GameError
 from .officers import deserialize_officer_ref, parse_officer_ref, ref_sort_key, recruitment_loyalty
@@ -462,14 +462,16 @@ def execute(game, state, payload, owner):
         event_city = payload['aid_city']
         success, score, details = _request_grain(
             game, state, owner, target, state.cities[event_city], aid[event_city]['amount'])
-    elif ai_turn:
-        # An AI turn can try another order after a rejection. Surrender may
-        # return several columns or convoys before finding one that cannot dock.
-        staged = deepcopy(state)
-        _accept_surrender(game, staged, owner, target, _holdings(staged, target))
-        vars(state).update(vars(staged))
-    else:
-        _accept_surrender(game, state, owner, target, other)
+    elif action == 'surrender':
+        success = not succession.refuses_diplomatic_surrender(state, target)
+        if success and ai_turn:
+            # An AI turn can try another order after a rejection. Surrender may
+            # return several columns or convoys before finding one that cannot dock.
+            staged = deepcopy(state)
+            _accept_surrender(game, staged, owner, target, _holdings(staged, target))
+            vars(state).update(vars(staged))
+        elif success:
+            _accept_surrender(game, state, owner, target, other)
     command_books.spend(state, state.cities[city_id], 'diplomacy')
     state.extension['officer_actions'][str(ident)] = state.turn
     result = '達成' if success else '遭拒'

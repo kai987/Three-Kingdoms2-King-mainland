@@ -110,6 +110,23 @@ _SUCCESSORS = {
 }
 
 
+# External diplomatic capitulation is separate from a court deposition or
+# abdication. Liu Shan and Sun Hao retain the ordinary surrender rules.
+_SUN_RESISTANCE = frozenset(map(_person, (551, 557, 553, 578, 548)))
+_SURRENDER_RESISTANCE = {
+    'wei': frozenset(map(_person, (521, 526, 501, 529, 530, 503))),
+    'shu': frozenset((_person(952),)),
+    'wu': _SUN_RESISTANCE,
+    'sun_jian': _SUN_RESISTANCE,
+}
+
+
+def refuses_diplomatic_surrender(state, faction):
+    ruler = state.officers.get(state.extension['leaders'].get(faction))
+    return bool(ruler and ruler.alive and ruler.faction_id == faction
+                and ruler.person_id in _SURRENDER_RESISTANCE.get(faction, ()))
+
+
 def _order(faction, ruler, now):
     if faction == 'sun_jian':
         faction = 'wu'

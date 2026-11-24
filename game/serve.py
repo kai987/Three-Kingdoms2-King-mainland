@@ -38,7 +38,10 @@ EVENT_SCENE_IDS = ('ai-campaign', 'battle-result', 'battle-started', 'battle-sup
                    'historical-dong-zhuo-relocation', 'historical-gaopingling', 'historical-goguryeo-expedition',
                    'historical-hanzhong', 'historical-hanzhong-preparation', 'historical-hefei',
                    'historical-hefei-defense', 'historical-liaodong', 'historical-liyang-campaign', 'historical-longyou-response',
-                   'historical-memorial', 'historical-nanzhong', 'historical-sun-jian-jingzhou',
+                   'historical-memorial', 'historical-nanzhong', 'historical-runan-cai-yang-defeated',
+                   'historical-runan-cao-expedition', 'historical-runan-gong-du-joins',
+                   'historical-runan-liu-biao-refuge', 'historical-runan-liu-pi-joins',
+                   'historical-runan-uprising', 'historical-sun-jian-jingzhou',
                    'historical-sun-liu-alliance', 'historical-sun-liu-alliance-ended',
                    'historical-tongguan', 'historical-wei-invades-shu',
                    'historical-welcome-han-emperor', 'historical-wuhuan-expedition', 'historical-wuzhang', 'historical-xiangfan',
@@ -471,6 +474,11 @@ def portrait_static_assets(here=HERE):
     people = data.get('people') if isinstance(data, dict) else None
     if not isinstance(data, dict) or data.get('schema') != 'tk2-portraits-v1' or not isinstance(people, dict):
         return static
+    # The Guandu catalog introduces Cai Yang at runtime using the reviewed
+    # name on original archive entry 83.
+    cai = base / 'original/083.png'
+    if not cai.parent.is_symlink() and not cai.is_symlink() and cai.is_file():
+        static['/assets/portraits/original/083.png'] = ('assets/portraits/original/083.png', 'image/png')
     for person_id, row in people.items():
         path = row.get('path') if isinstance(row, dict) else None
         if not isinstance(path, str) or not re.fullmatch(r'/assets/portraits/(original|generated)/[A-Za-z0-9_-]+\.png', path):

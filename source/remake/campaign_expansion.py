@@ -1022,8 +1022,8 @@ class ExpandedCampaign:
         report, awards = cached[1]
         return dict(report, status=status), awards
 
-    def _expanded_settle(self,state,payload):
-        from . import allied_assault, diplomacy
+    def _expanded_settle(self,state,payload,*,runan_refuge=None):
+        from . import allied_assault, diplomacy, runan_campaign
         b=state.battle
         if state.phase!='result' or not b or payload.get('battle_id')!=b['id']:raise GameError('没有待接收的战果。')
         source,target=state.cities[b['source']],state.cities[b['target']];x=b['extended']
@@ -1089,6 +1089,10 @@ class ExpandedCampaign:
         if b['outcome']=='victory':
             selected=[u['id'] for u in b['attackers'] if str(u['id']) not in x['surrenders']]
             defeated={u['id'] for u in b['defenders']} if x['withdrawn']!='defenders' else set()
+            if captor == 'wei':
+                runan_refuge = runan_refuge or runan_campaign.refuge_plan(self, state, b)
+                if runan_refuge is not None:
+                    runan_campaign.settle_refuge(self, state, runan_refuge)
             # Defenders escape to the nearest adjacent friendly city with room.
             for ident in list(target.roster.officer_ids):
                 o=state.officers[ident]
@@ -1117,7 +1121,9 @@ class ExpandedCampaign:
                 city_ids=[target.id],factions=[captor,b['defender']],
                 details=dict(previous_owner=b['defender']),audience='world')
         coalition_returns={distribution['ally']: distribution['returns']} if distribution else None
-        battle_supply.settle(self,state,b,coalition_returns=coalition_returns)
+        runan_campaign.settle_cai_defeat(self, state, b)
+        battle_supply.settle(self,state,b,coalition_returns=coalition_returns,
+                             refuge_members=runan_refuge[1] if runan_refuge else None)
         battle_reinforcements.withdraw(state,b)
         state.settled_battles.append(b['id'])
         incoming=state.player not in attackers
@@ -1292,9 +1298,10 @@ class ExpandedCampaign:
             del self._ai_routes
 
     def _expanded_catalog_view(self,state):
-        from . import troop_types
+        from . import runan_campaign, troop_types
         library=[]
         prisoners=state.extension.get('diplomacy',{}).get('prisoners',{}) if state else {}
+        runan_refuge = state and runan_campaign.REFUGE in state.extension.get(historical_campaigns.RECEIPTS, {})
         for ident,row in self.catalog.by_id.items():
             person=self.catalog.definitions[row['person_id']];profile=self.catalog.profiles[ident]
             officer=state.officers.get(ident) if state else None
@@ -1304,6 +1311,8 @@ class ExpandedCampaign:
                             'year_state':(self._runtime_year_state(state, person) if officer and officer.alive
                                 else year_state(person, state.year if state else self.catalog.data['start_year'])).value,
                             'faction':officer.faction_id if officer else None,'alive':officer.alive if officer else None,
+                            **({'retirement_reason':'whereabouts_unknown'}
+                               if runan_refuge and person.person_id == runan_campaign.GONG_DU else {}),
                             'location':state.extension['free_locations'].get(str(ident)) if state else self.catalog.data['appearance_locations'].get(person.person_id),
                             **({'prisoner':dict(prisoners[str(ident)])} if str(ident) in prisoners else {}),
                             'martial':profile.martial_strength,'intellect':officer.profile.intellect if officer else profile.intellect,'virtue':profile.virtue,

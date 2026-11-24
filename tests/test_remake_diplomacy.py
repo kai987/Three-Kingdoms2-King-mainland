@@ -191,6 +191,58 @@ class DiplomacyTests(unittest.TestCase):
         self.assertIsNone(diplomacy.requested_target(game.state, 'wu'))
         game.validate(game.state)
 
+    def test_eligible_surrender_order_against_liu_bei_records_refusal(self):
+        catalog = Catalog(ROOT/'game/data/campaigns/200-01.json')
+        for seat in ('wei', 'observer'):
+            with self.subTest(seat=seat):
+                game = Campaign(catalog)
+                game.command('new', dict(faction=seat, seed=2026), 0)
+                state = game.state
+                sender, receiver = 'wei', 'shu'
+                self.assertTrue(next(row for row in diplomacy.command_options(game, state, sender)['targets']
+                                     if row['id'] == receiver)['actions']['surrender'])
+                stock = {key:(city.owner, city.gold, city.grain, city.reserves, list(city.roster.officer_ids))
+                         for key, city in state.cities.items()}
+                soldiers, rng = state.soldiers.copy(), state.rng.draws
+                available = command_books.remaining(state, sender)
+                actor = state.extension['leaders'][sender]
+                payload = dict(action='surrender', envoy=actor, city='yingchuan', target=receiver)
+                if seat == 'wei':
+                    game.command('diplomacy', payload, game.revision)
+                    state = game.state
+                else:
+                    state.phase = 'ai'
+                    diplomacy.execute(game, state, payload, sender)
+                event, = [row for row in state.extension['events']['items'] if row['kind']=='diplomacy_result']
+                self.assertFalse(event['details']['success'])
+                self.assertEqual(event['factions'], [sender, receiver])
+                self.assertEqual(command_books.remaining(state, sender), available - 1)
+                self.assertEqual(state.soldiers, soldiers)
+                self.assertEqual(state.rng.draws, rng)
+                self.assertEqual(stock, {
+                    key:(city.owner, city.gold, city.grain, city.reserves, list(city.roster.officer_ids))
+                    for key, city in state.cities.items()})
+                self.assertNotIn(receiver, state.extension['ended_factions'])
+
+    def test_surrender_policy_follows_the_current_ruler(self):
+        from types import SimpleNamespace
+        from remake import succession
+
+        catalog = Catalog(ROOT/'game/data/campaigns/200-01.json')
+        expected = {
+            'wei': (('曹操', '曹丕', '曹叡', '曹芳', '曹髦', '曹奂'), ('夏侯惇',)),
+            'shu': (('刘备',), ('刘禅',)),
+            'wu': (('孙坚', '孙策', '孙权', '孙亮', '孙休'), ('孙皓',)),
+        }
+        people = {row['name']:row['person_id'] for row in catalog.data['people']}
+        for faction, groups in expected.items():
+            for protects, names in zip((True, False), groups):
+                for name in names:
+                    with self.subTest(faction=faction, ruler=name):
+                        ruler = SimpleNamespace(alive=True, faction_id=faction, person_id=people[name])
+                        state = SimpleNamespace(officers={1:ruler}, extension={'leaders': {faction:1}})
+                        self.assertEqual(succession.refuses_diplomatic_surrender(state, faction), protects)
+
     def test_surrender_preserves_city_resources_and_soldiers(self):
         game = self.start()
         def stocks():
