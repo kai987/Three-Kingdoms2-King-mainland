@@ -1,4 +1,4 @@
-"""Versioned agricultural parameters and deterministic production arithmetic."""
+"""Versioned agricultural and market parameters and deterministic production arithmetic."""
 from typing import NamedTuple
 
 FIELD = 'economy_rules_version'
@@ -9,6 +9,9 @@ POPULATION_POWER = (7, 10)
 POPULATION_REFERENCE_MULTIPLIER = 2
 LAND_SCALE = 20
 LAND_SEGMENTS = ((0, 300, 15), (300, 600, 12), (600, 999, 10))
+TOWN_MARKET_SUPPLY = {1: (1_000, 40), 2: (2_000, 50), 3: (4_000, 60)}
+MARKET_CAPACITY_MONTHS = 3
+MARKET_TOWN3_SELL_RATE = 8
 
 
 class TownAgriculture(NamedTuple):

@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 
 from campaign_fixtures import controlled_catalog
-from remake import city_development, city_economy, economy_rules, grain_units
+from remake import city_development, city_economy, economy_rules, grain_market, grain_units
 from remake.campaign import Campaign, digest
 from remake.session import CampaignSession
 
@@ -127,6 +127,7 @@ class AgricultureV2Tests(unittest.TestCase):
         self.assertEqual(economy_rules.version(state), 2)
         save = game.export_save()
         save['state']['extension'].pop(economy_rules.FIELD)
+        save['state']['extension'].pop(grain_market.FIELD)
         save['checksum'] = digest({k: v for k, v in save.items() if k!='checksum'})
         old = Campaign(game.catalog)
         old.load_save(save, 0)

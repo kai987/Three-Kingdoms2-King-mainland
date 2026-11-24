@@ -21,14 +21,14 @@ from remake.difficulty import get_settings
 from remake.march_core import using_backend
 from remake.officers import ref_sort_key
 from remake.tactical_ai import choose_action
-from remake import battle_grid, battle_placement, battle_reinforcements, command_books, domestic, logistics, march_supply
+from remake import battle_grid, battle_placement, battle_reinforcements, command_books, domestic, economy_rules, logistics, march_supply
 
 CASES = {
     'early': dict(scenario='184-02', faction='yellow_turban', turns=72),
     'middle': dict(scenario='217-07', faction='wei', turns=144),
     'late': dict(scenario='263-05', faction='wu', turns=72),
 }
-POLICY = 'defensive-administrator-v5-han-reinforcements'
+POLICY = 'defensive-administrator-v6-han-emergency-recruitment'
 
 
 class HeadlessCampaign(Campaign):
@@ -245,14 +245,19 @@ class Replay:
                 key=lambda i: (-state.officers[i].profile.martial_strength, ref_sort_key(i)))
             post = domestic.appointments(state, state.player)
             if post['civil'] != civil or post['military'] != military or not post['policy']['recruit_enabled']:
-                # In the Han continuity leg, fill the thin early garrisons
-                # before spending shared command books on their transports.
-                task_order = (['personnel', 'transport', 'recruit']
-                    if game.catalog.data['id'] == 'mainland184-02' and state.player == 'han'
-                    else ['transport', 'personnel', 'recruit'])
+                han_continuity = game.catalog.data['id'] == 'mainland184-02' and state.player == 'han'
+                emergency_recruitment = han_continuity and economy_rules.version(state) == economy_rules.CURRENT
+                if emergency_recruitment:
+                    # Fill the thin opening garrisons before scheduling transports or training.
+                    task_order = ['personnel', 'recruit', 'transport']
+                elif han_continuity:
+                    task_order = ['personnel', 'transport', 'recruit']
+                else:
+                    task_order = ['transport', 'personnel', 'recruit']
                 self.command('set_domestic', faction=state.player, civil=civil, military=military,
                     policy=dict(auto_recruit=True, auto_persuade=True, min_chance=20,
-                        recruit_enabled=True, training_enabled=True, reserve_target=2000, recruit_budget=100,
+                        recruit_enabled=True, training_enabled=not emergency_recruitment,
+                        reserve_target=2000, recruit_budget=100,
                         task_order=task_order))
         game, state = self.game, self.game.state
         post = domestic.appointments(state, state.player)

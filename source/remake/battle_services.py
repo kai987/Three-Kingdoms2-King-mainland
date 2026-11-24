@@ -5,7 +5,7 @@ come from the recovered per-map table. Exact prices/healing use the remake's
 existing facility tables; entering a village pays ordinary terrain movement,
 and service use never spends a strategic command book.
 """
-from . import grain_units
+from . import grain_market, grain_units
 from .errors import GameError
 from . import battle_grid, equipment, facilities, battle_supply
 from .officers import parse_officer_ref
@@ -55,11 +55,19 @@ def quote(game, state, battle, actor, side, *, site=None):
         stock={'weapon': [], 'armor': []}, trade=None,
         medical_gold=facilities._rule(game, 'medical_gold'))
     if site['kind'] == 'market':
-        rate = facilities.market_rate(game, _town(state,battle), 'buy', state.month)
+        rate = facilities.market_rate(game, _town(state, battle), 'buy', state.month, state=state)
         batch = facilities._rule(game, 'trade_batch_grain')
-        room = battle_supply.pool_limit(battle,side)-grain
-        result['trade'] = dict(rate=rate, batch_grain=batch,
-            max_batches=max(0,min(facilities._rule(game,'trade_max_batches'),payer.gold//rate,room//batch)))
+        room = max(0, battle_supply.pool_limit(battle, side) - grain)
+        market = grain_market.available(state, battle['target'], 'buy')
+        affordable, space = payer.gold // rate, room // batch
+        stock = None if market is None else market // batch
+        maximum, constraint = grain_market.purchase_limit(
+            affordable, space, facilities._rule(game, 'trade_max_batches'), stock)
+        result['trade'] = dict(rate=rate, batch_grain=batch, max_batches=maximum)
+        if market is not None:
+            result['trade'].update(market_city=battle['target'], market_stock=market,
+                affordable_batches=affordable, warehouse_batches=space, market_batches=stock,
+                limiting_reason=constraint, blocked_reason=constraint if not maximum else None)
     if site['kind'] == 'armory':
         result['stock'] = _stock(state,battle,officer)
     return result
@@ -109,7 +117,8 @@ def execute(game, state, payload, *, side=None):
     elif action == 'buy_grain':
         batches, trade = payload['batches'], offer['trade']
         if type(batches) is not int or not 1 <= batches <= trade['max_batches']:
-            raise GameError('兵糧交易數量超出可用金錢或上限。')
+            reason = trade.get('limiting_reason') if type(batches) is int and batches > trade['max_batches'] else None
+            raise GameError(facilities.MARKET_FAILURES.get(reason, '兵糧交易數量超出可用金錢或上限。'))
         gold, grain = batches*trade['rate'], batches*trade['batch_grain']
         contributor=payer.owner if own=='attackers' and 'coalition' in battle['extended'] else None
         battle_supply.receive(state,battle,own,grain,contributor=contributor)
@@ -117,6 +126,10 @@ def execute(game, state, payload, *, side=None):
         kind = 'grain_traded'
         details = dict(actor=officer.person_id,direction='buy',batches=batches,grain=grain,gold=gold,rate=trade['rate'],
                        battle_id=battle['id'],side=own,destination='battle')
+        if 'market_city' in trade:
+            market_city = trade['market_city']
+            grain_market.transfer(state, market_city, 'buy', grain)
+            details['market_city'] = market_city
     else:
         slot, item = payload['slot'], payload['item']
         if not isinstance(slot,str) or slot not in ('weapon','armor') or type(item) is not int:

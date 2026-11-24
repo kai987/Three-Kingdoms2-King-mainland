@@ -493,6 +493,11 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
  assert(!validEvent({...upgradedTown,details:{...upgradedTown.details,grain:1999}}));
  assert(!validEvent({...facilityRows[6],details:{...facilityRows[6].details,preparedness_before:99}}));
  assert(!validEvent({...facilityRows[3],details:{...facilityRows[3].details,grain:301}}));
+ const marketTrade={...facilityRows[3],details:{...facilityRows[3].details,grain:3000,market_city:facilityRows[3].city_ids[0]}};
+ assert(validEvent(marketTrade,129,50));
+ assert(!validEvent({...marketTrade,details:{...marketTrade.details,market_city:'foreign'}},129,50));
+ const battleTrade={...marketTrade,details:{...marketTrade.details,market_city:'foreign',battle_id:'battle-1',side:'attackers',destination:'battle'}};
+ assert(validEvent(battleTrade,129,50));
  assert(!validEvent({...facilityRows[2],details:{...facilityRows[2].details,before:80}}));
  const sites=fixture(),sitesView=view([upgradedTown,...facilityRows.slice(1),{...facilityRows[5],id:8,factions:['wei']}]);const sitesBytes=JSON.stringify(sitesView);
  sites.events.observe(sitesView,{newGame:true});sites.drain();assertScene(sites.modal.innerHTML,'town-developed');assert(sites.modal.innerHTML.includes('町等級')||sites.modal.innerHTML.includes('城町'));

@@ -572,6 +572,15 @@
         "save"
       ]
     },
+    "tests/test_remake_grain_market.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "economy",
+        "logistics",
+        "save"
+      ]
+    },
     "tests/test_remake_grain_recovery.py": {
       "tier": "related",
       "groups": [

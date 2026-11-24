@@ -3,7 +3,7 @@ from pathlib import Path
 import unittest
 
 from test_remake_diplomacy import diplomacy_catalog
-from remake import city_economy, command_books, domestic, facilities, grain_relief, grain_units, march_supply, treasures
+from remake import city_economy, command_books, domestic, facilities, grain_market, grain_relief, grain_units, march_supply, treasures
 from remake.campaign import Campaign, Catalog
 from remake.strategic_ai import StrategicAI
 
@@ -42,13 +42,18 @@ class GrainRecoveryTests(unittest.TestCase):
         city.grain = 0
         domestic.appointments(game.state, 'shu')['civil'] = 146
         old_gold = city.gold
+        market_before = grain_market.row(game.state, city.id)['stock']
+        market_estimate = game.view()['catalog']['grain_recovery']['market_purchases'][city.id]
+        self.assertEqual(market_estimate['market_stock'], market_before)
         game.command('end_turn', {}, game.revision)
         receipt = next(row for row in game.state.extension['events']['items'] if row['kind'] == 'grain_traded')
         self.assertEqual(receipt['city_ids'], ['jiangxia'])
         self.assertEqual(receipt['details']['direction'], 'buy')
         self.assertTrue(receipt['details']['emergency'])
         limit = 2 * grain_relief.forecasts(game, game.state, 'shu')[city.id].monthly
-        self.assertEqual(receipt['details']['grain'], limit)
+        self.assertEqual(receipt['details']['grain'], min(limit, market_before))
+        self.assertEqual(market_estimate['grain'], receipt['details']['grain'])
+        self.assertEqual(grain_market.row(game.state, city.id)['stock'], market_before-receipt['details']['grain'])
         self.assertEqual(game.state.cities['jiangxia'].grain, receipt['details']['grain'])
         self.assertEqual(game.state.cities['jiangxia'].gold, old_gold - receipt['details']['gold'])
         self.assertEqual(game.state.extension['command_books']['factions']['shu']['orders'][0]['kind'],

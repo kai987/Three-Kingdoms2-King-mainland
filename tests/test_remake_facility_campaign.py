@@ -294,13 +294,13 @@ class FacilityCampaignTests(unittest.TestCase):
             market = game.view()['catalog']['facilities']['cities'][city_id]['trade']
             return market['buy']['rate'], market['sell']['rate']
 
-        self.assertEqual(prices(), (10, 10))
+        self.assertEqual(prices(), (10, 9))
         self.advance(game, 2)
         self.assertEqual((game.state.month, game.state.day), (9, 21))
-        self.assertEqual(prices(), (10, 10))
+        self.assertEqual(prices(), (10, 9))
         self.advance(game)
         self.assertEqual((game.state.month, game.state.day), (10, 1))
-        self.assertEqual(prices(), (7, 7))
+        self.assertEqual(prices(), (7, 6))
         stock = game.state.cities[city_id]
         before = stock.gold, stock.grain, deepcopy(game.state.rng)
         self.cmd(game, 'trade_grain', city=city_id, actor=146, direction='buy', batches=2)

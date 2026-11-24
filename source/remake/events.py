@@ -33,7 +33,7 @@ FACILITY_DETAILS = {
     'town_developed': {'actor','from_town','to_town','gold','grain'},
     'officer_treated': {'actor','target','gold','before','after'},
     'officer_studied': {'actor','target','gold','before','after','bonus'},
-    'grain_traded': {'actor','direction','batches','grain','gold','rate','battle_id','side','destination','emergency'},
+    'grain_traded': {'actor','direction','batches','grain','gold','rate','battle_id','side','destination','emergency','market_city'},
     'equipment_bought': {'actor','target','slot','item','previous','gold'},
     'prevention_improved': {'actor','gold','gain','repair','preparedness_before',
         'preparedness_after','damage_before','damage_after'},
@@ -151,7 +151,7 @@ def _validate_equipment_event(row):
     if not valid:raise ValueError('Equipment acquisition receipt')
 
 
-def _validate_facility_event(row):
+def _validate_facility_event(row, cities):
     d, kind = row['details'], row['kind']
     fields = FACILITY_DETAILS[kind]
     if kind == 'town_developed' and 'grain' not in d:
@@ -161,6 +161,8 @@ def _validate_facility_event(row):
             fields = fields - BATTLE_TRADE_DETAILS
         if 'emergency' not in d:
             fields = fields - {'emergency'}
+        if 'market_city' not in d:
+            fields = fields - {'market_city'}
     if (set(d) != fields or row['audience'] != 'player'
             or len(row['city_ids']) != 1 or len(row['factions']) != 1):
         raise ValueError('Facility event fields')
@@ -195,6 +197,10 @@ def _validate_facility_event(row):
             valid=(valid and d['direction']=='buy' and d['destination']=='battle'
                 and d['side'] in ('attackers','defenders') and isinstance(d['battle_id'],str)
                 and re.fullmatch(r'battle-[1-9][0-9]{0,9}',d['battle_id']) is not None)
+        if 'market_city' in d:
+            market = d['market_city']
+            valid = (valid and isinstance(market, str) and market in cities
+                     and ('battle_id' in d or market == row['city_ids'][0]))
     elif kind=='equipment_bought':
         from .facility_equipment import WEAPONS, ARMORS
         maximum=len(WEAPONS if d['slot']=='weapon' else ARMORS)-1
@@ -655,7 +661,7 @@ def validate(campaign, state):
         if row['kind'] in TREASURY_DETAILS:
             _validate_treasury_event(row)
         if row['kind'] in FACILITY_DETAILS:
-            _validate_facility_event(row)
+            _validate_facility_event(row, campaign.catalog.map_cities)
         if harvest:
             bonuses = row['details'].get('bonuses')
             if (row['month'] != 10 or row['day'] != 1 or row['audience'] != 'player'

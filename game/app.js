@@ -875,7 +875,16 @@ function grainRecoveryNotice(id,{faction=false}={}){
  if(!Number.isInteger(turns))return '';
  const label=faction?cityCommandText('全勢力糧儲預計三個月內用盡。','勢力全体の食糧が3か月以内に尽きる見込みです。'):
   cityCommandText('糧儲不足三個月，政務官將優先購糧或開墾土地。','3か月以内に食糧が不足する見込みです。政務官は食糧購入または土地開墾を優先します。');
- return `<p class="small" data-grain-recovery="${turns}">${label}</p>`;
+ const offer=faction?null:outlook?.market_purchases?.[id];
+ let market='';
+ if(offer?.blocked_reason){
+  market=cityCommandText(GameFacilities.marketConstraint(offer.blocked_reason,'zh-Hant'),
+   GameFacilities.marketConstraint(offer.blocked_reason,'ja'));
+ }else if(offer&&offer.grain<offer.demand){
+  market=cityCommandText(`當地市場可緊急購得 ${offer.grain} / ${offer.demand} 糧。`,
+   `現地市場で緊急購入できるのは ${offer.grain} / ${offer.demand} 糧です。`);
+ }
+ return `<p class="small" data-grain-recovery="${turns}">${label}${market?` ${market}`:''}</p>`;
 }
 function bindCityGrainWarning(container){
  const button=container.querySelector('[data-city-grain-aid]');
@@ -2139,7 +2148,10 @@ function openBattleFacility(){
   footer=`<button id="battle-facility-treat" class="primary" ${site.health>=site.max_health||site.gold<site.medical_gold?'disabled':''}>${battleText('療傷','治療')}</button>`;
  }else if(site.kind==='market'){
   const trade=site.trade;
-  body=`<label class="field">${battleText('交易批數','取引する口数')}<input id="battle-facility-batches" type="number" min="1" max="${trade.max_batches}" value="${trade.max_batches?1:0}" step="1" ${trade.max_batches?'':'disabled'}></label><p id="battle-facility-trade-preview"></p>`;
+  const shared=trade.market_stock===undefined?'':battleText(
+   `與城內及雙方共用市場庫存 ${trade.market_stock} 糧 · 可買 ${trade.max_batches} 批`,
+   `都市と両軍の共通市場在庫 ${trade.market_stock} 糧 ・ 購入上限 ${trade.max_batches} 口`);
+  body=`${shared?`<p id="battle-market-inventory">${shared}</p>`:''}<label class="field">${battleText('交易批數','取引する口数')}<input id="battle-facility-batches" type="number" min="1" max="${trade.max_batches}" value="${trade.max_batches?1:0}" step="1" ${trade.max_batches?'':'disabled'}></label><p id="battle-facility-trade-preview"></p>`;
   footer=`<button id="battle-facility-buy-grain" class="primary" ${trade.max_batches?'':'disabled'}>${battleText('購入兵糧','兵糧を購入')}</button>`;
  }else if(site.kind==='armory'){
   body=`<label class="field">${battleText('裝備部位','装備部位')}<select id="battle-facility-slot"><option value="weapon">${battlePlain('武器','武器')}</option><option value="armor">${battlePlain('防具','防具')}</option></select></label><label class="field">${battleText('出售裝備','販売装備')}<select id="battle-facility-item"></select></label><div id="battle-facility-equipment-preview"></div>`;
@@ -2150,7 +2162,7 @@ function openBattleFacility(){
  if(site.kind==='hospital')$('#battle-facility-treat').onclick=()=>submit('treat');
  if(site.kind==='market'){
   const input=$('#battle-facility-batches'),preview=$('#battle-facility-trade-preview'),trade=site.trade;
-  const update=()=>{const count=Math.min(trade.max_batches,Math.max(1,Math.trunc(Number(input.value)||1)));input.value=String(count);preview.textContent=battlePlain(`花費資金 ${count*trade.rate}，購入兵糧 ${count*trade.batch_grain}。`,`資金 ${count*trade.rate}を使い、兵糧 ${count*trade.batch_grain}を購入します。`);return count;};input.oninput=update;update();
+  const update=()=>{const count=Math.min(trade.max_batches,Math.max(1,Math.trunc(Number(input.value)||1)));input.value=String(count);preview.textContent=GameFacilities.marketConstraint(trade.blocked_reason,GameI18n.locale)||battlePlain(`花費資金 ${count*trade.rate}，購入兵糧 ${count*trade.batch_grain}。`,`資金 ${count*trade.rate}を使い、兵糧 ${count*trade.batch_grain}を購入します。`);return count;};input.oninput=update;update();
   $('#battle-facility-buy-grain').onclick=()=>submit('buy_grain',{batches:update()});
  }
  if(site.kind==='armory'){

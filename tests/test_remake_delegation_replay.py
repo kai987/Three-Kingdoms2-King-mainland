@@ -397,9 +397,10 @@ class DelegationReplayTests(unittest.TestCase):
             with using_backend(backend):
                 game.command('new', dict(faction=faction, seed=seed), 0)
                 if legacy_economy:
-                    from remake import economy_rules
+                    from remake import economy_rules, grain_market
                     saved = game.export_save()
                     saved['state']['extension'].pop(economy_rules.FIELD)
+                    saved['state']['extension'].pop(grain_market.FIELD)
                     saved['checksum'] = digest({key: value for key, value in saved.items() if key != 'checksum'})
                     game = HeadlessCampaign(catalog)
                     game.load_save(saved, 0)

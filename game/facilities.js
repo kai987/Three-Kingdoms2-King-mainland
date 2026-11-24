@@ -3,6 +3,15 @@
 (function(root){
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const choose=(locale,tc,ja)=>locale==='ja'?ja:tc;
+ const marketMessages=Object.freeze({
+  market_empty:['當地市場庫存不足。','現地の市場在庫が不足しています。'],
+  market_full:['當地市場剩餘容量不足。','現地市場の空き容量が不足しています。'],
+  insufficient_gold:['購糧所需的金錢不足。','食糧購入に必要な資金が不足しています。'],
+  warehouse_full:['倉庫剩餘容量不足。','倉庫の空き容量が不足しています。'],
+  insufficient_grain:['官倉可出售的糧食不足。','売却できる官倉の食糧が不足しています。'],
+  treasury_full:['金庫剩餘容量不足。','金庫の空き容量が不足しています。'],
+ });
+ const marketConstraint=(reason,locale)=>marketMessages[reason]?choose(locale,...marketMessages[reason]):'';
  const defaults=Object.freeze({enabled:false,gold_budget:200,gold_floor:100,grain_floor:200,grain_target:2000,target_preparedness:70,heal_below:60,auto_prevent:true,auto_treat:true,auto_develop:false,auto_study:false,auto_trade:false,auto_equip:false});
  const limits=Object.freeze({gold_budget:[0,1000000],gold_floor:[0,100000000],grain_floor:[0,100000000],grain_target:[0,100000000],target_preparedness:[0,99],heal_below:[1,99]});
  const services=Object.freeze({hospital:['醫館','医館'],market:['市場','市場'],school:['學問所','学問所'],armory:['武器屋','武器屋']});
@@ -106,6 +115,19 @@
     prices.textContent=text(`${shown(month)} 月糧價 · 每批 ${shown(buy.batch_grain)} 糧 · 買入 ${shown(buy.rate)} 金 · 賣出 ${shown(sell.rate)} 金`,
      `${shown(month)}月の相場 ・ 1口 ${shown(buy.batch_grain)} 糧 ・ 買値 ${shown(buy.rate)} 金 ・ 売値 ${shown(sell.rate)} 金`);
    }
+   const inventory=query('#facility-market-inventory'),constraints=query('#facility-market-constraints');
+   if(inventory&&source?.market){
+    const {stock,capacity,monthly_supply,next_restock_year,next_restock_month}=source.market;
+    inventory.textContent=text(
+     `市場庫存（糧） ${shown(stock)} / ${shown(capacity)} · 本月供應（糧） ${shown(monthly_supply)} · 下次補貨 ${next_restock_year} 年 ${next_restock_month} 月上旬`,
+     `市場在庫（糧） ${shown(stock)} / ${shown(capacity)} ・ 今月の供給（糧） ${shown(monthly_supply)} ・ 次回補充 ${next_restock_year}年${next_restock_month}月上旬`);
+   }
+   if(constraints&&source?.market){
+    const buying=source.trade.buy;
+    constraints.textContent=text(
+     `資金可買 ${shown(buying.affordable_batches)} 批 · 官倉空位 ${shown(buying.warehouse_free)} 糧 · 實際可買 ${shown(buying.max_batches)} 批`,
+     `資金で購入可能 ${shown(buying.affordable_batches)} 口 ・ 官倉の空き ${shown(buying.warehouse_free)} 糧 ・ 実際の購入上限 ${shown(buying.max_batches)} 口`);
+   }
    const prevention=query('#facility-prevention-preview');if(prevention)prevention.textContent=prevent?text(`費用：金${range(prevent.gold_min,prevent.gold_max)}；防災 +${range(prevent.gain_min,prevent.gain_max)} → ${range(prevent.preparedness_min,prevent.preparedness_max)}；損傷 → ${range(prevent.damage_min,prevent.damage_max)}。`,`費用：資金${range(prevent.gold_min,prevent.gold_max)}。防災+${range(prevent.gain_min,prevent.gain_max)} → ${range(prevent.preparedness_min,prevent.preparedness_max)}、損傷 → ${range(prevent.damage_min,prevent.damage_max)}。`):text('請選擇可執行防災的武將。','防災を実行できる武将を選択してください。');
    const actorSummary=query('#facility-actor-summary');if(actorSummary)actorSummary.textContent=active.actor===null?'':officerLabel(active.actor);
    const status=query('#facility-boundary');if(status)status.textContent=boundary();
@@ -125,7 +147,7 @@
     return `<fieldset><legend>${text('學問所求學','学問所で学ぶ')}</legend>${select('facility-student',text('求學武將','学ぶ武将'),active.student,[...(source.students||[])].sort((a,b)=>b.before-a.before||stable(a.id,b.id)).map(p=>[p.id,officerLabel(p.id)]))}<p class="small" id="facility-study-preview">${quote?text(`花費金${shown(quote.gold)}；知 ${shown(quote.before)} → ${range(quote.after_min,quote.after_max)}（增加${range(quote.gain_min,quote.gain_max)}）。知80以上不能再求學。`,`資金${shown(quote.gold)}を使い、知${shown(quote.before)} → ${range(quote.after_min,quote.after_max)}（+${range(quote.gain_min,quote.gain_max)}）。知80以上は学べません。`):text('本城沒有可求學的武將。','この都市に学べる武将はいません。')}</p></fieldset>`;
    }
    if(active.service==='market'){
-    return `<fieldset><legend>${text('市場兵糧買賣','市場で兵糧を売買')}</legend><p class="small" id="facility-market-prices"></p>${select('facility-trade-direction',text('交易方向','取引の種類'),active.direction,[['buy',text('買進兵糧','兵糧を購入')],['sell',text('出售兵糧','兵糧を売却')]])}<div class="facility-amount">${number('facility-trade-batches',text('交易批數','取引口数'),active.batches,tradeMaximum(),tradeMaximum()>0?1:0)}<button type="button" id="facility-trade-max">${text('最大值','最大')}</button></div><p class="small" id="facility-trade-limit"></p><p id="facility-trade-preview" role="status" aria-live="polite"></p></fieldset>`;
+    return `<fieldset><legend>${text('市場兵糧買賣','市場で兵糧を売買')}</legend><p class="small" id="facility-market-prices"></p>${row()?.market?'<p class="small" id="facility-market-inventory" role="status" aria-live="polite"></p><p class="small" id="facility-market-constraints"></p>':''}${select('facility-trade-direction',text('交易方向','取引の種類'),active.direction,[['buy',text('買進兵糧','兵糧を購入')],['sell',text('出售兵糧','兵糧を売却')]])}<div class="facility-amount">${number('facility-trade-batches',text('交易批數','取引口数'),active.batches,tradeMaximum(),tradeMaximum()>0?1:0)}<button type="button" id="facility-trade-max">${text('最大值','最大')}</button></div><p class="small" id="facility-trade-limit"></p><p id="facility-trade-preview" role="status" aria-live="polite"></p></fieldset>`;
    }
    if(active.service==='armory'){
     const quote=equipmentQuote(),stock=source.stock?.[active.slot]||[];
@@ -168,7 +190,7 @@
     if(student&&!affordable(gold))reason=text(`金錢不足；需要金${gold}。`,`資金不足です。資金${gold}が必要です。`);else if(!student?.can_study)reason=text('所選武將無法求學；請確認知、健康與在場狀態。','選んだ武将は学べません。知力・健康・在籍状態を確認してください。');else if(!affordable(gold))reason=text(`金錢不足；需要金${gold}。`,`資金不足です。資金${gold}が必要です。`);
    }else if(active.service==='market'){
     const trade=source.trade?.[active.direction];id='facility-trade';caption=text('確認交易','取引を確定');gold=trade&&active.batches!==''?active.batches*trade.rate:null;income=active.direction==='sell';
-    if(!trade||tradeMaximum()<1)reason=text('資金、兵糧庫存或容量不足，無法完成一批交易。','資金・兵糧の在庫、または容量が足りず、1口も取引できません。');else if(active.batches===''||active.batches<1||active.batches>tradeMaximum())reason=text('請輸入可交易範圍內的整數批數。','取引可能な範囲の整数を入力してください。');
+    if(!trade||tradeMaximum()<1)reason=marketConstraint(trade?.blocked_reason,locale())||text('資金、兵糧庫存或容量不足，無法完成一批交易。','資金・兵糧の在庫、または容量が足りず、1口も取引できません。');else if(active.batches===''||active.batches<1||active.batches>tradeMaximum())reason=text('請輸入可交易範圍內的整數批數。','取引可能な範囲の整数を入力してください。');
    }else if(active.service==='armory'){
     if(active.equipmentMode==='owned'&&ownedOffers().length){id='facility-equip-owned';caption=text('確認重新裝備','再装備を確定');gold=0;if(!ownedAllowed())reason=text('請選擇本人的可用備用裝備。','本人が持つ、利用可能な予備の装備を選んでください。');}
     else{id='facility-equipment-buy';caption=text('確認購買','購入を確定');gold=equipment?.price;if(equipment&&!affordable(gold))reason=text(`金錢不足；需要金${shown(gold)}。`,`資金不足です。資金${shown(gold)}が必要です。`);else if(!equipmentAllowed())reason=equipmentPreview()?.[locale()==='ja'?'reason_ja':'reason_tc']||text('這件裝備無庫存，或所選武將不符合購買條件。','在庫がないか、選んだ武将が購入条件を満たしていません。');else if(!affordable(gold))reason=text(`金錢不足；需要金${shown(gold)}。`,`資金不足です。資金${shown(gold)}が必要です。`);}
@@ -270,7 +292,7 @@
   doc?.addEventListener?.('game-language-change',refresh);
   return {open,refresh,dispose(){disposed=true;active=null;doc?.removeEventListener?.('game-language-change',refresh);}};
  }
- const api=Object.freeze({create,data,city,summary,attributes,sortActors,sortEquipment,normalizePolicy,bounded,ref,range});
+ const api=Object.freeze({create,data,city,summary,attributes,sortActors,sortEquipment,normalizePolicy,bounded,ref,range,marketConstraint});
  if(typeof module!=='undefined'&&module.exports)module.exports=api;
  if(root)root.GameFacilities=api;
 })(typeof window!=='undefined'?window:globalThis);

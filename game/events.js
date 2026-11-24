@@ -395,6 +395,7 @@
   if(k==='town_developed'&&Object.hasOwn(d,'grain'))fields.push('grain');
   if(k==='grain_traded'&&['battle_id','side','destination'].some(key=>Object.hasOwn(d,key)))fields.push('battle_id','side','destination');
   if(k==='grain_traded'&&Object.hasOwn(d,'emergency'))fields.push('emergency');
+  if(k==='grain_traded'&&Object.hasOwn(d,'market_city'))fields.push('market_city');
   const num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max,people=k==='city_disaster'?[]:[...new Set([d.actor,...(Object.hasOwn(d,'target')?[d.target]:[])])];
   if(row.audience!=='player'||row.city_ids.length!==1||!row.city_ids[0]||row.factions.length!==1||!row.factions[0]||people.some(id=>typeof id!=='string'||!id)||Object.keys(d).sort().join(',')!==fields.sort().join(',')||JSON.stringify(row.person_ids)!==JSON.stringify(people)||!num('gold',0,100000000))return false;
   if(k==='town_developed')return num('from_town',1,2)&&d.to_town===d.from_town+1&&d.gold>0&&
@@ -403,6 +404,8 @@
   if(k==='grain_traded'){
    const batch=100*grainScale;
    if(!['buy','sell'].includes(d.direction)||!num('batches',1,1000)||!num('rate',1,100)||!num('grain',1,1000*batch))return false;
+   if(Object.hasOwn(d,'market_city')&&(typeof d.market_city!=='string'||!/^[a-z][a-z0-9_-]{0,79}$/.test(d.market_city)||
+    (!Object.hasOwn(d,'battle_id')&&d.market_city!==row.city_ids[0])))return false;
    if(Object.hasOwn(d,'emergency'))return d.emergency===true&&d.direction==='buy'&&!Object.hasOwn(d,'battle_id')&&d.batches===Math.ceil(d.grain/batch)&&d.gold===Math.ceil(d.grain*d.rate/batch);
    return d.grain===d.batches*batch&&d.gold===d.batches*d.rate&&(!Object.hasOwn(d,'battle_id')||d.direction==='buy'&&d.destination==='battle'&&['attackers','defenders'].includes(d.side)&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id));
   }
@@ -611,7 +614,16 @@
     case 'town_developed':return text(`${p}在${c}完成城町發展，等級${d.from_town} → ${d.to_town}，花費${d.gold}金${d.grain===undefined?'':`和${d.grain}糧`}。`,`${p}が${c}の町を発展させ、段階が${d.from_town} → ${d.to_town}になりました。支出は資金${d.gold}${d.grain===undefined?'':`と兵糧${d.grain}`}です。`);
     case 'officer_treated':return text(`${names({...row,person_ids:[d.target]}).people[0]}在${c}醫館療傷，體力${d.before} → ${d.after}，花費${d.gold}金。恢復不超過本人體力上限。`,`${names({...row,person_ids:[d.target]}).people[0]}が${c}の医館で治療を受け、体力が${d.before} → ${d.after}になりました。支出は資金${d.gold}で、本人の体力上限を超えません。`);
     case 'officer_studied':return text(`${names({...row,person_ids:[d.target]}).people[0]}在${c}學問所進修，知${d.before} → ${d.after}，花費${d.gold}金。學習所得隨本局人物保存，已用於內政與計略。`,`${names({...row,person_ids:[d.target]}).people[0]}が${c}の学問所で学び、知が${d.before} → ${d.after}になりました。支出は資金${d.gold}です。成長はこの戦役の本人に保存され、内政と計略に反映されます。`);
-    case 'grain_traded':return d.destination==='battle'?text(`${p}在${c}購買兵糧${d.grain}，由出發城支付資金${d.gold}，直接補入${d.side==='attackers'?'攻方':'守方'}隨軍兵糧。城內兵糧未增加。`,`${p}が${c}で兵糧${d.grain}を購入しました。出発都市から資金${d.gold}を支払い、${d.side==='attackers'?'攻撃側':'防御側'}の携行兵糧へ直接補給しました。都市の兵糧在庫は増えていません。`):text(`${p}在${c}${d.direction==='buy'?'買入':'賣出'}兵糧${d.grain}，${d.direction==='buy'?'支付':'取得'}${d.gold}金。實際庫存已結算。`,`${p}が${c}で兵糧${d.grain}を${d.direction==='buy'?'購入':'売却'}し、資金${d.gold}を${d.direction==='buy'?'支払い':'受け取り'}ました。実際の在庫に反映済みです。`);
+    case 'grain_traded':{
+     if(d.destination==='battle'){
+      if(!d.market_city)return text(`${p}在${c}購買兵糧${d.grain}，由出發城支付資金${d.gold}，直接補入${d.side==='attackers'?'攻方':'守方'}隨軍兵糧。城內兵糧未增加。`,`${p}が${c}で兵糧${d.grain}を購入しました。出発都市から資金${d.gold}を支払い、${d.side==='attackers'?'攻撃側':'防御側'}の携行兵糧へ直接補給しました。都市の兵糧在庫は増えていません。`);
+      const market=names({...row,city_ids:[d.market_city]},false).cities[0];
+      const side=text(d.side==='attackers'?'攻方':'守方',d.side==='attackers'?'攻撃側':'防御側');
+      return text(`${p}從${market}市場購糧${d.grain}，${c}支付${d.gold}金。糧食已補入${side}隨軍糧袋。`,
+       `${p}が${market}市場で食糧${d.grain}を購入し、${c}が資金${d.gold}を支払いました。${side}の携行食糧に補給しました。`);
+     }
+     return text(`${p}在${c}${d.direction==='buy'?'買入':'賣出'}兵糧${d.grain}，${d.direction==='buy'?'支付':'取得'}${d.gold}金。實際庫存已結算。`,`${p}が${c}で兵糧${d.grain}を${d.direction==='buy'?'購入':'売却'}し、資金${d.gold}を${d.direction==='buy'?'支払い':'受け取り'}ました。実際の在庫に反映済みです。`);
+    }
     case 'equipment_bought':{
      const item=view?.catalog?.facilities?.equipment_catalog?.[d.slot]?.find(row=>row.id===d.item),gear=item?(locale()==='ja'?item.name_ja:item.name_tc):text(`${d.slot==='weapon'?'武器':'防具'}${d.item+1}號`,`${d.slot==='weapon'?'武器':'防具'}${d.item+1}`),who=names({...row,person_ids:[d.target]}).people[0];
      return text(`${c}為${who}購置${gear}，花費${d.gold}金並替換原裝備，單挑效果已生效。`,`${c}で${who}のために${gear}を購入しました。資金${d.gold}を支払い、以前の装備と交換して一騎討ちに反映しました。`);
