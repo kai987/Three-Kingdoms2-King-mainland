@@ -15,6 +15,8 @@ from test_remake_march_supply import supply_catalog
 from remake.campaign import Campaign, Catalog
 from remake.march_core import enabled, using_backend
 from remake.route_hazards import evaluate_leg
+from remake.transfer_supply import minimum_grain
+from remake.travel import TravelCampaign
 
 
 def land(days, terrain='plain'):
@@ -193,6 +195,69 @@ class CargoLossTests(unittest.TestCase):
         self.assertEqual(received['cargo_delivered'],expected)
         self.assertEqual(received['cargo_route_loss'],500-expected)
         self.assertTrue(logistics.valid_grain_receipt(received))
+
+
+def route_case(*,plain_days=10,water_days=10,terrain='plain',stock=100_000,one_way=False):
+    ground=land(plain_days,terrain)
+    ground.update(distance_km=plain_days*30,land_km=plain_days*30)
+    water=dict(id='a:b:river',mode='river',terrain='river',**{'from':'a','to':'b'},
+               distance_km=water_days*50,land_km=0,one_way=one_way,
+               river_segments=[dict(distance_km=water_days*50,downstream_from='a')])
+    ruleset=dict(speeds={'plain':30},river_speeds={'downstream':50,'upstream':20},river_embark_days=0)
+    data=dict(travel_rules=ruleset,travel_hazards={},travel_routes=[ground,water])
+    class TestMap(TravelCampaign):
+        catalog=SimpleNamespace(data=data)
+        def _known_routes(self,state):
+            return data['travel_routes']
+    city=lambda name:SimpleNamespace(id=name,owner='shu',grain=stock)
+    state=SimpleNamespace(extension={rules.FIELD:2},cities={key:city(key) for key in ('a','b')},
+                          officers={1:SimpleNamespace(troops=10_000)},month=10)
+    return TestMap(),state,ground,water
+
+
+class CheapestRouteTests(unittest.TestCase):
+    def test_select_longer_downstream_and_respect_directed_routes(self):
+        game,state,ground,water=route_case(plain_days=8,terrain='mountain',one_way=True)
+        result=minimum_grain(game,state,'a','b','shu',[1])
+        self.assertEqual((result['days'],result['routes'][0]['mode']),(10,'river'))
+        reverse=minimum_grain(game,state,'b','a','shu',[1])
+        self.assertEqual(reverse['routes'][0]['id'],ground['id'])
+        state.cities['b'].grain=0
+        self.assertIsNone(minimum_grain(game,state,'b','a','shu',[1]))
+
+    def test_similar_cost_route_switches_when_loading_cargo(self):
+        game,state,ground,water=route_case(water_days=12)
+        state.officers[1].troops=900
+        self.assertEqual(minimum_grain(game,state,'a','b','shu',[1])['routes'][0]['id'],ground['id'])
+        self.assertEqual(minimum_grain(game,state,'a','b','shu',[1],cargo=10_000)['routes'][0]['id'],water['id'])
+
+    def test_one_thousand_seeded_routes_against_independent_direct_oracle(self):
+        rng=random.Random(20261126)
+        for _ in range(1000):
+            days, water_days = rng.randint(1,30),rng.randint(1,30)
+            terrain = rng.choice(('plain','mountain','desert'))
+            stock = rng.randrange(26_000)
+            cargo = rng.randrange(10_000)
+            soldiers = rng.randrange(11_000)
+            reserve = rng.randrange(1200)
+            game,state,ground,water=route_case(plain_days=days,water_days=water_days,
+                                               terrain=terrain,stock=stock)
+            state.officers[1].troops=soldiers
+            options=[]
+            for raw,elapsed,percent,bps in ((ground,days,125 if terrain=='plain' else 150,
+                                               {'plain':50,'mountain':100,'desert':150}[terrain]),
+                                            (water,water_days,105,10)):
+                required=-(-(soldiers+100+reserve)*elapsed*percent//5000)
+                if required+cargo>stock:
+                    continue
+                delivered,carry=cargo,0
+                for day in range(elapsed):
+                    lost,carry=divmod(delivered*bps+carry,10_000)
+                    delivered-=lost
+                options.append((required+cargo-delivered,elapsed,raw['id']))
+            found=minimum_grain(game,state,'a','b','shu',[1],cargo=cargo,reserves=reserve)
+            self.assertEqual(found['routes'][0]['id'] if found else None,
+                             min(options)[2] if options else None)
 
 
 if __name__ == '__main__':

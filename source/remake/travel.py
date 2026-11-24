@@ -63,7 +63,7 @@ class TravelCampaign:
         return ids | battle_reinforcements.marching_ids(state)
 
     def _travel_modes(self):
-        return ('fastest','land','river','sea','special','explore')
+        return ('fastest','land','river','sea','special','explore','minimum_grain')
 
     def _known_routes(self, state):
         from .route_network import effective
@@ -104,7 +104,12 @@ class TravelCampaign:
                     distance_km=distance,
                     grain_per_officer=5*len(legs),modes=sorted({row['mode'] for row in legs}))
 
-    def _travel_path(self, state, source, target, owner, mode='fastest', *, adjacent=False):
+    def _travel_path(self, state, source, target, owner, mode='fastest', *, adjacent=False,
+                     officers=(),cargo=0,reserves=0):
+        from .transfer_supply import MINIMUM_GRAIN, minimum_grain
+        if mode==MINIMUM_GRAIN:
+            return minimum_grain(self,state,source,target,owner,officers,adjacent=adjacent,
+                                 cargo=cargo,reserves=reserves)
         from .march_core import enabled, invoke, state_input
         if enabled():
             if mode not in self._travel_modes():
@@ -274,8 +279,6 @@ class TravelCampaign:
             raise GameError('同盟期间，不能向盟友出征。')
         order = 'depart' if kind == 'attack' else 'transfer'
         command_books.require(state, source.owner, order)
-        quote = self._travel_path(state, source.id, target.id, source.owner, mode, adjacent=kind == 'attack')
-        if not quote: raise GameError('没有满足海陆选择及本方连通条件的路线。')
         if not ids or len(ids) != len(set(ids)) or any(i in self._march_ids(state) for i in ids):
             raise GameError('请选择尚未出发且不重复的武将。')
         if kind == 'attack':
@@ -285,6 +288,12 @@ class TravelCampaign:
                 raise GameError(f'聯軍共用出戰名額，目前只可再派{coalition["remaining"]}名武將。')
         elif self._city_occupancy(state,target)+len(ids)>self.catalog.rules.city_officer_capacity:
             raise GameError('目的城武将容量不足。')
+        quote = self._travel_path(state,source.id,target.id,source.owner,mode,
+                                  adjacent=kind=='attack',officers=ids)
+        if not quote:
+            if mode=='minimum_grain':
+                raise GameError('找不到可由沿途兵糧支應的節糧路線。')
+            raise GameError('没有满足海陆选择及本方连通条件的路线。')
         if mode=='explore' and not sum(state.officers[i].troops for i in ids):
             raise GameError('探索航行至少需要一名带兵武将。')
         if supply_detour:

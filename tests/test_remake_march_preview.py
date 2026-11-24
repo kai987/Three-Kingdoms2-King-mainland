@@ -27,7 +27,7 @@ def preview(session, source, target):
 
 
 def quote_details(row):
-    return {key: value for key, value in row.items() if key != 'segments'}
+    return {key: value for key, value in row.items() if key not in {'segments','logistics'}}
 
 
 class MarchPreviewTests(unittest.TestCase):
@@ -208,6 +208,7 @@ class MarchPreviewTests(unittest.TestCase):
         state = session.game.state
         row, = state.extension['travel']['marches']
         self.assertEqual(row['quote'], quote_details(detour))
+        self.assertEqual(row['supply']['loaded'],detour['logistics']['initial_grain'])
         self.assertEqual(state.cities['shujun'].grain, source_grain-row['supply']['loaded'])
         saved = session.export_save()
         session.load_save(saved, session.revision)

@@ -309,8 +309,8 @@ def _safe_engine(game, policy):
     return engine
 
 
-def _safe_path(game, state, source, target, owner, mode, policy):
-    return _safe_engine(game,policy)._travel_path(state,source,target,owner,mode)
+def _safe_path(game, state, source, target, owner, mode, policy, **load):
+    return _safe_engine(game,policy)._travel_path(state,source,target,owner,mode,**load)
 
 
 def _supply_routes(game, state, owner, pairs, policy):
@@ -654,14 +654,15 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None):
     cargo = dict(cargo,treasure=cargo.get('treasure',0))
     if army is not None and (cargo['gold'] or cargo['reserves'] or cargo['treasure'] or not cargo['grain']):
         raise GameError('行军补给队只能运送兵粮。')
-    if not isinstance(mode, str) or mode not in {'land', 'fastest', 'river', 'sea', 'special'}:
+    if not isinstance(mode, str) or mode not in {'land', 'fastest', 'river', 'sea', 'special', 'minimum_grain'}:
         raise GameError('请选择已知的运输路线。')
     if army is not None:
         selected=_meeting_quote(game,state,source,army,policy)
         if selected is None or selected[0]!=target.id:
             raise GameError('部队已移动，请重新选择实际会合城池。')
     quote = (game._quote([source.id],[]) if source.id==target.id else
-             _safe_path(game, state, source.id, target.id, owner, mode, policy))
+             _safe_path(game,state,source.id,target.id,owner,mode,policy,
+                        officers=ids,cargo=cargo['grain'],reserves=cargo['reserves']))
     if quote is None or _dangerous(quote, policy):
         raise GameError('没有符合方针的安全运输路线。')
     if _present_count(game, state, source) - len(ids) < policy['reserve_officers']:
@@ -1438,7 +1439,7 @@ def validate(game, state):
         for index, journey in enumerate(journeys):
             if (not isinstance(journey, dict) or set(journey) != _JOURNEY_FIELDS
                     or any(journey[k] not in state.cities for k in ('source', 'target'))
-                    or journey['mode'] not in {'land', 'fastest', 'river', 'sea', 'special'}
+                    or journey['mode'] not in {'land', 'fastest', 'river', 'sea', 'special', 'minimum_grain'}
                     or not _int(journey['departure_turn'], 1, state.turn)
                     or not _int(journey['departure_year'], 1, state.year)
                     or not _int(journey['departure_month'], 1, 12) or journey['departure_day'] not in {1, 11, 21}

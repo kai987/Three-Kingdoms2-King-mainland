@@ -74,6 +74,7 @@ const portraitHtml=(id,size='roster',source=false,personId=null,displayName=null
 const faction=id=>id==='neutral'?'无主':factionDisplayName(view.catalog.factions.find(f=>f.id===id))||'守备军';
 const capacity=()=>view.catalog.rules.city_officer_capacity;
 const marching=()=>new Set([...(view.game?.extension?.travel?.marches||[]).flatMap(r=>r.officers),...(view.catalog.logistics?.marching_officers||[])]);
+const usesLogisticsV2=()=>view.game?.extension?.logistics_rules_version===2;
 const routeModes=()=>['fastest','land',...(view.catalog.river_routes?.length?['river']:[]),...(view.catalog.travel_hazards?['special','sea','explore']:[])];
 const routeModeSelect=(mode='fastest')=>`<div class="route-choice"><label class="field" id="route-field">行军路线<select id="route-mode" data-exploring="${mode==='explore'}"></select></label><p class="small" id="route-unavailable" hidden>没有已知的可用路线。</p><button type="button" id="route-explore" aria-pressed="false" hidden>探索未知航路</button></div>`;
 const routeQuotes=()=>MarchCore.quotesFor(view)??view.catalog.travel_quotes??null;
@@ -93,7 +94,9 @@ function syncRouteModes(source,target,preferred='fastest'){
  const choices=GameRouteOptions.build(quotes,{preferred,exploring:select.dataset.exploring==='true'});
  select.dataset.exploring=String(choices.exploring);
  select.innerHTML=choices.options.map(option=>`<option value="${option.mode}" data-route-kind="${option.kind}">${escapeHtml(routeOptionLabel(option,choices.options.length))}</option>`).join('');
- select.value=choices.value;
+ const supplyMode=usesLogisticsV2()&&choices.options.length&&!choices.exploring;
+ if(supplyMode)select.insertAdjacentHTML('beforeend','<option value="minimum_grain">'+escapeHtml(battlePlain('最低耗糧','兵糧消費最小'))+'</option>');
+ select.value=supplyMode&&preferred==='minimum_grain'?preferred:choices.value;
  $('#route-field').hidden=!choices.options.length;
  $('#route-unavailable').hidden=!!choices.options.length;
  const explore=$('#route-explore');explore.hidden=!choices.canExplore;
@@ -101,7 +104,7 @@ function syncRouteModes(source,target,preferred='fastest'){
  explore.setAttribute('aria-pressed',String(choices.exploring));
  explore.onclick=()=>{select.dataset.exploring=String(!choices.exploring);refreshRouteDialog?.();};
  GameI18n.apply();
- return choices.value;
+ return select.value;
 }
 function factionResources(id,preview=setupPreview){
  const supplied=(preview?.faction_resources||(!preview&&view.catalog.faction_resources))?.[id];
@@ -864,7 +867,8 @@ function staffInterface(){
 
 function showCivilStaff(id){staffInterface()?.open(id);}
 function delegationInterface(){
- if(!domesticUI&&typeof GameDomestic!=='undefined')domesticUI=GameDomestic.create({getView:()=>view,cityName:id=>cityName(id),openDialog:(...args)=>openDialog(...args),command:(kind,payload)=>command(kind,payload),dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
+ if(!domesticUI&&typeof GameDomestic!=='undefined')domesticUI=GameDomestic.create({getView:()=>view,cityName:id=>cityName(id),openDialog:(...args)=>openDialog(...args),command:(kind,payload)=>command(kind,payload),dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview,
+  routePreview:payload=>request('/api/logistics-preview',payload)});
  return domesticUI;
 }
 function cityGrainWarning(id,{showCity=false}={}){
@@ -1470,6 +1474,35 @@ function marchSupplyRuleHtml(){
  return '<p class="small"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">出發只預裝至下一座本方城的口糧，途中由本方城池補給；沿途沒有本方城池時預裝全程。等待也每日耗糧，缺糧會暫停前進並每日損兵1%，連續10日於旬末撤退。可從本方城派運輸隊向在途部隊送糧。兵糧按兵數、隨行人數與實際日數累計取整。</span><span data-locale-only="ja" data-l10n-native="ja" hidden>次の自勢力都市までの兵糧を積み、途中は自勢力の都市から補給します。経由地に自勢力の都市がなければ全行程分を積みます。待機中も毎日消費し、不足時は前進を止め、1日1%の兵を失います。10日連続で不足すると旬末に撤退します。自勢力の都市から行軍部隊へ兵糧を届けられます。兵数・同行人数・実際の日数に基づき累計で切り上げます。</span></p>';
 }
 function marchGrain(ids,quote){return GameMarchSupply.estimate(view.game.officers,ids,quote,0,view.game.cities,view.game.cities[quote.path?.[0]]?.owner??view.game.player,view.catalog.grain_people_per_day);}
+function logisticsPreviewForDialog(element,purpose){
+ let previous=null;
+ return (source,target,ids,mode,refresh,{cargo=0,reserves=0}={})=>{
+  if(!usesLogisticsV2()||!ids.length)return null;
+  const body={source,target,officers:ids,route_mode:mode,purpose,cargo,reserves,revision:view.revision};
+  const key=JSON.stringify(body);
+  if(previous?.key===key)return previous.result;
+  const query={key,result:undefined},generation=dialogGeneration;
+  previous=query;
+  const current=()=>dialog.open&&element?.isConnected&&dialogGeneration===generation&&view.revision===body.revision&&previous===query;
+  fetch('/api/logistics-preview',{method:'POST',headers:{'Content-Type':'application/json'},body:key})
+   .then(response=>{if(!response.ok)throw Error('Logistics preview');return response.json();})
+   .then(result=>{if(current()){query.result=result.revision===body.revision?result:null;refresh();}})
+   .catch(()=>{if(current()){query.result=null;refresh();}});
+  return undefined;
+ };
+}
+function logisticsQuoteHtml(quote,comparison){
+ const q=quote?.logistics;
+ if(!q)return '';
+ const labels={plain:['平原','平地'],mountain:['山地','山地'],desert:['沙漠','砂漠'],river_downstream:['順流','下り'],river_still:['靜水','静水'],river_upstream:['逆流','上り'],sea:['海路','海路'],embark:['登船','乗船'],node_wait:['等待','待機']};
+ const times=Object.entries(q.time_ticks).map(([mode,ticks])=>
+  battleText(...(labels[mode]||[mode,mode]))+' '+String(ticks/q.ticks_per_day)+battleText('日','日')+(q.percent[mode]?' ('+q.percent[mode]+'%)':'')).join(' · ');
+ const line=(value,title)=>value?title+' '+value.days+battleText('日 · ','日・')+value.logistics.total_grain+battleText('糧','兵糧'):'';
+ return '<div class="small" data-logistics-quote data-march-grain="'+q.total_grain+'"><p>'+battleText(
+  '基礎口糧 '+q.base_grain+' · 額外後勤 '+q.extra_grain+' · 返程糧 '+(q.return_grain??'—'),
+  '基本兵糧 '+q.base_grain+'・追加補給 '+q.extra_grain+'・帰路 '+(q.return_grain??'—'))+'</p><p>'+times+'</p>'+
+  (comparison?'<p>'+[line(comparison.fastest,battleText('最快','最速')),line(comparison.minimum,battleText('最低耗糧','最小消費'))].filter(Boolean).join('　')+'</p>':'')+'</div>';
+}
 function marchRefillForecastHtml(quote,ids,loaded,owner,rows){
  if(!quote||!ids.length)return '';
  rows??=GameMarchSupply.refillForecast(view.game.officers,ids,quote,loaded,view.game.cities,owner,view.catalog.grain_people_per_day);
@@ -1539,10 +1572,19 @@ function departure(city,targetCity=null){
   const submit=founding?battleText('確認出航','出航する'):'确认出征';
   const troops=draft.officers.reduce((n,i)=>n+view.game.officers[i].troops,0),cost=legacyDepartureCost(troops),allied=alliedAttackNote(draft.target);
   openDialog(title,`<p>${escapeHtml(cityName(city.id))}出发，目标${escapeHtml(cityName(draft.target))}。</p>${allied?`<p class="small" data-allied-attack>${allied}</p>`:''}${commandBookHint('depart')}<p>${draft.officers.map(i=>escapeHtml(officerChoiceText(i))).join('<br>')}，共${troops}兵${view.catalog.travel_rules?'':`，耗粮${cost}`}。</p>${view.catalog.travel_rules?routeModeSelect(draft.route_mode)+'<div id="departure-estimate"></div><p id="departure-supply"></p><label class="field">'+reserveLabel+'<span class="departure-provisions-input"><input id="departure-battle-grain" type="number" min="0" step="1" inputmode="numeric"><button type="button" id="departure-battle-grain-max">'+battleText('最大','最大')+'</button></span></label><p id="departure-battle-budget" role="status"></p><div id="departure-refill-forecast"></div>'+marchSupplyRuleHtml():''}<p class="small">${arrival}现在取消不会扣粮或消耗行动。</p>`,`<button data-cancel>取消出征</button><button id="back-to-pick">返回名单</button><button id="confirm-departure" class="primary">${submit}</button>`);
+  const readLogistics=logisticsPreviewForDialog($('#departure-estimate'),'attack');
+  let confirmedRoute=null;
   const refresh=()=>{
    draft.route_mode=syncRouteModes(city.id,draft.target,draft.route_mode);
-   const estimate=$('#departure-estimate'),quote=travelQuote(city.id,draft.target,draft.route_mode);
-   estimate.innerHTML=travelEstimate(city.id,draft.target,draft.route_mode);previewSurvivors(estimate,quote,draft.officers);
+   const estimate=$('#departure-estimate'),answer=readLogistics(city.id,draft.target,draft.officers,draft.route_mode,refresh);
+   const quote=usesLogisticsV2()?answer?.primary:travelQuote(city.id,draft.target,draft.route_mode);
+   confirmedRoute=quote;
+   if(usesLogisticsV2()&&!quote){
+    estimate.innerHTML='<p role="status">'+(answer===undefined?battleText('正在計算後勤…','兵站を計算中…'):battleText('目前無可補給的路線。','補給可能な経路がありません。'))+'</p>';
+    $('#departure-supply').innerHTML=$('#departure-battle-budget').innerHTML=$('#departure-refill-forecast').innerHTML='';
+    $('#confirm-departure').disabled=true;return;
+   }
+   estimate.innerHTML=travelEstimate(city.id,draft.target,draft.route_mode,quote)+logisticsQuoteHtml(quote,answer);previewSurvivors(estimate,quote,draft.officers);
    let loaded=quote?marchGrain(draft.officers,quote):0;
    const segmentLoaded=loaded,food=$('#departure-battle-grain'),budget=$('#departure-battle-budget');
    if(food&&quote&&typeof GameBattleSupply!=='undefined'){
@@ -1569,7 +1611,7 @@ function departure(city,targetCity=null){
    if(!hasCommandBook('depart'))return notice(commandBookReason('depart'),true);
    if(!isDepartureTarget(view.game.cities[draft.target]))return rejectDepartureTarget();
    if(draft.officers.length>departureLimit(draft.target))return notice('联军攻方的可用名额已变化，请返回名单调整武将人数。',true);
-   if(view.catalog.travel_rules){refresh();const quote=travelQuote(city.id,draft.target,draft.route_mode);if(!quote)return notice('没有符合条件的路线。',true);if(city.grain<marchGrain(draft.officers,quote))return notice('行军粮食不足。',true);}
+   if(view.catalog.travel_rules){refresh();const quote=confirmedRoute;if(!quote)return notice('没有符合条件的路线。',true);if(city.grain<marchGrain(draft.officers,quote))return notice('行军粮食不足。',true);}
    actor=target=null;if(await command('depart',draft))dialog.close();
   };
  };
@@ -1608,6 +1650,7 @@ function transferCity(city){
  const introduction=view.catalog.travel_rules?`<p><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">可經相通的本方城池、無主城和同盟領地調任。目的城須屬本方，上限${capacity()}人；使用全勢力共用命令書。</span><span data-locale-only="ja" data-l10n-native="ja" hidden>自勢力の都市、空白都市、同盟領を経由して移動できます。目的都市は自勢力、定員${capacity()}人まで。勢力全体で共有する命令書を使います。</span></p>${marchSupplyRuleHtml()}`:`<p>可经过相通的本方城池及无主城，不能穿过敌城；目的城必须属本方。费用为每人每段道路5粮。使用全势力共用命令书，目的城仍最多${capacity()}人。</p>`;
  openDialog('调动武将',`${introduction}${commandBookHint('transfer')}${view.catalog.travel_rules?routeModeSelect()+'<div id="transfer-estimate"></div><p id="transfer-supply"></p><div id="transfer-refill-forecast"></div>':''}<label class="field">目的城<select id="transfer-city">${destinations.map(c=>`<option value="${c.id}">${escapeHtml(cityName(c.id))} · ${cityOccupancy(c)}/${capacity()}人</option>`).join('')}</select></label><div class="selection-status"><p id="transfer-count" role="status" aria-live="polite"></p><p class="small" id="transfer-reason"></p></div><div class="officer-picker">${sortedOfficers(city.roster.officer_ids).map(i=>`<label><input type="checkbox" name="transfer-officer" value="${i}" ${officerUnavailable(i)?'disabled':''}>${escapeHtml(officerChoiceText(i,{loyalty:true}))}</label>`).join('')}</div>${view.catalog.travel_rules?'<section id="transfer-supply-detour" hidden></section>':''}`,'<button data-cancel>取消</button><button id="confirm-transfer" class="primary">确认调动</button>');
  const detourPanel=$('#transfer-supply-detour');
+ const readLogistics=logisticsPreviewForDialog($('#transfer-estimate'),'transfer');
  let selection,updating=false,limit=0,quote=null,baseQuote=null;
  let supplyPreview=null,renderedPreview=null,useDetour=false,previewTimer;
  const syncSupplyPreview=(destination,mode,ids,rows)=>{
@@ -1656,19 +1699,21 @@ function transferCity(city){
   if(updating)return;updating=true;
   try{
    const destination=$('#transfer-city').value,slots=Math.max(0,capacity()-cityOccupancy(view.game.cities[destination])),mode=$('#route-mode')?syncRouteModes(city.id,destination,$('#route-mode').value):'fastest';
-   baseQuote=view.catalog.travel_rules?travelQuote(city.id,destination,mode):null;
+   baseQuote=view.catalog.travel_rules?travelQuote(city.id,destination,mode==='minimum_grain'?'fastest':mode):null;
    const available=city.roster.officer_ids.filter(i=>!officerUnavailable(i)),eligible=available.length;
    limit=Math.min(slots,eligible);selection?.setLimit(limit);
    let ids=[...dialog.querySelectorAll('input[name=transfer-officer]:checked')].map(e=>GameOfficerChoices.ref(e.value));
-   while(selection&&baseQuote&&ids.length&&marchGrain(ids,baseQuote)>city.grain){selection.setLimit(ids.length-1);ids=selection.selectedIds();}
+   while(!usesLogisticsV2()&&selection&&baseQuote&&ids.length&&marchGrain(ids,baseQuote)>city.grain){selection.setLimit(ids.length-1);ids=selection.selectedIds();}
    selection?.setLimit(limit);
+   const answer=ids.length?readLogistics(city.id,destination,ids,mode,updateEstimate):null;
+   if(usesLogisticsV2()&&ids.length)baseQuote=answer?.primary??null;
    const baseLoaded=baseQuote?marchGrain(ids,baseQuote):0;
    const baseRefills=baseQuote?GameMarchSupply.refillForecast(view.game.officers,ids,baseQuote,baseLoaded,view.game.cities,city.owner,view.catalog.grain_people_per_day):[];
    const detour=syncSupplyPreview(destination,mode,ids,baseRefills);
    quote=useDetour&&detour?detour:baseQuote;
    const unarmed=mode==='explore'&&ids.length>0&&!ids.some(id=>view.game.officers[id].troops>0),poor=!!quote&&!available.some(id=>marchGrain([id],quote)<=city.grain);
    selectionStatus('transfer',ids.length,limit,slots===0?'目的城已满，无法再调入武将。':eligible===0?'本城没有可行动的武将。':view.catalog.travel_rules&&!quote?'没有符合条件的路线。':unarmed?'探索航行至少需要一名带兵武将。':poor?'行军粮食不足。':'');
-   const estimate=$('#transfer-estimate');if(estimate){estimate.innerHTML=travelEstimate(city.id,destination,mode,quote);previewSurvivors(estimate,quote,ids);}
+   const estimate=$('#transfer-estimate');if(estimate){estimate.innerHTML=usesLogisticsV2()&&ids.length&&answer===undefined?'<p role="status">'+battleText('正在計算後勤…','兵站を計算中…')+'</p>':travelEstimate(city.id,destination,mode,quote)+logisticsQuoteHtml(quote,answer);previewSurvivors(estimate,quote,ids);}
    const loaded=quote===baseQuote?baseLoaded:marchGrain(ids,quote);
    if($('#transfer-supply'))$('#transfer-supply').innerHTML=quote?marchSupplyHtml({loaded,consumed:0,remaining:loaded,elapsed_days:0}):'';
    if($('#transfer-refill-forecast'))$('#transfer-refill-forecast').innerHTML=marchRefillForecastHtml(quote,ids,loaded,city.owner,quote===baseQuote?baseRefills:undefined);
@@ -1677,7 +1722,7 @@ function transferCity(city){
    GameI18n.apply();
   }finally{updating=false;}
  };
- selection=GameOfficerSelection.bind(dialog.querySelectorAll('input[name=transfer-officer]'),{limit:capacity(),isEligible:input=>{if(!view.catalog.travel_rules)return true;if(!baseQuote)return false;if(input.checked)return true;const selected=[...dialog.querySelectorAll('input[name=transfer-officer]:checked')].map(e=>GameOfficerChoices.ref(e.value));return marchGrain([...selected,GameOfficerChoices.ref(input.value)],baseQuote)<=city.grain;},onChange:()=>{if(selection)updateEstimate();}});
+ selection=GameOfficerSelection.bind(dialog.querySelectorAll('input[name=transfer-officer]'),{limit:capacity(),isEligible:input=>{if(!view.catalog.travel_rules||usesLogisticsV2())return true;if(!baseQuote)return false;if(input.checked)return true;const selected=[...dialog.querySelectorAll('input[name=transfer-officer]:checked')].map(e=>GameOfficerChoices.ref(e.value));return marchGrain([...selected,GameOfficerChoices.ref(input.value)],baseQuote)<=city.grain;},onChange:()=>{if(selection)updateEstimate();}});
  $('#transfer-city').onchange=updateEstimate;if($('#route-mode'))$('#route-mode').onchange=updateEstimate;watchRouteDialog(updateEstimate);updateEstimate();
  $('#confirm-transfer').onclick=async()=>{
   if(!hasCommandBook('transfer'))return notice(commandBookReason('transfer'),true);
@@ -2066,14 +2111,15 @@ function openBattleReinforcements(){
    const route=row.routes.find(route=>route.id===routeSelect.value);
    const ids=checks.filter(input=>input.checked).map(input=>GameOfficerChoices.ref(input.dataset.reinforceOfficer));
    const troops=ids.reduce((sum,id)=>sum+view.game.officers[String(id)].troops+100,0);
-   const grain=Math.ceil(troops*2*route.days/options.denominator);
+   const rationCost=plan=>plan.provisions?Math.ceil(troops*(plan.provisions.outbound+plan.provisions.returning)/plan.provisions.denominator):Math.ceil(troops*2*plan.days/options.denominator);
+   const grain=rationCost(route),minimum=Math.min(...row.routes.map(rationCost));
    const short=grain>row.grain;
    const allowed=ids.length>0&&ids.length<=options.remaining&&!short&&view.game.battle?.id===battleId;
    confirm.disabled=!allowed;
    request=allowed?{battle_id:battleId,source:row.city,route:route.id,officers:ids}:null;
    $('#battle-reinforce-quote').textContent=battlePlain(
-    `預計第${route.arrival}日抵達 · 往返備糧 ${grain}／庫存 ${row.grain} · 1 本命令書${short?' · 糧不足':''}`,
-    `第${route.arrival}日到着予定・往復の糧 ${grain}／備蓄 ${row.grain}・命令書1冊${short?'・糧不足':''}`);
+    `預計第${route.arrival}日抵達 · 往返備糧 ${grain}／庫存 ${row.grain} · 最低 ${minimum} · 1 本命令書${short?' · 糧不足':''}`,
+    `第${route.arrival}日到着予定・往復の糧 ${grain}／備蓄 ${row.grain}・最小 ${minimum}・命令書1冊${short?'・糧不足':''}`);
   }
   routeSelect.onchange=update;
   for(const input of checks)input.onchange=update;

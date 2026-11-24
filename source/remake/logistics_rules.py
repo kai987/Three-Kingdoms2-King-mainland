@@ -24,7 +24,7 @@ CARGO_GRAIN_LOSS_BPS = MappingProxyType({
 
 
 def version(state):
-    return state.extension.get(FIELD, LEGACY)
+    return getattr(state, 'extension', {}).get(FIELD, LEGACY)
 
 
 def validate(state):

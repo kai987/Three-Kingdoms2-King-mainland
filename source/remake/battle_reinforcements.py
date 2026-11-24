@@ -141,14 +141,19 @@ def _cost(state, officers, days):
 
 
 def _roundtrip(game, state, officers, leg):
-    if logistics_rules.version(state) == logistics_rules.LEGACY:
-        return _cost(state, officers, 2 * leg['days'])
+    quote = _route_provisions(game,state,leg)
+    units = march_supply.ration_units(state,officers)
+    return logistics_rules.ceil_div(units*(quote['outbound']+quote['returning']),quote['denominator'])
+
+
+def _route_provisions(game,state,leg):
+    if logistics_rules.version(state)==logistics_rules.LEGACY:
+        return dict(outbound=leg['days'],returning=leg['days'],denominator=march_supply.denominator())
     parts = logistics_rules.leg_parts(leg, march_supply.travel_rules(game))
     reverse = logistics_rules.reverse_prefix(parts, leg['days'])
-    units = march_supply.ration_units(state, officers)
-    weighted = logistics_rules.weight(parts) + logistics_rules.weight(reverse)
-    return logistics_rules.ceil_div(units * weighted,
-                                    march_supply.denominator() * logistics_rules.RATION_SCALE)
+    return dict(outbound=logistics_rules.weight(parts),returning=logistics_rules.weight(reverse),
+                denominator=march_supply.denominator()*logistics_rules.RATION_SCALE,
+                modes=logistics_rules.time_by_mode(parts))
 
 
 def _meal(rations, units, weight):
@@ -358,7 +363,8 @@ def view(game, state, battle):
         for city, _, legs, officers in _eligible(game, state, battle, owners_routes):
             options.append(dict(city=city.id, grain=city.grain, officers=officers,
                 routes=[dict(id=leg['id'], mode=leg['mode'], days=leg['days'],
-                             arrival=battle['round'] + leg['days']) for leg in sorted(legs, key=lambda leg: leg['days'])]))
+                             arrival=battle['round']+leg['days'],provisions=_route_provisions(game,state,leg))
+                        for leg in sorted(legs,key=lambda leg: leg['days'])]))
     return dict(pending=pending, remaining=remaining, sources=options, denominator=march_supply.denominator(),
                 supporting=supporting_side(battle) is not None, can_decline=_can_decline(state, battle))
 

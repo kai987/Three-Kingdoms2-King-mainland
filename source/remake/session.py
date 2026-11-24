@@ -364,6 +364,41 @@ class CampaignSession:
             return preview_transfer(self.game, state, source.id, target.id, ids,
                                     payload['route_mode'], self.revision)
 
+    def preview_logistics(self, payload):
+        from . import logistics
+        from .march_preview import preview_logistics
+
+        with self.lock, grain_units.using(self.game.state):
+            fields={'source','target','officers','route_mode','purpose','cargo','reserves','revision'}
+            state=self.game.state
+            if (not isinstance(payload,dict) or set(payload)!=fields or type(payload['revision']) is not int
+                    or state is None or 'travel_rules' not in self.game.catalog.data):
+                raise GameError('查询参数无效。')
+            if self.revision!=payload['revision']:
+                raise GameError('进度已更新，请重新选择操作。',409)
+            source,target,ids,mode,purpose,cargo,reserves=(
+                payload[key] for key in ('source','target','officers','route_mode','purpose','cargo','reserves'))
+            if (not isinstance(source,str) or not isinstance(target,str) or source==target
+                    or source not in state.cities or target not in state.cities
+                    or state.cities[source].owner!=state.player
+                    or not isinstance(mode,str) or mode not in self.game._travel_modes()
+                    or not isinstance(purpose,str) or purpose not in ('attack','transfer','convoy')
+                    or not isinstance(ids,list) or not 1<=len(ids)<=99
+                    or any(type(ident) not in (int,str) for ident in ids) or len(set(ids))!=len(ids)
+                    or any(type(value) is not int or not 0<=value<=logistics.LIMIT for value in (cargo,reserves))
+                    or purpose!='convoy' and (cargo or reserves)
+                    or purpose=='attack' and len(ids)>self.game.catalog.rules.battle_officers_per_side):
+                raise GameError('查询参数无效。')
+            city=state.cities[source]
+            if purpose=='convoy':
+                if any(ident not in logistics._eligible(self.game,state,city) for ident in ids):
+                    raise GameError('请选择可参与运输的武将。')
+            else:
+                ids=[self.game._personnel_actor(state,city,ident).runtime_id for ident in ids]
+            if purpose!='attack' and state.cities[target].owner!=state.player:
+                raise GameError('请选择本方目的城。')
+            return preview_logistics(self.game,state,source,target,ids,mode,purpose,cargo,reserves,self.revision)
+
     def load_save(self, save, revision):
         with self.lock:
             if type(revision) is not int or revision!=self.revision:raise GameError('进度已更新。',409)
