@@ -766,6 +766,9 @@ CITY_CHARS = str.maketrans(pairs('''
 襄=>襄
 濮=>濮
 阆=>閬
+乡=>郷
+顺=>順
+鲁=>魯
 '''))
 
 

@@ -8,7 +8,7 @@
     "map-clean.png": "bbe033c944ba1547ca12c7d0cbd50d930c8a49befce5fbcc767cf5afbfc77c7e",
     "map-navigation.png": "3cf81b31f08fe73ff5f9acd7627e009de9e4250664088c2d7cfc54f31bd2f683",
     "map.png": "30946ef6877db09f7fb44c7d0cfe729614983613619095428ff3a270c0881edd",
-    "map-road-centers.png": "ba6559305096c0be4c044f0a59c5660609e73766d9817851cc7aabd136b33547"
+    "map-road-centers.png": "0bb3df1ad7a8507aae55d38b9a1f9e48599936b9d7c720482b58f69623c5c0ba"
   },
   "native_castle_sprite": {
     "sourceRect": [
@@ -863,6 +863,10 @@
       "taiyuan",
       "qi",
       "wuwei",
+      "jincheng",
+      "longxi",
+      "tianshui",
+      "wudu",
       "jiujiang",
       "nanjun",
       "nanhai",
@@ -951,16 +955,24 @@
             "mode": "land",
             "points": [
               [
-                200,
-                182
+                253,
+                188
               ],
               [
-                198,
+                246,
+                170
+              ],
+              [
+                222,
+                164
+              ],
+              [
+                215,
                 156
               ],
               [
-                206,
-                130
+                209,
+                128
               ],
               [
                 208,
@@ -1046,12 +1058,41 @@
                 218
               ],
               [
-                224,
-                234
+                202,
+                222
               ],
               [
-                278,
-                256
+                218,
+                218
+              ],
+              [
+                235,
+                218
+              ]
+            ]
+          },
+          {
+            "mode": "land",
+            "points": [
+              [
+                235,
+                218
+              ],
+              [
+                256,
+                243
+              ],
+              [
+                267,
+                276
+              ],
+              [
+                273,
+                293
+              ],
+              [
+                280,
+                306
               ]
             ]
           }
@@ -1075,12 +1116,33 @@
                 218
               ],
               [
-                194,
-                204
+                202,
+                222
               ],
               [
-                200,
-                182
+                218,
+                218
+              ],
+              [
+                235,
+                218
+              ]
+            ]
+          },
+          {
+            "mode": "land",
+            "points": [
+              [
+                235,
+                218
+              ],
+              [
+                242,
+                207
+              ],
+              [
+                253,
+                188
               ]
             ]
           }
@@ -1928,24 +1990,41 @@
             "mode": "land",
             "points": [
               [
-                200,
-                182
+                253,
+                188
               ],
               [
-                194,
-                204
+                242,
+                207
               ],
               [
-                182,
+                235,
+                218
+              ]
+            ]
+          },
+          {
+            "mode": "land",
+            "points": [
+              [
+                235,
                 218
               ],
               [
-                224,
-                234
+                256,
+                243
               ],
               [
-                278,
-                256
+                267,
+                276
+              ],
+              [
+                273,
+                293
+              ],
+              [
+                280,
+                306
               ]
             ]
           }
@@ -4009,7 +4088,8 @@
     "inactive_castle_ids": [
       "yiyang",
       "yidu",
-      "xindu"
+      "xindu",
+      "daifang"
     ],
     "inactive_castle_ground": "/assets/map-city-ground.png"
   },

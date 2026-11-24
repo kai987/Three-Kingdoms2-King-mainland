@@ -23,6 +23,7 @@ from . import battle_reinforcements, city_economy, economy_rules, grain_market, 
 from .city_economy import frontier_maintenance
 from .starting_garrisons import resolve as resolve_opening_garrisons
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
+from .map_presentation import city_names
 from .events import empty as empty_events, emit as emit_event, transition as record_events, validate as validate_events
 from .officers import (OFFICER_TROOP_CAP, CityRoster, GameRules, OfficerProfile, PersonDefinition,
                        RuntimeOfficer, YearState, advance_year, experience_tier,
@@ -196,15 +197,21 @@ class Catalog:
         return resolve_opening_garrisons(self)
 
     def active_city_ids(self, year, month=1):
+        date = year, month
         opened = set(self.data['active_cities'])
         for key, rule in self.data.get('city_foundings', {}).items():
-            if (year,month) >= (rule['year'],rule.get('month',1)): opened.add(key)
-            else: opened.discard(key)
+            if date >= (rule['year'], rule.get('month', 1)):
+                opened.add(key)
+            else:
+                opened.discard(key)
         # Administrative abolition affects later scenario openings. An older
         # campaign keeps its existing node, troops and actual ownership.
-        opening=(self.data['start_year'],self.data['start_month'])
-        for key,rule in self.data.get('city_retirements',{}).items():
-            if opening>=(rule['year'],rule.get('month',1)):opened.discard(key)
+        opening = self.data['start_year'], self.data['start_month']
+        for key, rule in self.data.get('city_retirements', {}).items():
+            retired = rule['year'], rule.get('month', 1)
+            reopens = rule.get('reopens')
+            if opening >= retired and date >= retired and (not reopens or date < tuple(reopens)):
+                opened.discard(key)
         return [key for key in self.map_cities if key in opened]
 
     def name(self, ident):
@@ -708,26 +715,32 @@ class Campaign(TravelCampaign, ExpandedCampaign):
 
     def _open_dated_cities(self, state):
         """Split an existing actual territory; do not replay historical conquest."""
-        active = set(self.catalog.active_city_ids(state.year, state.month))
-        for key, rule in self.catalog.data.get('city_foundings', {}).items():
-            if key in state.cities or key not in active:
-                continue
+        date = state.year, state.month
+        active = set(self.catalog.active_city_ids(*date))
+        due = [(key, rule) for key, rule in self.catalog.data.get('city_foundings', {}).items()
+               if key in active and key not in state.cities]
+        if not due:
+            return
+        for key, rule in due:
             parent = state.cities[rule['parent']]
             resources = {}
             for field in ('gold','grain','reserves'):
                 resources[field] = getattr(parent,field) // rule['resource_divisor']
                 setattr(parent,field,getattr(parent,field)-resources[field])
             state.cities[key] = City(key,parent.owner,CityRoster(key,rules=self.catalog.rules),**resources)
-            facilities.synchronize(self,state)
-            city_development.synchronize(self,state)
-            treasures.synchronize(self,state)
-            treasures.inherit_city(state,key,parent.id)
+        facilities.synchronize(self,state)
+        city_development.synchronize(self,state)
+        treasures.synchronize(self,state)
+        current_names = city_names(self.catalog, *date)
+        for key, rule in due:
+            parent = rule['parent']
+            treasures.inherit_city(state, key, parent)
             if key == 'xinxing' and 'month' not in rule:
                 # Keep the released year-only event text and replay output.
                 self._note(state,f'{self.catalog.map_cities[key]["name"]}建郡，承接晋阳当时归属与部分资源；未新增兵员或强制转属。')
             else:
-                parent_name = self.catalog.map_cities[rule['parent']]['name']
-                self._note(state,f'{self.catalog.map_cities[key]["name"]}建置，承接{parent_name}当时归属与部分资源；未新增兵员或强制转属。')
+                parent_name = self.catalog.map_cities[parent]['name']
+                self._note(state,f'{current_names[key]}建置，承接{parent_name}当时归属与部分资源；未新增兵员或强制转属。')
 
     def _monthly_calendar(self, state, harvest=None):
         """Monthly income, healing and dated events run only at month rollover."""

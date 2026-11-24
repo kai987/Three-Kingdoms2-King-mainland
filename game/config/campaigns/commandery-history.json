@@ -1,0 +1,1045 @@
+{
+  "schema": "tk2-commandery-history-v1",
+  "new_sites": {
+    "liang": {
+      "name": "梁",
+      "parent": "chenliu",
+      "administrative_names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "zh": "梁國",
+          "ja": "梁国"
+        },
+        {
+          "from_date": [
+            220,
+            11
+          ],
+          "zh": "梁郡",
+          "ja": "梁郡"
+        },
+        {
+          "from_date": [
+            232,
+            2
+          ],
+          "zh": "梁國",
+          "ja": "梁国"
+        }
+      ],
+      "detail": "東漢梁國治睢陽（今商丘）。漢魏禪代後改梁郡；魏明帝太和六年立曹悌為梁王，復按王國記。漢末梁地另依劇本的實際控制配置。",
+      "detail_ja": "後漢の梁国の治所は睢陽（現在の商丘）です。漢魏交代後は梁郡、曹悌が梁王に封じられた232年から再び梁国とします。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/後漢書/卷110",
+        "https://zh.wikisource.org/zh-hant/三國志/卷20",
+        "https://zh.wikisource.org/wiki/晉書/卷014"
+      ],
+      "opening_owners": {
+        "mainland190-01": "neutral",
+        "mainland191-10": "neutral",
+        "mainland194-06": "neutral"
+      }
+    },
+    "pengcheng": {
+      "name": "彭城",
+      "parent": "xiapi",
+      "administrative_names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "zh": "彭城國",
+          "ja": "彭城国"
+        },
+        {
+          "from_date": [
+            220,
+            11
+          ],
+          "zh": "彭城郡",
+          "ja": "彭城郡"
+        },
+        {
+          "from_date": [
+            232,
+            2
+          ],
+          "zh": "彭城國",
+          "ja": "彭城国"
+        }
+      ],
+      "detail": "東漢彭城國治彭城（今徐州）。198年曹操在討呂布時攻下彭城。魏初曹據曾短暫受封，確月難定；本作從232年復封起穩定顯示彭城國。",
+      "detail_ja": "後漢の彭城国の治所は現在の徐州です。198年に曹操が攻略しました。魏初の曹拠の短い封国を経て、ゲームでは232年の再封から彭城国と表示します。",
+      "sources": [
+        "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_42777",
+        "https://zh.wikisource.org/zh-hant/三國志/卷01",
+        "https://zh.wikisource.org/zh-hant/三國志/卷20"
+      ],
+      "opening_owners": {
+        "mainland184-02": "han",
+        "mainland188-06": "han",
+        "mainland190-01": "tao_qian",
+        "mainland191-10": "tao_qian",
+        "mainland194-06": "tao_qian",
+        "mainland198-03": "lubu",
+        "mainland200-01": "wei"
+      },
+      "label_offset": [
+        -23,
+        7,
+        "end"
+      ]
+    },
+    "ruyin": {
+      "name": "汝阴",
+      "parent": "runan",
+      "administrative_names": [
+        {
+          "from_date": [
+            222,
+            1
+          ],
+          "zh": "汝陰郡",
+          "ja": "汝陰郡"
+        },
+        {
+          "from_date": [
+            260,
+            1
+          ],
+          "zh": "汝南郡（汝陰已省）",
+          "ja": "汝南郡（汝陰郡廃止）"
+        },
+        {
+          "from_date": [
+            266,
+            1
+          ],
+          "zh": "汝陰郡",
+          "ja": "汝陰郡"
+        }
+      ],
+      "detail": "曹魏分汝南置汝陰，治今阜陽。《晉書》確載魏置、後廢、西晉266年復置。採黃初三年（222）及魏末260年為劇本界線，撤郡確月不詳。",
+      "detail_ja": "魏が汝南から分けた汝陰郡の治所は現在の阜陽です。開始は222年、廃止は魏末の260年と仮定し、266年の西晋での再置も記録します。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/晉書/卷014",
+        "https://www.shidianguji.com/book/7514547545549307939/chapter/1levoqj9p27m7",
+        "https://ctext.org/wiki.pl?chapter=171246&if=gb"
+      ],
+      "founding": {
+        "year": 222,
+        "month": 1,
+        "precision": "attested_year_game_month"
+      },
+      "retirement": {
+        "year": 260,
+        "month": 1,
+        "precision": "inferred_game_month",
+        "reopens": [
+          266,
+          1
+        ]
+      }
+    },
+    "xihai": {
+      "name": "西海",
+      "parent": "zhangye",
+      "administrative_names": [
+        {
+          "from_date": [
+            195,
+            1
+          ],
+          "zh": "西海郡",
+          "ja": "西海郡"
+        }
+      ],
+      "detail": "興平二年（195）張雅請從張掖劃設，治居延，為今額濟納一帶的西海郡。河西無對應割據勢力的開局按地方漢郡處理。",
+      "detail_ja": "195年、張雅の建議を受けて張掖から居延を分けて設置。現在のエジン一帯に位置し、青海湖周辺の同名郡とは別です。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/晉書/卷014",
+        "https://zh.wikisource.org/zh-hant/後漢書/卷113"
+      ],
+      "founding": {
+        "year": 195,
+        "month": 1,
+        "precision": "attested_year_game_month"
+      }
+    },
+    "nanxiang": {
+      "name": "南乡",
+      "parent": "nanyang",
+      "administrative_names": [
+        {
+          "from_date": [
+            208,
+            9
+          ],
+          "zh": "南鄉郡",
+          "ja": "南郷郡"
+        },
+        {
+          "from_date": [
+            265,
+            1
+          ],
+          "zh": "順陽郡",
+          "ja": "順陽郡"
+        }
+      ],
+      "detail": "建安十三年（208）曹操取得荊州北部後分南陽西部設南鄉，治所取順陽、南鄉同一丹江河谷，今淅川一帶。9月用作荊州戰役界線。晉武帝改順陽，265年為本作年界。",
+      "detail_ja": "208年、曹操が荊州北部を得て南陽西部に南郷郡を置きました。地図では淅川付近を使い、西晋での順陽への改称は265年を表示の境とします。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/晉書/卷015",
+        "https://zh.wikisource.org/zh-hant/宋書/卷37",
+        "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_45727",
+        "https://www.shidianguji.com/book/CADAL02030991/chapter/1lmngzgkbtixn"
+      ],
+      "founding": {
+        "year": 208,
+        "month": 9,
+        "precision": "attested_year_campaign_month"
+      },
+      "names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "name": "南乡"
+        },
+        {
+          "from_date": [
+            265,
+            1
+          ],
+          "name": "顺阳"
+        }
+      ]
+    },
+    "yiyang_runan": {
+      "name": "弋阳",
+      "parent": "runan",
+      "administrative_names": [
+        {
+          "from_date": [
+            218,
+            1
+          ],
+          "zh": "弋陽郡",
+          "ja": "弋陽郡"
+        }
+      ],
+      "detail": "《晉書》歸於魏文帝分汝南，《三國志》已載田豫在曹彰218年征代郡前任弋陽太守。取218年初為本作保守界線，治弋陽（今河南潢川隆古一帶）。與新野方向的義陽分列。",
+      "detail_ja": "『晋書』は魏文帝による分置としますが、『三国志』では218年の曹彰の出征前に田豫が弋陽太守を務めています。ゲームでは218年初めを境とし、義陽とは別の地点に置きます。",
+      "sources": [
+        "https://ctext.org/text.pl?if=gb&node=603135",
+        "https://zh.wikisource.org/wiki/晉書/卷014",
+        "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_82553"
+      ],
+      "founding": {
+        "year": 218,
+        "month": 1,
+        "precision": "attested_by_218_game_boundary"
+      }
+    },
+    "lu": {
+      "name": "鲁",
+      "parent": "shanyang",
+      "administrative_names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "zh": "魯國",
+          "ja": "魯国"
+        },
+        {
+          "from_date": [
+            220,
+            11
+          ],
+          "zh": "魯郡",
+          "ja": "魯郡"
+        }
+      ],
+      "detail": "東漢魯國治魯縣（今曲阜）；曹魏地理沿用同一郡治，採山東建置志的魯郡稱呼。曹魏皇族的魯陽封邑在另一地。",
+      "detail_ja": "後漢では魯国、魏では魯郡で、治所は魯県（曲阜）です。魏の諸侯が封じられた魯陽とは別の地点です。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/後漢書/卷110",
+        "https://zh.wikisource.org/wiki/晉書/卷014",
+        "https://shandong-chorography.org/database/a/section/3/article/12/"
+      ],
+      "opening_owners": {
+        "mainland190-01": "neutral",
+        "mainland191-10": "neutral"
+      }
+    },
+    "leling": {
+      "name": "乐陵",
+      "parent": "pingyuan",
+      "administrative_names": [
+        {
+          "from_date": [
+            213,
+            1
+          ],
+          "zh": "樂陵郡",
+          "ja": "楽陵郡"
+        },
+        {
+          "from_date": [
+            244,
+            1
+          ],
+          "zh": "樂陵國",
+          "ja": "楽陵国"
+        }
+      ],
+      "detail": "曹操建安中分平原等地置郡，魏時治厭次，約在今惠民—陽信一帶。採213年為建安年間的劇本界線。據《山東省志》採244年改稱樂陵國。",
+      "detail_ja": "曹操が建安年間に平原などから分け、魏の郡治は厭次でした。開放の年は213年を採用し、244年以降は楽陵国とします。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/晉書/卷014",
+        "https://zh.wikisource.org/zh-hant/讀史方輿紀要/卷二",
+        "https://www.shidianguji.com/zh/book/CADAL02032629/chapter/1lmfcvxtr1l34",
+        "https://shandong-chorography.org/database/a/section/3/article/12/"
+      ],
+      "founding": {
+        "year": 213,
+        "month": 1,
+        "precision": "period_game_boundary"
+      }
+    },
+    "zhangwu": {
+      "name": "章武",
+      "parent": "hejian",
+      "administrative_names": [
+        {
+          "from_date": [
+            215,
+            1
+          ],
+          "zh": "章武郡",
+          "ja": "章武郡"
+        },
+        {
+          "from_date": [
+            250,
+            1
+          ],
+          "zh": "章武郡已省",
+          "ja": "章武郡廃止"
+        },
+        {
+          "from_date": [
+            265,
+            1
+          ],
+          "zh": "章武國",
+          "ja": "章武国"
+        }
+      ],
+      "detail": "漢末置章武，治東平舒（今河北大城）。採CHGIS的暫定編年215年置、250年省；晉265年另復立章武國。",
+      "detail_ja": "漢末に置かれた章武郡の治所は東平舒（現在の河北省大城）です。CHGISの暫定編年に従い、215年に開放、250年以降の開幕で廃止します。",
+      "sources": [
+        "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_87628",
+        "https://zh.wikisource.org/wiki/晉書/卷014"
+      ],
+      "founding": {
+        "year": 215,
+        "month": 1,
+        "precision": "scholarly_inferred_year_game_month"
+      },
+      "retirement": {
+        "year": 250,
+        "month": 1,
+        "precision": "inferred_game_month",
+        "reopens": [
+          265,
+          1
+        ]
+      }
+    },
+    "youbeiping": {
+      "name": "右北平",
+      "parent": "yuyang",
+      "administrative_names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "zh": "右北平郡",
+          "ja": "右北平郡"
+        },
+        {
+          "from_date": [
+            265,
+            1
+          ],
+          "zh": "北平郡",
+          "ja": "北平郡"
+        }
+      ],
+      "detail": "東漢右北平郡治土垠（今唐山豐潤一帶）。漢末公孫瓚、袁氏至曹操的控制按幽州東部局勢配置；晉地志稱北平，治徐無。",
+      "detail_ja": "後漢の右北平郡の治所は土垠（唐山の豊潤付近）です。漢末の所属は幽州東部の情勢に沿い、西晋の北平郡への改称は265年を境とします。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/後漢書/卷112",
+        "https://www.shidianguji.com/zh/mid-page/7585306632381464602",
+        "https://zh.wikisource.org/wiki/晉書/卷014"
+      ],
+      "opening_owners": {
+        "mainland184-02": "han",
+        "mainland188-06": "neutral"
+      },
+      "names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "name": "右北平"
+        },
+        {
+          "from_date": [
+            265,
+            1
+          ],
+          "name": "北平"
+        }
+      ]
+    },
+    "guangping": {
+      "name": "广平",
+      "parent": "wei",
+      "administrative_names": [
+        {
+          "from_date": [
+            221,
+            1
+          ],
+          "zh": "廣平郡",
+          "ja": "広平郡"
+        },
+        {
+          "from_date": [
+            222,
+            1
+          ],
+          "zh": "廣平國",
+          "ja": "広平国"
+        },
+        {
+          "from_date": [
+            223,
+            1
+          ],
+          "zh": "廣平郡",
+          "ja": "広平郡"
+        }
+      ],
+      "detail": "西漢曾有廣平國，東漢初併鉅鹿；曹魏黃初二年（221）分魏郡復置，治曲梁（今永年廣府）。此前按鉅鹿、魏郡區域處理。 曹儼222年受封廣平王，223年無嗣國除。",
+      "detail_ja": "後漢初に鉅鹿へ統合された広平を、魏が221年に魏郡から再分割しました。曲梁（現在の永年広府付近）を治所とします。 曹儼の封国となった222年から翌年の国除までは広平国とします。",
+      "sources": [
+        "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_87505",
+        "https://zh.wikisource.org/wiki/晉書/卷014",
+        "https://zh.wikisource.org/wiki/魏書/卷106上",
+        "https://ctext.org/wiki.pl?chapter=3529848&if=gb"
+      ],
+      "founding": {
+        "year": 221,
+        "month": 1,
+        "precision": "attested_annal_month"
+      },
+      "label_offset": [
+        -42,
+        46,
+        "end"
+      ]
+    },
+    "lean": {
+      "name": "乐安",
+      "parent": "qi",
+      "administrative_names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "zh": "樂安國",
+          "ja": "楽安国"
+        },
+        {
+          "from_date": [
+            220,
+            11
+          ],
+          "zh": "樂安郡",
+          "ja": "楽安郡"
+        }
+      ],
+      "detail": "青州樂安承東漢千乘故地，三國時曹魏治高苑。共用一處節點顯示東漢樂安國、曹魏樂安郡。205年曹操平袁氏青州後列入其版圖。",
+      "detail_ja": "後漢の楽安国と魏の楽安郡を同じ地点で表示し、郡治には高苑を採用します。205年の青州平定後は曹操の勢力です。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/後漢書/卷112",
+        "https://zh.wikisource.org/wiki/晉書/卷015",
+        "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_45119",
+        "https://shandong-chorography.org/database/a/section/3/article/12/"
+      ],
+      "opening_owners": {
+        "mainland202-06": "yuan_tan"
+      },
+      "owner_since": [
+        {
+          "from_date": [
+            205,
+            1
+          ],
+          "owner": "wei"
+        }
+      ],
+      "label_offset": [
+        24,
+        -27,
+        "start"
+      ]
+    },
+    "leping": {
+      "name": "乐平",
+      "parent": "shangdang",
+      "administrative_names": [
+        {
+          "from_date": [
+            215,
+            1
+          ],
+          "zh": "樂平郡",
+          "ja": "楽平郡"
+        }
+      ],
+      "detail": "取《水經注》所記後漢分上黨沾縣置樂平及《晉書》并州沿革，治今昔陽一帶。215年作為建安中後期的遊戲界線；晉志郡條另有泰始置的異說。",
+      "detail_ja": "上党の沾県から分けた楽平郡を現在の昔陽付近に配置します。設置年代には異説があり、215年をゲーム上の境とします。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/後漢書集解/續漢志第二十三",
+        "https://zh.wikisource.org/wiki/晉書/卷014",
+        "https://zh.wikisource.org/wiki/水經注/10"
+      ],
+      "founding": {
+        "year": 215,
+        "month": 1,
+        "precision": "period_game_boundary"
+      }
+    },
+    "xijun": {
+      "name": "日勒",
+      "parent": "zhangye",
+      "administrative_names": [
+        {
+          "from_date": [
+            194,
+            6
+          ],
+          "zh": "西郡",
+          "ja": "西郡"
+        }
+      ],
+      "detail": "《張掖綜合年鑑》載194年六月由張掖析置，治日勒（今山丹東南）。宋人地志載興平二年，本作採張掖地方志編年，三國期間仍列為西郡。",
+      "detail_ja": "張掖の地方年鑑に従い、194年6月に分置します。治所の日勒は山丹の南東にあり、三国時代を通じて西郡が続きます。",
+      "sources": [
+        "https://www.zhangye.gov.cn/szb/dzdt/njbz/201509/t20150921_51869.html",
+        "https://www.shidianguji.com/zh/book/CADAL02030991/chapter/1lmngzjaf1puu",
+        "https://zh.wikisource.org/wiki/晉書/卷014"
+      ],
+      "founding": {
+        "year": 194,
+        "month": 6,
+        "precision": "gazetteer_month"
+      }
+    },
+    "chengyang": {
+      "name": "城阳",
+      "parent": "beihai",
+      "administrative_names": [
+        {
+          "from_date": [
+            198,
+            12
+          ],
+          "zh": "城陽郡",
+          "ja": "城陽郡"
+        }
+      ],
+      "detail": "東漢的莒縣原屬琅邪。曹操平呂布後任孫康為城陽太守；據《山東省志》取198年、以年末作開放界線，治東武（今諸城）。",
+      "detail_ja": "呂布を破った曹操は孫康を城陽太守に任命しました。198年末から開放し、治所の東武を現在の諸城付近に置きます。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷18#臧霸",
+        "https://shandong-chorography.org/database/a/section/3/article/12/",
+        "https://zh.wikisource.org/wiki/晉書/卷015"
+      ],
+      "founding": {
+        "year": 198,
+        "month": 12,
+        "precision": "attested_year_campaign_month"
+      },
+      "owner_since": [
+        {
+          "from_date": [
+            198,
+            12
+          ],
+          "owner": "wei"
+        }
+      ]
+    },
+    "shixing": {
+      "name": "始兴",
+      "parent": "guiyang",
+      "administrative_names": [
+        {
+          "from_date": [
+            265,
+            1
+          ],
+          "zh": "始興郡",
+          "ja": "始興郡"
+        }
+      ],
+      "detail": "孫皓甘露元年（265）分桂陽南部都尉置始興郡，治曲江（今韶關）。263年設立的是始興縣，各劇本開局最晚在263年，本郡到265年才開放。",
+      "detail_ja": "孫晧が265年に桂陽南部を分けて始興郡を設置し、曲江（韶関）を治所としました。263年の始興県の設置とは区別します。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/宋書/卷37",
+        "https://zh.wikisource.org/wiki/晉書/卷015",
+        "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34174"
+      ],
+      "founding": {
+        "year": 265,
+        "month": 1,
+        "precision": "attested_year_game_month"
+      }
+    },
+    "shian": {
+      "name": "始安",
+      "parent": "lingling",
+      "administrative_names": [
+        {
+          "from_date": [
+            265,
+            1
+          ],
+          "zh": "始安郡",
+          "ja": "始安郡"
+        }
+      ],
+      "detail": "孫皓甘露元年（265）分零陵置始安郡，治始安縣（今桂林）。263年劇本開局仍屬零陵，進入265年後設郡。",
+      "detail_ja": "呉の孫晧が265年に零陵から始安郡を分け、始安県（桂林）を治所としました。263年の開幕では零陵に属します。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/晉書/卷015",
+        "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_43738"
+      ],
+      "founding": {
+        "year": 265,
+        "month": 1,
+        "precision": "attested_year_game_month"
+      }
+    },
+    "dongguan": {
+      "name": "东莞",
+      "parent": "langya",
+      "administrative_names": [
+        {
+          "from_date": [
+            198,
+            12
+          ],
+          "zh": "東莞郡",
+          "ja": "東莞郡"
+        },
+        {
+          "from_date": [
+            265,
+            1
+          ],
+          "zh": "東莞國",
+          "ja": "東莞国"
+        }
+      ],
+      "detail": "曹操破呂布後任尹禮為東莞太守，故依《三國志》把建安三年末定為開放界線，治今沂水一帶。《宋書》的265年對應晉人分置及封國，本作延續節點。與嶺南東官郡為兩地。",
+      "detail_ja": "呂布を破った曹操は尹礼を東莞太守に任命しました。198年末から開放し、現在の沂水付近に置きます。265年の西晋では東莞国とし、嶺南の東官郡とは区別します。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷18#臧霸",
+        "https://shandong-chorography.org/database/a/section/3/article/12/",
+        "https://zh.wikisource.org/zh-hant/宋書/卷35",
+        "https://zh.wikisource.org/wiki/晉書/卷014"
+      ],
+      "founding": {
+        "year": 198,
+        "month": 12,
+        "precision": "attested_year_campaign_month"
+      },
+      "owner_since": [
+        {
+          "from_date": [
+            198,
+            12
+          ],
+          "owner": "wei"
+        }
+      ]
+    }
+  },
+  "existing_sites": {
+    "shanyang": {
+      "parent": "shanyang",
+      "administrative_names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "zh": "山陽郡",
+          "ja": "山陽郡"
+        },
+        {
+          "from_date": [
+            265,
+            1
+          ],
+          "zh": "高平國",
+          "ja": "高平国"
+        }
+      ],
+      "detail": "兗州山陽郡治昌邑，改晉高平國前沿用。河內山陽縣的獻帝山陽公國另地。",
+      "detail_ja": "兗州の山陽郡の治所は昌邑。河内の山陽公国とは別の地点です。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/後漢書/卷111",
+        "https://zh.wikisource.org/wiki/晉書/卷014"
+      ]
+    },
+    "yingchuan": {
+      "parent": "yingchuan",
+      "administrative_names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "zh": "潁川郡",
+          "ja": "潁川郡"
+        }
+      ],
+      "detail": "潁川為漢郡，東漢郡治陽翟。現有節點代表潁川轄下重要城許縣（221年起顯示許昌），沿用劇本首府位置。",
+      "detail_ja": "潁川郡の後漢の郡治は陽翟です。ゲームでは同郡の許県を主な城として表示し、221年以降は許昌とします。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/後漢書/卷110",
+        "https://zh.wikisource.org/wiki/晉書/卷014"
+      ]
+    },
+    "xicheng": {
+      "parent": "hanzhong",
+      "administrative_names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "zh": "漢中郡西城縣",
+          "ja": "漢中郡西城県"
+        },
+        {
+          "from_date": [
+            215,
+            1
+          ],
+          "zh": "西城郡",
+          "ja": "西城郡"
+        },
+        {
+          "from_date": [
+            220,
+            7
+          ],
+          "zh": "新城郡西城",
+          "ja": "新城郡西城"
+        },
+        {
+          "from_date": [
+            221,
+            1
+          ],
+          "zh": "魏興郡",
+          "ja": "魏興郡"
+        }
+      ],
+      "detail": "曹操平漢中後析置西城郡，219年歸劉備；220年孟達降魏後有合郡編制，221年申儀任魏興太守。本作共用西城節點代表魏興，任內的駐防地洵口在今日旬陽一帶。",
+      "detail_ja": "215年に漢中から西城が分けられ、219年に劉備に帰属。220年の再編を経て、魏は221年に申儀を魏興太守としました。ゲームでは西城の同じ地点で魏興を表示します。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷01",
+        "https://zh.wikisource.org/wiki/華陽國志/卷二#魏興郡",
+        "https://zh.wikisource.org/wiki/晉書/卷015",
+        "https://zh.wikisource.org/wiki/三國志/卷40"
+      ],
+      "names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "name": "西城"
+        },
+        {
+          "from_date": [
+            221,
+            1
+          ],
+          "name": "魏兴"
+        }
+      ]
+    },
+    "guangwei": {
+      "parent": "tianshui",
+      "administrative_names": [
+        {
+          "from_date": [
+            193,
+            12
+          ],
+          "zh": "永陽郡",
+          "ja": "永陽郡"
+        },
+        {
+          "from_date": [
+            214,
+            1
+          ],
+          "zh": "漢陽郡（永陽已省）",
+          "ja": "漢陽郡（永陽郡廃止）"
+        },
+        {
+          "from_date": [
+            220,
+            11
+          ],
+          "zh": "廣魏郡",
+          "ja": "広魏郡"
+        },
+        {
+          "from_date": [
+            265,
+            1
+          ],
+          "zh": "略陽郡",
+          "ja": "略陽郡"
+        }
+      ],
+      "detail": "初平四年十二月分漢陽置永陽，214年省。廣魏治臨渭，《甘肅省志》列作魏初設置，本作採220年十一月魏建國為界線。兩郡共用一地圖點，期間另開劇本不設獨立郡城。西晉改略陽。",
+      "detail_ja": "193年末に漢陽から永陽を分け、214年に廃止。『甘粛省志』が魏初の設置とする広魏は、220年11月から同じ地点で開放します。西晋では略陽に改称されます。",
+      "sources": [
+        "https://zh.wikisource.org/wiki/後漢書集解/續漢志第二十三",
+        "https://zh.wikisource.org/zh-hant/讀史方輿紀要/卷二",
+        "https://zh.wikisource.org/wiki/晉書/卷014",
+        "https://www.gsdfszw.org.cn/gssz/dyl/dsjjszx/201612/P020170214612935151730.pdf"
+      ],
+      "founding": {
+        "year": 193,
+        "month": 12,
+        "precision": "attested_annal_month"
+      },
+      "retirement": {
+        "year": 214,
+        "month": 1,
+        "precision": "attested_year_game_month",
+        "reopens": [
+          220,
+          11
+        ]
+      },
+      "names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "name": "永阳"
+        },
+        {
+          "from_date": [
+            220,
+            11
+          ],
+          "name": "广魏"
+        },
+        {
+          "from_date": [
+            265,
+            1
+          ],
+          "name": "略阳"
+        }
+      ]
+    },
+    "bohai": {
+      "parent": "bohai",
+      "administrative_names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "zh": "渤海郡",
+          "ja": "渤海郡"
+        }
+      ],
+      "detail": "東漢正史寫勃海，現通稱渤海；沿用南皮郡治節點，漢末袁紹、袁氏及曹操的歸屬從現有劇本。",
+      "detail_ja": "後漢の史書では勃海と記されます。現在の表記は渤海で、ゲームでは郡治の南皮に配置しています。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/後漢書/卷110",
+        "https://zh.wikisource.org/wiki/晉書/卷014",
+        "https://zh.wikisource.org/zh-hant/三國志/卷01"
+      ]
+    },
+    "fanyang": {
+      "parent": "fanyang",
+      "administrative_names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "zh": "涿郡",
+          "ja": "涿郡"
+        },
+        {
+          "from_date": [
+            224,
+            1
+          ],
+          "zh": "范陽郡",
+          "ja": "范陽郡"
+        }
+      ],
+      "detail": "東漢涿郡治涿縣。曹魏改范陽，採CHGIS的224年；地圖沿用原節點。",
+      "detail_ja": "後漢の涿郡から魏の范陽郡への改称は、CHGISに従い224年を境とします。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/後漢書/卷112",
+        "https://zh.wikisource.org/wiki/晉書/卷014",
+        "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_87304"
+      ]
+    },
+    "hedong": {
+      "parent": "hedong",
+      "administrative_names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "zh": "河東郡",
+          "ja": "河東郡"
+        },
+        {
+          "from_date": [
+            222,
+            1
+          ],
+          "zh": "河東國",
+          "ja": "河東国"
+        },
+        {
+          "from_date": [
+            225,
+            1
+          ],
+          "zh": "河東郡",
+          "ja": "河東郡"
+        }
+      ],
+      "detail": "東漢河東郡治安邑。曹霖222年封河東王、225年改徙館陶，沿用同一節點顯示郡國沿革。",
+      "detail_ja": "後漢の河東郡の治所は安邑。曹霖の河東王への封建に伴い222～224年を河東国と表示します。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/後漢書/卷110",
+        "https://zh.wikisource.org/wiki/晉書/卷014",
+        "https://ctext.org/wiki.pl?chapter=3529848&if=gb"
+      ]
+    },
+    "daifang": {
+      "parent": "lelang",
+      "administrative_names": [
+        {
+          "from_date": [
+            204,
+            1
+          ],
+          "zh": "帶方郡",
+          "ja": "帯方郡"
+        }
+      ],
+      "detail": "《三國志・東夷傳》記公孫康建安中分樂浪置帶方。遊戲依指定採204年界線，史書未記確月。238年魏取遼東後由魏接收帶方。",
+      "detail_ja": "公孫康が建安年間に楽浪を分けて帯方郡を設置しました。ゲームでは204年から開放し、238年の遼東平定後は魏の所属です。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷30",
+        "https://zh.wikisource.org/zh-hant/三國志/卷08#公孫度"
+      ],
+      "founding": {
+        "year": 204,
+        "month": 1,
+        "precision": "user_year_game_month"
+      },
+      "owner_since": [
+        {
+          "from_date": [
+            204,
+            1
+          ],
+          "owner": "gongsun"
+        },
+        {
+          "from_date": [
+            238,
+            8
+          ],
+          "owner": "wei"
+        }
+      ]
+    },
+    "lelang": {
+      "parent": "liaodong",
+      "administrative_names": [
+        {
+          "from_date": [
+            1,
+            1
+          ],
+          "zh": "樂浪郡",
+          "ja": "楽浪郡"
+        }
+      ],
+      "detail": "樂浪在漢末公孫氏治下。204年分出帶方，238年魏接收二郡。204年至238年初的開局一併按公孫氏控制顯示。",
+      "detail_ja": "楽浪から204年に帯方が分かれ、238年に魏が両郡を引き継ぎました。204年以降の該当開幕は公孫氏とします。",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷30",
+        "https://zh.wikisource.org/zh-hant/三國志/卷08#公孫度"
+      ],
+      "owner_since": [
+        {
+          "from_date": [
+            204,
+            1
+          ],
+          "owner": "gongsun"
+        },
+        {
+          "from_date": [
+            238,
+            8
+          ],
+          "owner": "wei"
+        }
+      ]
+    }
+  }
+}

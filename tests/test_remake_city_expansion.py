@@ -49,6 +49,7 @@ class CityExpansionTests(unittest.TestCase):
         }
         cls.plan = read('game/config/campaigns/city-expansion-openings.json')['scenarios']
         cls.chronology = read('game/config/campaigns/city-chronology-openings.json')
+        cls.commanderies = read('game/config/campaigns/commandery-history.json')['new_sites']
         cls.shu_openings = read('game/config/campaigns/early-shu-openings.json')
 
     def start(self, scenario, faction=None):
@@ -75,16 +76,21 @@ class CityExpansionTests(unittest.TestCase):
                 state = game.state
                 reviewed_owners = {key: owner for key, owner in self.chronology['owners'][scenario].items()
                                    if owner is not None}
-                self.assertEqual(set(state.cities),
-                                 set(original['active_cities']) | expected | FACTION_CAPITALS
-                                 | reviewed_owners.keys() | SETTLEMENT_SITES)
+                active = set(original['active_cities']) | expected | FACTION_CAPITALS | reviewed_owners.keys() | SETTLEMENT_SITES
+                if date < (204, 1):
+                    active.remove('daifang')
+                if (193, 12) <= date < (214, 1) or date >= (220, 11):
+                    active.add('guangwei')
+                self.assertEqual(set(state.cities) - self.commanderies.keys(), active)
                 self.assertEqual(set(state.cities), set(catalog.active_city_ids(*date)))
-                self.assertEqual(set(catalog.map_cities), set(legacy) | ADDITIONS)
+                self.assertEqual(set(catalog.map_cities), set(legacy) | ADDITIONS | self.commanderies.keys())
                 self.assertEqual({key: catalog.map_cities[key]['position'] for key in legacy}, legacy)
                 self.assertEqual({key: catalog.data['city_coordinates'][key] for key in legacy},
                                  self.shared['city_coordinates'])
                 legacy_owners = original['initial_owners'] | reviewed_owners
-                self.assertEqual({key: state.cities[key].owner for key in legacy_owners}, legacy_owners)
+                unrelated = legacy_owners.keys() - {'daifang', 'lelang'}
+                self.assertEqual({key: state.cities[key].owner for key in unrelated},
+                                 {key: legacy_owners[key] for key in unrelated})
                 reserve_transfers = Counter()
                 if date > tuple(self.shu_openings['after']):
                     for person, posting in self.shu_openings['people'].items():

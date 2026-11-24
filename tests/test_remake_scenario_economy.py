@@ -45,6 +45,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         cls.index = read('game/data/campaigns/index.json')
         cls.expansion = read('game/config/campaigns/city-expansion-openings.json')['scenarios']
         cls.expansion_cities = read('game/config/campaigns/city-expansion-map.json')['cities']
+        cls.commanderies = read('game/config/campaigns/commandery-history.json')['new_sites']
         cls.retainer_review = {row['id']: row for row in read(
             'game/config/references/retainer-affiliation-review.json')['scenarios']}
         shu_openings = read('game/config/campaigns/early-shu-openings.json')
@@ -172,7 +173,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                         self.assertEqual(change['after']['status'], 'serving')
                         self.assertEqual(row['city'], expansion_garrisons.get(row['person_id'], change['after']['city']))
                 # The frozen retainer review predates the Hetao expansion.
-                reviewed_cities = set(data['active_cities']) - POST_REVIEW_CITIES
+                reviewed_cities = (set(data['active_cities']) - POST_REVIEW_CITIES - self.commanderies.keys()) | {'daifang'}
                 reviewed_material = dict(
                     gold=sum(data['initial_city_resources'][city]['gold'] for city in reviewed_cities),
                     grain=sum(data['initial_city_resources'][city]['grain'] for city in reviewed_cities),

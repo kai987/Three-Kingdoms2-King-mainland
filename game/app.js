@@ -546,18 +546,21 @@ function setPreviewFaction(id,focus=null,reveal=false){
  }
  return true;
 }
-function layoutCityLabels(cities,offsets,world,labelFor=cityName){
+function layoutCityLabels(cities,offsets,world,labelFor=cityName,visible=()=>true){
  const above=[0,-17,'middle'];
  const nearby=[above,[0,38,'middle'],[-23,8,'end'],[23,8,'start'],
   [-23,-13,'end'],[23,-13,'start'],[-23,29,'end'],[23,29,'start'],
   [-32,-19,'end'],[32,-19,'start'],[0,-36,'middle'],[0,54,'middle'],
-  [-8,-17,'middle'],[8,-17,'middle'],[-23,22,'end'],[23,22,'start']];
+  [-8,-17,'middle'],[8,-17,'middle'],[-23,22,'end'],[23,22,'start'],
+  [-23,5,'end'],[23,5,'start'],[-24,-27,'end'],[24,-27,'start'],
+  [-42,43,'end'],[42,43,'start'],[0,-50,'middle']];
  const positions=cities.map(c=>mapPosition(c));
  const icons=positions.map(([x,y])=>[x-17,y-9,x+17,y+17]);
  const placed=[];
  const overlaps=(a,b)=>a[0]<b[2]&&a[2]>b[0]&&a[1]<b[3]&&a[3]>b[1];
  const top=world.y||0;
- const plans=cities.map((city,index)=>{
+ const plans=cities.flatMap((city,index)=>{
+  if(!visible(city))return [];
   const [x,y]=positions[index],name=labelFor(city.id);
   // The map uses 16-unit Unifont with a 3-unit outline.
   const width=Array.from(GameI18n.t(name)).length*16;
@@ -571,12 +574,12 @@ function layoutCityLabels(cities,offsets,world,labelFor=cityName){
   });
   const fit=({bounds:b})=>b[0]>=world.x&&b[1]>=top&&b[2]<=world.x+world.width&&b[3]<=top+world.height
    &&!overlaps(b,ownFrame)&&!icons.some(icon=>overlaps(b,icon));
-  return {city,name,index,candidates:candidates.filter(fit),fallback:candidates[0]};
+  return [{city,name,index,candidates:candidates.filter(fit),fallback:candidates[0]}];
  });
  // Give the most crowded cities first choice; retain board order for drawing.
  const labels=[];
  for(const {city,name,index,candidates,fallback} of plans.sort((a,b)=>a.candidates.length-b.candidates.length)){
-  const label=candidates.find(({bounds})=>!placed.some(other=>overlaps(bounds,other)))||fallback;
+  const label=candidates.find(({bounds})=>!placed.some(other=>overlaps(bounds,other)))||candidates[0]||fallback;
   placed.push(label.bounds);
   labels[index]={city,name,...label};
  }
@@ -700,8 +703,8 @@ function renderMap(){
   return `<g data-regional-road="${r.from}-${r.to}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;
  })).join('');
  const offsets=preview?.city_label_offsets||view.catalog.city_label_offsets||{};
- const labels=cityLabels==='none'?'':layoutCityLabels(active,offsets,world,mapCityName)
-  .filter(({city:c})=>cityLabels==='all'||(['giant','large'].includes(cityLabels)?cityProfiles[c.id]?.tier===cityLabels:added.includes(c.id)||view.catalog.map_presentation.labelled_city_ids.includes(c.id)||c.id===focused))
+ const showName=c=>cityLabels==='all'||(['giant','large'].includes(cityLabels)?cityProfiles[c.id]?.tier===cityLabels:added.includes(c.id)||view.catalog.map_presentation.labelled_city_ids.includes(c.id)||c.id===focused);
+ const labels=cityLabels==='none'?'':layoutCityLabels(active,offsets,world,mapCityName,showName)
   .map(({city,name,x,y,anchor})=>`<text class="map-city-name" x="${x}" y="${y}" text-anchor="${anchor}" data-city-label="${city.id}" aria-hidden="true">${escapeHtml(name)}</text>`).join('');
  const bridges=mapBridgeLayer([roads,expansionRoads,regionalRoads,navigableSeas,navigableRivers]);
  const labelName={major:'主城',giant:'巨大都市',large:'大都市',all:'全部',none:'关闭'}[cityLabels];
@@ -785,6 +788,8 @@ async function showCityInformation(id){
   }
   if(!dialog.open||generation!==dialogGeneration||preview!==setupPreview)return;
   const c=data.city,naming=view.catalog.map_presentation.city_names[id],history=c.history,troops=c.officers.reduce((n,o)=>n+o.troops,0);
+  const administration=history?.administrative_names?.findLast(({from_date:[year,month]})=>
+   year<data.year||year===data.year&&month<=data.month);
   const rows=c.officers.map(o=>`<tr><td><button type="button" class="officer-identity person-detail city-information-officer" data-city-information-officer="${escapeHtml(o.id)}" aria-label="${escapeHtml(o.name)}">${portraitHtml(o.id,'roster',false,o.person_id,o.name)}<span>${escapeHtml(o.name)}</span></button>${typeof GameEquipment!=='undefined'?GameEquipment.render(o.equipment,{id:o.id,locale:GameI18n.locale,bilingual:true,compact:true}):''}</td><td>${o.troops}</td><td>${o.martial_strength}</td><td>${o.intellect}</td><td>${o.virtue}</td><td>${GameOfficerChoices.loyalty(o,{isRuler:o.is_ruler===true})}</td><td>${GameOfficerChoices.experience(o.experience)}</td><td>${o.health??'—'}</td></tr>`).join('');
   const garrisonLabels={attested_yanmen_post_227:'史料任职',attested_expansion_post:'史料任职',reviewed_SAN14_source_city_to_board:'攻略驻城参考',retained_faction_ruler_seat:'君主营地'};
   const garrisons=history?.garrisons;
@@ -792,14 +797,16 @@ async function showCityInformation(id){
   if(garrisons?.length)garrisonHistory=`<p>开局驻防：${garrisons.map(g=>`${escapeHtml(g.name)}（${garrisonLabels[g.basis]||'区域防务调配'}）`).join('、')}</p>`;
   else if(garrisons)garrisonHistory='<p>未虚构初始郡守，驻防名册暂空，可在战役中调将或招募。</p>';
   const historySources=(history?.sources||[]).map((source,i)=>{const url=typeof source==='string'?source:source?.url,label=typeof source==='object'&&source?.note?source.note:`参考资料${i+1}`;return typeof url==='string'&&url?`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`:`<span>${escapeHtml(label)}</span>`;}).join(' · ');
+  const openingNote=history?.opening?.note&&history.opening.note!==history.detail?`<p>${escapeHtml(history.opening.note)}</p>`:'';
   const governor=c.officers.find(officer=>officer.id===c.governor);
   const body=`<div class="city-information" data-inspected-city="${id}" data-information-mode="${preview?'preview':'live'}">
    <p class="small">${preview?'剧本开局预览':'当前战役'} · ${GameCalendar.text({...data,day:data.day??1})}</p>
    <p class="city-information-owner">归属：${escapeHtml(c.owner==='neutral'&&history?.neutral_label?history.neutral_label:c.owner_name)}</p>
+   ${administration?`<p class="small" data-city-administration>${cityCommandText(`建置 ${administration.zh}`,`行政区分 ${administration.ja}`)}</p>`:''}
    ${governor?`<p data-city-governor="${escapeHtml(String(governor.id))}">${battleText('太守','太守')} <span>${escapeHtml(governor.name)}</span></p>`:''}
    ${history?.summary_i18n?`<div class="city-island-status" data-island-status="${id}"><p data-locale-only="zh-Hant" data-l10n-native="zh-Hant">${escapeHtml(history.summary_i18n['zh-Hant'])}</p><p data-locale-only="ja" data-l10n-native="ja">${escapeHtml(history.summary_i18n.ja)}</p></div>`:''}
    ${naming?.detail?`<p class="small">${escapeHtml(naming.detail)}</p>`:''}
-   ${history?`<details class="scenario-notes city-history"><summary>年代与开局归属依据</summary>${sourceEvidence(`<p>${escapeHtml(history.detail)}</p><p>${escapeHtml(history.opening?.note||'')}</p>${historySources}`,history.detail_ja||'都市の年代・開始時所属について、史料の記録と本作の配置設定を区別しています。詳細な根拠と資料の精度は原資料で確認できます。')}<p>驻将按攻略参考、君主营地和同势力防务调配安排；史料任职会单独注明，不代表所有驻将均为史实郡守。</p>${garrisonHistory}</details>`:''}
+   ${history?`<details class="scenario-notes city-history"><summary>年代与开局归属依据</summary>${sourceEvidence(`<p>${escapeHtml(history.detail)}</p>${openingNote}${historySources}`,history.detail_ja||'都市の年代・開始時所属について、史料の記録と本作の配置設定を区別しています。詳細な根拠と資料の精度は原資料で確認できます。')}<p>驻将按攻略参考、君主营地和同势力防务调配安排；史料任职会单独注明，不代表所有驻将均为史实郡守。</p>${garrisonHistory}</details>`:''}
    <p class="small">${escapeHtml(cityTypeLabel(c.profile,'旧版城市'))} · 地形：${{plain:'平地',mountain:'山地',water:'水地'}[c.terrain]||'未配置'}</p>
    ${c.frontier_outpost?frontierOutpostNote(c.frontier_outpost,c.owner):cityEconomyNote(c.profile)}
    ${!preview&&typeof GameDomestic!=='undefined'?GameDomestic.summary(view,id):''}

@@ -192,7 +192,8 @@ class RoadCenterBuilderTests(unittest.TestCase):
                                         'liaoxi-changli-liaodong', 'lingling-eastern-fork',
                                         'runan-northeast-fork', 'qichun-chaisang-poyang-shared-trunks',
                                         'nanpi-coastal-roads', 'shandong-coastal-fork',
-                                        'liaodong-lelang-daifang', 'changan-south-bank'})
+                                        'liaodong-lelang-daifang', 'longyou-wei-river-banks',
+                                        'changan-south-bank'})
         coastal = rows[260]
         self.assertEqual(rows[246]['new_points'][0], positions['yuyang'])
         self.assertEqual(rows[246]['new_points'][-1], positions['liaoxi'])
