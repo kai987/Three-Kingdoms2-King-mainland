@@ -224,6 +224,15 @@ def dispatch(game, state, owner):
 
 
 def aid_cities(game, state, owner):
+    from . import faction_economy, logistics_strategy
+    if owner != state.player and logistics_strategy.enabled(state) and state.phase == 'ai':
+        plan = faction_economy.plan(game, state, owner)
+        allies = any(other != owner and historical_campaigns.allied(state, owner, other)
+                     for other in {city.owner for city in state.cities.values()} - {'neutral'})
+        return {key: dict(id=key, zero_in=plan.cities[key].zero_in, amount=min(
+                    logistics.LIMIT - state.cities[key].grain, AID_MONTHS * plan.cities[key].monthly,
+                    sum(gap for turn, gap in plan.cities[key].gaps if turn <= WARNING_TURNS)) if allies else 0)
+                for key in plan.shortages(state)}
     projections = forecasts(game, state, owner)
     targets = _shortages(projections)
     if not targets:
@@ -242,8 +251,19 @@ def aid_cities(game, state, owner):
 
 def allied_stocks(game, state, owner):
     """Only stock above two months' rations and the configured floor is aid."""
+    from . import faction_economy, logistics_strategy
     result = []
     policies = state.extension.get('logistics', {}).get('cities', {})
+    if owner != state.player and logistics_strategy.enabled(state):
+        plan = faction_economy.plan(game, state, owner)
+        for key, row in plan.budgets.items():
+            city = state.cities[key]
+            floor = max(row['minimum_export_floor'], AID_MONTHS * row['fixed'],
+                        policies.get(key, {}).get('policy', {}).get('reserve_grain', 0))
+            surplus = city.grain - row['reserved_grain'] - floor
+            if surplus > 0:
+                result.append((surplus, city))
+        return sorted(result, key=lambda entry: (-entry[0], entry[1].id))
     for key, row in forecasts(game, state, owner).items():
         if row.zero_in is not None:
             continue

@@ -125,7 +125,9 @@ class MarchRationTests(unittest.TestCase):
         class PreLogisticsCampaign(Campaign):
             def _new(self,*args,**kwargs):
                 state = super()._new(*args,**kwargs)
+                from remake import logistics_strategy
                 del state.extension[rules.FIELD]
+                state.extension.pop(logistics_strategy.FIELD, None)
                 return state
         source = Catalog(ROOT/'game/data/campaigns/208-10.json')
         for game_type,version in ((PreLogisticsCampaign,1),(Campaign,2)):

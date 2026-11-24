@@ -15,6 +15,11 @@ try:
 except ImportError:
     logistics_rules = military_budget = None
 
+try:
+    from remake import grain_dispatch, faction_economy
+except ImportError:
+    grain_dispatch = faction_economy = None
+
 
 def quote_grain(game, state, quote, troops, officers, reserves=0):
     if logistics_rules is None or logistics_rules.version(state) != logistics_rules.CURRENT:
@@ -30,15 +35,17 @@ def budget_reasons(game, state, city, plan, return_routes=()):
     reasons = []
     if not plan['safe_return']:
         reasons.append('return_route_restricted' if return_routes else 'return_route_unreachable')
-    stock = city.grain
+    stock = plan.get('available_grain', city.grain)
     for name, amount in (('outbound_grain', plan['outbound']), ('battle_grain', plan['battle']),
                          ('return_grain', plan['returning'] or 0), ('contingency_grain', plan['safety'])):
         if amount and stock < amount:
             reasons.append(name)
         stock -= amount
-    ration = city_economy.turn_rations(plan['home'], (state.day - 1) // 10 + 1)
+    ration = plan.get('home_next', city_economy.turn_rations(plan['home'], (state.day - 1) // 10 + 1))
     if ration and stock < ration:
         reasons.append('garrison_grain')
+    if 'hard_grain' in plan:
+        return reasons or ['other_budget_limit']
     # These are the same two funding branches as sortie(): the immediate cash
     # in the city and the full month after expected ordinary city income.
     expected_grain = city_economy.monthly_income(game, city.id, state)['grain']
@@ -99,6 +106,46 @@ class Hooks:
             for name, handler in handlers.items():
                 if hasattr(obj, name):
                     self.hook(obj, name, handler)
+        if grain_dispatch is not None:
+            self.hook(grain_dispatch, 'dispatch', self.v21_dispatch)
+            self.hook(grain_dispatch, 'recover', self.v21_market)
+            self.hook(faction_economy.FactionEconomyPlan, 'outlook', self.v21_outlook)
+
+    def v21_outlook(self, real, plan, state):
+        result = real(plan, state)
+        runway, warnings = result
+        self.t.outlooks[plan.owner] = runway, min((row.zero_in for row in warnings.values()), default=None)
+        return result
+
+    def v21_dispatch(self, real, game, state, owner, **kwargs):
+        with self.request('city_emergency', owner) as request:
+            result = real(game, state, owner, **kwargs)
+        for row in result:
+            by_source = {}
+            timely = {}
+            for option in row['candidates']:
+                source, amount = option['source'], option['expected_capacity']
+                by_source[source] = max(by_source.get(source, 0), amount)
+                if option['timely']:
+                    timely[source] = max(timely.get(source,0), amount)
+            self.write_request(state, request, target=row['target'], grain=row['grain'],
+                deadline=state.turn+row['deadline'], candidates=row['candidates'],
+                routed=sum(by_source.values()), timely=sum(timely.values()),
+                result='dispatched' if row['allocations'] else 'failed',
+                reason=dict(primary=row['reason'], blockers=row['failures']),
+                ids=[item['convoy_id'] for item in row['allocations']], allocations=row['allocations'])
+        return result
+
+    def v21_market(self, real, game, state, owner, plan, **kwargs):
+        result = real(game, state, owner, plan, **kwargs)
+        for row in result:
+            request = dict(channel='emergency_market', owner=owner)
+            self.write_request(state, request, target=row['target'], grain=row['grain'],
+                deadline=state.turn + plan.cities[row['target']].zero_in, routed=None, timely=row['bought'],
+                result='bought' if row['bought'] else 'failed', reason=row['reason'])
+            if row['bought']:
+                self.t.action(owner, 'emergency_purchase')
+        return result
 
     def hook(self, obj, name, handler):
         real = getattr(obj, name)

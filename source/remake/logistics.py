@@ -325,7 +325,7 @@ def _supply_routes(game, state, owner, pairs, policy):
             for a, b in pairs for mode in ('land', 'fastest')}
 
 
-def _safe_quote(game, state, source, target, policy, *, quotes=None):
+def _safe_options(game, state, source, target, policy, *, quotes=None):
     # The strategic batch accepts friendly origins. An escort may have to
     # return from a stop that changed hands after it set out.
     if quotes is None and state.phase == 'ai' and state.cities[source.id].owner == source.owner:
@@ -341,10 +341,12 @@ def _safe_quote(game, state, source, target, policy, *, quotes=None):
             continue
         if quote is not None and not _dangerous(quote, policy):
             choices.append((quote['days'], quote['distance_km'], mode, quote))
-    if not choices:
-        return None
-    _, _, mode, quote = min(choices, key=lambda row: row[:3])
-    return mode, quote
+    return [(mode, quote) for _, _, mode, quote in sorted(choices, key=lambda row: row[:3])]
+
+
+def _safe_quote(game, state, source, target, policy, *, quotes=None):
+    choices = _safe_options(game, state, source, target, policy, quotes=quotes)
+    return choices[0] if choices else None
 
 
 def _eligible(game, state, source):
@@ -748,6 +750,8 @@ def auto_dispatch_city(game,state,city_id,*,plans=None):
                 return False
         else:
             floor=min(donor['target'],donor['fixed']*3)
+            if 'minimum_export_floor' in donor:
+                floor=max(donor['minimum_export_floor'], donor['safety_reserve'])+donor['reserved_grain']
             cargo=dict(cargo,grain=min(cargo['grain'],remaining,
                 max(0,city.grain-floor-proposed['cost_grain'])))
             if cargo['grain'] and recipient['stock']>=recipient['fixed']:
@@ -784,7 +788,7 @@ def supply_shortages(state, target, gold_goal, grain_goal):
 
 
 def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_officers=(),
-                       max_turns=None, require_return=False):
+                       max_turns=None, require_return=False, economy_plan=None):
     """Choose an eligible rear escort and move real cargo through the shared order."""
     owner = target.owner
     if ('logistics' not in state.extension or state.phase != 'ai' or owner == state.player
@@ -802,6 +806,11 @@ def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_
     protected = set(protected_officers)
     grain_room = LIMIT - target.grain - _inbound(state, target.id)['grain']
     groups, candidates = {}, []
+    def grain_floor(source, policy):
+        row = economy_plan.budgets.get(source.id) if economy_plan is not None else None
+        return (max(row['safety_reserve'], row['minimum_export_floor'], policy['reserve_grain'])
+                + row['reserved_grain'] if row else policy['reserve_grain'])
+
     for source in state.cities.values():
         if (source.owner != owner or source.id == target.id or source.id in active_origins
                 or source.id in threatened or pool['receipts'].get('city:' + source.id, 0) > state.turn
@@ -816,7 +825,7 @@ def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_
                 or _present_count(game, state, source) <= policy['reserve_officers']):
             continue
         gold = min(gold_need, policy['max_gold'], source.gold - policy['reserve_gold'])
-        grain = min(policy['max_grain'], grain_room, source.grain - policy['reserve_grain'])
+        grain = min(policy['max_grain'], grain_room, source.grain - grain_floor(source, policy))
         if not gold and not (grain_need and grain > 0):
             continue
         escorts = [ident for ident in _eligible(game, state, source) if ident not in protected]
@@ -843,9 +852,10 @@ def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_
             if max_turns is not None and quote['turns'] > max_turns:
                 continue
             rations = _rations(game, state, quote, [escort], _empty_cargo())
-            if source.grain - rations < policy['reserve_grain']:
+            floor = grain_floor(source, policy)
+            if source.grain - rations < floor:
                 continue
-            grain = min(grain, source.grain - policy['reserve_grain'] - rations)
+            grain = min(grain, source.grain - floor - rations)
             if gold or (grain_need and grain > 0):
                 delivered = (projected_grain(game,quote,grain)
                              if logistics_rules.version(state)==logistics_rules.CURRENT else grain)

@@ -1334,13 +1334,16 @@ class ExpandedCampaign:
                 'recruitable':{c.id:self._free_candidates(state,c) for c in state.cities.values() if c.owner==state.player} if state else {}}
 
     def _validate_expansion(self,state):
-        from . import economy_rules, grain_market, logistics_rules, payroll
+        from . import economy_rules, grain_market, logistics_rules, logistics_strategy, payroll
         x=state.extension
         fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events','civil_staff','pending_succession','domestic','logistics','treasury','facilities','equipment','command_books'}
         if 'city_development' in x:fields.add('city_development')
         if payroll.FIELD in x:fields.add(payroll.FIELD)
         if economy_rules.FIELD in x:fields.add(economy_rules.FIELD)
         if logistics_rules.FIELD in x:fields.add(logistics_rules.FIELD)
+        for key in (logistics_strategy.FIELD, logistics_strategy.PRESSURE):
+            if key in x:fields.add(key)
+        logistics_strategy.validate(self, state)
         if grain_market.FIELD in x:fields.add(grain_market.FIELD)
         if battle_reinforcements.RETURNS in x:fields.add(battle_reinforcements.RETURNS)
         from . import dated_events, succession

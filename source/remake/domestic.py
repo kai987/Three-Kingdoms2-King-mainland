@@ -395,7 +395,7 @@ def _allocation_priority(officer):
             _ref_key(officer.runtime_id))
 
 
-def allocation_preview(game, state, city_id):
+def allocation_preview(game, state, city_id, *, max_added=None):
     """Plan local reserve assignments without drawing RNG or changing the state.
 
     A faction official manages every owned city, but troops stay in their own
@@ -414,6 +414,8 @@ def allocation_preview(game, state, city_id):
     available.sort(key=_allocation_priority)
     for officer in available:
         amount = min(result['remaining_reserves'], OFFICER_TROOP_CAP - officer.troops)
+        if max_added is not None:
+            amount = min(amount, max(0, max_added - result['soldiers']))
         if not amount:
             continue
         result['assignments'].append(dict(id=officer.runtime_id, **{'from': officer.troops},
@@ -426,9 +428,9 @@ def allocation_preview(game, state, city_id):
     return result
 
 
-def allocate_garrison(game, state, city_id, *, record=True):
+def allocate_garrison(game, state, city_id, *, record=True, max_added=None):
     """Apply the shared player/AI allocation plan; no fees or action are spent."""
-    quote = allocation_preview(game, state, city_id)
+    quote = allocation_preview(game, state, city_id, max_added=max_added)
     if quote['soldiers']:
         city = state.cities[city_id]
         for assignment in quote['assignments']:
@@ -675,8 +677,27 @@ def _hire_staff(game, state, owner, city_ids):
     return False
 
 
-def prioritize_grain(game, state, owner, outlook=None):
-    from . import diplomacy, grain_relief, military_budget
+def prioritize_grain(game, state, owner, outlook=None, *, economy_plan=None):
+    from . import diplomacy, faction_economy, grain_dispatch, grain_relief, logistics_strategy, military_budget
+
+    if (state.phase == 'ai' and owner != state.player and logistics_strategy.enabled(state)):
+        plan = economy_plan if economy_plan is not None else faction_economy.plan(game, state, owner)
+        requests = grain_dispatch.dispatch(game, state, owner, plan=plan)
+        if any(row['allocations'] for row in requests):
+            plan = faction_economy.plan(game, state, owner)
+        if plan.shortages(state) and diplomacy.request_available_grain(game, state, owner):
+            plan = faction_economy.plan(game, state, owner)
+        purchases = grain_dispatch.recover(game, state, owner, plan)
+        if any(row['bought'] for row in purchases):
+            plan = faction_economy.plan(game, state, owner)
+        _, remaining = plan.outlook(state)
+        # Run local trade before elective military development. Leave
+        # imminent cities to the emergency quote and its partial lots.
+        military_budget.buy_reserves(game, state, owner, outlook=plan.budgets)
+        later = {key: row for key, row in remaining.items() if row.zero_in > grain_relief.WARNING_TURNS}
+        if later:
+            grain_relief.invest(game, state, owner, (None, later))
+        return plan.outlook(state)
 
     if outlook is None:
         outlook = grain_relief.recovery(game, state, owner)
@@ -694,9 +715,9 @@ def prioritize_grain(game, state, owner, outlook=None):
     return outlook
 
 
-def run_automatic(game, state, owner, *, outlook=None):
+def run_automatic(game, state, owner, *, outlook=None, economy_plan=None):
     """Spend the faction's remaining orders under the shared policy, once per turn."""
-    from . import grain_relief, military_budget
+    from . import faction_economy, grain_relief, logistics_strategy, military_budget
 
     synchronize(game, state)
     if owner not in game.catalog.factions or owner == 'neutral' or owner in state.extension.get('ended_factions', []):
@@ -741,7 +762,10 @@ def run_automatic(game, state, owner, *, outlook=None):
             budgeted=military_budget.enabled(state) and owner!=state.player
             if statewide is not None and not budgeted:
                 continue
-            budgets=military_budget.budgets(game,state,owner) if budgeted else {}
+            managed = logistics_strategy.enabled(state, logistics_strategy.GARRISON) and owner != state.player
+            budgets = (economy_plan.budgets if managed and economy_plan is not None else
+                       faction_economy.plan(game, state, owner).budgets if managed else
+                       military_budget.budgets(game, state, owner) if budgeted else {})
             for _ in range(command_books.MAXIMUM):
                 remaining = command_books.remaining(state, owner)
                 for key in eligible:
@@ -762,8 +786,9 @@ def run_automatic(game, state, owner, *, outlook=None):
                     break
         elif task == 'transport' and 'logistics' in state.extension:
             from . import logistics
-            plans=(military_budget.budgets(game,state,owner)
-                   if military_budget.enabled(state) and owner!=state.player else None)
+            plans = (economy_plan.budgets if economy_plan is not None else
+                     military_budget.budgets(game, state, owner)
+                     if military_budget.enabled(state) and owner != state.player else None)
             for key in discretionary_cities:
                 if command_books.can_spend(state, owner, 'dispatch_transport'):
                     logistics.auto_dispatch_city(game,state,key,plans=plans)
@@ -771,18 +796,26 @@ def run_automatic(game, state, owner, *, outlook=None):
 
 def finish_faction_turn(game, state, owner, *, automatic=True, outlook=None):
     """After manual commands and before the calendar advances, once per city."""
-    from . import grain_relief, military_budget
+    from . import faction_economy, grain_relief, logistics_strategy, military_budget
+    planned = logistics_strategy.enabled(state) and owner not in (state.player, 'neutral')
+    economy_plan = faction_economy.plan(game, state, owner) if planned else None
+    if economy_plan is not None:
+        outlook = economy_plan.outlook(state)
+        if logistics_strategy.enabled(state, logistics_strategy.GARRISON):
+            for key, budget in economy_plan.budgets.items():
+                logistics_strategy.pressure(state, 'cities', key, budget['excess_troops'] > 0)
     if outlook is None:
         outlook = grain_relief.recovery(game, state, owner)
     statewide, shortages = outlook
     hold_grain = {key for key, city in state.cities.items() if city.owner == owner} if statewide is not None else shortages
     food_priority = grain_relief.imminent_shortages(shortages)
     if automatic:
-        run_automatic(game, state, owner, outlook=outlook)
+        run_automatic(game, state, owner, outlook=outlook, economy_plan=economy_plan)
         from . import facilities
         facilities.synchronize(game,state)
         if military_budget.enabled(state) and owner!=state.player:
-            unfilled={key for key,budget in military_budget.budgets(game,state,owner).items() if budget['deficit']}
+            budgets = economy_plan.budgets if economy_plan is not None else military_budget.budgets(game,state,owner)
+            unfilled = {key for key, budget in budgets.items() if budget['deficit'] or budget.get('reserved_grain')}
             hold_grain = set(hold_grain) | unfilled
         facilities.auto_turn(game, state, owner, hold_grain=hold_grain, food_priority=food_priority,
                              allow_stockpiling=(owner == state.player or not grain_units.current_rations()))
@@ -833,7 +866,13 @@ def finish_faction_turn(game, state, owner, *, automatic=True, outlook=None):
         # Active jobs, including explicitly configured reserve transports, have
         # first claim. Assign only the local remainder before training it.
         if key not in hold_grain or key in frontiers:
-            allocate_garrison(game, state, key)
+            cap = None
+            if economy_plan is not None and logistics_strategy.enabled(state, logistics_strategy.GARRISON):
+                budget = economy_plan.budgets[key]
+                # Other orders may already have changed local stock or reserves.
+                budget = dict(budget, **faction_economy.capacity(game, state, city, budget))
+                cap = faction_economy.allocation_limit(game, state, city, budget)
+            allocate_garrison(game, state, key, max_added=cap)
         if key not in hold_grain and policy['training_enabled']:
             quote = training_preview(game, state, key)
             if quote['gain']:

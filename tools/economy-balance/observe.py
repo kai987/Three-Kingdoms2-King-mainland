@@ -5,6 +5,8 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from contextlib import ExitStack
 from pathlib import Path
 from time import monotonic
+import resource
+import sys
 import traceback
 from unittest.mock import patch
 
@@ -208,6 +210,18 @@ FAMILIES = ('cities', 'population', 'total_land', 'total_industry', 'gold_stock'
 
 
 def run_scenario(scenario, seed, months, output, group, settings=None, *, hash_turns=False):
+    try:
+        from remake import logistics_strategy
+    except ImportError:
+        if group.startswith('E'):
+            raise ValueError('E groups require the V2.1 engine')
+        return _run_scenario(scenario, seed, months, output, group, settings, hash_turns=hash_turns)
+    stage = {'E1':1, 'E2':2, 'E3':3, 'E4':4}.get(group,0)
+    with logistics_strategy.experiment(stage):
+        return _run_scenario(scenario, seed, months, output, group, settings, hash_turns=hash_turns)
+
+
+def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns):
     started = monotonic()
     head=git('rev-parse','HEAD').decode().strip()
     runtime_diff=sha256(git('diff','HEAD','--binary','--','source','game','crates'))
@@ -216,6 +230,7 @@ def run_scenario(scenario, seed, months, output, group, settings=None, *, hash_t
     game.campaign_id, game.flow = scenario, defaultdict(Counter)
     game.telemetry = None
     game.city_fixed = {}
+    timings = []
     committed = []  # Optional verification trace on the independent command boundary.
 
     game.recoveries, game.recovering = [], {}
@@ -387,8 +402,8 @@ def run_scenario(scenario, seed, months, output, group, settings=None, *, hash_t
                 game.flow[city.owner].update(ai_sortie_quotes=1,ai_sortie_quote_blocked=not budget['can_depart'])
                 return budget
 
-            def record_buy(campaign,state,owner):
-                result=real_buy(campaign,state,owner)
+            def record_buy(campaign,state,owner,**kwargs):
+                result=real_buy(campaign,state,owner,**kwargs)
                 game.flow[owner]['ai_reserve_purchases']+=result
                 return result
 
@@ -410,7 +425,9 @@ def run_scenario(scenario, seed, months, output, group, settings=None, *, hash_t
                 break
             try:
                 before = game.state
+                turn_started = monotonic()
                 game.command('observe_turn', {}, game.revision)
+                timings.append(monotonic() - turn_started)
                 assert game.state.turn == turn + 1
                 if detailed:
                     game.telemetry.roster_moves(before, game.state)
@@ -471,10 +488,16 @@ def run_scenario(scenario, seed, months, output, group, settings=None, *, hash_t
                   worktree_diff_sha256=runtime_diff,
                   rule_versions=dict(economy=state.extension.get('economy_rules_version',1),
                                      market=2 if 'grain_market' in state.extension else 1,
-                                     logistics=state.extension.get('logistics_rules_version',1)),
+                                     logistics=state.extension.get('logistics_rules_version',1),
+                                     ai_strategy=state.extension.get('ai_logistics_strategy_version', 'legacy')),
                   catalog_sha256=catalog.sha256, last_date=[state.year,state.month,state.day],
                   seconds=round(monotonic()-started,2), failure=failure)
-    result['parameters'] = dict(faction='observer', difficulty='normal', seed=seed,
+    result['performance'] = dict(measured_turns=len(timings),
+        mean_turn_seconds=round(sum(timings)/len(timings),6) if timings else None,
+        max_turn_seconds=round(max(timings),6) if timings else None,
+        worker_peak_rss_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss *
+        (1 if sys.platform == 'darwin' else 1024))
+    result['parameters'] = dict(faction='observer', difficulty='normal', lifespan='historical', seed=seed,
                                 record_journal=False, commands=['new', 'observe_turn'])
     if settings:
         result['telemetry'] = dict(schema=SCHEMA, config=settings, rows=game.telemetry.counts)
@@ -491,7 +514,7 @@ def main():
     parser.add_argument('--months', type=int, default=60)
     parser.add_argument('--workers', type=int, default=4)
     parser.add_argument('--seed', type=int, default=2026)
-    parser.add_argument('--group', choices='ABCDE', default='D')
+    parser.add_argument('--group', choices=('A','B','C','D','E1','E2','E3','E4'), default='D')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--telemetry-config', type=Path, nargs='?', const=TOOL_ROOT / 'tools/economy-balance/observer-config.json',
                         help='Record optional detailed V2.1 observations')

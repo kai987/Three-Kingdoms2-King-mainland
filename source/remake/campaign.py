@@ -19,7 +19,7 @@ from . import diplomacy, grain_relief, grain_units, historical_campaigns, observ
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
-from . import battle_reinforcements, city_economy, economy_rules, grain_market, logistics_rules, payroll
+from . import battle_reinforcements, city_economy, economy_rules, grain_market, logistics_rules, logistics_strategy, payroll
 from .city_economy import frontier_maintenance
 from .starting_garrisons import resolve as resolve_opening_garrisons
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
@@ -362,6 +362,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             state.extension[grain_units.RATION_FIELD] = grain_units.RATION_VERSION
             state.extension[economy_rules.FIELD] = economy_rules.CURRENT
             state.extension[logistics_rules.FIELD] = logistics_rules.CURRENT
+            logistics_strategy.initialize(state)
         if lifespan == 'none':
             state.extension['lifespan'] = lifespan
         state.extension['travel'] = dict(counter=0, marches=[], battle_arrival=False, discovered=[])

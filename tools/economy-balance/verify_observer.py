@@ -29,7 +29,12 @@ def verify(scenario, seed, months, group):
     if data['outcome'] == 'error':
         raise RuntimeError(data['failure']['trace'])
     observed = data['committed_save_sha256']
-    expected = plain_checksums(scenario, seed, months * 3)
+    if group.startswith('E'):
+        from remake import logistics_strategy
+        with logistics_strategy.experiment(int(group[-1])):
+            expected = plain_checksums(scenario, seed, months * 3)
+    else:
+        expected = plain_checksums(scenario, seed, months * 3)
     if len(observed) != len(expected):
         raise AssertionError(f'{scenario}: committed state count differs')
     for turn, (actual, reference) in enumerate(zip(observed, expected)):
@@ -46,7 +51,7 @@ if __name__ == '__main__':
     parser.add_argument('--scenario', required=True)
     parser.add_argument('--seed', type=int, default=2026)
     parser.add_argument('--months', type=int, default=12)
-    parser.add_argument('--group', choices='AD', required=True)
+    parser.add_argument('--group', choices=('A','D','E1','E2','E3','E4'), required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     result = verify(args.scenario, args.seed, args.months, args.group)
