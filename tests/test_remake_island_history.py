@@ -191,7 +191,7 @@ class IslandHistoryTests(unittest.TestCase):
                 for policy in game.state.extension['treasury']['factions'].values():
                     policy.update(enabled=False,gold_floor=0)
                 before = game.to_dict()
-                paid = self.enterContext(record_garrison_charges())
+                paid = self.enterContext(record_garrison_charges(include_payroll=True))
                 for _ in range(3):
                     turn = game.state.turn
                     game.command('end_turn', {}, game.revision)
@@ -199,6 +199,9 @@ class IslandHistoryTests(unittest.TestCase):
                 self.assertEqual(game.state.cities[city].owner, 'wei')
                 expected_city = deepcopy(before['cities'][city])
                 expected_city['grain'] -= paid[city]
+                from remake.payroll import wage
+                expected_city['gold'] -= sum(wage(game.state.officers[i])['gold']
+                                             for i in expected_city['roster']['officer_ids'])
                 self.assertEqual(game.to_dict()['cities'][city], expected_city)
                 self.assertEqual(game.to_dict()['officers'], after_monthly_healing(before['officers']))
                 self.assertEqual(game.to_dict()['soldiers'], before['soldiers'])

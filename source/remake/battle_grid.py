@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 
 from .errors import GameError
-from .officers import MAX_BATTLE_OFFICERS, OFFICER_TROOP_CAP
+from .officers import MAX_BATTLE_PARTICIPANTS, OFFICER_TROOP_CAP
 
 SCHEMA = 'tk2-battle-tactical-v1'
 VIEW_SCHEMA = 'tk2-battle-tactical-view-v1'
@@ -90,13 +90,14 @@ def player_side(state, battle):
         return 'attackers'
     if state.player == battle['defender']:
         return 'defenders'
-    return None
+    from .battle_reinforcements import supporting_side
+    return supporting_side(battle)
 
 
 def player_controls(state, battle, unit):
     if unit is None:
         return False
-    if 'coalition' in battle['extended']:
+    if 'coalition' in battle['extended'] or 'reinforcements' in battle['extended']:
         return state.officers[unit['id']].faction_id == state.player
     return True
 
@@ -122,13 +123,13 @@ def _troops(battle, side):
 
 
 def daily_points(troops):
-    if not _int(troops, 0, MAX_BATTLE_OFFICERS * OFFICER_TROOP_CAP):
+    if not _int(troops, 0, MAX_BATTLE_PARTICIPANTS * OFFICER_TROOP_CAP):
         raise ValueError('Invalid tactical soldier total')
     return DAILY_POINTS[min(troops // 1000, 9)]
 
 
 def point_cap(troops):
-    if not _int(troops, 0, MAX_BATTLE_OFFICERS * OFFICER_TROOP_CAP):
+    if not _int(troops, 0, MAX_BATTLE_PARTICIPANTS * OFFICER_TROOP_CAP):
         raise ValueError('Invalid tactical soldier total')
     return POINT_CAPS[min(troops // 1000, 9)]
 
@@ -587,7 +588,7 @@ def view(game, state, battle):
         camp=dict(zip(('x','y'),_field(battle)['camp'])), facilities=[dict(service) for service in _field(battle).get('services',())],
         maximum_troops=OFFICER_TROOP_CAP, deployment=deepcopy(battle['extended'].get('deployment')),placement=placement,
         auto_deployment=automatic,
-        **({'player_side': own} if 'coalition' in battle['extended'] else {}),
+        **({'player_side': own} if 'coalition' in battle['extended'] or 'reinforcements' in battle['extended'] else {}),
         points=deepcopy(row['points']), caps={side: point_cap(_troops(battle, side)) for side in SIDES},
         can_end=not placing and state.phase == 'battle' and row['side'] == own and not battle['extended']['duel'],
         attack_cost=ATTACK_COST, duel_cost=DUEL_COST, tactic_costs=list(TACTIC_COSTS), actors=actors)

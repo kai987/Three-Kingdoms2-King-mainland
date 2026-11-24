@@ -19,7 +19,7 @@ from . import diplomacy, grain_relief, grain_units, historical_campaigns, observ
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
-from . import city_economy
+from . import battle_reinforcements, city_economy, payroll
 from .city_economy import frontier_maintenance
 from .starting_garrisons import resolve as resolve_opening_garrisons
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
@@ -414,6 +414,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 **({'non_aggression': alliances} if alliances else {}),
                                 **expanded, **travel,
                                 'civil_staff': self._civil_staff_view(state),
+                                'payroll': payroll.rules(),
                                 'diplomacy': diplomacy.view(self, state),
                                 'grain_recovery': (grain_relief.recovery_view(self, state, state.player)
                                                    if state and state.phase == 'city' and state.player in self.catalog.factions
@@ -430,6 +431,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'equipment':equipment.view(self,state),
                                 'command_books':command_books.view(self,state),
                                 'battle_tactical':battle_grid.view(self,state,state.battle) if state else None,
+                                'battle_reinforcements':battle_reinforcements.view(self,state,state.battle) if state else None,
                                 'officer_troop_types':troop_types.view(self,state),
                                 'officer_relations':officer_relations.view(self,state),
                                 'names': {str(i): self.person_name(state, i) for i in state.officers} if state else {}}}
@@ -471,6 +473,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                'battle_move':self._battle_move, 'battle_wait':self._battle_wait,
                                'battle_place':self._battle_place,
                                'battle_facility':self._battle_facility,
+                               'battle_reinforce':lambda state, payload: battle_reinforcements.dispatch(self,state,payload),
+                               'battle_decline_support':lambda state, payload: battle_reinforcements.decline_support(self,state,payload),
                                **{action:self._siege_command(action) for action in
                                   ('siege_form','siege_orders','siege_step','siege_withdraw')},
                                'end_turn': self._end_turn, 'ai': self._ai, 'arrivals': self._arrivals,
@@ -516,8 +520,14 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 logistics.synchronize(self,candidate)
                 domestic.synchronize(self,candidate)
                 treasures.synchronize(self,candidate)
+                if kind != 'new' and candidate.turn != self.state.turn:
+                    payroll.finish_turn(self, candidate)
+                else:
+                    payroll.prune(self, candidate)
                 facilities.synchronize(self,candidate)
                 equipment.synchronize(self,candidate)
+                if kind != 'new':
+                    domestic.rebalance_changed_garrisons(self, self.state, candidate)
                 self.validate(candidate)
                 self.state = candidate
                 self.revision += 1
@@ -776,6 +786,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         else:
             city_economy.settle_turn_grain(self, state)
         state.turn += 1
+        battle_reinforcements.advance_returns(self, state)
         if month_changed:
             from . import dated_events, succession_depositions
             dated_events.process(self,state)
@@ -901,6 +912,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         command_books.validate(self, state)
         diplomacy.validate(self, state)
         civil_staff.validate(self, state)
+        payroll.validate(self, state)
+        battle_reinforcements.validate_returns(self, state)
         domestic.validate(self,state)
         logistics.validate(self,state)
         treasures.validate(self,state)
@@ -1017,7 +1030,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             all_ids = []
             for key, city_key in (('attackers', 'source'), ('defenders', 'target')):
                 units = battle[key]
-                if len(units) > 2*self.catalog.rules.battle_officers_per_side:
+                if len(units) > 4*self.catalog.rules.battle_officers_per_side:
                     raise ValueError('battle side capacity')
                 for unit in units:
                     if set(unit) != {'id', 'troops', 'start', 'martial'}:
@@ -1033,7 +1046,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     all_ids.append(unit['id'])
             if len(all_ids) != len(set(all_ids)) or len(battle['used']) != len(set(battle['used'])) or not set(battle['used']) <= {u['id'] for u in battle[self._player_sides(state)[0]]}:
                 raise ValueError('battle duplicate/turn ownership')
-            if len(all_ids)>2*self.catalog.rules.battle_officers_per_side:
+            reinforcements = len(battle_reinforcements.joined(battle))
+            if len(all_ids) - reinforcements > 2*self.catalog.rules.battle_officers_per_side:
                 raise ValueError('battle total deployment capacity')
             attacking = any(u['troops'] > 0 for u in battle['attackers'])
             defending = any(u['troops'] > 0 for u in battle['defenders'])

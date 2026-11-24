@@ -217,11 +217,17 @@ class HazardMarchTests(unittest.TestCase):
                     game._reconcile_factions(game.state)
                 self.assertEqual(sum(game.state.officers[i].troops for i in ids), 30000)
                 lost = game.state.soldiers['lost']
+                def destination_garrison(state):
+                    city = state.cities[target]
+                    return city.reserves + sum(state.officers[i].troops for i in city.roster.officer_ids)
+                destination_before = destination_garrison(game.state)
                 game.command('arrivals', {}, game.revision)
-                self.assertEqual(sum(game.state.officers[i].troops for i in ids), expected)
                 self.assertEqual(game.state.soldiers['lost'] - lost, 30000 - expected)
                 if order == 'depart':
+                    self.assertEqual(sum(game.state.officers[i].troops for i in ids), expected)
                     self.assertEqual(sum(unit['start'] for unit in game.state.battle['attackers']), expected)
+                else:
+                    self.assertEqual(destination_garrison(game.state), destination_before + expected)
 
     def test_completed_hazard_applies_before_retreat_from_a_lost_destination(self):
         game = self.game('wei')

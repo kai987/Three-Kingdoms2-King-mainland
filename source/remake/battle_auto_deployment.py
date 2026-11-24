@@ -40,6 +40,7 @@ def _original_side(battle,key,current):
 
 def _receipt(game,battle):
     from . import battle_ai_deployment,battle_deployment,battle_grid
+    from .battle_reinforcements import joined
     extension = battle['extended']; record = extension.get('auto_deployment')
     _require(type(record) is dict and set(record) == {'schema','sides'} and record.get('schema') == SCHEMA
         and type(record.get('sides')) is dict and 1 <= len(record['sides']) <= 2
@@ -66,7 +67,8 @@ def _receipt(game,battle):
                 and type(unit.get('martial')) is int and 0 <= unit['martial'] <= 255,
                 'Invalid automatic deployment initial roster')
             keys.append(unit['id'])
-        initial = {key for key,(current,_) in units.items() if _original_side(battle,key,current) == side}
+        initial = {key for key,(current,_) in units.items()
+                   if key not in joined(battle) and _original_side(battle,key,current) == side}
         _require(len(keys) == len(set(keys)) and set(keys) == initial,
                  'Automatic deployment initial side differs')
     return record,units

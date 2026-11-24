@@ -13,6 +13,9 @@ draw damage samples and change battle troops; profile stats remain immutable.
 """
 from copy import deepcopy
 
+from . import battle_experience
+from .officers import MAX_BATTLE_PARTICIPANTS
+
 SCHEMA = 'tk2-battle-conditions-v1'
 SIDES = ('attackers', 'defenders')
 MAX_DAY = 30
@@ -84,7 +87,7 @@ def _checked(battle, *, pending_day=False, allow_removed=False):
             or set(row)-{'schema', 'day', 'units', 'high_order'}
             or row['schema'] != SCHEMA or type(current) is not int or current < 1
             or not _integer(row['day'], 1, min(current, MAX_DAY))
-            or not isinstance(row['units'], dict) or len(row['units']) > 20):
+            or not isinstance(row['units'], dict) or len(row['units']) > MAX_BATTLE_PARTICIPANTS):
         raise ValueError('Invalid battle condition fields')
     if battle.get('outcome') is None:
         allowed = (current-1, current) if pending_day else (current,)
@@ -93,7 +96,7 @@ def _checked(battle, *, pending_day=False, allow_removed=False):
     units = _units(battle)
     if 'high_order' in row:
         order = row['high_order']
-        if (not isinstance(order, list) or len(order) > 20
+        if (not isinstance(order, list) or len(order) > MAX_BATTLE_PARTICIPANTS
                 or any(type(key) is not str or not key or key.strip() != key for key in order)
                 or len(set(order)) != len(order)
                 or not allow_removed and set(order) != set(units)):
@@ -215,7 +218,7 @@ def _apply(battle, ident, side, condition_kind, count):
     units = _units(battle)
     if (not _integer(current, 1, MAX_DAY) or battle.get('outcome') is not None
             or not _live(extension, units, key) or units[key][0] == side
-            or condition_kind == 'qimen' and len(units) > 20):
+            or condition_kind == 'qimen' and len(units) > MAX_BATTLE_PARTICIPANTS):
         raise ValueError('Invalid battle condition target or phase')
     if row is None:
         row = dict(schema=SCHEMA, day=current, units={})
@@ -295,28 +298,34 @@ def advance_daily(state, battle):
         changes.append(dict(id=key, kind=condition_kind, before=before, remaining=after))
     if source is not None:
         by_id, counter = _units(battle), 0
+        tracked = battle_experience.FIELD in battle['extended']
+        source_side = by_id[str(source)][0]
         for key in row['high_order']:
             condition = units.get(key)
             if condition is None or condition['kind'] != 'qimen':
                 continue
-            unit = by_id[key][1]
+            side, unit = by_id[key]
             before, troops = condition['remaining'], unit['troops']
             after = before-1
             requested = 80+state.rng.next()%71
             remaining_troops = max(0, troops-requested)
             unit['troops'] = remaining_troops
-            counter += remaining_troops%256
+            if tracked:
+                if side != source_side:
+                    battle_experience.attack(battle,source,unit['id'],troops-remaining_troops)
+            else:
+                counter += remaining_troops%256
             if after:
                 units[key] = dict(kind='qimen', remaining=after)
             else:
                 del units[key]
             changes.append(dict(id=key, kind='qimen', before=before, remaining=after,
                 troops_before=troops, troops_after=remaining_troops, loss=troops-remaining_troops))
-        # Explicit remake growth contract: normal capped experience and the
-        # current tier function, without mutating immutable profile/battle war.
-        from .officers import experience_tier
-        officer = state.officers[source]
-        officer.experience = min(49999, officer.experience+counter//2)
-        officer.tier = experience_tier(officer.experience)
+        # Older ongoing battles retain their original daily receipt.
+        if not tracked:
+            from .officers import experience_tier
+            officer = state.officers[source]
+            officer.experience = min(49999, officer.experience+counter//2)
+            officer.tier = experience_tier(officer.experience)
     row.update(day=current, units=units)
     return changes

@@ -751,7 +751,7 @@ test('qimen targets enemies with daily losses and experience, bilingual receipts
   if(row.kind==='daily'){
    const history=await openBattleHistoryEntry(page,result.save.state.extension.events.items.at(-1));
    await expect(page.locator('#event-title')).toContainText('奇門の日界効果');await expect(page.locator('#event-description .event-facts')).toContainText('損兵合計'+expected.rows.reduce((sum,tick)=>sum+tick.loss,0));
-   await page.locator('#event-dialog [data-language-picker]').selectOption('zh-Hant');await expect(page.locator('#event-title')).toContainText('奇門日界效果');await expect(page.locator('#event-description .event-facts')).toContainText('增加經驗'+expected.experience_gain);await expect(page.locator('#event-dialog .event-person img').first()).toBeVisible();await evidence(page,testInfo,'qimen-daily-committed-loss-and-xp-tc');await closeBattleHistoryEntry(history);expect(await save(page)).toEqual(result.save);
+   await page.locator('#event-dialog [data-language-picker]').selectOption('zh-Hant');await expect(page.locator('#event-title')).toContainText('奇門日界效果');await expect(page.locator('#event-description .event-facts')).toContainText(expected.experience_gain?'增加經驗'+expected.experience_gain:'合計損兵');await expect(page.locator('#event-dialog .event-person img').first()).toBeVisible();await evidence(page,testInfo,'qimen-daily-committed-loss-and-xp-tc');await closeBattleHistoryEntry(history);expect(await save(page)).toEqual(result.save);
   }else{
    expect(prior.save.state.battle.defenders.find(u=>u.id===row.target).troops).toBe(0);expect(result.save.state.rng.draws-prior.save.state.rng.draws).toBe(1);await expect(page.locator(`[data-target="${row.target}"] [data-qimen-count]`)).toHaveCount(0);
   }

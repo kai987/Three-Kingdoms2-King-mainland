@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 @contextmanager
-def record_garrison_charges():
+def record_garrison_charges(*, include_payroll=False):
     """Include actual new city bills in pre-existing conservation assertions."""
     from collections import Counter
     paid = Counter()
@@ -24,7 +24,17 @@ def record_garrison_charges():
         settle(game, state)
         paid.update({key: stock - state.cities[key].grain for key, stock in before.items()})
     with patch.object(city_economy, 'settle_turn_grain', side_effect=receipt):
-        yield paid
+        if not include_payroll:
+            yield paid
+            return
+        from remake import payroll
+        pay_city = payroll.pay_city
+        def payroll_receipt(state, city, previous, shortfalls):
+            result = pay_city(state, city, previous, shortfalls)
+            paid[city.id] += sum(row['grain_paid'] for row in result.values())
+            return result
+        with patch.object(payroll, 'pay_city', side_effect=payroll_receipt):
+            yield paid
 
 
 @contextmanager

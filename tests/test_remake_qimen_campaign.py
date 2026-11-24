@@ -15,7 +15,7 @@ from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
-from remake import battle_conditions as conditions,battle_grid,battle_supply,battle_allegiance,tactical_ai
+from remake import battle_conditions as conditions,battle_grid,battle_supply,battle_allegiance,battle_experience,tactical_ai
 from remake.campaign import Campaign,SeedRng
 from remake.errors import GameError
 from remake.officers import experience_tier
@@ -109,32 +109,28 @@ class QimenCampaignTests(unittest.TestCase):
             command(game,'tactic',battle_id=game.state.battle['id'],actor=ZHU_GE,target=roles['center'],tactic=15)
         self.assertEqual(game.export_save(),before);self.assertEqual(game.revision,revision)
 
-    def test_real_full_days_use_fixed_order_one_draw_each_and_sum_post_loss_bytes_before_half(self):
+    def test_real_full_days_use_fixed_order_and_credit_actual_enemy_losses(self):
         game,roles,own,_=prepared();cast(game,roles);battle=game.state.battle
         conditions.apply_qimen(battle,roles['leaf'],own,1);conditions.apply_qimen(battle,roles['near'],own,2)
         # Initial defender order is near,leaf,...,center; neither numeric ID
         # order nor insertion order of the condition dict has this sequence.
         order=[roles[k]for k in('near','leaf','center')]
         self.assertNotEqual(order,sorted(order))
-        for seed in range(1,100):
-            probe=SeedRng(seed);ticks=expected_ticks(battle,order,probe)
-            values=[tick['troops_after']%256 for tick in ticks]
-            if sum(values)//2!=sum(v//2 for v in values):break
-        else:self.fail('No odd-byte aggregation boundary')
-        game.state.rng=SeedRng(seed);rng=deepcopy(game.state.rng)
+        game.state.rng=SeedRng(2026);rng=deepcopy(game.state.rng)
         ticks=expected_ticks(battle,order,rng)
         before_exp=game.state.officers[ZHU_GE].experience
         profile=deepcopy(game.state.officers[ZHU_GE].profile)
         health=deepcopy(battle['extended']['support'])
         wait_day(game);battle=game.state.battle
-        gain=sum(tick['troops_after']%256 for tick in ticks)//2
         self.assertEqual(game.state.rng,rng);self.assertEqual(game.state.rng.draws,3)
-        self.assertEqual(game.state.officers[ZHU_GE].experience,before_exp+gain)
-        self.assertEqual(game.state.officers[ZHU_GE].tier,experience_tier(before_exp+gain))
+        self.assertEqual(game.state.officers[ZHU_GE].experience,before_exp)
+        self.assertEqual(game.state.officers[ZHU_GE].tier,experience_tier(before_exp))
+        self.assertEqual(battle['extended'][battle_experience.FIELD]['officers'][str(ZHU_GE)]['damage'],
+                         sum(tick['loss'] for tick in ticks))
         self.assertEqual(game.state.officers[ZHU_GE].profile,profile)
         self.assertEqual(battle['extended']['support'],health)
         self.assertEqual(daily_event(game)['details'],dict(tactic=15,success=True,condition='qimen',
-            qimen_phase='daily',qimen_ticks=ticks,experience_id=str(ZHU_GE),experience_gain=gain))
+            qimen_phase='daily',qimen_ticks=ticks,experience_id=str(ZHU_GE),experience_gain=0))
         for tick in ticks:
             self.assertEqual(unit(battle,int(tick['id']))['troops'],tick['troops_after'])
             self.assertEqual(conditions.remaining(battle,tick['id']),tick['remaining'])
@@ -198,7 +194,8 @@ class QimenCampaignTests(unittest.TestCase):
         before_exp=game.state.officers[ZHU_GE].experience;draws=game.state.rng.draws
         wait_day(game)
         self.assertEqual(game.state.rng.draws,draws+1)
-        self.assertGreater(game.state.officers[ZHU_GE].experience,before_exp)
+        self.assertEqual(game.state.officers[ZHU_GE].experience,before_exp)
+        self.assertGreater(game.state.battle['extended'][battle_experience.FIELD]['officers'][str(ZHU_GE)]['damage'],0)
         self.assertEqual(conditions.qimen_source(game.state,game.state.battle),ZHU_GE)
         game.validate(game.state)
 
@@ -210,6 +207,7 @@ class QimenCampaignTests(unittest.TestCase):
                 if mode=='absent':
                     battle['defenders'].remove(unit(battle,ZHU_GE))
                     battle['extended']['support'].pop(str(ZHU_GE))
+                    battle['extended'][battle_experience.FIELD]['officers'].pop(str(ZHU_GE))
                     battle['extended']['tactical']['positions'].pop(str(ZHU_GE))
                     battle['used'][:]=[ident for ident in battle['used']if ident!=ZHU_GE]
                     conditions.drop_removed(battle)  # Actual removed-slot boundary prunes order.
@@ -264,14 +262,20 @@ class QimenCampaignTests(unittest.TestCase):
                 state.officers[ZHU_GE].tier=experience_tier(experience)
                 profile=deepcopy(state.officers[ZHU_GE].profile);war=unit(battle,ZHU_GE)['martial']
                 rng=deepcopy(state.rng);tick=expected_ticks(battle,[roles['center']],rng)[0]
-                expected=min(49999,experience+(tick['troops_after']%256)//2)
                 wait_day(game);state,battle=game.state,game.state.battle
-                self.assertEqual(state.officers[ZHU_GE].experience,expected)
-                self.assertEqual(state.officers[ZHU_GE].tier,experience_tier(expected))
+                self.assertEqual(state.officers[ZHU_GE].experience,experience)
+                self.assertEqual(state.officers[ZHU_GE].tier,experience_tier(experience))
                 self.assertEqual(state.officers[ZHU_GE].profile,profile)
                 self.assertEqual(unit(battle,ZHU_GE)['martial'],war)
-                self.assertEqual(daily_event(game)['details']['experience_gain'],expected-experience)
+                self.assertEqual(daily_event(game)['details']['experience_gain'],0)
+                self.assertEqual(daily_event(game)['details']['qimen_ticks'],[tick])
                 game.validate(state)
+                command(game,'retreat',battle_id=battle['id'])
+                command(game,'settle',battle_id=battle['id'])
+                result=game.state.officers[ZHU_GE]
+                self.assertGreaterEqual(result.experience,min(49_999,experience+50))
+                self.assertLessEqual(result.experience,min(49_999,experience+2_500))
+                self.assertEqual(result.tier,experience_tier(result.experience))
 
     def test_food_or_thirty_day_end_precedes_high_damage_rng_and_daily_event(self):
         for mode in('food','timeout'):

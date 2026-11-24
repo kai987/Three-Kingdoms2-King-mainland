@@ -13,7 +13,7 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT/'source'),str(ROOT/'tests')]
-from remake import battle_ai_deployment,battle_auto_deployment as automatic,battle_grid,battle_placement,battle_allegiance
+from remake import battle_ai_deployment,battle_auto_deployment as automatic,battle_grid,battle_placement,battle_allegiance,civil_staff
 from remake.campaign import Campaign,Catalog,SeedRng,digest
 from remake.errors import GameError
 from campaign_fixtures import controlled_catalog,confirm_default_placement
@@ -50,6 +50,7 @@ class AutoDeploymentCampaignTests(unittest.TestCase):
         march = deepcopy(game.state.extension['travel']['marches'][0])
         while game.state.turn < march['arrival_turn']:
             game._complete_turn(game.state);game._spawn_eligible(game.state);game._reconcile_factions(game.state)
+            civil_staff.synchronize(game, game.state, monthly=game.state.day==1)
         game.state.phase = 'arrivals'
         game.validate(game.state)
         return game,ids,march

@@ -13,6 +13,7 @@ from typing import Iterable, Mapping
 OFFICER_TROOP_CAP = 10000
 BATTLE_OFFICERS_PER_SIDE = 10
 MAX_BATTLE_OFFICERS = 2 * BATTLE_OFFICERS_PER_SIDE
+MAX_BATTLE_PARTICIPANTS = 2 * MAX_BATTLE_OFFICERS
 
 
 def integer(value, low, high, label):

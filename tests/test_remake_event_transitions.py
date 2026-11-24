@@ -302,7 +302,7 @@ class CampaignEventTransitionTests(unittest.TestCase):
             data['city_foundings'] = {'baxi': dict(year=218, month=1, parent='xiangyang', resource_divisor=4)}
             data['city_income']['baxi'] = dict(gold=0, grain=0, reserves=0)
         game = start(catalog_with(change))
-        paid = self.enterContext(record_garrison_charges())
+        paid = self.enterContext(record_garrison_charges(include_payroll=True))
         original = {field: getattr(game.state.cities['xiangyang'], field) for field in ('gold', 'grain', 'reserves')}
         for _ in range(2):
             tick(game)
@@ -314,10 +314,15 @@ class CampaignEventTransitionTests(unittest.TestCase):
         self.assertEqual(found[0]['details'], dict(parent='xiangyang'))
         self.assertEqual(found[0]['factions'], ['shu'])
         self.assertEqual(game.state.cities['baxi'].owner, 'shu')
+        from remake.payroll import wage
+        gold_wages = {city: sum(wage(game.state.officers[i])['gold']
+                               for i in game.state.cities[city].roster.officer_ids)
+                      for city in ('baxi', 'xiangyang')}
         for field, amount in original.items():
             split = (amount - before_founding if field == 'grain' else amount) // 4
-            self.assertEqual(getattr(game.state.cities['baxi'], field), split - (paid['baxi'] if field == 'grain' else 0))
-            self.assertEqual(getattr(game.state.cities['xiangyang'], field), amount - split - (paid['xiangyang'] if field == 'grain' else 0))
+            charges = paid if field == 'grain' else gold_wages if field == 'gold' else {}
+            self.assertEqual(getattr(game.state.cities['baxi'], field), max(0, split - charges.get('baxi', 0)))
+            self.assertEqual(getattr(game.state.cities['xiangyang'], field), max(0, amount - split - charges.get('xiangyang', 0)))
         tick(game)
         self.assertEqual(events(game, 'city_founded'), found)
         game.validate(game.state)
@@ -343,6 +348,7 @@ class CampaignEventTransitionTests(unittest.TestCase):
         loaded = Campaign(game.catalog)
         loaded.load_save(game.export_save(), 0)
         original_troops = loaded.state.officers[ident].troops
+        survivor_ratio = march['risks'][0]
         loaded.command('arrivals', {}, loaded.revision)
         weather = events(loaded, 'march_weather')
         discovery = events(loaded, 'route_discovered')
@@ -351,7 +357,8 @@ class CampaignEventTransitionTests(unittest.TestCase):
         self.assertEqual(weather[0]['person_ids'], [loaded.state.officers[ident].person_id])
         self.assertEqual(weather[0]['city_ids'], ['hepu', 'yizhou'])
         self.assertEqual(weather[0]['details']['march_id'], march['id'])
-        self.assertEqual(weather[0]['details']['lost'], original_troops - loaded.state.officers[ident].troops)
+        survivors = original_troops * survivor_ratio['survival_numerator'] // survivor_ratio['survival_denominator']
+        self.assertEqual(weather[0]['details']['lost'], original_troops - survivors)
         self.assertEqual(loaded.state.soldiers['lost'] - old_lost, weather[0]['details']['lost'])
         self.assertTrue(80 <= weather[0]['details']['risks'][0]['loss_percent'] <= 90)
         self.assertEqual(discovery[0]['details'], {'from': 'hepu', 'to': 'yizhou'})
@@ -372,8 +379,9 @@ class CampaignEventTransitionTests(unittest.TestCase):
 
     def test_total_weather_loss_returns_without_discovery_or_arrival(self):
         game, ident, march = self.sailing(troops=1)
+        losses = game.state.soldiers['lost']
         game.command('arrivals', {}, game.revision)
-        self.assertEqual(game.state.officers[ident].troops, 0)
+        self.assertEqual(game.state.soldiers['lost'], losses + 1)
         self.assertEqual(len(events(game, 'march_weather')), 1)
         self.assertEqual(events(game, 'march_weather')[0]['details']['lost'], 1)
         returned = events(game, 'march_returned')

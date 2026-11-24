@@ -50,6 +50,8 @@
   const actorReady=()=>actors().some(id=>same(id,active.actor));
   const record=()=>getView()?.game?.cities?.[active?.city];
   const affordable=gold=>Number.isSafeInteger(gold)&&gold>=0&&(record()?.gold??-1)>=gold;
+  const canPayGrain=grain=>Number.isSafeInteger(grain)&&grain>=0&&(record()?.grain??-1)>=grain;
+  const townUpgradeReady=quote=>quote?.can_develop===true&&affordable(quote.gold)&&canPayGrain(quote.grain);
   const tradeMaximum=()=>{const quote=row()?.trade?.[active.direction];if(!quote||!Number.isSafeInteger(quote.rate)||quote.rate<1||!Number.isSafeInteger(quote.batch_grain)||quote.batch_grain<1)return 0;return Math.max(0,Math.min(quote.max_batches??0,active.direction==='buy'?Math.floor((record()?.gold??0)/quote.rate):Math.floor((record()?.grain??0)/quote.batch_grain),active.direction==='buy'?Math.floor((100000000-(record()?.grain??100000000))/quote.batch_grain):Math.floor((100000000-(record()?.gold??100000000))/quote.rate)));};
   const commandKind=()=>active.section==='civic'?(active.civicAction==='policy'?'set_facility_policy':active.civicAction==='prevention'?'improve_prevention':'develop_town'):({hospital:'treat_officer',school:'study_officer',market:'trade_grain',armory:active.equipmentMode==='owned'?'equip_owned':'buy_equipment'})[active.service];
   const bookReady=kind=>root.GameCommandBooks?.can(getView(),kind)===true;
@@ -86,7 +88,7 @@
   function update(){
    if(!showing())return;
    const source=row(),ready=canAct(),set=(id,disabled)=>{if(!id)return;const el=query('#'+id);if(el)el.disabled=disabled;};
-   set('facility-develop',!ready||!source?.develop?.can_develop||!affordable(source?.develop?.gold));
+   set('facility-develop',!ready||!townUpgradeReady(source?.develop));
    const patient=targetQuote('patients',active.patient),student=targetQuote('students',active.student),equipment=equipmentQuote(),prevent=preventionQuote(),trade=source?.trade?.[active.direction];
    set('facility-treat',!ready||!source?.services?.includes('hospital')||!patient?.can_treat||!affordable(patient?.gold));
    set('facility-study',!ready||!source?.services?.includes('school')||!student?.can_study||!affordable(student?.gold));
@@ -144,11 +146,20 @@
   const missingService=()=>text('本城尚未設置','この都市には未設置');
   function selectedAction(){
    const source=row()||{},patient=targetQuote('patients',active.patient),student=targetQuote('students',active.student),equipment=equipmentQuote(),prevent=preventionQuote();
-   let id='',caption='',gold=null,reason='',income=false;
+   let id='',caption='',gold=null,grain=null,reason='',income=false;
    if(active.section==='civic'){
     if(active.civicAction==='policy'){id='facility-save-policy';caption=text('儲存自動方針','自動方針を保存');gold=0;}
     else if(active.civicAction==='prevention'){id='facility-prevent';caption=text('確認防災整備','防災整備を確定');gold=range(prevent?.gold_min,prevent?.gold_max);if(!prevent?.can_prevent)reason=text('防災已到上限且無待修復損傷，或執行者不符合條件。','防災が上限で復旧対象がないか、実行武将が条件を満たしていません。');else if(!affordable(prevent.gold_max))reason=text(`金錢不足；需保留最高費用金${prevent.gold_max}。`,`資金不足です。最大費用${prevent.gold_max}が必要です。`);}
-    else{id='facility-develop';caption=text('確認設施等級','施設等級を確定');gold=source.develop?.gold;if(source.develop&&source.develop.from_town<source.develop.to_town&&!affordable(gold))reason=text(`金錢不足；需要金${shown(gold)}。`,`資金不足です。資金${shown(gold)}が必要です。`);else if(!source.develop?.can_develop)reason=text('已達最高城町等級，或目前無法發展。','町が最高段階に達しているか、現在は発展できません。');else if(!affordable(gold))reason=text(`金錢不足；需要金${shown(gold)}。`,`資金不足です。資金${shown(gold)}が必要です。`);}
+    else{
+     const upgrade=source.develop;
+     id='facility-develop';caption=text('確認設施等級','施設等級を確定');
+     if(upgrade&&upgrade.from_town<upgrade.to_town){
+      ({gold,grain}=upgrade);
+      if(!affordable(gold))reason=text(`金錢不足，需要金${shown(gold)}。`,`資金不足です。資金${shown(gold)}が必要です。`);
+      else if(!canPayGrain(grain))reason=text(`糧不足，需要糧${shown(grain)}。`,`兵糧不足です。兵糧${shown(grain)}が必要です。`);
+     }
+     if(!reason&&!upgrade?.can_develop)reason=text('已達最高城町等級，或目前無法發展。','町が最高段階に達しているか、現在は発展できません。');
+    }
    }else if(active.service==='hospital'){
     id='facility-treat';caption=text('確認診療','治療を確定');gold=patient?.gold;
     if(patient&&!affordable(gold))reason=text(`金錢不足；需要金${gold}。`,`資金不足です。資金${gold}が必要です。`);else if(!patient?.can_treat)reason=text('沒有需要治療且符合條件的受診武將。','治療が必要で条件を満たす武将がいません。');else if(!affordable(gold))reason=text(`金錢不足；需要金${gold}。`,`資金不足です。資金${gold}が必要です。`);
@@ -165,7 +176,8 @@
    if(active.section==='town'&&!source.services?.includes(active.service))reason=missingService();
    const management=active.section==='civic'&&active.civicAction==='policy';
    if(pending)reason=text('指令處理中…','指令を処理中…');else if(!canWrite())reason=boundary()||text('目前無法執行指令。','現在、指令を実行できません。');else if(!management&&!canAct())reason=boundary()||text('本城或執行武將目前無法行動。','都市または実行武将は現在、行動できません。');
-   const cost=text(`${income?'收入':'總費用'}：金${gold===null||gold===undefined?'—':gold}`,`${income?'収入':'合計費用'}：資金${gold===null||gold===undefined?'—':gold}`);
+   const cost=text(`${income?'收入':'總費用'}：金${gold??'—'}${grain==null?'':`、糧${grain}`}`,
+        `${income?'収入':'合計費用'}：資金${gold??'—'}${grain==null?'':`、兵糧${grain}`}`);
    return {id,caption,cost,reason,management};
   }
   function footer(){
@@ -187,7 +199,7 @@
   function civicBody(){
    const source=row(),develop=source.develop;
    const tabs=[['development',text('設施等級','施設の整備')],['prevention',text('防災與修復','防災・復旧')],['policy',text('自動方針','自動方針')]];
-   let content=active.civicAction==='policy'?policyBody():active.civicAction==='prevention'?`<fieldset><legend>${text('防災與災後修復','防災と被災後の復旧')}</legend><p class="small" id="facility-prevention-preview"></p><p class="small">${text('防災值最多99、損傷最低0。費用與效果會在確認後，依顯示的參考範圍決定。','防災は99まで、損傷は0までです。費用と効果は、表示した参考範囲から確定時に決まります。')}</p></fieldset>`:`<fieldset><legend>${text('設施等級','施設の整備')}</legend><p>${develop&&develop.from_town===develop.to_town?text('已達最高城町等級3。醫館、市場、學問所與武器屋均已開放。','施設の整備段階は上限の3です。医館・市場・学問所・武器屋を利用できます。'):develop?text(`發展 ${shown(develop.from_town)} → ${shown(develop.to_town)}，花費金${shown(develop.gold)}。醫館與市場為基礎服務；發展後開放學問所與武器屋，最高級提供進階商品。`,`発展${shown(develop.from_town)} → ${shown(develop.to_town)}、費用は資金${shown(develop.gold)}。医館・市場は基本施設で、発展すると学問所・武器屋を利用でき、最高段階では上級商品が並びます。`):text('目前無法發展。','現在は発展できません。')}</p></fieldset>`;
+   let content=active.civicAction==='policy'?policyBody():active.civicAction==='prevention'?`<fieldset><legend>${text('防災與災後修復','防災と被災後の復旧')}</legend><p class="small" id="facility-prevention-preview"></p><p class="small">${text('防災值最多99、損傷最低0。費用與效果會在確認後，依顯示的參考範圍決定。','防災は99まで、損傷は0までです。費用と効果は、表示した参考範囲から確定時に決まります。')}</p></fieldset>`:`<fieldset><legend>${text('設施等級','施設の整備')}</legend><p>${develop&&develop.from_town===develop.to_town?text('已達最高城町等級3。醫館、市場、學問所與武器屋均已開放。','施設の整備段階は上限の3です。医館・市場・学問所・武器屋を利用できます。'):develop?text(`發展 ${shown(develop.from_town)} → ${shown(develop.to_town)}。町等級2開放學問所與武器屋，最高級提供進階商品。`,`発展 ${shown(develop.from_town)} → ${shown(develop.to_town)}。段階2で学問所・武器屋が開き、最高段階では上級商品が並びます。`):text('目前無法發展。','現在は発展できません。')}</p></fieldset>`;
    return `<nav class="facility-civic-tabs" aria-label="${text('城政指令','都市の指令')}">${tabs.map(([id,title])=>`<button type="button" id="facility-civic-${id}" data-facility-civic="${id}" aria-pressed="${active.civicAction===id}">${title}</button>`).join('')}</nav>${content}`;
   }
   function render(){
@@ -207,7 +219,7 @@
    }
    query('#facility-civic-entry').onclick=()=>{if(!pending){active.section='civic';rerender('facility-civic-'+active.civicAction);}};
    for(const id of ['development','prevention','policy'])if(query('#facility-civic-'+id))query('#facility-civic-'+id).onclick=()=>{if(!pending){active.civicAction=id;rerender('facility-civic-'+id);}};
-   if(query('#facility-develop'))query('#facility-develop').onclick=()=>submit('develop_town',()=>({city:active.city,actor:ref(active.actor)}),()=>row()?.develop?.can_develop===true&&affordable(row()?.develop?.gold));
+   if(query('#facility-develop'))query('#facility-develop').onclick=()=>submit('develop_town',()=>({city:active.city,actor:ref(active.actor)}),()=>townUpgradeReady(row()?.develop));
    if(query('#facility-patient'))query('#facility-patient').onchange=()=>{if(!pending){active.patient=ref(query('#facility-patient').value);rerender('facility-patient');}};
    if(query('#facility-treat'))query('#facility-treat').onclick=()=>submit('treat_officer',()=>({city:active.city,actor:ref(active.actor),officer:ref(active.patient)}),()=>row()?.services?.includes('hospital')&&targetQuote('patients',active.patient)?.can_treat===true&&affordable(targetQuote('patients',active.patient)?.gold));
    if(query('#facility-student'))query('#facility-student').onchange=()=>{if(!pending){active.student=ref(query('#facility-student').value);rerender('facility-student');}};

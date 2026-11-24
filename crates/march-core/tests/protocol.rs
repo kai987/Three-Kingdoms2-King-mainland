@@ -291,7 +291,7 @@ fn raw_abi_owns_separate_buffers_and_preserves_version() {
 }
 
 #[test]
-fn tactical_rosters_allow_mid_battle_conversion_within_total_capacity() {
+fn tactical_rosters_allow_mid_battle_conversion_and_reinforcements() {
     let unit = json!({"troops":500,"martial":80,"morale":93,"spirit":100,
         "guarded":false,"stunned":false});
     let request = |friends, enemies| {
@@ -299,7 +299,7 @@ fn tactical_rosters_allow_mid_battle_conversion_within_total_capacity() {
             "enemies":vec![unit.clone(); enemies],"enemy_rank":(0..enemies).collect::<Vec<_>>(),
             "damage_percent":32,"board":null})
     };
-    for (friends, enemies) in [(11, 6), (6, 11), (19, 1)] {
+    for (friends, enemies) in [(11, 6), (6, 11), (19, 1), (11, 10), (21, 19)] {
         let result = value(request(friends, enemies));
         let rows = result.as_array().unwrap();
         assert_eq!(rows.len(), friends);
@@ -307,5 +307,5 @@ fn tactical_rosters_allow_mid_battle_conversion_within_total_capacity() {
             .iter()
             .all(|row| row["attacks"].as_array().unwrap().len() == enemies));
     }
-    assert_eq!(run(&request(11, 10))["error"], "Invalid tactical units");
+    assert_eq!(run(&request(21, 20))["error"], "Invalid tactical units");
 }

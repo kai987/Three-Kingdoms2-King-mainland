@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake import grain_units
 from remake.campaign import Campaign, GameError, digest
-from remake import city_economy, domestic
+from remake import city_economy, civil_staff, domestic
 from campaign_fixtures import record_garrison_charges, controlled_catalog, confirm_default_placement
 
 
@@ -57,6 +57,7 @@ class TenDayCalendarTests(unittest.TestCase):
                 game.command('new', dict(faction=faction, seed=2026), 0)
                 with (patch.object(game, '_ai', wraps=game._ai) as ai,
                       patch.object(game, '_monthly_calendar', wraps=game._monthly_calendar) as monthly,
+                      patch.object(civil_staff, 'settle_payroll', wraps=civil_staff.settle_payroll) as salaries,
                       patch.object(city_economy, 'settle_turn_grain', wraps=city_economy.settle_turn_grain) as grain):
                     for turn in (1, 2, 3):
                         if faction == 'observer':
@@ -75,8 +76,8 @@ class TenDayCalendarTests(unittest.TestCase):
                         else:
                             game.command(command, payload, revision)
                         self.assertEqual(game.export_save(), saved)
-                        self.assertEqual((ai.call_count, grain.call_count, monthly.call_count),
-                                         (turn, turn, turn // 3))
+                        self.assertEqual((ai.call_count, grain.call_count, monthly.call_count, salaries.call_count),
+                                         (turn, turn, turn // 3, turn // 3))
 
     def test_new_year_and_lifetime_receipts_only_at_december_lower_to_january_upper(self):
         game = self.game

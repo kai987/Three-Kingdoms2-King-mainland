@@ -67,6 +67,7 @@ _ORDINARY_CITY_OPENINGS = {
     **ordinary_population_west.OPENINGS,
 }
 ACTIONS = dict(develop_land='land', develop_industry='industry', develop_population='population')
+DEVELOPMENT_SCALE = 10
 DEFAULTS = {tier: dict(land=150*size, industry=150*size,
                        population=50000*size, governance=70)
             for tier, size in (('normal', 1), ('large', 2), ('giant', 3))}
@@ -235,13 +236,17 @@ def tax_rate(governance):
     return 50 if governance <= 50 else 60 if governance <= 70 else 70 if governance <= 80 else 80 if governance <= 90 else 90 if governance < 100 else 100
 
 
-def _production(row, field, difficulty, *, minimum_population_steps=0):
+def _production(row, field, difficulty, *, opening_land, minimum_population_steps=0):
     if difficulty not in ('easy', 'normal', 'hard'):
         raise ValueError('Unknown campaign difficulty')
     # Difficulty remains an AI-policy choice.
     current_grain = field == 'land' and grain_units.current_rations()
-    population_unit, development_divisor = (300, 1) if current_grain else (100, 3)
-    development_factor = 60 + row[field] // development_divisor
+    population_unit = 1_000 if current_grain else 100
+    # Preserve the opening yield and retain 3/4 of each land point's effect.
+    # Both grain factors use quarter units so intermediate rounding cannot
+    # hide individual land improvements.
+    development_factor = (4 * 60 + opening_land + 3 * row['land'] if current_grain
+                          else 60 + row[field] // 3)
     population_steps = max(minimum_population_steps, row['population'] // population_unit)
     return population_steps * development_factor * tax_rate(row['governance'])
 
@@ -256,10 +261,11 @@ def adjust_income(game, state, city_id, income):
     difficulty = state.extension.get('difficulty', 'normal')
     for resource, field in (('gold', 'industry'), ('grain', 'land')):
         if resource in result:
-            numerator = _production(row, field, difficulty)
+            numerator = _production(row, field, difficulty, opening_land=baseline['land'])
             # Custom openings below one production step still have a safe
             # reference value when their population later reaches one step.
-            denominator = _production(baseline, field, difficulty, minimum_population_steps=1)
+            denominator = _production(baseline, field, difficulty, opening_land=baseline['land'],
+                                      minimum_population_steps=1)
             result[resource] = result[resource] * numerator // denominator
     if 'reserves' in result:
         result['reserves'] = result['reserves'] * row['population'] // baseline['population']
@@ -277,8 +283,13 @@ def _effect(gold, intellect, roll, field, before, governor_bonus_percent=0):
     if population:
         units = max(1, units//2)
     units = units * (100 + governor_bonus_percent) // 100
-    gain = units * POPULATION_UNIT if population else units
+    gain = (units * POPULATION_UNIT if population else
+            min(5, (units + DEVELOPMENT_SCALE - 1) // DEVELOPMENT_SCALE))
     return min(gain, LIMITS[field]-before)
+
+
+def _governance_increase(field, gain):
+    return 1 + (gain >= (3100 if field == 'population' else 4))
 
 
 def _profile(game, state, actor):
@@ -308,10 +319,9 @@ def _quote(game, state, city, actor, kind, owner, governor_bonus_percent):
     # The rounded bonus and the cap preserve the minimum/maximum corners.
     gain_min = _effect(choices[0], intellect, 10, field, row[field], governor_bonus_percent)
     gain_max = _effect(choices[-1], intellect, 17, field, row[field], governor_bonus_percent)
-    threshold = 3100 if field == 'population' else 31
     governance = row['governance']
-    governance_min = min(100, governance+1+(gain_min >= threshold))-governance
-    governance_max = min(100, governance+1+(gain_max >= threshold))-governance
+    governance_min = min(100, governance + _governance_increase(field, gain_min)) - governance
+    governance_max = min(100, governance + _governance_increase(field, gain_max)) - governance
     reason = ('disabled' if not _rules(game)['enabled'] else
               'city_unavailable' if city.owner != owner or not _ready(state, owner) else
               'actor_unavailable' if not _resident(game, state, city, actor, working=True, healthy=True) else
@@ -356,11 +366,13 @@ def execute(game, state, payload, owner):
     command_books.spend(state, city, payload['kind'])
     city.gold -= cost
     row[field] += gain
-    row['governance'] = min(100, governance+1+(gain >= (3100 if field == 'population' else 31)))
+    row['governance'] = min(100, governance + _governance_increase(field, gain))
     state.extension['officer_actions'][str(actor)] = state.turn
     details = dict(actor=state.officers[actor].person_id, development=field, gold=cost,
                    before=before, after=row[field], gain=gain,
                    governance_before=governance, governance_after=row['governance'])
+    if field != 'population':
+        details['gain_scale'] = DEVELOPMENT_SCALE
     game._emit_event(state, 'city_developed', city_ids=[city.id], factions=[owner],
                      person_ids=[state.officers[actor].person_id], details=details)
     return details

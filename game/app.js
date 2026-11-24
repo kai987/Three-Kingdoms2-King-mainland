@@ -208,14 +208,16 @@ MarchCore.subscribe(()=>{
 });
 function renderMarches(){
  const rows=view.game?.extension?.travel?.marches||[],observing=isObserver();
+ const returns=(view.game?.extension?.battle_reinforcement_returns||[]).filter(row=>observing||row.owner===view.game.player);
+ const returning=returns.map(row=>`<p data-battle-reinforcement-return><strong>${escapeHtml(cityName(row.source))}</strong> · ${battleText(`援軍沿原路返回，尚需 ${row.remaining} 日`,`援軍は元の経路で帰還中・残り ${row.remaining} 日`)}<br>${row.officers.map(id=>escapeHtml(name(id))).join('、')}</p>`).join('');
  const visible=rows.filter(r=>observing||r.owner===view.game.player);
  const entries=visible.map(r=>`<p data-march="${r.id}">${observing?escapeHtml(faction(r.owner))+' · ':''}${escapeHtml(cityName(r.journey_source||r.source))} → ${escapeHtml(cityName(r.target))}<br>${r.officers.map(i=>`<button type="button" class="person-detail" data-march-officer="${escapeHtml(i)}">${escapeHtml(name(i))}</button>`).join('、')} · ${r.quote.distance_km}公里<br>${marchStatusHtml(r)}${marchPositionHtml(r)}${r.supply?'<br>'+marchSupplyHtml(r.supply,r.history):''}</p>`).join('');
  if(observing){
-  return `<details id="observer-marches" class="marches"><summary>${battleText('各勢力在途部隊','各勢力の行軍部隊')} · ${visible.length}</summary>${entries||`<p>${battleText('目前沒有在途部隊。','現在行軍中の部隊はありません。')}</p>`}</details>`;
+  return `<details id="observer-marches" class="marches"><summary>${battleText('各勢力在途部隊','各勢力の行軍部隊')} · ${visible.length+returns.length}</summary>${entries||(!returning?`<p>${battleText('目前沒有在途部隊。','現在行軍中の部隊はありません。')}</p>`:'')}${returning}</details>`;
  }
  const joint=Object.keys(view.catalog.allied_attacks||{}).map(id=>`<p data-allied-target="${escapeHtml(id)}"><strong>${escapeHtml(cityName(id))}</strong> · ${alliedAttackNote(id)}</p>`).join('');
  const allies=joint?`<h3>${battleText('盟軍出征','同盟軍の出陣')}</h3>${joint}`:'';
- return rows.length?`<div class="marches"><h3>在途部队</h3>${entries||'<p>本方暂无在途部队。</p>'}${allies}<p class="small">在途者保留出发城编制与容量，不参加守城，不能再次行动。每旬固定10日，每月3旬。</p></div>`:'';
+ return rows.length||returns.length?`<div class="marches"><h3>在途部队</h3>${entries||(!returning?'<p>本方暂无在途部队。</p>':'')}${returning}${allies}<p class="small">在途者保留出发城编制与容量，不参加守城，不能再次行动。每旬固定10日，每月3旬。</p></div>`:'';
 }
 const mapPosition=c=>(setupPreview?setupPreview.world:view.catalog.world)?c.position:mapPositions?.positions[c.id]||c.position;
 // Both views already supply city names resolved for their respective dates.
@@ -1893,11 +1895,24 @@ async function loadOfficerBiography(section){
 }
 function personProfileHead(id,p,mode,record){
  const experience=GameOfficerChoices.experience(record?.experience);
- return `<div class="person-profile-head" tabindex="-1" data-officer-profile="${escapeHtml(id)}" data-officer-profile-mode="${mode}">${portraitHtml(id,'detail',true,p.person_id,p.name)}<div class="person-profile-summary">${record?`<p>${battleText('兵力','兵力')} <strong data-officer-profile-troops>${escapeHtml(record.troops)}</strong></p>`:''}<p>武 ${p.martial??'待填'} / 知 ${p.intellect??'待填'} / 德 ${p.virtue??'待考'} / <span>经</span> ${experience}。</p></div></div>${officerBiographySection(p.person_id)}`;
+ return `<div class="person-profile-head" tabindex="-1" data-officer-profile="${escapeHtml(id)}" data-officer-profile-mode="${mode}">${portraitHtml(id,'detail',true,p.person_id,p.name)}<div class="person-profile-summary">${record?`<p>${battleText('兵力','兵力')} <strong data-officer-profile-troops>${escapeHtml(record.troops)}</strong></p>`:''}<p>武 ${p.martial??'待填'} / 知 ${p.intellect??'待填'} / 德 ${p.virtue??'待考'} / <span>经</span> ${experience}。</p>${mode==='live'?personPayroll(record):''}</div></div>${officerBiographySection(p.person_id)}`;
 }
 function personRosterStats(record,ruler,opening=false){
  const health=escapeHtml(record.health??'—'),loyalty=escapeHtml(GameOfficerChoices.loyalty(record,{isRuler:ruler}));
  return `<p>${opening?battleText('開局體力','開始時の体力'):battleText('目前體力','現在の体力')} <span data-current-health>${health}</span> · ${opening?battleText('開局忠誠','開始時の忠誠'):battleText('目前忠誠','現在の忠誠')} <span data-current-loyalty>${loyalty}</span></p>`;
+}
+function personPayroll(record){
+ if(!record?.alive||!record.faction_id||record.faction_id==='neutral')return '';
+ const staff=view.catalog?.civil_staff?.rules,clerk=String(record.runtime_id).startsWith('clerk-');
+ const payroll=view.catalog?.payroll;
+ const band=Math.floor(record.experience/payroll?.experience_per_band);
+ const wage=clerk?{gold:staff?.monthly_salary,grain:staff?.monthly_salary_grain}:payroll?.officer_wages?.[band];
+ if(!Number.isInteger(wage?.gold)||!Number.isInteger(wage?.grain))return '';
+ const shortage=view.game?.extension?.payroll?.shortfalls?.[record.runtime_id];
+ const received=shortage?battleText(
+  ` · 本月實發 ${shortage.gold_paid}/${shortage.gold} 金、${shortage.grain_paid}/${shortage.grain} 糧，連續 ${shortage.turns} 旬`,
+  `・今月の支給は金 ${shortage.gold_paid}/${shortage.gold}、兵糧 ${shortage.grain_paid}/${shortage.grain}、連続 ${shortage.turns} 旬`):'';
+ return `<p data-officer-payroll>${battleText(`月俸 ${wage.gold} 金、${wage.grain} 糧`,`月俸は金 ${wage.gold}、兵糧 ${wage.grain}`)}${received}</p>`;
 }
 function officerDetailName(person){
  const title=person.regnal_title?.['zh-Hans'];
@@ -1935,13 +1950,56 @@ function battleOfficerControllable(id){
  return typeof GameBattleView==='undefined'||GameBattleView.canCommandOfficer(view,id);
 }
 function battleCoalitionAffiliation(id){
- if(!view.game.battle.extended?.coalition)return '';
+ const extended=view.game.battle.extended;
+ if(!extended?.coalition&&!extended?.reinforcements)return '';
  const owner=view.game.officers[String(id)]?.faction_id;
  return owner?`<small data-battle-unit-faction="${escapeHtml(owner)}">${escapeHtml(faction(owner))}</small>`:'';
 }
 function battleClaimant(battle){
- const ident=battle.extended?.occupation?.actor??battle.extended?.capture_actor;
- return view.game.officers[String(ident)]?.faction_id;
+ const extended=battle.extended, owners=extended.coalition?.provisions;
+ const owner=id=>view.game.officers[String(id)]?.faction_id;
+ const eligible=battle.attackers.filter(unit=>owner(unit.id)&&(!owners||Object.hasOwn(owners,owner(unit.id)))
+  &&view.game.officers[String(unit.id)]?.alive&&!Object.hasOwn(extended.surrenders,unit.id));
+ const claimants=[extended.occupation?.actor,extended.capture_actor];
+ const ident=claimants.find(id=>eligible.some(unit=>unit.id===id))??eligible.find(unit=>unit.troops>0)?.id;
+ return owner(ident)||battle.attacker;
+}
+function openBattleReinforcements(){
+ const options=view.catalog.battle_reinforcements;
+ if(!options?.sources.length)return;
+ const battleId=view.game.battle.id;
+ openDialog(battlePlain('調派援軍','援軍の派遣'),
+  `<label>${battleText('出發城池','出発都市')} <select id="battle-reinforce-source">${options.sources.map(row=>`<option value="${escapeHtml(row.city)}">${escapeHtml(cityName(row.city))}</option>`).join('')}</select></label><div id="battle-reinforce-options"></div><p id="battle-reinforce-quote" role="status"></p>`,
+  `<button data-cancel>${battleText('取消','取消')}</button><button id="battle-reinforce-confirm" class="primary" disabled>${battleText('確認派兵','派遣を確定')}</button>`);
+ const source=$('#battle-reinforce-source'), confirm=$('#battle-reinforce-confirm');
+ let request=null;
+ function renderSource(){
+  const row=options.sources.find(row=>row.city===source.value);
+  const modes={land:['陸路','陸路'],river:['水路','水路'],sea:['海路','海路']};
+  $('#battle-reinforce-options').innerHTML=`<label>${battleText('行軍路線','行軍経路')} <select id="battle-reinforce-route">${row.routes.map(route=>`<option value="${escapeHtml(route.id)}">${battlePlain(...(modes[route.mode]||[route.mode,route.mode]))} · ${route.days} ${battlePlain('日','日')}</option>`).join('')}</select></label><fieldset><legend>${battleText(`選擇武將（最多 ${options.remaining} 名）`,`武将を選択（最大 ${options.remaining} 名）`)}</legend>${row.officers.map(id=>`<label class="domestic-toggle"><input type="checkbox" data-reinforce-officer="${escapeHtml(id)}">${escapeHtml(officerChoiceText(id))}</label>`).join('')}</fieldset>`;
+  const routeSelect=$('#battle-reinforce-route');
+  const checks=[...document.querySelectorAll('#battle-reinforce-options [data-reinforce-officer]')];
+  function update(){
+   const route=row.routes.find(route=>route.id===routeSelect.value);
+   const ids=checks.filter(input=>input.checked).map(input=>GameOfficerChoices.ref(input.dataset.reinforceOfficer));
+   const troops=ids.reduce((sum,id)=>sum+view.game.officers[String(id)].troops+100,0);
+   const grain=Math.ceil(troops*2*route.days/options.denominator);
+   const short=grain>row.grain;
+   const allowed=ids.length>0&&ids.length<=options.remaining&&!short&&view.game.battle?.id===battleId;
+   confirm.disabled=!allowed;
+   request=allowed?{battle_id:battleId,source:row.city,route:route.id,officers:ids}:null;
+   $('#battle-reinforce-quote').textContent=battlePlain(
+    `預計第${route.arrival}日抵達 · 往返備糧 ${grain}／庫存 ${row.grain} · 1 本命令書${short?' · 糧不足':''}`,
+    `第${route.arrival}日到着予定・往復の糧 ${grain}／備蓄 ${row.grain}・命令書1冊${short?'・糧不足':''}`);
+  }
+  routeSelect.onchange=update;
+  for(const input of checks)input.onchange=update;
+  update();
+ }
+ source.onchange=renderSource;
+ confirm.onclick=async()=>{if(request&&await command('battle_reinforce',request))dialog.close();};
+ renderSource();
+ GameI18n.apply();
 }
 function battleTargetAllowed(kind){return view.game?.phase==='battle'&&battleActor()?.can_act===true&&(battleActor()?.[kind+'_targets']||[]).some(id=>String(id)===String(target));}
 function battleActionReason(kind){const row=battleActor();return row?.[kind+'_reasons']?.[String(target)]||row?.reason||battlePlain('目前無法執行此行動。','現在、この行動は実行できません。');}
@@ -2140,6 +2198,15 @@ function renderBattle(){
    $('#inspector .battle-movement')?.insertAdjacentHTML('afterend',`<div class="battle-facility-entry"><button type="button" id="battle-facility-open">${icon}<span>${escapeHtml(battleFacilityName(site.kind))}</span></button></div>`);
    $('#battle-facility-open').onclick=openBattleFacility;
   }
+  const reinforcement=view.catalog.battle_reinforcements;
+  if(reinforcement?.pending.length||reinforcement?.sources.length||reinforcement?.can_decline){
+   const pending=reinforcement.pending.map(row=>`<li>${escapeHtml(cityName(row.source))} · ${row.officers.length} ${battleText('名武將','名')} · ${battleText(`第${row.arrival}日抵達`,`第${row.arrival}日到着予定`)}</li>`).join('');
+   const decline=reinforcement.can_decline?`<button type="button" id="battle-decline-support">${battleText('不派援軍，交由電腦結算','援軍を送らず自動決着')}</button>`:'';
+   $('#inspector .battle-movement')?.insertAdjacentHTML('afterend',`<div data-battle-reinforcements>${reinforcement.sources.length?`<button type="button" id="battle-reinforce-open">${battleText('調派援軍','援軍の派遣')}</button>`:''}${decline}${pending?`<ul aria-label="${battlePlain('在途援軍','行軍中の援軍')}">${pending}</ul>`:''}</div>`);
+   if($('#battle-reinforce-open'))$('#battle-reinforce-open').onclick=openBattleReinforcements;
+   if($('#battle-decline-support'))$('#battle-decline-support').onclick=()=>command('battle_decline_support',{battle_id:b.id});
+  }
+  if(reinforcement?.supporting)$('#retreat').hidden=true;
   document.querySelectorAll('[data-battle-nav]').forEach(button=>button.onclick=()=>navigateBattleCell(Number(button.dataset.dx),Number(button.dataset.dy)));
   $('#battle-move').onclick=confirmBattleMove;$('#battle-cancel-move').onclick=()=>{battleDestination=null;renderBattle();};
   $('#battle-wait').onclick=()=>{if(battleTactical()?.can_end)command('battle_wait',{battle_id:b.id});};

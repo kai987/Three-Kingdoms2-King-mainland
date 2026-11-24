@@ -179,6 +179,47 @@ class FactionDomesticTests(unittest.TestCase):
         self.assertTrue(domestic.view(game, state)['factions']['shu']['civil_active'])
         game.validate(state)
 
+    def test_transfer_reassigns_both_garrisons_without_changing_marching_troops(self):
+        game = self.game()
+        state = game.state
+        source, target = state.cities['xiangyang'], state.cities['nanjun']
+        source_officers = sorted((state.officers[i] for i in source.roster.officer_ids),
+                                 key=domestic._allocation_priority)
+        traveller, strongest, weakest = (source_officers[index].runtime_id for index in (0, 1, -1))
+        source_total = source.reserves + sum(officer.troops for officer in source_officers)
+        game.command('allocate', dict(city=source.id, allocations=[
+            dict(officer=officer.runtime_id, troops={
+                traveller: 300, weakest: source_total - 300,
+            }.get(officer.runtime_id, 0)) for officer in source_officers
+        ]), game.revision)
+        resident, = target.roster.officer_ids
+        target_total = target.reserves + state.officers[resident].troops
+        game.command('allocate', dict(city=target.id, officer=resident, troops=target_total), game.revision)
+        self.assertEqual(game.state.officers[weakest].troops, source_total - 300)
+        self.assertEqual(game.state.officers[strongest].troops, 0)
+
+        game.command('transfer', dict(source=source.id, target=target.id, officers=[traveller],
+                                     route_mode='land'), game.revision)
+        state = game.state
+        march, = state.extension['travel']['marches']
+        self.assertEqual(march['departure_troops'], {str(traveller): 300})
+        self.assertEqual(state.officers[traveller].troops, 300)
+        self.assertEqual(state.officers[strongest].troops, source_total - 300)
+        self.assertEqual(state.officers[weakest].troops, 0)
+        self.assertEqual(state.officers[resident].troops, target_total)
+
+        game._complete_turn(state)
+        books = deepcopy(state.extension['command_books'])
+        game.command('arrivals', {}, game.revision)
+        state = game.state
+        best, other = sorted((state.officers[i] for i in (traveller, resident)),
+                             key=domestic._allocation_priority)
+        self.assertEqual(best.troops, target_total + 300)
+        self.assertEqual(other.troops, 0)
+        self.assertEqual(state.cities[target.id].reserves, 0)
+        self.assertEqual(state.extension['command_books'], books)
+        game.validate(state)
+
     def test_battle_pauses_global_office_instead_of_serving_other_cities(self):
         game = self.game()
         civil, _ = self.appoint(game)

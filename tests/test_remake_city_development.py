@@ -76,7 +76,7 @@ class DevelopmentTests(unittest.TestCase):
         state.rng = SequenceRng([4, 7])
         details = development.execute(game, state, dict(city='capital', actor=1, kind='develop_land'), 'one')
         self.assertEqual(details, dict(actor='person-1', development='land', gold=26,
-            before=450, after=489, gain=39, governance_before=70, governance_after=72))
+            before=450, after=454, gain=4, governance_before=70, governance_after=72, gain_scale=10))
         self.assertEqual(state.cities['capital'].gold, 974)
         self.assertEqual(state.rng.draws, 2)
         self.assertEqual(state.events[-1]['kind'], 'city_developed')
@@ -98,7 +98,7 @@ class DevelopmentTests(unittest.TestCase):
 
         state.officers[5].profile = replace(state.officers[5].profile, intellect=99)
         treasures.set_governor(game, state, dict(city='capital', officer=5), 'one')
-        for kind, minimum, maximum in (('develop_land', 19, 46), ('develop_industry', 19, 46),
+        for kind, minimum, maximum in (('develop_land', 2, 5), ('develop_industry', 2, 5),
                                         ('develop_population', 900, 2200)):
             with self.subTest(kind=kind):
                 state.rng = SequenceRng([4, 7])
@@ -131,23 +131,26 @@ class DevelopmentTests(unittest.TestCase):
                 for kind, field in development.ACTIONS.items():
                     quantum = 100 if field == 'population' else 1
                     cap = development.LIMITS[field]
+                    boundaries = (0, 1, 30, 31, 32, 50) if field == 'population' else range(6)
                     before_values = {0, cap//quantum//2*quantum,
-                        *(max(0, cap-units*quantum) for units in (0, 1, 30, 31, 32, 50))}
+                        *(max(0, cap-units*quantum) for units in boundaries)}
                     for before in before_values:
                         row[field] = before
-                        # Independent old40-outcome oracle, including every
-                        # floor/max/cap in the original integer formula.
+                        # Independent oracle over every cost and effect roll.
                         outcomes = []
                         for cost in costs:
                             for roll in range(10, 18):
                                 units = max(1, (cost*intellect//100)*roll//10)
                                 if field == 'population':
                                     units = max(1, units//2)
+                                else:
+                                    units = min(5, (units + 9) // 10)
                                 outcomes.append(min(units*quantum, cap-before))
                         for governance in (0, 49, 50, 70, 98, 99, 100):
                             row['governance'] = governance
                             offer = development.quote(game, state, 'capital', 1, kind)
-                            governance_gains = [min(100, governance+1+(gain//quantum >= 31))-governance for gain in outcomes]
+                            threshold = 3100 if field == 'population' else 4
+                            governance_gains = [min(100, governance+1+(gain >= threshold))-governance for gain in outcomes]
                             context = (intellect, kind, before, governance)
                             self.assertEqual((offer['gain_min'], offer['gain_max']),
                                              (min(outcomes), max(outcomes)), context)

@@ -8,7 +8,7 @@ Formation/order edits and movement previews consume no RNG.
 from collections import deque
 from copy import deepcopy
 from .errors import GameError
-from . import battle_grid, presentation, equipment
+from . import battle_experience, battle_grid, presentation, equipment
 from .officers import OFFICER_TROOP_CAP
 
 SCHEMA = 'tk2-siege-v1'
@@ -121,7 +121,7 @@ def player_engaged(state,row=None):
     battle=state.battle
     if battle_grid.player_side(state,battle) is None:
         return False
-    if 'coalition' not in battle['extended']:
+    if not {'coalition', 'reinforcements'} & battle['extended'].keys():
         return True
     row=row if row is not None else battle['extended']['siege']
     return any(state.officers[row[key]].faction_id==state.player for key in ('actor','target'))
@@ -311,6 +311,7 @@ def _move_toward(battle,row,piece,goal,*,retreat=False):
 
 def _hit(game,state,row,piece,target,*,ranged=False):
     battle=state.battle;actor=_main(battle,row,piece['side']);victim=_main(battle,row,target['side'])
+    previous_troops = victim['troops']
     if row.get('attack_bases')is None:
         row['attack_bases']={side:attack_base(_main(battle,row,side)['martial'],state.rng.next()%9)for side in SIDES}
     acting_officer=state.officers[actor['id']];defending_officer=state.officers[victim['id']]
@@ -339,6 +340,8 @@ def _hit(game,state,row,piece,target,*,ranged=False):
         target['troops']-=loss;target['health']=target['troops']
     _event(row,'arrow'if ranged else'melee',piece,target,loss=before-(target['health']if target['kind']=='general'else target['troops']))
     _sync(state,row)
+    battle_experience.attack(battle,actor['id'],victim['id'],previous_troops-victim['troops'],
+                             injured=target['kind']=='general' and target['health']<before)
 
 
 def _duel(game,state,row):
@@ -347,6 +350,7 @@ def _duel(game,state,row):
     own=_player_side(state);actor=_main(battle,row,own);target=_main(battle,row,_opposite(own))
     before=presentation.snapshot(game,state)
     battle['extended']['duel']=dict(actor=actor['id'],target=target['id'],round=1,log=[])
+    battle_experience.attack(battle,actor['id'],target['id'])
     battle['log'].append('雙方主將接觸，進入單挑。')
     battle['log'][:]=battle['log'][-80:]
     presentation.record(game,state,before,kind='duel_start',actor=actor['id'],target=target['id'],own=own)

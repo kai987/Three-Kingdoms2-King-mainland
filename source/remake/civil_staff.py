@@ -8,13 +8,14 @@ from hashlib import sha256
 import re
 
 from .errors import GameError
-from . import command_books, historical_campaigns
+from . import command_books, historical_campaigns, payroll
 from .officers import (OfficerProfile, PersonDefinition, initialize_officer,
                        is_generated_ref, year_state, YearState)
 
 
 SCHEMA = 'tk2-civil-staff-v1'
-RULES = dict(hire_gold=60, monthly_salary=5, candidate_months=3,
+RULES = dict(hire_gold=60, monthly_salary=payroll.CLERK_GOLD, monthly_salary_grain=payroll.CLERK_GRAIN,
+             candidate_months=3,
              cooldown_months=3, shortage_months=2, ordinary_target=2,
              large_target=3, single_probability=60, large_probability=30,
              guaranteed_after_misses=3, income_bonus_cap_percent=15)
@@ -294,39 +295,40 @@ def _base_income(campaign, city_id, state):
         dict(gold=rules.get('monthly_gold_income', 0), grain=rules.get('monthly_grain_income', 0), reserves=0))
 
 
-def _payroll(campaign, state):
+def settle_payroll(campaign, state):
     pool, m = state.extension['civil_staff'], month_index(state)
     if pool['last_payroll_month'] == m:
         return
     pool['last_payroll_month'] = m
-    summary = dict(amount=0, paid=0, bonus=dict(gold=0, grain=0, reserves=0),
+    previous = state.extension.pop(payroll.FIELD, {}).get('shortfalls', {})
+    shortfalls = {}
+    summary = dict(amount=0, paid=0, grain_amount=0, grain_paid=0, bonus=dict(gold=0, grain=0, reserves=0),
                    counts=dict(staff=0, total_unpaid=0, cities=0))
     first_city = None
     sync_people(state)
     for key, city in sorted(state.cities.items()):
-        employees = sorted((p for p in pool['people'].values() if p['city'] == key
-            and p['id'] in city.roster.officer_ids and state.officers[p['id']].alive
-            and state.officers[p['id']].faction_id == city.owner), key=lambda p: p['id'])
-        if not employees:
-            continue
+        employees = [pool['people'][ident] for ident in city.roster.officer_ids if ident in pool['people']
+                     and state.officers[ident].alive and state.officers[ident].faction_id == city.owner]
         if not _active(campaign, state, city):
             for person in employees:
                 person['working'] = False
             continue
-        paid = 0
-        base = _base_income(campaign, key, state)
+        receipts = payroll.pay_city(state, city, previous, shortfalls)
+        if not employees:
+            continue
+        legacy_bonus = 'domestic' not in state.extension
+        base = _base_income(campaign, key, state) if legacy_bonus else {}
         contributions = dict(gold=0, grain=0, reserves=0)
         for person in employees:
-            if city.gold < RULES['monthly_salary']:
+            receipt = receipts[person['id']]
+            if receipt['gold_paid'] < receipt['gold'] or receipt['grain_paid'] < receipt['grain']:
                 person['unpaid_months'] += 1
                 person['working'] = False
                 continue
-            city.gold -= RULES['monthly_salary']
-            paid += RULES['monthly_salary']
             person.update(paid_month=m, unpaid_months=0, working=True)
             field = dict(commerce='gold', farming='grain', recruitment='reserves')[person['specialty']]
             # The delegation system replaces this legacy per-person bonus.
-            if 'domestic' not in state.extension:
+            if legacy_bonus:
                 contributions[field] += int(base.get(field, 0)) * (2 + person['profile']['intellect'] // 20) // 100
         bonus = {field: min(amount, int(base.get(field, 0)) * RULES['income_bonus_cap_percent'] // 100)
                  for field, amount in contributions.items()}
@@ -336,12 +338,16 @@ def _payroll(campaign, state):
         if city.owner == state.player:
             first_city = first_city or city
             summary['amount'] += len(employees) * RULES['monthly_salary']
-            summary['paid'] += paid
+            summary['paid'] += sum(receipts[p['id']]['gold_paid'] for p in employees)
+            summary['grain_amount'] += len(employees) * RULES['monthly_salary_grain']
+            summary['grain_paid'] += sum(receipts[p['id']]['grain_paid'] for p in employees)
             for field, amount in bonus.items():
                 summary['bonus'][field] += amount
             summary['counts']['staff'] += len(employees)
             summary['counts']['total_unpaid'] += sum(not p['working'] for p in employees)
             summary['counts']['cities'] += 1
+    if shortfalls:
+        state.extension[payroll.FIELD] = dict(last_turn=state.turn - 1, shortfalls=shortfalls)
     if first_city is not None:
         _emit(campaign, state, 'staff_salary', first_city, **summary)
 
@@ -381,8 +387,8 @@ def synchronize(campaign, state, *, opening=False, monthly=False, checks=True):
             _expire(campaign, state, city, row, 'inactive', cooldown=False)
     if not checks:
         return
-    if monthly:
-        _payroll(campaign, state)
+    if monthly and pool['last_payroll_month'] != m:
+        settle_payroll(campaign, state)
     if state.phase in {'arrivals', 'finished'}:
         return
     if not opening and state.day != 1:
@@ -528,6 +534,7 @@ def view(campaign, state):
             need=max(0, limit-effective), candidate=deepcopy(row['candidate']), employees=employees,
             can_hire=reason is None, blocked_reason=reason,
             can_reject=rejectable, monthly_salary=count * RULES['monthly_salary'],
+            monthly_salary_grain=count * RULES['monthly_salary_grain'],
             cooldown_until_month=row['cooldown_until_month'],
             can_search=bool(available and free and city.owner == state.player and state.phase == 'city'
                             and command_books.can_spend(state, city.owner, 'staff_recruit') and not _in_battle(state, key)

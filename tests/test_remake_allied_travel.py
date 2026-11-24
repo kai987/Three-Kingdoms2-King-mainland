@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
 from campaign_fixtures import controlled_catalog
 from remake.campaign import Campaign, Catalog
@@ -136,8 +137,92 @@ class AlliedAttackTravelTests(unittest.TestCase):
                 else:
                     self.arrivals()
                     self.assertEqual(game.state.battle_counter, 1)
+                    battle = game.state.battle
+                    self.assertTrue(game.view()['catalog']['battle_reinforcements']['can_decline'])
+                    game.command('battle_decline_support', {'battle_id': battle['id']}, game.revision)
                     self.assertIsNone(game.state.battle)
                     self.assertFalse(game.state.extension['travel']['marches'])
+
+    def test_ai_ally_can_reinforce_attackers_or_defenders_on_battle_days(self):
+        from remake import battle_grid, battle_reinforcements
+
+        for player, side in (('shu', 'attackers'), ('wei', 'defenders')):
+            with self.subTest(side=side):
+                game = Campaign(_catalog(wu_days=2, budget=2))
+                game.command('new', dict(faction=player,seed=2026), 0)
+                state = game.state
+                home, target = state.cities['xiangyang'], state.cities['nanyang']
+                envoy = (home if player == 'shu' else target).roster.officer_ids[0]
+                game.command('diplomacy', dict(action='alliance', city=home.id if player == 'shu' else target.id,
+                                              target='wu', envoy=envoy, duration=12), game.revision)
+                state = game.state
+                home, target = state.cities[home.id], state.cities[target.id]
+                game._start_expanded_battle(state, home, target, home.roster.officer_ids[:1])
+                battle = state.battle
+                for _ in range(4):
+                    game._end_tactical_side(state)
+                arrivals = battle_reinforcements.joined(battle)
+                allied_ids = [ident for ident, arrival in arrivals.items() if arrival['owner'] == 'wu']
+                self.assertEqual(len(allied_ids), 2)
+                self.assertEqual(battle['round'], 3)
+                self.assertEqual({arrivals[ident]['side'] for ident in allied_ids}, {side})
+                allied = [unit for unit in battle[side] if str(unit['id']) in allied_ids]
+                self.assertEqual(len(allied), 2)
+                self.assertTrue(all(not battle_grid.player_controls(state, battle, unit) for unit in allied))
+                self.assertEqual(state.turn, 1)
+                game.validate(state)
+                restored = Campaign(game.catalog)
+                restored.load_save(game.export_save(compact=True), 0)
+                self.assertEqual(restored.export_save(), game.export_save())
+
+    def test_player_ally_can_join_either_side_or_let_ai_resolve(self):
+        from remake import battle_grid, battle_reinforcements
+
+        for ally, side in (('shu', 'attackers'), ('wei', 'defenders')):
+            with self.subTest(side=side), patch('remake.tactical_ai.choose_action', return_value=None):
+                game = Campaign(_catalog(shu_days=10, wu_days=2))
+                game.command('new', dict(faction='wu', seed=2026), 0)
+                wu_city = game.state.cities['jiangxia']
+                game.command('diplomacy', dict(action='alliance', city=wu_city.id, target=ally,
+                    envoy=wu_city.roster.officer_ids[0], duration=12), game.revision)
+                state = game.state
+                home, target = state.cities['xiangyang'], state.cities['nanyang']
+                game._queue_march(state, home, target, home.roster.officer_ids[:1], 'attack')
+                game._complete_turn(state)
+                game.command('arrivals', {}, game.revision)
+                if side == 'attackers':
+                    column, = game.state.extension['travel']['marches']
+                    self.assertEqual(column['reason'], 'allied_support_window')
+                    game._complete_turn(game.state)
+                    game.command('arrivals', {}, game.revision)
+                battle = game.state.battle
+                self.assertEqual(game.state.phase, 'battle')
+                self.assertEqual(battle_grid.player_side(game.state, battle), side)
+                offer = game.view()['catalog']['battle_reinforcements']
+                self.assertTrue(offer['can_decline'])
+                source, = offer['sources']
+                ident = source['officers'][0]
+                payload = {'battle_id': battle['id']}
+
+                declined = Campaign(game.catalog)
+                declined.load_save(game.export_save(compact=True), 0)
+                declined.command('battle_decline_support', payload, declined.revision)
+                self.assertIsNone(declined.state.battle)
+                with self.assertRaisesRegex(GameError, '主戰勢力'):
+                    game.command('retreat', payload, game.revision)
+
+                game.command('battle_reinforce', dict(payload, source=source['city'],
+                    route=source['routes'][0]['id'], officers=[ident]), game.revision)
+                self.assertFalse(game.view()['catalog']['battle_reinforcements']['can_decline'])
+                for _ in range(3):
+                    if str(ident) in battle_reinforcements.joined(game.state.battle):
+                        break
+                    game.command('battle_wait', payload, game.revision)
+                battle = game.state.battle
+                self.assertEqual(battle_reinforcements.joined(battle)[str(ident)]['side'], side)
+                self.assertTrue(battle_grid.player_controls(game.state, battle, {'id': ident}))
+                self.assertTrue(all(not battle_grid.player_controls(game.state, battle, unit)
+                                    for unit in battle[side] if unit['id'] != ident))
 
     def test_ai_plan_respects_remaining_officer_slots(self):
         game = Campaign(_catalog(budget=2))

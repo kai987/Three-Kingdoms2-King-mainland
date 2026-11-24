@@ -15,7 +15,7 @@
   }
   if(q.tactic===2&&(q.condition!=='phantom'||![2,3].includes(q.condition_count)||!integer(q.target_count,9)))return null;
   if(q.tactic===15&&(q.condition!=='qimen'||![5,6].includes(q.count_min)||q.count_max!==q.count_min+3||q.daily_loss_min!==80||q.daily_loss_max!==150||typeof q.source_present!=='boolean'))return null;
-  if(q.tactic===10&&(q.condition!=='chain'||![3,4].includes(q.count_min)||q.count_max!==q.count_min+1||!Array.isArray(q.target_ids)||q.target_ids.length<2||q.target_ids.length>20||q.target_ids.some(id=>typeof id!=='string'||!id||id.length>128)||new Set(q.target_ids).size!==q.target_ids.length))return null;
+  if(q.tactic===10&&(q.condition!=='chain'||![3,4].includes(q.count_min)||q.count_max!==q.count_min+1||!Array.isArray(q.target_ids)||q.target_ids.length<2||q.target_ids.length>40||q.target_ids.some(id=>typeof id!=='string'||!id||id.length>128)||new Set(q.target_ids).size!==q.target_ids.length))return null;
   if(q.tactic===5&&(!['attackers','defenders'].includes(q.affected_side)||!['grain_before','grain_loss_min','grain_loss_max'].every(k=>integer(q[k],100000000))||q.grain_loss_min>q.grain_loss_max||q.grain_loss_max>q.grain_before))return null;
   if(q.tactic===8&&(!integer(q.target_loyalty,100)||typeof q.guaranteed_failure!=='boolean'||q.guaranteed_failure!==(q.target_loyalty>=71)||q.guaranteed_failure!==(q.success_percent===0)))return null;
   return [2,5,8,10,15].includes(q.tactic)||q.success_gate!==undefined?q:null;

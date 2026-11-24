@@ -94,7 +94,7 @@ class AlliedTransitTests(unittest.TestCase):
                     game = Campaign(game.catalog)
                     game.load_save(saved, 0)
                     self.assertEqual(game.export_save(), saved)
-                    with record_garrison_charges() as dues:
+                    with record_garrison_charges(include_payroll=True) as dues:
                         for _ in range(10):
                             if not game.state.extension[lane][key]:
                                 break
@@ -125,6 +125,7 @@ class MarchSupplyTests(unittest.TestCase):
         game._complete_turn(game.state)
         game._spawn_eligible(game.state)
         game._reconcile_factions(game.state)
+        civil_staff.synchronize(game, game.state, monthly=game.state.day == 1)
         game.validate(game.state)
 
     def restore(self, game):
@@ -297,7 +298,7 @@ class ConvoySupplyTests(unittest.TestCase):
     def test_convoy_loading_cargo_separation_and_return_rations(self):
         game = self.game()
         before = game.state.cities['xiangyang'].grain
-        dues = self.enterContext(record_garrison_charges())
+        dues = self.enterContext(record_garrison_charges(include_payroll=True))
         row = self.dispatch(game)
         budget = row['journeys'][0]['supply']['loaded']
         self.assertEqual(game.state.cities['xiangyang'].grain,before-200-budget)

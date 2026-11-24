@@ -40,7 +40,7 @@ assert(effects.summary(chainView,1,2,10,{locale:'ja'}).includes('陸上の敵は
 assert(effects.summary(chainView,1,2,2).includes('data-chain-clear-preview="5"'),'Phantom can target and disclose clearing an existing chain5');
 assert(effects.forecast(chainView,1,2,2));
 assert(effects.summary(chainView,1,2,11).includes('data-phantom-clear-preview="3"'),'Self-target remains distinct');
-for(const patch of [{condition:'phantom'},{count_min:2},{count_max:6},{count_min:true},{target_ids:['2']},{target_ids:['2','2']},{target_ids:['2',3]},{target_ids:Array.from({length:21},(_,i)=>String(i))}]){const broken=structuredClone(chainView);Object.assign(broken.catalog.battle_tactical.actors[1].tactic_previews[10][2],patch);assert.equal(effects.forecast(broken,1,2,10),null,JSON.stringify(patch));}
+for(const patch of [{condition:'phantom'},{count_min:2},{count_max:6},{count_min:true},{target_ids:['2']},{target_ids:['2','2']},{target_ids:['2',3]},{target_ids:Array.from({length:41},(_,i)=>String(i))}]){const broken=structuredClone(chainView);Object.assign(broken.catalog.battle_tactical.actors[1].tactic_previews[10][2],patch);assert.equal(effects.forecast(broken,1,2,10),null,JSON.stringify(patch));}
 assert.equal(JSON.stringify(chainView),chainBefore,'Chain forecasts do not draw or modify the saved state');
 const chained={tactic:10,success:true,condition:'chain',condition_counts:[{id:'9',remaining:5},{id:'2',remaining:4}]};
 assert(events.validEvent(event(chained)));assert(events.validEvent(event({tactic:10,success:false,condition:'chain',condition_counts:[]})));assert(events.validEvent(event({tactic:10,success:true})),'Old compact chain events remain accepted');
@@ -48,12 +48,12 @@ for(const patch of [{condition:'phantom'},{success:false},{condition_counts:[]},
 for(const key of Object.keys(chained)){const partial=structuredClone(chained);delete partial[key];assert(!events.validEvent(event(partial)),'Incomplete chain snapshot '+key);}
 console.log('chain forecasts: BFS target order, independent side ranges, mixed state clears and strict bilingual event snapshots passed');
 
-for(const length of [11,20]){
+for(const length of [11,20,21,40]){
  const expanded=structuredClone(chainView);expanded.catalog.battle_tactical.actors[1].tactic_previews[10][2].target_ids=Array.from({length},(_,i)=>String(i));
- assert(effects.forecast(expanded,1,2,10),'Converted armies may exceed ten original-side units');
+ assert(effects.forecast(expanded,1,2,10),'Conversions and reinforcements can exceed the opening roster size');
  assert(events.validEvent(event({...chained,condition_counts:Array.from({length},(_,i)=>({id:String(i),remaining:4}))})));
 }
-assert(!events.validEvent(event({...chained,condition_counts:Array.from({length:21},(_,i)=>({id:String(i),remaining:4}))})));
+assert(!events.validEvent(event({...chained,condition_counts:Array.from({length:41},(_,i)=>({id:String(i),remaining:4}))})));
 const qimen={schema:'tk2-tactic-effect-preview-v1',tactic:15,success_percent:80,condition:'qimen',count_min:6,count_max:9,daily_loss_min:80,daily_loss_max:150,source_present:true};
 const qView=structuredClone(chainView);qView.catalog.battle_tactical.actors[1].tactic_previews[15]={2:qimen};qView.game.battle.extended.conditions.units[2]={kind:'qimen',remaining:9};
 const qBefore=JSON.stringify(qView);

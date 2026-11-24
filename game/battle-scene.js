@@ -82,7 +82,7 @@
   return 'ready';
  }
  function validSnapshot(s){
-  if(!s||Object.keys(s).sort().join(',')!=='duel,outcome,round,units'||!bounded(s.round,1000000)||s.round<1||![null,'victory','defeat','retreat'].includes(s.outcome)||!Array.isArray(s.units)||s.units.length>20)return false;
+  if(!s||Object.keys(s).sort().join(',')!=='duel,outcome,round,units'||!bounded(s.round,1000000)||s.round<1||![null,'victory','defeat','retreat'].includes(s.outcome)||!Array.isArray(s.units)||s.units.length>40)return false;
   const seen=new Set();
   for(const u of s.units){if(!u||Array.isArray(u)||Object.keys(u).sort().join(',')!=='energy,guard,health,id,side,stunned,troops'||!reference(u.id)||seen.has(String(u.id))||!['attackers','defenders'].includes(u.side)||!bounded(u.troops,10000)||!bounded(u.health,99)||!bounded(u.energy,18)||!bounded(u.guard,2)||!bounded(u.stunned,1))return false;seen.add(String(u.id));}
   if(s.duel===null)return true;

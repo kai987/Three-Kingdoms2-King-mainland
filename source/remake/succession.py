@@ -272,3 +272,23 @@ def family_priorities(state, previous, alive):
     rank.pop(person, None)
     return {ident: rank[pid] for ident in alive
             if (pid := state.officers[ident].person_id) in rank}
+
+
+def ruler_relatives(state, ruler_id, candidates):
+    """Use known blood ties plus direct adoption and marriage relationships."""
+    relatives = set(family_priorities(state, ruler_id, candidates))
+    ruler = state.officers.get(ruler_id)
+    if ruler is None:
+        return relatives
+    by_person = {state.officers[ident].person_id: ident for ident in candidates}
+    policy = officer_relations.policy()
+    for rows in (policy['records'], policy['exceptions']):
+        for row in rows:
+            if (row['kind'] not in {'adopted', 'affinal'}
+                    or not row.get('start_year', 1) <= state.year <= row.get('end_year', 400)):
+                continue
+            first, second = row['ruler_id'], row['person_id']
+            relative = second if first == ruler.person_id else first if second == ruler.person_id else None
+            if relative in by_person:
+                relatives.add(by_person[relative])
+    return relatives

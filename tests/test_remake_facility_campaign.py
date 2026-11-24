@@ -14,7 +14,7 @@ import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
-from remake import civil_staff,facilities,grain_relief,treasures
+from remake import civil_staff,facilities,grain_relief,payroll,treasures
 from remake.campaign import Campaign,Catalog,SeedRng,digest,canonical
 from remake.city_economy import income_at,monthly_income,tier_at
 from remake.errors import GameError
@@ -46,6 +46,13 @@ def facility_catalog(*,month=4,disasters=False):
         path=Path(directory)/'facilities.json'
         path.write_text(json.dumps(data,ensure_ascii=False))
         return Catalog(path)
+
+
+def _monthly_wages(state, city):
+    """These fixtures have enough stock to pay the full wage once per month."""
+    wages = [payroll.wage(state.officers[ident]) for ident in city.roster.officer_ids
+             if state.officers[ident].alive and state.officers[ident].faction_id == city.owner]
+    return {field: sum(wage[field] for wage in wages) for field in ('gold', 'grain')}
 
 
 class FacilityCampaignTests(unittest.TestCase):
@@ -104,6 +111,36 @@ class FacilityCampaignTests(unittest.TestCase):
             self.assertEqual(session.game.state,None,'Opening city previews cannot start a campaign')
             self.assertFalse(result['factions'][player]['policy']['enabled'])
             self.assertTrue(all(row['policy']['enabled'] for key,row in result['factions'].items() if key!=player))
+
+    def test_town_upgrade_receipts_and_older_gold_only_receipts_survive_loading(self):
+        game = self.new()
+        city_id, actor = 'xiangyang', 439
+        game.state.extension['facilities']['cities'][city_id]['town'] = 1
+        for before, gold, grain in ((1, 500, 2000), (2, 1000, 4000)):
+            city = game.state.cities[city_id]
+            city.gold, city.grain = gold, grain - 1
+            self.fails(game, 'develop_town', city=city_id, actor=actor)
+            city.grain = grain
+            view = game.view()['catalog']
+            self.assertEqual(view['facilities']['cities'][city_id]['develop'],
+                dict(from_town=before,to_town=before+1,gold=gold,grain=grain,can_develop=True))
+            used = game.state.extension['command_books']['factions']['shu']['used']
+            self.cmd(game, 'develop_town', city=city_id, actor=actor)
+            self.assertEqual(game.state.extension['command_books']['factions']['shu']['used'], used + 1)
+            city = game.state.cities[city_id]
+            self.assertEqual((city.gold, city.grain), (0, 0))
+            self.assertEqual(game.state.extension['events']['items'][-1]['details']['grain'], grain)
+            game = self.restore(game)
+
+        save = game.export_save()
+        receipt = next(row['details'] for row in save['state']['extension']['events']['items']
+                       if row['kind'] == 'town_developed')
+        receipt.pop('grain')
+        receipt['gold'] = 200
+        save['checksum'] = digest({key: value for key, value in save.items() if key != 'checksum'})
+        loaded = Campaign(game.catalog)
+        loaded.load_save(save, 0)
+        self.assertEqual(loaded.export_save(), save)
 
     def test_historical_school_profile_survives_cache_save_transfer_and_same_next_rng(self):
         game=self.new();ident=146;actor=439
@@ -189,14 +226,16 @@ class FacilityCampaignTests(unittest.TestCase):
         game.state.officers[146].health=0
         self.advance(game,2)
         before=deepcopy(game.state);income=income_at(game.catalog.data,source.id,before.year,8)
+        wages = _monthly_wages(before, before.cities[source.id])
         with record_garrison_charges() as paid:
             self.advance(game)
         events=[event for event in game.state.extension['events']['items'] if event['kind']=='city_disaster']
         self.assertEqual(len(events),1)
         receipt=events[0]['details'];current=game.state.cities[source.id]
         self.assertEqual(receipt['disaster'],'drought');self.assertEqual(receipt['rate'],10)
-        self.assertEqual(current.gold,before.cities[source.id].gold+income['gold'])
-        self.assertEqual(current.grain,before.cities[source.id].grain+2*income['grain']-paid[source.id]-receipt['grain'])
+        self.assertEqual(current.gold, before.cities[source.id].gold + income['gold'] - wages['gold'])
+        self.assertEqual(current.grain, before.cities[source.id].grain + 2 * income['grain']
+                         - paid[source.id] - receipt['grain'] - wages['grain'])
         self.assertEqual(current.reserves,before.cities[source.id].reserves+income['reserves']-receipt['reserves'])
         self.assertEqual(game.state.soldiers['lost']-before.soldiers['lost'],receipt['reserves'])
         self.assertEqual(game.state.officers[146].health,8,'Only established monthly healing changes the wounded officer')
@@ -225,13 +264,15 @@ class FacilityCampaignTests(unittest.TestCase):
         self.advance(game,2)
         row=game.state.extension['facilities']['cities']['xiangyang'];row['preparedness']=99
         before=deepcopy(game.state.cities['xiangyang'])
+        wages = _monthly_wages(game.state, before)
         base=income_at(game.catalog.data,'xiangyang',game.state.year,6)
         expected=facilities.adjusted_income(game.state,'xiangyang',base)
         with record_garrison_charges() as paid:
             self.advance(game)
         current=game.state.cities['xiangyang']
-        self.assertEqual(current.gold,before.gold+expected['gold'])
-        self.assertEqual(current.grain,before.grain+2*expected['grain']-paid['xiangyang'])
+        self.assertEqual(current.gold, before.gold + expected['gold'] - wages['gold'])
+        self.assertEqual(current.grain, before.grain + 2 * expected['grain']
+                         - paid['xiangyang'] - wages['grain'])
         self.assertEqual(current.reserves,before.reserves+expected['reserves'])
         self.restore(game)
 
@@ -273,7 +314,8 @@ class FacilityCampaignTests(unittest.TestCase):
         self.advance(game, 2)
         game = self.restore(game)
         state = game.state
-        forecast = {key: result.balances[0] for owner in ('shu', 'wu', 'wei')
+        forecast = {key: result.balances[0] - _monthly_wages(state, state.cities[key])['grain']
+                    for owner in ('shu', 'wu', 'wei')
                     for key, result in grain_relief.forecasts(game, state, owner, turns=1).items()}
         expected = {key: monthly_income(game, key, state)['grain'] // 5
                     for key in state.cities if key != 'xiangyang'}

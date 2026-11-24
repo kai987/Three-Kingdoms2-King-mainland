@@ -10,14 +10,16 @@ from . import grain_units
 from .battle_supply import COALITION_LIMIT, denominator, MAX_BATTLE_DAILY_UNITS
 from .city_development import LIMITS as DEVELOPMENT_LIMITS, POPULATION_UNIT, valid_population
 from .civil_staff import PORTRAITS as CIVIL_PORTRAITS
+from .payroll import CLERK_GOLD, CLERK_GRAIN
 from .dated_events import FOUNDING_TROOP_TARGET
-from .officers import OFFICER_TROOP_CAP, ref_sort_key, is_generated_ref
+from .officers import MAX_BATTLE_PARTICIPANTS, OFFICER_TROOP_CAP, ref_sort_key, is_generated_ref
 
 LIMIT = 100
 MILESTONE_KINDS = frozenset((*historical_campaigns.EVENT_FACTIONS, *three_visits.STAGES, *southern_mission.EVENTS))
 STAFF_KINDS = {'staff_candidate', 'staff_hired', 'staff_declined', 'staff_expired',
                'staff_salary', 'staff_allegiance'}
 STAFF_DETAILS = {'staff_id', 'name', 'portrait', 'reason', 'amount', 'paid', 'bonus', 'counts'}
+STAFF_SALARY_GRAIN = {'grain_amount', 'grain_paid'}
 TRANSPORT_KINDS = {'transport_departed','transport_arrived','transport_returned','transport_weather'}
 TRANSPORT_DETAILS = {'convoy_id','gold','grain','reserves','treasure','lost','reason'}
 TREASURY_DETAILS = {
@@ -28,7 +30,7 @@ TREASURY_DETAILS = {
     'governor_assigned': {'governor','mode'},
 }
 FACILITY_DETAILS = {
-    'town_developed': {'actor','from_town','to_town','gold'},
+    'town_developed': {'actor','from_town','to_town','gold','grain'},
     'officer_treated': {'actor','target','gold','before','after'},
     'officer_studied': {'actor','target','gold','before','after','bonus'},
     'grain_traded': {'actor','direction','batches','grain','gold','rate','battle_id','side','destination','emergency'},
@@ -40,7 +42,7 @@ FACILITY_DETAILS = {
 }
 CITY_DEVELOPMENT_DETAILS = {
     'city_developed': {'actor','development','gold','before','after','gain',
-        'governance_before','governance_after'},
+        'governance_before','governance_after','gain_scale'},
     'civil_unrest': {'governance','category','gold_loss','grain_loss','population_loss',
         'land_loss','industry_loss'},
 }
@@ -85,6 +87,7 @@ DETAILS = {
     'campaign_victory': set(), 'campaign_defeat': set(),
     'ai_campaign': {'target', 'sources', 'arrival_turn', 'coordinated'},
     **{kind: set(STAFF_DETAILS) for kind in STAFF_KINDS},
+    'staff_salary': STAFF_DETAILS | STAFF_SALARY_GRAIN,
     **{kind: set(TRANSPORT_DETAILS) for kind in TRANSPORT_KINDS},
     **{kind: set(SUPPLY_DETAILS) for kind in SUPPLY_KINDS},
     **TREASURY_DETAILS,
@@ -114,7 +117,7 @@ def _validate_coalition_result(campaign, row):
             or row['factions'][0] not in {captor, ally} or row['factions'][1] in {captor, ally}):
         raise ValueError('Allied assault result factions')
     troops, shares, returns = (result[key] for key in ('troops', 'shares', 'returns'))
-    max_troops = BATTLE_OFFICERS_PER_SIDE * OFFICER_TROOP_CAP
+    max_troops = MAX_BATTLE_PARTICIPANTS * OFFICER_TROOP_CAP
     if (not isinstance(troops, list) or len(troops) != 2
             or any(type(qty) is not int or not 0 <= qty <= max_troops for qty in troops)
             or sum(troops) > max_troops
@@ -122,7 +125,7 @@ def _validate_coalition_result(campaign, row):
             or any(not isinstance(share, dict) or set(share) != set(RESOURCES)
                    or any(type(qty) is not int or not 0 <= qty <= STOCK_LIMIT for qty in share.values())
                    for share in shares)
-            or not isinstance(returns, list) or len(returns) > BATTLE_OFFICERS_PER_SIDE
+            or not isinstance(returns, list) or len(returns) > MAX_BATTLE_PARTICIPANTS
             or any(not isinstance(city, str) or city not in campaign.catalog.map_cities for city in returns)
             or len(set(returns)) != len(returns)):
         raise ValueError('Allied assault result units or stocks')
@@ -151,6 +154,8 @@ def _validate_equipment_event(row):
 def _validate_facility_event(row):
     d, kind = row['details'], row['kind']
     fields = FACILITY_DETAILS[kind]
+    if kind == 'town_developed' and 'grain' not in d:
+        fields = fields - {'grain'}
     if kind == 'grain_traded':
         if not set(d) & BATTLE_TRADE_DETAILS:
             fields = fields - BATTLE_TRADE_DETAILS
@@ -166,6 +171,10 @@ def _validate_facility_event(row):
         raise ValueError('Facility event references/price')
     if kind=='town_developed':
         valid=number('from_town',1,2) and d['to_town']==d['from_town']+1 and d['gold']>0
+        if valid and 'grain' in d:
+            from .facilities import TOWN_UPGRADE_COSTS
+            gold, grain = TOWN_UPGRADE_COSTS[d['from_town']]
+            valid = d['gold'] == gold and number('grain', grain, grain)
     elif kind in ('officer_treated','officer_studied'):
         valid=(number('before',0 if kind=='officer_treated' else 1,99 if kind=='officer_treated' else 79)
             and number('after',1,99 if kind=='officer_treated' else 89)
@@ -210,7 +219,11 @@ def _validate_facility_event(row):
 
 def _validate_city_development_event(row):
     d, kind = row['details'], row['kind']
-    if (set(d) != CITY_DEVELOPMENT_DETAILS[kind] or row['audience'] != 'player'
+    fields = CITY_DEVELOPMENT_DETAILS[kind]
+    scaled = kind == 'city_developed' and 'gain_scale' in d
+    if kind == 'city_developed' and not scaled:
+        fields = fields - {'gain_scale'}
+    if (set(d) != fields or row['audience'] != 'player'
             or len(row['city_ids']) != 1 or len(row['factions']) != 1):
         raise ValueError('City development event fields')
     def number(key, low, high):
@@ -227,7 +240,8 @@ def _validate_city_development_event(row):
             unit = POPULATION_UNIT if population else 1
             valid=((not population or (valid_population(d['before']) and valid_population(d['after'])
                                         and (d['gain'] % unit == 0 or d['after'] == cap)))
-                and d['governance_after']==min(100,d['governance_before']+1+(d['gain']//unit>=31))
+                and (not scaled or (not population and number('gain_scale',10,10) and d['gain'] <= 5))
+                and d['governance_after']==min(100,d['governance_before']+1+(d['gain']//unit >= (4 if scaled else 31)))
                 and (d['gain']>0 or d['governance_after']>d['governance_before']))
     else:
         loss_fields={'population':{'population_loss'},'resources':{'gold_loss','grain_loss'},
@@ -336,7 +350,7 @@ def _validate_staff_event(row, city_count):
     if 'reason' in details and (not isinstance(details['reason'], str)
             or re.fullmatch(r'[a-z_]{1,80}', details['reason']) is None):
         raise ValueError('Civil staff event reason')
-    for field in ('amount', 'paid'):
+    for field in ('amount', 'paid', 'grain_amount', 'grain_paid'):
         if field in details and (type(details[field]) is not int or not 0 <= details[field] <= 100000000):
             raise ValueError('Civil staff event amount')
     if 'bonus' in details:
@@ -352,11 +366,22 @@ def _validate_staff_event(row, city_count):
                 or not counts['cities'] <= counts['staff'] <= counts['cities'] * 99
                 or type(counts['total_unpaid']) is not int or not 0 <= counts['total_unpaid'] <= counts['staff']):
             raise ValueError('Civil staff event counts')
-    if row['kind'] == 'staff_salary' and (details['paid'] > details['amount']
-            or details['amount'] != details['counts']['staff'] * 5
-            or details['paid'] % 5 != 0
-            or details['counts']['total_unpaid'] != details['counts']['staff'] - details['paid'] // 5):
+    if row['kind'] != 'staff_salary':
+        return
+    staff = details['counts']['staff']
+    unpaid = details['counts']['total_unpaid']
+    paid = details['paid']
+    grain_fields = STAFF_SALARY_GRAIN & details.keys()
+    if paid > details['amount'] or details['amount'] != staff * CLERK_GOLD:
         raise ValueError('Civil staff event salary')
+    if not grain_fields:
+        if paid % CLERK_GOLD or unpaid != staff - paid // CLERK_GOLD:
+            raise ValueError('Civil staff event legacy salary')
+    elif (grain_fields != STAFF_SALARY_GRAIN or details['grain_amount'] != staff * CLERK_GRAIN
+          or not (staff - unpaid) * CLERK_GRAIN <= details['grain_paid'] <= details['grain_amount']
+          or paid < (staff - unpaid) * CLERK_GOLD
+          or (unpaid == 0) != (paid == details['amount'] and details['grain_paid'] == details['grain_amount'])):
+        raise ValueError('Civil staff event grain salary')
 
 
 def _validate_tactic_event(row):
@@ -384,7 +409,7 @@ def _validate_tactic_event(row):
                     or not d['success'] or type(d['experience_id']) is not str
                     or not 1<=len(d['experience_id'])<=128 or d['experience_id'].strip()!=d['experience_id']
                     or type(d['experience_gain']) is not int or not 0<=d['experience_gain']<=2550
-                    or not isinstance(d['qimen_ticks'],list) or not 1<=len(d['qimen_ticks'])<=20):
+                    or not isinstance(d['qimen_ticks'],list) or not 1<=len(d['qimen_ticks'])<=MAX_BATTLE_PARTICIPANTS):
                 raise ValueError('Tactic qimen daily snapshot')
             seen=set()
             for tick in d['qimen_ticks']:
@@ -402,7 +427,7 @@ def _validate_tactic_event(row):
     elif d['tactic']==10:
         counts=d.get('condition_counts')
         if (extra!={'condition','condition_counts'} or d['condition']!='chain'
-                or not isinstance(counts,list) or not (2<=len(counts)<=20 if d['success'] else not counts)):
+                or not isinstance(counts,list) or not (2<=len(counts)<=MAX_BATTLE_PARTICIPANTS if d['success'] else not counts)):
             raise ValueError('Tactic chain snapshot')
         seen=set()
         for item in counts:

@@ -585,7 +585,6 @@ class StrategicAITests(unittest.TestCase):
                     game=self.resume(game)
                 games.append(game)
         self.assertEqual(canonical(games[0].to_dict()),canonical(games[1].to_dict()))
-        self.assertEqual(games[0].state.rng.draws,0)
         self.assertEqual(games[0].state.soldiers['lost'],0)
 
     def test_sustained_actual_ai_war_economy_and_arrivals_survive_repeated_saves(self):

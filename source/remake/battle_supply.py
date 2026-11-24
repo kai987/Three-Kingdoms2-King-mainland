@@ -7,11 +7,11 @@ Reading/quoting a battle never loads provisions or advances randomness.
 """
 from .errors import GameError
 from .march_supply import denominator, OFFICER_UNITS, LIMIT, estimate
-from .officers import BATTLE_OFFICERS_PER_SIDE, MAX_BATTLE_OFFICERS, OFFICER_TROOP_CAP
+from .officers import BATTLE_OFFICERS_PER_SIDE, MAX_BATTLE_PARTICIPANTS, OFFICER_TROOP_CAP
 
 SCHEMA = 'tk2-battle-supply-v1'
 BUDGET_DAYS = 30
-MAX_BATTLE_DAILY_UNITS = MAX_BATTLE_OFFICERS * (OFFICER_TROOP_CAP + OFFICER_UNITS)
+MAX_BATTLE_DAILY_UNITS = MAX_BATTLE_PARTICIPANTS * (OFFICER_TROOP_CAP + OFFICER_UNITS)
 COALITION_LIMIT = BATTLE_OFFICERS_PER_SIDE * (LIMIT + 1) - 1
 SIDES = ('attackers', 'defenders')
 _SIDE_FIELDS = {'owner', 'origin', 'loaded', 'initial_credit', 'received', 'consumed',
@@ -122,7 +122,7 @@ def pool_limit(battle, side):
     return COALITION_LIMIT if side == 'attackers' and battle['extended'].get('coalition') else LIMIT
 
 
-def receive(state, battle, side, grain, *, contributor=None):
+def receive(state, battle, side, grain, *, contributor=None, kind='market'):
     supply = ensure(state, battle)
     row = supply['sides'][side]
     contributions = battle['extended'].get('coalition', {}).get('provisions') if side == 'attackers' else None
@@ -132,7 +132,15 @@ def receive(state, battle, side, grain, *, contributor=None):
     if grain:
         row['remaining'] += grain
         row['received'] += grain
-        _receipt(row, 'market', supply['days'], grain, contributor=contributor)
+        _receipt(row, kind, supply['days'], grain, contributor=contributor)
+
+
+def receive_reinforcements(state, battle, side, grain, owner):
+    row = ensure(state, battle)['sides'][side]
+    coalition = battle['extended'].get('coalition') if side == 'attackers' else None
+    contributor = (owner if owner in coalition['provisions'] else battle['attacker']) if coalition else None
+    receive(state, battle, side, min(grain, pool_limit(battle, side) - row['remaining']),
+            contributor=contributor, kind='reinforcement')
 
 
 def destroy(state, battle, side, amount):
@@ -226,7 +234,7 @@ def _settle_coalition_grain(state, battle, row, winner_city, returns):
     primary = battle['attacker']
     ally = next(owner for owner in contributions if owner != primary)
     for receipt in row['journal']:
-        if receipt['kind'] == 'market':
+        if receipt['kind'] in ('market', 'reinforcement'):
             contributions[receipt['contributor']] += receipt['grain'] * denominator()
     total = sum(contributions.values())
     ally_grain = row['remaining'] * contributions[ally] // total if total else 0
@@ -344,12 +352,15 @@ def validate(state, battle):
                 credit = max(0,nutrition-receipt['units']); days += 1
             else:
                 fields = {'kind','day','grain'}
-                if receipt.get('kind') == 'market' and side == 'attackers' and battle['extended'].get('coalition'):
+                if (receipt.get('kind') in ('market', 'reinforcement') and side == 'attackers'
+                        and battle['extended'].get('coalition')):
                     fields.add('contributor')
                     contributor = receipt.get('contributor')
                     if not isinstance(contributor, str) or contributor not in battle['extended']['coalition']['provisions']:
                         raise ValueError('Battle provision contributor')
-                if set(receipt) != fields or receipt.get('kind') not in ('market', 'fire') or receipt['day'] != days:
+                if (set(receipt) != fields or receipt.get('kind') not in ('market', 'fire', 'reinforcement')
+                        or receipt['day'] != days
+                        or receipt['kind'] == 'reinforcement' and not battle['extended'].get('reinforcements', {}).get('joined')):
                     raise ValueError('Battle provision receipt clock')
                 integer(receipt['day'],0,supply['days'])
                 integer(receipt['grain'], 1, limit)

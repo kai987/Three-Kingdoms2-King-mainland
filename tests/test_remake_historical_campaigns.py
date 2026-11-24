@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import battle_placement, city_development, civil_staff, events, facilities, historical_campaigns as history, strategic_ai, treasures
+from remake import battle_placement, battle_reinforcements, city_development, civil_staff, events, facilities, historical_campaigns as history, strategic_ai, treasures
 from remake.historical_chapters import CHAPTERS, GOGURYEO_EXPEDITION, GUANQIU_JIAN, WANG_QI, DONGCHEON
 from remake.march_core import using_backend
 from remake.officers import transfer_officers
@@ -68,16 +68,26 @@ class HistoricalCampaignTests(unittest.TestCase):
 
     def finish_pending_battles(self, game, *, stop_at=None):
         # Resolve simultaneous arrivals through the normal battle commands.
-        while game.state.phase == 'battle':
+        while game.state.phase in {'battle', 'result'}:
             battle = game.state.battle
             if stop_at and stop_at(battle):
                 return
             battle_id = battle['id']
+            if game.state.phase == 'result':
+                game.command('settle', {'battle_id': battle_id}, game.revision)
+                self.arrivals(game)
+                continue
+            if battle_reinforcements.supporting_side(battle):
+                game.command('battle_decline_support', {'battle_id': battle_id}, game.revision)
+                self.arrivals(game)
+                continue
             while battle_placement.pending(game.state.battle):
                 battle = game.state.battle
                 actor = battle_placement.view(game, game.state, battle)['actor']
                 point = battle['extended']['tactical']['positions'][str(actor)]
                 game.command('battle_place', {'battle_id': battle_id, 'actor': actor, **point}, game.revision)
+            if game.state.phase == 'result':
+                continue
             game.command('retreat', {'battle_id': battle_id}, game.revision)
             game.command('settle', {'battle_id': battle_id}, game.revision)
             self.arrivals(game)
@@ -135,6 +145,7 @@ class HistoricalCampaignTests(unittest.TestCase):
             self.assertEqual((game.state.year, game.state.month), (227, 12))
             residents = {i: game.state.officers[i].troops for key in cities
                          for i in game.state.cities[key].roster.officer_ids}
+            lost_before = game.state.soldiers['lost']
             self.assertTrue(residents)
             self.assertEqual({game.state.cities[key].owner for key in cities}, {'wei'})
             ai = strategic_ai.StrategicAI(game, game.state)
@@ -149,10 +160,10 @@ class HistoricalCampaignTests(unittest.TestCase):
         governor = game.catalog.ids[history.LONGYOU_GOVERNOR]
         self.assertTrue({*joined, governor} <= set(residents))
         self.assertTrue(joined <= set(game.state.cities['tianshui'].roster.officer_ids))
-        for ident, troops in residents.items():
+        self.assertEqual(game.state.soldiers['lost'], lost_before)
+        for ident in residents:
             owner = 'shu' if ident in joined else 'wei'
-            self.assertEqual((game.state.officers[ident].faction_id, game.state.officers[ident].troops),
-                             (owner, troops))
+            self.assertEqual(game.state.officers[ident].faction_id, owner)
             self.assertTrue(any(c.owner == owner and ident in c.roster.officer_ids
                                 for c in game.state.cities.values()))
         restored = self.resume(game)
@@ -225,6 +236,7 @@ class HistoricalCampaignTests(unittest.TestCase):
             self.assertFalse(self.events(game, history.SOUTH))
             self.advance(game)
             self.arrivals(game)
+            self.finish_pending_battles(game)
         self.assertEqual((game.state.year, game.state.month, game.state.day), (208, 12, 1))
         self.assertEqual(len(self.events(game, history.ALLIANCE)), 1)
         event, = self.events(game, history.SOUTH)
@@ -244,11 +256,14 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertEqual(game.state.cities['jiangxia'].owner, 'shu')
         self.assertIsNone(game.state.battle)
         self.arrivals(game)
+        wanted = lambda b: b['target'] == 'jiangxia' and b['attacker'] == 'wei'
         while game.state.turn < jiangxia['arrival_turn']:
+            self.finish_pending_battles(game, stop_at=wanted)
             self.assertTrue(any(row['id'] == jiangxia['id']
                                 for row in game.state.extension['travel']['marches']))
             self.advance(game)
             self.arrivals(game)
+        self.finish_pending_battles(game, stop_at=wanted)
         self.assertEqual(game.state.phase, 'battle')
         self.assertEqual(game.state.turn, jiangxia['arrival_turn'])
         self.assertEqual(game.state.battle['target'], 'jiangxia')
@@ -279,9 +294,12 @@ class HistoricalCampaignTests(unittest.TestCase):
                 self.assertEqual(game.state.phase, 'arrivals')
                 before = deepcopy(game.state.officers[ident])
                 before.faction_id = 'shu'
+                losses = game.state.soldiers['lost']
                 self.arrivals(game)
 
+                before.troops = game.state.officers[ident].troops
                 self.assertEqual(game.state.officers[ident], before)
+                self.assertEqual(game.state.soldiers['lost'], losses)
                 homes = [city.id for city in game.state.cities.values() if ident in city.roster.officer_ids]
                 self.assertEqual(homes, ['jiangxia'])
                 self.assertEqual(game.state.cities['wujun'].owner, 'wu')
@@ -461,12 +479,13 @@ class HistoricalCampaignTests(unittest.TestCase):
         history.process(game, separated)
         self.assertTrue(history.allied(separated, 'shu', 'wu'))
         self.assertNotIn(history.ALLIANCE_ENDED, separated.extension[history.RECEIPTS])
-        for _ in range(3):
-            self.assertTrue(history.allied(game.state, 'shu', 'wu'))
-            self.assertFalse(self.events(game, history.ALLIANCE_ENDED))
-            self.advance(game)
-            self.arrivals(game)
-            self.finish_pending_battles(game)
+        with patch.object(strategic_ai, '_open_ai_queue'):
+            for _ in range(3):
+                self.assertTrue(history.allied(game.state, 'shu', 'wu'))
+                self.assertFalse(self.events(game, history.ALLIANCE_ENDED))
+                self.advance(game)
+                self.arrivals(game)
+                self.finish_pending_battles(game)
         event, = self.events(game, history.ALLIANCE_ENDED)
         self.assertEqual((event['year'], event['month'], event['day'], event['audience']),
                          (219, 10, 1, 'world'))
@@ -833,9 +852,21 @@ class HistoricalCampaignTests(unittest.TestCase):
             self.advance(legacy)
             self.arrivals(legacy)
             self.finish_pending_battles(legacy)
-        self.advance(game)
-        self.arrivals(game)
-        self.finish_pending_battles(game)
+        relocate = history._relocate_court
+        stocks = {}
+        def record_relocation(state, cities):
+            for label in ('before', 'after'):
+                if label == 'after':
+                    result = relocate(state, cities)
+                stocks[label] = {city: {
+                    **{key: getattr(state.cities[city], key) for key in ('gold', 'grain', 'reserves')},
+                    'population': state.extension['city_development']['cities'][city]['population']
+                } for city in cities}
+            return result
+        with patch.object(history, '_relocate_court', side_effect=record_relocation):
+            self.advance(game)
+            self.arrivals(game)
+            self.finish_pending_battles(game)
 
         event, = self.events(game, kind)
         self.assertEqual((event['year'], event['month'], event['day']), (190, 2, 1))
@@ -849,14 +880,8 @@ class HistoricalCampaignTests(unittest.TestCase):
         treasure_before = old_treasury['cities']['jingzhao']['treasure']
         self.assertEqual(loot, dict(gold=50_000, grain=1_000_000, treasure=99 - treasure_before))
         for field in ('gold', 'grain', 'population', 'reserves'):
-            if field == 'population':
-                new = game.state.extension['city_development']['cities']
-                old = legacy.state.extension['city_development']['cities']
-                source_before, target_before = (old[city][field] for city in event['city_ids'])
-                source_after, target_after = (new[city][field] for city in event['city_ids'])
-            else:
-                source_before, target_before = (getattr(legacy.state.cities[city], field) for city in event['city_ids'])
-                source_after, target_after = (getattr(game.state.cities[city], field) for city in event['city_ids'])
+            source_before, target_before = (stocks['before'][city][field] for city in event['city_ids'])
+            source_after, target_after = (stocks['after'][city][field] for city in event['city_ids'])
             self.assertEqual(moved[field], source_before * 72 // 10_000 * 100)
             self.assertEqual(lost[field], source_before * 25 // 10_000 * 100)
             self.assertEqual(source_after, source_before - moved[field] - lost[field])

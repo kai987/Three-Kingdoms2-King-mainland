@@ -14,6 +14,8 @@ from .city_economy import tier_at
 
 SCHEMA = 'tk2-facilities-v1'
 LIMIT = 100000000
+TOWN_UPGRADE_COSTS = {1: (500, 2_000), 2: (1_000, 4_000)}
+# Keep the old development fee field for compatibility with existing catalogues.
 RULES = dict(town_cap=3, preparedness_cap=99, damage_cap=50,
     initial_preparedness=40, development_per_level_gold=100, medical_gold=50,
     medical_heal_min=35, medical_heal_max=45, study_cap=89,
@@ -244,10 +246,14 @@ def develop(game, state, payload, owner):
     before = row['town']
     if before >= 3:
         raise GameError('本城町等級已達上限。')
-    gold = _rule(game, 'development_per_level_gold') * (before + 1)
+    gold, grain = TOWN_UPGRADE_COSTS[before]
+    if city.grain < grain:
+        raise GameError('本城糧不足，無法提升町等級。')
     _charge(state, city, actor, gold, kind='develop_town')
+    city.grain -= grain
     row['town'] += 1
-    details = dict(actor=state.officers[actor].person_id, from_town=before, to_town=row['town'], gold=gold)
+    details = dict(actor=state.officers[actor].person_id, from_town=before,
+                   to_town=row['town'], gold=gold, grain=grain)
     _emit(game, state, 'town_developed', city, [actor], details)
     return details
 
@@ -675,8 +681,10 @@ def auto_turn(game, state, owner, *, hold_grain=(), food_priority=(), allow_stoc
                             break
                     if choice:
                         break
-            if choice is None and command_books.can_spend(state, owner, 'develop_town') and policy['auto_develop'] and row['town'] < 3:
-                if _rule(game,'development_per_level_gold')*(row['town']+1) <= available:
+            if (choice is None and policy['auto_develop'] and key not in hold_grain and row['town'] < 3
+                    and command_books.can_spend(state, owner, 'develop_town')):
+                gold, grain = TOWN_UPGRADE_COSTS[row['town']]
+                if gold <= available and grain + policy['grain_floor'] <= city.grain:
                     choice = (develop, dict(city=key,actor=actor))
             if choice is None and command_books.can_spend(state, owner, 'study_officer') and policy['auto_study'] and row['town'] >= 2:
                 students = [i for i in actors if (quote := _study_quote(game,state,state.officers[i])) is not None
@@ -727,15 +735,16 @@ def view(game, state):
                     targets=item['eligible_targets']
                     stock[slot].append(dict(item,eligible_targets=targets,
                         can_buy=ready and command_books.can_spend(state,city.owner,'buy_equipment') and bool(targets) and city.gold>=item['price']))
-        development_gold=_rule(game,'development_per_level_gold')*(row['town']+1) if row['town']<3 else 0
+        development_gold, development_grain = TOWN_UPGRADE_COSTS.get(row['town'], (0, 0))
         prevention={str(i):dict(_prevention_quote(game,city,row,state.officers[i]),
             can_prevent=ready and command_books.can_spend(state,city.owner,'improve_prevention') and _prevention_quote(game,city,row,state.officers[i])['can_prevent']) for i in actors}
         result['cities'][key]=dict(owner=city.owner,town=row['town'],preparedness=row['preparedness'],damage=row['damage'],
             services=['hospital','market']+(['school','armory'] if row['town']>=2 else []),
             can_manage=_ready(state,city.owner),can_act=ready,eligible_actors=actors,
             patients=patients,students=students,equipment_targets=residents,stock=stock,
-            develop=dict(from_town=row['town'],to_town=min(3,row['town']+1),gold=development_gold,
-                can_develop=ready and command_books.can_spend(state,city.owner,'develop_town') and row['town']<3 and city.gold>=development_gold),
+            develop=dict(from_town=row['town'],to_town=min(3,row['town']+1),gold=development_gold,grain=development_grain,
+                can_develop=ready and row['town']<3 and command_books.can_spend(state,city.owner,'develop_town')
+                    and city.gold>=development_gold and city.grain>=development_grain),
             trade={direction:_trade_quote(game, city, row['town'], direction, state.month)
                    for direction in ('buy', 'sell')},
             prevention_quotes=prevention)

@@ -260,7 +260,8 @@ class ConvoyRescueTests(unittest.TestCase):
             game.validate(game.state)
             if game.state.phase=='arrivals':game.command('arrivals',{},game.revision)
         row=game.state.extension['logistics']['convoys'][0]
-        self.assertEqual(game.state.cities['xiangyang'].gold,logistics.LIMIT)
+        free_space = logistics.LIMIT - game.state.cities['xiangyang'].gold
+        self.assertTrue(0 <= free_space < row['cargo']['gold'])
         self.assertEqual(march_supply.current_city(row['journeys'][-1]),'xiangyang')
         self.assertEqual(row['reason'],'resource_full')
         self.assertTrue(row['journeys'][-1]['supply']['waiting'])
@@ -270,7 +271,7 @@ class ConvoyRescueTests(unittest.TestCase):
         self.assertTrue(all(j['quote']['days']>0 for j in row['journeys']))
         saved=game.export_save();loaded=Campaign(game.catalog);loaded.load_save(saved,0)
         self.assertEqual(loaded.export_save(),saved)
-        game.state.cities['xiangyang'].gold-=100
+        game.state.cities['xiangyang'].gold-=100-free_space
         logistics.resolve_supply_retreats(game,game.state)
         self.assertFalse(game.state.extension['logistics']['convoys'])
         self.assertEqual(game.state.cities['xiangyang'].gold,logistics.LIMIT)

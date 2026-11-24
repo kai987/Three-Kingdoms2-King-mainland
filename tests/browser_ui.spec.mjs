@@ -2419,8 +2419,11 @@ test('facility visits, trade, study, equipment, prevention and town development 
  expect(protectedCity.damage).toBeGreaterThanOrEqual(preventionQuote.damage_min);expect(protectedCity.damage).toBeLessThanOrEqual(preventionQuote.damage_max);expect(after.state.rng.draws).toBe(before.save.state.rng.draws+2);
  expect(after.state.extension.command_books.factions.shu.used).toBe(before.save.state.extension.command_books.factions.shu.used+1);await events('prevention-ja','prevention_improved');
  before=await read();const town=chooseCity(before,row=>row.develop.can_develop);expect(town).toBeTruthy();await open(town[0]);await page.locator('#facility-civic-entry').click();
+ await expect(page.locator('#facility-total')).toContainText(String(town[1].develop.gold));await expect(page.locator('#facility-total')).toContainText(String(town[1].develop.grain));await expect(page.locator('.facility-footer')).toContainText('命令書');
+ await historyScreenshot(page,testInfo,'town-upgrade-quote',{fullPage:false});
  await page.locator('#facility-develop').click();await waitIdle(page);after=await tacticalSave(page);
- expect(after.state.extension.facilities.cities[town[0]].town).toBe(town[1].develop.to_town);expect(after.state.cities[town[0]].gold).toBe(before.save.state.cities[town[0]].gold-town[1].develop.gold);expect(after.state.rng).toEqual(before.save.state.rng);
+ expect(after.state.extension.facilities.cities[town[0]].town).toBe(town[1].develop.to_town);expect(after.state.cities[town[0]].gold).toBe(before.save.state.cities[town[0]].gold-town[1].develop.gold);
+ expect(after.state.cities[town[0]].grain).toBe(before.save.state.cities[town[0]].grain-town[1].develop.grain);expect(after.state.rng).toEqual(before.save.state.rng);
  expect(after.state.extension.command_books.factions.shu.used).toBe(before.save.state.extension.command_books.factions.shu.used+1);await expect(page.locator('#facility-tab-school')).toBeEnabled();await expect(page.locator('#facility-tab-armory')).toBeEnabled();await events('development-ja','town_developed');
  const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');
  await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
@@ -2435,6 +2438,7 @@ test('a natural August drought shows bilingual illustrated losses and preserves 
  await expect(page.locator('#city-facilities')).toBeEnabled({timeout:90_000});await waitIdle(page);await dismissHistoryOpening(page);
  const read=()=>page.evaluate(async()=>{const a=await fetch('/api/save'),b=await fetch('/api/state');if(!a.ok||!b.ok)throw new Error('Read-only disaster state failed');const result=await b.json(),view=result.view||result;return {save:await a.json(),income:view.catalog.city_income};});
  const original=await read();expect(original.save.state.month).toBe(7);expect(original.save.state.player).toBe('wei');
+ const catalog=JSON.parse(await readFile(new URL('../game/data/campaigns/217-07.json',import.meta.url),'utf8'));
  const dismiss=async()=>{const modal=page.locator('#event-dialog');if(await modal.isVisible()){const skip=modal.locator('[data-event-skip]');await (await skip.count()?skip:modal.locator('[data-event-next]')).click();await expect(modal).not.toBeVisible();}};
  // Advancing the calendar only needs the actual saved phase. Rebuild the
  // income view at the August checkpoint where production is compared.
@@ -2446,7 +2450,8 @@ test('a natural August drought shows bilingual illustrated losses and preserves 
   else if(phase==='ai')await page.locator('#run-ai').click();
   else if(phase==='arrivals')await page.locator('#process-arrivals').click();
   else if(phase==='battle'){
-   if(currentSave.state.battle?.extended?.placement?.confirmed<currentSave.state.battle?.extended?.placement?.order?.length)await page.locator('#battle-place-confirm').click();
+   if(currentSave.state.battle?.extended?.reinforcements?.supporting)await page.locator('#battle-decline-support').click();
+   else if(currentSave.state.battle?.extended?.placement?.confirmed<currentSave.state.battle?.extended?.placement?.order?.length)await page.locator('#battle-place-confirm').click();
    else{await page.locator('#retreat').click();await expect(page.locator('#confirm-retreat')).toBeVisible();await page.locator('#confirm-retreat').click();}
   }else if(phase==='result')await page.locator('#settle').click();
   else throw new Error('The natural drought campaign unexpectedly finished before August: '+phase);
@@ -2465,15 +2470,16 @@ test('a natural August drought shows bilingual illustrated losses and preserves 
   // damage factor. Check both integer stages instead of assuming intact land.
   const development=current.save.state.extension.city_development.cities[city],baseline=development.baseline;
   const tax=value=>value<=50?50:value<=70?60:value<=80?70:value<=90?80:value<100?90:100;
-  const production=(row,field)=>Math.floor(row.population/(field==='land'?300:100))*
-   (60+Math.floor(row[field]/(field==='land'?1:3)))*tax(row.governance);
+  const production=(row,field)=>Math.floor(row.population/(field==='land'?1000:100))*
+   (field==='land'?240+baseline.land+3*row.land:60+Math.floor(row.industry/3))*tax(row.governance);
   expect(development.land).toBeLessThan(baseline.land);
   for(const resource of ['gold','grain','reserves']){
-   const multiplier=resource==='grain'?2:1, base=original.income[city][resource]/multiplier;
+   const multiplier=resource==='grain'?2:1;
+   const base=catalog.city_income[city][resource]*(resource==='grain'?original.save.state.extension.grain_scale:1);
    const field=resource==='gold'?'industry':'land';
    const adjusted=resource==='reserves'?Math.floor(base*development.population/baseline.population):
     Math.floor(base*production(development,field)/production(baseline,field));
-   expect(current.income[city][resource]).toBe(multiplier*Math.floor(adjusted*(100-actual.damage)/100));
+   expect(current.income[city][resource], `${city} ${resource}, opening ${base}, damage ${actual.damage}, population ${baseline.population} → ${development.population}`).toBe(multiplier*Math.floor(adjusted*(100-actual.damage)/100));
   }
  }
  const live=current.save.state,currentSoldiers=Object.values(live.cities).reduce((sum,c)=>sum+c.reserves,0)+Object.values(live.officers).reduce((sum,o)=>sum+o.troops,0)+(live.extension.logistics?.convoys||[]).reduce((sum,c)=>sum+c.cargo.reserves,0);
@@ -3185,7 +3191,8 @@ test('Dong Zhuo relocation opens in February 190 with its own bilingual historic
   const phase=saved.state.phase;
   if(phase==='battle'){
    const placement=saved.state.battle?.extended?.placement;
-   if(placement&&placement.confirmed<placement.order.length)await tacticalControl(page,'battle-place-confirm');
+   if(saved.state.battle?.extended?.reinforcements?.supporting)await tacticalControl(page,'battle-decline-support');
+   else if(placement&&placement.confirmed<placement.order.length)await tacticalControl(page,'battle-place-confirm');
    else{
     await tacticalControl(page,'retreat');
     await expect(page.locator('#confirm-retreat')).toBeVisible();
@@ -3220,12 +3227,25 @@ test('Dong Zhuo relocation opens in February 190 with its own bilingual historic
  expect(treasury.cities.jingzhao.treasure).toBe(99);
  expect(treasury.cities.henan.treasure).toBe(beforeTreasury.cities.henan.treasure);
  expect(treasury.ledger.found).toBeGreaterThanOrEqual(beforeTreasury.ledger.found+effects.loot.treasure);
+ const wages=await page.evaluate(async()=>{
+  const body=await (await fetch('/api/state')).json();
+  const data=(body.view||body).catalog;
+  return {payroll:data.payroll,staff:data.civil_staff?.rules};
+ });
+ const paid=(city,field)=>field==='reserves'?0:saved.state.cities[city].roster.officer_ids.reduce((total,id)=>{
+  const o=saved.state.officers[id];
+  if(!o.alive||o.faction_id!==saved.state.cities[city].owner)return total;
+  const due=String(id).startsWith('clerk-')?
+   (field==='gold'?wages.staff?.monthly_salary??5:wages.staff?.monthly_salary_grain??10):
+   wages.payroll.officer_wages[Math.floor(o.experience/wages.payroll.experience_per_band)][field];
+  return total+(saved.state.extension.payroll?.shortfalls?.[id]?.[field+'_paid']??due);
+ },0);
  for(const field of ['gold','grain','reserves']){
-  const stock=saved.state.cities.henan[field]+effects.moved[field]+effects.lost[field];
+  const stock=saved.state.cities.henan[field]+paid('henan',field)+effects.moved[field]+effects.lost[field];
   expect(effects.moved[field]).toBe(Math.floor(stock*72/10000)*100);
   expect(effects.lost[field]).toBe(Math.floor(stock*25/10000)*100);
   expect(saved.state.cities.henan[field]).toBeLessThan(beforeRelocation.state.cities.henan[field]);
-  expect(saved.state.cities.jingzhao[field]).toBeGreaterThanOrEqual(beforeRelocation.state.cities.jingzhao[field]+effects.moved[field]+(effects.loot[field]??0));
+  expect(saved.state.cities.jingzhao[field]+paid('jingzhao',field)).toBeGreaterThanOrEqual(beforeRelocation.state.cities.jingzhao[field]+effects.moved[field]+(effects.loot[field]??0));
  }
  expect(effects.moved.reserves).toBeGreaterThan(0);
  expect(effects.moved).not.toHaveProperty('troops');

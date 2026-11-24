@@ -9,7 +9,7 @@ from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
-from remake import battle_conditions as conditions,battle_grid as grid,battle_services,tactical_ai as ai,tactic_effects
+from remake import battle_conditions as conditions,battle_grid as grid,battle_experience,battle_services,tactical_ai as ai,tactic_effects
 from remake.campaign import Campaign,Catalog,SeedRng
 from remake.campaign_expansion import TACTICS
 from remake.errors import GameError
@@ -213,9 +213,9 @@ class QimenAITests(unittest.TestCase):
         self.assertEqual(conditions.remaining(current,target['id']),initial_count-1)
         self.assertEqual(current['extended']['support'],before.battle['extended']['support'])
         self.assertEqual(current['extended']['tactical']['positions'],before.battle['extended']['tactical']['positions'])
-        gain=(actual['troops']%256)//2
         zhuge=game.state.officers[439]
-        self.assertEqual(zhuge.experience,min(49999,before.officers[439].experience+gain))
+        self.assertEqual(zhuge.experience,before.officers[439].experience)
+        self.assertEqual(current['extended'][battle_experience.FIELD]['officers']['439']['damage'],loss)
         self.assertEqual(zhuge.tier,experience_tier(zhuge.experience))
         self.assertEqual(zhuge.profile,before.officers[439].profile)
         self.assertEqual(game.state.officers[target['id']].troops,before.officers[target['id']].troops,

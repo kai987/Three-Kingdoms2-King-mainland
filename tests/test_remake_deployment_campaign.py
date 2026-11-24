@@ -13,7 +13,7 @@ from unittest.mock import patch
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
 from remake.campaign import Campaign,Catalog,digest
-from remake import battle_grid,battle_deployment,battle_allegiance,battle_supply
+from remake import battle_grid,battle_deployment,battle_allegiance,battle_supply,civil_staff
 from remake.errors import GameError
 
 SOURCE,TARGET,ARRIVAL='baxi','hanzhong','jingzhao'
@@ -69,6 +69,7 @@ class DeploymentCampaignTests(unittest.TestCase):
             game._complete_turn(game.state)
             game._spawn_eligible(game.state)
             game._reconcile_factions(game.state)
+            civil_staff.synchronize(game, game.state, monthly=game.state.day == 1)
         game.state.phase='arrivals'
         game.validate(game.state)
         return game

@@ -6,7 +6,7 @@
   "crate": "march-core",
   "file": "march_core.wasm",
   "rust": "1.93.0",
-  "sha256": "432404a778efcac044ec6d0f76888f465fbc36cec32e7b584fa87992a4fcb281",
+  "sha256": "b2fc9be871e2512f3861a32aec4a05c988caafb31b71e5b7fa0484b41ff62f75",
   "sources_sha256": {
     "Cargo.lock": "681fc64b6f88550d1f61c6dc48be6c49e123a9ef9ba2926c86a8260d9e780342",
     "Cargo.toml": "9346d419e1beb656dda08c16b3f7310599b2bbdd93784c5da37c5f1e07832fce",
@@ -14,8 +14,8 @@
     "src/lib.rs": "6f73ae95e1617c0a71936036db61f7126389b8563746bfcba1c9ebc6d3568f4a",
     "src/main.rs": "eef1ba77e410ff8726503e1727c2a414b28d3291d62c722ce709882fe632a04a",
     "src/paths.rs": "cf6483ba1cd17f1c988e40410c2a37c7d1423a3e051a3678f15fd126aefd1bfc",
-    "src/tactical.rs": "fbaee9ddf26deb7f93a35b07080d72422ac8af2cef9613f778e8f8542881958e",
-    "tests/protocol.rs": "51fa6970f413ce72c58b3d87598add85f75013f49a4376910ef00ea001e4b7ad",
+    "src/tactical.rs": "470afcd19dec7ba61664e1d97c6afec8fad124d6a81e538b74e3e9811c1edf91",
+    "tests/protocol.rs": "d34978e8455dc758b361c6592cce1edba2fe1b16bff02f46fb11e87da7496cda",
     "tests/river.rs": "7176511c019ed77d8a376dbea90aec30a2dcd1bfd4ff05df2765276345c9427a"
   },
   "target": "wasm32-unknown-unknown"

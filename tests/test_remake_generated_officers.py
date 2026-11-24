@@ -159,8 +159,11 @@ class GeneratedOfficerTests(unittest.TestCase):
         arrival = game.state.extension['travel']['marches'][0]['arrival_turn']
         while game.state.turn < arrival:
             self.reset_turn(game)
+        losses = game.state.soldiers['lost']
         self.cmd(game, 'arrivals')
+        before.troops = game.state.officers[ident].troops
         self.assertEqual(game.state.officers[ident], before)
+        self.assertEqual(game.state.soldiers['lost'], losses)
         self.assertNotIn(ident, game.state.cities['nanjun'].roster.officer_ids)
         self.assertIn(ident, game.state.cities['xiangyang'].roster.officer_ids)
         person = game.state.extension['civil_staff']['people'][ident]

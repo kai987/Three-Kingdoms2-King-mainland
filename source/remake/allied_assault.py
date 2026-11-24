@@ -9,8 +9,9 @@ RESOURCES = ('gold', 'grain', 'reserves')
 
 def capture_actor(state, battle):
     extended = battle['extended']
+    owners = extended.get('coalition', {}).get('provisions', (battle['attacker'],))
     eligible = [unit for unit in battle['attackers'] if str(unit['id']) not in extended['surrenders']
-                and state.officers[unit['id']].alive]
+                and state.officers[unit['id']].alive and state.officers[unit['id']].faction_id in owners]
     claimants = ((extended.get('occupation') or {}).get('actor'), extended.get('capture_actor'))
     for ident in claimants:
         if any(unit['id'] == ident for unit in eligible):
