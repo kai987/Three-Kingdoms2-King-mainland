@@ -402,6 +402,13 @@
         "logistics"
       ]
     },
+    "tests/test_remake_economy_v2.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "save"
+      ]
+    },
     "tests/test_remake_economy_supply_events.py": {
       "tier": "related",
       "groups": [

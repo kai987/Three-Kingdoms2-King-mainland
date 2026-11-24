@@ -196,10 +196,23 @@
    const portrait=target===null?'':root.GamePortraits?.html?.(root.GamePortraits?.personId?.(getView()?.catalog,target)||person(getView(),target)?.person_id,label(name(getView(),target)),{size:'detail'})||'';
    return `<aside class="facility-visual" aria-label="${escape(text(...services[id]))}">${scene||`<div class="facility-symbol">${icon(id)}</div>`}<div class="facility-visitor">${portrait}<div><strong>${target===null?text('尚未選擇武將','武将は未選択'):escape(label(name(getView(),target)))}</strong><p class="small">${id==='hospital'?text('體力回復','体力を回復'):id==='school'?text('學問增知','学問で知を高める'):id==='armory'?text('選擇實際裝備','実際の装備を選ぶ'):text('依本城即期報價交易','この都市の見積りで取引')}</p></div></div></aside>`;
   }
+  function townAgriculture(projection){
+   if(!projection)return '';
+   const rows=[
+    ['population_cap','產糧人口上限','生産人口上限',''],
+    ['town_bonus_percent','町產糧加成','町の収穫補正','%'],
+    ['civilian_grain','居民月耗糧','住民の月間消費',''],
+    ['regular_grain','常規月產糧','月間の通常収穫',''],
+    ['net_grain','月淨糧（含月俸）','兵糧月間収支（俸給込み）','']
+   ];
+   return '<dl class="development-stats" data-town-agriculture>'+rows.map(([key,tc,ja,unit])=>
+    '<div><dt>'+text(tc,ja)+'</dt><dd data-town-'+key+'>'+shown(projection.before[key])+unit+' → '+shown(projection.after[key])+unit+'</dd></div>'
+   ).join('')+'</dl>';
+  }
   function civicBody(){
    const source=row(),develop=source.develop;
    const tabs=[['development',text('設施等級','施設の整備')],['prevention',text('防災與修復','防災・復旧')],['policy',text('自動方針','自動方針')]];
-   let content=active.civicAction==='policy'?policyBody():active.civicAction==='prevention'?`<fieldset><legend>${text('防災與災後修復','防災と被災後の復旧')}</legend><p class="small" id="facility-prevention-preview"></p><p class="small">${text('防災值最多99、損傷最低0。費用與效果會在確認後，依顯示的參考範圍決定。','防災は99まで、損傷は0までです。費用と効果は、表示した参考範囲から確定時に決まります。')}</p></fieldset>`:`<fieldset><legend>${text('設施等級','施設の整備')}</legend><p>${develop&&develop.from_town===develop.to_town?text('已達最高城町等級3。醫館、市場、學問所與武器屋均已開放。','施設の整備段階は上限の3です。医館・市場・学問所・武器屋を利用できます。'):develop?text(`發展 ${shown(develop.from_town)} → ${shown(develop.to_town)}。町等級2開放學問所與武器屋，最高級提供進階商品。`,`発展 ${shown(develop.from_town)} → ${shown(develop.to_town)}。段階2で学問所・武器屋が開き、最高段階では上級商品が並びます。`):text('目前無法發展。','現在は発展できません。')}</p></fieldset>`;
+   let content=active.civicAction==='policy'?policyBody():active.civicAction==='prevention'?`<fieldset><legend>${text('防災與災後修復','防災と被災後の復旧')}</legend><p class="small" id="facility-prevention-preview"></p><p class="small">${text('防災值最多99、損傷最低0。費用與效果會在確認後，依顯示的參考範圍決定。','防災は99まで、損傷は0までです。費用と効果は、表示した参考範囲から確定時に決まります。')}</p></fieldset>`:`<fieldset><legend>${text('設施等級','施設の整備')}</legend><p>${develop&&develop.from_town===develop.to_town?text('已達最高城町等級3。醫館、市場、學問所與武器屋均已開放。','施設の整備段階は上限の3です。医館・市場・学問所・武器屋を利用できます。'):develop?text(`發展 ${shown(develop.from_town)} → ${shown(develop.to_town)}。町等級2開放學問所與武器屋，最高級提供進階商品。`,`発展 ${shown(develop.from_town)} → ${shown(develop.to_town)}。段階2で学問所・武器屋が開き、最高段階では上級商品が並びます。`):text('目前無法發展。','現在は発展できません。')}</p>${townAgriculture(develop?.agriculture)}</fieldset>`;
    return `<nav class="facility-civic-tabs" aria-label="${text('城政指令','都市の指令')}">${tabs.map(([id,title])=>`<button type="button" id="facility-civic-${id}" data-facility-civic="${id}" aria-pressed="${active.civicAction===id}">${title}</button>`).join('')}</nav>${content}`;
   }
   function render(){

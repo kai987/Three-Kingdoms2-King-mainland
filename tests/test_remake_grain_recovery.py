@@ -101,7 +101,7 @@ class GrainRecoveryTests(unittest.TestCase):
         self.assertTrue(city_economy.frontier_outpost_at(data, 'shuofang', 217, 7))
         self.assertEqual(city_economy.garrison_grain_cost(data, 'shuofang', 217, 7, 1000, 1000), 600)
         self.assertEqual(city_economy.garrison_grain_cost(data, 'jiangxia', 217, 7, 1000, 1000), 270)
-        self.assertEqual(city_economy.civilian_grain(1000), 30)
+        self.assertEqual(tuple(city_economy.civilian_grain(1000, town) for town in (1, 2, 3)), (18, 24, 30))
         self.assertEqual(march_supply.required_grain(100, 1, 10, 50), 50)
         with grain_units.using({'extension': {'grain_scale': 10}}):
             self.assertEqual(march_supply.required_grain(100, 1, 10, 50), 25)

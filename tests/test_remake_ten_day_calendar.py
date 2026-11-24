@@ -7,7 +7,6 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
-from remake import grain_units
 from remake.campaign import Campaign, GameError, digest
 from remake import city_economy, civil_staff, domestic
 from campaign_fixtures import record_garrison_charges, controlled_catalog, confirm_default_placement
@@ -44,7 +43,8 @@ class TenDayCalendarTests(unittest.TestCase):
             self.assertEqual(officer.health, officer.profile.health_max - 20)
         game._complete_turn(game.state)
         for key, city in game.state.cities.items():
-            income = city_economy.scale_monthly_grain(grain_units.stocks(game.catalog.data['city_income'][key])) if city.owner != 'neutral' else dict(gold=0, grain=0, reserves=0)
+            income = (city_economy.monthly_income(game, key, game.state)
+                      if city.owner != 'neutral' else dict(gold=0, grain=0, reserves=0))
             self.assertEqual((city.gold, city.grain, city.reserves),
                 tuple(stocks[key][i] + income[field] - (paid[key] if field == 'grain' else 0) for i, field in enumerate(('gold', 'grain', 'reserves'))))
         self.assertEqual(officer.health,

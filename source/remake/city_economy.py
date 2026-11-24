@@ -6,7 +6,7 @@ and rear-city frontier maintenance settles at the month rollover.
 from copy import deepcopy
 from heapq import heappop, heappush
 
-from . import grain_units
+from . import economy_rules, grain_units
 from .route_hazards import route_allowed
 from .route_network import effective
 
@@ -101,16 +101,16 @@ def opening_monthly_income(game, city_id, *, development=None, facility=None):
     income = _monthly_base_income(data, city_id, (data['start_year'], data['start_month']))
     if facility is None:
         facility = facilities.opening_view(data, city_id)
-    income = city_development.adjust_income(game, None, city_id, income, opening=development)
+    income = city_development.adjust_income(game, None, city_id, income, opening=development, town=facility['town'])
     return scale_monthly_grain(facilities.income_after_damage(income, facility['damage']))
 
 
-def monthly_income(game, city_id, state, *, date=None):
+def monthly_income(game, city_id, state, *, date=None, town=None):
     from . import city_development, facilities
 
     income = _monthly_base_income(game.catalog.data, city_id, date or (state.year, state.month))
     if city_id in state.cities:
-        income = city_development.adjust_income(game, state, city_id, income)
+        income = city_development.adjust_income(game, state, city_id, income, town=town)
     return scale_monthly_grain(facilities.adjusted_income(state, city_id, income))
 
 
@@ -191,14 +191,24 @@ def garrison_grain_cost(data, city_id, year, month, active, reserves):
     return ((active * active_rate + reserves * reserve_rate) * days + rate - 1) // rate
 
 
-def civilian_grain(population):
-    percent = 5 if grain_units.current_rations() else 1
+def town_level(game, state, city_id):
+    from .facilities import opening_view
+
+    cities = state.extension.get('facilities', {}).get('cities', {}) if state is not None else {}
+    return cities[city_id]['town'] if city_id in cities else opening_view(game.catalog.data, city_id)['town']
+
+
+def civilian_grain(population, town=1, *, state=None):
+    if economy_rules.version(state) == economy_rules.CURRENT and grain_units.current_rations():
+        percent = economy_rules.TOWN_AGRICULTURE[town].resident_rate_percent
+    else:
+        percent = 5 if grain_units.current_rations() else 1
     divisor = 100 * grain_units.denominator()
     return (30 * population * percent + divisor - 1) // divisor
 
 
-def grain_balance(production, upkeep, owner, population=0):
-    civilian = civilian_grain(population)
+def grain_balance(production, upkeep, owner, population=0, *, town=1, state=None):
+    civilian = civilian_grain(population, town, state=state)
     if owner == 'neutral':
         production = upkeep = civilian = 0
     return dict(production=production, upkeep=upkeep, civilian=civilian,
@@ -214,19 +224,20 @@ def absent_troops(game, state):
     return absent
 
 
-def garrison_grain(game, state, absent=None):
+def stationed_troops(game, state, absent=None):
     if absent is None:
         absent = absent_troops(game, state)
-    result = {}
-    for city in state.cities.values():
-        if city.owner == 'neutral':
-            result[city.id] = 0
-            continue
-        active = sum(state.officers[i].troops for i in city.roster.officer_ids
+    return {key: sum(state.officers[i].troops for i in city.roster.officer_ids
                      if i not in absent and state.officers[i].alive)
-        result[city.id] = garrison_grain_cost(game.catalog.data, city.id, state.year, state.month,
-                                             active, city.reserves)
-    return result
+            for key, city in state.cities.items() if city.owner != 'neutral'}
+
+
+def garrison_grain(game, state, absent=None, *, stationed=None):
+    if stationed is None:
+        stationed = stationed_troops(game, state, absent)
+    return {key: (garrison_grain_cost(game.catalog.data, key, state.year, state.month,
+                                    stationed[key], city.reserves) if key in stationed else 0)
+            for key, city in state.cities.items()}
 
 
 def turn_rations(monthly, installment):
@@ -244,7 +255,8 @@ def settle_turn_grain(game, state):
         if city.owner == 'neutral':
             continue
         development = cities.get(key)
-        monthly = garrisons[key] + civilian_grain(development['population'] if development else 0)
+        monthly = garrisons[key] + civilian_grain(development['population'] if development else 0,
+                                               town_level(game, state, key), state=state)
         required = turn_rations(monthly, installment)
         paid = min(required, city.grain)
         city.grain -= paid

@@ -2470,15 +2470,19 @@ test('a natural August drought shows bilingual illustrated losses and preserves 
   // damage factor. Check both integer stages instead of assuming intact land.
   const development=current.save.state.extension.city_development.cities[city],baseline=development.baseline;
   const tax=value=>value<=50?50:value<=70?60:value<=80?70:value<=90?80:value<100?90:100;
-  const production=(row,field)=>Math.floor(row.population/(field==='land'?1000:100))*
-   (field==='land'?240+baseline.land+3*row.land:60+Math.floor(row.industry/3))*tax(row.governance);
+  const industry=(row)=>Math.floor(row.population/100)*(60+Math.floor(row.industry/3))*tax(row.governance);
+  const landUnits=(land)=>15*Math.min(land,300)+12*Math.min(Math.max(land-300,0),300)+10*Math.max(land-600,0);
+  const cap=[0,50_000,90_000,150_000][actual.town];
+  const landReference=20*(60+baseline.land);
+  const agriculture=2*(Math.min(development.population,cap)/100_000)**0.7*(1+(actual.town+2)/100)*
+   Math.max(0,landReference+landUnits(development.land)-landUnits(baseline.land))/landReference*
+   tax(development.governance)/tax(baseline.governance);
   expect(development.land).toBeLessThan(baseline.land);
   for(const resource of ['gold','grain','reserves']){
    const multiplier=resource==='grain'?2:1;
    const base=catalog.city_income[city][resource]*(resource==='grain'?original.save.state.extension.grain_scale:1);
-   const field=resource==='gold'?'industry':'land';
-   const adjusted=resource==='reserves'?Math.floor(base*development.population/baseline.population):
-    Math.floor(base*production(development,field)/production(baseline,field));
+   const adjusted=resource==='grain'?Math.floor(base*agriculture):resource==='reserves'?
+    Math.floor(base*development.population/baseline.population):Math.floor(base*industry(development)/industry(baseline));
    expect(current.income[city][resource], `${city} ${resource}, opening ${base}, damage ${actual.damage}, population ${baseline.population} → ${development.population}`).toBe(multiplier*Math.floor(adjusted*(100-actual.damage)/100));
   }
  }

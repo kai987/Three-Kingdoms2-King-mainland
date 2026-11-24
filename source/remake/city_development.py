@@ -11,7 +11,8 @@ from hashlib import sha256
 from . import capital_openings, command_books, grain_units, large_city_population
 from . import ordinary_population_north, ordinary_population_southeast
 from . import ordinary_population_southwest, ordinary_population_west
-from .city_economy import monthly_income, opening_development, tier_at
+from . import economy_rules
+from .city_economy import monthly_income, opening_development, tier_at, town_level
 from .errors import GameError
 from .officers import ref_sort_key
 
@@ -236,44 +237,57 @@ def tax_rate(governance):
     return 50 if governance <= 50 else 60 if governance <= 70 else 70 if governance <= 80 else 80 if governance <= 90 else 90 if governance < 100 else 100
 
 
-def _production(row, field, difficulty, *, opening_land, minimum_population_steps=0):
-    if difficulty not in ('easy', 'normal', 'hard'):
-        raise ValueError('Unknown campaign difficulty')
-    # Difficulty remains an AI-policy choice.
+def _legacy_factor(row, field, opening_land, *, min_steps=0):
     current_grain = field == 'land' and grain_units.current_rations()
-    population_unit = 1_000 if current_grain else 100
-    # Preserve the opening yield and retain 3/4 of each land point's effect.
-    # Both grain factors use quarter units so intermediate rounding cannot
-    # hide individual land improvements.
-    development_factor = (4 * 60 + opening_land + 3 * row['land'] if current_grain
-                          else 60 + row[field] // 3)
-    population_steps = max(minimum_population_steps, row['population'] // population_unit)
-    return population_steps * development_factor * tax_rate(row['governance'])
+    unit = 1_000 if current_grain else POPULATION_UNIT
+    factor = (4 * 60 + opening_land + 3 * row['land'] if current_grain
+              else 60 + row[field] // 3)
+    return max(min_steps, row['population'] // unit) * factor * tax_rate(row['governance'])
 
 
-def adjust_income(game, state, city_id, income, *, opening=None):
-    """Scale established dated production relative to immutable opening data."""
+def _income_rows(game, state, city_id, opening=None):
+    if state is None:
+        row = opening if opening is not None else opening_view(game.catalog, city_id)
+        return row, row
+    row = _row(game, state, city_id)
+    return row, row['baseline']
+
+
+def adjust_income(game, state, city_id, income, *, opening=None, town=None):
+    """Apply the same income formula to a live city or an opening preview."""
     result = dict(income)
     if not _rules(game)['enabled']:
         return result
-    if state is None:
-        row = baseline = opening if opening is not None else opening_view(game.catalog, city_id)
-        difficulty = 'normal'
-    else:
-        row = _row(game, state, city_id)
-        baseline = row['baseline']
-        difficulty = state.extension.get('difficulty', 'normal')
+    row, baseline = _income_rows(game, state, city_id, opening)
     for resource, field in (('gold', 'industry'), ('grain', 'land')):
-        if resource in result:
-            numerator = _production(row, field, difficulty, opening_land=baseline['land'])
-            # Custom openings below one production step still have a safe
-            # reference value when their population later reaches one step.
-            denominator = _production(baseline, field, difficulty, opening_land=baseline['land'],
-                                      minimum_population_steps=1)
+        if resource not in result:
+            continue
+        if resource == 'grain' and economy_rules.version(state) == economy_rules.CURRENT:
+            town = town_level(game, state, city_id) if town is None else town
+            result['grain'] = economy_rules.adjusted_grain(result['grain'], row['population'], town,
+                row['land'], baseline['land'], tax_rate(row['governance']), tax_rate(baseline['governance']))
+        else:
+            numerator = _legacy_factor(row, field, baseline['land'])
+            denominator = _legacy_factor(baseline, field, baseline['land'], min_steps=1)
             result[resource] = result[resource] * numerator // denominator
     if 'reserves' in result:
         result['reserves'] = result['reserves'] * row['population'] // baseline['population']
     return result
+
+
+def agriculture_details(game, state, city_id, town, *, opening=None):
+    """Expose the same production factors used by the calculation and upgrades."""
+    if economy_rules.version(state) != economy_rules.CURRENT or not _rules(game)['enabled']:
+        return None
+    row, baseline = _income_rows(game, state, city_id, opening)
+    effective = economy_rules.effective_population(row['population'], town)
+    factors = economy_rules.TOWN_AGRICULTURE[town]
+    land, reference = economy_rules.land_factors(row['land'], baseline['land'])
+    return dict(town=town, population=row['population'], effective_population=effective,
+                population_cap=factors.population_cap, population_multiplier=economy_rules.population_multiplier(effective),
+                town_bonus_percent=factors.grain_bonus_percent, resident_rate_percent=factors.resident_rate_percent,
+                land=row['land'], land_multiplier=land/reference, land_stage=economy_rules.land_stage(row['land']),
+                tax_rate=tax_rate(row['governance']))
 
 
 def _gold_choices(intellect):

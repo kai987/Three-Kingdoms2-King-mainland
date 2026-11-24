@@ -18,6 +18,7 @@ from remake.officers import OFFICER_TROOP_CAP
 from remake.san14_opening_forces import OPENING_TROOPS
 from remake.starting_garrisons import frontier_cities, mobilize_reserves
 from campaign_fixtures import advance_month, record_garrison_charges
+from test_remake_economy_v2 import reference_adjusted
 
 FIELDS = ('gold', 'grain', 'reserves')
 POST_REVIEW_CITIES = {'shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan', 'xuantu', 'liucheng', 'guonei', 'luzon',
@@ -324,7 +325,12 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         expected_recruits = 0
         for key, city in game.state.cities.items():
             base = grain_units.stocks(game.catalog.data['city_income'][key]) if city.owner != 'neutral' else dict.fromkeys(FIELDS, 0)
-            damage = game.state.extension['facilities']['cities'][key]['damage']
+            row = game.state.extension['city_development']['cities'][key]
+            facility = game.state.extension['facilities']['cities'][key]
+            base['grain'] = reference_adjusted(base['grain'], row['population'], facility['town'],
+                row['land'], row['baseline']['land'], city_development.tax_rate(row['governance']),
+                city_development.tax_rate(row['baseline']['governance']))
+            damage = facility['damage']
             expected = {field: base[field] * (100 - damage) // 100 for field in FIELDS}
             expected['grain'] *= 2
             self.assertEqual(tuple(getattr(city, field) for field in FIELDS),
@@ -377,7 +383,10 @@ class DatedScenarioEconomyTests(unittest.TestCase):
             game._complete_turn(game.state)
         child = game.state.cities[key]
         income = grain_units.stocks(game.catalog.data['city_income'][key]) if child.owner != 'neutral' else dict.fromkeys(FIELDS, 0)
-        income['grain'] *= 2
+        row = game.state.extension['city_development']['cities'][key]
+        # A newly founded city starts at town 1.
+        income['grain'] = 2 * reference_adjusted(income['grain'], row['population'], 1,
+                                                 row['land'], row['baseline']['land'], 60, 60)
         for field in FIELDS:
             self.assertEqual(getattr(child, field), max(0, before_split[field] // rule['resource_divisor'] + income[field] - (due_at_rollover[key] if field == 'grain' else 0)))
         self.assertEqual(child.owner, changed_owner)

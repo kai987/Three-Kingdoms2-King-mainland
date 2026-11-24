@@ -48,6 +48,18 @@ def wage(officer):
     return officer_wage(officer.experience)
 
 
+
+def monthly_due(state, city):
+    """Gross payroll for the same roster billed by pay_city."""
+    due = dict(gold=0, grain=0)
+    for ident in city.roster.officer_ids:
+        officer = state.officers[ident]
+        if officer.alive and officer.faction_id == city.owner:
+            amount = wage(officer)
+            due['gold'] += amount['gold']
+            due['grain'] += amount['grain']
+    return due
+
 def rules():
     return dict(experience_per_band=_EXPERIENCE_PER_WAGE_BAND,
                 officer_wages=[dict(gold=gold, grain=grain) for gold, grain in _WAGES_BY_BAND])

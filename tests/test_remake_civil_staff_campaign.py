@@ -14,7 +14,6 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
-from remake import grain_units
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
 from remake import city_economy, civil_staff, diplomacy, domestic, equipment, facilities, payroll, treasures
@@ -330,6 +329,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.hire(game, 'runan')
         owned = [c for c in game.state.cities.values() if c.owner == 'shu']
         before = {field: sum(getattr(c, field) for c in owned) for field in ('gold', 'grain', 'reserves')}
+        incomes = [city_economy.monthly_income(game, city.id, game.state) for city in owned]
         wages = [payroll.wage(game.state.officers[ident]) for city in owned for ident in city.roster.officer_ids]
         paid = self.enterContext(record_garrison_charges())
         for _ in range(3): self.step(game)
@@ -344,8 +344,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.assertEqual((details['grain_amount'], details['grain_paid']), (20, 20))
         for field in before:
             current = sum(getattr(game.state.cities[c.id], field) for c in owned)
-            base = sum(city_economy.scale_monthly_grain(
-                grain_units.stocks(game.catalog.data['city_income'][c.id]))[field] for c in owned)
+            base = sum(income[field] for income in incomes)
             wages_paid = sum(wage.get(field, 0) for wage in wages)
             rations = sum(paid[c.id] for c in owned) if field == 'grain' else 0
             self.assertEqual(current, before[field] + base + details['bonus'][field] - wages_paid - rations)

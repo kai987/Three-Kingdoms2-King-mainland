@@ -780,7 +780,7 @@ async function showCityInformation(id){
   else{
    const c=view.game.cities[id],def=view.catalog.cities.find(c=>c.id===id);
    data={title:view.catalog.title,year:view.game.year,month:view.game.month,day:view.game.day,capacity:capacity(),city:{...c,
-    owner_name:faction(c.owner),governor:view.catalog.treasury?.cities?.[id]?.governor,terrain:def.terrain,profile:view.catalog.city_profiles[id],income:view.catalog.city_income[id],city_development:view.catalog.city_development?.cities?.[id],grain_balance:view.catalog.city_grain_balance?.[id],history:view.catalog.city_history?.[id],frontier_outpost:view.catalog.frontier_outposts?.[id],
+    owner_name:faction(c.owner),governor:view.catalog.treasury?.cities?.[id]?.governor,terrain:def.terrain,profile:view.catalog.city_profiles[id],income:view.catalog.city_income[id],city_development:view.catalog.city_development?.cities?.[id],grain_balance:view.catalog.city_grain_balance?.[id],agriculture:view.catalog.city_agriculture?.[id],history:view.catalog.city_history?.[id],frontier_outpost:view.catalog.frontier_outposts?.[id],
     officers:c.roster.officer_ids.map(i=>{const o=view.game.officers[i];return {id:i,name:name(i),martial_strength:o.profile.martial_strength,intellect:o.profile.intellect,virtue:o.profile.virtue,loyalty:o.loyalty,is_ruler:isRuler(i),health:o.health,troops:o.troops,experience:o.experience,equipment:view.catalog.equipment?.officers?.[String(i)]};})}};
   }
   if(!dialog.open||generation!==dialogGeneration||preview!==setupPreview)return;
@@ -813,6 +813,7 @@ async function showCityInformation(id){
    ${preview?'':cityGrainWarning(id)}
    ${preview?'':grainRecoveryNotice(id)}
    ${c.grain_balance?`<dl class="resources city-grain-balance" data-city-grain-balance><div class="resource-pair"><dt>${cityCommandText('月產糧','月間兵糧収入')}</dt><dd data-grain-production>${c.grain_balance.production}</dd></div><div class="resource-pair"><dt>${cityCommandText('駐軍耗糧','駐屯軍の兵糧消費')}</dt><dd data-grain-upkeep>${c.grain_balance.upkeep}</dd></div><div class="resource-pair"><dt>${cityCommandText('居民月耗糧','住民の月間消費')}</dt><dd data-civilian-grain>${c.grain_balance.civilian}</dd></div><div class="resource-pair"><dt>${cityCommandText('駐軍士氣','駐屯軍の士気')}</dt><dd>${c.city_development?.garrison_spirit??100}</dd></div><div class="resource-pair"><dt>${cityCommandText('兵糧淨收支','兵糧の収支')}</dt><dd data-grain-net>${c.grain_balance.net>0?'+':''}${c.grain_balance.net}</dd></div></dl><p class="small">${cityCommandText(`1 點兵糧相當於 ${(preview?data.grain_people_per_day:view.catalog.grain_people_per_day)??1000} 名士兵的單日基本口糧。`,`兵糧1は兵 ${(preview?data.grain_people_per_day:view.catalog.grain_people_per_day)??1000} 人の1日分の基本配給です。`)}</p>`:''}
+   ${c.agriculture&&typeof GameCityDevelopment!=='undefined'?GameCityDevelopment.agriculture(c.agriculture):''}
    <p class="city-information-strength">驻城 ${c.officers.length}/${data.capacity}人 · 武将带兵合计 ${troops}</p>
    ${!preview&&typeof GameCivilStaff!=='undefined'?GameCivilStaff.summary(view,id,{locale:GameI18n.locale,cityName,bilingual:true}):''}
    <div class="roster-scroll"><table class="roster-table"><thead><tr><th>武将</th><th>兵</th><th>武</th><th>知</th><th>德</th><th>忠</th><th>经</th><th>体</th></tr></thead><tbody>${rows||'<tr><td colspan="8">暂无驻军</td></tr>'}</tbody></table></div>

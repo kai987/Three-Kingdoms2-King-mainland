@@ -48,7 +48,8 @@ def forecasts(game, state, owner, *, turns=WARNING_TURNS):
     for city in cities:
         active = sum(state.officers[i].troops for i in city.roster.officer_ids
                      if i not in absent and state.officers[i].alive)
-        civilian = city_economy.civilian_grain(development.get(city.id, {}).get('population', 0))
+        civilian = city_economy.civilian_grain(development.get(city.id, {}).get('population', 0),
+                                             city_economy.town_level(game, state, city.id), state=state)
         monthly = civilian + city_economy.garrison_grain_cost(
             data, city.id, *current_date, active, city.reserves)
         due, reserves = monthly, city.reserves

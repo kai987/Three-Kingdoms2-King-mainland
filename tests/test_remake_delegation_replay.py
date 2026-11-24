@@ -370,7 +370,8 @@ class DelegationReplayTests(unittest.TestCase):
             payload['tactic'] = choice['tactic']
         return self.command(kind, **payload)
 
-    def replay(self, filename, faction, turns, *, backends=('rust',), staff=False, seed=2026):
+    def replay(self, filename, faction, turns, *, backends=('rust',), staff=False, seed=2026,
+               legacy_economy=False):
         self.backends, self.games = backends, []
         started = time.monotonic()
         self.render_checkpoints, self.previous_encounters = set(), {}
@@ -395,6 +396,13 @@ class DelegationReplayTests(unittest.TestCase):
             game = HeadlessCampaign(catalog)
             with using_backend(backend):
                 game.command('new', dict(faction=faction, seed=seed), 0)
+                if legacy_economy:
+                    from remake import economy_rules
+                    saved = game.export_save()
+                    saved['state']['extension'].pop(economy_rules.FIELD)
+                    saved['checksum'] = digest({key: value for key, value in saved.items() if key != 'checksum'})
+                    game = HeadlessCampaign(catalog)
+                    game.load_save(saved, 0)
             self.games.append(game)
         self.checkpoint()
         self.configure()
@@ -447,7 +455,7 @@ class DelegationReplayTests(unittest.TestCase):
             self.assertEqual(final.officers[self.generated].experience, 50 * expected)
             self.assertNotIn(self.generated, catalog.by_id)
             self.assertEqual(len(catalog.definitions), 1083)
-        if filename == '184-02.json':
+        if filename == '184-02.json' and legacy_economy:
             self.assertTrue(self.reappointed_military,
                 'Real persuasion must be followed by a legal replacement military appointment')
             self.assertTrue(any(kind == 'allocation' and turn >= self.reappointed_military[0][0]
@@ -458,13 +466,17 @@ class DelegationReplayTests(unittest.TestCase):
         print(json.dumps(dict(scenario=filename, elapsed_seconds=round(time.monotonic()-started, 3),
             commands=dict(self.commands), actual_json_restores=dict(self.restore_counts),
             full_view_checkpoints=len(self.render_checkpoints),
+            economy_rules_version=1 if legacy_economy else 2,
             final_save_sha256=self.games[0].export_save()['checksum'],
             final_rng=vars(self.games[0].state.rng)), ensure_ascii=False), flush=True)
 
     def test_184_liu_yan_six_turns_are_identical_in_python_and_rust(self):
-        # At current opening strength, this seed yields a natural defection,
-        # a legal replacement and resumed reserve allocation without defeat.
         self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'))
+
+    def test_184_historical_save_preserves_defection_reappointment_and_allocation(self):
+        # This seed exercises the historical economy's natural persuasion
+        # sequence. V2 uses different jobs when it forecasts a food shortage.
+        self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'), legacy_economy=True)
 
     def test_217_wei_six_turns_staff_arrival_combat_and_real_convoys(self):
         self.replay('217-07.json', 'wei', 6, staff=True)

@@ -8,7 +8,6 @@ import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
-from remake import grain_units
 from remake.campaign import Campaign,Catalog,digest
 from remake import civil_staff, domestic, facilities, logistics, treasures, city_development, city_economy
 from remake.map_presentation import city_names
@@ -80,6 +79,7 @@ class CityLifecycleTests(unittest.TestCase):
         game.validate(game.state)
         paid = self.enterContext(record_garrison_charges())
         parent_before={key:getattr(parent,key) for key in ('gold','grain','reserves')}
+        parent_income = city_economy.monthly_income(game, parent.id, game.state, date=(207, 10))
         troops_before=sum(o.troops for o in game.state.officers.values())
         rng_before=deepcopy(game.state.rng)
         advance_month(game);game.validate(game.state)
@@ -88,11 +88,10 @@ class CityLifecycleTests(unittest.TestCase):
         self.assertEqual(child.roster.officer_ids,[])
         self.assertEqual(game.state.rng,rng_before)
         self.assertEqual(sum(o.troops for o in game.state.officers.values()),troops_before)
+        child_income = city_economy.monthly_income(game, child.id, game.state)
         for field in ('gold','grain','reserves'):
-            parent_income=city_economy.scale_monthly_grain(grain_units.stocks(game.catalog.data['city_income']['taiyuan']))[field]
-            child_income=city_economy.scale_monthly_grain(grain_units.stocks(game.catalog.data['city_income']['xinxing']))[field]
             self.assertEqual(getattr(parent,field)+getattr(child,field),
-                             parent_before[field]+parent_income+child_income-(paid['taiyuan']+paid['xinxing'] if field=='grain' else 0))
+                             parent_before[field]+parent_income[field]+child_income[field]-(paid['taiyuan']+paid['xinxing'] if field=='grain' else 0))
         snapshot=game.to_dict()
         game._open_dated_cities(game.state)
         self.assertEqual(game.to_dict(),snapshot)
