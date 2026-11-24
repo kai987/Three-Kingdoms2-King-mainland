@@ -189,8 +189,24 @@ class CampaignSession:
                                    net_grain=projection['net'] - wage['grain']))
             result['catalog']['city_grain_balance'] = balances
             result['catalog']['city_agriculture'] = details
-            from . import military_budget
-            if military_budget.enabled(state):
+            from . import faction_economy, logistics_strategy, military_budget
+            if logistics_strategy.enabled(state):
+                owners = sorted({city.owner for city in state.cities.values()} - {'neutral'})
+                reports, cities = {}, {}
+                for owner in owners:
+                    plan = faction_economy.plan(self.game, state, owner, stationed=stationed, incomes=income)
+                    reports[owner] = plan.summary(state)
+                    for key, row in plan.budgets.items():
+                        forecast = plan.cities[key]
+                        row['deliveries'] = [[eta, amount] for eta, amount in forecast.receipts.items() if amount]
+                        if owner != state.player and row['reserved_grain']:
+                            row['offense'] = [order['target']
+                                for order in state.extension['ai_strategy'][owner]['orders']
+                                if order['source'] == key and order['march_id'] is None]
+                        cities[key] = row
+                result['catalog']['military_logistics'] = cities
+                result['catalog']['faction_logistics'] = reports
+            elif military_budget.enabled(state):
                 result['catalog']['military_logistics'] = military_budget.budgets(
                     self.game,state,state.player,stationed=stationed,incomes=income)
         else:

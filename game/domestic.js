@@ -35,6 +35,23 @@
     [t('現有條件下可購','現条件で購入可能'),row.market_affordable],
     [t('每增100預備兵的月口糧','予備兵100人増の月兵糧'),row.additional_reserve_rations_100],
    ];
+   if(row.minimum_reserve!==undefined){
+    cells.push(
+     [t('最低生存儲糧','最低生活備蓄'),row.minimum_reserve],
+     [t('安全儲糧','安全備蓄'),row.safety_reserve],
+     [t('實駐現役／超出供養','駐屯兵／供養超過'),row.active+' / '+row.excess_troops],
+     [t('本地／綜合供養上限','都市単独／総合維持兵力'),row.sustainable_local+' / '+row.sustainable_combined],
+     [t('下一次預計缺糧','次の不足見込み'),row.zero_in===null?'—':row.zero_in===0?t('本旬','今旬'):row.zero_in+t('旬後','旬後')],
+     [t('已預留軍糧','出陣のために確保した兵糧'),row.reserved_grain],
+     [t('近期到貨','直近の輸送'),row.deliveries?.length?row.deliveries.map(([eta,n])=>eta+t('旬後','旬後')+' '+n).join(' · '):'—']
+    );
+    if(new URLSearchParams(globalThis.location?.search||'').has('debugLogistics')){
+     cells.push([t('下旬未覆蓋支出','次旬の未充足支出'),row.current_shortfall],
+      [t('預計自然徵集預備兵','自然増加の予備兵見込み'),row.next_natural_reserves],
+      [t('派糧安全底線','輸送後の最低備蓄'),row.minimum_export_floor],
+      [t('預留出征目的地','出陣の予約先'),row.offense?.join(' · ')||'—']);
+    }
+   }
    return '<details class="city-logistics-summary" data-city-logistics data-locale-only="'+locale+'" data-l10n-native="'+locale+'"'+
     (locale==='ja'?' hidden':'')+'><summary>'+t('後勤與儲糧','兵站と備蓄')+(row.threatened?' · '+t('敵軍逼近','敵軍接近'):'')+
     '</summary><dl>'+cells.map(([label,value])=>'<dt>'+escape(label)+'</dt><dd>'+escape(value)+'</dd>').join('')+'</dl></details>';

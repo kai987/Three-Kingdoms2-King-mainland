@@ -88,6 +88,7 @@ class Hooks:
         self.transfer_call = []
         for obj, handlers in (
             (logistics, {'dispatch': self.dispatch, 'dispatch_ai_supply': self.ai_supply,
+                         '_supply_routes': self.supply_routes,
                          '_safe_quote': self.safe_supply_route, '_begin_journey': self.convoy_reroute,
                          '_return': self.convoy_return}),
             (grain_relief, {'dispatch': self.emergency, 'forecasts': self.forecast, '_deliveries': self.deliveries,
@@ -96,7 +97,7 @@ class Hooks:
             (domestic, {'add_reserves': self.reserves}),
             (strategic_ai.StrategicAI, {'plan': self.plan, 'attack_option': self.attack_option, 'safe': self.safe_attack,
                                        'provisioned': self.provisioned, 'war_budget': self.war_budget,
-                                       'depart': self.depart}),
+                                       'depart': self.depart, 'quote': self.quote_queries}),
             (transfer_supply, {'detour': self.transfer_detour}),
             (campaign_class, {'_monthly_calendar': self.monthly, '_recruit': self.manual_recruit,
                               '_queue_march': self.depart_march, '_arrivals': self.arrivals,
@@ -145,6 +146,19 @@ class Hooks:
                 result='bought' if row['bought'] else 'failed', reason=row['reason'])
             if row['bought']:
                 self.t.action(owner, 'emergency_purchase')
+        return result
+
+    def quote_queries(self, real, ai, *args, **kwargs):
+        before = len(ai.quotes)
+        result = real(ai, *args, **kwargs)
+        self.t.route_queries['ai_quote_queries'] += 1
+        self.t.route_queries['ai_quote_cache_hits'] += int(len(ai.quotes)==before)
+        return result
+
+    def supply_routes(self, real, game, state, owner, pairs, policy):
+        result = real(game, state, owner, pairs, policy)
+        self.t.route_queries['supply_route_batches'] += 1
+        self.t.route_queries['supply_route_pairs'] += len(pairs)
         return result
 
     def hook(self, obj, name, handler):

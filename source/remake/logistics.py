@@ -371,6 +371,14 @@ def _rations(game, state, quote, ids, cargo):
     return estimate(state, ids, quote, cargo['reserves'], game=game)
 
 
+def escort_rations(game, state, ids, outward, backward, *, reserves=0):
+    """Quote both complete routes, including different terrain on the return."""
+    from .march_supply import quote_supply
+    troops=sum(state.officers[i].troops for i in ids)
+    return (quote_supply(outward,troops,len(ids),reserves,game=game,version=logistics_rules.CURRENT) +
+            quote_supply(backward,troops,len(ids),game=game,version=logistics_rules.CURRENT))
+
+
 def _army(state, ident, owner):
     if type(ident) is not int:
         return None
@@ -735,8 +743,9 @@ def auto_dispatch_city(game,state,city_id,*,plans=None):
         if reason=='no_surplus':
             return _auto_transfer_city(game,state,city_id)
         return False
-    from . import military_budget
+    from . import logistics_strategy, military_budget
     city=state.cities[city_id]
+    managed = logistics_strategy.enabled(state) and city.owner!=state.player
     mode=proposed['route_mode']
     cargo=proposed['cargo']
     if military_budget.enabled(state) and city.owner!=state.player and cargo['grain']:
@@ -764,8 +773,30 @@ def auto_dispatch_city(game,state,city_id,*,plans=None):
                         mode='minimum_grain'
             if not any(cargo.values()):
                 return False
+    prepaid = None
+    if managed:
+        target = state.cities[proposed['target']]
+        policy = _pool(state)['cities'][city_id]['policy']
+        quote = _safe_path(game,state,city_id,target.id,city.owner,mode,policy,
+                           officers=proposed['officers'],cargo=cargo['grain'],reserves=cargo['reserves'])
+        returning = _safe_quote(game,state,target,city,policy)
+        if not quote or not returning:
+            return False
+        prepaid = escort_rations(game,state,proposed['officers'],quote,returning[1],reserves=cargo['reserves'])
+        donor = (plans or {}).get(city_id)
+        floor = (max(donor['safety_reserve'],donor['minimum_export_floor'],policy['reserve_grain'])
+                 + donor['reserved_grain'] if donor and 'minimum_export_floor' in donor else policy['reserve_grain'])
+        room = city.grain - floor - prepaid
+        if room < 0:
+            return False
+        cargo = dict(cargo,grain=min(cargo['grain'],room))
+        net = projected_grain(game,quote,cargo['grain'])
+        # An elective shipment ought to move useful cargo, particularly if
+        # the only available escort is already carrying a large garrison.
+        if not any(cargo.values()) or net*2+cargo['gold']*5+cargo['reserves'] < prepaid:
+            return False
     dispatch(game,state,dict(source=city_id,target=proposed['target'],officers=proposed['officers'],
-        cargo=cargo,route_mode=mode),city.owner)
+        cargo=cargo,route_mode=mode),city.owner, **({'emergency_grain':prepaid} if managed else {}))
     return True
 
 
@@ -887,8 +918,21 @@ def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_
         if require_return and target.grain + (projected_grain(game,outbound_quote,load)
                                                if weighted else load) < return_rations:
             continue
+        prepaid = None
+        if economy_plan is not None:
+            if selected is None:
+                continue
+            prepaid = escort_rations(game,state,[escort],outbound_quote,selected[1])
+            ceiling = source.grain - grain_floor(source,policy) - prepaid
+            if ceiling < 0:
+                continue
+            cargo['grain'] = min(cargo['grain'], ceiling)
+            if (not any(cargo.values()) or
+                    projected_grain(game,outbound_quote,cargo['grain'])*2+cargo['gold']*5 < prepaid):
+                continue
         dispatch(game, state, dict(source=source_id, target=target.id, officers=[escort],
-                                   cargo=cargo, route_mode=mode), owner)
+                                   cargo=cargo, route_mode=mode), owner,
+                 **({'emergency_grain':prepaid} if economy_plan is not None else {}))
         return True
     return False
 

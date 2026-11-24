@@ -145,6 +145,13 @@ function factionLedger({observer=false}={}){
  const standings=view.catalog.factions.map(f=>({f,r:factionResources(f.id,null)}));
  if(observer)standings.sort((a,b)=>b.r.cities-a.r.cities);
  const names=new Map(standings.map(({f})=>[f.id,factionDisplayName(f)]));
+ const logistics=view.catalog.faction_logistics;
+ const logisticsView=logistics&&Object.keys(logistics).length?`<details class="faction-logistics-overview" data-faction-logistics><summary>${battleText('勢力後勤總覽','勢力の兵站') }</summary>
+ <p class="small">${battleText('各城官倉各自結算，跨城供應依運輸及到貨處理。','備蓄は都市ごとに精算され、都市間の補給は輸送・到着時に反映されます。')}</p>
+ <div class="faction-ledger-scroll"><table><thead><tr>${[['勢力','勢力'],['官倉糧','官倉の兵糧'],['金','資金'],['月產／支出／淨糧','月産出／支出／収支'],['實駐／在途／預備兵','駐屯／移動中／予備兵'],['缺糧預警','不足警戒'],['可供糧城／戰略糧倉','供給候補／戦略備蓄都市'],['庫存餘糧','備蓄余剰'],['在途／預計及時到貨','輸送中／期限内到着見込み'],['軍糧承諾','出陣用の確保量']].map(([tc,ja])=>`<th scope="col">${battleText(tc,ja)}</th>`).join('')}</tr></thead><tbody>${standings.filter(({f})=>logistics[f.id]).map(({f})=>{
+  const r=logistics[f.id],cities=ids=>ids.map(id=>escapeHtml(cityName(id))).join('、')||'—';
+  return `<tr><th scope="row">${escapeHtml(names.get(f.id))}</th><td>${r.grain}</td><td>${r.gold}</td><td>${r.regular} / ${r.fixed} / ${r.net}</td><td>${r.stationed} / ${r.deployed} / ${r.reserves}</td><td>${cities(r.needs)}</td><td>${cities(r.donors)} / ${cities(r.granaries)}</td><td>${r.exportable}</td><td>${r.inbound} / ${r.timely}</td><td>${r.committed}</td></tr>`;
+ }).join('')}</tbody></table></div></details>`:'';
  const alliances=view.catalog.non_aggression||[];
  const {castle_outline_pixels:outlines,castle_fill_pixels:fills}=view.catalog.map_presentation;
  const borderPath=castlePixelPath(outlines),fillPath=castlePixelPath(fills);
@@ -162,7 +169,7 @@ function factionLedger({observer=false}={}){
  return `<details class="faction-ledger"><summary>各势力资源</summary>
  <p class="small">${battleText('物資按目前所屬都市的庫存合計。','物資は現在支配する都市の備蓄を合計しています。')}</p>
  <p class="small">${battleText('兵士為武將所率的兵力，現役為在籍武將人數。行軍與戰鬥中的人員也計入。','兵士は武将が率いる兵の数、現役は所属武将の人数です。行軍中・戦闘中の部隊も集計に含まれます。')}</p>
- <div class="faction-ledger-scroll"><table${observer?' class="faction-ledger-with-base"':''}><thead><tr><th scope="col">势力</th><th scope="col"${observer?' aria-sort="descending"':''}>都市</th>${observer?`<th scope="col">${battleText('本據','本拠')}</th>`:''}<th scope="col">同盟</th><th scope="col">現役</th><th scope="col">兵士</th><th scope="col">預備兵</th><th scope="col" data-l10n-literal>金</th><th scope="col">兵糧</th></tr></thead><tbody>${rows}</tbody></table></div></details>`;
+ <div class="faction-ledger-scroll"><table${observer?' class="faction-ledger-with-base"':''}><thead><tr><th scope="col">势力</th><th scope="col"${observer?' aria-sort="descending"':''}>都市</th>${observer?`<th scope="col">${battleText('本據','本拠')}</th>`:''}<th scope="col">同盟</th><th scope="col">現役</th><th scope="col">兵士</th><th scope="col">預備兵</th><th scope="col" data-l10n-literal>金</th><th scope="col">兵糧</th></tr></thead><tbody>${rows}</tbody></table></div>${logisticsView}</details>`;
 }
 function routeRisk(quote){
  const lines=(quote.routes||[]).filter(r=>r.hazard).map(r=>{

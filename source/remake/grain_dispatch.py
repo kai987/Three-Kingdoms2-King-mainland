@@ -85,10 +85,10 @@ def _options(game, state, plan, keys):
                 if not outward or not backward:
                     rejected[target]['no_legal_route' if not outward else 'no_legal_return'] += 1
                     continue
-                return_rations = min(logistics._rations(game, state, quote, [escort], logistics._empty_cargo())
-                                     for _, quote in backward)
+                # Actual unloaded convoys choose the fastest legal route
+                # home. Price that full route, not just its first checkpoint.
                 for mode, quote in outward if detailed else outward[:1]:
-                    rations = return_rations + logistics._rations(game, state, quote, [escort], logistics._empty_cargo())
+                    rations = logistics.escort_rations(game,state,[escort],quote,backward[0][1])
                     gross = min(policy['max_grain'], stock - minimum - rations)
                     if gross <= 0:
                         rejected[target]['insufficient_escort_rations'] += 1
@@ -99,16 +99,6 @@ def _options(game, state, plan, keys):
                         continue
                     candidates[target].append((source, escort, mode, quote, rations, gross, net, minimum))
     return candidates, rejected
-
-
-def _capacity_after(forecast, arrival):
-    return max(0, logistics.LIMIT - forecast.balances[min(len(forecast.balances), arrival)-1])
-
-
-def needed(forecast, stock, arrival, *, horizon):
-    """Unpaid bills after delivery, excluding earlier missed installments."""
-    gaps, _, _ = faction_economy.balance(stock, forecast.timeline)
-    return sum(gap for turn, gap in gaps if arrival < turn <= horizon)
 
 
 def dispatch(game, state, owner, *, plan=None):
@@ -126,6 +116,8 @@ def dispatch(game, state, owner, *, plan=None):
                else 'no_available_civil_officer'
                if not domestic._present(game, state, state.cities[keys[0]], civil) else None)
     candidates, rejected = _options(game, state, plan, keys) if not blocker else ({}, {})
+    local_orders = min(2, sum(budgets[key]['current_shortfall'] > 0 and budgets[key]['market_affordable'] > 0
+                              for key in keys))
     used = set()
     records = []
     for key in keys:
@@ -147,7 +139,10 @@ def dispatch(game, state, owner, *, plan=None):
         horizon = faction_economy.HORIZON if detailed else 3
         past = []
         while not blocker and command_books.can_spend(state, owner, 'dispatch_transport'):
-            gaps, _, settled = faction_economy.balance(stock, forecast.timeline, past)
+            if command_books.remaining(state, owner) < command_books.cost('dispatch_transport') + local_orders:
+                issue['reason'] = 'books_reserved_for_immediate_relief'
+                break
+            gaps, balances, _ = faction_economy.balance(stock, forecast.timeline, past)
             priority = []
             for candidate in queue:
                 source, escort, mode, quote, rations, gross, net, minimum = candidate
@@ -159,18 +154,22 @@ def dispatch(game, state, owner, *, plan=None):
                 # covers every installment after the convoy would arrive.
                 if not payable:
                     continue
-                amount = min(payable, net, _capacity_after(forecast, arrival))
+                room = logistics.LIMIT - balances[min(len(balances), arrival)-1]
+                amount = min(payable,net,room)
                 if not amount:
                     continue
-                load = logistics.gross_shipment(game, quote, amount, gross)
                 timely = arrival < forecast.zero_in
+                if not timely and amount*2 < rations:
+                    issue['failures']['late_load_below_escort_cost'] = 1
+                    continue
                 # A usable late load still ranks behind all timely rescue.
-                rank = (not timely, quote['days'], -amount, load+rations-amount, source, mode)
-                priority.append((rank, candidate, load, amount))
+                rank = (not timely, quote['days'], -amount, gross-net+rations, source, mode)
+                priority.append((rank, candidate, amount))
             if not priority:
                 break
-            rank, candidate, load, net = min(priority, key=lambda row: row[0])
-            source, escort, mode, quote, rations, _, _, minimum = candidate
+            _, candidate, amount = min(priority, key=lambda row: row[0])
+            source, escort, mode, quote, rations, gross, _, minimum = candidate
+            load = logistics.gross_shipment(game,quote,amount,gross)
             used.add(source)
             city = state.cities[source]
             item = faction_economy.Commitment(f"rescue:{state.turn}:{key}", owner, source,
@@ -197,7 +196,7 @@ def dispatch(game, state, owner, *, plan=None):
                 arrival_turn=state.turn+actual['turns'], released_reserve=released,
                 release_reason='emergency_relief' if released else None, donor_grain=available,
                 donor_required_floor=minimum))
-        if not issue['allocations'] and not blocker:
+        if not issue['allocations'] and not issue['reason']:
             if not command_books.can_spend(state, owner, 'dispatch_transport'):
                 issue['reason'] = 'no_command_books_remaining'
             elif queue:

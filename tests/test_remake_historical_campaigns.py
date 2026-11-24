@@ -952,7 +952,10 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.march_to_battle(game, 'zhuti', 'jianning', zhang_yi)
         self.assert_unresolved_battle(game, 'shu', 'nanman', 'zhuti', 'jianning')
         self.assertEqual(game.state.cities['zangke'].owner, 'nanman')
-        self.assertEqual(len(self.events(game, history.NANZHONG)), 1)
+        # More dated cities and battle/supply reports can evict the opening
+        # notice from the finite recent-event list. Its receipt must survive.
+        self.assertEqual(game.state.extension[history.RECEIPTS][history.NANZHONG], 1)
+        self.assertLessEqual(len(self.events(game, history.NANZHONG)), 1)
 
     def test_liaodong_wei_ai_reaches_xiangping_with_ordinary_supply(self):
         game = self.opening('238-01', 'gongsun', legacy_logistics=True)

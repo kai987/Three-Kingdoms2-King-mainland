@@ -34,7 +34,13 @@ def verify(scenario, seed, months, group):
         with logistics_strategy.experiment(int(group[-1])):
             expected = plain_checksums(scenario, seed, months * 3)
     else:
-        expected = plain_checksums(scenario, seed, months * 3)
+        try:
+            from remake import logistics_strategy
+        except ImportError:
+            expected = plain_checksums(scenario, seed, months * 3)
+        else:
+            with logistics_strategy.experiment(0):
+                expected = plain_checksums(scenario, seed, months * 3)
     if len(observed) != len(expected):
         raise AssertionError(f'{scenario}: committed state count differs')
     for turn, (actual, reference) in enumerate(zip(observed, expected)):

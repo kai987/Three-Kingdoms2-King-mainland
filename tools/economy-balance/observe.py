@@ -23,7 +23,8 @@ METRICS = ('grain_bought', 'emergency_grain_bought', 'battle_grain_bought', 'gra
            'purchase_gold', 'sale_gold', 'markets_empty_samples', 'markets_under_batch_samples',
            'unpaid_city_turns', 'rations_missing', 'battles', 'battle_troops_lost', 'granted_aid',
            'requested_aid', 'received_aid_grain', 'raised_troops', 'recruit_gold', 'recruit_grain',
-           'postbattle_recruit_gold', 'postbattle_recruit_grain', 'market_city_turns')
+           'postbattle_recruit_gold', 'postbattle_recruit_grain', 'market_city_turns',
+           'all_city_turns', 'owned_city_turns', 'active_faction_turns')
 LOGISTICS = ('ai_sorties', 'battle_retreats', 'march_rations', 'march_base_rations', 'march_food_missing_days',
              'march_hunger_losses', 'convoy_rations', 'convoy_hunger_losses',
              'convoy_dispatched', 'convoy_arrived', 'convoy_returned', 'convoy_grain_sent',
@@ -300,6 +301,13 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
         return result
 
     def observe_rations(campaign, state):
+        owners = {city.owner for city in state.cities.values()} - {'neutral'}
+        for owner in owners:
+            game.flow[owner]['active_faction_turns'] += 1
+        for city in state.cities.values():
+            game.flow[city.owner]['all_city_turns'] += 1
+            if city.owner != 'neutral':
+                game.flow[city.owner]['owned_city_turns'] += 1
         installment = {11: 1, 21: 2, 1: 3}[state.day]
         absent = economy.absent_troops(campaign, state)
         active = economy.stationed_troops(campaign, state, absent)
@@ -501,6 +509,7 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
                                 record_journal=False, commands=['new', 'observe_turn'])
     if settings:
         result['telemetry'] = dict(schema=SCHEMA, config=settings, rows=game.telemetry.counts)
+        result['performance']['route_queries'] = dict(game.telemetry.route_queries)
     if hash_turns:
         result['committed_save_sha256'] = committed
     to_json(output / scenario / 'run.json', result)

@@ -214,6 +214,7 @@ class Telemetry:
         self.request_stack = []
         self.month_rollover = False
         self.request_number = 0
+        self.route_queries = Counter(dict(ai_quote_queries=0,ai_quote_cache_hits=0,supply_route_batches=0,supply_route_pairs=0))
         path.mkdir(parents=True, exist_ok=True)
         for name, columns in FILES.items():
             handle = stack.enter_context((path / (name + '.csv')).open('w', encoding='utf-8', newline=''))
