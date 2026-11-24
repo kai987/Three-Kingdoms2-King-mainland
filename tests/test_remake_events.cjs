@@ -47,10 +47,10 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
 }
 (async()=>{
  const sceneIds=Object.keys(KINDS).map(kind=>sceneForEvent(row(1,kind)));
- assert.equal(sceneIds.length,99);
+ assert.equal(sceneIds.length,105);
  for(const scene of sceneIds)assert.match(scene,/^[a-z-]+$/);
  sceneIds.push(sceneForEvent(row(1,'city_disaster',{details:{disaster:'flood'}})));
- assert.equal(new Set(sceneIds).size,100,'Each event kind and disaster variant owns a different scene');
+ assert.equal(new Set(sceneIds).size,106,'Each event kind and disaster variant owns a different scene');
  const scenesDir=require('node:path').join(__dirname,'../game/assets/event-scenes');
  assert.deepEqual(fs.readdirSync(scenesDir).filter(name=>name.endsWith('.webp')).sort(),
   sceneIds.map(scene=>scene+'.webp').sort(),'The renderer references every available event art asset exactly once');
@@ -159,6 +159,48 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
  observerDiplomacy.i18n.locale='ja';observerDiplomacy.doc.emit('game-language-change');
  assert(observerDiplomacy.modal.innerHTML.includes('曹操を劉備勢力に返還'));
  observerDiplomacy.events.dispose();
+ const runanBase={year:200,month:7,audience:'world',factions:['yuan_shao','shu','wei'],city_ids:['runan']};
+ const runanRows=[
+  row(1,'historical_runan_uprising',{...runanBase,person_ids:['san14-candidate-0958','san14-candidate-0035',liuBei]}),
+  row(2,'historical_runan_liu_pi_joins',{...runanBase,person_ids:[liuBei,'san14-candidate-0958'],details:{troops:500,deployed:true}}),
+  row(3,'historical_runan_gong_du_joins',{...runanBase,person_ids:[liuBei,'san14-candidate-0208'],details:{troops:630,deployed:false}}),
+  row(4,'historical_runan_cai_yang_defeated',{...runanBase,month:8,factions:['wei','shu','yuan_shao'],
+   person_ids:[liuBei,'san14-candidate-0208','historical-cai-yang-runan']}),
+  row(5,'historical_runan_cao_expedition',{...runanBase,year:201,month:9,factions:['wei','shu','yuan_shao'],
+   person_ids:['san14-candidate-0521',liuBei,'san14-candidate-0208']}),
+  row(6,'historical_runan_liu_biao_refuge',{...runanBase,year:201,month:9,factions:['shu','liu_biao','wei'],
+   city_ids:['runan','yiyang'],person_ids:[liuBei,'san14-candidate-0953','san14-candidate-0208'],details:{dispersed:600}})
+ ];
+ for(const event of runanRows)assert(validEvent(event));
+ for(const bad of [{troops:499,deployed:true},{troops:500,deployed:'true'},{troops:500}])
+  assert(!validEvent({...runanRows[1],details:bad}));
+ for(const bad of [{dispersed:-1},{dispersed:'600'},{}])
+  assert(!validEvent({...runanRows.at(-1),details:bad}));
+ const plotView=view(runanRows),plot=fixture();
+ plotView.game={...plotView.game,player:'observer'};
+ plot.setView(plotView);plot.events.observe(plotView,{newGame:true});plot.drain();
+ assertScene(plot.modal.innerHTML,'historical-runan-uprising');
+ assert.match(plot.modal.innerHTML,/劉辟響應袁紹/);
+ plot.modal.querySelector('[data-event-next]').onclick();plot.drain();
+ assertScene(plot.modal.innerHTML,'historical-runan-liu-pi-joins');
+ assert.match(plot.modal.innerHTML,/500 人/);
+ plot.i18n.locale='ja';plot.doc.emit('game-language-change');
+ assert.match(plot.modal.innerHTML,/劉備と劉辟が合流/);
+ plot.modal.querySelector('[data-event-next]').onclick();plot.drain();
+ assertScene(plot.modal.innerHTML,'historical-runan-gong-du-joins');
+ assert.match(plot.modal.innerHTML,/龔都が合流/);
+ for(const [scene,title] of [
+  ['cai-yang-defeated',/蔡陽軍を撃破/],['cao-expedition',/曹操、汝南へ親征/],['liu-biao-refuge',/劉表のもとへ/]
+ ]){
+  plot.modal.querySelector('[data-event-next]').onclick();plot.drain();
+  assertScene(plot.modal.innerHTML,'historical-runan-'+scene);
+  assert.match(plot.modal.innerHTML,title);
+ }
+ assert.match(plot.modal.innerHTML,/散った兵は 600 人/);
+ plot.i18n.locale='zh-Hant';plot.doc.emit('game-language-change');
+ assert.match(plot.modal.innerHTML,/龔都自此下落不明/);
+ assert.match(plot.modal.innerHTML,/離散兵士 600 人/);
+ plot.events.dispose();
  const campaignRows=[
   row(1,'historical_guandu',{audience:'world',factions:['wei','yuan_shao']}),
   row(2,'historical_sun_liu_alliance',{audience:'world',factions:['wu','shu']}),
@@ -709,5 +751,5 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
   assert(line.includes('劉禪'));assert(!line.includes('劉備'),'Event faction labels follow the live ruler, not the opening name');
  }
  assert.equal(JSON.stringify(inheritedView),inheritedBefore,'Bilingual event display never changes faction identity or state');inherited.events.dispose();
- console.log('events: 99 bilingual kinds, strict event snapshots, deduplicated visit control, read-only history, locale continuity and immutable presentation passed');
+ console.log('events: 105 bilingual kinds, strict event snapshots, deduplicated visit control, read-only history, locale continuity and immutable presentation passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

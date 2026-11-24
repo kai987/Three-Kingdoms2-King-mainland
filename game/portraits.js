@@ -49,6 +49,7 @@
   const thumbnailVersion=typeof sourceVersion==='string'&&/^[0-9a-f]{64}$/.test(sourceVersion)?sourceVersion:null;
   return Object.freeze({schema:value.schema,width:value.width,height:value.height,people:Object.freeze(people),thumbnailVersion});
  }
+ const caiYang=Object.freeze({kind:'nes_original',original_id:83,path:'/assets/portraits/original/083.png'});
  function create(options={}){
   const doc=options.document||root.document,i18n=options.i18n||root.GameI18n,fetcher=options.fetch||root.fetch?.bind(root);
   const timeout=Number.isFinite(options.timeoutMs)&&options.timeoutMs>0?options.timeoutMs:10000;
@@ -74,7 +75,8 @@
     generated.set(person.id,Object.freeze(row));
    }
   }
-  function entry(id){return typeof id==='string'?(generated.get(id)||index?.people[id]||null):null;}
+  function entry(id){return typeof id==='string'?(generated.get(id)||index?.people[id]||
+   (id==='historical-cai-yang-runan'?caiYang:null)):null;}
   function selectedAsset(row,size){
    if(!row?.path)return null;
    if((size==='roster'||size==='library')&&row.thumbnail&&!failedPaths.has(row.thumbnail.path))return{...row.thumbnail,enhanced:true};

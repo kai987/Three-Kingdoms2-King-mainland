@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import city_economy, civil_staff, diplomacy, domestic, equipment, facilities, payroll, treasures
+from remake import city_economy, civil_staff, diplomacy, domestic, equipment, facilities, payroll, runan_campaign, treasures
 from remake.officers import OFFICER_TROOP_CAP, YearState, initialize_officer, year_state
 from campaign_fixtures import record_garrison_charges, controlled_catalog, arrange_contact, finish_soldier_encounter, confirm_default_placement, stage_battle_troops
 
@@ -137,7 +137,10 @@ class CivilStaffCampaignTests(unittest.TestCase):
                 self.assertEqual(actual, expected)
                 self.assertEqual(game.state.officers, skeleton.officers)
                 self.assertEqual(game.state.rng, skeleton.rng)
-                self.assertEqual(len(game.catalog.definitions), 1083)
+                guandu = game.catalog.data['id'] == runan_campaign.SCENARIO
+                self.assertEqual(len(game.catalog.definitions), 1084 if guandu else 1083)
+                self.assertEqual(runan_campaign.CAI_YANG in game.catalog.definitions, guandu)
+                self.assertNotIn(runan_campaign.CAI_YANG_ID, game.state.officers)
                 self.assertTrue(all(type(ident) is int for ident in game.state.officers))
                 self.assertEqual(game.state.extension['events']['items'][0]['kind'], 'campaign_start')
                 game.validate(game.state)

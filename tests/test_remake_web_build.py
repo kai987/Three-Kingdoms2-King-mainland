@@ -113,7 +113,7 @@ class EventSceneStaticBoundaries(unittest.TestCase):
         self.assertEqual(static, {'/' + name: (name, 'image/webp') for name in expected})
         self.assertEqual({str(file.relative_to(ROOT / 'game'))
                           for file in (ROOT / 'game' / prefix).glob('*.webp')}, expected)
-        self.assertEqual(len(expected), 100)
+        self.assertEqual(len(expected), 106)
         hashes = {}
         for name in sorted(expected):
             with self.subTest(scene=name):
@@ -362,6 +362,7 @@ class WebReleaseArtifact(unittest.TestCase):
             self.assertIn('source/remake/browser_runtime.py', names)
             self.assertIn('source/remake/troop_types.py', names)
             self.assertIn('source/remake/officer_relations.py', names)
+            self.assertIn('source/remake/runan_campaign.py', names)
             self.assertIn('source/remake/battle_deployment.py', names)
             self.assertIn('source/remake/battle_ai_deployment.py', names)
             self.assertIn('source/remake/battle_auto_deployment.py', names)

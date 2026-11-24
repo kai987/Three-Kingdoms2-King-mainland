@@ -66,6 +66,13 @@ class HistoricalCampaignTests(unittest.TestCase):
         if game.state.phase == 'arrivals':
             game.command('arrivals', {}, game.revision)
 
+    def place(self, game):
+        while battle_placement.pending(game.state.battle):
+            battle = game.state.battle
+            actor = battle_placement.view(game, game.state, battle)['actor']
+            point = battle['extended']['tactical']['positions'][str(actor)]
+            game.command('battle_place', {'battle_id': battle['id'], 'actor': actor, **point}, game.revision)
+
     def finish_pending_battles(self, game, *, stop_at=None):
         # Resolve simultaneous arrivals through the normal battle commands.
         while game.state.phase in {'battle', 'result'}:
@@ -81,11 +88,7 @@ class HistoricalCampaignTests(unittest.TestCase):
                 game.command('battle_decline_support', {'battle_id': battle_id}, game.revision)
                 self.arrivals(game)
                 continue
-            while battle_placement.pending(game.state.battle):
-                battle = game.state.battle
-                actor = battle_placement.view(game, game.state, battle)['actor']
-                point = battle['extended']['tactical']['positions'][str(actor)]
-                game.command('battle_place', {'battle_id': battle_id, 'actor': actor, **point}, game.revision)
+            self.place(game)
             if game.state.phase == 'result':
                 continue
             game.command('retreat', {'battle_id': battle_id}, game.revision)
@@ -179,6 +182,233 @@ class HistoricalCampaignTests(unittest.TestCase):
         before = game.to_dict(alternate)
         history.process(game, alternate)
         self.assertEqual(game.to_dict(alternate), before)
+
+    def test_runan_july_dispatch_and_two_real_arrivals_survive_save_restore(self):
+        from remake import runan_campaign as runan
+
+        game = self.opening('200-01', 'shu', start_month=7)
+        liu_bei, liu_pi, gong_du = (game.catalog.ids[person]
+                                    for person in (runan.LIU_BEI, runan.LIU_PI, runan.GONG_DU))
+        self.assertEqual(game.state.extension['free_locations'][str(liu_pi)], 'runan')
+        uprising, = self.events(game, runan.UPRISING)
+        self.assertEqual((uprising['year'], uprising['month'], uprising['city_ids']), (200, 7, ['runan']))
+        self.assertFalse(self.events(game, runan.FIRST_JOIN))
+
+        with patch.object(game, '_queue_march', wraps=game._queue_march) as queue:
+            self.advance(game)
+        expeditions = [call for call in queue.call_args_list
+                       if call.args[2].id == 'runan' and liu_bei in call.args[3]]
+        self.assertEqual(len(expeditions), 1)
+        army, = [row for row in game.state.extension['travel']['marches'] if liu_bei in row['officers']]
+        self.assertEqual((army['source'], army['target'], army['quote']['days']), ('qiao', 'runan', 7))
+        self.assertGreater(army['arrival_turn'], army['departure_turn'])
+        self.assertGreater(army['supply']['loaded'], 0)
+        self.assertFalse(self.events(game, runan.FIRST_JOIN))
+
+        game = self.resume(game)
+        self.arrivals(game)
+        self.assert_unresolved_battle(game, 'shu', 'wei', 'qiao', 'runan')
+        first, = self.events(game, runan.FIRST_JOIN)
+        self.assertEqual(first['details'], {'troops': runan.LOCAL_RECRUITS, 'deployed': True})
+        self.assertEqual({unit['id'] for unit in game.state.battle['attackers']}, {liu_bei, liu_pi})
+        self.assertEqual(game.state.officers[liu_pi].faction_id, 'shu')
+        self.assertNotIn(str(liu_pi), game.state.extension['free_locations'])
+        self.assertFalse(self.events(game, runan.SECOND_JOIN))
+        game = self.resume(game)
+        self.finish_pending_battles(game)  # The first army retreats instead of gifting ownership of Runan.
+        self.advance(game)
+        self.arrivals(game)
+        self.finish_pending_battles(game)
+        self.assertNotIn(liu_bei, game._march_ids(game.state))
+        self.assertFalse(self.events(game, runan.SECOND_JOIN))
+
+        troops = min(400, game.state.cities['qiao'].reserves)
+        self.assertGreater(troops, 0)
+        game.command('allocate', {'city': 'qiao', 'officer': liu_bei, 'troops': troops}, game.revision)
+        game.command('depart', {'source': 'qiao', 'target': 'runan', 'officers': [liu_bei]}, game.revision)
+        self.advance(game)
+        before = game.state.soldiers.copy()
+        self.arrivals(game)
+        self.assert_unresolved_battle(game, 'shu', 'wei', 'qiao', 'runan')
+        second, = self.events(game, runan.SECOND_JOIN)
+        self.assertGreater(second['turn'], first['turn'])
+        self.assertEqual({unit['id'] for unit in game.state.battle['attackers']}, {liu_bei, gong_du})
+        self.assertEqual(game.state.officers[gong_du].faction_id, 'shu')
+        self.assertEqual(game.state.soldiers['recruited'], before['recruited'] + runan.LOCAL_RECRUITS)
+        packed = game.export_save(compact=True)
+        restored = Headless(game.catalog)
+        restored.load_save(packed, 0)
+        self.assertEqual(restored.export_save(compact=True), packed)
+        for kind in (runan.UPRISING, runan.FIRST_JOIN, runan.SECOND_JOIN):
+            self.assertEqual(len(self.events(restored, kind)), 1)
+
+    def test_runan_rendezvous_respects_battle_slots_and_friendly_return(self):
+        from remake import runan_campaign as runan
+
+        game = self.opening('200-01', 'shu', start_month=7)
+        liu_bei, liu_pi, gong_du = (game.catalog.ids[person]
+                                    for person in (runan.LIU_BEI, runan.LIU_PI, runan.GONG_DU))
+        cities = game.state.cities
+        qiao, xiapi = cities['qiao'].roster, cities['xiapi'].roster
+        transfer_officers(xiapi, qiao, xiapi.officer_ids[:4])
+        column = list(qiao.officer_ids)
+        self.assertEqual(len(column), game.catalog.rules.battle_officers_per_side)
+        game.command('depart', {'source': 'qiao', 'target': 'runan', 'officers': column}, game.revision)
+        self.advance(game)
+        self.arrivals(game)
+        self.assert_unresolved_battle(game, 'shu', 'wei', 'qiao', 'runan')
+        self.assertEqual({unit['id'] for unit in game.state.battle['attackers']}, set(column))
+        first, = self.events(game, runan.FIRST_JOIN)
+        self.assertEqual(first['details'], {'troops': runan.LOCAL_RECRUITS, 'deployed': False})
+        self.assertIn(liu_pi, game.state.cities['qiao'].roster.officer_ids)
+
+        self.finish_pending_battles(game)
+        self.advance(game)
+        self.arrivals(game)
+        self.finish_pending_battles(game)
+        # A friendly Runan must also support the later rendezvous.
+        cities = game.state.cities
+        runan_roster = cities['runan'].roster
+        transfer_officers(runan_roster, cities['yingchuan'].roster, list(runan_roster.officer_ids))
+        cities['runan'].owner = 'shu'
+        game.command('transfer', {'source': 'qiao', 'target': 'runan', 'officers': [liu_bei]}, game.revision)
+        self.advance(game)
+        self.arrivals(game)
+        self.finish_pending_battles(game)
+        second, = self.events(game, runan.SECOND_JOIN)
+        self.assertEqual(second['details'], {'troops': runan.LOCAL_RECRUITS, 'deployed': False})
+        self.assertIn(gong_du, game.state.cities['runan'].roster.officer_ids)
+
+    def test_runan_uprising_waits_for_july_and_the_coalition(self):
+        from remake import diplomacy, runan_campaign as runan
+
+        game = self.opening('200-01', 'shu', start_month=6)
+        self.assertFalse(self.events(game, runan.UPRISING))
+        for reason in ('changed_holder', 'treaty', 'liu_pi_left', 'yuan_shao_replaced'):
+            with self.subTest(reason=reason):
+                alternate = deepcopy(game.state)
+                alternate.month, alternate.turn = 7, 4
+                if reason == 'changed_holder':
+                    alternate.cities['runan'].owner = 'wu'
+                elif reason == 'treaty':
+                    diplomacy._pool(alternate)['treaties']['wei|yuan_shao'] = 9
+                elif reason == 'liu_pi_left':
+                    alternate.extension['free_locations'][str(game.catalog.ids[runan.LIU_PI])] = 'yingchuan'
+                else:
+                    alternate.extension['leaders']['yuan_shao'] = None
+                history.process(game, alternate)
+                self.assertNotIn(runan.UPRISING, alternate.extension.get(history.RECEIPTS, {}))
+
+    def test_runan_counterattacks_and_refuge_commit_once(self):
+        from campaign_fixtures import stage_battle_troops
+        from remake import runan_campaign as runan
+
+        game = self.opening('200-01', 'shu', start_month=7)
+        liu, gong, cai, cao = (game.catalog.ids[person] for person in
+                               (runan.LIU_BEI, runan.GONG_DU, runan.CAI_YANG, runan.CAO_CAO))
+        state = game.state
+        receipts = state.extension[history.RECEIPTS]
+        history._record(game, state, receipts, runan.FIRST_JOIN, ('runan',),
+                        details=dict(troops=500, deployed=False))
+        game._complete_turn(state)
+        cities = state.cities
+        # Stage the defending coalition after Gong Du's rendezvous. The
+        # preceding rendezvous and capture use existing tested commands.
+        transfer_officers(cities['runan'].roster, cities['yingchuan'].roster,
+                          list(cities['runan'].roster.officer_ids))
+        cities['runan'].owner = 'shu'
+        transfer_officers(cities['qiao'].roster, cities['runan'].roster, [liu])
+        del state.extension['free_locations'][str(gong)]
+        cities['runan'].roster.officer_ids.append(gong)
+        state.officers[gong].faction_id = 'shu'
+        state.officers[gong].troops = 500
+        state.soldiers['recruited'] += 500
+        history._record(game, state, receipts, runan.SECOND_JOIN, ('runan',),
+                        details=dict(troops=500, deployed=False))
+        self.arrivals(game)
+        with (patch('remake.strategic_ai._open_ai_queue'),
+              patch('remake.domestic.prepare_ai'), patch('remake.domestic.finish_faction_turn')):
+            for _ in range(8):
+                self.advance(game)
+                self.arrivals(game)
+                if game.state.battle:
+                    break
+            self.assertEqual(game.state.battle['target'], 'runan')
+            attackers = game.state.battle['attackers']
+            self.assertEqual([unit['id'] for unit in attackers], [cai])
+            self.place(game)
+            game.state.battle['extended'].pop('siege', None)
+            attackers = game.state.battle['attackers']
+            stage_battle_troops(game.state.battle, attackers[0], 0)
+            game._battle_result(game.state)
+            self.finish_pending_battles(game)
+            self.assertEqual(len(self.events(game, runan.CAI_DEFEATED)), 1)
+            self.assertFalse(game.state.officers[cai].alive)
+            self.assertEqual(game.state.cities['runan'].owner, 'shu')
+            game = self.resume(game)
+            while (game.state.year, game.state.month) < runan.SEPTEMBER:
+                self.advance(game)
+                self.arrivals(game)
+            self.assertTrue(game.state.officers[gong].alive)
+            observing = self.resume(game)
+            observing.state.player = 'observer'
+            for _ in range(8):
+                observing.command('observe_turn', {}, observing.revision)
+                if self.events(observing, runan.REFUGE):
+                    break
+            self.assertEqual(len(self.events(observing, runan.REFUGE)), 1)
+            self.assertEqual(observing.state.phase, 'city')
+            self.assertEqual(observing.state.cities['runan'].owner, 'wei')
+            for _ in range(8):
+                self.advance(game)
+                self.arrivals(game)
+                if game.state.battle:
+                    break
+            self.assertEqual([unit['id'] for unit in game.state.battle['attackers']], [cao])
+            expedition, = self.events(game, runan.CAO_EXPEDITION)
+            self.assertEqual((expedition['year'], expedition['month']), (201, 9))
+            self.place(game)
+            while game.state.phase == 'battle' and game.state.battle['extended'].get('siege'):
+                game.command('siege_withdraw', {'battle_id': game.state.battle['id']}, game.revision)
+            self.finish_pending_battles(game)
+            refuge, = self.events(game, runan.REFUGE)
+            self.assertGreater(refuge['turn'], expedition['turn'])
+            self.assertFalse(game.state.officers[gong].alive)
+            self.assertFalse(any(runan.GONG_DU in row['person_ids'] for row in self.events(game, 'officer_death')))
+            self.assertEqual(game.state.cities['runan'].owner, 'wei')
+            self.assertEqual(game.state.cities[runan.REFUGE_CITY].owner, 'shu')
+            self.assertTrue(history.allied(game.state, 'shu', 'liu_biao'))
+            returning, = [row for row in game.state.extension['travel']['marches'] if liu in row['officers']]
+            self.assertEqual((returning['journey_source'], returning['target']), ('runan', runan.REFUGE_CITY))
+            self.assertGreater(returning['arrival_turn'], returning['departure_turn'])
+            game = self.resume(game)
+            for _ in range(returning['quote']['turns']):
+                self.advance(game)
+                self.arrivals(game)
+            self.assertEqual(len(self.events(game, runan.REFUGE)), 1)
+            self.assertNotIn(liu, game._march_ids(game.state))
+            self.assertIn(liu, game.state.cities[runan.REFUGE_CITY].roster.officer_ids)
+
+    def test_runan_guandu_save_from_before_the_roster_correction_loads(self):
+        from remake import runan_campaign as runan
+
+        with patch.object(runan, 'configure_catalog'):
+            old_game = self.opening('200-01', 'shu', start_month=7)
+        with (patch.object(runan, 'dispatch'), patch('remake.strategic_ai._open_ai_queue'),
+              patch('remake.domestic.prepare_ai'), patch('remake.domestic.finish_faction_turn')):
+            while old_game.state.year == 200:
+                self.advance(old_game)
+                self.arrivals(old_game)
+        gong = old_game.catalog.ids[runan.GONG_DU]
+        self.assertFalse(old_game.state.officers[gong].alive)
+        old_receipt = f'remove_after_death_year:{runan.GONG_DU}:201'
+        self.assertIn(old_receipt, old_game.state.year_events)
+        new_catalog = self.opening('200-01', 'shu', start_month=7).catalog
+        restored = Headless(new_catalog)
+        restored.load_save(old_game.export_save(compact=True), 0)
+        self.assertNotIn(old_receipt, restored.state.year_events)
+        self.assertFalse(restored.state.officers[gong].alive)
+        self.assertEqual(restored.state.soldiers, old_game.state.soldiers)
 
     def test_guandu_calendar_once_and_real_yuan_expedition(self):
         game = self.opening('200-01', 'wei')

@@ -1736,6 +1736,7 @@ document.addEventListener('game-language-change',refreshLibraryEntryLabels);
 document.addEventListener('game-language-change',()=>$('#library-results')?.dispatchEvent(new Event('library-language-change')));
 function personStatus(p){
  if(p.missing.length)return '待补：'+p.missing.map(k=>({health_max:'体力',martial_strength:'武',intellect:'知',virtue:'德',terrain_affinity:'适性'})[k]).join('、');
+ if(p.retirement_reason==='whereabouts_unknown')return battleText('下落不明','消息不明');
  if(p.alive===false)return '已退出';
  if(p.prisoner)return battleText('俘虜','捕虜')+' · '+cityName(p.prisoner.city);
  if(p.alive)return p.faction?faction(p.faction):'在野 · '+cityName(p.location);

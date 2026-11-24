@@ -1,7 +1,7 @@
 """Read-only strategy for the same diplomacy orders available to players."""
 from collections import defaultdict
 
-from . import command_books, diplomacy, grain_relief, grain_units, historical_campaigns
+from . import command_books, diplomacy, grain_relief, grain_units, historical_campaigns, succession
 from .officers import ref_sort_key
 
 TREATY_TURNS = 12
@@ -157,6 +157,7 @@ def orders(ai, owner):
                 # Do not propose a second gift for the same pair.
                 can_gift = False
         if (actions['surrender'] and target in own_borders and not protected_front
+                and not succession.refuses_diplomatic_surrender(state, target)
                 and state.turn > SURRENDER_GRACE_TURNS and len(holdings[target]) <= SURRENDER_MAX_CITIES):
             lost_city = any(key in state.cities and initial == target and state.cities[key].owner != target
                             for key, initial in game.catalog.data['initial_owners'].items())

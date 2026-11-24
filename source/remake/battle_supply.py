@@ -257,7 +257,7 @@ def _settle_coalition_grain(state, battle, row, winner_city, returns):
     return reports
 
 
-def settle(game, state, battle, *, coalition_returns=None):
+def settle(game, state, battle, *, coalition_returns=None, refuge_members=None):
     """Move each remaining grain once, after actual officer/city settlement."""
     supply = battle['extended'].get('supply')
     if supply is None:
@@ -273,6 +273,13 @@ def settle(game, state, battle, *, coalition_returns=None):
         row = supply['sides'][side]
         if side == 'attackers' and coalition:
             report.extend(_settle_coalition_grain(state, battle, row, winner_city, coalition_returns or {}))
+            row['remaining'] = row['credit_units'] = 0
+            continue
+        if side == 'defenders' and refuge_members:
+            grain = row['remaining']
+            game._queue_runan_refuge(state, battle, refuge_members, grain)
+            report.append(dict(side=side, city=None, grain=grain, stored=0, lost=0,
+                               credit_units=row['credit_units'], in_transit=grain))
             row['remaining'] = row['credit_units'] = 0
             continue
         city = _return_city(state, battle, side)

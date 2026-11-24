@@ -3174,8 +3174,13 @@ test('published event backdrops decode from the verified web build',async({page}
   return sizes;
  },{all:browserScope.full,updates});
  const fullInventory=browserScope.full||!updates.length;
- expect(result).toHaveLength(fullInventory?100:updates.length);
- if(fullInventory)expect(result.map(([path])=>path)).toContain('assets/event-scenes/city-harvest.webp');
+ expect(result).toHaveLength(fullInventory?106:updates.length);
+ if(fullInventory){
+  const scenes=['city-harvest','historical-runan-uprising','historical-runan-liu-pi-joins',
+   'historical-runan-gong-du-joins','historical-runan-cai-yang-defeated',
+   'historical-runan-cao-expedition','historical-runan-liu-biao-refuge'];
+  expect(result.map(([path])=>path)).toEqual(expect.arrayContaining(scenes.map(name=>'assets/event-scenes/'+name+'.webp')));
+ }
  for(const [path,width,height]of result)expect(width>height&&height>0,path).toBe(true);
 });
 

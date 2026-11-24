@@ -5,7 +5,7 @@ conquests, consume random numbers, or acknowledge/advance a game from the UI.
 """
 from copy import deepcopy
 import re
-from . import historical_campaigns, observer, southern_mission, three_visits
+from . import historical_campaigns, observer, southern_mission, three_visits, runan_campaign
 from . import grain_units
 from .battle_supply import COALITION_LIMIT, denominator, MAX_BATTLE_DAILY_UNITS
 from .city_development import LIMITS as DEVELOPMENT_LIMITS, POPULATION_UNIT, valid_population
@@ -70,6 +70,8 @@ DETAILS = {
     **{kind: set() for kind in historical_campaigns.EVENT_FACTIONS},
     historical_campaigns.DONG_ZHUO_RELOCATION: historical_campaigns.DONG_ZHUO_RELOCATION_DETAILS,
     historical_campaigns.LONGYOU_RESPONSE: {'joined', 'governor_withdrew'},
+    **dict.fromkeys((runan_campaign.FIRST_JOIN, runan_campaign.SECOND_JOIN), runan_campaign.JOIN_DETAILS),
+    runan_campaign.REFUGE: runan_campaign.REFUGE_DETAILS,
     **{kind: set() for kind in three_visits.STAGES},
     southern_mission.DEPARTED: {'days', 'storm_days'},
     southern_mission.LANDED: {'can_build'},
@@ -513,6 +515,8 @@ def transition(campaign, before, after, kind, payload):
             emit(campaign, after, 'officer_appeared', person_ids=[officer.person_id],
                  city_ids=[city] if city else [], factions=[faction] if faction else [], audience='world')
         elif previous.alive and not officer.alive:
+            if runan_campaign.SCRIPTED_EXITS.get(officer.person_id) in after.extension.get(historical_campaigns.RECEIPTS, {}):
+                continue  # The historical scene records the actual departure.
             homes = [city.id for city in before.cities.values() if ident in city.roster.officer_ids]
             emit(campaign, after, 'officer_death', person_ids=[officer.person_id],
                  city_ids=homes, factions=[previous.faction_id] if previous.faction_id else [],

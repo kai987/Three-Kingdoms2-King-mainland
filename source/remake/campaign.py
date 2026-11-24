@@ -15,7 +15,7 @@ from threading import RLock
 from types import SimpleNamespace
 
 from .errors import GameError, INVALID_SAVE_MESSAGE
-from . import diplomacy, grain_relief, grain_units, historical_campaigns, observer, southern_mission, three_visits
+from . import diplomacy, grain_relief, grain_units, historical_campaigns, observer, runan_campaign, southern_mission, three_visits
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
@@ -141,6 +141,7 @@ class Catalog:
         self.appearance_year_corrections = san14_appearance_reference.apply(self.data)
         self.appearance_year_corrections.update(succession.apply_appearance_corrections(self.data))
         san14_opening_posts.apply(self.data)
+        runan_campaign.configure_catalog(self.data)
         r = self.data['rules']
         self.rules = GameRules(r['city_officer_capacity'], r['battle_officers_per_side'], r['runtime_capacity'])
         self.by_id, self.definitions, self.profiles = {}, {}, {}
@@ -888,6 +889,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 candidate = CampaignState(**raw)
                 from .succession import migrate_appearance_receipts
                 migrate_appearance_receipts(self.catalog, candidate)
+                runan_campaign.migrate_calendar(self.catalog, candidate)
                 if legacy:
                     command_books.initialize(self, candidate, legacy=True)
                 # Existing current-catalog battles had presentation-only flags.

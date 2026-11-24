@@ -55,6 +55,42 @@
    text:["建安三年，高順攻劉備，曹操於九月東征呂布。這個劇本三月開局，下邳與曹軍初始領地之間沒有直通道路，需先依實際戰局打通進軍路線。下邳的攻守與陳宮的去留由實戰決定。","建安3年、高順が劉備を攻め、曹操は9月に呂布討伐へ向かった。このシナリオは3月から始まり、初期配置では曹操領と下邳を直接結ぶ道がない。実際の戦況に応じて進路を確保し、下邳の攻防と陳宮の去就は戦闘で決まる。"],
    sources:[["《三國志·武帝紀》","https://zh.wikisource.org/zh-hant/三國志/卷01"],["《三國志·呂布傳》","https://zh.wikisource.org/zh-hant/三國志/卷07"]]
   },
+  historical_runan_uprising:{
+   title:["汝南起兵・劉辟響應袁紹","汝南で挙兵・劉辟が袁紹に呼応"],
+   counts:[3,3,1],
+   text:["建安五年七月，汝南黃巾劉辟起兵抗曹，響應袁紹。袁紹命劉備率部馳援。路線、命令書與兵糧具備時，劉備從實際駐地出發。","建安5年7月、汝南の黄巾勢力を率いる劉辟が曹操に背き、袁紹に呼応した。袁紹は劉備に救援を命じた。経路、命令書、兵糧がそろえば、劉備は現在の駐屯地から出陣する。"],
+   sources:[["《資治通鑑》卷六十三","https://zh.wikisource.org/zh-hant/資治通鑑/卷063"]]
+  },
+  historical_runan_liu_pi_joins:{
+   title:["劉備與劉辟合兵","劉備と劉辟が合流"],
+   counts:[3,2,1],
+   text:["劉備率軍抵達汝南，與響應袁紹的劉辟會合，合力進擊曹軍。","劉備の軍が汝南に到着し、袁紹に呼応した劉辟と合流して、曹操軍に対抗した。"],
+   sources:[["《資治通鑑》卷六十三","https://zh.wikisource.org/zh-hant/資治通鑑/卷063"]]
+  },
+  historical_runan_gong_du_joins:{
+   title:["劉備再至汝南・龔都合兵","劉備、再び汝南へ・龔都が合流"],
+   counts:[3,2,1],
+   text:["劉備率部再至汝南，與聚兵於此的龔都會合。","劉備は兵を率いて再び汝南を訪れ、この地で兵を集めた龔都と合流した。"],
+   sources:[["《資治通鑑》卷六十三","https://zh.wikisource.org/zh-hant/資治通鑑/卷063"]]
+  },
+  historical_runan_cai_yang_defeated:{
+   title:["大破蔡陽","蔡陽軍を撃破"],
+   counts:[3,3,1],
+   text:["曹操命蔡陽率軍討伐汝南。劉備與龔都所部擊潰來軍，蔡陽戰死，汝南仍由聯軍控制。","曹操の命を受けた蔡陽が汝南を攻めた。劉備と龔都の部隊がこれを撃破し、蔡陽は戦死した。汝南は連合軍の手に残った。"],
+   sources:[["《三國志・先主傳》","https://zh.wikisource.org/zh-hant/三國志/卷32"],["《三國志・武帝紀》","https://zh.wikisource.org/zh-hant/三國志/卷01"]]
+  },
+  historical_runan_cao_expedition:{
+   title:["曹操親征汝南","曹操、汝南へ親征"],
+   counts:[3,3,1],
+   text:["建安六年秋，官渡戰事過後，曹操親率所部南下汝南。曹軍已出發，仍須沿實際路線行軍。","建安6年秋、官渡の戦いの後、曹操は自ら兵を率いて汝南に向かった。曹操軍は出陣し、実際の経路を進む。"],
+   sources:[["《資治通鑑》卷六十四","https://zh.wikisource.org/zh-hant/資治通鑑/卷064"]]
+  },
+  historical_runan_liu_biao_refuge:{
+   title:["劉備棄汝南・南投劉表","劉備、汝南を離れ劉表のもとへ"],
+   counts:[3,3,2],
+   text:["劉備率部撤離汝南，劉表接納並安置其部駐防荊州。史載劉備屯新野，本局以義陽作為駐軍節點。龔都部眾潰散，龔都自此下落不明。","劉備は配下を率いて汝南を離れた。劉表はこれを受け入れ、荊州に駐屯させた。史書の新野に当たる駐屯先として、この戦役では義陽を用いる。龔都の部隊は散り、本人の消息は伝わらない。"],
+   sources:[["《資治通鑑》卷六十四","https://zh.wikisource.org/zh-hant/資治通鑑/卷064"]]
+  },
   historical_liyang_campaign:{
    title:["河北爭亂・曹操北攻黎陽","河北争乱・曹操の黎陽進攻"],
    counts:[3,3,3],
@@ -209,6 +245,12 @@
   guandu:['官渡平原的兩軍旌旗','官渡の平原に立つ両軍の旗'],
   'red-cliffs':['赤壁江面上的戰船','赤壁の川面に並ぶ軍船'],
   'historical-dong-zhuo-relocation':['洛陽宮城火光下西行的車隊','燃える洛陽の宮城を後に、西へ向かう車列'],
+  'historical-runan-uprising':['汝南河畔聚集的黃巾部眾','汝南の川辺に集まった黄巾の人々'],
+  'historical-runan-liu-pi-joins':['劉備與劉辟在汝南郊外會合','汝南の郊外で合流する劉備と劉辟'],
+  'historical-runan-gong-du-joins':['龔都在汝南渡口迎接劉備','汝南の渡し場で劉備を迎える龔都'],
+  'historical-runan-cai-yang-defeated':['汝南郊外的蔡陽軍敗退','汝南の郊外で退く蔡陽軍'],
+  'historical-runan-cao-expedition':['曹操軍在秋日行軍道上南下','秋の街道を南下する曹操軍'],
+  'historical-runan-liu-biao-refuge':['劉表在荊州城外迎接劉備','荊州の城外で劉備を迎える劉表'],
   'historical-longyou-response':['祁山前線向諸葛亮呈遞竹簡的隴右使者','祁山の陣で諸葛亮に竹簡を差し出す隴右の使者'],
   'historical-wuhuan-expedition':['白狼山間擎「曺」字軍旗的騎隊','白狼山で「曺」の軍旗を掲げる騎兵隊'],
   'historical-goguryeo-expedition':['丸都山城下舉著赭黃紅邊「魏」字軍旗的魏軍','丸都山城のふもとで赤縁の黄土色の「魏」旗を掲げる魏軍'],
@@ -227,6 +269,7 @@
  const OPERATIONS=new Set(['domestic_report','transport_departed','transport_arrived','transport_returned','transport_weather']);
  const FACILITIES=new Set(['town_developed','officer_treated','officer_studied','grain_traded','equipment_bought','prevention_improved','city_disaster']);
  const CITY_OPERATIONS=new Set(['city_developed','civil_unrest']);
+ const RUNAN_JOINS=new Set(['historical_runan_liu_pi_joins','historical_runan_gong_du_joins']);
  const EQUIPMENT=new Set(['equipment_acquired']);
  const TREASURY=new Set(['treasure_found','treasure_search_failed','treasure_sold','officer_rewarded','governor_assigned']);
  const SUPPLY=new Set(['march_resupplied','march_starvation','march_retreat']);
@@ -314,7 +357,17 @@
     row.person_ids.join(',')===['san14-candidate-0440',...d.joined,...(d.governor_withdrew?['san14-candidate-0764']:[])].join(',');
   }
   const [factions,people,cities]=HISTORICAL_CAMPAIGNS[row.kind];
-  const validDetails=row.kind==='historical_dong_zhuo_relocation'?validDongZhuoRelocation(row,grainScale):Object.keys(row.details).length===0;
+  let validDetails=Object.keys(row.details).length===0;
+  if(row.kind==='historical_dong_zhuo_relocation')validDetails=validDongZhuoRelocation(row,grainScale);
+  if(RUNAN_JOINS.has(row.kind)){
+   const d=row.details;
+   validDetails=Object.keys(d).sort().join(',')==='deployed,troops'&&
+    Number.isSafeInteger(d.troops)&&d.troops>=500&&d.troops<=10000&&typeof d.deployed==='boolean';
+  }
+  if(row.kind==='historical_runan_liu_biao_refuge'){
+   const d=row.details;
+   validDetails=Object.keys(d).join(',')==='dispersed'&&Number.isSafeInteger(d.dispersed)&&d.dispersed>=0&&d.dispersed<=10000;
+  }
   return row.audience==='world'&&validDetails&&
    validIds(row.person_ids,people??1,people??4)&&validIds(row.city_ids,cities??1,cities??8)&&validIds(row.factions,factions,factions);
  }
@@ -575,6 +628,14 @@
      const withdrawal=row.details.governor_withdrew
       ?text(' 本局馬遵率部撤往魏境。',' この戦役で馬遵は配下の兵を率いて魏領に退きました。'):'';
      return history+transfer+withdrawal;
+    }
+    if(RUNAN_JOINS.has(row.kind)){
+     const {troops,deployed}=row.details;
+     return history+text(` 本次合流兵士 ${troops} 人。`,` 今回合流した兵は ${troops} 人です。`)
+      +(deployed?text(' 所部已列入本場出戰名單。',' 一隊は今回の戦闘に参加します。'):'');
+    }
+    if(row.kind==='historical_runan_liu_biao_refuge'&&row.details.dispersed>0){
+     return history+text(` 本次離散兵士 ${row.details.dispersed} 人。`,` この戦役で散った兵は ${row.details.dispersed} 人です。`);
     }
     return chapter.front?history+(observing?text(
      ' 路線可通行時，進攻方的 AI 會優先評估這條戰線，勝負由實際交戰決定。',

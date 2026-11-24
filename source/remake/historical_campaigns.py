@@ -4,7 +4,7 @@ from math import dist
 
 from .errors import GameError
 from .officers import recruitment_loyalty, transfer_officers
-from . import grain_units, capital_openings, city_development, command_books, facilities, officer_relations, treasures
+from . import grain_units, capital_openings, city_development, command_books, facilities, officer_relations, treasures, runan_campaign
 from .historical_chapters import (
     CHAPTERS, DONG_ZHUO_RELOCATION, FRONTIER_SORTIES, LONGYOU_CITIES, LONGYOU_GOVERNOR, LONGYOU_JOINERS, LONGYOU_RESPONSE, WUHUAN_EXPEDITION,
 )
@@ -119,8 +119,10 @@ EVENT_FACTIONS = {kind: factions[:2] if kind == ALLIANCE else factions
 EVENT_FACTIONS[ALLIANCE_ENDED] = SUN_LIU
 EVENT_FACTIONS[HEFEI_DEFENSE] = ('wei', 'wu')
 EVENT_FACTIONS[DINGJUN] = ('shu', 'wei')
+EVENT_FACTIONS.update(runan_campaign.FACTIONS)
 EVENT_CITIES = {
     GUANDU: ('dongjun', 'wei', 'yingchuan'),
+    **runan_campaign.CITIES,
     ALLIANCE: ('jiangxia', 'wujun'),
     SOUTH: ('nanjun', 'jiangxia', 'wujun'),
     TONGGUAN: ('hongnong', 'fengyi', 'jingzhao', 'fufeng', 'jincheng'),
@@ -135,6 +137,7 @@ EVENT_CITIES = {
     **{kind: row.cities for kind, row in CHAPTERS.items()},
 }
 EVENT_PEOPLE = {
+    **runan_campaign.PEOPLE,
     MARRIAGE: (LEADERS['shu'], LADY_SUN, LEADERS['wu']),
     HEFEI: (LEADERS['wu'], LEADERS['wei'], ZHANG_LIAO),
     HEFEI_DEFENSE: (ZHANG_LIAO, LEADERS['wu']),
@@ -145,6 +148,7 @@ EVENT_PEOPLE = {
     **{kind: row.people for kind, row in CHAPTERS.items()},
 }
 NOTES = {
+    **runan_campaign.NOTES,
     GUANDU: '袁绍与曹操在黄河沿线开战。双方依战局安排出征。',
     ALLIANCE: '孙权与刘备结盟抗曹，同盟期间两方不得相互出征。',
     SOUTH: '曹军以江陵为南下据点，战斗按实际行军和接敌结算。',
@@ -376,7 +380,8 @@ def _record(game, state, receipts, kind, cities, *, details=None):
     receipts[kind] = state.turn
     factions = EVENT_FACTIONS[kind]
     # Battle stages, preparations and the court relocation leave existing plans in place.
-    if kind not in BATTLE_STAGES and kind not in (HANZHONG_PREPARATION, DONG_ZHUO_RELOCATION):
+    if (kind not in BATTLE_STAGES and kind not in runan_campaign.PEOPLE
+            and kind not in (HANZHONG_PREPARATION, DONG_ZHUO_RELOCATION)):
         for owner in factions:
             state.extension['ai_strategy'].pop(owner, None)
     game._emit_event(state, kind, city_ids=cities, factions=factions, audience='world',
@@ -418,6 +423,7 @@ def reserved_sortie_targets(game, state, owner):
 
 def dispatch_frontier_sorties(game, state):
     """Stage the serving historical officers through ordinary strategic orders."""
+    runan_campaign.dispatch(game, state)
     marches = state.extension['travel']['marches']
     for staging, target, members in _active_sorties(game, state, 'wei'):
         if state.phase != 'ai' or any(row['owner'] == 'wei' and row['kind'] == 'attack'
@@ -481,6 +487,7 @@ def process(game, state):
         return
     now = _date(state)
     receipts = state.extension.get(RECEIPTS, {})
+    runan_campaign.process(game, state, receipts)
     if (game.catalog.data['id'] == JINGZHOU_OPENING and (219, 7) <= now < JINGZHOU_RUPTURE
             and ALLIANCE_CONTINUING not in receipts and _has_leaders(state, SUN_LIU)
             and _jingzhou_front(game, state)):
@@ -635,7 +642,7 @@ def validate_state(catalog, state):
         return
     receipts = state.extension[RECEIPTS]
     if (not _historical(catalog) or not isinstance(receipts, dict)
-            or not receipts or not set(receipts) <= {*EVENT_FACTIONS, ALLIANCE_CONTINUING}):
+            or not receipts or not set(receipts) <= {*EVENT_FACTIONS, ALLIANCE_CONTINUING, runan_campaign.CAI_SENT}):
         raise ValueError('Historical campaign receipts')
     for kind, turn in receipts.items():
         if type(turn) is not int or not 1 <= turn <= state.turn:
@@ -658,6 +665,10 @@ def validate_state(catalog, state):
             if (type(parent_turn) is not int or parent_turn > turn or not start <= date <= end
                     or city not in state.cities or any(person not in catalog.ids for person in _event_people(kind))):
                 raise ValueError('Historical battle receipt')
+            continue
+        if kind in runan_campaign.PEOPLE or kind == runan_campaign.CAI_SENT:
+            if not runan_campaign.valid_receipt(catalog, kind, turn, date, receipts):
+                raise ValueError('Runan campaign receipt')
             continue
         start, end, factions, holdings = RULES[kind]
         if (not start <= date <= end
@@ -735,7 +746,9 @@ def validate_event(catalog, state, row):
         cities_ok = cities == list(EVENT_CITIES[kind])
     details = row['details']
     people = list(_event_people(kind))
-    if kind == LONGYOU_RESPONSE and details:
+    if kind in runan_campaign.PEOPLE:
+        details_ok = runan_campaign.valid_details(kind, details)
+    elif kind == LONGYOU_RESPONSE and details:
         joined = details.get('joined')
         details_ok = (set(details) == {'joined', 'governor_withdrew'}
                       and type(details['governor_withdrew']) is bool and isinstance(joined, list)
