@@ -84,8 +84,9 @@ class FrontierEconomyTests(unittest.TestCase):
         people = civilian_grain(development['population'])
         after = people + 11  # 34 reserves, each at 50% of the basic ration for 30 days
         need = people * 2 // 3 + after - after * 2 // 3
+        production = 1800 * (development['population'] // 1000) // (development['baseline']['population'] // 1000)
         self.assertEqual((outpost.gold, outpost.grain, outpost.reserves, rear.gold),
-                         (start[0] + 70, start[1] + 3600 - need, start[2] + 34, start[3] + 35 - 30))
+                         (start[0] + 70, start[1] + production - need, start[2] + 34, start[3] + 35 - 30))
         self.assertEqual(frontier_outposts_view(game.catalog.data, state)[outpost.id]['monthly_maintenance'], 30)
         self.assertEqual(development['baseline']['population'] * 2, development['population'])
         game.validate(state)

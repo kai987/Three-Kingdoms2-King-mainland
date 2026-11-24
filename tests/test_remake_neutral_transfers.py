@@ -196,7 +196,7 @@ class NeutralTransferTests(unittest.TestCase):
                     # physical travel home, with the same daily food service.
                     game = self.restore(game, alternate)
                     self.assertTrue(game.state.extension['travel']['marches'])
-                    paid = self.enterContext(record_garrison_charges())
+                    paid = self.enterContext(record_garrison_charges(include_payroll=True))
                     saw_return = False;consumed = 0
                     for _ in range(12):
                         if not game.state.extension['travel']['marches']:break

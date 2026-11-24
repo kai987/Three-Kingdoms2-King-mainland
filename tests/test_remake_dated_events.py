@@ -171,16 +171,27 @@ class DatedEventsTests(unittest.TestCase):
 
     def test_song_retires_in_october_upper_and_uses_normal_succession_and_death_event(self):
         game=self.game('retirement');ident=game.catalog.ids[SONG]
-        reserves=game.state.cities['xiangyang'].reserves
+        def garrison(state):
+            city = state.cities['xiangyang']
+            return city.reserves + sum(state.officers[i].troops for i in city.roster.officer_ids)
+        retire = dated_events._retire
+        def record_retirement(campaign, state, person):
+            soldiers = garrison(state)
+            reserves = state.cities['xiangyang'].reserves
+            released = retire(campaign, state, person)
+            self.assertEqual(garrison(state), soldiers)
+            self.assertEqual(state.cities['xiangyang'].reserves, reserves + released)
+            return released
         for _ in range(2):
             step(game)
             self.assertTrue(game.state.officers[ident].alive)
-        step(game)
+        game.command('allocate', dict(city='xiangyang', officer=ident, troops=300), game.revision)
+        with patch.object(dated_events, '_retire', side_effect=record_retirement):
+            step(game)
         self.assertEqual((game.state.year,game.state.month,game.state.day),(214,10,1))
         self.assertFalse(game.state.officers[ident].alive)
         self.assertEqual(game.state.officers[ident].troops,0)
         self.assertNotIn(ident,game.state.cities['xiangyang'].roster.officer_ids)
-        self.assertEqual(game.state.cities['xiangyang'].reserves,reserves+300)
         self.assertEqual(game.state.extension['dated_events']['retirements'][SONG],dict(date=[214,10],turn=4,released=300))
         self.assertIn('shu',game.state.extension['pending_succession'])
         self.assertNotEqual(game.state.extension['leaders']['shu'],ident)

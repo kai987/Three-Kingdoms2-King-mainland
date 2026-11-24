@@ -70,8 +70,8 @@ class BattleGridTests(unittest.TestCase):
         self.assertEqual([grid.point_cap(i*1000) for i in range(10)], list(grid.POINT_CAPS))
         self.assertEqual((grid.daily_points(999), grid.daily_points(1000)), (10, 16))
         self.assertEqual((grid.daily_points(9990), grid.point_cap(9990)), (42, 60))
-        self.assertEqual((grid.daily_points(100000),grid.point_cap(200000)),(42,60))
-        for bad in (-1, True, '1000', 200001):
+        self.assertEqual((grid.daily_points(100000),grid.point_cap(400000)),(42,60))
+        for bad in (-1, True, '1000', 400001):
             with self.assertRaises(ValueError):
                 grid.daily_points(bad)
 

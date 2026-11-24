@@ -125,9 +125,10 @@ class AutoAllocationTests(unittest.TestCase):
         quote = domestic.allocation_preview(game, state, 'xiangyang')
         self.assertEqual([r['id'] for r in quote['assignments']], [439])
         original = {i: state.officers[i].troops for i in (951, 999, 146)}
+        soldiers = state.officers[439].troops + state.cities['xiangyang'].reserves
         domestic.allocate_garrison(game, state, 'xiangyang')
         self.assertEqual({i: state.officers[i].troops for i in original}, original)
-        self.assertEqual(state.officers[439].troops, 1320)
+        self.assertEqual(state.officers[439].troops, soldiers)
         self.assertEqual(state.cities['xiangyang'].reserves, 0)
         treasures.synchronize(game,state)
         game.validate(state)

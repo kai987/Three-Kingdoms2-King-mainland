@@ -433,11 +433,10 @@ def dispatch_frontier_sorties(game, state):
             if ident in unavailable or officer.health <= 0:
                 continue
             if used.get(str(ident)) == state.turn:
-                waiting |= ident in staging.roster.officer_ids and officer.troops > 0
+                waiting |= ident in staging.roster.officer_ids
                 continue
             if ident in staging.roster.officer_ids:
-                if officer.troops > 0:
-                    at_staging.append(ident)
+                at_staging.append(ident)
                 continue
             home = next((city for city in state.cities.values() if city.owner == 'wei'
                          and ident in city.roster.officer_ids), None)
@@ -452,10 +451,27 @@ def dispatch_frontier_sorties(game, state):
         if (waiting or members[0] not in at_staging or
                 not command_books.can_spend(state, 'wei', 'depart')):
             continue
+        # The normal arrival rebalance can leave a named officer unarmed.
+        # Share the expedition's existing escort so all staged officers can lead.
+        troops = {ident: state.officers[ident].troops for ident in at_staging}
+        reserves = staging.reserves
+        if sum(troops.values()) + reserves < len(at_staging):
+            continue
+        for ident, strength in troops.items():
+            if strength:
+                continue
+            if staging.reserves:
+                staging.reserves -= 1
+            else:
+                donor = max(at_staging, key=lambda member: state.officers[member].troops)
+                state.officers[donor].troops -= 1
+            state.officers[ident].troops = 1
         try:
             game._queue_march(state, staging, target, at_staging, 'attack', 'land')
         except GameError:
-            continue
+            staging.reserves = reserves
+            for ident, strength in troops.items():
+                state.officers[ident].troops = strength
 
 
 
