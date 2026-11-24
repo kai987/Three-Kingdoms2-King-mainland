@@ -1,13 +1,12 @@
 """Export engine-based scenarios and explicitly marked arithmetic cases."""
 from argparse import ArgumentParser
-from copy import copy, deepcopy
+from copy import deepcopy
 from itertools import product
 from pathlib import Path
 
-from common import Catalog, ROOT, catalogs, open_game, to_csv, to_json
+from common import catalogs, open_game, to_csv, to_json
 from remake import grain_units, logistics, logistics_rules as rules, march_preview, march_supply
 from remake import military_budget as budget, route_hazards
-from remake.errors import GameError
 from remake.officers import OFFICER_TROOP_CAP
 
 LOADS=(1,100,10_000,50_000,100_000,200_000)
@@ -246,6 +245,12 @@ def export(output, seed):
         to_csv(output/(name+'.csv'),data)
     result={name:len(data) for name,data in datasets.items()}
     to_json(output/'case-validation.json',result)
+    to_json(output/'experiments'/'high-pressure-rates.json',
+        dict(kind='optional_stress_profile',applied_to_observer_runs=False,
+             march_percent=dict(plain=150,mountain=200,desert=200,river_downstream=110,
+                 river_still=115,river_upstream=125,sea=120,embark=110,node_wait=100),
+             cargo_loss_bps=dict(plain=100,mountain=200,desert=200,river_downstream=20,
+                 river_still=30,river_upstream=40,sea=40,embark=0,node_wait=0)))
     print(result)
 
 

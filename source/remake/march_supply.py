@@ -85,7 +85,10 @@ def remaining_requirement(game,state,journey,*,minimum_days=0,reserves=0):
     unit_scale=rules.RATION_SCALE if version==rules.CURRENT else 1
     travel_weight=route_weight(quote,days,offset=progress,game=game,version=version)
     travel_weight+=max(0,minimum_days-days)*unit_scale
-    return max(0,rules.ceil_div(ration_units(state,journey['officers'],reserves)*travel_weight-supply['credit_units'],
+    # Legacy rescue dispatches used the whole quoted ration even when the
+    # receiving column already had fractional credit in its own bag.
+    credit=supply['credit_units'] if version==rules.CURRENT else 0
+    return max(0,rules.ceil_div(ration_units(state,journey['officers'],reserves)*travel_weight-credit,
                                book_denominator(supply)))
 
 

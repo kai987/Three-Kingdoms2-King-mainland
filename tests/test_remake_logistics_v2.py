@@ -35,6 +35,19 @@ def mixed():
 
 
 class MarchRationTests(unittest.TestCase):
+    def test_legacy_rescue_quote_keeps_the_whole_ration_boundary(self):
+        from remake import grain_units
+
+        state=SimpleNamespace(officers={1:SimpleNamespace(troops=1)},
+                              cities={name:SimpleNamespace(owner='shu') for name in ('a','b')})
+        quote=dict(days=1,path=['a','b'],routes=[land(1)])
+        arrival=dict(quote=quote,owner='shu',officers=[1],
+                     supply=dict(schema=march_supply.SCHEMA,route_days=0,credit_units=49))
+        with grain_units.using():
+            self.assertEqual(march_supply.remaining_requirement(None,state,arrival),3)
+            arrival['supply'].update(schema=march_supply.WEIGHTED_SCHEMA,credit_units=49*rules.RATION_SCALE)
+            self.assertEqual(march_supply.remaining_requirement(None,state,arrival),2)
+
     def test_requested_standard_rations(self):
         cases = [('plain',7,1768),('plain',10,2525),('mountain',20,6060),
                  ('desert',22,6666),('river_downstream',7,1485),('river_still',10,2222),

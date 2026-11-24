@@ -35,8 +35,9 @@ assert.equal(previews.length,29);
 const initial=manifest.initial_scenario;
 const another=manifest.catalogs.find(row=>row.id!==initial)?.id;
 assert(another,'a second scenario is required for the lazy switching check');
+const logisticsScenario='mainland217-07';
 const catalogs=new Map();
-for(const identity of [initial,another]){
+for(const identity of new Set([initial,another,logisticsScenario])){
  const row=manifest.catalogs.find(row=>row.id===identity);
  assert.match(row.path,/^\/tk2\/game\/data\/campaigns\/[a-zA-Z0-9-]+\.json$/);
  const bytes=gunzipSync(artifact(row.url));
@@ -101,8 +102,8 @@ function request(pathname,{method='GET',body,instance='primary',status=200}={}){
  return response.body;
 }
 function state(instance='primary'){return JSON.parse(request('/api/state',{instance}));}
-function command(view,kind,payload={}){
- return JSON.parse(request('/api/command',{method:'POST',
+function command(view,kind,payload={},instance='primary'){
+ return JSON.parse(request('/api/command',{method:'POST',instance,
   body:JSON.stringify({kind,payload,revision:view.revision})}));
 }
 function load(raw,revision){
@@ -224,6 +225,31 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
  assert.deepEqual(state('isolated'),isolatedMenu,'all primary commands leave the other instance untouched');
  assert.equal(JSON.parse(request('/api/march-status')).engine,'python');
 
+ // Exercise the actual V2 quotation, route selection and granary write once
+ // on the independently mounted browser campaign.
+ const seat='isolated',source='shujun',target='bajun';
+ let travel=command(isolatedMenu,'new',{scenario:logisticsScenario,faction:'shu',seed:2026},seat);
+ assert.equal(travel.game.extension.logistics_rules_version,2);
+ const sourceCity=travel.game.cities[source],ruler=travel.game.extension.leaders.shu;
+ const escort=sourceCity.roster.officer_ids.find(id=>id!==ruler&&travel.game.officers[id].health>0);
+ assert.notEqual(escort,undefined);
+ const travelDraft={source,target,officers:[escort],route_mode:'minimum_grain'};
+ const previous=request('/api/save',{instance:seat});
+ const choices=JSON.parse(request('/api/logistics-preview',{method:'POST',instance:seat,
+  body:JSON.stringify({...travelDraft,revision:travel.revision,purpose:'transfer',cargo:0,reserves:0})}));
+ assert.equal(request('/api/save',{instance:seat}),previous);
+ const promise=choices.primary;
+ assert(promise&&choices.fastest&&choices.minimum);
+ assert.equal(promise.logistics.total_grain,promise.logistics.base_grain+promise.logistics.extra_grain);
+ assert.equal(Object.values(promise.logistics.time_ticks).reduce((a,b)=>a+b,0),
+  promise.days*promise.logistics.ticks_per_day);
+ travel=command(travel,'transfer',travelDraft,seat);
+ assert.equal(travel.game.cities[source].grain,sourceCity.grain-promise.logistics.initial_grain);
+ const committed=travel.game.extension.travel.marches.find(row=>row.target===target);
+ assert(committed);
+ assert.equal(committed.supply.loaded,promise.logistics.initial_grain);
+ request('/api/save',{instance:seat});
+
  // Exercise the real optional wire path, not only the legacy bridge used by
  // CPU replay. Hydration must reconstruct the same complete current view.
  const {default:wireModule}=await import(pathToFileURL(path.join(root,'game/view-cache.js')).href);
@@ -267,7 +293,7 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
  const rng=JSON.parse(finalSave).state.rng;
  assert.deepEqual(cpu.rng,rng,'final RNG state and draw count agree');
  console.log(JSON.stringify({ok:true,pyodide:py.version,previews:previews.length,catalogs:catalogs.size,
-  requests:trace.length,ai_turns:1,battle_settlements:battleSettlements,
+  requests:trace.length,ai_turns:1,battle_settlements:battleSettlements,logistics_route_parity:true,
   save_sha256:sha(finalSave),rng,cpu_save_bytes_equal:true}));
 }finally{
  for(const bridge of bridges.values())bridge.destroy();

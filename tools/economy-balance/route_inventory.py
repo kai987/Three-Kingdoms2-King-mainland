@@ -1,5 +1,4 @@
 """Export physical links, directional runtime quotations and dated availability."""
-from collections import Counter
 import json
 
 from common import sha256
@@ -8,8 +7,6 @@ from remake.map_presentation import city_names
 
 FORMATIONS = ((1000, 1), (10000, 1), (50000, 5), (100000, 10))
 MODES = ('land', 'river', 'sea')
-REACH_FIELDS = ('reach_id', 'river_id', 'name_tc', 'name_ja', 'speed_key', 'distance_km',
-                'downstream_from', 'flow', 'speed_km_per_day')
 RULE_FIELDS = ('from', 'to', 'mode', 'terrain', 'distance_km', 'land_km', 'river_km',
                'sea_km', 'days', 'river_segments', 'one_way', 'special', 'parent_route',
                'via', 'availability', 'closures', 'discovery_candidate')
@@ -28,12 +25,10 @@ def _identity(data, raw, kind):
 
 def _instances(catalogs, selected):
     result = {}
-    coastal = Counter()
     for catalog in sorted(catalogs, key=lambda c: (c.data['id'] != selected, c.data['id'])):
         data, scenario = catalog.data, catalog.data['id']
         year = data['start_year']
         names = city_names(catalog, year, data['start_month'])
-        coastal.update(data['travel_hazards']['coastal_cities'])
         for kind, routes in (('configured', data['travel_routes']), ('exploration', data.get('exploration_routes', []))):
             eligible = {}
             for month in range(1, 13):
@@ -50,7 +45,7 @@ def _instances(catalogs, selected):
                 for month, active_routes in eligible.items():
                     if raw['id'] in active_routes:
                         record['eligible'][month].append(scenario)
-    return result, coastal
+    return result
 
 
 def _static_route(route_key, instance, quotes):

@@ -12,7 +12,7 @@ from remake.march_core import backend_status
 
 def export(output, previous=None):
     scenarios = catalogs()
-    grouped, _ = _instances(scenarios, 'mainland208-10')
+    grouped = _instances(scenarios, 'mainland208-10')
     scenario_totals = {catalog.data['id']: Counter() for catalog in scenarios}
     links, comparisons, reaches = [], [], []
     with grain_units.using():
@@ -47,14 +47,18 @@ def export(output, previous=None):
                                stages=ticks, risk=leg['hazard'] if leg else None,
                                cargo_sent=100_000 if leg else None, cargo_delivered=cargo,
                                cargo_loss_remainder=remainder)
+                    for mode in rules.MARCH_SUPPLY_PERCENT:
+                        row[f'days_{mode}'] = ticks.get(mode,0)/rules.DAY_TICKS if leg else None
                     for soldiers, officers in FORMATIONS:
                         key = f'{soldiers}_{officers}'
                         v1 = march_supply.cost(soldiers, officers, leg['days']) if leg else None
                         v2 = rules.ceil_div((soldiers+100*officers)*rules.weight(parts),
                                 march_supply.denominator()*rules.RATION_SCALE) if leg else None
                         row[f'grain_v1_{key}'] = v1
+                        row[f'grain_base_v2_{key}'] = v1
                         row[f'grain_v2_{key}'] = v2
                         row[f'grain_extra_{key}'] = v2-v1 if leg else None
+                        row[f'grain_change_percent_{key}'] = round(100*(v2-v1)/v1,3) if v1 else None
                     for ident in active:
                         if info['kind'] == 'configured':
                             scenario_totals[ident].update(open_configured_directions_seasons=1,
@@ -75,8 +79,15 @@ def export(output, previous=None):
     prior_count = None
     if previous:
         with previous.open(encoding='utf-8', newline='') as handle:
-            prior = {(row['route_key'], row['orientation'], row['month']) for row in csv.DictReader(handle)}
-        assert prior <= keys, sorted(prior-keys)[:10]
+            prior = {(row['route_key'],row['orientation'],row['month']):row for row in csv.DictReader(handle)}
+        assert prior.keys() <= keys, sorted(prior.keys()-keys)[:10]
+        for row in comparisons:
+            older=prior.get((row['route_key'],row['orientation'],str(row['month'])))
+            if older is None:
+                continue
+            assert older['allowed_direction'] == str(row['allowed_direction']).lower()
+            days=older['travel_days_demo_applies_only_when_available']
+            assert (int(days) if days!='null' else None)==row['days_v2'],row['route_key']
         prior_count = len(prior)
     to_csv(output/'travel-routes-v1-v2.csv', links)
     to_csv(output/'route-seasonal-costs-v1-v2.csv', comparisons)

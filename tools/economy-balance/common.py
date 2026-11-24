@@ -2,7 +2,6 @@
 import csv
 import hashlib
 import json
-from collections import Counter
 from itertools import chain
 from pathlib import Path
 import subprocess
@@ -12,12 +11,8 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'source'))
 
 from remake.campaign import Campaign, Catalog
-from remake.march_core import backend_status
 
 CATALOG_INDEX = ROOT / 'game/data/campaigns/index.json'
-RUNTIME_PATHS = ('source/remake', 'crates/march-core/src', 'game/config',
-                 'game/data/campaigns', 'game/app.js', 'game/battle*', 'game/events.js',
-                 'game/facilities.js', 'game/city-development.js', 'game/locales', 'game/browser-engine-worker.js', 'game/march-worker.js', 'game/wasm/manifest.json')
 
 
 def git(*args):
@@ -75,29 +70,3 @@ def to_json(path, value):
 
 def sha256(raw):
     return hashlib.sha256(raw).hexdigest()
-
-
-def provenance(catalog_rows, args):
-    changed = git('diff', '--name-only', 'HEAD', '--', *RUNTIME_PATHS).decode().splitlines()
-    added = git('ls-files', '--others', '--exclude-standard', '--', *RUNTIME_PATHS).decode().splitlines()
-    paths = sorted(set(changed + added))
-    return dict(
-        git_sha=git('rev-parse', 'HEAD').decode().strip(),
-        git_branch=git('rev-parse', '--abbrev-ref', 'HEAD').decode().strip(),
-        extraction_date=args.date,
-        opening_seed=args.seed,
-        opening_seat='observer',
-        opening_difficulty='normal',
-        backend=backend_status(),
-        runtime_worktree_diff_sha256=sha256(git('diff', '--binary', 'HEAD', '--', *RUNTIME_PATHS)),
-        runtime_worktree_files={path: sha256((ROOT / path).read_bytes()) if (ROOT / path).is_file() else None
-                                for path in paths},
-        catalogs=[dict(scenario_id=c.data['id'], catalog_sha256=c.sha256,
-                       active_cities=len(c.data['active_cities'])) for c in catalog_rows],
-        requested=dict(sections=list(args.sections), scenario=args.scenario,
-                       battle_replicates=args.battle_replicates),
-    )
-
-
-def null_counts(rows):
-    return dict(sorted(Counter(key for row in rows for key, value in row.items() if value is None).items()))

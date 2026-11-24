@@ -11,20 +11,25 @@ from common import to_csv, to_json
 METRICS = {
     'economy': ('grain_stock','gold_stock','market_stock','monthly_regular_grain','monthly_gold',
                 'monthly_grain_payroll','monthly_gold_payroll','population','total_land','total_industry',
-                'grain_bought','emergency_grain_bought','grain_sold','ai_reserve_purchases',
-                'live_factions','small_initial_factions','small_factions_surviving'),
+                'monthly_fixed_grain','grain_bought','emergency_grain_bought','grain_sold','ai_reserve_purchases',
+                'live_factions','small_initial_factions','small_factions_surviving','faction_grain_stock_hhi',
+                'strategic_reserve_met_percent'),
     'military': ('active_troops','reserves','raised_troops','recruit_grain','recruit_gold',
                 'postbattle_recruit_grain','postbattle_recruit_gold','ai_sorties','battles','battle_retreats',
                 'battle_troops_lost','troop_losses','march_hunger_losses','march_rations','march_base_rations',
                 'convoy_rations','convoy_grain_sent','convoy_grain_arrived','convoy_route_grain_loss',
                 'convoy_cargo_rations','convoy_weather_grain_loss','battle_grain_bought',
                 'ai_sortie_quote_blocked','ai_sortie_quotes','ai_recruit_quote_capped','ai_recruit_quotes',
-                'battles_per_active_faction_year','grain_delivered_per_10000_sent'),
+                 'battles_per_active_faction_year','grain_delivered_per_10000_sent','battle_days',
+                 'battle_grain_rations','battle_grain_burned','march_days','convoy_days',
+                 'convoy_land_departures','convoy_river_departures','convoy_sea_departures',
+                 'convoy_minimum_grain_departures','convoy_late_arrivals','convoy_failed',
+                 'ai_recruit_quote_rejected','ai_emergency_recruit_quotes','march_grain_per_10000_troop_years'),
     'shortage': ('unpaid_city_turns','rations_missing','market_city_turns','markets_empty_samples',
                  'shortage_city_turns_per_1000','cities_with_recent_shortage','cities_empty_last_month',
                  'requested_aid','granted_aid','received_aid_grain','strategic_aid_transports',
                  'convoy_dispatched','convoy_arrived','convoy_returned','march_food_missing_days',
-                 'captured_cities_recovered','median_capture_recovery_turns'),
+                 'captured_cities_recovered','median_capture_recovery_turns','max_city_shortage_streak'),
 }
 
 
@@ -43,9 +48,11 @@ def data(path):
     from statistics import median
 
     world=read(path/'monthly.csv')
-    factions=defaultdict(dict)
+    factions,stored=defaultdict(dict),defaultdict(dict)
     for row in read(path/'factions.csv'):
-        factions[int(row['elapsed_months'])][row['faction']]=int(row['cities'])
+        month=int(row['elapsed_months'])
+        factions[month][row['faction']]=int(row['cities'])
+        stored[month][row['faction']]=int(row['grain_stock'])
     opening=factions[0]
     small={key for key,size in opening.items() if key!='neutral' and 0<size<=3}
     city_by_month=defaultdict(list)
@@ -54,6 +61,7 @@ def data(path):
     recovered=read(path/'capture-recovery.csv')
     last_shortages={}
     faction_months=0
+    troop_months=0
     results={}
     selected={12,36,60,120,240,int(world[-1]['elapsed_months'])}
     for row in world:
@@ -61,6 +69,7 @@ def data(path):
         live={key for key,cities in factions[month].items() if key!='neutral' and cities>0}
         if month:
             faction_months+=len(live)
+            troop_months+=int(row['active_troops'])
         recent=empty=0
         for city in city_by_month[month]:
             key=city['city']
@@ -72,11 +81,23 @@ def data(path):
             continue
         values={key:wire(row[key]) for keys in METRICS.values() for key in keys if key in row}
         periods=values.get('market_city_turns',0)
+        total_grain=sum(stored[month][faction] for faction in live)
         values.update(live_factions=len(live),small_initial_factions=len(small),
             small_factions_surviving=len(small&live),cities_with_recent_shortage=recent,
             cities_empty_last_month=empty,
+            faction_grain_stock_hhi=round(sum((stored[month][faction]/total_grain)**2 for faction in live),4)
+                if total_grain else None,
             shortage_city_turns_per_1000=round(values['unpaid_city_turns']*1000/periods,3) if periods else None,
             battles_per_active_faction_year=round(values['battles']*12/faction_months,3) if faction_months else None)
+        if int(row.get('strategic_reserve_observed',0)):
+            values['strategic_reserve_met_percent']=round(int(row['strategic_reserve_met'])*100/
+                                                         int(row['strategic_reserve_observed']),3)
+        if troop_months and 'march_rations' in values:
+            values['march_grain_per_10000_troop_years']=round(values['march_rations']*120_000/troop_months,3)
+        observed_streaks=[int(city['max_food_shortage_streak']) for city in city_by_month[month]
+                          if 'max_food_shortage_streak' in city]
+        if observed_streaks:
+            values['max_city_shortage_streak']=max(observed_streaks)
         sent=values.get('convoy_grain_sent')
         values['grain_delivered_per_10000_sent']=round(values['convoy_grain_arrived']*10_000/sent,2) if sent else None
         take=[int(entry['sampled_turn'])-int(entry['capture_turn']) for entry in recovered
@@ -92,6 +113,7 @@ def export(root, output, heads):
         group,seed,horizon,scenario=path.relative_to(root).parts[:4]
         run=json.loads(path.read_text(encoding='utf-8'))
         assert run['scenario']==scenario and run['seed']==int(seed) and run['requested_months']==int(horizon)
+        assert run.get('head',heads[group])==heads[group]
         year,month=map(int,scenario.split('-')[:2])
         runs.append(dict(group=group, head=heads[group], start_date=[year,month,1],
                          **{key:value for key,value in run.items() if key not in ('group','head','start_date')}))

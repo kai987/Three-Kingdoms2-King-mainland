@@ -163,7 +163,11 @@ class CampaignTests(unittest.TestCase):
         self.cmd('retreat', dict(battle_id=battle_id))
         self.cmd('settle', dict(battle_id=battle_id))
         self.assertEqual(self.game.state.officers[123].troops, remaining)
-        self.assertEqual(self.game.state.cities['nanyang'].grain, paid_grain+returned_grain)
+        self.assertEqual(self.game.state.cities['nanyang'].grain, paid_grain)
+        returning, = [row for row in self.game.state.extension['travel']['marches']
+                      if row.get('battle_return') == battle_id]
+        self.assertEqual((returning['journey_source'],returning['target']),('xiangyang','nanyang'))
+        self.assertEqual(returning['supply']['remaining'],returned_grain)
         self.assertEqual(self.game.state.cities['xiangyang'].owner, 'shu')
 
     def test_ten_day_ai_receipt_is_idempotent(self):
