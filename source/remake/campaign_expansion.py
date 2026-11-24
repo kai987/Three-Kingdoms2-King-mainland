@@ -1130,7 +1130,7 @@ class ExpandedCampaign:
             if distribution is not None:
                 details['coalition']=distribution
             if experience_report is not None:
-                details['experience']=dict(experience_report, applied=applied)
+                details['experience']=battle_experience.archive_report(experience_report, applied)
             self._emit_event(state,'battle_result',city_ids=[b['source'],b['target']],
                 person_ids=[state.officers[u['id']].person_id for u in (b['attackers'][:1]+b['defenders'][:1])],
                 factions=[b['attacker'],b['defender']],

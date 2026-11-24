@@ -243,6 +243,20 @@ def result(battle, status):
     return report, awards
 
 
+def archive_report(report, applied):
+    """Persist display scores without changing the checksum across JSON clients."""
+    def encode(value):
+        if type(value) is float:
+            return str(value)
+        if isinstance(value, list):
+            return [encode(item) for item in value]
+        if isinstance(value, dict):
+            return {key: encode(item) for key, item in value.items()}
+        return value
+
+    return dict(encode(report), applied=applied)
+
+
 def validate_load(battle):
     if V1_FIELD not in battle['extended']:
         return

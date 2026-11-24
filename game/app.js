@@ -2143,7 +2143,10 @@ function battleExperienceHtml(report, {details = false} = {}){
  if(report?.version!==1||!report.sides?.attackers||!report.sides?.defenders)return '';
  const tr=battlePlain, number=value=>Number.isFinite(value)?value.toLocaleString(GameI18n.locale):'—';
  const points=value=>Number.isFinite(value)?(value/100).toFixed(2)+'%':'—';
- const metric=value=>Number.isFinite(value)?value.toLocaleString(GameI18n.locale,{maximumFractionDigits:4}):'—';
+ const metric=value=>{
+  const score=typeof value==='string'&&value?Number(value):value;
+  return Number.isFinite(score)?score.toLocaleString(GameI18n.locale,{maximumFractionDigits:4}):'—';
+ };
  const labels=[
   tr('實際參戰','実戦参加'),tr('參戰兵力','参加兵力'),tr('擊殺','敵兵撃破'),tr('單挑','一騎討ち'),
   tr('離間','離間'),tr('兵力保存','兵力温存'),tr('承傷','被害引受')

@@ -2,7 +2,6 @@
 
 from dataclasses import dataclass
 from decimal import Decimal, localcontext
-from math import isfinite
 
 from .officers import MAX_BATTLE_PARTICIPANTS, OFFICER_TROOP_CAP, is_generated_ref, ref_sort_key
 
@@ -453,7 +452,7 @@ def validate_reports(events):
                     for column in ('raw', 'normalized', 'weighted'):
                         values = row[column]
                         if not isinstance(values, list) or len(values) != len(DIMENSIONS) or not all(
-                                type(value) in (int, float) and 0 <= value <= 2**53 and isfinite(value) for value in values):
+                                type(value) in (str, int, float) and 0 <= float(value) <= 2**53 for value in values):
                             raise ValueError('Invalid settled experience scores')
                 elif points or share:
                     raise ValueError('Idle officer awarded experience')

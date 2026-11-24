@@ -343,6 +343,18 @@ class CampaignReceipt(unittest.TestCase):
         items = restored.state.extension['events']['items']
         settled = next(row['details']['experience'] for row in reversed(items) if row['kind'] == 'battle_result')
         self.assertEqual(settled['status'], 'settled')
+        raw = json.dumps(restored.export_save(), allow_nan=False)
+        # Browser JSON treats whole numbers as integers on re-export. The
+        # signed raw save must retain the same checksum through that hop.
+        def browser_number(token):
+            number = float(token)
+            return int(number) if number.is_integer() else number
+        browser_save = json.loads(raw, parse_float=browser_number)
+        browser_reloaded = Campaign(game.catalog)
+        browser_reloaded.load_save(browser_save, 0)
+        self.assertEqual(browser_reloaded.export_save(), restored.export_save())
+        armed = next(row for row in settled['sides'][ATTACK]['officers'] if row['eligible'])
+        self.assertEqual(float(armed['raw'][0]), 1)
         for ident, amount in awards.items():
             self.assertEqual(restored.state.officers[ident].experience, min(49_999, before[ident] + 50 * amount))
         saved = restored.export_save(compact=True)
