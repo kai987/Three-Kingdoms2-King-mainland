@@ -85,15 +85,30 @@ def scale_monthly_grain(income):
     return dict(income, grain=2 * income['grain'])
 
 
-def monthly_income(game, city_id, state, *, date=None):
-    from . import city_development, facilities
-
-    data = game.catalog.data
-    income = income_at(data, city_id, *(date or (state.year, state.month)))
+def _monthly_base_income(data, city_id, date):
+    income = income_at(data, city_id, *date)
     if income is None:
         rules = data['rules']
         income = dict(gold=rules.get('monthly_gold_income', 0),
                       grain=grain_units.amount(rules.get('monthly_grain_income', 0)), reserves=0)
+    return income
+
+
+def opening_monthly_income(game, city_id, *, development=None, facility=None):
+    from . import city_development, facilities
+
+    data = game.catalog.data
+    income = _monthly_base_income(data, city_id, (data['start_year'], data['start_month']))
+    if facility is None:
+        facility = facilities.opening_view(data, city_id)
+    income = city_development.adjust_income(game, None, city_id, income, opening=development)
+    return scale_monthly_grain(facilities.income_after_damage(income, facility['damage']))
+
+
+def monthly_income(game, city_id, state, *, date=None):
+    from . import city_development, facilities
+
+    income = _monthly_base_income(game.catalog.data, city_id, date or (state.year, state.month))
     if city_id in state.cities:
         income = city_development.adjust_income(game, state, city_id, income)
     return scale_monthly_grain(facilities.adjusted_income(state, city_id, income))

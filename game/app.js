@@ -1720,37 +1720,102 @@ function refreshLibraryEntryLabels(){
 function libraryEntrySummary(people,game){
  if(!game)return '<div class="small" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">尚未開始戰役。總人物庫與開局規劃不等於實際駐城；開始後可查看本局在籍與在野人數。</div><div class="small" data-locale-only="ja" data-l10n-native="ja">戦役はまだ始まっていません。人物総数と開始時の配置計画は、実際の所属人数とは異なります。開始後に仕官中・在野の人数を確認できます。</div>';
  const c=libraryEntryCounts(people),actual=c.serving+c.free+c.captive,other=c.missing+c.unknown+c.unentered;
- return `<div class="library-entry-summary" data-locale-only="zh-Hant" data-l10n-native="zh-Hant"><p>${game.year}年${game.month}月本局：在籍 <strong data-entry-count="serving">${c.serving}</strong> 人，在野 <strong data-entry-count="free">${c.free}</strong> 人${c.captive?`，俘虜 ${c.captive} 人`: ''}；已登場 ${actual}／總庫 ${people.length} 人。</p><p class="small">未出生 ${c.not_born}、未出仕 ${c.not_appeared}、已退出／過卒年 ${c.retired}、卒年待核 ${c.death_review}；歸屬待考 ${c.pending_history}、勢力待配置 ${c.pending_faction}、容量不足 ${c.pending_capacity}、劇本排除 ${c.scenario_excluded}、其他未入局 ${other}。</p><p class="small">在籍包含行軍中的武將；在野者有所在地，但不佔城內名冊。待考或容量不足者不計入各城在籍，開局規劃不代表已經安置。</p></div><div class="library-entry-summary" data-locale-only="ja" data-l10n-native="ja"><p>${game.year}年${game.month}月の戦役：仕官中 <strong data-entry-count="serving">${c.serving}</strong> 人、在野 <strong data-entry-count="free">${c.free}</strong> 人${c.captive?`、捕虜 ${c.captive} 人`: ''}。登場済み ${actual}／人物総数 ${people.length} 人。</p><p class="small">未出生 ${c.not_born}、登場前 ${c.not_appeared}、退場・没年経過 ${c.retired}、没年要確認 ${c.death_review}。所属未確定 ${c.pending_history}、勢力未設定 ${c.pending_faction}、定員不足 ${c.pending_capacity}、シナリオ対象外 ${c.scenario_excluded}、その他未登場 ${other}。</p><p class="small">仕官中には行軍中の武将も含みます。在野武将には現在地がありますが、都市の所属名簿には入りません。所属未確定・定員不足の人物は都市の人数に含めず、開始時の計画を実際の配置とはみなしません。</p></div>`;
+ return `<div class="library-entry-summary" data-locale-only="zh-Hant" data-l10n-native="zh-Hant"><p>${game.year}年${game.month}月本局：在籍 <strong data-entry-count="serving">${c.serving}</strong> 人，在野 <strong data-entry-count="free">${c.free}</strong> 人${c.captive?`，俘虜 ${c.captive} 人`: ''}；已登場 ${actual}／總庫 ${people.length} 人。</p><details class="small"><summary>登場狀態詳情</summary><p>未出生 ${c.not_born}、未出仕 ${c.not_appeared}、已退出／過卒年 ${c.retired}、卒年待核 ${c.death_review}；歸屬待考 ${c.pending_history}、勢力待配置 ${c.pending_faction}、容量不足 ${c.pending_capacity}、劇本排除 ${c.scenario_excluded}、其他未入局 ${other}。</p><p class="small">在籍包含行軍中的武將。在野武將有所在地，但不佔城內名冊。</p></details></div><div class="library-entry-summary" data-locale-only="ja" data-l10n-native="ja"><p>${game.year}年${game.month}月の戦役：仕官中 <strong data-entry-count="serving">${c.serving}</strong> 人、在野 <strong data-entry-count="free">${c.free}</strong> 人${c.captive?`、捕虜 ${c.captive} 人`: ''}。登場済み ${actual}／人物総数 ${people.length} 人。</p><details class="small"><summary>登場状況の詳細</summary><p>未出生 ${c.not_born}、登場前 ${c.not_appeared}、退場・没年経過 ${c.retired}、没年要確認 ${c.death_review}。所属未確定 ${c.pending_history}、勢力未設定 ${c.pending_faction}、定員不足 ${c.pending_capacity}、シナリオ対象外 ${c.scenario_excluded}、その他未登場 ${other}。</p><p class="small">仕官中には行軍中の武将も含まれます。在野武将には現在地があり、都市の所属名簿には入りません。</p></details></div>`;
 }
 document.addEventListener('game-language-change',refreshLibraryEntryLabels);
+document.addEventListener('game-language-change',()=>$('#library-results')?.dispatchEvent(new Event('library-language-change')));
 function personStatus(p){
  if(p.missing.length)return '待补：'+p.missing.map(k=>({health_max:'体力',martial_strength:'武',intellect:'知',virtue:'德',terrain_affinity:'适性'})[k]).join('、');
  if(p.alive===false)return '已退出';
- if(p.prisoner)return battleText('俘虜','捕虜')+' · '+escapeHtml(cityName(p.prisoner.city));
- if(p.alive)return p.faction?escapeHtml(faction(p.faction)):'在野 · '+escapeHtml(cityName(p.location));
+ if(p.prisoner)return battleText('俘虜','捕虜')+' · '+cityName(p.prisoner.city);
+ if(p.alive)return p.faction?faction(p.faction):'在野 · '+cityName(p.location);
  if(missionAway(p.era_assignment?.appearance_plan,view.game?.year))return battleText('出使中','使節として派遣中');
  const labels={not_born:'未出生',not_appeared:'未出仕',available:'年代合格',death_year_review:'卒年待核',dead:'已过卒年',unknown:'年代待核'};
  if(['not_born','not_appeared','dead'].includes(p.year_state))return labels[p.year_state];
  return {pending_history:'归属待考',pending_faction:'势力待接入',pending_capacity:'容量不足，尚未登场',scenario_excluded:'本剧本不登场'}[p.era_assignment?.status]||labels[p.year_state];
 }
-function showLibrary({search='',filter='all',page=0,focus=null,scroll=0}={}){
+const libraryColumns=[
+ ['name','武將','武将','ascending'],
+ ['birth','生年','生年','ascending'],
+ ['service','出仕年','仕官年','ascending'],
+ ['death','卒年','没年','ascending'],
+ ['martial','武','武','descending'],
+ ['intellect','知','知','descending'],
+ ['virtue','德','徳','descending'],
+ ['experience','經','経','descending'],
+ ['status','狀態','状態','ascending']
+];
+function sortLibraryPeople(people,order,officers,locale){
+ if(!order)return people;
+ const {column,direction}=order;
+ const collator=new Intl.Collator(locale,{numeric:true});
+ const records=people.map(person=>{
+  const value=column==='experience'?GameOfficerChoices.experience(officers?.[person.id]?.experience)
+   :column==='status'?GameI18n.t(personStatus(person)||'',locale)
+   :column==='name'?GameI18n.t(person.name,locale):person[column];
+  return {person,key:typeof value==='number'&&Number.isFinite(value)?value
+   :typeof value==='string'&&value&&value!=='—'?value:null};
+ });
+ records.sort((a,b)=>{
+  // Keep unknown values last in both directions and break ties by stable ID.
+  if(a.key===null||b.key===null)return Number(a.key===null)-Number(b.key===null)||a.person.id-b.person.id;
+  const comparison=typeof a.key==='number'&&typeof b.key==='number'?a.key-b.key:collator.compare(a.key,b.key);
+  return (direction==='ascending'?comparison:-comparison)||a.person.id-b.person.id;
+ });
+ return records.map(row=>row.person);
+}
+function showLibrary({search='',filter='all',page=0,focus=null,scroll=0,tableScroll=0,order=null}={}){
  if(!view.catalog.library)return notice('请进入扩展战役查看人物配置状态。');
  const total=view.catalog.library.length;
- openDialog(`${total}人武将库`,`<p>${view.catalog.coverage.configured_profiles}人属性齐全，${view.catalog.coverage.pending_profiles}人待配置。德按《三国志14》魅力转换；没有魅力资料者按指定默认60。开局体力与忠诚分别注明来源和适用范围。点击姓名查看评分依据与本年代驻城安排。</p>${libraryEntrySummary(view.catalog.library,view.game)}<div class="library-tools"><input id="library-search" aria-label="检索武将" placeholder="姓名、别名或人物编号"><select id="library-filter" aria-label="人物筛选"><option value="all">全部${total}人</option>${libraryEntryOptions(isObserver()?null:view.game?.player)}</select></div><div id="library-results"></div>${view.catalog.library.some(p=>p.chronology_design?.historical_death_year===null)?'<p class="small">＊为本作退场年，并非已知卒年；新增人物的估计年代可查看来源。</p>':''}<div class="library-tools"><button id="library-prev">上一页</button><span id="library-count"></span><button id="library-next">下一页</button></div>`,`<button data-cancel>返回战役</button>${view.game&&view.catalog.civil_staff&&!setupPreview?'<button id="library-staff">地方文吏名册</button>':''}`);
+ const intro=battleText(
+  '可依姓名、別名或人物編號搜尋。點選欄名排序，再點一次切換順序。點選武將姓名可查看人物介紹、能力來源與本劇本的登場安排。',
+  '名前・別名・人物IDで検索できます。列見出しを押すと並べ替わり、もう一度押すと昇順と降順が切り替わります。武将名から人物紹介、能力の出典、シナリオでの登場予定を確認できます。');
+ const headings=libraryColumns.map(([key,tc,ja])=>`<th scope="col"><button type="button" class="library-sort" data-library-sort="${key}">${battleText(tc,ja)}<span class="library-sort-indicator" aria-hidden="true"></span></button></th>`).join('');
+ const chronology=view.catalog.library.some(p=>p.chronology_design?.historical_death_year===null)
+  ?battleText('＊為本作退場年。', '＊は本作での退場年です。'):'';
+ const defaultVirtue=view.catalog.library.some(p=>p.virtue_design?.status==='configured_default')
+  ?battleText(' † 為缺少魅力資料時採用的預設德值。',' † は魅力の資料がない場合に使う既定の徳の値です。'):'';
+ openDialog(`${total}人武将库`,`<p>${intro}</p>${libraryEntrySummary(view.catalog.library,view.game)}<div class="library-tools"><input id="library-search" aria-label="检索武将" placeholder="姓名、别名或人物编号"><select id="library-filter" aria-label="人物筛选"><option value="all">全部${total}人</option>${libraryEntryOptions(isObserver()?null:view.game?.player)}</select></div><div id="library-results" class="library-table-scroll" tabindex="0" role="region" aria-label="武将库"><table class="library-table"><thead><tr>${headings}</tr></thead><tbody></tbody></table></div>${chronology||defaultVirtue?`<p class="small">${chronology}${defaultVirtue}</p>`:''}<div class="library-tools"><button id="library-prev">上一页</button><span id="library-count" aria-live="polite"></span><button id="library-next">下一页</button></div>`,`<button data-cancel>返回战役</button>${view.game&&view.catalog.civil_staff&&!setupPreview?'<button id="library-staff">地方文吏名册</button>':''}`);
  if($('#library-staff'))$('#library-staff').onclick=()=>staffInterface()?.openRegistry();
- const searchInput=$('#library-search'),filterInput=$('#library-filter');
+ const searchInput=$('#library-search'),filterInput=$('#library-filter'),results=$('#library-results');
+ const body=results.querySelector('tbody'),sortButtons=results.querySelectorAll('[data-library-sort]');
  searchInput.value=search;
  filterInput.value=filter;
- const draw=()=>{const q=searchInput.value.trim(),filter=filterInput.value;const people=view.catalog.library.filter(p=>(!q||[p.name,p.person_id,...p.aliases].some(s=>[s,GameI18n.t(s,'zh-Hant'),GameI18n.t(s,'ja')].some(label=>label.includes(q))))&&libraryFilterMatches(p,filter,view.game?.player));const max=Math.max(0,Math.ceil(people.length/12)-1);page=Math.min(page,max);
- $('#library-results').innerHTML=`<table class="library-table"><thead><tr><th>武将</th><th>生/仕/卒</th><th>武/知/德</th><th>经</th><th>状态</th></tr></thead><tbody>${people.slice(page*12,(page+1)*12).map(p=>`<tr><td><span class="officer-identity">${portraitHtml(p.id,'library',false,p.person_id,p.name)}<button class="person-detail" data-person="${p.id}">${escapeHtml(p.name)}</button></span></td><td>${p.birth}/${p.service}/${p.death}${p.chronology_design?.historical_death_year===null?'＊':''}</td><td>${p.martial??'待填'}/${p.intellect??'待填'}/${p.virtue??'待填'}${p.virtue_design?.status==='configured_default'?'（默认）':''}</td><td>${GameOfficerChoices.experience(view.game?.officers?.[p.id]?.experience)}</td><td>${personStatus(p)}</td></tr>`).join('')}</tbody></table>`;
- dialog.querySelectorAll('[data-person]').forEach(el=>el.onclick=()=>{
-  const selection={search:searchInput.value,filter:filterInput.value,page,focus:el.dataset.person,scroll:dialog.scrollTop};
-  showPerson(Number(el.dataset.person),{back:()=>showLibrary(selection)});
- });
- $('#library-count').textContent=`${people.length}人 · ${page+1}/${max+1}页`;$('#library-prev').disabled=page===0;$('#library-next').disabled=page===max;};
- searchInput.oninput=filterInput.onchange=()=>{page=0;draw();};$('#library-prev').onclick=()=>{page--;draw();};$('#library-next').onclick=()=>{page++;draw();};draw();
+ function draw(){
+  const q=searchInput.value.trim(),filter=filterInput.value;
+  const people=view.catalog.library.filter(p=>(!q||[p.name,p.person_id,...p.aliases].some(s=>[s,GameI18n.t(s,'zh-Hant'),GameI18n.t(s,'ja')].some(label=>label.includes(q))))&&libraryFilterMatches(p,filter,view.game?.player));
+  const sorted=sortLibraryPeople(people,order,view.game?.officers,GameI18n.locale);
+  const max=Math.max(0,Math.ceil(people.length/12)-1);
+  page=Math.min(page,max);
+  for(const button of sortButtons){
+   if(button.dataset.librarySort===order?.column)button.parentElement.setAttribute('aria-sort',order.direction);
+   else button.parentElement.removeAttribute('aria-sort');
+  }
+  body.innerHTML=sorted.slice(page*12,(page+1)*12).map(p=>`<tr><td><span class="officer-identity">${portraitHtml(p.id,'library',false,p.person_id,p.name)}<button type="button" class="person-detail" data-person="${p.id}">${escapeHtml(p.name)}</button></span></td><td>${p.birth??'—'}</td><td>${p.service??'—'}</td><td>${p.death??'—'}${p.chronology_design?.historical_death_year===null?'＊':''}</td><td>${p.martial??'—'}</td><td>${p.intellect??'—'}</td><td>${p.virtue??'—'}${p.virtue_design?.status==='configured_default'?'†':''}</td><td>${GameOfficerChoices.experience(view.game?.officers?.[p.id]?.experience)}</td><td>${escapeHtml(personStatus(p)||'—')}</td></tr>`).join('');
+  body.querySelectorAll('[data-person]').forEach(el=>el.onclick=()=>{
+   const selection={search:searchInput.value,filter:filterInput.value,page,focus:el.dataset.person,scroll:dialog.scrollTop,tableScroll:results.scrollLeft,order};
+   showPerson(Number(el.dataset.person),{back:()=>showLibrary(selection)});
+  });
+  $('#library-count').innerHTML=battleText(`${people.length} 人 · ${page+1}/${max+1} 頁`,`${people.length}人 · ${page+1}/${max+1}ページ`);
+  $('#library-prev').disabled=page===0;
+  $('#library-next').disabled=page===max;
+ }
+ for(const button of sortButtons)button.onclick=()=>{
+  const column=button.dataset.librarySort;
+  const initial=libraryColumns.find(([key])=>key===column)[3];
+  const direction=order?.column===column?(order.direction==='ascending'?'descending':'ascending'):initial;
+  order={column,direction};
+  page=0;
+  draw();
+ };
+ results.addEventListener('library-language-change',draw);
+ searchInput.oninput=filterInput.onchange=()=>{page=0;draw();};
+ $('#library-prev').onclick=()=>{page--;draw();};
+ $('#library-next').onclick=()=>{page++;draw();};
+ draw();
  if(focus!==null){
   dialog.scrollTop=scroll;
+  results.scrollLeft=tableScroll;
   dialog.querySelector(`[data-person="${focus}"]`)?.focus({preventScroll:true});
  }
 }
