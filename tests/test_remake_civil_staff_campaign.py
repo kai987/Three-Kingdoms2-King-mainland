@@ -387,7 +387,10 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.assertEqual(restored.state.extension[payroll.FIELD]['shortfalls'][ident]['turns'], 2)
 
     def test_actual_ai_hires_and_clerk_recruits_with_the_same_cost_and_rng(self):
-        game = self.new(player='wu', free=False)
+        from remake import logistics_strategy
+        # This oracle expects the pre-V2.1 full-cap garrison assignment.
+        with logistics_strategy.experiment(0):
+            game = self.new(player='wu', free=False)
         # The faction military official can now recruit even in an empty city.
         # A satisfied reserve target isolates the actual AI hiring/personnel
         # commands from that independent city-action competitor.

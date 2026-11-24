@@ -329,6 +329,7 @@ def main():
     parser=ArgumentParser(description=__doc__)
     parser.add_argument('root',type=Path)
     parser.add_argument('--archive',type=Path,required=True)
+    parser.add_argument('--tables-only',action='store_true',help='Validate and export tables before writing documentation')
     parser.add_argument('--docs',type=Path,required=True)
     parser.add_argument('--preflight',type=Path,required=True)
     parser.add_argument('--references',type=Path,required=True)
@@ -429,6 +430,9 @@ def main():
         test_evidence=sorted(p.name for p in args.preflight.iterdir() if p.is_file()),
         comparisons=sorted(p.name for p in comparisons.glob('*.csv'))))
     data_files.update({'data/'+p.name:p for p in comparisons.iterdir() if p.is_file()})
+    if args.tables_only:
+        print(json.dumps(dict(tables=str(comparisons),completed=len(found),expected=len(required),pairs=len(valid_pairs))))
+        return
     supplemental=args.root/'supplemental'
     data_files.update({'data/supplemental/'+str(p.relative_to(supplemental)):p
                        for p in supplemental.rglob('*') if p.is_file() and p.suffix in ('.csv','.json')})

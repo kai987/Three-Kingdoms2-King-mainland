@@ -133,6 +133,18 @@ class LogisticsV21Tests(TestCase):
         self.assertEqual(cap['sustainable_local'],46666)
         self.assertEqual(cap['excess_troops'],53334)
 
+    def test_finish_phase_keeps_reserves_when_the_local_garrison_cannot_expand(self):
+        game=self.start()
+        state=game.state
+        city=state.cities['jiangxia']
+        city.grain=100000
+        before=(city.reserves, sum(state.officers[i].troops for i in city.roster.officer_ids))
+        budget=economy.plan(game,state,'shu').budgets[city.id]
+        self.assertEqual(budget['sustainable_allocation'],0)
+        self.assertFalse(budget['threatened'])
+        domestic.finish_faction_turn(game,state,'shu',automatic=False)
+        self.assertEqual((city.reserves, sum(state.officers[i].troops for i in city.roster.officer_ids)),before)
+
     def test_natural_reserves_cover_planned_recruitment(self):
         game = self.start()
         state = game.state
