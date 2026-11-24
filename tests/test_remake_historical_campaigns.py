@@ -479,12 +479,13 @@ class HistoricalCampaignTests(unittest.TestCase):
         history.process(game, separated)
         self.assertTrue(history.allied(separated, 'shu', 'wu'))
         self.assertNotIn(history.ALLIANCE_ENDED, separated.extension[history.RECEIPTS])
-        for _ in range(3):
-            self.assertTrue(history.allied(game.state, 'shu', 'wu'))
-            self.assertFalse(self.events(game, history.ALLIANCE_ENDED))
-            self.advance(game)
-            self.arrivals(game)
-            self.finish_pending_battles(game)
+        with patch.object(strategic_ai, '_open_ai_queue'):
+            for _ in range(3):
+                self.assertTrue(history.allied(game.state, 'shu', 'wu'))
+                self.assertFalse(self.events(game, history.ALLIANCE_ENDED))
+                self.advance(game)
+                self.arrivals(game)
+                self.finish_pending_battles(game)
         event, = self.events(game, history.ALLIANCE_ENDED)
         self.assertEqual((event['year'], event['month'], event['day'], event['audience']),
                          (219, 10, 1, 'world'))
