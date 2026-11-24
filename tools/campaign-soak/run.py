@@ -21,7 +21,7 @@ from remake.difficulty import get_settings
 from remake.march_core import using_backend
 from remake.officers import ref_sort_key
 from remake.tactical_ai import choose_action
-from remake import domestic, logistics, command_books, battle_placement
+from remake import battle_grid, battle_placement, battle_reinforcements, command_books, domestic, logistics
 
 CASES = {
     'early': dict(scenario='184-02', faction='yellow_turban', turns=72),
@@ -146,6 +146,11 @@ class Replay:
                 self.command('settle', battle_id=state.battle['id'])
             elif state.phase == 'battle':
                 battle = state.battle
+                if battle_reinforcements.supporting_side(battle):
+                    # This replay's defensive policy leaves allied battles to the
+                    # principals. The real command still simulates and settles it.
+                    self.command('battle_decline_support', battle_id=battle['id'])
+                    continue
                 if battle_placement.pending(battle):
                     # This headless driver chooses each actual native default,
                     # just as a player confirming the new setup would. Keep
@@ -169,10 +174,11 @@ class Replay:
                     else:self.command('siege_step',battle_id=battle['id'])
                     continue
                 own, foe = game._player_sides(state)
+                allowed = {unit['id'] for unit in battle[own] if battle_grid.player_controls(state, battle, unit)}
                 choice = choose_action(state, battle, own, foe,
                     game.catalog.map_cities[battle['target']]['terrain'], TACTICS,
                     settings=get_settings(state), damage_percent=game.catalog.data['rules']['battle_damage_percent'],
-                    used=set(battle['used']))
+                    used=set(battle['used']), allowed_actors=allowed)
                 if choice is None:
                     raise AssertionError(f'No legal battle action: id={battle["id"]}, '
                         f'used={battle["used"]}, own={battle[own]}, foe={battle[foe]}')

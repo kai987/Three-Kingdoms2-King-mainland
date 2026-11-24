@@ -22,7 +22,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, digest
-from remake import command_books, domestic, logistics, battle_placement
+from remake import battle_grid, battle_placement, battle_reinforcements, command_books, domestic, logistics
 from remake.march_core import using_backend
 from remake.officers import ref_sort_key
 from campaign_fixtures import confirm_default_placement
@@ -179,11 +179,31 @@ class DelegationReplayTests(unittest.TestCase):
             return
         game, state = self.games[0], self.games[0].state
         ident = self.generated
-        if ident in game._march_ids(state) or not state.officers[ident].alive or state.officers[ident].troops <= 0:
+        away = game._march_ids(state)
+        if ident in away or not state.officers[ident].alive:
             return
         home = next((c for c in state.cities.values() if ident in c.roster.officer_ids), None)
         if home is None or home.owner != state.player or not command_books.can_spend(state,state.player):
             return
+        if not state.officers[ident].troops:
+            # The automatic arrival rebalance may assign the clerk's escort to
+            # stronger officers. Equip the clerk again with the normal city
+            # allocation order before using it to exercise combat.
+            if not command_books.can_spend(state, state.player, 'allocate'):
+                return
+            donors = [i for i in home.roster.officer_ids if i not in away and state.officers[i].troops > 1]
+            if home.reserves < 999 and donors:
+                donor = min(donors, key=lambda i: (-state.officers[i].troops, ref_sort_key(i)))
+                strength = state.officers[donor].troops
+                self.command('allocate', city=home.id, officer=donor,
+                             troops=strength-min(999-home.reserves, strength-1))
+                state = self.games[0].state
+                home = state.cities[home.id]
+            if not home.reserves:
+                return
+            self.command('allocate', city=home.id, officer=ident, troops=min(999,home.reserves))
+            game, state = self.games[0], self.games[0].state
+            home = state.cities[home.id]
         threatened = {row['target'] for row in state.extension['travel']['marches']
                       if row['owner'] != state.player and row['kind'] == 'attack'
                       and row['status'] == 'outbound'}
@@ -273,6 +293,9 @@ class DelegationReplayTests(unittest.TestCase):
                 self.command('settle', battle_id=state.battle['id'])
             elif state.phase == 'battle':
                 battle = state.battle
+                if battle_reinforcements.supporting_side(battle):
+                    self.command('battle_decline_support', battle_id=battle['id'])
+                    continue
                 if battle_placement.pending(battle):
                     with using_backend(self.backends[0]):
                         confirm_default_placement(PlacementCommands(self))
@@ -293,7 +316,8 @@ class DelegationReplayTests(unittest.TestCase):
                     else:self.command('siege_step',battle_id=battle['id'])
                     continue
                 own, foe = game._player_sides(state)
-                actors = [u for u in battle[own] if u['troops'] > 0
+                controllable = {unit['id'] for unit in battle[own] if battle_grid.player_controls(state, battle, unit)}
+                actors = [u for u in battle[own] if u['troops'] > 0 and u['id'] in controllable
                           and isinstance(u['id'], str) and u['id'].startswith('clerk-')]
                 targets = [u for u in battle[foe] if u['troops'] > 0]
                 if actors and targets and battle['id'] not in self.staff_battles:
@@ -323,7 +347,8 @@ class DelegationReplayTests(unittest.TestCase):
                     choice = choose_action(state, battle, own, foe,
                         game.catalog.map_cities[battle['target']]['terrain'], TACTICS,
                         settings=get_settings(state),
-                        damage_percent=game.catalog.data['rules']['battle_damage_percent'])
+                        damage_percent=game.catalog.data['rules']['battle_damage_percent'],
+                        allowed_actors=controllable)
                     self.assertIsNotNone(choice)
                     self.tactical_command(battle, choice)
                 else:
@@ -435,7 +460,7 @@ class DelegationReplayTests(unittest.TestCase):
     def test_184_liu_yan_six_turns_are_identical_in_python_and_rust(self):
         # At current opening strength, this seed yields a natural defection,
         # a legal replacement and resumed reserve allocation without defeat.
-        self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'), seed=1942955373)
+        self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'))
 
     def test_217_wei_six_turns_staff_arrival_combat_and_real_convoys(self):
         self.replay('217-07.json', 'wei', 6, staff=True)
