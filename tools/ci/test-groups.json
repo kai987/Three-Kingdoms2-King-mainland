@@ -320,6 +320,13 @@
         "save"
       ]
     },
+    "tests/test_remake_commandery_history.py": {
+      "tier": "global",
+      "groups": [
+        "map",
+        "scenarios"
+      ]
+    },
     "tests/test_remake_convoy_rescue.py": {
       "tier": "related",
       "groups": [
