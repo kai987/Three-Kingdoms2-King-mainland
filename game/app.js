@@ -812,7 +812,7 @@ async function showCityInformation(id){
    ${history?`<details class="scenario-notes city-history"><summary>年代与开局归属依据</summary>${sourceEvidence(`<p>${escapeHtml(history.detail)}</p>${openingNote}${historySources}`,history.detail_ja||'都市の年代・開始時所属について、史料の記録と本作の配置設定を区別しています。詳細な根拠と資料の精度は原資料で確認できます。')}<p>驻将按攻略参考、君主营地和同势力防务调配安排；史料任职会单独注明，不代表所有驻将均为史实郡守。</p>${garrisonHistory}</details>`:''}
    <p class="small">${escapeHtml(cityTypeLabel(c.profile,'旧版城市'))} · 地形：${{plain:'平地',mountain:'山地',water:'水地'}[c.terrain]||'未配置'}</p>
    ${c.frontier_outpost?frontierOutpostNote(c.frontier_outpost,c.owner):cityEconomyNote(c.profile)}
-   ${!preview&&typeof GameDomestic!=='undefined'?GameDomestic.summary(view,id):''}
+   ${!preview&&typeof GameDomestic!=='undefined'?GameDomestic.summary(view,id):''}${!preview&&typeof GameDomestic!=='undefined'?GameDomestic.logisticsSummary(view,id):''}
    ${!preview&&typeof GameFacilities!=='undefined'?GameFacilities.summary(view,id):''}
    ${!preview&&typeof GameCityDevelopment!=='undefined'?GameCityDevelopment.summary(view,id):''}
    ${preview&&c.city_development&&typeof GameCityDevelopment!=='undefined'?GameCityDevelopment.summary({catalog:{city_development:{cities:{[id]:c.city_development}}}},id):''}

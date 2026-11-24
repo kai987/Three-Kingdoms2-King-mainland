@@ -189,6 +189,10 @@ class CampaignSession:
                                    net_grain=projection['net'] - wage['grain']))
             result['catalog']['city_grain_balance'] = balances
             result['catalog']['city_agriculture'] = details
+            from . import military_budget
+            if military_budget.enabled(state):
+                result['catalog']['military_logistics'] = military_budget.budgets(
+                    self.game,state,state.player,stationed=stationed,incomes=income)
         else:
             scenario = self.game.catalog.data['id']
             if scenario not in self._opening_incomes:

@@ -275,7 +275,9 @@ class BattleSupplyTests(unittest.TestCase):
         battle['outcome']='retreat';battle['extended']['withdrawn']='attackers'
         state.cities['xiangyang'].grain = battle_supply.LIMIT
         remaining = battle['extended']['supply']['sides']['attackers']['remaining']
-        report = battle_supply.settle(game,state,battle)
+        # An unavailable retreat path retains the original refuge settlement.
+        with patch.object(game, '_battle_withdrawal', return_value=None):
+            report = battle_supply.settle(game,state,battle)
         self.assertEqual((report[0]['stored'],report[0]['lost']),(0,remaining))
         battle['extended'].pop('supply'); before = deepcopy(state.cities)
         self.assertEqual(battle_supply.settle(game,state,battle),[])

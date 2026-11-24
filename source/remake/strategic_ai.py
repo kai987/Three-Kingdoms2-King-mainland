@@ -15,7 +15,7 @@ from .officers import integer, recruitment_loyalty, ref_sort_key
 from . import civil_staff
 from . import grain_relief, grain_units
 from .march_supply import denominator, OFFICER_UNITS, estimate as march_grain, next_supply_days, required_grain, travel_rules
-from . import logistics_rules
+from . import city_economy, logistics_rules, military_budget
 from .route_hazards import allocate_survivors
 
 
@@ -29,6 +29,10 @@ class StrategicAI:
         self.support_checked = set()
         self.front_supply_checked = set()
         self.grain_outlooks = {}
+        self.military_budget = military_budget.enabled(state)
+        self.budget_absent = None
+        self.return_quotes = {}
+        self.war_quotes = {}
         holdings = Counter(city.owner for city in state.cities.values() if city.owner != 'neutral')
         # Let both sides concentrate on the remaining fronts once the map
         # has consolidated. Earlier campaigns retain their wider priorities.
@@ -195,6 +199,38 @@ class StrategicAI:
                 credit += needed * divisor
         return True
 
+    def war_budget(self, city, target, ids, quote):
+        if not self.military_budget:
+            return None
+        state=self.state
+        travel=state.extension['travel']['counter']
+        convoys=state.extension.get('logistics',{}).get('next_id',0)
+        movements=(travel,convoys)
+        if self.budget_absent is None or self.budget_absent[0]!=movements:
+            self.budget_absent=(movements,city_economy.absent_troops(self.game,state))
+        key=(target.id,city.id,city.owner)
+        if key not in self.return_quotes:
+            origin=copy(target)
+            origin.owner=city.owner
+            # Use the current legal directed network. A one-way march is not
+            # a licence to quote an illegal return.
+            options=[self.quote(origin,city,mode,adjacent=False) for mode in ('land','fastest')]
+            self.return_quotes[key]=[option for option in options if option is not None]
+        troops=tuple((ident,state.officers[ident].troops) for ident in ids)
+        route=tuple((leg['id'],leg['days']) for leg in quote['routes'])
+        fingerprint=(key,troops,route,movements,city.grain,city.gold,city.reserves,
+                     tuple((i,state.officers[i].experience) for i in city.roster.officer_ids))
+        if fingerprint not in self.war_quotes:
+            safe=[option for option in self.return_quotes[key] if self.safe(option,ids)]
+            back=min(safe,key=lambda option:option['days'],default=None)
+            self.war_quotes[fingerprint]=military_budget.sortie(self.game,state,city,target,ids,quote,
+                back,absent=self.budget_absent[1])
+        return self.war_quotes[fingerprint]
+
+    def affordable_sortie(self,city,target,ids,quote):
+        plan=self.war_budget(city,target,ids,quote)
+        return plan is None or plan['can_depart']
+
     def attack_option(self, city, target, *, require_grain=True):
         ids = self.army(city, target.id)
         joint = self.game._allied_attack_info(self.state, target, city.owner)
@@ -204,14 +240,28 @@ class StrategicAI:
         if not ids or total + (joint['troops'] if joint else 0) < self.settings['min_attack_troops']:
             return None
         options = []
-        for mode in ('land', 'fastest'):
-            quote = self.quote(city, target, mode, adjacent=True)
-            if self.safe(quote, ids) and (not require_grain or self.provisioned(city, ids, quote)):
-                survivors = self.survivors(quote, ids)
-                options.append(dict(source=city.id, target=target.id, officers=ids,
-                                    mode=mode, quote=quote, survivors=survivors))
-        return min(options, key=lambda o: (-o['survivors'], o['quote']['days'],
-                                          o['quote']['distance_km'], o['mode'])) if options else None
+        modes=('land','fastest','river','sea') if self.military_budget else ('land','fastest')
+        for mode in modes:
+            quote=self.quote(city,target,mode,adjacent=True)
+            if not self.safe(quote,ids):
+                continue
+            choices=range(len(ids),0,-1) if self.military_budget and require_grain else (len(ids),)
+            for size in choices:
+                selected=ids[:size]
+                strength=self.survivors(quote,selected)
+                if self.military_budget and strength+(joint['troops'] if joint else 0)<self.settings['min_attack_troops']:
+                    break
+                if require_grain and (not self.provisioned(city,selected,quote)
+                        or not self.affordable_sortie(city,target,selected,quote)):
+                    continue
+                cost=0
+                if self.military_budget:
+                    cost=march_grain(self.state,selected,quote,game=self.game)
+                options.append(dict(source=city.id,target=target.id,officers=selected,mode=mode,
+                                    quote=quote,survivors=strength,provision=cost))
+                break
+        return min(options,key=lambda o:(-o['survivors'],o['provision'],o['quote']['days'],
+                                         o['quote']['distance_km'],o['mode']),default=None)
 
     def schedule(self, members):
         """Find real departures under their projected calendar weather."""
@@ -225,7 +275,8 @@ class StrategicAI:
                 for departure in range(arrival-1, turn-1, -1):
                     quote = self.quote(source, target, member['mode'], adjacent=True, departure=departure)
                     if (self.safe(quote, member['officers']) and departure+quote['turns'] == arrival
-                            and self.provisioned(source, member['officers'], quote)):
+                            and self.provisioned(source, member['officers'], quote)
+                            and self.affordable_sortie(source,target,member['officers'],quote)):
                         found = dict(source=source.id, target=target.id, mode=member['mode'],
                             departure_turn=departure, arrival_turn=arrival,
                             officers=list(member['officers']), march_id=None)
@@ -421,21 +472,26 @@ class StrategicAI:
                 if option is None:
                     continue
                 grain = march_grain(self.state, option['officers'], option['quote'], game=self.game)
-                if source.grain >= grain:
+                budget=self.war_budget(source,target,option['officers'],option['quote'])
+                if budget is not None and not budget['safe_return']:
+                    continue
+                goal=budget['required_grain'] if budget is not None else grain
+                gold=budget['required_gold'] if budget is not None else 0
+                if source.grain>=goal and source.gold>=gold:
                     continue
                 supporting = [strength for strength, city_id in ready if city_id != source.id]
                 if option['survivors'] + sum(supporting[:max_columns-1]) >= required:
                     ids = option['officers']
                     troops = sum(self.state.officers[ident].troops for ident in ids)
-                    total_grain = grain + required_grain(troops, len(ids), BUDGET_DAYS)
+                    total_grain = goal if budget is not None else grain+required_grain(troops,len(ids),BUDGET_DAYS)
                     requests.append((key != first, option['quote']['days'], total_grain-source.grain,
-                                     key, source.id, total_grain))
+                                     key, source.id, total_grain,gold))
 
-        for _, _, _, key, source_id, grain in sorted(requests):
+        for _, _, _, key, source_id, grain,gold in sorted(requests):
             source = self.state.cities[source_id]
-            if (not logistics.attack_grain_shortage(self.state, source, grain)
-                    or logistics.dispatch_attack_grain(self.game, self.state, source, grain,
-                                                       max_turns=self.settings['max_route_turns'])):
+            if (not any(logistics.supply_shortages(self.state,source,gold,grain))
+                    or logistics.dispatch_ai_supply(self.game,self.state,source,gold,grain,
+                                                    max_turns=self.settings['max_route_turns'])):
                 plan['target'] = key
                 return
 
@@ -464,7 +520,9 @@ class StrategicAI:
             usable = (ids and target and target.owner != city.owner
                       and not historical_campaigns.allied(self.state, city.owner, target.owner)
                       and all(i in self.army(city,target.id) for i in ids))
+            budget=self.war_budget(city,target,ids,quote) if usable and quote is not None else None
             if (not usable or not self.safe(quote,ids) or not self.provisioned(city, ids, quote)
+                    or budget is not None and not budget['can_depart']
                     or self.state.turn+quote['turns'] > order['arrival_turn']
                     or self.state.extension['ai_attacks'] >= self.budget):
                 plan['orders'].remove(order)
@@ -472,7 +530,8 @@ class StrategicAI:
             if self.state.turn+quote['turns'] < order['arrival_turn']:
                 order['departure_turn'] = order['arrival_turn']-quote['turns']
                 return True
-            self.game._queue_march(self.state, city, target, ids, 'attack', order['mode'])
+            reserve=budget['immediate']-budget['outbound'] if budget is not None else None
+            self.game._queue_march(self.state, city, target, ids, 'attack', order['mode'],battle_grain=reserve)
             order['officers'] = ids
             order['march_id'] = self.state.extension['travel']['counter']
             self.state.extension['ai_attacks'] += 1
@@ -642,7 +701,7 @@ def run(campaign, state, payload):
         if city is None or city.owner in (state.player,'neutral') or not command_books.can_spend(state,city.owner):
             continue
         outlook = ai.grain_outlook(city.owner)
-        if outlook[0] is not None:
+        if outlook[0] is not None and not ai.military_budget:
             if has_domestic and city.owner not in relief_done:
                 prioritize_grain(campaign, state, city.owner, outlook)
                 relief_done.add(city.owner)

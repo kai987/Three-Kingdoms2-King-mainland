@@ -2,7 +2,7 @@
 from collections import defaultdict
 from dataclasses import dataclass
 
-from . import city_economy, command_books, domestic, facilities, grain_units, historical_campaigns, logistics
+from . import city_economy, command_books, domestic, facilities, grain_units, historical_campaigns, logistics, military_budget, payroll
 from .errors import GameError
 
 WARNING_TURNS = 3
@@ -33,6 +33,7 @@ def forecasts(game, state, owner, *, turns=WARNING_TURNS):
     cities = [city for city in state.cities.values() if city.owner == owner]
     if not cities:
         return {}
+    weighted=military_budget.enabled(state)
     absent = city_economy.absent_troops(game, state)
     development = state.extension.get('city_development', {}).get('cities', {})
     shipments = defaultdict(lambda: defaultdict(int))
@@ -41,7 +42,7 @@ def forecasts(game, state, owner, *, turns=WARNING_TURNS):
                 and row['target_march'] is None and not row['delivery_done']):
             arrival = row['journeys'][-1]['arrival_turn'] - state.turn
             if arrival > 0:
-                shipments[row['target']][arrival] += row['cargo']['grain']
+                shipments[row['target']][arrival] += (logistics.inbound_grain(game,row) if weighted else row['cargo']['grain'])
 
     current_date = (state.year, state.month)
     result = {}
@@ -52,6 +53,7 @@ def forecasts(game, state, owner, *, turns=WARNING_TURNS):
                                              city_economy.town_level(game, state, city.id), state=state)
         monthly = civilian + city_economy.garrison_grain_cost(
             data, city.id, *current_date, active, city.reserves)
+        wages=payroll.monthly_due(state,city)['grain'] if weighted else 0
         due, reserves = monthly, city.reserves
         stock, unassisted, reserve = city.grain, 0, 0
         arrivals = shipments[city.id]
@@ -72,7 +74,7 @@ def forecasts(game, state, owner, *, turns=WARNING_TURNS):
                 reserves += income.get('reserves', 0)
                 due = civilian + city_economy.garrison_grain_cost(
                     data, city.id, year, month + 1, active, reserves)
-            ration = city_economy.turn_rations(due, installment)
+            ration = city_economy.turn_rations(due, installment)+(wages if installment==3 else 0)
             stock -= ration
             unassisted -= ration
             balances.append(stock)
@@ -86,7 +88,7 @@ def forecasts(game, state, owner, *, turns=WARNING_TURNS):
                 and not any(arrivals[ahead] for ahead in range(1, turns + 1))):
             # An empty granary needs a buffer even if the next harvest could refill it.
             gaps.append((turns, (monthly + 2) // 3))
-        result[city.id] = Forecast(monthly, zero_in, gaps, reserve, late_gap, balances)
+        result[city.id] = Forecast(monthly+wages, zero_in, gaps, reserve, late_gap, balances)
     return result
 
 
@@ -102,13 +104,17 @@ def _donors(game, state, projections):
     pool = state.extension['logistics']
     busy = {row['source'] for row in pool['convoys']}
     donors = []
+    owner=state.cities[next(iter(projections))].owner if projections else 'neutral'
+    budgets=military_budget.budgets(game,state,owner) if military_budget.enabled(state) and owner!=state.player else {}
     for key, row in projections.items():
         if key in busy or row.zero_in is not None:
             continue
         city = state.cities[key]
         ledger = pool['cities'][key]
         policy = ledger['policy']
-        surplus = city.grain - max(row.reserve, policy['reserve_grain'])
+        budget=budgets.get(key)
+        reserve=min(budget['target'],budget['fixed']*3) if budget else 0
+        surplus = city.grain - max(row.reserve,policy['reserve_grain'],reserve)
         if (surplus <= 0 or not policy['max_grain'] or not policy['max_officers']
                 or ledger['last_dispatch_turn'] == state.turn
                 or historical_campaigns.hold_longyou_garrison(game, state, city)):
@@ -123,8 +129,10 @@ def _donors(game, state, projections):
 
 
 def _deliveries(game, state, owner, projections, targets):
-    from .march_supply import cost, initial_days
+    from .march_supply import cost, estimate, initial_days, quote_supply
+    from . import logistics_rules
 
+    weighted=military_budget.enabled(state)
     groups = defaultdict(list)
     for donor in _donors(game, state, projections):
         policy = donor[1]
@@ -144,13 +152,18 @@ def _deliveries(game, state, owner, projections, targets):
                 # not withdraw the emergency cargo from the receiving city.
                 returning = logistics._safe_quote(game, state, state.cities[key], city, policy, quotes=quotes)
                 troops = state.officers[escort].troops
-                rations = cost(troops, 1, quote['days'])
+                rations=(quote_supply(quote,troops,1,game=game,version=logistics_rules.CURRENT)
+                         if weighted else cost(troops,1,quote['days']))
                 if returning:
-                    rations += cost(troops, 1, initial_days(state, returning[1]))
+                    rations+=(estimate(state,[escort],returning[1],game=game)
+                              if weighted else cost(troops,1,initial_days(state,returning[1])))
                 amount = min(policy['max_grain'], surplus - rations)
                 if amount > 0:
-                    deliveries[key].append((quote['turns'], quote['days'], -amount, city.id, escort, mode, rations))
-    return {key: sorted(rows) for key, rows in deliveries.items()}
+                    delivered=logistics.projected_grain(game,quote,amount) if weighted else amount
+                    if delivered:
+                        line=(quote['turns'],quote['days'],-delivered,city.id,escort,mode,rations)
+                        deliveries[key].append((*line,quote,amount) if weighted else line)
+    return {key:sorted(rows,key=lambda row:row[:7]) for key,rows in deliveries.items()}
 
 
 def _uncovered(row, planned, arrival=0):
@@ -159,7 +172,7 @@ def _uncovered(row, planned, arrival=0):
                 for ahead, gap in row.gaps if arrival < ahead), default=0)
 
 
-def _schedule(projections, targets, deliveries, slots, *, send=None):
+def _schedule(projections, targets, deliveries, slots, *, send=None, game=None):
     """Use the same donor allocation for advice and actual dispatch."""
     assigned = set()
     planned = {key: [] for key in targets}
@@ -167,7 +180,7 @@ def _schedule(projections, targets, deliveries, slots, *, send=None):
         for key in targets:
             row = projections[key]
             orders = planned[key]
-            for turns, _, capacity, source, escort, mode, rations in deliveries.get(key, ()):
+            for turns, _, capacity, source, escort, mode, rations, *route in deliveries.get(key, ()):
                 if not slots:
                     return planned
                 if source in assigned:
@@ -177,7 +190,8 @@ def _schedule(projections, targets, deliveries, slots, *, send=None):
                 if not need:
                     continue
                 amount = min(-capacity, need)
-                if send and not send(key, source, escort, mode, amount, rations):
+                actual=logistics.gross_shipment(game,route[0],amount,route[1]) if route else amount
+                if send and not send(key, source, escort, mode, actual, rations):
                     continue
                 assigned.add(source)
                 orders.append((turns, amount))
@@ -206,7 +220,7 @@ def dispatch(game, state, owner):
         return True
 
     deliveries = _deliveries(game, state, owner, projections, targets)
-    _schedule(projections, targets, deliveries, command_books.remaining(state, owner), send=send)
+    _schedule(projections, targets, deliveries, command_books.remaining(state, owner), send=send,game=game)
 
 
 def aid_cities(game, state, owner):
@@ -218,7 +232,7 @@ def aid_cities(game, state, owner):
                  for other in {c.owner for c in state.cities.values()} - {'neutral'})
     slots = command_books.remaining(state, owner)
     deliveries = _deliveries(game, state, owner, projections, targets) if allies and slots else {}
-    plans = _schedule(projections, targets, deliveries, slots)
+    plans = _schedule(projections,targets,deliveries,slots,game=game)
     return {key: dict(id=key, zero_in=projections[key].zero_in,
                       amount=min(AID_MONTHS * projections[key].monthly,
                                  logistics.LIMIT - state.cities[key].grain)

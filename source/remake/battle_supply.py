@@ -253,7 +253,7 @@ def _return_city(state, battle, side):
     return sorted(homes, key=lambda city: city.id)[0] if homes else None
 
 
-def _settle_coalition_grain(state, battle, row, winner_city, returns):
+def _settle_coalition_grain(game,state,battle,row,winner_city,returns):
     """Allocate remaining grain by each faction's contribution to the shared pool."""
     contributions = dict(battle['extended']['coalition']['provisions'])
     primary = battle['attacker']
@@ -264,8 +264,15 @@ def _settle_coalition_grain(state, battle, row, winner_city, returns):
                 * credit_scale(battle['extended']['supply']) + receipt.get('credit',0))
     total = sum(contributions.values())
     ally_grain = row['remaining'] * contributions[ally] // total if total else 0
+    ally_credit = row['credit_units'] * contributions[ally] // total if total else 0
     reports = []
     for owner, grain in ((primary, row['remaining'] - ally_grain), (ally, ally_grain)):
+        if credit_scale(battle['extended']['supply'])>1 and winner_city.owner!=owner:
+            credit=ally_credit if owner==ally else row['credit_units']-ally_credit
+            withdrawal=game._battle_withdrawal(state,battle,'attackers',grain,credit,owner=owner)
+            if withdrawal is not None:
+                reports.append(dict(withdrawal,owner=owner))
+                continue
         officers = {unit['id'] for unit in battle['attackers']
                     if state.officers[unit['id']].alive and state.officers[unit['id']].faction_id == owner}
         homes = [city for city in state.cities.values() if city.owner == owner
@@ -298,16 +305,24 @@ def settle(game, state, battle, *, coalition_returns=None, refuge_members=None):
     for side in SIDES:
         row = supply['sides'][side]
         if side == 'attackers' and coalition:
-            report.extend(_settle_coalition_grain(state, battle, row, winner_city, coalition_returns or {}))
+            report.extend(_settle_coalition_grain(game,state,battle,row,winner_city,coalition_returns or {}))
             row['remaining'] = row['credit_units'] = 0
             continue
         if side == 'defenders' and refuge_members:
             grain = row['remaining']
-            game._queue_runan_refuge(state, battle, refuge_members, grain)
+            game._queue_runan_refuge(state, battle, refuge_members, grain, row['credit_units'])
             report.append(dict(side=side, city=None, grain=grain, stored=0, lost=0,
                                credit_units=row['credit_units'], in_transit=grain))
             row['remaining'] = row['credit_units'] = 0
             continue
+        if (supply['schema']==EXACT_SCHEMA and
+                (side=='attackers' and battle['outcome'] in ('retreat','defeat') or
+                 side=='defenders' and battle['outcome']=='victory')):
+            withdrawal=game._battle_withdrawal(state,battle,side,row['remaining'],row['credit_units'])
+            if withdrawal is not None:
+                report.append(withdrawal)
+                row['remaining']=row['credit_units']=0
+                continue
         city = _return_city(state, battle, side)
         # A routed force without a returning commander leaves its bags behind.
         if city is None and winner_city.owner == winner_owner:
@@ -323,7 +338,8 @@ def settle(game, state, battle, *, coalition_returns=None, refuge_members=None):
     supply['settlement'] = report
     game._note(state, '戰鬥餘糧結算：' + '；'.join(
         (game.faction_name(state, row['owner']) if 'owner' in row else
-         ('攻方' if row['side'] == 'attackers' else '守方')) + f'{row["stored"]}入城、{row["lost"]}損失'
+         ('攻方' if row['side'] == 'attackers' else '守方')) +
+        (f'{row["in_transit"]}隨撤退隊' if 'in_transit' in row else f'{row["stored"]}入城、{row["lost"]}損失')
         for row in report) + '。')
     return report
 

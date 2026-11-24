@@ -2,7 +2,7 @@
 
 import unittest
 
-from remake import battle_experience, battle_grid, battle_supply, grain_units
+from remake import battle_experience, battle_grid, battle_supply, grain_units, logistics_rules
 from remake.campaign import Campaign
 from test_remake_allied_travel import _alliance, _catalog
 
@@ -25,7 +25,7 @@ class AlliedSettlementTests(unittest.TestCase):
         shu, wu = shu_home.roster.officer_ids[0], wu_home.roster.officer_ids[0]
         shu_home.grain -= 60
         wu_home.grain -= 90
-        ration_units = grain_units.denominator()
+        ration_units = grain_units.denominator() * logistics_rules.RATION_SCALE
         game._start_expanded_battle(state, shu_home, target, [shu, wu], paid=True,
             march_supply=dict(remaining=150, credit_units=0),
             coalition=dict(sources={str(shu): shu_home.id, str(wu): wu_home.id},
@@ -74,8 +74,11 @@ class AlliedSettlementTests(unittest.TestCase):
                           captor_share['reserves']))
         self.assertEqual((rear.gold, rear.grain, rear.reserves),
                          (rear_before[0] + contributor_share['gold'],
-                          rear_before[1] + contributor_share['grain'] + 60,
+                          rear_before[1] + contributor_share['grain'],
                           rear_before[2] + contributor_share['reserves']))
+        returning, = state.extension['travel']['marches']
+        self.assertEqual((returning['journey_source'], returning['target'], returning['officers'],
+                          returning['supply']['remaining']), ('nanyang', 'nanjun', [shu], 60))
         event = next(event for event in reversed(state.extension['events']['items'])
                      if event['kind'] == 'battle_result')
         self.assertEqual(event['details']['coalition'],

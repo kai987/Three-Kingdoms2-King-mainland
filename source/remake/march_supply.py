@@ -89,7 +89,7 @@ def remaining_requirement(game,state,journey,*,minimum_days=0,reserves=0):
                                book_denominator(supply)))
 
 
-def create(state,ids,quote,reserves=0,*,game=None,from_cargo=False,initial_grain=None,previous=None):
+def create(state,ids,quote,reserves=0,*,game=None,from_cargo=False,initial_grain=None,previous=None,credit=0):
     version=rules.version(state) if previous is None else book_version(previous)
     loaded=estimate(state,ids,quote,reserves,game=game,version=version) if initial_grain is None else initial_grain
     tick=(state.turn-1)*10
@@ -100,7 +100,7 @@ def create(state,ids,quote,reserves=0,*,game=None,from_cargo=False,initial_grain
         shortage_days=0,shortage_streak=0,lost=0,retreat_requested=False,refills=[],starvation=[],periods=[],
         ration_manifests=[dict(tick=tick+1,troops={str(i):state.officers[i].troops for i in ids},reserves=reserves)])
     if version==rules.CURRENT:
-        credit=previous['credit_units'] if previous else 0
+        credit=previous['credit_units'] if previous else credit
         supply.update(schema=WEIGHTED_SCHEMA,credit_units=credit,initial_credit=credit,base_consumed=0)
     return supply
 

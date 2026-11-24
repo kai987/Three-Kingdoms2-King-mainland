@@ -145,7 +145,12 @@ class LogisticsTests(unittest.TestCase):
                                 required_grain(6000, 1, 1 + BUDGET_DAYS))
         self.assertFalse(game.state.settled_battles)
 
-        finished = game.command('observe_turn', {}, game.revision)
+        # Recruitment and city dues can change the full reserve requirement
+        # between dispatch and arrival. Allow that next income installment.
+        for _ in range(3):
+            finished = game.command('observe_turn', {}, game.revision)
+            if game.state.phase == 'finished':
+                break
         self.assertEqual(finished['catalog']['observer_winner'], 'shu')
         self.assertEqual(game.state.phase, 'finished')
         self.assertEqual(len(game.state.settled_battles), 1)

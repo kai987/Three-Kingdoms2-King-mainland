@@ -350,7 +350,7 @@ def _recruit_gold_per_100(strength):
     raise ValueError('Recruitment martial strength')
 
 
-def recruitment_preview(game, state, city_id):
+def recruitment_preview(game, state, city_id, *, budget=None):
     city, row = state.cities[city_id], _pool(state)['cities'][city_id]
     post = appointments(state, city.owner)
     ident, policy = post.get('military'), post.get('policy', DEFAULT_POLICY)
@@ -365,6 +365,9 @@ def recruitment_preview(game, state, city_id):
     amount = min(100 + strength, max(0, policy['reserve_target'] - city.reserves),
                  gold_capacity, available_grain * 100 // unit_grain,
                  LIMIT - city.reserves)
+    if budget is not None:
+        from . import military_budget
+        amount=military_budget.recruitment(game,state,city,amount,budget)
     return dict(soldiers=amount, gold=(amount * unit_gold + 99) // 100,
                 grain=(amount * unit_grain + 99) // 100)
 
@@ -673,7 +676,7 @@ def _hire_staff(game, state, owner, city_ids):
 
 
 def prioritize_grain(game, state, owner, outlook=None):
-    from . import diplomacy, grain_relief
+    from . import diplomacy, grain_relief, military_budget
 
     if outlook is None:
         outlook = grain_relief.recovery(game, state, owner)
@@ -686,12 +689,14 @@ def prioritize_grain(game, state, owner, outlook=None):
                     and diplomacy.request_available_grain(game, state, owner)):
                 updated = grain_relief.recovery(game, state, owner)
             grain_relief.invest(game, state, owner, updated)
+        if military_budget.enabled(state) and state.phase=='ai' and owner!=state.player:
+            military_budget.buy_reserves(game,state,owner)
     return outlook
 
 
 def run_automatic(game, state, owner, *, outlook=None):
     """Spend the faction's remaining orders under the shared policy, once per turn."""
-    from . import grain_relief
+    from . import grain_relief, military_budget
 
     synchronize(game, state)
     if owner not in game.catalog.factions or owner == 'neutral' or owner in state.extension.get('ended_factions', []):
@@ -732,16 +737,21 @@ def run_automatic(game, state, owner, *, outlook=None):
                 for _ in range(command_books.MAXIMUM):
                     if not _hire_staff(game, state, owner, discretionary_cities):
                         break
-        elif task == 'recruit' and policy['recruit_enabled'] and statewide is None:
+        elif task == 'recruit' and policy['recruit_enabled']:
+            budgeted=military_budget.enabled(state) and owner!=state.player
+            if statewide is not None and not budgeted:
+                continue
+            budgets=military_budget.budgets(game,state,owner) if budgeted else {}
             for _ in range(command_books.MAXIMUM):
                 remaining = command_books.remaining(state, owner)
                 for key in eligible:
-                    if key in shortages:
+                    budget=budgets.get(key)
+                    if key in shortages and not (budget and budget['threatened']):
                         continue
                     city = state.cities[key]
                     if not command_books.can_spend(state, owner, 'recruit'):
                         break
-                    quote = recruitment_preview(game, state, key)
+                    quote = recruitment_preview(game,state,key,budget=budget)
                     if quote['soldiers']:
                         city.gold -= quote['gold']
                         city.grain -= quote['grain']
@@ -752,14 +762,16 @@ def run_automatic(game, state, owner, *, outlook=None):
                     break
         elif task == 'transport' and 'logistics' in state.extension:
             from . import logistics
+            plans=(military_budget.budgets(game,state,owner)
+                   if military_budget.enabled(state) and owner!=state.player else None)
             for key in discretionary_cities:
                 if command_books.can_spend(state, owner, 'dispatch_transport'):
-                    logistics.auto_dispatch_city(game, state, key)
+                    logistics.auto_dispatch_city(game,state,key,plans=plans)
 
 
 def finish_faction_turn(game, state, owner, *, automatic=True, outlook=None):
     """After manual commands and before the calendar advances, once per city."""
-    from . import grain_relief
+    from . import grain_relief, military_budget
     if outlook is None:
         outlook = grain_relief.recovery(game, state, owner)
     statewide, shortages = outlook
@@ -769,6 +781,9 @@ def finish_faction_turn(game, state, owner, *, automatic=True, outlook=None):
         run_automatic(game, state, owner, outlook=outlook)
         from . import facilities
         facilities.synchronize(game,state)
+        if military_budget.enabled(state) and owner!=state.player:
+            unfilled={key for key,budget in military_budget.budgets(game,state,owner).items() if budget['deficit']}
+            hold_grain = set(hold_grain) | unfilled
         facilities.auto_turn(game, state, owner, hold_grain=hold_grain, food_priority=food_priority,
                              allow_stockpiling=(owner == state.player or not grain_units.current_rations()))
         from . import treasures

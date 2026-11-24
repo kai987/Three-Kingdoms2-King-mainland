@@ -706,7 +706,7 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None):
     return row
 
 
-def auto_dispatch_city(game, state, city_id):
+def auto_dispatch_city(game,state,city_id,*,plans=None):
     if (not _pool(state)['cities'][city_id]['policy']['enabled']
             or historical_campaigns.hold_longyou_garrison(game, state, state.cities[city_id])):
         return False
@@ -733,8 +733,35 @@ def auto_dispatch_city(game, state, city_id):
         if reason=='no_surplus':
             return _auto_transfer_city(game,state,city_id)
         return False
-    dispatch(game, state, dict(source=city_id, target=proposed['target'], officers=proposed['officers'],
-        cargo=proposed['cargo'], route_mode=proposed['route_mode']), state.cities[city_id].owner)
+    from . import military_budget
+    city=state.cities[city_id]
+    mode=proposed['route_mode']
+    cargo=proposed['cargo']
+    if military_budget.enabled(state) and city.owner!=state.player and cargo['grain']:
+        plans=military_budget.budgets(game,state,city.owner) if plans is None else plans
+        donor=plans[city_id]
+        recipient=plans[proposed['target']]
+        remaining=max(0,recipient['target']-state.cities[proposed['target']].grain-_inbound(state,proposed['target'],game=game)['grain'])
+        if remaining<=0:
+            cargo=dict(cargo,grain=0)
+            if not any(cargo.values()):
+                return False
+        else:
+            floor=min(donor['target'],donor['fixed']*3)
+            cargo=dict(cargo,grain=min(cargo['grain'],remaining,
+                max(0,city.grain-floor-proposed['cost_grain'])))
+            if cargo['grain'] and recipient['stock']>=recipient['fixed']:
+                policy=_pool(state)['cities'][city_id]['policy']
+                minimum=_safe_path(game,state,city_id,proposed['target'],city.owner,'minimum_grain',policy,
+                    officers=proposed['officers'],cargo=cargo['grain'],reserves=cargo['reserves'])
+                if minimum is not None:
+                    bags=_rations(game,state,minimum,proposed['officers'],cargo)
+                    if city.grain-cargo['grain']-bags>=max(floor,policy['reserve_grain']):
+                        mode='minimum_grain'
+            if not any(cargo.values()):
+                return False
+    dispatch(game,state,dict(source=city_id,target=proposed['target'],officers=proposed['officers'],
+        cargo=cargo,route_mode=mode),city.owner)
     return True
 
 
