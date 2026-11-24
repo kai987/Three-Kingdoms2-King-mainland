@@ -44,6 +44,9 @@ EARLY_EXPANSION_RESERVES = {
     'wuchang': 1320,  # E County is present in the 184 opening.
 }
 HETAO_184_RESERVES = {'shuofang': 630, 'wuyuan': 660, 'yunzhong': 660}
+COMMANDERY_184_RESERVES = {'liang': 600, 'pengcheng': 630, 'lu': 600, 'youbeiping': 660, 'lean': 630}
+DAIFANG_PRE_204_RESERVES = 1320
+COMMANDERY_184_DELTA = sum(COMMANDERY_184_RESERVES.values()) - DAIFANG_PRE_204_RESERVES
 LATER_184_RESERVES = {'donglai': 660, 'langya': 650, 'taishan': 700, 'xuantu': 580,
                       'guonei': 1600, 'liucheng': 1350, 'luzon': 0}
 FRONTIER_184_GARRISONS = {'goguryeo': 1510, 'wuhuan': 3800}
@@ -206,13 +209,17 @@ class SongJianLuXingTests(unittest.TestCase):
         for city in expansion_reserves:
             self.assertEqual(state.cities[city].owner, 'han' if city in HETAO_184_RESERVES else 'neutral')
             self.assertEqual(state.cities[city].roster.officer_ids, [])
+        self.assertNotIn('daifang', state.cities)
+        self.assertEqual({city: state.cities[city].reserves for city in COMMANDERY_184_RESERVES},
+                         COMMANDERY_184_RESERVES)
+        legacy_total = ORIGINAL_184_SOLDIERS + LATER_184_SOLDIERS + COMMANDERY_184_DELTA
         self.assertEqual(sum(row['reserves'] for city, row in old_stocks.items() if city not in expansion_reserves)
-                         + sum(old_troops.values()), ORIGINAL_184_SOLDIERS + LATER_184_SOLDIERS)
+                         + sum(old_troops.values()), legacy_total)
         reinforcement = sum(opening_troops.values()) - sum(old_troops.values())
         self.assertEqual(sum(c.reserves for city, c in state.cities.items() if city not in expansion_reserves)
                          + sum(o.troops for o in state.officers.values()),
-                         ORIGINAL_184_SOLDIERS + LATER_184_SOLDIERS + reinforcement)
-        expected_total = ORIGINAL_184_SOLDIERS + sum(expected_reserves.values()) + LATER_184_SOLDIERS + reinforcement
+                         legacy_total + reinforcement)
+        expected_total = legacy_total + sum(expected_reserves.values()) + reinforcement
         self.assertEqual(state.soldiers['initial'], expected_total)
         self.assertEqual(sum(c.reserves for c in state.cities.values())
                          + sum(o.troops for o in state.officers.values()), expected_total)
@@ -415,7 +422,7 @@ class SongJianLuXingTests(unittest.TestCase):
         self.assertEqual(len(rows['mainland184-02']['scheduled_faction_coups']), 1)
         self.assertEqual(rows['mainland184-02']['initial_soldier_total'],
                          ORIGINAL_184_SOLDIERS + sum(EARLY_EXPANSION_RESERVES.values())
-                         + sum(HETAO_184_RESERVES.values()) + LATER_184_SOLDIERS)
+                         + sum(HETAO_184_RESERVES.values()) + LATER_184_SOLDIERS + COMMANDERY_184_DELTA)
         adaptations = report['fictional_adaptations']
         self.assertEqual({row['id'] for row in adaptations}, SONG_IF_OPENINGS)
         self.assertTrue(all(row['fictional'] for row in adaptations))

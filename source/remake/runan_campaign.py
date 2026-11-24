@@ -227,7 +227,7 @@ def _send(game, state, target, commander, unavailable):
                  if city.owner == owner and ident in city.roster.officer_ids), None)
     if home is None:
         return False
-    neighbors = game._neighbors(RUNAN, state)
+    neighbors = game._neighbors(RUNAN, state) & state.cities.keys()
     if home.id not in neighbors:
         if not command_books.can_spend(state, owner, 'transfer'):
             return False

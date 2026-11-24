@@ -44,6 +44,18 @@ class HistoricalCampaignTests(unittest.TestCase):
                             row['resolve_death_year'] = True
             if start_month is not None:
                 data['start_month'] = start_month
+            if start_year is not None:
+                date = data['start_year'], data['start_month']
+                for city, rule in data['city_foundings'].items():
+                    if city in data['active_cities'] or date < (rule['year'], rule.get('month', 1)):
+                        continue
+                    retirement = data['city_retirements'].get(city)
+                    if retirement and date >= (retirement['year'], retirement.get('month', 1)):
+                        reopens = retirement.get('reopens')
+                        if reopens is None or date < tuple(reopens):
+                            continue
+                    data['active_cities'].append(city)
+                    data['initial_owners'][city] = data['initial_owners'][rule['parent']]
             if group is not None:
                 data['main_scenario']['group'] = group
             if initial_alliance is not None:
@@ -91,6 +103,9 @@ class HistoricalCampaignTests(unittest.TestCase):
             self.place(game)
             if game.state.phase == 'result':
                 continue
+            if game.state.battle['extended'].get('siege'):
+                game.command('siege_withdraw', {'battle_id': battle_id}, game.revision)
+                continue
             game.command('retreat', {'battle_id': battle_id}, game.revision)
             game.command('settle', {'battle_id': battle_id}, game.revision)
             self.arrivals(game)
@@ -124,9 +139,15 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertGreater(army['supply']['loaded'], 0)
         self.assertEqual(game.state.cities[source].grain, grain_before - army['supply']['loaded'])
         self.assertIsNone(game.state.battle)
+        def wanted(battle):
+            return battle['source'] == source and battle['target'] == target and battle['attacker'] == game.state.player
+
         for _ in range(army['quote']['turns']):
             self.advance(game)
             self.arrivals(game)
+            self.finish_pending_battles(game, stop_at=wanted)
+            if game.state.phase == 'battle':
+                break
 
     def allocate_from_reserves(self, game, city, officer, target):
         unit = game.state.officers[officer]
@@ -431,7 +452,14 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertGreater(army['supply']['loaded'], 0)
         self.assertEqual(len(self.events(game, history.GUANDU)), 1)
         self.arrivals(game)
-        self.finish_pending_battles(game, stop_at=lambda battle: battle['attacker'] == 'yuan_shao')
+        wanted = lambda battle: battle['attacker'] == 'yuan_shao' and battle['target'] == army['target']
+        while game.state.turn < army['arrival_turn']:
+            self.finish_pending_battles(game, stop_at=wanted)
+            if game.state.phase == 'battle':
+                break
+            self.advance(game)
+            self.arrivals(game)
+        self.finish_pending_battles(game, stop_at=wanted)
         self.assertEqual(game.state.phase, 'battle')
         self.assertEqual((game.state.battle['attacker'], game.state.battle['defender']),
                          ('yuan_shao', 'wei'))
@@ -462,11 +490,15 @@ class HistoricalCampaignTests(unittest.TestCase):
         # Keep the separate Changsha front quiet while testing Cao Cao's advance.
         game = self.opening('208-10', 'shu', initial_alliance=['shu', 'han_xuan'])
         self.assertFalse(game.state.extension['travel']['marches'])
+        # Keep the October front intact until the historical December trigger.
+        # The expedition and its arrival below use the real AI and route commands.
         for _ in range(6):
             self.assertFalse(self.events(game, history.SOUTH))
-            self.advance(game)
-            self.arrivals(game)
-            self.finish_pending_battles(game)
+            game._complete_turn(game.state)
+            game._reconcile_factions(game.state)
+            civil_staff.synchronize(game, game.state, monthly=game.state.day == 1)
+            history.process(game, game.state)
+        game.validate(game.state)
         self.assertEqual((game.state.year, game.state.month, game.state.day), (208, 12, 1))
         self.assertEqual(len(self.events(game, history.ALLIANCE)), 1)
         event, = self.events(game, history.SOUTH)

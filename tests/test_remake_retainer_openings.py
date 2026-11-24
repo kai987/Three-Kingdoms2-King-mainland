@@ -183,6 +183,7 @@ class RetainerOpeningTests(unittest.TestCase):
 
     def test_all29_runtime_openings_conserve_material_and_have_no_duplicate_officers(self):
         materials = {row['id']: row['material'] for row in self.review['scenarios']}
+        commanderies = json.loads((ROOT/'game/config/campaigns/commandery-history.json').read_text())
         for chapter, catalog in self.catalogs.items():
             with self.subTest(chapter=chapter):
                 game = self.game(chapter)
@@ -193,13 +194,20 @@ class RetainerOpeningTests(unittest.TestCase):
                 expected = dict(materials[catalog.data['id']])
                 # The retainer review was frozen before these cities were added.
                 for city in ('shuofang', 'wuyuan', 'yunzhong', 'donglai', 'langya', 'taishan',
-                             'xuantu', 'liucheng', 'guonei', 'luzon', 'nanan', 'xinping', 'beidi', 'guangwei'):
+                             'xuantu', 'liucheng', 'guonei', 'luzon', 'nanan', 'xinping', 'beidi', 'guangwei',
+                             *commanderies['new_sites']):
                     if city not in game.state.cities:
                         continue
                     stock = catalog.data['initial_city_resources'][city]
                     expected['gold'] += stock['gold']
                     expected['grain'] += stock['grain']
                     expected['soldiers'] += stock['reserves']
+                if 'daifang' not in game.state.cities:
+                    self.assertLess(catalog.data['start_year'], 204)
+                    stock = catalog.data['initial_city_resources']['daifang']
+                    expected['gold'] -= stock['gold']
+                    expected['grain'] -= stock['grain']
+                    expected['soldiers'] -= stock['reserves']
                 expected['soldiers'] += sum(row['troops'] for row in catalog.data['initial_officers']
                                             if row['city'] in ('liucheng', 'guonei'))
                 stocks, mobilized = mobilize_reserves(catalog)

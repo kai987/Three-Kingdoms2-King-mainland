@@ -127,9 +127,15 @@ class HanSuiIfTests(unittest.TestCase):
         plan = self.expansion[data['id']]
         opened_counties = {city for city, owner in self.chronology[data['id']].items()
                            if owner is not None}
-        additions = plan['owners'].keys() | opened_counties | {'liucheng', 'guonei', 'luzon'}
-        original_cities = [city for city in data['active_cities'] if city not in additions]
-        self.assertEqual(original_cities, old['active_cities'])
+        commanderies = json.loads((ROOT/'game/config/campaigns/commandery-history.json').read_text())
+        additions = plan['owners'].keys() | opened_counties | commanderies['new_sites'].keys() | {
+            'liucheng', 'guonei', 'luzon'}
+        if 'guangwei' not in old['active_cities']:
+            additions.add('guangwei')  # The earlier Yongyang period was added later.
+        original_cities = old['active_cities']
+        missing = {'daifang'} if data['start_year'] < 204 else set()
+        self.assertEqual([city for city in data['active_cities'] if city not in additions],
+                         [city for city in original_cities if city not in missing])
         approved = {pid: city for city, people in plan['garrisons'].items() for pid in people}
         old_locations = {row['person_id']: row['city'] for row in old['initial_officers']}
         rows = []

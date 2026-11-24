@@ -475,9 +475,10 @@ class DelegationReplayTests(unittest.TestCase):
         self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'))
 
     def test_184_historical_save_preserves_defection_reappointment_and_allocation(self):
-        # This seed exercises the historical economy's natural persuasion
-        # sequence. V2 uses different jobs when it forecasts a food shortage.
-        self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'), legacy_economy=True)
+        # With the expanded 184 map, this seed still produces an actual
+        # defection, a replacement appointment, and a subsequent allocation.
+        self.replay('184-02.json', 'liu_yan', 9, backends=('python', 'rust'),
+                    legacy_economy=True, seed=2027)
 
     def test_217_wei_six_turns_staff_arrival_combat_and_real_convoys(self):
         self.replay('217-07.json', 'wei', 6, staff=True)
