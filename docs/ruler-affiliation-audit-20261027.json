@@ -5,7 +5,7 @@
   "review_sha256": "fb38ef837fad2783b70ac326f3496bfb45f322b274a8d062c7f5bc0aa65efdba",
   "presentation_sha256": "12707877fb471d725e7b531e13afa848dc39f05d5bea35b294e256f436faebe4",
   "locale_sha256": "31d08c0f13fbd204244755c945176787b7aec49126cb4a78e9426992f9033205",
-  "japanese_sha256": "795d256682906aec6cc6cb8634b8af25128f7e5685e5a08607f46743bdb7effe",
+  "japanese_sha256": "02f98ab2652d6fea89e27a251ec86dd7b232f8799eb96d42de16e90c41f2b7d8",
   "baseline_serving_non_ruler_reviews": 283,
   "pool": [
     {
