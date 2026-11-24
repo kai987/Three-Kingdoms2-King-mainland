@@ -150,7 +150,19 @@ def audit():
         data = catalog.data
         check(catalog.rules.city_officer_capacity == 99, scenario_id + ': city capacity changed')
         check(catalog.rules.battle_officers_per_side == 10, scenario_id + ': battle capacity changed')
-        check(set(catalog.definitions) == set(people), scenario_id + ': canonical person set changed')
+        check(set(compiled_people) == set(people), scenario_id + ': canonical person set changed')
+        guandu = scenario_id == 'mainland200-01'
+        cai_yang = 'historical-cai-yang-runan'
+        supplements = {cai_yang} if guandu else set()
+        check(set(catalog.definitions) == set(people) | supplements,
+              scenario_id + ': unexpected runtime person set')
+        if guandu:
+            definition = catalog.definitions[cai_yang]
+            expected_window = dict(start=[200, 7], end=[201, 9], city='yingchuan', faction='wei', resolve_death_year=True)
+            check(catalog.ids[cai_yang] == 1199 and definition.name == '蔡阳'
+                  and (definition.service_year, definition.death_year) == (200, 201)
+                  and data['appearance_windows'][cai_yang] == [expected_window],
+                  scenario_id + ': unexpected Cai Yang deployment window')
         override = scenario_sources[scenario_id].get('people_overrides', {})
         check(not (set(override) - {'update'}), scenario_id + ': unsupported person override shape')
         overrides = override.get('update', {})
@@ -171,6 +183,9 @@ def audit():
                 expected_identity['service_year'] = correction[1]
                 if correction == RUNTIME_SERVICE_YEARS.get(pid):
                     expected_identity['chronology_basis'] = 'historical_succession_appearance_correction'
+            if guandu and pid == 'san14-candidate-0208':
+                expected_identity.update(death_year=201,
+                    chronology_basis='《資治通鑑》載建安六年曹操擊汝南時龔都部眾散去，龔都下落不詳。201年是本劇本的退場界線。')
             check(all(person[field] == expected_identity[field] for field in CANONICAL_FIELDS),
                   scenario_id + ': runtime person identity/date mismatch: ' + pid)
             check(all(person[field] == canonical_person[field]
