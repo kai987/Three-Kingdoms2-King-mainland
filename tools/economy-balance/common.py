@@ -2,12 +2,14 @@
 import csv
 import hashlib
 import json
+import os
 from itertools import chain
 from pathlib import Path
 import subprocess
 import sys
 
-ROOT = Path(__file__).resolve().parents[2]
+TOOL_ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(os.environ.get('TK2_OBSERVER_RUNTIME_ROOT', TOOL_ROOT)).resolve()
 sys.path.insert(0, str(ROOT / 'source'))
 
 from remake.campaign import Campaign, Catalog

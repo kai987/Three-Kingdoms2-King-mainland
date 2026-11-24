@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from common import to_csv, to_json
+from observe import WEIGHTED_ONLY
 
 
 METRICS = {
@@ -17,7 +18,7 @@ METRICS = {
     'military': ('active_troops','reserves','raised_troops','recruit_grain','recruit_gold',
                 'postbattle_recruit_grain','postbattle_recruit_gold','ai_sorties','battles','battle_retreats',
                 'battle_troops_lost','troop_losses','march_hunger_losses','march_rations','march_base_rations',
-                'convoy_rations','convoy_grain_sent','convoy_grain_arrived','convoy_route_grain_loss',
+                'convoy_rations','convoy_hunger_losses','convoy_grain_sent','convoy_grain_arrived','convoy_route_grain_loss',
                 'convoy_cargo_rations','convoy_weather_grain_loss','battle_grain_bought',
                 'ai_sortie_quote_blocked','ai_sortie_quotes','ai_recruit_quote_capped','ai_recruit_quotes',
                  'battles_per_active_faction_year','grain_delivered_per_10000_sent','battle_days',
@@ -27,7 +28,7 @@ METRICS = {
                  'ai_recruit_quote_rejected','ai_emergency_recruit_quotes','march_grain_per_10000_troop_years'),
     'shortage': ('unpaid_city_turns','rations_missing','market_city_turns','markets_empty_samples',
                  'shortage_city_turns_per_1000','cities_with_recent_shortage','cities_empty_last_month',
-                 'requested_aid','granted_aid','received_aid_grain','strategic_aid_transports',
+                 'requested_aid','granted_aid','received_aid_grain','requested_aid_refused','strategic_aid_transports',
                  'convoy_dispatched','convoy_arrived','convoy_returned','march_food_missing_days',
                  'captured_cities_recovered','median_capture_recovery_turns','max_city_shortage_streak'),
 }
@@ -41,10 +42,18 @@ def read(path):
 
 
 def wire(value):
+    if value in ('not_applicable', 'not_collected'):
+        return value
+    if value in ('', 'null', None):
+        return None
     return float(value) if '.' in value else int(value)
 
 
-def data(path):
+def numeric(value):
+    return type(value) in (int, float)
+
+
+def data(path, *, legacy=False):
     from statistics import median
 
     world=read(path/'monthly.csv')
@@ -79,7 +88,10 @@ def data(path):
             last_shortages[key]=shortages
         if month not in selected:
             continue
-        values={key:wire(row[key]) for keys in METRICS.values() for key in keys if key in row}
+        values = {
+            key: 'not_applicable' if legacy and key in WEIGHTED_ONLY else wire(row[key])
+            for keys in METRICS.values() for key in keys if key in row
+        }
         periods=values.get('market_city_turns',0)
         total_grain=sum(stored[month][faction] for faction in live)
         values.update(live_factions=len(live),small_initial_factions=len(small),
@@ -89,17 +101,20 @@ def data(path):
                 if total_grain else None,
             shortage_city_turns_per_1000=round(values['unpaid_city_turns']*1000/periods,3) if periods else None,
             battles_per_active_faction_year=round(values['battles']*12/faction_months,3) if faction_months else None)
-        if int(row.get('strategic_reserve_observed',0)):
-            values['strategic_reserve_met_percent']=round(int(row['strategic_reserve_met'])*100/
-                                                         int(row['strategic_reserve_observed']),3)
-        if troop_months and 'march_rations' in values:
+        strategic_observed = wire(row.get('strategic_reserve_observed'))
+        if legacy or strategic_observed == 'not_applicable':
+            values['strategic_reserve_met_percent'] = 'not_applicable'
+        elif numeric(strategic_observed) and strategic_observed:
+            values['strategic_reserve_met_percent'] = round(wire(row['strategic_reserve_met'])*100 /
+                                                           strategic_observed, 3)
+        if troop_months and numeric(values.get('march_rations')):
             values['march_grain_per_10000_troop_years']=round(values['march_rations']*120_000/troop_months,3)
-        observed_streaks=[int(city['max_food_shortage_streak']) for city in city_by_month[month]
-                          if 'max_food_shortage_streak' in city]
+        observed_streaks = [count for city in city_by_month[month]
+                            if numeric(count := wire(city.get('max_food_shortage_streak')))]
         if observed_streaks:
             values['max_city_shortage_streak']=max(observed_streaks)
         sent=values.get('convoy_grain_sent')
-        values['grain_delivered_per_10000_sent']=round(values['convoy_grain_arrived']*10_000/sent,2) if sent else None
+        values['grain_delivered_per_10000_sent']=round(values['convoy_grain_arrived']*10_000/sent,2) if numeric(sent) and sent and numeric(values.get('convoy_grain_arrived')) else None
         take=[int(entry['sampled_turn'])-int(entry['capture_turn']) for entry in recovered
               if entry['result']=='one_month_rations' and int(entry['sampled_turn'])<=int(row['elapsed_turns'])+1]
         values.update(captured_cities_recovered=len(take),median_capture_recovery_turns=median(take) if take else None)
@@ -117,7 +132,7 @@ def export(root, output, heads):
         year,month=map(int,scenario.split('-')[:2])
         runs.append(dict(group=group, head=heads[group], start_date=[year,month,1],
                          **{key:value for key,value in run.items() if key not in ('group','head','start_date')}))
-        for elapsed, line in data(path.parent).items():
+        for elapsed, line in data(path.parent, legacy=group == 'A').items():
             phases[group,int(seed),int(horizon),scenario,elapsed] = dict(line,outcome=run['outcome'])
     output.mkdir(parents=True,exist_ok=True)
     for name, metrics in METRICS.items():
@@ -126,9 +141,9 @@ def export(root, output, heads):
                 baseline=phases.get(('A',seed,horizon,scenario,month),{})
                 yield dict(group=group,seed=seed,scenario=scenario,requested_months=horizon,
                            sampled_month=month,outcome=values['outcome'],
-                           **{k:values.get(k) for k in metrics},
+                           **{k:values.get(k, 'not_collected') for k in metrics},
                            **{k+'_delta_vs_A':round(values[k]-baseline[k],3)
-                              if values.get(k) is not None and baseline.get(k) is not None else None
+                              if numeric(values.get(k)) and numeric(baseline.get(k)) else None
                               for k in metrics})
         to_csv(output/f'long-term-{name}-comparison.csv',lines())
     to_json(output/'simulation-manifest.json',

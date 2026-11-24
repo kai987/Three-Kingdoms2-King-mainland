@@ -1,0 +1,13 @@
+{
+  "schema": "tk2-observer-v21",
+  "reserve_months": [1, 3, 6],
+  "postbattle_turns": 3,
+  "action_capacity": {
+    "report_streak_at": 3,
+    "consider_blocked_offensive": true,
+    "consider_incoming_enemy": true,
+    "shortage_warning_turns": 3,
+    "minimum_grain_gap": 1,
+    "reserve_rest_months": 1
+  }
+}

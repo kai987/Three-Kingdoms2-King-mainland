@@ -8,8 +8,11 @@ from time import monotonic
 import traceback
 from unittest.mock import patch
 
-from common import Catalog, ROOT, HeadlessCampaign, git, sha256, to_csv, to_json
-from remake import battle_supply, city_economy as economy, domestic, grain_market, logistics, march_supply, payroll
+from common import Catalog, ROOT, TOOL_ROOT, HeadlessCampaign, git, sha256, to_csv, to_json
+from observer_hooks import Hooks
+from observer_telemetry import (AIS, CITY_FIELDS, SCHEMA, StockSnapshot, Telemetry, clock_date, config,
+                                sustainable_troops, tick_date, troop_manifest)
+from remake import battle_supply, city_economy as economy, domestic, grain_market, grain_units, logistics, march_supply, payroll
 from remake.march_core import backend_status
 
 SCENARIOS = ('184-02', '190-01', '200-01', '207-09', '208-10', '221-07', '263-05')
@@ -30,6 +33,23 @@ LOGISTICS = ('ai_sorties', 'battle_retreats', 'march_rations', 'march_base_ratio
              'convoy_minimum_grain_departures', 'convoy_late_arrivals', 'convoy_failed',
              'ai_recruit_quote_rejected', 'ai_emergency_recruit_quotes')
 METRICS += LOGISTICS
+# These columns remain present for a stable A/D schema. Legacy weather loss,
+# cargo meals, unsolicited relief and ordinary route modes all exist under V1.
+WEIGHTED_ONLY = frozenset((
+    'convoy_route_grain_loss', 'convoy_minimum_grain_departures',
+    'ai_recruit_quotes', 'ai_recruit_quote_capped', 'ai_recruit_quote_rejected',
+    'ai_emergency_recruit_quotes', 'ai_sortie_quotes', 'ai_sortie_quote_blocked',
+    'ai_reserve_purchases', 'strategic_reserve_met', 'strategic_reserve_observed',
+    'strategic_reserve_target',
+))
+
+
+def metric(values, name, weighted):
+    if name in WEIGHTED_ONLY and not weighted:
+        return 'not_applicable'
+    value = values[name]
+    return int(value) if type(value) is bool else value
+
 
 
 class RecordedCampaign(HeadlessCampaign):
@@ -37,6 +57,8 @@ class RecordedCampaign(HeadlessCampaign):
         event = super()._emit_event(state, kind, **values)
         stats = self.flow[event['factions'][0]] if event['factions'] else self.flow['neutral']
         details = event['details']
+        if self.telemetry:
+            self.telemetry.event(state, event)
         if kind == 'grain_traded':
             direction = details['direction']
             stats['grain_bought' if direction == 'buy' else 'grain_sold'] += details['grain']
@@ -63,6 +85,15 @@ class RecordedCampaign(HeadlessCampaign):
                 stats['battle_grain_burned']+=sum(battle_supply.burned(book) for book in supply['sides'].values())
             for faction in event['factions']:
                 self.last_battle_turn[faction] = event['turn']
+            if self.telemetry:
+                attacker, defender = event['factions'][:2]
+                source, target = event['city_ids']
+                self.telemetry.receipt(event['factions'], state,
+                    dict(battle_id=details['battle_id'], attacker=attacker, defender=defender,
+                         source=source, target=target, outcome=details['outcome'], deaths=details['lost'],
+                         surrendered=details['surrendered'], days=supply['days'] if supply else None,
+                         rations=sum(book['consumed'] for book in supply['sides'].values()) if supply else None,
+                         grain_burned=sum(battle_supply.burned(book) for book in supply['sides'].values()) if supply else None))
         elif kind == 'city_captured':
             self.captured(event['city_ids'][0], state)
         return event
@@ -70,6 +101,11 @@ class RecordedCampaign(HeadlessCampaign):
     def _report_ai(self, state, city, action, target=None):
         if action == 'attack':
             self.flow[city.owner]['ai_sorties'] += 1
+        if self.telemetry and action in AIS:
+            self.telemetry.action(city.owner, action)
+            if action == 'recruit_soldiers':
+                self.telemetry.troops(state, city.owner, 'ai_direct_recruitment',
+                    target=city.id, reserves=self.catalog.data['rules']['recruit_per_action'])
         return super()._report_ai(state, city, action, target)
 
     def captured(self, city_id, state):
@@ -85,8 +121,9 @@ def _measure(game, month, all_sides, city_history):
     state = game.state
     factions = defaultdict(Counter)
     active = economy.stationed_troops(game, state)
+    weighted = state.extension.get('logistics_rules_version') == 2
     plans={}
-    if state.extension.get('logistics_rules_version') == 2:
+    if weighted:
         try:
             from remake import military_budget
         except ImportError:
@@ -109,8 +146,18 @@ def _measure(game, month, all_sides, city_history):
         income = economy.monthly_income(game, key, state) if owned else dict(grain=0, gold=0)
         wages = payroll.monthly_due(state, city) if owned else dict(grain=0, gold=0)
         town=economy.town_level(game,state,key)
-        ration=(economy.civilian_grain(row['population'],town,state=state)+economy.garrison_grain_cost(
-            game.catalog.data,key,state.year,state.month,active.get(key,0),city.reserves)) if owned else 0
+        present = active.get(key, 0)
+        residents = economy.civilian_grain(row['population'], town, state=state) if owned else 0
+        ration = residents + (economy.garrison_grain_cost(
+            game.catalog.data, key, state.year, state.month, present, city.reserves) if owned else 0)
+        if game.telemetry:
+            ceiling, excess = sustainable_troops(game, state, city, present,
+                income['grain'], residents, wages['grain']) if owned else (None, None)
+            city_troops = dict(zip(CITY_FIELDS, (present,
+                sum(state.officers[ident].troops for ident in city.roster.officer_ids if state.officers[ident].alive),
+                city.reserves, ceiling, excess)))
+        else:
+            city_troops = {}
         target=plans[key]['target'] if key in plans else None
         record.update(monthly_regular_grain=income['grain'], monthly_gold=income['gold'],
                       monthly_grain_payroll=wages['grain'], monthly_gold_payroll=wages['gold'],
@@ -123,7 +170,8 @@ def _measure(game, month, all_sides, city_history):
             market_supply=market['monthly_supply'], unpaid_city_turns=game.city_food_shortages[key],
             food_shortage_streak=game.city_food_streak[key], max_food_shortage_streak=game.city_food_max_streak[key],
             market_zero_turns=game.city_market_zero[key], max_market_zero_streak=game.city_market_max_streak[key],
-            monthly_fixed_grain=ration+wages['grain'], strategic_reserve_target=target))
+            monthly_fixed_grain=ration+wages['grain'],
+            strategic_reserve_target=target if weighted else 'not_applicable', **city_troops))
     for officer in state.officers.values():
         if officer.alive and officer.faction_id in factions:
             factions[officer.faction_id].update(officers=1, active_troops=officer.troops)
@@ -147,10 +195,10 @@ def _measure(game, month, all_sides, city_history):
 
     for owner in sorted(set(factions) | set(game.flow)):
         values = factions[owner]
-        all_sides.append(dict(identity, faction=owner, **{name:values[name] for name in FAMILIES},
-                              **{name:game.flow[owner][name] for name in METRICS}))
-    return dict(identity, **{name:combined[name] for name in FAMILIES},
-                troop_losses=state.soldiers['lost'], **{name:flow[name] for name in METRICS})
+        all_sides.append(dict(identity, faction=owner, **{name:metric(values, name, weighted) for name in FAMILIES},
+                              **{name:metric(game.flow[owner], name, weighted) for name in METRICS}))
+    return dict(identity, **{name:metric(combined, name, weighted) for name in FAMILIES},
+                troop_losses=state.soldiers['lost'], **{name:metric(flow, name, weighted) for name in METRICS})
 
 
 FAMILIES = ('cities', 'population', 'total_land', 'total_industry', 'gold_stock', 'grain_stock',
@@ -159,13 +207,17 @@ FAMILIES = ('cities', 'population', 'total_land', 'total_industry', 'gold_stock'
             'strategic_reserve_met', 'strategic_reserve_observed')
 
 
-def run_scenario(scenario, seed, months, output, group):
+def run_scenario(scenario, seed, months, output, group, settings=None, *, hash_turns=False):
     started = monotonic()
     head=git('rev-parse','HEAD').decode().strip()
     runtime_diff=sha256(git('diff','HEAD','--binary','--','source','game','crates'))
     catalog = Catalog(ROOT / 'game' / 'data' / 'campaigns' / f'{scenario}.json')
     game = RecordedCampaign(catalog, record_journal=False)
     game.campaign_id, game.flow = scenario, defaultdict(Counter)
+    game.telemetry = None
+    game.city_fixed = {}
+    committed = []  # Optional verification trace on the independent command boundary.
+
     game.recoveries, game.recovering = [], {}
     game.last_battle_turn = {}
     game.city_food_shortages, game.city_market_zero = Counter(), Counter()
@@ -178,9 +230,20 @@ def run_scenario(scenario, seed, months, output, group):
     def record_march(campaign, state, unit, journey, *args, **values):
         ledger = journey['supply']
         before = {key:ledger.get(key,0) for key in ('shortage_days','base_consumed','lost','elapsed_days')}
+        start = len(ledger['starvation']) if game.telemetry else 0
         used = real_march(campaign,state,unit,journey,*args,**values)
         stats = game.flow[unit['owner']]
-        if values.get('unit_kind') == 'convoy':
+        is_convoy = values.get('unit_kind') == 'convoy'
+        if (game.telemetry and is_convoy
+                and ledger['shortage_streak'] >= march_supply.RETREAT_DAYS):
+            game.telemetry.convoy_hunger.add((unit['id'], ledger['start_tick']))
+        if game.telemetry and ledger['lost'] > before['lost']:
+            loss_entries = ledger['starvation'][start:]
+            reserve_loss = sum(row['reserves_before'] - row['reserves_after'] for row in loss_entries)
+            game.telemetry.troops(state, unit['owner'], 'convoy_hunger_deaths' if is_convoy else 'march_hunger_deaths',
+                journey.get('source'), journey['target'], active=ledger['lost'] - before['lost'] - reserve_loss,
+                reserves=reserve_loss, reference=unit['id'])
+        if is_convoy:
             stats.update(convoy_rations=used,convoy_hunger_losses=ledger['lost']-before['lost'],
                          convoy_days=ledger['elapsed_days']-before['elapsed_days'])
         else:
@@ -216,25 +279,58 @@ def run_scenario(scenario, seed, months, output, group):
                 stats['convoy_late_arrivals']+=game.city_food_streak[row['target']]>0
             else:
                 stats['convoy_failed']+=not row['delivery_done']
-        return real_event(campaign,state,kind,row,**values)
+        result = real_event(campaign,state,kind,row,**values)
+        if game.telemetry:
+            game.telemetry.transport(state, kind, row, **values)
+        return result
 
     def observe_rations(campaign, state):
         installment = {11: 1, 21: 2, 1: 3}[state.day]
-        garrisons = economy.garrison_grain(campaign, state)
+        absent = economy.absent_troops(campaign, state)
+        active = economy.stationed_troops(campaign, state, absent)
+        garrisons = economy.garrison_grain(campaign, state, stationed=active)
+        development = state.extension['city_development']['cities']
+        shortages, fixed = [], {}
         for city_id, city in state.cities.items():
             if city.owner == 'neutral':
+                game.city_food_streak[city_id] = 0
                 continue
-            population = state.extension['city_development']['cities'][city_id]['population']
+            population = development[city_id]['population']
             residents = economy.civilian_grain(population, economy.town_level(campaign, state, city_id), state=state)
             due = economy.turn_rations(residents + garrisons[city_id], installment)
+            if game.telemetry:
+                fixed[city_id] = residents + garrisons[city_id] + payroll.monthly_due(state, city)['grain']
             if city.grain < due:
                 game.flow[city.owner].update(unpaid_city_turns=1, rations_missing=due-city.grain)
                 game.city_food_shortages[city_id] += 1
-                game.city_food_streak[city_id]+=1
-                game.city_food_max_streak[city_id]=max(game.city_food_max_streak[city_id],game.city_food_streak[city_id])
+                game.city_food_streak[city_id] += 1
+                game.city_food_max_streak[city_id] = max(game.city_food_max_streak[city_id], game.city_food_streak[city_id])
+                if game.telemetry:
+                    shortages.append((city, due, city.grain, city.reserves))
             else:
-                game.city_food_streak[city_id]=0
+                game.city_food_streak[city_id] = 0
+        if game.telemetry:
+            game.city_fixed = fixed
+            snapshot = (StockSnapshot(campaign, state, fixed, absent, settings['reserve_months'])
+                        if shortages else None)
+            headroom = [snapshot.other(city) for city, *_ in shortages]
+            before = state.soldiers['lost']
         real_rations(campaign, state)
+        if game.telemetry:
+            stationed_after = economy.stationed_troops(campaign, state, absent) if shortages else {}
+            measured = 0
+            for (city, required, paid, reserve), other in zip(shortages, headroom):
+                active_lost = active[city.id] - stationed_after[city.id]
+                reserve_lost = reserve - city.reserves
+                game.telemetry.row('shortages', state, owner=city.owner, city=city.id,
+                    required=required, paid=paid, missing=required-paid, stationed_before=active[city.id],
+                    reserves_before=reserve, active_lost=active_lost, reserve_lost=reserve_lost, **other)
+                game.telemetry.troops(state, city.owner, 'city_shortage_deaths', target=city.id,
+                                     active=active_lost, reserves=reserve_lost)
+                game.telemetry.shortages[city.owner] += required - paid
+                measured += active_lost + reserve_lost
+            if state.soldiers['lost'] - before != measured:
+                raise ValueError('City shortage deaths differ from the engine loss receipt')
 
     def observe_report(state, city, kind, **details):
         if kind == 'recruit':
@@ -244,12 +340,29 @@ def run_scenario(scenario, seed, months, output, group):
             fought = game.last_battle_turn.get(city.owner)
             if fought is not None and state.turn - fought <= 3:
                 stats.update(postbattle_recruit_gold=details['gold'], postbattle_recruit_grain=details['grain'])
+            if game.telemetry:
+                game.telemetry.troops(state, city.owner, 'delegated_recruitment', target=city.id,
+                                     reserves=details['soldiers'])
+                game.telemetry.action(city.owner, 'delegated_recruitment')
+                if fought is not None and state.turn - fought <= settings['postbattle_turns']:
+                    game.telemetry.troops(state, city.owner, 'postbattle_recruitment', target=city.id,
+                                         reserves=details['soldiers'], reference=fought)
+        if game.telemetry and kind == 'allocation':
+            fought = game.last_battle_turn.get(city.owner)
+            if fought is not None and state.turn - fought <= settings['postbattle_turns']:
+                game.telemetry.troops(state, city.owner, 'postbattle_reserve_assignment', target=city.id,
+                                     active=details['soldiers'], officers=details['officers'], reference=fought)
         return real_report(state, city, kind, **details)
 
     outcome, failure = 'complete', None
     game.command('new', dict(faction='observer', seed=seed, difficulty='normal'), 0)
-    world_rows.append(_measure(game, 0, faction_rows, city_rows))
     with ExitStack() as hooks:
+        if settings:
+            game.telemetry = Telemetry(game, output / scenario, settings, hooks)
+        with grain_units.using(game.state):
+            world_rows.append(_measure(game, 0, faction_rows, city_rows))
+        if hash_turns:
+            committed.append(game.export_save(compact=True)['checksum'])
         for obj,name,handler in ((economy,'settle_turn_grain',observe_rations),(domestic,'_report',observe_report),
             (march_supply,'advance_unit',record_march),(logistics,'_cargo_change',record_cargo),
             (logistics,'_event',record_transport)):
@@ -290,13 +403,21 @@ def run_scenario(scenario, seed, months, output, group):
             return result
 
         hooks.enter_context(patch.object(logistics,'dispatch_ai_supply',record_ai_transport))
+        detailed = Hooks(game.telemetry, hooks, RecordedCampaign) if game.telemetry else None
         for turn in range(1, months * 3 + 1):
             if game.state.phase == 'finished':
                 outcome = 'natural_end'
                 break
             try:
+                before = game.state
                 game.command('observe_turn', {}, game.revision)
                 assert game.state.turn == turn + 1
+                if detailed:
+                    game.telemetry.roster_moves(before, game.state)
+                    detailed.flush_plans(game.state)
+                    game.telemetry.finish_turn(game.state)
+                if hash_turns:
+                    committed.append(game.export_save(compact=True)['checksum'])
                 for key, city in game.state.cities.items():
                     stock = grain_market.row(game.state, key)['stock']
                     game.flow[city.owner]['market_city_turns'] += 1
@@ -313,7 +434,8 @@ def run_scenario(scenario, seed, months, output, group):
                 if turn % 3:
                     continue
                 month = turn // 3
-                world_rows.append(_measure(game, month, faction_rows, city_rows))
+                with grain_units.using(game.state):
+                    world_rows.append(_measure(game, month, faction_rows, city_rows))
                 if month in MILESTONES:
                     original = game.export_save(compact=True)
                     restored = HeadlessCampaign(catalog, record_journal=False)
@@ -329,7 +451,8 @@ def run_scenario(scenario, seed, months, output, group):
                 break
     state = game.state
     if state.turn-1 != world_rows[-1]['elapsed_turns']:
-        world_rows.append(_measure(game, (state.turn-1)//3, faction_rows, city_rows))
+        with grain_units.using(state):
+            world_rows.append(_measure(game, (state.turn-1)//3, faction_rows, city_rows))
     to_csv(output / scenario / 'monthly.csv', world_rows)
     to_csv(output / scenario / 'factions.csv', faction_rows)
     to_csv(output / scenario / 'cities.csv', city_rows)
@@ -351,6 +474,12 @@ def run_scenario(scenario, seed, months, output, group):
                                      logistics=state.extension.get('logistics_rules_version',1)),
                   catalog_sha256=catalog.sha256, last_date=[state.year,state.month,state.day],
                   seconds=round(monotonic()-started,2), failure=failure)
+    result['parameters'] = dict(faction='observer', difficulty='normal', seed=seed,
+                                record_journal=False, commands=['new', 'observe_turn'])
+    if settings:
+        result['telemetry'] = dict(schema=SCHEMA, config=settings, rows=game.telemetry.counts)
+    if hash_turns:
+        result['committed_save_sha256'] = committed
     to_json(output / scenario / 'run.json', result)
     print(result, flush=True)
     return result
@@ -364,12 +493,17 @@ def main():
     parser.add_argument('--seed', type=int, default=2026)
     parser.add_argument('--group', choices='ABCDE', default='D')
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--telemetry-config', type=Path, nargs='?', const=TOOL_ROOT / 'tools/economy-balance/observer-config.json',
+                        help='Record optional detailed V2.1 observations')
+    parser.add_argument('--hash-turns', action='store_true', help='Hash each committed compact save for parity checks')
     args = parser.parse_args()
+    settings = config(args.telemetry_config) if args.telemetry_config else None
     if min(args.months, args.workers, args.seed) < 1:
         parser.error('months, workers and seed must be positive')
     results = []
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
-        tasks = [pool.submit(run_scenario, scenario, args.seed, args.months, args.output, args.group)
+        tasks = [pool.submit(run_scenario, scenario, args.seed, args.months, args.output, args.group,
+                             settings, hash_turns=args.hash_turns)
                  for scenario in args.scenarios]
         for result in as_completed(tasks):
             results.append(result.result())
