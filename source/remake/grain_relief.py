@@ -48,7 +48,8 @@ def forecasts(game, state, owner, *, turns=WARNING_TURNS):
     for city in cities:
         active = sum(state.officers[i].troops for i in city.roster.officer_ids
                      if i not in absent and state.officers[i].alive)
-        civilian = city_economy.civilian_grain(development.get(city.id, {}).get('population', 0))
+        civilian = city_economy.civilian_grain(development.get(city.id, {}).get('population', 0),
+                                             city_economy.town_level(game, state, city.id), state=state)
         monthly = civilian + city_economy.garrison_grain_cost(
             data, city.id, *current_date, active, city.reserves)
         due, reserves = monthly, city.reserves
@@ -254,9 +255,29 @@ def recovery(game, state, owner):
                     if row.monthly and row.zero_in is not None}
 
 
+def _emergency_limit(city, forecast):
+    turns = EMERGENCY_MONTHS * WARNING_TURNS
+    gap = max((gap for ahead, gap in forecast.gaps if ahead <= turns), default=0)
+    if not gap and city.grain == 0:
+        gap = city_economy.turn_rations(forecast.monthly, 1)
+    return min(forecast.monthly * EMERGENCY_MONTHS, gap)
+
+
 def recovery_view(game, state, owner):
     runway, cities = recovery(game, state, owner)
-    return dict(turns=runway, cities={key: row.zero_in for key, row in cities.items()})
+    result = dict(turns=runway, cities={key: row.zero_in for key, row in cities.items()})
+    purchases = {}
+    for key in sorted(imminent_shortages(cities)):
+        forecast = cities[key]
+        city = state.cities[key]
+        limit = _emergency_limit(city, forecast)
+        if limit:
+            offer = facilities.emergency_quote(game, state, city, limit)
+            if offer['market_stock'] is not None:
+                purchases[key] = dict(offer, demand=limit)
+    if purchases:
+        result['market_purchases'] = purchases
+    return result
 
 
 def imminent_shortages(shortages):
@@ -283,13 +304,9 @@ def invest(game, state, owner, outlook):
             continue
         actor = min(actors, key=lambda i: (-state.officers[i].profile.intellect, ref_sort_key(i)))
         if forecast.zero_in <= WARNING_TURNS:
-            limit = forecast.monthly * EMERGENCY_MONTHS
-            gap = max((gap for ahead, gap in forecast.gaps
-                       if ahead <= EMERGENCY_MONTHS * WARNING_TURNS), default=0)
-            if not gap and city.grain == 0:
-                gap = city_economy.turn_rations(forecast.monthly, 1)
-            if gap:
-                facilities.buy_emergency_grain(game, state, key, actor, owner, min(limit, gap))
+            limit = _emergency_limit(city, forecast)
+            if limit:
+                facilities.buy_emergency_grain(game, state, key, actor, owner, limit)
             continue
 
         regular_budget = max(0, city.gold - policy['gold_floor'])

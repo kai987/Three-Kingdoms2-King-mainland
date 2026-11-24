@@ -33,6 +33,8 @@ def domestic_catalog():
     # Isolate turn logic from any fortuitous persuasion targets.
     data['rules']['persuade_officer_gold'] = 100000000
     data['city_income']['xiangyang'] = dict(gold=100, grain=300, reserves=0)
+    # Keep the base grain yield fixed for the delegate bonus assertions.
+    data.setdefault('initial_city_development', {}).setdefault('xiangyang', {})['population'] = 50_000
     # These delegation fixtures exercise normal work under stocked granaries.
     for key, stock in data['initial_city_resources'].items():
         if data['initial_owners'][key] == 'shu':
@@ -96,7 +98,7 @@ class DomesticTests(unittest.TestCase):
             self.assertEqual(game.export_save(), snapshot)
             game._complete_turn(game.state)
         self.assertEqual(intellect, 99)
-        self.assertEqual((city.gold, city.grain), (start[0] + 150, start[1] + 9000 - paid['xiangyang']))
+        self.assertEqual((city.gold, city.grain), (start[0] + 150, start[1] + 11_523 - paid['xiangyang']))
         snapshot = game.export_save()
         domestic.month_rollover(game, game.state)
         self.assertEqual(game.export_save(), snapshot)
@@ -108,14 +110,15 @@ class DomesticTests(unittest.TestCase):
         game = self.game()
         civil, military = self.appoint(game)
         state = game.state
-        for intellect, gold, grain in ((30, 2, 76), (58, 4, 147), (59, 5, 150), (60, 5, 150),
-                                      (61, 6, 180), (75, 20, 600), (94, 39, 1170), (95, 40, 1200), (96, 42, 1275),
-                                      (97, 45, 1350), (98, 47, 1425), (99, 50, 1500)):
+        # Monthly bonus uses the posted grain of 7,682 and floors once.
+        for intellect, gold, grain in ((30, 2, 195), (58, 4, 377), (59, 5, 384), (60, 5, 384),
+                                      (61, 6, 460), (75, 20, 1536), (94, 39, 2995), (95, 40, 3072),
+                                      (96, 42, 3264), (97, 45, 3456), (98, 47, 3648), (99, 50, 3841)):
             with self.subTest(intellect=intellect):
                 officer = state.officers[civil]
                 officer.profile = replace(officer.profile, intellect=intellect)
                 preview = domestic.view(game, state)['cities']['xiangyang']['monthly_bonus_preview']
-                self.assertEqual(preview, dict(gold=gold, grain=2 * grain))
+                self.assertEqual(preview, dict(gold=gold, grain=grain))
 
         self.assertEqual(state.officers[military].profile.intellect, 75)
         game.command('set_domestic', dict(faction='shu', civil=military, military=civil), game.revision)
@@ -139,11 +142,11 @@ class DomesticTests(unittest.TestCase):
 
         # One full duty at 20%, one half duty at 50%, and one missed duty.
         city = state.cities['xiangyang']
-        self.assertEqual((city.gold, city.grain), (start[0] + 115, start[1] + 6900 - paid['xiangyang']))
+        self.assertEqual((city.gold, city.grain), (start[0] + 115, start[1] + 8834 - paid['xiangyang']))
         self.assertNotIn('income_rate_units', state.extension['domestic']['cities'][city.id])
 
     def test_midmonth_old_save_keeps_earned_income_then_uses_new_rate(self):
-        for older_rate, gold, grain in ((40, 146, 8800), (50, 150, 9000)):
+        for older_rate, gold, grain in ((40, 146, 11_266), (50, 150, 11_523)):
             with self.subTest(older_rate=older_rate):
                 game = self.game()
                 self.appoint(game)

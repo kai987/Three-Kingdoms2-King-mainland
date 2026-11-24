@@ -8,7 +8,7 @@ from copy import deepcopy
 from dataclasses import replace
 
 from .errors import GameError
-from . import capital_openings, command_books, grain_units
+from . import capital_openings, command_books, economy_rules, grain_market, grain_units
 from .officers import parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref
 from .city_economy import tier_at
 
@@ -314,18 +314,46 @@ def study(game, state, payload, owner):
     return details
 
 
-def market_rate(game, town, direction, month):
+def market_rate(game, town, direction, month, *, state=None):
     rule = 'market_buy_rates' if direction == 'buy' else 'market_sell_rates'
     base = _rule(game, rule)[str(town)]
+    if economy_rules.version(state) == economy_rules.CURRENT and direction == 'sell' and town == 3:
+        base = min(base, economy_rules.MARKET_TOWN3_SELL_RATE)
     return min(100, max(1, base + MARKET_MONTHLY_ADJUSTMENTS[month - 1]))
 
 
-def _trade_quote(game, city, town, direction, month):
-    rate = market_rate(game, town, direction, month)
-    batch,cap=_rule(game,'trade_batch_grain'),_rule(game,'trade_max_batches')
-    maximum = (min(cap, city.gold // rate, (LIMIT - city.grain) // batch) if direction == 'buy'
-        else min(cap, city.grain // batch, (LIMIT - city.gold) // rate))
-    return dict(rate=rate, max_batches=max(0, maximum), batch_grain=batch)
+MARKET_FAILURES = {
+    'market_empty': '當地市場可供應的糧食不足。',
+    'market_full': '當地市場的剩餘容量不足。',
+    'insufficient_gold': '資金不足以購買所需的糧食。',
+    'warehouse_full': '糧食的剩餘倉位不足。',
+    'insufficient_grain': '官倉可出售的糧食不足。',
+    'treasury_full': '金庫的剩餘容量不足。',
+}
+
+
+def _trade_quote(game, state, city, town, direction):
+    rate = market_rate(game, town, direction, state.month, state=state)
+    batch, cap = _rule(game, 'trade_batch_grain'), _rule(game, 'trade_max_batches')
+    market = grain_market.available(state, city.id, direction)
+    market_batches = None if market is None else market // batch
+    if direction == 'buy':
+        space = max(0, LIMIT - city.grain)
+        affordable, room = city.gold // rate, space // batch
+        limits = dict(affordable_batches=affordable, warehouse_free=space, warehouse_batches=room)
+        maximum, constraint = grain_market.purchase_limit(affordable, room, cap, market_batches)
+    else:
+        limits = dict(grain_batches=city.grain // batch, treasury_batches=max(0, LIMIT - city.gold) // rate)
+        constraints = [(limits['grain_batches'], 'insufficient_grain'),
+                       (limits['treasury_batches'], 'treasury_full'), (cap, 'trade_limit')]
+        if market_batches is not None:
+            constraints.insert(0, (market_batches, 'market_full'))
+        maximum, constraint = min(constraints, key=lambda limit: limit[0])
+    result = dict(rate=rate, max_batches=maximum, batch_grain=batch)
+    if market is not None:
+        result.update(limits, market_batches=market_batches, limiting_reason=constraint,
+                      blocked_reason=constraint if maximum == 0 else None)
+    return result
 
 
 def trade(game, state, payload, owner):
@@ -335,39 +363,50 @@ def trade(game, state, payload, owner):
     direction, batches = payload['direction'], payload['batches']
     if direction not in ('buy', 'sell'):
         raise GameError('請選擇買入或賣出兵糧。')
-    quote = _trade_quote(game, city, _pool(state)['cities'][city.id]['town'], direction, state.month)
+    quote = _trade_quote(game, state, city, _pool(state)['cities'][city.id]['town'], direction)
     if not _int(batches, 1, quote['max_batches']):
-        raise GameError('兵糧交易數量超出可用庫存或上限。')
+        reason = quote.get('limiting_reason') if type(batches) is int and batches > quote['max_batches'] else None
+        raise GameError(MARKET_FAILURES.get(reason, '兵糧交易數量超出可用庫存或上限。'))
     gold, grain = batches * quote['rate'], batches * quote['batch_grain']
     return _settle_grain_trade(game, state, city, actor, direction, batches, grain, gold, quote['rate'])
+
+
+def emergency_quote(game, state, city, limit):
+    town = _pool(state)['cities'][city.id]['town']
+    rate = market_rate(game, town, 'buy', state.month, state=state)
+    batch = _rule(game, 'trade_batch_grain')
+    market = grain_market.available(state, city.id, 'buy')
+    grain, constraint = grain_market.purchase_limit(
+        city.gold * batch // rate, max(0, LIMIT - city.grain),
+        min(limit, _rule(game, 'trade_max_batches') * batch), market)
+    return dict(grain=grain, rate=rate, batches=(grain + batch - 1) // batch,
+                gold=(grain * rate + batch - 1) // batch, market_stock=market,
+                limiting_reason=constraint, blocked_reason=constraint if not grain else None)
 
 
 def buy_emergency_grain(game, state, city, actor, owner, limit):
     """Fill up to the ration limit, with partial lots priced at the current rate."""
     city = _city(game, state, city, owner, service='market', kind='trade_grain')
     actor = _actor(game, state, city, actor)
-    town = _pool(state)['cities'][city.id]['town']
-    rate = market_rate(game, town, 'buy', state.month)
-    batch = _rule(game, 'trade_batch_grain')
-    grain = min(limit, city.gold * batch // rate, LIMIT - city.grain,
-                _rule(game, 'trade_max_batches') * batch)
-    if grain > 0:
-        batches = (grain + batch - 1) // batch
-        gold = (grain * rate + batch - 1) // batch
-        return _settle_grain_trade(game, state, city, actor, 'buy', batches, grain, gold, rate,
-                                   emergency=True)
+    offer = emergency_quote(game, state, city, limit)
+    if not offer['grain']:
+        return offer
+    return _settle_grain_trade(game, state, city, actor, 'buy', offer['batches'],
+                               offer['grain'], offer['gold'], offer['rate'], emergency=True)
 
 
 def _settle_grain_trade(game, state, city, actor, direction, batches, grain, gold, rate, *, emergency=False):
+    _charge(state, city, actor, gold if direction == 'buy' else 0, kind='trade_grain')
     if direction == 'buy':
-        _charge(state, city, actor, gold, kind='trade_grain')
         city.grain += grain
     else:
-        _charge(state, city, actor, 0, kind='trade_grain')
         city.gold += gold
         city.grain -= grain
     details = dict(actor=state.officers[actor].person_id, direction=direction,
         batches=batches, grain=grain, gold=gold, rate=rate)
+    if grain_market.row(state, city.id) is not None:
+        grain_market.transfer(state, city.id, direction, grain)
+        details['market_city'] = city.id
     if emergency:
         details['emergency'] = True
     _emit(game, state, 'grain_traded', city, [actor], details)
@@ -628,7 +667,7 @@ def auto_turn(game, state, owner, *, hold_grain=(), food_priority=(), allow_stoc
             choice = None
             can_trade = policy['auto_trade'] and command_books.can_spend(state, owner, 'trade_grain')
             if can_trade and allow_stockpiling and city.grain < policy['grain_target']:
-                quote = _trade_quote(game, city, row['town'], 'buy', state.month)
+                quote = _trade_quote(game, state, city, row['town'], 'buy')
                 batch = quote['batch_grain']
                 batches = min(quote['max_batches'], available // quote['rate'],
                               (policy['grain_target'] - city.grain + batch - 1) // batch)
@@ -646,7 +685,7 @@ def auto_turn(game, state, owner, *, hold_grain=(), food_priority=(), allow_stoc
                 choice = (treat, dict(city=key, actor=actor, officer=patient))
             if (choice is None and can_trade and key not in hold_grain
                     and city.gold < policy['gold_floor'] and city.grain > policy['grain_target']):
-                quote = _trade_quote(game, city, row['town'], 'sell', state.month)
+                quote = _trade_quote(game, state, city, row['town'], 'sell')
                 batches = min(quote['max_batches'], (city.grain-policy['grain_target'])//quote['batch_grain'],
                     (policy['gold_floor']-city.gold+quote['rate']-1)//quote['rate'])
                 if batches:
@@ -745,9 +784,16 @@ def view(game, state):
             develop=dict(from_town=row['town'],to_town=min(3,row['town']+1),gold=development_gold,grain=development_grain,
                 can_develop=ready and row['town']<3 and command_books.can_spend(state,city.owner,'develop_town')
                     and city.gold>=development_gold and city.grain>=development_grain),
-            trade={direction:_trade_quote(game, city, row['town'], direction, state.month)
+            trade={direction:_trade_quote(game, state, city, row['town'], direction)
                    for direction in ('buy', 'sell')},
             prevention_quotes=prevention)
+        market = grain_market.row(state, key)
+        if market is not None:
+            result['cities'][key]['market'] = dict(market, next_restock_month=(state.month % 12) + 1,
+                next_restock_year=state.year + (state.month == 12))
+    if economy_rules.version(state) == economy_rules.CURRENT:
+        rates = result['rules']['market_sell_rates']
+        rates['3'] = min(rates['3'], economy_rules.MARKET_TOWN3_SELL_RATE)
     return result
 
 

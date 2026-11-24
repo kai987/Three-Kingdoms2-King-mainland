@@ -308,7 +308,7 @@ def earned_grain(state, city_id, income):
     return _income_bonus(income, units)['grain']
 
 
-def month_rollover(game, state):
+def month_rollover(game, state, *, regular_incomes=None):
     """After the date advances; add only the previous month's earned bonus."""
     synchronize(game, state)
     current = _month(state)
@@ -321,8 +321,11 @@ def month_rollover(game, state):
         units = 0
         if city.owner != 'neutral' and row['income_month'] == current - 1:
             units = _earned_income_units(row)
-        bonus = {field: min(LIMIT - getattr(city, field), amount)
-                 for field, amount in _income_bonus(_income(game, key, state), units).items()}
+        bonus = {}
+        if units:
+            base = _income(game, key, state) if regular_incomes is None else regular_incomes[key]
+            bonus = {field: min(LIMIT - getattr(city, field), amount)
+                     for field, amount in _income_bonus(base, units).items()}
         for field, amount in bonus.items():
             setattr(city, field, getattr(city, field) + amount)
         _reset_income(row, current)

@@ -19,7 +19,7 @@ from . import diplomacy, grain_relief, grain_units, historical_campaigns, observ
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
-from . import battle_reinforcements, city_economy, payroll
+from . import battle_reinforcements, city_economy, economy_rules, grain_market, payroll
 from .city_economy import frontier_maintenance
 from .starting_garrisons import resolve as resolve_opening_garrisons
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
@@ -352,6 +352,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         state.extension[grain_units.FIELD] = grain_units.CURRENT
         if grain_units.current_rations():
             state.extension[grain_units.RATION_FIELD] = grain_units.RATION_VERSION
+            state.extension[economy_rules.FIELD] = economy_rules.CURRENT
         if lifespan == 'none':
             state.extension['lifespan'] = lifespan
         state.extension['travel'] = dict(counter=0, marches=[], battle_arrival=False, discovered=[])
@@ -364,6 +365,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             policy['enabled'] = owner != faction
         state.extension['facilities'] = facilities.empty(self,state)
         state.extension['city_development'] = city_development.empty(self,state)
+        grain_market.initialize(self, state)
         state.extension['equipment'] = equipment.empty(self,state)
         command_books.initialize(self, state)
         equipment.synchronize(self,state)
@@ -756,19 +758,22 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                         self._note(state, f'{name}到达寿命边界，释放兵员{released}归原城。')
             state.calendar_cursor = state.year
             self._note(state, f'新年更新人物库，记录{count}项年代事件；未自动招募或复活人物。')
+        regular_incomes = {}
         for city in state.cities.values():
             if city.owner != 'neutral':
-                income=city_economy.monthly_income(self,city.id,state)
+                income = city_economy.monthly_income(self, city.id, state)
+                regular_incomes[city.id] = income
                 city.gold += income['gold']
                 city.grain += income['grain']
-                domestic.add_reserves(self,state,city,income['reserves'],recruited=True)
+                domestic.add_reserves(self, state, city, income['reserves'], recruited=True)
+        grain_market.restock(self, state, regular_incomes)
         frontier_maintenance(self, state)
         existing = set(state.officers)
         self._spawn_eligible(state)
         for ident, officer in state.officers.items():
             if ident in existing and officer.alive:
                 officer.health = min(officer.profile.health_max, officer.health + r['monthly_heal'])
-        domestic.month_rollover(self,state)
+        domestic.month_rollover(self, state, regular_incomes=regular_incomes)
         if harvest:
             facilities.settle_harvest(self, state, harvest)
         city_economy.settle_turn_grain(self, state)
@@ -922,6 +927,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         if 'campaign_id' in state.extension and not _valid_campaign_id(state.extension['campaign_id']):
             raise ValueError('campaign identity')
         get_settings(state)
+        economy_rules.validate(state)
+        grain_market.validate(state)
         command_books.validate(self, state)
         diplomacy.validate(self, state)
         civil_staff.validate(self, state)

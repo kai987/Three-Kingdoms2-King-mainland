@@ -18,25 +18,28 @@ class GrainEconomyTests(unittest.TestCase):
         path = ROOT / 'game/data/campaigns/208-10.json'
         session = CampaignSession([path])
         opening = session.preview_city('mainland208-10', 'jiangxia')['city']
-        self.assertEqual(opening['grain_balance'], dict(production=1480, upkeep=2542, civilian=819, net=-1881))
+        self.assertEqual(opening['grain_balance'], dict(production=1228, upkeep=2542, civilian=492, net=-1806))
         live = session.command('new', {'faction': 'shu', 'seed': 2026}, 0)
         self.assertEqual(live['catalog']['grain_people_per_day'], 50)
         self.assertEqual(live['catalog']['city_grain_balance']['jiangxia'], opening['grain_balance'])
         self.assertEqual(live['game']['cities']['jiangxia']['grain'], opening['grain'])
         self.assertEqual(march_supply.cost(10_000, 0, 30), 6000)
 
-    def test_grain_production_uses_one_land_point_and_one_thousand_people_per_step(self):
+    def test_grain_production_uses_land_bands_and_continuous_population(self):
         session = CampaignSession([ROOT / 'game/data/campaigns/208-10.json'])
         session.command('new', {'faction': 'shu', 'seed': 2026}, 0)
         game, state = session.game, session.game.state
         development = state.extension['city_development']['cities']['jiangxia']
         base = domestic._income(game, 'jiangxia', state)
-        for population, expected in [(27_000, 1480), (27_900, 1480), (28_000, 1534), (28_900, 1534), (29_000, 1588)]:
+        for population, expected in [(26_000, 1186), (27_900, 1246), (28_000, 1250), (29_900, 1308), (30_000, 1312)]:
             with self.subTest(population=population):
                 development['population'] = population
                 self.assertEqual(domestic._income(game, 'jiangxia', state)['grain'], expected)
         development['population'] = 27300
-        for land, expected in [(0, 752), (27, 924), (113, 1472), (114, 1480), (115, 1486), (116, 1492), (999, 7124)]:
+        from test_remake_economy_v2 import reference_adjusted
+
+        for land in (0, 27, 113, 114, 115, 116, 300, 301, 600, 601, 999):
+            expected = 2 * reference_adjusted(740, 27300, 1, land, 114, 60, 60)
             with self.subTest(land=land):
                 development['land'] = land
                 income = domestic._income(game, 'jiangxia', state)
@@ -44,13 +47,15 @@ class GrainEconomyTests(unittest.TestCase):
         development['land'] = 115
         facilities = state.extension['facilities']['cities']['jiangxia']
         facilities['damage'] = 1
-        self.assertEqual(domestic._income(game, 'jiangxia', state)['grain'], 1470)
+        self.assertEqual(domestic._income(game, 'jiangxia', state)['grain'],
+                         2 * (reference_adjusted(740, 27300, 1, 115, 114, 60, 60) * 99 // 100))
         facilities['damage'] = 0
         development['baseline']['population'] = 200
-        development['population'] = 900
-        self.assertEqual(domestic._income(game, 'jiangxia', state)['grain'], 0)
-        development.update(population=1_000, land=114)
-        self.assertEqual(domestic._income(game, 'jiangxia', state)['grain'], 1480)
+        development['population'] = 1_900
+        self.assertEqual(domestic._income(game, 'jiangxia', state)['grain'],
+                         2 * reference_adjusted(740, 1900, 1, 115, 114, 60, 60))
+        development.update(population=2_000, land=114)
+        self.assertEqual(domestic._income(game, 'jiangxia', state)['grain'], 196)
 
     def test_monthly_bill_has_one_rounding_and_caps_withdrawal_at_stock(self):
         game = Campaign(controlled_catalog())
@@ -59,11 +64,13 @@ class GrainEconomyTests(unittest.TestCase):
         city = state.cities['xiangyang']
         upkeep = city_economy.garrison_grain(game, state)[city.id]
         stocks = city.grain
-        production = 2 * city_economy.income_at(game.catalog.data, city.id, state.year, state.month)['grain']
+        production = city_economy.monthly_income(game, city.id, state)['grain']
         self.assertEqual(city_economy.garrison_grain_cost(game.catalog.data, city.id, state.year,
                                                        state.month, 999, 333), 210)
         advance_month(game)
-        self.assertEqual(city.grain, stocks + production - upkeep - city_economy.civilian_grain(state.extension['city_development']['cities'][city.id]['population']))
+        population = state.extension['city_development']['cities'][city.id]['population']
+        residents = city_economy.civilian_grain(population, city_economy.town_level(game, state, city.id), state=state)
+        self.assertEqual(city.grain, stocks + production - upkeep - residents)
 
         state = game.state
         city = state.cities['xiangyang']
@@ -87,7 +94,9 @@ class GrainEconomyTests(unittest.TestCase):
                 before = dict(row)
                 count = {i: state.officers[i].troops for i in city.roster.officer_ids}
                 reserves, lost = city.reserves, state.soldiers['lost']
-                need = (city_economy.garrison_grain(game,state)[city.id] + city_economy.civilian_grain(100000)) // 3
+                town = city_economy.town_level(game, state, city.id)
+                residents = city_economy.civilian_grain(row['population'], town, state=state)
+                need = (city_economy.garrison_grain(game, state)[city.id] + residents) // 3
                 city.grain = need * share // 100
                 short = need - city.grain
                 game._complete_turn(state)

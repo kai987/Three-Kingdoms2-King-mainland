@@ -780,7 +780,7 @@ async function showCityInformation(id){
   else{
    const c=view.game.cities[id],def=view.catalog.cities.find(c=>c.id===id);
    data={title:view.catalog.title,year:view.game.year,month:view.game.month,day:view.game.day,capacity:capacity(),city:{...c,
-    owner_name:faction(c.owner),governor:view.catalog.treasury?.cities?.[id]?.governor,terrain:def.terrain,profile:view.catalog.city_profiles[id],income:view.catalog.city_income[id],city_development:view.catalog.city_development?.cities?.[id],grain_balance:view.catalog.city_grain_balance?.[id],history:view.catalog.city_history?.[id],frontier_outpost:view.catalog.frontier_outposts?.[id],
+    owner_name:faction(c.owner),governor:view.catalog.treasury?.cities?.[id]?.governor,terrain:def.terrain,profile:view.catalog.city_profiles[id],income:view.catalog.city_income[id],city_development:view.catalog.city_development?.cities?.[id],grain_balance:view.catalog.city_grain_balance?.[id],agriculture:view.catalog.city_agriculture?.[id],history:view.catalog.city_history?.[id],frontier_outpost:view.catalog.frontier_outposts?.[id],
     officers:c.roster.officer_ids.map(i=>{const o=view.game.officers[i];return {id:i,name:name(i),martial_strength:o.profile.martial_strength,intellect:o.profile.intellect,virtue:o.profile.virtue,loyalty:o.loyalty,is_ruler:isRuler(i),health:o.health,troops:o.troops,experience:o.experience,equipment:view.catalog.equipment?.officers?.[String(i)]};})}};
   }
   if(!dialog.open||generation!==dialogGeneration||preview!==setupPreview)return;
@@ -813,6 +813,7 @@ async function showCityInformation(id){
    ${preview?'':cityGrainWarning(id)}
    ${preview?'':grainRecoveryNotice(id)}
    ${c.grain_balance?`<dl class="resources city-grain-balance" data-city-grain-balance><div class="resource-pair"><dt>${cityCommandText('月產糧','月間兵糧収入')}</dt><dd data-grain-production>${c.grain_balance.production}</dd></div><div class="resource-pair"><dt>${cityCommandText('駐軍耗糧','駐屯軍の兵糧消費')}</dt><dd data-grain-upkeep>${c.grain_balance.upkeep}</dd></div><div class="resource-pair"><dt>${cityCommandText('居民月耗糧','住民の月間消費')}</dt><dd data-civilian-grain>${c.grain_balance.civilian}</dd></div><div class="resource-pair"><dt>${cityCommandText('駐軍士氣','駐屯軍の士気')}</dt><dd>${c.city_development?.garrison_spirit??100}</dd></div><div class="resource-pair"><dt>${cityCommandText('兵糧淨收支','兵糧の収支')}</dt><dd data-grain-net>${c.grain_balance.net>0?'+':''}${c.grain_balance.net}</dd></div></dl><p class="small">${cityCommandText(`1 點兵糧相當於 ${(preview?data.grain_people_per_day:view.catalog.grain_people_per_day)??1000} 名士兵的單日基本口糧。`,`兵糧1は兵 ${(preview?data.grain_people_per_day:view.catalog.grain_people_per_day)??1000} 人の1日分の基本配給です。`)}</p>`:''}
+   ${c.agriculture&&typeof GameCityDevelopment!=='undefined'?GameCityDevelopment.agriculture(c.agriculture):''}
    <p class="city-information-strength">驻城 ${c.officers.length}/${data.capacity}人 · 武将带兵合计 ${troops}</p>
    ${!preview&&typeof GameCivilStaff!=='undefined'?GameCivilStaff.summary(view,id,{locale:GameI18n.locale,cityName,bilingual:true}):''}
    <div class="roster-scroll"><table class="roster-table"><thead><tr><th>武将</th><th>兵</th><th>武</th><th>知</th><th>德</th><th>忠</th><th>经</th><th>体</th></tr></thead><tbody>${rows||'<tr><td colspan="8">暂无驻军</td></tr>'}</tbody></table></div>
@@ -874,7 +875,16 @@ function grainRecoveryNotice(id,{faction=false}={}){
  if(!Number.isInteger(turns))return '';
  const label=faction?cityCommandText('全勢力糧儲預計三個月內用盡。','勢力全体の食糧が3か月以内に尽きる見込みです。'):
   cityCommandText('糧儲不足三個月，政務官將優先購糧或開墾土地。','3か月以内に食糧が不足する見込みです。政務官は食糧購入または土地開墾を優先します。');
- return `<p class="small" data-grain-recovery="${turns}">${label}</p>`;
+ const offer=faction?null:outlook?.market_purchases?.[id];
+ let market='';
+ if(offer?.blocked_reason){
+  market=cityCommandText(GameFacilities.marketConstraint(offer.blocked_reason,'zh-Hant'),
+   GameFacilities.marketConstraint(offer.blocked_reason,'ja'));
+ }else if(offer&&offer.grain<offer.demand){
+  market=cityCommandText(`當地市場可緊急購得 ${offer.grain} / ${offer.demand} 糧。`,
+   `現地市場で緊急購入できるのは ${offer.grain} / ${offer.demand} 糧です。`);
+ }
+ return `<p class="small" data-grain-recovery="${turns}">${label}${market?` ${market}`:''}</p>`;
 }
 function bindCityGrainWarning(container){
  const button=container.querySelector('[data-city-grain-aid]');
@@ -2138,7 +2148,10 @@ function openBattleFacility(){
   footer=`<button id="battle-facility-treat" class="primary" ${site.health>=site.max_health||site.gold<site.medical_gold?'disabled':''}>${battleText('療傷','治療')}</button>`;
  }else if(site.kind==='market'){
   const trade=site.trade;
-  body=`<label class="field">${battleText('交易批數','取引する口数')}<input id="battle-facility-batches" type="number" min="1" max="${trade.max_batches}" value="${trade.max_batches?1:0}" step="1" ${trade.max_batches?'':'disabled'}></label><p id="battle-facility-trade-preview"></p>`;
+  const shared=trade.market_stock===undefined?'':battleText(
+   `與城內及雙方共用市場庫存 ${trade.market_stock} 糧 · 可買 ${trade.max_batches} 批`,
+   `都市と両軍の共通市場在庫 ${trade.market_stock} 糧 ・ 購入上限 ${trade.max_batches} 口`);
+  body=`${shared?`<p id="battle-market-inventory">${shared}</p>`:''}<label class="field">${battleText('交易批數','取引する口数')}<input id="battle-facility-batches" type="number" min="1" max="${trade.max_batches}" value="${trade.max_batches?1:0}" step="1" ${trade.max_batches?'':'disabled'}></label><p id="battle-facility-trade-preview"></p>`;
   footer=`<button id="battle-facility-buy-grain" class="primary" ${trade.max_batches?'':'disabled'}>${battleText('購入兵糧','兵糧を購入')}</button>`;
  }else if(site.kind==='armory'){
   body=`<label class="field">${battleText('裝備部位','装備部位')}<select id="battle-facility-slot"><option value="weapon">${battlePlain('武器','武器')}</option><option value="armor">${battlePlain('防具','防具')}</option></select></label><label class="field">${battleText('出售裝備','販売装備')}<select id="battle-facility-item"></select></label><div id="battle-facility-equipment-preview"></div>`;
@@ -2149,7 +2162,7 @@ function openBattleFacility(){
  if(site.kind==='hospital')$('#battle-facility-treat').onclick=()=>submit('treat');
  if(site.kind==='market'){
   const input=$('#battle-facility-batches'),preview=$('#battle-facility-trade-preview'),trade=site.trade;
-  const update=()=>{const count=Math.min(trade.max_batches,Math.max(1,Math.trunc(Number(input.value)||1)));input.value=String(count);preview.textContent=battlePlain(`花費資金 ${count*trade.rate}，購入兵糧 ${count*trade.batch_grain}。`,`資金 ${count*trade.rate}を使い、兵糧 ${count*trade.batch_grain}を購入します。`);return count;};input.oninput=update;update();
+  const update=()=>{const count=Math.min(trade.max_batches,Math.max(1,Math.trunc(Number(input.value)||1)));input.value=String(count);preview.textContent=GameFacilities.marketConstraint(trade.blocked_reason,GameI18n.locale)||battlePlain(`花費資金 ${count*trade.rate}，購入兵糧 ${count*trade.batch_grain}。`,`資金 ${count*trade.rate}を使い、兵糧 ${count*trade.batch_grain}を購入します。`);return count;};input.oninput=update;update();
   $('#battle-facility-buy-grain').onclick=()=>submit('buy_grain',{batches:update()});
  }
  if(site.kind==='armory'){

@@ -15,6 +15,33 @@
    [choose(locale,'人口','人口'),c.population,populationLimit],[choose(locale,'統治度','統治度'),c.governance,100]
   ].map(([k,v,cap])=>`<div><dt>${k}</dt><dd>${esc(v)}<small> / ${cap}</small></dd></div>`).join('')}</dl>`;
  }
+ function agriculture(detail){
+  const number=value=>esc(value),signed=value=>number(value>0?'+'.concat(value):value);
+  const rate=value=>number(value)+'%',times=value=>number(value.toFixed(3))+'×';
+  const render=locale=>{
+   const field=(tc,ja,value,key)=>'<div><dt>'+choose(locale,tc,ja)+'</dt><dd data-agriculture-'+key+'>'+value+'</dd></div>';
+   const stage=['前期','中期','後期'][detail.land_stage-1];
+   return '<details data-locale-only="'+locale+'" data-l10n-native="'+locale+'" data-city-agriculture><summary>'+choose(locale,'農業與月收支明細','農業と月間収支の内訳')+'</summary><dl class="development-stats">'+
+    field('居民人口','住民人口',number(detail.population),'population')+
+    field('町等級','町の段階',number(detail.town),'town')+
+    field('計入產糧人口','生産対象人口',number(detail.effective_population)+' / '+number(detail.population_cap),'effective-population')+
+    field('人口產糧倍率','人口の収穫倍率',times(detail.population_multiplier),'population-multiplier')+
+    field('町產糧加成','町の収穫補正','+'+rate(detail.town_bonus_percent),'town-bonus')+
+    field('土地與開墾階段','土地・開墾段階',number(detail.land)+' · '+stage,'land-stage')+
+    field('土地開發倍率','土地の収穫倍率',times(detail.land_multiplier),'land-multiplier')+
+    field('稅率','税率',rate(detail.tax_rate),'tax')+
+    field('災害損傷','災害損傷',number(detail.damage)+'/50','damage')+
+    field('常規月產糧','月間の通常収穫',number(detail.regular_grain),'production')+
+    field('民政官累計加成','民政官の累積補正','+'+number(detail.civil_bonus),'civil-bonus')+
+    field('居民月耗糧','住民の月間消費',number(detail.civilian_grain)+' ('+rate(detail.resident_rate_percent)+')','civilian')+
+    field('現役兵月耗糧','現役兵の月間消費',number(detail.active_grain),'active')+
+    field('預備兵月耗糧','予備兵の月間消費',number(detail.reserve_grain),'reserve')+
+    field('應付金糧月俸','月俸の金・兵糧',number(detail.wage_gold)+' / '+number(detail.wage_grain),'payroll')+
+    field('月淨糧（含月俸）','兵糧月間収支（俸給込み）',signed(detail.net_grain),'net')+
+    '</dl></details>';
+  };
+  return ['zh-Hant','ja'].map(render).join('');
+ }
  function quote(view,id,actor,kind){return row(view,id)?.actor_quotes?.[String(actor)]?.[kind]||null;}
  function create({getView,cityName,openDialog,command,dialog,i18n,isBusy=()=>false,isPreview=()=>false}){
   let active=null,pending=false;
@@ -48,7 +75,7 @@
   root.document?.addEventListener('game-language-change',language);
   return {open,dispose(){active=null;root.document?.removeEventListener('game-language-change',language);}};
  }
- const api=Object.freeze({kinds,summary,quote,create});
+ const api=Object.freeze({kinds,summary,agriculture,quote,create});
  if(typeof module==='object'&&module.exports)module.exports=api;
  root.GameCityDevelopment=api;
 })(typeof window==='object'?window:globalThis);

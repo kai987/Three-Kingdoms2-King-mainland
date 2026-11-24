@@ -116,6 +116,11 @@ class FacilityCampaignTests(unittest.TestCase):
         game = self.new()
         city_id, actor = 'xiangyang', 439
         game.state.extension['facilities']['cities'][city_id]['town'] = 1
+        game.state.extension['city_development']['cities'][city_id]['population'] = 120_000
+        base = income_at(game.catalog.data, city_id, game.state.year, game.state.month)['grain']
+        from test_remake_economy_v2 import reference_adjusted
+
+        land = game.state.extension['city_development']['cities'][city_id]['land']
         for before, gold, grain in ((1, 500, 2000), (2, 1000, 4000)):
             city = game.state.cities[city_id]
             city.gold, city.grain = gold, grain - 1
@@ -124,13 +129,18 @@ class FacilityCampaignTests(unittest.TestCase):
             view = game.view()['catalog']
             self.assertEqual(view['facilities']['cities'][city_id]['develop'],
                 dict(from_town=before,to_town=before+1,gold=gold,grain=grain,can_develop=True))
+            self.assertEqual(view['city_development']['cities'][city_id]['income']['grain'],
+                             2 * reference_adjusted(base, 120_000, before, land, land, 60, 60))
             used = game.state.extension['command_books']['factions']['shu']['used']
             self.cmd(game, 'develop_town', city=city_id, actor=actor)
             self.assertEqual(game.state.extension['command_books']['factions']['shu']['used'], used + 1)
             city = game.state.cities[city_id]
             self.assertEqual((city.gold, city.grain), (0, 0))
             self.assertEqual(game.state.extension['events']['items'][-1]['details']['grain'], grain)
+            expected = 2 * reference_adjusted(base, 120_000, before + 1, land, land, 60, 60)
+            self.assertEqual(monthly_income(game, city_id, game.state)['grain'], expected)
             game = self.restore(game)
+            self.assertEqual(monthly_income(game, city_id, game.state)['grain'], expected)
 
         save = game.export_save()
         receipt = next(row['details'] for row in save['state']['extension']['events']['items']
@@ -225,7 +235,8 @@ class FacilityCampaignTests(unittest.TestCase):
         row.update(preparedness=0,damage=0)
         game.state.officers[146].health=0
         self.advance(game,2)
-        before=deepcopy(game.state);income=income_at(game.catalog.data,source.id,before.year,8)
+        before=deepcopy(game.state)
+        income=monthly_income(game,source.id,before,date=(before.year,8))
         wages = _monthly_wages(before, before.cities[source.id])
         with record_garrison_charges() as paid:
             self.advance(game)
@@ -234,7 +245,7 @@ class FacilityCampaignTests(unittest.TestCase):
         receipt=events[0]['details'];current=game.state.cities[source.id]
         self.assertEqual(receipt['disaster'],'drought');self.assertEqual(receipt['rate'],10)
         self.assertEqual(current.gold, before.cities[source.id].gold + income['gold'] - wages['gold'])
-        self.assertEqual(current.grain, before.cities[source.id].grain + 2 * income['grain']
+        self.assertEqual(current.grain, before.cities[source.id].grain + income['grain']
                          - paid[source.id] - receipt['grain'] - wages['grain'])
         self.assertEqual(current.reserves,before.cities[source.id].reserves+income['reserves']-receipt['reserves'])
         self.assertEqual(game.state.soldiers['lost']-before.soldiers['lost'],receipt['reserves'])
@@ -265,13 +276,12 @@ class FacilityCampaignTests(unittest.TestCase):
         row=game.state.extension['facilities']['cities']['xiangyang'];row['preparedness']=99
         before=deepcopy(game.state.cities['xiangyang'])
         wages = _monthly_wages(game.state, before)
-        base=income_at(game.catalog.data,'xiangyang',game.state.year,6)
-        expected=facilities.adjusted_income(game.state,'xiangyang',base)
+        expected=monthly_income(game,'xiangyang',game.state,date=(game.state.year,6))
         with record_garrison_charges() as paid:
             self.advance(game)
         current=game.state.cities['xiangyang']
         self.assertEqual(current.gold, before.gold + expected['gold'] - wages['gold'])
-        self.assertEqual(current.grain, before.grain + 2 * expected['grain']
+        self.assertEqual(current.grain, before.grain + expected['grain']
                          - paid['xiangyang'] - wages['grain'])
         self.assertEqual(current.reserves,before.reserves+expected['reserves'])
         self.restore(game)
@@ -284,13 +294,13 @@ class FacilityCampaignTests(unittest.TestCase):
             market = game.view()['catalog']['facilities']['cities'][city_id]['trade']
             return market['buy']['rate'], market['sell']['rate']
 
-        self.assertEqual(prices(), (10, 10))
+        self.assertEqual(prices(), (10, 9))
         self.advance(game, 2)
         self.assertEqual((game.state.month, game.state.day), (9, 21))
-        self.assertEqual(prices(), (10, 10))
+        self.assertEqual(prices(), (10, 9))
         self.advance(game)
         self.assertEqual((game.state.month, game.state.day), (10, 1))
-        self.assertEqual(prices(), (7, 7))
+        self.assertEqual(prices(), (7, 6))
         stock = game.state.cities[city_id]
         before = stock.gold, stock.grain, deepcopy(game.state.rng)
         self.cmd(game, 'trade_grain', city=city_id, actor=146, direction='buy', batches=2)

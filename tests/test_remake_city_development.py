@@ -13,7 +13,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'source'))
 sys.path.insert(0, str(ROOT/'tests'))
 from remake import capital_openings, city_development as development, command_books, large_city_population
-from remake import domestic, treasures
+from remake import domestic, economy_rules, treasures
+from test_remake_economy_v2 import reference_adjusted
 from remake.errors import GameError
 from remake.campaign import Campaign, Catalog
 from remake.city_economy import income_at, tier_at
@@ -38,6 +39,7 @@ class SequenceRng:
 
 def setup():
     game, state = fixture()
+    state.extension[economy_rules.FIELD] = economy_rules.CURRENT
     game.catalog.data['city_income'] = {key: dict(gold=120, grain=400, reserves=100) for key in state.cities}
     state.extension['city_development'] = development.empty(game, state)
     return game, state
@@ -64,7 +66,11 @@ class DevelopmentTests(unittest.TestCase):
         development.validate(game, state)
         for city in state.cities:
             base = game.catalog.data['city_income'][city]
-            self.assertEqual(development.adjust_income(game, state, city, base), base)
+            town = state.extension['facilities']['cities'][city]['town']
+            opening = view['cities'][city]
+            expected = dict(base, grain=reference_adjusted(base['grain'], opening['population'], town,
+                                                           opening['land'], opening['land'], 60, 60))
+            self.assertEqual(development.adjust_income(game, state, city, base), expected)
         self.assertEqual(before, state)
 
     def test_intellect_gold_bands_and_exact_effect_floor_order(self):
@@ -201,17 +207,18 @@ class DevelopmentTests(unittest.TestCase):
         state.officers[1].health = 0
         self.refuse(game, state, payload)
 
-    def test_income_opening_identity_and_independent_production_fields(self):
+    def test_income_independent_production_fields_and_difficulty(self):
         game, state = setup()
         row = state.extension['city_development']['cities']['capital']
         base = dict(gold=120, grain=400, reserves=100)
+        opening = dict(base, grain=reference_adjusted(400, 150_000, 3, 450, 450, 60, 60))
         for difficulty in ('easy', 'normal', 'hard'):
             state.extension['difficulty'] = difficulty
-            self.assertEqual(development.adjust_income(game, state, 'capital', base), base)
+            self.assertEqual(development.adjust_income(game, state, 'capital', base), opening)
         state.extension['difficulty'] = 'normal'
         row['land'] += 60
         changed = development.adjust_income(game, state, 'capital', base)
-        self.assertGreater(changed['grain'], base['grain'])
+        self.assertGreater(changed['grain'], opening['grain'])
         self.assertEqual(changed['gold'], base['gold'])
         self.assertEqual(changed['reserves'], base['reserves'])
         for difficulty in ('easy', 'normal', 'hard'):
@@ -225,6 +232,21 @@ class DevelopmentTests(unittest.TestCase):
                                 (81, 80), (90, 80), (91, 90), (99, 90), (100, 100)):
             self.assertEqual(development.tax_rate(governance), tax)
         self.assertEqual(base, dict(gold=120, grain=400, reserves=100))
+
+    def test_grain_uses_continuous_population_and_town_caps_regardless_of_opening_population(self):
+        game, state = setup()
+        city = state.extension['city_development']['cities']['capital']
+        facility = state.extension['facilities']['cities']['capital']
+        for town, cap in ((1, 50_000), (2, 90_000), (3, 150_000)):
+            facility['town'] = town
+            for population in (0, 1_900, 2_000, 3_900, 4_000, cap - 100, cap, 200_000, cap - 2_100):
+                with self.subTest(town=town, population=population):
+                    city['population'] = population
+                    expected = reference_adjusted(400, population, town, 450, 450, 60, 60)
+                    for opening_population in (8_000, 157_000):
+                        city['baseline']['population'] = opening_population
+                        income = development.adjust_income(game, state, 'capital', {'grain': 400})
+                        self.assertEqual(income['grain'], expected)
 
     def test_negative_events_exact_floor_order_and_separate_categories(self):
         for category, roll in (('population', 0), ('resources', 1), ('development', 2)):
@@ -520,7 +542,7 @@ class DevelopmentCampaignTests(unittest.TestCase):
                            'A faction with remaining orders can develop more than once')
         game.validate(game.state)
 
-    def test_all_29_real_openings_pure_income_identity_and_three_saved_developments(self):
+    def test_all_29_opening_income_previews_and_three_saved_developments(self):
         paths = [path for path in sorted((ROOT/'game/data/campaigns').glob('*.json')) if path.name != 'index.json']
         self.assertEqual(len(paths), 29)
         session = CampaignSession(paths)
@@ -546,6 +568,7 @@ class DevelopmentCampaignTests(unittest.TestCase):
                     preview = session.preview_city(catalog.data['id'], key)['city']
                     baseline = view['cities'][key]['baseline']
                     self.assertEqual(preview['city_development'], baseline)
+                    self.assertEqual(preview['income'], view['cities'][key]['income'])
                     examples[path.stem, key] = baseline
                     if key in ('henan', 'jingzhao'):
                         city = game.state.cities[key]
@@ -557,6 +580,8 @@ class DevelopmentCampaignTests(unittest.TestCase):
                         self.assertEqual(sum(officer['troops'] for officer in preview['officers']), active)
                         base = income_at(catalog.data, key, game.state.year, game.state.month)
                         damage = preview['facilities']['damage']
+                        base['grain'] = reference_adjusted(base['grain'], baseline['population'],
+                            preview['facilities']['town'], baseline['land'], baseline['land'], 60, 60)
                         expected_income = {field: amount * (100-damage) // 100 for field, amount in base.items()}
                         expected_income['grain'] *= 2
                         self.assertEqual(preview['income'], expected_income)
@@ -587,11 +612,15 @@ class DevelopmentCampaignTests(unittest.TestCase):
                     else:
                         self.assertEqual(expected, previous_population_format, (path.stem, key))
                     base = income_at(catalog.data, key, game.state.year, game.state.month)
-                    damage = game.state.extension['facilities']['cities'][key]['damage']
-                    expected_income = {field: amount * (100-damage) // 100 for field, amount in base.items()}
+                    facility = game.state.extension['facilities']['cities'][key]
+                    damage = facility['damage']
+                    grain = reference_adjusted(base['grain'], expected['population'], facility['town'],
+                                               expected['land'], expected['land'], 60, 60)
+                    adjusted = dict(base, grain=grain)
+                    expected_income = {field: amount * (100-damage) // 100 for field, amount in adjusted.items()}
                     expected_income['grain'] *= 2
                     self.assertEqual(row['income'], expected_income)
-                    self.assertEqual(development.adjust_income(game, game.state, key, base), base)
+                    self.assertEqual(development.adjust_income(game, game.state, key, base), adjusted)
                     self.assertEqual(row['baseline'], expected)
                 self.assertEqual(game.export_save(), before)
                 restored = Campaign(catalog)

@@ -3,6 +3,7 @@ import base64
 import json
 import zlib
 
+from .economy_rules import FIELD as ECONOMY_VERSION_FIELD
 from .json_boundary import loads
 
 MAX_STATE_BYTES = 32 * 1024 * 1024
@@ -11,7 +12,7 @@ MAX_FILE_BYTES = 2 * 1024 * 1024 - 128
 
 def header(state):
     result = {key: state[key] for key in ('seed', 'player', 'year', 'month', 'day', 'turn', 'phase')}
-    result['extension'] = {key: state['extension'][key] for key in ('campaign_id', 'difficulty', 'lifespan')
+    result['extension'] = {key: state['extension'][key] for key in ('campaign_id', 'difficulty', 'lifespan', ECONOMY_VERSION_FIELD)
                            if key in state['extension']}
     return result
 

@@ -8,7 +8,6 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / 'source'), str(ROOT / 'tests')]
-from remake import grain_units
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
 from remake import city_economy, civil_staff, diplomacy, domestic, logistics, treasures
@@ -141,7 +140,7 @@ class FactionDomesticTests(unittest.TestCase):
         intellect = state.officers[civil].profile.intellect
         self.assertEqual(intellect, 99)
         for key in costs:
-            base = city_economy.scale_monthly_grain(grain_units.stocks(game.catalog.data['city_income'][key]))
+            base = city_economy.monthly_income(game, key, state)
             for index, field in enumerate(('gold', 'grain')):
                 bonus = base[field] // 2
                 self.assertEqual(getattr(state.cities[key], field),
@@ -150,7 +149,7 @@ class FactionDomesticTests(unittest.TestCase):
             self.assertLessEqual(pool_row, 100)
         for key in ('nanyang', 'jiangxia'):
             self.assertEqual(state.extension['domestic']['cities'][key]['morale'], 70)
-            base = city_economy.scale_monthly_grain(grain_units.stocks(game.catalog.data['city_income'][key]))
+            base = city_economy.monthly_income(game, key, state)
             self.assertEqual((state.cities[key].gold, state.cities[key].grain),
                              (initial[key][0] + base['gold'], initial[key][1] + base['grain'] - paid[key]))
         self.assertEqual(state.rng.draws, 0)

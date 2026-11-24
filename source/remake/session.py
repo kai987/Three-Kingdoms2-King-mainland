@@ -1,16 +1,28 @@
 """Atomic scenario switching. Failed new/load requests retain the current game."""
 from threading import RLock
-from . import grain_units, southern_mission
+from . import city_development, domestic, economy_rules, grain_units, payroll, southern_mission
 from .campaign import Campaign, Catalog, GameError, verified_save_content
 from .map_presentation import city_names,presentation,faction_colors
 from .city_economy import (frontier_outposts_view, garrison_grain, garrison_grain_cost, grain_balance,
-                           monthly_income, opening_monthly_income, profile_at, profiles_at)
+                           monthly_income, opening_monthly_income, profile_at, profiles_at, stationed_troops, town_level)
 from .officer_relations import opening_values
 from .dated_events import visible_factions
 from .treasures import opening_stock as opening_treasure_stock
 
 
 DEFAULT_SCENARIO = 'mainland184-02'
+
+
+def _agricultural_balance(factors, balance, bonus, active_bill, wage, facility):
+    return dict(factors, damage=facility['damage'], regular_grain=balance['production'] - bonus,
+                civil_bonus=bonus, civilian_grain=balance['civilian'], active_grain=active_bill,
+                reserve_grain=balance['upkeep'] - active_bill, wage_gold=wage['gold'], wage_grain=wage['grain'],
+                net_grain=balance['net'] - wage['grain'])
+
+
+def _town_agriculture(detail):
+    fields = ('population_cap', 'town_bonus_percent', 'civilian_grain', 'regular_grain', 'net_grain')
+    return {key: detail[key] for key in fields}
 
 
 def faction_resources(catalog, state=None):
@@ -139,19 +151,44 @@ class CampaignSession:
         result['catalog']['city_profiles']=profiles_at(self.game.catalog.data,year,month)
         result['catalog']['frontier_outposts']=frontier_outposts_view(self.game.catalog.data,self.game.state)
         if self.game.state:
-            from . import domestic
             state = self.game.state
             development = result['catalog']['city_development']['cities']
             city_keys = dict.fromkeys((*self.game.catalog.data.get('city_income', {}), *state.cities))
             income = {key: development[key]['income'] if key in development else monthly_income(self.game, key, state)
                       for key in city_keys}
-            upkeep = garrison_grain(self.game, state)
+            stationed = stationed_troops(self.game, state)
+            upkeep = garrison_grain(self.game, state, stationed=stationed)
             result['catalog']['city_income'] = income
-            result['catalog']['city_grain_balance'] = {
-                key: grain_balance(income[key]['grain'] + domestic.earned_grain(state, key, income[key]),
-                                   upkeep[key], city.owner, development[key]['population'])
-                for key, city in state.cities.items()
-            }
+            balances, details = {}, {}
+            for key, city in state.cities.items():
+                town = town_level(self.game, state, key)
+                bonus = domestic.earned_grain(state, key, income[key]) if city.owner != 'neutral' else 0
+                population = development[key]['population']
+                balance = grain_balance(income[key]['grain'] + bonus, upkeep[key], city.owner,
+                                        population, town=town, state=state)
+                balances[key] = balance
+                factors = city_development.agriculture_details(self.game, state, key, town)
+                if factors is None:
+                    continue
+                wage = payroll.monthly_due(state, city) if city.owner != 'neutral' else dict(gold=0, grain=0)
+                active_bill = garrison_grain_cost(self.game.catalog.data, key, year, month, stationed.get(key, 0), 0)
+                facility = result['catalog']['facilities']['cities'][key]
+                details[key] = _agricultural_balance(factors, balance, bonus, active_bill, wage, facility)
+                if town < 3 and city.owner == state.player:
+                    next_town = town + 1
+                    revised = monthly_income(self.game, key, state, town=next_town)
+                    next_bonus = domestic.earned_grain(state, key, revised)
+                    projection = grain_balance(revised['grain'] + next_bonus, upkeep[key], city.owner,
+                                               population, town=next_town, state=state)
+                    next_factors = economy_rules.TOWN_AGRICULTURE[next_town]
+                    facility['develop']['agriculture'] = dict(
+                        before=_town_agriculture(details[key]),
+                        after=dict(population_cap=next_factors.population_cap,
+                                   town_bonus_percent=next_factors.grain_bonus_percent,
+                                   civilian_grain=projection['civilian'], regular_grain=revised['grain'],
+                                   net_grain=projection['net'] - wage['grain']))
+            result['catalog']['city_grain_balance'] = balances
+            result['catalog']['city_agriculture'] = details
         else:
             scenario = self.game.catalog.data['id']
             if scenario not in self._opening_incomes:
@@ -270,15 +307,23 @@ class CampaignSession:
             history=d.get('city_history',{}).get(city,{})
             neutral_name=history.get('neutral_label') or ('地方汉郡（中立）' if history.get('opening',{}).get('basis')=='unmapped_local_han_administration' else '无主')
             frontier=frontier_outposts_view(d).get(city)
-            upkeep = garrison_grain_cost(d, city, d['start_year'], d['start_month'],
-                                         sum(o['troops'] for o in officers), stocks[city]['reserves'])
-            balance = grain_balance(income['grain'], upkeep, owner, development['population'])
+            active = sum(o['troops'] for o in officers)
+            upkeep = garrison_grain_cost(d, city, d['start_year'], d['start_month'], active,
+                                        grain_units.stocks(stocks[city])['reserves'])
+            balance = grain_balance(income['grain'], upkeep, owner, development['population'], town=facilities['town'])
+            factors = city_development.agriculture_details(preview_game, None, city, facilities['town'], opening=development)
+            agriculture = None
+            if factors is not None:
+                count = len(officers) if owner != 'neutral' else 0
+                wage = {key: value * count for key, value in payroll.officer_wage(0).items()}
+                active_bill = garrison_grain_cost(d, city, d['start_year'], d['start_month'], active if count else 0, 0)
+                agriculture = _agricultural_balance(factors, balance, 0, active_bill, wage, facilities)
             prefect = d.get('initial_governors', {}).get(city)
             governor = c.ids[prefect['person_id']] if prefect else None
             return dict(scenario=scenario,title=d['title'],year=d['start_year'],month=d['start_month'],
                 capacity=c.rules.city_officer_capacity, grain_people_per_day=grain_units.denominator(),
                 city=dict(id=city,owner=owner,treasure=treasure,governor=governor,facilities=facilities,city_development=development,owner_name=c.factions[owner]['name'] if owner!='neutral' else neutral_name,
-                    terrain=c.map_cities[city].get('terrain'),officers=officers,
+                    terrain=c.map_cities[city].get('terrain'),officers=officers,agriculture=agriculture,
                     profile=profile_at(d,city,d['start_year'],d['start_month']),income=income, grain_balance=balance,
                     history=d.get('city_history',{}).get(city),frontier_outpost=frontier,
                     **grain_units.stocks(stocks[city])))
