@@ -19,7 +19,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, canonical, digest
-from remake import historical_campaigns, starting_garrisons
+from remake import civil_staff, domestic, historical_campaigns, starting_garrisons
 from remake.errors import GameError
 from remake.march_core import CoreUnavailable, config_for, invoke, using_backend
 from remake.route_hazards import allocate_survivors, evaluate_leg, route_allowed
@@ -86,6 +86,15 @@ def campaign_fixture(case):
     return game
 
 
+def historical_payroll(campaign, state):
+    pool = state.extension['civil_staff']
+    if pool['people']:
+        raise AssertionError('Historical march fixtures must not employ civil staff')
+    pool['last_payroll_month'] = civil_staff.month_index(state)
+
+
+@patch.object(civil_staff, 'settle_payroll', historical_payroll)
+@patch.object(domestic, 'rebalance_changed_garrisons', lambda *_: None, create=True)
 @pre_civil_staff_profile()
 @pre_city_development_opening()
 @patch.object(historical_campaigns, 'RULES', {
@@ -98,7 +107,8 @@ def campaign_result(case, alternate_backend=None, *, legacy_catalog_sha256=None)
     Every case is a friendly transfer: no battle budget or battle service is
     disabled. The old full-save artifact predates city development state and
     the two Hanzhong calendar milestones in this 217 opening. It also used
-    the original civil-staff profiles. The natural replay uses current rules.
+    the original civil-staff profiles, and predates officer pay and garrison
+    redistribution at arrival. The natural replay uses current rules.
     """
     name, side, source, target, mode, month = case
     game = campaign_fixture(case)

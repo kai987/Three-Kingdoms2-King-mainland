@@ -9,7 +9,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake import civil_staff as staff
-from remake import command_books, diplomacy
+from remake import command_books, diplomacy, payroll
 from remake.errors import GameError
 from remake.officers import GameRules
 
@@ -35,7 +35,8 @@ class CampaignFixture:
 
 def fixture():
     game = CampaignFixture()
-    officers = {i: SimpleNamespace(alive=True) for i in range(6)}
+    officers = {i: SimpleNamespace(alive=True, runtime_id=i, person_id=f'person-{i}',
+                                  faction_id='one', tier=0, experience=0, loyalty=90) for i in range(6)}
     cities = {key: SimpleNamespace(id=key, owner='one',
                   roster=SimpleNamespace(officer_ids=ids), gold=1000,
                   grain=1000, reserves=1000, action_used=False)
@@ -288,13 +289,14 @@ class CivilStaffTests(unittest.TestCase):
         field = dict(commerce='gold', farming='grain', recruitment='reserves')[person['specialty']]
         base = dict(gold=100, grain=200, reserves=100)
         bonus = base[field]*(2+person['profile']['intellect']//20)//100
-        expected = dict(gold=before[0]-5, grain=before[1], reserves=before[2])
+        expected = dict(gold=before[0]-5, grain=before[1]-10, reserves=before[2])
         expected[field] += bonus
         self.assertEqual((city.gold, city.grain, city.reserves), tuple(expected.values()))
         self.assertEqual(state.soldiers['recruited']-before[3], bonus if field == 'reserves' else 0)
         salary = next(row for row in reversed(state.events) if row['kind'] == 'staff_salary')
         self.assertEqual(salary['details']['amount'], 5)
         self.assertEqual(salary['details']['paid'], 5)
+        self.assertEqual((salary['details']['grain_amount'], salary['details']['grain_paid']), (10, 10))
         self.assertEqual(salary['details']['counts'], dict(staff=1, total_unpaid=0, cities=1))
         frozen = deepcopy(state)
         staff.synchronize(game, state, monthly=True)
@@ -305,13 +307,113 @@ class CivilStaffTests(unittest.TestCase):
         staff.synchronize(game, state, monthly=True)
         self.assertFalse(person['working'])
         self.assertEqual(person['unpaid_months'], 1)
-        self.assertEqual((city.gold, city.grain, city.reserves), before)
+        self.assertEqual((city.gold, city.grain, city.reserves), (before[0], before[1]-10, before[2]))
         advance_month(game, state)
         city.gold = 5
         staff.synchronize(game, state, monthly=True)
         self.assertTrue(person['working'])
         self.assertEqual(person['unpaid_months'], 0)
         staff.validate(game, state)
+
+    def test_officers_receive_tiered_wages_with_proportional_shortfalls(self):
+        game, state = fixture()
+        city = state.cities['capital']
+        state.officers[2].tier, state.officers[2].experience = 7, 15_000
+        city.gold, city.grain = 7, 32
+        advance_month(game, state)
+        staff.settle_payroll(game, state)
+        ledger = state.extension['payroll']['shortfalls']
+        self.assertEqual((city.gold, city.grain), (0, 0))
+        self.assertEqual((ledger['1']['gold'], ledger['2']['gold']), (5, 10))
+        self.assertEqual((ledger['1']['grain'], ledger['2']['grain']), (10, 22))
+        self.assertEqual((ledger['1']['gold_paid'], ledger['2']['gold_paid']), (2, 5))
+        self.assertEqual((ledger['1']['grain_paid'], ledger['2']['grain_paid']), (10, 22))
+        snapshot = deepcopy(state)
+        staff.settle_payroll(game, state)
+        self.assertEqual(state, snapshot)
+
+    def test_wage_bands_cover_every_experience_boundary_and_legacy_receipts(self):
+        published = payroll.rules()
+        self.assertEqual(published['experience_per_band'], 1_000)
+        rates = published['officer_wages']
+        self.assertEqual(len(rates), 50)
+        for band, (gold, grain) in {
+            0: (5, 10), 1: (5, 11), 2: (5, 12), 4: (6, 13), 5: (6, 13),
+            14: (9, 21), 15: (10, 22), 29: (28, 61), 30: (31, 68), 49: (188, 413),
+        }.items():
+            self.assertEqual(rates[band], dict(gold=gold, grain=grain))
+        for band, expected in enumerate(rates):
+            with self.subTest(band=band):
+                self.assertEqual(payroll.officer_wage(band * 1_000), expected)
+                self.assertEqual(payroll.officer_wage((band + 1) * 1_000 - 1), expected)
+                if band:
+                    previous = rates[band - 1]
+                    self.assertGreaterEqual(expected['gold'], previous['gold'])
+                    self.assertGreaterEqual(expected['grain'], previous['grain'])
+
+        game, state = fixture()
+        state.officers[0].tier, state.officers[0].experience = 7, 49_999
+        city = state.cities['one']
+        city.gold, city.grain = 50, 200
+        advance_month(game, state)
+        staff.settle_payroll(game, state)
+        receipt = state.extension[payroll.FIELD]['shortfalls']['0']
+        self.assertEqual((receipt['gold'], receipt['grain'], receipt['gold_paid'], receipt['grain_paid']),
+                         (188, 413, 50, 200))
+        payroll.validate(game, state)
+        for old_gold, old_grain in ((11, 22), (30, 60), (48, 97), (128, 256), (26, 57), (12_733, 28_013)):
+            receipt.update(gold=old_gold, grain=old_grain, gold_paid=5, grain_paid=10)
+            payroll.validate(game, state)
+
+    def test_zero_and_partial_pay_grace_periods_and_immunity(self):
+        for gold, grain, first_loss, loss in ((0, 0, 4, 3), (5, 0, 5, 2)):
+            with self.subTest(gold=gold):
+                game, state = fixture()
+                city = state.cities['capital']
+                city.roster.officer_ids = list(state.officers)
+                state.cities['one'].roster.officer_ids = []
+                state.extension.update(leaders={'one': 0},
+                    treasury={'cities': {'capital': {'governor': 2}}})
+                state.officers[0].person_id = 'san14-candidate-0521'
+                state.officers[1].person_id = 'san14-candidate-0500'
+                state.officers[3].loyalty = 95
+                state.officers[5].loyalty = 2
+                for elapsed in range(1, first_loss + 2):
+                    if (elapsed - 1) % 3 == 0:
+                        advance_month(game, state)
+                        city.gold, city.grain = gold * 6, grain * 6
+                        staff.settle_payroll(game, state)
+                    payroll.finish_turn(game, state)
+                    expected = max(0, elapsed - first_loss + 1) * loss
+                    self.assertEqual([state.officers[i].loyalty for i in range(6)],
+                                     [90, 90, 90, 95, 90 - expected, max(0, 2 - expected)])
+                    payroll.validate(game, state)
+                    payroll.finish_turn(game, state)
+                    self.assertEqual(state.officers[4].loyalty, 90 - expected)
+                    state.turn += 1
+                city.gold = city.grain = 100
+                advance_month(game, state)
+                staff.settle_payroll(game, state)
+                self.assertNotIn('payroll', state.extension)
+
+    def test_partial_payment_after_stoppage_preserves_the_shortfall_streak(self):
+        game, state = fixture()
+        city = state.cities['one']
+        city.gold = city.grain = 0
+        advance_month(game, state)
+        staff.settle_payroll(game, state)
+        for _ in range(3):
+            payroll.finish_turn(game, state)
+            state.turn += 1
+        advance_month(game, state)
+        city.gold = 5
+        staff.settle_payroll(game, state)
+        payroll.finish_turn(game, state)
+        row = state.extension[payroll.FIELD]['shortfalls']['0']
+        self.assertEqual((row['turns'], row['stopped_turns'], state.officers[0].loyalty), (4, 0, 90))
+        state.turn += 1
+        payroll.finish_turn(game, state)
+        self.assertEqual(state.officers[0].loyalty, 88)
 
     def test_generated_person_follows_actual_retreat_not_the_captured_city_owner(self):
         game, state = fixture()

@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake import grain_units
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import city_economy, civil_staff, diplomacy, domestic, equipment, facilities, treasures
+from remake import city_economy, civil_staff, diplomacy, domestic, equipment, facilities, payroll, treasures
 from remake.officers import OFFICER_TROOP_CAP, YearState, initialize_officer, year_state
 from campaign_fixtures import record_garrison_charges, controlled_catalog, arrange_contact, finish_soldier_encounter, confirm_default_placement
 
@@ -330,6 +330,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.hire(game, 'runan')
         owned = [c for c in game.state.cities.values() if c.owner == 'shu']
         before = {field: sum(getattr(c, field) for c in owned) for field in ('gold', 'grain', 'reserves')}
+        wages = [payroll.wage(game.state.officers[ident]) for city in owned for ident in city.roster.officer_ids]
         paid = self.enterContext(record_garrison_charges())
         for _ in range(3): self.step(game)
         salaries = [e for e in game.state.extension['events']['items'] if e['kind'] == 'staff_salary']
@@ -340,15 +341,48 @@ class CivilStaffCampaignTests(unittest.TestCase):
         details = event['details']
         self.assertEqual(details['counts'], dict(staff=2, total_unpaid=0, cities=2))
         self.assertEqual((details['amount'], details['paid']), (10, 10))
+        self.assertEqual((details['grain_amount'], details['grain_paid']), (20, 20))
         for field in before:
             current = sum(getattr(game.state.cities[c.id], field) for c in owned)
             base = sum(city_economy.scale_monthly_grain(
                 grain_units.stocks(game.catalog.data['city_income'][c.id]))[field] for c in owned)
-            self.assertEqual(current, before[field] + base + details['bonus'][field] - (10 if field == 'gold' else sum(paid[c.id] for c in owned) if field == 'grain' else 0))
+            wages_paid = sum(wage.get(field, 0) for wage in wages)
+            rations = sum(paid[c.id] for c in owned) if field == 'grain' else 0
+            self.assertEqual(current, before[field] + base + details['bonus'][field] - wages_paid - rations)
         frozen = game.export_save()
         for _ in range(3): game.view(); game.export_save()
         self.assertEqual(game.export_save(), frozen)
         game.validate(game.state)
+
+    def test_payroll_shortfall_round_trips_and_the_same_turn_never_counts_twice(self):
+        game = self.new(free=False)
+        ident = self.hire(game)
+        city = game.state.cities['nanjun']
+        city.gold, city.grain = 2, 0
+        veteran_city = game.state.cities['xiangyang']
+        veteran_id = next(i for i in veteran_city.roster.officer_ids
+                          if i != game.state.extension['leaders']['shu'])
+        veteran = game.state.officers[veteran_id]
+        veteran.experience, veteran.tier = 49_999, 7
+        veteran_city.gold = 0
+        self.assertEqual(game.view()['catalog']['payroll']['officer_wages'][-1], dict(gold=188, grain=413))
+        with patch.object(city_economy, 'monthly_income', return_value=dict(gold=0, grain=0, reserves=0)):
+            for _ in range(3):
+                self.step(game)
+        ledger = game.state.extension[payroll.FIELD]
+        self.assertEqual((ledger['shortfalls'][ident]['gold_paid'], ledger['shortfalls'][ident]['grain_paid']), (2, 0))
+        self.assertEqual(ledger['shortfalls'][ident]['turns'], 1)
+        veteran_receipt = ledger['shortfalls'][str(veteran_id)]
+        self.assertEqual((veteran_receipt['gold'], veteran_receipt['grain'], veteran_receipt['gold_paid']),
+                         (188, 413, 0))
+        saved = game.export_save(compact=True)
+        restored = Campaign(game.catalog)
+        restored.load_save(saved, 0)
+        payroll.finish_turn(restored, restored.state)
+        civil_staff.settle_payroll(restored, restored.state)
+        self.assertEqual(restored.export_save(compact=True), saved)
+        self.step(restored)
+        self.assertEqual(restored.state.extension[payroll.FIELD]['shortfalls'][ident]['turns'], 2)
 
     def test_actual_ai_hires_and_clerk_recruits_with_the_same_cost_and_rng(self):
         game = self.new(player='wu', free=False)
@@ -391,11 +425,11 @@ class CivilStaffCampaignTests(unittest.TestCase):
             if r['city'] == 'nanjun' and r['turn'] == game.state.turn - 1 and r['kind'] == 'training')
         self.assertEqual(game.state.cities['nanjun'].gold, gold - 60 - training,
                          'Shared reserve assignment does not charge the former AI-only top-up fee')
-        self.assertEqual(game.state.officers[clerk['id']].troops, OFFICER_TROOP_CAP)
         self.assertEqual(game.state.rng.draws, 1)
         self.assertEqual(game.state.officers[target].faction_id, 'shu')
-        self.assertEqual(game.state.officers[target].troops, local_soldiers - OFFICER_TROOP_CAP,
-                         'The newly recruited historical officer receives the remaining local reserves')
+        self.assertEqual(game.state.officers[target].troops, OFFICER_TROOP_CAP,
+                         'Local redistribution prioritizes the stronger newly recruited officer')
+        self.assertEqual(game.state.officers[clerk['id']].troops, local_soldiers - OFFICER_TROOP_CAP)
         self.assertEqual(game.state.cities['nanjun'].reserves, 0)
         self.assertEqual(sum(game.state.officers[i].troops
                             for i in game.state.cities['nanjun'].roster.officer_ids), local_soldiers,

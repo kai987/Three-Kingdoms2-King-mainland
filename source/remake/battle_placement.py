@@ -45,13 +45,17 @@ def _zone(game,battle,side):
 
 
 def _initial_ids(state,battle,side):
+    from .battle_reinforcements import joined
     coalition = battle['extended'].get('coalition')
     records = battle['extended'].get('defections',{})
+    reinforcements = joined(battle)
     _require(type(records) is dict,'Invalid placement conversion ledger')
     result = []
     for current in SIDES:
         for unit in battle[current]:
             key = _ident(unit)
+            if key in reinforcements:
+                continue
             record = records.get(key)
             _require(record is None or isinstance(record,dict) and record.get('original_side') in SIDES,
                      'Invalid placement conversion identity')

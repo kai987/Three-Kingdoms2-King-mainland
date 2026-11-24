@@ -357,7 +357,7 @@
   const amount=v=>Number.isSafeInteger(v)&&v>=0&&v<=100000000;
   if(d.tactic===2)return keys(['condition','condition_count'])&&d.condition==='phantom'&&Number.isInteger(d.condition_count)&&(d.success?[2,3]:[0]).includes(d.condition_count);
   if(d.tactic===15)return validQimenEvent(d,keys);
-  if(d.tactic===10)return keys(['condition','condition_counts'])&&d.condition==='chain'&&Array.isArray(d.condition_counts)&&(d.success?d.condition_counts.length>=2&&d.condition_counts.length<=20:d.condition_counts.length===0)&&d.condition_counts.every(item=>item&&typeof item==='object'&&!Array.isArray(item)&&Object.keys(item).length===2&&typeof item.id==='string'&&item.id.length>0&&item.id.length<=128&&item.id.trim()===item.id&&Number.isInteger(item.remaining)&&item.remaining>=3&&item.remaining<=5)&&new Set(d.condition_counts.map(item=>item.id)).size===d.condition_counts.length;
+  if(d.tactic===10)return keys(['condition','condition_counts'])&&d.condition==='chain'&&Array.isArray(d.condition_counts)&&(d.success?d.condition_counts.length>=2&&d.condition_counts.length<=40:d.condition_counts.length===0)&&d.condition_counts.every(item=>item&&typeof item==='object'&&!Array.isArray(item)&&Object.keys(item).length===2&&typeof item.id==='string'&&item.id.length>0&&item.id.length<=128&&item.id.trim()===item.id&&Number.isInteger(item.remaining)&&item.remaining>=3&&item.remaining<=5)&&new Set(d.condition_counts.map(item=>item.id)).size===d.condition_counts.length;
   if(d.tactic===5)return keys(['affected_side','grain_before','grain_after','grain_loss'])&&['attackers','defenders'].includes(d.affected_side)&&[d.grain_before,d.grain_after,d.grain_loss].every(amount)&&d.grain_before-d.grain_after===d.grain_loss&&(d.success||d.grain_loss===0);
   if(d.tactic===8)return keys(['success_percent','target_loyalty','guaranteed_failure'])&&Number.isInteger(d.success_percent)&&d.success_percent>=0&&d.success_percent<=100&&Number.isInteger(d.target_loyalty)&&d.target_loyalty>=0&&d.target_loyalty<=100&&typeof d.guaranteed_failure==='boolean'&&d.guaranteed_failure===(d.target_loyalty>=71)&&d.guaranteed_failure===(d.success_percent===0)&&(!d.guaranteed_failure||!d.success);
   return false;
@@ -365,7 +365,7 @@
  function validQimenEvent(d,keys){
   if(d.condition!=='qimen')return false;
   if(d.qimen_phase==='cast')return keys(['condition','condition_count','qimen_phase'])&&Number.isInteger(d.condition_count)&&(d.success?d.condition_count>=5&&d.condition_count<=9:d.condition_count===0);
-  if(d.qimen_phase!=='daily'||!d.success||!keys(['condition','qimen_phase','qimen_ticks','experience_id','experience_gain'])||typeof d.experience_id!=='string'||!d.experience_id||d.experience_id.length>128||d.experience_id.trim()!==d.experience_id||!Number.isInteger(d.experience_gain)||d.experience_gain<0||d.experience_gain>2550||!Array.isArray(d.qimen_ticks)||!d.qimen_ticks.length||d.qimen_ticks.length>20)return false;
+  if(d.qimen_phase!=='daily'||!d.success||!keys(['condition','qimen_phase','qimen_ticks','experience_id','experience_gain'])||typeof d.experience_id!=='string'||!d.experience_id||d.experience_id.length>128||d.experience_id.trim()!==d.experience_id||!Number.isInteger(d.experience_gain)||d.experience_gain<0||d.experience_gain>2550||!Array.isArray(d.qimen_ticks)||!d.qimen_ticks.length||d.qimen_ticks.length>40)return false;
   return d.qimen_ticks.every(t=>t&&typeof t==='object'&&!Array.isArray(t)&&Object.keys(t).sort().join(',')==='before,id,loss,remaining,troops_after,troops_before'&&typeof t.id==='string'&&t.id.length>0&&t.id.length<=128&&t.id.trim()===t.id&&['before','remaining','troops_before','troops_after','loss'].every(k=>Number.isInteger(t[k]))&&t.before>=1&&t.before<=9&&t.remaining===t.before-1&&t.troops_before>=0&&t.troops_before<=10000&&t.troops_after>=0&&t.troops_after<=t.troops_before&&t.loss===t.troops_before-t.troops_after&&t.loss>=Math.min(80,t.troops_before)&&t.loss<=Math.min(150,t.troops_before))&&new Set(d.qimen_ticks.map(t=>t.id)).size===d.qimen_ticks.length;
  }
  function validCoupEvent(row){
@@ -392,11 +392,13 @@
  }
  function validFacilityEvent(row,grainScale){
   const d=row.details,k=row.kind,fields={town_developed:['actor','from_town','to_town','gold'],officer_treated:['actor','target','gold','before','after'],officer_studied:['actor','target','gold','before','after','bonus'],grain_traded:['actor','direction','batches','grain','gold','rate'],equipment_bought:['actor','target','slot','item','previous','gold'],prevention_improved:['actor','gold','gain','repair','preparedness_before','preparedness_after','damage_before','damage_after'],city_disaster:['disaster','gold','grain','reserves','rate','preparedness_before','preparedness_after','damage_before','damage_after']}[k];
+  if(k==='town_developed'&&Object.hasOwn(d,'grain'))fields.push('grain');
   if(k==='grain_traded'&&['battle_id','side','destination'].some(key=>Object.hasOwn(d,key)))fields.push('battle_id','side','destination');
   if(k==='grain_traded'&&Object.hasOwn(d,'emergency'))fields.push('emergency');
   const num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max,people=k==='city_disaster'?[]:[...new Set([d.actor,...(Object.hasOwn(d,'target')?[d.target]:[])])];
   if(row.audience!=='player'||row.city_ids.length!==1||!row.city_ids[0]||row.factions.length!==1||!row.factions[0]||people.some(id=>typeof id!=='string'||!id)||Object.keys(d).sort().join(',')!==fields.sort().join(',')||JSON.stringify(row.person_ids)!==JSON.stringify(people)||!num('gold',0,100000000))return false;
-  if(k==='town_developed')return num('from_town',1,2)&&d.to_town===d.from_town+1&&d.gold>0;
+  if(k==='town_developed')return num('from_town',1,2)&&d.to_town===d.from_town+1&&d.gold>0&&
+   (!Object.hasOwn(d,'grain')||d.gold===500*d.from_town&&d.grain===2000*d.from_town);
   if(k==='officer_treated'||k==='officer_studied')return num('before',k==='officer_treated'?0:1,k==='officer_treated'?99:79)&&num('after',1,k==='officer_treated'?99:89)&&d.after>d.before&&d.gold>0&&(k==='officer_treated'||num('bonus',1,88)&&d.after-d.before>=5&&d.after-d.before<=12);
   if(k==='grain_traded'){
    const batch=100*grainScale;
@@ -411,13 +413,16 @@
  }
  function validCityDevelopmentEvent(row){
   const d=row.details,developed=row.kind==='city_developed',fields=developed?['actor','development','gold','before','after','gain','governance_before','governance_after']:['governance','category','gold_loss','grain_loss','population_loss','land_loss','industry_loss'];
+  const scaled=developed&&Object.hasOwn(d,'gain_scale');
+  if(scaled)fields.push('gain_scale');
   const num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max;
   if(row.audience!=='player'||row.city_ids.length!==1||!row.city_ids[0]||row.factions.length!==1||!row.factions[0]||Object.keys(d).sort().join(',')!==fields.sort().join(','))return false;
   if(developed){
    const population=d.development==='population',unit=population?100:1,cap=population?CITY_POPULATION_LIMIT:999;
    const validGrowth=['before','after','gain'].every(key=>num(key,0,cap))&&d.after-d.before===d.gain
+    &&(!scaled||(!population&&d.gain_scale===10&&d.gain<=5))
     &&(!population||(['before','after'].every(key=>[0,cap%unit].includes(d[key]%unit))&&(d.gain%unit===0||d.after===cap)));
-   return ['land','industry','population'].includes(d.development)&&typeof d.actor==='string'&&!!d.actor&&JSON.stringify(row.person_ids)===JSON.stringify([d.actor])&&num('gold',10,26)&&d.gold%2===0&&validGrowth&&['governance_before','governance_after'].every(key=>num(key,0,100))&&d.governance_after===Math.min(100,d.governance_before+1+(d.gain/unit>=31?1:0))&&(d.gain>0||d.governance_after>d.governance_before);
+   return ['land','industry','population'].includes(d.development)&&typeof d.actor==='string'&&!!d.actor&&JSON.stringify(row.person_ids)===JSON.stringify([d.actor])&&num('gold',10,26)&&d.gold%2===0&&validGrowth&&['governance_before','governance_after'].every(key=>num(key,0,100))&&d.governance_after===Math.min(100,d.governance_before+1+(d.gain/unit>=(scaled?4:31)?1:0))&&(d.gain>0||d.governance_after>d.governance_before);
   }
   const categories={population:['population_loss'],resources:['gold_loss','grain_loss'],development:['land_loss','industry_loss']};
   if(row.person_ids.length||!num('governance',0,49)||typeof d.category!=='string'||!Object.hasOwn(categories,d.category))return false;
@@ -432,11 +437,11 @@
    Array.isArray(d.troops)&&d.troops.length===2&&d.troops.every(num)&&
    Array.isArray(d.shares)&&d.shares.length===2&&d.shares.every(share=>share&&
     Object.keys(share).sort().join(',')==='gold,grain,reserves'&&Object.values(share).every(num))&&
-   Array.isArray(d.returns)&&d.returns.length<=10&&d.returns.every(city)&&new Set(d.returns).size===d.returns.length;
+   Array.isArray(d.returns)&&d.returns.length<=40&&d.returns.every(city)&&new Set(d.returns).size===d.returns.length;
  }
  function validBattleSupplyEvent(row,denominator){
   const d=row.details,num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max;
-  return row.audience==='player'&&row.city_ids.length>=1&&row.city_ids.length<=2&&row.city_ids.every(id=>id)&&new Set(row.city_ids).size===row.city_ids.length&&row.factions.length>=1&&row.factions.length<=2&&row.factions.every(id=>id)&&new Set(row.factions).size===row.factions.length&&row.person_ids.length<=10&&row.person_ids.every(id=>id)&&new Set(row.person_ids).size===row.person_ids.length&&Object.keys(d).sort().join(',')==='battle_id,daily_grain,days,grain,missing_units,outcome,side'&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id)&&['attackers','defenders'].includes(d.side)&&num('days',1,30)&&num('grain',0,100000000)&&num('daily_grain',1,202000/denominator)&&num('missing_units',1,d.daily_grain*denominator)&&d.outcome===(d.side==='attackers'?'retreat':'victory');
+  return row.audience==='player'&&row.city_ids.length>=1&&row.city_ids.length<=2&&row.city_ids.every(id=>id)&&new Set(row.city_ids).size===row.city_ids.length&&row.factions.length>=1&&row.factions.length<=2&&row.factions.every(id=>id)&&new Set(row.factions).size===row.factions.length&&row.person_ids.length<=10&&row.person_ids.every(id=>id)&&new Set(row.person_ids).size===row.person_ids.length&&Object.keys(d).sort().join(',')==='battle_id,daily_grain,days,grain,missing_units,outcome,side'&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id)&&['attackers','defenders'].includes(d.side)&&num('days',1,30)&&num('grain',0,100000000)&&num('daily_grain',1,404000/denominator)&&num('missing_units',1,d.daily_grain*denominator)&&d.outcome===(d.side==='attackers'?'retreat':'victory');
  }
  function validEquipmentEvent(row){
   const d=row.details,num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max;
@@ -486,6 +491,7 @@
  }
  function validStaffEvent(row,cityCount){
   const d=row.details,allowed=['staff_id','name','portrait','reason','amount','paid','bonus','counts'];
+  if(row.kind==='staff_salary')allowed.push('grain_amount','grain_paid');
   if(row.person_ids.length||row.city_ids.length!==1||row.factions.length<1||row.factions.length>2||Object.keys(d).some(k=>!allowed.includes(k)))return false;
   const required=row.kind==='staff_salary'?['amount','paid','bonus','counts']:['staff_id','name','portrait','reason'];
   if(required.some(k=>!Object.hasOwn(d,k)))return false;
@@ -493,10 +499,15 @@
   if(Object.hasOwn(d,'name')&&(typeof d.name!=='string'||!d.name.trim()||d.name.length>40||/[\u0000-\u001f\u007f]/u.test(d.name)))return false;
   if(Object.hasOwn(d,'portrait')&&!civilEntry?.(d.portrait))return false;
   if(Object.hasOwn(d,'reason')&&(typeof d.reason!=='string'||!/^[a-z_]{1,80}$/.test(d.reason)))return false;
-  for(const k of ['amount','paid'])if(Object.hasOwn(d,k)&&(!Number.isInteger(d[k])||d[k]<0||d[k]>100000000))return false;
+  for(const k of ['amount','paid','grain_amount','grain_paid'])if(Object.hasOwn(d,k)&&(!Number.isInteger(d[k])||d[k]<0||d[k]>100000000))return false;
   if(Object.hasOwn(d,'bonus')&&(!d.bonus||typeof d.bonus!=='object'||Array.isArray(d.bonus)||Object.keys(d.bonus).sort().join(',')!=='gold,grain,reserves'||Object.values(d.bonus).some(n=>!Number.isInteger(n)||n<0||n>100000000)))return false;
   if(Object.hasOwn(d,'counts')&&(!d.counts||typeof d.counts!=='object'||Array.isArray(d.counts)||Object.keys(d.counts).sort().join(',')!=='cities,staff,total_unpaid'||!Number.isInteger(d.counts.staff)||d.counts.staff<1||!Number.isInteger(d.counts.cities)||d.counts.cities<1||d.counts.cities>cityCount||d.counts.staff<d.counts.cities||d.counts.staff>d.counts.cities*99||!Number.isInteger(d.counts.total_unpaid)||d.counts.total_unpaid<0||d.counts.total_unpaid>d.counts.staff))return false;
-  return row.kind!=='staff_salary'||d.paid<=d.amount&&d.amount===d.counts.staff*5&&d.paid%5===0&&d.counts.total_unpaid===d.counts.staff-d.paid/5;
+  if(row.kind!=='staff_salary')return true;
+  const {staff,total_unpaid:unpaid}=d.counts;
+  if(d.paid>d.amount||d.amount!==staff*5)return false;
+  if(!Object.hasOwn(d,'grain_amount')&&!Object.hasOwn(d,'grain_paid'))return d.paid%5===0&&unpaid===staff-d.paid/5;
+  return d.grain_amount===staff*10&&d.grain_paid<=d.grain_amount&&d.grain_paid>=(staff-unpaid)*10&&
+   d.paid>=(staff-unpaid)*5&&(unpaid===0)===(d.paid===d.amount&&d.grain_paid===d.grain_amount);
  }
  function campaignKey(view){return view?.game?JSON.stringify([view.catalog?.scenario_id||view.catalog?.title||'',view.game.seed,view.game.player]):null;}
  function eventRows(view){
@@ -597,7 +608,7 @@
      const loss=d.category==='population'?text(`人口${d.population_loss}人`,`人口${d.population_loss}人`):d.category==='resources'?text(`資金${d.gold_loss}、兵糧${d.grain_loss}`,`資金${d.gold_loss}・兵糧${d.grain_loss}`):text(`土地${d.land_loss}、產業${d.industry_loss}`,`土地${d.land_loss}・産業${d.industry_loss}`);
      return text(`${c}統治不穩（統治度${d.governance}），本次實際損失：${loss}。城池歸屬未變，請安排開發以改善統治。`,`${c}の統治が不安定になりました（統治度${d.governance}）。今回の実損は${loss}です。都市の所属は変わりません。開発を進め、統治を整えましょう。`);
     }
-    case 'town_developed':return text(`${p}在${c}完成城町發展，等級${d.from_town} → ${d.to_town}，花費${d.gold}金。町等級解鎖設施與貨架，是本作擴展配置。`,`${p}が${c}の町を発展させ、段階が${d.from_town} → ${d.to_town}になりました。支出は資金${d.gold}です。施設・品揃えの解放条件は本作の拡張設定です。`);
+    case 'town_developed':return text(`${p}在${c}完成城町發展，等級${d.from_town} → ${d.to_town}，花費${d.gold}金${d.grain===undefined?'':`和${d.grain}糧`}。`,`${p}が${c}の町を発展させ、段階が${d.from_town} → ${d.to_town}になりました。支出は資金${d.gold}${d.grain===undefined?'':`と兵糧${d.grain}`}です。`);
     case 'officer_treated':return text(`${names({...row,person_ids:[d.target]}).people[0]}在${c}醫館療傷，體力${d.before} → ${d.after}，花費${d.gold}金。恢復不超過本人體力上限。`,`${names({...row,person_ids:[d.target]}).people[0]}が${c}の医館で治療を受け、体力が${d.before} → ${d.after}になりました。支出は資金${d.gold}で、本人の体力上限を超えません。`);
     case 'officer_studied':return text(`${names({...row,person_ids:[d.target]}).people[0]}在${c}學問所進修，知${d.before} → ${d.after}，花費${d.gold}金。學習所得隨本局人物保存，已用於內政與計略。`,`${names({...row,person_ids:[d.target]}).people[0]}が${c}の学問所で学び、知が${d.before} → ${d.after}になりました。支出は資金${d.gold}です。成長はこの戦役の本人に保存され、内政と計略に反映されます。`);
     case 'grain_traded':return d.destination==='battle'?text(`${p}在${c}購買兵糧${d.grain}，由出發城支付資金${d.gold}，直接補入${d.side==='attackers'?'攻方':'守方'}隨軍兵糧。城內兵糧未增加。`,`${p}が${c}で兵糧${d.grain}を購入しました。出発都市から資金${d.gold}を支払い、${d.side==='attackers'?'攻撃側':'防御側'}の携行兵糧へ直接補給しました。都市の兵糧在庫は増えていません。`):text(`${p}在${c}${d.direction==='buy'?'買入':'賣出'}兵糧${d.grain}，${d.direction==='buy'?'支付':'取得'}${d.gold}金。實際庫存已結算。`,`${p}が${c}で兵糧${d.grain}を${d.direction==='buy'?'購入':'売却'}し、資金${d.gold}を${d.direction==='buy'?'支払い':'受け取り'}ました。実際の在庫に反映済みです。`);
@@ -701,7 +712,12 @@
     case 'duel_started':return text(`${p}展開單挑，勝負依招式與武力判定。`,`${p}が一騎討ちに臨みます。技の選択と武力が勝負を左右します。`);
     case 'duel_result':return text(`${p}的單挑已結束。${d.result?label(d.result):'體力與退場結果已結算。'}`,`${p}の一騎討ちが終わりました。${d.result?label(d.result):'体力と退場結果は処理されています。'}`);
     case 'tactic':{
-     if(d.tactic===15&&d.condition==='qimen')return d.qimen_phase==='daily'?text(`奇門日界效果已結算：${d.qimen_ticks.length}隊合計損兵${d.qimen_ticks.reduce((sum,t)=>sum+t.loss,0)}，諸葛亮增加經驗${d.experience_gain}。不另扣機動力；查看本事件不會再次結算。`,`奇門の日界効果を精算：${d.qimen_ticks.length}隊の損兵合計${d.qimen_ticks.reduce((sum,t)=>sum+t.loss,0)}、諸葛亮の経験増加${d.experience_gain}。追加の機動力消費はなく、再生で再精算しません。`):text(`${n.people[0]||p}施放奇門遁甲。${d.success?'敵隊移動受限，施放時計數'+d.condition_count+'；諸葛亮在場時按日界倒數並損兵80–150，最後一次也損兵':'未能奏效'}。機動力消耗已結算。`,`${n.people[0]||p}が奇門遁甲を使用。${d.success?'敵の移動を封鎖。付与時カウント'+d.condition_count+'で、諸葛亮がいる間は日界に80–150兵を失い、最後の走査も損兵します':'効果なし'}。機動力は消費済みです。`);
+     if(d.tactic===15&&d.condition==='qimen'&&d.qimen_phase==='daily'){
+      const losses=d.qimen_ticks.reduce((sum,t)=>sum+t.loss,0);
+      const gain=d.experience_gain?text(`諸葛亮增加經驗${d.experience_gain}。`,`諸葛亮の経験が${d.experience_gain}増加しました。`):'';
+      return text(`奇門日界效果已結算，${d.qimen_ticks.length}隊合計損兵${losses}。`,`奇門の日界効果を精算しました。${d.qimen_ticks.length}隊の損兵合計${losses}。`)+gain;
+     }
+     if(d.tactic===15&&d.condition==='qimen')return text(`${n.people[0]||p}施放奇門遁甲。${d.success?'敵隊移動受限，施放時計數'+d.condition_count+'；諸葛亮在場時按日界倒數並損兵80–150，最後一次也損兵':'未能奏效'}。機動力消耗已結算。`,`${n.people[0]||p}が奇門遁甲を使用。${d.success?'敵の移動を封鎖。付与時カウント'+d.condition_count+'で、諸葛亮がいる間は日界に80–150兵を失い、最後の走査も損兵します':'効果なし'}。機動力は消費済みです。`);
      if(d.tactic===10&&d.condition==='chain')return text(`${n.people[0]||p}施放連環。${d.success?d.condition_counts.length+'支水上敵隊移動受限，施放時計數'+d.condition_counts.map(item=>item.remaining).join('／')+'；按日界消退，仍可攻擊或施計':'未能奏效'}。機動力消耗已結算。`,`${n.people[0]||p}が連環を使用。${d.success?'水上の敵'+d.condition_counts.length+'隊の移動を封鎖。付与時カウント'+d.condition_counts.map(item=>item.remaining).join('／')+'で、日界に減少します。攻撃や計略は可能':'効果なし'}。機動力は消費済みです。`);
      if(d.tactic===2&&d.condition==='phantom')return text(`${n.people[0]||p}施放虛兵。${d.success?'目標移動受限，施放時計數'+d.condition_count+'；按日界消退，仍可攻擊或施計':'未能奏效'}。機動力消耗已結算。`,`${n.people[0]||p}が虚兵を使用。${d.success?'対象の移動を封鎖。付与時カウント'+d.condition_count+'で、日界に減少します。攻撃や計略は可能':'効果なし'}。機動力は消費済みです。`);
      const title=label(view?.catalog?.tactics?.[d.tactic]?.name||text('計略','計略'));
@@ -737,7 +753,7 @@
      return text(`前往${target}的原行軍已取消，請核對${source}與在途部隊的現有編制。`,`${target}への元の行軍を取り消しました。${source}と行軍中の部隊の現在の編制を確認してください。`);
     }
     case 'new_year':return text(`${row.year}年到來。人物年代、各城收入與體力恢復已核對。`,`${row.year}年を迎えました。武将の年代・都市収入・体力回復を確認しました。`);
-    case 'staff_candidate':return text(`地方人士${label(d.name||'文吏')}願在${c}任職。候選保留3個月，雇用費60金、月俸5金；確認後才錄用。此人為架空內政人才。`,`${label(d.name||'文官')}が${c}での勤務を希望しています。候補の有効期間は3か月、雇用費は金60、月俸は金5です。採用を確定するまで雇用されません。架空の内政人材です。`);
+    case 'staff_candidate':return text(`地方人士${label(d.name||'文吏')}願在${c}任職。候選保留3個月，雇用費60金、月俸5金與10糧。確認後才錄用。此人為架空內政人才。`,`${label(d.name||'文官')}が${c}での勤務を希望しています。候補の有効期間は3か月、雇用費は金60、月俸は金5と兵糧10です。採用を確定するまで雇用されません。架空の内政人材です。`);
     case 'staff_hired':return text(`${label(d.name||'文吏')}受聘為${c}的地方文吏，花費${d.amount??60}金，使用本旬城池行動。地方人才可編兵出戰、單挑、轉屬與繼承君主，並可受任為內政官。`,`${label(d.name||'文官')}を${c}の在地文官として雇用しました。金${d.amount??60}を支払い、都市の今旬の行動を使用しました。地方人材も編成・出陣・一騎討ち・移籍・君主継承ができ、内政担当官に任命できます。`);
     case 'staff_declined':return text(`${c}此次未錄用${label(d.name||'文吏')}，沒有支出雇用費。該城進入3個月的文吏招募冷卻期。`,`${c}では${label(d.name||'文官')}の採用を見送りました。雇用費は発生せず、この都市の次の文官募集まで3か月待機します。`);
     case 'staff_expired':{
@@ -747,7 +763,9 @@
     }
     case 'staff_salary':{
      const bonus=d.bonus||{},result=Object.entries({gold:text('錢','金'),grain:text('糧','兵糧'),reserves:text('預備兵','予備兵')}).filter(([k])=>bonus[k]>0).map(([k,l])=>`${l}+${bonus[k]}`).join(text('、','・'))||text('本月無額外收入','今月の追加収入なし');
-     return text(`${f}本月${d.counts?.cities??1}城共有文吏${d.counts?.staff??0}人，應付月俸${d.amount??0}金，實付${d.paid??0}金。內政成果：${result}。${d.paid<d.amount?'未足額領俸者本月暫停工作。':''}`,`${f}の${d.counts?.cities??1}都市、文官${d.counts?.staff??0}人分の月俸は金${d.amount??0}、支払額は金${d.paid??0}です。業務成果：${result}。${d.paid<d.amount?'俸給を全額受け取れなかった文官は今月の業務を休止します。':''}`);
+     const grain=d.grain_amount===undefined?'':text(`，糧實付 ${d.grain_paid}/${d.grain_amount}`,`、兵糧は ${d.grain_paid}/${d.grain_amount}`);
+     const paused=d.counts?.total_unpaid>0?text('未足額領俸者本月暫停工作。','俸給を全額受け取れなかった文官は今月の業務を休止します。'):'';
+     return text(`${f}本月${d.counts?.cities??1}城共有文吏${d.counts?.staff??0}人，金實付 ${d.paid??0}/${d.amount??0}${grain}。內政成果：${result}。${paused}`,`${f}の${d.counts?.cities??1}都市、文官${d.counts?.staff??0}人分の月俸支払は金 ${d.paid??0}/${d.amount??0}${grain}。業務成果：${result}。${paused}`);
     }
     case 'staff_allegiance':return text(`${c}的行政歸屬改變，文吏${label(d.name||'文吏')}留在本城，現隨${f}管理地方事務。`,`${c}の行政上の所属が変わり、文官${label(d.name||'文官')}は都市に留任し、現在は${f}のもとで地方行政に従事します。`);
     case 'domestic_report':return d.reason==='month'?text(`${f}本月${d.cities}城的商農增收已入庫：金${d.gold}、糧${d.grain}。按實際任職旬數結算，不重複領取。`,`${f}の${d.cities}都市で、今月の商農加算を入庫しました。資金${d.gold}・兵糧${d.grain}。実際の勤務旬数で一度だけ精算しています。`):text(`${f}本旬${d.cities}城完成委任工作，花費金${d.gold}、糧${d.grain}；募得預備兵${d.reserves}，訓練度成果${d.morale}。`,`${f}の${d.cities}都市で今旬の担当業務を実行しました。支出は資金${d.gold}・兵糧${d.grain}、募兵は予備兵${d.reserves}、練度の成果は${d.morale}です。`);

@@ -4,12 +4,12 @@ The serialized morale/unit_morale keys remain stable for current campaign saves;
 these values represent training degree, not the original temporary morale tactic.
 
 This is an authorial adaptation of the agreed rules, not SAN14's formulas.
-Only committed faction-turn and calendar hooks perform work. Views are pure.
+Only committed commands and calendar hooks perform work. Views are pure.
 """
 from copy import deepcopy
 
 from . import grain_units
-from .city_economy import monthly_income as _income
+from .city_economy import absent_troops, monthly_income as _income
 from .errors import GameError
 from . import command_books
 from .officers import OFFICER_TROOP_CAP, parse_officer_ref
@@ -383,6 +383,12 @@ def training_preview(game, state, city_id):
     return dict(gain=gain, gold=units, grain=grain)
 
 
+def _allocation_priority(officer):
+    return (-officer.profile.martial_strength, -officer.profile.intellect,
+            -officer.profile.virtue, -officer.health, -officer.experience,
+            _ref_key(officer.runtime_id))
+
+
 def allocation_preview(game, state, city_id):
     """Plan local reserve assignments without drawing RNG or changing the state.
 
@@ -399,9 +405,7 @@ def allocation_preview(game, state, city_id):
         return result
     available = [state.officers[i] for i in city.roster.officer_ids
                  if state.officers[i].troops < OFFICER_TROOP_CAP and _present(game, state, city, i)]
-    available.sort(key=lambda officer: (-officer.profile.martial_strength,
-        -officer.profile.intellect, -officer.profile.virtue, -officer.health,
-        -officer.experience, _ref_key(officer.runtime_id)))
+    available.sort(key=_allocation_priority)
     for officer in available:
         amount = min(result['remaining_reserves'], OFFICER_TROOP_CAP - officer.troops)
         if not amount:
@@ -427,6 +431,51 @@ def allocate_garrison(game, state, city_id, *, record=True):
         if record:
             _report(state, city, 'allocation', soldiers=quote['soldiers'], officers=quote['officers'])
     return quote
+
+
+def rebalance_changed_garrisons(game, before, state):
+    """Reassign local soldiers once after the command's roster changes settle."""
+    before_absent = absent_troops(game, before)
+    after_absent = absent_troops(game, state)
+    presence_changes = before_absent ^ after_absent
+    staff = state.extension['civil_staff']['people']
+    for city in state.cities.values():
+        if city.owner == 'neutral' or not city.roster.officer_ids:
+            continue
+        prior = before.cities.get(city.id)
+        if (prior and prior.owner == city.owner
+                and prior.roster.officer_ids == city.roster.officer_ids
+                and presence_changes.isdisjoint(city.roster.officer_ids)):
+            continue
+        stationed = set(city.roster.officer_ids) - after_absent
+        if (prior and prior.owner == city.owner
+                and stationed == set(prior.roster.officer_ids) - before_absent):
+            continue
+        members = [state.officers[ident] for ident in city.roster.officer_ids if ident in stationed]
+        eligible = sorted((officer for officer in members if officer.health > 0
+                           and staff.get(officer.runtime_id, {}).get('working', True)),
+                          key=_allocation_priority)
+        if not eligible:
+            continue
+        remaining = sum(officer.troops for officer in members)
+        moved = recipients = 0
+        for officer in eligible:
+            troops = min(OFFICER_TROOP_CAP, remaining)
+            if troops > officer.troops:
+                moved += troops - officer.troops
+                recipients += 1
+            officer.troops = troops
+            remaining -= troops
+        eligible_ids = {officer.runtime_id for officer in eligible}
+        for officer in members:
+            if officer.runtime_id not in eligible_ids:
+                # At the reserve limit, leave any excess with its officer.
+                retained = min(officer.troops, max(0, city.reserves + remaining - LIMIT))
+                officer.troops = retained
+                remaining -= retained
+        city.reserves += remaining
+        if moved:
+            _report(state, city, 'allocation', soldiers=moved, officers=recipients)
 
 
 def _chance(actor, target, method):

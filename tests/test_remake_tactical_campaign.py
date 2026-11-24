@@ -2,19 +2,113 @@
 from copy import deepcopy
 from pathlib import Path
 import sys
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, SeedRng, digest
-from remake import battle_grid as grid, siege
+from remake import battle_experience, battle_grid as grid, siege
 from remake.errors import GameError
-from campaign_fixtures import controlled_catalog, reach_battle, soldier_encounter_step
+from campaign_fixtures import arrange_contact, controlled_catalog, reach_battle, soldier_encounter_step
 from test_remake_tactical_ai import battle as contact_battle
 
 
 WAIT = dict(kind='wait', actor=None, target=None, tactic=None, score=0)
+
+
+class BattleExperienceTests(unittest.TestCase):
+    def fixture(self, attackers, defenders, outcome='victory'):
+        state = SimpleNamespace(officers={})
+        battle = dict(outcome=outcome, extended=dict(surrenders={}, withdrawn=None))
+        for side, troops in zip(battle_experience.SIDES, (attackers, defenders)):
+            battle[side] = []
+            for strength in troops:
+                ident = len(state.officers) + 1
+                state.officers[ident] = SimpleNamespace(profile=SimpleNamespace(
+                    martial_strength=70, intellect=70, virtue=70))
+                battle[side].append(dict(id=ident, start=strength, troops=strength))
+        battle_experience.initialize(battle)
+        return state, battle
+
+    def hit(self, battle, actor, target, loss):
+        target['troops'] -= loss
+        battle_experience.attack(battle, actor['id'], target['id'], loss)
+
+    def sides(self, state, battle):
+        losses = sum(unit['start'] - unit['troops']
+                     for side in battle_experience.SIDES for unit in battle[side])
+        amounts = battle_experience.awards(state, battle, losses)
+        return tuple([amounts[u['id']] for u in battle[side]] for side in battle_experience.SIDES)
+
+    def test_pool_uses_scale_medians_and_result_but_gives_each_side_half(self):
+        even = self.fixture([5_000, 5_000], [5_000, 5_000])
+        equal_amounts = self.sides(*even)
+        self.assertEqual(tuple(map(sum, equal_amounts)), (40, 40))
+        smaller = self.sides(*self.fixture([5_000, 5_000], [3_333]))
+        self.assertEqual(sum(smaller[0]), sum(smaller[1]))
+        self.assertLess(sum(smaller[0]), 40)
+
+        for outcome in ('victory', 'defeat'):
+            amounts = self.sides(*self.fixture([2_500] * 4, [2_500] * 3, outcome))
+            self.assertEqual(sum(amounts[0]), sum(amounts[1]))
+            if outcome == 'victory':
+                favorite = sum(amounts[0])
+            else:
+                self.assertGreater(sum(amounts[0]), favorite)
+        state, battle = self.fixture([3_333, 3_333, 3_334], [500, 500, 9_000])
+        self.assertLess(sum(self.sides(state, battle)[0]), 40)
+        state, battle = self.fixture([5_000, 5_000], [5_000, 5_000])
+        for unit in battle['defenders']:
+            state.officers[unit['id']].profile.intellect = 20
+        self.assertLess(sum(self.sides(state, battle)[0]), 40)
+
+    def test_loss_ratio_activity_and_total_damage_rank_shares(self):
+        state, battle = self.fixture([6_000] * 6, [6_000] * 6)
+        a, d = (battle[side] for side in battle_experience.SIDES)
+        for actor, target, losses in ((a[0], d[0], 3_000), (d[0], a[0], 500),
+                (a[1], d[1], 3_000), (d[1], a[1], 2_500), (a[2], d[2], 6_000),
+                (d[4], a[4], 3_000), (d[5], a[5], 6_000)):
+            self.hit(battle, actor, target, losses)
+        attack, defense = self.sides(state, battle)
+        self.assertEqual(sum(attack), sum(defense))
+        self.assertTrue(attack[2] > attack[0] > attack[1] > attack[3] > attack[4] > attack[5])
+        self.assertEqual(attack[5], 1)
+        self.assertTrue(all(1 <= points <= 50 for points in attack + defense))
+        battle_experience.validate(battle)
+
+    def test_half_army_conversion_reserves_half_the_side_budget(self):
+        state, battle = self.fixture([3_333, 3_333, 3_334], [5_000, 5_000])
+        caster, *allies = battle['attackers']
+        target, enemy = battle['defenders']
+        battle_experience.convert(battle, caster, target, 'defenders')
+        battle['defenders'].remove(target)
+        battle['attackers'].append(target)
+        battle['extended']['defections'] = {str(target['id']): {'original_side': 'defenders'}}
+        result = battle_experience.awards(state, battle, 0)
+        side_budget = sum(result[u['id']] for u in (caster, *allies))
+        self.assertEqual(result[caster['id']], side_budget // 2)
+        self.assertEqual(side_budget, result[target['id']] + result[enemy['id']])
+        battle_experience.validate(battle)
+
+    def test_empty_city_clean_withdrawal_and_maximum(self):
+        state, battle = self.fixture([10_000], [])
+        self.assertEqual(battle_experience.awards(state, battle, 0), {})
+        state, battle = self.fixture([8_000, 2_000], [10_000], 'retreat')
+        battle['extended']['withdrawn'] = 'attackers'
+        battle_experience.voluntary_withdrawal(battle)
+        self.assertEqual(self.sides(state, battle), ([1, 1], [1]))
+        battle_experience.attack(battle, 1, 3, injured=True)
+        self.assertGreater(sum(self.sides(state, battle)[0]), 2)
+
+        state, battle = self.fixture([10_000] * 10, [10_000] * 10)
+        for target in battle['defenders']:
+            self.hit(battle, battle['attackers'][0], target, 10_000)
+        attack, defense = self.sides(state, battle)
+        self.assertEqual((sum(attack), sum(defense)), (400, 400))
+        self.assertEqual(max(attack), 50)
+        self.assertLessEqual(max(defense), 50)
 
 
 class TacticalCampaignTests(unittest.TestCase):
@@ -30,6 +124,126 @@ class TacticalCampaignTests(unittest.TestCase):
     def actors(self):
         battle = self.game.state.battle
         return battle, battle['attackers'][0], battle['defenders'][0]
+
+    def test_reinforcement_arrives_on_quote_day_and_can_act_after_reload(self):
+        from remake import battle_reinforcements, march_supply
+
+        game = self.game
+        state = game.state
+        battle = state.battle
+        offer = game.view()['catalog']['battle_reinforcements']
+        source = next(row for row in offer['sources'] if row['city'] == 'xiangyang')
+        route, officer = source['routes'][0], source['officers'][0]
+        grain = state.cities[source['city']].grain
+        cost = march_supply.cost(state.officers[officer].troops, 1, route['days'] * 2)
+        book = state.extension['command_books']['factions']['shu']['used']
+        self.command('battle_reinforce', battle_id=battle['id'], source=source['city'],
+                     route=route['id'], officers=[officer])
+        self.assertIn(officer, game._march_ids(game.state))
+        self.assertEqual(game.state.cities[source['city']].grain, grain - cost)
+        self.assertEqual(game.state.extension['command_books']['factions']['shu']['used'], book + 1)
+        saved = game.export_save(compact=True)
+        duplicate = dict(battle_id=battle['id'], source=source['city'], route=route['id'], officers=[officer])
+        with self.assertRaises(GameError):
+            self.command('battle_reinforce', **duplicate)
+        self.assertEqual(game.export_save(compact=True), saved)
+
+        restored = Campaign(game.catalog)
+        restored.load_save(saved, 0)
+        with patch('remake.tactical_ai.choose_action', return_value=WAIT):
+            for next_day in range(2, route['arrival'] + 1):
+                for active in (game, restored):
+                    active.command('battle_wait', dict(battle_id=battle['id']), active.revision)
+                    current = active.state.battle
+                    self.assertEqual(current['round'], next_day)
+                    self.assertEqual(str(officer) in battle_reinforcements.joined(current),
+                                     next_day == route['arrival'])
+        self.assertEqual(game.export_save(), restored.export_save())
+        self.assertNotIn(officer, game._march_ids(game.state))
+        self.assertTrue(game.view()['catalog']['battle_tactical']['actors'][str(officer)]['can_act'])
+        self.assertEqual(game.state.turn, state.turn)
+
+    def test_reinforcement_returns_by_the_distance_travelled_after_early_retreat(self):
+        from remake import battle_reinforcements, march_supply
+
+        game = self.game
+        battle = game.state.battle
+        direct = next(leg for leg in game.catalog.data['travel_routes']
+                      if {leg['from'], leg['to']} == {'xiangyang', 'nanyang'})
+        direct['days'] = 3
+        source = game.view()['catalog']['battle_reinforcements']['sources'][0]
+        route = next(route for route in source['routes'] if route['days'] > 1)
+        officer = source['officers'][0]
+        self.command('battle_reinforce', battle_id=battle['id'], source=source['city'],
+                     route=route['id'], officers=[officer])
+        with patch('remake.tactical_ai.choose_action', return_value=WAIT):
+            self.command('battle_wait', battle_id=battle['id'])
+        self.command('retreat', battle_id=battle['id'])
+        self.command('settle', battle_id=battle['id'])
+        row, = game.state.extension[battle_reinforcements.RETURNS]
+        self.assertEqual((row['officers'], row['source'], row['route'], row['remaining']),
+                         ([officer], source['city'], route['id'], 1))
+        self.assertEqual(row['grain'], march_supply.cost(game.state.officers[officer].troops, 1, 2*route['days'])
+                         - march_supply.cost(game.state.officers[officer].troops, 1, 2))
+        self.assertIn(officer, game._march_ids(game.state))
+        restored = Campaign(game.catalog)
+        restored.load_save(game.export_save(compact=True), 0)
+        for active in (game, restored):
+            active._complete_turn(active.state)
+            self.assertNotIn(officer, active._march_ids(active.state))
+            self.assertNotIn(battle_reinforcements.RETURNS, active.state.extension)
+        self.assertEqual(game.export_save(), restored.export_save())
+
+    def test_clean_retreat_settles_one_point_each_once_after_reload(self):
+        battle, _, _ = self.actors()
+        ids = [u['id'] for side in grid.SIDES for u in battle[side]]
+        before = {ident: self.game.state.officers[ident].experience for ident in ids}
+        self.command('retreat', battle_id=battle['id'])
+        save = self.game.export_save(compact=True)
+        restored = Campaign(self.game.catalog)
+        restored.load_save(save, 0)
+        restored.command('settle', dict(battle_id=battle['id']), restored.revision)
+        self.assertEqual({ident: restored.state.officers[ident].experience for ident in ids},
+                         {ident: value + 50 for ident, value in before.items()})
+        settled = restored.export_save()
+        revision = restored.revision
+        restored.command('settle', dict(battle_id=battle['id']), revision)
+        self.assertEqual(restored.revision, revision)
+        self.assertEqual(restored.export_save(), settled)
+
+    def test_duel_rout_credits_the_winner_for_actual_troop_loss(self):
+        battle, actor, target = self.actors()
+        arrange_contact(self.game, battle, actor, target)
+        officers = self.game.state.officers
+        threshold = max(15, min(90, 70 + officers[target['id']].profile.martial_strength
+                                - officers[actor['id']].profile.martial_strength))
+        self.game.state.rng = SeedRng(next(seed for seed in range(1, 100)
+                                           if SeedRng(seed).next() % 100 < threshold))
+        self.command('duel_start', battle_id=battle['id'], actor=actor['id'], target=target['id'])
+        battle, actor, target = self.actors()
+        before_troops = target['troops']
+        battle['extended']['support'][str(target['id'])]['health'] = 2
+        self.game.state.rng = SeedRng(next(seed for seed in range(1, 100) if SeedRng(seed).next() % 3))
+        with patch('remake.equipment.duel_hit_chance', return_value=100):
+            self.command('duel_action', battle_id=battle['id'], move='strike')
+        battle, actor, target = self.actors()
+        entries = battle['extended'][battle_experience.FIELD]['officers']
+        self.assertEqual(target['troops'], 0)
+        self.assertEqual(entries[str(actor['id'])]['damage'], before_troops)
+
+    def test_undefended_capture_awards_no_experience_at_settlement(self):
+        game = Campaign(controlled_catalog())
+        game.command('new', dict(faction='shu', seed=2026), 0)
+        state = game.state
+        target = state.cities['nanyang']
+        for ident in target.roster.officer_ids:
+            target.reserves += state.officers[ident].troops
+            state.officers[ident].troops = 0
+        before = state.officers[146].experience
+        game._start_expanded_battle(state, state.cities['xiangyang'], target, [146])
+        self.assertEqual(state.phase, 'result')
+        game.command('settle', dict(battle_id=state.battle['id']), game.revision)
+        self.assertEqual(game.state.officers[146].experience, before)
 
     def approach(self, *, reserve=4):
         """Walk actual cheapest paths, legally passing days to retain attack AP."""
@@ -130,6 +344,11 @@ class TacticalCampaignTests(unittest.TestCase):
         self.assertGreaterEqual(contacts,1)
         self.assertLess(actor['troops'],before.battle['attackers'][0]['troops'])
         self.assertLess(target['troops'],before.battle['defenders'][0]['troops'])
+        contributions = battle['extended'][battle_experience.FIELD]['officers']
+        self.assertEqual(contributions[str(actor['id'])]['damage'],
+                         before.battle['defenders'][0]['troops'] - target['troops'])
+        self.assertEqual(contributions[str(target['id'])]['damage'],
+                         before.battle['attackers'][0]['troops'] - actor['troops'])
         self.assertEqual(battle['extended']['tactical']['points']['attackers'],points-2*contacts)
         self.assertEqual(self.game.state.rng.draws,before.rng.draws+2*contacts)
         self.assertEqual(self.game.state.extension['command_books'],before.extension['command_books'])

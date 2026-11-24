@@ -488,11 +488,15 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
   row(7,'city_disaster',{person_ids:[],details:{disaster:'drought',gold:0,grain:80,reserves:40,rate:4,preparedness_before:60,preparedness_after:54,damage_before:0,damage_after:4}})
  ];
  for(const r of facilityRows){assert(validEvent(r));assert(!validEvent({...r,details:{...r.details,extra:1}}));assert(!validEvent({...r,details:{...r.details,gold:-1}}));}
+ const upgradedTown={...facilityRows[0],details:{...facilityRows[0].details,gold:500,grain:2000}};
+ assert(validEvent(upgradedTown));
+ assert(!validEvent({...upgradedTown,details:{...upgradedTown.details,grain:1999}}));
  assert(!validEvent({...facilityRows[6],details:{...facilityRows[6].details,preparedness_before:99}}));
  assert(!validEvent({...facilityRows[3],details:{...facilityRows[3].details,grain:301}}));
  assert(!validEvent({...facilityRows[2],details:{...facilityRows[2].details,before:80}}));
- const sites=fixture(),sitesView=view([...facilityRows,{...facilityRows[5],id:8,factions:['wei']}]);const sitesBytes=JSON.stringify(sitesView);
+ const sites=fixture(),sitesView=view([upgradedTown,...facilityRows.slice(1),{...facilityRows[5],id:8,factions:['wei']}]);const sitesBytes=JSON.stringify(sitesView);
  sites.events.observe(sitesView,{newGame:true});sites.drain();assertScene(sites.modal.innerHTML,'town-developed');assert(sites.modal.innerHTML.includes('町等級')||sites.modal.innerHTML.includes('城町'));
+ assert(sites.modal.innerHTML.includes('500金和2000糧'));
  for(let n=0;n<5;n++)sites.modal.querySelector('[data-event-next]').onclick();
  assert(sites.modal.innerHTML.includes('60 → 72'));assertScene(sites.modal.innerHTML,'prevention-improved');sites.i18n.locale='ja';sites.doc.emit('game-language-change');assert(sites.modal.innerHTML.includes('防災整備'));
  sites.modal.querySelector('[data-event-next]').onclick();assert(sites.modal.innerHTML.includes('干ばつ'));assertScene(sites.modal.innerHTML,'drought');
@@ -597,6 +601,8 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
  assert(supplies.modal.innerHTML.includes('瞬時には戻りません'));supplies.modal.querySelector('[data-event-next]').onclick();assert(!supplies.modal.open);
  assert.equal(JSON.stringify(supplyView),supplyBefore,'Acknowledging supply, hunger and retreat never changes a save or RNG');
  assert(validEvent(staffRow(1)));assert(validEvent(salary));
+ const partSalary={...salary,details:{...salary.details,paid:3,grain_amount:10,grain_paid:5}};
+ assert(validEvent(partSalary));assert(!validEvent({...partSalary,details:{...partSalary.details,grain_paid:11}}));
  for(const details of [{staff_id:'san14-candidate-0952'},{staff_id:'clerk-000000'},{staff_id:12},{portrait:'../portrait'},{name:''},{reason:'<script>'},{amount:-1},{paid:1.5}])assert(!validEvent(staffRow(1,'staff_candidate',{details:{...staffRow(1).details,...details}})));
  assert(!validEvent(staffRow(1,'staff_candidate',{person_ids:['person-a']})));assert(!validEvent(staffRow(1,'staff_candidate',{city_ids:[]})));
  assert(!validEvent({...salary,details:{...salary.details,paid:6}}));assert(!validEvent({...salary,details:{...salary.details,bonus:{gold:0,grain:0,reserves:-1}}}));
@@ -611,7 +617,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
  const staffBefore=JSON.stringify(staffView);staff.events.observe(staffView,{newGame:true});staff.drain();assert.deepEqual(staff.events.snapshot().active,[1,4]);assert.deepEqual(staff.events.snapshot().pending,[[2]],'Remote AI staff events never interrupt this player, even with a broad audience');
  assert(staff.modal.innerHTML.includes('/assets/civil-staff/clerk-1.png'));assert(staff.modal.innerHTML.includes('/assets/civil-staff/clerk-2.png'));assert(staff.modal.innerHTML.includes('架空文吏'));assert(staff.modal.innerHTML.includes('王安'));assert.equal(staff.portraitRequests.length,0,'Civil staff portraits never look up a historical person ID');
  const staffSnapshot=staff.events.snapshot();staff.i18n.locale='ja';staff.doc.emit('game-language-change');assert(staff.modal.innerHTML.includes('在地文官の推薦'));assert(staff.modal.innerHTML.includes('架空文官'));assert.deepEqual(staff.events.snapshot(),staffSnapshot);assert.equal(JSON.stringify(staffView),staffBefore);
- staff.modal.querySelector('[data-event-next]').onclick();assert(staff.modal.innerHTML.includes('金5'));assert(staff.modal.innerHTML.includes('業務を休止'));assert(staff.modal.innerHTML.includes('今月の追加収入なし'));
+ staff.modal.querySelector('[data-event-next]').onclick();assert(staff.modal.innerHTML.includes('金 0/5'));assert(staff.modal.innerHTML.includes('業務を休止'));assert(staff.modal.innerHTML.includes('今月の追加収入なし'));
  staff.modal.querySelector('[data-event-next]').onclick();assert(!staff.modal.open);
  const staffDesc=fixture();staffDesc.events.observe(view([]),{baseline:true});assert(staffDesc.events.description(staffRow(1,'staff_expired',{details:{...staffRow(1).details,reason:'filled'}})).includes('編制已補足'));assert(staffDesc.events.description(staffRow(1,'staff_expired',{details:{...staffRow(1).details,reason:'owner_changed'}})).includes('所屬已變更'));assert(staffDesc.events.description(staffRow(1,'staff_allegiance',{factions:['wei','shu']})).includes('劉備勢力'));
  const f=fixture([row(1)]),before=view([row(1)]);f.events.observe(before,{baseline:true});f.drain();assert.equal(f.modal.shows,0);assert.equal(f.events.snapshot().cursor,1);

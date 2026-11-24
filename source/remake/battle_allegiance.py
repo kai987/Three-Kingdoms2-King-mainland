@@ -3,11 +3,11 @@
 The original C886..C91D flips a battlefield slot rather than deleting it, and
 calls A006 using the receiving ruler's virtue.  City rosters are explicit in
 this remake, so a converted officer also moves to a real friendly home with
-capacity.  The twenty initially deployed identities remain the entire battle.
+capacity. Conversions retain their original deployment or reinforcement identity.
 """
 from .errors import GameError
-from .officers import MAX_BATTLE_OFFICERS, recruitment_loyalty
-from . import officer_relations
+from .officers import MAX_BATTLE_PARTICIPANTS, recruitment_loyalty
+from . import battle_experience, battle_reinforcements, officer_relations
 
 FIELDS = {'original_side', 'original_city', 'home', 'side'}
 
@@ -15,7 +15,8 @@ FIELDS = {'original_side', 'original_city', 'home', 'side'}
 def home(state, battle, side, *, actor=None):
     owner = battle['attacker' if side == 'attackers' else 'defender']
     preferred = battle['source' if side == 'attackers' else 'target']
-    if 'coalition' in battle['extended'] and side == 'attackers' and actor is not None:
+    if actor is not None and ('coalition' in battle['extended'] and side == 'attackers'
+                              or battle_reinforcements.FIELD in battle['extended']):
         owner = state.officers[actor['id']].faction_id
         preferred = home_for(battle, actor, side)
     cities = sorted((city for city in state.cities.values() if city.owner == owner),
@@ -26,8 +27,6 @@ def home(state, battle, side, *, actor=None):
 
 def reason(state, battle, target, side, *, actor=None):
     extension = getattr(state, 'extension', {})
-    if 'coalition' in battle['extended'] and len(battle[side]) >= MAX_BATTLE_OFFICERS:
-        return '本方戰場已有十名武將，無法接納歸降武將。'
     if target['id'] in extension.get('leaders', {}).values():
         return '君主不能被籠絡。'
     # Isolated tactical scoring fixtures need not provide strategic rosters.
@@ -43,6 +42,7 @@ def convert(game, state, battle, actor, target, own, foe):
     destination = home(state, battle, own, actor=actor)
     if destination is None:
         raise GameError('本方城池已滿員，無法接納歸降武將。')
+    battle_experience.convert(battle,actor,target,foe)
     origin = next(city for city in state.cities.values() if target['id'] in city.roster.officer_ids)
     records = battle['extended'].setdefault('defections', {})
     previous = records.get(str(target['id']))
@@ -75,14 +75,16 @@ def convert(game, state, battle, actor, target, own, foe):
 
 def validate(game, state, battle):
     records = battle['extended'].get('defections', {})
-    if not isinstance(records, dict) or len(records) > 20:
+    if not isinstance(records, dict) or len(records) > MAX_BATTLE_PARTICIPANTS:
         raise ValueError('Invalid battlefield conversion ledger')
     units = {str(unit['id']): (side, unit) for side in ('attackers','defenders') for unit in battle[side]}
     original_counts = {'attackers': 0, 'defenders': 0}
+    reinforcements = battle_reinforcements.joined(battle)
     for key, (side, unit) in units.items():
         record = records.get(key)
         if record is None:
-            original_counts[side] += 1
+            if key not in reinforcements:
+                original_counts[side] += 1
             continue
         if (not isinstance(record, dict) or set(record) != FIELDS
                 or record['original_side'] not in original_counts or record['side'] != side
@@ -94,17 +96,23 @@ def validate(game, state, battle):
         coalition = battle['extended'].get('coalition')
         owners = (coalition['provisions'] if coalition and side == 'attackers'
                   else (battle['attacker' if side == 'attackers' else 'defender'],))
-        if (city.owner not in owners or officer.faction_id != city.owner
+        if (city.owner not in owners and (battle_reinforcements.FIELD not in battle['extended']
+                or battle_reinforcements.side_for(state, battle, city.owner) != side)
+                or officer.faction_id != city.owner
                 or unit['id'] not in city.roster.officer_ids
                 or unit['id'] in state.extension['leaders'].values()):
             raise ValueError('Invalid converted officer ownership')
-        original_counts[record['original_side']] += 1
+        if key not in reinforcements:
+            original_counts[record['original_side']] += 1
     if (set(records) - set(units) or original_counts['attackers']<1
             or any(n > game.catalog.rules.battle_officers_per_side for n in original_counts.values())):
         raise ValueError('Battle conversions exceed original deployment')
 
 
 def _original_home(battle, unit, side):
+    reinforcement = battle_reinforcements.joined(battle).get(str(unit['id']))
+    if reinforcement is not None:
+        return reinforcement['home']
     if side == 'defenders':
         return battle['target']
     sources = battle['extended'].get('coalition', {}).get('sources', {})

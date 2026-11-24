@@ -15,7 +15,7 @@ from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
-from remake import battle_allegiance,battle_deployment,battle_grid,battle_placement,tactical_ai
+from remake import battle_allegiance,battle_deployment,battle_grid,battle_placement,civil_staff,tactical_ai
 from remake.campaign import Campaign,Catalog,SeedRng,canonical,digest
 from remake.campaign_expansion import TACTICS
 from remake.errors import GameError
@@ -77,6 +77,7 @@ class ManualDeploymentCampaignTests(unittest.TestCase):
             game._complete_turn(game.state)
             game._spawn_eligible(game.state)
             game._reconcile_factions(game.state)
+            civil_staff.synchronize(game, game.state, monthly=game.state.day==1)
         game.state.phase='arrivals';game.validate(game.state)
         return game,ids,deepcopy(march)
 

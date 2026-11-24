@@ -103,12 +103,22 @@ class FacilityTests(unittest.TestCase):
     def test_develop_opens_real_services_once_without_free_resources(self):
         game,state=fixture();city=state.cities['border'];actor='clerk-000001'
         before=deepcopy(state.rng)
-        for expected in (2,3):
+        for expected, gold, grain in ((2, 500, 2_000), (3, 1_000, 4_000)):
             self.reset(game,state)
-            old_gold=city.gold
+            city.gold, city.grain = gold - 1, grain
+            self.fails(game,state,facilities.develop,dict(city=city.id,actor=actor))
+            city.gold, city.grain = gold, grain - 1
+            quote = facilities.view(game,state)['cities'][city.id]['develop']
+            self.assertEqual(quote, dict(from_town=expected-1,to_town=expected,
+                gold=gold,grain=grain,can_develop=False))
+            self.fails(game,state,facilities.develop,dict(city=city.id,actor=actor))
+            city.grain = grain
+            self.assertTrue(facilities.view(game,state)['cities'][city.id]['develop']['can_develop'])
+            books = command_books.remaining(state, 'one')
             receipt=facilities.develop(game,state,dict(city=city.id,actor=actor),'one')
-            self.assertEqual(receipt['to_town'],expected)
-            self.assertEqual(city.gold,old_gold-100*expected)
+            self.assertEqual((receipt['to_town'],receipt['gold'],receipt['grain']), (expected,gold,grain))
+            self.assertEqual((city.gold,city.grain), (0,0))
+            self.assertEqual(command_books.remaining(state, 'one'), books - 1)
             self.assertTrue(city.action_used)
             self.assertEqual(state.extension['officer_actions'][actor],state.turn)
         self.assertEqual(state.rng,before)
@@ -385,7 +395,9 @@ class FacilityTests(unittest.TestCase):
                 if task=='treat':policy['auto_treat']=True;state.officers[2].health=0
                 elif task=='trade':policy['auto_trade']=True;state.cities['capital'].grain=0
                 elif task=='equip':policy['auto_equip']=True
-                elif task=='develop':policy['auto_develop']=True
+                elif task=='develop':
+                    policy.update(auto_develop=True,gold_budget=1500)
+                    state.cities['border'].gold = 1600
                 else:policy['auto_study']=True
                 before=deepcopy(state)
                 with patch.object(equipment, 'shop_stock', side_effect=AssertionError('AI requested all shop previews')):
@@ -399,11 +411,26 @@ class FacilityTests(unittest.TestCase):
                 elif task=='equip':self.assertNotEqual(state.officers[1].weapon_id,0)
                 elif task=='develop':
                     self.assertEqual(state.extension['facilities']['cities']['border']['town'],3)
-                    self.assertEqual(state.cities['border'].gold,500,'Both level upgrades pay their actual200 and300 cost')
+                    self.assertEqual((state.cities['border'].gold,state.cities['border'].grain), (100,4000))
                     self.assertEqual([r['city'] for r in receipts],['border','border'])
                 else:self.assertGreater(state.officers[2].profile.intellect,20)
                 self.assertGreaterEqual(before.cities['capital'].gold,state.cities['capital'].gold)
                 facilities.validate(game,state)
+
+    def test_auto_town_upgrade_preserves_grain_reserve_and_respects_shortage(self):
+        game, state = fixture()
+        state.player, state.phase = 'two', 'ai'
+        state.extension['facilities']['factions']['one'].update(
+            enabled=True,auto_prevent=False,auto_treat=False,auto_develop=True,gold_budget=1000,grain_floor=200)
+        city = state.cities['border']
+        city.grain = 2199
+        self.assertEqual(facilities.auto_turn(game,state,'one'), [])
+        self.reset(game,state)
+        city.grain = 2200
+        self.assertEqual(facilities.auto_turn(game,state,'one',hold_grain={'border'}), [])
+        self.reset(game,state)
+        receipt, = facilities.auto_turn(game,state,'one')
+        self.assertEqual((receipt['grain'],city.grain), (2000,200))
 
     def test_saved_schema_learning_domains_and_policy_tampering_fail(self):
         game,state=fixture()

@@ -455,6 +455,45 @@ class LogisticsTests(unittest.TestCase):
         self.assertEqual(mode, 'land')
         self.assertEqual(quote['path'], ['nanjun', 'xiangyang'])
 
+    def test_escort_leaving_before_first_return_meal_keeps_one_manifest(self):
+        game = self.game()
+        self.dispatch(game)
+        self.advance_due(game)
+        state = game.state
+        row, = state.extension['logistics']['convoys']
+        self.assertEqual(row['status'], 'returning')
+        journey = row['journeys'][-1]
+        departure = journey['departure_troops'].copy()
+        self.assertIn('999', departure)
+
+        # Model an escort becoming free after the return journey was
+        # scheduled, before its first daily supply update.
+        source = state.cities['xiangyang']
+        escort = state.officers[999]
+        source.roster.officer_ids.remove(999)
+        source.reserves += escort.troops
+        escort.troops, escort.loyalty, escort.faction_id = 0, 0, None
+        state.extension['free_locations']['999'] = source.id
+        self.sync(game)
+        self.assertEqual(row['officers'], [])
+        saved = game.export_save(compact=True)
+        restored = Campaign(game.catalog)
+        restored.load_save(saved, 0)
+
+        restored._complete_turn(restored.state)
+        restored.validate(restored.state)
+        row, = restored.state.extension['logistics']['convoys']
+        journey = row['journeys'][-1]
+        self.assertEqual(journey['departure_troops'], departure)
+        supply = journey['supply']
+        self.assertEqual(supply['ration_manifests'], [
+            {'tick': supply['start_tick'] + 1, 'troops': {}, 'reserves': 0},
+        ])
+        resumed = restored.export_save(compact=True)
+        twin = Campaign(game.catalog)
+        twin.load_save(resumed, 0)
+        self.assertEqual(twin.export_save(compact=True), resumed)
+
     def test_target_capture_returns_over_real_time_and_does_not_reserve_enemy_slots(self):
         game = self.game()
         origin = deepcopy(game.state.cities['xiangyang'])

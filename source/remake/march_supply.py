@@ -157,7 +157,12 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
         manifest=dict(tick=tick,troops={str(i):state.officers[i].troops for i in ids},reserves=reserves)
         previous=supply['ration_manifests'][-1]
         if previous['troops']!=manifest['troops'] or previous['reserves']!=reserves:
-            supply['ration_manifests'].append(manifest)
+            if previous['tick'] == tick:
+                # The scheduled first meal can follow a roster change in the
+                # departure turn. Keep one meal manifest for that day.
+                supply['ration_manifests'][-1] = manifest
+            else:
+                supply['ration_manifests'].append(manifest)
         city_id=current_city(journey)
         distance=next_supply_days(state,quote,unit['owner'],supply['route_days'])
         budget_days=10 if supply['route_days']>=quote['days'] else distance
@@ -387,7 +392,8 @@ def validate_departures(supply,quote,*,returning=False):
 def validate_strength_manifests(supply,manifest,risks,dead_keys=(),reserves_at=None):
     """Bind meal weights to actual departure, hunger and arrived weather facts."""
     dead=set(dead_keys)
-    if supply['ration_manifests'][0]['troops']!=manifest:
+    if (supply['clock_tick'] == supply['start_tick']
+            and supply['ration_manifests'][0]['troops'] != manifest):
         raise ValueError('Initial meal strength differs from departure')
     progress=0;positions={supply['start_tick']:0}
     for index,period in enumerate(supply['periods']):

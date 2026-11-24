@@ -6,7 +6,7 @@ use serde_json::{json, Value};
 use std::cmp::Reverse;
 use std::collections::BinaryHeap;
 
-const MAX_BATTLE_OFFICERS: usize = 20;
+const MAX_BATTLE_OFFICERS: usize = 40;
 
 #[derive(Deserialize)]
 struct Unit {

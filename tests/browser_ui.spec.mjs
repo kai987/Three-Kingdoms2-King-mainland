@@ -2419,8 +2419,11 @@ test('facility visits, trade, study, equipment, prevention and town development 
  expect(protectedCity.damage).toBeGreaterThanOrEqual(preventionQuote.damage_min);expect(protectedCity.damage).toBeLessThanOrEqual(preventionQuote.damage_max);expect(after.state.rng.draws).toBe(before.save.state.rng.draws+2);
  expect(after.state.extension.command_books.factions.shu.used).toBe(before.save.state.extension.command_books.factions.shu.used+1);await events('prevention-ja','prevention_improved');
  before=await read();const town=chooseCity(before,row=>row.develop.can_develop);expect(town).toBeTruthy();await open(town[0]);await page.locator('#facility-civic-entry').click();
+ await expect(page.locator('#facility-total')).toContainText(String(town[1].develop.gold));await expect(page.locator('#facility-total')).toContainText(String(town[1].develop.grain));await expect(page.locator('.facility-footer')).toContainText('命令書');
+ await historyScreenshot(page,testInfo,'town-upgrade-quote',{fullPage:false});
  await page.locator('#facility-develop').click();await waitIdle(page);after=await tacticalSave(page);
- expect(after.state.extension.facilities.cities[town[0]].town).toBe(town[1].develop.to_town);expect(after.state.cities[town[0]].gold).toBe(before.save.state.cities[town[0]].gold-town[1].develop.gold);expect(after.state.rng).toEqual(before.save.state.rng);
+ expect(after.state.extension.facilities.cities[town[0]].town).toBe(town[1].develop.to_town);expect(after.state.cities[town[0]].gold).toBe(before.save.state.cities[town[0]].gold-town[1].develop.gold);
+ expect(after.state.cities[town[0]].grain).toBe(before.save.state.cities[town[0]].grain-town[1].develop.grain);expect(after.state.rng).toEqual(before.save.state.rng);
  expect(after.state.extension.command_books.factions.shu.used).toBe(before.save.state.extension.command_books.factions.shu.used+1);await expect(page.locator('#facility-tab-school')).toBeEnabled();await expect(page.locator('#facility-tab-armory')).toBeEnabled();await events('development-ja','town_developed');
  const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');
  await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();

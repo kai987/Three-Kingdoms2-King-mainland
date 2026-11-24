@@ -25,17 +25,18 @@ class GrainEconomyTests(unittest.TestCase):
         self.assertEqual(live['game']['cities']['jiangxia']['grain'], opening['grain'])
         self.assertEqual(march_supply.cost(10_000, 0, 30), 6000)
 
-    def test_grain_production_uses_one_land_point_and_three_hundred_people_per_step(self):
+    def test_grain_production_uses_one_land_point_and_one_thousand_people_per_step(self):
         session = CampaignSession([ROOT / 'game/data/campaigns/208-10.json'])
         session.command('new', {'faction': 'shu', 'seed': 2026}, 0)
         game, state = session.game, session.game.state
         development = state.extension['city_development']['cities']['jiangxia']
         base = domestic._income(game, 'jiangxia', state)
-        for population, expected in [(27300, 1480), (27400, 1480), (27500, 1480), (27600, 1496)]:
-            development['population'] = population
-            self.assertEqual(domestic._income(game, 'jiangxia', state)['grain'], expected)
+        for population, expected in [(27_000, 1480), (27_900, 1480), (28_000, 1534), (28_900, 1534), (29_000, 1588)]:
+            with self.subTest(population=population):
+                development['population'] = population
+                self.assertEqual(domestic._income(game, 'jiangxia', state)['grain'], expected)
         development['population'] = 27300
-        for land, expected in [(0, 510), (27, 740), (113, 1470), (114, 1480), (115, 1488), (116, 1496), (999, 9006)]:
+        for land, expected in [(0, 752), (27, 924), (113, 1472), (114, 1480), (115, 1486), (116, 1492), (999, 7124)]:
             with self.subTest(land=land):
                 development['land'] = land
                 income = domestic._income(game, 'jiangxia', state)
@@ -43,11 +44,12 @@ class GrainEconomyTests(unittest.TestCase):
         development['land'] = 115
         facilities = state.extension['facilities']['cities']['jiangxia']
         facilities['damage'] = 1
-        self.assertEqual(domestic._income(game, 'jiangxia', state)['grain'], 1472)
+        self.assertEqual(domestic._income(game, 'jiangxia', state)['grain'], 1470)
         facilities['damage'] = 0
-        development['population'] = development['baseline']['population'] = 200
+        development['baseline']['population'] = 200
+        development['population'] = 900
         self.assertEqual(domestic._income(game, 'jiangxia', state)['grain'], 0)
-        development.update(population=300, land=114)
+        development.update(population=1_000, land=114)
         self.assertEqual(domestic._income(game, 'jiangxia', state)['grain'], 1480)
 
     def test_monthly_bill_has_one_rounding_and_caps_withdrawal_at_stock(self):

@@ -11,7 +11,8 @@
  }
  function canCommandOfficer(view,id){
   const game=view?.game;
-  return !game?.battle?.extended?.coalition||game.officers?.[String(id)]?.faction_id===game.player;
+  const extended=game?.battle?.extended;
+  return !(extended?.coalition||extended?.reinforcements)||game.officers?.[String(id)]?.faction_id===game.player;
  }
  function sceneCue(scene){
   if(scene?.kind==='duel_start'&&scene.success===false)return 'duel_refused';

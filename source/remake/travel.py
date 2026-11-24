@@ -55,11 +55,12 @@ class TravelCampaign:
         return process_march_supply(self,state, through_turn)
 
     def _march_ids(self, state):
+        from . import battle_reinforcements
         ids = {i for r in state.extension.get('travel', {}).get('marches', []) for i in r['officers']}
         if 'logistics' in state.extension:
             from .logistics import marching_ids
             ids.update(marching_ids(state))
-        return ids
+        return ids | battle_reinforcements.marching_ids(state)
 
     def _travel_modes(self):
         return ('fastest','land','river','sea','special','explore')
@@ -554,6 +555,8 @@ class TravelCampaign:
         self._reconcile_factions(state)
 
     def _arrivals(self, state, payload):
+        from . import battle_grid, battle_reinforcements
+
         if state.phase != 'arrivals': raise GameError('当前没有待处理的到达事件。')
         historical_campaigns.process(self,state)
         self._process_march_supply(state)
@@ -620,7 +623,11 @@ class TravelCampaign:
                 if not self._start_arrived_attack(state, row, target): continue
                 historical_campaigns.process_battle(self, state)
                 travel['battle_arrival'] = True
-                if state.player in (state.battle['attacker'], target.owner): return
+                if battle_grid.player_side(state, state.battle):
+                    return
+                if state.player != observer.SEAT and battle_reinforcements.offer_support(self, state, state.battle):
+                    self._run_tactical_ai_turn(state)
+                    return
                 self._resolve_ai_battle(state)
                 if state.phase == 'finished': return
                 state.phase = 'arrivals'
