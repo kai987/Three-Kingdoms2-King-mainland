@@ -218,6 +218,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         self.revision = 0
         self.lock = RLock()
         self.journal = []
+        self._experience_receipt = None
 
     def _note(self, state, text):
         period = {1: '上旬', 11: '中旬', 21: '下旬'}[state.day]
@@ -387,7 +388,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
     def view(self):
         with self.lock, grain_units.using(self.state):
             from . import dated_events
-            from . import troop_types
+            from . import battle_experience, troop_types
             state = self.state
             travel = self._travel_view(state)
             expanded = self._expanded_catalog_view(state)
@@ -431,6 +432,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'equipment':equipment.view(self,state),
                                 'command_books':command_books.view(self,state),
                                 'battle_tactical':battle_grid.view(self,state,state.battle) if state else None,
+                                **({'battle_experience': deepcopy(self._experience_result(state.battle, 'pending')[0])}
+                                   if state and state.phase == 'result'
+                                   and battle_experience.V1_FIELD in state.battle['extended'] else {}),
                                 'battle_reinforcements':battle_reinforcements.view(self,state,state.battle) if state else None,
                                 'officer_troop_types':troop_types.view(self,state),
                                 'officer_relations':officer_relations.view(self,state),
@@ -529,6 +533,10 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 if kind != 'new':
                     domestic.rebalance_changed_garrisons(self, self.state, candidate)
                 self.validate(candidate)
+                if candidate.phase == 'result':
+                    from . import battle_experience
+                    if battle_experience.V1_FIELD in candidate.battle['extended']:
+                        self._experience_result(candidate.battle, 'pending')
                 self.state = candidate
                 self.revision += 1
                 if self.record_journal:
@@ -891,8 +899,13 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     if own=='defenders':tactical['passed']['attackers']=True
                 civil_staff.migrate_profiles(self, candidate)
                 from .restore_routes import validating_load
+                if candidate.battle:
+                    from . import battle_experience
+                    battle_experience.validate_load(candidate.battle)
                 with validating_load(self.catalog.data, candidate):
                     self.validate(candidate)
+                from .battle_experience_v1 import validate_reports
+                validate_reports(candidate.extension['events'])
             except (ValueError, TypeError, KeyError, AttributeError, OverflowError) as exc:
                 raise GameError(INVALID_SAVE_MESSAGE) from exc
             self.state = candidate

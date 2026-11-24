@@ -19,7 +19,7 @@ from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
 from remake import city_economy, civil_staff, diplomacy, domestic, equipment, facilities, payroll, treasures
 from remake.officers import OFFICER_TROOP_CAP, YearState, initialize_officer, year_state
-from campaign_fixtures import record_garrison_charges, controlled_catalog, arrange_contact, finish_soldier_encounter, confirm_default_placement
+from campaign_fixtures import record_garrison_charges, controlled_catalog, arrange_contact, finish_soldier_encounter, confirm_default_placement, stage_battle_troops
 
 
 FREE_PERSON = 'san14-candidate-0001'
@@ -493,7 +493,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
         # Wound the actual defending battle unit so one real attack/settlement
         # reaches the escape boundary, without altering its reserved start ledger.
         battle = game.state.battle
-        battle['defenders'][0]['troops'] = 1
+        stage_battle_troops(battle, battle['defenders'][0], 1)
         arrange_contact(game)
         game.validate(game.state)
         defender = battle['defenders'][0]['id']

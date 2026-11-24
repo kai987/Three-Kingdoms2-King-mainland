@@ -92,6 +92,14 @@
         "battle"
       ]
     },
+    "tests/test_remake_battle_experience_v1.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "people",
+        "save"
+      ]
+    },
     "tests/test_remake_battle_grid.py": {
       "tier": "related",
       "groups": [

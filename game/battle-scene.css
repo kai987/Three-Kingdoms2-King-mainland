@@ -121,3 +121,9 @@
 .battle-facility-resources{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0;font-variant-numeric:tabular-nums}
 @media(min-width:761px){.siege-piece-orders{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:360px){.siege-piece-orders{grid-template-columns:minmax(0,1fr)}}
+
+.battle-experience{margin-block:10px;padding-block:8px;border-block:1px solid currentColor}
+.battle-experience h3{margin:0 0 6px;font-size:inherit}
+.battle-experience p{margin:6px 0}
+.battle-experience summary{cursor:pointer;padding-block:4px}
+.battle-experience ul{margin:3px 0 8px;padding-inline-start:1.35em}

@@ -11,7 +11,7 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, SeedRng, digest
 from remake import battle_experience, battle_grid as grid, siege
 from remake.errors import GameError
-from campaign_fixtures import arrange_contact, controlled_catalog, reach_battle, soldier_encounter_step
+from campaign_fixtures import arrange_contact, controlled_catalog, reach_battle, soldier_encounter_step, stage_battle_troops
 from test_remake_tactical_ai import battle as contact_battle
 
 
@@ -29,7 +29,7 @@ class BattleExperienceTests(unittest.TestCase):
                 state.officers[ident] = SimpleNamespace(profile=SimpleNamespace(
                     martial_strength=70, intellect=70, virtue=70))
                 battle[side].append(dict(id=ident, start=strength, troops=strength))
-        battle_experience.initialize(battle)
+        battle_experience.initialize_legacy(battle)
         return state, battle
 
     def hit(self, battle, actor, target, loss):
@@ -194,7 +194,7 @@ class TacticalCampaignTests(unittest.TestCase):
             self.assertNotIn(battle_reinforcements.RETURNS, active.state.extension)
         self.assertEqual(game.export_save(), restored.export_save())
 
-    def test_clean_retreat_settles_one_point_each_once_after_reload(self):
+    def test_clean_retreat_awards_zero_experience_once_after_reload(self):
         battle, _, _ = self.actors()
         ids = [u['id'] for side in grid.SIDES for u in battle[side]]
         before = {ident: self.game.state.officers[ident].experience for ident in ids}
@@ -204,7 +204,7 @@ class TacticalCampaignTests(unittest.TestCase):
         restored.load_save(save, 0)
         restored.command('settle', dict(battle_id=battle['id']), restored.revision)
         self.assertEqual({ident: restored.state.officers[ident].experience for ident in ids},
-                         {ident: value + 50 for ident, value in before.items()})
+                         before)
         settled = restored.export_save()
         revision = restored.revision
         restored.command('settle', dict(battle_id=battle['id']), revision)
@@ -227,9 +227,11 @@ class TacticalCampaignTests(unittest.TestCase):
         with patch('remake.equipment.duel_hit_chance', return_value=100):
             self.command('duel_action', battle_id=battle['id'], move='strike')
         battle, actor, target = self.actors()
-        entries = battle['extended'][battle_experience.FIELD]['officers']
+        _, awards = battle_experience.result(battle, 'pending')
+        replay = battle_experience.v1.Replay(battle['extended'][battle_experience.V1_FIELD])
         self.assertEqual(target['troops'], 0)
-        self.assertEqual(entries[str(actor['id'])]['damage'], before_troops)
+        self.assertEqual(replay.rows[(actor['id'], 'attackers')].kills, before_troops)
+        self.assertGreater(awards[actor['id']], 0)
 
     def test_undefended_capture_awards_no_experience_at_settlement(self):
         game = Campaign(controlled_catalog())
@@ -344,10 +346,10 @@ class TacticalCampaignTests(unittest.TestCase):
         self.assertGreaterEqual(contacts,1)
         self.assertLess(actor['troops'],before.battle['attackers'][0]['troops'])
         self.assertLess(target['troops'],before.battle['defenders'][0]['troops'])
-        contributions = battle['extended'][battle_experience.FIELD]['officers']
-        self.assertEqual(contributions[str(actor['id'])]['damage'],
+        contributions = battle_experience.v1.Replay(battle['extended'][battle_experience.V1_FIELD]).rows
+        self.assertEqual(contributions[(actor['id'], 'attackers')].kills,
                          before.battle['defenders'][0]['troops'] - target['troops'])
-        self.assertEqual(contributions[str(target['id'])]['damage'],
+        self.assertEqual(contributions[(target['id'], 'defenders')].kills,
                          before.battle['attackers'][0]['troops'] - actor['troops'])
         self.assertEqual(battle['extended']['tactical']['points']['attackers'],points-2*contacts)
         self.assertEqual(self.game.state.rng.draws,before.rng.draws+2*contacts)
@@ -562,7 +564,7 @@ class ContactRetaliationTests(unittest.TestCase):
         self.assertLess(next(p['troops']for p in scene['soldiers']['after']['units']if p['id']=='a1'),100)
 
     def test_routed_defender_cannot_reply_or_draw_a_second_damage_roll(self):
-        b,actor,target=self.units();target['troops']=1
+        b,actor,target=self.units();stage_battle_troops(b,target,1)
         troops,draws=actor['troops'],self.game.state.rng.draws
         self.prepare_contact();result=self.cycle();b,actor,target=self.units()
         self.assertEqual(target['troops'],0);self.assertEqual(actor['troops'],troops)
@@ -585,7 +587,7 @@ class ContactRetaliationTests(unittest.TestCase):
         self.assertEqual(len(self.scene(result)['soldiers']['after']['events']),2)
 
     def test_reply_can_route_the_initiator_and_resolve_defeat(self):
-        b,actor,target=self.units();actor['troops']=1;draws=self.game.state.rng.draws
+        b,actor,target=self.units();stage_battle_troops(b,actor,1);draws=self.game.state.rng.draws
         self.prepare_contact();result=self.cycle();b,actor,target=self.units()
         self.assertEqual(actor['troops'],0);self.assertGreater(target['troops'],0)
         self.assertEqual(self.game.state.rng.draws,draws+2)

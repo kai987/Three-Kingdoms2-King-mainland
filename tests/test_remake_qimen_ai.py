@@ -215,7 +215,8 @@ class QimenAITests(unittest.TestCase):
         self.assertEqual(current['extended']['tactical']['positions'],before.battle['extended']['tactical']['positions'])
         zhuge=game.state.officers[439]
         self.assertEqual(zhuge.experience,before.officers[439].experience)
-        self.assertEqual(current['extended'][battle_experience.FIELD]['officers']['439']['damage'],loss)
+        journal=current['extended'][battle_experience.V1_FIELD]
+        self.assertEqual(battle_experience.v1.Replay(journal).rows[(439,'defenders')].kills,loss)
         self.assertEqual(zhuge.tier,experience_tier(zhuge.experience))
         self.assertEqual(zhuge.profile,before.officers[439].profile)
         self.assertEqual(game.state.officers[target['id']].troops,before.officers[target['id']].troops,

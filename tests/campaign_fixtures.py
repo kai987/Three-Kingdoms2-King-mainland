@@ -263,6 +263,15 @@ def advance_month(game):
         game._complete_turn(game.state)
 
 
+def stage_battle_troops(battle, unit, troops):
+    """Stage prior unattributed losses without forgetting them in the XP journal."""
+    from remake.battle_experience_v1 import record
+    lost = unit['troops'] - troops
+    unit['troops'] = troops
+    if lost:
+        record(battle, 'loss', target=unit['id'], amount=lost, cause='fixture')
+
+
 def arrange_contact(game, battle=None, actor=None, target=None):
     """Stage a legal native-grid contact for isolated effect/receipt fixtures.
 

@@ -298,7 +298,8 @@ def advance_daily(state, battle):
         changes.append(dict(id=key, kind=condition_kind, before=before, remaining=after))
     if source is not None:
         by_id, counter = _units(battle), 0
-        tracked = battle_experience.FIELD in battle['extended']
+        modern = battle_experience.V1_FIELD in battle['extended']
+        tracked = modern or battle_experience.FIELD in battle['extended']
         source_side = by_id[str(source)][0]
         for key in row['high_order']:
             condition = units.get(key)
@@ -311,8 +312,8 @@ def advance_daily(state, battle):
             remaining_troops = max(0, troops-requested)
             unit['troops'] = remaining_troops
             if tracked:
-                if side != source_side:
-                    battle_experience.attack(battle,source,unit['id'],troops-remaining_troops)
+                if side != source_side or modern:
+                    battle_experience.attack(battle,source,unit['id'],troops-remaining_troops,ordinary=False,cause='qimen')
             else:
                 counter += remaining_troops%256
             if after:

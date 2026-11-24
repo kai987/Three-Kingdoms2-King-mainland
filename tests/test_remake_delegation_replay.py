@@ -440,7 +440,11 @@ class DelegationReplayTests(unittest.TestCase):
         if staff:
             self.assertTrue(self.staff_attack_sent)
             self.assertTrue(self.staff_battles, 'A generated officer must enter and act in a real arrival battle')
-            self.assertGreater(final.officers[self.generated].experience, 0)
+            receipts = [row['details']['experience'] for row in final.extension['events']['items']
+                        if row['kind'] == 'battle_result' and row['details']['battle_id'] in self.staff_battles]
+            self.assertEqual({receipt['battle_id'] for receipt in receipts}, self.staff_battles)
+            expected = sum(receipt['applied'].get(self.generated, 0) for receipt in receipts)
+            self.assertEqual(final.officers[self.generated].experience, 50 * expected)
             self.assertNotIn(self.generated, catalog.by_id)
             self.assertEqual(len(catalog.definitions), 1083)
         if filename == '184-02.json':

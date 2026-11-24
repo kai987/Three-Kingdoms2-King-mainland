@@ -75,7 +75,7 @@ DETAILS = {
     southern_mission.LANDED: {'can_build'},
     southern_mission.FOUNDED: {'troops', 'work_days'},
     'battle_started': {'battle_id', 'attacker', 'defender'},
-    'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered', 'coalition'},
+    'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered', 'coalition', 'experience'},
     'duel_started': set(), 'duel_result': {'result'},
     'tactic': {'tactic','success','affected_side','grain_before','grain_after','grain_loss',
                'success_percent','target_loyalty','guaranteed_failure','condition','condition_count','condition_counts',
@@ -638,7 +638,13 @@ def validate(campaign, state):
             if isinstance(value, dict):
                 return len(value) <= 10 and all(isinstance(k, str) and len(k) <= 80 and value_ok(v, depth+1) for k, v in value.items())
             return False
-        if not value_ok(row['details']):
+        event_details = row['details']
+        if row['kind'] == 'battle_result' and 'experience' in event_details:
+            report = event_details['experience']
+            if not isinstance(report, dict) or report.get('battle_id') != event_details.get('battle_id'):
+                raise ValueError('Campaign experience receipt identity')
+            event_details = {key: val for key, val in event_details.items() if key != 'experience'}
+        if not value_ok(event_details):
             raise ValueError('Campaign event JSON value')
         if row['kind']=='tactic':
             _validate_tactic_event(row)

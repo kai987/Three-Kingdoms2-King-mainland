@@ -442,7 +442,7 @@ class ExpandedCampaign:
         before=presentation.snapshot(self,state)
         loss=min(actor['troops'],max(1,state.officers[trap['actor']].profile.intellect*2))
         actor['troops']-=loss;x['ambush']=None
-        battle_experience.attack(b,ambusher['id'],actor['id'],loss)
+        battle_experience.attack(b,ambusher['id'],actor['id'],loss,ordinary=False,cause='ambush')
         b['log'].append(f'十面埋伏触发，{self.person_name(state, actor["id"])}损兵{loss}。')
         presentation.record(self,state,before,kind='ambush',actor=ambusher['id'],
             target=actor['id'],own=side,counter=counter,tactic=11,effect='ambush')
@@ -511,8 +511,11 @@ class ExpandedCampaign:
                 presentation.record(self,state,before,kind='tactic',actor=source,
                     target=deserialize_officer_ref(ticks[0]['id'],self.catalog.rules),own=source_side,
                     tactic=15,effect='qimen_daily',success=True)
-        if change['advanced_day'] and state.phase == 'battle':
-            battle_reinforcements.arrive(self, state, b)
+        if change['advanced_day']:
+            if state.phase == 'battle':
+                battle_reinforcements.arrive(self, state, b)
+            elif b['extended']['withdrawn']:
+                battle_experience.withdraw_side(b)
         b['log'][:]=b['log'][-80:]
         return change
 
@@ -683,7 +686,7 @@ class ExpandedCampaign:
             defense=b['extended']['support'][str(target['id'])]
             if defense['guard']:loss=max(1,loss//2);defense['guard']-=1
             target['troops']-=loss;b['log'].append(f'{self.person_name(state, actor["id"])}{"反击" if counter else "攻击"}{self.person_name(state, target["id"])}，损兵{loss}。')
-            battle_experience.attack(b,actor['id'],target['id'],loss)
+            battle_experience.attack(b,actor['id'],target['id'],loss,cause='counterattack' if counter else 'attack')
         presentation.record(self,state,before,kind='attack',actor=actor['id'],
             target=target['id'],own=own,counter=counter,success=not skipped,skipped=skipped,
             effect='siege' if siege else None,siege=siege)
@@ -762,11 +765,13 @@ class ExpandedCampaign:
         elif effect=='ambush':x['ambush']={'actor':actor['id']};b['log'].append('十面埋伏已設置，等待接近的敵軍行動。')
         elif modern_qimen:
             count=battle_conditions.apply_qimen(b,target['id'],own,state.rng.next()%4)
+            battle_experience.effect(b,actor['id'],target['id'])
             effect_details['condition_count']=count
             b['log'].append(f'{self.person_name(state,target["id"])}受到奇門遁甲，移動封鎖計數{count}。')
         elif effect=='guard':a['guard']=2;b['log'].append(f'{title}使本队获得两次减伤。')
         elif effect=='confuse' and 'tactical' in x:
             count=battle_conditions.apply(b,target['id'],own)
+            battle_experience.effect(b,actor['id'],target['id'])
             effect_details['condition_count']=count
             b['log'].append(f'{self.person_name(state,target["id"])}受到虛兵，移動封鎖計數{count}。')
         elif effect=='chain' and 'tactical' in x:
@@ -775,12 +780,15 @@ class ExpandedCampaign:
             for victim in battle_grid.affected_units(b,target,tid,foe):
                 count=battle_conditions.apply_chain(b,victim['id'],own,state.rng.next()%2)
                 battle_experience.attack(b,actor['id'],victim['id'])
+                battle_experience.effect(b,actor['id'],victim['id'])
                 effect_details['condition_counts'].append(dict(id=str(victim['id']),remaining=count))
                 b['log'].append(f'{self.person_name(state,victim["id"])}受到連環，移動封鎖計數{count}。')
         elif effect in {'confuse','chain'}:
             victims=(battle_grid.affected_units(b,target,tid,foe) if 'tactical' in b['extended']
                 else [target] if effect=='confuse' else [target]+[u for u in enemies if u is not target][:2])
             for u in victims:
+                if not support[str(u['id'])]['stunned']:
+                    battle_experience.effect(b,actor['id'],u['id'])
                 support[str(u['id'])]['stunned']=1
                 battle_experience.attack(b,actor['id'],u['id'])
             b['log'].append(f'{title}扰乱{len(victims)}隊，下次普通攻擊失效。')
@@ -790,6 +798,8 @@ class ExpandedCampaign:
             from .tactic_effects import fire_arrow_requested
             amount=fire_arrow_requested(battle_supply.available(state,b,foe),p.intellect,state.rng.next()%5)
             loss=battle_supply.destroy(state,b,foe,amount)
+            if loss:
+                battle_experience.effect(b,actor['id'],target['id'])
             effect_details.update(grain_after=battle_supply.available(state,b,foe),grain_loss=loss)
             b['log'].append(f'火箭燒毀敵軍隨軍兵糧{loss}。')
         else:
@@ -806,7 +816,9 @@ class ExpandedCampaign:
                     hp['health']=max(1,previous_health-max(1,p.intellect//4))
                     injured=hp['health']<previous_health
                     if hp['health']==1:u['troops']=0
-                battle_experience.attack(b,actor['id'],u['id'],before_troops-u['troops'],injured=injured)
+                battle_experience.attack(b,actor['id'],u['id'],before_troops-u['troops'],injured=injured,ordinary=False,cause=effect)
+                if injured and before_troops == u['troops']:
+                    battle_experience.effect(b,actor['id'],u['id'])
                 if effect=='feint':support[str(u['id'])]['stunned']=1
                 b['log'].append(f'{title}命中{self.person_name(state, u["id"])}，损兵{loss}。')
         if hasattr(self,'_emit_event') and battle_grid.player_side(state,b):
@@ -882,6 +894,10 @@ class ExpandedCampaign:
             received,enemy_self_loss,enemy_success=hit(target,actor,reply,move)
             health_before = {actor['id']: a['health'], target['id']: t['health']}
             t['health']=max(1,t['health']-damage-enemy_self_loss);a['health']=max(1,a['health']-received-self_loss)
+            for first, second, harm, own_harm in ((actor,target,damage,enemy_self_loss),
+                                                   (target,actor,received,self_loss)):
+                prior = max(1, health_before[second['id']]-own_harm)
+                battle_experience.duel_hit(b,state,first['id'],second['id'],prior,max(1,prior-harm))
             knocked_out = {unit['id'] for unit, hp, harm, own_harm in (
                 (actor,a,received,self_loss), (target,t,damage,enemy_self_loss))
                 if hp['health']==1 and harm>0 and health_before[unit['id']]-own_harm>1}
@@ -949,7 +965,9 @@ class ExpandedCampaign:
                 if attack=='guard':damage=max(1,damage//3)
                 if defense=='guard':damage=max(1,damage//3) if attack!='feint' else damage+4
                 if attack=='feint' and defense=='strike':damage=max(1,damage//2)
-                second_hp['health']=max(1,second_hp['health']-damage)
+                previous_health=second_hp['health']
+                second_hp['health']=max(1,previous_health-damage)
+                battle_experience.duel_hit(b,state,first['id'],second['id'],previous_health,second_hp['health'])
                 if second_hp['health']==1:
                     knocked_out.add(second['id'])
                 d['log'].append(f'{self.person_name(state,first["id"])}命中，造成体力损伤{damage}。')
@@ -975,8 +993,8 @@ class ExpandedCampaign:
         support = battle['extended']['support']
         for unit, opponent in ((actor,target), (target,actor)):
             if support[str(unit['id'])]['health']==1:
-                if unit['id'] in knocked_out:
-                    battle_experience.attack(battle,opponent['id'],unit['id'],unit['troops'])
+                battle_experience.duel_defeat(battle,opponent['id'],unit['id'],unit['troops'],
+                                              opposing=unit['id'] in knocked_out)
                 unit['troops']=0
 
     def _expanded_retreat(self,state,payload):
@@ -993,6 +1011,16 @@ class ExpandedCampaign:
         b['outcome']='retreat' if own=='attackers' else 'victory';state.phase='result'
         battle_grid.record_coalition_capture(b)
         presentation.record(self,state,before,kind='retreat',own=own)
+
+    def _experience_result(self, battle, status):
+        journal = battle['extended'][battle_experience.V1_FIELD]
+        key = (battle['id'], journal)
+        cached = self._experience_receipt
+        if cached is None or cached[0] != key:
+            cached = (key, battle_experience.result(battle, 'pending'))
+            self._experience_receipt = cached
+        report, awards = cached[1]
+        return dict(report, status=status), awards
 
     def _expanded_settle(self,state,payload):
         from . import allied_assault, diplomacy
@@ -1023,7 +1051,11 @@ class ExpandedCampaign:
         lost=sum(u['start']-u['troops'] for u in b['attackers']+b['defenders'])-sum(x['surrenders'].values())
         if lost<0:raise GameError('战果兵员账本异常。')
         units = b['attackers']+b['defenders']
-        if battle_experience.FIELD in x:
+        experience_report = None
+        if battle_experience.V1_FIELD in x:
+            experience_report, awards = self._experience_result(b,'settled')
+            increments = {ident: points * battle_experience.RAW_PER_POINT for ident, points in awards.items()}
+        elif battle_experience.FIELD in x:
             awards = battle_experience.awards(state,b,lost)
             increments = {ident: points * battle_experience.RAW_PER_POINT for ident, points in awards.items()}
         else:
@@ -1031,15 +1063,21 @@ class ExpandedCampaign:
             increments = dict.fromkeys((unit['id'] for unit in units), max(1,lost//max(1,len(units))))
         experience_log = []
         log_experience = state.player == observer.SEAT or state.player in participants
+        applied = dict.fromkeys(map(str, awards), 0)
         for u in units:
             o=state.officers[u['id']];o.troops=u['troops'];o.health=x['support'][str(u['id'])]['health']
+        for ident, increment in increments.items():
+            o = state.officers.get(ident)
+            if o is None or not o.alive:
+                continue
             before = o.experience
-            o.experience=min(49999,before+increments.get(u['id'],0))
-            o.tier=experience_tier(o.experience)
-            if log_experience and u['id'] in awards:
+            o.experience = min(49999, before + increment)
+            o.tier = experience_tier(o.experience)
+            if ident in awards:
                 change = o.experience//battle_experience.RAW_PER_POINT - before//battle_experience.RAW_PER_POINT
-                if change:
-                    experience_log.append(f'{self.person_name(state,u["id"])}＋{change}')
+                applied[str(ident)] = change
+                if log_experience and change:
+                    experience_log.append(f'{self.person_name(state,ident)}＋{change}')
         state.soldiers['lost']+=lost
         diplomacy.battle_relations(self,state,b)
         for key,amount in x['surrenders'].items():
@@ -1091,11 +1129,14 @@ class ExpandedCampaign:
             details=dict(battle_id=b['id'],outcome=b['outcome'],lost=lost,surrendered=sum(x['surrenders'].values()))
             if distribution is not None:
                 details['coalition']=distribution
+            if experience_report is not None:
+                details['experience']=dict(experience_report, applied=applied)
             self._emit_event(state,'battle_result',city_ids=[b['source'],b['target']],
                 person_ids=[state.officers[u['id']].person_id for u in (b['attackers'][:1]+b['defenders'][:1])],
                 factions=[b['attacker'],b['defender']],
                 details=details,
                 audience='world' if observing else 'player')
+        self._experience_receipt = None
         state.battle=None;state.phase='ai' if incoming else 'city'
         travel=state.extension['travel']
         if travel['battle_arrival']:
@@ -1381,7 +1422,7 @@ class ExpandedCampaign:
         if not b:return
         e=b['extended']
         expected={'support','duel','duel_history','ambush','surrenders','withdrawn','tactical'}
-        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation','supply','deployment','conditions','placement','auto_deployment','coalition','capture_actor',battle_experience.FIELD,battle_reinforcements.FIELD}:raise ValueError('battle extended fields')
+        if not expected<=set(e) or set(e)-expected-{'siege','defections','occupation','supply','deployment','conditions','placement','auto_deployment','coalition','capture_actor',battle_experience.FIELD,battle_experience.V1_FIELD,battle_reinforcements.FIELD}:raise ValueError('battle extended fields')
         battle_reinforcements.validate(self,state,b)
         battle_grid.validate(self,state,b)
         battle_conditions.validate(b)

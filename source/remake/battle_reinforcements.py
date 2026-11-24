@@ -214,7 +214,7 @@ def _entry_cells(game, battle, source):
 
 def arrive(game, state, battle):
     """Commit arrivals once, after a full battlefield day and only if still fighting."""
-    from . import battle_supply, domestic
+    from . import battle_experience, battle_supply, domestic
     pending = _pending(battle)
     entries = joined(battle)
     for row in pending[:]:
@@ -231,6 +231,7 @@ def arrive(game, state, battle):
             entries[key] = dict(side=side, home=source, owner=row['owner'])
             battle[side].append(dict(id=ident, troops=officer.troops, start=officer.troops,
                                      martial=officer.profile.martial_strength))
+            battle_experience.arrive(battle, side, battle[side][-1])
             tactical['positions'][key] = dict(x=x, y=y)
             battle['extended']['support'][key] = dict(health=officer.health, energy=18, stunned=0, guard=0,
                                                       morale=domestic.unit_morale(game, state, ident))

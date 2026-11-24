@@ -40,7 +40,7 @@ document.addEventListener('visibilitychange',()=>{
   scheduleObserver();
  }
 });
-const gameEvents=typeof GameEvents==='undefined'?null:GameEvents.create({getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview,parentDialog:dialog,onVisit:submitThreeVisit,onSettlement:showLuzonProject});
+const gameEvents=typeof GameEvents==='undefined'?null:GameEvents.create({getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview,parentDialog:dialog,onVisit:submitThreeVisit,onSettlement:showLuzonProject,battleExperience:battleExperienceHtml});
 let audioOutcome=null;
 // Browsers require a real gesture before creating/resuming the audio context.
 for(const type of ['pointerdown','keydown'])document.addEventListener(type,event=>{if(event.isTrusted)void gameAudio.unlock();},{capture:true});
@@ -2139,6 +2139,40 @@ function renderBattlePlacement(board){
  document.querySelectorAll('[data-placement-nav]').forEach(button=>button.onclick=()=>navigateBattleCell(...({left:[-1,0],up:[0,-1],down:[0,1],right:[1,0]}[button.dataset.placementNav])));
  $('#battle-place-confirm').onclick=confirmBattlePlacement;GameI18n.apply();restore();
 }
+function battleExperienceHtml(report, {details = false} = {}){
+ if(report?.version!==1||!report.sides?.attackers||!report.sides?.defenders)return '';
+ const tr=battlePlain, number=value=>Number.isFinite(value)?value.toLocaleString(GameI18n.locale):'—';
+ const points=value=>Number.isFinite(value)?(value/100).toFixed(2)+'%':'—';
+ const metric=value=>Number.isFinite(value)?value.toLocaleString(GameI18n.locale,{maximumFractionDigits:4}):'—';
+ const labels=[
+  tr('實際參戰','実戦参加'),tr('參戰兵力','参加兵力'),tr('擊殺','敵兵撃破'),tr('單挑','一騎討ち'),
+  tr('離間','離間'),tr('兵力保存','兵力温存'),tr('承傷','被害引受')
+ ];
+ const sideName=key=>key==='attackers'?tr('攻方','攻撃側'):tr('守方','防御側');
+ const sides=Object.entries(report.sides).map(([key,side])=>{
+  const summary=tr(
+   `${sideName(key)}：初始 ${number(side.opening)} 將 · 損兵 ${number(side.losses)} · 離間 ${number(side.converts)} 將／${number(side.converted_troops)} 兵 · 戰果分 ${metric(side.score)} · 經 ${number(side.experience)}（${points(side.basis_points)}）`,
+   `${sideName(key)}：初期 ${number(side.opening)} 名・損失 ${number(side.losses)} 兵・離間 ${number(side.converts)} 名／${number(side.converted_troops)} 兵・戦果点 ${metric(side.score)}・経験 ${number(side.experience)}（${points(side.basis_points)}）`);
+  const officers=details?side.officers.map(row=>{
+   const officer=escapeHtml(name(row.id));
+   if(!row.eligible)return `<li>${officer} · ${escapeHtml(tr('未參戰 · 經 0','実戦参加なし・経験 0'))}</li>`;
+   const stats=tr(
+    `參戰 ${number(row.troops)} 兵 · 擊殺 ${number(row.kills)} · 損兵 ${number(row.losses)}（普通攻擊承傷 ${number(row.ordinary)}）· 單挑造成／承受 ${number(row.duel_hp)}／${number(row.received_hp)} HP · 離間 ${number(row.converts)} 將／${number(row.converted_troops)} 兵`,
+    `参加 ${number(row.troops)} 兵・撃破 ${number(row.kills)}・損失 ${number(row.losses)}（通常攻撃による損失 ${number(row.ordinary)}）・一騎討ちの与／被ダメージ ${number(row.duel_hp)}／${number(row.received_hp)} HP・離間 ${number(row.converts)} 名／${number(row.converted_troops)} 兵`);
+   const dimensions=labels.map((label,i)=>`<li>${escapeHtml(label)} ${metric(row.raw[i])} / ${metric(row.normalized[i])} / ${metric(row.weighted[i])}</li>`).join('');
+   return `<li><details><summary>${officer} · ${escapeHtml(tr('經','経験'))} ${number(row.experience)}（${points(row.basis_points)}）</summary><p>${escapeHtml(stats)}</p><p>${escapeHtml(tr('各項原始分／正規化分／加權分','各項目の素点／正規化点／加重点'))}</p><ul>${dimensions}</ul></details></li>`;
+  }).join(''):'';
+  return `<div class="battle-experience-side"><p>${escapeHtml(summary)}</p>${officers?`<details><summary>${escapeHtml(tr(`${sideName(key)}武將戰功`,`${sideName(key)}の武将別戦功`))}</summary><ul>${officers}</ul></details>`:''}</div>`;
+ }).join('');
+ const limited=report.applied?Object.entries(report.applied).filter(([id, applied])=>{
+  const earned=Object.values(report.sides).reduce((sum, side)=>sum+(side.officers.find(row=>String(row.id)===id)?.experience??0),0);
+  return applied<earned;
+ }).map(([id, applied])=>tr(`${name(id)}實際入帳 ${number(applied)} 經`,`${name(id)}に加算された経験は ${number(applied)}`)):[];
+ const applied=limited.length?`<p>${escapeHtml(tr('已達累計經驗上限：','累積経験の上限：')+limited.join(tr('、','・')))}</p>`:'';
+ const summary=tr(`實際參戰 ${number(report.participants)} 將、${number(report.total_troops)} 兵 · 總經驗 ${number(report.experience)}`,
+  `実戦参加 ${number(report.participants)} 名、${number(report.total_troops)} 兵・総経験 ${number(report.experience)}`);
+ return `<section class="battle-experience" data-battle-experience data-l10n-native="${escapeHtml(GameI18n.locale)}"><h3>${escapeHtml(tr('戰役經驗','戦闘経験'))}</h3><p>${escapeHtml(summary)}</p>${sides}${applied}</section>`;
+}
 function renderBattle(){
  if(mapNavigation){mapNavigation.destroy();mapNavigation=null;}
  const game=view.game,b=game.battle;
@@ -2176,7 +2210,7 @@ function renderBattle(){
  const labels={victory:own==='attackers'?(coalition?battleText('聯軍獲勝','連合軍の勝利'):'本方胜利'):'本方城池失守',defeat:own==='attackers'?'本方败退':'本方守城成功',retreat:'攻方退却'};
  const claim=coalition&&b.outcome==='victory'?battleClaimant(b):null;
  const captureNotice=claim?`<p data-coalition-captor="${escapeHtml(claim)}">${battleText(`城池由${GameI18n.t(faction(claim),'zh-Hant')}占領。`,`${GameI18n.t(faction(claim),'ja')}が都市を占領します。`)}</p>`:'';
- updateBattleControls(`<h2 class="battle-title">${game.phase==='result'?'战果':battleText('本方行動','自軍の行動')}</h2>${game.phase==='result'?`<p class="outcome">${labels[b.outcome]}</p>${captureNotice}<p>接收战果后，兵员、名册与城池资源一起结算。</p>`:`<p class="phase-description">本方${friendly.length}人，对方${hostile.length}人。</p><p class="battle-ap" data-battle-ap="${ownPoints}" data-battle-ap-cap="${ownCap}">${battleText(`共用機動：本方 ${ownPoints}/${ownCap} · 對方 ${foePoints}/${foeCap}`,`共有機動力：自軍 ${ownPoints}/${ownCap}・敵軍 ${foePoints}/${foeCap}`)}</p><p class="battle-selection">${battleText('選擇','選択')}：${actor===null?'—':escapeHtml(name(actor))} → ${target===null?'—':escapeHtml(name(target))}</p>`}${movement}<ul class="battle-log">${b.log.slice(-8).map(t=>`<li>${escapeHtml(displayLog(t))}</li>`).join('')}</ul><div class="actions">${game.phase==='result'?'<button id="settle" class="primary">接收战果</button>':`<p class="small battle-action-reason" role="status">${!allowed?escapeHtml(GameI18n.t(battleActionReason('attack'))):battleText('已接觸敵軍，可普通攻擊。','敵に接触しており、通常攻撃できます。')}</p><button id="attack" class="primary" ${!allowed?'disabled':''}>${battleText(`攻擊 · ${board?.attack_cost??'—'}機動`,`攻撃・機動力${board?.attack_cost??'—'}`)}</button>${b.extended?`<div class="action-pair"><button id="tactic" ${!tacticsAllowed?'disabled':''}>${battleText('計略','計略')}</button><button id="duel" ${!duelAllowed?'disabled':''}>${battleText(`單挑 · ${board?.duel_cost??'—'}機動`,`一騎討ち・機動力${board?.duel_cost??'—'}`)}</button></div>`:''}<div class="action-pair"><button id="battle-wait" ${!board?.can_end?'disabled':''} title="${escapeHtml(battlePlain('結束整個本方的行動，隨後由敵方行動。','自軍全体の行動を終え、敵軍に手番を渡します。'))}">${battleText('結束本方行動','自軍の行動終了')}</button><button id="retreat">退却</button></div>`}</div>`);
+ updateBattleControls(`<h2 class="battle-title">${game.phase==='result'?'战果':battleText('本方行動','自軍の行動')}</h2>${game.phase==='result'?`<p class="outcome">${labels[b.outcome]}</p>${captureNotice}${battleExperienceHtml(view.catalog.battle_experience,{details:true})}<p>接收战果后，兵员、名册与城池资源一起结算。</p>`:`<p class="phase-description">本方${friendly.length}人，对方${hostile.length}人。</p><p class="battle-ap" data-battle-ap="${ownPoints}" data-battle-ap-cap="${ownCap}">${battleText(`共用機動：本方 ${ownPoints}/${ownCap} · 對方 ${foePoints}/${foeCap}`,`共有機動力：自軍 ${ownPoints}/${ownCap}・敵軍 ${foePoints}/${foeCap}`)}</p><p class="battle-selection">${battleText('選擇','選択')}：${actor===null?'—':escapeHtml(name(actor))} → ${target===null?'—':escapeHtml(name(target))}</p>`}${movement}<ul class="battle-log">${b.log.slice(-8).map(t=>`<li>${escapeHtml(displayLog(t))}</li>`).join('')}</ul><div class="actions">${game.phase==='result'?'<button id="settle" class="primary">接收战果</button>':`<p class="small battle-action-reason" role="status">${!allowed?escapeHtml(GameI18n.t(battleActionReason('attack'))):battleText('已接觸敵軍，可普通攻擊。','敵に接触しており、通常攻撃できます。')}</p><button id="attack" class="primary" ${!allowed?'disabled':''}>${battleText(`攻擊 · ${board?.attack_cost??'—'}機動`,`攻撃・機動力${board?.attack_cost??'—'}`)}</button>${b.extended?`<div class="action-pair"><button id="tactic" ${!tacticsAllowed?'disabled':''}>${battleText('計略','計略')}</button><button id="duel" ${!duelAllowed?'disabled':''}>${battleText(`單挑 · ${board?.duel_cost??'—'}機動`,`一騎討ち・機動力${board?.duel_cost??'—'}`)}</button></div>`:''}<div class="action-pair"><button id="battle-wait" ${!board?.can_end?'disabled':''} title="${escapeHtml(battlePlain('結束整個本方的行動，隨後由敵方行動。','自軍全体の行動を終え、敵軍に手番を渡します。'))}">${battleText('結束本方行動','自軍の行動終了')}</button><button id="retreat">退却</button></div>`}</div>`);
  if(game.phase==='result')$('#settle').onclick=async()=>{
   let next=own==='defenders'||b.outcome==='victory'?b.target:b.source;
   if(coalition&&own==='attackers'){

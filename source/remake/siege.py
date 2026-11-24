@@ -341,7 +341,8 @@ def _hit(game,state,row,piece,target,*,ranged=False):
     _event(row,'arrow'if ranged else'melee',piece,target,loss=before-(target['health']if target['kind']=='general'else target['troops']))
     _sync(state,row)
     battle_experience.attack(battle,actor['id'],victim['id'],previous_troops-victim['troops'],
-                             injured=target['kind']=='general' and target['health']<before)
+                             injured=target['kind']=='general' and target['health']<before,
+                             ordinary=target['kind']!='general',cause='siege_shot' if ranged else 'siege_melee')
 
 
 def _duel(game,state,row):
@@ -393,6 +394,7 @@ def _surround(state,row):
         if len(neighbors)<3:continue
         side=general['side'];unit=_main(battle,row,side)
         battle['extended']['surrenders'][str(unit['id'])]=unit['troops']
+        battle_experience.depart(battle, unit['id'])
         for p in row['units']:
             if p['side']==side and p['kind']!='general':p['troops']=p['health']=0
         _sync(state,row)
