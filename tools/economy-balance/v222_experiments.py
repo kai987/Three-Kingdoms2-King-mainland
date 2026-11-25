@@ -140,7 +140,10 @@ class Recorder(TransportRecorder):
             self.convoys[ident]=facts
         elif kind=='transport_arrived':
             facts=self.convoys[ident]
-            facts['delivered_tick']=row['tick']
+            facts.update(delivered_tick=row['tick'],current_escort=row['current_escort_troops'],
+                current_reserves=row['current_reserve_cargo'],current_officers=row['current_officers'],
+                current_civil_staff=row['current_civil_staff'],remaining_rations=row['current_rations'],
+                remaining_cargo=row['current_grain_cargo'])
             self.effective(facts,row['tick'])
         elif kind=='transport_weather':
             self.convoys[ident]['other_troop_loss']+=row['lost']
@@ -177,14 +180,17 @@ class Recorder(TransportRecorder):
             else:
                 if ident not in active:
                     raise ValueError(f'Convoy {ident} disappeared without a terminal receipt')
-                facts['remaining_rations']=active[ident]['escort_bag']
-                facts['remaining_cargo']=active[ident]['cargo_grain']
+                final_holdings=active[ident]
+                facts.update(current_phase=final_holdings['status'],remaining_rations=final_holdings['escort_bag'],
+                             remaining_cargo=final_holdings['cargo_grain'])
                 if facts['consecutive_blocked_days']>=30 or last_tick-facts['last_effective_tick']>=30:
                     facts['terminal_status']='dangerous_stalled'
                 else:
                     facts['terminal_status']='delivered_returning' if facts['delivered_tick'] is not None else 'not_delivered_in_transit'
             cutoff=last_tick if facts['actual_terminal_tick'] is None else facts['actual_terminal_tick']
-            facts['days_since_last_effective_action']=max(0,cutoff-facts['last_effective_tick'])
+            idle=max(0,cutoff-facts['last_effective_tick'])
+            facts.update(consecutive_unresolved_days=idle,days_since_last_effective_action=idle,
+                         days_since_delivery=cutoff-facts['delivered_tick'] if facts['delivered_tick'] is not None else None)
         rows=list(self.convoys.values())
         if rows:
             to_csv(self.path/'convoy-survival.csv',rows)
