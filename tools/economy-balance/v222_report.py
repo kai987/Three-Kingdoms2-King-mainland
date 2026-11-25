@@ -37,6 +37,7 @@ ACCEPTANCE_CHECKS = {
     'environment.json','matrix.log','holdout.log','march-build.log','cargo.log','wasm.log',
     'transport-locales.log','fixture-relief-proof.json',
     'post-wait-five-year.json','replay-final-long.log','long-relief-rerun.json',
+    'year-handoff-receipts.json','year-handoff-replay.log',
     'js-final.log','web-build.log','browser-emergency.log','convoy-emergency-zh.png','convoy-emergency-ja-mobile.png',
     'emergency-fixtures-final.log','full-suite-final.log','ci-registry.log','baseline-replay.log',
     'checkpoint-replay.log','guandu-candidate.log','guandu-baseline.log',
@@ -226,7 +227,7 @@ def reconcile_cutoff(path,run,transferred,reserves_at_cutoff):
     return all_convoys,dormant,survival,corrections
 
 
-def collect(path,run):
+def collect(path,run,year_receipts=()):
     key=base(run)
     final=list(rows(path/'monthly.csv'))[-1]
     year, winter=supply(run,path,'supply-episodes-weather-aware.csv')
@@ -243,6 +244,25 @@ def collect(path,run):
     personnel=survivors['initial_escort']+survivors['initial_reserves']
     terminal_reserve_losses=sum(integer(record,'current_reserves') for record in all_convoys
                                 if record['terminal_status']=='no_friendly_city')
+    released_escorts=Counter()
+    for receipt in year_receipts:
+        if (run['catalog_sha256']!=receipt['catalog_sha256']
+                or sha(path/'convoy-resolution-daily.csv.gz')!=receipt['previous_daily_sha256']):
+            raise ValueError(f'Calendar escort receipt does not belong to this observation: {path}')
+        released_escorts[str(receipt['convoy_id'])]+=receipt['city_credit']['credited']
+    residuals=[]
+    for item in all_convoys:
+        ident=item['convoy_id']
+        initial=integer(item,'initial_escort')+integer(item,'initial_reserves')
+        survivors_and_losses=sum(integer(item,k) for k in (
+            'current_reserves','escort_hunger_loss','reserve_hunger_loss','other_troop_loss'))
+        if item['terminal_status']!='no_friendly_city':
+            survivors_and_losses+=integer(item,'current_escort')
+        difference=initial-survivors_and_losses-transferred[ident]-released_escorts[ident]
+        if difference:
+            residuals.append(dict(key,convoy_id=ident,terminal_status=item['terminal_status'],
+                                  initial=initial,unmatched_personnel=difference))
+    released_total=sum(released_escorts.values())
     disbanded=terminal.get('no_friendly_city',0)
     max_convoy=max(all_convoys,key=lambda r:integer(r,'escort_hunger_loss')+integer(r,'reserve_hunger_loss'),default={})
     outgoing=sum(integer(record,'grain') for record in rows(path/'convoy-events.csv')
@@ -271,10 +291,10 @@ def collect(path,run):
         delivered_returning=terminal.get('delivered_returning',0),initial_personnel=personnel,**survivors,
         legally_transferred_reserves=ledger.get('delivered_reserves',0),
         safely_received_escort_and_cargo_at_end=survival['safe_personnel'],still_in_transit_personnel=survival['in_transit_personnel'],
-        surviving_personnel_observed=observed_alive+ledger.get('delivered_reserves',0),
+        surviving_personnel_observed=observed_alive+ledger.get('delivered_reserves',0)+released_total,
+        calendar_escorts_released=released_total,
         terminal_reserve_losses=terminal_reserve_losses,
-        personnel_unreconciled=personnel-observed_alive-ledger.get('delivered_reserves',0)-terminal_reserve_losses
-            -survivors['escort_hunger_loss']-survivors['reserve_hunger_loss']-survivors['other_troop_loss'],
+        personnel_unreconciled=sum(abs(item['unmatched_personnel']) for item in residuals),
         safe_personnel_percent=percentage(survival['safe_personnel']+ledger.get('delivered_reserves',0),personnel),
         all_escorts_exhausted=sum(bool(integer(record,'initial_escort') and not integer(record,'current_escort'))
                                  for record in all_convoys),
@@ -301,7 +321,7 @@ def collect(path,run):
     stats['historical_safe_return_pct']=percentage(docked,ended)
     return (dict(key,run_status=run['outcome'],completed_turns=run['completed_turns'], **stats),
             [dict(key,**r) for r in dormant], [dict(key,**r) for r in long_cases],ledger,
-            [dict(key,**r) for r in corrections])
+            [dict(key,**r) for r in corrections],residuals)
 
 
 def validate_weather(games):
@@ -379,16 +399,23 @@ def exports(root,older):
     to_json(root/'sources'/f"{current['tree_sha256']}.json",current)
     observation=root/'exports'
     observation.mkdir(parents=True,exist_ok=True)
-    metrics=[]; unresolved=[]; long=[]; ledgers=[]; historical=[]; boundary_fixes=[]
+    metrics=[]; unresolved=[]; long=[]; ledgers=[]; historical=[]; boundary_fixes=[]; personnel_issues=[]
+    year_proof=root/'checks/year-handoff-receipts.json'
+    witnessed=defaultdict(list)
+    if year_proof.is_file():
+        for receipt in json.loads(year_proof.read_text()):
+            match=tuple(receipt[k] for k in ('seed','scenario','strategy','group','months'))
+            witnessed[match].append(receipt)
     if sha(older)!=PREVIOUS_SHA:
         raise ValueError('Historical evidence hash changed')
     with ZipFile(older) as prior:
-        for _,(path,run) in sorted(actual.items()):
-            score,stranded,long_cases,ledger,corrections=collect(path,run)
+        for key,(path,run) in sorted(actual.items()):
+            score,stranded,long_cases,ledger,corrections,residuals=collect(path,run,witnessed.get(key,()))
             metrics.append(score)
             unresolved.extend(stranded)
             long.extend(long_cases)
             boundary_fixes.extend(corrections)
+            personnel_issues.extend(residuals)
             ledgers.append(dict(base(run),**{k:ledger.get(k,0) for k in (
                 'rations','bag_return','route_loss','weather','army_supply','convoy_supply','delivered',
                 'delivered_reserves','incident_reserves','daily_receipts')}))
@@ -400,6 +427,8 @@ def exports(root,older):
     write(observation,'weather-sequence-checks',validate_weather(actual))
     write(observation,'cargo-ledger-checks',ledgers)
     write(observation,'settlement-boundary-reconciliation',boundary_fixes)
+    write(observation,'unreconciled-convoy-personnel',personnel_issues,
+          header='group,strategy,scenario,seed,months,convoy_id,terminal_status,initial,unmatched_personnel')
     write(observation,'scenario-scores',metrics)
     index={(r['seed'],r['scenario'],r['strategy'],r['group'],r['months']):r for r in metrics}
     paired=[]
@@ -422,7 +451,7 @@ def exports(root,older):
         'convoy-survival-comparison':('initial_escort','initial_reserves','current_escort','current_reserves','initial_officers',
             'current_officers','initial_civil_staff','current_civil_staff','escort_hunger_loss','reserve_hunger_loss','other_troop_loss',
             'safe_personnel_percent','safely_received_escort_and_cargo_at_end','legally_transferred_reserves','still_in_transit_personnel',
-            'surviving_personnel_observed','terminal_reserve_losses','personnel_unreconciled',
+            'surviving_personnel_observed','calendar_escorts_released','terminal_reserve_losses','personnel_unreconciled',
             'all_escorts_exhausted'),
         'convoy-terminal-comparison':('dispatched','returned_home','received_elsewhere','no_friendly_city','surrender_settlement',
             'delivered_returning','not_delivered_in_transit','dangerous_stalled','unresolved'),
