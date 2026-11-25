@@ -350,6 +350,25 @@ def exports(root,older):
               for _,(path,run) in sorted(actual.items())])
 
 
+def archive_references(sources, older):
+    """Pin byte-identical I3 inputs to the existing V2.2.1 validation archive."""
+    references={}
+    with ZipFile(older) as previous:
+        inventory=json.loads(previous.read('validation-manifest.json'))['files']
+        for rel,file in list(sources.items()):
+            parts=Path(rel).parts
+            if len(parts)!=6 or parts[0]!='observed' or not parts[1].startswith('I3-'):
+                continue
+            group,seed,months,scene,name=parts[1:]
+            wave='long' if months=='240' else 'matrix' if seed in ('2026','2027','2028') else 'holdout'
+            member=f'observed/{wave}/{group}/{seed}/{months}/{scene}/{name}'
+            original=inventory.get(member)
+            if original and file.stat().st_size==original['bytes'] and sha(file)==original['sha256']:
+                references[rel]=dict(member=member,**original)
+                del sources[rel]
+    return references
+
+
 def package(root,older,report):
     prior_reference=dict(path=str(older.resolve()),sha256=sha(older),bytes=older.stat().st_size)
     docs=ROOT/'docs/weather-v222'
@@ -376,9 +395,10 @@ def package(root,older,report):
                 sources[rel.as_posix()]=file.with_name('normalized-'+file.name)
             else:
                 sources[rel.as_posix()]=file
+    references=archive_references(sources,older)
     files={rel:dict(bytes=p.stat().st_size,sha256=sha(p)) for rel,p in sorted(sources.items())}
     manifest=dict(schema='weather-v222-delivery-r1',previous_package=prior_reference,
-                  source_commit=report['current_git_head'],files=files)
+                  source_commit=report['current_git_head'],files=files,referenced_files=references)
     to_json(root/'validation-manifest.json',manifest)
     archive=root/'three-kingdoms-weather-v222-validation.zip'
     intermediate=archive.with_suffix('.partial')
@@ -392,7 +412,7 @@ def package(root,older,report):
             raise ValueError('Invalid acceptance archive')
     checksum=sha(archive)
     archive.with_suffix('.zip.sha256').write_text(f'{checksum}  {archive.name}\n')
-    print(archive,archive.stat().st_size,checksum,len(files),flush=True)
+    print(archive,archive.stat().st_size,checksum,len(files),'files',len(references),'prior references',flush=True)
 
 
 def main():

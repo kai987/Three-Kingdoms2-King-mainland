@@ -27,3 +27,5 @@ python3 -B tools/economy-balance/v222_report.py --output build/weather-v222 --pr
 ```
 
 旧轨迹使用原版运行时复现，三条重点运队以原剧本、种子、来源、最初目的地和逐日流水核对，再从真实记录的检查点分支测试。工作中的检查点存档用于本地复算，交付包包含逐日记录的校验结论和检查点证据。
+
+验收包中的 `validation-manifest.json` 列出实际打包文件及其 SHA-256。字节完全相同的 I3 历史原件列在 `referenced_files`，并指向前版验收包中的成员。解压本版后，可运行 `reproduction-tools/v222_hydrate_report.py --output <解压目录> --previous <V2.2.1验收包>` 校验并补齐这些原件。
