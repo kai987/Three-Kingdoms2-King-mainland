@@ -1058,6 +1058,15 @@
         "scenarios"
       ]
     },
+    "tests/test_remake_winter_transport.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "logistics",
+        "map",
+        "save"
+      ]
+    },
     "tests/test_remake_winter_weather.py": {
       "tier": "related",
       "groups": [

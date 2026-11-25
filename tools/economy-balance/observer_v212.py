@@ -274,6 +274,63 @@ class Measurements:
                     definition='tk2-independent-march-supply-episodes-v1')
 
 
+class PublishedMeasurements(Measurements):
+    """An independent parallel series using the actual checkpoint clock."""
+    def __init__(self):
+        super().__init__()
+        self.actual_shortages={}
+
+    def before_meal(self,game,state,army,journey,**values):
+        book=journey['supply']
+        if 'winter' not in book:
+            return super().before_meal(game,state,army,journey,**values)
+        tick=values.get('absolute_tick')
+        if (values.get('unit_kind')=='convoy' or tick is None
+                or book['clock_tick']>=tick or book['closed_tick'] is not None
+                or army.get('status')=='returning' or book['retreat_requested']):
+            return None
+        ident=army['id']
+        token=(ident,tick,len(book['refills']),book['lost'])
+        if book['route_days']>=journey['quote']['days'] and not book['waiting']:
+            return token
+        need=army_relief.requirement(game,state,army,published=True)
+        if need.required:
+            deadline=max(tick,need.deadline+1)
+            entry=self.open.get(ident)
+            if entry is None:
+                self.serial[ident]+=1
+                self.open[ident]=Episode(ident,army['owner'],self.serial[ident],tick,deadline,deadline,need.required)
+            elif entry.owner==army['owner']:
+                # A realized unfunded meal bounds subsequent forecasts.
+                end=min(deadline,self.actual_shortages.get(ident,deadline))
+                entry.update(need.required,end,revised=True)
+        return token
+
+    def after_meal(self,token,journey):
+        if token is not None:
+            ident,tick,*_=token
+            book=journey['supply']
+            if ident in self.open and book['clock_tick']==tick and book['shortage_streak']:
+                actual=self.actual_shortages.setdefault(ident,tick)
+                self.open[ident].deadline=min(self.open[ident].deadline,actual)
+        return super().after_meal(token,journey)
+
+    def finish(self,ident,tick,**kwargs):
+        super().finish(ident,tick,**kwargs)
+        self.episodes[-1]['actual_shortage_tick']=self.actual_shortages.pop(ident,None)
+
+    def write(self,folder,state):
+        for ident in list(self.open):
+            self.finish(ident,(state.turn-1)*10,unresolved='pending_at_observation_end')
+        filename=folder/'supply-episodes-weather-aware.csv'
+        if self.episodes:
+            to_csv(filename,self.episodes)
+        else:
+            fields=Episode(0,'',0,0,0,0,0).row(0).keys()
+            filename.write_text(','.join((*fields,'actual_shortage_tick'))+'\n',encoding='utf-8')
+        return dict(episodes=len(self.episodes),definition='published-checkpoint-ration-deadline-v1')
+
+
 availability_headers=('city_id','faction_id','turn','officers_total','resident_officers','available_officers',
     'unarmed_officers','light_escort_candidates','heavy_escort_candidates','convoy_officers',
     'military_plan_officers','reserve_capacity','command_books','assigned_escort_id','assignment_result',

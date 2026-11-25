@@ -290,6 +290,16 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
  winter=load(winterSave,winter.revision,seat);
  assert.deepEqual(winter.catalog.weather,observedWeather);
  assert.equal(request('/api/save',{instance:seat}),winterSave);
+ let revised=command(winter,'new',{scenario:initial,faction:'observer',seed:2026,weather_rules_version:221},seat);
+ assert.equal(revised.game.extension.winter_weather.adjustments,3);
+ for(let index=0;index<winterTurns;index++)revised=command(revised,'observe_turn',{},seat);
+ assert.equal(revised.game.extension.weather_rules_version,221);
+ assert.deepEqual(revised.catalog.weather.regions,observedWeather.regions);
+ assert.deepEqual(revised.catalog.weather.ice,observedWeather.ice);
+ const revisedSave=request('/api/save',{instance:seat});
+ revised=load(revisedSave,revised.revision,seat);
+ assert.equal(request('/api/save',{instance:seat}),revisedSave);
+ assert.equal(revised.catalog.weather.tick,30);
 
  // Exercise the real optional wire path, not only the legacy bridge used by
  // CPU replay. Hydration must reconstruct the same complete current view.

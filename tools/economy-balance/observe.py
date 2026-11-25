@@ -259,6 +259,10 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
     v211_rows=defaultdict(list)
     committed = []  # Optional verification trace on the independent command boundary.
     with_weather_observer=bool(winter_weather and winter_weather.observing())
+    published_metrics=None
+    if extra_metrics and winter_weather and winter_weather.detailed():
+        from observer_v212 import PublishedMeasurements
+        published_metrics=PublishedMeasurements()
     before_weather=[]
     def record_hash():
         committed.append(game.export_save(compact=True)['checksum'])
@@ -284,9 +288,12 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
         before = {key:ledger.get(key,0) for key in ('shortage_days','base_consumed','lost','elapsed_days')}
         start = len(ledger['starvation']) if game.telemetry else 0
         token=extra_metrics.before_meal(campaign,state,unit,journey,**values) if extra_metrics else None
+        adjusted=published_metrics.before_meal(campaign,state,unit,journey,**values) if published_metrics else None
         used = real_march(campaign,state,unit,journey,*args,**values)
         if extra_metrics:
             extra_metrics.after_meal(token,journey)
+        if published_metrics:
+            published_metrics.after_meal(adjusted,journey)
         stats = game.flow[unit['owner']]
         is_convoy = values.get('unit_kind') == 'convoy'
         if (game.telemetry and is_convoy
@@ -322,6 +329,8 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
     def record_transport(campaign,state,kind,row,**values):
         if extra_metrics:
             extra_metrics.transport(state,kind,row,values)
+        if published_metrics:
+            published_metrics.transport(state,kind,row,values)
         if new_metrics and row['target_march'] is not None:
             first=row['journeys'][0]
             record_v211('army-convoys',state,stage=kind,owner=row['owner'],convoy=row['id'],
@@ -531,6 +540,8 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
                     game.telemetry.finish_turn(game.state)
                 if extra_metrics:
                     extra_metrics.turn(game.state)
+                if published_metrics:
+                    published_metrics.turn(game.state)
                 if hash_turns:
                     record_hash()
                 for key, city in game.state.cities.items():
@@ -645,6 +656,15 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
         if staged:
             from v212_experiments import settings_for
             result['v212']['profile']=settings_for(group)
+    if published_metrics:
+        result['weather_aware_supply']=published_metrics.write(output/scenario,state)
+    if winter_weather and winter_weather.detailed() and timings:
+        from math import ceil
+        result['performance']['percentiles']={}
+        for label,measurements in (('wall',timings),('cpu',cpu_times)):
+            series=sorted(measurements)
+            result['performance']['percentiles'][label]={
+                str(p):round(series[ceil(len(series)*p/100)-1],6) for p in (50,95,99)}
     if hash_turns:
         result['committed_save_sha256'] = committed
         if before_weather:
