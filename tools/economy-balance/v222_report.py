@@ -26,6 +26,7 @@ PREVIOUS_SHA = 'cc606fd31eeb120ac578caea2be085ee099ba32341b7ae44ac113a46f97b19b5
 EXPECTED = set().union(*(set(cases(wave)) for wave in ('focus','paired','long')))
 ACCEPTANCE_CHECKS = {
     'environment.json','matrix.log','holdout.log','march-build.log','cargo.log','wasm.log',
+    'transport-locales.log','fixture-relief-proof.json',
     'js-final.log','web-build.log','browser-emergency.log','convoy-emergency-zh.png','convoy-emergency-ja-mobile.png',
     'emergency-fixtures-final.log','full-suite-final.log','ci-registry.log','baseline-replay.log',
     'checkpoint-replay.log','guandu-candidate.log','guandu-baseline.log',
@@ -328,11 +329,14 @@ def exports(root,older):
         write(observation,name,[{k:r[k] for k in (*datekeys,*fields)}
               for r in metrics if r['months']==240 or name!='long-term-economy-comparison'])
     magnitude=[]
-    for (strategy,group,months) in sorted({(r['strategy'],r['group'],r['months']) for r in metrics}):
-        found=[r for r in metrics if (r['strategy'],r['group'],r['months'])==(strategy,group,months)]
-        means={k:round(mean(r[k] for r in found if r[k] is not None),5)
-               if any(r[k] is not None for r in found) else None for k in METRICS}
-        magnitude.append(dict(strategy=strategy,group=group,months=months,runs=len(found),**means))
+    for wave in ('focus','paired','long','holdout'):
+        design=set(cases(wave))
+        selected=[r for key,r in index.items() if key in design]
+        for strategy,group,months in sorted({(r['strategy'],r['group'],r['months']) for r in selected}):
+            found=[r for r in selected if (r['strategy'],r['group'],r['months'])==(strategy,group,months)]
+            means={k:round(mean(r[k] for r in found if r[k] is not None),5)
+                   if any(r[k] is not None for r in found) else None for k in METRICS}
+            magnitude.append(dict(wave=wave,strategy=strategy,group=group,months=months,runs=len(found),**means))
     write(observation,'sample-means',magnitude)
     return dict(schema='weather-v222-validation-r1',baseline_commit='1e521fa67fc54c7ae16f4195f8adafbfe2891e6d',
         current_git_head=git('rev-parse','HEAD').decode().strip(),source_tree_sha256=next(iter(sources),None),
