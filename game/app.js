@@ -152,6 +152,13 @@ function factionLedger({observer=false}={}){
   const r=logistics[f.id],cities=ids=>ids.map(id=>escapeHtml(cityName(id))).join('、')||'—';
   return `<tr><th scope="row">${escapeHtml(names.get(f.id))}</th><td>${r.grain}</td><td>${r.gold}</td><td>${r.regular} / ${r.fixed} / ${r.net}</td><td>${r.stationed} / ${r.deployed} / ${r.reserves}</td><td>${cities(r.needs)}</td><td>${cities(r.donors)} / ${cities(r.granaries)}</td><td>${r.exportable}</td><td>${r.inbound} / ${r.timely}</td><td>${r.committed}</td></tr>`;
  }).join('')}</tbody></table></div></details>`:'';
+ const recoveryRows=standings.filter(({f})=>logistics?.[f.id]?.recovery).map(({f})=>{
+  const r=logistics[f.id].recovery;
+  const time=r.months===null?battleText('未有可靠恢復來源','確実な回復手段なし'):`${r.months}${battleText('個月','か月')}`;
+  const status=r.status==='ready'?battleText('就緒','準備完了'):r.status==='recovering'?battleText('補充中','回復中'):battleText('待籌措','物資を確保中');
+  return `<tr><th scope="row">${escapeHtml(names.get(f.id))}</th><td>${r.committed_wars}／${r.enroute}</td><td>${r.actual_losses??0}／${r.reserves_assigned??0}</td><td>${r.gold_need??0}／${r.grain_need??0}</td><td>${r.pending_grain}／${r.incoming_grain??0}</td><td>${time}</td><td>${status}</td></tr>`;
+ });
+ const recoveryView=recoveryRows.length?`<details class="faction-logistics-overview" data-war-recovery><summary>${battleText('戰事與補充','戦況と戦力回復')}</summary><p class="small">${battleText('以下為補充預算與在途預測，實際官倉庫存見勢力後勤總覽。','補充予算と輸送見込みです。実際の備蓄は勢力の兵站で確認できます。')}</p><div class="faction-ledger-scroll"><table><thead><tr>${[['勢力','勢力'],['已承諾戰線／在途部隊','作戦中の戦線／移動部隊'],['待補兵／可配預備兵','要補充兵／配備可能な予備兵'],['補兵金／糧','補充費用・資金／兵糧'],['未支付預留糧／預計到貨糧','確保済み兵糧／到着見込み兵糧'],['預計恢復','回復見込み'],['準備狀態','準備状況']].map(([zh,ja])=>`<th scope="col">${battleText(zh,ja)}</th>`).join('')}</tr></thead><tbody>${recoveryRows.join('')}</tbody></table></div></details>`:'';
  const alliances=view.catalog.non_aggression||[];
  const {castle_outline_pixels:outlines,castle_fill_pixels:fills}=view.catalog.map_presentation;
  const borderPath=castlePixelPath(outlines),fillPath=castlePixelPath(fills);
@@ -169,7 +176,7 @@ function factionLedger({observer=false}={}){
  return `<details class="faction-ledger"><summary>各势力资源</summary>
  <p class="small">${battleText('物資按目前所屬都市的庫存合計。','物資は現在支配する都市の備蓄を合計しています。')}</p>
  <p class="small">${battleText('兵士為武將所率的兵力，現役為在籍武將人數。行軍與戰鬥中的人員也計入。','兵士は武将が率いる兵の数、現役は所属武将の人数です。行軍中・戦闘中の部隊も集計に含まれます。')}</p>
- <div class="faction-ledger-scroll"><table${observer?' class="faction-ledger-with-base"':''}><thead><tr><th scope="col">势力</th><th scope="col"${observer?' aria-sort="descending"':''}>都市</th>${observer?`<th scope="col">${battleText('本據','本拠')}</th>`:''}<th scope="col">同盟</th><th scope="col">現役</th><th scope="col">兵士</th><th scope="col">預備兵</th><th scope="col" data-l10n-literal>金</th><th scope="col">兵糧</th></tr></thead><tbody>${rows}</tbody></table></div></details>${logisticsView}`;
+ <div class="faction-ledger-scroll"><table${observer?' class="faction-ledger-with-base"':''}><thead><tr><th scope="col">势力</th><th scope="col"${observer?' aria-sort="descending"':''}>都市</th>${observer?`<th scope="col">${battleText('本據','本拠')}</th>`:''}<th scope="col">同盟</th><th scope="col">現役</th><th scope="col">兵士</th><th scope="col">預備兵</th><th scope="col" data-l10n-literal>金</th><th scope="col">兵糧</th></tr></thead><tbody>${rows}</tbody></table></div></details>${logisticsView}${recoveryView}`;
 }
 function routeRisk(quote){
  const lines=(quote.routes||[]).filter(r=>r.hazard).map(r=>{

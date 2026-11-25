@@ -119,6 +119,24 @@
    query('#save-domestic').onclick=()=>{const current=row('domestic'),payload={faction:active.faction};for(const key of ['civil','military'])if(d[key]!==current[key])payload[key]=d[key];const changed=Object.fromEntries(Object.entries(p).filter(([key,value])=>JSON.stringify(value)!==JSON.stringify(current.policy[key])));if(Object.keys(changed).length)payload.policy=clone(changed);return submit('set_domestic',payload);};i18n?.apply?.();
   }
   function cargoText(cargo){return resources.map(([key,tc,ja])=>`${text(tc,ja)}${cargo?.[key]??0}`).join(' · ');}
+  const reliefReasons={
+   army_supplied:['部隊已取得足夠糧食','部隊が必要な兵糧を確保済み'],
+   unsafe_return:['返程口糧或路線不足，重新安排返程','帰路の兵糧・経路が不足し、帰還を再手配'],
+   rendezvous_expired:['錯過會合時限','合流の期限を超過'],
+   rendezvous_replanned:['已改往新的會合城','別の合流都市に変更済み'],
+   army_missing:['目標部隊已離開行軍隊列','補給先は行軍を終了'],
+   low_efficiency:['可送達的糧食過少','引き渡せる兵糧が少なすぎます'],
+   heavy_escort:['目前無合適的輕裝押運武將','現在は軽装の護送武将を配置できません'],
+   defence:['押運武將須留守本城','護送候補の武将は守備に必要です'],
+  };
+  function reliefText(plan,reason){
+   if(!plan)return '';
+   const g=getView()?.game;
+   const serial=g?g.year*360+(g.month-1)*30+g.day-1+plan.eta_tick-(g.turn-1)*10:null;
+   const eta=serial===null?'—':`${Math.floor(serial/360)}年${Math.floor(serial%360/30)+1}月${serial%30+1}日`;
+   const note=reliefReasons[reason];
+   return `<span class="small" data-relief-estimate>${text('會合','合流')} ${escape(eta)} · ${text('預計等待','待機見込み')} ${plan.wait_days}${text('日','日')} · ${text('裝載／預計送達','積載／到着見込み')} ${plan.cargo}／${plan.estimated_net} · ${text('效率','効率')} ${plan.efficiency}%</span><br><span class="small" data-relief-budget>${text('去程／等待／返程／備用口糧','往路／待機／帰還／予備の糧')} ${plan.outbound}／${plan.wait}／${plan.returning}／${plan.safety} · ${text('押運兵士','護送兵')} ${plan.escort_troops} · ${text('預計返抵','帰還先見込み')} ${escape(label(cityName(plan.return_city)))}</span>${note?`<br><span data-relief-reason>${escape(note[locale()==='ja'?1:0])}</span>`:''}`;
+  }
   function journeyText(row){
    const journey=row.journeys?.at(-1),quote=journey?.quote||row.quote,s=journey?.supply||row.supply;
    if(!s)return '';
@@ -129,13 +147,13 @@
   }
   function convoyList(city=null){
    const view=getView(),rows=(view?.catalog?.logistics?.convoys||[]).filter(r=>r.owner===view?.game?.player&&(!city||r.source===city||r.target===city||r.original_target===city));
-   return rows.length?`<div class="logistics-convoys" data-l10n-native="${locale()}"><h3>${text('運輸隊','輸送隊')}</h3>${rows.map(r=>{const status=staffStatus[r.status]||staffStatus[r.state]||[text('運輸中','輸送中'),text('運輸中','輸送中')],quote=r.quote||r.journeys?.at(-1)?.quote;return `<p class="small" data-convoy="${escape(r.id)}">${escape(label(cityName(r.source)))} → ${escape(label(cityName(r.original_target||r.target)))}${r.target_march?' · '+text('在途送糧目標','行軍部隊への補給')+' #'+escape(r.target_march):''} · ${status[locale()==='ja'?1:0]}<br>${escape(cargoText(r.cargo))}${r.delivery_done?'<br>'+text('已卸貨','荷下ろし済み')+'：'+escape(cargoText(r.delivered))+' · '+text('押運返回原城','護送隊は出発都市へ帰還'):''}<br>${(r.officers||[]).map(id=>escape(label(name(id)))).join('、')}${quote?` · ${quote.days}${text('日','日')}`:''}${journeyText(r)}${r.reason==='insufficient_grain'?'<br>'+text('目前口糧不足，等待補給；等待期間仍每日耗糧。','携行兵糧が不足し、補給待ちです。待機中も毎日消費します。'):''}</p>`;}).join('')}</div>`:'';
+   return rows.length?`<div class="logistics-convoys" data-l10n-native="${locale()}"><h3>${text('運輸隊','輸送隊')}</h3>${rows.map(r=>{const status=staffStatus[r.status]||staffStatus[r.state]||[text('運輸中','輸送中'),text('運輸中','輸送中')],quote=r.quote||r.journeys?.at(-1)?.quote;return `<p class="small" data-convoy="${escape(r.id)}">${escape(label(cityName(r.source)))} → ${escape(label(cityName(r.original_target||r.target)))}${r.target_march?' · '+text('在途送糧目標','行軍部隊への補給')+' #'+escape(r.target_march):''} · ${status[locale()==='ja'?1:0]}<br>${escape(cargoText(r.cargo))}${r.delivery_done?'<br>'+text('已卸貨','荷下ろし済み')+'：'+escape(cargoText(r.delivered))+' · '+text('押運返回原城','護送隊は出発都市へ帰還'):''}<br>${(r.officers||[]).map(id=>escape(label(name(id)))).join('、')}${quote?` · ${quote.days}${text('日','日')}`:''}${journeyText(r)}${r.relief?'<br>'+reliefText(r.relief,r.reason):''}${r.reason==='insufficient_grain'?'<br>'+text('目前口糧不足，等待補給；等待期間仍每日耗糧。','携行兵糧が不足し、補給待ちです。待機中も毎日消費します。'):''}</p>`;}).join('')}</div>`:'';
   }
   function rescueSelection(state){
    const targets=state.rescue_targets||[],previous=active.rescue,
     target=targets.find(row=>String(row.march_id)===String(previous?.march_id))||targets.find(row=>row.can_dispatch)||targets[0]||null;
    if(!target){active.rescue=null;return {targets,target:null,maximum:0};}
-   const maximum=bounded(target.max_grain),suggested=Math.min(maximum,Math.max(1,bounded(target.needed_grain))),same=String(previous?.march_id)===String(target.march_id);
+   const maximum=bounded(target.max_grain),suggested=Math.min(maximum,Math.max(1,bounded(target.relief?.cargo??target.needed_grain))),same=String(previous?.march_id)===String(target.march_id);
    active.rescue={march_id:target.march_id,grain:bounded(same&&Number.isSafeInteger(previous.grain)?previous.grain:suggested,maximum)};
    return {targets,target,maximum};
   }
@@ -147,12 +165,12 @@
   function rescueControls(state){
    const {targets,target,maximum}=rescueSelection(state);
    if(!target)return `<fieldset data-rescue-panel><legend>${text('向在途部隊送糧','行軍部隊へ兵糧を輸送')}</legend><p class="small">${text('目前沒有本方在途部隊需要送糧。','現在、補給対象の自軍行軍部隊はいません。')}</p></fieldset>`;
-   const reason=reasons[target.blocked_reason],can=rescueWritable(target)&&maximum>0,
+   const reason=reliefReasons[target.blocked_reason]||reasons[target.blocked_reason],can=rescueWritable(target)&&maximum>0,
     army=(getView()?.game?.extension?.travel?.marches||[]).find(row=>row.id===target.march_id),
     position=root.GameMarchSupply?.position?.(army?.quote,army?.supply?.route_days??0),
     place=target.location_city?label(cityName(target.location_city)):position?.from&&position?.to?`${label(cityName(position.from))} → ${label(cityName(position.to))}（${position.progress_days}/${position.leg_days}${text('日','日')}）`:'—',
     caption=row=>`#${row.march_id} · ${label(cityName(row.target_city||row.city))}${row.can_dispatch?'':' · '+text('目前不可派遣','現在派遣不可')}`;
-   return `<fieldset data-rescue-panel><legend>${text('向在途部隊送糧','行軍部隊へ兵糧を輸送')}</legend>${select('rescue-target',text('本方在途部隊','自軍の行軍部隊'),target.march_id,targets.map(row=>[row.march_id,caption(row)]))}<p data-rescue-location>${text('目前位置','現在地')}：${escape(place)} · ${text('下一節點','次の地点')}：${escape(target.next_city?label(cityName(target.next_city)):'—')}</p><p>${text('實際會合城','合流する都市')}：${escape(target.city?label(cityName(target.city)):'—')}${target.quote?` · ${target.quote.days}${text('日','日')}`:''} · ${text('需要兵糧','必要兵糧')} ${target.needed_grain??0}</p><p>${text('押運武將','護送武将')}：${(target.officers||[]).map(id=>escape(label(name(id)))).join('、')||'—'} · ${text('首段口糧','最初の補給地までの兵糧')} ${target.cost_grain??0}</p><div class="allocation-value"><label class="field" for="rescue-grain">${text('送往部隊的兵糧','部隊へ届ける兵糧')}<input id="rescue-grain" type="number" min="0" max="${maximum}" step="1" value="${active.rescue.grain}" ${!can?'disabled':''}></label><button type="button" id="rescue-max" ${!can?'disabled':''}>${text('最大值','最大値')}</button></div><p class="small" data-rescue-rule>${text('送糧隊會實際行軍至會合城，接觸部隊後才交糧；不會遠端即時入帳。押運武將保留原城席位，卸貨後自動返原城；永久調任請使用調動。','輸送隊は合流都市まで実際に行軍し、部隊と接触してから引き渡します。遠隔で即時加算はしません。護送武将は出発都市の枠を保ち、荷下ろし後に帰還します。恒久的な異動は武将移動を使ってください。')}</p>${!target.can_dispatch?`<p class="staff-command-error" role="status">${reason?reason[locale()==='ja'?1:0]:text('目前無法派出送糧隊，請確認路線、物資及押運人員。','現在は補給隊を派遣できません。経路・物資・護送武将を確認してください。')}</p>`:''}${bookHint('resupply_march')}<button type="button" id="dispatch-rescue" ${!can||active.rescue.grain<1?'disabled':''}>${text('派出送糧隊','兵糧輸送隊を派遣')}</button></fieldset>`;
+   return `<fieldset data-rescue-panel><legend>${text('向在途部隊送糧','行軍部隊へ兵糧を輸送')}</legend>${select('rescue-target',text('本方在途部隊','自軍の行軍部隊'),target.march_id,targets.map(row=>[row.march_id,caption(row)]))}<p data-rescue-location>${text('目前位置','現在地')}：${escape(place)} · ${text('下一節點','次の地点')}：${escape(target.next_city?label(cityName(target.next_city)):'—')}</p><p>${text('實際會合城','合流する都市')}：${escape(target.city?label(cityName(target.city)):'—')}${target.quote?` · ${target.quote.days}${text('日','日')}`:''} · ${text('需要兵糧','必要兵糧')} ${target.needed_grain??0}</p><p>${text('押運武將','護送武将')}：${(target.officers||[]).map(id=>escape(label(name(id)))).join('、')||'—'} · ${target.relief?text('預裝口糧','携行兵糧'):text('首段口糧','最初の補給地までの兵糧')} ${target.cost_grain??0}</p>${target.relief?`<p>${reliefText(target.relief)}</p>`:''}<div class="allocation-value"><label class="field" for="rescue-grain">${text('送往部隊的兵糧','部隊へ届ける兵糧')}<input id="rescue-grain" type="number" min="0" max="${maximum}" step="1" value="${active.rescue.grain}" ${!can?'disabled':''}></label><button type="button" id="rescue-max" ${!can?'disabled':''}>${text('最大值','最大値')}</button></div><p class="small" data-rescue-rule>${text('送糧隊會實際行軍至會合城，接觸部隊後才交糧；不會遠端即時入帳。押運武將保留原城席位，卸貨後自動返原城；永久調任請使用調動。','輸送隊は合流都市まで実際に行軍し、部隊と接触してから引き渡します。遠隔で即時加算はしません。護送武将は出発都市の枠を保ち、荷下ろし後に帰還します。恒久的な異動は武将移動を使ってください。')}</p>${!target.can_dispatch?`<p class="staff-command-error" role="status">${reason?reason[locale()==='ja'?1:0]:text('目前無法派出送糧隊，請確認路線、物資及押運人員。','現在は補給隊を派遣できません。経路・物資・護送武将を確認してください。')}</p>`:''}${bookHint('resupply_march')}<button type="button" id="dispatch-rescue" ${!can||active.rescue.grain<1?'disabled':''}>${text('派出送糧隊','兵糧輸送隊を派遣')}</button></fieldset>`;
   }
   function bindRescue(state){
    if(!query('#rescue-target'))return;

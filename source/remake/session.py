@@ -189,13 +189,15 @@ class CampaignSession:
                                    net_grain=projection['net'] - wage['grain']))
             result['catalog']['city_grain_balance'] = balances
             result['catalog']['city_agriculture'] = details
-            from . import faction_economy, logistics_strategy, military_budget
+            from . import faction_economy, logistics_strategy, military_budget, war_recovery
             if logistics_strategy.enabled(state):
                 owners = sorted({city.owner for city in state.cities.values()} - {'neutral'})
                 reports, cities = {}, {}
                 for owner in owners:
                     plan = faction_economy.plan(self.game, state, owner, stationed=stationed, incomes=income)
                     reports[owner] = plan.summary(state)
+                    if logistics_strategy.war_recovery(state):
+                        reports[owner]['recovery'] = war_recovery.Forecast(self.game,state,owner,plan).view()
                     for key, row in plan.budgets.items():
                         forecast = plan.cities[key]
                         row['deliveries'] = [[eta, amount] for eta, amount in forecast.receipts.items() if amount]

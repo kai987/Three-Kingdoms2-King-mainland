@@ -501,6 +501,12 @@ test('logistics V2.1 displays faction and city budgets in both languages',async(
  await expect(overview.getByRole('columnheader',{name:'軍糧承諾'})).toBeVisible();
  await expect(overview.getByRole('rowheader').filter({hasText:'曹操'})).toBeVisible();
  await historyScreenshot(page,testInfo,'faction-logistics-v21',{fullPage:false});
+ const recovery=page.locator('#inspector [data-war-recovery]');
+ await recovery.locator('summary').click();
+ await expect(recovery.getByRole('columnheader',{name:'準備狀態'})).toBeVisible();
+ await expect(recovery.getByRole('rowheader').filter({hasText:'曹操'})).toBeVisible();
+ await recovery.scrollIntoViewIfNeeded();
+ await historyScreenshot(page,testInfo,'war-recovery-v211',{fullPage:false});
  await page.locator('#city-information').click();
  const detail=page.locator('.city-information');
  const summary=detail.locator('[data-city-logistics][data-locale-only="zh-Hant"]');

@@ -740,6 +740,15 @@
       "tier": "related",
       "groups": ["economy", "logistics", "battle", "save"]
     },
+    "tests/test_remake_logistics_v211.py": {
+      "tier": "related",
+      "groups": [
+        "ai",
+        "economy",
+        "logistics",
+        "save"
+      ]
+    },
     "tests/test_remake_luzon_settlement.py": {
       "tier": "related",
       "groups": [
