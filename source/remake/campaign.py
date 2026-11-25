@@ -634,6 +634,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         for ident, officer, troops, _ in planned:
             officer.troops = troops
         city.reserves -= change
+        if change>0:
+            from . import war_recovery
+            war_recovery.record(state,city.owner,city.id,'allocation',change)
         for ident, _, troops, changed in planned:
             if changed:
                 self._note(state, f'{self.person_name(state, ident)}编兵为{troops}，本城预备兵{city.reserves}。')

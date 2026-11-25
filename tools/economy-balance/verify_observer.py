@@ -29,7 +29,11 @@ def verify(scenario, seed, months, group):
     if data['outcome'] == 'error':
         raise RuntimeError(data['failure']['trace'])
     observed = data['committed_save_sha256']
-    if group.startswith('E'):
+    if group.startswith('F'):
+        from remake import logistics_strategy
+        with logistics_strategy.experiment(4,army=group in {'F1','F3'},recovery=group in {'F2','F3'}):
+            expected = plain_checksums(scenario, seed, months * 3)
+    elif group.startswith('E'):
         from remake import logistics_strategy
         with logistics_strategy.experiment(int(group[-1])):
             expected = plain_checksums(scenario, seed, months * 3)
@@ -57,7 +61,7 @@ if __name__ == '__main__':
     parser.add_argument('--scenario', required=True)
     parser.add_argument('--seed', type=int, default=2026)
     parser.add_argument('--months', type=int, default=12)
-    parser.add_argument('--group', choices=('A','D','E1','E2','E3','E4'), required=True)
+    parser.add_argument('--group', choices=('A','D','E1','E2','E3','E4','F1','F2','F3'), required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     result = verify(args.scenario, args.seed, args.months, args.group)

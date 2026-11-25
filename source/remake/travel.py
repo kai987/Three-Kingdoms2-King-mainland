@@ -218,6 +218,9 @@ class TravelCampaign:
             for ident,troops in zip(ids,after):
                 state.officers[ident].troops = troops
             state.soldiers['lost'] += risk['lost']
+            if risk['lost']:
+                from . import war_recovery
+                war_recovery.record(state,row['owner'],row['source'],'march',risk['lost'])
             label = row['quote']['routes'][risk['legs'][0]]['hazard']['label']
             self._note(state,f'行军{row["id"]}遭遇{label}，全程兵员由{sum(before)}减至{sum(after)}，伤亡{risk["lost"]}；减员只结算一次。')
             if row['owner']==state.player:

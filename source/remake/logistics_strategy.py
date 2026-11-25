@@ -6,14 +6,15 @@ from . import logistics_rules
 
 FIELD = 'ai_logistics_strategy_version'
 PRESSURE = 'ai_logistics_pressure'
-CURRENT = 21
+V21 = 21
+CURRENT = 211
 RELIEF, TRANSPORT, GARRISON, WAR = range(1, 5)
-_experiment = ContextVar('logistics_experiment', default=WAR)
+_experiment = ContextVar('logistics_experiment', default=(WAR, True, True))
 
 
 @contextmanager
-def experiment(stage):
-    token = _experiment.set(stage)
+def experiment(stage, *, army=False, recovery=False):
+    token = _experiment.set((stage, army, recovery))
     try:
         yield
     finally:
@@ -21,19 +22,30 @@ def experiment(stage):
 
 
 def initialize(state):
-    if _experiment.get():
-        state.extension[FIELD] = CURRENT
+    stage, army, recovery = _experiment.get()
+    if stage:
+        state.extension[FIELD] = CURRENT if army or recovery else V21
 
 
 def enabled(state, stage=RELIEF):
-    return state.extension.get(FIELD) == CURRENT and _experiment.get() >= stage
+    return state.extension.get(FIELD) in (V21, CURRENT) and _experiment.get()[0] >= stage
+
+
+def army_relief(state):
+    return state.extension.get(FIELD) == CURRENT and _experiment.get()[1]
+
+
+def war_recovery(state):
+    return state.extension.get(FIELD) == CURRENT and _experiment.get()[2]
 
 
 def validate(game, state):
     fields = state.extension
-    if FIELD in fields and (type(fields[FIELD]) is not int or fields[FIELD] != CURRENT
+    if FIELD in fields and (type(fields[FIELD]) is not int or fields[FIELD] not in (V21, CURRENT)
                             or logistics_rules.version(state) != logistics_rules.CURRENT):
         raise ValueError('AI logistics strategy version')
+    from . import war_recovery
+    war_recovery.validate(game,state)
     if PRESSURE not in fields:
         return
     rows = fields[PRESSURE]
@@ -68,3 +80,8 @@ def pressure(state, scope, key, active, *, write=True):
     count = streak + 1 if last == state.turn - 1 else 1
     table[key] = [state.turn, count]
     return count
+
+
+
+def observe(kind, state, **values):
+    """Optional read-only hook for the offline observer; gameplay keeps no counters here."""

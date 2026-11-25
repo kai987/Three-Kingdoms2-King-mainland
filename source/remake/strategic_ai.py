@@ -15,7 +15,7 @@ from .officers import integer, recruitment_loyalty, ref_sort_key
 from . import civil_staff
 from . import grain_relief, grain_units
 from .march_supply import denominator, OFFICER_UNITS, estimate as march_grain, next_supply_days, required_grain, travel_rules
-from . import city_economy, faction_economy, logistics_rules, logistics_strategy, military_budget
+from . import city_economy, faction_economy, logistics_rules, logistics_strategy, military_budget, war_recovery
 from .route_hazards import allocate_survivors
 
 
@@ -37,6 +37,8 @@ class StrategicAI:
         self.friendly_recovery = {}
         self.v21 = logistics_strategy.enabled(state)
         self.adaptive = logistics_strategy.enabled(state, logistics_strategy.WAR)
+        self.recovery_v211 = logistics_strategy.war_recovery(state)
+        self.recovery_wait = {}
         holdings = Counter(city.owner for city in state.cities.values() if city.owner != 'neutral')
         # Let both sides concentrate on the remaining fronts once the map
         # has consolidated. Earlier campaigns retain their wider priorities.
@@ -291,7 +293,7 @@ class StrategicAI:
             incoming = self.adaptive and any(m['kind']=='transfer' and m['owner']==target.owner
                        and m['target']==target.id for m in state.extension['travel']['marches'])
             kwargs = (dict(defenders=self.strength(target), incoming=incoming,
-                           recovery=self.recovery_support(city)) if self.adaptive else {})
+                           recovery=None if self.recovery_v211 else self.recovery_support(city)) if self.adaptive else {})
             self.war_quotes[fingerprint]=military_budget.sortie(self.game,state,city,target,ids,quote,
                 back,absent=self.budget_absent[1], **kwargs)
         return self.war_quotes[fingerprint]
@@ -399,6 +401,8 @@ class StrategicAI:
         available_budget = min(max(0, self.budget-self.state.extension['ai_attacks']),
                                command_books.remaining(self.state, owner)//max(1,command_books.cost('depart')))
         winners, potential = [], []
+        recovery_quote = None
+        deferred = []
         for key in targets:
             target = self.state.cities[key]
             defend = self.strength(target)
@@ -431,7 +435,31 @@ class StrategicAI:
                     supply = sum(march_grain(self.state, order['officers'], quote, game=self.game)
                                  for order, quote in scheduled)
                     score = min(power-required,required//3)-days*3-supply*2//grain_units.amount(1)+min(200,target.gold//20+target.grain//grain_units.amount(200))
-                    if self.adaptive:
+                    if self.recovery_v211:
+                        if recovery_quote is None:
+                            # Use the post-relief resources and the currently valid
+                            # campaign-wide commitments at this decision boundary.
+                            recovery_quote=war_recovery.Forecast(self.game,self.state,owner)
+                        columns=[(order['source'],
+                                  sum(self.state.officers[i].troops for i in order['officers']),
+                                  self.war_budget(self.state.cities[order['source']],target,order['officers'],route)['immediate'])
+                                 for order,route in scheduled]
+                        risk=recovery_quote.assess(columns,target=target.id)
+                        necessary=bool(joint and joint['troops'] or any(
+                            recovery_quote.economy.budgets[key]['threatened'] for key,_,_ in columns))
+                        attack,prepare=war_recovery.action_score(power-required,required,risk['multiplier'],
+                            risk['other_fronts']+risk['overlapping_fronts'],risk.get('source_grain_pressure',0),
+                            necessary=necessary)
+                        decision=dict(owner=owner,target=target.id,sources=[c[0] for c in columns],
+                            plan_id=f'{owner}:{self.state.turn}:{target.id}',necessary=necessary,
+                            attack_score=attack,prepare_score=prepare,recovery=risk)
+                        if not necessary and attack<prepare:
+                            deferred.append((prepare-attack,target.id,decision))
+                            logistics_strategy.observe('war_recovery',self.state,result='prepare',**decision)
+                            continue
+                        score += (attack-prepare)*3
+                        logistics_strategy.observe('war_recovery',self.state,result='eligible',**decision)
+                    elif self.adaptive:
                         risk = sum(self.war_budget(self.state.cities[order['source']],target,order['officers'],route)
                                    ['recovery_risk'] for order,route in scheduled)
                         score -= risk // 2
@@ -442,8 +470,15 @@ class StrategicAI:
                     winners.extend(feasible)
                     break
         if winners:
+            self.recovery_wait.pop(owner,None)
             best = min(winners, key=lambda row: (row[2] != first, *row[:4]))
             return best[2], best[4]
+        if deferred:
+            _, target, decision = min(deferred,key=lambda row:row[:2])
+            self.recovery_wait[owner]=decision['recovery']['cities']
+            logistics_strategy.observe('war_recovery',self.state,result='deferred',**decision)
+            return target,[]
+        self.recovery_wait.pop(owner,None)
         if first:
             return first, []
         return (min(potential)[2] if potential else None), []
@@ -498,7 +533,8 @@ class StrategicAI:
         from .battle_supply import BUDGET_DAYS
 
         requests = []
-        sources = {order['source'] for order in pending}
+        recovery = {row['city']:row for row in self.recovery_wait.get(owner,()) if row['grain_gap'] or row['gold_gap']}
+        sources = {order['source'] for order in pending} | set(recovery)
         for city in logistics._fronts(self.game, self.state, owner):
             if not self.available(city):
                 continue
@@ -507,6 +543,9 @@ class StrategicAI:
             # Stock one full battle plus two turns of movement for a large army.
             grain_goal = max(grain_units.amount(3000), required_grain(troops, len(ids), BUDGET_DAYS + 20))
             gold_goal = 1500
+            if city.id in recovery:
+                grain_goal=max(grain_goal,city.grain+recovery[city.id]['grain_gap'])
+                gold_goal=max(gold_goal,city.gold+recovery[city.id]['gold_gap'])
             gold, grain = logistics.supply_shortages(self.state, city, gold_goal, grain_goal)
             if gold >= 100 or grain >= grain_units.amount(300):
                 shortage = gold * 100 // gold_goal + grain * 100 // grain_goal
@@ -527,7 +566,8 @@ class StrategicAI:
 
     def support_endgame(self, owner, plan):
         """Fund or reinforce one viable front while no attack is ready."""
-        if not self.endgame or plan['orders'] or not self.budget or owner in self.support_checked:
+        if (not self.endgame or plan['orders'] or not self.budget or owner in self.support_checked
+                or owner in self.recovery_wait):
             return
         self.support_checked.add(owner)
         from . import ai_rally, logistics

@@ -3,8 +3,9 @@ from argparse import ArgumentParser
 from collections import Counter, defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from contextlib import ExitStack
+from copy import deepcopy
 from pathlib import Path
-from time import monotonic
+from time import monotonic, process_time
 import resource
 import sys
 import traceback
@@ -218,7 +219,10 @@ def run_scenario(scenario, seed, months, output, group, settings=None, *, hash_t
         if group.startswith('E'):
             raise ValueError('E groups require the V2.1 engine')
         return _run_scenario(scenario, seed, months, output, group, settings, hash_turns=hash_turns)
-    stage = {'E1':1, 'E2':2, 'E3':3, 'E4':4}.get(group,0)
+    stage = {'E1':1, 'E2':2, 'E3':3, 'E4':4, 'F1':4, 'F2':4, 'F3':4}.get(group,0)
+    if group in {'F1','F2','F3'}:
+        with logistics_strategy.experiment(stage, army=group in {'F1','F3'}, recovery=group in {'F2','F3'}):
+            return _run_scenario(scenario, seed, months, output, group, settings, hash_turns=hash_turns)
     with logistics_strategy.experiment(stage):
         return _run_scenario(scenario, seed, months, output, group, settings, hash_turns=hash_turns)
 
@@ -232,7 +236,9 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
     game.campaign_id, game.flow = scenario, defaultdict(Counter)
     game.telemetry = None
     game.city_fixed = {}
-    timings = []
+    timings, cpu_times = [], []
+    new_metrics = settings is not None and group in {'E4','F1','F2','F3'}
+    v211_rows=defaultdict(list)
     committed = []  # Optional verification trace on the independent command boundary.
 
     game.recoveries, game.recovering = [], {}
@@ -282,6 +288,20 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
         return real_cargo(row,kind,cargo,*args,**values)
 
     def record_transport(campaign,state,kind,row,**values):
+        if new_metrics and row['target_march'] is not None:
+            first=row['journeys'][0]
+            record_v211('army-convoys',state,stage=kind,owner=row['owner'],convoy=row['id'],
+                army=row['target_march'],source=row['source'],target=row['target'],status=row['status'],
+                reason=values.get('reason','outbound'),cargo=deepcopy(row['cargo']),
+                initial_grain=row['initial_cargo']['grain'],escort_strength=sum(first['departure_troops'].values()),
+                initial_bag=first['supply']['loaded'],receipt=logistics.grain_receipt(row,
+                    returned=values.get('reason')=='returned',abandoned=values.get('reason')=='no_friendly_city'),
+                actual_meal_days=sum(journey['supply']['elapsed_days'] for journey in row['journeys']),
+                actual_wait_days=sum(journey['supply']['elapsed_days']-journey['supply']['route_days']
+                                     for journey in row['journeys']),
+                last_node=march_supply.current_city(row['journeys'][-1]),
+                actual_supply_tick=row['journeys'][-1]['supply']['clock_tick'],
+                plan=row.get('relief','not_applicable'))
         name = {'transport_departed':'convoy_dispatched','transport_arrived':'convoy_arrived',
                 'transport_returned':'convoy_returned'}.get(kind)
         if name:
@@ -381,9 +401,23 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
                                      active=details['soldiers'], officers=details['officers'], reference=fought)
         return real_report(state, city, kind, **details)
 
+    def record_v211(kind,state,**values):
+        v211_rows[kind].append(dict(turn=state.turn,date=f'{state.year:04d}-{state.month:02d}-{state.day:02d}',
+                                    kind=kind,details=deepcopy(values)))
+
     outcome, failure = 'complete', None
     game.command('new', dict(faction='observer', seed=seed, difficulty='normal'), 0)
+    opened = None
+    if new_metrics:
+        from remake.campaign import digest
+        normalized=game.export_save()['state']
+        normalized['extension'].pop('ai_logistics_strategy_version',None)
+        opened=digest(normalized)
     with ExitStack() as hooks:
+        if new_metrics:
+            from remake import logistics_strategy
+            if hasattr(logistics_strategy,'observe'):
+                hooks.enter_context(patch.object(logistics_strategy,'observe',record_v211))
         if settings:
             game.telemetry = Telemetry(game, output / scenario, settings, hooks)
         with grain_units.using(game.state):
@@ -437,9 +471,10 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
                 break
             try:
                 before = game.state
-                turn_started = monotonic()
+                turn_started, cpu_started = monotonic(), process_time()
                 game.command('observe_turn', {}, game.revision)
                 timings.append(monotonic() - turn_started)
+                cpu_times.append(process_time()-cpu_started)
                 assert game.state.turn == turn + 1
                 if detailed:
                     game.telemetry.roster_moves(before, game.state)
@@ -514,6 +549,9 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
     result['performance'] = dict(measured_turns=len(timings),
         mean_turn_seconds=round(sum(timings)/len(timings),6) if timings else None,
         max_turn_seconds=round(max(timings),6) if timings else None,
+        total_turn_cpu_seconds=round(sum(cpu_times),6),
+        mean_turn_cpu_seconds=round(sum(cpu_times)/len(cpu_times),6) if cpu_times else None,
+        max_turn_cpu_seconds=round(max(cpu_times),6) if cpu_times else None,
         worker_peak_rss_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss *
         (1 if sys.platform == 'darwin' else 1024))
     result['parameters'] = dict(faction='observer', difficulty='normal', lifespan='historical', seed=seed,
@@ -521,6 +559,33 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
     if settings:
         result['telemetry'] = dict(schema=SCHEMA, config=settings, rows=game.telemetry.counts)
         result['performance']['route_queries'] = dict(game.telemetry.route_queries)
+    if new_metrics:
+        from remake import logistics_strategy
+        runtime_source=git('rev-parse','HEAD:source').decode().strip()
+        artifacts={}
+        streams={'army-convoys':{'army-convoys'},'army-requests':{'relief_quote','relief_handoff',
+                   'relief_cancelled','relief_replanned'},'war-recovery':{'war_recovery'}}
+        for file,kinds in streams.items():
+            rows=sorted((row for kind in kinds for row in v211_rows.get(kind,())),
+                        key=lambda item:(item['turn'],item['kind']))
+            filename=output/scenario/(file+'.csv')
+            if rows:
+                to_csv(filename, rows)
+            else:
+                filename.write_text('turn,date,kind,details\n',encoding='utf-8')
+            artifacts[file]=len(rows)
+        strategy=dict(army_relief=group in {'F1','F3'},war_recovery=group in {'F2','F3'})
+        ruleset={}
+        if getattr(logistics_strategy,'CURRENT',21)==211:
+            from remake import army_relief, war_recovery
+            ruleset=dict(wait_days=army_relief.WAIT_DAYS,safety_percent=army_relief.SAFETY_PERCENT,
+                efficiency=[army_relief.EFFICIENCY_MINIMUM,army_relief.EFFICIENCY_NORMAL,army_relief.EFFICIENCY_PREFERRED],
+                maximum_late_days=army_relief.MAX_LATE_DAYS,loss_window_turns=war_recovery.RECENT_TURNS,
+                forecast_turns=war_recovery.SUPPLY_HORIZON,risk=war_recovery.RISK_MULTIPLIERS,
+                long_risk=war_recovery.LATER,unfunded_risk=war_recovery.UNFUNDED,
+                objective_scale=war_recovery.OBJECTIVE_SCALE,front_pressure=war_recovery.FRONT_PRESSURE)
+        result['v211']=dict(opening_sha256=opened, runtime_source_tree=runtime_source,
+                            strategy=strategy,candidate_config=ruleset, streams=artifacts)
     if hash_turns:
         result['committed_save_sha256'] = committed
     to_json(output / scenario / 'run.json', result)
@@ -534,7 +599,7 @@ def main():
     parser.add_argument('--months', type=int, default=60)
     parser.add_argument('--workers', type=int, default=4)
     parser.add_argument('--seed', type=int, default=2026)
-    parser.add_argument('--group', choices=('A','B','C','D','E1','E2','E3','E4'), default='D')
+    parser.add_argument('--group', choices=('A','B','C','D','E1','E2','E3','E4','F1','F2','F3'), default='D')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--telemetry-config', type=Path, nargs='?', const=TOOL_ROOT / 'tools/economy-balance/observer-config.json',
                         help='Record optional detailed V2.1 observations')

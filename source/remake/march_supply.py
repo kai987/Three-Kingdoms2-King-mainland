@@ -191,7 +191,7 @@ def _completion_tick(supply,days):
 
 
 def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',cargo=None,
-                 on_cargo_change=None,on_cargo_day=None,absolute_tick=None,parts=None):
+                 on_cargo_change=None,on_cargo_day=None,absolute_tick=None,parts=None,self_funded=False):
     supply=journey['supply'];quote=journey['quote']
     target=absolute_tick if absolute_tick is not None else ((through_turn or state.turn)-1)*10
     if supply['closed_tick'] is not None:return 0
@@ -227,12 +227,14 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
         distance=next_supply_days(state,quote,unit['owner'],supply['route_days'])
         if weighted:
             leg_budget=rules.weight(parts,progress,distance)
-            budget=leg_budget or (10 if progress>=quote['days'] else 1)*rules.RATION_SCALE
+            budget=leg_budget or (10 if progress>=quote['days'] and not self_funded else 1)*rules.RATION_SCALE
+            if self_funded and unit.get('hold'):
+                budget=rules.RATION_SCALE
         else:
             leg_budget=distance
             budget=10 if progress>=quote['days'] else max(1,distance)
         wanted=max(0,rules.ceil_div(units*budget-supply['credit_units'],divisor)-supply['remaining'])
-        if wanted and city_id and state.cities[city_id].owner==unit['owner']:
+        if wanted and not self_funded and city_id and state.cities[city_id].owner==unit['owner']:
             city=state.cities[city_id];amount=min(wanted,city.grain,LIMIT-supply['remaining'])
             if amount:
                 city.grain-=amount;receive(supply,amount,'city',city_id,state.turn);wanted-=amount
@@ -273,6 +275,10 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
                 after_risks=sum(bool(r['applied']) for r in journey.get('risks',[])),
                 before=before,after=after,reserves_before=reserves,reserves_after=reserve_after,lost=lost))
             supply['lost']+=lost;state.soldiers['lost']+=lost
+            if lost:
+                from . import war_recovery
+                war_recovery.record(state,unit['owner'],unit.get('source',journey['source']),
+                                    'convoy' if unit_kind=='convoy' else 'march',lost)
         if on_cargo_day is not None and weighted and moving_or_on_leg:
             on_cargo_day(rules.weight(parts,progress,1,rates=rules.CARGO_GRAIN_LOSS_BPS),tick)
         _record(supply,tick,[units,used,int(moving),missing])

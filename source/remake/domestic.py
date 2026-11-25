@@ -436,6 +436,8 @@ def allocate_garrison(game, state, city_id, *, record=True, max_added=None):
         for assignment in quote['assignments']:
             state.officers[assignment['id']].troops = assignment['to']
         city.reserves = quote['remaining_reserves']
+        from . import war_recovery
+        war_recovery.record(state,city.owner,city.id,'allocation',quote['soldiers'])
         if record:
             _report(state, city, 'allocation', soldiers=quote['soldiers'], officers=quote['officers'])
     return quote
@@ -789,9 +791,13 @@ def run_automatic(game, state, owner, *, outlook=None, economy_plan=None):
             plans = (economy_plan.budgets if economy_plan is not None else
                      military_budget.budgets(game, state, owner)
                      if military_budget.enabled(state) and owner != state.player else None)
+            relief_planner = None
+            if logistics_strategy.army_relief(state):
+                from . import army_relief
+                relief_planner = army_relief.Planner(game,state,owner)
             for key in discretionary_cities:
                 if command_books.can_spend(state, owner, 'dispatch_transport'):
-                    logistics.auto_dispatch_city(game,state,key,plans=plans)
+                    logistics.auto_dispatch_city(game,state,key,plans=plans,relief_planner=relief_planner)
 
 
 def finish_faction_turn(game, state, owner, *, automatic=True, outlook=None):
