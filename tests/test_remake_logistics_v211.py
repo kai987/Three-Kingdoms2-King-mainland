@@ -173,6 +173,23 @@ class LogisticsV211Tests(TestCase):
         self.assertEqual(convoy['delivered']['grain'],0)
         self.assertTrue(logistics.valid_grain_receipt(logistics.grain_receipt(convoy,returned=True)))
 
+    def test_replanned_convoy_keeps_a_still_valid_meeting(self):
+        game=self.game()
+        ident=self.stranded(game)
+        with grain_units.using(game.state):
+            box,=logistics.rescue_targets(game,game.state,'jiangxia')
+        game.command('dispatch_transport',dict(source='jiangxia',target=box['city'],target_march=ident,
+            officers=box['officers'],cargo=dict(gold=0,grain=box['max_grain'],reserves=0),
+            route_mode=box['route_mode']),game.revision)
+        state=game.state
+        convoy,=state.extension['logistics']['convoys']
+        convoy['reason']='rendezvous_replanned'
+        prior=deepcopy(convoy['journeys'])
+        with grain_units.using(state):
+            self.assertTrue(army_relief.settle(game,state,convoy))
+        self.assertEqual(state.extension['logistics']['convoys'],[convoy])
+        self.assertEqual(convoy['journeys'],prior)
+
     def test_war_recovery_uses_receipted_losses_then_releases_reserves(self):
         game=self.game()
         state=game.state

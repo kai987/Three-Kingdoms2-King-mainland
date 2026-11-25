@@ -15,7 +15,7 @@ EFFICIENCY_MINIMUM = 30
 # Keep an elective wait within the current route-supply horizon.
 MAX_LATE_DAYS = march_supply.RETREAT_DAYS
 FIELD = 'relief'
-REASONS = ('army_supplied', 'unsafe_return', 'rendezvous_expired', 'rendezvous_replanned')
+HOLD_REASONS = ('army_supplied', 'unsafe_return', 'rendezvous_expired')
 
 
 class Budget(NamedTuple):
@@ -482,7 +482,7 @@ def hold_reason(game, state, row, tick):
         return 'army_missing'
     if state.cities[row['target']].owner!=row['owner']:
         return 'target_changed'
-    if row['reason'] in REASONS and row['reason']!='rendezvous_replanned':
+    if row['reason'] in HOLD_REASONS:
         return row['reason']
     actual_tick=journey['supply']['clock_tick']+1 if tick is None else tick
     progress=journey['supply']['route_days']
@@ -509,7 +509,7 @@ def _return_budget(game,state,row,quote,wait=0):
 
 def handoff(game,state,row,army,city,tick,maximum):
     from . import logistics_strategy
-    if city != row['target'] or state.cities[city].owner!=row['owner'] or row['reason'] in REASONS and row['reason']!='rendezvous_replanned':
+    if city != row['target'] or state.cities[city].owner!=row['owner'] or row['reason'] in HOLD_REASONS:
         return 0
     need=requirement(game,state,army)
     if not need.required:
@@ -582,7 +582,7 @@ def settle(game,state,row):
     rest=current['quote']['days']-current['supply']['route_days']
     window=next((node for node in planner.windows[army['id']] if node.city==row['target']),None)
     if (window and max(now+rest,window.start)<=min(window.end,row[FIELD]['wait_until'])
-            and row['reason'] not in REASONS and not current['supply']['retreat_requested']):
+            and row['reason'] not in HOLD_REASONS and not current['supply']['retreat_requested']):
         if not rest:
             current['supply']['waiting']=True
             row.update(status='waiting',reason='rendezvous_wait')
