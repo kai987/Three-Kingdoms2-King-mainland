@@ -5,7 +5,7 @@ let cloudSave=null,cloudSaveUI=null;
 let civilStaffUI=null,domesticUI=null,treasuryUI=null,facilitiesUI=null,cityDevelopmentUI=null,diplomacyUI=null;
 let campaignDifficulty='normal';
 let campaignLifespan='historical';
-let campaignWinter=false,weatherLayerVisible=false;
+let campaignWinter=false,campaignEmergency=false,weatherLayerVisible=false;
 const lifespanLabels={historical:['史實','史実'],none:['無','なし']};
 let allocationDialogContext=null,allocationCloseEpoch=0;
 let battleDestination=null,battleViewKey='';
@@ -493,6 +493,7 @@ function selectFaction(){
   <label class="field" for="lifespan">${battleText('武將壽命','武将の寿命')}<select id="lifespan" aria-describedby="lifespan-help">${lifespanOptions}</select></label></div>
   <p id="lifespan-help" class="small">${battleText('選「無」時，武將不會因年齡自然死亡。','「なし」では、武将は加齢による自然死を迎えません。')}</p>
   <label class="setup-winter"><input id="winter-weather-option" type="checkbox" ${campaignWinter?'checked':''}> ${battleText('啟用冬季天氣（實驗）','冬季天候を有効にする（実験）')}</label>
+  <label class="setup-winter"><input id="transport-emergency-option" type="checkbox" ${campaignEmergency?'checked':''}> ${battleText('啟用運輸應急 V2.2.2（實驗）','輸送の緊急対応 V2.2.2 を有効にする（実験）')}</label>
   ${catalogSummary}${catalogWarning}<p class="intro">${option.year}年${option.month}月 · ${option.cities}城 · 每城${option.capacity}人<br>开局在籍${option.serving}人，在野${option.free}人。</p>
   <div class="choice-list">${option.factions.map(f=>`<label class="faction-choice">
     <input type="radio" name="faction" value="${f.id}" ${f.id===preferred?'checked':''}>
@@ -520,6 +521,7 @@ function selectFaction(){
   $('#difficulty').onchange=()=>{campaignDifficulty=$('#difficulty').value;};
   $('#lifespan').onchange=()=>{campaignLifespan=$('#lifespan').value;};
   $('#winter-weather-option').onchange=event=>{campaignWinter=event.target.checked;};
+  $('#transport-emergency-option').onchange=event=>{campaignEmergency=event.target.checked;};
   bindNumberInput($('#seed'));
   const start=async f=>{
    const seed=clampNumberInput($('#seed'),true);
@@ -527,8 +529,10 @@ function selectFaction(){
    const pending=setupPreview;setupPreview=null;
    weatherLayerVisible=false;
    if(await command('new',{faction:f,seed,scenario,difficulty:campaignDifficulty,lifespan:campaignLifespan,
-       ...(campaignWinter?{weather_rules_version:221}:{})})){
+       ...(campaignWinter?{weather_rules_version:221}:{}),
+       ...(campaignEmergency?{transport_emergency_rules_version:222}:{})})){
     campaignWinter=false;
+    campaignEmergency=false;
     cityCommandGroups.clear();
     selectedCity=view.catalog.factions.find(x=>x.id===f)?.city||pending.focus;actor=target=null;mapMode='all';dialog.close();render();
     if(isObserver())setObserverPlaying(true);

@@ -191,6 +191,60 @@
     info&&!safety?`<br><span data-convoy-weather-eta>${text('按目前天氣估算','現在の天候での見込み')} ${escape(info.expected?.join('/')??'—')} · ${text('送達糧','到着時の兵糧')} ${info.expected_grain??'—'} · ${text('下段缺糧','次区間の不足')} ${info.shortage}</span>`:'';
    return `<br><span data-convoy-position>${text('目前位置','現在地')}：${escape(place)} · ${text('下一補給點','次の補給地')}：${escape(next?label(cityName(next.city)):'—')}</span><br><span data-convoy-supply data-supply-remaining="${s.remaining}" data-supply-shortage="${s.shortage_streak??0}">${text('隨軍糧：初裝','携行兵糧：初期積載')}${s.loaded} · ${text('途中補給','途中補給')}${s.received??0} · ${text('已耗','消費')}${s.consumed} · ${text('剩餘','残り')}${s.remaining}<br>${text('前進','前進')}${Number(route.toFixed(1))}${text('日，等待','日・待機')}${Number(waiting.toFixed(1))}${text('日；缺糧','日・不足')}${s.shortage_days??0}${text('日（連續','日（連続')}${s.shortage_streak??0}${text('日），斷糧減員','日）・飢餓損耗')}${s.lost??0}${s.retreat_requested?' · '+text('已觸發撤退','撤退が発動'):''}</span>${safetyText}${frost}`;
   }
+  const emergencyStatus={
+   evacuating:['正在撤離','退避中'],
+   waiting_for_supply:['等待接濟','補給待ち'],
+   waiting_for_thaw:['等待解凍','解氷待ち'],
+   waiting_for_access:['等待通行恢復','通行再開待ち'],
+   no_feasible_exit:['目前無可行退路','現在は実行可能な退路なし'],
+   awaiting_terminal_resolution:['等待城池接收','都市での受け入れ待ち']
+  };
+  function emergencyText(row,view){
+   const plan=row.emergency;
+   const sender=(view.catalog.logistics?.convoys??[]).find(candidate=>
+    candidate.convoy_relief?.target===row.id&&candidate.owner===row.owner&&!candidate.delivery_done&&
+    candidate.status!=='returning'&&!candidate.journeys?.at(-1)?.supply?.retreat_requested);
+   if(!plan&&!row.convoy_relief)return '';
+   const labelPair=emergencyStatus[plan?.status];
+   const block=convoyBlock[row.reason];
+   const g=view.game;
+   const b=row.journeys?.at(-1)?.supply;
+   let eta=null;
+   if(sender){
+    const j=sender.journeys?.at(-1),remaining=j?.supply;
+    const estimate=view.catalog.weather?.convoys?.[sender.id]?.safety?.expected;
+    if(remaining&&g&&!remaining.waiting&&!remaining.winter?.blocked){
+     if(remaining.winter){
+      if(estimate){
+       const offset=([y,m,d])=>y*360+(m-1)*30+d-1;
+       const tick=(g.turn-1)*10+offset(estimate)-offset([g.year,g.month,g.day])+1;
+       if(tick<=sender.convoy_relief.wait_until)eta=estimate.join('/');
+      }
+     }else{
+      const tick=remaining.clock_tick+j.quote.days-remaining.route_days;
+      const day=g.year*360+(g.month-1)*30+g.day-1+tick-(g.turn-1)*10-1;
+      if(tick<=sender.convoy_relief.wait_until)eta=[Math.floor(day/360),Math.floor(day%360/30)+1,day%30+1].join('/');
+     }
+    }
+   }
+   return ['zh-Hant','ja'].map(language=>{
+   const text=(zh,ja)=>choose(language,zh,ja);
+   const read=pair=>pair?.[language==='ja'?1:0];
+   const unknown=text('未定','未定');
+   const duration=plan&&b&&plan.status!=='evacuating'?Math.max(0,b.clock_tick-plan.since):null;
+   const node=plan?.target?escape(label(cityName(plan.target))):unknown;
+   const reason=plan?.risk_margin_waived?text('口糧足以撤至安全點，未達建議備用量。','安全地点までは移動できますが、推奨予備量には届きません。'):'';
+   return `<span data-locale-only="${language}" data-l10n-native="${language}" ${language!==locale()?'hidden':''}><br><span data-convoy-emergency data-emergency-status="${escape(plan?.status??'relief')}">
+    ${labelPair?read(labelPair):text('接濟運輸隊','救援輸送隊')}${block?' · '+read(block):''}
+    ${plan?`<br>${text('返抵原城口糧','出発都市までの兵糧')} ${plan.full_budget??unknown} ·
+    ${text('安全節點','安全地点')} ${node} · ${text('撤離口糧','退避用の兵糧')} ${plan.route_budget??unknown}
+    ${duration!==null?' · '+text('等待','待機')+' '+duration+text('日','日'):''}<br>
+    ${sender?text('接濟預計到達','救援の到着見込み')+' '+escape(eta??unknown):text('目前無已發運接濟','発送済みの救援なし')}
+    ${plan.status==='awaiting_terminal_resolution'?' · '+text('可由目前城池接收','現在の都市で受け入れ可能'):''}
+    ${reason?'<br>'+reason:''}`:escape('#'+row.convoy_relief.target)}
+   </span></span>`;
+   }).join('');
+  }
   function convoyList(city=null){
    const view=getView(),rows=(view?.catalog?.logistics?.convoys||[]).filter(r=>r.owner===view?.game?.player&&(!city||r.source===city||r.target===city||r.original_target===city));
    if(!rows.length)return '';
@@ -207,7 +261,7 @@
      ${escape(cargoText(r.cargo))}
      ${r.delivery_done?'<br>'+text('已卸貨','荷下ろし済み')+'：'+escape(cargoText(r.delivered))+' · '+text('返程目標','帰還先')+' '+destination:''}
      <br>${(r.officers||[]).map(id=>escape(label(name(id)))).join('、')}${quote?` · ${quote.days}${text('日','日')}`:''}
-     ${journeyText(r)}${r.relief?'<br>'+reliefText(r.relief,r.reason):''}
+     ${journeyText(r)}${r.relief?'<br>'+reliefText(r.relief,r.reason):''}${emergencyText(r,view)}
      ${!weather?.safety&&r.reason==='insufficient_grain'?'<br>'+text('目前口糧不足，等待補給；等待期間仍每日耗糧。','携行兵糧が不足し、補給待ちです。待機中も毎日消費します。'):''}</p>`;
    });
    return `<div class="logistics-convoys" data-l10n-native="${locale()}"><h3>${text('運輸隊','輸送隊')}</h3>${reports.join('')}</div>`;
