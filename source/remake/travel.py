@@ -9,7 +9,7 @@ from heapq import heappop, heappush
 from itertools import count
 from math import asin, ceil, cos, radians, sin, sqrt
 from .errors import GameError
-from . import command_books, historical_campaigns, observer, runan_campaign, southern_mission
+from . import command_books, historical_campaigns, logistics_rules, observer, runan_campaign, southern_mission
 from .officers import (OFFICER_TROOP_CAP, integer, select_deployment, transfer_officers,
                        ref_sort_key, deserialize_officer_ref)
 
@@ -63,7 +63,7 @@ class TravelCampaign:
         return ids | battle_reinforcements.marching_ids(state)
 
     def _travel_modes(self):
-        return ('fastest','land','river','sea','special','explore')
+        return ('fastest','land','river','sea','special','explore','minimum_grain')
 
     def _known_routes(self, state):
         from .route_network import effective
@@ -104,7 +104,12 @@ class TravelCampaign:
                     distance_km=distance,
                     grain_per_officer=5*len(legs),modes=sorted({row['mode'] for row in legs}))
 
-    def _travel_path(self, state, source, target, owner, mode='fastest', *, adjacent=False):
+    def _travel_path(self, state, source, target, owner, mode='fastest', *, adjacent=False,
+                     officers=(),cargo=0,reserves=0):
+        from .transfer_supply import MINIMUM_GRAIN, minimum_grain
+        if mode==MINIMUM_GRAIN:
+            return minimum_grain(self,state,source,target,owner,officers,adjacent=adjacent,
+                                 cargo=cargo,reserves=reserves)
         from .march_core import enabled, invoke, state_input
         if enabled():
             if mode not in self._travel_modes():
@@ -213,6 +218,9 @@ class TravelCampaign:
             for ident,troops in zip(ids,after):
                 state.officers[ident].troops = troops
             state.soldiers['lost'] += risk['lost']
+            if risk['lost']:
+                from . import war_recovery
+                war_recovery.record(state,row['owner'],row['source'],'march',risk['lost'])
             label = row['quote']['routes'][risk['legs'][0]]['hazard']['label']
             self._note(state,f'行军{row["id"]}遭遇{label}，全程兵员由{sum(before)}减至{sum(after)}，伤亡{risk["lost"]}；减员只结算一次。')
             if row['owner']==state.player:
@@ -267,15 +275,13 @@ class TravelCampaign:
                     remaining=max(0, self.catalog.rules.battle_officers_per_side - committed))
 
     def _queue_march(self, state, source, target, ids, kind, mode='fastest', *, battle_grain=None,
-                     supply_detour=False):
+                     supply_detour=False, staging_budgets=None):
         if kind == 'attack' and southern_mission.blocks_settlement(state, source.owner, target.id):
             raise GameError('呂宋正在進行宣化南行劇情，請從呂宋的築城計畫派遣船隊。')
         if kind == 'attack' and historical_campaigns.allied(state, source.owner, target.owner):
             raise GameError('同盟期间，不能向盟友出征。')
         order = 'depart' if kind == 'attack' else 'transfer'
         command_books.require(state, source.owner, order)
-        quote = self._travel_path(state, source.id, target.id, source.owner, mode, adjacent=kind == 'attack')
-        if not quote: raise GameError('没有满足海陆选择及本方连通条件的路线。')
         if not ids or len(ids) != len(set(ids)) or any(i in self._march_ids(state) for i in ids):
             raise GameError('请选择尚未出发且不重复的武将。')
         if kind == 'attack':
@@ -285,6 +291,12 @@ class TravelCampaign:
                 raise GameError(f'聯軍共用出戰名額，目前只可再派{coalition["remaining"]}名武將。')
         elif self._city_occupancy(state,target)+len(ids)>self.catalog.rules.city_officer_capacity:
             raise GameError('目的城武将容量不足。')
+        quote = self._travel_path(state,source.id,target.id,source.owner,mode,
+                                  adjacent=kind=='attack',officers=ids)
+        if not quote:
+            if mode=='minimum_grain':
+                raise GameError('找不到可由沿途兵糧支應的節糧路線。')
+            raise GameError('没有满足海陆选择及本方连通条件的路线。')
         if mode=='explore' and not sum(state.officers[i].troops for i in ids):
             raise GameError('探索航行至少需要一名带兵武将。')
         if supply_detour:
@@ -295,10 +307,18 @@ class TravelCampaign:
         from .march_supply import create, estimate
         if kind == 'attack':
             from .battle_supply import departure_quote
-            grain = departure_quote(state, ids, quote, battle_grain=battle_grain)['total_grain']
+            grain = departure_quote(state, ids, quote, game=self, battle_grain=battle_grain)['total_grain']
         else:
-            grain = estimate(state, ids, quote)
-        if source.grain < grain: raise GameError('行军粮食不足。')
+            grain = estimate(state, ids, quote, game=self)
+        from . import staging_supply
+        if (staging_supply.available(state, source) if staging_budgets is not None
+                else source.grain) < grain:
+            raise GameError('行军粮食不足。')
+        stops = []
+        if staging_budgets is not None:
+            _, stops = staging_supply.assess(self,state,source,ids,quote,staging_budgets)
+            if any(stop['reserved'] != stop['required'] for stop in stops):
+                raise GameError('沿途城池的預留糧不足。')
         command_books.spend(state, source, order)
         source.grain -= grain
         state.extension['officer_actions'].update({str(i): state.turn for i in ids})
@@ -309,10 +329,11 @@ class TravelCampaign:
                    arrival_turn=state.turn+quote['turns'], checked_turn=0, quote=quote)
         row.update(departure_year=state.year,departure_month=state.month,departure_day=state.day,
                    departure_troops={str(i):state.officers[i].troops for i in ids},
-                   risks=self._march_risks(quote,state.rng), supply=create(state,ids,quote,initial_grain=grain))
+                   risks=self._march_risks(quote,state.rng), supply=create(state,ids,quote,game=self,initial_grain=grain))
         row.update(status='outbound',reason='outbound',history=[],journey_source=source.id,
             mission={key:row[key] for key in ('source','target','kind','mode','departure_turn','arrival_turn')})
         travel['marches'].append(row)
+        staging_supply.reserve(state,row,stops)
         if 'domestic' in state.extension:
             from .domestic import on_departure
             on_departure(self,state,ids,source.id)
@@ -389,9 +410,9 @@ class TravelCampaign:
                 reason=reason,departure_turn=state.turn,departure_year=state.year,departure_month=state.month,
                 departure_day=state.day,arrival_turn=state.turn+quote['turns'],checked_turn=0,quote=quote,
                 departure_troops={str(i):state.officers[i].troops for i in ids},risks=self._march_risks(quote,state.rng),
-                supply=create(state,ids,quote,initial_grain=remaining))
+                supply=create(state,ids,quote,game=self,initial_grain=remaining,previous=row['supply']))
 
-    def _queue_runan_refuge(self, state, battle, members, grain):
+    def _queue_runan_refuge(self, state, battle, members, grain, credit):
         from .march_supply import create
 
         origin, home = runan_campaign.RUNAN, runan_campaign.REFUGE_CITY
@@ -407,10 +428,60 @@ class TravelCampaign:
                    departure_year=state.year, departure_month=state.month, departure_day=state.day,
                    departure_troops={str(ident):state.officers[ident].troops for ident in members},
                    risks=self._march_risks(quote, state.rng),
-                   supply=create(state, members, quote, initial_grain=grain))
+                   supply=create(state, members, quote, game=self, initial_grain=grain, credit=credit))
         row['mission'] = {key:row[key] for key in ('source','target','kind','mode','departure_turn','arrival_turn')}
         travel['marches'].append(row)
 
+    def _battle_withdrawal(self,state,battle,side,grain,credit,*,owner=None):
+        """Keep roster slots, then move surviving field troops on legal roads."""
+        from .logistics import _safe_path
+        from .march_supply import create, ration_units
+        origin=battle['target']
+        owner=owner or (battle['attacker'] if side=='attackers' else battle['defender'])
+        homes={}
+        officers={unit['id'] for unit in battle[side] if state.officers[unit['id']].alive
+                  and state.officers[unit['id']].faction_id==owner}
+        for city in state.cities.values():
+            ids=[ident for ident in city.roster.officer_ids if ident in officers]
+            if ids and city.owner==owner and city.id!=origin:
+                homes[city.id]=ids
+        if not homes:
+            return None
+        plans=[]
+        all_homes=[city for city in state.cities.values() if city.owner==owner and city.id!=origin]
+        for key,ids in sorted(homes.items()):
+            def route(destination):
+                return _safe_path(self,state,origin,destination,owner,'fastest',
+                                  dict(allow_sea=True,allow_special=False))
+            quote=route(key)
+            if quote is None:
+                options=[(candidate['days'],city.id,candidate) for city in all_homes if city.id!=key
+                         and self._city_occupancy(state,city)+len(ids)<=self.catalog.rules.city_officer_capacity
+                         and (candidate:=route(city.id))]
+                if options:
+                    quote=min(options)[2]
+            if quote is None:
+                return None  # The result's existing refuge assignment still applies.
+            plans.append((key,ids,quote))
+        total=sum(ration_units(state,ids) for _,ids,_ in plans)
+        left=grain
+        travel=state.extension['travel']
+        for index,(home,ids,quote) in enumerate(plans):
+            carried=left if index==len(plans)-1 else grain*ration_units(state,ids)//total
+            travel['counter']+=1
+            row=dict(id=travel['counter'],source=home,target=quote['path'][-1],owner=owner,
+                     officers=ids,kind='transfer',mode='fastest',status='returning',reason='battle_retreat',
+                     departure_turn=state.turn,arrival_turn=state.turn+quote['turns'],checked_turn=0,
+                     quote=quote,journey_source=origin,history=[],battle_return=battle['id'],
+                     departure_year=state.year,departure_month=state.month,departure_day=state.day,
+                     departure_troops={str(i):state.officers[i].troops for i in ids},
+                     risks=self._march_risks(quote,state.rng),
+                     supply=create(state,ids,quote,game=self,initial_grain=carried,
+                                   credit=credit if index==len(plans)-1 else 0))
+            row['mission']={k:row[k] for k in ('source','target','kind','mode','departure_turn','arrival_turn')}
+            travel['marches'].append(row)
+            left-=carried
+        return dict(side=side,city=None,grain=grain,stored=0,lost=0,credit_units=credit,in_transit=grain)
 
     def _prune_marches(self, state):
         travel = state.extension['travel']
@@ -464,7 +535,7 @@ class TravelCampaign:
             quote = self._travel_path(state, source_id, target.id, player, adjacent=True)
             if quote and any(ident not in marching and state.officers[ident].troops > 0
                              and state.officers[ident].health > 0
-                             and estimate(state, [ident], quote) <= source.grain
+                             and estimate(state, [ident], quote, game=self) <= source.grain
                              for ident in source.roster.officer_ids):
                 return True
         return False
@@ -479,7 +550,7 @@ class TravelCampaign:
         row['supply']['waiting'] = True
 
     def _start_arrived_attack(self, state, row, target):
-        from .march_supply import denominator, _completion_tick
+        from .march_supply import book_denominator, _completion_tick
 
         marches = state.extension['travel']['marches']
         ids = self._attack_members(state, row)
@@ -532,14 +603,15 @@ class TravelCampaign:
             empty_capture_actor = self._attack_members(state, columns[0])[0]
             primary = next((col for col in columns if col['owner'] == state.player), columns[0])
             sources, provisions = {}, {}
+            divisor = book_denominator(supply)
             for column in columns:
                 for ident in self._attack_members(state, column):
                     sources[str(ident)] = column['source']
                 grain, credit = (column['supply'][key] for key in ('remaining', 'credit_units'))
                 owner = column['owner']
-                provisions[owner] = provisions.get(owner, 0) + grain * denominator() + credit
-            grain, credit = divmod(sum(provisions.values()), denominator())
-            supply = dict(remaining=grain, credit_units=credit)
+                provisions[owner] = provisions.get(owner, 0) + grain * divisor + credit
+            grain, credit = divmod(sum(provisions.values()), divisor)
+            supply = dict(remaining=grain, credit_units=credit, schema=supply['schema'])
             coalition = dict(sources=sources, provisions=provisions)
             ids = self._attack_members(state, primary)
             ids.extend(ident for column in columns if column is not primary
@@ -639,7 +711,8 @@ class TravelCampaign:
                 self._note(state, f'行军{row["id"]}到达{self.catalog.map_cities[target.id]["name"]}，{len(ids)}将入城。')
                 if row['owner']==state.player:
                     self._emit_event(state,'march_arrived',person_ids=[state.officers[i].person_id for i in ids[:1]],
-                        city_ids=[source.id,target.id],factions=[row['owner']],details=dict(march_id=row['id'],officers=len(ids)))
+                        city_ids=list(dict.fromkeys((source.id,target.id))),factions=[row['owner']],
+                        details=dict(march_id=row['id'],officers=len(ids)))
             elif (target.owner == 'neutral' and not target.roster.officer_ids
                   and self.catalog.map_cities[target.id].get('settlement_site')):
                 if southern_mission.blocks_settlement(state, row['owner'], target.id):
@@ -827,11 +900,14 @@ class TravelCampaign:
             if old['mode'] in ('river','sea') and (len(legs)!=1 or legs[0]['mode']!=old['mode']):
                 raise ValueError('March history direct water mode')
             if quote!=self._quote(path,legs):raise ValueError('March history quote')
-            validate(old['supply'],quote,old['departure_turn'],state.turn)
-            validate_departures(old['supply'],quote,returning=index>0)
+            validate(old['supply'],quote,old['departure_turn'],state.turn,game=self,version=logistics_rules.version(state))
+            validate_departures(old['supply'],quote,returning=index>0 or 'battle_return' in row,game=self)
             if (old['supply']['closed_tick']!=(following['departure_turn']-1)*10
                     or current_city(old)!=following['journey_source']
-                    or old['supply']['remaining'] or old['supply']['returned_to_cargo']!=following['supply']['loaded']):
+                    or old['supply']['remaining'] or old['supply']['returned_to_cargo']!=following['supply']['loaded']
+                    or 'initial_credit' in old['supply'] and (
+                        index==0 and 'battle_return' not in row and old['supply']['initial_credit']
+                        or following['supply'].get('initial_credit')!=old['supply']['credit_units'])):
                 raise ValueError('March history transition')
             manifest=old['departure_troops']
             if (not isinstance(manifest,dict) or old['supply']['troops']!=sum(manifest.values())
@@ -907,14 +983,18 @@ class TravelCampaign:
                 'departure_year','departure_month','departure_day','departure_troops','risks','supply',
                 'status','reason','mission','history','journey_source'}
         for row in x['marches']:
-            if not isinstance(row,dict) or set(row) not in (fields, fields | {'battle_return'}):
+            if not isinstance(row,dict) or set(row)-{'battle_return'}!=fields:
                 raise ValueError('hazard march fields')
+            battle_return='battle_return' in row
+            if battle_return and (type(row['battle_return']) is not str or row['battle_return'] not in state.settled_battles
+                    or row['kind']!='transfer' or row['status'] not in {'returning','waiting'}):
+                raise ValueError('Battle retreat identity')
             integer(row['id'],1,x['counter'],'march id')
             if row['id'] in serials:
                 raise ValueError('duplicate march id')
             serials.add(row['id'])
-            returning_trip=(row['kind']=='transfer' and isinstance(row['history'],list) and (bool(row['history']) or 'battle_return' in row)
-                            and row['status'] in {'returning','waiting'})
+            returning_trip=(battle_return or row['kind']=='transfer' and isinstance(row['history'],list)
+                            and bool(row['history']) and row['status'] in {'returning','waiting'})
             if (any(row[k] not in state.cities for k in ('source','target'))
                     or row['source']==row['target'] and not returning_trip):
                 raise ValueError('march city')
@@ -926,14 +1006,14 @@ class TravelCampaign:
                     or not isinstance(row['history'],list) or len(row['history'])>16):
                 raise ValueError('march mission fields')
             original=row['history'][0] if row['history'] else row
-            if 'battle_return' in row:
+            if battle_return and logistics_rules.version(state)!=logistics_rules.CURRENT:
                 refuge_turn = state.extension.get(historical_campaigns.RECEIPTS, {}).get(runan_campaign.REFUGE)
                 if (not returning_trip or row['battle_return'] not in state.settled_battles or row['owner'] != 'shu'
                         or original['journey_source'] != runan_campaign.RUNAN
                         or original['target'] != runan_campaign.REFUGE_CITY or row['source'] != runan_campaign.REFUGE_CITY
                         or refuge_turn != original['departure_turn']):
                     raise ValueError('Runan withdrawal receipt')
-            elif row['reason'] == 'battle_retreat':
+            elif not battle_return and row['reason'] == 'battle_retreat':
                 raise ValueError('The battle retreat requires a settlement receipt')
             mission=row['mission']
             if (mission['source']!=row['source'] or any(mission[k]!=original[k] for k in
@@ -1023,12 +1103,13 @@ class TravelCampaign:
                 if ident not in ids and state.officers[ident].alive:
                     raise ValueError('live manifest officer omitted')
             from .march_supply import validate as validate_supply,validate_departures
-            validate_supply(row['supply'],quote,row['departure_turn'],state.turn)
-            validate_departures(row['supply'],quote,returning=bool(row['history']) or row['status']=='returning')
+            validate_supply(row['supply'],quote,row['departure_turn'],state.turn,game=self,version=logistics_rules.version(state))
+            validate_departures(row['supply'],quote,returning=bool(row['history']) or row['status']=='returning',game=self)
             if (row['supply']['troops'] != sum(manifest.values())
                     or row['supply']['officers'] != len(manifest) or row['supply']['reserves']
                     or row['supply']['from_cargo'] or row['supply']['returned_to_cargo']
-                    or row['supply']['closed_tick'] is not None):
+                    or row['supply']['closed_tick'] is not None
+                    or not battle_return and not row['history'] and row['supply'].get('initial_credit',0)):
                 raise ValueError('March supply departure manifest')
             for receipt in row['supply']['refills']:
                 if receipt['kind']=='cargo' or receipt['kind']=='city' and receipt['source'] not in path:

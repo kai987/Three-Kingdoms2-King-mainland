@@ -1051,6 +1051,15 @@ class ExpandedCampaign:
         lost=sum(u['start']-u['troops'] for u in b['attackers']+b['defenders'])-sum(x['surrenders'].values())
         if lost<0:raise GameError('战果兵员账本异常。')
         units = b['attackers']+b['defenders']
+        from . import logistics_strategy, occupation_budget, war_recovery
+        if lost and logistics_strategy.war_recovery(state):
+            homes={ident:c.id for c in state.cities.values() for ident in c.roster.officer_ids}
+            for unit in units:
+                ident=unit['id']
+                count=unit['start']-unit['troops']-x['surrenders'].get(str(ident),0)
+                owner=state.officers[ident].faction_id
+                if count>0 and owner in self.catalog.factions:
+                    war_recovery.record(state,owner,homes.get(ident,b['target']),'battle',count)
         experience_report = None
         if battle_experience.V1_FIELD in x:
             experience_report, awards = self._experience_result(b,'settled')
@@ -1111,6 +1120,7 @@ class ExpandedCampaign:
                 if city.id!=target.id:
                     city.roster.officer_ids[:]=[ident for ident in city.roster.officer_ids if ident not in occupiers]
             target.owner=captor;target.action_used=True
+            occupation_budget.captured(state,target)
             if coalition:
                 distribution=allied_assault.settle_capture(self,state,b,target,captor,selected)
                 claimants=[occupant] if occupant is not None else occupiers[:1]
@@ -1334,12 +1344,20 @@ class ExpandedCampaign:
                 'recruitable':{c.id:self._free_candidates(state,c) for c in state.cities.values() if c.owner==state.player} if state else {}}
 
     def _validate_expansion(self,state):
-        from . import economy_rules, grain_market, payroll
+        from . import economy_rules, grain_market, logistics_rules, logistics_strategy, occupation_budget, payroll, staging_supply, war_recovery
         x=state.extension
         fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events','civil_staff','pending_succession','domestic','logistics','treasury','facilities','equipment','command_books'}
         if 'city_development' in x:fields.add('city_development')
         if payroll.FIELD in x:fields.add(payroll.FIELD)
         if economy_rules.FIELD in x:fields.add(economy_rules.FIELD)
+        if logistics_rules.FIELD in x:fields.add(logistics_rules.FIELD)
+        for key in (logistics_strategy.FIELD, logistics_strategy.PRESSURE, logistics_strategy.POLICY, war_recovery.FIELD):
+            if key in x:fields.add(key)
+        logistics_strategy.validate(self, state)
+        if staging_supply.FIELD in x:fields.add(staging_supply.FIELD)
+        staging_supply.validate(state)
+        if occupation_budget.FIELD in x:fields.add(occupation_budget.FIELD)
+        occupation_budget.validate(self,state)
         if grain_market.FIELD in x:fields.add(grain_market.FIELD)
         if battle_reinforcements.RETURNS in x:fields.add(battle_reinforcements.RETURNS)
         from . import dated_events, succession
@@ -1473,6 +1491,7 @@ class ExpandedCampaign:
 
     def _validate_battle_coalition(self,state,battle):
         from .march_supply import denominator, LIMIT
+        from .battle_supply import credit_scale
 
         ext=battle['extended']
         coalition=ext['coalition']
@@ -1509,7 +1528,7 @@ class ExpandedCampaign:
         if set(provisions)!=owners or 'supply' not in ext:
             raise ValueError('Invalid coalition provision owners')
         for amount in provisions.values():
-            integer(amount,0,(LIMIT*denominator()+denominator()-1)*len(sources),'coalition provisions')
+            integer(amount,0,(LIMIT+1)*denominator()*credit_scale(ext['supply'])*len(sources)-1,'coalition provisions')
         supply=ext['supply']['sides']['attackers']
-        if sum(provisions.values())!=supply['loaded']*denominator()+supply['initial_credit']:
+        if sum(provisions.values())!=supply['loaded']*denominator()*credit_scale(ext['supply'])+supply['initial_credit']:
             raise ValueError('Invalid coalition provision balance')

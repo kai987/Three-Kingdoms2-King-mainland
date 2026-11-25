@@ -26,10 +26,11 @@
   return quote.days;
  }
  function estimate(people,ids,quote,reserves=0,cities=null,owner=null,denominator=RATION_DENOMINATOR){
-  return requiredGrain(troopCount(people,ids),ids.length,initialDays(quote,cities,owner),reserves,denominator);
+  return quote.logistics?.initial_grain??requiredGrain(troopCount(people,ids),ids.length,initialDays(quote,cities,owner),reserves,denominator);
  }
  function refillForecast(people,ids,quote,loaded,cities,owner,denominator=RATION_DENOMINATOR){
   if(!ids.length||!Array.isArray(quote?.routes)||!Array.isArray(quote?.path))return [];
+  if(quote.logistics?.refills)return quote.logistics.refills;
   const stops=[{city:quote.path[0],day:0}];
   let day=0;
   for(const [index,leg] of quote.routes.entries()){

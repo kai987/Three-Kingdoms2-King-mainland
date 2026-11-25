@@ -574,6 +574,15 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
  assert(gifts.modal.innerHTML.includes('宝の発見'));assert.equal(JSON.stringify(giftView),giftBytes);gifts.events.dispose();
  const salary=staffRow(2,'staff_salary',{details:{amount:5,paid:0,bonus:{gold:0,grain:0,reserves:0},counts:{staff:1,total_unpaid:1,cities:1}}});
  const transport=row(8,'transport_departed',{person_ids:['clerk-000001'],city_ids:['home','enemy'],details:{convoy_id:1,gold:100,grain:300,reserves:50,treasure:2,lost:0,reason:'outbound'}}),work=row(9,'domestic_report',{person_ids:[],details:{gold:20,grain:30,reserves:180,morale:150,cities:30,reason:'turn'}});
+ const receipt={cargo_dispatched:300,cargo_received:0,cargo_rations:0,cargo_route_loss:0,cargo_weather_loss:0,
+  cargo_delivered:0,cargo_returned:0,cargo_abandoned:0,cargo_remaining:300,cargo_loss_remainder:0,
+  escort_base_grain:0,escort_extra_grain:0};
+ const fundedTransport={...transport,details:{...transport.details,grain_receipt:receipt}};
+ assert(validEvent(fundedTransport));
+ for(const patch of [{cargo_remaining:299},{cargo_loss_remainder:10000000},{escort_base_grain:false},{extra:0}]){
+  assert(!validEvent({...fundedTransport,details:{...fundedTransport.details,grain_receipt:{...receipt,...patch}}}));
+ }
+ assert(!validEvent({...work,details:{...work.details,grain_receipt:receipt}}));
  // Verified art is selected by event kind for both the player's automatic
  // queue and AI history. Playback still consumes only copied event snapshots.
  const artCalls=[],originalUI={
@@ -581,7 +590,7 @@ function fixture(items=[],{originalUI,portraits:providedPortraits,onVisit}={}){
   icon(){assert.fail('Event illustrations must not request a corner icon');}
  };
  const sale=row(10,'treasure_sold',{details:{actor:'person-a',amount:2,gold:200}}),artExamples=[
-  [facilityRows[4],'armory'],[facilityRows[3],'market'],[transport,'sortie']
+  [facilityRows[4],'armory'],[facilityRows[3],'market'],[transport,'sortie'],[fundedTransport,'sortie']
  ];
  for(const [event,id]of artExamples){
   const state=view([event]),bytes=JSON.stringify(state),visual=fixture([event],{originalUI});

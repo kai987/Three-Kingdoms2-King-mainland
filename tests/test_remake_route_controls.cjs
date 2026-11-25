@@ -2,7 +2,7 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const source=fs.readFileSync(require.resolve('../game/app.js'),'utf8');
-const start=source.indexOf('const routeModes='),end=source.indexOf('function factionResources(',start);
+const start=source.indexOf('const usesLogisticsV2='),end=source.indexOf('function factionResources(',start);
 assert(start>=0&&end>start,'Exercise the actual app route controls, not a copied implementation');
 const controlsSource=source.slice(start,end)+'\nglobalThis.routeControls={routeModeSelect,travelQuote,routeOptionLabel,syncRouteModes};';
 const routeOptions=require('../game/route-options.js');

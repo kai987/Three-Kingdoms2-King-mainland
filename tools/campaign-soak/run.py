@@ -221,7 +221,10 @@ class Replay:
             officers = officers[:min(4, offer['remaining'])]
             while officers:
                 troops = sum(state.officers[i].troops for i in officers)
-                if march_supply.cost(troops, len(officers), 2 * route['days']) <= source['grain']:
+                plan=route['provisions']
+                units=troops+march_supply.OFFICER_UNITS*len(officers)
+                estimate=-(-units*(plan['outbound']+plan['returning'])//plan['denominator'])
+                if estimate <= source['grain']:
                     options.append((route['days'], -troops, source['city'], route['id'], officers))
                     break
                 officers.pop()

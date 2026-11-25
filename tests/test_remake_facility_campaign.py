@@ -324,7 +324,7 @@ class FacilityCampaignTests(unittest.TestCase):
         self.advance(game, 2)
         game = self.restore(game)
         state = game.state
-        forecast = {key: result.balances[0] - _monthly_wages(state, state.cities[key])['grain']
+        forecast = {key: result.balances[0]
                     for owner in ('shu', 'wu', 'wei')
                     for key, result in grain_relief.forecasts(game, state, owner, turns=1).items()}
         expected = {key: monthly_income(game, key, state)['grain'] // 5

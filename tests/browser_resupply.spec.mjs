@@ -54,9 +54,11 @@ async function depart(page){
  await page.locator('#transfer').click();await page.locator('#transfer-city').selectOption('bajun');
  const ruler=String(initial.state.extension.leaders.shu),officer=page.locator(`input[name=transfer-officer]:enabled:not([value="${ruler}"])`).first();
  const ident=await officer.getAttribute('value');await officer.check();
- const food=page.locator('#transfer-supply [data-supply-loaded]'),loaded=Number(await food.getAttribute('data-supply-loaded')),
+ const food=page.locator('#transfer-supply [data-supply-loaded]');await expect(food).toHaveCount(1);
+ const loaded=Number(await food.getAttribute('data-supply-loaded')),
   units=initial.state.officers[ident].troops+100;
- expect(loaded).toBe(Math.ceil(units*10/50));expect(loaded).toBeLessThan(Math.ceil(units*30/50));
+ expect(initial.state.extension.logistics_rules_version).toBe(2);
+ expect(loaded).toBe(Math.ceil(units*10*125/5000));expect(loaded).toBeLessThan(Math.ceil(units*30/50));
  await page.locator('#confirm-transfer').click();await idle(page);await expect(page.locator('#dialog')).not.toBeVisible();
  const after=await saved(page),column=after.state.extension.travel.marches[0];
  expect(column.quote.path).toEqual(['nanyang','nanjun','bajun']);expect(column.supply.loaded).toBe(loaded);
@@ -64,6 +66,7 @@ async function depart(page){
 }
 
 test('a real courier feeds a waiting column at a city and its escorts return home',async({page},testInfo)=>{
+ test.skip(process.env.TK2_V211_BROWSER==='1','Historical V2.1 compatibility check');
  const {ident,column}=await depart(page);await nextTurn(page);
  let snapshot=await saved(page),army=snapshot.state.extension.travel.marches.find(row=>row.id===column.id);
  expect(army.supply.route_days).toBe(10);expect(army.supply.remaining).toBe(0);
@@ -92,13 +95,17 @@ test('a real courier feeds a waiting column at a city and its escorts return hom
  for(const escort of escorts)expect(snapshot.state.cities.jiangxia.roster.officer_ids.map(String)).toContain(escort);
  await nextTurn(page);await arrivals(page);snapshot=await saved(page);
  army=snapshot.state.extension.travel.marches.find(row=>row.id===column.id);
- expect(army.supply.received).toBeGreaterThanOrEqual(200);
- expect(army.supply.refills.some(row=>row.kind==='convoy'&&row.grain===200)).toBe(true);
+ const returning=snapshot.state.extension.logistics.convoys.find(row=>row.id===convoy.id);
+ const cargoLoss=returning.cargo_ledger.filter(row=>row.kind==='route_loss'||row.kind==='weather'||row.kind==='rations')
+  .reduce((total,row)=>total+row.before.grain-row.after.grain,0);
+ const delivered=200-cargoLoss;
+ expect(cargoLoss).toBeGreaterThan(0);
+ expect(army.supply.received).toBeGreaterThanOrEqual(delivered);
+ expect(army.supply.refills.some(row=>row.kind==='convoy'&&row.grain===delivered)).toBe(true);
  expect(army.supply.shortage_days).toBeGreaterThan(0);expect(army.supply.shortage_days).toBeLessThan(10);
  expect(army.supply.route_days).toBeGreaterThan(10);expect(army.supply.retreat_requested).toBe(false);
  expect(snapshot.state.officers[ident].alive).toBe(true);
- const returning=snapshot.state.extension.logistics.convoys.find(row=>row.id===convoy.id);
- expect(returning.delivery_done).toBe(true);expect(returning.delivered.grain).toBe(200);expect(returning.status).toBe('returning');
+ expect(returning.delivery_done).toBe(true);expect(returning.delivered.grain).toBe(delivered);expect(returning.status).toBe('returning');
  expect(returning.target).toBe('jiangxia');
  for(const escort of escorts){
   expect(snapshot.state.cities.jiangxia.roster.officer_ids.map(String)).toContain(escort);
@@ -127,5 +134,42 @@ test('a column without rescue loses troops and begins a real return after ten sh
  await expect(returnInfo.locator('[data-march-status]')).toContainText('撤退返程中',{useInnerText:true});
  await returnInfo.scrollIntoViewIfNeeded();await expect(returnInfo).toBeInViewport();
  await page.screenshot({path:testInfo.outputPath('starvation-retreat.png')});
+ expect(errors.get(page)).toEqual([]);
+});
+
+test('a V2.1.1 courier shows a funded return and delivers at the real meeting node',async({page},testInfo)=>{
+ test.skip(process.env.TK2_V211_BROWSER!=='1','Run the V2.1.1 browser matrix');
+ const {initial,column}=await depart(page);
+ expect(initial.state.extension.ai_logistics_strategy_version).toBe(211);
+ await nextTurn(page);
+ await page.locator('#city-jump').selectOption('jiangxia');
+ await openLogistics(page);
+ const budget=page.locator('[data-relief-budget]');
+ await expect(budget).toContainText('去程／等待／返程／備用口糧');
+ await expect(page.locator('[data-relief-estimate]')).toContainText('預計等待');
+ await page.locator('#dialog-language').selectOption('ja');
+ await expect(budget).toContainText('往路／待機／帰還／予備の糧');
+ await page.locator('#dialog-language').selectOption('zh-Hant');
+ await budget.scrollIntoViewIfNeeded();
+ await page.screenshot({path:testInfo.outputPath('relief-funded-return.png')});
+ await page.locator('#dispatch-rescue').click();await idle(page);
+ await expect(page.locator('.domestic-saved')).toContainText('運輸隊已出發');
+ await page.keyboard.press('Escape');await dismissEvents(page);
+ const first=await saved(page),[convoy]=first.state.extension.logistics.convoys;
+ expect(convoy.target_march).toBe(column.id);
+ const plan=convoy.relief;
+ expect(plan.returning).toBeGreaterThan(0);
+ expect(convoy.journeys[0].supply.loaded).toBe(plan.outbound+plan.wait+plan.returning+plan.safety);
+ await nextTurn(page);await arrivals(page);
+ const moved=await saved(page),returned=moved.state.extension.logistics.convoys.find(row=>row.id===convoy.id);
+ expect(returned.status).toBe('returning');
+ expect(returned.delivered.grain).toBeGreaterThan(0);
+ expect(returned.journeys.every(journey=>journey.supply.lost===0)).toBe(true);
+ expect(returned.journeys.flatMap(journey=>journey.supply.refills).every(record=>record.kind!=='city')).toBe(true);
+ await openLogistics(page);
+ const receipt=page.locator(`#dialog [data-convoy="${convoy.id}"]`);
+ await expect(receipt).toContainText('押運返程中');
+ await receipt.scrollIntoViewIfNeeded();
+ await page.screenshot({path:testInfo.outputPath('relief-returning.png')});
  expect(errors.get(page)).toEqual([]);
 });

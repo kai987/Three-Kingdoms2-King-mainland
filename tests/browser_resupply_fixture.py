@@ -6,6 +6,7 @@ No live campaign or browser state is injected or modified by the fixture.
 """
 from copy import deepcopy
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
@@ -56,6 +57,15 @@ def resupply_catalog():
 
 def main():
     import serve
+    from remake import logistics_strategy
+    initialize=logistics_strategy.initialize
+
+    def legacy_start(state):
+        with logistics_strategy.experiment(logistics_strategy.WAR):
+            initialize(state)
+
+    if os.environ.get('TK2_V211_BROWSER')!='1':
+        logistics_strategy.initialize=legacy_start
     catalog = resupply_catalog()
 
     def fixture_session(paths, **options):

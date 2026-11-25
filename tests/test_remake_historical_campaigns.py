@@ -28,7 +28,8 @@ class HistoricalCampaignTests(unittest.TestCase):
         backend.__enter__()
         self.addCleanup(backend.__exit__, None, None, None)
 
-    def opening(self, scenario, faction, *, start_year=None, start_month=None, group=None, initial_alliance=None):
+    def opening(self, scenario, faction, *, start_year=None, start_month=None, group=None, initial_alliance=None,
+                legacy_logistics=False):
         path = ROOT / 'game/data/campaigns' / (scenario + '.json')
         if all(option is None for option in (start_year, start_month, group, initial_alliance)):
             catalog = Catalog(path)
@@ -66,6 +67,13 @@ class HistoricalCampaignTests(unittest.TestCase):
                 catalog = Catalog(fixture)
         game = Headless(catalog)
         game.command('new', {'faction': faction, 'seed': 2026, 'difficulty': 'normal'}, 0)
+        if legacy_logistics:
+            # The historical opening oracles pin dispatch turns and targets
+            # under the original affordability rule.
+            from remake.logistics_rules import FIELD
+            from remake import logistics_strategy
+            game.state.extension.pop(FIELD)
+            game.state.extension.pop(logistics_strategy.FIELD,None)
         return game
 
     def advance(self, game):
@@ -432,7 +440,7 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertEqual(restored.state.soldiers, old_game.state.soldiers)
 
     def test_guandu_calendar_once_and_real_yuan_expedition(self):
-        game = self.opening('200-01', 'wei')
+        game = self.opening('200-01', 'wei', legacy_logistics=True)
         self.assertFalse(self.events(game, history.GUANDU))
         for _ in range(3):
             self.advance(game)
@@ -764,7 +772,7 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.assertEqual(len(self.events(game, history.ALLIANCE_ENDED)), 1)
 
     def test_yiling_ai_orders_a_real_eastern_attack_without_forcing_a_result(self):
-        game = self.opening('221-07', 'wu')
+        game = self.opening('221-07', 'wu', legacy_logistics=True)
         event, = self.events(game, history.YILING)
         self.assertEqual((event['year'], event['month'], event['day'], event['audience']),
                          (221, 7, 1, 'world'))
@@ -946,10 +954,13 @@ class HistoricalCampaignTests(unittest.TestCase):
         self.march_to_battle(game, 'zhuti', 'jianning', zhang_yi)
         self.assert_unresolved_battle(game, 'shu', 'nanman', 'zhuti', 'jianning')
         self.assertEqual(game.state.cities['zangke'].owner, 'nanman')
-        self.assertEqual(len(self.events(game, history.NANZHONG)), 1)
+        # More dated cities and battle/supply reports can evict the opening
+        # notice from the finite recent-event list. Its receipt must survive.
+        self.assertEqual(game.state.extension[history.RECEIPTS][history.NANZHONG], 1)
+        self.assertLessEqual(len(self.events(game, history.NANZHONG)), 1)
 
     def test_liaodong_wei_ai_reaches_xiangping_with_ordinary_supply(self):
-        game = self.opening('238-01', 'gongsun')
+        game = self.opening('238-01', 'gongsun', legacy_logistics=True)
         event, = self.events(game, history.LIAODONG)
         self.assertEqual((event['year'], event['month'], event['day'], event['audience']),
                          (238, 1, 1, 'world'))

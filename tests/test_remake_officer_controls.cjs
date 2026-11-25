@@ -46,6 +46,7 @@ context.GameCommandBooks=commandBookFixture.api;commandBookFixture.attach(contex
 vm.createContext(context);
 context.isRuler=id=>context.GameOfficerChoices.isRuler(id,context.view.game.extension?.leaders);
 vm.runInContext(source.slice(source.indexOf('function officerAttributes('),source.indexOf('// Classify actual runtime entry')),context);
+vm.runInContext(source.match(/^const usesLogisticsV2=.*;$/m)[0],context);
 const values=html=>[...html.matchAll(/<option value="(\d+)"/g)].map(m=>Number(m[1]));
 (async()=>{
  const before=JSON.stringify(context.view.game);

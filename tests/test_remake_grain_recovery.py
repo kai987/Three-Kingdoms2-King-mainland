@@ -91,7 +91,8 @@ class GrainRecoveryTests(unittest.TestCase):
         self.assertIn('wei', state.extension['ai_strategy'])
         game.command('end_turn', {}, game.revision)
         game.command('ai', dict(turn=game.state.turn), game.revision)
-        self.assertNotIn('wei', game.state.extension['ai_strategy'])
+        # V2 keeps the inactive objective available for a later funded turn.
+        self.assertEqual(game.state.extension['ai_strategy'].get('wei',{}).get('orders',[]),[])
         self.assertFalse(any(row['kind'] == 'attack' and row['owner'] == 'wei'
                              for row in game.state.extension['travel']['marches']))
         treaty = next(row for row in game.state.extension['events']['items']

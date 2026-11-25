@@ -9,7 +9,8 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
 from remake.campaign import Campaign,Catalog,digest
-from remake import facilities,grain_units,logistics,march_supply,treasures,city_development
+from remake import facilities, grain_units, logistics, logistics_rules, logistics_strategy
+from remake import march_supply, treasures, city_development
 from remake.errors import GameError
 from remake.march_core import using_backend
 from test_remake_domestic import domestic_catalog
@@ -41,7 +42,8 @@ def rescue_catalog():
 class ConvoyRescueTests(unittest.TestCase):
     def game(self):
         game=Campaign(rescue_catalog())
-        game.command('new',dict(faction='shu',seed=2026),0)
+        with logistics_strategy.experiment(logistics_strategy.WAR):
+            game.command('new',dict(faction='shu',seed=2026),0)
         game.command('set_logistics',dict(city='jiangxia',policy=dict(reserve_officers=0,max_officers=1)),game.revision)
         game.command('transfer',dict(source='xiangyang',target='jiangxia',officers=[146],route_mode='land'),game.revision)
         return game
@@ -167,20 +169,27 @@ class ConvoyRescueTests(unittest.TestCase):
         supply['troops']=0
         for packet in supply['ration_manifests']:
             packet['troops']={key:0 for key in packet['troops']}
-        credit=used_total=0
-        denominator=grain_units.denominator()
+        credit=used_total=used_basic=progress=0
+        denominator=grain_units.denominator()*logistics_rules.RATION_SCALE
+        parts=logistics_rules.plan(journey['quote'],game.catalog.data['travel_rules'])
         for period in supply['periods']:
             for meal in period['days']:
                 if meal is None:continue
                 units=100*len(journey['departure_troops'])
-                used=max(0,(units-credit+denominator-1)//denominator)
-                credit=credit+used*denominator-units;used_total+=used
+                weight=logistics_rules.weight(parts,progress,1) if meal[2] else logistics_rules.RATION_SCALE
+                charge=units*weight
+                used=max(0,(charge-credit+denominator-1)//denominator)
+                basic=units*logistics_rules.RATION_SCALE
+                used_basic+=min(used,max(0,(basic-credit+denominator-1)//denominator))
+                credit=credit+used*denominator-charge;used_total+=used
+                progress+=meal[2]
                 meal[:]=[units,used,meal[2],0]
         supply['credit_units']=credit;supply['consumed']=used_total
+        supply['base_consumed']=used_basic
         supply['remaining']=supply['loaded']+supply['received']-used_total-supply['returned_to_cargo']
         # It is a self-consistent food calculation; actual officer strength is
         # the independent anchor which must still reject the rewritten save.
-        march_supply.validate(supply,journey['quote'],journey['departure_turn'],game.state.turn)
+        march_supply.validate(supply,journey['quote'],journey['departure_turn'],game.state.turn,game=game)
         bad['checksum']=digest({k:v for k,v in bad.items() if k!='checksum'})
         with self.assertRaises((ValueError,GameError)):game.load_save(bad,game.revision)
         self.assertEqual(game.export_save(),saved)
@@ -309,7 +318,8 @@ class ConvoyRescueTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path=Path(tmp)/'return-rescue.json';path.write_text(json.dumps(data,ensure_ascii=False))
             game=Campaign(Catalog(path))
-        game.command('new',dict(faction='shu',seed=2026),0)
+        with logistics_strategy.experiment(logistics_strategy.WAR):
+            game.command('new',dict(faction='shu',seed=2026),0)
         game.command('set_logistics',dict(city='xiangyang',policy=dict(reserve_grain=0,
             reserve_officers=1,max_officers=1)),game.revision)
         game.command('transfer',dict(source='xiangyang',target='shujun',officers=[146],route_mode='land'),game.revision)

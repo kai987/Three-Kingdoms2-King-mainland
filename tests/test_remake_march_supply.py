@@ -165,11 +165,11 @@ class MarchSupplyTests(unittest.TestCase):
         game.command('allocate', dict(city=source.id, officer=ident, troops=10000), game.revision)
         _, march = self.queue(game)
         self.assertEqual(march['supply']['troops'], 10000)
-        self.assertEqual(march['supply']['loaded'], 11110)  # 5,050 march + 6,060 battle
+        self.assertEqual(march['supply']['loaded'], 12373)  # 6,313 march + 6,060 battle
         game = self.restore(game)
         self.advance(game)
         march = game.state.extension['travel']['marches'][0]
-        self.assertEqual(march['supply']['consumed'], 2020)
+        self.assertEqual(march['supply']['consumed'], 2525)
         self.assertEqual(game.state.officers[ident].troops, 10000)
         self.restore(game)
 
@@ -191,8 +191,7 @@ class MarchSupplyTests(unittest.TestCase):
                     self.advance(game)
                     row = game.state.extension['travel']['marches'][0]
                     self.assertEqual(row['supply']['elapsed_days'],elapsed)
-                    self.assertEqual(row['supply']['consumed'],march_supply.required_grain(
-                        row['supply']['troops'],1,elapsed))
+                    self.assertEqual(row['supply']['consumed'],((row['supply']['troops']+100)*elapsed*125+4999)//5000)
                     snapshot = game.export_save()
                     self.assertEqual(game._process_march_supply(game.state),0)
                     self.assertEqual(game.export_save(),snapshot)
@@ -317,13 +316,18 @@ class ConvoySupplyTests(unittest.TestCase):
         return_food=sum(r['grain'] for r in returning['refills'] if r['kind']=='cargo')
         self.assertGreater(return_food,0)
         self.assertEqual(returning['received'],return_food)
-        self.assertEqual(row['cargo']['grain'],200-return_food)
+        outward_loss=logistics.grain_receipt(row)['cargo_route_loss']
+        self.assertEqual(row['cargo']['grain'],200-return_food-outward_loss)
         saved = game.export_save()
         loaded = Campaign(game.catalog); loaded.load_save(saved,0)
         self.assertEqual(loaded.export_save(),saved)
         self.advance_due(loaded)
         self.assertFalse(loaded.state.extension['logistics']['convoys'])
-        self.assertEqual(loaded.state.cities['xiangyang'].grain,before-budget-return_food-dues['xiangyang'])
+        returned=next(row['details']['grain_receipt'] for row in reversed(loaded.state.extension['logistics']['reports'])
+                      if row['kind']=='transport_returned' and row['details']['reason']=='returned')
+        food=returned['escort_base_grain']+returned['escort_extra_grain']
+        self.assertEqual(loaded.state.cities['xiangyang'].grain,
+                         before-food-returned['cargo_route_loss']-dues['xiangyang'])
 
     def test_no_grain_for_return_walks_and_suffers_hunger_without_free_trip_or_negative_cargo(self):
         game = self.game()

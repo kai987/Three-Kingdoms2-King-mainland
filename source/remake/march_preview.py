@@ -191,12 +191,89 @@ def preview_transfer(game, state, source, target, ids, mode, revision):
     """Add map geometry to the same deterministic detour used at confirmation."""
     from .transfer_supply import detour
 
-    primary = game._travel_path(state, source, target, state.player, mode)
+    primary = game._travel_path(state,source,target,state.player,mode,officers=ids)
     alternative = detour(game, state, source, target, ids, mode, primary)
     data = game.catalog.data
 
     def with_geometry(quote):
-        return dict(quote, segments=_quote_segments(data, quote['routes'])) if quote else None
+        if not quote:
+            return None
+        return dict(quote, segments=_quote_segments(data, quote['routes']),
+                    logistics=logistics_cost(game,state,ids,quote))
 
     return dict(source=source, target=target, revision=revision, route_mode=mode,
                 primary=with_geometry(primary), detour=with_geometry(alternative))
+
+
+def logistics_cost(game, state, ids, quote, *, cargo=0, reserves=0):
+    from . import logistics_rules as rules, march_supply
+
+    parts = rules.plan(quote, march_supply.travel_rules(game))
+    weighted = rules.version(state)==rules.CURRENT
+    units = march_supply.ration_units(state,ids,reserves)
+    divisor = march_supply.denominator() * (rules.RATION_SCALE if weighted else 1)
+    total = rules.ceil_div(units*(rules.weight(parts) if weighted else quote['days']),divisor)
+    basic = march_supply.cost(units,0,quote['days'])
+    stops = []
+    progress = last = nutrition = 0
+    owner = state.cities[quote['path'][0]].owner
+    for index,leg in enumerate(quote['routes']):
+        progress += leg['days']
+        reaching = state.cities[leg['to']]
+        if reaching.owner != owner and index+1 != len(quote['routes']):
+            continue
+        weight = rules.weight(parts,last,progress-last) if weighted else progress-last
+        charge = units*weight
+        needed = max(0,rules.ceil_div(charge-nutrition,divisor))
+        if last:
+            city=quote['path'][last_index]
+            stock=state.cities[city].grain
+            stops.append(dict(city=city,next=reaching.id,days=progress-last,stock=stock,
+                              required=needed,shortfall=max(0,needed-stock),
+                              conditional=any(stop['shortfall'] for stop in stops)))
+        nutrition += needed*divisor-charge
+        last = progress
+        last_index = index+1
+    estimated_cargo = rules.estimate_cargo(cargo,parts,quote['days'])[0] if weighted and cargo else cargo
+    return dict(initial_grain=march_supply.estimate(state,ids,quote,reserves,game=game),
+                base_grain=basic,extra_grain=total-basic,total_grain=total,cargo_loss=cargo-estimated_cargo,
+                delivered_grain=estimated_cargo,refills=stops,time_ticks=rules.time_by_mode(parts),
+                ticks_per_day=rules.DAY_TICKS,percent=dict(rules.MARCH_SUPPLY_PERCENT) if weighted else {},
+                hazards=[leg['hazard'] for leg in quote['routes'] if leg.get('hazard')])
+
+
+def preview_logistics(game,state,source,target,ids,mode,purpose,cargo,reserves,revision):
+    from . import historical_campaigns, logistics
+    from .transfer_supply import MINIMUM_GRAIN
+
+    owner = state.cities[source].owner
+    target_owner = state.cities[target].owner
+    if purpose == 'attack' and (owner == target_owner or historical_campaigns.allied(state,owner,target_owner)):
+        return dict(revision=revision,primary=None,fastest=None,minimum=None,blocked_reason='allied_destination')
+    if purpose == 'convoy':
+        policy = state.extension['logistics']['cities'][source]['policy']
+        engine = logistics._safe_engine(game,policy)
+    else:
+        engine = game
+
+    def find(which):
+        return engine._travel_path(state,source,target,owner,which,adjacent=purpose=='attack',
+                                   officers=ids,cargo=cargo,reserves=reserves)
+
+    fastest = find('fastest')
+    minimum = find(MINIMUM_GRAIN)
+    primary = fastest if mode=='fastest' else minimum if mode==MINIMUM_GRAIN else find(mode)
+    back = engine._travel_path(state,target,source,owner,'fastest')
+    expected_return = None if back is None else logistics_cost(game,state,ids,back)['total_grain']
+    data = game.catalog.data
+
+    def decorate(quote):
+        if quote is None:
+            return None
+        return dict(quote,segments=_quote_segments(data,quote['routes']),
+                    logistics=dict(logistics_cost(game,state,ids,quote,cargo=cargo,reserves=reserves),
+                                   return_grain=expected_return))
+
+    return dict(revision=revision,primary=decorate(primary),fastest=decorate(fastest),
+                minimum=decorate(minimum),blocked_reason=None if primary else
+                'no_provisionable_route' if mode==MINIMUM_GRAIN else 'no_route')

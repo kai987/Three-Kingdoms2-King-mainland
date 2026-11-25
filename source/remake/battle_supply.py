@@ -5,11 +5,13 @@ formula is an author adaptation: reuse the campaign's daily march formula,
 including its fractional ration credit, rather than introduce a second rate.
 Reading/quoting a battle never loads provisions or advances randomness.
 """
+from . import logistics_rules
 from .errors import GameError
-from .march_supply import denominator, OFFICER_UNITS, LIMIT, estimate
+from .march_supply import denominator, OFFICER_UNITS, LIMIT, estimate, WEIGHTED_SCHEMA as MARCH_SCHEMA
 from .officers import BATTLE_OFFICERS_PER_SIDE, MAX_BATTLE_PARTICIPANTS, OFFICER_TROOP_CAP
 
 SCHEMA = 'tk2-battle-supply-v1'
+EXACT_SCHEMA = 'tk2-battle-supply-v2'
 BUDGET_DAYS = 30
 MAX_BATTLE_DAILY_UNITS = MAX_BATTLE_PARTICIPANTS * (OFFICER_TROOP_CAP + OFFICER_UNITS)
 COALITION_LIMIT = BATTLE_OFFICERS_PER_SIDE * (LIMIT + 1) - 1
@@ -23,14 +25,18 @@ def rules():
                 officer_units=OFFICER_UNITS, limit=LIMIT, shortage='withdraw')
 
 
-def departure_quote(state, ids, route_quote, *, battle_grain=None):
+def credit_scale(supply):
+    return logistics_rules.RATION_SCALE if supply and supply['schema'] == EXACT_SCHEMA else 1
+
+
+def departure_quote(state, ids, route_quote, *, game=None, battle_grain=None):
     """Quote attack loading after segment food, without spending or RNG.
 
     The caller validates the deployment and route. Transfers do not call this
     function and continue to load only the existing segment budget.
     """
     source = state.cities[route_quote['path'][0]]
-    march = estimate(state, ids, route_quote)
+    march = estimate(state, ids, route_quote, game=game)
     units = sum(state.officers[i].troops for i in ids) + OFFICER_UNITS * len(ids)
     maximum = max(0, min(LIMIT - march, source.grain - march))
     default = min((units * BUDGET_DAYS + denominator() - 1) // denominator(), maximum)
@@ -48,12 +54,14 @@ def daily_units(battle, side):
     return sum(unit['troops'] for unit in active) + OFFICER_UNITS * len(active)
 
 
-def _new_side(state, battle, side, march_supply=None):
+def _new_side(state, battle, side, march_supply=None, *, factor=1):
     origin = battle['source' if side == 'attackers' else 'target']
     owner = battle['attacker' if side == 'attackers' else 'defender']
     city = state.cities[origin]
     if march_supply is not None:
         loaded, credit = march_supply['remaining'], march_supply['credit_units']
+        if march_supply.get('schema') != MARCH_SCHEMA:
+            credit *= factor
     else:
         wanted = (daily_units(battle, side) * BUDGET_DAYS + denominator() - 1) // denominator()
         loaded = min(city.grain, wanted) if city.owner == owner else 0
@@ -68,9 +76,10 @@ def initialize(state, battle, *, march_supply=None):
     """Load a new battle once; arrival passes its already paid march balance."""
     if 'supply' in battle['extended']:
         return battle['extended']['supply']
-    result = dict(schema=SCHEMA, started_round=battle['round'], days=0, settlement=None,
-                  sides={side: _new_side(state, battle, side,
-                         march_supply if side == 'attackers' else None) for side in SIDES})
+    schema = EXACT_SCHEMA if logistics_rules.version(state) == logistics_rules.CURRENT else SCHEMA
+    result = dict(schema=schema, started_round=battle['round'], days=0, settlement=None)
+    result['sides'] = {side: _new_side(state, battle, side,
+        march_supply if side == 'attackers' else None, factor=credit_scale(result)) for side in SIDES}
     battle['extended']['supply'] = result
     return result
 
@@ -104,15 +113,17 @@ def view(state, battle):
     if battle is None:
         return None
     supply = battle['extended'].get('supply')
-    result = dict(schema=SCHEMA, initialized=supply is not None,
+    factor = credit_scale(supply)
+    divisor = denominator() * factor
+    result = dict(schema=supply['schema'] if supply else SCHEMA, initialized=supply is not None,
                   days=supply['days'] if supply else 0, budget_days=BUDGET_DAYS, sides={})
     for side in SIDES:
         row, units = _peek(state, battle, side), daily_units(battle, side)
         result['sides'][side] = dict(initialized=supply is not None,
             grain=row['remaining'] if supply else None,
             available_grain=row['remaining'], daily_units=units,
-            daily_grain=max(0, (units-row['credit_units']+denominator()-1)//denominator()),
-            days_supported=((row['remaining']*denominator()+row['credit_units'])//units if units else 0),
+            daily_grain=max(0, (units*factor-row['credit_units']+divisor-1)//divisor),
+            days_supported=((row['remaining']*divisor+row['credit_units'])//(units*factor) if units else 0),
             consumed=row['consumed'], received=row['received'], burned=burned(row),
             days=supply['days'] if supply else 0)
     return result
@@ -135,12 +146,23 @@ def receive(state, battle, side, grain, *, contributor=None, kind='market'):
         _receipt(row, kind, supply['days'], grain, contributor=contributor)
 
 
-def receive_reinforcements(state, battle, side, grain, owner):
-    row = ensure(state, battle)['sides'][side]
+def receive_reinforcements(state, battle, side, grain, owner, *, credit=0):
+    supply = ensure(state, battle)
+    row = supply['sides'][side]
     coalition = battle['extended'].get('coalition') if side == 'attackers' else None
     contributor = (owner if owner in coalition['provisions'] else battle['attacker']) if coalition else None
-    receive(state, battle, side, min(grain, pool_limit(battle, side) - row['remaining']),
-            contributor=contributor, kind='reinforcement')
+    room = pool_limit(battle, side) - row['remaining']
+    divisor = denominator() * credit_scale(supply)
+    if credit and grain + (row['credit_units'] + credit)//divisor <= room:
+        whole, row['credit_units'] = divmod(row['credit_units'] + credit, divisor)
+        row['remaining'] += grain + whole
+        row['received'] += grain + whole
+        receipt = dict(kind='reinforcement', day=supply['days'], grain=grain, credit=credit)
+        if contributor is not None:
+            receipt['contributor'] = contributor
+        row['journal'].append(receipt)
+    else:
+        receive(state, battle, side, min(grain, room), contributor=contributor, kind='reinforcement')
 
 
 def destroy(state, battle, side, amount):
@@ -160,7 +182,7 @@ def destroy(state, battle, side, amount):
 
 def _receipt(row, kind, day, grain, *, contributor=None):
     last = row['journal'][-1] if row['journal'] else None
-    if last and last['kind'] == kind and last['day'] == day and last.get('contributor') == contributor:
+    if last and 'credit' not in last and last['kind'] == kind and last['day'] == day and last.get('contributor') == contributor:
         last['grain'] += grain
     else:
         receipt = dict(kind=kind, day=day, grain=grain)
@@ -179,19 +201,22 @@ def end_day(game, state, battle):
     if day != supply['days'] + 1 or supply['settlement'] is not None:
         raise ValueError('Battle provision day sequence')
     supply['days'] = day
+    factor = credit_scale(supply)
+    divisor = denominator() * factor
     shortages = {}
     for side in SIDES:
         row, units = supply['sides'][side], daily_units(battle, side)
-        needed = max(0, units-row['credit_units'])
-        used = min(row['remaining'], (needed+denominator()-1)//denominator())
-        nutrition = row['credit_units']+used*denominator()
-        missing = max(0, units-nutrition)
+        charge = units * factor
+        needed = max(0, charge-row['credit_units'])
+        used = min(row['remaining'], (needed+divisor-1)//divisor)
+        nutrition = row['credit_units']+used*divisor
+        missing = max(0, charge-nutrition)
         row['remaining'] -= used
         row['consumed'] += used
-        row['credit_units'] = max(0, nutrition-units)
+        row['credit_units'] = max(0, nutrition-charge)
         row['journal'].append(dict(kind='meal', day=day, units=units, used=used, missing=missing))
         if missing:
-            shortages[side] = missing
+            shortages[side] = logistics_rules.ceil_div(missing, factor)
     battle['log'].append('戰鬥第%d日耗糧：攻方%d，守方%d。' % (
         day, supply['sides']['attackers']['journal'][-1]['used'],
         supply['sides']['defenders']['journal'][-1]['used']))
@@ -228,18 +253,26 @@ def _return_city(state, battle, side):
     return sorted(homes, key=lambda city: city.id)[0] if homes else None
 
 
-def _settle_coalition_grain(state, battle, row, winner_city, returns):
+def _settle_coalition_grain(game,state,battle,row,winner_city,returns):
     """Allocate remaining grain by each faction's contribution to the shared pool."""
     contributions = dict(battle['extended']['coalition']['provisions'])
     primary = battle['attacker']
     ally = next(owner for owner in contributions if owner != primary)
     for receipt in row['journal']:
         if receipt['kind'] in ('market', 'reinforcement'):
-            contributions[receipt['contributor']] += receipt['grain'] * denominator()
+            contributions[receipt['contributor']] += (receipt['grain'] * denominator()
+                * credit_scale(battle['extended']['supply']) + receipt.get('credit',0))
     total = sum(contributions.values())
     ally_grain = row['remaining'] * contributions[ally] // total if total else 0
+    ally_credit = row['credit_units'] * contributions[ally] // total if total else 0
     reports = []
     for owner, grain in ((primary, row['remaining'] - ally_grain), (ally, ally_grain)):
+        if credit_scale(battle['extended']['supply'])>1 and winner_city.owner!=owner:
+            credit=ally_credit if owner==ally else row['credit_units']-ally_credit
+            withdrawal=game._battle_withdrawal(state,battle,'attackers',grain,credit,owner=owner)
+            if withdrawal is not None:
+                reports.append(dict(withdrawal,owner=owner))
+                continue
         officers = {unit['id'] for unit in battle['attackers']
                     if state.officers[unit['id']].alive and state.officers[unit['id']].faction_id == owner}
         homes = [city for city in state.cities.values() if city.owner == owner
@@ -272,16 +305,24 @@ def settle(game, state, battle, *, coalition_returns=None, refuge_members=None):
     for side in SIDES:
         row = supply['sides'][side]
         if side == 'attackers' and coalition:
-            report.extend(_settle_coalition_grain(state, battle, row, winner_city, coalition_returns or {}))
+            report.extend(_settle_coalition_grain(game,state,battle,row,winner_city,coalition_returns or {}))
             row['remaining'] = row['credit_units'] = 0
             continue
         if side == 'defenders' and refuge_members:
             grain = row['remaining']
-            game._queue_runan_refuge(state, battle, refuge_members, grain)
+            game._queue_runan_refuge(state, battle, refuge_members, grain, row['credit_units'])
             report.append(dict(side=side, city=None, grain=grain, stored=0, lost=0,
                                credit_units=row['credit_units'], in_transit=grain))
             row['remaining'] = row['credit_units'] = 0
             continue
+        if (supply['schema']==EXACT_SCHEMA and
+                (side=='attackers' and battle['outcome'] in ('retreat','defeat') or
+                 side=='defenders' and battle['outcome']=='victory')):
+            withdrawal=game._battle_withdrawal(state,battle,side,row['remaining'],row['credit_units'])
+            if withdrawal is not None:
+                report.append(withdrawal)
+                row['remaining']=row['credit_units']=0
+                continue
         city = _return_city(state, battle, side)
         # A routed force without a returning commander leaves its bags behind.
         if city is None and winner_city.owner == winner_owner:
@@ -297,7 +338,8 @@ def settle(game, state, battle, *, coalition_returns=None, refuge_members=None):
     supply['settlement'] = report
     game._note(state, '戰鬥餘糧結算：' + '；'.join(
         (game.faction_name(state, row['owner']) if 'owner' in row else
-         ('攻方' if row['side'] == 'attackers' else '守方')) + f'{row["stored"]}入城、{row["lost"]}損失'
+         ('攻方' if row['side'] == 'attackers' else '守方')) +
+        (f'{row["in_transit"]}隨撤退隊' if 'in_transit' in row else f'{row["stored"]}入城、{row["lost"]}損失')
         for row in report) + '。')
     return report
 
@@ -311,7 +353,7 @@ def validate(state, battle):
         if type(value) is not int or not low <= value <= high:
             raise ValueError('Battle provision quantity')
     if (not isinstance(supply, dict) or set(supply) != {'schema','started_round','days','sides','settlement'}
-            or supply['schema'] != SCHEMA or not isinstance(supply['sides'],dict)
+            or supply['schema'] != (EXACT_SCHEMA if logistics_rules.version(state) == logistics_rules.CURRENT else SCHEMA) or not isinstance(supply['sides'],dict)
             or set(supply['sides']) != set(SIDES)
             or supply['settlement'] is not None):
         raise ValueError('Battle provision fields')
@@ -319,6 +361,8 @@ def validate(state, battle):
     integer(supply['days'], 0, BUDGET_DAYS)
     if supply['days'] != battle['round']-supply['started_round']:
         raise ValueError('Battle provision clock')
+    factor = credit_scale(supply)
+    divisor = denominator() * factor
     shortages = {}
     for side in SIDES:
         row = supply['sides'][side]
@@ -333,7 +377,7 @@ def validate(state, battle):
         for field in ('received','consumed'):
             integer(row[field], 0, LIMIT*4096)
         for field in ('initial_credit','credit_units'):
-            integer(row[field], 0, denominator()-1)
+            integer(row[field], 0, divisor-1)
         if not isinstance(row['journal'], list) or len(row['journal']) > 4096:
             raise ValueError('Battle provision receipts')
         remaining, credit = row['loaded'], row['initial_credit']
@@ -346,9 +390,10 @@ def validate(state, battle):
                     raise ValueError('Battle provision meal clock')
                 integer(receipt['day'],1,supply['days'])
                 integer(receipt['units'], 0, MAX_BATTLE_DAILY_UNITS)
-                used = min(remaining, (max(0,receipt['units']-credit)+denominator()-1)//denominator())
-                nutrition = credit+used*denominator()
-                missing = max(0,receipt['units']-nutrition)
+                charge = receipt['units'] * factor
+                used = min(remaining, (max(0,charge-credit)+divisor-1)//divisor)
+                nutrition = credit+used*divisor
+                missing = max(0,charge-nutrition)
                 if type(receipt['used']) is not int or receipt['used'] != used or type(receipt['missing']) is not int or receipt['missing'] != missing:
                     raise ValueError('Battle provision meal replay')
                 if missing:
@@ -356,9 +401,12 @@ def validate(state, battle):
                         raise ValueError('Army remained after provision exhaustion')
                     shortages[side] = missing
                 remaining -= used; consumed += used
-                credit = max(0,nutrition-receipt['units']); days += 1
+                credit = max(0,nutrition-charge); days += 1
             else:
                 fields = {'kind','day','grain'}
+                if receipt.get('kind') == 'reinforcement' and 'credit' in receipt and factor > 1:
+                    fields.add('credit')
+                    integer(receipt['credit'], 1, divisor-1)
                 if (receipt.get('kind') in ('market', 'reinforcement') and side == 'attackers'
                         and battle['extended'].get('coalition')):
                     fields.add('contributor')
@@ -370,13 +418,16 @@ def validate(state, battle):
                         or receipt['kind'] == 'reinforcement' and not battle['extended'].get('reinforcements', {}).get('joined')):
                     raise ValueError('Battle provision receipt clock')
                 integer(receipt['day'],0,supply['days'])
-                integer(receipt['grain'], 1, limit)
+                extra = receipt.get('credit',0)
+                integer(receipt['grain'], 0 if extra else 1, limit)
                 if receipt['kind'] == 'fire':
                     if receipt['grain'] > remaining:
                         raise ValueError('Battle provision destruction exceeds carried grain')
                     remaining -= receipt['grain']; destroyed += receipt['grain']
                 else:
-                    remaining += receipt['grain']; received += receipt['grain']
+                    whole, credit = divmod(credit + extra, divisor)
+                    remaining += receipt['grain'] + whole
+                    received += receipt['grain'] + whole
                 integer(remaining, 0, limit)
         if (days != supply['days'] or (remaining,credit,consumed,received) !=
                 (row['remaining'],row['credit_units'],row['consumed'],row['received'])

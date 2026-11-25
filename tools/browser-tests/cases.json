@@ -38,6 +38,13 @@
       "scenario_scope": "fixed"
     },
     {
+      "id": "logistics-v21-overview",
+      "title": "logistics V2.1 displays faction and city budgets in both languages",
+      "groups": ["economy", "logistics"],
+      "scenario_ids": ["mainland208-10"],
+      "scenario_scope": "fixed"
+    },
+    {
       "id": "observer-speed",
       "title": "observer speed changes cadence without resuming a pause and city counts follow ownership",
       "groups": [

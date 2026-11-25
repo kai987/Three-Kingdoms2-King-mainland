@@ -732,6 +732,32 @@
         "logistics"
       ]
     },
+    "tests/test_remake_logistics_v2.py": {
+      "tier": "related",
+      "groups": ["economy", "logistics", "battle", "save"]
+    },
+    "tests/test_remake_logistics_v21.py": {
+      "tier": "related",
+      "groups": ["economy", "logistics", "battle", "save"]
+    },
+    "tests/test_remake_logistics_v211.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "economy",
+        "logistics",
+        "save"
+      ]
+    },
+    "tests/test_remake_logistics_v212.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "economy",
+        "logistics",
+        "save"
+      ]
+    },
     "tests/test_remake_luzon_settlement.py": {
       "tier": "related",
       "groups": [

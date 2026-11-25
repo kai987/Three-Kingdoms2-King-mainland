@@ -90,7 +90,7 @@ DETAILS = {
     'ai_campaign': {'target', 'sources', 'arrival_turn', 'coordinated'},
     **{kind: set(STAFF_DETAILS) for kind in STAFF_KINDS},
     'staff_salary': STAFF_DETAILS | STAFF_SALARY_GRAIN,
-    **{kind: set(TRANSPORT_DETAILS) for kind in TRANSPORT_KINDS},
+    **{kind: TRANSPORT_DETAILS | {'grain_receipt'} for kind in TRANSPORT_KINDS},
     **{kind: set(SUPPLY_DETAILS) for kind in SUPPLY_KINDS},
     **TREASURY_DETAILS,
     **FACILITY_DETAILS,
@@ -654,6 +654,8 @@ def validate(campaign, state):
             if not isinstance(report, dict) or report.get('battle_id') != event_details.get('battle_id'):
                 raise ValueError('Campaign experience receipt identity')
             event_details = {key: val for key, val in event_details.items() if key != 'experience'}
+        if row['kind'] in TRANSPORT_KINDS and 'grain_receipt' in event_details:
+            event_details = {key: value for key, value in event_details.items() if key != 'grain_receipt'}
         if not value_ok(event_details):
             raise ValueError('Campaign event JSON value')
         if row['kind']=='tactic':
@@ -739,9 +741,12 @@ def validate(campaign, state):
                         (d['reason']!='conditions_changed' or d['released_troops']))):
                 raise ValueError('Dated faction coup event')
         if row['kind'] in TRANSPORT_KINDS:
-            if (set(row['details']) != TRANSPORT_DETAILS
+            from . import logistics, logistics_rules
+            weighted = logistics_rules.version(state)==logistics_rules.CURRENT
+            if (set(row['details']) != (TRANSPORT_DETAILS | {'grain_receipt'} if weighted else TRANSPORT_DETAILS)
                     or type(row['details']['treasure']) is not int
-                    or not 0 <= row['details']['treasure'] <= 99):
+                    or not 0 <= row['details']['treasure'] <= 99
+                    or weighted and not logistics.valid_grain_receipt(row['details']['grain_receipt'])):
                 raise ValueError('Transport treasure receipt')
         if row['kind']=='city_upgraded':
             from .city_economy import income_at, scale_monthly_grain, tier_at
@@ -776,9 +781,11 @@ def validate(campaign, state):
                 raise ValueError('City name event date or names')
         if row['kind'] in TRANSPORT_KINDS or row['kind']=='domestic_report':
             details=row['details']
-            if set(details)!=DETAILS[row['kind']]:
+            if row['kind']=='domestic_report' and set(details)!=DETAILS[row['kind']]:
                 raise ValueError('Domestic/transport event fields')
             for key,value in details.items():
+                if row['kind'] in TRANSPORT_KINDS and key=='grain_receipt':
+                    continue  # The versioned transport ledger owns these invariants.
                 if key=='reason':
                     if not isinstance(value,str) or re.fullmatch(r'[a-z_]{1,80}',value) is None:
                         raise ValueError('Domestic/transport event reason')

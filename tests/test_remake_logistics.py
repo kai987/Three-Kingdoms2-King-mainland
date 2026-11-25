@@ -107,7 +107,7 @@ class LogisticsTests(unittest.TestCase):
                                                          protected_officers=spare[:1], max_turns=2))
         row, = state.extension['logistics']['convoys']
         self.assertEqual((row['source'], row['target'], row['officers']), (source.id, target.id, spare[1:]))
-        self.assertEqual(row['cargo'], dict(gold=0, grain=3504, reserves=0, treasure=0))
+        self.assertEqual(row['cargo'], dict(gold=0, grain=3522, reserves=0, treasure=0))
         self.assertEqual(source.grain, 10000 - row['cargo']['grain'] - row['journeys'][0]['supply']['loaded'])
         self.assertGreaterEqual(source.grain, 5000)
         self.assertEqual(target.grain, 2000)
@@ -122,6 +122,12 @@ class LogisticsTests(unittest.TestCase):
         self.assertTrue(game.state.extension['logistics']['convoys'][0]['delivery_done'])
 
     def test_observer_resupplies_a_stranded_attack_through_to_victory(self):
+        from remake import logistics_strategy
+        for stage in (0,logistics_strategy.WAR):
+            with self.subTest(stage=stage), logistics_strategy.experiment(stage):
+                self.assert_resupplied_victory(stage)
+
+    def assert_resupplied_victory(self, stage):
         data = transport_catalog(rear=True).data
         data['rules']['ai_max_attacks_per_turn'] = 3
         data['initial_owners']['nanyang'] = 'shu'
@@ -141,11 +147,22 @@ class LogisticsTests(unittest.TestCase):
         reports = game.state.extension['logistics']['reports']
         arrival, = [row for row in reports if row['kind'] == 'transport_arrived']
         self.assertEqual((arrival['source'], arrival['target']), ('xiangyang', 'nanjun'))
-        self.assertGreaterEqual(game.state.cities['nanjun'].grain,
-                                required_grain(6000, 1, 1 + BUDGET_DAYS))
+        received = game.state.cities['nanjun'].grain
+        old_reserve = required_grain(6000, 1, 1 + BUDGET_DAYS)
+        if stage:
+            self.assertGreater(received, 0)
+            self.assertLess(received, old_reserve)
+            self.assertEqual(received, arrival['details']['grain'])
+        else:
+            self.assertGreaterEqual(received,old_reserve)
         self.assertFalse(game.state.settled_battles)
 
-        finished = game.command('observe_turn', {}, game.revision)
+        # Recruitment and city dues can change the full reserve requirement
+        # between dispatch and arrival. Allow that next income installment.
+        for _ in range(3):
+            finished = game.command('observe_turn', {}, game.revision)
+            if game.state.phase == 'finished':
+                break
         self.assertEqual(finished['catalog']['observer_winner'], 'shu')
         self.assertEqual(game.state.phase, 'finished')
         self.assertEqual(len(game.state.settled_battles), 1)
@@ -264,7 +281,7 @@ class LogisticsTests(unittest.TestCase):
         self.assertEqual(target.gold, destination['gold'] + 100)
         row=game.state.extension['logistics']['convoys'][0]
         return_food=sum(r['grain'] for r in row['journeys'][-1]['supply']['refills'] if r['kind']=='city')
-        self.assertEqual(target.grain, destination['grain'] + 200 - return_food - dues['nanjun'])
+        self.assertEqual(target.grain, destination['grain'] + 199 - return_food - dues['nanjun'])
         self.assertEqual(target.reserves, destination['reserves'] + 300)
         self.assertTrue(row['delivery_done']);self.assertEqual(row['status'],'returning')
         self.assertNotIn(999,target.roster.officer_ids)

@@ -487,6 +487,43 @@ test('recovery callback waits for title Start',async({page},testInfo)=>{
  expect(errors.get(page)).toEqual([]);
 });
 
+test('logistics V2.1 displays faction and city budgets in both languages',async({page},testInfo)=>{
+ await opening(page);
+ await page.locator('#scenario').selectOption('mainland208-10');
+ await page.locator('input[name=faction][value=wei]').check();
+ await page.locator('#begin').click();
+ await waitIdle(page);await tacticalDismiss(page);
+ const campaign=await page.evaluate(()=>({title:document.title,path:location.pathname}));
+ expect(campaign.path).toContain('/Three-Kingdoms2-King-mainland/');
+ expect(campaign.title).toContain('戰役');
+ const overview=page.locator('#inspector [data-faction-logistics]');
+ await overview.locator('summary').click();
+ await expect(overview.getByRole('columnheader',{name:'軍糧承諾'})).toBeVisible();
+ await expect(overview.getByRole('rowheader').filter({hasText:'曹操'})).toBeVisible();
+ await historyScreenshot(page,testInfo,'faction-logistics-v21',{fullPage:false});
+ const recovery=page.locator('#inspector [data-war-recovery]');
+ await recovery.locator('summary').click();
+ await expect(recovery.getByRole('columnheader',{name:'準備狀態'})).toBeVisible();
+ await expect(recovery.getByRole('rowheader').filter({hasText:'曹操'})).toBeVisible();
+ await recovery.scrollIntoViewIfNeeded();
+ await historyScreenshot(page,testInfo,'war-recovery-v211',{fullPage:false});
+ await page.locator('#city-information').click();
+ const detail=page.locator('.city-information');
+ const summary=detail.locator('[data-city-logistics][data-locale-only="zh-Hant"]');
+ await summary.locator('summary').click();
+ await expect(summary.getByText('最低生存儲糧',{exact:true})).toBeVisible();
+ await expect(summary.getByText('實駐現役／超出供養',{exact:true})).toBeVisible();
+ await page.locator('#dialog-language').selectOption('ja');
+ const japanese=detail.locator('[data-city-logistics][data-locale-only="ja"]');
+ if(!await japanese.evaluate(node=>node.open))await japanese.locator('summary').click();
+ await expect(japanese.getByText('最低生活備蓄',{exact:true})).toBeVisible();
+ const forecast=japanese.getByText('次の不足見込み',{exact:true});
+ await forecast.scrollIntoViewIfNeeded();
+ await expect(forecast).toBeInViewport();
+ expect(errors.get(page)).toEqual([]);
+ await historyScreenshot(page,testInfo,'city-logistics-v21',{fullPage:false});
+});
+
 test('faction resources show current allies and large factions receive 40 command books',async({page})=>{
  await opening(page);
  const scenarios=page.locator('#scenario');
@@ -987,6 +1024,13 @@ test('daily marching grain loads once and consumes actual days through visible t
  expect(initial.state.extension.domestic.factions.shu.military).toBeNull();
  expect(initial.state.day).toBe(1);
  const startingGrain=initial.state.cities[source].grain;
+ expect(initial.state.extension.logistics_rules_version).toBe(2);
+ await page.locator('#city-information').click();
+ const logistics=page.locator('#dialog [data-city-logistics]:visible');
+ await expect(logistics).toHaveCount(1);
+ await logistics.locator('summary').click();
+ await expect(logistics.locator('dl')).toBeVisible();
+ await closeDialog(page);
  await clickCityCommand(page,'transfer');
  await expect(page.locator('#transfer-city')).toBeVisible();
  await page.locator('#transfer-city').selectOption(target);
@@ -998,6 +1042,12 @@ test('daily marching grain loads once and consumes actual days through visible t
  expect(officerText).toBeTruthy();
  expect(initial.state.officers[officerText].alive).toBe(true);
  await officer.check();
+ const cheapest=page.locator('#route-mode option[value=minimum_grain]');
+ await expect(cheapest).toHaveCount(1);
+ await page.locator('#route-mode').selectOption('minimum_grain');
+ await expect(page.locator('[data-logistics-quote]')).toBeVisible();
+ await expect(page.locator('[data-logistics-quote]')).toContainText(/最低耗糧|最小消費/);
+ await page.locator('#route-mode').selectOption(await landOption.getAttribute('value'));
  const preview=page.locator('#transfer-supply [data-supply-loaded]');
  await expect(preview).toHaveCount(1);
  const loaded=Number(await preview.getAttribute('data-supply-loaded'));
@@ -1021,7 +1071,17 @@ test('daily marching grain loads once and consumes actual days through visible t
   if(initial.state.cities[column.quote.path[index+1]]?.owner===initial.state.player)break;
  }
  expect(firstStage).toBeLessThan(column.quote.days);
- expect(loaded).toBe(Math.ceil(units*firstStage/50));
+ const weighted=(duration)=>{
+  let days=duration,total=0;
+  for(const leg of column.quote.routes){
+   const part=Math.min(days,leg.days);
+   total+=part*({plain:125,mountain:150,desert:150})[leg.terrain];
+   days-=part;
+   if(!days)break;
+  }
+  return Math.ceil(units*total/5000);
+ };
+ expect(loaded).toBe(weighted(firstStage));
  expect(column.supply).toMatchObject({loaded,received:0,consumed:0,remaining:loaded,elapsed_days:0,route_days:0});
  expect(departing.state.cities[source].grain).toBe(startingGrain-loaded);
  const live=page.locator(`[data-march="${column.id}"] [data-supply-loaded]`);
@@ -1038,7 +1098,7 @@ test('daily marching grain loads once and consumes actual days through visible t
  expect([next.state.year,next.state.month,next.state.day]).toEqual([217,7,11]);
  const marched=next.state.extension.travel.marches.find(row=>row.id===column.id);
  expect(marched).toBeTruthy();
- const elapsed=Math.min(10,column.quote.days),consumed=Math.ceil(units*elapsed/50),received=marched.supply.received;
+ const elapsed=Math.min(10,column.quote.days),consumed=weighted(elapsed),received=marched.supply.received;
  expect(marched.supply).toMatchObject({loaded,consumed,remaining:loaded+received-consumed,elapsed_days:elapsed,route_days:elapsed,shortage_days:0,lost:0});
  expect(next.state.officers[officerText].health).toBe(initial.state.officers[officerText].health);
  expect(next.state.officers[officerText].loyalty).toBe(initial.state.officers[officerText].loyalty);
@@ -1551,7 +1611,8 @@ test('Jiangxia Changsha offers distinct inland water and land routes through rea
  const select=page.locator('#route-mode'),river=select.locator('option[data-route-kind=river]');
  await expect(river).toHaveCount(1);
  await expect(select.locator('option[data-route-kind=land]')).toHaveCount(1);
- await expect(select.locator('option')).toHaveCount(2);
+ await expect(select.locator('option[value=minimum_grain]')).toHaveCount(1);
+ await expect(select.locator('option')).toHaveCount(3);
  const mode=await river.getAttribute('value');
  await select.selectOption(mode);
  await expect(page.locator('#transfer-estimate .river-flow-info')).toBeVisible();
@@ -2299,8 +2360,13 @@ test('manual treasure transport preserves cargo, rations and saved travel while 
  expect(convoy).toMatchObject({owner:'shu',status:'outbound',officers:[595],cargo:{gold:0,grain:0,reserves:0,treasure:6},delivery_done:false});
  const quote=convoy.journeys[0].quote;
  expect(quote.days).toBe(expectedTransport.days);expect(quote.modes).toEqual(expectedTransport.modes);
- let stageDays=0;for(let index=0;index<quote.routes.length;index++){stageDays+=quote.routes[index].days;if(before.state.cities[quote.path[index+1]]?.owner==='shu')break;}
- const units=convoy.officers.reduce((sum,id)=>sum+before.state.officers[id].troops+100,0),rations=Math.ceil(units*stageDays/50);
+ // The convoy loads to its first friendly depot over the plain land leg.
+ const firstLeg=quote.routes[0];
+ expect(quote.path.slice(0,2)).toEqual(['shujun','guanghan']);
+ expect(before.state.cities.guanghan.owner).toBe('shu');
+ expect(firstLeg).toMatchObject({mode:'land',terrain:'plain',days:2});
+ const units=convoy.officers.reduce((sum,id)=>sum+before.state.officers[id].troops+100,0);
+ const rations=Math.ceil(units*firstLeg.days*125/5000);
  expect(rations).toBe(expectedTransport.cost_grain);
  expect(convoy.journeys[0].supply).toMatchObject({loaded:rations,consumed:0,remaining:rations});
  expect(departing.state.cities[source].grain).toBe(before.state.cities[source].grain-rations);
@@ -3136,7 +3202,9 @@ test('march preview discloses a downstream depot shortage before moving officers
  const after=await tacticalSave(page);
  const march=after.state.extension.travel.marches.find(row=>row.source==='shujun'&&row.target==='nanjun');
  expect(march).toMatchObject({officers:[370],quote:{days:56,path:['shujun','qianwei','jiangyang','bajun','fuling','badong','nanjun']}});
- expect(march.supply.loaded).toBe(Math.ceil((before.state.officers[370].troops+100)*4/50));
+ // The first leg has one land-access day, one embarkation day and two downstream days.
+ const firstLegRationDays=1.25+1.10+2*1.05;
+ expect(march.supply.loaded).toBe(Math.ceil((before.state.officers[370].troops+100)*firstLegRationDays/50));
  expect(after.state.cities.shujun.grain).toBe(before.state.cities.shujun.grain-march.supply.loaded);
  expect(after.state.cities.guanghan.grain).toBe(0);
  const inTransit=page.locator(`[data-march="${march.id}"] button[data-march-officer="370"]`);

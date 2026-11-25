@@ -19,7 +19,7 @@ from . import diplomacy, grain_relief, grain_units, historical_campaigns, observ
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
-from . import battle_reinforcements, city_economy, economy_rules, grain_market, payroll
+from . import battle_reinforcements, city_economy, economy_rules, grain_market, logistics_rules, logistics_strategy, payroll
 from .city_economy import frontier_maintenance
 from .starting_garrisons import resolve as resolve_opening_garrisons
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
@@ -361,6 +361,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         if grain_units.current_rations():
             state.extension[grain_units.RATION_FIELD] = grain_units.RATION_VERSION
             state.extension[economy_rules.FIELD] = economy_rules.CURRENT
+            state.extension[logistics_rules.FIELD] = logistics_rules.CURRENT
+            logistics_strategy.initialize(state)
         if lifespan == 'none':
             state.extension['lifespan'] = lifespan
         state.extension['travel'] = dict(counter=0, marches=[], battle_arrival=False, discovered=[])
@@ -542,6 +544,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 equipment.synchronize(self,candidate)
                 if kind != 'new':
                     domestic.rebalance_changed_garrisons(self, self.state, candidate)
+                from . import occupation_budget, staging_supply
+                staging_supply.synchronize(candidate)
+                occupation_budget.prune(candidate)
                 self.validate(candidate)
                 if candidate.phase == 'result':
                     from . import battle_experience
@@ -629,9 +634,10 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             command_books.spend(state, city, 'allocate')
             if batch:
                 command_books.open_allocation(state, city)
-        for ident, officer, troops, _ in planned:
-            officer.troops = troops
-        city.reserves -= change
+        domestic.apply_allocation(state,city,{ident:troops for ident,_,troops,_ in planned})
+        if change>0:
+            from . import war_recovery
+            war_recovery.record(state,city.owner,city.id,'allocation',change)
         for ident, _, troops, changed in planned:
             if changed:
                 self._note(state, f'{self.person_name(state, ident)}编兵为{troops}，本城预备兵{city.reserves}。')
@@ -943,6 +949,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             raise ValueError('campaign identity')
         get_settings(state)
         economy_rules.validate(state)
+        logistics_rules.validate(state)
         grain_market.validate(state)
         command_books.validate(self, state)
         diplomacy.validate(self, state)

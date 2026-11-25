@@ -174,7 +174,7 @@ def _loss_value(unit, amount):
 def _ration_nutrition(state,battle,side):
     from . import battle_supply
     ledger=battle['extended'].get('supply')
-    credit=ledger['sides'][side]['credit_units']if ledger is not None else 0
+    credit=ledger['sides'][side]['credit_units']//battle_supply.credit_scale(ledger) if ledger else 0
     return battle_supply.available(state,battle,side)*battle_supply.denominator()+credit
 
 
