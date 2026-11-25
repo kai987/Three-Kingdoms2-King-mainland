@@ -395,7 +395,7 @@ def _allocation_priority(officer):
             _ref_key(officer.runtime_id))
 
 
-def allocation_preview(game, state, city_id, *, max_added=None):
+def allocation_preview(game, state, city_id, *, max_added=None, held=None):
     """Plan local reserve assignments without drawing RNG or changing the state.
 
     A faction official manages every owned city, but troops stay in their own
@@ -410,7 +410,7 @@ def allocation_preview(game, state, city_id, *, max_added=None):
     if official is None or not _present(game, state, city, official):
         return result
     available = [state.officers[i] for i in city.roster.officer_ids
-                 if state.officers[i].troops < OFFICER_TROOP_CAP and _present(game, state, city, i)]
+                 if i!=held and state.officers[i].troops < OFFICER_TROOP_CAP and _present(game, state, city, i)]
     available.sort(key=_allocation_priority)
     for officer in available:
         amount = min(result['remaining_reserves'], OFFICER_TROOP_CAP - officer.troops)
@@ -428,19 +428,25 @@ def allocation_preview(game, state, city_id, *, max_added=None):
     return result
 
 
-def allocate_garrison(game, state, city_id, *, record=True, max_added=None):
+def allocate_garrison(game, state, city_id, *, record=True, max_added=None, held=None):
     """Apply the shared player/AI allocation plan; no fees or action are spent."""
-    quote = allocation_preview(game, state, city_id, max_added=max_added)
+    quote = allocation_preview(game, state, city_id, max_added=max_added,held=held)
     if quote['soldiers']:
         city = state.cities[city_id]
-        for assignment in quote['assignments']:
-            state.officers[assignment['id']].troops = assignment['to']
-        city.reserves = quote['remaining_reserves']
+        apply_allocation(state,city,{row['id']:row['to'] for row in quote['assignments']})
         from . import war_recovery
         war_recovery.record(state,city.owner,city.id,'allocation',quote['soldiers'])
         if record:
             _report(state, city, 'allocation', soldiers=quote['soldiers'], officers=quote['officers'])
     return quote
+
+
+def apply_allocation(state,city,changes):
+    """Apply the same local active/reserve balance for player and AI orders."""
+    change=sum(troops-state.officers[ident].troops for ident,troops in changes.items())
+    for ident,troops in changes.items():
+        state.officers[ident].troops=troops
+    city.reserves-=change
 
 
 def rebalance_changed_garrisons(game, before, state):
@@ -835,6 +841,10 @@ def finish_faction_turn(game, state, owner, *, automatic=True, outlook=None):
     synchronize(game, state)
     summary = dict(gold=0, grain=0, reserves=0, morale=0, cities=0, reason='turn')
     first_city = None
+    relief_needed=False
+    if logistics_strategy.staging(state) and economy_plan is not None:
+        relief_needed=any(row['owner']==owner and not row['supply']['retreat_requested']
+                          for row in state.extension['travel']['marches'])
     post = appointments(state, owner)
     if not post:
         return
@@ -872,13 +882,17 @@ def finish_faction_turn(game, state, owner, *, automatic=True, outlook=None):
         # Active jobs, including explicitly configured reserve transports, have
         # first claim. Assign only the local remainder before training it.
         if key not in hold_grain or key in frontiers:
-            cap = None
+            cap = budget = None
             if economy_plan is not None and logistics_strategy.enabled(state, logistics_strategy.GARRISON):
                 budget = economy_plan.budgets[key]
                 # Other orders may already have changed local stock or reserves.
                 budget = dict(budget, **faction_economy.capacity(game, state, city, budget))
                 cap = faction_economy.allocation_limit(game, state, city, budget)
-            allocate_garrison(game, state, key, max_added=cap)
+            held=None
+            if logistics_strategy.staging(state) and economy_plan is not None:
+                from . import escort_planning
+                held=escort_planning.preserves_escort(game,state,city,shortages,budget,relief_needed)
+            allocate_garrison(game, state, key, max_added=cap,held=held)
         if key not in hold_grain and policy['training_enabled']:
             quote = training_preview(game, state, key)
             if quote['gain']:

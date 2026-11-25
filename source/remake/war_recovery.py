@@ -36,7 +36,7 @@ def validate(game,state):
     if FIELD not in state.extension:
         return
     values=state.extension[FIELD]
-    if (state.extension.get(logistics_strategy.FIELD)!=logistics_strategy.CURRENT
+    if (state.extension.get(logistics_strategy.FIELD)not in logistics_strategy.VERSIONS_WITH_RELIEF
             or not isinstance(values,dict) or not set(values)<=set(game.catalog.factions)):
         raise ValueError('War recovery history')
     for cities in values.values():
@@ -92,10 +92,10 @@ def months_for(needs, current, dated, surplus):
     return best
 
 
-def multiplier(months):
+def multiplier(months, policy=None):
     if months is None:
-        return UNFUNDED
-    return next((value for upper,value in RISK_MULTIPLIERS if months<=upper),LATER)
+        return policy['no_source'] if policy else UNFUNDED
+    return next((value for upper,value in RISK_MULTIPLIERS if months<=upper),policy['after_six'] if policy else LATER)
 
 
 def action_score(advantage,defender,weight,fronts,local_deficit,*,necessary=False):
@@ -294,7 +294,7 @@ class Forecast:
                                    months=round(float(eta),3) if eta is not None else None))
         months=None if no_regular else waiting
         return dict(fields,months=round(float(waiting),3) if not no_regular else None,
-                    multiplier=multiplier(months),no_reliable_surplus=no_regular,
+                    multiplier=multiplier(months,self.state.extension.get(logistics_strategy.POLICY)),no_reliable_surplus=no_regular,
                     other_fronts=len(fronts),overlapping_fronts=other_fronts,
                     committed_wars=len(fronts)+int(any(target in f for f in self.fronts.values())),
                     deployed=self.deployed,enroute=self.enroute,cities=cities)

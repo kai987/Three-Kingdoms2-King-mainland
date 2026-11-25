@@ -302,7 +302,8 @@ class Planner:
             return 'no_spare_officer'
         return None
 
-    def candidates(self, source, *, budget=None, selected=None, cargo=None, origin=None, live=None):
+    def candidates(self, source, *, budget=None, selected=None, cargo=None, origin=None, live=None,
+                   loads=None, urgent_only=False):
         game, state = self.game, self.state
         key = source.id
         policy = logistics._pool(state)['cities'][key]['policy'] if live is None else live['route_policy']
@@ -311,6 +312,11 @@ class Planner:
             if reason:
                 return (), reason
         ids = sorted(logistics._eligible(game,state,source),key=lambda i:escort_rank(state,i)) if live is None else live['officers']
+        from . import logistics_strategy
+        if live is None and selected is None and logistics_strategy.staging(state):
+            from .escort_planning import assigned_to_war
+            locked=assigned_to_war(state,source)
+            ids=[i for i in ids if i not in locked and (loads is None or i in loads)]
         if selected is not None:
             ids = selected['officers']
         if not ids:
@@ -327,7 +333,7 @@ class Planner:
         for ident,demand in self.demands.items():
             if (selected is not None and ident!=selected['march_id']) or (live and ident!=live['target_march']):
                 continue
-            if demand.required:
+            if demand.required and (not urgent_only or demand.urgent):
                 booked = tuple(self.estimates(ident,exclude=live['id'] if live else None))
                 need = net_requirement(demand.required,booked,demand.deadline)
                 if need:
@@ -382,7 +388,7 @@ class Planner:
                     missing_slot = len(ids) if live or selected else 1
                     candidates = [ids] if selected is not None or live is not None else [[i] for i in ids]
                     for team in candidates:
-                        troop_count = sum(state.officers[i].troops for i in team)
+                        troop_count = sum((loads or {}).get(i,state.officers[i].troops) for i in team)
                         if budget and budget['threatened'] and selected is None and live is None:
                             from .difficulty import get_settings
                             if budget['active']-troop_count < min(budget['active'],get_settings(state)['min_guard_troops']):

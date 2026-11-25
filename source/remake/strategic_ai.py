@@ -34,6 +34,8 @@ class StrategicAI:
         self.return_quotes = {}
         self.war_quotes = {}
         self.economy_plans = {}
+        self.occupation = {}
+        self.staging_checked = set()
         self.friendly_recovery = {}
         self.v21 = logistics_strategy.enabled(state)
         self.adaptive = logistics_strategy.enabled(state, logistics_strategy.WAR)
@@ -231,6 +233,13 @@ class StrategicAI:
         """
         if not quote:
             return False
+        if logistics_strategy.staging(self.state):
+            from . import staging_supply
+            if len(quote['routes']) == 1:
+                return staging_supply.available(self.state,city) >= march_grain(self.state,ids,quote,game=self.game)
+            loaded, stops = staging_supply.assess(self.game,self.state,city,ids,quote,self.economy_plan(city.owner).budgets)
+            return staging_supply.available(self.state,city) >= loaded and all(
+                row['required']==row['reserved'] for row in stops)
         loaded = march_grain(self.state, ids, quote, game=self.game)
         if city.grain < loaded:
             return False
@@ -274,7 +283,9 @@ class StrategicAI:
             self.return_quotes[key]=[option for option in options if option is not None]
         troops=tuple((ident,state.officers[ident].troops) for ident in ids)
         route=tuple((leg['id'],leg['days']) for leg in quote['routes'])
-        fingerprint=(key,troops,route,movements,city.grain,city.gold,city.reserves,
+        from . import staging_supply
+        held=staging_supply.held(state,city.id) if logistics_strategy.staging(state) else 0
+        fingerprint=(key,troops,route,movements,city.grain,city.gold,city.reserves,held,
                      tuple((i,state.officers[i].experience) for i in city.roster.officer_ids))
         # A pending order revalidates its own reservation. Another purpose
         # cannot concurrently spend that stock.
@@ -295,7 +306,7 @@ class StrategicAI:
             kwargs = (dict(defenders=self.strength(target), incoming=incoming,
                            recovery=None if self.recovery_v211 else self.recovery_support(city)) if self.adaptive else {})
             self.war_quotes[fingerprint]=military_budget.sortie(self.game,state,city,target,ids,quote,
-                back,absent=self.budget_absent[1], **kwargs)
+                back,absent=self.budget_absent[1],held=held, **kwargs)
         return self.war_quotes[fingerprint]
 
     def affordable_sortie(self,city,target,ids,quote):
@@ -403,6 +414,12 @@ class StrategicAI:
         winners, potential = [], []
         recovery_quote = None
         deferred = []
+        occupied = []
+        if logistics_strategy.occupancy_budget(self.state):
+            from . import occupation_budget
+            if owner not in self.occupation:
+                self.occupation[owner]=occupation_budget.record(self,owner,self.economy_plan(owner))
+            occupied=self.occupation[owner]
         historical_targets = set()
         hostile_approaches = defaultdict(set)
         if self.recovery_v211:
@@ -465,8 +482,16 @@ class StrategicAI:
                         attack,prepare=war_recovery.action_score(power-required,required,risk['multiplier'],
                             risk['other_fronts']+risk['overlapping_fronts'],risk.get('source_grain_pressure',0),
                             necessary=necessary)
+                        occupation_pressure = max((row['local_risk'] for row in occupied
+                            if row['city'] not in {entry['city'] for entry in risk['cities']}),default=0)
+                        if occupation_pressure and not necessary:
+                            # Compare present exposure with the existing preparation
+                            # score. It never becomes a second requisition.
+                            prepare=max(prepare,war_recovery.OBJECTIVE_SCALE-25+occupation_pressure)
                         decision=dict(owner=owner,target=target.id,sources=[c[0] for c in columns],
                             plan_id=f'{owner}:{self.state.turn}:{target.id}',necessary=necessary,necessity=necessity,
+                            **({'occupation_pressure':occupation_pressure}
+                               if logistics_strategy.occupancy_budget(self.state) else {}),
                             attack_score=attack,prepare_score=prepare,recovery=risk)
                         if not necessary and attack<prepare:
                             deferred.append((prepare-attack,target.id,decision))
@@ -549,7 +574,8 @@ class StrategicAI:
 
         requests = []
         recovery = {row['city']:row for row in self.recovery_wait.get(owner,()) if row['grain_gap'] or row['gold_gap']}
-        sources = {order['source'] for order in pending} | set(recovery)
+        occupied={row['city']:row for row in self.occupation.get(owner,()) if row['next_grain_gap']}
+        sources = {order['source'] for order in pending} | set(recovery) | set(occupied)
         for city in logistics._fronts(self.game, self.state, owner):
             if not self.available(city):
                 continue
@@ -561,6 +587,8 @@ class StrategicAI:
             if city.id in recovery:
                 grain_goal=max(grain_goal,city.grain+recovery[city.id]['grain_gap'])
                 gold_goal=max(gold_goal,city.gold+recovery[city.id]['gold_gap'])
+            if city.id in occupied:
+                grain_goal=max(grain_goal,city.grain+occupied[city.id]['next_grain_gap'])
             gold, grain = logistics.supply_shortages(self.state, city, gold_goal, grain_goal)
             if gold >= 100 or grain >= grain_units.amount(300):
                 shortage = gold * 100 // gold_goal + grain * 100 // grain_goal
@@ -688,6 +716,7 @@ class StrategicAI:
         economy = self.economy_plan(city.owner) if garrison_policy else None
         chronic = garrison_policy and logistics_strategy.pressure(self.state, 'cities', city.id, True, write=False) >= 3
         destinations = []
+        stage_missing = {}
         eligible = []
         for target in self.state.cities.values():
             if target.id == city.id or target.owner != city.owner:
@@ -727,16 +756,79 @@ class StrategicAI:
                         candidate = chosen + [ident]
                         troops = sum(self.state.officers[officer].troops for officer in candidate)
                         threatened = economy is not None and economy.budgets[target.id]['threatened']
-                        if (support is None or threatened or troops<=support) and self.provisioned(city, candidate, quote):
+                        if support is not None and not threatened and troops>support:
+                            continue
+                        if self.provisioned(city,candidate,quote):
                             chosen = candidate
+                        elif (logistics_strategy.staging(self.state) and not chosen and len(quote['routes'])>1
+                              and self.safe(quote,candidate)):
+                            from . import staging_supply
+                            loaded,stops=staging_supply.assess(self.game,self.state,city,candidate,quote,economy.budgets)
+                            if loaded<=staging_supply.available(self.state,city):
+                                for stop in stops:
+                                    gap=stop['required']-stop['reserved']
+                                    if gap:
+                                        order=(stop['arrival'],stop['city'],gap)
+                                        stage_missing.setdefault(stop['city'],order)
                 if chosen and self.safe(quote,chosen):
                     destinations.append((self.strength(target)-self.threat(target),quote['days'],target.id,mode,chosen))
         if not destinations:
+            if stage_missing and self.prepare_checkpoint(city.owner,stage_missing,economy):
+                return True
             return False
         _,_,key,mode,chosen = min(destinations,key=lambda row:row[:4])
-        self.game._queue_march(self.state,city,self.state.cities[key],chosen,'transfer',mode)
+        kwargs = {'staging_budgets':economy.budgets} if logistics_strategy.staging(self.state) else {}
+        try:
+            self.game._queue_march(self.state,city,self.state.cities[key],chosen,'transfer',mode,**kwargs)
+        except GameError:
+            if not kwargs:
+                raise
+            return False
+        if kwargs:
+            self.economy_plans.pop(city.owner,None)
         self.game._report_ai(self.state,city,'transfer',key)
         return True
+
+    def prepare_checkpoint(self,owner,missing,economy):
+        """Fund one real checkpoint before trying the route again."""
+        from . import escort_planning, facilities, logistics
+        if owner in self.staging_checked:
+            return False
+        self.staging_checked.add(owner)
+        when,key,grain=min(missing.values())
+        city=self.state.cities[key]
+        if city.owner!=owner:
+            return False
+        protected=escort_planning.assigned_to_war(self.state,city)
+        gap=grain
+        result='deferred'
+        # Existing convoys must arrive before the quoted departure plus its
+        # first leg. Later deliveries never count as immediate inventory.
+        eta=max(1,(when-(self.state.turn-1)*10+9)//10)
+        scheduled=sum(x for t,(_,_,x) in enumerate(economy.cities[key].timeline,1) if t<=eta)
+        if scheduled>=grain:
+            result='awaiting_transport'
+        elif facilities._ready(self.state,owner) and command_books.can_spend(self.state,owner,'trade_grain'):
+            budget=economy.budgets[key]
+            offer=facilities.emergency_quote(self.game,self.state,city,grain)
+            actor=next((i for i in self.available(city) if i not in protected and
+                facilities._resident(self.game,self.state,city,i,working=True,unused=True,healthy=True)),None)
+            if actor is not None and offer['grain'] and city.gold-offer['gold']>=budget['wage_gold']:
+                receipt=facilities.buy_emergency_grain(self.game,self.state,city,actor,owner,grain)
+                gap-=receipt['grain']
+                result='market_purchase'
+        if result=='deferred':
+            floor=economy.budgets[key]['minimum_export_floor']
+            if logistics.dispatch_ai_supply(self.game,self.state,city,0,max(floor,city.grain)+grain,
+                    require_return=True,protected_officers=protected,max_turns=eta,economy_plan=economy):
+                result='transport_dispatched'
+        logistics_strategy.observe('staging_preparation',self.state,owner=owner,city=key,
+                                   expected_tick=when,grain_required=grain,gap=gap,result=result)
+        if result in {'market_purchase','transport_dispatched'}:
+            self.economy_plans.pop(owner,None)
+            self.grain_outlooks.pop(owner,None)
+            return True
+        return False
 
     def record_pressure(self, owner):
         state = self.state
@@ -863,6 +955,7 @@ def run(campaign, state, payload):
     x = state.extension
     ai = StrategicAI(campaign,state)
     has_domestic = 'domestic' in x
+    escort_checked = set()
     relief_done = {state.cities[key].owner for key in x['ai_queue'][:x['ai_cursor']] if key in state.cities}
     if has_domestic:
         from .domestic import prepare_ai, prioritize_grain
@@ -874,6 +967,13 @@ def run(campaign, state, payload):
         city = state.cities.get(key)
         if city is None or city.owner in (state.player,'neutral') or not command_books.can_spend(state,city.owner):
             continue
+        if logistics_strategy.staging(state) and city.owner not in escort_checked:
+            from . import escort_planning
+            escort_checked.add(city.owner)
+            if any(row['owner']==city.owner for row in state.extension['travel']['marches']):
+                if escort_planning.prepare(campaign,state,city.owner,ai.economy_plan(city.owner)):
+                    ai.economy_plans.pop(city.owner,None)
+                    ai.grain_outlooks.pop(city.owner,None)
         outlook = ai.grain_outlook(city.owner)
         if ai.v21 and has_domestic and city.owner not in relief_done:
             outlook = prioritize_grain(campaign, state, city.owner, outlook,

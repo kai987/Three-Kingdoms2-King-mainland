@@ -47,10 +47,15 @@ class Commitments:
 
 def pending(state, owner):
     book = Commitments()
-    plan = state.extension['ai_strategy'].get(owner)
-    if not plan:
-        return book
-    for order in plan['orders']:
+    from . import staging_supply
+    for row in staging_supply.active(state):
+        if row['owner'] == owner:
+            item = Commitment(f"march:{row['army']}:{row['route_day']}", owner,
+                              row['city'], row['path'][-1], row['reserved'], 3,
+                              row['turn'], row['expires']//10+1)
+            book.reserve(item, state.cities[row['city']].grain)
+    plan = state.extension['ai_strategy'].get(owner, {})
+    for order in plan.get('orders', ()):
         source = state.cities.get(order['source'])
         target = state.cities.get(order['target'])
         if (order['march_id'] is not None or not order.get('provision')
@@ -222,6 +227,10 @@ def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=H
             away.update(march['officers'])
     away.update(ident for ident in city_economy.absent_troops(game, state)
                 if state.officers[ident].faction_id == owner and state.officers[ident].alive)
+    staged = defaultdict(int)
+    for item in book.held.values():
+        if item.plan_id.startswith('march:'):
+            staged[item.source_city_id] += item.amount
     forecast = {}
     next_date = (state.year + (state.month == 12), state.month % 12 + 1)
     for key, row in budgets.items():
@@ -233,6 +242,8 @@ def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=H
         held = book.amount(key)
         row.update(gold=city.gold, reserves=city.reserves, minimum_reserve=minimum,
                    safety_reserve=safety, reserved_grain=held, next_natural_reserves=natural)
+        if staged:
+            row['staging_grain'] = staged[key]
         projected = _forecast(game, state, city, row, shipments[key], held, turns, next_income)
         forecast[key] = projected
         reserve = max(minimum, projected.reserve)

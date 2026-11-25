@@ -544,6 +544,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 equipment.synchronize(self,candidate)
                 if kind != 'new':
                     domestic.rebalance_changed_garrisons(self, self.state, candidate)
+                from . import occupation_budget, staging_supply
+                staging_supply.synchronize(candidate)
+                occupation_budget.prune(candidate)
                 self.validate(candidate)
                 if candidate.phase == 'result':
                     from . import battle_experience
@@ -631,9 +634,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             command_books.spend(state, city, 'allocate')
             if batch:
                 command_books.open_allocation(state, city)
-        for ident, officer, troops, _ in planned:
-            officer.troops = troops
-        city.reserves -= change
+        domestic.apply_allocation(state,city,{ident:troops for ident,_,troops,_ in planned})
         if change>0:
             from . import war_recovery
             war_recovery.record(state,city.owner,city.id,'allocation',change)

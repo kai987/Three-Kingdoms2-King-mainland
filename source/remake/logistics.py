@@ -657,7 +657,7 @@ def _journey(game, state, source, target, mode, quote, ids, reserves, *, from_ca
         supply=create(state, ids, quote, reserves, game=game, from_cargo=from_cargo,initial_grain=initial_grain,previous=previous))
 
 
-def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planner=None, donor_budget=None):
+def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planner=None, donor_budget=None, allocation=None):
     if (not isinstance(payload, dict) or set(payload) - {'source', 'target', 'officers', 'cargo', 'route_mode','target_march'}
             or not isinstance(payload.get('source'), str) or not isinstance(payload.get('target'), str)
             or payload['source'] not in state.cities or payload['target'] not in state.cities):
@@ -694,11 +694,16 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planne
     if not isinstance(mode, str) or mode not in {'land', 'fastest', 'river', 'sea', 'special', 'minimum_grain'}:
         raise GameError('请选择已知的运输路线。')
     relief = None
+    if allocation is not None:
+        from . import escort_planning
+        if (not logistics_strategy.staging(state) or army is None or len(ids)!=1
+                or allocation!=escort_planning.can_change(game,state,source,donor_budget,ids[0])):
+            raise GameError('押运编兵条件已经变更。')
     if army is not None and logistics_strategy.army_relief(state):
         from . import army_relief
         planner=relief_planner or army_relief.Planner(game,state,owner)
         options,blocked=planner.candidates(source,budget=donor_budget,cargo=cargo['grain'],
-            selected=dict(march_id=target_march,city=target.id,officers=ids,mode=mode))
+            selected=dict(march_id=target_march,city=target.id,officers=ids,mode=mode),loads=allocation)
         if not options:
             raise GameError(army_relief.dispatch_error(blocked))
         relief=options[0]
@@ -726,6 +731,13 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planne
         raise GameError('本城的宝数量不足。')
     if pool['next_id'] > 1000000:
         raise GameError('运输队编号已达上限。')
+    if allocation is not None:
+        from . import domestic
+        command_books.spend(state,source,'allocate')
+        before={str(i):state.officers[i].troops for i in allocation}
+        domestic.apply_allocation(state,source,allocation)
+        logistics_strategy.observe('escort_assignment',state,source=source.id,owner=owner,army=target_march,
+                                    officer=ids[0],before=before,after=allocation,reserves=source.reserves)
     for field in _CITY_FIELDS:
         setattr(source, field, getattr(source, field) - cargo[field])
     if cargo['treasure']:
@@ -760,7 +772,13 @@ def auto_dispatch_city(game,state,city_id,*,plans=None,relief_planner=None):
     if (not _pool(state)['cities'][city_id]['policy']['enabled']
             or historical_campaigns.hold_longyou_garrison(game, state, state.cities[city_id])):
         return False
-    if logistics_strategy.army_relief(state):
+    if logistics_strategy.staging(state):
+        from . import army_relief, escort_planning
+        city=state.cities[city_id]
+        planner=relief_planner or army_relief.Planner(game,state,city.owner)
+        if escort_planning.send(game,state,city,planner,(plans or {}).get(city_id)):
+            return True
+    elif logistics_strategy.army_relief(state):
         from . import army_relief
         city=state.cities[city_id]
         planner=relief_planner or army_relief.Planner(game,state,city.owner)
@@ -1560,7 +1578,7 @@ def validate(game, state):
             raise ValueError('Logistics convoy identity')
         if 'relief' in row:
             from . import army_relief
-            if state.extension.get(logistics_strategy.FIELD)!=logistics_strategy.CURRENT:
+            if state.extension.get(logistics_strategy.FIELD)not in logistics_strategy.VERSIONS_WITH_RELIEF:
                 raise ValueError('Army relief version')
             army_relief.validate(row,state)
         seen.add(row['id']); origins.add(row['source'])

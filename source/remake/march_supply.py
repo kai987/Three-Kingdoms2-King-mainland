@@ -235,7 +235,13 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
             budget=10 if progress>=quote['days'] else max(1,distance)
         wanted=max(0,rules.ceil_div(units*budget-supply['credit_units'],divisor)-supply['remaining'])
         if wanted and not self_funded and city_id and state.cities[city_id].owner==unit['owner']:
-            city=state.cities[city_id];amount=min(wanted,city.grain,LIMIT-supply['remaining'])
+            from . import staging_supply
+            city=state.cities[city_id]
+            army=unit['id'] if unit_kind=='march' else None
+            stock=staging_supply.available(state,city,army=army) if staging_supply.FIELD in state.extension else city.grain
+            amount=min(wanted,stock,LIMIT-supply['remaining'])
+            if army is not None and staging_supply.FIELD in state.extension:
+                staging_supply.settle(state,unit,city_id,amount,tick)
             if amount:
                 city.grain-=amount;receive(supply,amount,'city',city_id,state.turn);wanted-=amount
                 # At most one combined city receipt event per unit/city/turn.

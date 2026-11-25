@@ -30,7 +30,7 @@ def configured(group):
         hooks.enter_context(patch.object(war_recovery,'UNFUNDED',p['no_source']))
         options={'army':True,'recovery':True}
         if p['staging']:
-            options.update(candidate='occupation' if p['occupation'] else 'logistics')
+            options.update(candidate={key:p[key] for key in ('occupation','after_six','no_source')})
         hooks.enter_context(logistics_strategy.experiment(4,**options))
         yield
 

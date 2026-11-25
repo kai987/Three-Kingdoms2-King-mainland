@@ -275,7 +275,7 @@ class TravelCampaign:
                     remaining=max(0, self.catalog.rules.battle_officers_per_side - committed))
 
     def _queue_march(self, state, source, target, ids, kind, mode='fastest', *, battle_grain=None,
-                     supply_detour=False):
+                     supply_detour=False, staging_budgets=None):
         if kind == 'attack' and southern_mission.blocks_settlement(state, source.owner, target.id):
             raise GameError('呂宋正在進行宣化南行劇情，請從呂宋的築城計畫派遣船隊。')
         if kind == 'attack' and historical_campaigns.allied(state, source.owner, target.owner):
@@ -310,7 +310,15 @@ class TravelCampaign:
             grain = departure_quote(state, ids, quote, game=self, battle_grain=battle_grain)['total_grain']
         else:
             grain = estimate(state, ids, quote, game=self)
-        if source.grain < grain: raise GameError('行军粮食不足。')
+        from . import staging_supply
+        if (staging_supply.available(state, source) if staging_budgets is not None
+                else source.grain) < grain:
+            raise GameError('行军粮食不足。')
+        stops = []
+        if staging_budgets is not None:
+            _, stops = staging_supply.assess(self,state,source,ids,quote,staging_budgets)
+            if any(stop['reserved'] != stop['required'] for stop in stops):
+                raise GameError('沿途城池的預留糧不足。')
         command_books.spend(state, source, order)
         source.grain -= grain
         state.extension['officer_actions'].update({str(i): state.turn for i in ids})
@@ -325,6 +333,7 @@ class TravelCampaign:
         row.update(status='outbound',reason='outbound',history=[],journey_source=source.id,
             mission={key:row[key] for key in ('source','target','kind','mode','departure_turn','arrival_turn')})
         travel['marches'].append(row)
+        staging_supply.reserve(state,row,stops)
         if 'domestic' in state.extension:
             from .domestic import on_departure
             on_departure(self,state,ids,source.id)
