@@ -51,11 +51,25 @@ UNRESOLVED_FIELDS = ('convoy_id owner actual_position current_phase terminal_sta
  'delivered_tick').split()
 
 
+def personnel_safe_terminal(facts, transferred_reserves=0):
+    """A docking receipt with an entirely lost original group is not a safe end."""
+    if facts['terminal_status'] not in ('returned_home','received_elsewhere'):
+        return False
+    def total(*keys):
+        return sum(int(facts[key]) for key in keys)
+    return (
+        (not total('initial_escort') or total('current_escort')>0)
+        and (not total('initial_reserves') or total('current_reserves')+transferred_reserves>0)
+        and (not total('initial_officers','initial_civil_staff') or total('current_officers','current_civil_staff')>0)
+    )
+
+
 class Recorder(TransportRecorder):
     def __init__(self,path):
         super().__init__(path)
         self.convoys={}
         self.strength={}
+        self.transferred_reserves=Counter()
 
     def __enter__(self):
         super().__enter__()
@@ -83,6 +97,8 @@ class Recorder(TransportRecorder):
             export={k:json.dumps(v,ensure_ascii=False,sort_keys=True,separators=(',',':')) if isinstance(v,(list,dict)) else v
                     for k,v in row.items()}
             self.write(STREAMS[kind],export)
+        if kind=='convoy_ledger' and row['kind_of_change']=='delivered':
+            self.transferred_reserves[row['convoy_id']]+=row['before']['reserves']-row['after']['reserves']
         if kind=='convoy_strength':
             self.strength[row['convoy_id']]=row
         elif kind=='convoy_event':
@@ -155,7 +171,8 @@ class Recorder(TransportRecorder):
         active={r['id']:r for r in final}
         for ident,facts in self.convoys.items():
             if facts['actual_terminal_tick'] is not None:
-                date=weather.date_at(catalog,max(1,facts['actual_terminal_tick']))
+                # Strategic settlement at tick 10 is the start of day 11.
+                date=weather.date_at(catalog,facts['actual_terminal_tick']+1)
                 facts['actual_terminal_date']='-'.join(map(str,date))
             else:
                 if ident not in active:
@@ -166,7 +183,8 @@ class Recorder(TransportRecorder):
                     facts['terminal_status']='dangerous_stalled'
                 else:
                     facts['terminal_status']='delivered_returning' if facts['delivered_tick'] is not None else 'not_delivered_in_transit'
-            facts['days_since_last_effective_action']=max(0,(facts['actual_terminal_tick'] or last_tick)-facts['last_effective_tick'])
+            cutoff=last_tick if facts['actual_terminal_tick'] is None else facts['actual_terminal_tick']
+            facts['days_since_last_effective_action']=max(0,cutoff-facts['last_effective_tick'])
         rows=list(self.convoys.values())
         if rows:
             to_csv(self.path/'convoy-survival.csv',rows)
@@ -177,13 +195,14 @@ class Recorder(TransportRecorder):
             to_csv(self.path/'unresolved-convoy-cases.csv',unresolved)
         else:
             (self.path/'unresolved-convoy-cases.csv').write_text(','.join(UNRESOLVED_FIELDS)+'\n',encoding='utf-8')
-        safe=[x for x in rows if x['terminal_status'] in ('returned_home','received_elsewhere')]
+        received=[x for x in rows if x['terminal_status'] in ('returned_home','received_elsewhere')]
+        safe=[x for x in received if personnel_safe_terminal(x,self.transferred_reserves[x['convoy_id']])]
         totals=Counter(x['terminal_status'] for x in rows)
         account_fields=('initial_escort','initial_reserves','initial_officers','initial_civil_staff','current_escort',
             'current_reserves','current_officers','current_civil_staff','escort_hunger_loss','reserve_hunger_loss','other_troop_loss')
         return dict(dispatched=len(rows),ended=len(rows)-len(unresolved),safe_ended=len(safe),unresolved=len(unresolved),
             states=dict(totals),totals={k:sum(x[k] for x in rows) for k in account_fields},
-            safe_personnel=sum(x['current_escort']+x['current_reserves'] for x in safe),
+            safe_personnel=sum(x['current_escort']+x['current_reserves'] for x in received),
             in_transit_personnel=sum(x['current_escort']+x['current_reserves'] for x in unresolved),
             all_escorts_lost=sum(bool(x['initial_escort'] and x['escort_hunger_loss']>=x['initial_escort']) for x in rows),
             max_effective_stall=max((x['max_consecutive_blocked_days'] for x in rows),default=0))
