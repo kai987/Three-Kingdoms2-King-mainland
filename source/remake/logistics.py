@@ -37,7 +37,7 @@ _REASONS.add('insufficient_grain')
 _REASONS.update({'army_missing','army_changed','rendezvous_wait','rendezvous_missed',
                  'delivered','escort_return','retreat','army_supplied','unsafe_return',
                  'rendezvous_expired','rendezvous_replanned'})
-_CARGO_KINDS = {'weather','rations','starvation','delivered','army_supply','bag_return'}
+_CARGO_KINDS = {'weather','rations','starvation','delivered','army_supply','convoy_supply','bag_return'}
 LOSS_FIELD = 'cargo_loss_remainder'
 RECEIPT_FIELDS = {'cargo_dispatched','cargo_received','cargo_rations','cargo_route_loss',
                   'cargo_weather_loss','cargo_delivered','cargo_returned','cargo_remaining',
@@ -49,8 +49,10 @@ def _int(value, low, high):
 
 
 def safe_execution(state):
+    from . import transport_emergency
     return (logistics_rules.version(state)==logistics_rules.CURRENT and
-            (winter_weather.stage(state)<2 or winter_weather.corrected(state,winter_weather.TRANSPORT)))
+            (winter_weather.stage(state)<2 or winter_weather.corrected(state,winter_weather.TRANSPORT)
+             or transport_emergency.stage(state)))
 
 
 def _empty_cargo():
@@ -117,6 +119,9 @@ def _cargo_change(row, kind, new_cargo, day, reference=None):
     row['cargo_ledger'].append(dict(kind=kind,day=day,before=before,
                                     after=deepcopy(new_cargo),reference=reference))
     row['cargo'] = deepcopy(new_cargo)
+    if winter_weather.detailed():
+        winter_weather.report('convoy_ledger',convoy_id=row['id'],tick=day,owner=row['owner'],
+                              kind_of_change=kind,before=before.copy(),after=new_cargo.copy(),reference=reference)
 
 
 def advance_supply(game, state, row, through_turn=None, *, absolute_tick=None, parts=None, weather_parts=None):
@@ -149,13 +154,18 @@ def advance_supply(game, state, row, through_turn=None, *, absolute_tick=None, p
             unit=dict(row,hold=True)
             row['reason']=reason
             row['journeys'][-1]['supply']['waiting']=True
+    if ('convoy_relief' in row and row['status'] != 'returning'
+            and current_city(row['journeys'][-1]) is not None):
+        from . import convoy_relief
+        if convoy_relief.hold(state,row,absolute_tick):
+            unit=dict(row,hold=True)
     if row['journeys'][-1]['supply'].get('retreat_requested') and current_city(row['journeys'][-1]) is not None:
         unit=dict(row,hold=True)
         row['journeys'][-1]['supply']['waiting']=True
     spent=advance_unit(game,state,unit,row['journeys'][-1],through_turn,
                         unit_kind='convoy',cargo=cargo,on_cargo_change=changed,
                         on_cargo_day=apply_loss if LOSS_FIELD in row else None,
-                        absolute_tick=absolute_tick,parts=parts,self_funded=managed,weather_parts=weather_parts)
+                        absolute_tick=absolute_tick,parts=parts,self_funded=managed or 'convoy_relief' in row,weather_parts=weather_parts)
     journey=row['journeys'][-1]
     remaining=max(0,journey['quote']['days']-journey['supply']['route_days'])
     if 'winter' in journey['supply']:
@@ -199,6 +209,7 @@ def synchronize(game, state):
             state.soldiers['lost'] += lost
             _treasure_loss(state,row['cargo']['treasure'])
             _event(game, state, 'transport_returned', row, lost=lost, reason='no_friendly_city')
+            _trace_terminal(game, state, row, 'no_friendly_city')
             pool['convoys'].remove(row)
     for ident in list(pool['receipts']):
         if pool['receipts'][ident] <= state.turn:
@@ -289,7 +300,7 @@ def gross_shipment(game, quote, needed, capacity, *, state=None):
 def _inbound(state, key, *, game=None):
     rows = [row for row in _pool(state)['convoys'] if row['target'] == key
             and row['owner'] == state.cities[key].owner and not row['delivery_done']
-            and row['target_march'] is None and row['status'] != 'returning']
+            and row['target_march'] is None and 'convoy_relief' not in row and row['status'] != 'returning']
     result={field:sum(r['cargo'][field] for r in rows) for field in _CARGO_FIELDS-{'grain'}}
     return dict(result,grain=sum(inbound_grain(game,r,state) for r in rows),officers=0)
 
@@ -415,15 +426,17 @@ def _rations(game, state, quote, ids, cargo):
 def escort_rations(game, state, ids, outward, backward, *, reserves=0):
     """Quote both complete routes, including different terrain on the return."""
     from .march_supply import quote_supply, ration_units
-    from . import winter_transport
-    if winter_transport.enabled(state):
+    from . import transport_emergency, winter_transport
+    emergency = transport_emergency.stage(state)
+    if winter_transport.enabled(state) or emergency and winter_weather.movement(state):
         out=winter_transport.protected_cost(game,state,outward,ration_units(state,ids,reserves))
         back=winter_transport.protected_cost(game,state,backward,ration_units(state,ids))
         meal=out['meal']+back['meal']
         return logistics_rules.ceil_div(meal*winter_transport.SAFETY_PERCENT,100)
     troops=sum(state.officers[i].troops for i in ids)
-    return (quote_supply(outward,troops,len(ids),reserves,game=game,version=logistics_rules.CURRENT,state=state) +
+    meal = (quote_supply(outward,troops,len(ids),reserves,game=game,version=logistics_rules.CURRENT,state=state) +
             quote_supply(backward,troops,len(ids),game=game,version=logistics_rules.CURRENT,state=state))
+    return logistics_rules.ceil_div(meal*winter_transport.SAFETY_PERCENT,100) if emergency else meal
 
 
 def _army(state, ident, owner):
@@ -578,7 +591,9 @@ def preview(game, state, city_id):
         return None, 'no_route'
     mode, quote = selected
     grain = _rations(game, state, quote, ids, cargo)
-    if source.owner==state.player and winter_weather.corrected(state,winter_weather.TRANSPORT):
+    from . import transport_emergency
+    if source.owner==state.player and (winter_weather.corrected(state,winter_weather.TRANSPORT)
+            or transport_emergency.stage(state)):
         back=_safe_quote(game,state,target,source,policy)
         if back is None:
             return None,'no_route'
@@ -696,6 +711,12 @@ def _event(game, state, kind, row, *, lost=0, reason='outbound',amounts=None):
                    reserves=values['reserves'], treasure=values.get('treasure',0), lost=lost, reason=reason)
     if LOSS_FIELD in row:
         details['grain_receipt']=grain_receipt(row,returned=reason=='returned',abandoned=reason=='no_friendly_city')
+    if winter_weather.detailed() and (kind in ('transport_departed','transport_arrived','transport_weather')
+                                      or kind=='transport_returned' and reason not in ('returned','no_friendly_city')):
+        from .transport_emergency import note
+        note(game,state,'convoy_event',row,kind_of_event=kind,source=row['source'],target=row['target'],
+             initial_reserves=row['initial_cargo']['reserves'],bag_loaded=row['journeys'][0]['supply']['loaded'],
+             delivered=row['delivery_done'],lost=lost,report_reason=reason,grain=values['grain'])
     reports.append(dict(turn=state.turn, owner=row['owner'], source=row['source'], target=row['target'],
                         kind=kind, details=details))
     reports[:] = reports[-100:]
@@ -717,13 +738,24 @@ def _journey(game, state, source, target, mode, quote, ids, reserves, *, from_ca
     return set_eta(game,state,journey)
 
 
-def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planner=None, donor_budget=None, allocation=None):
-    if (not isinstance(payload, dict) or set(payload) - {'source', 'target', 'officers', 'cargo', 'route_mode','target_march'}
+def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planner=None, donor_budget=None, allocation=None,
+             convoy_relief_quote=None):
+    from . import transport_emergency
+    if (not isinstance(payload, dict) or set(payload) - {'source', 'target', 'officers', 'cargo', 'route_mode','target_march','target_convoy'}
             or not isinstance(payload.get('source'), str) or not isinstance(payload.get('target'), str)
             or payload['source'] not in state.cities or payload['target'] not in state.cities):
         raise GameError('运输队参数无效。')
     source, target = state.cities[payload['source']], state.cities[payload['target']]
     target_march=payload.get('target_march')
+    target_convoy=payload.get('target_convoy')
+    rescue=None
+    if 'target_convoy' in payload:
+        if (transport_emergency.stage(state)<transport_emergency.EXTERNAL_RELIEF or target_march is not None
+                or type(target_convoy) is not int or emergency_grain is not None or allocation is not None):
+            raise GameError('運輸隊接濟參數無效。')
+        rescue=next((row for row in _pool(state)['convoys'] if row['id']==target_convoy and row['owner']==owner),None)
+        if rescue is None:
+            raise GameError('請選擇仍在等待接濟的本方運輸隊。')
     army=_army(state,target_march,owner) if target_march is not None else None
     if target_march is not None and army is None:
         raise GameError('请选择仍在本方行军队列中的部队。')
@@ -749,11 +781,20 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planne
             or any(not _int(value, 0, 99 if key=='treasure' else LIMIT) for key,value in cargo.items())):
         raise GameError('运输物资数量无效。')
     cargo = dict(cargo,treasure=cargo.get('treasure',0))
-    if army is not None and (cargo['gold'] or cargo['reserves'] or cargo['treasure'] or not cargo['grain']):
+    if (army is not None or rescue is not None) and (cargo['gold'] or cargo['reserves'] or cargo['treasure'] or not cargo['grain']):
         raise GameError('行军补给队只能运送兵粮。')
     if not isinstance(mode, str) or mode not in {'land', 'fastest', 'river', 'sea', 'special', 'minimum_grain'}:
         raise GameError('请选择已知的运输路线。')
     relief = None
+    special = None
+    if rescue is not None:
+        from . import convoy_relief
+        special = convoy_relief_quote
+        if special is None:
+            planner = convoy_relief.Planner(game,state,owner)
+            special, _ = planner.quote(source,rescue,selected=dict(target=target.id,ids=ids,mode=mode),cargo=cargo['grain'])
+        if special is None:
+            raise GameError('目前沒有符合路權、存糧和返程預算的接濟方案。')
     if allocation is not None:
         from . import escort_planning
         if (not logistics_strategy.staging(state) or army is None or len(ids)!=1
@@ -771,7 +812,7 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planne
         selected=_meeting_quote(game,state,source,army,policy)
         if selected is None or selected[0]!=target.id:
             raise GameError('部队已移动，请重新选择实际会合城池。')
-    quote = relief['quote'] if relief else (game._quote([source.id],[]) if source.id==target.id else
+    quote = special['quote'] if special else relief['quote'] if relief else (game._quote([source.id],[]) if source.id==target.id else
              _safe_path(game,state,source.id,target.id,owner,mode,policy,
                         officers=ids,cargo=cargo['grain'],reserves=cargo['reserves']))
     if quote is None or _dangerous(quote, policy):
@@ -780,13 +821,13 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planne
         raise GameError('押运后未达到本城保留武将人数。')
     if any(cargo[field] > policy['max_' + field] for field in _CITY_FIELDS) or len(ids) > policy['max_officers']:
         raise GameError('运输队超过本城的单次运输上限。')
-    checked_fields = {'grain'} if army is not None or emergency_grain is not None else _CITY_FIELDS
+    checked_fields = {'grain'} if army is not None or rescue is not None or emergency_grain is not None else _CITY_FIELDS
     if any(getattr(source, field) - cargo[field] < policy['reserve_' + field] for field in checked_fields):
         raise GameError('运输后未达到本城保留物资数量。')
-    grain = (relief['cost_grain'] if relief else _rations(game, state, quote, ids, cargo)
+    grain = (special['rations'] if special else relief['cost_grain'] if relief else _rations(game, state, quote, ids, cargo)
              if emergency_grain is None else emergency_grain)
-    if (army is None and emergency_grain is None
-            and winter_weather.corrected(state,winter_weather.TRANSPORT)):
+    if (army is None and rescue is None and emergency_grain is None
+            and (winter_weather.corrected(state,winter_weather.TRANSPORT) or transport_emergency.stage(state))):
         back = _safe_quote(game,state,target,source,policy)
         if back is None:
             raise GameError('没有符合方针的安全运输路线。')
@@ -832,11 +873,15 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planne
     pool['next_id'] += 1
     pool['cities'][source.id]['last_dispatch_turn'] = state.turn
     pool['convoys'].append(row)
+    if special:
+        row['convoy_relief']=special['relief']
+        convoy_relief.register(game,state,row,rescue)
     _event(game, state, 'transport_departed', row)
     return row
 
 
 def auto_dispatch_city(game,state,city_id,*,plans=None,relief_planner=None):
+    from . import transport_emergency
     if (not _pool(state)['cities'][city_id]['policy']['enabled']
             or historical_campaigns.hold_longyou_garrison(game, state, state.cities[city_id])):
         return False
@@ -916,7 +961,7 @@ def auto_dispatch_city(game,state,city_id,*,plans=None,relief_planner=None):
             if not any(cargo.values()):
                 return False
     prepaid = None
-    if managed:
+    if managed or transport_emergency.stage(state):
         target = state.cities[proposed['target']]
         policy = _pool(state)['cities'][city_id]['policy']
         quote = _safe_path(game,state,city_id,target.id,city.owner,mode,policy,
@@ -938,7 +983,7 @@ def auto_dispatch_city(game,state,city_id,*,plans=None,relief_planner=None):
         if not any(cargo.values()) or net*2+cargo['gold']*5+cargo['reserves'] < prepaid:
             return False
     dispatch(game,state,dict(source=city_id,target=proposed['target'],officers=proposed['officers'],
-        cargo=cargo,route_mode=mode),city.owner, **({'emergency_grain':prepaid} if managed else {}))
+        cargo=cargo,route_mode=mode),city.owner, **({'emergency_grain':prepaid} if prepaid is not None else {}))
     return True
 
 
@@ -963,6 +1008,7 @@ def supply_shortages(state, target, gold_goal, grain_goal):
 def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_officers=(),
                        max_turns=None, require_return=False, economy_plan=None, seasonal=False):
     """Choose an eligible rear escort and move real cargo through the shared order."""
+    from . import transport_emergency
     owner = target.owner
     if ('logistics' not in state.extension or state.phase != 'ai' or owner == state.player
             or not command_books.can_spend(state, owner, 'dispatch_transport')):
@@ -1070,7 +1116,7 @@ def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_
                                                if weighted else load) < return_rations:
             continue
         prepaid = None
-        if economy_plan is not None:
+        if economy_plan is not None or transport_emergency.stage(state):
             if selected is None:
                 continue
             prepaid = escort_rations(game,state,[escort],outbound_quote,selected[1])
@@ -1083,7 +1129,7 @@ def dispatch_ai_supply(game, state, target, gold_goal, grain_goal, *, protected_
                 continue
         dispatch(game, state, dict(source=source_id, target=target.id, officers=[escort],
                                    cargo=cargo, route_mode=mode), owner,
-                 **({'emergency_grain':prepaid} if economy_plan is not None else {}))
+                 **({'emergency_grain':prepaid} if prepaid is not None else {}))
         return True
     return False
 
@@ -1181,8 +1227,12 @@ def _receiving_blocker(game, state, row, target, *, returning):
     return None
 
 
-def _dock(game, state, row, target):
-    from . import domestic
+def _dock(game, state, row, target, *, surrender=False):
+    from . import domestic, march_supply, transport_emergency
+    if transport_emergency.stage(state) and not surrender and (
+            row not in _pool(state)['convoys'] or target.owner!=row['owner']
+            or march_supply.current_city(row['journeys'][-1])!=target.id):
+        return False
     blocker=_receiving_blocker(game,state,row,target,returning=True)
     if blocker:
         row.update(status='returning',reason=blocker)
@@ -1190,6 +1240,9 @@ def _dock(game, state, row, target):
         row['journeys'][-1]['supply']['retreat_requested']=True
         return False
     row['target']=target.id
+    if winter_weather.observing():
+        outcome='surrender_settlement' if surrender else 'returned_home' if target.id==row['source'] else 'received_elsewhere'
+        _trace_terminal(game,state,row,outcome,target.id)
     # Once physically received, these people are no longer marching. This must
     # precede cargo morale weighting so their troops count in the new garrison.
     _pool(state)['convoys'].remove(row)
@@ -1213,6 +1266,14 @@ def _dock(game, state, row, target):
     return True
 
 
+def _trace_terminal(game, state, row, outcome, city=None):
+    from .transport_emergency import note
+    note(game,state,'convoy_terminal',row,at=city,terminal_status=outcome,source=row['source'],
+         initial_reserves=row['initial_cargo']['reserves'],delivered=row['delivery_done'],
+         remaining_gold=row['cargo']['gold'],remaining_treasure=row['cargo']['treasure'],
+         actual_terminal_tick=(state.turn-1)*10)
+
+
 def settle_surrender(game, state, owner, holdings):
     """Account for the surrendering faction's cargo and escorts before transfer."""
     for row in list(_pool(state)['convoys']):
@@ -1223,13 +1284,14 @@ def settle_surrender(game, state, owner, holdings):
                        if not _receiving_blocker(game, state, row, city, returning=True)), None)
         if target is None:
             raise GameError('對方城池沒有空間接收在途運輸隊，無法完成受降。')
-        _dock(game, state, row, target)
+        _dock(game, state, row, target, surrender=True)
 
 
 def _unload(game, state, row, target):
     """Cargo arrives; escorts retain their home slots until the real return."""
-    from . import domestic
-    if (row['target_march'] is None and winter_weather.corrected(state,winter_weather.TRANSPORT)):
+    from . import domestic, transport_emergency
+    if (row['target_march'] is None and (winter_weather.corrected(state,winter_weather.TRANSPORT)
+            or transport_emergency.stage(state))):
         _reserve_before_unload(game,state,row,target)
     cargo=deepcopy(row['cargo'])
     for field in ('gold','grain'):
@@ -1253,16 +1315,23 @@ def _reserve_before_unload(game,state,row,target):
     if back is None:
         return
     book=row['journeys'][-1]['supply']
-    cost=winter_transport.protected_cost(game,state,back[1],march_supply.ration_units(state,row['officers']),
-                                         credit=book['credit_units'])
-    moved=min(row['cargo']['grain'],max(0,cost['meal']+cost['safety']-book['remaining']))
+    if winter_weather.movement(state):
+        cost=winter_transport.protected_cost(game,state,back[1],march_supply.ration_units(state,row['officers']),
+                                            credit=book['credit_units'])
+        required=cost['meal']+cost['safety']
+    else:
+        from . import army_relief
+        weight=march_supply.quoted_weight(game,state,back[1],back[1]['days'])
+        required=army_relief.ration_budget(march_supply.ration_units(state,row['officers']),weight,0,0,
+                                           credit=book['credit_units']).total
+    moved=min(row['cargo']['grain'],max(0,required-book['remaining']))
     if moved:
         day=book['clock_tick']
         _cargo_change(row,'rations',dict(row['cargo'],grain=row['cargo']['grain']-moved),day,
                       dict(journey=len(row['journeys'])-1,tick=day))
         march_supply.receive(book,moved,'cargo',row['id'],state.turn)
     winter_weather.action(game,state,'convoy_delivery_budget',target.id,owner=row['owner'],target=home.id,
-                          convoy=row['id'],required=cost['meal']+cost['safety'],retained=moved,
+                          convoy=row['id'],required=required,retained=moved,
                           available=book['remaining'],route=back[1]['path'])
 
 
@@ -1308,6 +1377,10 @@ def rendezvous(game, state, *, tick=None):
             city=city,owner=row['owner'],grain=amount,reason='convoy')
         _event(game,state,'transport_arrived',row,reason='delivered',
                amounts=dict(gold=0,grain=amount,reserves=0))
+    from . import transport_emergency
+    if transport_emergency.stage(state)>=transport_emergency.EXTERNAL_RELIEF:
+        from . import convoy_relief
+        convoy_relief.rendezvous(game,state,tick)
 
 
 def _begin_journey(game,state,row,here,target,mode,quote,*,status,reason,prepaid=None):
@@ -1370,7 +1443,7 @@ def _keep_return_journey(row, here, target, quote):
 
 def _return(game, state, row, reason):
     from .march_supply import current_city, ration_units
-    from . import winter_transport
+    from . import transport_emergency, winter_transport
     here=current_city(row['journeys'][-1])
     if here is None:
         # A hungry party first reaches its next real road node. It cannot be
@@ -1383,8 +1456,14 @@ def _return(game, state, row, reason):
         lost=row['cargo']['reserves'];state.soldiers['lost']+=lost
         _treasure_loss(state,row['cargo']['treasure'])
         _event(game,state,'transport_returned',row,lost=lost,reason='no_friendly_city')
+        _trace_terminal(game, state, row, 'no_friendly_city')
         _pool(state)['convoys'].remove(row)
         return
+    if transport_emergency.stage(state):
+        reason = reason if reason in transport_emergency.REASONS else 'retreat'
+        if transport_emergency.direct_home(game,state,row,here,reason):
+            return True
+        return transport_emergency.withdraw(game,state,row,here,reason)
     if 'relief' in row:
         from . import army_relief
         return army_relief.return_home(game,state,row,here,reason)
@@ -1443,10 +1522,26 @@ def _return(game, state, row, reason):
 
 def resolve_supply_retreats(game,state):
     from .march_supply import current_city
+    from . import transport_emergency
+    emergency = transport_emergency.stage(state)
+    review = None
     for row in list(_pool(state)['convoys']):
         journey=row['journeys'][-1]
         book=journey['supply']
         here=current_city(journey)
+        waiting=row.get('emergency', {})
+        if emergency and here is not None and (
+                book['retreat_requested'] or book['waiting'] and not _arrived(journey)
+                    and (row['status']=='returning' or book['shortage_streak'] or 'emergency' in row)
+                or emergency>=transport_emergency.TERMINAL and row['status']=='waiting'
+                    and not any(row['cargo'].values())
+                    and transport_emergency.convoy_units(state,row)==100*len(row['officers'])
+                    and row['target_march'] is None and 'convoy_relief' not in row):
+            review = review or transport_emergency.Review(game,state)
+            reason = waiting.get('reason',row['reason'])
+            transport_emergency.withdraw(game,state,row,here,
+                reason if reason in transport_emergency.REASONS else 'retreat',review=review)
+            continue
         winter=(winter_weather.corrected(state,winter_weather.TRANSPORT) and 'relief' not in row)
         if winter and here and not _arrived(journey) and book['waiting'] and not book['retreat_requested']:
             if _winter_replan(game,state,row,here):
@@ -1498,8 +1593,14 @@ def process_arrivals(game, state):
     from .march_supply import process_march_supply
     process_march_supply(game,state)
     synchronize(game, state)
+    from . import transport_emergency
+    review = None
     for row in sorted(list(_pool(state)['convoys']), key=lambda x: (x['journeys'][-1]['arrival_turn'], x['id'])):
         journey = row['journeys'][-1]
+        if 'convoy_relief' in row and row.get('return_leg')!=len(row['journeys'])-1:
+            from . import convoy_relief
+            if convoy_relief.settle(game,state,row):
+                continue
         if ('relief' in row and row['status']!='returning'
                 and row['checked_turn']!=state.turn):
             from . import army_relief
@@ -1535,8 +1636,22 @@ def process_arrivals(game, state):
         if target.owner != row['owner']:
             _return(game, state, row, 'target_changed')
             continue
+        if transport_emergency.stage(state) and ('emergency' in row or row.get('return_leg')==len(row['journeys'])-1):
+            review = review or transport_emergency.Review(game,state)
+            existing = row.get('emergency', {})
+            if (row['status']=='returning' and existing.get('status') in (None,'evacuating')
+                    and existing.get('final',target.id)==target.id
+                    and transport_emergency.can_receive(game,state,row,target)):
+                _dock(game,state,row,target)
+            else:
+                transport_emergency.withdraw(game,state,row,target.id,existing.get('reason','escort_return'),review=review)
+            continue
         blocker=_receiving_blocker(game,state,row,target,returning=row['status']=='returning')
         if blocker:
+            if transport_emergency.stage(state) and blocker in ('city_full','resource_full'):
+                review = review or transport_emergency.Review(game,state)
+                transport_emergency.withdraw(game,state,row,target.id,blocker,review=review)
+                continue
             if (row['status']=='waiting' and row['reason']=='resource_full' and row['cargo']['treasure']
                     and _treasure_count(state,target.id)+row['cargo']['treasure']>99):
                 _return(game,state,row,'resource_full')
@@ -1675,10 +1790,12 @@ def _validate_cargo(row,state,game):
             for field in _CARGO_FIELDS:delivered[field]+=cargo[field]
         else:
             amount=cargo['grain']-after['grain']
-            if (set(reference)!={'march','city'} or reference['march']!=row['target_march']
+            key='convoy' if kind=='convoy_supply' else 'march'
+            recipient=row.get('convoy_relief',{}).get('target') if key=='convoy' else row['target_march']
+            if (recipient is None or set(reference)!={key,'city'} or reference[key]!=recipient
                     or reference['city'] not in state.cities or amount<=0
                     or after!=dict(cargo,grain=cargo['grain']-amount)):
-                raise ValueError('Logistics marching army delivery')
+                raise ValueError('Logistics field delivery')
             delivered['grain']+=amount
         cargo=deepcopy(after)
     if weighted and (credit!=row[LOSS_FIELD] or due and cargo['grain']):
@@ -1755,8 +1872,9 @@ def validate(game, state):
     seen, people, origins = set(), set(), set()
     weighted=logistics_rules.version(state)==logistics_rules.CURRENT
     row_fields=_ROW_FIELDS | {LOSS_FIELD} if weighted else _ROW_FIELDS
+    from . import transport_emergency
     for row in pool['convoys']:
-        if (not isinstance(row, dict) or set(row)-{'relief','return_leg','original_eta'} != row_fields
+        if (not isinstance(row, dict) or set(row)-{'relief','return_leg','original_eta','emergency','convoy_relief'} != row_fields
                 or not _int(row['id'], 1, pool['next_id'] - 1)
                 or weighted and not _int(row[LOSS_FIELD],0,logistics_rules.LOSS_SCALE-1)
                 or row['id'] in seen or row['source'] in origins or row['owner'] not in game.catalog.factions
@@ -1769,6 +1887,11 @@ def validate(game, state):
             if state.extension.get(logistics_strategy.FIELD)not in logistics_strategy.VERSIONS_WITH_RELIEF:
                 raise ValueError('Army relief version')
             army_relief.validate(row,state)
+        if 'emergency' in row:
+            transport_emergency.validate_row(state,row)
+        if 'convoy_relief' in row:
+            from . import convoy_relief
+            convoy_relief.validate(state,row,pool)
         seen.add(row['id']); origins.add(row['source'])
         for field in ('cargo', 'initial_cargo','delivered'):
             value = row[field]
@@ -1821,6 +1944,7 @@ def validate(game, state):
             quote = journey['quote']
             if (not isinstance(quote, dict) or not isinstance(quote.get('path'), list)
                     or not quote['path'] or index == 0 and len(quote['path']) < 2 and row['target_march'] is None
+                        and 'convoy_relief' not in row
                     or quote['path'][0] != journey['source'] or quote['path'][-1] != journey['target']
                     or not isinstance(quote.get('routes'), list) or len(quote['path']) != len(quote['routes']) + 1):
                 raise ValueError('Logistics route quote')

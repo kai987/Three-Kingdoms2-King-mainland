@@ -20,7 +20,7 @@ from . import civil_staff, domestic, logistics, presentation, treasures, facilit
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from . import battle_reinforcements, city_economy, economy_rules, grain_market, logistics_rules, logistics_strategy, payroll
-from . import winter_weather
+from . import transport_emergency, winter_weather
 from .city_economy import frontier_maintenance
 from .starting_garrisons import resolve as resolve_opening_garrisons
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
@@ -372,6 +372,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             winter_weather.initialize(self, state)
         if lifespan == 'none':
             state.extension['lifespan'] = lifespan
+        transport_emergency.initialize(state)
         state.extension['travel'] = dict(counter=0, marches=[], battle_arrival=False, discovered=[])
         state.extension['civil_staff'] = civil_staff.empty(self, state)
         state.extension['domestic'] = domestic.empty(self,state)
@@ -489,6 +490,13 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                         if requested and logistics_rules.version(candidate) != logistics_rules.CURRENT:
                             raise GameError('冬季天气需要当前后勤规则。')
                         winter_weather.initialize(self, candidate, requested)
+                    if transport_emergency.FIELD in payload:
+                        requested = payload[transport_emergency.FIELD]
+                        if type(requested) is not int or requested not in (0, transport_emergency.VERSION):
+                            raise GameError('運輸應急規則版本無效。')
+                        if requested and logistics_rules.version(candidate) != logistics_rules.CURRENT:
+                            raise GameError('運輸應急需要目前的後勤規則。')
+                        transport_emergency.initialize(candidate, requested)
                     if campaign_id is not None:
                         candidate.extension['campaign_id'] = campaign_id
                 else:
@@ -969,6 +977,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         economy_rules.validate(state)
         logistics_rules.validate(state)
         winter_weather.validate(self, state)
+        transport_emergency.validate_version(state)
         grain_market.validate(state)
         command_books.validate(self, state)
         diplomacy.validate(self, state)

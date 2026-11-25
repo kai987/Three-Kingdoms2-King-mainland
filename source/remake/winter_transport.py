@@ -100,6 +100,14 @@ def trace_day(game,state,row,before):
     for transaction in row['cargo_ledger'][ledger:]:
         key=transaction['kind']
         charges[key]=charges.get(key,0)+transaction['before']['grain']-transaction['after']['grain']
+    starvation=book['starvation'][-1] if book['starvation'] and book['starvation'][-1]['tick']==now else None
+    reserves_lost=starvation['reserves_before']-starvation['reserves_after'] if starvation else 0
+    winter_weather.report('convoy_strength',convoy_id=row['id'],tick=now,
+        current_escort=sum(state.officers[ident].troops for ident in row['officers']),
+        current_reserves=row['cargo']['reserves'],current_officers=sum(type(i) is int for i in row['officers']),
+        current_civil_staff=sum(type(i) is str for i in row['officers']),
+        escort_hunger_loss=book['lost']-lost-reserves_lost,reserve_hunger_loss=reserves_lost,
+        delivery_done=row['delivery_done'])
     winter_weather.report('convoy_day',tick=now,date=winter_weather.date_at(game.catalog.data,now),
         convoy=row['id'],owner=row['owner'],phase=row['status'],journey=len(row['journeys'])-1,
         origin=row['source'],source=journey['source'],target=journey['target'],

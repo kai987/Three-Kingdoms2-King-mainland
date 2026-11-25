@@ -7,6 +7,7 @@ from .economy_rules import FIELD as ECONOMY_VERSION_FIELD
 from .json_boundary import loads
 from .logistics_rules import FIELD as LOGISTICS_VERSION_FIELD
 from .logistics_strategy import FIELD as AI_VERSION_FIELD, POLICY as AI_POLICY_FIELD
+from .transport_emergency import FIELD as TRANSPORT_VERSION_FIELD, EXPERIMENT as TRANSPORT_EXPERIMENT_FIELD
 
 MAX_STATE_BYTES = 32 * 1024 * 1024
 MAX_FILE_BYTES = 2 * 1024 * 1024 - 128
@@ -14,7 +15,8 @@ MAX_FILE_BYTES = 2 * 1024 * 1024 - 128
 
 def header(state):
     result = {key: state[key] for key in ('seed', 'player', 'year', 'month', 'day', 'turn', 'phase')}
-    result['extension'] = {key: state['extension'][key] for key in ('campaign_id', 'difficulty', 'lifespan', ECONOMY_VERSION_FIELD, LOGISTICS_VERSION_FIELD, AI_VERSION_FIELD, AI_POLICY_FIELD)
+    result['extension'] = {key: state['extension'][key] for key in ('campaign_id', 'difficulty', 'lifespan', ECONOMY_VERSION_FIELD, LOGISTICS_VERSION_FIELD, AI_VERSION_FIELD, AI_POLICY_FIELD,
+                               TRANSPORT_VERSION_FIELD, TRANSPORT_EXPERIMENT_FIELD)
                            if key in state['extension']}
     return result
 

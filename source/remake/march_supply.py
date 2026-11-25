@@ -225,8 +225,9 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
     if dynamic is not None and weather_parts is None:
         weather_parts=winter_travel.plan(game,quote)
     divisor=book_denominator(supply)
-    from . import staging_supply, winter_transport
-    convoy_safety=(unit_kind=='convoy' and not self_funded and winter_transport.enabled(state))
+    from . import staging_supply, transport_emergency, winter_transport
+    emergency = unit_kind=='convoy' and transport_emergency.stage(state)
+    convoy_safety=(unit_kind=='convoy' and not self_funded and (winter_transport.enabled(state) or emergency))
     has_staging=staging_supply.FIELD in getattr(state,'extension',{})
     spent=0
     for tick in range(supply['clock_tick']+1,target+1):
@@ -286,7 +287,7 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
         elif weighted:
             leg_budget=rules.weight(parts,progress,distance)
             budget=leg_budget or (10 if progress>=quote['days'] and not self_funded else 1)*rules.RATION_SCALE
-            if self_funded and unit.get('hold'):
+            if (self_funded or emergency) and unit.get('hold'):
                 budget=rules.RATION_SCALE
         else:
             leg_budget=distance
@@ -296,7 +297,9 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
             city=state.cities[city_id]
             army=unit['id'] if unit_kind=='march' else None
             stock=staging_supply.available(state,city,army=army) if has_staging else city.grain
-            if convoy_safety:
+            if emergency:
+                stock=transport_emergency.stock(game,state,city)
+            elif convoy_safety:
                 stock=winter_transport.city_stock(game,state,city,stock)
             amount=min(wanted,stock,LIMIT-supply['remaining'])
             if army is not None and has_staging:
@@ -316,6 +319,8 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
         moving=(supply['route_days']<quote['days'] and not blocked and not changed_target and not frost and not unit.get('hold')
                 and not (supply['retreat_requested'] and city_id is not None and unit.get('status')!='returning')
                 and (city_id is None or enough or unit.get('status')=='returning' and not convoy_safety))
+        if emergency and self_funded and city_id is not None and not enough:
+            moving=False
         moving_or_on_leg=moving or city_id is None
         cargo_weight=0
         if dynamic is not None:

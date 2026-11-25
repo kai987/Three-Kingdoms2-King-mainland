@@ -269,6 +269,21 @@ def _calendar_tick(state):
     return (state.turn-1)*10
 
 
+def source_blocker(game,state,source,policy,busy):
+    if state.phase not in {'city','ai'}:
+        return 'wrong_phase'
+    if source.owner not in game.catalog.factions:
+        return 'not_owned'
+    if not command_books.can_spend(state,source.owner,'dispatch_transport'):
+        return 'command_books'
+    if (source.id in busy
+            or logistics._pool(state)['cities'][source.id]['last_dispatch_turn']==state.turn):
+        return 'in_transit'
+    if not policy['max_officers'] or logistics._present_count(game,state,source)<=policy['reserve_officers']:
+        return 'no_spare_officer'
+    return None
+
+
 class Planner:
     """Scoped to one domestic transport pass or one read-only preview."""
     def __init__(self, game, state, owner):
@@ -317,19 +332,7 @@ class Planner:
                 yield eta, grain
 
     def source_reason(self, source, policy):
-        state = self.state
-        if state.phase not in {'city','ai'}:
-            return 'wrong_phase'
-        if source.owner not in self.game.catalog.factions:
-            return 'not_owned'
-        if not command_books.can_spend(state,source.owner,'dispatch_transport'):
-            return 'command_books'
-        if (source.id in self.busy
-                or logistics._pool(state)['cities'][source.id]['last_dispatch_turn']==state.turn):
-            return 'in_transit'
-        if not policy['max_officers'] or logistics._present_count(self.game,state,source)<=policy['reserve_officers']:
-            return 'no_spare_officer'
-        return None
+        return source_blocker(self.game,self.state,source,policy,self.busy)
 
     def candidates(self, source, *, budget=None, selected=None, cargo=None, origin=None, live=None,
                    loads=None, urgent_only=False):

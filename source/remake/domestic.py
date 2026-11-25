@@ -797,6 +797,13 @@ def run_automatic(game, state, owner, *, outlook=None, economy_plan=None):
             plans = (economy_plan.budgets if economy_plan is not None else
                      military_budget.budgets(game, state, owner)
                      if military_budget.enabled(state) and owner != state.player else None)
+            from . import transport_emergency
+            if (transport_emergency.stage(state)>=transport_emergency.EXTERNAL_RELIEF
+                    and any(row['owner']==owner and row.get('emergency',{}).get('status') in ('waiting_for_supply','no_feasible_exit')
+                            for row in logistics._pool(state)['convoys'])):
+                from . import convoy_relief
+                support=convoy_relief.Planner(game,state,owner)
+                support.dispatch_one([state.cities[key] for key in discretionary_cities],plans or {})
             relief_planner = None
             if logistics_strategy.army_relief(state):
                 from . import army_relief

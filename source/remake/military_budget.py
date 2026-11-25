@@ -58,7 +58,8 @@ def budgets(game,state,owner,*,stationed=None,incomes=None):
             continue
         journey=row['journeys'][-1]
         committed_convoys[row['source']]+=row['cargo']['grain']+journey['supply']['remaining']
-        if row['status']=='outbound' and row['target_march'] is None and not row['delivery_done']:
+        if (row['status']=='outbound' and row['target_march'] is None
+                and 'convoy_relief' not in row and not row['delivery_done']):
             arrival=journey['arrival_turn']-state.turn
             projected=logistics.inbound_grain(game,row,state)
             in_transit[row['target']]+=projected
