@@ -403,6 +403,17 @@ class StrategicAI:
         winners, potential = [], []
         recovery_quote = None
         deferred = []
+        historical_targets = set()
+        hostile_approaches = defaultdict(set)
+        if self.recovery_v211:
+            # A dated campaign order and an active attack on the staging city
+            # each establish a reason to join an existing conflict.
+            historical_targets,_=historical_campaigns.priority_targets(self.state,owner,targets)
+            for march in self.state.extension['travel']['marches']:
+                if (march['kind']=='attack' and march['owner']!=owner
+                        and not historical_campaigns.allied(self.state,owner,march['owner'])
+                        and not march['supply']['retreat_requested']):
+                    hostile_approaches[march['source']].add(march['target'])
         for key in targets:
             target = self.state.cities[key]
             defend = self.strength(target)
@@ -445,13 +456,17 @@ class StrategicAI:
                                   self.war_budget(self.state.cities[order['source']],target,order['officers'],route)['immediate'])
                                  for order,route in scheduled]
                         risk=recovery_quote.assess(columns,target=target.id)
-                        necessary=bool(joint and joint['troops'] or any(
-                            recovery_quote.economy.budgets[key]['threatened'] for key,_,_ in columns))
+                        necessity=('existing_campaign' if target.id in historical_targets
+                                   else 'existing_allied_battle' if joint and joint['troops']
+                                   else 'countering_incoming_attack' if any(
+                                       key in hostile_approaches.get(target.id,()) for key,_,_ in columns)
+                                   else None)
+                        necessary=necessity is not None
                         attack,prepare=war_recovery.action_score(power-required,required,risk['multiplier'],
                             risk['other_fronts']+risk['overlapping_fronts'],risk.get('source_grain_pressure',0),
                             necessary=necessary)
                         decision=dict(owner=owner,target=target.id,sources=[c[0] for c in columns],
-                            plan_id=f'{owner}:{self.state.turn}:{target.id}',necessary=necessary,
+                            plan_id=f'{owner}:{self.state.turn}:{target.id}',necessary=necessary,necessity=necessity,
                             attack_score=attack,prepare_score=prepare,recovery=risk)
                         if not necessary and attack<prepare:
                             deferred.append((prepare-attack,target.id,decision))
