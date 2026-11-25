@@ -723,11 +723,11 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         """Split an existing actual territory; do not replay historical conquest."""
         date = state.year, state.month
         active = set(self.catalog.active_city_ids(*date))
-        due = [(key, rule) for key, rule in self.catalog.data.get('city_foundings', {}).items()
-               if key in active and key not in state.cities]
+        due = {key: rule for key, rule in self.catalog.data.get('city_foundings', {}).items()
+               if key in active and key not in state.cities}
         if not due:
             return
-        for key, rule in due:
+        for key, rule in due.items():
             parent = state.cities[rule['parent']]
             resources = {}
             for field in ('gold','grain','reserves'):
@@ -735,10 +735,10 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 setattr(parent,field,getattr(parent,field)-resources[field])
             state.cities[key] = City(key,parent.owner,CityRoster(key,rules=self.catalog.rules),**resources)
         facilities.synchronize(self,state)
-        city_development.synchronize(self,state)
+        city_development.synchronize(self, state, foundings=due.keys())
         treasures.synchronize(self,state)
         current_names = city_names(self.catalog, *date)
-        for key, rule in due:
+        for key, rule in due.items():
             parent = rule['parent']
             treasures.inherit_city(state, key, parent)
             if key == 'xinxing' and 'month' not in rule:

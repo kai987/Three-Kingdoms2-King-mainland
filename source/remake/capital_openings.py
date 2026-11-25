@@ -4,6 +4,7 @@ MOVED_PERCENT = 72
 LOST_PERCENT = 25
 UNIT = 100
 LUOYANG_OPENING_POPULATION = 203_100
+CHANGAN_POPULATION_BEFORE_RELOCATION = 98_100
 
 
 def relocation_amounts(stock, room):
@@ -38,7 +39,7 @@ _OPENINGS = {
         ((263, 5), (198_200, 6_650, 19_600, 108, 437, 402, 85, 61, 3,  0)),
     ),
     'jingzhao': (
-        ((190, 2), (98_100 + _MOVED_POPULATION,
+        ((190, 2), (CHANGAN_POPULATION_BEFORE_RELOCATION + _MOVED_POPULATION,
                    55_190,114_725, 100, 258, 222, 71, 40, 2,  0)),
         ((191,10), (207_500,24_500, 43_000, 100, 285, 260, 66, 44, 3,  3)),
         ((194, 6), (148_800, 6_400, 10_700, 135, 209, 185, 47, 28, 2, 19)),

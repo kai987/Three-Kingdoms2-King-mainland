@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
-from remake import city_development, facilities, treasures
+from remake import capital_openings, city_development, commandery_population, facilities, treasures
 from remake.campaign import Campaign, Catalog
 from remake.map_presentation import city_names
 
@@ -92,6 +92,61 @@ class CommanderyHistoryTests(unittest.TestCase):
             overlaps = [other for other in stamps if other != key and stamps[key] & stamps[other]]
             self.assertFalse(overlaps, (key, overlaps))
 
+    def test_historical_population_profiles_cover_the_new_sites(self):
+        self.assertEqual(set(commandery_population.OPENINGS), set(self.review['new_sites']))
+        for city, anchors in commandery_population.OPENINGS.items():
+            dates = [date for date, _ in anchors]
+            self.assertEqual(dates, sorted(set(dates)), city)
+            self.assertTrue(all(city_development.valid_population(population) for _, population in anchors), city)
+            founding = self.review['new_sites'][city].get('founding')
+            if founding:
+                self.assertEqual(dates[0], (founding['year'], founding['month']), city)
+        for scenario, expected in {
+            '184-02': dict(liang=47_900, pengcheng=61_600, lu=68_600, lean=47_100, youbeiping=13_400,
+                           guonei=32_400, jingzhao=108_600),
+            '188-06': dict(jingzhao=102_700),
+            '190-01': dict(jingzhao=98_100),
+            '191-10': dict(pengcheng=56_100),
+            '194-06': dict(xijun=7_800, pengcheng=26_800, guangwei=12_300),
+            '196-06': dict(xihai=4_700),
+            '212-12': dict(guangwei=12_100),
+            '221-07': dict(xijun=5_600, guangwei=14_100),
+            '238-01': dict(guonei=38_700),
+            '249-01': dict(guonei=19_200),
+            '263-05': dict(xijun=7_300, xihai=7_400, pengcheng=19_300, lu=16_300, guonei=27_400),
+        }.items():
+            catalog = self.catalogs[scenario]
+            for city, population in expected.items():
+                with self.subTest(scenario=scenario, city=city):
+                    self.assertEqual(city_development.opening_view(catalog, city)['population'], population)
+
+        january = self.catalogs['190-01']
+        changan = city_development.opening_view(january, 'jingzhao')['population']
+        luoyang = city_development.opening_view(january, 'henan')['population']
+        transferred, _ = capital_openings.relocation_amounts(luoyang, 1_999_999 - changan)
+        february = capital_openings.opening(dict(january.data, start_month=2), 'jingzhao')
+        self.assertEqual(february['population'], changan + transferred)
+
+    def test_prior_campaigns_use_the_same_population_at_the_same_founding(self):
+        expected = dict(linhai=19_600, linchuan=24_500, hengyang=25_600, xiangdong=23_500)
+        game = Campaign(self.catalogs['249-01'])
+        state = game._new('wu', 2026)
+        self.assertTrue(expected.keys().isdisjoint(state.cities))
+        state.year, state.month = 257, 2
+        game._open_dated_cities(state)
+        population = state.extension['city_development']['cities']
+        for city, amount in expected.items():
+            self.assertEqual(population[city]['population'], amount, city)
+            self.assertEqual(population[city]['baseline']['population'], amount, city)
+            for scenario in ('184-02', '208-10', '249-01'):
+                opening = city_development.opening_view(self.catalogs[scenario], city)
+                self.assertEqual(opening['population'], amount, (scenario, city))
+        for scenario, city, amount in (('184-02', 'nanan', 13_800), ('200-01', 'yidu', 22_800),
+                                       ('184-02', 'xinxing', 10_800), ('184-02', 'guangwei', 12_600),
+                                       ('215-08', 'guangwei', 14_300), ('238-01', 'changli', 15_100)):
+            self.assertEqual(city_development.opening_view(self.catalogs[scenario], city)['population'],
+                             amount, (scenario, city))
+
     def test_same_month_openings_balance_stocks_and_run_each_initializer_once(self):
         game = Campaign(self.catalogs['263-05'])
         state = game._new('wu', 2026)
@@ -109,8 +164,9 @@ class CommanderyHistoryTests(unittest.TestCase):
             opened = game.to_dict(state)
             game._open_dated_cities(state)
             self.assertEqual(game.to_dict(state), opened)
-            for initializer in (facility, development, treasury):
+            for initializer in (facility, treasury):
                 initializer.assert_called_once_with(game, state)
+            development.assert_called_once_with(game, state, foundings={'shixing', 'shian', 'zhangwu'})
         for city, parent in (('shixing', 'guiyang'), ('shian', 'lingling'), ('zhangwu', 'hejian')):
             child, original = state.cities[city], state.cities[parent]
             self.assertEqual(child.owner, before[parent][0])
@@ -118,4 +174,17 @@ class CommanderyHistoryTests(unittest.TestCase):
             for field, value in zip(('gold', 'grain', 'reserves'), before[parent][1:]):
                 self.assertEqual(getattr(child, field), value // 4)
                 self.assertEqual(getattr(original, field) + getattr(child, field), value)
+        population = state.extension['city_development']['cities']
+        for city, expected in dict(shixing=13_700, shian=16_400, zhangwu=25_500).items():
+            self.assertEqual(population[city]['population'], expected)
+            self.assertEqual(population[city]['baseline']['population'], expected)
+        self.assertNotIn('ruyin', population)
+        state.year, state.month = 266, 1
+        game._open_dated_cities(state)
+        self.assertEqual(population['ruyin']['population'], 25_600)
+        self.assertEqual(population['ruyin']['baseline']['population'], 25_600)
+        self.assertNotIn('wuxing', population)
+        state.month = 12
+        game._open_dated_cities(state)
+        self.assertEqual(population['wuxing']['population'], 31_600)
         self.assertEqual((state.rng.state, state.rng.draws), old_rng)

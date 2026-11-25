@@ -481,20 +481,24 @@ class DevelopmentCampaignTests(unittest.TestCase):
                 development.synchronize(restored, restored.state)
                 self.assertEqual(restored.export_save(), save)
 
-    def test_ordinary_opening_estimates_preserve_v8_saves(self):
+    def test_dated_opening_estimates_preserve_v8_through_v10_saves(self):
         catalog = Catalog(ROOT/'game/data/campaigns/200-01.json')
         game = Campaign(catalog)
         game.state = game._new(catalog.data['initial_owners']['qiao'], 2026)
-        old = development.empty(game, game.state, schema=development.HUNDRED_PLACE_SCHEMA)
-        old['cities']['hefei']['population'] += 500
-        self.assertNotEqual(old['cities']['hefei']['baseline'], development.opening_view(catalog, 'hefei'))
-        game.state.extension['city_development'] = old
-        save = game.export_save()
-        restored = Campaign(catalog)
-        with patch.object(restored, 'view', return_value={}):
-            restored.load_save(json.loads(json.dumps(save)), 0)
-        development.synchronize(restored, restored.state)
-        self.assertEqual(restored.export_save(), save)
+        for schema, city in ((development.HUNDRED_PLACE_SCHEMA, 'hefei'),
+                             (development.ORDINARY_CITY_SCHEMA, 'xijun'),
+                             (development.COMMANDERY_SCHEMA, 'guonei')):
+            with self.subTest(schema=schema):
+                old = development.empty(game, game.state, schema=schema)
+                old['cities'][city]['population'] += 500
+                self.assertNotEqual(old['cities'][city]['baseline'], development.opening_view(catalog, city))
+                game.state.extension['city_development'] = old
+                save = game.export_save()
+                restored = Campaign(catalog)
+                with patch.object(restored, 'view', return_value={}):
+                    restored.load_save(json.loads(json.dumps(save)), 0)
+                development.synchronize(restored, restored.state)
+                self.assertEqual(restored.export_save(), save)
 
     def test_real_ai_turn_executes_the_same_paid_development_and_seeded_effect(self):
         data = deepcopy(staff_catalog(free=False).data)
@@ -549,7 +553,8 @@ class DevelopmentCampaignTests(unittest.TestCase):
         examples, reviewed_baselines = {}, {}
         ordinary_cities = set()
         commanderies = json.loads((ROOT/'game/config/campaigns/commandery-history.json').read_text())
-        regional_openings = set(commanderies['new_sites'])
+        new_commanderies = set(commanderies['new_sites'])
+        dated_additions = new_commanderies | {'guonei', 'guangwei'}
         guangwei_series_start = development._ORDINARY_CITY_OPENINGS['guangwei'][0][0]
         for path in paths:
             with self.subTest(scenario=path.stem):
@@ -567,7 +572,8 @@ class DevelopmentCampaignTests(unittest.TestCase):
                     self.assertGreater(len({row[field] for row in view['cities'].values()}), 10)
                 named = ('henan', 'jingzhao', 'wei', 'yingchuan', 'shujun', 'danyang', 'wenshan',
                          'hefei', 'jiangxia', 'xincheng', 'wuyuan', 'shuofang', 'yunzhong')
-                for key in (*named, *large_city_population.OPENINGS):
+                additional_openings = sorted(dated_additions & game.state.cities.keys())
+                for key in dict.fromkeys((*named, *large_city_population.OPENINGS, *additional_openings)):
                     preview = session.preview_city(catalog.data['id'], key)['city']
                     baseline = view['cities'][key]['baseline']
                     self.assertEqual(preview['city_development'], baseline)
@@ -606,11 +612,18 @@ class DevelopmentCampaignTests(unittest.TestCase):
                     self.assertEqual({field: expected[field] for field in development.LIMITS if field != 'population'},
                                      {field: reviewed[field] for field in development.LIMITS if field != 'population'})
                     date = (game.state.year, game.state.month)
-                    # New commanderies use regional development baselines. Yongyang
-                    # also predates the dated Guangwei population series at this site.
-                    regional = key in regional_openings or (key == 'guangwei' and date < guangwei_series_start)
-                    if (tier_at(catalog.data, key, *date) == 'normal' and not regional
-                            and key not in ('wuchang', 'guonei', 'luzon')):
+                    # Yongyang predates the dated Guangwei population series at this site.
+                    pre_guangwei = key == 'guangwei' and date < guangwei_series_start
+                    early_changan = key == 'jingzhao' and date <= (190, 1)
+                    if key in new_commanderies:
+                        old = development.opening_view(catalog, key, schema=development.ORDINARY_CITY_SCHEMA)
+                        self.assertNotEqual(expected['population'], old['population'])
+                        self.assertNotEqual(expected['population'] % 1000, 0)
+                    elif key == 'guonei' or pre_guangwei or early_changan:
+                        old = development.opening_view(catalog, key, schema=development.COMMANDERY_SCHEMA)
+                        self.assertEqual(expected['population'] == old['population'],
+                                         key == 'jingzhao' and date == (190, 1), (path.stem, key))
+                    elif tier_at(catalog.data, key, *date) == 'normal' and key not in ('wuchang', 'luzon'):
                         ordinary_cities.add(key)
                         self.assertIn(key, development._ORDINARY_CITY_OPENINGS)
                         anchors = development._ORDINARY_CITY_OPENINGS[key]

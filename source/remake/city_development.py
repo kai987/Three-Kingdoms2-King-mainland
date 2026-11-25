@@ -8,7 +8,7 @@ the extension, debit stocks, or advance the campaign random generator.
 from copy import deepcopy
 from hashlib import sha256
 
-from . import capital_openings, command_books, grain_units, large_city_population
+from . import capital_openings, command_books, commandery_population, grain_units, large_city_population
 from . import ordinary_population_north, ordinary_population_southeast
 from . import ordinary_population_southwest, ordinary_population_west
 from . import economy_rules
@@ -24,7 +24,12 @@ GIANT_CITY_SCHEMA = 'tk2-city-development-v5'
 CAPITAL_SCHEMA = 'tk2-city-development-v6'
 LARGE_CITY_SCHEMA = 'tk2-city-development-v7'
 HUNDRED_PLACE_SCHEMA = 'tk2-city-development-v8'
-SCHEMA = 'tk2-city-development-v9'
+ORDINARY_CITY_SCHEMA = 'tk2-city-development-v9'
+COMMANDERY_SCHEMA = 'tk2-city-development-v10'
+SCHEMA = 'tk2-city-development-v11'
+_ORDINARY_CITY_SCHEMAS = (ORDINARY_CITY_SCHEMA, COMMANDERY_SCHEMA, SCHEMA)
+_HUNDRED_PLACE_SCHEMAS = (HUNDRED_PLACE_SCHEMA, *_ORDINARY_CITY_SCHEMAS)
+_CAPITAL_OPENING_SCHEMAS = (CAPITAL_SCHEMA, LARGE_CITY_SCHEMA, *_HUNDRED_PLACE_SCHEMAS)
 LIMITS = dict(land=999, industry=999, population=1_999_999, governance=100)
 POPULATION_UNIT = 100
 _LUOYANG_EARLY_OPENINGS = frozenset(('mainland184-02', 'mainland188-06', 'mainland190-01'))
@@ -67,6 +72,26 @@ _ORDINARY_CITY_OPENINGS = {
     **ordinary_population_southwest.OPENINGS,
     **ordinary_population_west.OPENINGS,
 }
+# Estimates of the seat and nearby settlements. Historical references and
+# reasons for each change of scale are in docs/han-wei-commanderies.md.
+_ADDITIONAL_CITY_OPENINGS = {
+    'guonei': (
+        ((184, 2), 32_400), ((197, 7), 34_300), ((202, 6), 32_600),
+        ((207, 9), 22_700), ((219, 7), 29_900), ((238, 1), 38_700),
+        ((244, 6), 41_300), ((246, 6), 14_600), ((249, 1), 19_200),
+        ((263, 5), 27_400),
+    ),
+    'guangwei': (
+        ((193, 12), 12_600), ((196, 6), 11_400), ((207, 9), 13_200),
+        ((211, 7), 12_700), ((213, 12), 11_800),
+        *_ORDINARY_CITY_OPENINGS['guangwei'],
+    ),
+    'jingzhao': (
+        ((184, 2), 108_600), ((188, 6), 102_700),
+        ((190, 1), capital_openings.CHANGAN_POPULATION_BEFORE_RELOCATION),
+    ),
+    'wuxing': (((266, 12), 31_600),),
+}
 ACTIONS = dict(develop_land='land', develop_industry='industry', develop_population='population')
 DEVELOPMENT_SCALE = 10
 DEFAULTS = {tier: dict(land=150*size, industry=150*size,
@@ -75,6 +100,7 @@ DEFAULTS = {tier: dict(land=150*size, industry=150*size,
 RULES = dict(enabled=True, unrest_enabled=True, ai_enabled=True, ai_gold_floor=100)
 _POOL_FIELDS = {'schema', 'cities', 'last_month', 'auto_turns'}
 _CITY_FIELDS = {'owner', 'land', 'industry', 'population', 'governance', 'baseline', 'cooldown'}
+_CITY_OPTIONAL_FIELDS = {'garrison_spirit', 'population_from_founding'}
 
 
 def _int(value, low, high):
@@ -113,12 +139,21 @@ def _metrics(row):
 def _dated_population(date, anchors):
     if not anchors[0][0] <= date <= anchors[-1][0]:
         return None
+    if date == anchors[-1][0]:
+        return anchors[-1][1]
     for ((year, month), population), ((next_year, next_month), next_population) in zip(anchors, anchors[1:]):
         if date <= (next_year, next_month):
             start, end = year*12 + month, next_year*12 + next_month
             elapsed = date[0]*12 + date[1] - start
             gain = (next_population-population)*elapsed//((end-start)*POPULATION_UNIT)
             return population + gain*POPULATION_UNIT
+
+
+def _bounded_opening_population(date, anchors):
+    date = min(max(date, anchors[0][0]), anchors[-1][0])
+    population = _dated_population(date, anchors)
+    # A fixed hundred-place adjustment keeps the same estimate across campaigns.
+    return population + POPULATION_UNIT if population % 1000 == 0 else population
 
 
 def _luoyang_opening(scenario, date, seed, schema):
@@ -140,22 +175,64 @@ def _luoyang_opening(scenario, date, seed, schema):
     return aftermath + growth//(previous_midpoint*POPULATION_UNIT)*POPULATION_UNIT
 
 
+def _commandery_opening_population(data, city_id, date):
+    anchors = commandery_population.OPENINGS[city_id]
+    retirement = data.get('city_retirements', {}).get(city_id)
+    if retirement and 'reopens' in retirement and date >= (retirement['year'], retirement.get('month', 1)):
+        date = max(date, tuple(retirement['reopens']))
+    # A campaign that predates a new seat uses the founding or reopening
+    # estimate for its future baseline as well as for save validation.
+    return _bounded_opening_population(date, anchors)
+
+
+def _population_at_founding(data, city_id):
+    founding = data.get('city_foundings', {}).get(city_id)
+    if (not founding or city_id in data.get('initial_owners', {})
+            or not data.get('id', '').startswith('mainland')
+            or 'population' in data.get('initial_city_development', {}).get(city_id, {})):
+        return None
+    date = founding['year'], founding.get('month', 1)
+    start = data['start_year'], data['start_month']
+    retirement = data.get('city_retirements', {}).get(city_id)
+    if retirement and start >= (retirement['year'], retirement.get('month', 1)):
+        if not retirement.get('reopens'):
+            return None
+        date = max(date, tuple(retirement['reopens']))
+    if date <= start:
+        return None
+    anchors = (commandery_population.OPENINGS.get(city_id)
+               or _ADDITIONAL_CITY_OPENINGS.get(city_id)
+               or _ORDINARY_CITY_OPENINGS.get(city_id)
+               or large_city_population.OPENINGS.get(city_id))
+    if not anchors:
+        return None
+    # Some sites have a first estimate shortly after the founding month.
+    return _bounded_opening_population(date, anchors)
+
+
 def _historical_opening_population(data, city_id, seed, schema):
     scenario = data.get('id', '')
     if not scenario.startswith('mainland'):
         return None
     date = (data['start_year'], data['start_month'])
-    if city_id == 'henan' and schema in (SEEDED_SCHEMA, LUOYANG_SCHEMA, GIANT_CITY_SCHEMA,
-                                       CAPITAL_SCHEMA, LARGE_CITY_SCHEMA, HUNDRED_PLACE_SCHEMA, SCHEMA):
+    giant_schemas = (GIANT_CITY_SCHEMA, *_CAPITAL_OPENING_SCHEMAS)
+    if city_id == 'henan' and schema in (SEEDED_SCHEMA, LUOYANG_SCHEMA, *giant_schemas):
         return _luoyang_opening(scenario, date, seed, schema)
-    giant_schemas = (GIANT_CITY_SCHEMA, CAPITAL_SCHEMA, LARGE_CITY_SCHEMA, HUNDRED_PLACE_SCHEMA, SCHEMA)
     if schema in giant_schemas and city_id in _GIANT_CITY_OPENINGS:
         return _dated_population(date, _GIANT_CITY_OPENINGS[city_id])
-    if schema == SCHEMA and city_id in _ORDINARY_CITY_OPENINGS:
+    if schema == SCHEMA:
+        population = _population_at_founding(data, city_id)
+        if population is not None:
+            return population
+        if city_id in _ADDITIONAL_CITY_OPENINGS:
+            return _dated_population(date, _ADDITIONAL_CITY_OPENINGS[city_id])
+    if schema in (COMMANDERY_SCHEMA, SCHEMA) and city_id in commandery_population.OPENINGS:
+        return _commandery_opening_population(data, city_id, date)
+    if schema in _ORDINARY_CITY_SCHEMAS and city_id in _ORDINARY_CITY_OPENINGS:
         population = _dated_population(date, _ORDINARY_CITY_OPENINGS[city_id])
         if population is not None:
             return population
-    if schema in (LARGE_CITY_SCHEMA, HUNDRED_PLACE_SCHEMA, SCHEMA) and city_id in large_city_population.OPENINGS:
+    if schema in (LARGE_CITY_SCHEMA, *_HUNDRED_PLACE_SCHEMAS) and city_id in large_city_population.OPENINGS:
         return _dated_population(date, large_city_population.OPENINGS[city_id])
     return None
 
@@ -175,8 +252,7 @@ def opening_view(catalog, city_id, *, seed=None, schema=SCHEMA):
     row = dict(DEFAULTS[tier])
     if schema != LEGACY_SCHEMA:
         row.update(opening_development(data, city_id, tier))
-    capital_schemas = (CAPITAL_SCHEMA, LARGE_CITY_SCHEMA, HUNDRED_PLACE_SCHEMA, SCHEMA)
-    capital = capital_openings.opening(data, city_id) if schema in capital_schemas else {}
+    capital = capital_openings.opening(data, city_id) if schema in _CAPITAL_OPENING_SCHEMAS else {}
     row.update(override)
     if capital:
         row.update({field: capital[field] for field in LIMITS if field not in override})
@@ -188,33 +264,42 @@ def opening_view(catalog, city_id, *, seed=None, schema=SCHEMA):
     if row['population'] < POPULATION_UNIT:
         raise ValueError('City development opening population must be at least 100')
     scenario = data.get('id', '')
-    if schema in (HUNDRED_PLACE_SCHEMA, SCHEMA) and row['population'] % 1000 == 0 and scenario.startswith('mainland'):
+    if schema in _HUNDRED_PLACE_SCHEMAS and row['population'] % 1000 == 0 and scenario.startswith('mainland'):
         # Use campaign and city identities so previews and saves agree without an RNG draw.
         entropy = sha256(f'opening-population:{scenario}:{city_id}'.encode()).digest()
         row['population'] += (entropy[0] % 9 + 1) * POPULATION_UNIT
     return row
 
 
-def _new_city(game, state, city, schema):
+def _new_city(game, state, city, schema, *, founded=False):
     opening = opening_view(game.catalog, city.id, seed=state.seed, schema=schema)
-    return dict(owner=city.owner, **opening, baseline=deepcopy(opening), cooldown=0)
+    row = dict(owner=city.owner, **opening, baseline=deepcopy(opening), cooldown=0)
+    if founded and schema != SCHEMA:
+        population = _population_at_founding(game.catalog.data, city.id)
+        if population is not None and population != opening['population']:
+            row['population'] = population
+            row['baseline']['population'] = population
+            row['population_from_founding'] = True
+    return row
 
 
-def empty(game, state, *, schema=SCHEMA):
+def empty(game, state, *, schema=SCHEMA, foundings=()):
     _rules(game)
-    return dict(schema=schema, cities={key: _new_city(game, state, city, schema) for key, city in state.cities.items()},
+    cities = {key: _new_city(game, state, city, schema, founded=key in foundings)
+              for key, city in state.cities.items()}
+    return dict(schema=schema, cities=cities,
                 last_month=_month(state),
                 auto_turns={owner: 0 for owner in sorted(game.catalog.factions) if owner != 'neutral'})
 
 
-def synchronize(game, state):
+def synchronize(game, state, *, foundings=()):
     """Commit-time initialization; conquests retain the developed property."""
     if 'city_development' not in state.extension:
-        state.extension['city_development'] = empty(game, state, schema=PREVIOUS_SCHEMA)
+        state.extension['city_development'] = empty(game, state, schema=PREVIOUS_SCHEMA, foundings=foundings)
     pool = state.extension['city_development']
     for key, city in state.cities.items():
         if key not in pool['cities']:
-            pool['cities'][key] = _new_city(game, state, city, pool['schema'])
+            pool['cities'][key] = _new_city(game, state, city, pool['schema'], founded=key in foundings)
         row = pool['cities'][key]
         if row['owner'] != city.owner:
             row.pop('garrison_spirit', None)
@@ -579,7 +664,7 @@ def validate(game, state):
     if (not isinstance(pool, dict) or set(pool) != _POOL_FIELDS
             or pool['schema'] not in (LEGACY_SCHEMA, PREVIOUS_SCHEMA, SEEDED_SCHEMA, LUOYANG_SCHEMA,
                                       GIANT_CITY_SCHEMA, CAPITAL_SCHEMA, LARGE_CITY_SCHEMA,
-                                      HUNDRED_PLACE_SCHEMA, SCHEMA)
+                                      *_HUNDRED_PLACE_SCHEMAS)
             or not isinstance(pool['cities'], dict) or set(pool['cities']) != set(state.cities)):
         raise ValueError('City development schema')
     opening_month = game.catalog.data['start_year']*12+game.catalog.data['start_month']-1
@@ -589,10 +674,20 @@ def validate(game, state):
     if (not isinstance(pool['auto_turns'], dict) or set(pool['auto_turns']) != owners
             or any(not _int(turn, 0, state.turn) for turn in pool['auto_turns'].values())):
         raise ValueError('City development AI receipt')
+    schema = pool['schema']
     for key, city in state.cities.items():
         row = pool['cities'][key]
-        if not isinstance(row, dict) or set(row) - {'garrison_spirit'} != _CITY_FIELDS or not _int(row.get('garrison_spirit',100),0,100) or row['owner'] != city.owner or not _int(row['cooldown'], 0, 6):
+        if (not isinstance(row, dict) or set(row) - _CITY_OPTIONAL_FIELDS != _CITY_FIELDS
+                or not _int(row.get('garrison_spirit', 100), 0, 100) or row['owner'] != city.owner
+                or not _int(row['cooldown'], 0, 6)):
             raise ValueError('City development city fields')
         _metrics({field: row[field] for field in LIMITS})
-        if row['baseline'] != opening_view(game.catalog, key, seed=state.seed, schema=pool['schema']):
+        baseline = opening_view(game.catalog, key, seed=state.seed, schema=schema)
+        if 'population_from_founding' in row:
+            population = _population_at_founding(game.catalog.data, key)
+            if (schema == SCHEMA or row['population_from_founding'] is not True
+                    or population is None or population == baseline['population']):
+                raise ValueError('City development founding population')
+            baseline['population'] = population
+        if row['baseline'] != baseline:
             raise ValueError('City development immutable opening reference')
