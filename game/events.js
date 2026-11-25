@@ -541,9 +541,21 @@
  }
  function validOperationEvent(row,cityCount){
   const d=row.details,domestic=row.kind==='domestic_report',fields=domestic?['gold','grain','reserves','morale','cities','reason']:['convoy_id','gold','grain','reserves','treasure','lost','reason'];
-  if(Object.keys(d).some(key=>!fields.includes(key))||fields.some(key=>!Object.hasOwn(d,key))||typeof d.reason!=='string'||!/^[a-z_]{1,80}$/.test(d.reason))return false;
+  const receipt=!domestic&&Object.hasOwn(d,'grain_receipt');
+  if(Object.keys(d).length!==fields.length+Number(receipt)||fields.some(key=>!Object.hasOwn(d,key))||typeof d.reason!=='string'||!/^[a-z_]{1,80}$/.test(d.reason))return false;
+  if(receipt&&!validTransportGrainReceipt(d.grain_receipt))return false;
   for(const key of fields)if(key!=='reason'&&(!Number.isInteger(d[key])||d[key]<0||d[key]>100000000))return false;
   return domestic?['turn','month'].includes(d.reason)&&d.cities>=1&&d.cities<=cityCount&&d.morale<=d.cities*100:d.convoy_id>=1&&d.treasure<=99;
+ }
+ function validTransportGrainReceipt(receipt){
+  if(!receipt||typeof receipt!=='object'||Array.isArray(receipt))return false;
+  const uses=['cargo_rations','cargo_route_loss','cargo_weather_loss','cargo_delivered','cargo_returned','cargo_abandoned','cargo_remaining'];
+  const fields=['cargo_dispatched','cargo_received','cargo_loss_remainder','escort_base_grain','escort_extra_grain',...uses];
+  const amount=value=>Number.isSafeInteger(value)&&value>=0&&value<=1600000000;
+  if(Object.keys(receipt).length!==fields.length||
+     fields.some(key=>!Object.hasOwn(receipt,key)||!amount(receipt[key])))return false;
+  return receipt.cargo_loss_remainder<10000000&&
+   receipt.cargo_dispatched+receipt.cargo_received===uses.reduce((total,key)=>total+receipt[key],0);
  }
  function validStaffEvent(row,cityCount){
   const d=row.details,allowed=['staff_id','name','portrait','reason','amount','paid','bonus','counts'];

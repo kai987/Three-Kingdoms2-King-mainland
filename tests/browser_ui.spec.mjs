@@ -2360,8 +2360,13 @@ test('manual treasure transport preserves cargo, rations and saved travel while 
  expect(convoy).toMatchObject({owner:'shu',status:'outbound',officers:[595],cargo:{gold:0,grain:0,reserves:0,treasure:6},delivery_done:false});
  const quote=convoy.journeys[0].quote;
  expect(quote.days).toBe(expectedTransport.days);expect(quote.modes).toEqual(expectedTransport.modes);
- let stageDays=0;for(let index=0;index<quote.routes.length;index++){stageDays+=quote.routes[index].days;if(before.state.cities[quote.path[index+1]]?.owner==='shu')break;}
- const units=convoy.officers.reduce((sum,id)=>sum+before.state.officers[id].troops+100,0),rations=Math.ceil(units*stageDays/50);
+ // The convoy loads to its first friendly depot over the plain land leg.
+ const firstLeg=quote.routes[0];
+ expect(quote.path.slice(0,2)).toEqual(['shujun','guanghan']);
+ expect(before.state.cities.guanghan.owner).toBe('shu');
+ expect(firstLeg).toMatchObject({mode:'land',terrain:'plain',days:2});
+ const units=convoy.officers.reduce((sum,id)=>sum+before.state.officers[id].troops+100,0);
+ const rations=Math.ceil(units*firstLeg.days*125/5000);
  expect(rations).toBe(expectedTransport.cost_grain);
  expect(convoy.journeys[0].supply).toMatchObject({loaded:rations,consumed:0,remaining:rations});
  expect(departing.state.cities[source].grain).toBe(before.state.cities[source].grain-rations);
