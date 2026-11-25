@@ -130,7 +130,43 @@ class CityLifecycleTests(unittest.TestCase):
         self.assertEqual((game.state.year, game.state.month), (208, 1))
         self.assertEqual(game.state.cities['xindu'].owner, game.state.cities['danyang'].owner)
         self.assertIn('xindu', game.view()['catalog']['active_cities'])
+        self.assertEqual(game.state.extension['city_development']['cities']['xindu']['baseline']['population'],
+                         11_700)
         game.validate(game.state)
+
+    def test_legacy_save_uses_the_recorded_population_for_new_foundings(self):
+        catalog = Catalog(ROOT/'game/data/campaigns/207-09.json')
+        game = self.start(catalog)
+        legacy = city_development.empty(game, game.state, schema=city_development.COMMANDERY_SCHEMA)
+        legacy['cities']['guonei']['population'] += 500
+        game.state.extension['city_development'] = legacy
+        before = game.export_save()
+        game.load_save(before, game.revision)
+        self.assertEqual(game.export_save(), before)
+        for _ in range(4):
+            advance_month(game)
+        game.validate(game.state)
+        pool = game.state.extension['city_development']
+        self.assertEqual(pool['schema'], city_development.COMMANDERY_SCHEMA)
+        new_city = pool['cities']['xindu']
+        self.assertEqual(new_city['population'], 11_700)
+        self.assertEqual(new_city['baseline']['population'], 11_700)
+        self.assertIs(new_city['population_from_founding'], True)
+        self.assertEqual(pool['cities']['guonei']['baseline'], legacy['cities']['guonei']['baseline'])
+        corrected_save = game.export_save()
+        game.load_save(corrected_save, game.revision)
+        self.assertEqual(game.export_save(), corrected_save)
+
+        old_city = game.state.extension['city_development']['cities']['xindu']
+        legacy_opening = city_development.opening_view(catalog, 'xindu', schema=city_development.COMMANDERY_SCHEMA)
+        old_city.pop('population_from_founding')
+        old_city.update(legacy_opening, baseline=legacy_opening.copy())
+        previous_foundation = game.export_save()
+        game.load_save(previous_foundation, game.revision)
+        self.assertEqual(game.export_save(), previous_foundation)
+        game.state.extension['city_development']['cities']['guonei']['population_from_founding'] = True
+        with self.assertRaisesRegex(ValueError, 'City development founding population'):
+            city_development.validate(game, game.state)
 
     def test_new_opening_cannot_recreate_a_retired_city_at_month_rollover(self):
         late = self.start(self.fixture(8, retirement_month=9))
