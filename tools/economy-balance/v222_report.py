@@ -24,6 +24,14 @@ RECEIVED = {'returned_home', 'received_elsewhere'}
 PERIODS = ('regional-weather-daily.csv', 'snowfall-events.csv','snow-accumulation.csv',
            'river-ice-daily.csv','river-freeze-events.csv')
 PREVIOUS_SHA = 'cc606fd31eeb120ac578caea2be085ee099ba32341b7ae44ac113a46f97b19b5'
+SOURCE_TRANSITIONS = {
+    'tools/economy-balance/v222_experiments.py': (
+        'bfba846f2520901231d4f3d5d26ce5f8acd031c9dc117fcdc62e0e3b32a29e09',
+        '88ebd8bce29f9e4190b6b71045d0385cc127fb346ccf48bb3307d8bca16e4854'),
+    'source/remake/convoy_relief.py': (
+        '4e76c7a00b1be12ceee41418fa96e62f193012585ad17ecc62f90e4da1305a07',
+        '69a1fcf7319919a18f8dae6eaed0fbe6ae327bef993ea32e9e54d440f69ac1db'),
+}
 EXPECTED = set().union(*(set(cases(wave)) for wave in ('focus','paired','long')))
 ACCEPTANCE_CHECKS = {
     'environment.json','matrix.log','holdout.log','march-build.log','cargo.log','wasm.log',
@@ -349,9 +357,9 @@ def exports(root,older):
         before=json.loads((root/'sources'/f'{next(iter(sources))}.json').read_text())['files']
         after=current['files']
         changes=sorted(name for name in before.keys()|after.keys() if before.get(name)!=after.get(name))
-        compatible={'tools/economy-balance/v222_experiments.py','source/remake/convoy_relief.py'}
-        if set(changes)-compatible:
-            raise ValueError(f'Observation runtime inputs changed: {changes}')
+        for name in changes:
+            if (before.get(name),after.get(name))!=SOURCE_TRANSITIONS.get(name):
+                raise ValueError(f'Unverified observation runtime change: {name}')
         if 'source/remake/convoy_relief.py' in changes:
             # The final wait-ration fix enlarges a cargo quote only after its
             # unchanged eligibility check, or on a real handoff. These captured
