@@ -36,7 +36,7 @@ EXPECTED = set().union(*(set(cases(wave)) for wave in ('focus','paired','long'))
 ACCEPTANCE_CHECKS = {
     'environment.json','matrix.log','holdout.log','march-build.log','cargo.log','wasm.log',
     'transport-locales.log','fixture-relief-proof.json',
-    'post-wait-five-year.json',
+    'post-wait-five-year.json','replay-final-long.log','long-relief-rerun.json',
     'js-final.log','web-build.log','browser-emergency.log','convoy-emergency-zh.png','convoy-emergency-ja-mobile.png',
     'emergency-fixtures-final.log','full-suite-final.log','ci-registry.log','baseline-replay.log',
     'checkpoint-replay.log','guandu-candidate.log','guandu-baseline.log',
@@ -348,13 +348,15 @@ def exports(root,older):
             sources.add(run['source_tree_sha256'])
         else:
             failed.append(dict(base(run),failure=run['failure']))
-    if len(sources)>1:
-        raise ValueError(f'Mixed experiment sources {sources}')
     current=source_identity()
+    earlier=sources-{current['tree_sha256']}
+    if len(earlier)>1:
+        raise ValueError(f'Multiple unverified historical experiment sources: {earlier}')
     changes=[]
     conditional_source_check=None
-    if sources and sources!={current['tree_sha256']}:
-        before=json.loads((root/'sources'/f'{next(iter(sources))}.json').read_text())['files']
+    if earlier:
+        historical_source=next(iter(earlier))
+        before=json.loads((root/'sources'/f'{historical_source}.json').read_text())['files']
         after=current['files']
         changes=sorted(name for name in before.keys()|after.keys() if before.get(name)!=after.get(name))
         for name in changes:
@@ -364,11 +366,16 @@ def exports(root,older):
             # The final wait-ration fix enlarges a cargo quote only after its
             # unchanged eligibility check, or on a real handoff. These captured
             # campaigns are equivalent only if neither opportunity occurred.
+            eligible=0
             for path,run in actual.values():
+                if run['source_tree_sha256']!=historical_source:
+                    continue
                 if (run['streams']['convoy-relief-deliveries'] or
                         any(row['decision']=='dispatched' for row in rows(path/'convoy-relief-requests.csv'))):
                     raise ValueError(f'Rerun required after relief wait-ration fix: {path}')
-            conditional_source_check='no recorded ordinary relief dispatches or handoffs in the original samples'
+                eligible+=1
+            conditional_source_check=dict(source=historical_source,unaffected_runs=eligible,
+                criterion='no recorded ordinary relief dispatches or handoffs')
     to_json(root/'sources'/f"{current['tree_sha256']}.json",current)
     observation=root/'exports'
     observation.mkdir(parents=True,exist_ok=True)
@@ -443,7 +450,8 @@ def exports(root,older):
             magnitude.append(dict(wave=wave,strategy=strategy,group=group,months=months,runs=len(found),**means))
     write(observation,'sample-means',magnitude)
     return dict(schema='weather-v222-validation-r1',baseline_commit='1e521fa67fc54c7ae16f4195f8adafbfe2891e6d',
-        current_git_head=git('rev-parse','HEAD').decode().strip(),source_tree_sha256=next(iter(sources),None),
+        current_git_head=git('rev-parse','HEAD').decode().strip(),
+        observed_source_tree_sha256=sorted(sources),
         delivered_source_tree_sha256=current['tree_sha256'], source_differences=changes,
         conditional_source_check=conditional_source_check,
         normalization=('strategic terminal date = start + terminal tick; personnel-safe endings use actual surviving groups; '
@@ -451,7 +459,8 @@ def exports(root,older):
         expected=len(EXPECTED),completed=len(EXPECTED&actual.keys()),
         additional_controls=len(actual.keys()-EXPECTED),failed=failed,
         missing=[dict(seed=s,scenario=c,strategy=a,group=g,months=m) for s,c,a,g,m in sorted(EXPECTED-actual.keys())],
-        runs=[dict(base(run),head=run['head'],path=str(path.relative_to(root)),catalog_sha256=run['catalog_sha256'],
+        runs=[dict(base(run),head=run['head'],source_tree_sha256=run['source_tree_sha256'],
+                   path=str(path.relative_to(root)),catalog_sha256=run['catalog_sha256'],
                    weather_seed=run['weather_seed'],backend=run['backend']['engine'],rules=run['rule_versions'])
               for _,(path,run) in sorted(actual.items())])
 
