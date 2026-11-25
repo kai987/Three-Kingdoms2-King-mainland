@@ -28,6 +28,7 @@ EXPECTED = set().union(*(set(cases(wave)) for wave in ('focus','paired','long'))
 ACCEPTANCE_CHECKS = {
     'environment.json','matrix.log','holdout.log','march-build.log','cargo.log','wasm.log',
     'transport-locales.log','fixture-relief-proof.json',
+    'post-wait-five-year.json',
     'js-final.log','web-build.log','browser-emergency.log','convoy-emergency-zh.png','convoy-emergency-ja-mobile.png',
     'emergency-fixtures-final.log','full-suite-final.log','ci-registry.log','baseline-replay.log',
     'checkpoint-replay.log','guandu-candidate.log','guandu-baseline.log',
@@ -343,12 +344,23 @@ def exports(root,older):
         raise ValueError(f'Mixed experiment sources {sources}')
     current=source_identity()
     changes=[]
+    conditional_source_check=None
     if sources and sources!={current['tree_sha256']}:
         before=json.loads((root/'sources'/f'{next(iter(sources))}.json').read_text())['files']
         after=current['files']
         changes=sorted(name for name in before.keys()|after.keys() if before.get(name)!=after.get(name))
-        if changes!=['tools/economy-balance/v222_experiments.py']:
+        compatible={'tools/economy-balance/v222_experiments.py','source/remake/convoy_relief.py'}
+        if set(changes)-compatible:
             raise ValueError(f'Observation runtime inputs changed: {changes}')
+        if 'source/remake/convoy_relief.py' in changes:
+            # The final wait-ration fix enlarges a cargo quote only after its
+            # unchanged eligibility check, or on a real handoff. These captured
+            # campaigns are equivalent only if neither opportunity occurred.
+            for path,run in actual.values():
+                if (run['streams']['convoy-relief-deliveries'] or
+                        any(row['decision']=='dispatched' for row in rows(path/'convoy-relief-requests.csv'))):
+                    raise ValueError(f'Rerun required after relief wait-ration fix: {path}')
+            conditional_source_check='no recorded ordinary relief dispatches or handoffs in the original samples'
     to_json(root/'sources'/f"{current['tree_sha256']}.json",current)
     observation=root/'exports'
     observation.mkdir(parents=True,exist_ok=True)
@@ -424,7 +436,8 @@ def exports(root,older):
     write(observation,'sample-means',magnitude)
     return dict(schema='weather-v222-validation-r1',baseline_commit='1e521fa67fc54c7ae16f4195f8adafbfe2891e6d',
         current_git_head=git('rev-parse','HEAD').decode().strip(),source_tree_sha256=next(iter(sources),None),
-        delivered_source_tree_sha256=current['tree_sha256'], postprocessing_adjusted_sources=changes,
+        delivered_source_tree_sha256=current['tree_sha256'], source_differences=changes,
+        conditional_source_check=conditional_source_check,
         normalization=('strategic terminal date = start + terminal tick; personnel-safe endings use actual surviving groups; '
                        'right-censored cargo uses the latest physical receipt, including last-boundary settlements'),
         expected=len(EXPECTED),completed=len(EXPECTED&actual.keys()),

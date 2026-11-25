@@ -50,8 +50,19 @@ def relief_case():
         from remake import treasures
         treasures.synchronize(game,state)
         game.validate(state)
+        exit_status=dict(phase=target['status'],city=target['target'],
+            remaining_rations=transport_emergency.book(target)['remaining'],
+            route_rations=target['emergency']['route_budget'])
+        assert exit_status['phase']=='returning' and exit_status['remaining_rations']>=exit_status['route_rations']
+        game._complete_turn(state)
+        logistics.process_arrivals(game,state)
+        treasures.synchronize(game,state)
+        game.validate(state)
+        received_terminal=[e for e in tracked if e['event']=='convoy_terminal']
+        assert {e['convoy_id'] for e in received_terminal}=={target['id'],sender['id']}
+        assert all(e['actual_position']=='jiangxia' for e in received_terminal)
         return dict(before=before,dispatch_debit=debit,actual_debit=receipt,actual_receipt=received,
-                    sender_return_budget=choice['relief']['returning'],events=tracked,
+                    recipient_exit=exit_status,sender_return_budget=choice['relief']['returning'],events=tracked,
                     verified_state=game.export_save(compact=True)['checksum'])
 
 

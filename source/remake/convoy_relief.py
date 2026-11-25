@@ -37,6 +37,15 @@ def request(game, state, row):
     return Demand(row['id'], here, required, book['clock_tick'] + emergency.RELIEF_DAYS, plan['meal_per_day'])
 
 
+def _need_at_settlement(game,state,target,demand,meeting):
+    # Handoffs are daily. The recipient can choose its next journey only once
+    # the strategic turn settles, so it also needs meals through that boundary.
+    remaining = max(0, army_relief.boundary(meeting)-emergency.book(target)['clock_tick'])
+    weight = remaining*emergency.wait_weight(game,state,demand.city)
+    waiting = army_relief.ration_budget(emergency.convoy_units(state,target),0,weight,0).wait
+    return demand.required+waiting
+
+
 def missions(state, owner):
     return (row for row in logistics._pool(state)['convoys'] if row['owner']==owner and 'convoy_relief' in row
             and row.get('return_leg')!=len(row['journeys'])-1
@@ -148,6 +157,7 @@ class Planner:
                 continue
             wait = army_relief.boundary(eta+army_relief.WAIT_DAYS)-eta
             demand_at_eta=demand.required+max(0, out.days*demand.meal_per_day-emergency.available(target))
+            needed = _need_at_settlement(game,state,target,demand,eta)
             for team in teams:
                 troops = sum(state.officers[i].troops for i in team)
                 if budget and budget['threatened']:
@@ -157,25 +167,28 @@ class Planner:
                         continue
                 bag = army_relief.ration_budget(march_supply.ration_units(state,team),out.weight,
                     wait*emergency.wait_weight(game,state,demand.city),back.weight)
-                room=max(0,min(policy['max_grain'],stock-bag.total))
+                capacity=max(0,min(policy['max_grain'],stock-bag.total))
                 parts = logistics.logistics_rules.plan(out.route,march_supply.travel_rules(game))
                 risks = game._march_risks(out.route,None)
                 if cargo is not None:
-                    room = cargo if cargo<=room else 0
+                    room = cargo if cargo<=capacity else 0
                     net = army_relief.net_cargo(game,out.route,room,parts=parts,risks=risks,state=state)
-                elif room:
-                    room,net = army_relief.shipment(game,out.route,demand_at_eta,room,parts,risks,state=state)
+                elif capacity:
+                    room,net = army_relief.shipment(game,out.route,demand_at_eta,capacity,parts,risks,state=state)
                 else:
-                    net = 0
+                    room,net = 0,0
                 efficiency = army_relief.efficiency(net,room,bag.total)
                 if not net or efficiency<army_relief.EFFICIENCY_MINIMUM and net*4<demand_at_eta:
                     continue
+                if cargo is None and net<needed and room<capacity:
+                    room,net = army_relief.shipment(game,out.route,needed,capacity,parts,risks,state=state)
+                    efficiency = army_relief.efficiency(net,room,bag.total)
                 facts = dict(target=demand.ident,root=demand.root,meeting=demand.city,
-                    eta=eta,wait_until=min(eta+wait,demand.wait_until),needed=demand_at_eta,
+                    eta=eta,wait_until=min(eta+wait,demand.wait_until),needed=needed,
                     net=net,return_city=source.id,return_weight=back.weight,
                     outbound=bag.outbound,waiting=bag.wait,returning=bag.returning,safety=bag.safety)
                 result.append((
-                    (eta, -min(net,demand_at_eta), efficiency<army_relief.EFFICIENCY_PREFERRED,
+                    (eta, -min(net,needed), efficiency<army_relief.EFFICIENCY_PREFERRED,
                     efficiency<army_relief.EFFICIENCY_NORMAL, bag.total+room, troops,
                     tuple(logistics._key(i) for i in team),out.mode),
                     dict(quote=out.route,mode=out.mode,officers=team,grain=room,rations=bag.total,relief=facts),
@@ -312,7 +325,7 @@ def rendezvous(game,state,tick):
             (army_relief.boundary(tick)-tick)*emergency.wait_weight(game,state,here),back.weight,
             credit=sender['credit_units']).total
         current=emergency.book(recipient)
-        amount=min(demand.required, logistics.LIMIT-current['remaining'],
+        amount=min(_need_at_settlement(game,state,recipient,demand,tick), logistics.LIMIT-current['remaining'],
                    row['cargo']['grain']-max(0,protected-sender['remaining']))
         if amount<=0:
             continue

@@ -135,6 +135,14 @@ class TransportEmergencyTests(unittest.TestCase):
             game._complete_turn(state)
             logistics.process_arrivals(game,state)
             treasures.synchronize(game,state)
+            self.assertEqual((row['status'],row['target']),('returning','jiangxia'))
+            self.assertGreaterEqual(emergency.book(row)['remaining'],row['emergency']['route_budget'])
+            self.roundtrip(game)
+            game._complete_turn(state)
+            logistics.process_arrivals(game,state)
+            treasures.synchronize(game,state)
+            self.assertNotIn(row,logistics._pool(state)['convoys'])
+            self.assertIn(999,state.cities['jiangxia'].roster.officer_ids)
             self.roundtrip(game)
 
     def test_late_expected_arrival_is_never_available_as_rations(self):
