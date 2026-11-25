@@ -213,6 +213,10 @@ FAMILIES = ('cities', 'population', 'total_land', 'total_industry', 'gold_stock'
 
 
 def run_scenario(scenario, seed, months, output, group, settings=None, *, hash_turns=False):
+    if group.startswith('G'):
+        from v212_experiments import configured
+        with configured(group):
+            return _run_scenario(scenario, seed, months, output, group, settings, hash_turns=hash_turns)
     try:
         from remake import logistics_strategy
     except ImportError:
@@ -237,7 +241,12 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
     game.telemetry = None
     game.city_fixed = {}
     timings, cpu_times = [], []
-    new_metrics = settings is not None and group in {'E4','F1','F2','F3'}
+    staged = group.startswith('G')
+    new_metrics = settings is not None and (group in {'E4','F1','F2','F3'} or staged)
+    extra_metrics=None
+    if new_metrics and (group=='F3' or staged):
+        from observer_v212 import Measurements
+        extra_metrics=Measurements()
     v211_rows=defaultdict(list)
     committed = []  # Optional verification trace on the independent command boundary.
 
@@ -254,7 +263,10 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
         ledger = journey['supply']
         before = {key:ledger.get(key,0) for key in ('shortage_days','base_consumed','lost','elapsed_days')}
         start = len(ledger['starvation']) if game.telemetry else 0
+        token=extra_metrics.before_meal(campaign,state,unit,journey,**values) if extra_metrics else None
         used = real_march(campaign,state,unit,journey,*args,**values)
+        if extra_metrics:
+            extra_metrics.after_meal(token,journey)
         stats = game.flow[unit['owner']]
         is_convoy = values.get('unit_kind') == 'convoy'
         if (game.telemetry and is_convoy
@@ -288,6 +300,8 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
         return real_cargo(row,kind,cargo,*args,**values)
 
     def record_transport(campaign,state,kind,row,**values):
+        if extra_metrics:
+            extra_metrics.transport(state,kind,row,values)
         if new_metrics and row['target_march'] is not None:
             first=row['journeys'][0]
             record_v211('army-convoys',state,stage=kind,owner=row['owner'],convoy=row['id'],
@@ -414,6 +428,8 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
         normalized['extension'].pop('ai_logistics_strategy_version',None)
         opened=digest(normalized)
     with ExitStack() as hooks:
+        if extra_metrics:
+            extra_metrics.attach(hooks)
         if new_metrics:
             from remake import logistics_strategy
             if hasattr(logistics_strategy,'observe'):
@@ -480,6 +496,8 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
                     game.telemetry.roster_moves(before, game.state)
                     detailed.flush_plans(game.state)
                     game.telemetry.finish_turn(game.state)
+                if extra_metrics:
+                    extra_metrics.turn(game.state)
                 if hash_turns:
                     committed.append(game.export_save(compact=True)['checksum'])
                 for key, city in game.state.cities.items():
@@ -574,7 +592,7 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
             else:
                 filename.write_text('turn,date,kind,details\n',encoding='utf-8')
             artifacts[file]=len(rows)
-        strategy=dict(army_relief=group in {'F1','F3'},war_recovery=group in {'F2','F3'})
+        strategy=dict(army_relief=group in {'F1','F3'} or staged,war_recovery=group in {'F2','F3'} or staged)
         ruleset={}
         if getattr(logistics_strategy,'CURRENT',21)==211:
             from remake import army_relief, war_recovery
@@ -586,6 +604,11 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
                 objective_scale=war_recovery.OBJECTIVE_SCALE,front_pressure=war_recovery.FRONT_PRESSURE)
         result['v211']=dict(opening_sha256=opened, runtime_source_tree=runtime_source,
                             strategy=strategy,candidate_config=ruleset, streams=artifacts)
+    if extra_metrics:
+        result['v212']=extra_metrics.write(output/scenario,state)
+        if staged:
+            from v212_experiments import settings_for
+            result['v212']['profile']=settings_for(group)
     if hash_turns:
         result['committed_save_sha256'] = committed
     to_json(output / scenario / 'run.json', result)
