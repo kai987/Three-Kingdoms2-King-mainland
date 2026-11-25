@@ -583,6 +583,9 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
         artifacts={}
         streams={'army-convoys':{'army-convoys'},'army-requests':{'relief_quote','relief_handoff',
                    'relief_cancelled','relief_replanned'},'war-recovery':{'war_recovery'}}
+        if staged:
+            streams.update({'escort-assignments':{'escort_assignment'}, 'pre-expedition-supply-plans':
+                {'staging_node','staging_preparation'}, 'occupation-recovery':{'occupation'}})
         for file,kinds in streams.items():
             rows=sorted((row for kind in kinds for row in v211_rows.get(kind,())),
                         key=lambda item:(item['turn'],item['kind']))
