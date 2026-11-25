@@ -15,7 +15,7 @@ def relief_case():
     game=test.game()
     tracked=[]
     def observe(kind,record):
-        if kind.startswith('emergency_') or kind in ('convoy_relief_request','convoy_relief_delivery'):
+        if kind.startswith('emergency_') or kind in ('convoy_relief_request','convoy_relief_delivery','convoy_terminal'):
             tracked.append(dict(event=kind,**record))
     with grain_units.using(game.state), winter_weather.experiment(0,observe=observe,detailed=True):
         target=test.convoy(game,bag=148)
