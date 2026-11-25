@@ -268,6 +268,29 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
   assert.equal(request('/api/save',{instance:seat}),observed);
  }
 
+ // Opt-in winter uses the same real worker, preview and save paths.
+ let winter=command(state(seat),'new',{scenario:logisticsScenario,faction:'shu',
+  seed:2026,weather_rules_version:22},seat);
+ assert.equal(winter.game.extension.weather_rules_version,22);
+ assert.equal(winter.game.extension.ai_logistics_strategy_version,211);
+ const winterOpening=request('/api/save',{instance:seat});
+ const winterQuote=JSON.parse(request('/api/logistics-preview',{method:'POST',instance:seat,
+  body:JSON.stringify({...travelDraft,revision:winter.revision,purpose:'transfer',cargo:0,reserves:0})})).primary;
+ assert.equal(winterQuote.logistics.weather.forecast,'current_conditions');
+ assert.equal(winterQuote.logistics.weather.normal_days,winterQuote.logistics.weather.days);
+ assert.equal(request('/api/save',{instance:seat}),winterOpening);
+ winter=command(winter,'new',{scenario:initial,faction:'observer',seed:2026,weather_rules_version:22},seat);
+ assert.equal(winter.catalog.weather.tick,0);
+ const winterTurns=3;
+ for(let index=0;index<winterTurns;index++)winter=command(winter,'observe_turn',{},seat);
+ assert.equal(winter.catalog.weather.tick,30);
+ assert(Object.values(winter.catalog.weather.regions).some(region=>region.snow_seen));
+ const winterSave=request('/api/save',{instance:seat});
+ const observedWeather=winter.catalog.weather;
+ winter=load(winterSave,winter.revision,seat);
+ assert.deepEqual(winter.catalog.weather,observedWeather);
+ assert.equal(request('/api/save',{instance:seat}),winterSave);
+
  // Exercise the real optional wire path, not only the legacy bridge used by
  // CPU replay. Hydration must reconstruct the same complete current view.
  const {default:wireModule}=await import(pathToFileURL(path.join(root,'game/view-cache.js')).href);
@@ -312,7 +335,8 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
  assert.deepEqual(cpu.rng,rng,'final RNG state and draw count agree');
  console.log(JSON.stringify({ok:true,pyodide:py.version,previews:previews.length,catalogs:catalogs.size,
   requests:trace.length,ai_turns:1,battle_settlements:battleSettlements,logistics_route_parity:true,
-  save_sha256:sha(finalSave),rng,cpu_save_bytes_equal:true,v212_observer_turns:candidateTurns}));
+  save_sha256:sha(finalSave),rng,cpu_save_bytes_equal:true,v212_observer_turns:candidateTurns,
+  weather_observer_turns:winterTurns,weather_save_sha256:sha(winterSave)}));
 }finally{
  for(const bridge of bridges.values())bridge.destroy();
  responseSemantic?.destroy();

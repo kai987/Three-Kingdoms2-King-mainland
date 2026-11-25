@@ -18,6 +18,11 @@ from observer_telemetry import (AIS, CITY_FIELDS, SCHEMA, StockSnapshot, Telemet
 from remake import battle_supply, city_economy as economy, domestic, grain_market, grain_units, logistics, march_supply, payroll
 from remake.march_core import backend_status
 
+try:
+    from remake import winter_weather
+except ImportError:
+    winter_weather=None  # Prior baseline source trees predate the winter observer.
+
 SCENARIOS = ('184-02', '190-01', '200-01', '207-09', '208-10', '221-07', '263-05')
 MILESTONES = (12, 36, 60, 120, 240)
 METRICS = ('grain_bought', 'emergency_grain_bought', 'battle_grain_bought', 'grain_sold',
@@ -61,6 +66,10 @@ class RecordedCampaign(HeadlessCampaign):
         event = super()._emit_event(state, kind, **values)
         stats = self.flow[event['factions'][0]] if event['factions'] else self.flow['neutral']
         details = event['details']
+        if (winter_weather and winter_weather.observing() and event['factions'] and event['city_ids']
+                and kind in ('grain_traded','battle_result')):
+            winter_weather.action(self,state,kind,event['city_ids'][0],owner=event['factions'][0],
+                target=event['city_ids'][1] if len(event['city_ids'])>1 else None,event=details)
         if self.telemetry:
             self.telemetry.event(state, event)
         if kind == 'grain_traded':
@@ -249,6 +258,17 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
         extra_metrics=Measurements()
     v211_rows=defaultdict(list)
     committed = []  # Optional verification trace on the independent command boundary.
+    with_weather_observer=bool(winter_weather and winter_weather.observing())
+    before_weather=[]
+    def record_hash():
+        committed.append(game.export_save(compact=True)['checksum'])
+        if with_weather_observer and winter_weather.stage(game.state)<2:
+            from remake.campaign import digest
+            snapshot=game.to_dict()
+            extension=snapshot['extension']
+            extension.pop(winter_weather.POOL,None)
+            extension.pop(winter_weather.FIELD,None)
+            before_weather.append(digest(snapshot))
 
     game.recoveries, game.recovering = [], {}
     game.last_battle_turn = {}
@@ -318,6 +338,13 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
                 plan=row.get('relief','not_applicable'))
         name = {'transport_departed':'convoy_dispatched','transport_arrived':'convoy_arrived',
                 'transport_returned':'convoy_returned'}.get(kind)
+        if with_weather_observer:
+            journey=row['journeys'][-1]
+            facts=values.get('amounts') or row['cargo']
+            winter_weather.action(campaign,state,kind,row['source'],owner=row['owner'],target=row['target'],
+                unit_id=row['id'],grain=facts['grain'],arrival=journey['arrival_turn'],
+                blocked=journey['supply'].get('winter',{}).get('blocked'),
+                reason=values.get('reason'),army=row['target_march'])
         if name:
             stats=game.flow[row['owner']]
             stats[name]+=1
@@ -439,7 +466,7 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
         with grain_units.using(game.state):
             world_rows.append(_measure(game, 0, faction_rows, city_rows))
         if hash_turns:
-            committed.append(game.export_save(compact=True)['checksum'])
+            record_hash()
         for obj,name,handler in ((economy,'settle_turn_grain',observe_rations),(domestic,'_report',observe_report),
             (march_supply,'advance_unit',record_march),(logistics,'_cargo_change',record_cargo),
             (logistics,'_event',record_transport)):
@@ -461,6 +488,12 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
 
             def record_sortie(campaign,state,city,*args,**values):
                 budget=real_sortie(campaign,state,city,*args,**values)
+                if with_weather_observer:
+                    target,_,quote,back=args
+                    winter_weather.action(campaign,state,'sortie_quote',city.id,owner=city.owner,target=target.id,
+                        permitted=budget['can_depart'],required_grain=budget['required_grain'],available_grain=city.grain,
+                        outbound=budget['outbound'],returning=budget['returning'],base_days=quote['days'],
+                        return_reachable=back is not None)
                 game.flow[city.owner].update(ai_sortie_quotes=1,ai_sortie_quote_blocked=not budget['can_depart'])
                 return budget
 
@@ -499,7 +532,7 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
                 if extra_metrics:
                     extra_metrics.turn(game.state)
                 if hash_turns:
-                    committed.append(game.export_save(compact=True)['checksum'])
+                    record_hash()
                 for key, city in game.state.cities.items():
                     stock = grain_market.row(game.state, key)['stock']
                     game.flow[city.owner]['market_city_turns'] += 1
@@ -614,8 +647,11 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
             result['v212']['profile']=settings_for(group)
     if hash_turns:
         result['committed_save_sha256'] = committed
+        if before_weather:
+            result['without_weather_state_sha256']=before_weather
     to_json(output / scenario / 'run.json', result)
-    print(result, flush=True)
+    if not with_weather_observer:
+        print(result, flush=True)
     return result
 
 
