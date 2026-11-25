@@ -4,8 +4,8 @@
   "base_commit": "69a6e8f01239159b91e150637f888278af3b7a88",
   "review_sha256": "fb38ef837fad2783b70ac326f3496bfb45f322b274a8d062c7f5bc0aa65efdba",
   "presentation_sha256": "242e4349f6952057d242219a48b3b0447266c30194e8043c3b28c24223c5b6ca",
-  "locale_sha256": "0dc0d410088972957b8ccaf942d4454024fd5e518b5308c87e47727b6b8a3fd5",
-  "japanese_sha256": "00bc9402abaf255f38554bdb57dfbf3d74a5a202d4225c6d332bbe0dc688551e",
+  "locale_sha256": "19e02022fb2a0cb4af8b7f2c53db82def7eb9381ef4e9c89108f8867d8772c6f",
+  "japanese_sha256": "e5bef21df0b5a5d469fe7930db4a534819711273af55878cf50611ded3bfa239",
   "baseline_serving_non_ruler_reviews": 283,
   "pool": [
     {
