@@ -1,6 +1,7 @@
 """Deterministic daily food, real checkpoints and auditable starvation."""
 from copy import deepcopy
 from . import logistics_rules as rules
+from . import winter_travel, winter_weather
 from .grain_units import denominator
 from .historical_campaigns import transit_allowed
 from .officers import OFFICER_TROOP_CAP
@@ -48,11 +49,18 @@ def route_weight(quote, days, *, offset=0, game=None, version=rules.LEGACY):
     return rules.weight(rules.plan(quote, travel_rules(game)), offset, days)
 
 
-def quote_supply(quote,total_troops,officer_count,reserves=0,*,game=None,version=rules.LEGACY,days=None):
+def quote_supply(quote,total_troops,officer_count,reserves=0,*,game=None,version=rules.LEGACY,days=None,state=None):
     days=quote['days'] if days is None else days
     denominator_units=denominator() * (rules.RATION_SCALE if version==rules.CURRENT else 1)
     return rules.ceil_div((total_troops + OFFICER_UNITS*officer_count + reserves) *
-                          route_weight(quote,days,game=game,version=version),denominator_units)
+                          quoted_weight(game,state,quote,days,version=version),denominator_units)
+
+
+def quoted_weight(game,state,quote,days,*,offset=0,version=rules.CURRENT):
+    if game is not None and version==rules.CURRENT and winter_weather.stage(state)>=2:
+        return winter_travel.ration_weight(game,state,quote,position=offset*winter_travel.QUANTA,
+                                          stop=(offset+days)*winter_travel.QUANTA)
+    return route_weight(quote,days,offset=offset,game=game,version=version)
 
 
 def next_supply_days(state,quote,owner,route_days=0):
@@ -74,7 +82,7 @@ def initial_days(state,quote,owner=None):
 def estimate(state,ids,quote,reserves=0,*,game=None,version=None):
     version=rules.version(state) if version is None else version
     return quote_supply(quote,sum(state.officers[i].troops for i in ids),len(ids),reserves,
-                        version=version,game=game,days=initial_days(state,quote))
+                        version=version,game=game,days=initial_days(state,quote),state=state)
 
 
 def remaining_requirement(game,state,journey,*,minimum_days=0,reserves=0):
@@ -85,6 +93,9 @@ def remaining_requirement(game,state,journey,*,minimum_days=0,reserves=0):
     unit_scale=rules.RATION_SCALE if version==rules.CURRENT else 1
     travel_weight=route_weight(quote,days,offset=progress,game=game,version=version)
     travel_weight+=max(0,minimum_days-days)*unit_scale
+    if 'winter' in supply:
+        travel_weight=winter_travel.ration_weight(game,state,quote,position=winter_travel.work(supply),
+            stop=(progress+days)*winter_travel.QUANTA,minimum=minimum_days)
     # Legacy rescue dispatches used the whole quoted ration even when the
     # receiving column already had fractional credit in its own bag.
     credit=supply['credit_units'] if version==rules.CURRENT else 0
@@ -105,33 +116,43 @@ def create(state,ids,quote,reserves=0,*,game=None,from_cargo=False,initial_grain
     if version==rules.CURRENT:
         credit=previous['credit_units'] if previous else credit
         supply.update(schema=WEIGHTED_SCHEMA,credit_units=credit,initial_credit=credit,base_consumed=0)
+        if game is not None and winter_weather.stage(state)>=2:
+            supply['winter']=dict(work=0,blocked=None)
     return supply
 
 
 def current_city(journey):
-    progress=journey['supply']['route_days']
+    supply=journey['supply']
+    dynamic=supply.get('winter')
+    progress,scale=(dynamic['work'],winter_travel.QUANTA) if dynamic else (supply['route_days'],1)
     if progress==0:return journey['quote']['path'][0]
     total=0
     for index,leg in enumerate(journey['quote']['routes']):
-        total+=leg['days']
+        total+=leg['days']*scale
         if progress==total:return journey['quote']['path'][index+1]
         if progress<total:return None
-    return journey['quote']['path'][-1] if progress==journey['quote']['days'] else None
+    return journey['quote']['path'][-1] if progress==journey['quote']['days']*scale else None
 
 
 def next_city(journey):
+    supply=journey['supply']
+    dynamic=supply.get('winter')
+    progress,scale=(dynamic['work'],winter_travel.QUANTA) if dynamic else (supply['route_days'],1)
     total=0
     for index,leg in enumerate(journey['quote']['routes']):
-        total+=leg['days']
-        if total>journey['supply']['route_days']:return journey['quote']['path'][index+1]
+        total+=leg['days']*scale
+        if total>progress:return journey['quote']['path'][index+1]
     return None
 
 
 def last_city(journey):
+    supply=journey['supply']
+    dynamic=supply.get('winter')
+    progress,scale=(dynamic['work'],winter_travel.QUANTA) if dynamic else (supply['route_days'],1)
     total=0;found=journey['quote']['path'][0]
     for index,leg in enumerate(journey['quote']['routes']):
-        total+=leg['days']
-        if total>journey['supply']['route_days']:break
+        total+=leg['days']*scale
+        if total>progress:break
         found=journey['quote']['path'][index+1]
     return found
 
@@ -183,6 +204,7 @@ def _completion_tick(supply,days):
     """The physical arrival day, independent of a mutable waiting flag."""
     if days==0:return supply['start_tick']
     progress=0
+    if 'winter' in supply:days*=winter_travel.QUANTA
     for index,period in enumerate(supply['periods']):
         for offset,meal in enumerate(period['days']):
             if meal is not None:progress+=meal[2]
@@ -191,13 +213,17 @@ def _completion_tick(supply,days):
 
 
 def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',cargo=None,
-                 on_cargo_change=None,on_cargo_day=None,absolute_tick=None,parts=None,self_funded=False):
+                 on_cargo_change=None,on_cargo_day=None,absolute_tick=None,parts=None,self_funded=False,
+                 weather_parts=None):
     supply=journey['supply'];quote=journey['quote']
     target=absolute_tick if absolute_tick is not None else ((through_turn or state.turn)-1)*10
     if supply['closed_tick'] is not None:return 0
     weighted=book_version(supply)==rules.CURRENT
     if weighted and parts is None:
         parts=rules.plan(quote,travel_rules(game))
+    dynamic=supply.get('winter')
+    if dynamic is not None and weather_parts is None:
+        weather_parts=winter_travel.plan(game,quote)
     divisor=book_denominator(supply)
     from . import staging_supply
     has_staging=staging_supply.FIELD in getattr(state,'extension',{})
@@ -227,7 +253,22 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
         city_id=current_city(journey)
         progress=supply['route_days']
         distance=next_supply_days(state,quote,unit['owner'],supply['route_days'])
-        if weighted:
+        position=winter_travel.work(supply)
+        frost=None
+        if dynamic is not None:
+            # When already on a leg, only today's meal needs a quote.
+            # Full upcoming provisions are checked at real departure nodes.
+            if city_id is not None and distance:
+                end=(progress+distance)*winter_travel.QUANTA
+                leg_budget=winter_travel.ration_weight(game,state,quote,position=position,stop=end)
+                frost=winter_travel.closed_at_node(state,quote,position)
+            else:
+                leg_budget=0
+            region=game.catalog.climate.cities[city_id or last_city(journey)]['climate_region_id']
+            budget=leg_budget or (10 if progress>=quote['days'] and not self_funded else 1)*winter_travel.wait_rate(state,region)
+            if frost or self_funded and unit.get('hold'):
+                budget=winter_travel.wait_rate(state,region)
+        elif weighted:
             leg_budget=rules.weight(parts,progress,distance)
             budget=leg_budget or (10 if progress>=quote['days'] and not self_funded else 1)*rules.RATION_SCALE
             if self_funded and unit.get('hold'):
@@ -259,15 +300,30 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
                  and not transit_allowed(state,unit['owner'],state.cities[upcoming].owner))
         if blocked:supply['retreat_requested']=True;unit['reason']='route_blocked'
         enough=supply['remaining']*divisor+supply['credit_units']>=units*leg_budget
-        moving=(supply['route_days']<quote['days'] and not blocked and not unit.get('hold')
+        moving=(supply['route_days']<quote['days'] and not blocked and not frost and not unit.get('hold')
                 and not (supply['retreat_requested'] and city_id is not None and unit.get('status')!='returning')
                 and (city_id is None or enough or unit.get('status')=='returning'))
         moving_or_on_leg=moving or city_id is None
-        rate=rules.weight(parts,progress,1) if weighted and moving_or_on_leg else (
-            rules.RATION_SCALE if weighted else None)
+        cargo_weight=0
+        if dynamic is not None:
+            stop=winter_travel.next_checkpoint(quote,position)
+            rest_region=game.catalog.climate.cities[next_city(journey) or city_id or quote['path'][-1]]['climate_region_id'] if moving else region
+            today=winter_travel.day(state,weather_parts,position,rest_region=rest_region,
+                moving=moving,on_leg=city_id is None,stop=stop)
+            moved,rate,cargo_weight=today.moved,today.ration,today.cargo
+            previous_ice=dynamic['blocked']
+            dynamic.update(work=position+moved,blocked=frost or today.blocked)
+            supply['route_days']=dynamic['work']//winter_travel.QUANTA
+        else:
+            rate=rules.weight(parts,progress,1) if weighted and moving_or_on_leg else (
+                rules.RATION_SCALE if weighted else None)
+            moved=int(moving)
+            supply['route_days']+=moved
+            if on_cargo_day is not None and weighted and moving_or_on_leg:
+                cargo_weight=rules.weight(parts,progress,1,rates=rules.CARGO_GRAIN_LOSS_BPS)
+        previous_credit=supply['credit_units']
         used,missing=_meal(supply,units,rate);spent+=used
-        if moving:supply['route_days']+=1
-        supply['waiting']=(not moving and supply['route_days']<quote['days']) or (
+        supply['waiting']=(not moved and supply['route_days']<quote['days']) or (
             supply['waiting'] and supply['route_days']>=quote['days'])
         if missing:
             before={str(i):state.officers[i].troops for i in ids}
@@ -286,9 +342,20 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
                 from . import war_recovery
                 war_recovery.record(state,unit['owner'],unit.get('source',journey['source']),
                                     'convoy' if unit_kind=='convoy' else 'march',lost)
-        if on_cargo_day is not None and weighted and moving_or_on_leg:
-            on_cargo_day(rules.weight(parts,progress,1,rates=rules.CARGO_GRAIN_LOSS_BPS),tick)
-        _record(supply,tick,[units,used,int(moving),missing])
+        meal=[units,used,moved,missing]
+        if dynamic is not None:
+            meal.extend((rate,cargo_weight))
+            if winter_weather.observing():
+                winter_weather.report('travel',tick=tick,unit_kind=unit_kind,unit_id=unit['id'],owner=unit['owner'],
+                    source=journey['source'],target=journey['target'],units=units,work=moved,
+                    grain=used,missing=missing,rate=rate,normal_rate=today.normal_ration,
+                    extra_grain=used-min(used,rules.ceil_div(max(0,units*today.normal_ration-previous_credit),divisor)),
+                    cargo_weight=cargo_weight,normal_cargo_weight=today.normal_cargo,
+                    delay=winter_travel.QUANTA if frost else today.delay,
+                    blocked=dynamic['blocked'],previous_blocked=previous_ice)
+        if on_cargo_day is not None and cargo_weight:
+            on_cargo_day(cargo_weight,tick)
+        _record(supply,tick,meal)
         if tick%10==0:
             recent=[r for r in supply['starvation'] if tick-10<r['tick']<=tick]
             if recent:
@@ -316,10 +383,13 @@ def process_march_supply(game,state,through_turn=None):
     rows=state.extension.get('travel',{}).get('marches',[])
     convoys=state.extension.get('logistics',{}).get('convoys',[])
     clocks=[r['supply']['clock_tick'] for r in rows]+[r['journeys'][-1]['supply']['clock_tick'] for r in convoys]
+    pool=state.extension.get(winter_weather.POOL)
+    if pool is not None:
+        clocks.append(pool['tick'])
     if not clocks or min(clocks)>=target:return 0
     used=0
-    from . import logistics
-    plans={}
+    from . import battle_reinforcements, logistics
+    plans={};weather_plans={}
     def plan_for(journey):
         if book_version(journey['supply'])!=rules.CURRENT:
             return None
@@ -327,18 +397,39 @@ def process_march_supply(game,state,through_turn=None):
         if key not in plans:
             plans[key]=rules.plan(journey['quote'],travel_rules(game))
         return plans[key]
+    def weather_plan(journey):
+        if 'winter' not in journey['supply']:
+            return None
+        key=id(journey)
+        if key not in weather_plans:
+            weather_plans[key]=winter_travel.plan(game,journey['quote'])
+        return weather_plans[key]
     for tick in range(min(clocks)+1,target+1):
+        if pool is not None:
+            winter_weather.advance(game,state,tick)
+            if pool['stage']>=2:
+                battle_reinforcements.advance_returns_day(game,state,tick)
+        if not rows and not convoys:
+            continue
         for row in list(rows):
             if row['supply']['clock_tick']<tick:
-                used+=advance_unit(game,state,row,row,through_turn,absolute_tick=tick,parts=plan_for(row))
+                used+=advance_unit(game,state,row,row,through_turn,absolute_tick=tick,parts=plan_for(row),
+                    weather_parts=weather_plan(row))
         for row in list(convoys):
             if row['journeys'][-1]['supply']['clock_tick']<tick:
                 used+=logistics.advance_supply(game,state,row,through_turn,absolute_tick=tick,
-                                              parts=plan_for(row['journeys'][-1]))
+                                              parts=plan_for(row['journeys'][-1]),weather_parts=weather_plan(row['journeys'][-1]))
         logistics.rendezvous(game,state,tick=tick)
     for row in rows:
         remaining=row['quote']['days']-row['supply']['route_days']
-        row['arrival_turn']=through_turn+max(1,(remaining+9)//10) if remaining else through_turn
+        eta=winter_travel.eta_turn(game,state,row,through_turn)
+        row['arrival_turn']=eta if eta is not None else through_turn+rules.ceil_div(remaining,10)
+    if pool is not None:
+        for row in convoys:
+            journey=row['journeys'][-1]
+            eta=winter_travel.eta_turn(game,state,journey,through_turn)
+            if eta is not None:
+                journey['arrival_turn']=eta
     return used
 
 
@@ -348,18 +439,29 @@ def validate(supply,quote,departure_turn,state_turn,*,game=None,version=None):
     actual_version=book_version(supply)
     weighted=actual_version==rules.CURRENT
     fields=_FIELDS | _WEIGHTED_FIELDS if weighted else _FIELDS
+    dynamic=supply.get('winter')
+    if weighted and 'winter' in supply:
+        fields=fields|{'winter'}
+        if (not isinstance(dynamic,dict) or set(dynamic)!={'work','blocked'}
+                or type(dynamic['work']) is not int or not 0<=dynamic['work']<=quote['days']*winter_travel.QUANTA
+                or dynamic['blocked'] is not None and (not isinstance(dynamic['blocked'],str)
+                    or game is not None and dynamic['blocked'] not in game.catalog.climate.frozen_reaches)):
+            raise ValueError('Winter route position')
     if set(supply)!=fields or version is not None and actual_version!=version:
         raise ValueError('Segment supply fields or rules')
+    scale=winter_travel.QUANTA if dynamic is not None else 1
+    total_work=quote['days']*scale
     divisor=book_denominator(supply)
     max_missing=MAX_DAILY_UNITS * (max(rules.MARCH_SUPPLY_PERCENT.values())*rules.DAY_TICKS if weighted else 1)
-    parts=rules.plan(quote,travel_rules(game)) if weighted else None
+    if dynamic is not None:max_missing=MAX_DAILY_UNITS*winter_travel.MAX_RATION_WEIGHT
+    parts=rules.plan(quote,travel_rules(game)) if weighted and dynamic is None else None
     nodes={}
     if 'path' in quote:
         nodes[0]=quote['path'][0]
         distance=0
         for index,leg in enumerate(quote['routes']):
-            distance+=leg['days'];nodes[distance]=quote['path'][index+1]
-    numbers=fields-{'schema','waiting','retreat_requested','refills','starvation','periods','closed_tick','ration_manifests'}
+            distance+=leg['days']*scale;nodes[distance]=quote['path'][index+1]
+    numbers=fields-{'schema','waiting','retreat_requested','refills','starvation','periods','closed_tick','ration_manifests','winter'}
     if any(type(supply[k])is not int or not 0<=supply[k]<=
            (MAX_TRAVELLING_SOLDIERS if k=='lost' else LIMIT) for k in numbers):
         raise ValueError('Segment supply integers')
@@ -422,14 +524,21 @@ def validate(supply,quote,departure_turn,state_turn,*,game=None,version=None):
                     raise ValueError('Travelling or waiting unit skipped its daily meal')
                 positions[tick]=progress
                 continue
-            if (not isinstance(meal,list) or len(meal)!=4
+            bounds=(MAX_DAILY_UNITS,LIMIT,scale,max_missing)
+            if dynamic is not None:bounds+= (winter_travel.MAX_RATION_WEIGHT,winter_travel.MAX_CARGO_WEIGHT)
+            if (not isinstance(meal,list) or len(meal)!=len(bounds)
                     or any(type(n)is not int or not 0<=n<=bound
-                           for n,bound in zip(meal,(MAX_DAILY_UNITS,LIMIT,1,max_missing)))):
+                           for n,bound in zip(meal,bounds))):
                 raise ValueError('Segment supply daily meal')
-            units,used,moved,missing=meal
+            units,used,moved,missing=meal[:4]
             charge=units
             if weighted:
-                rate=rules.weight(parts,progress,1) if moved or nodes and progress not in nodes else rules.RATION_SCALE
+                if dynamic is not None:
+                    rate=meal[4]
+                    if rate<rules.RATION_SCALE or not moved and progress in nodes and meal[5]:
+                        raise ValueError('Winter daily exposure')
+                else:
+                    rate=rules.weight(parts,progress,1) if moved or nodes and progress not in nodes else rules.RATION_SCALE
                 charge*=rate
                 base_paid+=min(used,rules.ceil_div(max(0,units*rules.RATION_SCALE-credit),divisor))
             balance=credit+used*divisor-charge+missing
@@ -438,14 +547,14 @@ def validate(supply,quote,departure_turn,state_turn,*,game=None,version=None):
             actual=manifests[manifest_index]
             if units!=sum(actual['troops'].values())+100*len(actual['troops'])+actual['reserves']:
                 raise ValueError('Segment ration units do not match travelling people')
-            if moved not in (0,1) or missing>charge or not 0<=balance<divisor or missing and balance:
+            if missing>charge or not 0<=balance<divisor or missing and balance:
                 raise ValueError('Segment supply meal arithmetic')
             if used>inventory:raise ValueError('Meal spent grain before it was delivered')
             inventory-=used
             credit=balance;elapsed+=1;progress+=moved;paid+=used
             positions[tick]=progress
-            if progress>quote['days']:raise ValueError('Daily movement passed the destination')
-            if progress==quote['days'] and completed is None:completed=tick
+            if progress>total_work:raise ValueError('Daily movement passed the destination')
+            if progress==total_work and completed is None:completed=tick
             if missing:shortage+=1;streak+=1;hungry_ticks.append(tick)
             else:streak=0
     if nodes:
@@ -467,7 +576,8 @@ def validate(supply,quote,departure_turn,state_turn,*,game=None,version=None):
             or row['lost']!=sum(row['before'].values())-sum(row['after'].values())+row['reserves_before']-row['reserves_after']):
             raise ValueError('Segment supply hunger arithmetic')
         lost+=row['lost']
-    if (supply['elapsed_days']!=elapsed or supply['route_days']!=progress or supply['credit_units']!=credit
+    if (supply['elapsed_days']!=elapsed or supply['route_days']!=progress//scale
+        or dynamic is not None and dynamic['work']!=progress or supply['credit_units']!=credit
         or supply['consumed']!=paid or weighted and supply['base_consumed']!=base_paid
         or supply['shortage_days']!=shortage or supply['shortage_streak']!=streak
         or supply['lost']!=lost or supply['received']!=sum(r['grain'] for r in refills)
@@ -485,11 +595,13 @@ def validate_departures(supply,quote,*,returning=False,game=None):
     """
     if returning:return
     weighted=book_version(supply)==rules.CURRENT
+    dynamic=supply.get('winter')
+    scale=winter_travel.QUANTA if dynamic else 1
     divisor=book_denominator(supply)
     parts=rules.plan(quote,travel_rules(game)) if weighted else None
     starts={};distance=0
     for leg in quote['routes']:
-        starts[distance]=rules.weight(parts,distance,leg['days']) if weighted else leg['days']
+        starts[distance*scale]=rules.weight(parts,distance,leg['days']) if weighted else leg['days']
         distance+=leg['days']
     receipts={}
     for row in supply['refills']:
@@ -499,13 +611,14 @@ def validate_departures(supply,quote,*,returning=False,game=None):
         for meal in period['days']:
             inventory+=receipts.get(tick,0);tick+=1
             if meal is None:continue
-            units,used,moved,missing=meal
-            if moved and progress in starts and inventory*divisor+credit<units*starts[progress]:
+            units,used,moved,missing=meal[:4]
+            if moved and progress in starts and inventory*divisor+credit<units*starts[progress] and not dynamic:
                 raise ValueError('Outbound departure cannot fund its next physical leg')
             inventory-=used
             charge=units
             if weighted:
-                rate=rules.weight(parts,progress,1) if moved or progress<quote['days'] and progress not in starts else rules.RATION_SCALE
+                rate=meal[4] if dynamic else (rules.weight(parts,progress,1)
+                    if moved or progress<quote['days'] and progress not in starts else rules.RATION_SCALE)
                 charge*=rate
             credit=max(0,credit+used*divisor-charge+missing)
             progress+=moved

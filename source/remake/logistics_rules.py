@@ -73,11 +73,12 @@ def _land_access(leg, days, reverse):
     return start, days * DAY_TICKS - start
 
 
-def leg_parts(leg, rules=None):
+def leg_parts(leg, rules=None, *, locations=False):
     """Return (mode, fractional-day ticks) for a directional, immutable leg."""
     days = leg['days']
     if leg['mode'] == 'land':
-        return [(leg.get('terrain', 'plain'), days * DAY_TICKS)]
+        part = (leg.get('terrain', 'plain'), days * DAY_TICKS)
+        return [(*part, 'road')] if locations else [part]
     rules = rules or {}
     plain_speed = rules.get('speeds', {}).get('plain', 30)
     authored = leg.get('id', '').rsplit(':', 3)[-3:-1]
@@ -90,7 +91,7 @@ def leg_parts(leg, rules=None):
         reaches = leg['river_segments']
         if reverse:
             reaches = reversed(reaches)
-        parts = [('river_' + reach['flow'],
+        parts = [(('river_' + reach['flow'], reach.get('reach_id')) if locations else 'river_' + reach['flow'],
                   Fraction(str(reach['distance_km'])) / Fraction(str(reach['speed_km_per_day'])))
                  for reach in reaches]
     else:
@@ -100,8 +101,14 @@ def leg_parts(leg, rules=None):
         land = min(land, days)
         embark = min(embark, days - land)
         water = days - land - embark
-        parts = [('sea', 1)]
+        parts = [(('sea', 'sea') if locations else 'sea', 1)]
     start, end = _land_access(leg, land, reverse)
+    if locations:
+        water_parts = [(mode, ticks, place) for (mode, place), ticks in _share(water, parts)]
+        return [(mode, ticks, place) for mode, ticks, place in [
+            ('plain', start, 'leading'), ('embark', embark*DAY_TICKS, 'embark'),
+            *water_parts, ('plain', end, 'trailing'),
+        ] if ticks]
     return [(kind, ticks) for kind, ticks in [
         ('plain', start), ('embark', embark * DAY_TICKS), *_share(water, parts), ('plain', end)
     ] if ticks]

@@ -20,6 +20,7 @@ from . import civil_staff, domestic, logistics, presentation, treasures, facilit
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from . import battle_reinforcements, city_economy, economy_rules, grain_market, logistics_rules, logistics_strategy, payroll
+from . import winter_weather
 from .city_economy import frontier_maintenance
 from .starting_garrisons import resolve as resolve_opening_garrisons
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
@@ -167,6 +168,11 @@ class Catalog:
         expected_people = self.data['officer_count']
         integer(expected_people, 1, self.rules.runtime_capacity, 'catalog officer count')
         assert len(self.definitions) == expected_people and len(self.map_cities) == expected
+
+    @cached_property
+    def climate(self):
+        from .climate_regions import ClimateMap
+        return ClimateMap(self.data)
 
     @cached_property
     def previous_weather_hashes(self):
@@ -363,6 +369,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             state.extension[economy_rules.FIELD] = economy_rules.CURRENT
             state.extension[logistics_rules.FIELD] = logistics_rules.CURRENT
             logistics_strategy.initialize(state)
+            winter_weather.initialize(self, state)
         if lifespan == 'none':
             state.extension['lifespan'] = lifespan
         state.extension['travel'] = dict(counter=0, marches=[], battle_arrival=False, discovered=[])
@@ -426,6 +433,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'year_available': available,
                                 **({'non_aggression': alliances} if alliances else {}),
                                 **expanded, **travel,
+                                **({'weather': winter_weather.view(self, state)} if winter_weather.stage(state) else {}),
                                 'civil_staff': self._civil_staff_view(state),
                                 'payroll': payroll.rules(),
                                 'diplomacy': diplomacy.view(self, state),
@@ -474,6 +482,13 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                         raise GameError('操作参数无效。')
                     candidate = self._new(payload.get('faction'), payload.get('seed'),
                                           payload.get('difficulty', 'normal'), payload.get('lifespan', 'historical'))
+                    if winter_weather.FIELD in payload:
+                        requested = payload[winter_weather.FIELD]
+                        if type(requested) is not int or requested not in (0, winter_weather.VERSION):
+                            raise GameError('天气规则版本无效。')
+                        if requested and logistics_rules.version(candidate) != logistics_rules.CURRENT:
+                            raise GameError('冬季天气需要当前后勤规则。')
+                        winter_weather.initialize(self, candidate, requested)
                     if campaign_id is not None:
                         candidate.extension['campaign_id'] = campaign_id
                 else:
@@ -819,6 +834,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         else:
             city_economy.settle_turn_grain(self, state)
         state.turn += 1
+        if winter_weather.stage(state)>=2:
+            from . import staging_supply
+            staging_supply.update_weather(self,state)
         battle_reinforcements.advance_returns(self, state)
         if month_changed:
             from . import dated_events, succession_depositions
@@ -950,6 +968,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         get_settings(state)
         economy_rules.validate(state)
         logistics_rules.validate(state)
+        winter_weather.validate(self, state)
         grain_market.validate(state)
         command_books.validate(self, state)
         diplomacy.validate(self, state)

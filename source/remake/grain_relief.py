@@ -42,7 +42,7 @@ def forecasts(game, state, owner, *, turns=WARNING_TURNS):
                 and row['target_march'] is None and not row['delivery_done']):
             arrival = row['journeys'][-1]['arrival_turn'] - state.turn
             if arrival > 0:
-                shipments[row['target']][arrival] += (logistics.inbound_grain(game,row) if weighted else row['cargo']['grain'])
+                shipments[row['target']][arrival] += (logistics.inbound_grain(game,row,state) if weighted else row['cargo']['grain'])
 
     current_date = (state.year, state.month)
     result = {}

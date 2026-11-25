@@ -1134,7 +1134,7 @@ class ExpandedCampaign:
         runan_campaign.settle_cai_defeat(self, state, b)
         battle_supply.settle(self,state,b,coalition_returns=coalition_returns,
                              refuge_members=runan_refuge[1] if runan_refuge else None)
-        battle_reinforcements.withdraw(state,b)
+        battle_reinforcements.withdraw(state,b,game=self)
         state.settled_battles.append(b['id'])
         incoming=state.player not in attackers
         self._note(state,f'战果已结算，合计损兵{lost}，劝降兵员{sum(x["surrenders"].values())}入城。')
@@ -1344,13 +1344,15 @@ class ExpandedCampaign:
                 'recruitable':{c.id:self._free_candidates(state,c) for c in state.cities.values() if c.owner==state.player} if state else {}}
 
     def _validate_expansion(self,state):
-        from . import economy_rules, grain_market, logistics_rules, logistics_strategy, occupation_budget, payroll, staging_supply, war_recovery
+        from . import economy_rules, grain_market, logistics_rules, logistics_strategy, occupation_budget, payroll, staging_supply, war_recovery, winter_weather
         x=state.extension
         fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events','civil_staff','pending_succession','domestic','logistics','treasury','facilities','equipment','command_books'}
         if 'city_development' in x:fields.add('city_development')
         if payroll.FIELD in x:fields.add(payroll.FIELD)
         if economy_rules.FIELD in x:fields.add(economy_rules.FIELD)
         if logistics_rules.FIELD in x:fields.add(logistics_rules.FIELD)
+        for key in (winter_weather.FIELD, winter_weather.POOL):
+            if key in x:fields.add(key)
         for key in (logistics_strategy.FIELD, logistics_strategy.PRESSURE, logistics_strategy.POLICY, war_recovery.FIELD):
             if key in x:fields.add(key)
         logistics_strategy.validate(self, state)

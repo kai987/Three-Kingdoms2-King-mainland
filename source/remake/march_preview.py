@@ -3,7 +3,7 @@ from functools import lru_cache
 import json
 from pathlib import Path
 
-from . import historical_campaigns
+from . import historical_campaigns, winter_travel, winter_weather
 from .route_hazards import _python_route_allowed as route_allowed
 from .route_network import available
 
@@ -79,6 +79,9 @@ def _route_restrictions(data, routes, state, source, target):
             elif not route_allowed(data, candidate, source, target):
                 restrictions.append({**info, 'reason': 'one_way', 'from': target, 'to': source,
                                      'segments': _route_segments(data, candidate, target, source)})
+            elif winter_weather.blocked(state,candidate):
+                restrictions.append(dict(info,reason='river_frozen',
+                                          segments=_route_segments(data,candidate,source,target)))
     return restrictions
 
 
@@ -103,7 +106,11 @@ def _pair_quotes(game, state, source, target, direct_routes, *, own_destination)
         quote = game._travel_path(state, source, target, state.player, mode,
                                   adjacent=not own_destination)
         if quote:
-            yield _compact_quote(game.catalog.data, quote, mode=mode)
+            option=_compact_quote(game.catalog.data, quote, mode=mode)
+            if winter_weather.stage(state)>=2:
+                option.update(days=winter_travel.quote_days(game,state,quote),
+                              weather=winter_travel.preview(game,state,quote))
+            yield option
 
 
 def _direct_options(quotes):
@@ -141,7 +148,7 @@ def _staged_attack(game, state, source, target, known):
         attack = game._travel_path(state, via, target, state.player, adjacent=True)
         if not attack:
             continue
-        days = transfer['days'] + attack['days']
+        days = winter_travel.quote_days(game,state,transfer)+winter_travel.quote_days(game,state,attack)
         if best is None or days < best['days']:
             best = dict(kind='staged_attack', via=via,
                         path=transfer['path'] + attack['path'][1:], days=days,
@@ -206,13 +213,14 @@ def preview_transfer(game, state, source, target, ids, mode, revision):
 
 
 def logistics_cost(game, state, ids, quote, *, cargo=0, reserves=0):
-    from . import logistics_rules as rules, march_supply
+    from . import logistics_rules as rules, logistics, march_supply
 
     parts = rules.plan(quote, march_supply.travel_rules(game))
     weighted = rules.version(state)==rules.CURRENT
     units = march_supply.ration_units(state,ids,reserves)
     divisor = march_supply.denominator() * (rules.RATION_SCALE if weighted else 1)
-    total = rules.ceil_div(units*(rules.weight(parts) if weighted else quote['days']),divisor)
+    dynamic=winter_weather.stage(state)>=2
+    total = rules.ceil_div(units*march_supply.quoted_weight(game,state,quote,quote['days'],version=rules.version(state)),divisor)
     basic = march_supply.cost(units,0,quote['days'])
     stops = []
     progress = last = nutrition = 0
@@ -222,24 +230,30 @@ def logistics_cost(game, state, ids, quote, *, cargo=0, reserves=0):
         reaching = state.cities[leg['to']]
         if reaching.owner != owner and index+1 != len(quote['routes']):
             continue
-        weight = rules.weight(parts,last,progress-last) if weighted else progress-last
+        weight = (march_supply.quoted_weight(game,state,quote,progress-last,offset=last) if dynamic else
+                  rules.weight(parts,last,progress-last) if weighted else progress-last)
         charge = units*weight
         needed = max(0,rules.ceil_div(charge-nutrition,divisor))
         if last:
             city=quote['path'][last_index]
             stock=state.cities[city].grain
-            stops.append(dict(city=city,next=reaching.id,days=progress-last,stock=stock,
+            days=winter_travel.forecast(game,state,quote,position=last*winter_travel.QUANTA,
+                                       stop=progress*winter_travel.QUANTA)[0] if dynamic else progress-last
+            stops.append(dict(city=city,next=reaching.id,days=days,stock=stock,
                               required=needed,shortfall=max(0,needed-stock),
                               conditional=any(stop['shortfall'] for stop in stops)))
         nutrition += needed*divisor-charge
         last = progress
         last_index = index+1
-    estimated_cargo = rules.estimate_cargo(cargo,parts,quote['days'])[0] if weighted and cargo else cargo
-    return dict(initial_grain=march_supply.estimate(state,ids,quote,reserves,game=game),
+    estimated_cargo = logistics.projected_grain(game,quote,cargo,state=state) if weighted and cargo else cargo
+    result=dict(initial_grain=march_supply.estimate(state,ids,quote,reserves,game=game),
                 base_grain=basic,extra_grain=total-basic,total_grain=total,cargo_loss=cargo-estimated_cargo,
                 delivered_grain=estimated_cargo,refills=stops,time_ticks=rules.time_by_mode(parts),
                 ticks_per_day=rules.DAY_TICKS,percent=dict(rules.MARCH_SUPPLY_PERCENT) if weighted else {},
                 hazards=[leg['hazard'] for leg in quote['routes'] if leg.get('hazard')])
+    if dynamic:
+        result['weather']=winter_travel.preview(game,state,quote,units=units,cargo=cargo)
+    return result
 
 
 def preview_logistics(game,state,source,target,ids,mode,purpose,cargo,reserves,revision):

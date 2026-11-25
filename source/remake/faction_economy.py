@@ -209,6 +209,8 @@ def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=H
                if base is None else base)
     if not budgets:
         return FactionEconomyPlan(owner, {}, {}, Commitments(), 0)
+    from . import winter_strategy
+    winter_reserves=winter_strategy.planned_reserves(game,state,owner)
     shipments, due = defaultdict(lambda: defaultdict(int)), defaultdict(int)
     book = pending(state, owner)
     away = set()
@@ -219,7 +221,7 @@ def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=H
                 and row['target_march'] is None and row['target'] in budgets):
             journey = row['journeys'][-1]
             eta = max(1, journey['arrival_turn'] - state.turn)
-            projected = logistics.inbound_grain(game, row)
+            projected = logistics.inbound_grain(game, row, state)
             shipments[row['target']][eta] += projected
             due[row['target']] += projected
     for march in state.extension.get('travel', {}).get('marches', ()):
@@ -240,6 +242,9 @@ def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=H
         next_income = city_economy.monthly_income(game, key, state, date=next_date)
         natural = next_income['reserves']
         held = book.amount(key)
+        if key in winter_reserves:
+            premium=winter_reserves[key][1]
+            row.update(target=row['target']+premium,winter_reserve_extra=premium)
         row.update(gold=city.gold, reserves=city.reserves, minimum_reserve=minimum,
                    safety_reserve=safety, reserved_grain=held, next_natural_reserves=natural)
         if staged:

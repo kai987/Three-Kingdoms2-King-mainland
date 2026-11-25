@@ -5,6 +5,7 @@ from math import gcd
 
 from .historical_campaigns import transit_allowed
 from . import logistics_rules as rules
+from . import winter_travel, winter_weather
 from .march_supply import denominator, OFFICER_UNITS, estimate, travel_rules
 from .route_hazards import evaluate_leg, route_allowed
 
@@ -55,7 +56,7 @@ def _next_depot_weight(state, owner, target, units, incoming, weight, divisor, w
     return distance
 
 
-def _distance_to_target(target, incoming, allowed):
+def _distance_to_target(target, incoming, allowed, travel_time):
     """Lower bound on complete travel days through potentially viable cities."""
     queue = [(0, target)]
     distances = {}
@@ -66,7 +67,7 @@ def _distance_to_target(target, incoming, allowed):
         distances[here] = days
         for leg in incoming[here]:
             if leg['from'] in allowed and leg['from'] not in distances:
-                heappush(queue, (days + leg['days'], leg['from']))
+                heappush(queue, (days + travel_time(leg), leg['from']))
     return distances
 
 
@@ -79,15 +80,17 @@ def detour(game, state, source, target, ids, mode, primary):
     # The ordinary forecast starts with exactly the initial leg budget. Only
     # a downstream shortage calls for this alternate route search.
     weighted = rules.version(state) == rules.CURRENT
+    dynamic=winter_weather.movement(state)
     divisor = denominator() * (rules.RATION_SCALE if weighted else 1)
     weights = {}
-    def weight(leg):
-        if not weighted:
-            return leg['days']
-        key = leg['id'], leg['from']
+    def metrics(leg):
+        key=leg['id'],leg['from']
         if key not in weights:
-            weights[key] = rules.weight(rules.leg_parts(leg, travel_rules(game)))
+            weights[key]=(winter_travel.leg_forecast(game,state,leg) if dynamic else (leg['days'],
+                rules.weight(rules.leg_parts(leg, travel_rules(game))) if weighted else leg['days']))
         return weights[key]
+    def weight(leg):
+        return metrics(leg)[1]
     balance = estimate(state, ids, primary, game=game) * divisor
     for leg in primary['routes']:
         balance = _remaining(state, owner, leg['to'], balance, units, weight(leg), divisor)
@@ -100,7 +103,7 @@ def detour(game, state, source, target, ids, mode, primary):
     next_depot = _next_depot_weight(state, owner, target, units, incoming, weight, divisor, weighted)
     if source not in next_depot:
         return None
-    lower_bound = _distance_to_target(target, incoming, next_depot)
+    lower_bound = _distance_to_target(target, incoming, next_depot, lambda leg:metrics(leg)[0])
     serial = count()
     balance = state.cities[source].grain * divisor
     queue = [(lower_bound[source], 0, 0, next(serial), source, balance, [source], [])]
@@ -122,7 +125,7 @@ def detour(game, state, source, target, ids, mode, primary):
                     or units * (weight(leg) + next_depot[city]) > balance):
                 continue
             remaining = _remaining(state, owner, city, balance, units, weight(leg), divisor)
-            travel_days = days + leg['days']
+            travel_days = days + metrics(leg)[0]
             heappush(queue, (travel_days + lower_bound[city], travel_days, distance + leg['distance_km'],
                              next(serial), city, remaining, path + [city], legs + [leg]))
     return None
@@ -146,6 +149,7 @@ def minimum_grain(game, state, source, target, owner, ids, *, adjacent=False, ca
         return None
     data = game.catalog.data
     policy = travel_rules(game)
+    dynamic=winter_weather.movement(state)
     if adjacent:
         routes = [row for row in game._known_routes(state)
                   if {row['from'],row['to']} == {source,target}]
@@ -165,9 +169,9 @@ def minimum_grain(game, state, source, target, owner, ids, *, adjacent=False, ca
                 continue
             leg = evaluate_leg(data,raw,origin,dest,state.month)
             parts = rules.leg_parts(leg,policy)
-            weight = rules.weight(parts)
+            duration,weight = winter_travel.leg_forecast(game,state,leg) if dynamic else (leg['days'],rules.weight(parts))
             hazard = (leg.get('hazard') or {}).get('loss_percent_max',0)
-            outgoing[origin].append((dest,leg,parts,weight,hazard))
+            outgoing[origin].append((dest,leg,parts,duration,weight,hazard))
             incoming[dest].append((origin,weight))
 
     distance = {}
@@ -202,7 +206,7 @@ def minimum_grain(game, state, source, target, owner, ids, *, adjacent=False, ca
             continue
         visited_paths.append(visited)
         attempts += 1
-        for dest,leg,parts,weight,extra_risk in outgoing[here]:
+        for dest,leg,parts,duration,weight,extra_risk in outgoing[here]:
             if dest in visited or dest not in distance:
                 continue
             due = units * weight
@@ -213,8 +217,10 @@ def minimum_grain(game, state, source, target, owner, ids, *, adjacent=False, ca
                 balance = state.cities[dest].grain*divisor + balance % divisor
             grain,carry = (rules.estimate_cargo(load,parts,leg['days'],remainder=remainder)
                            if load else (0,remainder))
+            if dynamic and load:
+                grain,carry=winter_travel.leg_cargo(game,state,leg,load,remainder)
             projected = rules.ceil_div(paid + due + units*distance[dest],divisor) + cargo-grain
-            heappush(queue,(projected,days+leg['days'],risk+extra_risk,len(legs)+1,
+            heappush(queue,(projected,days+duration,risk+extra_risk,len(legs)+1,
                            keys+(leg['id'],),next(serial),dest,balance,grain,carry,paid+due,
                            path+[dest],legs+[leg]))
     return None

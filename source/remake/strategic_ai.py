@@ -17,6 +17,7 @@ from . import grain_relief, grain_units
 from .march_supply import denominator, OFFICER_UNITS, estimate as march_grain, next_supply_days, required_grain, travel_rules
 from . import city_economy, faction_economy, logistics_rules, logistics_strategy, military_budget, war_recovery
 from .route_hazards import allocate_survivors
+from . import winter_travel, winter_weather
 
 
 class StrategicAI:
@@ -41,6 +42,7 @@ class StrategicAI:
         self.adaptive = logistics_strategy.enabled(state, logistics_strategy.WAR)
         self.recovery_v211 = logistics_strategy.war_recovery(state)
         self.recovery_wait = {}
+        self.winter_checked = set()
         holdings = Counter(city.owner for city in state.cities.values() if city.owner != 'neutral')
         # Let both sides concentrate on the remaining fronts once the map
         # has consolidated. Earlier campaigns retain their wider priorities.
@@ -88,14 +90,14 @@ class StrategicAI:
             escort = min(options, key=lambda ident: (state.officers[ident].troops, ref_sort_key(ident)))
             outward = logistics._safe_quote(game, state, donor, city, policy)
             backward = logistics._safe_quote(game, state, city, donor, policy)
-            if outward is None or backward is None or outward[1]['turns'] > 3:
+            if outward is None or backward is None or winter_travel.quote_turns(game,state,outward[1]) > 3:
                 continue
             ration = sum(logistics._rations(game,state,route[1],[escort],logistics._empty_cargo())
                          for route in (outward,backward))
             if stock < ration + policy['reserve_grain']:
                 continue
             grain += logistics.projected_grain(game, outward[1],
-                         min(policy['max_grain'], stock-ration-policy['reserve_grain']))
+                         min(policy['max_grain'], stock-ration-policy['reserve_grain']),state=state)
             gold += min(policy['max_gold'], max(0, donor.gold-max(budget['wage_gold'],policy['reserve_gold'])))
             break  # One modeled donor is one available order, even when several share its city.
         result = dict(grain=grain, gold=gold)
@@ -218,7 +220,7 @@ class StrategicAI:
         return sum(troops)
 
     def safe(self, quote, ids):
-        if not quote or quote['turns'] > self.settings['max_route_turns']:
+        if not quote or winter_travel.quote_turns(self.game,self.state,quote) > self.settings['max_route_turns']:
             return False
         total = sum(self.state.officers[i].troops for i in ids)
         return bool(total) and self.survivors(quote, ids)*100 >= total*(100-self.settings['max_route_loss_percent'])
@@ -356,7 +358,7 @@ class StrategicAI:
                 found = None
                 for departure in range(arrival-1, turn-1, -1):
                     quote = self.quote(source, target, member['mode'], adjacent=True, departure=departure)
-                    if (self.safe(quote, member['officers']) and departure+quote['turns'] == arrival
+                    if (self.safe(quote, member['officers']) and departure+winter_travel.quote_turns(self.game,self.state,quote) == arrival
                             and self.provisioned(source, member['officers'], quote)
                             and self.affordable_sortie(source,target,member['officers'],quote)):
                         found = dict(source=source.id, target=target.id, mode=member['mode'],
@@ -459,7 +461,7 @@ class StrategicAI:
                     # routes, including any changed seasonal travel time.
                     scheduled = [(o, self.quote(self.state.cities[o['source']], target,
                         o['mode'], adjacent=True, departure=o['departure_turn'])) for o in orders]
-                    days = sum(quote['days'] for _, quote in scheduled)
+                    days = sum(winter_travel.quote_days(self.game,self.state,quote) for _, quote in scheduled)
                     supply = sum(march_grain(self.state, order['officers'], quote, game=self.game)
                                  for order, quote in scheduled)
                     score = min(power-required,required//3)-days*3-supply*2//grain_units.amount(1)+min(200,target.gold//20+target.grain//grain_units.amount(200))
@@ -688,12 +690,12 @@ class StrategicAI:
             budget=self.war_budget(city,target,ids,quote) if usable and quote is not None else None
             if (not usable or not self.safe(quote,ids) or not self.provisioned(city, ids, quote)
                     or budget is not None and not budget['can_depart']
-                    or self.state.turn+quote['turns'] > order['arrival_turn']
+                    or self.state.turn+winter_travel.quote_turns(self.game,self.state,quote) > order['arrival_turn']
                     or self.state.extension['ai_attacks'] >= self.budget):
                 plan['orders'].remove(order)
                 continue
-            if self.state.turn+quote['turns'] < order['arrival_turn']:
-                order['departure_turn'] = order['arrival_turn']-quote['turns']
+            if self.state.turn+winter_travel.quote_turns(self.game,self.state,quote) < order['arrival_turn']:
+                order['departure_turn'] = order['arrival_turn']-winter_travel.quote_turns(self.game,self.state,quote)
                 return True
             if self.v21 and budget is not None:
                 order['provision'] = budget['immediate']
@@ -771,7 +773,7 @@ class StrategicAI:
                                         order=(stop['arrival'],stop['city'],gap)
                                         stage_missing.setdefault(stop['city'],order)
                 if chosen and self.safe(quote,chosen):
-                    destinations.append((self.strength(target)-self.threat(target),quote['days'],target.id,mode,chosen))
+                    destinations.append((self.strength(target)-self.threat(target),winter_travel.quote_days(self.game,self.state,quote),target.id,mode,chosen))
         if not destinations:
             if stage_missing and self.prepare_checkpoint(city.owner,stage_missing,economy):
                 return True
@@ -981,6 +983,9 @@ def run(campaign, state, payload):
             relief_done.add(city.owner)
             ai.grain_outlooks[city.owner] = outlook
             ai.economy_plans.pop(city.owner, None)
+            if winter_weather.stage(state)>=5:
+                from . import winter_strategy
+                winter_strategy.prepare(ai,city.owner)
         if outlook[0] is not None and not ai.military_budget:
             if has_domestic and city.owner not in relief_done:
                 prioritize_grain(campaign, state, city.owner, outlook)
