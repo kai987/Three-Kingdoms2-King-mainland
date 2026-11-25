@@ -2,12 +2,14 @@
 from fractions import Fraction
 from pathlib import Path
 from random import Random
+from types import SimpleNamespace
 import sys
 from unittest import TestCase
 
 import test_remake_logistics_v211 as previous
 from remake import army_relief, command_books, escort_planning, grain_units, logistics
 from remake import logistics_strategy as strategy, march_supply, occupation_budget, staging_supply, treasures, war_recovery
+from remake.errors import GameError
 from remake.faction_economy import Commitment, Commitments
 from remake.officers import OFFICER_TROOP_CAP
 from remake.strategic_ai import StrategicAI
@@ -66,6 +68,31 @@ class LogisticsV212Tests(TestCase):
         self.assertEqual(receipt['source'],node.id)
         self.assertEqual(state.cities[node.id].grain+receipt['grain'],grain)
         self.assertEqual(staging_supply.held(state,node.id),0)
+
+    def test_competing_columns_cannot_spend_the_same_checkpoint_grain(self):
+        game=self.game()
+        state=game.state
+        source,target,node=(state.cities[key] for key in ('nanyang','bajun','nanjun'))
+        # Controlled, equal-strength detachments competing for one node.
+        first,second=source.roster.officer_ids[1:3]
+        for ident in (first,second):
+            self.set_troops(state,ident,1000)
+        source.grain=3000
+        node.grain=3000
+        rule=dict(minimum_export_floor=0,safety_reserve=0,next_installment=0,reserved_grain=0)
+        budgets={node.id:rule}
+        with grain_units.using(state):
+            quote=game._travel_path(state,source.id,target.id,source.owner,'land',officers=[first])
+            _,booking=staging_supply.assess(game,state,source,[first],quote,budgets)
+            need=booking[0]['required']
+            node.grain=need+need//2
+            game._queue_march(state,source,target,[first],'transfer','land',staging_budgets=budgets)
+            before=game.export_save()
+            with self.assertRaises(GameError):
+                game._queue_march(state,source,target,[second],'transfer','land',staging_budgets=budgets)
+            self.assertEqual(game.export_save(),before)
+        self.assertEqual(staging_supply.held(state,node.id),need)
+        self.assertEqual(node.grain,need+need//2)
 
     def test_node_ownership_and_retreat_release_unused_budget(self):
         game=self.game()
@@ -193,6 +220,18 @@ class LogisticsV212Tests(TestCase):
     def test_recovery_stock_and_defence_1000_seeded_cases(self):
         rng=Random(21203)
         policy=dict(after_six=60,no_source=55)
+        game=self.game()
+        state=game.state
+        state.player='observer'
+        city=state.cities['xiangyang']
+        occupation_budget.captured(state,city)
+        with grain_units.using(state):
+            planner=StrategicAI(game,state)
+            plan=planner.economy_plan(city.owner)
+        base=plan.budgets[city.id]
+        economy=SimpleNamespace(budgets={city.id:dict(base)},cities={city.id:SimpleNamespace(first_missing=0)})
+        threat=[0]
+        ai=SimpleNamespace(state=state,threat=lambda _:threat[0])
         for _ in range(1000):
             losses,stock=(rng.randrange(40000) for _ in range(2))
             reserve,draft,gold,grain=war_recovery.loss_budget(losses,stock,8,15)
@@ -206,6 +245,16 @@ class LogisticsV212Tests(TestCase):
             self.assertEqual(war_recovery.multiplier(Fraction(7),policy),60)
             attack,alternative=war_recovery.action_score(0,100,55,rng.randint(0,8),gold,necessary=True)
             self.assertGreater(attack,alternative)
+            threat[0]=rng.randrange(20000)
+            economy.budgets[city.id]['active']=rng.randrange(20000)
+            short=rng.randrange(400) if rng.randrange(2) else 0
+            economy.cities[city.id].first_missing=short
+            city.grain=stock
+            before=city.grain,city.gold,city.reserves,state.rng.draws
+            row,=occupation_budget.assess(ai,city.owner,economy)
+            self.assertEqual(row['status']=='secured',not short and row['garrison']>=row['defense'])
+            self.assertTrue(0<=row['local_risk']<=20)
+            self.assertEqual(before,(city.grain,city.gold,city.reserves,state.rng.draws))
 
     def test_unchanged_211_default_and_212_policy_save(self):
         self.assertEqual(self.game(False).state.extension[strategy.FIELD],211)

@@ -12,6 +12,7 @@ import {gunzipSync} from 'node:zlib';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const build=path.resolve(root,process.argv[2]||'build/web');
 const runtimeDirectory=path.join(root,'tools/web-runtime/node_modules/pyodide');
+const candidateSave=process.argv[3];
 const sha=value=>createHash('sha256').update(value).digest('hex');
 const decode=bytes=>new TextDecoder('utf-8',{fatal:true}).decode(bytes);
 const jsonFile=name=>JSON.parse(fs.readFileSync(name,'utf8'));
@@ -106,10 +107,10 @@ function command(view,kind,payload={},instance='primary'){
  return JSON.parse(request('/api/command',{method:'POST',instance,
   body:JSON.stringify({kind,payload,revision:view.revision})}));
 }
-function load(raw,revision){
+function load(raw,revision,instance='primary'){
  // Preserve the exported save text inside the request; avoid a parse/stringify
  // pass like the production JSON-file and cloud-slot import path.
- return JSON.parse(request('/api/load',{method:'POST',body:`{"save":${raw},"revision":${revision}}`}));
+ return JSON.parse(request('/api/load',{method:'POST',instance,body:`{"save":${raw},"revision":${revision}}`}));
 }
 function unchangedFailure(pathname,settings){
  const before=request('/api/save');
@@ -250,6 +251,23 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
  assert.equal(committed.supply.loaded,promise.logistics.initial_grain);
  request('/api/save',{instance:seat});
 
+ // A prebuilt opt-in game uses the real import, observer and save paths.
+ let candidateTurns=0;
+ if(candidateSave){
+  const raw=fs.readFileSync(candidateSave,'utf8');
+  let candidate=load(raw,travel.revision,seat);
+  assert.equal(candidate.catalog.scenario_id,logisticsScenario);
+  assert.equal(candidate.game.extension.ai_logistics_strategy_version,212);
+  const first=candidate.game.turn;
+  for(let index=0;index<3;index++)candidate=command(candidate,'observe_turn',{},seat);
+  candidateTurns=candidate.game.turn-first;
+  assert.equal(candidateTurns,3);
+  const observed=request('/api/save',{instance:seat});
+  candidate=load(observed,candidate.revision,seat);
+  assert.equal(candidate.game.extension.ai_logistics_policy.after_six,60);
+  assert.equal(request('/api/save',{instance:seat}),observed);
+ }
+
  // Exercise the real optional wire path, not only the legacy bridge used by
  // CPU replay. Hydration must reconstruct the same complete current view.
  const {default:wireModule}=await import(pathToFileURL(path.join(root,'game/view-cache.js')).href);
@@ -294,7 +312,7 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
  assert.deepEqual(cpu.rng,rng,'final RNG state and draw count agree');
  console.log(JSON.stringify({ok:true,pyodide:py.version,previews:previews.length,catalogs:catalogs.size,
   requests:trace.length,ai_turns:1,battle_settlements:battleSettlements,logistics_route_parity:true,
-  save_sha256:sha(finalSave),rng,cpu_save_bytes_equal:true}));
+  save_sha256:sha(finalSave),rng,cpu_save_bytes_equal:true,v212_observer_turns:candidateTurns}));
 }finally{
  for(const bridge of bridges.values())bridge.destroy();
  responseSemantic?.destroy();

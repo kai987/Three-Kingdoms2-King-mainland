@@ -172,7 +172,7 @@ def analyze(folder, run):
         elif r['result']=='failed':
             failures[reason]+=1
     allocations=[a for row in emergency for a in (optional(row['delivery_allocations']) or [])]
-    v21 = run.get('rule_versions',{}).get('ai_strategy') in (21,211)
+    v21 = run.get('rule_versions',{}).get('ai_strategy') in (21,211,212)
     rescue_ids={str(i) for r in emergency for i in (optional(r['convoy_ids']) or [])}
     voyages=defaultdict(list)
     for row in table(folder,'convoys'):
