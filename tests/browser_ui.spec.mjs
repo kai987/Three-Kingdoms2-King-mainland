@@ -1611,7 +1611,8 @@ test('Jiangxia Changsha offers distinct inland water and land routes through rea
  const select=page.locator('#route-mode'),river=select.locator('option[data-route-kind=river]');
  await expect(river).toHaveCount(1);
  await expect(select.locator('option[data-route-kind=land]')).toHaveCount(1);
- await expect(select.locator('option')).toHaveCount(2);
+ await expect(select.locator('option[value=minimum_grain]')).toHaveCount(1);
+ await expect(select.locator('option')).toHaveCount(3);
  const mode=await river.getAttribute('value');
  await select.selectOption(mode);
  await expect(page.locator('#transfer-estimate .river-flow-info')).toBeVisible();
@@ -3196,7 +3197,9 @@ test('march preview discloses a downstream depot shortage before moving officers
  const after=await tacticalSave(page);
  const march=after.state.extension.travel.marches.find(row=>row.source==='shujun'&&row.target==='nanjun');
  expect(march).toMatchObject({officers:[370],quote:{days:56,path:['shujun','qianwei','jiangyang','bajun','fuling','badong','nanjun']}});
- expect(march.supply.loaded).toBe(Math.ceil((before.state.officers[370].troops+100)*4/50));
+ // The first leg has one land-access day, one embarkation day and two downstream days.
+ const firstLegRationDays=1.25+1.10+2*1.05;
+ expect(march.supply.loaded).toBe(Math.ceil((before.state.officers[370].troops+100)*firstLegRationDays/50));
  expect(after.state.cities.shujun.grain).toBe(before.state.cities.shujun.grain-march.supply.loaded);
  expect(after.state.cities.guanghan.grain).toBe(0);
  const inTransit=page.locator(`[data-march="${march.id}"] button[data-march-officer="370"]`);

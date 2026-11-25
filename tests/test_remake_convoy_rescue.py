@@ -9,7 +9,8 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
 from remake.campaign import Campaign,Catalog,digest
-from remake import facilities,grain_units,logistics,logistics_rules,march_supply,treasures,city_development
+from remake import facilities, grain_units, logistics, logistics_rules, logistics_strategy
+from remake import march_supply, treasures, city_development
 from remake.errors import GameError
 from remake.march_core import using_backend
 from test_remake_domestic import domestic_catalog
@@ -41,7 +42,8 @@ def rescue_catalog():
 class ConvoyRescueTests(unittest.TestCase):
     def game(self):
         game=Campaign(rescue_catalog())
-        game.command('new',dict(faction='shu',seed=2026),0)
+        with logistics_strategy.experiment(logistics_strategy.WAR):
+            game.command('new',dict(faction='shu',seed=2026),0)
         game.command('set_logistics',dict(city='jiangxia',policy=dict(reserve_officers=0,max_officers=1)),game.revision)
         game.command('transfer',dict(source='xiangyang',target='jiangxia',officers=[146],route_mode='land'),game.revision)
         return game
@@ -316,7 +318,8 @@ class ConvoyRescueTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path=Path(tmp)/'return-rescue.json';path.write_text(json.dumps(data,ensure_ascii=False))
             game=Campaign(Catalog(path))
-        game.command('new',dict(faction='shu',seed=2026),0)
+        with logistics_strategy.experiment(logistics_strategy.WAR):
+            game.command('new',dict(faction='shu',seed=2026),0)
         game.command('set_logistics',dict(city='xiangyang',policy=dict(reserve_grain=0,
             reserve_officers=1,max_officers=1)),game.revision)
         game.command('transfer',dict(source='xiangyang',target='shujun',officers=[146],route_mode='land'),game.revision)
