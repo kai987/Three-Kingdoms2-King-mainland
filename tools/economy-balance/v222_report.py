@@ -7,6 +7,7 @@ from statistics import mean
 import csv
 import gzip
 import hashlib
+import io
 import json
 
 from common import ROOT, git, to_csv, to_json
@@ -22,7 +23,6 @@ METRICS = ('unpaid_city_turns','rations_missing','battles','ai_sorties','march_h
 RECEIVED = {'returned_home', 'received_elsewhere'}
 PERIODS = ('regional-weather-daily.csv', 'snowfall-events.csv','snow-accumulation.csv',
            'river-ice-daily.csv','river-freeze-events.csv')
-PRIOR_PREFIX = 'observed'
 PREVIOUS_SHA = 'cc606fd31eeb120ac578caea2be085ee099ba32341b7ae44ac113a46f97b19b5'
 EXPECTED = set().union(*(set(cases(wave)) for wave in ('focus','paired','long')))
 ACCEPTANCE_CHECKS = {
@@ -68,20 +68,56 @@ def base(run):
                 months=run['requested_months'])
 
 
+def prior_prefixes(group,seed,months,scene):
+    waves=('long',) if int(months)==240 else ('matrix','focus','holdout')
+    return (f'observed/{wave}/{group}/{seed}/{months}/{scene}/' for wave in waves)
+
+
 def compare_archived(previous, path, run):
-    band='long' if run['requested_months']==240 else 'holdout' if run['seed'] not in (2026,2027,2028) else 'matrix'
-    prefix=f'{PRIOR_PREFIX}/{band}/I3-{run["strategy"]}/{run["seed"]}/{run["requested_months"]}/{run["scenario"]}/'
     filenames=('monthly.csv','factions.csv','cities.csv','convoys.csv','regional-weather-daily.csv',
                'river-ice-daily.csv','supply-episodes.csv','supply-episodes-weather-aware.csv')
     names=set(previous.namelist())
-    result={'archive_member':prefix,'availability':'matched_archived_case' if prefix+'run.json' in names else 'no_matching_archived_case'}
+    prefixes=prior_prefixes(f'I3-{run["strategy"]}',run['seed'],run['requested_months'],run['scenario'])
+    prefix=next((candidate for candidate in prefixes if candidate+'run.json' in names),None)
+    result={'archive_member':prefix,'availability':'matched_archived_case' if prefix else 'no_matching_archived_case'}
+    if prefix:
+        original=json.loads(previous.read(prefix+'run.json'))
+        identity=('catalog_sha256','weather_seed','completed_turns')
+        if any(run[key]!=original[key] for key in identity):
+            raise ValueError(f'Archived I3 experiment identity differs: {prefix}')
     for name in filenames:
         key=name.split('.')[0].replace('-','_')
-        if prefix+name in names:
-            result[key]=hashlib.sha256(previous.read(prefix+name)).hexdigest()==sha(path/name)
+        if prefix and prefix+name in names:
+            with previous.open(prefix+name) as original:
+                result[key]=hashlib.file_digest(original,'sha256').hexdigest()==sha(path/name)
+            if not result[key]:
+                raise ValueError(f'Archived I3 experiment data differs: {prefix+name}')
         else:
             result[key]='not_available'
     return result
+
+
+def compare_no_weather(previous, metrics):
+    archive_scores='exports/scenario-scores.csv'
+    with previous.open(archive_scores) as stream:
+        historical={(r['group'],int(r['seed']),r['scenario'],int(r['requested_months'])):r
+                    for r in csv.DictReader(io.TextIOWrapper(stream,encoding='utf-8'))}
+    matches=[]
+    for row in metrics:
+        if row['group']!='J3':
+            continue
+        group='H0' if row['strategy']==211 else 'H2'
+        original=historical.get((group,row['seed'],row['scenario'],row['months']))
+        raw=original['published_winter_timely_percent'] if original else None
+        reference=float(raw) if raw not in (None,'','null','not_applicable') else None
+        candidate=row['winter_timely_percent']
+        delta=round(candidate-reference,6) if candidate is not None and reference is not None else None
+        matches.append({k:row[k] for k in ('scenario','seed','strategy','months')} |
+            dict(archived_group=group,archived_scores_member=archive_scores,
+                 archived_wave=original['wave'] if original else None,
+                 no_weather_percent=reference,candidate_percent=candidate,delta_points=delta,
+                 within_five_points=delta>=-5 if delta is not None else None))
+    return matches
 
 
 def ledger_check(path):
@@ -331,7 +367,9 @@ def exports(root,older):
                 'delivered_reserves','incident_reserves','daily_receipts')}))
             if run['group']=='I3':
                 historical.append(dict(base(run),**compare_archived(prior,path,run)))
+        no_weather=compare_no_weather(prior,metrics)
     write(observation,'archived-I3-identity',historical)
+    write(observation,'winter-vs-no-weather',no_weather)
     write(observation,'weather-sequence-checks',validate_weather(actual))
     write(observation,'cargo-ledger-checks',ledgers)
     write(observation,'settlement-boundary-reconciliation',boundary_fixes)
@@ -407,12 +445,13 @@ def archive_references(sources, older):
             if len(parts)!=6 or parts[0]!='observed' or not parts[1].startswith('I3-'):
                 continue
             group,seed,months,scene,name=parts[1:]
-            wave='long' if months=='240' else 'matrix' if seed in ('2026','2027','2028') else 'holdout'
-            member=f'observed/{wave}/{group}/{seed}/{months}/{scene}/{name}'
-            original=inventory.get(member)
-            if original and file.stat().st_size==original['bytes'] and sha(file)==original['sha256']:
-                references[rel]=dict(member=member,**original)
-                del sources[rel]
+            for prefix in prior_prefixes(group,seed,months,scene):
+                member=prefix+name
+                original=inventory.get(member)
+                if original and file.stat().st_size==original['bytes'] and sha(file)==original['sha256']:
+                    references[rel]=dict(member=member,**original)
+                    del sources[rel]
+                    break
     return references
 
 
