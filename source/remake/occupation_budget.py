@@ -53,7 +53,7 @@ def assess(ai, owner, economy):
         grain_gap=forecast.first_missing
         guard_gap=max(0,defense-budget['active'])
         supplies=budget['timely_grain']
-        status='pending' if grain_gap or guard_gap else 'secured' 
+        status='pending' if grain_gap or guard_gap else 'secured'
         # Only direct local exposure is scored here. No estimate for hiring,
         # replacing losses, or spending resources on a second budget.
         local_risk=max(min(20,ceil_div(guard_gap*20,max(1,defense))),

@@ -814,7 +814,7 @@ class StrategicAI:
             actor=next((i for i in self.available(city) if i not in protected and
                 facilities._resident(self.game,self.state,city,i,working=True,unused=True,healthy=True)),None)
             if actor is not None and offer['grain'] and city.gold-offer['gold']>=budget['wage_gold']:
-                receipt=facilities.buy_emergency_grain(self.game,self.state,city,actor,owner,grain)
+                receipt=facilities.buy_emergency_grain(self.game,self.state,key,actor,owner,grain)
                 gap-=receipt['grain']
                 result='market_purchase'
         if result=='deferred':
