@@ -845,8 +845,12 @@ function cityWeatherHtml(id){
    `${WINTER_ICE_NAMES[ice.state][0]} · 河段航速 ${ice.speed_percent}%`,
    `${WINTER_ICE_NAMES[ice.state][1]}・区間の航速 ${ice.speed_percent}%`)}</p>`).join('')}
   ${seasonal?`<p data-city-winter-logistics>${battleText(
-   `未來九旬估算 · 平時缺口 ${seasonal.baseline} · 冬季缺口 ${seasonal.winter} · 需額外準備 ${seasonal.extra} · 預計到貨 ${seasonal.projected_delivery}`,
-   `今後9旬の見込み・平時の不足 ${seasonal.baseline}・冬季の不足 ${seasonal.winter}・追加準備 ${seasonal.extra}・到着見込み ${seasonal.projected_delivery}`)}</p>`:''}</div>`;
+   `未來九旬 · 平時缺口 ${seasonal.baseline} · 冬季缺口 ${seasonal.winter} · ${seasonal.extra?`需額外備糧 ${seasonal.extra}`:'現有供應可覆蓋冬季增量'}`,
+   `今後9旬・平時の不足 ${seasonal.baseline}・冬季の不足 ${seasonal.winter}・${seasonal.extra?`追加備蓄 ${seasonal.extra} が必要`:'冬季の追加分は確保済み'}`)}</p>
+   <details><summary>${battleText('冬季補給明細','冬季補給の内訳')}</summary><p>${battleText(
+   `可動用庫存 ${seasonal.covered} · 已承諾用糧 ${seasonal.committed} · 受天候影響的預計到貨 ${seasonal.projected_delivery}`,
+   `利用可能な備蓄 ${seasonal.covered}・引当済み ${seasonal.committed}・天候の影響を受ける到着見込み ${seasonal.projected_delivery}`)}
+   </p>${seasonal.reaches.length?`<p>${battleText('有冰封風險的河段','結氷のおそれのある区間')} ${escapeHtml(seasonal.reaches.join('、'))}</p>`:''}</details>`:''}</div>`;
 }
 
 async function showCityInformation(id){
