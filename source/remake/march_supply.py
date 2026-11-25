@@ -643,6 +643,9 @@ def validate_strength_manifests(supply,manifest,risks,dead_keys=(),reserves_at=N
     if (supply['clock_tick'] == supply['start_tick']
             and supply['ration_manifests'][0]['troops'] != manifest):
         raise ValueError('Initial meal strength differs from departure')
+    # Daily position uses exact work for weather journeys and whole route
+    # days in the older ledger. Compare within that same unit after arrival.
+    endpoint=supply['winter']['work'] if 'winter' in supply else supply['route_days']
     progress=0;positions={supply['start_tick']:0}
     for index,period in enumerate(supply['periods']):
         for offset,meal in enumerate(period['days']):
@@ -664,7 +667,7 @@ def validate_strength_manifests(supply,manifest,risks,dead_keys=(),reserves_at=N
         # A weather-adjusted meal is legal only after the force physically
         # completed its route. The raw risk before/after arithmetic is checked
         # separately by the enclosing army/convoy validator.
-        route_complete=positions.get(packet['tick']-1,0)==supply['route_days']
+        route_complete=positions.get(packet['tick']-1)==endpoint
         if route_complete:
             weather(sum(bool(r['applied']) for r in risks))
         removed=set(prior)-set(packet['troops'])

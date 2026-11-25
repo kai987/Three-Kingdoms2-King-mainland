@@ -152,6 +152,21 @@ class WinterTransportTests(unittest.TestCase):
         self.assertEqual(state.extension[weather.POOL],original)
         self.assertEqual(state.rng,rng_before)
 
+    def test_arrival_hazard_strength_is_valid_only_after_completed_weather_work(self):
+        original={'249':10000}
+        reduced={'249':8000}
+        risk=dict(applied=True,after=reduced)
+        supplies=dict(start_tick=0,clock_tick=20,route_days=10,
+                      winter=dict(work=10*travel.QUANTA),starvation=[],
+                      periods=[dict(days=[[10100,0,travel.QUANTA,0]]*10),
+                               dict(days=[[8100,0,0,0]]*10)],
+                      ration_manifests=[dict(tick=1,troops=original,reserves=0),
+                                        dict(tick=11,troops=reduced,reserves=0)])
+        march_supply.validate_strength_manifests(supplies,original,[risk])
+        supplies['ration_manifests'][1]['tick']=10
+        with self.assertRaisesRegex(ValueError,'actual travelling manifest'):
+            march_supply.validate_strength_manifests(supplies,original,[risk])
+
     def test_unchanged_weather_sequence_for_revision_22_and_221(self):
         old=self.game(version=22)
         new=self.game()
