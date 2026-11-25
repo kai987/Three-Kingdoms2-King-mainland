@@ -412,9 +412,9 @@ class Hooks:
         if kind == 'march' and ident is not None and status == 'rerouted':
             self.pending_routes[kind, ident] = (reason, new_target)
 
-    def convoy_reroute(self, real, game, state, row, here, target, mode, quote, *, status, reason):
+    def convoy_reroute(self, real, game, state, row, here, target, mode, quote, *, status, reason, **options):
         previous, old_target = row['journeys'][-1], row['target']
-        result = real(game, state, row, here, target, mode, quote, status=status, reason=reason)
+        result = real(game, state, row, here, target, mode, quote, status=status, reason=reason, **options)
         if reason != 'escort_return':
             self.route(state, 'convoy', row['id'], row['owner'], here, old_target, target,
                        reason, 'rerouted' if result else row['reason'], previous['quote'], quote,
