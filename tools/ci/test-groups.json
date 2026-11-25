@@ -743,7 +743,16 @@
     "tests/test_remake_logistics_v211.py": {
       "tier": "related",
       "groups": [
-        "ai",
+        "battle",
+        "economy",
+        "logistics",
+        "save"
+      ]
+    },
+    "tests/test_remake_logistics_v212.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
         "economy",
         "logistics",
         "save"
