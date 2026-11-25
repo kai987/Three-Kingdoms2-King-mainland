@@ -484,7 +484,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                           payload.get('difficulty', 'normal'), payload.get('lifespan', 'historical'))
                     if winter_weather.FIELD in payload:
                         requested = payload[winter_weather.FIELD]
-                        if type(requested) is not int or requested not in (0, winter_weather.VERSION):
+                        if type(requested) is not int or requested not in (0, winter_weather.VERSION, winter_weather.CORRECTED):
                             raise GameError('天气规则版本无效。')
                         if requested and logistics_rules.version(candidate) != logistics_rules.CURRENT:
                             raise GameError('冬季天气需要当前后勤规则。')

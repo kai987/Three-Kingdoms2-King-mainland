@@ -225,7 +225,8 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
     if dynamic is not None and weather_parts is None:
         weather_parts=winter_travel.plan(game,quote)
     divisor=book_denominator(supply)
-    from . import staging_supply
+    from . import staging_supply, winter_transport
+    convoy_safety=(unit_kind=='convoy' and not self_funded and winter_transport.enabled(state))
     has_staging=staging_supply.FIELD in getattr(state,'extension',{})
     spent=0
     for tick in range(supply['clock_tick']+1,target+1):
@@ -254,19 +255,33 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
         progress=supply['route_days']
         distance=next_supply_days(state,quote,unit['owner'],supply['route_days'])
         position=winter_travel.work(supply)
+        upcoming = next_city(journey) if city_id is not None else None
+        blocked=(upcoming is not None and upcoming!=quote['path'][-1]
+                 and not transit_allowed(state,unit['owner'],state.cities[upcoming].owner))
+        changed_target=False
+        if unit_kind=='convoy' and upcoming is not None:
+            from .logistics import safe_execution
+            changed_target=(safe_execution(state) and (position or convoy_safety)
+                            and state.cities[quote['path'][-1]].owner!=unit['owner'])
+        if blocked or changed_target:
+            supply['retreat_requested']=True
+            unit['reason']='target_changed' if changed_target else 'route_blocked'
         frost=None
         if dynamic is not None:
             # When already on a leg, only today's meal needs a quote.
             # Full upcoming provisions are checked at real departure nodes.
             if city_id is not None and distance:
                 end=(progress+distance)*winter_travel.QUANTA
-                leg_budget=winter_travel.ration_weight(game,state,quote,position=position,stop=end)
+                if convoy_safety:
+                    _,leg_budget,_=winter_travel.checkpoint_forecast(game,state,quote,position=position,stop=end)
+                else:
+                    leg_budget=winter_travel.ration_weight(game,state,quote,position=position,stop=end)
                 frost=winter_travel.closed_at_node(state,quote,position)
             else:
                 leg_budget=0
             region=game.catalog.climate.cities[city_id or last_city(journey)]['climate_region_id']
             budget=leg_budget or (10 if progress>=quote['days'] and not self_funded else 1)*winter_travel.wait_rate(state,region)
-            if frost or self_funded and unit.get('hold'):
+            if frost or convoy_safety and (blocked or changed_target or unit.get('hold')) or self_funded and unit.get('hold'):
                 budget=winter_travel.wait_rate(state,region)
         elif weighted:
             leg_budget=rules.weight(parts,progress,distance)
@@ -281,6 +296,8 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
             city=state.cities[city_id]
             army=unit['id'] if unit_kind=='march' else None
             stock=staging_supply.available(state,city,army=army) if has_staging else city.grain
+            if convoy_safety:
+                stock=winter_transport.city_stock(game,state,city,stock)
             amount=min(wanted,stock,LIMIT-supply['remaining'])
             if army is not None and has_staging:
                 staging_supply.settle(state,unit,city_id,amount,tick)
@@ -295,14 +312,10 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
             if on_cargo_change is None:raise ValueError('Cargo ration debit needs its transport ledger')
             on_cargo_change('rations',dict(cargo,grain=cargo['grain']-amount),tick)
             receive(supply,amount,'cargo',unit['id'],state.turn)
-        upcoming = next_city(journey) if city_id is not None else None
-        blocked=(upcoming is not None and upcoming!=quote['path'][-1]
-                 and not transit_allowed(state,unit['owner'],state.cities[upcoming].owner))
-        if blocked:supply['retreat_requested']=True;unit['reason']='route_blocked'
         enough=supply['remaining']*divisor+supply['credit_units']>=units*leg_budget
-        moving=(supply['route_days']<quote['days'] and not blocked and not frost and not unit.get('hold')
+        moving=(supply['route_days']<quote['days'] and not blocked and not changed_target and not frost and not unit.get('hold')
                 and not (supply['retreat_requested'] and city_id is not None and unit.get('status')!='returning')
-                and (city_id is None or enough or unit.get('status')=='returning'))
+                and (city_id is None or enough or unit.get('status')=='returning' and not convoy_safety))
         moving_or_on_leg=moving or city_id is None
         cargo_weight=0
         if dynamic is not None:

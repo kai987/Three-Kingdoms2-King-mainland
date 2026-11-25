@@ -9,6 +9,10 @@ from .climate_regions import REGIONS, WINTER_MONTHS
 FIELD = 'weather_rules_version'
 POOL = 'winter_weather'
 VERSION = 22
+CORRECTED = 221
+TRANSPORT = 1
+PREPARATION = 2
+CORRECTIONS = TRANSPORT | PREPARATION
 NAMES = ('clear', 'light_snow', 'heavy_snow', 'blizzard')
 ICE_NAMES = ('open', 'floating_ice', 'partial_ice', 'frozen')
 DURATION = ((0, 0), (1, 3), (2, 4), (1, 3))
@@ -22,17 +26,25 @@ WARMTH = (100, 105, 115, 130)
 SURCHARGE = (100, 120, 150, 200)
 CARGO = (100, 120, 150, 200)
 _stage = ContextVar('winter_experiment_stage', default=0)
+_adjustments = ContextVar('winter_experiment_adjustments', default=0)
 _observer = ContextVar('winter_readonly_observer', default=None)
+_detailed = ContextVar('winter_transport_observation', default=False)
 
 
 @contextmanager
-def experiment(stage, *, observe=None):
+def experiment(stage, *, observe=None, adjustments=0, detailed=False):
     if type(stage) is not int or not 0 <= stage <= 5:
         raise ValueError('Winter experiment stage')
+    if type(adjustments) is not int or not 0 <= adjustments <= CORRECTIONS or adjustments and stage != 5:
+        raise ValueError('Winter experiment adjustments')
     stage_token, observer_token = _stage.set(stage), _observer.set(observe)
+    adjustment_token = _adjustments.set(adjustments)
+    detail_token = _detailed.set(bool(detailed and observe is not None))
     try:
         yield
     finally:
+        _detailed.reset(detail_token)
+        _adjustments.reset(adjustment_token)
         _observer.reset(observer_token)
         _stage.reset(stage_token)
 
@@ -41,16 +53,23 @@ def stage(state):
     return getattr(state, 'extension', {}).get(POOL, {}).get('stage', 0)
 
 
+def corrected(state, flag):
+    return bool(state.extension.get(POOL, {}).get('adjustments', 0) & flag)
+
+
 def initialize(game, state, requested=None):
-    if requested is not None and (type(requested) is not int or requested not in (0, VERSION)):
+    if requested is not None and (type(requested) is not int or requested not in (0, VERSION, CORRECTED)):
         raise ValueError('Winter weather rules version')
-    selected = _stage.get() if requested is None else (5 if requested == VERSION else 0)
+    selected = _stage.get() if requested is None else (5 if requested else 0)
+    adjustments = _adjustments.get() if requested is None else (CORRECTIONS if requested == CORRECTED else 0)
     if selected:
-        state.extension[FIELD] = VERSION
+        state.extension[FIELD] = CORRECTED if adjustments else VERSION
         state.extension[POOL] = dict(stage=selected, seed=seed_for(state.seed), tick=0,
             regions={key: dict(severity=0, began=0, ends=0, depth=0, cold=0,
                                winter=0, snow_seen=False) for key in REGIONS},
             ice={key: dict(index=0, state=0, changed=0) for key in game.catalog.climate.frozen_reaches})
+        if adjustments:
+            state.extension[POOL]['adjustments'] = adjustments
     else:
         state.extension.pop(FIELD, None)
         state.extension.pop(POOL, None)
@@ -172,6 +191,10 @@ def observing():
     return _observer.get() is not None
 
 
+def detailed():
+    return _detailed.get()
+
+
 def action(game,state,action,source,*,owner,target=None,**details):
     if observing():
         report('action',tick=(state.turn-1)*10+1, year=state.year,month=state.month,day=state.day,
@@ -203,7 +226,7 @@ def view(game, state):
     if not stage(state):
         return {}
     pool = state.extension[POOL]
-    from . import winter_travel, march_supply
+    from . import logistics, winter_transport, winter_travel, march_supply
     def journey_info(row,reserves=0):
         supply,quote=row['supply'],row['quote']
         position=winter_travel.work(supply)
@@ -229,9 +252,27 @@ def view(game, state):
             info['expected_grain']=None if info['days'] is None else winter_travel.estimate_cargo(
                 game,state,trip['quote'],convoy['cargo']['grain'],position=winter_travel.work(trip['supply']),
                 remainder=convoy.get('cargo_loss_remainder',0))
+            if corrected(state,TRANSPORT):
+                status=winter_transport.view(game,state,convoy)
+                home=state.cities[convoy['source']]
+                target=state.cities[convoy['target']]
+                if home.owner==target.owner==convoy['owner'] and target.id!=home.id:
+                    route=logistics._safe_quote(game,state,target,home,convoy['route_policy'])
+                    status['return_legal']=route is not None
+                    if route:
+                        status.update(winter_transport.budget(game,state,convoy,return_quote=route[1]))
+                info['safety']=status
             cargo[str(convoy['id'])]=info
+    seasonal={}
+    if (corrected(state,PREPARATION) and state.player in game.catalog.factions
+            and state.month in (9,10,11,12,1,2,3)
+            and any(row['owner']==state.player for rows in (state.extension['logistics']['convoys'],
+                                                            state.extension['travel']['marches']) for row in rows)):
+        from . import faction_economy,winter_strategy
+        seasonal=winter_strategy.seasonal_requirements(game,state,state.player,faction_economy.plan(game,state,state.player))
     return dict(stage=pool['stage'], tick=pool['tick'], as_of=date_at(game.catalog.data, pool['tick']),
         work_per_day=winter_travel.QUANTA, reaches=game.catalog.climate.frozen_reaches, marches=armies,convoys=cargo,
+        seasonal=seasonal,
         cities=game.catalog.climate.cities,
         regions={key: {**row, 'weather': NAMES[row['severity']], 'road': NAMES[road_weather(row)],
                        'season_chance': REGIONS[key][1] if state.month in REGIONS[key][0] else 0}
@@ -243,14 +284,19 @@ def view(game, state):
 def validate(game, state):
     pool = state.extension.get(POOL)
     version = state.extension.get(FIELD, 0)
-    if type(version) is not int or version not in (0, VERSION):
+    if type(version) is not int or version not in (0, VERSION, CORRECTED):
         raise ValueError('Winter weather rules version')
     if version == 0:
         if POOL in state.extension:
             raise ValueError('Unexpected winter state')
         return
-    if (not isinstance(pool, dict) or set(pool) != {'stage','seed','tick','regions','ice'}
+    fields = {'stage','seed','tick','regions','ice'}
+    if version == CORRECTED:
+        fields.add('adjustments')
+    if (not isinstance(pool, dict) or set(pool) != fields
             or type(pool['stage']) is not int or not 1 <= pool['stage'] <= 5
+            or version == CORRECTED and (pool['stage'] != 5 or type(pool['adjustments']) is not int
+                                          or not 1 <= pool['adjustments'] <= CORRECTIONS)
             or pool['seed'] != seed_for(state.seed) or type(pool['tick']) is not int
             or pool['tick'] != (state.turn-1)*10 or not isinstance(pool['regions'], dict)
             or set(pool['regions']) != REGIONS.keys() or not isinstance(pool['ice'], dict)

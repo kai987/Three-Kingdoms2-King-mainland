@@ -96,7 +96,9 @@ def windows(state, army, *, stopped=False, game=None):
             position=winter_travel.work(book)
             if elapsed*winter_travel.QUANTA<position:
                 continue
-            eta=winter_travel.forecast(game,state,route,position=position,stop=elapsed*winter_travel.QUANTA)[0]
+            forecast=(winter_travel.checkpoint_forecast if winter_weather.corrected(state,winter_weather.PREPARATION)
+                      else winter_travel.forecast)
+            eta=forecast(game,state,route,position=position,stop=elapsed*winter_travel.QUANTA)[0]
             if eta is None:
                 break
             start=clock+eta
@@ -111,18 +113,20 @@ def windows(state, army, *, stopped=False, game=None):
     return tuple(places)
 
 
-def requirement(game, state, army):
+def requirement(game, state, army, *, published=None):
     book, quote = army['supply'], army['quote']
     now, progress = book['clock_tick'], book['route_days']
     left = quote['days']-progress
     urgent = bool(book['shortage_streak'] or book['waiting'] and left)
     days = march_supply.next_supply_days(state, quote, army['owner'], progress)
     dynamic='winter' in book
+    published=winter_weather.corrected(state,winter_weather.PREPARATION) if published is None else published
     forecast=None
     if dynamic:
         position=winter_travel.work(book)
         stop=(progress+days)*winter_travel.QUANTA
-        forecast=winter_travel.forecast(game,state,quote,position=position,stop=stop)
+        estimate=winter_travel.checkpoint_forecast if published else winter_travel.forecast
+        forecast=estimate(game,state,quote,position=position,stop=stop)
         days=forecast[0] if forecast[0] is not None else MAX_LATE_DAYS
         urgent|=forecast[0] is None
     if not left and not urgent:
@@ -136,7 +140,8 @@ def requirement(game, state, army):
 
     def weight(span):
         if dynamic:
-            return winter_travel.horizon_weight(game,state,quote,span,position=position,stop=stop)
+            estimate=winter_travel.checkpoint_horizon_weight if published else winter_travel.horizon_weight
+            return estimate(game,state,quote,span,position=position,stop=stop)
         travel = min(span, left)
         return rules.weight(parts, progress, travel) + (span-travel)*rules.RATION_SCALE
 

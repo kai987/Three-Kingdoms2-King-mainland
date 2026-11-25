@@ -34,7 +34,9 @@ def assess(game, state, city, ids, quote, budgets):
         if missing:
             space = max(0, exportable(state, state.cities[key], budget) - provisional[key])
             covered = min(missing, space)
-            eta=winter_travel.forecast(game,state,quote,stop=progress*winter_travel.QUANTA)[0] if dynamic else progress
+            predict=(winter_travel.checkpoint_forecast if winter_weather.corrected(state,winter_weather.PREPARATION)
+                     else winter_travel.forecast)
+            eta=predict(game,state,quote,stop=progress*winter_travel.QUANTA)[0] if dynamic else progress
             arrival=started+(eta if eta is not None else progress+10)
             rows.append(dict(city=key, route_day=progress, arrival=arrival,
                              required=missing, reserved=covered, expires=arrival + EXPIRY_DAYS))
@@ -134,13 +136,23 @@ def update_weather(game,state):
         position=winter_travel.work(book)
         if position>stop or book['clock_tick']>=item['expires']:
             continue
-        eta=winter_travel.forecast(game,state,row['quote'],position=position,stop=stop)[0]
+        published=winter_weather.corrected(state,winter_weather.PREPARATION)
+        predict=winter_travel.checkpoint_forecast if published else winter_travel.forecast
+        eta=predict(game,state,row['quote'],position=position,stop=stop)[0]
         if eta is None:
             state.extension[FIELD].remove(item)
             logistics_strategy.observe('staging_node',state,status='released',**item)
+            if published:
+                winter_weather.action(game,state,'winter_supply_node_released',item['city'],owner=item['owner'],
+                                      army=item['army'],commitment=item['plan'],reason='ice',reserved=item['reserved'])
         else:
             arrival=book['clock_tick']+eta
+            prior=item['arrival']
             item.update(arrival=arrival,expires=arrival+EXPIRY_DAYS)
+            if published and arrival!=prior:
+                winter_weather.action(game,state,'winter_supply_node_updated',item['city'],owner=item['owner'],
+                                      army=item['army'],commitment=item['plan'],previous=prior,arrival=arrival,
+                                      expiry=item['expires'],reserved=item['reserved'])
 
 
 def validate(state):

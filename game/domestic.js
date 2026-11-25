@@ -148,10 +148,16 @@
    const route=s.winter?s.winter.work/getView().catalog.weather.work_per_day:s.route_days??s.elapsed_days??0,waiting=Math.max(0,(s.elapsed_days??0)-route),
     position=root.GameMarchSupply?.position?.(quote,route),next=root.GameMarchSupply?.nextStop?.(quote,route,getView()?.game?.cities,row.owner),
     place=position?.city?label(cityName(position.city)):position?.from&&position?.to?`${label(cityName(position.from))} → ${label(cityName(position.to))}（${Number(position.progress_days.toFixed(1))}/${position.leg_days}${text('日','日')}）`:'—';
-   const info=getView().catalog.weather?.convoys?.[row.id];
+   const info=getView().catalog.weather?.convoys?.[row.id],safety=info?.safety;
+   const safetyText=safety?`<br><span data-convoy-safety>${text('已過','経過')} ${safety.elapsed}${text('日','日')} ·
+    ${text('原預計到達','当初の到着見込み')} ${escape(safety.original?.join('/')??'—')} ·
+    ${text('目前估算','現在の見込み')} ${escape(safety.expected?.join('/')??text('未定','未定'))}<br>
+    ${text('剩餘口糧需求','残りの兵糧需要')} ${safety.required} · ${text('缺口','不足')} ${safety.shortfall}
+    ${safety.return_legal===false?' · '+text('目前無合法返程','現在は帰還経路なし'):''}
+    ${info.alternative?.length?' · '+text('可選陸路','代替陸路')+' '+escape(info.alternative.map(cityName).join(' → ')):''}</span>`:'';
    const frost=s.winter?.blocked?`<br><span data-convoy-weather-wait>${text('河段冰封，仍每日耗糧。解凍後重估送達日。','結氷で待機中。兵糧は毎日消費し、解氷後に到着を再見積もりします。')}</span>`:
-    info?`<br><span data-convoy-weather-eta>${text('按目前天氣估算','現在の天候での見込み')} ${escape(info.expected?.join('/')??'—')} · ${text('送達糧','到着時の兵糧')} ${info.expected_grain??'—'} · ${text('下段缺糧','次区間の不足')} ${info.shortage}</span>`:'';
-   return `<br><span data-convoy-position>${text('目前位置','現在地')}：${escape(place)} · ${text('下一補給點','次の補給地')}：${escape(next?label(cityName(next.city)):'—')}</span><br><span data-convoy-supply data-supply-remaining="${s.remaining}" data-supply-shortage="${s.shortage_streak??0}">${text('隨軍糧：初裝','携行兵糧：初期積載')}${s.loaded} · ${text('途中補給','途中補給')}${s.received??0} · ${text('已耗','消費')}${s.consumed} · ${text('剩餘','残り')}${s.remaining}<br>${text('前進','前進')}${Number(route.toFixed(1))}${text('日，等待','日・待機')}${Number(waiting.toFixed(1))}${text('日；缺糧','日・不足')}${s.shortage_days??0}${text('日（連續','日（連続')}${s.shortage_streak??0}${text('日），斷糧減員','日）・飢餓損耗')}${s.lost??0}${s.retreat_requested?' · '+text('已觸發撤退','撤退が発動'):''}</span>${frost}`;
+    info&&!safety?`<br><span data-convoy-weather-eta>${text('按目前天氣估算','現在の天候での見込み')} ${escape(info.expected?.join('/')??'—')} · ${text('送達糧','到着時の兵糧')} ${info.expected_grain??'—'} · ${text('下段缺糧','次区間の不足')} ${info.shortage}</span>`:'';
+   return `<br><span data-convoy-position>${text('目前位置','現在地')}：${escape(place)} · ${text('下一補給點','次の補給地')}：${escape(next?label(cityName(next.city)):'—')}</span><br><span data-convoy-supply data-supply-remaining="${s.remaining}" data-supply-shortage="${s.shortage_streak??0}">${text('隨軍糧：初裝','携行兵糧：初期積載')}${s.loaded} · ${text('途中補給','途中補給')}${s.received??0} · ${text('已耗','消費')}${s.consumed} · ${text('剩餘','残り')}${s.remaining}<br>${text('前進','前進')}${Number(route.toFixed(1))}${text('日，等待','日・待機')}${Number(waiting.toFixed(1))}${text('日；缺糧','日・不足')}${s.shortage_days??0}${text('日（連續','日（連続')}${s.shortage_streak??0}${text('日），斷糧減員','日）・飢餓損耗')}${s.lost??0}${s.retreat_requested?' · '+text('已觸發撤退','撤退が発動'):''}</span>${safetyText}${frost}`;
   }
   function convoyList(city=null){
    const view=getView(),rows=(view?.catalog?.logistics?.convoys||[]).filter(r=>r.owner===view?.game?.player&&(!city||r.source===city||r.target===city||r.original_target===city));

@@ -104,19 +104,24 @@ def medium(state, part):
     road = weather.road_weather(row) if part.mode in ('plain','mountain','desert') else snow
     ice = pool['ice'].get(part.reach)
     ice_status = ice['state'] if pool['stage'] >= 4 and ice else 0
-    if part.mode.startswith('river_') or part.mode == 'embark':
-        speed = (weather.SPEED_PERCENT[ice_status]*SPEED_UNIT//100 if part.mode != 'embark'
+    speed, ration, cargo = _medium(part.mode,snow,road,ice_status,pool['stage']>=3)
+    return speed, ration, cargo, part.reach if not speed else None
+
+
+@lru_cache(maxsize=256)
+def _medium(mode, snow, road, ice_status, weather_cargo):
+    if mode.startswith('river_') or mode == 'embark':
+        speed = (weather.SPEED_PERCENT[ice_status]*SPEED_UNIT//100 if mode != 'embark'
                  else 0 if ice_status == 3 else SPEED_UNIT)
-    elif part.mode in {'plain','mountain','desert'}:
+    elif mode in ('plain','mountain','desert'):
         speed = SPEED_UNIT*100//weather.TIME_PERCENT[road]
     else:
         speed = SPEED_UNIT
     surcharge = weather.SURCHARGE[road]
-    ration = (weather.WARMTH[snow]*(10_000+(rules.MARCH_SUPPLY_PERCENT[part.mode]-100)*surcharge)
+    ration = (weather.WARMTH[snow]*(10_000+(rules.MARCH_SUPPLY_PERCENT[mode]-100)*surcharge)
               * rules.RATION_SCALE // 1_000_000)
-    cargo = rules.CARGO_GRAIN_LOSS_BPS[part.mode]*rules.DAY_TICKS
-    multiplied = cargo*weather.CARGO[road]//100 if pool['stage'] >= 3 else cargo
-    return speed, ration, multiplied, part.reach if not speed else None
+    cargo = rules.CARGO_GRAIN_LOSS_BPS[mode]*rules.DAY_TICKS
+    return speed, ration, cargo*weather.CARGO[road]//100 if weather_cargo else cargo
 
 
 def _segments(parts, position, stop=None):
@@ -202,6 +207,63 @@ def forecast(game, state, quote, *, position=0, stop=None):
     waiting = wait_rate(state, game.catalog.climate.cities[node]['climate_region_id'])
     return _forecast(tuple(amount for _,amount in segments),
                      tuple(medium(state, part) for part,_ in segments), waiting)
+
+
+def checkpoint_forecast(game,state,quote,*,position=0,stop=None):
+    """Published conditions, rounding the day at the same nodes as movement."""
+    days = weight = end = 0
+    for leg in quote['routes']:
+        beginning,end=end,end+leg['days']*QUANTA
+        if end<=position:
+            continue
+        if stop is not None and beginning>=stop:
+            break
+        parts=_parts_for_leg(game,leg)
+        segments=tuple(_segments(parts,max(0,position-beginning),None if stop is None else stop-beginning))
+        waiting=wait_rate(state,game.catalog.climate.cities[leg['to']]['climate_region_id'])
+        duration,rations,_,blocked=_forecast(tuple(work for _,work in segments),
+                    tuple(medium(state,part) for part,_ in segments),waiting)
+        weight+=rations
+        if blocked:
+            return None,weight,blocked
+        days+=duration
+    return days,weight,None
+
+
+def seasonal_forecast(game,state,quote,*,start_in=0,position=0,pressure=False):
+    """Risk based on public monthly normals and currently visible ice."""
+    pool=state.extension.get(weather.POOL)
+    if pool is None:
+        return dict(extra_days=0,extra_weight=0,reaches=())
+    elapsed=start_in*QUANTA
+    delay=extra=0
+    risks=set()
+    for part,work in _segments(plan(game,quote),position):
+        month=((state.month-1)+(state.day-1+elapsed//QUANTA)//30)%12+1
+        months,chance,cold,_=climate_regions.REGIONS[part.region]
+        if month in months:
+            exposure=100 if pressure else chance
+            if part.mode in ('plain','mountain','desert'):
+                severity=2 if pressure else 1
+                duration=weather.TIME_PERCENT[severity]
+                rate=_medium(part.mode,severity,severity,0,True)[1]
+                clear=_medium(part.mode,0,0,0,False)[1]
+                delay+=work*(duration-100)*exposure
+                extra+=work*(duration*rate-100*clear)*exposure
+        if part.reach in pool['ice'] and pool['stage']>=4:
+            reach=game.catalog.climate.frozen_reaches[part.reach]
+            cold_months=climate_regions.REGIONS[reach['freeze_region_id']][2]
+            typical=(cold_months[climate_regions.WINTER_MONTHS.index(month)]
+                     if month in climate_regions.WINTER_MONTHS else 0)
+            ice=pool['ice'][part.reach]
+            trend=max(weather.BASE_ICE[typical],weather.BASE_ICE[pool['regions'][reach['freeze_region_id']]['cold']]
+                      if elapsed//QUANTA<=10 else 0)
+            if ice['state']==3 or trend>0 and ice['index']+trend*reach['freeze_sensitivity']*min(
+                    30,elapsed//QUANTA+rules.ceil_div(work,QUANTA))>=6000:
+                risks.add(part.reach)
+        elapsed+=work
+    return dict(extra_days=rules.ceil_div(delay,10_000*QUANTA),
+                extra_weight=rules.ceil_div(extra,10_000*QUANTA),reaches=tuple(sorted(risks)))
 
 
 def leg_time(game, state, leg):
@@ -290,6 +352,40 @@ def horizon_weight(game,state,quote,days,*,position,stop):
         if not time:
             break
     return int(weight+time*wait_rate(state,region))
+
+
+def checkpoint_horizon_weight(game,state,quote,days,*,position,stop):
+    """Ration weight through published physical days, with actual stop rounding."""
+    end=weight=0
+    region=game.catalog.climate.cities[quote['path'][0]]['climate_region_id']
+    for leg in quote['routes']:
+        beginning,end=end,end+leg['days']*QUANTA
+        if end<=position:
+            region=game.catalog.climate.cities[leg['to']]['climate_region_id']
+            continue
+        if beginning>=stop or days<=0:
+            break
+        segments=tuple(_segments(_parts_for_leg(game,leg),max(0,position-beginning),stop-beginning))
+        rates=tuple(medium(state,part) for part,_ in segments)
+        arrival=game.catalog.climate.cities[leg['to']]['climate_region_id']
+        through,rations,_,frozen=_forecast(tuple(work for _,work in segments),rates,wait_rate(state,arrival))
+        if through is not None and days>=through:
+            days-=through
+            weight+=rations
+            region=arrival
+            continue
+        if frozen and beginning>=position:
+            return weight+days*wait_rate(state,region)
+        remaining=Fraction(days)
+        partial=0
+        for (part,work),(speed,rate,_,ice) in zip(segments,rates):
+            duration=remaining if not speed else min(remaining,Fraction(work,speed*rules.DAY_TICKS))
+            partial+=duration*(wait_rate(state,part.region) if ice else rate)
+            remaining-=duration
+            if not remaining:
+                break
+        return weight+int(partial+remaining*wait_rate(state,arrival))
+    return weight+max(0,days)*wait_rate(state,region)
 
 
 def next_checkpoint(quote, position):

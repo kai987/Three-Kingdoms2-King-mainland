@@ -527,7 +527,7 @@ function selectFaction(){
    const pending=setupPreview;setupPreview=null;
    weatherLayerVisible=false;
    if(await command('new',{faction:f,seed,scenario,difficulty:campaignDifficulty,lifespan:campaignLifespan,
-       ...(campaignWinter?{weather_rules_version:22}:{})})){
+       ...(campaignWinter?{weather_rules_version:221}:{})})){
     campaignWinter=false;
     cityCommandGroups.clear();
     selectedCity=view.catalog.factions.find(x=>x.id===f)?.city||pending.focus;actor=target=null;mapMode='all';dialog.close();render();
@@ -828,7 +828,7 @@ function cityWeatherHtml(id){
  const weather=view.catalog.weather,region=weather?.cities[id]?.climate_region_id,row=weather?.regions[region];
  if(!row)return '';
  const [tc,ja]=WINTER_REGION_NAMES[region],names=WINTER_SNOW_NAMES[row.severity],date=weather.as_of;
- const grouped=new Map();
+ const grouped=new Map(),seasonal=weather.seasonal?.[id];
  for(const route of view.catalog.river_routes||[]){
   if(route.from!==id&&route.to!==id)continue;
   for(const part of route.draw||[]){
@@ -843,7 +843,10 @@ function cityWeatherHtml(id){
    `道路 ${WINTER_SNOW_NAMES[['clear','light_snow','heavy_snow','blizzard'].indexOf(row.road)][1]}・季節の降雪確率は1旬あたり ${row.season_chance}%`)}</p>
   ${[...grouped].map(([reach,ice])=>`<p data-city-river-ice="${escapeHtml(reach)}">${battleText(
    `${WINTER_ICE_NAMES[ice.state][0]} · 河段航速 ${ice.speed_percent}%`,
-   `${WINTER_ICE_NAMES[ice.state][1]}・区間の航速 ${ice.speed_percent}%`)}</p>`).join('')}</div>`;
+   `${WINTER_ICE_NAMES[ice.state][1]}・区間の航速 ${ice.speed_percent}%`)}</p>`).join('')}
+  ${seasonal?`<p data-city-winter-logistics>${battleText(
+   `未來九旬估算 · 平時缺口 ${seasonal.baseline} · 冬季缺口 ${seasonal.winter} · 需額外準備 ${seasonal.extra} · 預計到貨 ${seasonal.projected_delivery}`,
+   `今後9旬の見込み・平時の不足 ${seasonal.baseline}・冬季の不足 ${seasonal.winter}・追加準備 ${seasonal.extra}・到着見込み ${seasonal.projected_delivery}`)}</p>`:''}</div>`;
 }
 
 async function showCityInformation(id){
