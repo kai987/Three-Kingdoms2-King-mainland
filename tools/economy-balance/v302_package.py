@@ -116,8 +116,40 @@ def summary(root, manifest, status, stage):
         lines.extend(f'| {r["wave"]} | {r["scenario"]}／{r["strategy"]} | {r["group"]} | {r["metric"]} | {r["before"]} | {r["after"]} |'
                      for r in alerts)
         lines.append('')
-    lines.extend(['## 验收状态','','实际测试日志、复跑记录、历史凭证与浏览器截图见对应目录。',
-                  '正式默认启用维持关闭。后续阶段的判断取决于实际技术门槛及长期经济评估。',''])
+    hard_errors = sum(int(row['city_resource_mismatches'])+
+                      (int(row['reserve_audit_errors']) if valid_numeric(row['reserve_audit_errors']) is not None else 0)
+                      for row in scores)
+    checked_runtime = (stage/'checks/technical-gates.json').is_file()
+    frozen_equal = status['frozen_checks'] and status['frozen_checks']==status['frozen_equal']
+    complete = status['outcomes'].get('complete',0)==status['total']
+    hard_pass = checked_runtime and frozen_equal and not hard_errors and not decisions
+    historical = json.loads((stage/'historical/historical-convoys.json').read_text()) if (
+                  stage/'historical/historical-convoys.json').is_file() else {}
+    long_rows={(r['scenario'],r['group']):r for r in scores if r['wave']=='long'}
+    def long_metric(scenario,group,key):
+        row=long_rows.get((scenario,group))
+        return int(row[key]) if row else None
+    chibi, chibi_base = (long_metric('208-10',group,'unpaid_city_turns') for group in ('S3','S1'))
+    chibi_gap,chibi_base_gap=(long_metric('208-10',group,'rations_missing') for group in ('S3','S1'))
+    yellow,yellow_base=(long_metric('184-02',group,'convoy_hunger_losses') for group in ('S3','S1'))
+    long_pass=chibi is not None and chibi_base is not None and chibi<=1727 and chibi_gap<chibi_base_gap and (
+              yellow is not None and yellow_base is not None and yellow<yellow_base)
+    def scope(phase):
+        return phase_results[phase]['complete']==sum(phase_results[phase].values()) and bool(phase_results[phase])
+    five_year = ('有警戒线越界' if any(r['wave'] in ('dry','winter','holdout') for r in alerts) else '未见警戒线越界') if (
+        scope('dry') and scope('winter') and scope('holdout')) else '未完成全矩阵'
+    long_balance = ('达到赤壁和黄巾专项目标' if long_pass else '未达到全部专项目标') if scope('long') else '未完成全矩阵'
+    lines.extend(['## 验收状态','','| 范围 | 结果 |','| --- | --- |',
+                  f'| 已采技术与守恒证据 | {"通过已执行检查" if hard_pass else "待复核"} |',
+                  f'| 战略储备与主动调粮 | {"通过账目、存读和真实发运专项" if checked_runtime else "待验证"} |',
+                  f'| 冬季储备与单站中转 | {"通过独立开关与实际回执专项" if checked_runtime else "待验证"} |',
+                  f'| 运队历史与返程 | {"1706 关闭规则重放一致，合法补粮受控回归通过" if historical.get("disabled_1706",{}).get("status")=="matched" and checked_runtime else "待验证"} |',
+                  f'| 五年经济平衡 | {five_year} |',
+                  f'| 二十年经济平衡 | {long_balance} |',
+                  f'| 进入下一阶段 | {"可评审" if complete and hard_pass and long_pass and not alerts else "继续留在 302 实验评估"} |',
+                  '| 正式默认启用 | 关闭 |','',
+                  f'已报告局的官仓和战略运单对账差异 {hard_errors}。'
+                  '实际测试日志、复跑记录、历史凭证与浏览器截图见对应目录。',''])
     report='\n'.join(lines)+'\n'
     (stage/'docs/validation-results.md').write_text(report,encoding='utf-8')
     return report
