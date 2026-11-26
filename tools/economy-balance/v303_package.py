@@ -158,7 +158,7 @@ def package(args):
     package_index=args.output/'v303-package-index.json'
     to_json(package_index,dict(version=303,source=status['source'],map_sha256=manifest['map_sha256'],
         validation_sha256=file_sha(summary_index),archives=archives))
-    audited=[package_index,*[args.output[row[key]] for row in archives for key in ('archive','file_manifest')]]
+    audited=[package_index,*[args.output/row[key] for row in archives for key in ('archive','file_manifest')]]
     (args.output/'SHA256SUMS.txt').write_text(checksums(args.output,audited),encoding='utf-8')
     return archives
 
