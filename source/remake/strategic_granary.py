@@ -3,7 +3,7 @@ from collections import defaultdict
 from contextlib import contextmanager
 from contextvars import ContextVar
 
-from . import economy_rules, logistics, logistics_rules, staging_supply
+from . import economy_rules, logistics, logistics_rules, staging_supply, transport_capacity
 from .errors import GameError
 
 VERSION = 302
@@ -440,15 +440,18 @@ def validate(state):
         'completed_turn','reason','reception','actual_cost','reference_price'}
     entries = [(key,row,True) for key,row in data['orders'].items()]
     entries.extend((None,row,False) for row in data['history'])
+    water_modes = {'river','sea'} if transport_capacity.enabled(state,'mode_aware_ai_policy') else set()
+    transport_modes = {'land','fastest'} | water_modes
     for key, row, active in entries:
         if (not isinstance(row, dict) or set(row) != fields or not quantity(row['id'],data['next_id']-1)
                 or not row['id'] or row['id'] in seen or active and key != str(row['id'])
                 or row['status'] not in (ACTIVE if active else TERMINAL)
                 or row['priority'] not in {'manual','proactive','winter','relay'}
                 or row['source'] == row['target'] or row['source'] not in state.cities or row['target'] not in state.cities
-                or row['owner'] == 'neutral' or row['mode'] not in {'land','fastest'}
+                or row['owner'] == 'neutral' or row['mode'] not in transport_modes
                 or row['escort'] not in state.officers or not isinstance(row['path'],list)
                 or len(row['path']) < 2 or row['path'][0] != row['source'] or row['path'][-1] != row['target']
+                or row['mode'] in water_modes and len(row['path']) != 2
                 or any(city not in state.cities for city in row['path'])
                 or any(not quantity(row[field]) for field in ('load','rations','expected_grain','delivered_grain','reference_price'))
                 or not 0 < row['expected_grain'] <= row['load'] or row['delivered_grain'] > row['load']
@@ -475,6 +478,8 @@ def validate(state):
             if (convoy is None or convoy['owner'] != row['owner'] or convoy['strategic'] != row['id']
                     or row['convoy_id'] in linked or row['completed_turn'] is not None
                     or convoy['source'] != row['source'] or convoy['original_target'] != row['target']
+                    or row['mode'] in water_modes and (convoy['journeys'][0]['mode'] != row['mode']
+                        or convoy['journeys'][0]['quote']['path'] != row['path'])
                     or convoy['initial_cargo']['grain'] != row['load']
                     or convoy['journeys'][0]['supply']['loaded'] != row['rations']
                     or convoy['journeys'][0]['departure_turn'] != row['dispatch_turn']

@@ -7,7 +7,8 @@ from types import SimpleNamespace
 from unittest import TestCase
 from unittest.mock import patch
 
-from remake import command_books, grain_units, logistics, logistics_rules, transport_capacity as capacity
+from remake import command_books, grain_units, logistics, logistics_rules, strategic_granary
+from remake import transport_capacity as capacity
 from remake.campaign import Campaign, Catalog
 from remake.errors import GameError
 from remake.transport_emergency import _hazard_risk
@@ -301,6 +302,28 @@ class CapacityGameTests(TestCase):
         self.assertEqual([event for event,_ in events].count('terminal'),1)
         terminal=next(row for event,row in events if event=='terminal')
         self.assertTrue(logistics.valid_grain_receipt(terminal['cargo_receipt']))
+
+    def test_strategic_direct_river_dispatch_has_a_valid_persisted_order(self):
+        game=Campaign(Catalog(Path(__file__).resolve().parents[1]/'game/data/campaigns/208-10.json'))
+        game.command('new',dict(faction='wu',seed=2026,transport_capacity_rules_version=303,
+                               strategic_granary_rules_version=302),0)
+        state=game.state
+        source,target=(state.cities[key] for key in ('lujiang','danyang'))
+        ident=logistics._eligible(game,state,source)[0]
+        source.grain=130_000
+        policy=logistics._pool(state)['cities'][source.id]['policy']
+        quote=logistics._safe_path(game,state,source.id,target.id,source.owner,'river',policy)
+        backward=logistics.convoy_return(game,state,source,target,policy)[1]
+        grain=2_000
+        option=dict(source=source.id,target=target.id,escort=ident,mode='river',path=quote['path'],
+                     load=grain,net=logistics.projected_grain(game,quote,grain,state=state),
+                     rations=logistics.escort_rations(game,state,[ident],quote,backward),
+                     arrival_turn=state.turn+quote['turns'],deadline=state.turn+6,reference_price=200)
+        order=strategic_granary.reserve_order(state,'wu',option,'manual')
+        strategic_granary.launch(game,state,order,option)
+        restarted=Campaign(game.catalog)
+        restarted.load_save(game.export_save(compact=True),0)
+        self.assertEqual(strategic_granary.pool(restarted.state)['orders']['1']['mode'],'river')
 
     def test_regional_purchase_can_complete_its_own_single_compound_order(self):
         game=regional.controlled()
