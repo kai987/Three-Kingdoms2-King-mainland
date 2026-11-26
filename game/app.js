@@ -1076,17 +1076,19 @@ function openRegionalMarket(initialCity){
   if(cancel)cancel.onclick=()=>send({action:'cancel',order:order.id});
   if(sell)sell.onclick=()=>{
    const quantity=node.querySelector('[data-sale-batches]');
-   if(quantity.reportValidity())send({action:'sell',order:order.id,actor:GameOfficerChoices.ref(node.querySelector('[data-sale-actor]').value),
-    batches:Number(quantity.value),token:order.offer.price_token});
+   send({action:'sell',order:order.id,actor:GameOfficerChoices.ref(node.querySelector('[data-sale-actor]').value),
+    batches:clampNumberInput(quantity,true),token:order.offer.price_token});
   };
+  if(sell)bindNumberInput(node.querySelector('[data-sale-batches]'));
  }
  const form=$('#regional-market-form');
  if(form){
   const status=$('#regional-preview-status'),list=$('#regional-preview-quotes'),snapshot=view.revision;
+  bindNumberInput($('#regional-qty'));
   form.oninput=()=>{serial++;status.replaceChildren();list.replaceChildren();};
   form.onsubmit=async event=>{
    event.preventDefault();
-   const marker=++serial,purpose=$('#regional-purpose').value,qty=Number($('#regional-qty').value);
+   const marker=++serial,purpose=$('#regional-purpose').value,qty=clampNumberInput($('#regional-qty'),true);
    list.replaceChildren();
    status.innerHTML=t('正在查詢庫存與路線…','在庫と経路を確認中…');
    try{

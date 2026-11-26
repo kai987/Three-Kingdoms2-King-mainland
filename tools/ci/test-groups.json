@@ -953,6 +953,15 @@
         "save"
       ]
     },
+    "tests/test_remake_regional_market.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "economy",
+        "logistics",
+        "save"
+      ]
+    },
     "tests/test_remake_retainer_audit.py": {
       "tier": "full",
       "groups": [
