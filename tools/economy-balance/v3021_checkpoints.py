@@ -37,7 +37,17 @@ def capture(args):
     game = campaign(args.scenario)
     with ExitStack() as stack:
         configure(stack, args.strategy, args.weather)
-        game.command('new', dict(faction='observer', seed=args.seed, difficulty='normal'), 0)
+        if args.resume:
+            with gzip.open(args.resume, 'rt', encoding='utf-8') as stream:
+                previous = json.load(stream)
+            key = args.scenario, args.seed, args.strategy, args.weather
+            if key != tuple(previous[field] for field in ('scenario','seed','strategy','weather')):
+                raise ValueError('Checkpoint metadata differs')
+            game.load_save(previous['save'],0)
+        else:
+            game.command('new', dict(faction='observer', seed=args.seed, difficulty='normal'), 0)
+        if game.state.turn > args.turn:
+            raise ValueError('Requested checkpoint precedes the supplied state')
         while game.state.turn < args.turn:
             game.command('observe_turn', {}, game.revision)
             if game.state.turn % 30 == 0:
@@ -131,6 +141,7 @@ def main():
     before.add_argument('--seed', type=int, default=2026)
     before.add_argument('--strategy', type=int, choices=(211, 212), default=211)
     before.add_argument('--weather', type=int, choices=(0, 221), default=221)
+    before.add_argument('--resume', type=Path)
     after = modes.add_parser('replay')
     after.add_argument('checkpoint', type=Path)
     after.add_argument('output', type=Path)

@@ -89,7 +89,7 @@ def _csv(stack, folder, name, fields):
     return writer
 
 
-def run(root, case):
+def run(root, case, *, granary_options=None, progress=False):
     wave, group, seed, scene, policy, weather, months = case
     dest = case_dir(root, case)
     complete = dest/'run-v302.json'
@@ -104,6 +104,8 @@ def run(root, case):
         emergency=222 if weather else 0, output=str(dest.relative_to(root)), map_sha256=map_sha(),
         reserve_options=(None if group in ('S0','S1') else dict(version=302,proactive=group in GROUPS[3:],
             winter=bool(weather) and group in ('S3','S4'), relay=group=='S4')))
+    if granary_options is not None:
+        case_data['reserve_options'] = granary_options
     try:
         with TransportRecorder(raw) as transport, ExitStack() as stack:
             writers = {}
@@ -124,7 +126,10 @@ def run(root, case):
             original = RecordedCampaign.command
             def capture(game, action, payload, revision):
                 with audit.command(game, action):
-                    return recorder.attach(game, action, payload, revision)
+                    result = recorder.attach(game, action, payload, revision)
+                if progress and game.state.turn % 30 == 0:
+                    print(f'{wave} {group} {scene} {seed} p{policy} w{weather}: turn {game.state.turn}', flush=True)
+                return result
             stack.enter_context(patch.object(RecordedCampaign, '_v301_command', original, create=True))
             stack.enter_context(patch.object(RecordedCampaign, 'command', capture))
             stack.enter_context(market_pricing.observing(recorder.event))
@@ -133,10 +138,11 @@ def run(root, case):
             stack.enter_context(winter_weather.experiment(5 if weather else 0,
                 adjustments=winter_weather.CORRECTIONS if weather else 0, detailed=True, observe=transport))
             stack.enter_context(transport_emergency.experiment(3 if weather else 0))
-            if group not in ('S0', 'S1'):
+            if case_data['reserve_options'] is not None:
                 from remake import strategic_granary
-                stack.enter_context(strategic_granary.experiment(proactive=group in GROUPS[3:],
-                    winter=bool(weather) and group in ('S3','S4'), relay=group == 'S4'))
+                options = {key:value for key,value in case_data['reserve_options'].items()
+                           if key != 'version' or value != 302}
+                stack.enter_context(strategic_granary.experiment(**options))
                 stack.enter_context(strategic_granary.observing(
                     lambda event,row: strategic_stream.writerow(dict(event=event,**row))))
             result = run_scenario(scene, seed, months, raw.parent, STRATEGY[policy], config(SETTINGS))
