@@ -4,13 +4,17 @@
 | --- | --- | --- |
 | `warehouse-postings.csv.gz` | 真正修改官仓城市属性的操作 | 命令作用域、资源、更新前后余额、实付差额、来源函数和城市。整个命令提交后才写入。 |
 | `market-stock-flow.csv.gz` | 市场真实成交或补货 | 买卖金与粮、真实商品粮库存、当月补货供应和溢出。 |
+| `market-price-bands.csv` | 一局、区域、价格和库存档 | 对真实市场采样归组。规则启用时使用 V3.0.1 的库存档位。 |
 | `convoy-ledger.csv.gz` | 实际车队货粮变更 | 货转口粮、到达与返还、道路和天气损失。每段供给袋仍有独立记录。 |
 | `strategic-granary-events.jsonl.gz` | 一次战略预留、实发、到账、释放或一次城市预测 | 城市、来源、实际日期、预算、身份、原因及所处阶段。 |
 | `shortages.csv` | 当旬发生粮账缺口的城 | 实付、缺口、损兵、同势力情况、1／3／6 个月余粮及合法路权毛量。 |
-| `grain-commitment-account.csv` | 调拨运单 | 实际预留、发运、到账、在途、已关闭、截止旬和实际到岸机会成本。 |
+| `grain-commitment-account.csv` | 调拨运单 | 实际预留、发运、到账、在途、已关闭、截止旬、是否属于中转首段，以及实际到岸机会成本。 |
+| `proactive-dispatch-comparison.csv` | 一局 | `leg_delivery_grain` 为每段实到量之和，`relay_hub_grain` 为中转首段入仓粮，`strategic_delivered` 只计最终目的地，包含 `relay_net_delivered`。及时及迟到粮均按最终目的地的订单截止旬计算。 |
+| `landed-cost-comparison.csv` | 区域市场运单 | 采购与出发量、实际入库、实际口粮和道路／天气损耗。成本用 V3.0.1 的公式按每千粮计算，单位是百分之一金。 |
 | `spatial-grain-imbalance.csv` | 一局 | 其他同方城市库存、三个月余粮、有合法路权余粮及实际记录的及时运能。 |
 | `strategic-granary-comparison.csv` | 一局 | 最后一次城市预测的储备、目标、释放、按九旬周期估计的闲置与季节目标。 |
-| `convoy-return-safety.csv` | 一局 | 运队终结、合法接收、原始护卫存活、饥损、等待和仍在途。 |
+| `convoy-return-safety.csv` | 一局 | 货物交付、运队终结、实际靠岸、合法人员接收、护卫接收率、饥损、等待和仍在途。护卫接收率用实际接收人数除以发运时的原始护卫人数。 |
+| `convoy-hunger-comparison.csv` | 出现饥损的运队 | 根据每日饥损凭证与有效交付日期汇总，严格晚于交付日的损失归入返程。护卫和载运预备兵分列。每日合计与终结人数账交叉核对。 |
 | `performance-comparison.csv` | 一局 | CPU／壁钟、P50／P95、峰值内存、路线与候选次数以及已观测缓存利用。 |
 | `pairwise.csv` | 一对固定配置及一个指标 | 候选值减 S0／S1 的绝对差、相对百分比和越界标记。 |
 

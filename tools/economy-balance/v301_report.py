@@ -192,26 +192,30 @@ def order_flows(directory):
     states={}
     plans=Counter()
     postings=defaultdict(Counter)
-    for line in (directory/'regional-orders.jsonl').open(encoding='utf-8'):
-        event=json.loads(line)
-        kind=event['event']
-        if kind=='warehouse_income':
-            postings[event['channel']].update(grain=event['grain'],gold=event['gold'],entries=1)
-            continue
-        if kind=='regional_trade_gate':
-            plans['commercial_'+event['reason']]+=1
-            continue
-        if kind.endswith('_plan'):
-            plans[kind]+=1
-            plans.update(event['work'])
-            for attempt in event.get('attempts',[event]):
-                plans['offers']+=attempt['candidates']
-                plans.update({'rejected_'+reason:value for reason,value in attempt['rejections'].items()})
-            continue
-        order=states.setdefault(event['order_id'],{})
-        if kind in order:
-            raise ValueError((directory,'duplicate order receipt',kind,event['order_id']))
-        order[kind]=event
+    compressed=directory/'regional-orders.jsonl.gz'
+    stream=(gzip.open(compressed,'rt',encoding='utf-8') if compressed.is_file()
+            else (directory/'regional-orders.jsonl').open(encoding='utf-8'))
+    with stream:
+        for line in stream:
+            event=json.loads(line)
+            kind=event['event']
+            if kind=='warehouse_income':
+                postings[event['channel']].update(grain=event['grain'],gold=event['gold'],entries=1)
+                continue
+            if kind=='regional_trade_gate':
+                plans['commercial_'+event['reason']]+=1
+                continue
+            if kind.endswith('_plan'):
+                plans[kind]+=1
+                plans.update(event['work'])
+                for attempt in event.get('attempts',[event]):
+                    plans['offers']+=attempt['candidates']
+                    plans.update({'rejected_'+reason:value for reason,value in attempt['rejections'].items()})
+                continue
+            order=states.setdefault(event['order_id'],{})
+            if kind in order:
+                raise ValueError((directory,'duplicate order receipt',kind,event['order_id']))
+            order[kind]=event
     for order in states.values():
         purchase,dispatch,receipt,close,sale=(order.get('regional_'+step) for step in
             ('purchase','dispatch','delivery','transport_closed','sale'))

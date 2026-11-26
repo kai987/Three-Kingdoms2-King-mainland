@@ -3,7 +3,7 @@ from argparse import ArgumentParser
 from collections import Counter, defaultdict
 from contextlib import contextmanager
 import csv
-from hashlib import sha256
+from hashlib import file_digest, sha256
 from io import TextIOWrapper
 from pathlib import Path
 import gzip
@@ -12,7 +12,8 @@ import zipfile
 
 from common import to_csv, to_json
 from remake import climate_regions, logistics, strategic_granary
-from v301_report import faction_survival, market_flows, pct, supply
+from remake.regional_procurement import landed_cents
+from v301_report import faction_survival, market_flows, order_flows, pct, quoted_market, supply
 from v302_experiments import PRIOR, case_dir
 
 KEYS = ('wave','scenario','seed','strategy','weather','requested_months')
@@ -23,7 +24,8 @@ MACRO = ('unpaid_city_turns','rations_missing','gold_stock','grain_stock','marke
          'convoy_route_grain_loss','convoy_weather_grain_loss','monthly_regular_grain','monthly_gold','monthly_fixed_grain')
 BRIDGE = ('proactive_requested','proactive_dispatched','winter_dispatched','strategic_load','grain_committed',
           'strategic_delivered','timely_grain','late_grain','cancelled','failed','repeated_target_blocked',
-          'source_safety_rejections','source_shortage_later','relay_planned','relay_second_leg','relay_net_delivered')
+          'source_safety_rejections','source_shortage_later','relay_planned','relay_second_leg','relay_net_delivered',
+          'relay_hub_grain','leg_delivery_grain')
 
 
 @contextmanager
@@ -117,6 +119,8 @@ def stock_observations(run,directory,shortages,exports):
                 {'route_pairs','route_batches','candidate_pairs','route_cache_hits','risk_cache_hits'}})
         elif event.startswith('relay_'):
             measures[event] += 1
+            if event=='relay_hub_receipt' and not row['received']:
+                measures['empty_relay_receipts'] += 1
             relays.setdefault(row['id'],{})[event] = row
         elif event == 'emergency_refill':
             measures.update(emergency_refills=1,emergency_refill_grain=row['grain'])
@@ -140,12 +144,17 @@ def stock_observations(run,directory,shortages,exports):
             if not dispatched:
                 reserve_issues += 1
             grain = received['delivered_grain']
-            measures['strategic_delivered'] += grain
-            measures['timely_grain' if received['delivered_turn']<received['deadline'] else 'late_grain'] += grain
+            measures['leg_delivery_grain'] += grain
+            if ident in relays:
+                measures['relay_hub_grain'] += grain
+            else:
+                measures['strategic_delivered'] += grain
+                measures['timely_grain' if received['delivered_turn']<received['deadline'] else 'late_grain'] += grain
         if ended and ended['status'] in ('failed','cancelled'):
             measures[ended['status']] += 1
         exports['grain-commitment-account'].append(dict(name(run),order=ident,
             source=(held or dispatched)['source'],target=(held or dispatched)['target'],
+            intermediate_relay_leg=ident in relays,
             grain_committed=held['load']+held['rations'] if held else 0,
             load=dispatched['load'] if dispatched else 0,
             convoy=dispatched['convoy_id'] if dispatched else None,
@@ -187,15 +196,16 @@ def stock_observations(run,directory,shortages,exports):
         above_target=sum(r['reserve']>r['target'] for r in last_city.values()),
         prewinter_target=measures['prewinter_target'],prewinter_funded=measures['prewinter_funded'],
         prewinter_fulfilment_pct=pct(measures['prewinter_funded'],measures['prewinter_target']),
-        reserve_audit_errors=reserve_issues)
+        reserve_audit_errors=reserve_issues, emergency_refills=measures['emergency_refills'],
+        emergency_refill_grain=measures['emergency_refill_grain'], legal_shelters=measures['return_shelters'],
+        empty_relay_receipts=measures['empty_relay_receipts'] if run['reserve_options'] and
+                             run['reserve_options']['relay'] else 'not_applicable')
     shipping = {key:measures[key] for key in BRIDGE}
     shipping.update(repeated_target_blocked=rejection['already_committed'],
                     source_safety_rejections=rejection['source_safety'], timely_route_coverage=measures['timely_route_coverage'],
                     requested_grain=measures['requested_grain'],legal_capacity=measures['legal_capacity'],
                     candidate_forecast_frontline_grain=round(measures['sample_front_available']/measures['sample_front_count'],3)
-                         if measures['sample_front_count'] else None,
-                    emergency_refills=measures['emergency_refills'],emergency_refill_grain=measures['emergency_refill_grain'],
-                    legal_shelters=measures['return_shelters'])
+                         if measures['sample_front_count'] else None)
     fields = dict(posted_reserve_fields=active,**{key:value if active else 'not_applicable' for key,value in summary.items()})
     dispatch = run['reserve_options'] and run['reserve_options']['proactive']
     ship_fields = {key:value if dispatch else 'not_applicable' for key,value in shipping.items()}
@@ -209,6 +219,41 @@ def stock_observations(run,directory,shortages,exports):
     return fields,ship_fields,perf,regions
 
 
+def convoy_hunger(run,directory,terminal,exports):
+    losses=defaultdict(Counter)
+    delivered={row['convoy_id']:int(row['delivered_tick']) for row in terminal
+               if row['delivered_tick'] not in ('','null')}
+    for row in csv_file_rows(directory/'convoy-resolution-daily.csv.gz'):
+        ident=row['convoy_id']
+        escort,reserve=(value(row,field) for field in ('escort_hunger_loss','reserve_hunger_loss'))
+        if escort or reserve:
+            returning=ident in delivered and value(row,'tick')>delivered[ident]
+            side='after_delivery' if returning else 'before_or_without_delivery'
+            losses[ident].update({side+'_escort':escort,side+'_reserve':reserve})
+    totals=Counter()
+    departures={}
+    if losses:
+        departures={row['convoy_id']:row for row in csv_file_rows(directory/'convoys.csv')
+                    if row['stage']=='departed' and row['convoy_id'] in losses}
+    for row in terminal:
+        ident=row['convoy_id']
+        actual=losses.pop(ident, {})
+        if sum(actual.values())!=value(row,'escort_hunger_loss')+value(row,'reserve_hunger_loss'):
+            raise ValueError(f'Convoy {ident} daily losses differ from the terminal escort record')
+        if actual:
+            totals.update(actual)
+            departure=departures[ident]
+            exports['convoy-hunger-comparison'].append(dict(name(run),convoy_id=ident,
+                owner=row['owner'],source=departure['source'],target=departure['target'],
+                delivered_tick=delivered.get(ident),terminal_status=row['terminal_status'],
+                initial_escort=row['initial_escort'],remaining_escort=row['current_escort'],
+                **{key:actual.get(key,0) for key in ('before_or_without_delivery_escort',
+                    'before_or_without_delivery_reserve','after_delivery_escort','after_delivery_reserve')}))
+    if losses:
+        raise ValueError('Unmatched daily convoy hunger records')
+    return len(delivered),totals
+
+
 def describe(run,directory,exports):
     tag = name(run)
     initial, final = needed_history(directory,run,exports)
@@ -220,23 +265,39 @@ def describe(run,directory,exports):
         balances.update(row)
     if sum(ending.values())!=value(final,'market_stock'):
         raise ValueError('Published market stock does not match final transaction receipts')
-    orders = {}
-    for event in jsonl(directory/'regional-orders.jsonl.gz'):
-        kind=event['event']
-        if kind in ('regional_purchase','regional_delivery','regional_transport_closed','regional_sale'):
-            orders.setdefault(event['order_id'],{})[kind]=event
+    for side,grain,gold in (('buy','grain_bought','purchase_gold'),('sell','grain_sold','sale_gold')):
+        if (balances[side+'_grain'],balances[side+'_gold'])!=(value(final,grain),value(final,gold)):
+            raise ValueError('Market grain or gold receipts differ from the official game totals')
+    _,price_bands=quoted_market(directory,ending)
+    exports['market-price-bands'].extend(dict(tag,region=region,buy=buy,sell=sell,stock_band=band,samples=count)
+            for (region,buy,sell,band),count in sorted(price_bands.items()))
+    orders,_,_=order_flows(directory)
+    purchased=Counter()
     regional_delivery=0
     for ident, events in orders.items():
-        buy=events.get('regional_purchase',{})
+        buy=events['regional_purchase']
+        dispatch=events.get('regional_dispatch',{})
         arrival=events.get('regional_delivery',{})
         close=events.get('regional_transport_closed',{})
         sold=events.get('regional_sale',{})
-        regional_delivery+=arrival.get('grain',0)
-        exports['landed-cost-comparison'].append(dict(tag,order=ident,source=buy.get('source'),
-            target=buy.get('target'), purchased=buy.get('grain'),gold=buy.get('gold'),
-            delivered=arrival.get('grain'),actual_extra_rations=close.get('extra_rations'),
+        volume=arrival.get('grain',0)
+        regional_delivery+=volume
+        purchased.update({(buy['purpose'],'grain'):buy['grain'],(buy['purpose'],'gold'):buy['gold']})
+        ref=buy.get('reference_price')
+        cost=(landed_cents(buy['gold'],close['extra_rations'],ref,volume) if ref is not None
+              else 'not_collected') if close and volume else None
+        exports['landed-cost-comparison'].append(dict(tag,order=ident,source=buy['source'],
+            target=buy['target'],purpose=buy['purpose'],purchased=buy['grain'],gold=buy['gold'],
+            sent=dispatch.get('grain'),delivered=arrival.get('grain'),estimate_cents_per_thousand=buy['landed_cents'],
+            estimate_net_grain=buy['estimated_net'], reference_price=ref,actual_cents_per_thousand=cost,
+            actual_extra_rations=close.get('extra_rations'), actual_rations=close.get('rations_used'),
             route_loss=close.get('cargo_route_loss'),weather_loss=close.get('cargo_weather_loss'),
-            cash_result=(sold['gold']-buy['gold']) if sold and buy else None))
+            cash_result=(sold['gold']-buy['gold']) if sold else None, close_reason=close.get('close_reason')))
+    for purpose in ('procurement','trade'):
+        for resource in ('grain','gold'):
+            debited=sum(v['buy_'+resource] for (_,channel),v in flow.items() if channel=='regional_'+purpose)
+            if debited!=purchased[purpose,resource]:
+                raise ValueError('Regional purchase differs from physical market receipts')
     score = {key:value(final,key) for key in MACRO}
     mean = run['performance']['mean_turn_cpu_seconds']
     overall,winter=supply(run,directory,'supply-episodes-weather-aware.csv')
@@ -277,12 +338,21 @@ def describe(run,directory,exports):
         exports['warehouse-resource-account'].append(dict(tag,**item))
         if item['resource']=='gold':
             exports['fiscal-resource-account'].append(dict(tag,**item))
-    safe = dict(transport_departed=convoy['dispatched'],real_docked=convoy['safe_ended'],
+    safe = dict(transport_departed=convoy['dispatched'],safely_resolved=convoy['safe_ended'],
         terminated=convoy['ended'],unresolved=convoy['unresolved'],hunger=convoy['totals']['escort_hunger_loss'],
         reserve_hunger=convoy['totals']['reserve_hunger_loss'],max_blocked_days=convoy['max_effective_stall'],
-        live_escort_received=convoy['safe_personnel'],lost_all_escorts=convoy['all_escorts_lost'],
+        live_personnel_received=convoy['safe_personnel'],lost_all_escorts=convoy['all_escorts_lost'],
         outcome_counts=convoy['states'])
     dated = list(csv_file_rows(directory/'convoy-survival.csv'))
+    docked=[r for r in dated if r['terminal_status'] in ('returned_home','received_elsewhere')]
+    delivered, losses=convoy_hunger(run,directory,dated,exports)
+    safe.update(real_docked=len(docked),cargo_delivered=delivered,
+        after_delivery_escort_hunger=losses['after_delivery_escort'],
+        after_delivery_reserve_hunger=losses['after_delivery_reserve'],
+        initial_escort=convoy['totals']['initial_escort'],
+        live_escort_received=sum(value(r,'current_escort') for r in docked))
+    safe['escort_hunger_survival_pct']=pct(safe['initial_escort']-safe['hunger'],safe['initial_escort'])
+    safe['escort_reception_pct']=pct(safe['live_escort_received'],safe['initial_escort'])
     safe['no_receiving_node'] = sum(r['terminal_status']=='no_friendly_city' for r in dated)
     safe['docked_after_all_escort_hunger'] = sum(
         value(r,'initial_escort')>0 and value(r,'escort_hunger_loss')>=value(r,'initial_escort')
@@ -299,9 +369,14 @@ def describe(run,directory,exports):
         market_bought=balances['buy_grain'],market_sold=balances['sell_grain'],
         market_paid=balances['buy_gold'],market_income=balances['sell_gold'],
         regional_orders=len(orders) if run['market_stage'] else 'not_applicable',
+        regional_purchased=purchased['procurement','grain'] if run['market_stage'] else 'not_applicable',
         regional_delivered=regional_delivery if run['market_stage'] else 'not_applicable',
         automatic_commercial_orders='not_applicable',
-        convoy_safe_pct=pct(safe['real_docked'],safe['transport_departed']),
+        convoy_safe_pct=pct(safe['safely_resolved'],safe['transport_departed']),
+        convoy_delivery_pct=pct(safe['cargo_delivered'],safe['transport_departed']),
+        convoy_return_escort_hunger=safe['after_delivery_escort_hunger'],
+        escort_hunger_survival_pct=safe['escort_hunger_survival_pct'],
+        escort_reception_pct=safe['escort_reception_pct'],
         net_gold=score['gold_stock']-value(initial,'gold_stock'),
         **faction_survival(directory),**weather_metrics,**fields,**shipping,**spatial,
         mean_turn_cpu=mean)
@@ -395,10 +470,64 @@ def write_or_empty(path, rows):
         path.write_text('status\nnot_applicable\n',encoding='utf-8')
 
 
+def compare_replay_assets(name,before,after):
+    paths=(before/name,after/name)
+    hashes=[]
+    for path in paths:
+        reader=gzip.open if path.suffix=='.gz' else open
+        with reader(path,'rb') as stream:
+            hashes.append(file_digest(stream,'sha256').hexdigest())
+    result=dict(frozen=hashes[0],fixed=hashes[1],raw_equal=hashes[0]==hashes[1],mode='exact')
+    result['equal']=result['raw_equal']
+    if not result['equal'] and name=='warehouse-postings.csv.gz':
+        accounts=[]
+        for path in paths:
+            by_account=defaultdict(list)
+            for row in csv_file_rows(path):
+                by_account[row['city'],row['resource']].append(row)
+            accounts.append(by_account)
+        result.update(mode='ordered_postings_per_city_resource',equal=accounts[0]==accounts[1])
+    if not result['equal'] and name=='strategic-granary-events.jsonl.gz':
+        frozen,fixed=(list(jsonl(path)) for path in paths)
+        empty={row['id']:row for row in frozen if row['event']=='relay_hub_receipt' and row['received']==0}
+        closed={row['id']:row for row in fixed if row['event']=='relay_cancelled' and row['reason']=='empty_receipt'}
+        identity=('turn','year','month','day','owner','source','hub','target','deadline')
+        if (empty and empty.keys()==closed.keys() and
+                all(old[key]==closed[ident][key] for ident,old in empty.items() for key in identity) and
+                not any(row['event']=='relay_hub_receipt' and row['id'] in empty for row in fixed)):
+            def unrelated(row):
+                return not (row['event'] in ('relay_hub_receipt','relay_cancelled') and row['id'] in empty)
+            result.update(mode='documented_zero_receipt_event_transition',transition_orders=sorted(empty),
+                          equal=list(filter(unrelated,frozen))==list(filter(unrelated,fixed)))
+    return result
+
+
+def relay_reruns(root, rerun_folder):
+    comparisons=[]
+    files=(*FROZEN,'convoy-survival.csv','route-changes.csv','convoy-ledger.csv.gz',
+           'convoy-resolution-daily.csv.gz','strategic-granary-events.jsonl.gz',
+           'warehouse-postings.csv.gz','market-stock-flow.csv.gz')
+    planned={tuple(row) for path in rerun_folder.glob('planned-*.json') for row in json.loads(path.read_text())}
+    for case in sorted(planned):
+        baseline, rerun=(case_dir(folder,case) for folder in (root,rerun_folder))
+        records=[folder/'run-v302.json' for folder in (baseline,rerun)]
+        if not all(path.is_file() for path in records):
+            continue
+        before, after=(json.loads(path.read_text()) for path in records)
+        assets={name:compare_replay_assets(name,baseline,rerun) for name in files} if (
+            before['outcome']==after['outcome']=='complete') else {}
+        comparisons.append(dict(run=case,baseline=before['source'],fixed=after['source'],files=assets,
+                           after_output=after['output'],complete=bool(assets),
+                           equal=bool(assets) and all(row['equal'] for row in assets.values())))
+    return dict(planned=len(planned),reported=len(comparisons),
+                matched=sum(row['equal'] for row in comparisons),comparisons=comparisons)
+
+
 def main():
     parser=ArgumentParser(description=__doc__)
     parser.add_argument('output',type=Path)
     parser.add_argument('--prior',type=Path,default=PRIOR)
+    parser.add_argument('--relay-reruns',type=Path)
     args=parser.parse_args()
     root=args.output
     planned = {tuple(row) for path in root.glob('planned-*.json') for row in json.loads(path.read_text())}
@@ -446,6 +575,18 @@ def main():
     status=dict(total=len(manifest),outcomes=dict(Counter(row['outcome'] for row in manifest)),
                 frozen_checks=len(checks),frozen_equal=sum(row['equal'] for row in checks),
                 accounting_failures=errors,warning_count=len(exports['balance-alerts']))
+    reruns=relay_reruns(root,args.relay_reruns or root.parent/'postfix')
+    if reruns['planned']:
+        affected=[row for row in scores if type(row['empty_relay_receipts']) is int and row['empty_relay_receipts']]
+        matched={tuple(replay['run']) for replay in reruns['comparisons'] if replay['equal']}
+        status['empty_relay_receipts']=sum(row['empty_relay_receipts'] for row in affected)
+        reruns['affected_cases']=[dict(name(row), empty_receipts=row['empty_relay_receipts'],
+            verified=tuple(row[key] for key in ('wave','group','seed','scenario','strategy',
+                                                'weather','requested_months')) in matched) for row in affected]
+        reruns['affected_count']=len(affected)
+        reruns['affected_revalidated']=sum(row['verified'] for row in reruns['affected_cases'])
+        status['relay_fix_reruns']={k:v for k,v in reruns.items() if k not in ('comparisons','affected_cases')}
+        to_json(data/'relay-fix-reruns.json',reruns)
     to_json(data/'report-status.json',status)
     print(json.dumps(status,ensure_ascii=False))
 
