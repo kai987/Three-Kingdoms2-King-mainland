@@ -99,29 +99,32 @@ def _shortages(projections):
 
 
 def _donors(game, state, projections):
+    from . import transport_capacity
     if 'logistics' not in state.extension:
         return []
     pool = state.extension['logistics']
-    busy = {row['source'] for row in pool['convoys']}
+    active = transport_capacity.activity(state)
     donors = []
     owner=state.cities[next(iter(projections))].owner if projections else 'neutral'
     budgets=military_budget.budgets(game,state,owner) if military_budget.enabled(state) and owner!=state.player else {}
     for key, row in projections.items():
-        if key in busy or row.zero_in is not None:
+        if row.zero_in is not None:
             continue
         city = state.cities[key]
         ledger = pool['cities'][key]
-        policy = ledger['policy']
+        policy=transport_capacity.ai_policy(state,owner,ledger['policy'],
+                                            automatic=transport_capacity.automation(state,owner))
         budget=budgets.get(key)
         reserve=min(budget['target'],budget['fixed']*3) if budget else 0
         surplus = city.grain - max(row.reserve,policy['reserve_grain'],reserve)
         if (surplus <= 0 or not policy['max_grain'] or not policy['max_officers']
-                or ledger['last_dispatch_turn'] == state.turn
+                or transport_capacity.dispatch_blocker(state,city,active)
                 or historical_campaigns.hold_longyou_garrison(game, state, city)):
             continue
         if logistics._present_count(game, state, city) <= policy['reserve_officers']:
             continue
-        ids = logistics._eligible(game, state, city)
+        ids = [i for i in logistics._eligible(game,state,city)
+               if logistics.escort_defence(game,state,city,[i])]
         if ids:
             escort = min(ids, key=lambda i: (state.officers[i].troops, logistics._key(i)))
             donors.append((city, policy, surplus, escort))
@@ -130,7 +133,7 @@ def _donors(game, state, projections):
 
 def _deliveries(game, state, owner, projections, targets):
     from .march_supply import cost, estimate, initial_days, quote_supply
-    from . import logistics_rules
+    from . import logistics_rules, transport_capacity
 
     weighted=military_budget.enabled(state)
     groups = defaultdict(list)
@@ -158,6 +161,14 @@ def _deliveries(game, state, owner, projections, targets):
                     rations+=(estimate(state,[escort],returning[1],game=game)
                               if weighted else cost(troops,1,initial_days(state,returning[1])))
                 amount = min(policy['max_grain'], surplus - rations)
+                if transport_capacity.enabled(state,'physical_capacity'):
+                    if not returning:
+                        continue
+                    rations=logistics.escort_rations(game,state,[escort],quote,returning[1])
+                    available=min(surplus,transport_capacity.current_grain(state,city)-policy['reserve_grain'])
+                    loading=transport_capacity.loading(game,state,owner,policy,quote,rations,available,logistics.LIMIT,
+                        automatic=transport_capacity.automation(state,owner))
+                    amount=loading['max_cargo']
                 if amount > 0:
                     delivered=logistics.projected_grain(game,quote,amount) if weighted else amount
                     if delivered:

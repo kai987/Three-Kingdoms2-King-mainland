@@ -7,7 +7,7 @@ from . import (city_economy, climate_regions, command_books, domestic, facilitie
                historical_campaigns, logistics, logistics_rules, logistics_strategy, strategic_granary as reserve,
                winter_travel, winter_weather)
 from .errors import GameError
-from . import granary_demand
+from . import granary_demand, transport_capacity
 
 
 def _plan(game, state, owner, *, except_order=None):
@@ -71,7 +71,7 @@ class Network:
         self.automatic = automatic
         self.profiles = {key:profile(game,state,state.cities[key],plan.budgets[key],ahead)
                          for key,ahead in plan.cities.items()}
-        self.busy = {row['source'] for row in state.extension['logistics']['convoys']}
+        self.active = transport_capacity.activity(state)
         self.held_sources = {row['source'] for row in reserve.commitments(state,except_id=except_id)}
         self.absent = city_economy.absent_troops(game,state)
         posts = domestic.appointments(state,owner)
@@ -85,6 +85,7 @@ class Network:
         self.route_cache = {}
         self.rejected = defaultdict(Counter)
         self.temporal = {}
+        self.physical = {}
         self.escort_exclusions = {}
         self.max_room = logistics.LIMIT
         self.target_pending = Counter()
@@ -94,11 +95,11 @@ class Network:
     def _donor(self, key, stock_credit, *, may_release=False):
         state, city = self.state, self.state.cities[key]
         ledger = state.extension['logistics']['cities'][key]
-        policy = ledger['policy']
+        policy=transport_capacity.ai_policy(state,self.owner,ledger['policy'],automatic=self.automatic)
         budget = self.plan.budgets[key]
         if key in self.held_sources:
             return None, 'already_committed'
-        if key in self.busy or ledger['last_dispatch_turn'] == state.turn:
+        if transport_capacity.dispatch_blocker(state,city,self.active):
             return None, 'source_convoy_limit'
         if (not policy['max_grain'] or not policy['max_officers']
                 or self.automatic and historical_campaigns.hold_longyou_garrison(self.game,state,city)):
@@ -108,7 +109,9 @@ class Network:
             self.escort_exclusions[key] = exclusions
             return None, 'no_eligible_escort'
         escort = min(escorts, key=lambda ident:(state.officers[ident].troops,logistics._key(ident)))
-        if self.automatic and budget['threatened']:
+        if not logistics.escort_defence(self.game,state,city,[escort],threatened=budget['threatened']):
+            return None, 'source_defence'
+        if self.automatic and budget['threatened'] and not transport_capacity.enabled(state):
             from .difficulty import get_settings
             if budget['active']-state.officers[escort].troops < min(budget['active'],
                                 get_settings(state)['min_guard_troops']):
@@ -121,6 +124,9 @@ class Network:
         safe_floor = max(required, spec['target'], reserve.reserve_grain(state,city))
         urgent_floor = max(required, forecast.reserve + spec['winter']) if may_release else safe_floor
         ceiling = city.grain - budget['reserved_grain'] + stock_credit
+        if transport_capacity.enabled(state):
+            from . import staging_supply
+            ceiling=min(ceiling,staging_supply.available(state,city))
         free = ceiling - min(safe_floor, urgent_floor)
         if free <= 0:
             return None, 'source_safety'
@@ -137,12 +143,14 @@ class Network:
             return present, [], dict(below_minimum_retained_officers=1)
         counts, eligible = Counter(), []
         ruler = state.extension['leaders'].get(self.owner)
+        staff = state.extension.get('civil_staff', {}).get('people', {}) if transport_capacity.enabled(state) else {}
         for ident in present:
             reason = ('restricted_ruler' if self.automatic and ident == ruler else
                       'restricted_appointment' if ident in self.restricted else
                       'assigned_to_war_plan' if ident in self.war else
                       'officer_health_unavailable' if state.officers[ident].health <= 0 else
                       'receipt_cooldown' if state.extension['logistics']['receipts'].get(str(ident),0)>state.turn else
+                      'local_clerk_unavailable' if not staff.get(ident,{}).get('working',True) else
                       'officer_already_acted' if state.extension['officer_actions'].get(str(ident)) == state.turn else None)
             if reason is None:
                 eligible.append(ident)
@@ -159,6 +167,12 @@ class Network:
                 seasonal=reserve.enabled(self.state,'winter') or self.automatic)
         return self.temporal[key]
 
+    def physical_profile(self, route):
+        key=tuple((leg['id'],leg['from']) for leg in route['routes'])
+        if key not in self.physical:
+            self.physical[key]=transport_capacity.physical(self.game,self.state,route)
+        return self.physical[key]
+
     def collect(self, targets, sources=None, *, stock_credit=None, urgent_targets=()):
         state = self.state
         if not command_books.can_spend(state,self.owner,'dispatch_transport'):
@@ -168,6 +182,8 @@ class Network:
         groups = defaultdict(list)
         urgent_targets = frozenset(urgent_targets)
         observed = reserve.observed() and reserve.candidate(state)
+        capacity_observed = transport_capacity.observed()
+        physical = transport_capacity.enabled(state,'physical_capacity')
         if observed:
             self.stats['target_passes'] += len(targets)
         for source in sorted(self.plan.budgets if sources is None else sources):
@@ -181,6 +197,11 @@ class Network:
                     exportable=self.plan.budgets[source]['exportable'],
                     fixed=self.plan.budgets[source]['fixed'],
                     exclusions=self.escort_exclusions[source] if reason == 'no_eligible_escort' else {})
+            if capacity_observed:
+                transport_capacity.observe(state,'source_offer',owner=self.owner,source=source,reason=reason,
+                    targets=len(targets)-int(source in targets),active=transport_capacity.active_count(
+                        state,state.cities[source],self.active),dispatch_count=transport_capacity.dispatch_count(state,source),
+                    exclusions=dict(self.escort_exclusions.get(source,{}) if reason=='no_eligible_escort' else {}))
             if reason:
                 for target in targets:
                     if source != target:
@@ -238,8 +259,13 @@ class Network:
                             rations += logistics_rules.ceil_div(extra_weight*march_supply.ration_units(state,[escort]),
                                 march_supply.denominator()*logistics_rules.RATION_SCALE)
                         limit = min(policy['max_grain'],free-rations)
+                        load_capacity=None
+                        if physical:
+                            load_capacity=transport_capacity.loading(self.game,state,self.owner,policy,route,rations,
+                                free,logistics.LIMIT,automatic=self.automatic,profile=self.physical_profile(route))
+                            limit=load_capacity['max_cargo']
                         if limit <= 0:
-                            self.rejected[key]['no_return_rations'] += 1
+                            self.rejected[key]['route_capacity' if physical and free>rations else 'no_return_rations'] += 1
                             continue
                         values = dict(source=city.id,target=target.id,escort=escort,
                             mode=mode, route=route, path=route['path'], return_path=backward[0][1]['path'],
@@ -250,6 +276,10 @@ class Network:
                             floor=floor, free=free)
                         if floor < normal_floor:
                             values['release_floor'] = floor
+                        if load_capacity is not None:
+                            values['capacity']=load_capacity
+                        if self.automatic and transport_capacity.enabled(state,'throughput_ranking'):
+                            values['rank_turnover']=True
                         options[key].append(values)
         return options
 
@@ -279,12 +309,20 @@ class Network:
                       deadline=deadline, reference_price=rate,
                       landed_cents=landed_cents(0,option['rations'],rate,net), eta=ticks,
                       timely=state.turn+ticks<deadline)
+        if 'capacity' in values:
+            values['capacity']=dict(values['capacity'],max_cargo=limit)
+        if values.pop('rank_turnover',False):
+            wait=(-values['days'])%10+(-values['return_days'])%10
+            values['turnover_priority']=list(transport_capacity.priority(net,values['rations'],
+                values['days'],values['return_days'],wait,1,logistics.RULES['receipt_turns'],values['landed_cents']))
         message = [state.turn, self.owner, state.cities[option['source']].grain, city.grain, values]
         values['token'] = sha256(json.dumps(message,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
         return values
 
 
 def _rank(quote):
+    if 'turnover_priority' in quote:
+        return (not quote['timely'],quote['risk'],*quote['turnover_priority'],quote['source'],quote['mode'])
     return (not quote['timely'], quote['risk'], quote['landed_cents'],
             -quote['net'], quote['days'], quote['return_days'], quote['source'], quote['mode'])
 

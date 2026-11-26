@@ -19,7 +19,7 @@ from . import diplomacy, grain_relief, grain_units, historical_campaigns, observ
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
-from . import battle_reinforcements, city_economy, economy_rules, grain_market, logistics_rules, logistics_strategy, payroll
+from . import battle_reinforcements, city_economy, economy_rules, grain_market, logistics_rules, logistics_strategy, payroll, transport_capacity
 from . import granary_planning, market_pricing, regional_market, strategic_granary, transport_emergency, winter_weather
 from .city_economy import frontier_maintenance
 from .starting_garrisons import resolve as resolve_opening_garrisons
@@ -521,6 +521,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     if strategic_granary.FIELD in payload or strategic_granary.OPTIONS in payload:
                         strategic_granary.initialize(candidate,payload.get(strategic_granary.FIELD,0),
                                                       payload.get(strategic_granary.OPTIONS))
+                    if transport_capacity.FIELD in payload or transport_capacity.OPTIONS in payload:
+                        transport_capacity.initialize(candidate,payload.get(transport_capacity.FIELD,0),
+                                                      payload.get(transport_capacity.OPTIONS))
                     if campaign_id is not None:
                         candidate.extension['campaign_id'] = campaign_id
                 else:
@@ -1015,6 +1018,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         payroll.validate(self, state)
         battle_reinforcements.validate_returns(self, state)
         domestic.validate(self,state)
+        transport_capacity.validate(state)
         logistics.validate(self,state)
         regional_market.validate(self,state)
         strategic_granary.validate(state)

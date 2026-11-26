@@ -1090,6 +1090,15 @@
         "scenarios"
       ]
     },
+    "tests/test_remake_transport_capacity.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "logistics",
+        "map",
+        "save"
+      ]
+    },
     "tests/test_remake_transport_emergency.py": {
       "tier": "related",
       "groups": [

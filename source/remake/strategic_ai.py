@@ -17,7 +17,7 @@ from . import grain_relief, grain_units
 from .march_supply import denominator, OFFICER_UNITS, estimate as march_grain, next_supply_days, required_grain, travel_rules
 from . import city_economy, faction_economy, logistics_rules, logistics_strategy, military_budget, war_recovery
 from .route_hazards import allocate_survivors
-from . import strategic_granary, winter_travel, winter_weather
+from . import strategic_granary, transport_capacity, winter_travel, winter_weather
 
 
 class StrategicAI:
@@ -72,20 +72,21 @@ class StrategicAI:
         local = plan.budgets[city.id]
         grain, gold = local['timely_grain'], 0
         pool = state.extension['logistics']
+        active=transport_capacity.activity(state)
         for donor in self.neighbors(city):
             if donor.owner != city.owner or donor.id not in plan.budgets:
                 continue
             budget = plan.budgets[donor.id]
             stock = max(0, donor.grain-budget['reserved_grain']
                         -max(budget['safety_reserve'], budget['minimum_export_floor']))
-            policy = pool['cities'][donor.id]['policy']
+            policy=transport_capacity.ai_policy(state,donor.owner,pool['cities'][donor.id]['policy'],automatic=True)
             if (not policy['enabled'] or policy['target_city'] not in (None, city.id)
                     or not policy['max_officers'] or not command_books.can_spend(state, city.owner, 'dispatch_transport')
-                    or pool['cities'][donor.id]['last_dispatch_turn'] == state.turn
-                    or any(row['source'] == donor.id for row in pool['convoys'])
+                    or transport_capacity.dispatch_blocker(state,donor,active)
                     or logistics._present_count(game, state, donor) <= policy['reserve_officers']):
                 continue
-            options = logistics._eligible(game, state, donor)
+            options=[ident for ident in logistics._eligible(game,state,donor)
+                     if logistics.escort_defence(game,state,donor,[ident],threatened=budget['threatened'])]
             if not options:
                 continue
             escort = min(options, key=lambda ident: (state.officers[ident].troops, ref_sort_key(ident)))
@@ -97,8 +98,14 @@ class StrategicAI:
                          for route in (outward,backward))
             if stock < ration + policy['reserve_grain']:
                 continue
-            grain += logistics.projected_grain(game, outward[1],
-                         min(policy['max_grain'], stock-ration-policy['reserve_grain']),state=state)
+            limit=min(policy['max_grain'],stock-ration-policy['reserve_grain'])
+            if transport_capacity.enabled(state,'physical_capacity'):
+                ration=logistics.escort_rations(game,state,[escort],outward[1],backward[1])
+                limit=transport_capacity.loading(game,state,city.owner,policy,outward[1],ration,
+                    stock-policy['reserve_grain'],logistics.LIMIT,automatic=True)['max_cargo']
+                if not limit and ration>stock-policy['reserve_grain']:
+                    continue
+            grain+=logistics.projected_grain(game,outward[1],limit,state=state)
             gold += min(policy['max_gold'], max(0, donor.gold-max(budget['wage_gold'],policy['reserve_gold'])))
             break  # One modeled donor is one available order, even when several share its city.
         result = dict(grain=grain, gold=gold)

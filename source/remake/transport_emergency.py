@@ -8,8 +8,17 @@ from heapq import heappop, heappush
 from itertools import count
 
 from . import army_relief, historical_campaigns, logistics, logistics_rules as rules
-from . import march_supply, staging_supply, winter_transport, winter_travel, winter_weather
+from . import march_supply, staging_supply, transport_capacity, winter_transport, winter_travel, winter_weather
 from .route_hazards import evaluate_leg, route_allowed
+
+
+def _hazard_risk(leg):
+    hazard=leg.get('hazard')
+    if not hazard:
+        return 0
+    if 'loss_percent_max' in hazard:
+        return hazard['loss_percent_max']
+    return 100 - 100*hazard['survival_numerator']//hazard['survival_denominator']
 
 FIELD = 'transport_emergency_rules_version'
 EXPERIMENT = 'transport_emergency_experiment_stage'
@@ -188,9 +197,7 @@ class Review:
                         else:
                             days, ice = leg['days'], None
                             weight = rules.weight(rules.leg_parts(leg, march_supply.travel_rules(game)))
-                        hazard = leg.get('hazard') or {}
-                        risk = hazard.get('loss_percent_max', 100 - 100 * hazard.get('survival_numerator', 1)
-                                          // hazard.get('survival_denominator', 1))
+                        risk = _hazard_risk(leg)
                         self.legs[ident] = (leg, days, weight, risk, ice)
                 choice = self.legs[ident]
                 if choice is None:
@@ -244,19 +251,24 @@ class Review:
         else:
             days = route['days']
             weight = rules.weight(rules.plan(route, march_supply.travel_rules(game)))
-        risk = 0
-        for leg in route['routes']:
-            hazard = leg.get('hazard') or {}
-            risk += hazard.get('loss_percent_max', 100 - 100 * hazard.get('survival_numerator', 1)
-                               // hazard.get('survival_denominator', 1))
+        risk = sum(_hazard_risk(leg) for leg in route['routes'])
         return Quote(route, days, weight, risk)
 
     def options(self, row, here, receiving):
         units = convoy_units(self.state, row)
         credit = book(row)['credit_units']
         routes = self.quotes(row['owner'], here, row['route_policy'])
-        return [Option(quote, army_relief.ration_budget(units, quote.weight, 0, 0, credit=credit), city)
-                for city in receiving for quote in routes.get(city, ())]
+        choices=[]
+        for city in receiving:
+            for quote in routes.get(city, ()):
+                budget=army_relief.ration_budget(units,quote.weight,0,0,credit=credit)
+                if transport_capacity.fits(self.game,self.state,row,quote.route,minimum=budget.total):
+                    choices.append(Option(quote,budget,city))
+                elif transport_capacity.observed():
+                    transport_capacity.observe(self.state,'reroute_blocked',id=row['id'],city=here,target=city,
+                        total=available(row),required_rations=budget.total,
+                        capacity=transport_capacity.physical(self.game,self.state,quote.route)['physical_capacity'])
+        return choices
 
     def staged(self, row, here, options, allotment, access):
         game, state = self.game, self.state
@@ -290,7 +302,8 @@ class Review:
                 short = army_relief.ration_budget(units, outward.weight, wait * wait_weight(game, state, city),
                                                  0, credit=credit)
                 follow = army_relief.ration_budget(units, backward.weight, 0, 0)
-                if short.total <= allotment and follow.total <= allotment - short.total + offered:
+                if (short.total <= allotment and follow.total <= allotment - short.total + offered
+                        and transport_capacity.fits(game,state,row,outward.route,minimum=short.total)):
                     choices.append((Option(outward, short, option.final, staged=True), offered))
         return min(choices, key=lambda x: option_rank(x[0]), default=(None, 0))
 
@@ -318,11 +331,13 @@ def note(game, state, event, row, *, at=None, event_tick=None, **values):
         emergency_reason=phase.get('reason'), **values)
 
 
-def _take_local(game, state, row, city, amount):
+def _take_local(game, state, row, city, amount, *, route=None):
     if city.owner != row['owner']:
         return 0
     supply = book(row)
     taken = min(amount, stock(game, state, city), logistics.LIMIT - supply['remaining'])
+    if transport_capacity.enabled(state,'physical_capacity'):
+        taken=min(taken,transport_capacity.refill_room(game,state,row,city.id,route=route))
     if taken:
         from . import strategic_granary
         strategic_granary.spending(state,city,taken,'military_or_urgent')
@@ -364,7 +379,9 @@ def review_return_node(game, state, row, tick):
     if carried >= need:
         return False
     lawful = stock(game,state,city)
-    if 0 < need-carried <= min(lawful, logistics.LIMIT-supply['remaining']):
+    room=transport_capacity.refill_room(game,state,row,current) if transport_capacity.enabled(
+        state,'physical_capacity') else logistics.LIMIT
+    if 0 < need-carried <= min(lawful, logistics.LIMIT-supply['remaining'], room):
         _take_local(game,state,row,city,need-carried)
         note(game,state,'emergency_plan',row,at=current,event_tick=tick,decision='fund_return_at_node',
              days=days,available_local_supply=lawful,rejection_reason=None)
@@ -405,6 +422,8 @@ def direct_home(game,state,row,here,reason):
             continue
         needed = army_relief.ration_budget(convoy_units(state,row),quote.weight,0,0,
                                           credit=book(row)['credit_units']).total
+        if not transport_capacity.fits(game,state,row,route,minimum=needed):
+            continue
         from . import strategic_granary
         if strategic_granary.enabled(state):
             local = state.cities[here]
@@ -421,7 +440,7 @@ def direct_home(game,state,row,here,reason):
                 return logistics._dock(game,state,row,local)
             missing = max(0,needed-available(row))
             if missing and local.owner == row['owner'] and stock(game,state,local) >= missing:
-                _take_local(game,state,row,local,missing)
+                _take_local(game,state,row,local,missing,route=route)
         if needed > available(row):
             continue
         if logistics._keep_return_journey(row,here,home.id,route):
@@ -507,7 +526,7 @@ def withdraw(game, state, row, here, reason, *, review=None):
         if len(row['journeys']) < logistics.RULES['max_journeys']:
             needed = choice.budget.total - (choice.budget.safety if risky else 0)
             missing = max(0, needed - carry)
-            provided = _take_local(game, state, row, local, missing) if missing else 0
+            provided = _take_local(game, state, row, local, missing,route=path) if missing else 0
             if provided == missing and logistics._begin_journey(game,state,row,here,choice.target,
                     choice.quote.mode,path,status='returning',reason=reason,prepaid=needed):
                 pool['status'] = 'evacuating'

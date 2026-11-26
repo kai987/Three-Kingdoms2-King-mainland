@@ -60,6 +60,9 @@ def start(game, state, order, *, automatic=False):
         raise GameError(pricing.STALE_QUOTE)
     city=facilities._city(game,state,source.id,order['owner'],service='market',kind='trade_grain')
     actor=facilities._actor(game,state,city,order['actor'])
+    from . import transport_capacity
+    if transport_capacity.enabled(state) and actor not in logistics._eligible(game,state,city,automatic=automatic):
+        raise GameError(pricing.STALE_QUOTE)
     offer=facilities.emergency_quote(game,state,city,order['cargo'])
     if (offer['grain']!=order['cargo'] or offer['gold']!=order['gold']
             or offer['rate']!=order['rate'] or offer['grain']<=0):

@@ -1,7 +1,7 @@
 """Deterministic daily food, real checkpoints and auditable starvation."""
 from copy import deepcopy
 from . import logistics_rules as rules
-from . import winter_travel, winter_weather
+from . import transport_capacity, winter_travel, winter_weather
 from .grain_units import denominator
 from .historical_campaigns import transit_allowed
 from .officers import OFFICER_TROOP_CAP
@@ -302,6 +302,8 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
             elif convoy_safety:
                 stock=winter_transport.city_stock(game,state,city,stock)
             amount=min(wanted,stock,LIMIT-supply['remaining'])
+            if unit_kind=='convoy' and cargo is not None and transport_capacity.enabled(state,'physical_capacity'):
+                amount=min(amount,transport_capacity.refill_room(game,state,unit,city_id,cargo_grain=cargo['grain']))
             if army is not None and has_staging:
                 staging_supply.settle(state,unit,city_id,amount,tick)
             if amount:
