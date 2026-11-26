@@ -14,6 +14,7 @@ const build=path.resolve(root,process.argv[2]||'build/web');
 const runtimeDirectory=path.join(root,'tools/web-runtime/node_modules/pyodide');
 const candidateSave=process.argv[3];
 const regionalSave=process.env.TK2_REGIONAL_BROWSER_FIXTURE;
+const granarySave=process.env.TK2_GRANARY_BROWSER_FIXTURE;
 const sha=value=>createHash('sha256').update(value).digest('hex');
 const decode=bytes=>new TextDecoder('utf-8',{fatal:true}).decode(bytes);
 const jsonFile=name=>JSON.parse(fs.readFileSync(name,'utf8'));
@@ -40,7 +41,7 @@ assert(another,'a second scenario is required for the lazy switching check');
 const logisticsScenario='mainland217-07';
 const regionalScenario='mainland208-10';
 const catalogs=new Map();
-for(const identity of new Set([initial,another,logisticsScenario,...(regionalSave?[regionalScenario]:[])])){
+for(const identity of new Set([initial,another,logisticsScenario,...(regionalSave||granarySave?[regionalScenario]:[])])){
  const row=manifest.catalogs.find(row=>row.id===identity);
  assert.match(row.path,/^\/tk2\/game\/data\/campaigns\/[a-zA-Z0-9-]+\.json$/);
  const bytes=gunzipSync(artifact(row.url));
@@ -330,6 +331,37 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
   assert.equal(request('/api/save',{instance:seat}),after);
  }
 
+ let granaryConvoy=null;
+ if(granarySave){
+  const source='wujun',target='kuaiji',quantity=4000;
+  let granary=load(fs.readFileSync(granarySave,'utf8'),state(seat).revision,seat);
+  assert.equal(granary.game.extension.strategic_granary_rules_version,302);
+  const initial=request('/api/save',{instance:seat});
+  const quotePath='/api/strategic-granary-preview';
+  const quoteBody=JSON.stringify({source,target,quantity,revision:granary.revision});
+  const read=()=>request(quotePath,{method:'POST',instance:seat,body:quoteBody});
+  const result=read();assert.equal(read(),result);
+  assert.equal(request('/api/save',{instance:seat}),initial);
+  const offer=JSON.parse(result).quotes[0],opening=granary.game.cities[source].grain;
+  const targetGrain=granary.game.cities[target].grain;
+  granary=command(granary,'strategic_granary_order',{action:'hold',city:target,amount:100},seat);
+  granary=command(granary,'strategic_granary_order',{action:'reserve',source,target,quantity,token:offer.token},seat);
+  assert.equal(granary.game.cities[source].grain,opening);
+  const compact=request('/api/save?compact=1',{instance:seat});
+  granary=load(compact,granary.revision,seat);
+  assert.equal(granary.catalog.strategic_granary.cities[source].committed,offer.load+offer.rations);
+  granary=command(granary,'strategic_granary_order',{action:'dispatch',order:1},seat);
+  granaryConvoy=granary.game.extension.strategic_granary.orders['1'].convoy_id;
+  assert.equal(granary.game.cities[source].grain,opening-offer.load-offer.rations);
+  assert.equal(granary.game.cities[target].grain,targetGrain);
+  const raw=request('/api/save',{instance:seat});
+  granary=load(raw,granary.revision,seat);
+  assert.equal(request('/api/save',{instance:seat}),raw);
+  request('/api/command',{method:'POST',instance:seat,status:400,body:JSON.stringify({
+   kind:'strategic_granary_order',payload:{action:'dispatch',order:1},revision:granary.revision})});
+  assert.equal(request('/api/save',{instance:seat}),raw);
+ }
+
  // Exercise the real optional wire path, not only the legacy bridge used by
  // CPU replay. Hydration must reconstruct the same complete current view.
  const {default:wireModule}=await import(pathToFileURL(path.join(root,'game/view-cache.js')).href);
@@ -375,7 +407,7 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
  console.log(JSON.stringify({ok:true,pyodide:py.version,previews:previews.length,catalogs:catalogs.size,
   requests:trace.length,ai_turns:1,battle_settlements:battleSettlements,logistics_route_parity:true,
   save_sha256:sha(finalSave),rng,cpu_save_bytes_equal:true,v212_observer_turns:candidateTurns,
-  weather_observer_turns:winterTurns,weather_save_sha256:sha(winterSave),regional_market_roundtrip:regionalMarketOrder?.convoy??null}));
+  weather_observer_turns:winterTurns,weather_save_sha256:sha(winterSave),regional_market_roundtrip:regionalMarketOrder?.convoy??null,granary_convoy_roundtrip:granaryConvoy}));
 }finally{
  for(const bridge of bridges.values())bridge.destroy();
  responseSemantic?.destroy();

@@ -962,6 +962,14 @@
         "save"
       ]
     },
+    "tests/test_remake_strategic_granary.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "logistics",
+        "save"
+      ]
+    },
     "tests/test_remake_retainer_audit.py": {
       "tier": "full",
       "groups": [

@@ -7,6 +7,7 @@ Only presentation text is converted, using OpenCC dictionaries pinned below.
 import hashlib
 import json
 from pathlib import Path
+from tempfile import NamedTemporaryFile
 
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / 'game'
@@ -86,7 +87,7 @@ def convert(text, stage):
     return ''.join(result)
 
 
-def build():
+def build(output=HERE / 'locales/zh-hant.json'):
     metadata = json.loads((SOURCE / 'source.json').read_text())
     for name, info in metadata['files'].items():
         if hashlib.sha256((SOURCE / name).read_bytes()).hexdigest() != info['sha256']:
@@ -110,8 +111,19 @@ def build():
     value = dict(schema='opencc-subset-v1', locale='zh-Hant',
         attribution='OpenCC ver.1.1.9, Apache-2.0; corpus-filtered phrases and historical name exceptions added by this project.',
         source_revision=metadata['revision'], stages=[first, second])
-    path = HERE / 'locales/zh-hant.json'
-    path.write_text(json.dumps(value, ensure_ascii=False, separators=(',', ':')) + '\n')
+    # Test builders can target private paths. Real readers see an entire
+    # previous or next dictionary even when two generators finish together.
+    output = Path(output)
+    temporary = None
+    try:
+        with NamedTemporaryFile(dir=output.parent, mode='w', encoding='utf-8', delete=False) as stream:
+            temporary = Path(stream.name)
+            stream.write(json.dumps(value, ensure_ascii=False, separators=(',', ':')) + '\n')
+        temporary.chmod(0o644)
+        temporary.replace(output)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
     return value
 
 
