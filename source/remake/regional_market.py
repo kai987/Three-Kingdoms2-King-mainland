@@ -402,7 +402,7 @@ def view(game,state):
         if item['status']=='dispatched':
             regions[economic_regions.region(item['target'])].update(inbound=item['estimated_net'])
     return dict(stage=pricing.stage(state),cities=cities,labels=economic_regions.REGIONS,orders=orders,
-                regions=dict(regions))
+                regions=dict(regions),order_costs=dict(buy=2,sell=1,cancel=0),max_quantity=logistics.LIMIT)
 
 
 def validate(game,state):

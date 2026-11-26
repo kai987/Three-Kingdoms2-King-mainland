@@ -12,6 +12,8 @@
   treasury_full:['金庫剩餘容量不足。','金庫の空き容量が不足しています。'],
  });
  const marketConstraint=(reason,locale)=>marketMessages[reason]?choose(locale,...marketMessages[reason]):'';
+ const marketBands=Object.freeze({severe:['嚴重短缺','深刻な不足'],tight:['緊缺','不足'],lean:['偏緊','やや不足'],normal:['正常','標準'],ample:['充裕','潤沢'],surplus:['大量富餘','大幅な余剰']});
+ const marketBand=(band,locale)=>choose(locale,...(marketBands[band]||['—','—']));
  const defaults=Object.freeze({enabled:false,gold_budget:200,gold_floor:100,grain_floor:200,grain_target:2000,target_preparedness:70,heal_below:60,auto_prevent:true,auto_treat:true,auto_develop:false,auto_study:false,auto_trade:false,auto_equip:false});
  const limits=Object.freeze({gold_budget:[0,1000000],gold_floor:[0,100000000],grain_floor:[0,100000000],grain_target:[0,100000000],target_preparedness:[0,99],heal_below:[1,99]});
  const services=Object.freeze({hospital:['醫館','医館'],market:['市場','市場'],school:['學問所','学問所'],armory:['武器屋','武器屋']});
@@ -122,6 +124,14 @@
      `市場庫存（糧） ${shown(stock)} / ${shown(capacity)} · 本月供應（糧） ${shown(monthly_supply)} · 下次補貨 ${next_restock_year} 年 ${next_restock_month} 月上旬`,
      `市場在庫（糧） ${shown(stock)} / ${shown(capacity)} ・ 今月の供給（糧） ${shown(monthly_supply)} ・ 次回補充 ${next_restock_year}年${next_restock_month}月上旬`);
    }
+   const pricing=query('#facility-market-price-basis'),basis=source?.market?.price;
+   if(pricing&&basis){
+    const ratio=basis.supply>0?`${(100*basis.snapshot_stock/basis.supply).toFixed(1)}%`:'—';
+    const delta=value=>value>=0?`+${value}`:String(value);
+    pricing.textContent=text(
+     `町${basis.town} · 旬初充裕度 ${ratio}（${marketBand(basis.band,locale())}） · 基本買／賣 ${basis.base_buy}／${basis.base_sell} 金 · 季節 ${delta(basis.season)} · 庫存 ${delta(basis.adjustment)}`,
+     `町${basis.town}・旬初在庫率 ${ratio}（${marketBand(basis.band,locale())}）・基本買値／売値 ${basis.base_buy}／${basis.base_sell} 金・季節 ${delta(basis.season)}・在庫 ${delta(basis.adjustment)}`);
+   }
    if(constraints&&source?.market){
     const buying=source.trade.buy;
     constraints.textContent=text(
@@ -147,7 +157,8 @@
     return `<fieldset><legend>${text('學問所求學','学問所で学ぶ')}</legend>${select('facility-student',text('求學武將','学ぶ武将'),active.student,[...(source.students||[])].sort((a,b)=>b.before-a.before||stable(a.id,b.id)).map(p=>[p.id,officerLabel(p.id)]))}<p class="small" id="facility-study-preview">${quote?text(`花費金${shown(quote.gold)}；知 ${shown(quote.before)} → ${range(quote.after_min,quote.after_max)}（增加${range(quote.gain_min,quote.gain_max)}）。知80以上不能再求學。`,`資金${shown(quote.gold)}を使い、知${shown(quote.before)} → ${range(quote.after_min,quote.after_max)}（+${range(quote.gain_min,quote.gain_max)}）。知80以上は学べません。`):text('本城沒有可求學的武將。','この都市に学べる武将はいません。')}</p></fieldset>`;
    }
    if(active.service==='market'){
-    return `<fieldset><legend>${text('市場兵糧買賣','市場で兵糧を売買')}</legend><p class="small" id="facility-market-prices"></p>${row()?.market?'<p class="small" id="facility-market-inventory" role="status" aria-live="polite"></p><p class="small" id="facility-market-constraints"></p>':''}${select('facility-trade-direction',text('交易方向','取引の種類'),active.direction,[['buy',text('買進兵糧','兵糧を購入')],['sell',text('出售兵糧','兵糧を売却')]])}<div class="facility-amount">${number('facility-trade-batches',text('交易批數','取引口数'),active.batches,tradeMaximum(),tradeMaximum()>0?1:0)}<button type="button" id="facility-trade-max">${text('最大值','最大')}</button></div><p class="small" id="facility-trade-limit"></p><p id="facility-trade-preview" role="status" aria-live="polite"></p></fieldset>`;
+    const regional=row()?.market?.price&&options.openRegional?`<p class="small" id="facility-market-price-basis"></p><button type="button" id="facility-regional-market">${text('區域市場與調糧','地域市場・兵糧輸送')}</button>`:'';
+    return `<fieldset><legend>${text('市場兵糧買賣','市場で兵糧を売買')}</legend><p class="small" id="facility-market-prices"></p>${row()?.market?'<p class="small" id="facility-market-inventory" role="status" aria-live="polite"></p><p class="small" id="facility-market-constraints"></p>':''}${regional}${select('facility-trade-direction',text('交易方向','取引の種類'),active.direction,[['buy',text('買進兵糧','兵糧を購入')],['sell',text('出售兵糧','兵糧を売却')]])}<div class="facility-amount">${number('facility-trade-batches',text('交易批數','取引口数'),active.batches,tradeMaximum(),tradeMaximum()>0?1:0)}<button type="button" id="facility-trade-max">${text('最大值','最大')}</button></div><p class="small" id="facility-trade-limit"></p><p id="facility-trade-preview" role="status" aria-live="polite"></p></fieldset>`;
    }
    if(active.service==='armory'){
     const quote=equipmentQuote(),stock=source.stock?.[active.slot]||[];
@@ -262,7 +273,11 @@
    if(query('#facility-trade-direction'))query('#facility-trade-direction').onchange=()=>{if(!pending){active.direction=query('#facility-trade-direction').value==='sell'?'sell':'buy';rerender('facility-trade-direction');}};
    if(query('#facility-trade-batches')){const input=query('#facility-trade-batches');input.oninput=()=>{if(!pending){active.batches=input.value;update();}};input.onchange=input.onblur=()=>{if(!pending){active.batches=input.value===''?(tradeMaximum()>0?1:0):input.value;update();}};}
    if(query('#facility-trade-max'))query('#facility-trade-max').onclick=()=>{if(!pending){active.batches=tradeMaximum();update();}};
-   if(query('#facility-trade'))query('#facility-trade').onclick=()=>submit('trade_grain',()=>({city:active.city,actor:ref(active.actor),direction:active.direction,batches:active.batches}),()=>row()?.services?.includes('market')&&active.batches>=1&&active.batches<=tradeMaximum());
+   if(query('#facility-regional-market'))query('#facility-regional-market').onclick=()=>options.openRegional(active.city);
+   if(query('#facility-trade'))query('#facility-trade').onclick=()=>submit('trade_grain',()=>{
+    const token=row()?.trade?.[active.direction]?.price_token;
+    return {city:active.city,actor:ref(active.actor),direction:active.direction,batches:active.batches,...(token?{price_token:token}:{})};
+   },()=>row()?.services?.includes('market')&&active.batches>=1&&active.batches<=tradeMaximum());
    for(const[id,field,parse]of [['facility-equipment-officer','equipmentOfficer',ref],['facility-equipment-slot','slot',value=>value==='armor'?'armor':'weapon'],['facility-equipment-item','item',value=>Number(value)],['facility-equipment-mode','equipmentMode',value=>value==='owned'?'owned':'buy']])if(query('#'+id))query('#'+id).onchange=()=>{if(!pending){active[field]=parse(query('#'+id).value);rerender(id);}};
    if(query('#facility-equipment-buy'))query('#facility-equipment-buy').onclick=()=>submit('buy_equipment',()=>({city:active.city,actor:ref(active.actor),officer:ref(active.equipmentOfficer),slot:active.slot,item:active.item}),()=>row()?.services?.includes('armory')&&equipmentAllowed()&&affordable(equipmentQuote()?.price));
    if(query('#facility-owned-equipment'))query('#facility-owned-equipment').onchange=()=>{if(!pending){active.ownedItem=Number(query('#facility-owned-equipment').value);update();}};
@@ -292,7 +307,7 @@
   doc?.addEventListener?.('game-language-change',refresh);
   return {open,refresh,dispose(){disposed=true;active=null;doc?.removeEventListener?.('game-language-change',refresh);}};
  }
- const api=Object.freeze({create,data,city,summary,attributes,sortActors,sortEquipment,normalizePolicy,bounded,ref,range,marketConstraint});
+ const api=Object.freeze({create,data,city,summary,attributes,sortActors,sortEquipment,normalizePolicy,bounded,ref,range,marketConstraint,marketBand});
  if(typeof module!=='undefined'&&module.exports)module.exports=api;
  if(root)root.GameFacilities=api;
 })(typeof window!=='undefined'?window:globalThis);
