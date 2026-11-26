@@ -1,0 +1,188 @@
+{
+  "python": {
+    "count": 1924,
+    "first_pass": 1910,
+    "known_failures_remediated": 13,
+    "affected_and_related_rerun": 36,
+    "passed_combined": 1923,
+    "skipped": 1,
+    "method": "full discovery plus rerun of all affected modules",
+    "full_log": "python-p0.log",
+    "correction_log": "python-corrections.log"
+  },
+  "rust": {
+    "count": 1924,
+    "first_pass": 1912,
+    "known_failures_remediated": 12,
+    "affected_and_related_rerun": 36,
+    "passed_combined": 1924,
+    "skipped": 0,
+    "method": "full discovery plus rerun of all affected modules",
+    "full_log": "rust-p0.log",
+    "correction_log": "rust-corrections.log"
+  },
+  "rust_crate": 16,
+  "wasm_vectors": 24689,
+  "node": 66,
+  "runtime": {
+    "ok": true,
+    "pyodide": "314.0.7",
+    "previews": 29,
+    "catalogs": 4,
+    "requests": 79,
+    "ai_turns": 1,
+    "battle_settlements": 0,
+    "logistics_route_parity": true,
+    "save_sha256": "9348378e4d592521a01d9f8e362d9e5da341d1867769bd679f27b28668de37dd",
+    "rng": {
+      "state": 1487971761,
+      "draws": 34
+    },
+    "cpu_save_bytes_equal": true,
+    "v212_observer_turns": 0,
+    "weather_observer_turns": 3,
+    "weather_save_sha256": "7c4dc799b89b57b26594c894b9bad7af22b0938500efd5b9a81ed7ec9d511535",
+    "regional_market_roundtrip": null,
+    "granary_convoy_roundtrip": 1
+  },
+  "browser": [
+    {
+      "locale": "zh-Hant",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "url": "http://127.0.0.1:18942/Three-Kingdoms2-King-mainland/",
+      "title": "三國·大陸戰役",
+      "forecastRows": 9,
+      "realOrder": {
+        "id": 1,
+        "owner": "wu",
+        "source": "wujun",
+        "target": "kuaiji",
+        "status": "in_transit",
+        "priority": "manual",
+        "reserved_turn": 1,
+        "dispatch_turn": 1,
+        "load": 4163,
+        "rations": 314,
+        "expected_grain": 4000,
+        "expected_turn": 2,
+        "deadline": 11,
+        "escort": 493,
+        "mode": "land",
+        "path": [
+          "wujun",
+          "kuaiji"
+        ],
+        "convoy_id": 1,
+        "delivered_grain": 0,
+        "delivered_turn": null,
+        "completed_turn": null,
+        "reason": null,
+        "reception": null,
+        "actual_cost": null,
+        "reference_price": 8
+      },
+      "turnWaitMilliseconds": 2309,
+      "horizontalOverflow": false,
+      "phase": "arrivals",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "locale": "ja",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "url": "http://127.0.0.1:18942/Three-Kingdoms2-King-mainland/",
+      "title": "三国志・大陸戦役",
+      "forecastRows": 9,
+      "realOrder": {
+        "id": 1,
+        "owner": "wu",
+        "source": "wujun",
+        "target": "kuaiji",
+        "status": "in_transit",
+        "priority": "manual",
+        "reserved_turn": 1,
+        "dispatch_turn": 1,
+        "load": 4163,
+        "rations": 314,
+        "expected_grain": 4000,
+        "expected_turn": 2,
+        "deadline": 11,
+        "escort": 493,
+        "mode": "land",
+        "path": [
+          "wujun",
+          "kuaiji"
+        ],
+        "convoy_id": 1,
+        "delivered_grain": 0,
+        "delivered_turn": null,
+        "completed_turn": null,
+        "reason": null,
+        "reception": null,
+        "actual_cost": null,
+        "reference_price": 8
+      },
+      "turnWaitMilliseconds": 2267,
+      "horizontalOverflow": false,
+      "phase": "arrivals",
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "domain_parity": {
+    "scenario": "184-02",
+    "turns": 18,
+    "capture": [
+      [
+        "3fb43a4ad244fe0bc9b71c4841a874b4555b0d14a2f2a0ce4d90aa9477a29d3c",
+        "f029f1c62b4a4e214232213b7c141196ebe2985a7de1c4914a33b11ab2eca5fc",
+        "e06acf96f922d23c5b9aaa8a792cb947656ac89850f1a0c06212429e1b4a5274",
+        "9404e43c2176d7a8a11a92339a2a28dfbe710741efee5880376fe387b4d7f2e9",
+        "579be92577da2be6386c875dcc44b1fca1dfd47fe044a6777fe32cca7e6429ca",
+        "ef70039b9567f96c866f63567d2748c950785900e371e18d7dabb33032204964",
+        "318f6b7cb2af270af0ebac836ff06321ce7f4aef6d17162129e16f12c4a57ef9",
+        "79950c44f006aba7a348334953332d2e5c7355c752414e3753b92b0cd52375f7",
+        "7e3cdb68c6f89154e9f4cb394307f460c7ccdb324f1bb155cec6e4d1d0637ecf",
+        "7b3e453cc37a5e64e34e18af59576c1038edf43f4410999ba684764784fece37",
+        "b892460696681c05c5e574841c1157d95c2a711b5fb016a6cae2dda756865c0c",
+        "efd6cacf486020519907c5fb2cab15312206b9df64f8006e14526c53364e5be8",
+        "3890cb9027baedd9758741fc360af5abf95edef307b560ddf0b612c301480288",
+        "7be79b0043cf68359bb6952ce103894b79347e62294a58bd242dc525748d7a9e",
+        "07df94090b5b95747c77b62de51633fd6d4c881f51f875b04edb3de5aa8ebca3",
+        "ebb572f77a6896aae21c7a22ccbf607d581e623b13c3b8f2ddbd34cc97f38f9d",
+        "d6dddb18e30033e22ef69b54901333df26180ac56d745c89f0404144ad732191",
+        "03cbcfd65ef265355f534d61ab1555063cfd1c0aa2f9540f2ad20629f9d6bf0e"
+      ],
+      590,
+      19,
+      5
+    ],
+    "exact": true
+  },
+  "historical": {
+    "status": "matched",
+    "fields": {
+      "terminal": true,
+      "owners": true,
+      "departure_alternative": true,
+      "loss": true
+    }
+  },
+  "static": {
+    "output": "/Users/paulasmith/.codex/worktrees/strategic-granary-v302/Three-Kingdoms2-King-mainland/build/strategic-granary-v302/web-postfix",
+    "files": 5132,
+    "bytes": 648517620,
+    "commit": "ab5fe760a1e5e227f6423675d60b5ac1d499bb12",
+    "content_sha256": "85eb867dc2521390277a2535c34a8018df5a2d6f9f1faf7db32af969e74d1ba7"
+  },
+  "empty_relay_reruns": {
+    "python": 22,
+    "rust": 22
+  }
+}

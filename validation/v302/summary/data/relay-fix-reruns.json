@@ -1,0 +1,640 @@
+{
+  "planned": 5,
+  "reported": 5,
+  "matched": 5,
+  "comparisons": [
+    {
+      "run": [
+        "holdout",
+        "S4",
+        2034,
+        "207-09",
+        211,
+        221,
+        60
+      ],
+      "baseline": "3f01f3f1ec429cc338bac949414253ba26e5c18d",
+      "fixed": "ab5fe760a1e5e227f6423675d60b5ac1d499bb12",
+      "files": {
+        "monthly.csv": {
+          "frozen": "1e903937018673f94146ebb6ebd363383dbeb2fb9d78c7bb52df148a6b3a9d22",
+          "fixed": "1e903937018673f94146ebb6ebd363383dbeb2fb9d78c7bb52df148a6b3a9d22",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "cities.csv": {
+          "frozen": "291290d37503562c647cd53fe98dee65c2cb49117948addd40593a5c2396762c",
+          "fixed": "291290d37503562c647cd53fe98dee65c2cb49117948addd40593a5c2396762c",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "factions.csv": {
+          "frozen": "c84a835f8088d6f80d2aed1f08e9db80265761eb5f6810d6789617ca66faadd1",
+          "fixed": "c84a835f8088d6f80d2aed1f08e9db80265761eb5f6810d6789617ca66faadd1",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "shortages.csv": {
+          "frozen": "891038704292dc291694ce0085342fdc2d98c05563321dbe40a8fdd47a923e81",
+          "fixed": "891038704292dc291694ce0085342fdc2d98c05563321dbe40a8fdd47a923e81",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoys.csv": {
+          "frozen": "532db04a5d7bbccbd10ddd6aebb2d73424d9c2186781f936b6fb7f4ae475bf69",
+          "fixed": "532db04a5d7bbccbd10ddd6aebb2d73424d9c2186781f936b6fb7f4ae475bf69",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "battles.csv": {
+          "frozen": "9c7af480be4a4ec37875a3d5553b5b5daed14ac67ad6c2964ec87dd7a2eccd41",
+          "fixed": "9c7af480be4a4ec37875a3d5553b5b5daed14ac67ad6c2964ec87dd7a2eccd41",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "supply-requests.csv": {
+          "frozen": "519b3564524e53978513e64cbca7c153ebb7c2e3fdf9eccaaf14e96d4e01bcdb",
+          "fixed": "519b3564524e53978513e64cbca7c153ebb7c2e3fdf9eccaaf14e96d4e01bcdb",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "troop-flows.csv": {
+          "frozen": "6c38abc6841b951711d7a9b7835140ce610bd13311706283b67c29d2c39f242f",
+          "fixed": "6c38abc6841b951711d7a9b7835140ce610bd13311706283b67c29d2c39f242f",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoy-survival.csv": {
+          "frozen": "f719043987755d15d893e683d877beee5076c5fd81fcc6da9fb3ebcbe513d0ae",
+          "fixed": "f719043987755d15d893e683d877beee5076c5fd81fcc6da9fb3ebcbe513d0ae",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "route-changes.csv": {
+          "frozen": "58f5546c7938267e41d1ad4b3ad7866844bc0722bf3662d0a4ff38627a69bad9",
+          "fixed": "58f5546c7938267e41d1ad4b3ad7866844bc0722bf3662d0a4ff38627a69bad9",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoy-ledger.csv.gz": {
+          "frozen": "8ba0e35579d7afdf2aedba6d6135295cf6ff770e5d0e2b912d441b56ee12320a",
+          "fixed": "8ba0e35579d7afdf2aedba6d6135295cf6ff770e5d0e2b912d441b56ee12320a",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoy-resolution-daily.csv.gz": {
+          "frozen": "9b74b25ed91a48a3be3605ff012ff87ac5d758a9936e1786d5b04b3c850ffa89",
+          "fixed": "9b74b25ed91a48a3be3605ff012ff87ac5d758a9936e1786d5b04b3c850ffa89",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "strategic-granary-events.jsonl.gz": {
+          "frozen": "b7d3ea0ee09b56d193ba3f944a8fe8bc18e1cca8803f7b7c5830e2a67c927651",
+          "fixed": "b7d3ea0ee09b56d193ba3f944a8fe8bc18e1cca8803f7b7c5830e2a67c927651",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "warehouse-postings.csv.gz": {
+          "frozen": "626cf1a723db29401ba7652865f542e294929c4ddc582dcdc8e7562a6e6670bd",
+          "fixed": "7aace1891911f388e113a6268c9549de8339dc0f78d59d7bcf6fbf30ebd2aad7",
+          "raw_equal": false,
+          "mode": "ordered_postings_per_city_resource",
+          "equal": true
+        },
+        "market-stock-flow.csv.gz": {
+          "frozen": "fa9685a5bdd442ac15f74b0d5cb2ad8f8024d2c0939e641fd2cf04fc8803476c",
+          "fixed": "fa9685a5bdd442ac15f74b0d5cb2ad8f8024d2c0939e641fd2cf04fc8803476c",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        }
+      },
+      "after_output": "observed/holdout/w221/S4/211/2034/60/207-09",
+      "complete": true,
+      "equal": true
+    },
+    {
+      "run": [
+        "rapid",
+        "S4",
+        2026,
+        "208-10",
+        211,
+        0,
+        12
+      ],
+      "baseline": "3f01f3f1ec429cc338bac949414253ba26e5c18d",
+      "fixed": "ab5fe760a1e5e227f6423675d60b5ac1d499bb12",
+      "files": {
+        "monthly.csv": {
+          "frozen": "ebff85a79f45ba527829626caefe45d7bf089f45c0d5646de0db8cfed5e72ccc",
+          "fixed": "ebff85a79f45ba527829626caefe45d7bf089f45c0d5646de0db8cfed5e72ccc",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "cities.csv": {
+          "frozen": "6668f161a8621737c761048fdc6b4c71246fbac80f7e3f0e2b15fe6ef99f5f85",
+          "fixed": "6668f161a8621737c761048fdc6b4c71246fbac80f7e3f0e2b15fe6ef99f5f85",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "factions.csv": {
+          "frozen": "0a0deac701c6eba4c05e033727a0ec97c1a7be9108b371f5d14613b76522a389",
+          "fixed": "0a0deac701c6eba4c05e033727a0ec97c1a7be9108b371f5d14613b76522a389",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "shortages.csv": {
+          "frozen": "3affdd8a356097df6f1ed6eb2a4de312062145f9ffea429bfb2372115d5af9db",
+          "fixed": "3affdd8a356097df6f1ed6eb2a4de312062145f9ffea429bfb2372115d5af9db",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoys.csv": {
+          "frozen": "0e5d3b71722f2f1e9af92981fecbbd0b0267f5cf51e61497ad9440e40b115920",
+          "fixed": "0e5d3b71722f2f1e9af92981fecbbd0b0267f5cf51e61497ad9440e40b115920",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "battles.csv": {
+          "frozen": "90f7e8d8c06df5523e4472015429a40c17e3a6f40d8c1b07d0c3ea3c918cc0f6",
+          "fixed": "90f7e8d8c06df5523e4472015429a40c17e3a6f40d8c1b07d0c3ea3c918cc0f6",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "supply-requests.csv": {
+          "frozen": "10701e8b76c0cee1e6180570959617186500c4694b21a479ef54bca90493afba",
+          "fixed": "10701e8b76c0cee1e6180570959617186500c4694b21a479ef54bca90493afba",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "troop-flows.csv": {
+          "frozen": "dfbba68f7fe79326d8c113124645d5a3f46a7f8f66d3c985f9350d7320794025",
+          "fixed": "dfbba68f7fe79326d8c113124645d5a3f46a7f8f66d3c985f9350d7320794025",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoy-survival.csv": {
+          "frozen": "6cb25e995a7444eb5ff304b21ea85f2449cdf850165afc2b099cf10bea47480d",
+          "fixed": "6cb25e995a7444eb5ff304b21ea85f2449cdf850165afc2b099cf10bea47480d",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "route-changes.csv": {
+          "frozen": "a4c6f7907ab1b2eb5379242ac3ff91f24fa78823ba0476acc70e1740fdae8019",
+          "fixed": "a4c6f7907ab1b2eb5379242ac3ff91f24fa78823ba0476acc70e1740fdae8019",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoy-ledger.csv.gz": {
+          "frozen": "06be4b09b86ba24eb56942a9a82cb9890193ca62ccfd90a1f55252eab58902dc",
+          "fixed": "06be4b09b86ba24eb56942a9a82cb9890193ca62ccfd90a1f55252eab58902dc",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoy-resolution-daily.csv.gz": {
+          "frozen": "e3460ed058562c9086c15db6f86881c49b756b5ab867705a877016dc7d542d84",
+          "fixed": "e3460ed058562c9086c15db6f86881c49b756b5ab867705a877016dc7d542d84",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "strategic-granary-events.jsonl.gz": {
+          "frozen": "5ffb984f7ca225393a76a6a4256ca3b671ea0ce98aeb97af66562641929ae6a8",
+          "fixed": "5ffb984f7ca225393a76a6a4256ca3b671ea0ce98aeb97af66562641929ae6a8",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "warehouse-postings.csv.gz": {
+          "frozen": "26d0b5780c4e55453b885a38028f4496c6b4a6e8850139ddfa028d304ce5f37a",
+          "fixed": "26d0b5780c4e55453b885a38028f4496c6b4a6e8850139ddfa028d304ce5f37a",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "market-stock-flow.csv.gz": {
+          "frozen": "91c4fee212bc76f91b681481954ac8c8c03a482f5c5c2742e014c0cf13552010",
+          "fixed": "91c4fee212bc76f91b681481954ac8c8c03a482f5c5c2742e014c0cf13552010",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        }
+      },
+      "after_output": "observed/rapid/w0/S4/211/2026/12/208-10",
+      "complete": true,
+      "equal": true
+    },
+    {
+      "run": [
+        "rapid",
+        "S4",
+        2026,
+        "208-10",
+        211,
+        221,
+        12
+      ],
+      "baseline": "3f01f3f1ec429cc338bac949414253ba26e5c18d",
+      "fixed": "ab5fe760a1e5e227f6423675d60b5ac1d499bb12",
+      "files": {
+        "monthly.csv": {
+          "frozen": "a091dbe752c0bb443ea4398c387fdda6941b2741dda9c11f30c3daad2e1bc34e",
+          "fixed": "a091dbe752c0bb443ea4398c387fdda6941b2741dda9c11f30c3daad2e1bc34e",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "cities.csv": {
+          "frozen": "d3abce2f49cc68b26cb0d374e07df9e36a47de83098ad7a3046832e5a7a93856",
+          "fixed": "d3abce2f49cc68b26cb0d374e07df9e36a47de83098ad7a3046832e5a7a93856",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "factions.csv": {
+          "frozen": "d96569a5b8f0f3404f3d46db44a28753f8cdf8b8db4417d9428faaeea3fad124",
+          "fixed": "d96569a5b8f0f3404f3d46db44a28753f8cdf8b8db4417d9428faaeea3fad124",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "shortages.csv": {
+          "frozen": "3affdd8a356097df6f1ed6eb2a4de312062145f9ffea429bfb2372115d5af9db",
+          "fixed": "3affdd8a356097df6f1ed6eb2a4de312062145f9ffea429bfb2372115d5af9db",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoys.csv": {
+          "frozen": "0dbb35b5913ee263d2532c22e87d54fd84d19a167496e42178d305203034bf1f",
+          "fixed": "0dbb35b5913ee263d2532c22e87d54fd84d19a167496e42178d305203034bf1f",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "battles.csv": {
+          "frozen": "5cfc3c4972038cfa82deafbc5364a5cdd754d3a9bcc568951e7d1266af43f916",
+          "fixed": "5cfc3c4972038cfa82deafbc5364a5cdd754d3a9bcc568951e7d1266af43f916",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "supply-requests.csv": {
+          "frozen": "0d159ab60e6c80ebb635b78b1c0ed4c30ab6c3861eb4b984701de85a90367028",
+          "fixed": "0d159ab60e6c80ebb635b78b1c0ed4c30ab6c3861eb4b984701de85a90367028",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "troop-flows.csv": {
+          "frozen": "289a6611aaccb15f1ac3ae9b675445d125bcdb1a39511c3aa87106dc69b25278",
+          "fixed": "289a6611aaccb15f1ac3ae9b675445d125bcdb1a39511c3aa87106dc69b25278",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoy-survival.csv": {
+          "frozen": "ed477a2c325ec5e07430eefeffd590611fcfa57483218160544482278b58f664",
+          "fixed": "ed477a2c325ec5e07430eefeffd590611fcfa57483218160544482278b58f664",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "route-changes.csv": {
+          "frozen": "7e49fe8cad765e36de0299b85ec8a2c6b71df2aab2ec276c542b088bcb977a58",
+          "fixed": "7e49fe8cad765e36de0299b85ec8a2c6b71df2aab2ec276c542b088bcb977a58",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoy-ledger.csv.gz": {
+          "frozen": "f04c3ac5ff84bdc69379658a6616aa3680f3c67b880dac8b20562f6c2d8f2a88",
+          "fixed": "f04c3ac5ff84bdc69379658a6616aa3680f3c67b880dac8b20562f6c2d8f2a88",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoy-resolution-daily.csv.gz": {
+          "frozen": "d2f76dce1514a38dbf88027940879ae0cb84479ed6ad5324d77a383c1de896c0",
+          "fixed": "d2f76dce1514a38dbf88027940879ae0cb84479ed6ad5324d77a383c1de896c0",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "strategic-granary-events.jsonl.gz": {
+          "frozen": "837a1d4324d69a2d1dcf33d4d1a500657a766f4460a360147b909d3551da950d",
+          "fixed": "837a1d4324d69a2d1dcf33d4d1a500657a766f4460a360147b909d3551da950d",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "warehouse-postings.csv.gz": {
+          "frozen": "b680196a19c996fc2a12ec9caf056532b35766443cc05db75e099f2749d987d8",
+          "fixed": "4fa0c2f3a683f9d280c66a2ee63b16399ae0ed58c1fbda62194bb48706ab25b7",
+          "raw_equal": false,
+          "mode": "ordered_postings_per_city_resource",
+          "equal": true
+        },
+        "market-stock-flow.csv.gz": {
+          "frozen": "51b51ed2dcfe65c8576bcf65d4c2b37a595cbbc8b7b77cbca7067ad438aeda93",
+          "fixed": "51b51ed2dcfe65c8576bcf65d4c2b37a595cbbc8b7b77cbca7067ad438aeda93",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        }
+      },
+      "after_output": "observed/rapid/w221/S4/211/2026/12/208-10",
+      "complete": true,
+      "equal": true
+    },
+    {
+      "run": [
+        "winter",
+        "S4",
+        2031,
+        "190-01",
+        211,
+        221,
+        60
+      ],
+      "baseline": "3f01f3f1ec429cc338bac949414253ba26e5c18d",
+      "fixed": "ab5fe760a1e5e227f6423675d60b5ac1d499bb12",
+      "files": {
+        "monthly.csv": {
+          "frozen": "4decfb77c252638d8a4f5edf253ed92f5d56767cc547fa885e80b53e33de0670",
+          "fixed": "4decfb77c252638d8a4f5edf253ed92f5d56767cc547fa885e80b53e33de0670",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "cities.csv": {
+          "frozen": "b1d2d352f42e8f3c4dd9e1214702c2d9787a708a855f0e0b8d6b782c560ab207",
+          "fixed": "b1d2d352f42e8f3c4dd9e1214702c2d9787a708a855f0e0b8d6b782c560ab207",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "factions.csv": {
+          "frozen": "3312f70aba0eb67b096a470c63f71a89f50cb6bae7b5470680824c59557b1926",
+          "fixed": "3312f70aba0eb67b096a470c63f71a89f50cb6bae7b5470680824c59557b1926",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "shortages.csv": {
+          "frozen": "3ab6cf82a5ea3b2735dcb9b9b0564cb30b3ec6e2375084dea1b056e53deb6744",
+          "fixed": "3ab6cf82a5ea3b2735dcb9b9b0564cb30b3ec6e2375084dea1b056e53deb6744",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoys.csv": {
+          "frozen": "99ac56947497d32c5788773b624f8dcd0c9f421a34f6d39d301accca0465a898",
+          "fixed": "99ac56947497d32c5788773b624f8dcd0c9f421a34f6d39d301accca0465a898",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "battles.csv": {
+          "frozen": "562f3ad9526ad8a664bcc30215d148aa3bc871f13d87cf4058f04e2b863dfd00",
+          "fixed": "562f3ad9526ad8a664bcc30215d148aa3bc871f13d87cf4058f04e2b863dfd00",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "supply-requests.csv": {
+          "frozen": "075401e4ebb5dbac081a1658008e2b07422e61685a5069c7c242c10c2df136b5",
+          "fixed": "075401e4ebb5dbac081a1658008e2b07422e61685a5069c7c242c10c2df136b5",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "troop-flows.csv": {
+          "frozen": "bce35531e85a4b336b706c542a3aaca6333b21f51588314611cae6943e89eb45",
+          "fixed": "bce35531e85a4b336b706c542a3aaca6333b21f51588314611cae6943e89eb45",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoy-survival.csv": {
+          "frozen": "05cb34900380b0efc957517259e82be786ed10ff048f1d49c2c9e9fe06cd6196",
+          "fixed": "05cb34900380b0efc957517259e82be786ed10ff048f1d49c2c9e9fe06cd6196",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "route-changes.csv": {
+          "frozen": "f4000bb337e9d420a2dbbac7fc81b56caec7aff2428693c20cab40965767312b",
+          "fixed": "f4000bb337e9d420a2dbbac7fc81b56caec7aff2428693c20cab40965767312b",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoy-ledger.csv.gz": {
+          "frozen": "c45271b419fd9e7fb41a43fefc6c2efb50dbf3895c861a0e090b1073ba840682",
+          "fixed": "c45271b419fd9e7fb41a43fefc6c2efb50dbf3895c861a0e090b1073ba840682",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoy-resolution-daily.csv.gz": {
+          "frozen": "59f923f11b33276b6f3f2caf901f6ec128d4fe7068054f74f5f6d58855a4b6f2",
+          "fixed": "59f923f11b33276b6f3f2caf901f6ec128d4fe7068054f74f5f6d58855a4b6f2",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "strategic-granary-events.jsonl.gz": {
+          "frozen": "7ab54b1f5cdbc229ae8bbc588e8368cdd315dd94b3ccca7d97847a13384de023",
+          "fixed": "7e4da5e33505c92a390b63d1fc908f39f7b1ef460c938e747558f6f5f870d825",
+          "raw_equal": false,
+          "mode": "documented_zero_receipt_event_transition",
+          "equal": true,
+          "transition_orders": [
+            343
+          ]
+        },
+        "warehouse-postings.csv.gz": {
+          "frozen": "8d871ca7172f4dbf1908c813865e1122ac3ab7abb317a4cd705c8855afa84be9",
+          "fixed": "8d871ca7172f4dbf1908c813865e1122ac3ab7abb317a4cd705c8855afa84be9",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "market-stock-flow.csv.gz": {
+          "frozen": "9ddb49f52768620b36673d82786397ba162fdf3e1b34eb6188ca08ececc95994",
+          "fixed": "9ddb49f52768620b36673d82786397ba162fdf3e1b34eb6188ca08ececc95994",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        }
+      },
+      "after_output": "observed/winter/w221/S4/211/2031/60/190-01",
+      "complete": true,
+      "equal": true
+    },
+    {
+      "run": [
+        "winter",
+        "S4",
+        2031,
+        "190-01",
+        212,
+        221,
+        60
+      ],
+      "baseline": "3f01f3f1ec429cc338bac949414253ba26e5c18d",
+      "fixed": "ab5fe760a1e5e227f6423675d60b5ac1d499bb12",
+      "files": {
+        "monthly.csv": {
+          "frozen": "4a0e21151979d33dac72ca46aaae4c06f1ecf042f5f95c98a7deb0d55f9f729e",
+          "fixed": "4a0e21151979d33dac72ca46aaae4c06f1ecf042f5f95c98a7deb0d55f9f729e",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "cities.csv": {
+          "frozen": "1592fd34f0633b97a5f5e98af30d56491e67fbdf2936e9a0d6bf47812e91d360",
+          "fixed": "1592fd34f0633b97a5f5e98af30d56491e67fbdf2936e9a0d6bf47812e91d360",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "factions.csv": {
+          "frozen": "0a012b34fcd4aca11444c894344b0eb98301bfa5aa3178385d0278bb2eb78e2f",
+          "fixed": "0a012b34fcd4aca11444c894344b0eb98301bfa5aa3178385d0278bb2eb78e2f",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "shortages.csv": {
+          "frozen": "f9137d030cf7ca1f3542d22683a2868967e43d5a43409f0b0fa7237ec28910e1",
+          "fixed": "f9137d030cf7ca1f3542d22683a2868967e43d5a43409f0b0fa7237ec28910e1",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoys.csv": {
+          "frozen": "8d2346432e6aa93820aef603a9c507c5a612e74f72ef93e4a400cb3e53c2bd1b",
+          "fixed": "8d2346432e6aa93820aef603a9c507c5a612e74f72ef93e4a400cb3e53c2bd1b",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "battles.csv": {
+          "frozen": "37cd655245636231f2dd503adf8b6ac7878b61ef7c6b5e6a7f42708adfe8b8b7",
+          "fixed": "37cd655245636231f2dd503adf8b6ac7878b61ef7c6b5e6a7f42708adfe8b8b7",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "supply-requests.csv": {
+          "frozen": "4ded539f6b01918c7dfbcdd13211cf65b0f9b8de2deb0e46bf8d2039f2ac1a37",
+          "fixed": "4ded539f6b01918c7dfbcdd13211cf65b0f9b8de2deb0e46bf8d2039f2ac1a37",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "troop-flows.csv": {
+          "frozen": "af72c08af28cf49a8b2fd451f7643562b9e6beb5bba9e8353f23886f48fd499b",
+          "fixed": "af72c08af28cf49a8b2fd451f7643562b9e6beb5bba9e8353f23886f48fd499b",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoy-survival.csv": {
+          "frozen": "e0e237addcf09f1463c34758996595c50ea92c7e2e90f2d36baf327e50b3bc00",
+          "fixed": "e0e237addcf09f1463c34758996595c50ea92c7e2e90f2d36baf327e50b3bc00",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "route-changes.csv": {
+          "frozen": "06e1fa31923faac748c2493a93d5a20736f68e8fba17647ecdd1f6e09291cda6",
+          "fixed": "06e1fa31923faac748c2493a93d5a20736f68e8fba17647ecdd1f6e09291cda6",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoy-ledger.csv.gz": {
+          "frozen": "266e0a1b7ac538ffe411decbd478163261bb1286d0e5bb7cb373622ab7cad5cc",
+          "fixed": "266e0a1b7ac538ffe411decbd478163261bb1286d0e5bb7cb373622ab7cad5cc",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "convoy-resolution-daily.csv.gz": {
+          "frozen": "796b063135ab13e4b5e5ec0eb7611ff822cbf686b9998581fc58b6b897244075",
+          "fixed": "796b063135ab13e4b5e5ec0eb7611ff822cbf686b9998581fc58b6b897244075",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "strategic-granary-events.jsonl.gz": {
+          "frozen": "9daae576e38148a50e8882fbc9f3066fdd582b1f84a113b9d424454fa114be33",
+          "fixed": "9daae576e38148a50e8882fbc9f3066fdd582b1f84a113b9d424454fa114be33",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "warehouse-postings.csv.gz": {
+          "frozen": "8c961430448e69e16ce4b113024b597681ca40f48c05cc699228dc79b578ff77",
+          "fixed": "8c961430448e69e16ce4b113024b597681ca40f48c05cc699228dc79b578ff77",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        },
+        "market-stock-flow.csv.gz": {
+          "frozen": "b33cefb1fcbf29252038fcdb64d678fa7d544c8b0422e0d2410d02a2f0063d6d",
+          "fixed": "b33cefb1fcbf29252038fcdb64d678fa7d544c8b0422e0d2410d02a2f0063d6d",
+          "raw_equal": true,
+          "mode": "exact",
+          "equal": true
+        }
+      },
+      "after_output": "observed/winter/w221/S4/212/2031/60/190-01",
+      "complete": true,
+      "equal": true
+    }
+  ],
+  "affected_cases": [
+    {
+      "wave": "winter",
+      "scenario": "190-01",
+      "seed": 2031,
+      "strategy": 211,
+      "weather": 221,
+      "requested_months": 60,
+      "group": "S4",
+      "empty_receipts": 1,
+      "verified": true
+    }
+  ],
+  "affected_count": 1,
+  "affected_revalidated": 1
+}

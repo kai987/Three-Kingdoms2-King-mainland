@@ -1,0 +1,18 @@
+{
+  "total": 142,
+  "outcomes": {
+    "complete": 142
+  },
+  "frozen_checks": 302,
+  "frozen_equal": 302,
+  "accounting_failures": [],
+  "warning_count": 59,
+  "empty_relay_receipts": 1,
+  "relay_fix_reruns": {
+    "planned": 5,
+    "reported": 5,
+    "matched": 5,
+    "affected_count": 1,
+    "affected_revalidated": 1
+  }
+}

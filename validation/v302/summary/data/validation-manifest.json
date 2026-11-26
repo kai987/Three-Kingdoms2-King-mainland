@@ -1,0 +1,26 @@
+{
+  "version": 302,
+  "observer_release": "3f01f3f1ec429cc338bac949414253ba26e5c18d",
+  "source_head": "e0f6ca91cbfc298fceb1872d1ece23dd219de685",
+  "runtime_build": "ab5fe760a1e5e227f6423675d60b5ac1d499bb12",
+  "v301_base": "dae702d60dc471803abe31bed2c3827cb3629920",
+  "upstream_base": "099b2ccc57590f6345fc41e5fb89688375051ed7",
+  "source_ref": "refs/heads/codex/strategic-granary-v302",
+  "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+  "total": 142,
+  "outcomes": {
+    "complete": 142
+  },
+  "frozen_checks": 302,
+  "frozen_equal": 302,
+  "accounting_failures": [],
+  "warning_count": 59,
+  "empty_relay_receipts": 1,
+  "relay_fix_reruns": {
+    "planned": 5,
+    "reported": 5,
+    "matched": 5,
+    "affected_count": 1,
+    "affected_revalidated": 1
+  }
+}
