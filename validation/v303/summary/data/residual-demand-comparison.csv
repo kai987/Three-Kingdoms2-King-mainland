@@ -1,0 +1,5 @@
+wave,scenario,seed,strategy,weather,requested_months,group,basis,decisions,with_estimate,total_without_receipts,reliable_coverage,later_conditional_coverage,total_uncovered,quoted_net,economy_background
+five,208-10,2026,212,221,60,C0,all,1542,232,5014134,1577754,0,3436380,338397,G4
+five,208-10,2026,212,221,60,C0,existing_strategic_order,357,72,1359706,799608,0,560098,97982,G4
+five,208-10,2026,212,221,60,C4,all,1667,307,6171257,1900525,0,4270732,417177,G4
+five,208-10,2026,212,221,60,C4,existing_strategic_order,354,151,1701681,1122053,0,579628,235040,G4

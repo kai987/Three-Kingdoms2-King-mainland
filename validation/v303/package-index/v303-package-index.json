@@ -1,0 +1,89 @@
+{
+  "version": 303,
+  "source": "6313339d3da46987227a15c636d3e43a52b1b3a0",
+  "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+  "validation_sha256": "b60ba12e2632b6d8609e9b66a7ea876a35694ab02dc790528bd36d398f1dca92",
+  "archives": [
+    {
+      "group": "summary",
+      "archive": "v303-summary.zip",
+      "bytes": 4634519,
+      "files": 70,
+      "sha256": "2f96d0b86afb6ef23199546d31b02866bbaaf0464ea223bc1255e8d5ecf242a5",
+      "file_manifest": "v303-summary-files.csv",
+      "manifest_sha256": "ffa1231bba6448c72229a83462cb768a7d70e6886e787d5cc31991da955876e9"
+    },
+    {
+      "group": "quick",
+      "archive": "v303-quick.zip",
+      "bytes": 28340121,
+      "files": 1318,
+      "sha256": "913f3d4ee439af5b1ec57a9d123f5c19e260ba5b0d69461256ffe99a3d0fba26",
+      "file_manifest": "v303-quick-files.csv",
+      "manifest_sha256": "945bcf1a6f40088cb2526ea1dd86f7b477bebc3d425a2dc7b41f1f656c95733b"
+    },
+    {
+      "group": "five-year",
+      "archive": "v303-five-year-01.zip",
+      "bytes": 98248183,
+      "files": 742,
+      "sha256": "484e72eb406751e80df58cfe40cbb6d347b6c5d1f92359b98a47bc71c9ae21d6",
+      "file_manifest": "v303-five-year-01-files.csv",
+      "manifest_sha256": "7a2e62dc879c441c77a437f7d3c6ba209adc21ac1e0a753adf857495f2de60cf"
+    },
+    {
+      "group": "five-year",
+      "archive": "v303-five-year-02.zip",
+      "bytes": 9446619,
+      "files": 50,
+      "sha256": "d310ca65b3ef74f609d0ac013c67718e9263e1511bc684c98a2218326a0b8e9d",
+      "file_manifest": "v303-five-year-02-files.csv",
+      "manifest_sha256": "49436163292b5cf6dc1e84170dfc1402124a5cdc2d32993732ec99f7e37c0d1a"
+    },
+    {
+      "group": "twenty-year",
+      "archive": "v303-twenty-year-01.zip",
+      "bytes": 96598789,
+      "files": 145,
+      "sha256": "f98c811a4b4588b11b9af197882ea7f21fa8fffe2c739b63c475aa515b82c2a7",
+      "file_manifest": "v303-twenty-year-01-files.csv",
+      "manifest_sha256": "d4dbb2dc55069c8ca2f2a73df422588cf211f7a6f16ec4888d7b1374501d0cd9"
+    },
+    {
+      "group": "twenty-year",
+      "archive": "v303-twenty-year-02.zip",
+      "bytes": 94912798,
+      "files": 118,
+      "sha256": "82ae4582ef8b9e4778f0e4ac73498be443b8b89c0a803721ae6c5afaaa1a701f",
+      "file_manifest": "v303-twenty-year-02-files.csv",
+      "manifest_sha256": "265dddb8d1a9f000064aeb7c606cba7e0d1217d1030cecc2836073128b90b8ab"
+    },
+    {
+      "group": "holdout",
+      "archive": "v303-holdout.zip",
+      "bytes": 28804728,
+      "files": 214,
+      "sha256": "7066d614406c7efa277a0c2e661cb585cb49cd467ea22282f81213f998374281",
+      "file_manifest": "v303-holdout-files.csv",
+      "manifest_sha256": "0ee046aa8eebbdb809ce0ed40a0dbe4c52d799dd92cc19c425735d3f428d7345"
+    },
+    {
+      "group": "technical",
+      "archive": "v303-technical.zip",
+      "bytes": 764581,
+      "files": 141,
+      "sha256": "6499449e1f3ff4d008a5a92dc5703991b483744024b61505b7df9e2967ff533b",
+      "file_manifest": "v303-technical-files.csv",
+      "manifest_sha256": "96b3e604467a0ca83774c7ebd919b2445b543c7faa1dd4f2b0c8c041b97c81a4"
+    },
+    {
+      "group": "capacity-replays",
+      "archive": "v303-capacity-replays.zip",
+      "bytes": 1031894,
+      "files": 30,
+      "sha256": "45f268a29f265f7172e995d047a047bfb445af62a014d564848ffbb5bf80c381",
+      "file_manifest": "v303-capacity-replays-files.csv",
+      "manifest_sha256": "d18296c81ce03da648db7b88ff966d529813cdde64c529ec9b96254833cf8e77"
+    }
+  ]
+}

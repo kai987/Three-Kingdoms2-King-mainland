@@ -1,0 +1,114 @@
+{
+  "python-complete": {
+    "check": "Python 完整清單與本地化重跑",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/python-complete.log",
+    "sha256": "5c572e3f34d5aa0c9c7bef01f004f45c794352a9b7615bfce45291da67b152da"
+  },
+  "rust-complete": {
+    "check": "Rust 完整清單與本地化重跑",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/rust-complete.log",
+    "sha256": "f5a5ef398e4401295a65143309676f32498d12480b3f9545c612f9042b2ebd86"
+  },
+  "light-final": {
+    "check": "固定 WASM、Rust crate、Node、WASM 差分",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/light-final.log",
+    "sha256": "05e83af2e0032cf2461079b2e64d39bdd931aa4c9a6b5a77372c20c0e61281b8"
+  },
+  "node-review": {
+    "check": "最終介面 Node 回歸",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/node-review.log",
+    "sha256": "f04af433f2b34bdab7cbaf018a7360965b7699c88cd62a63f8a49672867add9b"
+  },
+  "web-reviewed": {
+    "check": "可重現的瀏覽器發行包",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/web-reviewed.log",
+    "sha256": "cc5084d4d2849dbec988b05989363e7668c6ec1c833d7145676f1fd6a76fa78d"
+  },
+  "pyodide-final": {
+    "check": "實際 WASM／CPU 同版存讀和命令回放",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/pyodide-final.log",
+    "sha256": "69926d5ad2f91bcdd3a7b0f6ef52d39bac01db9afd625265c33120d3ca2ea20a"
+  },
+  "browser-localized": {
+    "check": "繁中桌面／日文觸控水陸雙運隊及錯誤文案",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/browser-localized.log",
+    "sha256": "1913662dd4b64bdc6270a0ec626497583cbfc1c31ee8784b5c2ea6b9e1c4a772"
+  },
+  "browser-suite": {
+    "check": "桌面及觸控完整回歸",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/browser-suite.log",
+    "sha256": "52fc40eedc0da649e436967f76867409f0f025f1ee02da3914f7dc27766b5a7a"
+  },
+  "backend-parity": {
+    "check": "候選同存檔 Rust／Python 領域狀態",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/backend-parity.log",
+    "sha256": "0a722eac5bba44f407721d9904e4919cc67f2f42eeb099430c3dd90fcb86e065"
+  },
+  "save-parity": {
+    "check": "同版存檔及相同起點的候選實際行為",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/save-parity.log",
+    "sha256": "492f1e371c61dc4baa36bdba079bcc53a40634656ada5809937e8173b4d08e25"
+  },
+  "focused-authority": {
+    "check": "物流、應急、糧倉、區域市場與運力雙後端",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/focused-authority.log",
+    "sha256": "ef0da30e61a48a575da09b7e20d2e948ea98c66b69740f591a24526ec81681f1"
+  },
+  "fixed-final": {
+    "check": "89 個固定需求及 23 個返程來源",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/fixed-final.log",
+    "sha256": "bf6ced2884f1564a3f8e00da54589363a61efd7631e3a73b17dd0a0e08b5c03f"
+  },
+  "physical-route-controls": {
+    "check": "純河段物理與城市方針裝載校驗",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/physical-route-controls.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "census-final": {
+    "check": "29 個劇本的實際路段普查",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/census-final.log",
+    "sha256": "033c676dab24d590e86a441564f74bcef405ca078b7dcc1d1de56f1b402b923e"
+  },
+  "historical-1860": {
+    "check": "歷史 1860 號 G1／C4 續跑",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/historical-1860.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "historical-short": {
+    "check": "歷史三組運隊 G1／C4 續跑",
+    "status": "pass",
+    "exit_code": 0,
+    "log": "logs/historical-short.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

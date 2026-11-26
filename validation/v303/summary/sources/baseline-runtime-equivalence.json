@@ -1,0 +1,34 @@
+{
+  "archived_g1_g2_sha256": "e2fc70a54cf63631d935a788a6c1101cc8b78b2ec22ee69ba0d01e32c0b76939",
+  "historical_fixed_runtime_matches": {
+    "same_state": {
+      "matches": 216,
+      "sampled": 216
+    },
+    "same_rng": {
+      "matches": 216,
+      "sampled": 216
+    },
+    "same_candidate_order_and_receipts": {
+      "matches": 108,
+      "sampled": 108
+    }
+  },
+  "historical_fixed_boundaries": 216,
+  "observed_prefix_pairs": 7,
+  "comparable_boundary_metrics": [
+    "population",
+    "active_troops",
+    "grain_stock",
+    "gold_stock",
+    "reserves",
+    "battles",
+    "ai_sorties",
+    "unpaid_city_turns",
+    "rations_missing",
+    "convoy_grain_sent",
+    "convoy_grain_arrived"
+  ],
+  "matching_boundaries": 643,
+  "differences": 0
+}

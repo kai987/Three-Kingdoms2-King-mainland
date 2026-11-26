@@ -1,0 +1,114 @@
+{
+  "archived_controls": [
+    {
+      "convoy": 126,
+      "archived_status": "archived_receipt_verified",
+      "snapshot": "convoy-126/diagnostic.jsonl",
+      "member": "reproduction/convoy-126/diagnostic.jsonl",
+      "reported_historical_loss": null,
+      "verified_archive_sha256": "cc606fd31eeb120ac578caea2be085ee099ba32341b7ae44ac113a46f97b19b5",
+      "archived_member_sha256": "be474a0b36cd8338d871fec476e27b093b0bb0312f85fda76c96bf6762c052fe",
+      "local_evidence_sha256": "be474a0b36cd8338d871fec476e27b093b0bb0312f85fda76c96bf6762c052fe",
+      "local_evidence_matches": true
+    },
+    {
+      "convoy": 1685,
+      "archived_status": "archived_receipt_verified",
+      "snapshot": "convoy-1685/diagnostic.jsonl",
+      "member": "reproduction/convoy-1685/diagnostic.jsonl",
+      "reported_historical_loss": null,
+      "verified_archive_sha256": "cc606fd31eeb120ac578caea2be085ee099ba32341b7ae44ac113a46f97b19b5",
+      "archived_member_sha256": "3dad9e8f23b19b60be90722db950e185dcefe962457f9f32a5f831e986ddcffe",
+      "local_evidence_sha256": "3dad9e8f23b19b60be90722db950e185dcefe962457f9f32a5f831e986ddcffe",
+      "local_evidence_matches": true
+    },
+    {
+      "convoy": 77,
+      "archived_status": "archived_receipt_verified",
+      "snapshot": "convoy-77/node-decisions.json",
+      "member": "reproduction/baseline/convoy-77/node-decisions.json",
+      "reported_historical_loss": null,
+      "verified_archive_sha256": "6754f24c37ec72df9c0a0f41f5a36563a47fc05e076e0f442c97c640f23faf18",
+      "archived_member_sha256": "4dfd7a834a85b8729df773404fd607eea9bdf7f930b685ea7ab839d92899391d",
+      "local_evidence_sha256": "4dfd7a834a85b8729df773404fd607eea9bdf7f930b685ea7ab839d92899391d",
+      "local_evidence_matches": true
+    },
+    {
+      "convoy": 2,
+      "archived_status": "archived_receipt_verified",
+      "snapshot": "convoy-2/node-decisions.json",
+      "member": "reproduction/baseline/convoy-2/node-decisions.json",
+      "reported_historical_loss": null,
+      "verified_archive_sha256": "6754f24c37ec72df9c0a0f41f5a36563a47fc05e076e0f442c97c640f23faf18",
+      "archived_member_sha256": "0b6e50c882d84c50bb2d7864356936f3c51f24cf53070e682e7e744ebc864421",
+      "local_evidence_sha256": "0b6e50c882d84c50bb2d7864356936f3c51f24cf53070e682e7e744ebc864421",
+      "local_evidence_matches": true
+    },
+    {
+      "convoy": 45,
+      "archived_status": "archived_receipt_verified",
+      "snapshot": "convoy-45/node-decisions.json",
+      "member": "reproduction/baseline/convoy-45/node-decisions.json",
+      "reported_historical_loss": null,
+      "verified_archive_sha256": "6754f24c37ec72df9c0a0f41f5a36563a47fc05e076e0f442c97c640f23faf18",
+      "archived_member_sha256": "7037ccc7544ea76317aa5bf898645a34e86e62b8db0089cb5e55c2db67a83482",
+      "local_evidence_sha256": "7037ccc7544ea76317aa5bf898645a34e86e62b8db0089cb5e55c2db67a83482",
+      "local_evidence_matches": true
+    },
+    {
+      "convoy": 1706,
+      "archived_status": "archived_receipt_verified",
+      "snapshot": "convoy-1706/convoy-survival.csv",
+      "member": "observed/J3-212/2026/240/208-10/convoy-survival.csv",
+      "reported_historical_loss": null,
+      "verified_archive_sha256": "6754f24c37ec72df9c0a0f41f5a36563a47fc05e076e0f442c97c640f23faf18",
+      "archived_member_sha256": "2fba91630a039654e614deac09a28bc83de46bb446d7998e87627164cff5f722",
+      "local_evidence_sha256": "2fba91630a039654e614deac09a28bc83de46bb446d7998e87627164cff5f722",
+      "local_evidence_matches": true
+    },
+    {
+      "convoy": 1723,
+      "archived_status": "archived_receipt_verified",
+      "snapshot": "184-02",
+      "member": null,
+      "reported_historical_loss": 412,
+      "verified_archive_sha256": null,
+      "archived_member_sha256": null,
+      "local_evidence_sha256": null,
+      "local_evidence_matches": null
+    },
+    {
+      "convoy": 1902,
+      "archived_status": "archived_receipt_verified",
+      "snapshot": "184-02",
+      "member": null,
+      "reported_historical_loss": 283,
+      "verified_archive_sha256": null,
+      "archived_member_sha256": null,
+      "local_evidence_sha256": null,
+      "local_evidence_matches": null
+    },
+    {
+      "convoy": 2095,
+      "archived_status": "archived_receipt_verified",
+      "snapshot": "184-02",
+      "member": null,
+      "reported_historical_loss": 199,
+      "verified_archive_sha256": null,
+      "archived_member_sha256": null,
+      "local_evidence_sha256": null,
+      "local_evidence_matches": null
+    }
+  ],
+  "disabled_1706": {
+    "status": "matched",
+    "fields": {
+      "terminal": true,
+      "owners": true,
+      "departure_alternative": true,
+      "loss": true
+    }
+  },
+  "disabled_1706_file_sha256": "843dc0accaba4b320cfb428c5310013c6632d1976f4185f0a1c32ec3e4adabbe",
+  "source": "V3.0.2 acceptance evidence"
+}

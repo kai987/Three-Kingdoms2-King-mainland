@@ -1,0 +1,219 @@
+{
+  "old_control_sha256": "c5b976021540c28039ff28b22dce3b2cd4dbded2ec06db5e59e1945ba92a99d0",
+  "paired": {
+    "2170": {
+      "checkpoint": "convoy-2170.json.gz",
+      "start": {
+        "owner": "han",
+        "source": "hanzhong",
+        "target": "jiameng",
+        "node": "jiameng",
+        "status": "returning",
+        "reason": "escort_return",
+        "delivered": 60,
+        "initial_grain": 69,
+        "original_bag": 9999,
+        "bag": 5454,
+        "cargo": 0,
+        "tick": 5670,
+        "path": [
+          "jiameng",
+          "hanzhong"
+        ],
+        "original_ids": [
+          "clerk-000509"
+        ],
+        "troops": 10000,
+        "hunger": 0,
+        "occupants": [
+          "clerk-000509"
+        ],
+        "reserved_until_turn": 570
+      },
+      "outcomes": [
+        {
+          "group": "C0",
+          "period": 570,
+          "survivors": null,
+          "hunger": null,
+          "terminal": "returned_home",
+          "last_location": null,
+          "final_state_sha256": "d6159f03b3576fadfc77c1fa6fea56f29a82acf4530bf292733539fbd68092b0"
+        },
+        {
+          "group": "C4",
+          "period": 570,
+          "survivors": null,
+          "hunger": null,
+          "terminal": "returned_home",
+          "last_location": null,
+          "final_state_sha256": "e09900b1e2420bd4c123a5cac10efa1d9e6b8f3ead1d773eccc2500863878011"
+        }
+      ],
+      "details": "checks/historical-2170.json",
+      "sha256": "a928f4f028f12cc666a04a1c13f68c371c2f191ee1985801f7ed53055990dced"
+    },
+    "1228": {
+      "checkpoint": "convoy-1228.json.gz",
+      "start": {
+        "owner": "wei",
+        "source": "yingchuan",
+        "target": "qiao",
+        "node": "qiao",
+        "status": "returning",
+        "reason": "escort_return",
+        "delivered": 5293,
+        "initial_grain": 5677,
+        "original_bag": 7777,
+        "bag": 4242,
+        "cargo": 0,
+        "tick": 4050,
+        "path": [
+          "qiao",
+          "chenliu",
+          "yingchuan"
+        ],
+        "original_ids": [
+          111
+        ],
+        "troops": 10000,
+        "hunger": 0,
+        "occupants": [
+          111
+        ],
+        "reserved_until_turn": 408
+      },
+      "outcomes": [
+        {
+          "group": "C0",
+          "period": 408,
+          "survivors": null,
+          "hunger": null,
+          "terminal": "received_elsewhere",
+          "last_location": null,
+          "final_state_sha256": "069cc62523f80c3f890f504cf91427755737ef425a13788588bf90d91a59e4c0"
+        },
+        {
+          "group": "C4",
+          "period": 408,
+          "survivors": null,
+          "hunger": null,
+          "terminal": "received_elsewhere",
+          "last_location": null,
+          "final_state_sha256": "8bbb1081fb7caa20f522c774432597135feb0db8a7d03c45c4a08b47345495a6"
+        }
+      ],
+      "details": "checks/historical-1228.json",
+      "sha256": "c07275bedd035311ca20bad77d7534c159ce0010200078d2f0c13ad520aa7ae7"
+    },
+    "219": {
+      "checkpoint": "convoy-219.json.gz",
+      "start": {
+        "owner": "wei",
+        "source": "wei",
+        "target": "nanyang",
+        "node": "nanyang",
+        "status": "returning",
+        "reason": "escort_return",
+        "delivered": 29475,
+        "initial_grain": 33075,
+        "original_bag": 12221,
+        "bag": 6387,
+        "cargo": 0,
+        "tick": 1210,
+        "path": [
+          "nanyang",
+          "yingchuan",
+          "chenliu",
+          "dongjun",
+          "wei"
+        ],
+        "original_ids": [
+          146
+        ],
+        "troops": 10000,
+        "hunger": 0,
+        "occupants": [
+          146
+        ],
+        "reserved_until_turn": 125
+      },
+      "outcomes": [
+        {
+          "group": "C0",
+          "period": 125,
+          "survivors": null,
+          "hunger": null,
+          "terminal": "returned_home",
+          "last_location": null,
+          "final_state_sha256": "a591a64daac3a83c3bf032abfdfb5031fead122912a553e48c0e04de45edef19"
+        },
+        {
+          "group": "C4",
+          "period": 125,
+          "survivors": null,
+          "hunger": null,
+          "terminal": "returned_home",
+          "last_location": null,
+          "final_state_sha256": "6464d86d8a0aba0c4f69c8f906bf5198d6115e8485b5a35a179d6aeab55fc087"
+        }
+      ],
+      "details": "checks/historical-219.json",
+      "sha256": "d1ef9f3d15a42b26fa5e2fbb0c02c4c5544f9dbfd6cb06c448877971bfeefb6e"
+    },
+    "1860": {
+      "checkpoint": "convoy-1860.json.gz",
+      "start": {
+        "owner": "liu_zhang",
+        "source": "yinping",
+        "target": "hanzhong",
+        "node": null,
+        "status": "returning",
+        "reason": "escort_return",
+        "delivered": 3765,
+        "initial_grain": 9065,
+        "original_bag": 19998,
+        "bag": 10199,
+        "cargo": 0,
+        "tick": 6200,
+        "path": [
+          "hanzhong",
+          "wudu",
+          "yinping"
+        ],
+        "original_ids": [
+          "clerk-000512"
+        ],
+        "troops": 10000,
+        "hunger": 0,
+        "occupants": [
+          "clerk-000512"
+        ],
+        "reserved_until_turn": 623
+      },
+      "outcomes": [
+        {
+          "group": "C0",
+          "period": 669,
+          "survivors": 80,
+          "hunger": 9920,
+          "terminal": null,
+          "last_location": "wudu",
+          "final_state_sha256": "84d311a1b519316892f277dca309d34420c390c1d4b0a61f1b2719e5bcb7b13e"
+        },
+        {
+          "group": "C4",
+          "period": 669,
+          "survivors": 80,
+          "hunger": 9920,
+          "terminal": null,
+          "last_location": "wudu",
+          "final_state_sha256": "67b0d7054f93213b2910b77d3f96c94c49b7e594ebb017720654ad0f8b60f734"
+        }
+      ],
+      "details": "checks/historical-1860.json",
+      "sha256": "c069e9adc8b048c4dc955218a0348f6ba3c55840c3e4ea6d6162322f4ebffdcd"
+    }
+  },
+  "original_1860": "historical-1860-original.json"
+}

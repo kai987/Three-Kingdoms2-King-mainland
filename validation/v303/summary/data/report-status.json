@@ -1,0 +1,121 @@
+{
+  "source": "6313339d3da46987227a15c636d3e43a52b1b3a0",
+  "states": {
+    "complete": 59
+  },
+  "planned_runs": 59,
+  "completed_runs": 59,
+  "fixed": {
+    "C0": {
+      "targets": 89,
+      "l1_donor_surplus_positive_targets": 88,
+      "l2_legal_outbound_surplus_positive_targets": 85,
+      "l3_qualified_gross_positive_targets": 66,
+      "l4_estimated_net_upper_bound_positive_targets": 25,
+      "l5_received": 127600,
+      "l5_with_supply": 35,
+      "l5_full": 33,
+      "l5_strategic_received": 36452,
+      "returning_samples": 23,
+      "qualified_source_sample": 0,
+      "timely_quote_sample": 0,
+      "actual_dispatch_receipt_sample": 16
+    },
+    "C1": {
+      "targets": 89,
+      "l1_donor_surplus_positive_targets": 88,
+      "l2_legal_outbound_surplus_positive_targets": 85,
+      "l3_qualified_gross_positive_targets": 76,
+      "l4_estimated_net_upper_bound_positive_targets": 39,
+      "l5_received": 184387,
+      "l5_with_supply": 46,
+      "l5_full": 41,
+      "l5_strategic_received": 57581,
+      "returning_samples": 23,
+      "qualified_source_sample": 23,
+      "timely_quote_sample": 11,
+      "actual_dispatch_receipt_sample": 17
+    },
+    "C2": {
+      "targets": 89,
+      "l1_donor_surplus_positive_targets": 88,
+      "l2_legal_outbound_surplus_positive_targets": 85,
+      "l3_qualified_gross_positive_targets": 64,
+      "l4_estimated_net_upper_bound_positive_targets": 25,
+      "l5_received": 123207,
+      "l5_with_supply": 32,
+      "l5_full": 30,
+      "l5_strategic_received": 36736,
+      "returning_samples": 23,
+      "qualified_source_sample": 0,
+      "timely_quote_sample": 0,
+      "actual_dispatch_receipt_sample": 14
+    },
+    "C3": {
+      "targets": 89,
+      "l1_donor_surplus_positive_targets": 88,
+      "l2_legal_outbound_surplus_positive_targets": 85,
+      "l3_qualified_gross_positive_targets": 77,
+      "l4_estimated_net_upper_bound_positive_targets": 39,
+      "l5_received": 186801,
+      "l5_with_supply": 45,
+      "l5_full": 40,
+      "l5_strategic_received": 59707,
+      "returning_samples": 23,
+      "qualified_source_sample": 23,
+      "timely_quote_sample": 11,
+      "actual_dispatch_receipt_sample": 16
+    },
+    "C4": {
+      "targets": 89,
+      "l1_donor_surplus_positive_targets": 88,
+      "l2_legal_outbound_surplus_positive_targets": 85,
+      "l3_qualified_gross_positive_targets": 77,
+      "l4_estimated_net_upper_bound_positive_targets": 39,
+      "l5_received": 181423,
+      "l5_with_supply": 46,
+      "l5_full": 42,
+      "l5_strategic_received": 58821,
+      "returning_samples": 23,
+      "qualified_source_sample": 23,
+      "timely_quote_sample": 11,
+      "actual_dispatch_receipt_sample": 16
+    }
+  },
+  "route_census": {
+    "land": 16517,
+    "mixed": 3833,
+    "river": 58,
+    "scenario_count": 29,
+    "direction_rows": 20408,
+    "map_directions": 792,
+    "sea_with_land_access": 732,
+    "unique_pure_water_directions": 2
+  },
+  "performance": {
+    "sampled_turns": 36,
+    "exact_turns": 36
+  },
+  "archived_runtime_equivalent_runs": 10,
+  "accounting_issues": 0,
+  "city_resource_mismatches": 0,
+  "balance_warnings": 60,
+  "gates": {
+    "python-complete": "pass",
+    "rust-complete": "pass",
+    "light-final": "pass",
+    "node-review": "pass",
+    "web-reviewed": "pass",
+    "pyodide-final": "pass",
+    "browser-localized": "pass",
+    "browser-suite": "pass",
+    "backend-parity": "pass",
+    "save-parity": "pass",
+    "focused-authority": "pass",
+    "fixed-final": "pass",
+    "physical-route-controls": "pass",
+    "census-final": "pass",
+    "historical-1860": "pass",
+    "historical-short": "pass"
+  }
+}

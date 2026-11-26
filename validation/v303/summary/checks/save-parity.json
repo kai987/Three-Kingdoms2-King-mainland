@@ -1,0 +1,51 @@
+{
+  "compatible_guandu": [
+    {
+      "fixture": "guandu-prior-supported-0.json",
+      "sha256": "0e45fa6619db48b2cfa9b9cc93bf8dad6e40b2101bfd782e2871008a18975a7d",
+      "state_sha256": "4e162629bf20ea397797d67f94b693aaa53f37b2f7d1ae974ba85d05c5393025",
+      "normal_roundtrip": true,
+      "compact_roundtrip": true
+    },
+    {
+      "fixture": "guandu-prior-supported-1.json",
+      "sha256": "a4b8ccbb7edb525b516a804e3d5984b2e3a36ec00ea87284ca689f7ad9926b70",
+      "state_sha256": "4e162629bf20ea397797d67f94b693aaa53f37b2f7d1ae974ba85d05c5393025",
+      "normal_roundtrip": true,
+      "compact_roundtrip": true
+    }
+  ],
+  "controlled_opening_sha256": "c1e04a3c50c735fea77f2e8998f9b2e0b5b3ead3c95d2cf102cae6d049f1d0d8",
+  "transport_comparisons": [
+    {
+      "group": "C0",
+      "starting_state_sha256": "0dd0fd2199804a682ff564da119994624d9eff171a405f9857e3ff4a6abd08e0",
+      "grain": 47000,
+      "independent_rations": 199,
+      "cargo_capacity": null,
+      "stock_debit": 47199,
+      "command_debit": 1,
+      "actual_path": [
+        "lujiang",
+        "danyang"
+      ]
+    },
+    {
+      "group": "C4",
+      "starting_state_sha256": "0dd0fd2199804a682ff564da119994624d9eff171a405f9857e3ff4a6abd08e0",
+      "grain": 47000,
+      "independent_rations": 533,
+      "cargo_capacity": {
+        "total": 47533,
+        "limit": 50000,
+        "policy_grain": 80000
+      },
+      "stock_debit": 47533,
+      "command_debit": 1,
+      "actual_path": [
+        "lujiang",
+        "danyang"
+      ]
+    }
+  ]
+}

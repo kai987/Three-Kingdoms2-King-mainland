@@ -1,0 +1,42 @@
+{
+  "engine": "6313339d3da46987227a15c636d3e43a52b1b3a0",
+  "tests": {
+    "python": {
+      "backend": "python",
+      "full_inventory": 1952,
+      "skips": 1,
+      "original_failures": [
+        "test_offline_rebuild_is_deterministic_without_touching_catalogs (test_remake_locales.TraditionalLocaleTests.test_offline_rebuild_is_deterministic_without_touching_catalogs)"
+      ],
+      "final_localization_tests": 16,
+      "unresolved_failures": 0,
+      "tests_after_localization_retest": 1951,
+      "files": 178,
+      "logs": {
+        "python-reviewed-1.log": "8507f21e0075151359e726a3337cb761cfb3548533dbff66d3456dbeb818e052",
+        "python-reviewed-2.log": "4a71f89408582102f6a0a1198c7e2914d3d1b35c96a4478904f1c1cfd925b253",
+        "python-reviewed-3.log": "c9aa8d3ced23ef07b9983e5231e4ac350706b1b3430589e2dab914e64e5c0581",
+        "python-reviewed-4.log": "02877289757492f044ae123fbca1a4ed2e4924dcddc88ebeeedce027c7fbdba9",
+        "python-reviewed-5.log": "6b6b257a33262ab472cfeff23947b40b3366ea657fbac35ed3d4d9626ed2b193",
+        "python-reviewed-6.log": "9950b82ede5a451cfd9729270c9dbfd5788ebdf4bcd560baff18b0bd1bde3ac0",
+        "locale-reviewed.log": "7100cf24735e08e922d5d03e955f38f76ae8d64beaf37ec65ba3cde14641dcfa"
+      }
+    },
+    "rust": {
+      "backend": "rust",
+      "full_inventory": 1952,
+      "skips": 0,
+      "original_failures": [
+        "test_offline_rebuild_is_deterministic_without_touching_catalogs (test_remake_locales.TraditionalLocaleTests.test_offline_rebuild_is_deterministic_without_touching_catalogs)"
+      ],
+      "final_localization_tests": 16,
+      "unresolved_failures": 0,
+      "tests_after_localization_retest": 1952,
+      "files": 178,
+      "logs": {
+        "rust-final.log": "011ac7ef5f8d526b19eb8a287a86aa79ee656b77b8cb6eedc300c2defdfb5249",
+        "locale-reviewed.log": "7100cf24735e08e922d5d03e955f38f76ae8d64beaf37ec65ba3cde14641dcfa"
+      }
+    }
+  }
+}
