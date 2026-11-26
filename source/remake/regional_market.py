@@ -70,7 +70,7 @@ def start(game, state, order, *, automatic=False):
     if ident>1_000_000:
         raise GameError('區域市場訂單已達上限。')
     item=dict(id=ident,owner=city.owner,source=city.id,target=order['target'],actor=actor,purpose=kind,
-        auto=automatic,status='failed',created=state.turn,purchased=offer['grain'],purchase_rate=offer['rate'],
+        auto=automatic,status='purchased',created=state.turn,purchased=offer['grain'],purchase_rate=offer['rate'],
         purchase_gold=offer['gold'],estimated_net=order['net'],quoted_arrival=order['arrival_turn'],
         landed_cents=order['landed_cents'],quoted_rations=order['escort_rations'],
         reference_price=order['reference_price'],convoy=None,delivered=0,delivered_turn=None,
@@ -87,7 +87,7 @@ def start(game, state, order, *, automatic=False):
             rate=offer['rate'],estimated_net=order['net'],landed_cents=order['landed_cents'],
             estimated_days=order['days'],route=order['route'],route_types=order['route_types'],
             expected_rations=order['expected_rations'],reserved_rations=order['escort_rations'],
-            estimated_loss=order['estimated_loss'],deadline=order['deadline'])
+            estimated_loss=order['estimated_loss'],deadline=order['deadline'],reference_price=item['reference_price'])
     try:
         convoy=logistics.dispatch(game,state,dict(source=source.id,target=order['target'],officers=[actor],
                     cargo=dict(gold=0,grain=offer['grain'],reserves=0),route_mode=order['route_mode']),
@@ -95,7 +95,7 @@ def start(game, state, order, *, automatic=False):
     except GameError as error:
         # The purchase was an actual exchange. The now-uncommitted grain
         # stays in this warehouse and the trader has spent only its own book.
-        item['reason']=str(error)
+        item.update(status='failed',reason=str(error))
         _report(state,'regional_dispatch_failed',item,grain_retained=offer['grain'],reason=str(error))
     else:
         item.update(convoy=convoy['id'],status='dispatched')

@@ -1040,13 +1040,18 @@ function openRegionalMarket(initialCity){
   return `<li data-regional-order="${row.id}"><p><strong>${localCity(row.source)} → ${localCity(row.target)}</strong> · ${t(...(statuses[row.status]||[row.status,row.status]))}</p>
    <p class="small">${t(`採購 ${number(row.purchased)} 糧／${number(row.purchase_gold)} 金 · 實到 ${number(row.delivered)} 糧 · 實售 ${number(row.sold)} 糧／收入 ${number(row.sale_gold)} 金`,
     `購入 ${number(row.purchased)} 糧／${number(row.purchase_gold)} 金・到着 ${number(row.delivered)} 糧・売却 ${number(row.sold)} 糧／収入 ${number(row.sale_gold)} 金`)}</p>
+   ${row.status==='failed'&&row.reason?`<p class="small" role="status">${t(GameI18n.t(row.reason,'zh-Hant'),GameI18n.t(row.reason,'ja'))}</p>`:''}
    ${actors.length?`<div class="facility-amount"><label class="field">${t('出售武將','売却する武将')}<select data-sale-actor>${actors.map(id=>`<option value="${idOf(id)}">${idOf(name(id))}</option>`).join('')}</select></label><label class="field">${t(`出售批數（每批 ${row.offer.batch_grain} 糧）`,`売却口数（1口 ${row.offer.batch_grain} 糧）`)}<input type="number" min="1" max="${row.offer.batches}" value="${row.offer.batches}" data-sale-batches></label><button type="button" data-regional-sell>${t(`按 ${row.offer.rate} 金出售`,`単価 ${row.offer.rate} 金で売却`)}</button></div>`:''}
    ${interactive&&row.status==='awaiting_sale'&&!row.auto?`<button type="button" data-regional-cancel>${t('取消出售，糧留在官倉','売却を取り消し、官倉に保管')}</button>`:''}</li>`;
  }).join('');
  const flags=view.game.extension?.weather_rules_version;
  const cityMarket=market.cities[initialCity];
+ const regionalTotals=market.regions[cityMarket.region];
  const body=`<section data-regional-market-dialog>
   <p>${localCity(initialCity)} · ${t('商品糧庫存','市場の在庫')} ${number(cityMarket.stock)} / ${number(cityMarket.capacity)} · ${t('買／賣（每千糧）','買値／売値（1,000糧）')} ${cityMarket.buy} / ${cityMarket.sell}</p>
+  <p class="small">${t(region(cityMarket.region,0),region(cityMarket.region,1))} · ${t(
+   `可查閱市場近三個月購入 ${number(regionalTotals.bought_three)} 糧，出售 ${number(regionalTotals.sold_three)} 糧`,
+   `閲覧できる市場の直近3か月の購入 ${number(regionalTotals.bought_three)} 糧、売却 ${number(regionalTotals.sold_three)} 糧`)}</p>
   <details><summary>${t('可查閱的區域市場','閲覧できる地域市場')}</summary><div class="roster-scroll"><table class="roster-table"><thead>
   <tr>${[['都市','都市'],['區域','地域'],['勢力','勢力'],['庫存／容量','在庫／容量'],['月供應','月間供給'],['買／賣','買値／売値'],['旬初狀態','旬初の状態']].map(label=>`<th scope="col">${t(...label)}</th>`).join('')}</tr>
   </thead><tbody>${marketRows}</tbody></table></div></details>
