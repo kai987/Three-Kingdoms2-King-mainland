@@ -27,6 +27,9 @@ def _close(state, row, event, **outcome):
 def accept(state, order):
     row = entries(state).get(str(order['id']))
     if row is not None and order['target']==row['hub']:
+        if not order['delivered_grain']:
+            _close(state,row,'relay_cancelled',reason='empty_receipt')
+            return
         row.update(received=order['delivered_grain'], received_turn=state.turn)
         reserve.observe(state,'relay_hub_receipt',**row)
 

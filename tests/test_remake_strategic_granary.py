@@ -221,7 +221,7 @@ class StrategicGranaryTests(TestCase):
         self.assertGreater(len({row['winter'] for row in cities.values()}),2)
         self.assertEqual(g.export_save(),before)
 
-    def test_relay_requires_first_leg_receipt_and_spends_it_once(self):
+    def _dispatch_relay(self):
         from remake import granary_relay
         final = 'xiangyang'
         g = start(relay=True,proactive=True)
@@ -236,6 +236,14 @@ class StrategicGranaryTests(TestCase):
         granary_relay.entries(s)[str(first['id'])]=relay
         with grain_units.using(s):
             granary.launch(g,s,first,quote)
+        return g,relay
+
+    def test_relay_requires_first_leg_receipt_and_spends_it_once(self):
+        from remake import granary_relay
+        g,relay=self._dispatch_relay()
+        s=g.state
+        final=relay['target']
+        with grain_units.using(s):
             plan = faction_economy.plan(g,s,OWNER,granary=True)
             self.assertEqual(granary_relay.forward(g,s,OWNER,plan),[])
         self.assertEqual(s.cities[final].grain,0)
@@ -258,3 +266,28 @@ class StrategicGranaryTests(TestCase):
             self.assertFalse(granary_relay.forward(other,s,OWNER,plan))
         advance(other)
         self.assertGreater(s.cities[final].grain,0)
+
+    def test_relay_closes_when_first_delivery_has_no_grain(self):
+        from remake import granary_relay, march_supply
+
+        def reserve_all_for_return(game,state,convoy,target):
+            bag=convoy['journeys'][-1]['supply']
+            amount=convoy['cargo']['grain']
+            tick=bag['clock_tick']
+            logistics._cargo_change(convoy,'rations',dict(convoy['cargo'],grain=0),tick,
+                                    dict(journey=len(convoy['journeys'])-1,tick=tick))
+            march_supply.receive(bag,amount,'cargo',convoy['id'],state.turn)
+
+        g,relay=self._dispatch_relay()
+        events=[]
+        with (patch.object(logistics,'_reserve_before_unload',side_effect=reserve_all_for_return),
+              granary.observing(lambda event,row:events.append((event,row)))):
+            advance(g)
+        self.assertFalse(granary_relay.entries(g.state))
+        self.assertEqual(g.state.cities[relay['target']].grain,0)
+        self.assertEqual(next(row for event,row in events if event=='order_delivered')['delivered_grain'],0)
+        self.assertEqual(next(row for event,row in events if event=='relay_cancelled')['reason'],'empty_receipt')
+        self.assertFalse(any(event=='relay_second_leg' for event,_ in events))
+        resumed=Campaign(g.catalog)
+        resumed.load_save(g.export_save(compact=True),0)
+        self.assertEqual(resumed.to_dict(),g.to_dict())
