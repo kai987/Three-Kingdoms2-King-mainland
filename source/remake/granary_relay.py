@@ -95,14 +95,15 @@ def validate(state):
 
 def forward(game,state,owner,plan):
     """Consume real hub stock only after revalidating the new leg."""
-    from . import granary_planning
+    from . import granary_demand, granary_planning
     sent = []
     for row in list(ready(state)):
         if row['owner'] != owner or not command_books.can_spend(state,owner,'dispatch_transport'):
             continue
         hub, target = row['hub'], row['target']
         forecast = plan.cities[target]
-        needed = sum(gap for _,gap in forecast.gaps)
+        demand = granary_demand.for_city(game, state, plan, target) if reserve.candidate(state) else None
+        needed = sum(gap for _,gap in (forecast.gaps if demand is None else demand.remaining))
         if not needed:
             _close(state,row,'relay_cancelled',reason='need_covered')
             continue
@@ -113,7 +114,9 @@ def forward(game,state,owner,plan):
         quotes = []
         for opt in choices:
             opt = dict(opt,limit=min(opt['limit'],row['received']-opt['rations']))
-            quote = network.shipment(opt,needed,row['deadline'])
+            still_needed = (needed if demand is None else demand.after(
+                max(1, (opt['days']+9)//10))[1])
+            quote = network.shipment(opt,still_needed,row['deadline'])
             if quote and quote['timely'] and quote['net']>=reserve.RULES['minimum_load']:
                 quotes.append(quote)
         if not quotes:

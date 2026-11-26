@@ -135,6 +135,11 @@ def advance_supply(game, state, row, through_turn=None, *, absolute_tick=None, p
         trace=winter_transport.trace_begin(row)
     else:
         trace=None
+    if absolute_tick is not None and row['status'] == 'returning' and row['delivery_done']:
+        from . import strategic_granary, transport_emergency
+        if (strategic_granary.enabled(state,'return_safety') and transport_emergency.stage(state)
+                and transport_emergency.review_return_node(game,state,row,absolute_tick)):
+            return 0
     cargo=deepcopy(row['cargo'])
     def changed(kind, new_cargo, day):
         _cargo_change(row,kind,new_cargo,day,dict(journey=len(row['journeys'])-1,tick=day))
@@ -747,7 +752,8 @@ def _journey(game, state, source, target, mode, quote, ids, reserves, *, from_ca
 
 
 def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planner=None, donor_budget=None, allocation=None,
-             convoy_relief_quote=None, regional_order=None, strategic_order=None, strategic_path=None):
+             convoy_relief_quote=None, regional_order=None, strategic_order=None, strategic_path=None,
+             strategic_floor=None):
     from . import transport_emergency
     if (not isinstance(payload, dict) or set(payload) - {'source', 'target', 'officers', 'cargo', 'route_mode','target_march','target_convoy'}
             or not isinstance(payload.get('source'), str) or not isinstance(payload.get('target'), str)
@@ -855,6 +861,8 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planne
                     or emergency_grain is not None and strategic_order is None and regional_order is None)
         if priority:
             strategic_granary.spending(state,source,cargo['grain']+grain,'military_or_urgent')
+        elif strategic_floor is not None and strategic_order is not None and strategic_granary.enabled(state,'coordination'):
+            strategic_granary.spend_for_dispatch(state,source,cargo['grain']+grain,strategic_order,strategic_floor)
         elif cargo['grain']+grain > strategic_granary.available(state,source,except_id=strategic_order):
             raise GameError(strategic_granary.INSUFFICIENT)
     if allocation is not None:
@@ -1250,7 +1258,7 @@ def _receiving_blocker(game, state, row, target, *, returning):
     return None
 
 
-def _dock(game, state, row, target, *, surrender=False):
+def _dock(game, state, row, target, *, surrender=False, terminal_tick=None):
     from . import domestic, march_supply, transport_emergency
     if transport_emergency.stage(state) and not surrender and (
             row not in _pool(state)['convoys'] or target.owner!=row['owner']
@@ -1265,7 +1273,7 @@ def _dock(game, state, row, target, *, surrender=False):
     row['target']=target.id
     if winter_weather.observing() or 'regional' in row or 'strategic' in row:
         outcome='surrender_settlement' if surrender else 'returned_home' if target.id==row['source'] else 'received_elsewhere'
-        _trace_terminal(game,state,row,outcome,target.id)
+        _trace_terminal(game,state,row,outcome,target.id,terminal_tick=terminal_tick)
     # Once physically received, these people are no longer marching. This must
     # precede cargo morale weighting so their troops count in the new garrison.
     _pool(state)['convoys'].remove(row)
@@ -1289,7 +1297,7 @@ def _dock(game, state, row, target, *, surrender=False):
     return True
 
 
-def _trace_terminal(game, state, row, outcome, city=None):
+def _trace_terminal(game, state, row, outcome, city=None, *, terminal_tick=None):
     if 'strategic' in row:
         from . import strategic_granary
         strategic_granary.transport_closed(state,row,outcome,city)
@@ -1300,7 +1308,7 @@ def _trace_terminal(game, state, row, outcome, city=None):
     note(game,state,'convoy_terminal',row,at=city,terminal_status=outcome,source=row['source'],
          initial_reserves=row['initial_cargo']['reserves'],delivered=row['delivery_done'],
          remaining_gold=row['cargo']['gold'],remaining_treasure=row['cargo']['treasure'],
-         actual_terminal_tick=(state.turn-1)*10)
+         event_tick=terminal_tick,actual_terminal_tick=(state.turn-1)*10 if terminal_tick is None else terminal_tick)
 
 
 def settle_surrender(game, state, owner, holdings):
