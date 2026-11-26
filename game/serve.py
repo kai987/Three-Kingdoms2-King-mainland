@@ -711,7 +711,7 @@ def make_handler(game, cloud_config, cloud_csp, static, audit=None, here=HERE):
 
         def do_POST(self):
             try:
-                if self.path not in ('/api/command', '/api/load', '/api/transfer-preview', '/api/logistics-preview', '/api/regional-market-preview'):
+                if self.path not in ('/api/command', '/api/load', '/api/transfer-preview', '/api/logistics-preview', '/api/regional-market-preview', '/api/strategic-granary-preview'):
                     return self.send(404, {'error': '未找到这个操作。'})
                 lengths = self.headers.get_all('Content-Length', [])
                 if (self.headers.get_all('Transfer-Encoding') or len(lengths) != 1
@@ -748,6 +748,8 @@ def make_handler(game, cloud_config, cloud_csp, static, audit=None, here=HERE):
                     view = game.preview_logistics(payload)
                 elif self.path == '/api/regional-market-preview':
                     view = game.preview_regional_market(payload)
+                elif self.path == '/api/strategic-granary-preview':
+                    view = game.preview_strategic_granary(payload)
                 elif self.path == '/api/transfer-preview':
                     view = game.preview_transfer(payload)
                 else:

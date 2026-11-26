@@ -1259,3 +1259,6 @@ dialog:has([data-domestic-dialog]) .dialog-actions{position:sticky;bottom:-24px;
 .river-lane[data-ice-state="2"]{stroke:#92c5e6;stroke-dasharray:5 3;stroke-width:4}
 .river-lane[data-ice-state="3"]{stroke:#22597c;stroke-dasharray:none;stroke-width:6}
 .city-weather{border-block-start:1px solid currentColor;margin-block:.6rem;padding-block-start:.35rem}
+
+.granary-actions{display:flex;flex-wrap:wrap;gap:.5rem;align-items:end}
+[data-strategic-granary] li{overflow-wrap:anywhere}

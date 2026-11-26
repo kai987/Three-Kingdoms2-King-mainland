@@ -355,7 +355,9 @@ def _trade_quote(game, state, city, town, direction):
         limits = dict(affordable_batches=affordable, warehouse_free=space, warehouse_batches=room)
         maximum, constraint = grain_market.purchase_limit(affordable, room, cap, market_batches)
     else:
-        limits = dict(grain_batches=city.grain // batch, treasury_batches=max(0, LIMIT - city.gold) // rate)
+        from . import strategic_granary
+        offered = strategic_granary.available(state,city) if strategic_granary.enabled(state) else city.grain
+        limits = dict(grain_batches=offered // batch, treasury_batches=max(0, LIMIT - city.gold) // rate)
         constraints = [(limits['grain_batches'], 'insufficient_grain'),
                        (limits['treasury_batches'], 'treasury_full'), (cap, 'trade_limit')]
         if market_batches is not None:

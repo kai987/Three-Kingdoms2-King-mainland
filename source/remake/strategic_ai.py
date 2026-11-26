@@ -17,7 +17,7 @@ from . import grain_relief, grain_units
 from .march_supply import denominator, OFFICER_UNITS, estimate as march_grain, next_supply_days, required_grain, travel_rules
 from . import city_economy, faction_economy, logistics_rules, logistics_strategy, military_budget, war_recovery
 from .route_hazards import allocate_survivors
-from . import winter_travel, winter_weather
+from . import strategic_granary, winter_travel, winter_weather
 
 
 class StrategicAI:
@@ -39,6 +39,7 @@ class StrategicAI:
         self.staging_checked = set()
         self.friendly_recovery = {}
         self.v21 = logistics_strategy.enabled(state)
+        self.granary = strategic_granary.enabled(state)
         self.adaptive = logistics_strategy.enabled(state, logistics_strategy.WAR)
         self.recovery_v211 = logistics_strategy.war_recovery(state)
         self.recovery_wait = {}
@@ -51,13 +52,13 @@ class StrategicAI:
 
     def grain_outlook(self, owner):
         if owner not in self.grain_outlooks:
-            self.grain_outlooks[owner] = (self.economy_plan(owner).outlook(self.state) if self.v21
+            self.grain_outlooks[owner] = (self.economy_plan(owner).outlook(self.state) if self.v21 or self.granary
                                          else grain_relief.recovery(self.game, self.state, owner))
         return self.grain_outlooks[owner]
 
     def economy_plan(self, owner):
         if owner not in self.economy_plans:
-            self.economy_plans[owner] = faction_economy.plan(self.game, self.state, owner)
+            self.economy_plans[owner] = faction_economy.plan(self.game,self.state,owner,granary=self.granary)
         return self.economy_plans[owner]
 
     def recovery_support(self, city):
@@ -977,7 +978,7 @@ def run(campaign, state, payload):
                     ai.economy_plans.pop(city.owner,None)
                     ai.grain_outlooks.pop(city.owner,None)
         outlook = ai.grain_outlook(city.owner)
-        if ai.v21 and has_domestic and city.owner not in relief_done:
+        if (ai.v21 or ai.granary) and has_domestic and city.owner not in relief_done:
             outlook = prioritize_grain(campaign, state, city.owner, outlook,
                                         economy_plan=ai.economy_plan(city.owner))
             relief_done.add(city.owner)

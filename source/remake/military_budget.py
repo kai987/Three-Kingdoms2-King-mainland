@@ -35,7 +35,7 @@ def fixed_expenses(game,state,city,active):
                 garrison=garrison(game,state,city,active,city.reserves))
 
 
-def budgets(game,state,owner,*,stationed=None,incomes=None):
+def budgets(game,state,owner,*,stationed=None,incomes=None,inbound_cache=None):
     """Only one absent-person, front and shipment scan for this faction quote."""
     from . import domestic, facilities, grain_market, logistics
 
@@ -62,6 +62,8 @@ def budgets(game,state,owner,*,stationed=None,incomes=None):
                 and 'convoy_relief' not in row and not row['delivery_done']):
             arrival=journey['arrival_turn']-state.turn
             projected=logistics.inbound_grain(game,row,state)
+            if inbound_cache is not None:
+                inbound_cache[row['id']] = projected
             in_transit[row['target']]+=projected
             if 0<=arrival<=9:
                 within_three_months[row['target']]+=projected

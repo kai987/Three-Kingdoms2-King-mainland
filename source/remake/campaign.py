@@ -20,7 +20,7 @@ from . import civil_staff, domestic, logistics, presentation, treasures, facilit
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from . import battle_reinforcements, city_economy, economy_rules, grain_market, logistics_rules, logistics_strategy, payroll
-from . import market_pricing, regional_market, transport_emergency, winter_weather
+from . import granary_planning, market_pricing, regional_market, strategic_granary, transport_emergency, winter_weather
 from .city_economy import frontier_maintenance
 from .starting_garrisons import resolve as resolve_opening_garrisons
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
@@ -161,6 +161,10 @@ class Catalog:
         officer_relations.validate_catalog(self)
         self.map_cities = {c['id']: c for c in self.data['cities']}
         self.links = {frozenset(e) for e in self.data['links']}
+        self.granary_neighbors = {}
+        for source, target in self.data['links']:
+            self.granary_neighbors.setdefault(source, set()).add(target)
+            self.granary_neighbors.setdefault(target, set()).add(source)
         from . import dated_events
         dated_events.validate_source(self)
         expected = self.data['city_count']
@@ -385,6 +389,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         state.extension['city_development'] = city_development.empty(self,state)
         grain_market.initialize(self, state)
         market_pricing.initialize(state)
+        strategic_granary.initialize(state)
         state.extension['equipment'] = equipment.empty(self,state)
         command_books.initialize(self, state)
         equipment.synchronize(self,state)
@@ -448,6 +453,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'logistics':logistics.view(self,state,travel_quotes=travel.get('travel_quotes',{})),
                                 'treasury':treasures.view(self,state),
                                 'facilities':facilities.view(self,state),
+                                **({'strategic_granary':granary_planning.view(self,state)}
+                                   if strategic_granary.enabled(state) and state.player != observer.SEAT else {}),
                                 **({'regional_market':regional_market.view(self,state)}
                                    if state and market_pricing.stage(state) else {}),
                                 'city_development':city_development.view(self,state),
@@ -511,6 +518,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                             raise GameError('區域市場需要目前的經濟及後勤規則。')
                         market_pricing.initialize(candidate,
                             (market_pricing.TRADE if automatic else market_pricing.PROCUREMENT) if requested else 0)
+                    if strategic_granary.FIELD in payload or strategic_granary.OPTIONS in payload:
+                        strategic_granary.initialize(candidate,payload.get(strategic_granary.FIELD,0),
+                                                      payload.get(strategic_granary.OPTIONS))
                     if campaign_id is not None:
                         candidate.extension['campaign_id'] = campaign_id
                 else:
@@ -539,6 +549,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                'staff_recruit': self._staff_recruit, 'choose_successor': self._choose_successor,
                                'set_domestic':self._set_domestic,'set_logistics':self._set_logistics,
                                'dispatch_transport':self._dispatch_transport,
+                               strategic_granary.COMMAND:lambda state,payload:strategic_granary.execute(self,state,payload,state.player),
                                regional_market.COMMAND:lambda state,payload:regional_market.execute(self,state,payload,state.player),
                                **{action: self._treasury_command(action) for action in
                                   ('search_treasure','reward_officer','sell_treasure','set_governor','set_treasury_policy')},
@@ -584,6 +595,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     domestic.rebalance_changed_garrisons(self, self.state, candidate)
                 from . import occupation_budget, staging_supply
                 staging_supply.synchronize(candidate)
+                strategic_granary.synchronize(candidate)
                 occupation_budget.prune(candidate)
                 self.validate(candidate)
                 if candidate.phase == 'result':
@@ -1005,6 +1017,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         domestic.validate(self,state)
         logistics.validate(self,state)
         regional_market.validate(self,state)
+        strategic_granary.validate(state)
         treasures.validate(self,state)
         facilities.validate(self,state)
         equipment.validate(self,state)

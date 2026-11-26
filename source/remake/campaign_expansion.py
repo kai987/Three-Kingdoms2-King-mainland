@@ -1362,6 +1362,8 @@ class ExpandedCampaign:
         occupation_budget.validate(self,state)
         if grain_market.FIELD in x:fields.add(grain_market.FIELD)
         fields.update({market_pricing.FIELD, market_pricing.STAGE, market_pricing.AUTOMATION, market_pricing.POOL} & x.keys())
+        from . import strategic_granary
+        fields.update({strategic_granary.FIELD, strategic_granary.POOL} & x.keys())
         if battle_reinforcements.RETURNS in x:fields.add(battle_reinforcements.RETURNS)
         from . import dated_events, succession
         if dated_events.enabled(self.catalog):fields.add('dated_events')

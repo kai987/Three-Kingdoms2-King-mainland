@@ -437,6 +437,21 @@ class CampaignSession:
             return regional_market.preview(self.game,state,state.player,payload['target'],payload['qty'],
                                            payload['purpose'],payload['source'])
 
+    def preview_strategic_granary(self, payload):
+        from . import granary_planning, strategic_granary
+        with self.lock:
+            if (not isinstance(payload,dict) or set(payload) != {'target','source','quantity','revision'}
+                    or type(payload['revision']) is not int):
+                raise GameError(strategic_granary.INVALID)
+            if payload['revision'] != self.revision:
+                raise GameError(strategic_granary.STALE,409)
+            state = self.game.state
+            if not state or state.phase != 'city' or state.player == 'observer':
+                raise GameError(strategic_granary.INVALID)
+            with grain_units.using(state):
+                return granary_planning.preview(self.game,state,state.player,payload['target'],
+                                                payload['quantity'],payload['source'])
+
     def load_save(self, save, revision):
         with self.lock:
             if type(revision) is not int or revision!=self.revision:raise GameError('进度已更新。',409)

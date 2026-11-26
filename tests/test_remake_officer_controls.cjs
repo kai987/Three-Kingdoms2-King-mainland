@@ -84,8 +84,13 @@ const values=html=>[...html.matchAll(/<option value="(\d+)"/g)].map(m=>Number(m[
  // Closing and opening anew discards unconfirmed drafts.
  context.allocate(city,1);assert.equal(input.value,'40');assert(element('#confirm-allocation').disabled);
  const seed={min:'1',max:'4294967295',value:'999999999999'};context.bindNumberInput(seed);seed.oninput();assert.equal(seed.value,'4294967295');seed.value='-2';seed.onchange();assert.equal(seed.value,'1');seed.value='';seed.onblur();assert.equal(seed.value,'1');seed.value='Infinity';seed.onblur();assert.equal(seed.value,'1');
- assert.equal((source.match(/type="number"/g)||[]).length,7,'All current numeric controls are explicitly covered');
+ assert.equal((source.match(/type="number"/g)||[]).length,8,'All current numeric controls are explicitly covered');
  assert(source.includes("bindNumberInput($('#regional-qty'))"));
+ const granaryForm=source.slice(source.indexOf('function openStrategicGranary'),source.indexOf('function openRegionalMarket'));
+ assert(granaryForm.includes("amountInput('granary-reserve-amount',city.capacity,0,0)"));
+ assert(granaryForm.includes("amountInput('granary-transfer-amount',100000000,1000)"));
+ assert.equal((granaryForm.match(/bindNumberInput\(amount\)/g)||[]).length,2);
+ assert.equal((granaryForm.match(/clampNumberInput\(amount,true\)/g)||[]).length,2);
  assert(source.includes("bindNumberInput(node.querySelector('[data-sale-batches]'))"));
  assert(source.includes('id="departure-battle-grain" type="number" min="0" step="1"'));
  assert(source.includes('GameBattleSupply.departure(view,city,draft.officers,quote'));

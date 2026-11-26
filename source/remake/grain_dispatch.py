@@ -2,7 +2,7 @@
 from collections import Counter, defaultdict
 
 from . import city_economy, command_books, domestic, facilities, faction_economy
-from . import historical_campaigns, logistics, logistics_strategy
+from . import historical_campaigns, logistics, logistics_strategy, strategic_granary
 from .errors import GameError
 from .officers import ref_sort_key
 
@@ -108,6 +108,11 @@ def dispatch(game, state, owner, *, plan=None):
     detailed = logistics_strategy.enabled(state, logistics_strategy.TRANSPORT)
     plan = plan if plan is not None else faction_economy.plan(game, state, owner)
     keys = plan.shortages(state)
+    if strategic_granary.enabled(state):
+        # Pending manual orders may be superseded by a real emergency; a
+        # shipped ordinary receipt is already in the dated forecast.
+        keys = [key for key in keys if plan.cities[key].zero_in <= 1 or
+                not any(order['target'] == key for order in strategic_granary.commitments(state))]
     if not keys:
         return []
     budgets = plan.budgets

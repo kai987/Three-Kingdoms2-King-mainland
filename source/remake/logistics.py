@@ -726,6 +726,9 @@ def _event(game, state, kind, row, *, lost=0, reason='outbound',amounts=None):
     reports.append(dict(turn=state.turn, owner=row['owner'], source=row['source'], target=row['target'],
                         kind=kind, details=details))
     reports[:] = reports[-100:]
+    if 'strategic' in row:
+        from . import strategic_granary
+        strategic_granary.transport_event(state,row,kind,values)
     if row['owner'] == state.player:
         ids = row['officers'][:1]
         game._emit_event(state, kind, city_ids=list(dict.fromkeys((row['source'], row['target']))),
@@ -745,7 +748,7 @@ def _journey(game, state, source, target, mode, quote, ids, reserves, *, from_ca
 
 
 def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planner=None, donor_budget=None, allocation=None,
-             convoy_relief_quote=None, regional_order=None):
+             convoy_relief_quote=None, regional_order=None, strategic_order=None, strategic_path=None):
     from . import transport_emergency
     if (not isinstance(payload, dict) or set(payload) - {'source', 'target', 'officers', 'cargo', 'route_mode','target_march','target_convoy'}
             or not isinstance(payload.get('source'), str) or not isinstance(payload.get('target'), str)
@@ -823,6 +826,9 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planne
                         officers=ids,cargo=cargo['grain'],reserves=cargo['reserves']))
     if quote is None or _dangerous(quote, policy):
         raise GameError('没有符合方针的安全运输路线。')
+    if strategic_order is not None and quote['path'] != strategic_path:
+        from . import strategic_granary
+        raise GameError(strategic_granary.STALE)
     if _present_count(game, state, source) - len(ids) < policy['reserve_officers']:
         raise GameError('押运后未达到本城保留武将人数。')
     if any(cargo[field] > policy['max_' + field] for field in _CITY_FIELDS) or len(ids) > policy['max_officers']:
@@ -844,6 +850,14 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planne
         raise GameError('本城的宝数量不足。')
     if pool['next_id'] > 1000000:
         raise GameError('运输队编号已达上限。')
+    from . import strategic_granary
+    if strategic_granary.enabled(state):
+        priority = (army is not None or rescue is not None
+                    or emergency_grain is not None and strategic_order is None and regional_order is None)
+        if priority:
+            strategic_granary.spending(state,source,cargo['grain']+grain,'military_or_urgent')
+        elif cargo['grain']+grain > strategic_granary.available(state,source,except_id=strategic_order):
+            raise GameError(strategic_granary.INSUFFICIENT)
     if allocation is not None:
         from . import domestic
         command_books.spend(state,source,'allocate')
@@ -871,6 +885,8 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planne
         route_policy={k:policy[k] for k in ('allow_sea','allow_special')})
     if logistics_rules.version(state)==logistics_rules.CURRENT:
         row[LOSS_FIELD]=0
+    if strategic_order is not None:
+        row['strategic'] = strategic_order
     if regional_order is not None:
         row['regional']=dict(id=regional_order,cargo=cargo['grain'],bag=0,consumed=0)
     if winter_weather.corrected(state,winter_weather.TRANSPORT):
@@ -1248,7 +1264,7 @@ def _dock(game, state, row, target, *, surrender=False):
         row['journeys'][-1]['supply']['retreat_requested']=True
         return False
     row['target']=target.id
-    if winter_weather.observing() or 'regional' in row:
+    if winter_weather.observing() or 'regional' in row or 'strategic' in row:
         outcome='surrender_settlement' if surrender else 'returned_home' if target.id==row['source'] else 'received_elsewhere'
         _trace_terminal(game,state,row,outcome,target.id)
     # Once physically received, these people are no longer marching. This must
@@ -1275,6 +1291,9 @@ def _dock(game, state, row, target, *, surrender=False):
 
 
 def _trace_terminal(game, state, row, outcome, city=None):
+    if 'strategic' in row:
+        from . import strategic_granary
+        strategic_granary.transport_closed(state,row,outcome,city)
     if 'regional' in row:
         from . import regional_market
         regional_market.transport_closed(state,row,outcome,city)
@@ -1302,7 +1321,7 @@ def _unload(game, state, row, target):
     """Cargo arrives; escorts retain their home slots until the real return."""
     from . import domestic, transport_emergency
     if (row['target_march'] is None and (winter_weather.corrected(state,winter_weather.TRANSPORT)
-            or transport_emergency.stage(state) or 'regional' in row)):
+            or transport_emergency.stage(state) or 'regional' in row or 'strategic' in row)):
         _reserve_before_unload(game,state,row,target)
     cargo=deepcopy(row['cargo'])
     for field in ('gold','grain'):
@@ -1888,7 +1907,7 @@ def validate(game, state):
     row_fields=_ROW_FIELDS | {LOSS_FIELD} if weighted else _ROW_FIELDS
     from . import transport_emergency
     for row in pool['convoys']:
-        if (not isinstance(row, dict) or set(row)-{'relief','return_leg','original_eta','emergency','convoy_relief','regional'} != row_fields
+        if (not isinstance(row, dict) or set(row)-{'relief','return_leg','original_eta','emergency','convoy_relief','regional','strategic'} != row_fields
                 or not _int(row['id'], 1, pool['next_id'] - 1)
                 or weighted and not _int(row[LOSS_FIELD],0,logistics_rules.LOSS_SCALE-1)
                 or row['id'] in seen or row['source'] in origins or row['owner'] not in game.catalog.factions

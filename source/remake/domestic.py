@@ -686,21 +686,35 @@ def _hire_staff(game, state, owner, city_ids):
 
 
 def prioritize_grain(game, state, owner, outlook=None, *, economy_plan=None):
-    from . import diplomacy, faction_economy, grain_dispatch, grain_relief, logistics_strategy, military_budget
+    from . import (diplomacy, faction_economy, grain_dispatch, grain_relief, logistics_strategy,
+                   military_budget, strategic_granary)
 
-    if (state.phase == 'ai' and owner != state.player and logistics_strategy.enabled(state)):
-        plan = economy_plan if economy_plan is not None else faction_economy.plan(game, state, owner)
+    strategic = strategic_granary.enabled(state)
+    if state.phase == 'ai' and owner != state.player and (logistics_strategy.enabled(state) or strategic):
+        def rebuild():
+            return faction_economy.plan(game,state,owner,granary=strategic)
+
+        plan = economy_plan if economy_plan is not None else rebuild()
+        if strategic:
+            urgent = plan.shortages(state,within=1)
+            if urgent and any(row['bought'] for row in grain_dispatch.recover(game,state,owner,plan,only=urgent)):
+                plan = rebuild()
         requests = grain_dispatch.dispatch(game, state, owner, plan=plan)
         if any(row['allocations'] for row in requests):
-            plan = faction_economy.plan(game, state, owner)
+            plan = rebuild()
         if plan.shortages(state) and diplomacy.request_available_grain(game, state, owner):
-            plan = faction_economy.plan(game, state, owner)
+            plan = rebuild()
         from . import regional_market
+        if strategic:
+            from . import granary_planning
+            granary_planning.refresh_reserves(game,state,owner,plan)
+            if granary_planning.dispatch(game,state,owner,plan):
+                plan = rebuild()
         if regional_market.procure(game,state,owner,plan):
-            plan = faction_economy.plan(game,state,owner)
+            plan = rebuild()
         purchases = grain_dispatch.recover(game, state, owner, plan)
         if any(row['bought'] for row in purchases):
-            plan = faction_economy.plan(game, state, owner)
+            plan = rebuild()
         _, remaining = plan.outlook(state)
         # Run local trade before elective military development. Leave
         # imminent cities to the emergency quote and its partial lots.
@@ -818,9 +832,10 @@ def run_automatic(game, state, owner, *, outlook=None, economy_plan=None):
 
 def finish_faction_turn(game, state, owner, *, automatic=True, outlook=None):
     """After manual commands and before the calendar advances, once per city."""
-    from . import faction_economy, grain_relief, logistics_strategy, military_budget
-    planned = logistics_strategy.enabled(state) and owner not in (state.player, 'neutral')
-    economy_plan = faction_economy.plan(game, state, owner) if planned else None
+    from . import faction_economy, grain_relief, logistics_strategy, military_budget, strategic_granary
+    strategic = strategic_granary.enabled(state)
+    planned = (logistics_strategy.enabled(state) or strategic) and owner not in (state.player, 'neutral')
+    economy_plan = faction_economy.plan(game, state, owner, granary=strategic) if planned else None
     if economy_plan is not None:
         outlook = economy_plan.outlook(state)
         if logistics_strategy.enabled(state, logistics_strategy.GARRISON):
@@ -906,7 +921,7 @@ def finish_faction_turn(game, state, owner, *, automatic=True, outlook=None):
             allocate_garrison(game, state, key, max_added=cap,held=held)
         if key not in hold_grain and policy['training_enabled']:
             quote = training_preview(game, state, key)
-            if quote['gain']:
+            if quote['gain'] and (not strategic or quote['grain'] <= strategic_granary.available(state,city)):
                 city.gold -= quote['gold']
                 city.grain -= quote['grain']
                 row['morale'] += quote['gain']

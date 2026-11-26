@@ -81,6 +81,12 @@ def tick_now(state):
 def stock(game, state, city):
     policy = logistics._pool(state)['cities'][city.id]['policy']
     granted = staging_supply.available(state, city)
+    from . import strategic_granary
+    if strategic_granary.enabled(state):
+        # Return custody outranks future city dispatch, after present army
+        # bookings, the local ration installment and the explicit donor floor.
+        from . import granary_relay
+        granted = max(0, granted - strategic_granary.committed(state,city.id) - granary_relay.credit(state,city.id))
     return min(winter_transport.city_stock(game, state, city, granted),
                max(0, granted - policy['reserve_grain']))
 
@@ -309,11 +315,17 @@ def note(game, state, event, row, *, at=None, **values):
 
 
 def _take_local(game, state, row, city, amount):
+    if city.owner != row['owner']:
+        return 0
     supply = book(row)
     taken = min(amount, stock(game, state, city), logistics.LIMIT - supply['remaining'])
     if taken:
+        from . import strategic_granary
+        strategic_granary.spending(state,city,taken,'military_or_urgent')
         city.grain -= taken
         march_supply.receive(supply, taken, 'city', city.id, state.turn)
+        strategic_granary.observe(state,'emergency_refill',city=city.id,owner=city.owner,
+                                   convoy_id=row['id'],grain=taken)
         game._supply_event(state, 'march_resupplied', unit_kind='convoy', unit_id=row['id'],
             city=city.id, owner=row['owner'], grain=taken, reason='city')
         note(game, state, 'emergency_refill', row, at=city.id, amount=taken)
@@ -346,6 +358,23 @@ def direct_home(game,state,row,here,reason):
             continue
         needed = army_relief.ration_budget(convoy_units(state,row),quote.weight,0,0,
                                           credit=book(row)['credit_units']).total
+        from . import strategic_granary
+        if strategic_granary.enabled(state):
+            local = state.cities[here]
+            approach = {march['target'] for march in state.extension['travel']['marches']
+                        if march['kind'] == 'attack' and not historical_campaigns.allied(
+                            state,row['owner'],march['owner']) and march['owner'] != row['owner']
+                        and march['arrival_turn'] <= state.turn+max(1,(quote.days+9)//10)}
+            weather = winter_travel.seasonal_forecast(game,state,route)
+            if (row['delivery_done'] and can_receive(game,state,row,local)
+                    and (approach.intersection(route['path'][1:]) or weather['reaches'])):
+                strategic_granary.observe(state,'return_shelter',convoy_id=row['id'],owner=row['owner'],
+                    city=local.id,home=home.id,reason='route_threat' if approach.intersection(route['path'][1:]) else 'ice_risk',
+                    return_days=quote.days,required=needed,grain=available(row))
+                return logistics._dock(game,state,row,local)
+            missing = max(0,needed-available(row))
+            if missing and local.owner == row['owner'] and stock(game,state,local) >= missing:
+                _take_local(game,state,row,local,missing)
         if needed > available(row):
             continue
         if logistics._keep_return_journey(row,here,home.id,route):

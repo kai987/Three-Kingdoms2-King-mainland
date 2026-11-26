@@ -93,6 +93,9 @@ def _entity(game, state, owner, source, busy, absent, decision, posts, *, automa
     # Military budgets already include staging commitments. Subtract each
     # source reservation only once before checking the physical ration budget.
     unreserved = min(staging_supply.available(state,source),source.grain-budget.get('reserved_grain',0))
+    from . import strategic_granary
+    if strategic_granary.enabled(state):
+        unreserved = min(unreserved, strategic_granary.available(state,source))
     floor = max(policy['reserve_grain'], budget.get('minimum_export_floor',0),
                 budget.get('next_installment',0),budget.get('safety_reserve',0) if budget.get('threatened') else 0)
     return (source,policy,escort,max(0,unreserved-floor)), None

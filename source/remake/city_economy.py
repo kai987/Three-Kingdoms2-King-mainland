@@ -246,6 +246,8 @@ def turn_rations(monthly, installment):
 
 
 def settle_turn_grain(game, state):
+    from . import strategic_granary
+    strategic = strategic_granary.enabled(state)
     absent = absent_troops(game, state)
     garrisons = garrison_grain(game, state, absent)
     cities = state.extension.get('city_development', {}).get('cities', {})
@@ -259,6 +261,8 @@ def settle_turn_grain(game, state):
                                                town_level(game, state, key), state=state)
         required = turn_rations(monthly, installment)
         paid = min(required, city.grain)
+        if strategic:
+            strategic_granary.spending(state,city,paid,'civilian_and_garrison')
         city.grain -= paid
         missing = required - paid
         if not missing:
