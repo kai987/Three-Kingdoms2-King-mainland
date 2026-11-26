@@ -279,6 +279,11 @@ def analyze(case,run,directory,exports):
         exports['commodity-grain-flow'].append(row)
         exports['landed-cost-comparison'].append(dict(row,estimated_net=buy['estimated_net'],
             estimated_days=buy['estimated_days'],estimated_grain_loss=buy['estimated_loss'],
+            return_days=buy.get('return_days','not_collected'),return_route=buy.get('return_route','not_collected'),
+            return_rations=buy.get('return_rations','not_collected'),
+            source_stock=buy.get('source_stock','not_collected'),
+            source_market_capacity=buy.get('source_market_capacity','not_collected'),
+            transport_capacity=buy.get('transport_capacity','not_collected'),
             planned_escort_rations=buy['reserved_rations'],forecast_escort_rations=buy['expected_rations'],
             estimate_cents_per_thousand=buy['landed_cents'],actual_extra_grain=close['extra_rations'] if close else None,
             actual_cents_per_thousand=actual_cost,actual_reference_price=ref if ref is not None else 'not_collected',
@@ -578,7 +583,8 @@ def deliver(root,results,report):
         'browser-engine-smoke.log browser-ui.log regional-market-zh.png regional-market-ja-mobile.png '
         'web-build.log march-build.log full-suite.log prior-archives.json commercial-fixture.json '
         'regional-runtime-tests.log commercial-fixture.log locales-final.log python-shard-2-rerun.log '
-        'browser-ui-local-market.log city-market-stock-zh.png gates-final.json regional-python-final.log'.split())
+        'browser-ui-local-market.log city-market-stock-zh.png gates-final.json regional-python-final.log '
+        'release-confirmation.log release-confirmation.json'.split())
     evidence_names.update(f'{backend}-shard-{part}.log' for backend in ('python','rust') for part in range(1,7))
     paths.extend((path,'checks/'+path.name) for path in sorted((root/'checks').iterdir()) if path.name in evidence_names)
     replay=root/'replay-1706'
