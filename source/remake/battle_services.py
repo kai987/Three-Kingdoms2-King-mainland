@@ -55,7 +55,8 @@ def quote(game, state, battle, actor, side, *, site=None):
         stock={'weapon': [], 'armor': []}, trade=None,
         medical_gold=facilities._rule(game, 'medical_gold'))
     if site['kind'] == 'market':
-        rate = facilities.market_rate(game, _town(state, battle), 'buy', state.month, state=state)
+        rate = facilities.market_rate(game, _town(state, battle), 'buy', state.month, state=state,
+                                      city=battle['target'])
         batch = facilities._rule(game, 'trade_batch_grain')
         room = max(0, battle_supply.pool_limit(battle, side) - grain)
         market = grain_market.available(state, battle['target'], 'buy')
@@ -128,7 +129,8 @@ def execute(game, state, payload, *, side=None):
                        battle_id=battle['id'],side=own,destination='battle')
         if 'market_city' in trade:
             market_city = trade['market_city']
-            grain_market.transfer(state, market_city, 'buy', grain)
+            grain_market.transfer(state, market_city, 'buy', grain, gold=gold, rate=trade['rate'],
+                                  channel='battle', payer=payer.id)
             details['market_city'] = market_city
     else:
         slot, item = payload['slot'], payload['item']

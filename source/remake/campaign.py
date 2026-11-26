@@ -20,7 +20,7 @@ from . import civil_staff, domestic, logistics, presentation, treasures, facilit
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from . import battle_reinforcements, city_economy, economy_rules, grain_market, logistics_rules, logistics_strategy, payroll
-from . import transport_emergency, winter_weather
+from . import market_pricing, transport_emergency, winter_weather
 from .city_economy import frontier_maintenance
 from .starting_garrisons import resolve as resolve_opening_garrisons
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
@@ -384,6 +384,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         state.extension['facilities'] = facilities.empty(self,state)
         state.extension['city_development'] = city_development.empty(self,state)
         grain_market.initialize(self, state)
+        market_pricing.initialize(state)
         state.extension['equipment'] = equipment.empty(self,state)
         command_books.initialize(self, state)
         equipment.synchronize(self,state)
@@ -497,6 +498,17 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                         if requested and logistics_rules.version(candidate) != logistics_rules.CURRENT:
                             raise GameError('運輸應急需要目前的後勤規則。')
                         transport_emergency.initialize(candidate, requested)
+                    if market_pricing.FIELD in payload or market_pricing.AUTOMATION in payload:
+                        requested = payload.get(market_pricing.FIELD, 0)
+                        automatic = payload.get(market_pricing.AUTOMATION, False)
+                        if (type(requested) is not int or requested not in (0, market_pricing.VERSION)
+                                or type(automatic) is not bool or automatic and not requested):
+                            raise GameError('區域市場規則版本無效。')
+                        if requested and (economy_rules.version(candidate) != economy_rules.CURRENT
+                                          or logistics_rules.version(candidate) != logistics_rules.CURRENT):
+                            raise GameError('區域市場需要目前的經濟及後勤規則。')
+                        market_pricing.initialize(candidate,
+                            (market_pricing.TRADE if automatic else market_pricing.PROCUREMENT) if requested else 0)
                     if campaign_id is not None:
                         candidate.extension['campaign_id'] = campaign_id
                 else:
@@ -842,6 +854,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         else:
             city_economy.settle_turn_grain(self, state)
         state.turn += 1
+        market_pricing.refresh(state)
         if winter_weather.stage(state)>=2:
             from . import staging_supply
             staging_supply.update_weather(self,state)
@@ -979,6 +992,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         winter_weather.validate(self, state)
         transport_emergency.validate_version(state)
         grain_market.validate(state)
+        market_pricing.validate(state)
         command_books.validate(self, state)
         diplomacy.validate(self, state)
         civil_staff.validate(self, state)
