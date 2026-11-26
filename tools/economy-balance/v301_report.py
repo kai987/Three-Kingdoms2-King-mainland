@@ -32,6 +32,14 @@ PAIR_METRICS=('unpaid_city_turns','rations_missing','empty_market_percent','mean
       'regional_end_inventory_hhi','mean_turn_cpu_seconds','p95_turn_wall_seconds')
 AUDITED_BASELINE=('monthly.csv','factions.csv','cities.csv','shortages.csv','convoys.csv',
                   'regional-weather-daily.csv','river-ice-daily.csv','supply-episodes-weather-aware.csv')
+OBSERVED_FILES=frozenset(AUDITED_BASELINE)|frozenset('run.json battles.csv troop-flows.csv action-capacity.csv '
+    'army-convoys.csv army-requests.csv convoy-events.csv convoy-ledger.csv.gz convoy-resolution-daily.csv.gz '
+    'convoy-relief-deliveries.csv convoy-relief-requests.csv convoy-survival.csv convoy-terminal-events.csv '
+    'emergency-evacuation-plans.csv emergency-local-refills.csv emergency-transport-decisions.csv '
+    'transport-progress-daily.csv.gz ice-transport-events.csv winter-cargo-impacts.csv weather-route-impacts.csv '
+    'market-stock-flow.csv.gz city-market-prices.csv.gz market-price-changes.csv.gz regional-market-daily.csv.gz '
+    'regional-market-monthly.csv regional-orders.jsonl route-changes.csv unresolved-convoy-cases.csv '
+    'supply-episodes.csv supply-requests.csv'.split())
 RECEIPTS=('cargo_rations','cargo_route_loss','cargo_weather_loss','cargo_delivered',
           'cargo_returned','cargo_abandoned','cargo_remaining')
 SCRIPTS=('v301_experiments.py','v301_report.py','v301_replay_1706.py','v301_commercial_fixture.py')
@@ -91,7 +99,7 @@ def metadata(output):
             cities.setdefault(city['id'],dict(city=city['id'],name=city['name'],
                 region=economic_regions.region(city['id']),
                 region_name=economic_regions.REGIONS[economic_regions.region(city['id'])][0],
-                latitude=city.get('latitude'),longitude=city.get('longitude')))
+                map_x=city.get('x'),map_y=city.get('y')))
         for route in data['travel_routes']:
             a,b=route['from'],route['to']
             for origin,target in ((a,b),(b,a)):
@@ -254,8 +262,9 @@ def analyze(case,run,directory,exports):
                 'cargo_received','cargo_abandoned','cargo_remaining')})
         cash=(sale['gold'] if sale else 0)-buy['gold']
         ref=buy.get('reference_price')
-        economic=(cash*1000-close['extra_rations']*ref) if sale and close and ref is not None else None
-        actual_cost=landed_cents(buy['gold'],close['extra_rations'],ref,volume) if close and ref is not None else None
+        economic=(cash*1000-close['extra_rations']*ref if ref is not None else 'not_collected') if sale and close else None
+        actual_cost=(landed_cents(buy['gold'],close['extra_rations'],ref,volume)
+                     if ref is not None else 'not_collected') if close and volume else None
         row=dict(tag,order=order_id,purpose=category,automatic=buy['automatic'],source=origin,target=target,
             source_region=origin_region,target_region=target_region,buy_turn=buy['turn'],
             dispatch_turn=dispatch['turn'] if dispatch else None,arrival_turn=delivery['turn'] if delivery else None,
@@ -268,11 +277,22 @@ def analyze(case,run,directory,exports):
             estimated_days=buy['estimated_days'],estimated_grain_loss=buy['estimated_loss'],
             planned_escort_rations=buy['reserved_rations'],forecast_escort_rations=buy['expected_rations'],
             estimate_cents_per_thousand=buy['landed_cents'],actual_extra_grain=close['extra_rations'] if close else None,
-            actual_cents_per_thousand=actual_cost,actual_reference_price=ref,deadline_days=buy['deadline']))
+            actual_cents_per_thousand=actual_cost,actual_reference_price=ref if ref is not None else 'not_collected',
+            deadline_days=buy['deadline']))
         if category=='trade':
             exports['trade-profit-comparison'].append(dict(row,receipt_scope='spectator_matrix',net_cash=cash,
                 unsold_receipt_grain=volume-row['grain_sold'],economic_milli=economic))
         landed+=buy['landed_cents']
+    for side in ('buy','sell'):
+        flow_side='grain_bought' if side=='buy' else 'grain_sold'
+        gold_side='purchase_gold' if side=='buy' else 'sale_gold'
+        observed=(sum(v[side+'_grain'] for v in flow.values()),sum(v[side+'_gold'] for v in flow.values()))
+        if observed!=(n(final,flow_side),n(final,gold_side)):
+            raise ValueError((directory,'market cash or grain receipts differ from official totals',side,observed))
+    for purpose in ('procurement','trade'):
+        source_rows=[entry for (_,channel),entry in flow.items() if channel=='regional_'+purpose]
+        if sum(v['buy_grain'] for v in source_rows)!=output[purpose]['purchased']:
+            raise ValueError((directory,'regional purchase differs from the physical market',purpose))
     for purpose in ('procurement','trade'):
         entry=output[purpose]
         level=2 if purpose=='procurement' else 3
@@ -430,6 +450,18 @@ def comparisons(scores):
     return result
 
 
+def long_windows(case,run,directory):
+    tag=identity(case,run)
+    end=run['full_months']
+    for row in rows(directory/'monthly.csv'):
+        at=n(row,'elapsed_months')
+        if at%60==0 or at==end:
+            yield dict(tag,checkpoint_month=at,year=n(row,'year'),month=n(row,'month'),
+                **{k:n(row,k) for k in ('gold_stock','grain_stock','market_stock','active_troops',
+                    'reserves','population','unpaid_city_turns','rations_missing','convoy_grain_arrived',
+                    'convoy_hunger_losses','ai_sorties','battles')})
+
+
 def archive_crosscheck(prior,results):
     evidence=[]
     with ZipFile(prior['path']) as linked:
@@ -453,6 +485,24 @@ def archive_crosscheck(prior,results):
             evidence.append(dict(group=group,seed=seed,scenario=scene,strategy=strategy,months=months,member=prefix,
                                  checks=checks))
     return evidence
+
+
+def historical_cases(weather_v221,weather_v222):
+    records=[]
+    for archive, fixtures in (
+        (weather_v221,{126:'reproduction/convoy-126/diagnostic.jsonl',
+                       1685:'reproduction/convoy-1685/diagnostic.jsonl'}),
+        (weather_v222,{77:'reproduction/baseline/convoy-77/node-decisions.json',
+                      2:'reproduction/baseline/convoy-2/node-decisions.json',
+                      45:'reproduction/baseline/convoy-45/node-decisions.json',
+                      1706:'observed/J3-212/2026/240/208-10/convoy-survival.csv'})):
+        with ZipFile(archive['path']) as file:
+            for convoy,member in fixtures.items():
+                with file.open(member) as stream:
+                    member_sha=file_digest(stream,'sha256').hexdigest()
+                records.append(dict(convoy=convoy,archive=archive['path'],archive_sha256=archive['sha256'],
+                    member=member,member_sha256=member_sha,scope='verified_prior_receipt'))
+    return records
 
 
 def discover(root):
@@ -491,17 +541,18 @@ def deliver(root,results,report):
     evidence_names=set('baseline-matrix.log final-candidate-matrix.log baseline-confirmation.log warehouse-account.log '
         'convoy-1706-replay.log regional-market-tests.log node-tests.log rust-tests.log wasm-vectors.log '
         'browser-engine-smoke.log browser-ui.log regional-market-zh.png regional-market-ja-mobile.png '
-        'web-build.log march-build.log full-suite.log prior-archives.json commercial-fixture.json'.split())
+        'web-build.log march-build.log full-suite.log prior-archives.json commercial-fixture.json '
+        'regional-runtime-tests.log commercial-fixture.log locales-final.log python-shard-2-rerun.log'.split())
     evidence_names.update(f'{backend}-shard-{part}.log' for backend in ('python','rust') for part in range(1,7))
     paths.extend((path,'checks/'+path.name) for path in sorted((root/'checks').iterdir()) if path.name in evidence_names)
     replay=root/'replay-1706'
-    for name in ('node-decisions.json','convoy-1706.json'):
+    for name in ('node-decisions.json','convoy-1706.json','regression-check.json'):
         if (replay/name).is_file():
             paths.append((replay/name,'historical/convoy-1706/'+name))
     for case, _, directory in results:
         prefix=run_directory(Path(),case).as_posix()
         paths.extend((path,prefix+'/'+path.name) for path in sorted(directory.iterdir())
-                     if path.is_file() and path.suffix in ('.csv','.gz','.json','.jsonl'))
+                     if path.is_file() and path.name in OBSERVED_FILES)
     temporary=root/(ARCHIVE+'.writing')
     unique={}
     for path,member in paths:
@@ -556,6 +607,7 @@ def main():
             weather_seed=run['weather_seed'],rule_versions=run['rule_versions'],emergency=run['emergency'],
             market_stage=run['market_stage'],runtime=run['backend']['engine'],parameters=run['parameters']))
     historical=archive_crosscheck(archives[-1],results)
+    archived_cases=historical_cases(*archives[-2:])
     audit_names=('monthly.csv','factions.csv','cities.csv','shortages.csv','convoys.csv','market-stock-flow.csv.gz',
                  'city-market-prices.csv.gz','supply-episodes-weather-aware.csv')
     controls=[]
@@ -575,17 +627,19 @@ def main():
     matrix_cmp=comparisons(scores)
     tables['scenario-scores']=scores
     tables['pairwise']=matrix_cmp
-    tables['long-term-economy-comparison']=[row for row in scores if row['wave']=='long']
+    tables['long-term-economy-comparison']=[sample for case,run,directory in results if EXPECTED[case]=='long'
+                                          for sample in long_windows(case,run,directory)]
     if (checks/'commercial-fixture.json').is_file():
         tables['trade-profit-comparison'].extend(commercial_acceptance(read_json(checks/'commercial-fixture.json')))
     tables['baseline-verification']=[dict(kind='historical_weather',group=item['group'],scenario=item['scenario'],
         seed=item['seed'],strategy=item['strategy'],months=item['months'],member=item['member'],**check)
         for item in historical for check in item['checks']]
+    tables['historical-convoy-references']=archived_cases
     names=['market-price-distribution','market-stock-flow','regional-supply-demand','regional-procurement-comparison',
            'regional-trade-comparison','landed-cost-comparison','commodity-grain-flow','regional-market-shortages',
            'trade-profit-comparison','gold-inflation-comparison','convoy-hunger-comparison','winter-army-supply-comparison',
            'scenario-scores','pairwise','long-term-economy-comparison','performance-comparison','warehouse-resource-account',
-           'baseline-verification']
+           'baseline-verification','historical-convoy-references']
     for name in names:
         write(exports_dir,name,tables[name],fields=('wave','scenario','seed','strategy','weather','group','months',
                'order','source','target','sale_gold','net_cash','unsold_receipt_grain','economic_milli')
@@ -599,7 +653,7 @@ def main():
         source=source_identity(),map_and_campaign_inputs=hashes,historical_archives=archives,
         historical_baseline_files=sum(len(entry['checks']) for entry in historical),
         historical_baseline_equal=sum(check['equal'] for entry in historical for check in entry['checks']),
-        historical_baseline=historical,final_control_checks=controls,warehouse_posting_replays=[
+        historical_baseline=historical,archived_convoys=archived_cases,final_control_checks=controls,warehouse_posting_replays=[
             identity(case,run) for case,run,_ in results if run.get('warehouse_postings')],
         tags={'0':'observed zero','not_collected':'not recorded by that observer','not_applicable':'mechanism unavailable',
               'null':'undefined denominator, censored receipt or missing reference','partial':'expected required case pending'})
