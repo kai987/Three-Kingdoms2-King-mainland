@@ -319,9 +319,12 @@ def describe(run,directory,exports):
     spatial = dict(grounds, faction_gap=grounds['measured']-grounds['local'],
         local=grounds['local'], legal_coverage_pct=pct(grounds['legal_surplus_covered'],grounds['legal_surplus_covered_sampled']),
         regional_stock_hhi=round(sum((v/sum(regions.values()))**2 for v in regions.values()),7) if sum(regions.values()) else None)
+    winter_shortages=[row for row in shortages if value(row,'month') in climate_regions.WINTER_MONTHS]
     weather_metrics = dict(winter_requested=winter.get('required',0) if run['weather'] else 'not_applicable',
         winter_delivered_timely=winter.get('timely',0) if run['weather'] else 'not_applicable',
         winter_timely_percent=pct(winter.get('timely',0),winter.get('required',0)) if run['weather'] else None,
+        winter_shortage_city_turns=len(winter_shortages) if run['weather'] else 'not_applicable',
+        winter_shortage_grain=sum(value(row,'missing') for row in winter_shortages) if run['weather'] else 'not_applicable',
         annual_requested=overall.get('required',0),annual_delivered_timely=overall.get('timely',0))
     exports['winter-army-supply-comparison'].append(dict(tag,**weather_metrics))
     exports['spatial-grain-imbalance'].append(dict(tag,**spatial))

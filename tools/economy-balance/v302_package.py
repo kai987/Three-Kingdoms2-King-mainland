@@ -190,6 +190,19 @@ def summary(root, manifest, status, stage):
                 grain=[int(r['strategic_delivered']) for r in subset if valid_numeric(r['strategic_delivered']) is not None]
                 lines.append(f'| {group} | {len(subset)} | {vals[0]} | {vals[1]} | {vals[2]} | {sum(grain) if grain else "—"} |')
         lines.append('')
+    winter_sample=[row for row in scores if row['wave']=='winter']
+    if winter_sample:
+        lines.extend(['### 五年天气联动的冬季补给','',
+            '| 组 | 军事申请粮 | 及时实收粮 | 加权及时率 | 城池缺粮旬 | 城池缺粮量 |',
+            '| --- | ---: | ---: | ---: | ---: | ---: |'])
+        for group in ('S0','S1','S2','S3','S4'):
+            group_scores=[row for row in winter_sample if row['group']==group]
+            if group_scores:
+                names=('winter_requested','winter_delivered_timely','winter_shortage_city_turns','winter_shortage_grain')
+                requested,timely,city_turns,city_gap=(sum(int(row[name]) for row in group_scores) for name in names)
+                rate=f'{timely/requested:.2%}' if requested else '—'
+                lines.append(f'| {group} | {requested:,} | {timely:,} | {rate} | {city_turns:,} | {city_gap:,} |')
+        lines.extend(['','冬季口径沿用天气验收的十一月至三月。及时率使用实际申请和实际及时收粮总量。',''])
     live=[r for r in scores if r['group'] in ('S3','S4')]
     if live:
         lines.extend(['### 空间调粮、冬季与返回',''])
