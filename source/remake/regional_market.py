@@ -269,6 +269,8 @@ def procure(game,state,owner,plan):
         if requested<=0:
             continue
         local=facilities.emergency_quote(game,state,target,requested)
+        if not plan.budgets[key]['market_affordable']:
+            local=dict(local,grain=0)
         if row.zero_in<=1 and (local['grain']>=requested or
                 local['grain'] and not command_books.can_spend(state,owner,3)):
             continue
@@ -299,7 +301,11 @@ def procure(game,state,owner,plan):
 
 
 def automatic_trade(game,state,owner,shortages):
-    if pricing.stage(state)!=pricing.TRADE or shortages or not command_books.can_spend(state,owner,2):
+    if pricing.stage(state)!=pricing.TRADE:
+        return
+    if shortages or not command_books.can_spend(state,owner,2):
+        pricing.report('regional_trade_gate',state,owner=owner,
+            reason='food_recovery' if shortages else 'command_books')
         return
     pending=[item for item in _orders(state).values() if item['owner']==owner and item['auto']
              and item['status']=='awaiting_sale']
@@ -312,10 +318,12 @@ def automatic_trade(game,state,owner,shortages):
         and pricing.snapshot(game,state,city.id)['buy']<ceiling
         for city in holding)
     if not (pending or buy_possible):
+        pricing.report('regional_trade_gate',state,owner=owner,reason='no_price_spread')
         return
     from . import faction_economy
     plan=faction_economy.plan(game,state,owner)
     if plan.shortages(state,within=9):
+        pricing.report('regional_trade_gate',state,owner=owner,reason='food_recovery')
         return
     safe={key for key,row in plan.budgets.items() if not row['threatened']}
     absent=game._march_ids(state) | facilities._battle_ids(state)
@@ -333,6 +341,7 @@ def automatic_trade(game,state,owner,shortages):
             _sell(game,state,item,min(actors,key=logistics._key),offer)
             return
     if not buy_possible or not command_books.can_spend(state,owner,3):
+        pricing.report('regional_trade_gate',state,owner=owner,reason='sale_not_ready' if pending else 'command_books')
         return
     planner=Planner(game,state,owner,decision=plan,automatic=True)
     targets=sorted((state.cities[key] for key in safe),key=lambda c:(

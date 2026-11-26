@@ -24,6 +24,25 @@ def quota_left(state, city, direction):
     return max(0, grain_market.row(state,city)['monthly_supply'] * COMMERCIAL_SHARE // 100 - used)
 
 
+def role_scores(city, market, budget, *, legal_modes=(), contacts=0):
+    """Update overlapping roles from current budgets and already quoted links."""
+    def ratio(value, scale):
+        return min(100,max(0,value)*100//max(1,scale))
+
+    supply, fixed = market['monthly_supply'], budget.get('fixed',0)
+    agriculture = ratio(budget.get('regular',0),2*fixed)
+    export = ratio(budget.get('exportable',0),max(fixed,supply))
+    purchasing = ratio(city.gold,max(1,supply//50))
+    replenishment = ratio(market['stock'],supply)
+    return dict(agricultural_output=(agriculture+export+replenishment)//3 if contacts else 0,
+        commercial_purchase=(purchasing+replenishment+ratio(budget.get('regular_gold',0),city.gold)
+                             + min(100,contacts*25))//4,
+        military_consumption=(ratio(budget.get('garrison',0),fixed)
+                              + ratio(-budget.get('net',0),fixed))//2,
+        transport_connection=min(100,contacts*15+len(legal_modes)*15),
+        strategic_stock=ratio(city.grain,budget.get('target',0)) if budget.get('months')==12 else 0)
+
+
 def _meal(game, state, quote, escort, *, offset=0):
     if winter_weather.movement(state):
         days, weight, ice = winter_travel.checkpoint_forecast(game,state,quote)
@@ -152,6 +171,7 @@ class Planner:
         network=self._route_book(target,candidates)
         destination=market_pricing.snapshot(game,state,target.id)
         results=[]
+        roles={}
         for city,policy,escort,ration_stock,amount,prices in candidates:
             quotes=network[policy['allow_sea'],policy['allow_special']]
             outward=logistics._safe_options(game,state,city,target,policy,quotes=quotes)
@@ -159,6 +179,9 @@ class Planner:
             if not outward or not backward:
                 failures['no_directed_round_trip']+=1
                 continue
+            if self.decision is not None:
+                roles[city.id]=role_scores(city,grain_market.row(state,city.id),self.decision.budgets[city.id],
+                    legal_modes={leg['mode'] for _,quote in outward for leg in quote['routes']},contacts=1)
             for mode,route in outward:
                 meal=_meal(game,state,route,escort)
                 back=_meal(game,state,backward[0][1],escort,offset=meal[0] if meal else 0)
@@ -228,5 +251,6 @@ class Planner:
                 row['token']=sha256(repr(tuple(sorted(row.items()))).encode()).hexdigest()[:24]
                 results.append(row)
         self.work['evaluations']+=1
-        return sorted(results,key=lambda q:(q['timely'] is False,q['landed_cents'],-q['net'],
-                                            q['days'],q['source'],q['route_mode'])),dict(failures)
+        role='commercial_purchase' if purpose=='trade' else 'agricultural_output'
+        return sorted(results,key=lambda q:(q['timely'] is False,q['landed_cents'],-q['net'],q['days'],
+            -roles.get(q['source'],{}).get(role,0),q['source'],q['route_mode'])),dict(failures)
