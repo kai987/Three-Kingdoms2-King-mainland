@@ -118,6 +118,9 @@ def _cargo_change(row, kind, new_cargo, day, reference=None):
         return
     row['cargo_ledger'].append(dict(kind=kind,day=day,before=before,
                                     after=deepcopy(new_cargo),reference=reference))
+    if 'regional' in row:
+        from . import regional_market
+        regional_market.track_cargo(row,kind,before['grain'],new_cargo['grain'])
     row['cargo'] = deepcopy(new_cargo)
     if winter_weather.detailed():
         winter_weather.report('convoy_ledger',convoy_id=row['id'],tick=day,owner=row['owner'],
@@ -167,6 +170,9 @@ def advance_supply(game, state, row, through_turn=None, *, absolute_tick=None, p
                         on_cargo_day=apply_loss if LOSS_FIELD in row else None,
                         absolute_tick=absolute_tick,parts=parts,self_funded=managed or 'convoy_relief' in row,weather_parts=weather_parts)
     journey=row['journeys'][-1]
+    if 'regional' in row:
+        from . import regional_market
+        regional_market.track_meals(row,journey['supply']['remaining'])
     remaining=max(0,journey['quote']['days']-journey['supply']['route_days'])
     if 'winter' in journey['supply']:
         remaining=winter_travel.quote_days(game,state,journey['quote'],position=winter_travel.work(journey['supply']))
@@ -739,7 +745,7 @@ def _journey(game, state, source, target, mode, quote, ids, reserves, *, from_ca
 
 
 def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planner=None, donor_budget=None, allocation=None,
-             convoy_relief_quote=None):
+             convoy_relief_quote=None, regional_order=None):
     from . import transport_emergency
     if (not isinstance(payload, dict) or set(payload) - {'source', 'target', 'officers', 'cargo', 'route_mode','target_march','target_convoy'}
             or not isinstance(payload.get('source'), str) or not isinstance(payload.get('target'), str)
@@ -865,6 +871,8 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planne
         route_policy={k:policy[k] for k in ('allow_sea','allow_special')})
     if logistics_rules.version(state)==logistics_rules.CURRENT:
         row[LOSS_FIELD]=0
+    if regional_order is not None:
+        row['regional']=dict(id=regional_order,cargo=cargo['grain'],bag=0,consumed=0)
     if winter_weather.corrected(state,winter_weather.TRANSPORT):
         row['original_eta']=row['journeys'][0]['arrival_turn']
     if relief:
@@ -1240,7 +1248,7 @@ def _dock(game, state, row, target, *, surrender=False):
         row['journeys'][-1]['supply']['retreat_requested']=True
         return False
     row['target']=target.id
-    if winter_weather.observing():
+    if winter_weather.observing() or 'regional' in row:
         outcome='surrender_settlement' if surrender else 'returned_home' if target.id==row['source'] else 'received_elsewhere'
         _trace_terminal(game,state,row,outcome,target.id)
     # Once physically received, these people are no longer marching. This must
@@ -1267,6 +1275,9 @@ def _dock(game, state, row, target, *, surrender=False):
 
 
 def _trace_terminal(game, state, row, outcome, city=None):
+    if 'regional' in row:
+        from . import regional_market
+        regional_market.transport_closed(state,row,outcome,city)
     from .transport_emergency import note
     note(game,state,'convoy_terminal',row,at=city,terminal_status=outcome,source=row['source'],
          initial_reserves=row['initial_cargo']['reserves'],delivered=row['delivery_done'],
@@ -1291,7 +1302,7 @@ def _unload(game, state, row, target):
     """Cargo arrives; escorts retain their home slots until the real return."""
     from . import domestic, transport_emergency
     if (row['target_march'] is None and (winter_weather.corrected(state,winter_weather.TRANSPORT)
-            or transport_emergency.stage(state))):
+            or transport_emergency.stage(state) or 'regional' in row)):
         _reserve_before_unload(game,state,row,target)
     cargo=deepcopy(row['cargo'])
     for field in ('gold','grain'):
@@ -1304,6 +1315,9 @@ def _unload(game, state, row, target):
                   dict(city=target.id))
     for field in _CARGO_FIELDS:row['delivered'][field]+=cargo[field]
     row['delivery_done']=True
+    if 'regional' in row:
+        from . import regional_market
+        regional_market.unloaded(state,row,target,cargo['grain'])
     _pool(state)['receipts']['city:'+target.id]=state.turn+RULES['receipt_turns']
     _event(game,state,'transport_arrived',row,reason='delivered',amounts=cargo)
 
@@ -1874,7 +1888,7 @@ def validate(game, state):
     row_fields=_ROW_FIELDS | {LOSS_FIELD} if weighted else _ROW_FIELDS
     from . import transport_emergency
     for row in pool['convoys']:
-        if (not isinstance(row, dict) or set(row)-{'relief','return_leg','original_eta','emergency','convoy_relief'} != row_fields
+        if (not isinstance(row, dict) or set(row)-{'relief','return_leg','original_eta','emergency','convoy_relief','regional'} != row_fields
                 or not _int(row['id'], 1, pool['next_id'] - 1)
                 or weighted and not _int(row[LOSS_FIELD],0,logistics_rules.LOSS_SCALE-1)
                 or row['id'] in seen or row['source'] in origins or row['owner'] not in game.catalog.factions

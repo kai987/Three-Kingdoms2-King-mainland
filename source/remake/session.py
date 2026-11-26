@@ -421,6 +421,22 @@ class CampaignSession:
                 raise GameError('请选择本方目的城。')
             return preview_logistics(self.game,state,source,target,ids,mode,purpose,cargo,reserves,self.revision)
 
+    def preview_regional_market(self, payload):
+        from . import regional_market
+
+        with self.lock, grain_units.using(self.game.state):
+            state=self.game.state
+            if (state is None or not isinstance(payload,dict)
+                    or set(payload)!={'target','qty','purpose','source','revision'}
+                    or type(payload['revision']) is not int
+                    or not isinstance(payload['target'],str) or not isinstance(payload['purpose'],str)
+                    or payload['source'] is not None and not isinstance(payload['source'],str)):
+                raise GameError(regional_market.INVALID_ORDER)
+            if self.revision!=payload['revision']:
+                raise GameError('进度已更新，请重新选择操作。',409)
+            return regional_market.preview(self.game,state,state.player,payload['target'],payload['qty'],
+                                           payload['purpose'],payload['source'])
+
     def load_save(self, save, revision):
         with self.lock:
             if type(revision) is not int or revision!=self.revision:raise GameError('进度已更新。',409)

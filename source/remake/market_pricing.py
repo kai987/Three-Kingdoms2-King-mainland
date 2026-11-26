@@ -77,7 +77,7 @@ def initialize(state, level=None):
     elif level == TRADE:
         fields[AUTOMATION] = True
     fields[POOL] = dict(map_version=economic_regions.VERSION, turn=0, snapshots={},
-                        history={}, orders={}, next_id=1, quota_month=month_key(state), quotas={})
+                        history={}, orders={}, next_id=1, quota_month=month_key(state), quotas={}, reviews={})
     refresh(state)
 
 
@@ -151,7 +151,7 @@ def validate(state):
         raise ValueError('Regional market version')
     ledger = pool(state)
     if (not isinstance(ledger, dict)
-            or set(ledger) != {'map_version','turn','snapshots','history','orders','next_id','quota_month','quotas'}
+            or set(ledger) != {'map_version','turn','snapshots','history','orders','next_id','quota_month','quotas','reviews'}
             or ledger['map_version'] != economic_regions.VERSION or ledger['turn'] != state.turn
             or ledger['quota_month'] != month_key(state)):
         raise ValueError('Regional market state')

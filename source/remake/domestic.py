@@ -695,6 +695,9 @@ def prioritize_grain(game, state, owner, outlook=None, *, economy_plan=None):
             plan = faction_economy.plan(game, state, owner)
         if plan.shortages(state) and diplomacy.request_available_grain(game, state, owner):
             plan = faction_economy.plan(game, state, owner)
+        from . import regional_market
+        if regional_market.procure(game,state,owner,plan):
+            plan = faction_economy.plan(game,state,owner)
         purchases = grain_dispatch.recover(game, state, owner, plan)
         if any(row['bought'] for row in purchases):
             plan = faction_economy.plan(game, state, owner)
@@ -842,7 +845,8 @@ def finish_faction_turn(game, state, owner, *, automatic=True, outlook=None):
         treasures.synchronize(game,state)
         treasures.auto_turn(game, state, owner, food_priority=food_priority)
         if owner != state.player:
-            from . import city_development
+            from . import city_development, regional_market
+            regional_market.automatic_trade(game,state,owner,shortages)
             treasures.ai_idle_turn(game, state, owner, food_priority=food_priority)
             city_development.auto_turn(game, state, owner, shortages=shortages)
     synchronize(game, state)

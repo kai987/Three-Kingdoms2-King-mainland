@@ -20,7 +20,7 @@ from . import civil_staff, domestic, logistics, presentation, treasures, facilit
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from . import battle_reinforcements, city_economy, economy_rules, grain_market, logistics_rules, logistics_strategy, payroll
-from . import market_pricing, transport_emergency, winter_weather
+from . import market_pricing, regional_market, transport_emergency, winter_weather
 from .city_economy import frontier_maintenance
 from .starting_garrisons import resolve as resolve_opening_garrisons
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
@@ -448,6 +448,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'logistics':logistics.view(self,state,travel_quotes=travel.get('travel_quotes',{})),
                                 'treasury':treasures.view(self,state),
                                 'facilities':facilities.view(self,state),
+                                **({'regional_market':regional_market.view(self,state)}
+                                   if state and market_pricing.stage(state) else {}),
                                 'city_development':city_development.view(self,state),
                                 'battle_supply':battle_supply.view(state,state.battle) if state and state.battle else None,
                                 'battle_supply_rules':battle_supply.rules(),
@@ -537,6 +539,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                'staff_recruit': self._staff_recruit, 'choose_successor': self._choose_successor,
                                'set_domestic':self._set_domestic,'set_logistics':self._set_logistics,
                                'dispatch_transport':self._dispatch_transport,
+                               regional_market.COMMAND:lambda state,payload:regional_market.execute(self,state,payload,state.player),
                                **{action: self._treasury_command(action) for action in
                                   ('search_treasure','reward_officer','sell_treasure','set_governor','set_treasury_policy')},
                                **{action:self._facility_command(action) for action in
@@ -870,6 +873,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         self._resolve_supply_retreats(state)
         logistics.synchronize(self,state)
         logistics.resolve_supply_retreats(self,state)
+        regional_market.maintain(state)
         for city in state.cities.values():
             city.action_used = False
         command_books.initialize(self, state)
@@ -1000,6 +1004,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         battle_reinforcements.validate_returns(self, state)
         domestic.validate(self,state)
         logistics.validate(self,state)
+        regional_market.validate(self,state)
         treasures.validate(self,state)
         facilities.validate(self,state)
         equipment.validate(self,state)
