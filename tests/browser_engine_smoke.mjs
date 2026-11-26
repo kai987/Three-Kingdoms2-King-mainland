@@ -13,6 +13,7 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const build=path.resolve(root,process.argv[2]||'build/web');
 const runtimeDirectory=path.join(root,'tools/web-runtime/node_modules/pyodide');
 const candidateSave=process.argv[3];
+const regionalSave=process.env.TK2_REGIONAL_BROWSER_FIXTURE;
 const sha=value=>createHash('sha256').update(value).digest('hex');
 const decode=bytes=>new TextDecoder('utf-8',{fatal:true}).decode(bytes);
 const jsonFile=name=>JSON.parse(fs.readFileSync(name,'utf8'));
@@ -37,8 +38,9 @@ const initial=manifest.initial_scenario;
 const another=manifest.catalogs.find(row=>row.id!==initial)?.id;
 assert(another,'a second scenario is required for the lazy switching check');
 const logisticsScenario='mainland217-07';
+const regionalScenario='mainland208-10';
 const catalogs=new Map();
-for(const identity of new Set([initial,another,logisticsScenario])){
+for(const identity of new Set([initial,another,logisticsScenario,...(regionalSave?[regionalScenario]:[])])){
  const row=manifest.catalogs.find(row=>row.id===identity);
  assert.match(row.path,/^\/tk2\/game\/data\/campaigns\/[a-zA-Z0-9-]+\.json$/);
  const bytes=gunzipSync(artifact(row.url));
@@ -301,6 +303,33 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
  assert.equal(request('/api/save',{instance:seat}),revisedSave);
  assert.equal(revised.catalog.weather.tick,30);
 
+ // The separate regional fixture was constructed using the published catalog
+ // and comes through the same file import and authoritative worker commands.
+ let regionalMarketOrder=null;
+ if(regionalSave){
+  const raw=fs.readFileSync(regionalSave,'utf8');
+  let market=load(raw,revised.revision,seat);
+  assert.equal(market.catalog.scenario_id,regionalScenario);
+  assert.equal(market.game.extension.regional_market_rules_version,301);
+  const regionalSource='wujun',regionalTarget='kuaiji',qty=5000,purpose='trade';
+  const opening=request('/api/save',{instance:seat});
+  const plan=JSON.parse(request('/api/regional-market-preview',{method:'POST',instance:seat,
+   body:JSON.stringify({source:regionalSource,target:regionalTarget,qty,purpose,revision:market.revision})}));
+  assert.equal(request('/api/save',{instance:seat}),opening);
+  const offer=plan.quotes[0],stock=market.game.extension.grain_market[regionalSource].stock;
+  const gold=market.game.cities[regionalSource].gold;
+  market=command(market,'regional_market_order',{action:'buy',source:regionalSource,target:regionalTarget,
+   qty,purpose,token:offer.token},seat);
+  assert.equal(market.game.cities[regionalSource].gold,gold-offer.gold);
+  assert.equal(market.game.extension.grain_market[regionalSource].stock,stock-offer.cargo);
+  regionalMarketOrder=market.game.extension.regional_market.orders['1'];
+  assert.equal(regionalMarketOrder.status,'dispatched');
+  const after=request('/api/save',{instance:seat});
+  market=load(after,market.revision,seat);
+  assert.deepEqual(market.game.extension.regional_market.orders['1'],regionalMarketOrder);
+  assert.equal(request('/api/save',{instance:seat}),after);
+ }
+
  // Exercise the real optional wire path, not only the legacy bridge used by
  // CPU replay. Hydration must reconstruct the same complete current view.
  const {default:wireModule}=await import(pathToFileURL(path.join(root,'game/view-cache.js')).href);
@@ -346,7 +375,7 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
  console.log(JSON.stringify({ok:true,pyodide:py.version,previews:previews.length,catalogs:catalogs.size,
   requests:trace.length,ai_turns:1,battle_settlements:battleSettlements,logistics_route_parity:true,
   save_sha256:sha(finalSave),rng,cpu_save_bytes_equal:true,v212_observer_turns:candidateTurns,
-  weather_observer_turns:winterTurns,weather_save_sha256:sha(winterSave)}));
+  weather_observer_turns:winterTurns,weather_save_sha256:sha(winterSave),regional_market_roundtrip:regionalMarketOrder?.convoy??null}));
 }finally{
  for(const bridge of bridges.values())bridge.destroy();
  responseSemantic?.destroy();

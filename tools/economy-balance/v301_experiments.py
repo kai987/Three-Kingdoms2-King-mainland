@@ -12,7 +12,8 @@ import json
 from common import TOOL_ROOT, to_json
 from observe import RecordedCampaign, run_scenario
 from observer_telemetry import config
-from remake import economic_regions, facilities, grain_units, market_pricing, transport_emergency, winter_weather
+from remake import (domestic, economic_regions, facilities, grain_market, grain_units, market_pricing,
+                    transport_emergency, winter_weather)
 from v221_experiments import source_identity
 from v222_experiments import Recorder as TransportRecorder, STRATEGY
 
@@ -127,6 +128,37 @@ class JsonLines:
         self.stream.write(json.dumps(row,ensure_ascii=False,separators=(',',':'))+'\n')
 
 
+def capture_warehouse_postings(stack):
+    """Observe existing credits at their posting boundary without recomputing income."""
+    restock, report, harvest = grain_market.restock, domestic._report, facilities.settle_harvest
+
+    def monthly(game,state,regular_incomes=None):
+        result=restock(game,state,regular_incomes)
+        if regular_incomes is not None:
+            for city,income in regular_incomes.items():
+                market_pricing.report('warehouse_income',state,city=city,owner=state.cities[city].owner,
+                    channel='regular',gold=income['gold'],grain=income['grain'])
+        return result
+
+    def domestic_event(state,city,kind,**details):
+        if kind=='income':
+            market_pricing.report('warehouse_income',state,city=city.id,owner=city.owner,
+                channel='civil_bonus',gold=details['gold'],grain=details['grain'])
+        return report(state,city,kind,**details)
+
+    def harvest_event(game,state,awards):
+        prior={city:state.cities[city].grain for city in awards}
+        result=harvest(game,state,awards)
+        for city,stock in prior.items():
+            market_pricing.report('warehouse_income',state,city=city,owner=state.cities[city].owner,
+                channel='harvest_bonus',gold=0,grain=state.cities[city].grain-stock)
+        return result
+
+    stack.enter_context(patch.object(grain_market,'restock',monthly))
+    stack.enter_context(patch.object(domestic,'_report',domestic_event))
+    stack.enter_context(patch.object(facilities,'settle_harvest',harvest_event))
+
+
 def run_case(output, case):
     from contextlib import ExitStack
     seed,scene,policy,group,months,weather=case
@@ -161,6 +193,7 @@ def run_case(output, case):
             stack.enter_context(patch.object(RecordedCampaign,'_v301_command',original,create=True))
             stack.enter_context(patch.object(RecordedCampaign,'command',command))
             stack.enter_context(market_pricing.observing(tracker.event))
+            capture_warehouse_postings(stack)
             stack.enter_context(market_pricing.experiment(STAGES.index(group)))
             stack.enter_context(winter_weather.experiment(5 if weather else 0,adjustments=winter_weather.CORRECTIONS if weather else 0,
                                                          detailed=True,observe=transport))
@@ -169,7 +202,7 @@ def run_case(output, case):
             result=run_scenario(scene,seed,months,parent,STRATEGY[policy],settings)
         result.update(group=group,strategy=policy,weather=weather,weather_seed=winter_weather.seed_for(seed) if weather else None,
                       emergency=222 if weather else 0,source_tree_sha256=identity['tree_sha256'],
-                      market_stage=STAGES.index(group),regional_streams=dict(tracker.counts))
+                      market_stage=STAGES.index(group),warehouse_postings=True,regional_streams=dict(tracker.counts))
         if result['outcome'] in ('complete','natural_end'):
             result['transport_survival']=transport.summary(result['terminal']['convoy_loads'],
                 result['completed_turns']*10,dict(start_year=result['start_date'][0],start_month=result['start_date'][1]))
