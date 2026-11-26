@@ -28,7 +28,7 @@ _VIEW_CACHE_REQUEST = re.compile(
     rf'(?P<legacy>{_VIEW_TOKEN})|scenarios-v1\|(?P<view>{_VIEW_TOKEN})\|(?P<scenarios>(?:[a-f0-9]{{64}})?)')
 GET_PATHS = frozenset(('/api/state', '/api/city-preview', '/api/march-config',
                        '/api/march-status', '/api/march-preview', '/api/save'))
-POST_PATHS = frozenset(('/api/command', '/api/load', '/api/transfer-preview', '/api/logistics-preview'))
+POST_PATHS = frozenset(('/api/command', '/api/load', '/api/transfer-preview', '/api/logistics-preview', '/api/regional-market-preview', '/api/strategic-granary-preview'))
 COMMANDS = frozenset(('new', 'persuade_officer', 'recruit_officer', 'transfer',
                      'tactic', 'duel_start', 'duel_action', 'allocate', 'allocation_close', 'recruit',
                      'depart', 'attack', 'battle_move', 'battle_place', 'battle_wait', 'battle_facility', 'battle_reinforce', 'retreat', 'settle', 'end_turn', 'ai',
@@ -38,7 +38,7 @@ COMMANDS = frozenset(('new', 'persuade_officer', 'recruit_officer', 'transfer',
                      'dispatch_transport', 'search_treasure', 'reward_officer',
                      'sell_treasure', 'set_governor', 'set_treasury_policy',
                      'develop_land','develop_industry','develop_population',
-                     'develop_town','treat_officer','study_officer','trade_grain',
+                     'develop_town','treat_officer','study_officer','trade_grain','regional_market_order','strategic_granary_order',
                      'buy_equipment','improve_prevention','set_facility_policy','equip_owned'))
 
 
@@ -182,6 +182,10 @@ class BrowserRuntime:
             raise GameError(INVALID_SAVE_MESSAGE if loading else '操作参数无效。')
         if url.path == '/api/logistics-preview':
             return self.session.preview_logistics(payload)
+        if url.path == '/api/regional-market-preview':
+            return self.session.preview_regional_market(payload)
+        if url.path == '/api/strategic-granary-preview':
+            return self.session.preview_strategic_granary(payload)
         if url.path == '/api/transfer-preview':
             return self.session.preview_transfer(payload)
         if url.path == '/api/command':

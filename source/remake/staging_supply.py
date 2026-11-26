@@ -1,7 +1,7 @@
 """Reserve real grain at reachable checkpoints for approved AI columns."""
 from collections import defaultdict
 
-from . import logistics_rules as rules, logistics_strategy, march_supply
+from . import logistics_rules as rules, logistics_strategy, march_supply, winter_travel, winter_weather
 
 FIELD = 'ai_supply_nodes'
 EXPIRY_DAYS = 10
@@ -13,25 +13,33 @@ def assess(game, state, city, ids, quote, budgets):
     units = march_supply.ration_units(state, ids)
     divisor = march_supply.denominator() * rules.RATION_SCALE
     parts = rules.plan(quote, march_supply.travel_rules(game))
+    dynamic=winter_weather.movement(state)
     stock = loaded * divisor
     progress = 0
     rows = []
     provisional = defaultdict(int)
     started = (state.turn - 1) * 10
     for index, leg in enumerate(quote['routes'][:-1]):
-        stock -= units * rules.weight(parts, progress, leg['days'])
+        stock -= units * (march_supply.quoted_weight(game,state,quote,leg['days'],offset=progress)
+                          if dynamic else rules.weight(parts, progress, leg['days']))
         progress += leg['days']
         key = quote['path'][index + 1]
         budget = budgets.get(key)
         if budget is None or state.cities[key].owner != city.owner:
             continue
         onward = march_supply.next_supply_days(state, quote, city.owner, progress)
-        missing = max(0, rules.ceil_div(units * rules.weight(parts, progress, onward) - stock, divisor))
+        weight=(march_supply.quoted_weight(game,state,quote,onward,offset=progress)
+                if dynamic else rules.weight(parts,progress,onward))
+        missing = max(0, rules.ceil_div(units * weight - stock, divisor))
         if missing:
             space = max(0, exportable(state, state.cities[key], budget) - provisional[key])
             covered = min(missing, space)
-            rows.append(dict(city=key, route_day=progress, arrival=started + progress,
-                             required=missing, reserved=covered, expires=started + progress + EXPIRY_DAYS))
+            predict=(winter_travel.checkpoint_forecast if winter_weather.corrected(state,winter_weather.PREPARATION)
+                     else winter_travel.forecast)
+            eta=predict(game,state,quote,stop=progress*winter_travel.QUANTA)[0] if dynamic else progress
+            arrival=started+(eta if eta is not None else progress+10)
+            rows.append(dict(city=key, route_day=progress, arrival=arrival,
+                             required=missing, reserved=covered, expires=arrival + EXPIRY_DAYS))
             provisional[key] += covered
             stock += missing * divisor
     return loaded, rows
@@ -115,6 +123,38 @@ def synchronize(state):
         del state.extension[FIELD]
 
 
+def update_weather(game,state):
+    if winter_weather.stage(state)<2 or FIELD not in state.extension:
+        return
+    marches={row['id']:row for row in state.extension['travel']['marches']}
+    for item in list(state.extension[FIELD]):
+        row=marches.get(item['army'])
+        if row is None:
+            continue
+        book=row['supply']
+        stop=item['route_day']*winter_travel.QUANTA
+        position=winter_travel.work(book)
+        if position>stop or book['clock_tick']>=item['expires']:
+            continue
+        published=winter_weather.corrected(state,winter_weather.PREPARATION)
+        predict=winter_travel.checkpoint_forecast if published else winter_travel.forecast
+        eta=predict(game,state,row['quote'],position=position,stop=stop)[0]
+        if eta is None:
+            state.extension[FIELD].remove(item)
+            logistics_strategy.observe('staging_node',state,status='released',**item)
+            if published:
+                winter_weather.action(game,state,'winter_supply_node_released',item['city'],owner=item['owner'],
+                                      army=item['army'],commitment=item['plan'],reason='ice',reserved=item['reserved'])
+        else:
+            arrival=book['clock_tick']+eta
+            prior=item['arrival']
+            item.update(arrival=arrival,expires=arrival+EXPIRY_DAYS)
+            if published and arrival!=prior:
+                winter_weather.action(game,state,'winter_supply_node_updated',item['city'],owner=item['owner'],
+                                      army=item['army'],commitment=item['plan'],previous=prior,arrival=arrival,
+                                      expiry=item['expires'],reserved=item['reserved'])
+
+
 def validate(state):
     if FIELD not in state.extension:
         return
@@ -132,7 +172,8 @@ def validate(state):
                        ('army','turn','route_day','arrival','required','reserved','expires'))
                 or row['plan']!=f"{row['owner']}:{row['turn']}:{row['path'][-1]}"
                 or row['reserved']>row['required'] or row['turn']>state.turn
-                or row['arrival']!=(row['turn']-1)*10+row['route_day']
+                or (row['arrival']<(row['turn']-1)*10+row['route_day'] if winter_weather.stage(state)>=2
+                    else row['arrival']!=(row['turn']-1)*10+row['route_day'])
                 or row['expires']!=row['arrival']+EXPIRY_DAYS
                 or (row['army'],row['route_day']) in positions):
             raise ValueError('Military supply-node reservation')

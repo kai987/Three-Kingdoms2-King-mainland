@@ -45,7 +45,7 @@ class Commitments:
         self.held.pop(item.commitment_id, None)
 
 
-def pending(state, owner):
+def pending(state, owner, *, granary=False, except_id=None):
     book = Commitments()
     from . import staging_supply
     for row in staging_supply.active(state):
@@ -67,6 +67,23 @@ def pending(state, owner):
                           source.id, target.id, order['provision'], 4,
                           plan['created_turn'], order['departure_turn'])
         book.reserve(item, source.grain)
+    if granary:
+        from . import strategic_granary
+        for row in strategic_granary.commitments(state, except_id=except_id):
+            if row['owner'] != owner:
+                continue
+            item = Commitment(f"granary:{row['id']}", owner, row['source'], row['target'],
+                              row['load']+row['rations'], 4, row['reserved_turn'],
+                              row['reserved_turn']+strategic_granary.RULES['hold_turns'])
+            book.reserve(item, state.cities[row['source']].grain)
+        if strategic_granary.enabled(state,'relay'):
+            from . import granary_relay
+            for row in granary_relay.ready(state):
+                if row['owner'] != owner:
+                    continue
+                item = Commitment(f"relay:{row['id']}",owner,row['hub'],row['target'],row['received'],
+                                  4,row['received_turn'],row['deadline'])
+                book.reserve(item,state.cities[row['hub']].grain)
     return book
 
 
@@ -82,6 +99,7 @@ class Forecast:
     timeline: tuple
     room: int
     first_missing: int
+    risky_receipts: dict = field(default_factory=dict)
 
 
 def balance(stock, timeline, deliveries=()):
@@ -204,13 +222,18 @@ class FactionEconomyPlan:
                     committed=sum(row['march_grain'] + row['reserved_grain'] for row in rows))
 
 
-def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=HORIZON):
-    budgets = (military_budget.budgets(game, state, owner, stationed=stationed, incomes=incomes)
-               if base is None else base)
+def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=HORIZON,
+         granary=False, except_order=None):
+    projected_convoys = {} if granary else None
+    budgets = (military_budget.budgets(game,state,owner,stationed=stationed,incomes=incomes,
+                                      inbound_cache=projected_convoys) if base is None else base)
     if not budgets:
         return FactionEconomyPlan(owner, {}, {}, Commitments(), 0)
+    from . import winter_strategy
+    winter_reserves=winter_strategy.planned_reserves(game,state,owner)
     shipments, due = defaultdict(lambda: defaultdict(int)), defaultdict(int)
-    book = pending(state, owner)
+    uncertain = defaultdict(lambda: defaultdict(int)) if granary else None
+    book = pending(state, owner, granary=granary, except_id=except_order)
     away = set()
     for row in state.extension.get('logistics', {}).get('convoys', ()):
         if row['owner'] == owner:
@@ -219,7 +242,20 @@ def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=H
                 and row['target_march'] is None and row['target'] in budgets):
             journey = row['journeys'][-1]
             eta = max(1, journey['arrival_turn'] - state.turn)
-            projected = logistics.inbound_grain(game, row)
+            projected = projected_convoys.get(row['id']) if granary else None
+            if projected is None:
+                projected = logistics.inbound_grain(game,row,state)
+            if granary:
+                from . import winter_travel, winter_weather
+                supply = journey['supply']
+                if ('convoy_relief' in row or row['target'] != journey['target'] or
+                        journey['supply']['retreat_requested'] or supply['waiting'] or
+                        any(not historical_campaigns.transit_allowed(state,owner,state.cities[key].owner)
+                            for key in journey['quote']['path'][1:]) or
+                        winter_weather.movement(state) and
+                        winter_travel.route_risk(game,state,journey['quote'],eta*10)):
+                    uncertain[row['target']][eta] += projected or row['cargo']['grain']
+                    continue
             shipments[row['target']][eta] += projected
             due[row['target']] += projected
     for march in state.extension.get('travel', {}).get('marches', ()):
@@ -240,11 +276,16 @@ def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=H
         next_income = city_economy.monthly_income(game, key, state, date=next_date)
         natural = next_income['reserves']
         held = book.amount(key)
+        if key in winter_reserves:
+            premium=winter_reserves[key][1]
+            row.update(target=row['target']+premium,winter_reserve_extra=premium)
         row.update(gold=city.gold, reserves=city.reserves, minimum_reserve=minimum,
                    safety_reserve=safety, reserved_grain=held, next_natural_reserves=natural)
         if staged:
             row['staging_grain'] = staged[key]
         projected = _forecast(game, state, city, row, shipments[key], held, turns, next_income)
+        if granary:
+            projected.risky_receipts = dict(uncertain[key])
         forecast[key] = projected
         reserve = max(minimum, projected.reserve)
         first = projected.zero_in

@@ -1,6 +1,7 @@
 """Dispatch local reserves on the tactical clock and return unfinished columns."""
 
 from . import command_books, historical_campaigns, logistics_rules, march_supply
+from . import winter_travel, winter_weather
 from .errors import GameError
 from .officers import integer, ref_sort_key
 from .route_hazards import evaluate_leg, route_allowed
@@ -98,7 +99,8 @@ def _sources(game, state, battle):
         source = raw['to'] if raw['from'] == target else raw['from']
         if source in state.cities and route_allowed(game.catalog.data, raw, source, target):
             leg = evaluate_leg(game.catalog.data, raw, source, target, state.month)
-            if leg['days'] > 0:
+            if leg['days'] > 0 and (winter_weather.stage(state)<2
+                    or route_allowed(game.catalog.data,raw,target,source)):
                 routes.setdefault(source, []).append(leg)
     return routes
 
@@ -112,7 +114,7 @@ def _eligible(game, state, battle, battle_routes):
         if (city.owner in pending or not command_books.can_spend(state, city.owner, 'depart')
                 or not (side := side_for(state, battle, city.owner))):
             continue
-        routes = [leg for leg in legs if battle['round'] + leg['days'] <= DAYS]
+        routes = [leg for leg in legs if battle['round'] + _march_days(game,state,leg) <= DAYS]
         if not routes:
             continue
         officers = [ident for ident in city.roster.officer_ids if ident not in unavailable
@@ -128,12 +130,16 @@ def _order(game, state, battle, city, side, leg, officers, *, grain):
     state.extension['officer_actions'].update({str(ident): state.turn for ident in officers})
     data = battle['extended'].setdefault(FIELD, dict(pending=[], joined={}))
     row = dict(side=side, source=city.id, owner=city.owner, officers=list(officers),
-               route=leg['id'], days=leg['days'], departed=battle['round'], grain=grain)
+               route=leg['id'], days=_march_days(game,state,leg), departed=battle['round'], grain=grain)
     if logistics_rules.version(state) == logistics_rules.CURRENT:
         parts = logistics_rules.leg_parts(leg, march_supply.travel_rules(game))
         row['rations'] = dict(parts=[list(part) for part in parts], credit=0,
                               remaining=grain, meals=[])
+    if winter_weather.stage(state)>=2:
+        row['winter']=_profile(game,state,leg)
     data['pending'].append(row)
+    winter_weather.action(game,state,'reinforcement_departed',city.id,owner=city.owner,target=battle['target'],
+                          battle_id=battle['id'],days=row['days'],normal_days=leg['days'],grain=grain)
 
 
 def _cost(state, officers, days):
@@ -146,12 +152,37 @@ def _roundtrip(game, state, officers, leg):
     return logistics_rules.ceil_div(units*(quote['outbound']+quote['returning']),quote['denominator'])
 
 
+def _march_days(game,state,leg):
+    return winter_travel.leg_time(game,state,leg) if winter_weather.movement(state) else leg['days']
+
+
+def _profile(game,state,leg):
+    quote=game._quote([leg['from'],leg['to']],[leg])
+    parts=winter_travel.plan(game,quote)
+    region=game.catalog.climate.cities[leg['to']]['climate_region_id']
+    position=0
+    meals=[]
+    while position<leg['days']*winter_travel.QUANTA:
+        today=winter_travel.day(state,parts,position,rest_region=region)
+        if not today.moved:
+            raise ValueError('Reinforcement route closed')
+        position+=today.moved
+        meals.append([today.moved,today.ration])
+    return dict(meals=meals,rest=winter_travel.wait_rate(state,region))
+
+
 def _route_provisions(game,state,leg):
     if logistics_rules.version(state)==logistics_rules.LEGACY:
         return dict(outbound=leg['days'],returning=leg['days'],denominator=march_supply.denominator())
     parts = logistics_rules.leg_parts(leg, march_supply.travel_rules(game))
     reverse = logistics_rules.reverse_prefix(parts, leg['days'])
-    return dict(outbound=logistics_rules.weight(parts),returning=logistics_rules.weight(reverse),
+    outgoing,back=logistics_rules.weight(parts),logistics_rules.weight(reverse)
+    if winter_weather.stage(state)>=2:
+        outgoing=sum(weight for _,weight in _profile(game,state,leg)['meals'])
+        quote=game._quote([leg['from'],leg['to']],[leg])
+        back=winter_travel.return_weight(state,winter_travel.reverse_parts(winter_travel.plan(game,quote)),
+            game.catalog.climate.cities[leg['from']]['climate_region_id'])
+    return dict(outbound=outgoing,returning=back,
                 denominator=march_supply.denominator()*logistics_rules.RATION_SCALE,
                 modes=logistics_rules.time_by_mode(parts),
                 ticks_per_day=logistics_rules.DAY_TICKS,percent=dict(logistics_rules.MARCH_SUPPLY_PERCENT))
@@ -175,6 +206,9 @@ def _feed_pending(state, battle, row):
         day = len(book['meals'])
         weight = (logistics_rules.weight(book['parts'], day, 1) if day < row['days']
                   else logistics_rules.RATION_SCALE)
+        if 'winter' in row:
+            weather=row['winter']
+            weight=weather['meals'][day][1] if day<row['days'] else weather['rest']
         _meal(book, march_supply.ration_units(state, row['officers']), weight)
 
 
@@ -216,12 +250,12 @@ def auto_dispatch(game, state, battle, side):
     for city, eligible_side, legs, officers in _eligible(game, state, battle, _sources(game, state, battle)):
         if eligible_side != side or city.owner == state.player or city.owner in sent:
             continue
-        leg = min(legs, key=lambda route: (route['days'], route['distance_km'], route['id']))
+        leg = min(legs, key=lambda route: (_march_days(game,state,route), route['distance_km'], route['id']))
         officers = sorted((i for i in officers if i not in leaders),
                           key=lambda i: (-state.officers[i].troops, ref_sort_key(i)))
         if officers:
             options = choices.setdefault(city.owner, [])
-            options.append((leg['days'], -state.officers[officers[0]].troops, city.id, city, leg, officers))
+            options.append((_march_days(game,state,leg), -state.officers[officers[0]].troops, city.id, city, leg, officers))
     for owner in sorted(choices):
         limit = min(2, _remaining(game, battle, side))
         if limit <= 0:
@@ -291,7 +325,7 @@ def arrive(game, state, battle):
         battle['log'].append(f'{game.catalog.map_cities[source]["name"]}援軍{len(ids)}名武將已抵達戰場。')
 
 
-def withdraw(state, battle):
+def withdraw(state, battle, *, game=None):
     """Reverse the distance actually covered, retaining the original home roster."""
     for row in _pending(battle):
         travelled = min(row['days'], battle['round'] - row['departed'])
@@ -299,14 +333,20 @@ def withdraw(state, battle):
         if book:
             _feed_pending(state, battle, row)
         grain = book['remaining'] if book else row['grain'] - _cost(state, row['officers'], 2 * travelled)
-        if travelled:
+        winter = row.get('winter')
+        work = sum(amount for amount, _ in winter['meals'][:travelled]) if winter else None
+        remaining = logistics_rules.ceil_div(work, winter_travel.QUANTA) if winter else travelled
+        if remaining:
             returning = dict(
                 source=row['source'], target=battle['target'], owner=row['owner'], officers=row['officers'],
-                route=row['route'], remaining=travelled, grain=grain)
+                route=row['route'], remaining=remaining, grain=grain)
             if book:
-                returning['rations'] = dict(parts=logistics_rules.reverse_prefix(book['parts'], travelled),
+                parts = [] if winter else logistics_rules.reverse_prefix(book['parts'], travelled)
+                returning['rations'] = dict(parts=parts,
                     credit=book['credit'], initial_credit=book['credit'], loaded=grain, remaining=grain,
                     month=state.month, meals=[])
+            if winter:
+                returning['winter'] = dict(limit=work, work=0, weights=[], blocked=None)
             state.extension.setdefault(RETURNS, []).append(returning)
         else:
             city = state.cities[row['source']]
@@ -320,7 +360,10 @@ def advance_returns(game, state):
         return
     for row in returning[:]:
         book = row.get('rations')
-        if book:
+        if 'winter' in row:
+            if row['winter']['work']<row['winter']['limit']:
+                continue
+        elif book:
             for _ in range(min(10, row['remaining'])):
                 day = len(book['meals'])
                 ids = [ident for ident in row['officers'] if state.officers[ident].alive
@@ -346,6 +389,36 @@ def advance_returns(game, state):
         del state.extension[RETURNS]
 
 
+def _return_parts(game,row):
+    raw=game.catalog.climate.routes[row['route']]
+    leg=evaluate_leg(game.catalog.data,raw,row['source'],row['target'],row['rations']['month'])
+    quote=game._quote([row['source'],row['target']],[leg])
+    return winter_travel.reverse_parts(winter_travel.plan(game,quote),row['winter']['limit'])
+
+
+def advance_returns_day(game,state,tick):
+    for row in state.extension.get(RETURNS,()):
+        winter=row.get('winter')
+        if winter is None or winter['work']>=winter['limit']:
+            continue
+        region=game.catalog.climate.cities[row['source']]['climate_region_id']
+        today=winter_travel.day(state,_return_parts(game,row),winter['work'],rest_region=region,on_leg=True)
+        winter['work']+=today.moved
+        winter['weights'].append([today.moved,today.ration])
+        winter['blocked']=today.blocked
+        row['remaining']=logistics_rules.ceil_div(winter['limit']-winter['work'],winter_travel.QUANTA)
+        ids=[ident for ident in row['officers'] if state.officers[ident].alive
+             and state.officers[ident].faction_id==row['owner']]
+        book=row['rations']
+        if _meal(book,march_supply.ration_units(state,ids),today.ration):
+            for ident in ids:
+                officer=state.officers[ident]
+                losses=(officer.troops+99)//100
+                officer.troops-=losses
+                state.soldiers['lost']+=losses
+        row['grain']=book['remaining']
+
+
 def view(game, state, battle):
     from . import battle_grid, battle_placement
     if not battle or state.phase != 'battle' or battle_placement.pending(battle):
@@ -363,15 +436,15 @@ def view(game, state, battle):
                          if state.cities[key].owner == state.player}
         for city, _, legs, officers in _eligible(game, state, battle, owners_routes):
             options.append(dict(city=city.id, grain=city.grain, officers=officers,
-                routes=[dict(id=leg['id'], mode=leg['mode'], days=leg['days'], distance_km=leg['distance_km'],
+                routes=[dict(id=leg['id'], mode=leg['mode'], days=_march_days(game,state,leg), distance_km=leg['distance_km'],
                              hazard=leg.get('hazard'),
-                             arrival=battle['round']+leg['days'],provisions=_route_provisions(game,state,leg))
-                        for leg in sorted(legs,key=lambda leg:(leg['days'],leg['distance_km'],leg['id']))]))
+                             arrival=battle['round']+_march_days(game,state,leg),provisions=_route_provisions(game,state,leg))
+                        for leg in sorted(legs,key=lambda leg:(_march_days(game,state,leg),leg['distance_km'],leg['id']))]))
     return dict(pending=pending, remaining=remaining, sources=options, denominator=march_supply.denominator(),
                 supporting=supporting_side(battle) is not None, can_decline=_can_decline(state, battle))
 
 
-def _check_book(book, parts, loaded, initial_credit, used_days, *, units=None):
+def _check_book(book, parts, loaded, initial_credit, used_days, *, units=None, winter=None):
     divisor = march_supply.denominator() * logistics_rules.RATION_SCALE
     if (not isinstance(book, dict) or book.get('parts') != [list(part) for part in parts]
             or not isinstance(book.get('meals'), list) or len(book['meals']) != used_days):
@@ -386,6 +459,8 @@ def _check_book(book, parts, loaded, initial_credit, used_days, *, units=None):
         integer(people, 0, march_supply.MAX_DAILY_UNITS, 'reinforcement ration strength')
         weight = (logistics_rules.weight(parts, day, 1) if day < travel_days
                   else logistics_rules.RATION_SCALE)
+        if winter is not None:
+            weight=winter['meals'][day][1] if day<len(winter['meals']) else winter['rest']
         if units is not None and people != units:
             raise ValueError('Reinforcement ration strength')
         _meal(check, people, weight)
@@ -422,9 +497,10 @@ def validate(game, state, battle):
     occupied.update(ident for row in state.extension.get(RETURNS, ()) for ident in row['officers'])
     routes = _sources(game, state, battle) if data['pending'] else {}
     weighted = logistics_rules.version(state) == logistics_rules.CURRENT
+    dynamic=winter_weather.stage(state)>=2
     for row in data['pending']:
         ids = row['officers']
-        if (set(row) != (ORDER_FIELDS | {'rations'} if weighted else ORDER_FIELDS)
+        if (set(row) != (ORDER_FIELDS | ({'rations'} if weighted else set()) | ({'winter'} if dynamic else set()))
                 or row['side'] not in SIDES or not isinstance(ids, list) or not ids
                 or len(set(ids)) != len(ids) or occupied.intersection(ids) or row['source'] not in state.cities):
             raise ValueError('Battle reinforcement participants')
@@ -433,11 +509,13 @@ def validate(game, state, battle):
                 or not set(ids) <= set(city.roster.officer_ids)
                 or any(not state.officers[i].alive or state.officers[i].faction_id != city.owner
                        or state.officers[i].troops <= 0 for i in ids)
-                or not any((leg['id'], leg['days']) == (row['route'], row['days']) for leg in routes.get(city.id, ()))):
+                or not any((leg['id'], _march_days(game,state,leg)) == (row['route'], row['days']) for leg in routes.get(city.id, ()))):
             raise ValueError('Battle reinforcement route or roster')
         integer(row['departed'], 1, battle['round'], 'reinforcement departure day')
         integer(row['days'], 1, DAYS - row['departed'], 'reinforcement route days')
-        leg = next(leg for leg in routes[city.id] if (leg['id'], leg['days']) == (row['route'], row['days']))
+        leg = next(leg for leg in routes[city.id] if (leg['id'], _march_days(game,state,leg)) == (row['route'], row['days']))
+        if dynamic and row['winter']!=_profile(game,state,leg):
+            raise ValueError('Winter reinforcement travel profile')
         cost = _roundtrip(game, state, ids, leg)
         integer(row['grain'], cost, cost, 'reinforcement carried grain')
         if weighted:
@@ -448,7 +526,7 @@ def validate(game, state, battle):
             if state.phase == 'result' and len(book['meals']) == elapsed-1:
                 elapsed -= 1  # The final day settles when the pending column is detached.
             _check_book(book, logistics_rules.leg_parts(leg,march_supply.travel_rules(game)),
-                        cost, 0, elapsed, units=march_supply.ration_units(state,ids))
+                        cost, 0, elapsed, units=march_supply.ration_units(state,ids),winter=row.get('winter'))
         occupied.update(ids)
 
 
@@ -460,6 +538,8 @@ def validate_returns(game, state):
     for row in returning:
         fields = {'source','target','owner','officers','route','remaining','grain'}
         weighted = logistics_rules.version(state) == logistics_rules.CURRENT
+        dynamic=winter_weather.stage(state)>=2
+        if dynamic:fields.add('winter')
         if (set(row) != (fields | {'rations'} if weighted else fields)
                 or row['source'] not in state.cities or row['target'] not in game.catalog.map_cities
                 or row['source'] == row['target'] or row['owner'] not in game.catalog.factions
@@ -473,7 +553,8 @@ def validate_returns(game, state):
         if weighted:
             book = row['rations']
             if (not isinstance(book, dict) or set(book) != {'parts','meals','credit','remaining','initial_credit','loaded','month'}
-                    or not isinstance(book['meals'], list) or len(book['meals']) + row['remaining'] >= DAYS):
+                    or not isinstance(book['meals'], list)
+                    or not dynamic and len(book['meals']) + row['remaining'] >= DAYS):
                 raise ValueError('Reinforcement return ration book')
             integer(book['loaded'], 0, march_supply.LIMIT, 'reinforcement return loading')
             integer(book['month'], 1, 12, 'reinforcement departure month')
@@ -484,8 +565,26 @@ def validate_returns(game, state):
                 raise ValueError('Reinforcement return route')
             travelled = len(book['meals']) + row['remaining']
             leg = evaluate_leg(game.catalog.data,raw,row['source'],row['target'],book['month'])
-            if travelled > leg['days'] or row['grain'] != book['remaining']:
+            if (not dynamic and travelled > leg['days']) or row['grain'] != book['remaining']:
                 raise ValueError('Reinforcement return progress')
+            if dynamic:
+                winter=row['winter']
+                if (not isinstance(winter,dict) or set(winter)!={'work','limit','weights','blocked'}
+                        or type(winter['work']) is not int or type(winter['limit']) is not int
+                        or not 0<=winter['work']<winter['limit']<=leg['days']*winter_travel.QUANTA
+                        or not isinstance(winter['weights'],list) or any(not isinstance(entry,list) or len(entry)!=2
+                            or type(entry[0]) is not int or not 0<=entry[0]<=winter_travel.QUANTA
+                            or type(entry[1]) is not int or not logistics_rules.RATION_SCALE<=entry[1]<=winter_travel.MAX_RATION_WEIGHT
+                            for entry in winter['weights'])
+                        or winter['work']!=sum(entry[0] for entry in winter['weights'])
+                        or winter['blocked'] is not None and winter['blocked'] not in game.catalog.climate.frozen_reaches
+                        or row['remaining']!=logistics_rules.ceil_div(winter['limit']-winter['work'],winter_travel.QUANTA)
+                        or not route_allowed(game.catalog.data,raw,row['target'],row['source'])):
+                    raise ValueError('Winter reinforcement return progress')
+                _check_book(book,[],book['loaded'],book['initial_credit'],len(winter['weights']),
+                            winter=dict(meals=winter['weights'],rest=logistics_rules.RATION_SCALE))
+                seen.update(row['officers'])
+                continue
             parts = logistics_rules.reverse_prefix(logistics_rules.leg_parts(leg,march_supply.travel_rules(game)),travelled)
             _check_book(book, parts, book['loaded'], book['initial_credit'], len(book['meals']))
         seen.update(row['officers'])

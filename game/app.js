@@ -5,6 +5,9 @@ let cloudSave=null,cloudSaveUI=null;
 let civilStaffUI=null,domesticUI=null,treasuryUI=null,facilitiesUI=null,cityDevelopmentUI=null,diplomacyUI=null;
 let campaignDifficulty='normal';
 let campaignLifespan='historical';
+let campaignWinter=false,campaignEmergency=false,weatherLayerVisible=false;
+let campaignRegional=false,campaignRegionalTrade=false;
+let campaignGranary=false,campaignGranaryDispatch=false,campaignGranaryWinter=false,campaignGranaryRelay=false;
 const lifespanLabels={historical:['史實','史実'],none:['無','なし']};
 let allocationDialogContext=null,allocationCloseEpoch=0;
 let battleDestination=null,battleViewKey='';
@@ -195,8 +198,9 @@ function routeRisk(quote){
 }
 function travelEstimate(source,target,mode='fastest',q=travelQuote(source,target,mode)){
  if(!q)return '<p class="small">没有符合条件的路线。</p>';
- const arrival=GameCalendar.advance(view.game,q.turns);
- return `<p class="travel-estimate">${q.path.map(id=>escapeHtml(cityName(id))).join(' → ')}<br>约${q.distance_km}公里 · 估算${q.days}日 · ${q.turns}旬（每旬10日）<br>预计${GameCalendar.text(arrival)}到达。${q.modes.includes('sea')?'含海路及上岸接驳。':q.modes.includes('river')?'含内河水路及陆地接入。':'陆路行军。'}</p>${routeRisk(q)}`;
+ const days=q.logistics?.weather?.days??q.days,turns=Math.max(1,Math.ceil(days/10));
+ const arrival=GameCalendar.advance(view.game,turns);
+ return `<p class="travel-estimate">${q.path.map(id=>escapeHtml(cityName(id))).join(' → ')}<br>约${q.distance_km}公里 · 估算${days}日 · ${turns}旬（每旬10日）<br>预计${GameCalendar.text(arrival)}到达。${q.modes.includes('sea')?'含海路及上岸接驳。':q.modes.includes('river')?'含内河水路及陆地接入。':'陆路行军。'}</p>${routeRisk(q)}`;
 }
 function previewSurvivors(element,quote,ids){
  if(!element)return;
@@ -490,6 +494,14 @@ function selectFaction(){
   <label class="field" for="difficulty">游戏难度<select id="difficulty">${['easy','normal','hard'].map(id=>`<option value="${id}" ${campaignDifficulty===id?'selected':''}>${difficultyName(id)}</option>`).join('')}</select></label>
   <label class="field" for="lifespan">${battleText('武將壽命','武将の寿命')}<select id="lifespan" aria-describedby="lifespan-help">${lifespanOptions}</select></label></div>
   <p id="lifespan-help" class="small">${battleText('選「無」時，武將不會因年齡自然死亡。','「なし」では、武将は加齢による自然死を迎えません。')}</p>
+  <label class="setup-winter"><input id="winter-weather-option" type="checkbox" ${campaignWinter?'checked':''}> ${battleText('啟用冬季天氣（實驗）','冬季天候を有効にする（実験）')}</label>
+  <label class="setup-winter"><input id="transport-emergency-option" type="checkbox" ${campaignEmergency?'checked':''}> ${battleText('啟用運輸應急 V2.2.2（實驗）','輸送の緊急対応 V2.2.2 を有効にする（実験）')}</label>
+  <label class="setup-winter"><input id="regional-market-option" type="checkbox" ${campaignRegional?'checked':''}> ${battleText('啟用區域市場 V3.0.1（實驗）','地域市場 V3.0.1 を有効にする（実験）')}</label>
+  <label class="setup-winter"><input id="regional-auto-trade-option" type="checkbox" ${campaignRegionalTrade?'checked':''} ${campaignRegional?'':'disabled'}> ${battleText('啟用 AI 自動商業貿易（實驗）','AIの自動商業取引を有効にする（実験）')}</label>
+  <label class="setup-winter"><input id="strategic-granary-option" type="checkbox" ${campaignGranary?'checked':''}> ${battleText('啟用戰略糧倉 V3.0.2（實驗）','戦略備蓄 V3.0.2 を有効にする（実験）')}</label>
+  <label class="setup-winter"><input id="strategic-dispatch-option" type="checkbox" ${campaignGranaryDispatch?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用 AI 主動調糧','AIの事前輸送を有効にする')}</label>
+  <label class="setup-winter"><input id="strategic-winter-option" type="checkbox" ${campaignGranaryWinter?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用冬季戰略儲備','冬季備蓄を有効にする')}</label>
+  <label class="setup-winter"><input id="strategic-relay-option" type="checkbox" ${campaignGranaryRelay?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用單站中轉（實驗）','1都市での積み替えを有効にする（実験）')}</label>
   ${catalogSummary}${catalogWarning}<p class="intro">${option.year}年${option.month}月 · ${option.cities}城 · 每城${option.capacity}人<br>开局在籍${option.serving}人，在野${option.free}人。</p>
   <div class="choice-list">${option.factions.map(f=>`<label class="faction-choice">
     <input type="radio" name="faction" value="${f.id}" ${f.id===preferred?'checked':''}>
@@ -516,12 +528,38 @@ function selectFaction(){
   $('#scenario').onchange=()=>draw($('#scenario').value);
   $('#difficulty').onchange=()=>{campaignDifficulty=$('#difficulty').value;};
   $('#lifespan').onchange=()=>{campaignLifespan=$('#lifespan').value;};
+  $('#winter-weather-option').onchange=event=>{campaignWinter=event.target.checked;};
+  $('#transport-emergency-option').onchange=event=>{campaignEmergency=event.target.checked;};
+  $('#regional-market-option').onchange=event=>{
+   campaignRegional=event.target.checked;
+   const trade=$('#regional-auto-trade-option');trade.disabled=!campaignRegional;
+   if(!campaignRegional)trade.checked=campaignRegionalTrade=false;
+  };
+  $('#regional-auto-trade-option').onchange=event=>{campaignRegionalTrade=event.target.checked;};
+  $('#strategic-granary-option').onchange=event=>{
+   campaignGranary=event.target.checked;
+   for(const id of ['#strategic-dispatch-option','#strategic-winter-option','#strategic-relay-option'])$(id).disabled=!campaignGranary;
+  };
+  $('#strategic-dispatch-option').onchange=event=>{campaignGranaryDispatch=event.target.checked;};
+  $('#strategic-winter-option').onchange=event=>{campaignGranaryWinter=event.target.checked;};
+  $('#strategic-relay-option').onchange=event=>{campaignGranaryRelay=event.target.checked;};
   bindNumberInput($('#seed'));
   const start=async f=>{
    const seed=clampNumberInput($('#seed'),true);
    if(!Number.isInteger(seed)||seed<1||seed>4294967295)return notice('随机种子请填写1到4294967295之间的整数。',true);
    const pending=setupPreview;setupPreview=null;
-   if(await command('new',{faction:f,seed,scenario,difficulty:campaignDifficulty,lifespan:campaignLifespan})){
+   weatherLayerVisible=false;
+   if(await command('new',{faction:f,seed,scenario,difficulty:campaignDifficulty,lifespan:campaignLifespan,
+       ...(campaignWinter?{weather_rules_version:221}:{}),
+       ...(campaignEmergency?{transport_emergency_rules_version:222}:{}),
+       ...(campaignRegional?{regional_market_rules_version:301}:{}),
+       ...(campaignRegionalTrade?{regional_trade_automation:true}:{}),
+       ...(campaignGranary?{strategic_granary_rules_version:302,
+         strategic_granary_options:{proactive:campaignGranaryDispatch,winter:campaignGranaryWinter,relay:campaignGranaryRelay}}:{})})){
+    campaignWinter=false;
+    campaignEmergency=false;
+    campaignRegional=campaignRegionalTrade=false;
+    campaignGranary=campaignGranaryDispatch=campaignGranaryWinter=campaignGranaryRelay=false;
     cityCommandGroups.clear();
     selectedCity=view.catalog.factions.find(x=>x.id===f)?.city||pending.focus;actor=target=null;mapMode='all';dialog.close();render();
     if(isObserver())setObserverPlaying(true);
@@ -643,6 +681,7 @@ function renderMap(){
   seas:preview?.sea_routes||view.catalog.sea_routes||[],discovered:!preview?view.catalog.discovered_routes||[]:[],
   rivers:preview?.river_routes||view.catalog.river_routes||[],
   regional:preview?.regional_roads||view.catalog.regional_roads||[],
+  winter:!preview&&!!view.catalog.weather,
   action:mapAction?{kind:mapAction.kind,source:mapAction.source,targets:mapAction.targets}:null
  });
  const reuseMap=!!mapNavigation&&!!mapRenderCache?.matches($('#world-map'),sceneKey);
@@ -730,7 +769,8 @@ function renderMap(){
  <defs>${mapMarchArrowMarker('map-march-arrow')}</defs>
  <g id="map-march-routes" aria-hidden="true" pointer-events="none"></g>`:'';
  const actionPrompt=mapAction?`<div class="map-action-prompt"><span role="status">${escapeHtml(cityName(mapAction.source))} · ${mapAction.kind==='depart'?cityCommandText('選擇目的地以查看行軍路線','行き先を選んで経路を確認'):'请选择高亮城池招募或劝降'}</span><button id="cancel-map-action">取消选城</button></div>`:'';
- $('#stage').innerHTML=`${marchMap?`${actionPrompt}<div class="march-map-board">`:''}<svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs>${spriteDefs}${mountainDefs}<marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker><marker id="oneway-river-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#d4e9ff" stroke="#224888" stroke-width="1"/></marker></defs><image href="${backgroundHref}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${inactiveCastles}${mountainColors}${cityRoadBed}${roads}${expansionRoads}${regionalRoads}${navigableSeas}${navigableRivers}${bridges}${marchRoutes}${castles}${labels}</svg>
+ $('#stage').innerHTML=`${marchMap?`${actionPrompt}<div class="march-map-board">`:''}<svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs>${spriteDefs}${mountainDefs}<marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker><marker id="oneway-river-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#d4e9ff" stroke="#224888" stroke-width="1"/></marker></defs><image href="${backgroundHref}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${inactiveCastles}${mountainColors}${cityRoadBed}${!preview&&view.catalog.weather?'<g id="map-weather-layer" aria-hidden="true" pointer-events="none"></g>':''}${roads}${expansionRoads}${regionalRoads}${navigableSeas}${navigableRivers}${bridges}${marchRoutes}${castles}${labels}</svg>
+ ${!preview&&view.catalog.weather?`<div class="map-weather-control"><button id="map-weather" type="button" aria-pressed="false">${battleText('天氣','天候')}</button><div id="map-weather-key" hidden>${battleText('雪勢及積雪以圓點標示 · 水路由淺至深為浮冰、部分封凍、完全冰封','降雪・積雪は円で表示。水路は淡い順に流氷、一部結氷、全面結氷。')}</div></div>`:''}
  <div class="map-zoom-controls" role="group" aria-label="地图缩放比例（1–4倍）"><button id="map-zoom-out" aria-label="缩小地图" title="缩小地图">−</button><output id="map-zoom" aria-label="地图缩放比例（1–4倍）">100%</output><button id="map-zoom-in" aria-label="放大地图" title="放大地图">＋</button></div>
  <p id="map-gesture-help" class="visually-hidden">拖动地图；滚轮或双指缩放，范围1到4倍。</p>
  <div class="map-bottom-bar">${toolbar}<time id="map-date" datetime="${GameCalendar.iso(date)}" aria-label="${GameCalendar.text(date)}">${date.year}年<span>${date.month}月${GameCalendar.period(date.day)}</span></time></div>
@@ -782,9 +822,66 @@ function renderMap(){
  $('#map-zoom-out').onclick=()=>mapNavigation.zoomBy(1/1.25);$('#map-zoom-in').onclick=()=>mapNavigation.zoomBy(1.25);
  $('#city-jump').onchange=()=>choose($('#city-jump').value);
  $('#map-labels').onclick=()=>{cityLabels={major:'giant',giant:'large',large:'all',all:'none',none:'major'}[cityLabels];renderMap();};
+ updateMapWeather(active);
  if($('#cancel-map-action'))$('#cancel-map-action').onclick=cancelMapAction;
  document.querySelectorAll('[data-city],[data-city-label]').forEach(el=>{const id=el.dataset.city||el.dataset.cityLabel;el.onclick=e=>{if(!mapNavigation.shouldSuppressClick(e)){if(!mapAction||mapAction.kind==='depart'||mapAction.targets.includes(id))gameAudio.play('click');choose(id,true);}};el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(!mapAction||mapAction.kind==='depart'||mapAction.targets.includes(id))gameAudio.play('click');choose(id,true);}};});
  if(mapAction?.kind==='depart')renderMapMarchPreview();
+}
+const WINTER_REGION_NAMES={
+ liaodong:['遼東與東北','遼東・東北'],northern_frontier:['北疆與河套','北辺・河套'],northwest:['西北','西北'],
+ qinling_highlands:['秦嶺高地','秦嶺高地'],north_china:['華北','華北'],central_plains:['中原','中原'],
+ huai_north_jing:['淮河與荊北','淮河・荊北'],southern_basins:['江南與四川盆地','江南・四川盆地'],
+ southern_highlands:['南方高地','南方高地'],lingnan:['嶺南','嶺南'],tropical_islands:['南方島嶼','南方諸島']
+};
+const WINTER_SNOW_NAMES=[['無雪','降雪なし'],['小雪','小雪'],['大雪','大雪'],['暴雪','吹雪']];
+const WINTER_ICE_NAMES=[['通航','通航'],['浮冰','流氷'],['部分封凍','一部結氷'],['完全冰封','全面結氷']];
+function updateMapWeather(cities){
+ const button=$('#map-weather'),layer=$('#map-weather-layer'),weather=view.catalog.weather;
+ if(!button||!layer||!weather)return;
+ const paint=()=>{
+  button.setAttribute('aria-pressed',String(weatherLayerVisible));
+  $('#map-weather-key').hidden=!weatherLayerVisible;
+  layer.innerHTML=weatherLayerVisible?cities.map(city=>{
+   const row=weather.regions[weather.cities[city.id]?.climate_region_id];
+   if(!row||!row.severity&&!row.depth)return '';
+   const [x,y]=mapPosition(city),level=Math.max(row.severity,row.depth>=5?2:1);
+   return `<circle cx="${x+15}" cy="${y-11}" r="${5+level}" class="map-weather-snow" data-snow-level="${level}"/>`;
+  }).join(''):'';
+  for(const path of $('#world-map').querySelectorAll('[data-river-reach]')){
+   const ice=weatherLayerVisible?weather.ice[path.dataset.riverReach]?.state:0;
+   if(ice)path.dataset.iceState=String(ice);else delete path.dataset.iceState;
+  }
+ };
+ button.onclick=()=>{weatherLayerVisible=!weatherLayerVisible;paint();};
+ paint();
+}
+function cityWeatherHtml(id){
+ const weather=view.catalog.weather,region=weather?.cities[id]?.climate_region_id,row=weather?.regions[region];
+ if(!row)return '';
+ const [tc,ja]=WINTER_REGION_NAMES[region],names=WINTER_SNOW_NAMES[row.severity],date=weather.as_of;
+ const grouped=new Map(),seasonal=weather.seasonal?.[id];
+ for(const route of view.catalog.river_routes||[]){
+  if(route.from!==id&&route.to!==id)continue;
+  for(const part of route.draw||[]){
+   const ice=weather.ice[part.reach_id];
+   if(ice)grouped.set(part.reach_id,ice);
+  }
+ }
+ return `<div class="small city-weather" data-city-weather><p>${battleText(
+  `${tc} · ${names[0]} · 積雪 ${row.depth}/30 · 寒冷 ${row.cold}/3・${date[1]}月${date[2]}日觀測`,
+  `${ja}・${names[1]}・積雪 ${row.depth}/30・寒さ ${row.cold}/3・${date[1]}月${date[2]}日観測`)}</p>
+  <p>${battleText(`道路 ${WINTER_SNOW_NAMES[['clear','light_snow','heavy_snow','blizzard'].indexOf(row.road)][0]} · 本季每旬降雪機率 ${row.season_chance}%`,
+   `道路 ${WINTER_SNOW_NAMES[['clear','light_snow','heavy_snow','blizzard'].indexOf(row.road)][1]}・季節の降雪確率は1旬あたり ${row.season_chance}%`)}</p>
+  ${[...grouped].map(([reach,ice])=>`<p data-city-river-ice="${escapeHtml(reach)}">${battleText(
+   `${WINTER_ICE_NAMES[ice.state][0]} · 河段航速 ${ice.speed_percent}%`,
+   `${WINTER_ICE_NAMES[ice.state][1]}・区間の航速 ${ice.speed_percent}%`)}</p>`).join('')}
+  ${seasonal?`<p data-city-winter-logistics>${battleText(
+   `未來九旬 · 平時缺口 ${seasonal.baseline} · 冬季缺口 ${seasonal.winter} · ${seasonal.extra?`需額外備糧 ${seasonal.extra}`:'現有供應可覆蓋冬季增量'}`,
+   `今後9旬・平時の不足 ${seasonal.baseline}・冬季の不足 ${seasonal.winter}・${seasonal.extra?`追加備蓄 ${seasonal.extra} が必要`:'冬季の追加分は確保済み'}`)}</p>
+   <details><summary>${battleText('冬季補給明細','冬季補給の内訳')}</summary><p>${battleText(
+   `可動用庫存 ${seasonal.covered} · 已承諾用糧 ${seasonal.committed} · 受天候影響的預計到貨 ${seasonal.projected_delivery}`,
+   `利用可能な備蓄 ${seasonal.covered}・引当済み ${seasonal.committed}・天候の影響を受ける到着見込み ${seasonal.projected_delivery}`)}
+   </p>${seasonal.reaches.length?`<p>${battleText('有冰封風險的河段','結氷のおそれのある区間')} ${escapeHtml(seasonal.reaches.join('、'))}</p>`:''}</details>`:''}</div>`;
 }
 
 async function showCityInformation(id){
@@ -828,13 +925,15 @@ async function showCityInformation(id){
    ${c.frontier_outpost?frontierOutpostNote(c.frontier_outpost,c.owner):cityEconomyNote(c.profile)}
    ${!preview&&typeof GameDomestic!=='undefined'?GameDomestic.summary(view,id):''}${!preview&&typeof GameDomestic!=='undefined'?GameDomestic.logisticsSummary(view,id):''}
    ${!preview&&typeof GameFacilities!=='undefined'?GameFacilities.summary(view,id):''}
+   ${!preview&&view.catalog.regional_market?.cities[id]?`<p><button type="button" id="city-information-regional-market">${battleText('區域市場與調糧','地域市場・兵糧輸送')}</button></p>`:''}
+   ${!preview&&view.catalog.strategic_granary?.cities[id]?`<p><button type="button" id="city-information-strategic-granary">${battleText('戰略糧倉','戦略備蓄')}</button></p>`:''}
    ${!preview&&typeof GameCityDevelopment!=='undefined'?GameCityDevelopment.summary(view,id):''}
    ${preview&&c.city_development&&typeof GameCityDevelopment!=='undefined'?GameCityDevelopment.summary({catalog:{city_development:{cities:{[id]:c.city_development}}}},id):''}
    ${preview&&c.facilities?`<p class="small" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">開局町等級 ${c.facilities.town}/3 · 防災 ${c.facilities.preparedness}/99${c.facilities.damage?` · 災損 ${c.facilities.damage}/50`:''} · ${c.facilities.services.map(service=>({hospital:'醫館',market:'市場',school:'學問所',armory:'武器屋'}[service])).join('、')}</p><p class="small" data-locale-only="ja" data-l10n-native="ja">開始時の町 ${c.facilities.town}/3・防災 ${c.facilities.preparedness}/99${c.facilities.damage?`・被害 ${c.facilities.damage}/50`:''}・${c.facilities.services.map(service=>({hospital:'医館',market:'市場',school:'学問所',armory:'武器屋'}[service])).join('・')}</p>`:''}
    ${preview?`<p class="small"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">寶 ${c.treasure??0}/99</span><span data-locale-only="ja" data-l10n-native="ja">宝 ${c.treasure??0}/99</span></p>`:typeof GameTreasury!=='undefined'?GameTreasury.summary(view,id):''}
    <dl class="resources"><div class="resource-pair"><dt>資金</dt><dd>${c.gold}</dd></div><div class="resource-pair"><dt>兵糧</dt><dd>${c.grain}</dd></div><div class="resource-pair"><dt>預備兵</dt><dd>${c.reserves}</dd></div></dl>
    ${c.income?`<p class="small">${c.owner==='neutral'?'无主城暂无月收入':`每月金${c.income.gold} / 粮${c.income.grain} / 预备兵${c.income.reserves}`}</p>`:''}
-   ${preview?'':cityGrainWarning(id)}
+   ${preview?'':cityWeatherHtml(id)+cityGrainWarning(id)}
    ${preview?'':grainRecoveryNotice(id)}
    ${c.grain_balance?`<dl class="resources city-grain-balance" data-city-grain-balance><div class="resource-pair"><dt>${cityCommandText('月產糧','月間兵糧収入')}</dt><dd data-grain-production>${c.grain_balance.production}</dd></div><div class="resource-pair"><dt>${cityCommandText('駐軍耗糧','駐屯軍の兵糧消費')}</dt><dd data-grain-upkeep>${c.grain_balance.upkeep}</dd></div><div class="resource-pair"><dt>${cityCommandText('居民月耗糧','住民の月間消費')}</dt><dd data-civilian-grain>${c.grain_balance.civilian}</dd></div><div class="resource-pair"><dt>${cityCommandText('駐軍士氣','駐屯軍の士気')}</dt><dd>${c.city_development?.garrison_spirit??100}</dd></div><div class="resource-pair"><dt>${cityCommandText('兵糧淨收支','兵糧の収支')}</dt><dd data-grain-net>${c.grain_balance.net>0?'+':''}${c.grain_balance.net}</dd></div></dl><p class="small">${cityCommandText(`1 點兵糧相當於 ${(preview?data.grain_people_per_day:view.catalog.grain_people_per_day)??1000} 名士兵的單日基本口糧。`,`兵糧1は兵 ${(preview?data.grain_people_per_day:view.catalog.grain_people_per_day)??1000} 人の1日分の基本配給です。`)}</p>`:''}
    ${c.agriculture&&typeof GameCityDevelopment!=='undefined'?GameCityDevelopment.agriculture(c.agriculture):''}
@@ -846,6 +945,10 @@ async function showCityInformation(id){
   const draw=()=>{
    if(openDialog(title,body,close)===undefined)return;
    bindCityGrainWarning(dialog);
+   const marketButton=$('#city-information-regional-market');
+   if(marketButton)marketButton.onclick=()=>openRegionalMarket(id);
+   const granaryButton=$('#city-information-strategic-granary');
+   if(granaryButton)granaryButton.onclick=()=>openStrategicGranary(id,draw);
    for(const officer of c.officers)rosterButton(officer).onclick=()=>{
     const scroll=dialog.scrollTop,table=dialog.querySelector('.roster-scroll');
     const rowScroll=[table.scrollLeft,table.scrollTop];
@@ -932,8 +1035,265 @@ function cityDevelopmentInterface(){
  return cityDevelopmentUI;
 }
 function facilitiesInterface(){
- if(!facilitiesUI&&typeof GameFacilities!=='undefined')facilitiesUI=GameFacilities.create({getView:()=>view,cityName:id=>cityName(id),openDialog:(...args)=>openDialog(...args),command:(kind,payload)=>command(kind,payload),dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
+ if(!facilitiesUI&&typeof GameFacilities!=='undefined')facilitiesUI=GameFacilities.create({getView:()=>view,cityName:id=>cityName(id),openDialog:(...args)=>openDialog(...args),openRegional:openRegionalMarket,command:(kind,payload)=>command(kind,payload),dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
  return facilitiesUI;
+}
+
+function openStrategicGranary(id,back){
+ const ledger=view.catalog.strategic_granary,city=ledger?.cities[id];
+ if(!city||setupPreview)return;
+ const t=battleText, title=['戰略糧倉','戦略備蓄'];
+ const number=value=>Number.isFinite(value)?value.toLocaleString(GameI18n.locale):'—';
+ const cityLabel=key=>t(GameI18n.t(cityName(key),'zh-Hant'),GameI18n.t(cityName(key),'ja'));
+ const pathLabel=path=>path.map(cityLabel).join(' → ');
+ const interactive=view.game.phase==='city';
+ const statuses={reserved:['已預留','確保済み'],dispatched:['已發運','発送済み'],in_transit:['運輸中','輸送中'],
+  delayed:['延誤','遅延'],diverted:['改道','迂回'],delivered:['已交付','到着済み'],partially_delivered:['部分交付','一部到着'],
+  returned:['已實際接收運隊','輸送隊受け入れ済み'],failed:['運輸失敗','輸送失敗'],cancelled:['已取消','取消済み']};
+ const reasons={ownership:['城市易主','所属変更'],expired:['預留逾期','確保期限切れ'],source_safety:['來源城保留量不足','出発都市の必要備蓄不足'],
+  no_legal_route:['沒有合法去程','往路を確保できない'],no_legal_return:['沒有合法返程','復路を確保できない'],
+  no_eligible_escort:['無合資格的押運武將','護送可能な武将がいない'],source_convoy_limit:['來源城已有運隊','出発都市に輸送隊がいる'],
+  no_command_books:['命令書不足','命令書不足'],no_transport_capacity:['運力不足','輸送力不足'],
+  already_committed:['已有調出承諾','輸送の確保済み'],winter_route_risk:['冬季路況風險','冬季の通行リスク'],
+  no_return_rations:['返程口糧不足','復路の口糧不足'],source_defence:['來源城需保留守軍','出発都市に守備兵が必要'],
+  route_blocked:['路線受阻','経路が遮断された'],target_changed:['目的地易主','目的地の所属変更'],
+  unsafe_return:['返程不安全','復路の安全を確保できない'],resource_full:['到貨城倉位不足','到着都市の倉庫が満杯'],
+  transport_weather:['天候延誤','天候による遅れ'],no_friendly_city:['沒有可接收的本方城市','受け入れ可能な自勢力都市なし'],
+  no_return_route:['無法返程','帰還経路なし'],journey_limit:['已達改道上限','迂回回数上限'],
+  returned_home:['已返回原城','出発都市へ帰還'],received_elsewhere:['由其他城市接收','別の都市で受け入れ'],
+  city_full:['接收城市名冊已滿','受け入れ都市の武将枠が満員'],manual:['手動操作','手動操作'],
+  surrender_settlement:['受降時實際接收','降伏時に受け入れ']};
+ const stateReason=key=>t(...(reasons[key]||['路況或執行條件已變更','経路または実行条件が変わりました']));
+ const facts=[
+  ['官倉總糧','官倉の総量',city.total],['普通可動用','通常の使用可能量',city.available],
+  ['戰略儲備','戦略備蓄',city.strategic],['儲備目標','備蓄目標',city.target],['儲備容量','備蓄容量',city.capacity],
+  ['已承諾調出','輸送確保量',city.committed],['行軍預留','行軍の確保量',city.military],
+  ['九旬內可靠到貨','9旬以内の到着見込み',city.inbound],['九旬內風險到貨','9旬以内の到着不確実分',city.inbound_risk],
+  ['冬季儲備目標增額','冬季備蓄の上積み',city.winter],['九旬預計缺口','9旬の見込み不足量',city.shortfall]];
+ const orders=ledger.orders.filter(row=>row.source===id||row.target===id).toReversed();
+ const relays=(ledger.relays||[]).filter(row=>[row.source,row.hub,row.target].includes(id));
+ const options=Object.keys(ledger.cities).filter(key=>key!==id);
+ const amountInput=(key,max,value,min=1)=>`<input id="${key}" type="number" min="${min}" max="${Math.max(min,max)}" value="${value}" required>`;
+ const body=`<section data-strategic-granary>
+  <h3>${cityLabel(id)}</h3>
+  <dl class="resources">${facts.map(([zh,ja,value])=>`<div class="resource-pair"><dt>${t(zh,ja)}</dt><dd>${number(value)}</dd></div>`).join('')}</dl>
+  <h3>${t('九旬糧食預測','今後9旬の兵糧予測')}</h3>
+  <p>${city.first===null?t('九旬內無預計缺糧。','9旬以内に不足の見込みはありません。'):
+    city.first===0?t('官倉目前已無糧。','官倉の兵糧は既にありません。'):
+    t(`預計第 ${city.first} 旬首次缺糧。`,`${city.first}旬後に最初の不足が見込まれます。`)}</p>
+  <div class="roster-scroll"><table class="roster-table"><thead><tr>
+   ${[['旬','旬'],['產糧','生産'],['應付','消費'],['可靠到貨','到着'],['期末庫存','期末在庫'],['缺口','不足']].map(label=>`<th scope="col">${t(...label)}</th>`).join('')}
+   </tr></thead><tbody>${city.forecast.map(row=>`<tr><th scope="row">${row.ahead}</th>${['harvest','due','reliable','ending','missing'].map(key=>`<td>${number(row[key])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+  ${interactive?`<form id="granary-reserve-form"><fieldset><legend>${t('本城儲備管理','備蓄管理')}</legend><div class="granary-actions">
+   <label class="field">${t('糧量','兵糧量')}${amountInput('granary-reserve-amount',city.capacity,0,0)}</label>
+   <button type="submit" value="hold">${t('預留','備蓄に確保')}</button>
+   <button type="submit" value="release">${t('釋放','備蓄から解放')}</button>
+   <button type="submit" value="set_target">${t('設定儲備目標','備蓄目標を設定')}</button>
+  </div><small>${t('目標輸入 0 可恢復自動計算。','目標に0を入力すると自動計算に戻ります。')}</small></fieldset></form>`:''}
+  ${interactive&&options.length?`<form id="granary-transfer-form"><fieldset><legend>${t('預覽向本城調糧','この都市への輸送を見積もる')}</legend>
+   <label class="field">${t('來源城','出発都市')}<select id="granary-source"><option value="">${battlePlain('比較本方運路','自勢力の輸送経路を比較')}</option>
+    ${options.map(key=>`<option value="${escapeHtml(key)}">${escapeHtml(cityName(key))}</option>`).join('')}</select></label>
+   <label class="field">${t('目標到貨糧量','到着希望量')}${amountInput('granary-transfer-amount',100000000,1000)}</label>
+   <button type="submit">${t('查詢路線及口糧','経路と口糧を確認')}</button></fieldset></form>
+   <p id="granary-preview-status" role="status" aria-live="polite"></p><ol id="granary-preview-quotes" class="regional-market-list"></ol>`:''}
+  ${relays.length?`<h3>${t('中轉路線','積み替え経路')}</h3><ul class="regional-market-list">
+   ${relays.map(row=>`<li>${pathLabel([row.source,row.hub,row.target])} · ${row.received?
+    t(`中轉倉實收 ${number(row.received)} 糧`,`中継都市で ${number(row.received)} 糧を受け取り済み`):
+    t('第一段運輸中','第1区間を輸送中')}</li>`).join('')}</ul>`:''}
+  ${orders.length?`<h3>${t('調糧紀錄','輸送記録')}</h3><ul class="regional-market-list">${orders.map(row=>`<li data-granary-order="${row.id}">
+   <p><strong>${pathLabel([row.source,row.target])}</strong> · ${t(...statuses[row.status])}</p>
+   <p>${t(`貨糧 ${number(row.load)} · 口糧 ${number(row.rations)} · 實到 ${number(row.delivered_grain)}`,
+     `荷糧 ${number(row.load)}・口糧 ${number(row.rations)}・実到着 ${number(row.delivered_grain)}`)} ${row.reason?stateReason(row.reason):''}</p>
+   ${row.reception?`<p>${t('運隊接收城市','輸送隊の受け入れ先')} ${cityLabel(row.reception)}</p>`:''}
+   ${interactive&&row.status==='reserved'?`<div class="granary-actions">
+    <button type="button" data-granary-dispatch>${t('確認發運（1 張命令書）','発送を確定（命令書1枚）')}</button>
+    <button type="button" data-granary-cancel>${t('取消預留','確保を取り消す')}</button></div>`:''}
+   </li>`).join('')}</ul>`:''}
+  </section>`;
+ const generation=openDialog(battlePlain(...title),body,`<button type="button" data-granary-back>${t('返回','戻る')}</button>`);
+ if(generation===undefined)return;
+ const active=()=>dialog.open&&dialogGeneration===generation;
+ let sending=false,serial=0;
+ const send=async payload=>{
+  if(sending||!active())return;
+  sending=true;
+  const scroll=dialog.scrollTop;
+  try{
+   if(await command('strategic_granary_order',payload)&&active()){
+    openStrategicGranary(id,back);
+    dialog.scrollTop=scroll;
+   }
+  }finally{sending=false;}
+ };
+ $('[data-granary-back]').onclick=back;
+ const form=$('#granary-reserve-form');
+ if(form){
+  const amount=$('#granary-reserve-amount');
+  bindNumberInput(amount);
+  form.onsubmit=event=>{
+   event.preventDefault();
+   send({action:event.submitter?.value||'set_target',city:id,amount:clampNumberInput(amount,true)});
+  };
+ }
+ for(const node of dialog.querySelectorAll('[data-granary-order]')){
+  const order=Number(node.dataset.granaryOrder),dispatch=node.querySelector('[data-granary-dispatch]');
+  if(dispatch)dispatch.onclick=()=>send({action:'dispatch',order});
+  const cancel=node.querySelector('[data-granary-cancel]');
+  if(cancel)cancel.onclick=()=>send({action:'cancel',order});
+ }
+ const transfer=$('#granary-transfer-form');
+ if(transfer){
+  const source=$('#granary-source'),amount=$('#granary-transfer-amount'),status=$('#granary-preview-status'),
+   list=$('#granary-preview-quotes');
+  bindNumberInput(amount);
+  transfer.oninput=()=>{serial++;status.replaceChildren();list.replaceChildren();};
+  transfer.onsubmit=async event=>{
+   event.preventDefault();
+   const marker=++serial,revision=view.revision,quantity=clampNumberInput(amount,true);
+   status.innerHTML=t('正在查詢…','確認中…');
+   list.replaceChildren();
+   try{
+    const result=await request('/api/strategic-granary-preview',{target:id,source:source.value||null,quantity,revision});
+    if(!active()||marker!==serial||revision!==view.revision)return;
+    status.innerHTML=result.quotes.length?'':(Object.keys(result.reasons).map(stateReason).join(' · ')||
+       t('目前沒有可執行的方案。','実行可能な経路がありません。'));
+    list.innerHTML=result.quotes.map((q,index)=>`<li><strong>${pathLabel(q.path)}</strong>
+     <p>${t('返程','復路')} ${pathLabel(q.return_path)}</p>
+     <p>${t(`去程 ${q.days} 日 · 返程 ${q.return_days} 日 · 預計淨到貨 ${number(q.net)} 糧`,
+       `往路 ${q.days} 日・復路 ${q.return_days} 日・到着見込み ${number(q.net)} 糧`)}</p>
+     <p>${t(`來源可輸出 ${number(q.free)} 糧 · 來回備糧 ${number(q.rations)}（返程基礎 ${number(q.return_rations)}） · 每千糧到岸估計 ${(q.landed_cents/100).toFixed(2)} 金`,
+       `出発都市の輸送可能量 ${number(q.free)} 糧・往復の準備口糧 ${number(q.rations)}（復路基本 ${number(q.return_rations)}）・千糧当たりの到着費用 ${(q.landed_cents/100).toFixed(2)} 金`)}</p>
+     ${q.risk||q.ice.length?`<p>${t('有冬季延誤或結冰風險。','冬季の遅延または結氷の恐れがあります。')}</p>`:''}
+     <button type="button" data-granary-quote="${index}">${t('預留這筆調糧','この輸送を確保')}</button></li>`).join('');
+    for(const button of list.querySelectorAll('[data-granary-quote]')){
+     const q=result.quotes[Number(button.dataset.granaryQuote)];
+     button.onclick=()=>send({action:'reserve',target:id,source:q.source,quantity,token:q.token});
+    }
+    GameI18n.apply?.();
+   }catch(error){if(active()&&marker===serial)status.textContent=GameI18n.t(error.message,GameI18n.locale);}
+  };
+ }
+ $('#dialog-language').addEventListener('change',()=>queueMicrotask(()=>{
+  if(!active())return;
+  $('#dialog-title').textContent=battlePlain(...title);
+  const anySource=$('#granary-source');
+  if(anySource)anySource.options[0].textContent=battlePlain('比較本方運路','自勢力の輸送経路を比較');
+ }));
+ GameI18n.apply?.();
+}
+
+function openRegionalMarket(initialCity){
+ const market=view.catalog.regional_market;
+ if(!market||!market.cities[initialCity]||setupPreview)return;
+ const t=battleText, idOf=escapeHtml, localCity=id=>t(GameI18n.t(cityName(id),'zh-Hant'),GameI18n.t(cityName(id),'ja'));
+ const number=value=>Number.isFinite(value)?value.toLocaleString(GameI18n.locale):'—';
+ const cityRows=Object.entries(market.cities), own=view.game.cities[initialCity].owner===view.game.player;
+ const interactive=own&&market.stage>=2&&view.game.phase==='city';
+ const region=(id,index)=>market.labels[id]?.[index]||id;
+ const statuses={
+  dispatched:['運輸中','輸送中'],awaiting_sale:['已抵達，待售','到着・売却待ち'],delivered:['已交付','引き渡し済み'],
+  sold:['已出售','売却済み'],failed:['已購糧，未發運','購入済み・未発送'],received_elsewhere:['另城接收','別都市で受け入れ'],
+  returned:['已返程','帰還済み'],expired:['出售期限已過','売却期限切れ'],cancelled:['已取消出售','売却取消']};
+ const marketRows=cityRows.toSorted(([,a],[,b])=>a.region.localeCompare(b.region)).map(([id,m])=>
+  `<tr><th scope="row">${localCity(id)}</th><td>${t(region(m.region,0),region(m.region,1))}</td><td>${idOf(faction(m.owner))}</td><td>${number(m.stock)} / ${number(m.capacity)}</td><td>${number(m.supply)}</td><td>${m.buy} / ${m.sell}</td><td>${t(GameFacilities.marketBand(m.band,'zh-Hant'),GameFacilities.marketBand(m.band,'ja'))}</td></tr>`).join('');
+ const orderList=market.orders.filter(row=>row.source===initialCity||row.target===initialCity).reverse().map(row=>{
+  const actors=row.offer?.batches&&interactive?view.catalog.facilities?.cities?.[row.target]?.eligible_actors||[]:[];
+  return `<li data-regional-order="${row.id}"><p><strong>${localCity(row.source)} → ${localCity(row.target)}</strong> · ${t(...(statuses[row.status]||[row.status,row.status]))}</p>
+   <p class="small">${t(`採購 ${number(row.purchased)} 糧／${number(row.purchase_gold)} 金 · 實到 ${number(row.delivered)} 糧 · 實售 ${number(row.sold)} 糧／收入 ${number(row.sale_gold)} 金`,
+    `購入 ${number(row.purchased)} 糧／${number(row.purchase_gold)} 金・到着 ${number(row.delivered)} 糧・売却 ${number(row.sold)} 糧／収入 ${number(row.sale_gold)} 金`)}</p>
+   ${row.status==='failed'&&row.reason?`<p class="small" role="status">${t(GameI18n.t(row.reason,'zh-Hant'),GameI18n.t(row.reason,'ja'))}</p>`:''}
+   ${actors.length?`<div class="facility-amount"><label class="field">${t('出售武將','売却する武将')}<select data-sale-actor>${actors.map(id=>`<option value="${idOf(id)}">${idOf(name(id))}</option>`).join('')}</select></label><label class="field">${t(`出售批數（每批 ${row.offer.batch_grain} 糧）`,`売却口数（1口 ${row.offer.batch_grain} 糧）`)}<input type="number" min="1" max="${row.offer.batches}" value="${row.offer.batches}" data-sale-batches></label><button type="button" data-regional-sell>${t(`按 ${row.offer.rate} 金出售`,`単価 ${row.offer.rate} 金で売却`)}</button></div>`:''}
+   ${interactive&&row.status==='awaiting_sale'&&!row.auto?`<button type="button" data-regional-cancel>${t('取消出售，糧留在官倉','売却を取り消し、官倉に保管')}</button>`:''}</li>`;
+ }).join('');
+ const flags=view.game.extension?.weather_rules_version;
+ const cityMarket=market.cities[initialCity];
+ const regionalTotals=market.regions[cityMarket.region];
+ const body=`<section data-regional-market-dialog>
+  <p>${localCity(initialCity)} · ${t('商品糧庫存','市場の在庫')} ${number(cityMarket.stock)} / ${number(cityMarket.capacity)} · ${t('買／賣（每千糧）','買値／売値（1,000糧）')} ${cityMarket.buy} / ${cityMarket.sell}</p>
+  <p class="small">${t(region(cityMarket.region,0),region(cityMarket.region,1))} · ${t(
+   `可查閱市場近三個月購入 ${number(regionalTotals.bought_three)} 糧，出售 ${number(regionalTotals.sold_three)} 糧`,
+   `閲覧できる市場の直近3か月の購入 ${number(regionalTotals.bought_three)} 糧、売却 ${number(regionalTotals.sold_three)} 糧`)}</p>
+  <details><summary>${t('可查閱的區域市場','閲覧できる地域市場')}</summary><div class="roster-scroll"><table class="roster-table"><thead>
+  <tr>${[['都市','都市'],['區域','地域'],['勢力','勢力'],['庫存／容量','在庫／容量'],['月供應','月間供給'],['買／賣','買値／売値'],['旬初狀態','旬初の状態']].map(label=>`<th scope="col">${t(...label)}</th>`).join('')}</tr>
+  </thead><tbody>${marketRows}</tbody></table></div></details>
+  ${interactive?`<form id="regional-market-form"><fieldset><legend>${t('跨城採購預覽','他都市からの調達見積り')}</legend>
+  <label class="field">${t('用途','用途')}<select id="regional-purpose"><option value="procurement">${battlePlain('官倉補糧','官倉への補給')}</option><option value="trade">${battlePlain('運抵後出售','輸送後に売却')}</option></select></label>
+  <label class="field">${t('來源城','購入する都市')}<select id="regional-source"><option value="">${battlePlain('所有本方可行市場','自勢力で利用可能な全市場')}</option>${cityRows.filter(([id])=>id!==initialCity).map(([id])=>`<option value="${idOf(id)}">${idOf(cityName(id))}</option>`).join('')}</select></label>
+  <label class="field">${t('需求糧量','希望する兵糧量')}<input id="regional-qty" type="number" min="1" max="${market.max_quantity}" value="1000" required></label>
+  <p class="small">${t('來源城付款與備妥往返口糧。購入與發運合計使用兩張命令書。','購入元の都市が代金と往復の口糧を負担します。購入と発送に命令書を計2枚使います。')}</p>
+  <button type="submit">${t('比較可行路線','利用可能な経路を比較')}</button></fieldset></form>
+  <div id="regional-preview-status" role="status" aria-live="polite"></div><ol id="regional-preview-quotes" class="regional-market-list"></ol>`:''}
+  ${orderList?`<section><h3>${t('本城相關訂單','この都市に関わる注文')}</h3><ul class="regional-market-list">${orderList}</ul></section>`:''}
+  </section>`;
+ const generation=openDialog('區域市場',body,`<button type="button" data-cancel>${t('返回','戻る')}</button>`);
+ if(generation===undefined)return;
+ const active=()=>dialog.open&&dialogGeneration===generation;
+ let committing=false,serial=0;
+ async function send(payload){
+  if(committing||!active())return;
+  committing=true;
+  try{
+   if(await command('regional_market_order',payload)&&active())openRegionalMarket(initialCity);
+  }finally{committing=false;}
+ }
+ for(const node of dialog.querySelectorAll('[data-regional-order]')){
+  const order=market.orders.find(item=>item.id===Number(node.dataset.regionalOrder));
+  const sell=node.querySelector('[data-regional-sell]'),cancel=node.querySelector('[data-regional-cancel]');
+  if(cancel)cancel.onclick=()=>send({action:'cancel',order:order.id});
+  if(sell)sell.onclick=()=>{
+   const quantity=node.querySelector('[data-sale-batches]');
+   send({action:'sell',order:order.id,actor:GameOfficerChoices.ref(node.querySelector('[data-sale-actor]').value),
+    batches:clampNumberInput(quantity,true),token:order.offer.price_token});
+  };
+  if(sell)bindNumberInput(node.querySelector('[data-sale-batches]'));
+ }
+ const form=$('#regional-market-form');
+ if(form){
+  const status=$('#regional-preview-status'),list=$('#regional-preview-quotes'),snapshot=view.revision;
+  bindNumberInput($('#regional-qty'));
+  form.oninput=()=>{serial++;status.replaceChildren();list.replaceChildren();};
+  form.onsubmit=async event=>{
+   event.preventDefault();
+   const marker=++serial,purpose=$('#regional-purpose').value,qty=clampNumberInput($('#regional-qty'),true);
+   list.replaceChildren();
+   status.innerHTML=t('正在查詢庫存與路線…','在庫と経路を確認中…');
+   try{
+    const result=await request('/api/regional-market-preview',{target:initialCity,qty,purpose,source:$('#regional-source').value||null,revision:snapshot});
+    if(!active()||marker!==serial||snapshot!==view.revision)return;
+    const {local,deadline,quotes}=result;
+    status.innerHTML=`<p>${t(`本城即時可買 ${number(local.grain)} 糧，需 ${number(local.gold)} 金。`,`この都市ですぐに購入できる量は ${number(local.grain)} 糧、代金は ${number(local.gold)} 金。`)}
+     ${deadline===null?t('目前無近期缺糧預測。','直近に兵糧不足の予測はありません。'):t(`預計 ${deadline} 日後缺糧。`,`不足まで推定 ${deadline} 日。`)}${quotes.length?'':t('沒有符合當前資源及路權的跨城方案。','現在の資源と通行権で利用できる経路がありません。')}</p>`;
+    list.innerHTML=quotes.map((q,index)=>{
+     const inTime=q.timely===null?'':q.timely?t('可趕在缺糧前送達','不足前に到着見込み'):t('無法在缺糧前送達','不足前の到着は見込めません');
+     const mode={land:['陸路','陸路'],river:['水路','水路'],sea:['海路','海路'],special:['特殊路線','特殊経路']};
+     const path=q.route.map(localCity).join(' → ');
+     const risk=flags?t('依目前天氣估算，冰情及通行權可能變化。','現在の天候を基に推定。結氷や通行権は変わることがあります。'):t('運輸時間和途耗為估算，通行權可能變化。','所要時間と荷損は見込みです。通行権は変わることがあります。');
+     return `<li><p><strong>${path}</strong> · ${q.route_types.map(key=>t(...(mode[key]||[key,key]))).join('／')} ${inTime}</p>
+      <p class="small">${t(`押運 ${name(q.actor)} · 採購 ${number(q.cargo)} 糧／${number(q.gold)} 金（每千糧 ${q.rate} 金） · 去程 ${q.days} 日，返程 ${q.return_days} 日`,`護送 ${name(q.actor)}・購入 ${number(q.cargo)} 糧／${number(q.gold)} 金（1,000糧当たり ${q.rate} 金）・往路 ${q.days} 日、復路 ${q.return_days} 日`)}</p>
+      <p class="small">${t(`備糧 ${number(q.escort_rations)}（返程預留 ${number(q.return_rations)}） · 預計途耗 ${number(q.estimated_loss)} · 淨送達 ${number(q.net)} · 每千糧到岸 ${(q.landed_cents/100).toFixed(2)} 金`,`準備する口糧 ${number(q.escort_rations)}（復路用 ${number(q.return_rations)}）・推定荷損 ${number(q.estimated_loss)}・到着見込み ${number(q.net)}・到着費用 ${(q.landed_cents/100).toFixed(2)} 金／1,000糧`)}</p>
+      ${purpose==='trade'?`<p class="small">${t(`估計賣價 ${q.sale_rate} 金／千糧 · 現金收益 ${q.estimated_revenue-q.gold} 金 · 扣除預估 ${q.expected_rations} 糧口糧後 ${(q.economic_result_milli/1000).toFixed(2)} 金，實際收入按抵達後成交價結算。`,`見込み売値 ${q.sale_rate} 金／1,000糧・現金差額 ${q.estimated_revenue-q.gold} 金・推定口糧 ${q.expected_rations} 糧を差し引くと ${(q.economic_result_milli/1000).toFixed(2)} 金。売却は到着後の価格で精算します。`)}</p>`:''}
+      <p class="small">${risk}</p><button type="button" data-market-quote="${index}">${t('確認購糧並發運','購入と発送を確定')}</button></li>`;
+    }).join('');
+    for(const button of list.querySelectorAll('[data-market-quote]')){
+     const quote=quotes[Number(button.dataset.marketQuote)];
+     button.onclick=()=>send({action:'buy',source:quote.source,target:initialCity,token:quote.token,qty,purpose});
+    }
+    GameI18n.apply?.();
+   }catch(error){if(active()&&marker===serial)status.textContent=GameI18n.t(error.message,GameI18n.locale);}
+  };
+ }
+ const refreshLanguage=()=>{
+  if(!active())return;
+  $('#dialog-title').textContent=battlePlain('區域市場','地域市場');
+  const purpose=$('#regional-purpose');
+  if(purpose){purpose.options[0].textContent=battlePlain('官倉補糧','官倉への補給');purpose.options[1].textContent=battlePlain('運抵後出售','輸送後に売却');}
+  const source=$('#regional-source');
+  if(source)source.options[0].textContent=battlePlain('所有本方可行市場','自勢力で利用可能な全市場');
+ };
+ $('#dialog-language').addEventListener('change',()=>queueMicrotask(refreshLanguage));
+ refreshLanguage();
+ GameI18n.apply?.();
+ dialog.scrollTop=0;
 }
 
 // Keep every officer choice comparable without opening a separate profile.
@@ -1401,6 +1761,7 @@ function mapMarchRestriction(row){
   one_way:()=>battleText(`單向通行（僅限 ${tc([row.from,row.to])}）`,`一方通行（${ja([row.from,row.to])} のみ）`),
   closed:()=>date?battleText(`目前封閉，預計 ${date} 開放。`,`現在は通行止めです。${date}に再開予定です。`):battleText('目前封閉，無法通行。','現在は通行止めです。'),
   not_yet_open:()=>battleText(`尚未開通，預計 ${date} 開放。`,`まだ開通していません。${date}に開通予定です。`),
+  river_frozen:()=>battleText('河段完全冰封，改走可通行的路線，或等解凍。','河川が全面結氷しています。通行可能な経路を使うか、解氷を待ちます。'),
   requires_stop:()=>battleText(`必須在 ${tc(row.via||[])} 停靠，不能直接通行。`,`${ja(row.via||[])} を経由するため、直行できません。`)
  };
  return phrasing[row.reason]?`<li data-march-reason="${escapeHtml(row.reason)}">${mapMarchKey('restricted',row.segments)}${mapMarchMode(row)} · ${phrasing[row.reason]()}</li>`:'';
@@ -1467,14 +1828,21 @@ function renderMapMarchPreview(){
 }
 function marchStatusHtml(row){
  const s=row.supply,arrived=s?(s.route_days??s.elapsed_days??0)>=row.quote.days:row.arrival_turn<=view.game.turn,
-  message=row.reason==='allied_rendezvous'?['已抵達，等待盟軍會合','到着済み・同盟軍との合流待ち']:row.reason==='allied_support_window'?['已抵達，等待援軍','到着済み・援軍待ち']:row.status==='returning'||row.returning||row.retreating||s?.retreat_requested?['撤退返程中','撤退・帰還中']:s?.waiting?['等待補給／接收','補給・受け入れ待ち']:arrived?['已抵達，等待處理','到着済み・処理待ち']:[`預計還需${Math.max(1,row.arrival_turn-view.game.turn)}旬`,`到着まで推定${Math.max(1,row.arrival_turn-view.game.turn)}旬`];
- return `<span data-march-status><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">${message[0]}</span><span data-locale-only="ja" data-l10n-native="ja" hidden>${message[1]}</span></span>`;
+  message=s?.winter?.blocked?['河段冰封，等待解凍，仍每日耗糧','河川が結氷中。解氷を待ち、兵糧は毎日消費']:row.reason==='allied_rendezvous'?['已抵達，等待盟軍會合','到着済み・同盟軍との合流待ち']:row.reason==='allied_support_window'?['已抵達，等待援軍','到着済み・援軍待ち']:row.status==='returning'||row.returning||row.retreating||s?.retreat_requested?['撤退返程中','撤退・帰還中']:s?.waiting?['等待補給／接收','補給・受け入れ待ち']:arrived?['已抵達，等待處理','到着済み・処理待ち']:[`預計還需${Math.max(1,row.arrival_turn-view.game.turn)}旬`,`到着まで推定${Math.max(1,row.arrival_turn-view.game.turn)}旬`];
+ const weather=view.catalog.weather?.marches?.[row.id],expected=weather?.expected?.join('/')??'—';
+ const remaining=weather?Number((weather.remaining_work/view.catalog.weather.work_per_day).toFixed(1)):0;
+ const detail=weather?'<br>'+battleText(
+  `按目前天氣預計 ${expected} 抵達 · 剩餘平時路程 ${remaining} 日 · 下段缺糧 ${weather.shortage}`,
+  `現在の天候での到着見込み ${expected}・平時換算で残り ${remaining} 日・次の区間の兵糧不足 ${weather.shortage}`)+
+  (weather.alternative?'<br>'+battleText('可行陸路','利用可能な陸路')+' '+mapMarchPath(weather.alternative):''):'';
+ return `<span data-march-status><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">${message[0]}</span><span data-locale-only="ja" data-l10n-native="ja" hidden>${message[1]}</span></span>${detail}`;
 }
 function marchPositionHtml(row){
  if(!row?.quote||typeof GameMarchSupply.position!=='function')return '';
- const progress=GameMarchSupply.position(row.quote,row.supply?.route_days??row.supply?.elapsed_days??0),
+ const travelled=row.supply?.winter?row.supply.winter.work/view.catalog.weather.work_per_day:row.supply?.route_days??row.supply?.elapsed_days??0,
+  progress=GameMarchSupply.position(row.quote,travelled),
   next=GameMarchSupply.nextStop(row.quote,row.supply?.route_days??0,view.game.cities,row.owner),
-  place=progress.city?escapeHtml(cityName(progress.city)):progress.from&&progress.to?`${escapeHtml(cityName(progress.from))} → ${escapeHtml(cityName(progress.to))}（${progress.progress_days}/${progress.leg_days}日）`:'—',
+  place=progress.city?escapeHtml(cityName(progress.city)):progress.from&&progress.to?`${escapeHtml(cityName(progress.from))} → ${escapeHtml(cityName(progress.to))}（${Number(progress.progress_days.toFixed(1))}/${progress.leg_days}日）`:'—',
   stop=next?`${escapeHtml(cityName(next.city))}（${next.days}日）`:'—';
  return `<br><span data-march-position><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">目前位置：${place} · 下一補給點：${stop}</span><span data-locale-only="ja" data-l10n-native="ja" hidden>現在地：${place}・次の補給地：${stop}</span></span>`;
 }
@@ -1487,7 +1855,7 @@ function marchSupplyHtml(s,history=[]){
 function marchSupplyRuleHtml(){
  return '<p class="small"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">出發只預裝至下一座本方城的口糧，途中由本方城池補給；沿途沒有本方城池時預裝全程。等待也每日耗糧，缺糧會暫停前進並每日損兵1%，連續10日於旬末撤退。可從本方城派運輸隊向在途部隊送糧。兵糧按兵數、隨行人數與實際日數累計取整。</span><span data-locale-only="ja" data-l10n-native="ja" hidden>次の自勢力都市までの兵糧を積み、途中は自勢力の都市から補給します。経由地に自勢力の都市がなければ全行程分を積みます。待機中も毎日消費し、不足時は前進を止め、1日1%の兵を失います。10日連続で不足すると旬末に撤退します。自勢力の都市から行軍部隊へ兵糧を届けられます。兵数・同行人数・実際の日数に基づき累計で切り上げます。</span></p>';
 }
-function marchGrain(ids,quote){return GameMarchSupply.estimate(view.game.officers,ids,quote,0,view.game.cities,view.game.cities[quote.path?.[0]]?.owner??view.game.player,view.catalog.grain_people_per_day);}
+function marchGrain(ids,quote){return quote.logistics?.weather?quote.logistics.initial_grain:GameMarchSupply.estimate(view.game.officers,ids,quote,0,view.game.cities,view.game.cities[quote.path?.[0]]?.owner??view.game.player,view.catalog.grain_people_per_day);}
 function logisticsPreviewForDialog(element,purpose){
  let previous=null;
  return (source,target,ids,mode,refresh,{cargo=0,reserves=0}={})=>{
@@ -1514,11 +1882,16 @@ function logisticsQuoteHtml(quote,comparison){
  const q=quote?.logistics;
  if(!q)return '';
  const times=logisticsTiming(q.time_ticks,q.ticks_per_day,q.percent);
- const line=(value,title)=>value?title+' '+value.days+battleText('日 · ','日・')+value.logistics.total_grain+battleText('糧','兵糧'):'';
+ const line=(value,title)=>value?title+' '+(value.logistics.weather?.days??value.days)+battleText('日 · ','日・')+value.logistics.total_grain+battleText('糧','兵糧'):'';
+ const winter=q.weather?'<p data-weather-route-quote>'+battleText(
+  `按目前天氣估算 ${q.weather.days} 日（平時 ${q.weather.normal_days} 日） · 冬季另需 ${q.weather.extra_grain} 糧 · 預計貨損 ${q.weather.cargo_loss_estimate}。`,
+  `現在の天候で ${q.weather.days} 日（平時 ${q.weather.normal_days} 日）・冬季の追加兵糧 ${q.weather.extra_grain}・推定荷損 ${q.weather.cargo_loss_estimate}。`)+
+  '<br>'+battleText(`時間增加 ${q.weather.winter_delay_grain??0} · 禦寒 ${q.weather.winter_warmth??0} · 道路後勤 ${q.weather.winter_route_overhead??0}`,
+   `日数増加 ${q.weather.winter_delay_grain??0}・防寒 ${q.weather.winter_warmth??0}・経路の追加補給 ${q.weather.winter_route_overhead??0}`)+'</p>':'';
  return '<div class="small" data-logistics-quote data-march-grain="'+q.total_grain+'"><p>'+battleText(
   '基礎口糧 '+q.base_grain+' · 額外後勤 '+q.extra_grain+' · 返程糧 '+(q.return_grain??'—'),
   '基本兵糧 '+q.base_grain+'・追加補給 '+q.extra_grain+'・帰路 '+(q.return_grain??'—'))+'</p><p>'+times+'</p>'+
-  (comparison?'<p>'+[line(comparison.fastest,battleText('最快','最速')),line(comparison.minimum,battleText('最低耗糧','最小消費'))].filter(Boolean).join('　')+'</p>':'')+'</div>';
+  winter+(comparison?'<p>'+[line(comparison.fastest,battleText('最快','最速')),line(comparison.minimum,battleText('最低耗糧','最小消費'))].filter(Boolean).join('　')+'</p>':'')+'</div>';
 }
 function marchRefillForecastHtml(quote,ids,loaded,owner,rows){
  if(!quote||!ids.length)return '';
@@ -1612,7 +1985,7 @@ function departure(city,targetCity=null){
      battleText(`首段行軍糧 ${provision.march_grain} + 戰鬥備糧 ${provision.battle_grain} = 裝載 ${loaded}；戰鬥日耗約 ${provision.daily_grain}，可支撐 ${provision.days_supported} 日。`, `最初の区間 ${provision.march_grain} + 戦闘用 ${provision.battle_grain} = 積載 ${loaded}。戦闘の一日消費は約 ${provision.daily_grain}、維持可能 ${provision.days_supported} 日。`)+(!provision.battle_grain?battleText(' 備糧為0時可能在首日斷糧撤退。',' 備糧0では初日に兵糧不足で撤退する可能性があります。'):'');
    }
    $('#departure-supply').innerHTML=quote?marchSupplyHtml({loaded:segmentLoaded,consumed:0,remaining:segmentLoaded,elapsed_days:0}):'';
-   $('#departure-refill-forecast').innerHTML=marchRefillForecastHtml(quote,draft.officers,loaded,city.owner);
+   $('#departure-refill-forecast').innerHTML=marchRefillForecastHtml(quote,draft.officers,loaded,city.owner,quote?.logistics?.weather?quote.logistics.refills:undefined);
    $('#confirm-departure').disabled=!hasCommandBook('depart')||!quote||city.grain<loaded;
    if(quote&&typeof tutorial!=='undefined')tutorial?.routePreview();
    GameI18n.apply();
@@ -1725,7 +2098,7 @@ function transferCity(city){
    const answer=ids.length?readLogistics(city.id,destination,ids,mode,updateEstimate):null;
    if(usesLogisticsV2()&&ids.length)baseQuote=answer?.primary??null;
    const baseLoaded=baseQuote?marchGrain(ids,baseQuote):0;
-   const baseRefills=baseQuote?GameMarchSupply.refillForecast(view.game.officers,ids,baseQuote,baseLoaded,view.game.cities,city.owner,view.catalog.grain_people_per_day):[];
+   const baseRefills=baseQuote?(baseQuote.logistics?.weather?baseQuote.logistics.refills:GameMarchSupply.refillForecast(view.game.officers,ids,baseQuote,baseLoaded,view.game.cities,city.owner,view.catalog.grain_people_per_day)):[];
    const detour=syncSupplyPreview(destination,mode,ids,baseRefills);
    quote=useDetour&&detour?detour:baseQuote;
    const unarmed=mode==='explore'&&ids.length>0&&!ids.some(id=>view.game.officers[id].troops>0),poor=!!quote&&!available.some(id=>marchGrain([id],quote)<=city.grain);
@@ -1733,7 +2106,7 @@ function transferCity(city){
    const estimate=$('#transfer-estimate');if(estimate){estimate.innerHTML=usesLogisticsV2()&&ids.length&&answer===undefined?'<p role="status">'+battleText('正在計算後勤…','兵站を計算中…')+'</p>':travelEstimate(city.id,destination,mode,quote)+logisticsQuoteHtml(quote,answer);previewSurvivors(estimate,quote,ids);}
    const loaded=quote===baseQuote?baseLoaded:marchGrain(ids,quote);
    if($('#transfer-supply'))$('#transfer-supply').innerHTML=quote?marchSupplyHtml({loaded,consumed:0,remaining:loaded,elapsed_days:0}):'';
-   if($('#transfer-refill-forecast'))$('#transfer-refill-forecast').innerHTML=marchRefillForecastHtml(quote,ids,loaded,city.owner,quote===baseQuote?baseRefills:undefined);
+   if($('#transfer-refill-forecast'))$('#transfer-refill-forecast').innerHTML=marchRefillForecastHtml(quote,ids,loaded,city.owner,quote===baseQuote?baseRefills:quote?.logistics?.refills);
    renderSupplyPreview();
    $('#confirm-transfer').disabled=!hasCommandBook('transfer')||ids.length===0||ids.length>limit||unarmed||view.catalog.travel_rules&&(!quote||loaded>city.grain);
    GameI18n.apply();

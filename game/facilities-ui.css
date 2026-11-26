@@ -85,3 +85,13 @@ dialog:has([data-facilities-dialog]) .dialog-actions{margin:0;padding-top:12px;b
 
 .departure-provisions-input{display:flex;gap:8px}.departure-provisions-input input{min-width:0;flex:1}.departure-provisions-input button{min-height:44px}
 .battle-provisions{border-bottom:1px solid var(--ink);padding-bottom:8px;margin-bottom:8px}.battle-provisions p{margin:4px 0;font-variant-numeric:tabular-nums}.battle-provisions small{font-size:.8em}
+
+[data-regional-market-dialog] fieldset{min-inline-size:0;margin:12px 0}
+[data-regional-market-dialog] .field{margin-block:8px;min-width:0}
+[data-regional-market-dialog] input,[data-regional-market-dialog] select{min-width:0;max-width:100%}
+[data-regional-market-dialog] .roster-scroll{margin-block:8px;overflow:auto}
+[data-regional-market-dialog] .roster-table{min-width:35rem}
+.regional-market-list{list-style:none;padding-inline:0;margin:0}
+.regional-market-list>li{border-block-start:1px solid var(--ink);padding:10px 0}
+.regional-market-list li p{margin:0 0 8px;overflow-wrap:anywhere}
+.regional-market-list .facility-amount{align-items:end;flex-wrap:wrap}

@@ -11,7 +11,7 @@
   search_treasure:['探索寶物','宝の探索'],reward_officer:['賞賜武將','武将への褒美'],sell_treasure:['出售寶物','宝の売却'],
   develop_land:['開墾土地','土地の開墾'],develop_industry:['開發產業','産業の開発'],develop_population:['町開發（人口）','町の開発（人口）'],
   develop_town:['整備設施','施設の整備'],treat_officer:['治療武將','武将の治療'],study_officer:['武將進修','武将の学習'],
-  trade_grain:['交易兵糧','兵糧の取引'],buy_equipment:['購買裝備','装備の購入'],equip_owned:['更換裝備','装備の変更'],
+  trade_grain:['交易兵糧','兵糧の取引'],regional_market_order:['區域市場訂單','地域市場の注文'],strategic_granary_order:['戰略調糧','戦略備蓄の操作'],buy_equipment:['購買裝備','装備の購入'],equip_owned:['更換裝備','装備の変更'],
   improve_prevention:['加強防災','防災の強化'],diplomacy:['外交','外交']
  });
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -25,7 +25,9 @@
   if(!Number.isSafeInteger(amount)||amount<0||amount>13)throw Error('Invalid command-book confirmation price');
   const locale=options.locale||'zh-Hant',labels=ACTIONS[kind];
   if(amount>0&&!labels)throw Error('Unknown command-book confirmation action');
-  const cities=view?.game?.cities||{},id=[payload.city,payload.source].find(value=>typeof value==='string'&&Object.hasOwn(cities,value))||null;
+  const destination=kind==='regional_market_order'?view?.catalog?.regional_market?.orders?.find(row=>row.id===payload.order)?.target:
+   kind==='strategic_granary_order'?view?.catalog?.strategic_granary?.orders?.find(row=>row.id===payload.order)?.source:null;
+  const cities=view?.game?.cities||{},id=[payload.city,payload.source,destination].find(value=>typeof value==='string'&&Object.hasOwn(cities,value))||null;
   const raw=id?(options.cityName?.(id)||id):choose(locale,'本勢力','自勢力');
   const city=options.translate?.(raw,locale)||raw;
   let action=labels?.[locale==='ja'?1:0]||kind,allocation_count=null,allocation_delta=null;

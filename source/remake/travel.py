@@ -10,6 +10,7 @@ from itertools import count
 from math import asin, ceil, cos, radians, sin, sqrt
 from .errors import GameError
 from . import command_books, historical_campaigns, logistics_rules, observer, runan_campaign, southern_mission
+from . import winter_travel, winter_weather
 from .officers import (OFFICER_TROOP_CAP, integer, select_deployment, transfer_officers,
                        ref_sort_key, deserialize_officer_ref)
 
@@ -75,12 +76,18 @@ class TravelCampaign:
         phase = getattr(self, '_ai_routes', None)
         # Safe logistics quotes use a copied catalog with a filtered road graph.
         cache = phase[1] if phase is not None and phase[0] is self.catalog.data else None
+        ice=state.extension.get(winter_weather.POOL,{}).get('ice',{})
+        frozen=frozenset(key for key,row in ice.items() if row['state']==3)
         if cache is not None:
             key = (year, state.month, frozenset(state.cities), discovered)
+            if frozen:
+                key+= (frozen,)
             if key in cache:
                 return cache[key]
         active = effective(routes + [row for row in self.catalog.data.get('exploration_routes', [])
                                      if row['id'] in discovered], state.cities, year, state.month)
+        if frozen:
+            active=[r for r in active if not any(p['reach_id'] in frozen for p in r.get('river_segments',()))]
         if cache is not None:
             cache[key] = active
         return active
@@ -111,7 +118,7 @@ class TravelCampaign:
             return minimum_grain(self,state,source,target,owner,officers,adjacent=adjacent,
                                  cargo=cargo,reserves=reserves)
         from .march_core import enabled, invoke, state_input
-        if enabled():
+        if enabled() and not winter_weather.movement(state):
             if mode not in self._travel_modes():
                 raise GameError('请选择有效的行军路线。')
             return invoke('path', data=self.catalog.data, **state_input(state, owner),
@@ -128,6 +135,34 @@ class TravelCampaign:
         if not adjacent and state.cities[target].owner != owner:
             return None
         routes = self._known_routes(state)
+        winter=winter_weather.movement(state)
+        if winter:
+            # Quotes share physical inputs within an AI transaction. Political
+            # transit and membership still use the current state in the search.
+            phase=getattr(self,'_ai_routes',None)
+            cache=phase[1] if phase is not None and phase[0] is self.catalog.data else {}
+            key=('winter_graph',id(routes),state.month,state.extension[winter_weather.POOL]['tick'])
+            if key not in cache:
+                cache[key]=({}, {})
+            directions, adjoining=cache[key]
+
+            def prepared(raw,origin,destination):
+                edge=raw['id'],origin,destination
+                if edge not in directions:
+                    data=self.catalog.data
+                    leg=evaluate_leg(data,raw,origin,destination,state.month) if route_allowed(
+                        data,raw,origin,destination) else None
+                    directions[edge]=(leg,winter_travel.time_rank(self,state,leg) if leg is not None else None)
+                return directions[edge]
+        else:
+            adjoining={}
+
+            def prepared(raw,origin,destination):
+                data=self.catalog.data
+                if not route_allowed(data,raw,origin,destination):
+                    return None,None
+                leg=evaluate_leg(data,raw,origin,destination,state.month)
+                return leg,leg['days']
         if mode in ('river','sea','special','explore'):
             if mode == 'explore':
                 raw = self._exploration_route(source,target)
@@ -143,18 +178,24 @@ class TravelCampaign:
                     candidates += [row for row in routes if row not in candidates
                                    and {row['from'],row['to']}=={source,target}
                                    and {source,target}=={'yinping','shujun'} and row['mode']=='land']
-            legs = [evaluate_leg(self.catalog.data,row,source,target,state.month)
-                    for row in candidates if route_allowed(self.catalog.data,row,source,target)]
+            legs=[]
+            for raw in candidates:
+                leg,days=prepared(raw,source,target)
+                if leg is not None:
+                    legs.append((leg,days))
             if not legs:
                 return None
-            leg = min(legs,key=lambda row:(row['days'],row['distance_km'],row['id']))
+            leg,_=min(legs,key=lambda item:(item[1],item[0]['distance_km'],item[0]['id']))
             return self._quote([source,target],[leg])
-        adjoining = {}
-        for route in routes:
-            if mode == 'land' and route['mode'] != 'land':
-                continue
-            for endpoint in (route['from'], route['to']):
-                adjoining.setdefault(endpoint, []).append(route)
+        if mode not in adjoining:
+            neighbors={}
+            for route in routes:
+                if mode == 'land' and route['mode'] != 'land':
+                    continue
+                for endpoint in (route['from'],route['to']):
+                    neighbors.setdefault(endpoint,[]).append(route)
+            adjoining[mode]=neighbors
+        neighbors=adjoining[mode]
         serial = count()
         queue = [(0,0,source,next(serial),[source],[])]
         seen = set()
@@ -165,7 +206,7 @@ class TravelCampaign:
             seen.add(here)
             if here == target and legs:
                 return self._quote(path,legs)
-            for raw in adjoining.get(here, ()):
+            for raw in neighbors.get(here, ()):
                 nxt = raw['to'] if here==raw['from'] else raw['from']
                 if nxt not in state.cities or nxt in seen:
                     continue
@@ -173,10 +214,10 @@ class TravelCampaign:
                     continue
                 if not adjacent and not historical_campaigns.transit_allowed(state, owner, state.cities[nxt].owner):
                     continue
-                if not route_allowed(self.catalog.data,raw,here,nxt):
+                leg,duration=prepared(raw,here,nxt)
+                if leg is None:
                     continue
-                leg = evaluate_leg(self.catalog.data,raw,here,nxt,state.month)
-                heappush(queue,(days+leg['days'],distance+leg['distance_km'],nxt,next(serial),path+[nxt],legs+[leg]))
+                heappush(queue,(days+duration,distance+leg['distance_km'],nxt,next(serial),path+[nxt],legs+[leg]))
         return None
 
     def _march_risks(self, quote, rng=None):
@@ -330,16 +371,21 @@ class TravelCampaign:
         row.update(departure_year=state.year,departure_month=state.month,departure_day=state.day,
                    departure_troops={str(i):state.officers[i].troops for i in ids},
                    risks=self._march_risks(quote,state.rng), supply=create(state,ids,quote,game=self,initial_grain=grain))
+        winter_travel.set_eta(self,state,row)
         row.update(status='outbound',reason='outbound',history=[],journey_source=source.id,
             mission={key:row[key] for key in ('source','target','kind','mode','departure_turn','arrival_turn')})
         travel['marches'].append(row)
+        winter_weather.action(self,state,f'{kind}_departed',source.id,owner=source.owner,
+            target=target.id,unit_id=row['id'],rations=grain,mode=mode,days=winter_travel.quote_days(self,state,quote),
+            normal_days=quote['days'])
         staging_supply.reserve(state,row,stops)
         if 'domestic' in state.extension:
             from .domestic import on_departure
             on_departure(self,state,ids,source.id)
         self._note(state, f'{len(ids)}将从{self.catalog.map_cities[source.id]["name"]}出发，'
-                   f'至{self.catalog.map_cities[target.id]["name"]}约{quote["distance_km"]}公里、{quote["days"]}日，'
-                   f'{quote["turns"]}旬后到达（每旬10天），预装随军粮{grain}，按实际行军日数持续消耗。')
+                   f'至{self.catalog.map_cities[target.id]["name"]}约{quote["distance_km"]}公里、'
+                   f'{winter_travel.quote_days(self,state,quote)}日，'
+                   f'{row["arrival_turn"]-state.turn}旬后到达（每旬10天），预装随军粮{grain}，按实际行军日数持续消耗。')
 
     def _resolve_supply_retreats(self,state):
         """Change a hungry column's real route at a reached node, never teleport."""
@@ -374,7 +420,7 @@ class TravelCampaign:
                         if raw is not None and route_allowed(self.catalog.data,raw,here,city.id):
                             quote=self._quote([here,city.id],[evaluate_leg(self.catalog.data,raw,here,city.id,state.month)])
                 if quote is not None:
-                    choices.append((city.id!=row['source'],quote['days'],city.id,quote))
+                    choices.append((city.id!=row['source'],winter_travel.quote_days(self,state,quote),city.id,quote))
                     if city.id == row['source']:
                         break
             if not choices:
@@ -411,6 +457,7 @@ class TravelCampaign:
                 departure_day=state.day,arrival_turn=state.turn+quote['turns'],checked_turn=0,quote=quote,
                 departure_troops={str(i):state.officers[i].troops for i in ids},risks=self._march_risks(quote,state.rng),
                 supply=create(state,ids,quote,game=self,initial_grain=remaining,previous=row['supply']))
+            winter_travel.set_eta(self,state,row)
 
     def _queue_runan_refuge(self, state, battle, members, grain, credit):
         from .march_supply import create
@@ -429,6 +476,7 @@ class TravelCampaign:
                    departure_troops={str(ident):state.officers[ident].troops for ident in members},
                    risks=self._march_risks(quote, state.rng),
                    supply=create(state, members, quote, game=self, initial_grain=grain, credit=credit))
+        winter_travel.set_eta(self,state,row)
         row['mission'] = {key:row[key] for key in ('source','target','kind','mode','departure_turn','arrival_turn')}
         travel['marches'].append(row)
 
@@ -455,7 +503,7 @@ class TravelCampaign:
                                   dict(allow_sea=True,allow_special=False))
             quote=route(key)
             if quote is None:
-                options=[(candidate['days'],city.id,candidate) for city in all_homes if city.id!=key
+                options=[(winter_travel.quote_days(self,state,candidate),city.id,candidate) for city in all_homes if city.id!=key
                          and self._city_occupancy(state,city)+len(ids)<=self.catalog.rules.city_officer_capacity
                          and (candidate:=route(city.id))]
                 if options:
@@ -478,6 +526,7 @@ class TravelCampaign:
                      risks=self._march_risks(quote,state.rng),
                      supply=create(state,ids,quote,game=self,initial_grain=carried,
                                    credit=credit if index==len(plans)-1 else 0))
+            winter_travel.set_eta(self,state,row)
             row['mission']={k:row[k] for k in ('source','target','kind','mode','departure_turn','arrival_turn')}
             travel['marches'].append(row)
             left-=carried
@@ -777,7 +826,7 @@ class TravelCampaign:
 
     def _travel_view(self, state):
         from .march_core import enabled, invoke, state_input
-        rust_enabled = enabled()
+        rust_enabled = enabled() and not winter_weather.movement(state)
         if rust_enabled:
             # Reuse metadata construction without a second route search.
             result = self._python_travel_view(None)
@@ -810,10 +859,17 @@ class TravelCampaign:
             return result
         routes=self._known_routes(state)
         adjacency={key:[] for key in state.cities}
+        weather=winter_weather.movement(state)
+        scores={}
+        def score(leg):
+            return scores[(leg['id'],leg['from'])] if weather else leg['days']
         for raw in routes:
             for a,b in ((raw['from'],raw['to']),(raw['to'],raw['from'])):
                 if a in adjacency and b in adjacency and route_allowed(self.catalog.data,raw,a,b):
-                    adjacency[a].append(evaluate_leg(self.catalog.data,raw,a,b,state.month))
+                    leg=evaluate_leg(self.catalog.data,raw,a,b,state.month)
+                    adjacency[a].append(leg)
+                    if weather:
+                        scores[(leg['id'],a)]=winter_travel.time_rank(self,state,leg)
         known_sea={frozenset((r['from'],r['to'])) for r in routes if r['mode']=='sea'}
         explorations={key:[] for key in state.cities}
         for raw in self.catalog.data.get('exploration_routes',[]):
@@ -843,14 +899,14 @@ class TravelCampaign:
                                 or not historical_campaigns.transit_allowed(state, state.player, state.cities[target].owner)
                                 or mode=='land' and leg['mode']!='land'):
                             continue
-                        heappush(queue,(days+leg['days'],distance+leg['distance_km'],target,next(serial),path+[target],legs+[leg]))
+                        heappush(queue,(days+score(leg),distance+leg['distance_km'],target,next(serial),path+[target],legs+[leg]))
                 # Attacks remain direct city-to-city legs; friendly paths above
                 # cannot tunnel through an enemy and emerge at another city.
                 targets={leg['to'] for leg in adjacency[source] if state.cities[leg['to']].owner!=state.player}
                 for target in targets:
                     options=[leg for leg in adjacency[source] if leg['to']==target and (mode!='land' or leg['mode']=='land')]
                     if options:
-                        leg=min(options,key=lambda r:(r['days'],r['distance_km']))
+                        leg=min(options,key=lambda r:(score(r),r['distance_km']))
                         quotes[f'{source}:{target}:{mode}']=self._quote([source,target],[leg])
             for mode in ('river','sea','special'):
                 targets=({leg['to'] for leg in adjacency[source] if leg['mode']==mode} if mode in ('river','sea')
@@ -860,7 +916,7 @@ class TravelCampaign:
                     options=[leg for leg in adjacency[source] if leg['to']==target and
                              (leg['mode']==mode if mode in ('river','sea') else leg.get('hazard') and
                               leg['hazard']['kind'] in ('yinping','ziwu_rain','ziwu_dry'))]
-                    leg=min(options,key=lambda r:(r['days'],r['distance_km']))
+                    leg=min(options,key=lambda r:(score(r),r['distance_km']))
                     quotes[f'{source}:{target}:{mode}']=self._quote([source,target],[leg])
             for leg in explorations[source]:
                 quotes[f'{source}:{leg["to"]}:explore']=self._quote([source,leg['to']],[leg])
@@ -1016,9 +1072,11 @@ class TravelCampaign:
             elif not battle_return and row['reason'] == 'battle_retreat':
                 raise ValueError('The battle retreat requires a settlement receipt')
             mission=row['mission']
+            normal=original['departure_turn']+original['quote']['turns']
+            latest=normal+original['quote']['turns']+len(original['quote']['routes']) if 'winter' in original['supply'] else normal
             if (mission['source']!=row['source'] or any(mission[k]!=original[k] for k in
                     ('source','target','kind','mode','departure_turn'))
-                    or mission['arrival_turn']!=original['departure_turn']+original['quote']['turns']):
+                    or type(mission['arrival_turn']) is not int or not normal<=mission['arrival_turn']<=latest):
                 raise ValueError('altered original march mission')
             source=state.cities[row['source']]
             if source.owner!=row['owner'] or row['owner'] not in self.catalog.factions or row['kind'] not in {'attack','transfer'}:
@@ -1090,6 +1148,9 @@ class TravelCampaign:
                     or remaining or not row['supply']['waiting']):
                 raise ValueError('Invalid allied attack rendezvous')
             expected_eta=state.turn+max(1,(remaining+9)//10) if remaining else state.turn
+            eta=winter_travel.eta_turn(self,state,row,state.turn)
+            if eta is not None:
+                expected_eta=max(row['departure_turn']+1,eta)
             if row['arrival_turn']!=expected_eta:
                 raise ValueError('march progress ETA')
             manifest=row['departure_troops']

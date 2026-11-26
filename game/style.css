@@ -1246,3 +1246,19 @@ dialog:has([data-domestic-dialog]) .dialog-actions{position:sticky;bottom:-24px;
 
 .faction-logistics-overview{margin-top:.5rem}
 .faction-logistics-overview th,.faction-logistics-overview td{text-align:center;padding:.35rem .5rem;white-space:nowrap}
+
+.setup-winter{display:flex;align-items:center;gap:.5rem;margin:.6rem 0;font-size:.9rem}
+.map-weather-control{position:absolute;z-index:3;top:8px;right:8px;display:grid;justify-items:end;gap:4px;max-width:min(16rem,50%)}
+.map-weather-control button{background:var(--paper);min-height:32px;padding:4px 8px}
+.map-weather-control button[aria-pressed="true"]{background:#16394f;color:#f4fbff}
+#map-weather-key{border:2px solid #16394f;background:#f4fbff;color:#102a3c;font:12px/1.4 var(--ui);padding:4px 6px}
+.map-weather-snow{stroke:#173b58;stroke-width:2;fill:#f1f8fd}
+.map-weather-snow[data-snow-level="2"]{fill:#89cdeb}
+.map-weather-snow[data-snow-level="3"]{fill:#4999cc}
+.river-lane[data-ice-state="1"]{stroke:#e5faff;stroke-dasharray:2 6}
+.river-lane[data-ice-state="2"]{stroke:#92c5e6;stroke-dasharray:5 3;stroke-width:4}
+.river-lane[data-ice-state="3"]{stroke:#22597c;stroke-dasharray:none;stroke-width:6}
+.city-weather{border-block-start:1px solid currentColor;margin-block:.6rem;padding-block-start:.35rem}
+
+.granary-actions{display:flex;flex-wrap:wrap;gap:.5rem;align-items:end}
+[data-strategic-granary] li{overflow-wrap:anywhere}

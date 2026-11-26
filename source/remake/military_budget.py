@@ -35,7 +35,7 @@ def fixed_expenses(game,state,city,active):
                 garrison=garrison(game,state,city,active,city.reserves))
 
 
-def budgets(game,state,owner,*,stationed=None,incomes=None):
+def budgets(game,state,owner,*,stationed=None,incomes=None,inbound_cache=None):
     """Only one absent-person, front and shipment scan for this faction quote."""
     from . import domestic, facilities, grain_market, logistics
 
@@ -58,9 +58,12 @@ def budgets(game,state,owner,*,stationed=None,incomes=None):
             continue
         journey=row['journeys'][-1]
         committed_convoys[row['source']]+=row['cargo']['grain']+journey['supply']['remaining']
-        if row['status']=='outbound' and row['target_march'] is None and not row['delivery_done']:
+        if (row['status']=='outbound' and row['target_march'] is None
+                and 'convoy_relief' not in row and not row['delivery_done']):
             arrival=journey['arrival_turn']-state.turn
-            projected=logistics.inbound_grain(game,row)
+            projected=logistics.inbound_grain(game,row,state)
+            if inbound_cache is not None:
+                inbound_cache[row['id']] = projected
             in_transit[row['target']]+=projected
             if 0<=arrival<=9:
                 within_three_months[row['target']]+=projected
@@ -151,17 +154,17 @@ def battle_days(soldiers, *, defenders=0, incoming=False, return_days=0, limited
 def sortie(game,state,city,target,ids,quote,back,*,absent=None,defenders=0,
            incoming=False,recovery=None,held=0):
     """One consistent outbound, home defence and replacement calculation."""
-    from . import battle_supply
+    from . import battle_supply, winter_travel
 
     soldiers=sum(state.officers[ident].troops for ident in ids)
-    travel=march_supply.quote_supply(quote,soldiers,len(ids),game=game,version=logistics_rules.CURRENT)
+    travel=march_supply.quote_supply(quote,soldiers,len(ids),game=game,version=logistics_rules.CURRENT,state=state)
     adaptive = logistics_strategy.enabled(state, logistics_strategy.WAR)
     battle = (battle_days(soldiers, defenders=defenders, incoming=incoming,
-                          return_days=back['days'] if back else 0,
+                          return_days=winter_travel.quote_days(game,state,back) if back else 0,
                           limited_market=target.grain < march_supply.cost(soldiers,len(ids),3))
               if adaptive else battle_supply.BUDGET_DAYS)
     battle_stock=march_supply.cost(soldiers,len(ids),battle)
-    back_stock=(march_supply.quote_supply(back,soldiers,len(ids),game=game,version=logistics_rules.CURRENT)
+    back_stock=(march_supply.quote_supply(back,soldiers,len(ids),game=game,version=logistics_rules.CURRENT,state=state)
                 if back is not None else None)
     absent=city_economy.absent_troops(game,state) if absent is None else absent
     left=max(0,active_garrison(state,city,absent)-soldiers)

@@ -953,6 +953,23 @@
         "save"
       ]
     },
+    "tests/test_remake_regional_market.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "economy",
+        "logistics",
+        "save"
+      ]
+    },
+    "tests/test_remake_strategic_granary.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "logistics",
+        "save"
+      ]
+    },
     "tests/test_remake_retainer_audit.py": {
       "tier": "full",
       "groups": [
@@ -1056,6 +1073,34 @@
       "tier": "full",
       "groups": [
         "scenarios"
+      ]
+    },
+    "tests/test_remake_transport_emergency.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "logistics",
+        "map",
+        "save"
+      ]
+    },
+    "tests/test_remake_winter_transport.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "logistics",
+        "map",
+        "save"
+      ]
+    },
+    "tests/test_remake_winter_weather.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "economy",
+        "logistics",
+        "map",
+        "save"
       ]
     },
     "tests/test_remake_segment_supply.py": {

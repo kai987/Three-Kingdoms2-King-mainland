@@ -3,6 +3,7 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+from tempfile import TemporaryDirectory
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -47,7 +48,10 @@ class TraditionalLocaleTests(unittest.TestCase):
         path = ROOT / 'game/locales/zh-hant.json'
         before = path.read_bytes()
         catalogs = {p: hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT / 'game/data').rglob('*.json')}
-        locales.build()
+        with TemporaryDirectory() as directory:
+            result = Path(directory) / path.name
+            locales.build(result)
+            self.assertEqual(result.read_bytes(),before)
         self.assertEqual(path.read_bytes(), before)
         self.assertTrue(all(hashlib.sha256(p.read_bytes()).hexdigest() == value for p, value in catalogs.items()))
 

@@ -215,7 +215,7 @@ class Forecast:
                 continue
             eta=max(1,row['journeys'][-1]['arrival_turn']-state.turn)
             if eta<=SUPPLY_HORIZON:
-                incoming[target.id].append((eta,logistics.inbound_grain(game,row),row['cargo']['gold']))
+                incoming[target.id].append((eta,logistics.inbound_grain(game,row,state),row['cargo']['gold']))
         for key,budget in plan.budgets.items():
             city=state.cities[key]
             here=[state.officers[i] for i in city.roster.officer_ids

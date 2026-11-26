@@ -58,7 +58,7 @@
  }
  function position(quote,routeDays=0){
   const path=quote?.path||[],routes=quote?.routes||[],total=quote?.days||0;
-  let elapsed=Math.max(0,Math.min(total,Number.isSafeInteger(routeDays)?routeDays:0));
+  let elapsed=Math.max(0,Math.min(total,Number.isFinite(routeDays)?routeDays:0));
   if(!routes.length||!path.length)return {city:null,from:null,to:null,progress_days:elapsed,leg_days:total,arrived:elapsed>=total};
   if(elapsed===0)return {city:path[0],from:path[0],to:path[1]??null,progress_days:0,leg_days:routes[0].days,arrived:false};
   for(let index=0;index<routes.length;index++){

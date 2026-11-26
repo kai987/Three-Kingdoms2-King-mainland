@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from typing import NamedTuple
 
 from . import command_books, historical_campaigns, logistics, logistics_rules as rules, march_supply
+from . import winter_travel, winter_weather
 from .grain_units import denominator
 
 WAIT_DAYS = 3
@@ -72,11 +73,12 @@ def projected_state(state, tick):
     return future
 
 
-def windows(state, army, *, stopped=False):
+def windows(state, army, *, stopped=False, game=None):
     book, route = army['supply'], army['quote']
     if book['retreat_requested'] or army.get('retreating') or army.get('returning'):
         return ()
     clock, progress = book['clock_tick'], book['route_days']
+    dynamic=game is not None and 'winter' in book
     places = []
     elapsed = 0
     for index, city in enumerate(route['path']):
@@ -90,6 +92,16 @@ def windows(state, army, *, stopped=False):
         if state.cities[city].owner != army['owner']:
             continue
         start = clock + elapsed-progress
+        if dynamic:
+            position=winter_travel.work(book)
+            if elapsed*winter_travel.QUANTA<position:
+                continue
+            forecast=(winter_travel.checkpoint_forecast if winter_weather.corrected(state,winter_weather.PREPARATION)
+                      else winter_travel.forecast)
+            eta=forecast(game,state,route,position=position,stop=elapsed*winter_travel.QUANTA)[0]
+            if eta is None:
+                break
+            start=clock+eta
         end = boundary(start) if index == len(route['routes']) else start
         if elapsed == progress and (book['waiting'] or stopped):
             end = max(end, clock + (max(0, MAX_LATE_DAYS-book['shortage_streak'])
@@ -101,12 +113,22 @@ def windows(state, army, *, stopped=False):
     return tuple(places)
 
 
-def requirement(game, state, army):
+def requirement(game, state, army, *, published=None):
     book, quote = army['supply'], army['quote']
     now, progress = book['clock_tick'], book['route_days']
     left = quote['days']-progress
     urgent = bool(book['shortage_streak'] or book['waiting'] and left)
     days = march_supply.next_supply_days(state, quote, army['owner'], progress)
+    dynamic='winter' in book
+    published=winter_weather.corrected(state,winter_weather.PREPARATION) if published is None else published
+    forecast=None
+    if dynamic:
+        position=winter_travel.work(book)
+        stop=(progress+days)*winter_travel.QUANTA
+        estimate=winter_travel.checkpoint_forecast if published else winter_travel.forecast
+        forecast=estimate(game,state,quote,position=position,stop=stop)
+        days=forecast[0] if forecast[0] is not None else MAX_LATE_DAYS
+        urgent|=forecast[0] is None
     if not left and not urgent:
         return Need(army['id'], now, 0, False)
     # Cover the next actual supply point. A stopped column may need food
@@ -117,6 +139,9 @@ def requirement(game, state, army):
     funded = book['remaining']*march_supply.book_denominator(book)+book['credit_units']
 
     def weight(span):
+        if dynamic:
+            estimate=winter_travel.checkpoint_horizon_weight if published else winter_travel.horizon_weight
+            return estimate(game,state,quote,span,position=position,stop=stop)
         travel = min(span, left)
         return rules.weight(parts, progress, travel) + (span-travel)*rules.RATION_SCALE
 
@@ -174,18 +199,19 @@ def safe_end(game, state, source, meeting, owner, ids, policy, tick, *, home=Non
         selected = logistics._safe_quote(game, future, origin, city, policy, quotes=batch)
         if selected:
             mode, quote = selected
-            choices.append((quote['days'], city.id, mode, quote))
+            choices.append((winter_travel.quote_days(game,state,quote), city.id, mode, quote))
     if choices:
         _, _, mode, quote = min(choices, key=lambda row:row[:3])
         return mode, quote
     return None
 
 
-def net_cargo(game, quote, grain, *, progress=0, remainder=0, risks=None, parts=None):
+def net_cargo(game, quote, grain, *, progress=0, remainder=0, risks=None, parts=None, state=None, position=None):
     if parts is None:
         parts=rules.plan(quote,march_supply.travel_rules(game))
-    net=rules.estimate_cargo(grain,parts,quote['days']-progress,
-                             start=progress,remainder=remainder)[0]
+    net=(logistics.projected_grain(game,quote,grain,progress=progress,remainder=remainder,state=state,position=position)
+         if winter_weather.stage(state)>=2 else
+         rules.estimate_cargo(grain,parts,quote['days']-progress,start=progress,remainder=remainder)[0])
     risks=game._march_risks(quote,None) if risks is None else risks
     for risk in risks:
         if risk['applied']:
@@ -198,9 +224,9 @@ def net_cargo(game, quote, grain, *, progress=0, remainder=0, risks=None, parts=
     return net
 
 
-def shipment(game,route,need,room,parts,risks):
+def shipment(game,route,need,room,parts,risks,*,state=None):
     def after(amount):
-        return net_cargo(game,route,amount,parts=parts,risks=risks)
+        return net_cargo(game,route,amount,parts=parts,risks=risks,state=state)
     high=room
     if after(high)<need:
         return high,after(high)
@@ -243,6 +269,21 @@ def _calendar_tick(state):
     return (state.turn-1)*10
 
 
+def source_blocker(game,state,source,policy,busy):
+    if state.phase not in {'city','ai'}:
+        return 'wrong_phase'
+    if source.owner not in game.catalog.factions:
+        return 'not_owned'
+    if not command_books.can_spend(state,source.owner,'dispatch_transport'):
+        return 'command_books'
+    if (source.id in busy
+            or logistics._pool(state)['cities'][source.id]['last_dispatch_turn']==state.turn):
+        return 'in_transit'
+    if not policy['max_officers'] or logistics._present_count(game,state,source)<=policy['reserve_officers']:
+        return 'no_spare_officer'
+    return None
+
+
 class Planner:
     """Scoped to one domestic transport pass or one read-only preview."""
     def __init__(self, game, state, owner):
@@ -250,7 +291,7 @@ class Planner:
         self.armies = {row['id']:row for row in state.extension['travel']['marches']
                        if row['owner']==owner and row['officers']}
         self.demands = {ident:requirement(game,state,row) for ident,row in self.armies.items()}
-        self.windows = {ident:windows(state,row,stopped=self.demands[ident].stopped) for ident,row in self.armies.items()
+        self.windows = {ident:windows(state,row,stopped=self.demands[ident].stopped,game=game) for ident,row in self.armies.items()
                         if self.demands[ident].required}
         self.convoys = defaultdict(list)
         for row in logistics._pool(state)['convoys']:
@@ -271,36 +312,27 @@ class Planner:
             slot = slots.get(row['target'])
             if slot is None or book['retreat_requested'] or not row['cargo']['grain']:
                 continue
-            eta = max(slot.start, book['clock_tick']+route['days']-book['route_days'])
+            position=winter_travel.work(book)
+            left=winter_travel.quote_days(game,state,route,position=position)
+            eta = max(slot.start, book['clock_tick']+left)
             if eta > slot.end:
                 continue
             planned = row.get(FIELD)
             grain = net_cargo(game,route,row['cargo']['grain'],progress=book['route_days'],
-                              remainder=row[logistics.LOSS_FIELD],risks=current['risks'])
+                              remainder=row[logistics.LOSS_FIELD],risks=current['risks'],state=state,position=position)
             if planned:
-                bag = ration_budget(march_supply.ration_units(state,row['officers']),
+                weight=(winter_travel.ration_weight(game,state,route,position=position) if 'winter' in book else
                     march_supply.route_weight(route, route['days']-book['route_days'],
-                        offset=book['route_days'],game=game,version=rules.CURRENT),
-                    max(0,boundary(eta)-book['clock_tick']-(route['days']-book['route_days']))*rules.RATION_SCALE,
+                                              offset=book['route_days'],game=game,version=rules.CURRENT))
+                bag = ration_budget(march_supply.ration_units(state,row['officers']),
+                    weight,max(0,boundary(eta)-book['clock_tick']-left)*rules.RATION_SCALE,
                     planned['return_weight'], credit=book['credit_units']).total
                 grain = max(0, grain-max(0,bag-book['remaining']))
             if grain:
                 yield eta, grain
 
     def source_reason(self, source, policy):
-        state = self.state
-        if state.phase not in {'city','ai'}:
-            return 'wrong_phase'
-        if source.owner not in self.game.catalog.factions:
-            return 'not_owned'
-        if not command_books.can_spend(state,source.owner,'dispatch_transport'):
-            return 'command_books'
-        if (source.id in self.busy
-                or logistics._pool(state)['cities'][source.id]['last_dispatch_turn']==state.turn):
-            return 'in_transit'
-        if not policy['max_officers'] or logistics._present_count(self.game,state,source)<=policy['reserve_officers']:
-            return 'no_spare_officer'
-        return None
+        return source_blocker(self.game,self.state,source,policy,self.busy)
 
     def candidates(self, source, *, budget=None, selected=None, cargo=None, origin=None, live=None,
                    loads=None, urgent_only=False):
@@ -367,7 +399,8 @@ class Planner:
                         continue
                     if selected is not None and mode!=selected['mode']:
                         continue
-                    dates = timing(slot,now,route['days'])
+                    days=winter_travel.quote_days(game,state,route)
+                    dates = timing(slot,now,days)
                     if dates is None:
                         continue
                     eta, wait = dates
@@ -382,7 +415,7 @@ class Planner:
                     # ownership or actual reception space changes.
                     return_tick = boundary(eta)
                     outward_parts=rules.plan(route,march_supply.travel_rules(game))
-                    outward=rules.weight(outward_parts,0,route['days'])
+                    outward=march_supply.quoted_weight(game,state,route,route['days'])
                     risks=game._march_risks(route,None)
                     season = projected_state(state,return_tick)
                     missing_slot = len(ids) if live or selected else 1
@@ -408,16 +441,19 @@ class Planner:
                         if back is None:
                             blocked='unsafe_return'
                             continue
-                        backward = march_supply.route_weight(back[1],back[1]['days'],game=game,version=rules.CURRENT)
+                        backward = march_supply.quoted_weight(game,state,back[1],back[1]['days'])
+                        if not demand.urgent and winter_travel.route_risk(game,state,back[1],days+wait):
+                            blocked='unsafe_return'
+                            continue
                         credit = live['journeys'][-1]['supply']['credit_units'] if live else 0
                         bag = ration_budget(troop_count+100*len(team),outward,wait*rules.RATION_SCALE,
                                             backward,credit=credit)
                         room=max(0,min(maximum,available-bag.total))
                         if cargo is not None:
                             room=cargo if cargo<=room else 0
-                            net=net_cargo(game,route,room,parts=outward_parts,risks=risks)
+                            net=net_cargo(game,route,room,parts=outward_parts,risks=risks,state=state)
                         elif room:
-                            room,net=shipment(game,route,needed,room,outward_parts,risks)
+                            room,net=shipment(game,route,needed,room,outward_parts,risks,state=state)
                         else:
                             net=0
                         percent=efficiency(net,room,bag.total)
@@ -432,7 +468,7 @@ class Planner:
                             blocked='heavy_escort'
                             continue
                         result=dict(march_id=ident,city=slot.city,officers=list(team),quote=route,route_mode=mode,
-                            cost_grain=bag.total, max_grain=room, needed_grain=needed, eta_turn=state.turn+route['turns'])
+                            cost_grain=bag.total, max_grain=room, needed_grain=needed, eta_turn=state.turn+winter_travel.quote_turns(game,state,route))
                         result[FIELD]=dict(request_id=demand.key,deadline=demand.deadline,required=needed,
                             eta_tick=eta, wait_until=boundary(eta+WAIT_DAYS),wait_days=wait, cargo=room,
                             estimated_net=min(needed,net), return_city=back[1]['path'][-1],return_days=back[1]['days'],
@@ -492,13 +528,13 @@ def hold_reason(game, state, row, tick):
         return row['reason']
     actual_tick=journey['supply']['clock_tick']+1 if tick is None else tick
     progress=journey['supply']['route_days']
-    if (actual_tick+journey['quote']['days']-progress > row[FIELD]['wait_until']
+    remaining=winter_travel.quote_days(game,state,journey['quote'],position=winter_travel.work(journey['supply']))
+    if (actual_tick+remaining > row[FIELD]['wait_until']
             or row['reason']=='rendezvous_missed'):
         return 'rendezvous_expired'
     if progress<journey['quote']['days']:
         next_days=march_supply.next_supply_days(state,journey['quote'],row['owner'],progress)
-        forward=march_supply.route_weight(journey['quote'],next_days,offset=progress,game=game,
-                                           version=rules.CURRENT)
+        forward=march_supply.quoted_weight(game,state,journey['quote'],next_days,offset=progress)
         bag=journey['supply']
         units=march_supply.ration_units(state,row['officers'])
         if units*forward>(bag['remaining']+row['cargo']['grain'])*march_supply.book_denominator(bag)+bag['credit_units']:
@@ -508,7 +544,7 @@ def hold_reason(game, state, row, tick):
 
 def _return_budget(game,state,row,quote,wait=0):
     supply=row['journeys'][-1]['supply']
-    weight=march_supply.route_weight(quote,quote['days'],game=game,version=rules.CURRENT)
+    weight=march_supply.quoted_weight(game,state,quote,quote['days'])
     return ration_budget(march_supply.ration_units(state,row['officers']),0,
                          wait*rules.RATION_SCALE,weight,credit=supply['credit_units']).total
 

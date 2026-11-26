@@ -1,6 +1,6 @@
 """Finite, city-owned-by-ID grain inventories separate from public warehouses."""
 
-from . import economy_rules
+from . import economy_rules, market_pricing
 from .city_economy import monthly_income, town_level
 
 FIELD = 'grain_market'
@@ -51,7 +51,11 @@ def restock(game, state, regular_incomes=None):
             income = monthly_income(game, key, state) if regular_incomes is None else regular_incomes[key]
             grain = income['grain']
         monthly = supply(town_level(game, state, key), grain)
+        market_pricing.close_month(state, key, previous)
         pool[key] = _restock(0 if previous is None else previous['stock'], monthly, month)
+        if market_pricing.observed():
+            market_pricing.report('stock_flow', state, city=key, owner=city.owner, kind='restock',
+                                  **pool[key])
 
 
 def available(state, city_id, direction):
@@ -61,17 +65,25 @@ def available(state, city_id, direction):
     return market['stock'] if direction == 'buy' else market['capacity'] - market['stock']
 
 
-def transfer(state, city_id, direction, grain):
+def transfer(state, city_id, direction, grain, *, gold=None, rate=None, channel=None, payer=None):
     """Move an already-quoted amount between the market and its buyer/seller."""
     market = row(state, city_id)
     if market is None:
         return
+    if type(grain) is not int or not 0 < grain <= available(state, city_id, direction):
+        raise ValueError('Market stock transfer')
+    before = market['stock']
     if direction == 'buy':
         market['purchased'] += grain
         market['stock'] -= grain
     else:
         market['sold'] += grain
         market['stock'] += grain
+    if market_pricing.observed():
+        market_pricing.report('stock_flow', state, city=city_id, owner=state.cities[city_id].owner,
+                              kind=direction, grain=grain, gold=gold, rate=rate, channel=channel, payer=payer,
+                              opening_stock=before, stock=market['stock'], capacity=market['capacity'],
+                              monthly_supply=market['monthly_supply'])
 
 
 def purchase_limit(buyer_gold, warehouse, trade_limit, market):
