@@ -108,7 +108,8 @@ def dispatch(game, state, owner, *, plan=None):
     detailed = logistics_strategy.enabled(state, logistics_strategy.TRANSPORT)
     plan = plan if plan is not None else faction_economy.plan(game, state, owner)
     keys = plan.shortages(state)
-    if strategic_granary.enabled(state):
+    candidate_demand = strategic_granary.candidate(state)
+    if strategic_granary.enabled(state) and not candidate_demand:
         # Pending manual orders may be superseded by a real emergency; a
         # shipped ordinary receipt is already in the dated forecast.
         keys = [key for key in keys if plan.cities[key].zero_in <= 1 or
@@ -143,6 +144,10 @@ def dispatch(game, state, owner, *, plan=None):
         # may still cover later bills, while purchases/allied aid cover today.
         horizon = faction_economy.HORIZON if detailed else 3
         past = []
+        if candidate_demand:
+            from . import granary_demand
+            past.extend(forecast.conditional_receipts.items())
+            past.extend(granary_demand.held_deliveries(game, state, plan, key))
         while not blocker and command_books.can_spend(state, owner, 'dispatch_transport'):
             if command_books.remaining(state, owner) < command_books.cost('dispatch_transport') + local_orders:
                 issue['reason'] = 'books_reserved_for_immediate_relief'

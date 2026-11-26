@@ -7,6 +7,7 @@ from . import economy_rules, logistics, logistics_rules, staging_supply
 from .errors import GameError
 
 VERSION = 302
+CANDIDATE = 3021
 FIELD = 'strategic_granary_rules_version'
 OPTIONS = 'strategic_granary_options'
 POOL = 'strategic_granary'
@@ -18,11 +19,12 @@ RULES = dict(rear_months=1, front_months=2, history=96, hold_turns=3,
              minimum_load=150, maximum_ration_percent=45, timely_buffer_days=5,
              winter_max_months=1, cold_reserve_min_chance=20, relay_hubs=3, relay_targets=3)
 FEATURES = frozenset({'proactive', 'winter', 'relay'})
+CANDIDATE_FEATURES = FEATURES | {'coordination', 'return_safety'}
 ACTIVE = {'reserved', 'dispatched', 'in_transit', 'delayed', 'diverted',
           'partially_delivered', 'delivered'}
 TERMINAL = {'cancelled', 'returned', 'failed'}
 REASONS = {'civilian_and_garrison', 'military_or_urgent', 'manual', 'policy', 'ownership',
-           'expired', 'source_safety', 'warehouse', 'scheduled'}
+           'expired', 'source_safety', 'warehouse', 'scheduled', 'cross_city_urgent'}
 INVALID = '戰略糧倉操作無效。'
 STALE = '戰略調糧條件已變更，請重新取得報價。'
 INSUFFICIENT = '官倉可動用糧食不足。'
@@ -32,9 +34,9 @@ _observer = ContextVar(POOL + '_observer', default=None)
 
 
 @contextmanager
-def experiment(**options):
-    flags = _options(options)
-    token = _experiment.set(flags)
+def experiment(*, version=VERSION, **options):
+    flags = _options(options, version)
+    token = _experiment.set((version, flags))
     try:
         yield
     finally:
@@ -60,35 +62,46 @@ def observed():
     return _observer.get() is not None
 
 
-def _options(raw):
-    if not isinstance(raw, dict) or not raw.keys() <= FEATURES or any(type(v) is not bool for v in raw.values()):
+def _features(version):
+    return CANDIDATE_FEATURES if version == CANDIDATE else FEATURES
+
+
+def _options(raw, version):
+    allowed = _features(version)
+    if (type(version) is not int or version not in (VERSION, CANDIDATE) or not isinstance(raw, dict)
+            or not raw.keys() <= allowed or any(type(v) is not bool for v in raw.values())):
         raise GameError(INVALID)
-    return {key: raw.get(key, False) for key in sorted(FEATURES)}
+    return {key: raw.get(key, False) for key in sorted(allowed)}
+
+
+def candidate(state):
+    return state.extension.get(FIELD) == CANDIDATE
 
 
 def enabled(state, feature=None):
-    if state is None or state.extension.get(FIELD) != VERSION:
+    if state is None or state.extension.get(FIELD) not in (VERSION, CANDIDATE):
         return False
-    return feature is None or state.extension[POOL]['features'][feature]
+    return feature is None or state.extension[POOL]['features'].get(feature, False)
 
 
 def initialize(state, version=None, options=None):
     if version is None and options is None:
-        flags = _experiment.get()
-        if flags is None:
+        experiment_options = _experiment.get()
+        if experiment_options is None:
             return
+        version, flags = experiment_options
     else:
-        if type(version) is not int or version not in (0, VERSION) or not version and options:
+        if type(version) is not int or version not in (0, VERSION, CANDIDATE) or not version and options:
             raise GameError(INVALID)
         state.extension.pop(FIELD, None)
         state.extension.pop(POOL, None)
         if not version:
             return
-        flags = _options({} if options is None else options)
+        flags = _options({} if options is None else options, version)
     if (economy_rules.version(state) != economy_rules.CURRENT or
             logistics_rules.version(state) != logistics_rules.CURRENT):
         raise GameError(INVALID)
-    state.extension[FIELD] = VERSION
+    state.extension[FIELD] = version
     state.extension[POOL] = dict(features=dict(flags), cities={}, orders={}, history=[], relays={}, next_id=1)
 
 
@@ -114,6 +127,7 @@ def commitments(state, source=None, *, except_id=None):
         return ()
     return (row for row in pool(state)['orders'].values()
             if row['status'] == 'reserved' and row['id'] != except_id
+            and (not candidate(state) or state.turn <= row['reserved_turn'] + RULES['hold_turns'])
             and (source is None or row['source'] == source)
             and state.cities[row['source']].owner == state.cities[row['target']].owner == row['owner'])
 
@@ -122,7 +136,22 @@ def committed(state, source, *, except_id=None):
     return sum(row['load'] + row['rations'] for row in commitments(state, source, except_id=except_id))
 
 
+def protection(state, city, *, except_id=None, book=None):
+    """Physical promises outrank the reserve label on the remaining grain."""
+    from . import faction_economy
+    if book is None:
+        book = faction_economy.pending(state, city.owner, granary=True, except_id=except_id)
+    amounts = book.breakdown(city.id, capacity=city.grain)
+    hard = sum(amounts.values())
+    stock = max(0, city.grain - hard)
+    tagged = min(reserve_grain(state, city), stock)
+    return dict(free=stock-tagged, strategic=tagged, military=amounts.get('military', 0),
+                unshipped=amounts.get('granary', 0), relay=amounts.get('relay', 0), committed=hard)
+
+
 def available(state, city, *, except_id=None, military=True):
+    if military and enabled(state, 'coordination'):
+        return protection(state, city, except_id=except_id)['free']
     held = staging_supply.held(state, city.id) if military else 0
     relay = 0
     if enabled(state,'relay'):
@@ -150,8 +179,20 @@ def spending(state, city, amount, reason):
     """A real priority debit spends ordinary stock first, then frees reserve."""
     grain = reserve_grain(state, city)
     remainder = max(0, city.grain - amount)
+    if grain and enabled(state, 'coordination'):
+        remainder = max(0, remainder - protection(state, city)['committed'])
     if grain > remainder:
         change_reserve(state, city, remainder, reason)
+
+
+def spend_for_dispatch(state, city, amount, order, floor):
+    """Recheck live promises and leave the donor's approved emergency floor."""
+    protected = protection(state, city, except_id=order)
+    remaining = city.grain - protected['committed'] - amount
+    if remaining < floor:
+        raise GameError(INSUFFICIENT)
+    if protected['strategic'] > remaining:
+        change_reserve(state, city, remaining, 'cross_city_urgent')
 
 
 def _order(state, ident):
@@ -191,6 +232,16 @@ def synchronize(state):
     for row in staging_supply.active(state):
         held[row['city']] += row['reserved']
     # Staged army grain takes priority if the labels overlap.
+    if enabled(state, 'coordination'):
+        from . import faction_economy
+        owners = {state.cities[key].owner for key in ledger['cities']}
+        military = defaultdict(int)
+        for owner in owners:
+            for item in faction_economy.pending(state, owner, granary=True).held.values():
+                if item.kind == 'military':
+                    military[item.source_city_id] += item.amount
+        for key, amount in military.items():
+            held[key] = max(held[key], amount)
     for key, amount in held.items():
         city = state.cities[key]
         stock = reserve_grain(state, city)
@@ -255,7 +306,7 @@ def launch(game, state, order, quote):
     return logistics.dispatch(game, state, dict(source=order['source'], target=order['target'],
         officers=[quote['escort']], cargo=dict(grain=quote['load'], gold=0, reserves=0),
         route_mode=quote['mode']), order['owner'], emergency_grain=quote['rations'],
-        strategic_order=order['id'], strategic_path=quote['path'])
+        strategic_order=order['id'], strategic_path=quote['path'], strategic_floor=quote.get('release_floor'))
 
 
 def transport_event(state, convoy, kind, amounts):
@@ -362,7 +413,8 @@ def validate(state):
         raise ValueError('Granary version')
     data = pool(state)
     if (not isinstance(data, dict) or set(data) != {'features','cities','orders','history','relays','next_id'}
-            or set(data['features']) != FEATURES or any(type(v) is not bool for v in data['features'].values())
+            or set(data['features']) != _features(state.extension[FIELD])
+            or any(type(v) is not bool for v in data['features'].values())
             or type(data['next_id']) is not int or not 1 <= data['next_id'] <= 1_000_001
             or not isinstance(data['cities'], dict) or not isinstance(data['orders'], dict)
             or not isinstance(data['history'], list) or len(data['history']) > RULES['history']):

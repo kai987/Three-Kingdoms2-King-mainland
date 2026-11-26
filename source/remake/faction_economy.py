@@ -24,6 +24,14 @@ class Commitment:
     def commitment_id(self):
         return (self.plan_id, self.source_city_id, self.resource_type)
 
+    @property
+    def kind(self):
+        if self.plan_id.startswith('granary:'):
+            return 'granary'
+        if self.plan_id.startswith('relay:'):
+            return 'relay'
+        return 'military'
+
 
 @dataclass
 class Commitments:
@@ -44,16 +52,36 @@ class Commitments:
     def release(self, item):
         self.held.pop(item.commitment_id, None)
 
+    def breakdown(self, source, *, capacity=None):
+        amounts = defaultdict(int)
+        for item in self.held.values():
+            if item.source_city_id != source or item.resource_type != 'grain':
+                continue
+            amount = item.amount if capacity is None else min(item.amount, capacity)
+            amounts[item.kind] += amount
+            if capacity is not None:
+                capacity -= amount
+        return dict(amounts)
+
 
 def pending(state, owner, *, granary=False, except_id=None):
     book = Commitments()
-    from . import staging_supply
+    from . import staging_supply, strategic_granary
+    coordinate = granary and strategic_granary.enabled(state, 'coordination')
+
+    def hold(item, city):
+        if coordinate:
+            if item.amount > 0:
+                book.held.setdefault(item.commitment_id, item)
+        else:
+            book.reserve(item, city.grain)
+
     for row in staging_supply.active(state):
         if row['owner'] == owner:
             item = Commitment(f"march:{row['army']}:{row['route_day']}", owner,
                               row['city'], row['path'][-1], row['reserved'], 3,
                               row['turn'], row['expires']//10+1)
-            book.reserve(item, state.cities[row['city']].grain)
+            hold(item, state.cities[row['city']])
     plan = state.extension['ai_strategy'].get(owner, {})
     for order in plan.get('orders', ()):
         source = state.cities.get(order['source'])
@@ -66,16 +94,15 @@ def pending(state, owner, *, granary=False, except_id=None):
         item = Commitment(f"{owner}:{plan['created_turn']}:{target.id}", owner,
                           source.id, target.id, order['provision'], 4,
                           plan['created_turn'], order['departure_turn'])
-        book.reserve(item, source.grain)
+        hold(item, source)
     if granary:
-        from . import strategic_granary
         for row in strategic_granary.commitments(state, except_id=except_id):
             if row['owner'] != owner:
                 continue
             item = Commitment(f"granary:{row['id']}", owner, row['source'], row['target'],
                               row['load']+row['rations'], 4, row['reserved_turn'],
                               row['reserved_turn']+strategic_granary.RULES['hold_turns'])
-            book.reserve(item, state.cities[row['source']].grain)
+            hold(item, state.cities[row['source']])
         if strategic_granary.enabled(state,'relay'):
             from . import granary_relay
             for row in granary_relay.ready(state):
@@ -83,7 +110,7 @@ def pending(state, owner, *, granary=False, except_id=None):
                     continue
                 item = Commitment(f"relay:{row['id']}",owner,row['hub'],row['target'],row['received'],
                                   4,row['received_turn'],row['deadline'])
-                book.reserve(item,state.cities[row['hub']].grain)
+                hold(item, state.cities[row['hub']])
     return book
 
 
@@ -100,6 +127,8 @@ class Forecast:
     room: int
     first_missing: int
     risky_receipts: dict = field(default_factory=dict)
+    conditional_receipts: dict = field(default_factory=dict)
+    convoy_receipts: list = field(default_factory=list)
 
 
 def balance(stock, timeline, deliveries=()):
@@ -229,15 +258,35 @@ def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=H
                                       inbound_cache=projected_convoys) if base is None else base)
     if not budgets:
         return FactionEconomyPlan(owner, {}, {}, Commitments(), 0)
-    from . import winter_strategy
+    from . import strategic_granary, winter_strategy
+    candidate = granary and strategic_granary.candidate(state)
     winter_reserves=winter_strategy.planned_reserves(game,state,owner)
     shipments, due = defaultdict(lambda: defaultdict(int)), defaultdict(int)
     uncertain = defaultdict(lambda: defaultdict(int)) if granary else None
+    conditional, convoy_rows = defaultdict(lambda: defaultdict(int)), defaultdict(list)
     book = pending(state, owner, granary=granary, except_id=except_order)
     away = set()
     for row in state.extension.get('logistics', {}).get('convoys', ()):
         if row['owner'] == owner:
             away.update(row['officers'])
+        if (candidate and row['owner'] == owner and not row['delivery_done']
+                and row['status'] != 'returning' and row['target_march'] is None
+                and 'convoy_relief' not in row and row['target'] in budgets):
+            from . import granary_demand
+            projected = projected_convoys.get(row['id'])
+            if projected is None:
+                projected = logistics.inbound_grain(game,row,state)
+            fact = granary_demand.inbound(game, state, row, projected)
+            target, eta = row['target'], fact['eta']
+            if fact['status'] == 'reliable':
+                shipments[target][eta] += fact['net']
+                due[target] += fact['net']
+            else:
+                uncertain[target][eta] += fact['net']
+                if fact['status'] == 'seasonal':
+                    conditional[target][fact['conditional_eta']] += fact['net']
+            convoy_rows[target].append(fact)
+            continue
         if (row['owner'] == owner and row['status'] == 'outbound' and not row['delivery_done']
                 and row['target_march'] is None and row['target'] in budgets):
             journey = row['journeys'][-1]
@@ -286,6 +335,9 @@ def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=H
         projected = _forecast(game, state, city, row, shipments[key], held, turns, next_income)
         if granary:
             projected.risky_receipts = dict(uncertain[key])
+        if candidate:
+            projected.conditional_receipts = dict(conditional[key])
+            projected.convoy_receipts = convoy_rows[key]
         forecast[key] = projected
         reserve = max(minimum, projected.reserve)
         first = projected.zero_in

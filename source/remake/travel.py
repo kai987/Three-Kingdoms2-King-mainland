@@ -126,44 +126,42 @@ class TravelCampaign:
                           adjacent=adjacent)
         return self._python_travel_path(state, source, target, owner, mode, adjacent=adjacent)
 
-    def _python_travel_path(self, state, source, target, owner, mode='fastest', *, adjacent=False):
+    def _python_route_graph(self, state, *, scoped=None):
         from .route_hazards import evaluate_leg, route_allowed
+        routes = self._known_routes(state)
+        winter = winter_weather.movement(state)
+        if scoped is not None:
+            directions, adjoining = scoped
+        elif winter:
+            phase=getattr(self,'_ai_routes',None)
+            cache=phase[1] if phase is not None and phase[0] is self.catalog.data else {}
+            key=('winter_graph',id(routes),state.month,state.extension[winter_weather.POOL]['tick'])
+            directions, adjoining = cache.setdefault(key, ({}, {}))
+        else:
+            directions, adjoining = {}, {}
+
+        def prepared(raw, origin, destination):
+            edge = raw['id'], origin, destination
+            if edge not in directions:
+                data = self.catalog.data
+                leg = (evaluate_leg(data, raw, origin, destination, state.month)
+                       if route_allowed(data, raw, origin, destination) else None)
+                duration = (winter_travel.time_rank(self, state, leg) if winter else leg['days']) if leg else None
+                directions[edge] = leg, duration
+            return directions[edge]
+
+        return routes, adjoining, prepared
+
+    def _python_travel_path(self, state, source, target, owner, mode='fastest', *, adjacent=False):
         if mode not in self._travel_modes():
             raise GameError('请选择有效的行军路线。')
         if source == target or source not in state.cities or target not in state.cities:
             return None
         if not adjacent and state.cities[target].owner != owner:
             return None
-        routes = self._known_routes(state)
-        winter=winter_weather.movement(state)
-        if winter:
-            # Quotes share physical inputs within an AI transaction. Political
-            # transit and membership still use the current state in the search.
-            phase=getattr(self,'_ai_routes',None)
-            cache=phase[1] if phase is not None and phase[0] is self.catalog.data else {}
-            key=('winter_graph',id(routes),state.month,state.extension[winter_weather.POOL]['tick'])
-            if key not in cache:
-                cache[key]=({}, {})
-            directions, adjoining=cache[key]
-
-            def prepared(raw,origin,destination):
-                edge=raw['id'],origin,destination
-                if edge not in directions:
-                    data=self.catalog.data
-                    leg=evaluate_leg(data,raw,origin,destination,state.month) if route_allowed(
-                        data,raw,origin,destination) else None
-                    directions[edge]=(leg,winter_travel.time_rank(self,state,leg) if leg is not None else None)
-                return directions[edge]
-        else:
-            adjoining={}
-
-            def prepared(raw,origin,destination):
-                data=self.catalog.data
-                if not route_allowed(data,raw,origin,destination):
-                    return None,None
-                leg=evaluate_leg(data,raw,origin,destination,state.month)
-                return leg,leg['days']
+        graph = self._python_route_graph(state)
         if mode in ('river','sea','special','explore'):
+            routes, _, prepared = graph
             if mode == 'explore':
                 raw = self._exploration_route(source,target)
                 if raw is None or any(row['mode']=='sea' and {row['from'],row['to']}=={source,target}
@@ -187,6 +185,25 @@ class TravelCampaign:
                 return None
             leg,_=min(legs,key=lambda item:(item[1],item[0]['distance_km'],item[0]['id']))
             return self._quote([source,target],[leg])
+        allowed = None if adjacent else {}
+        return self._python_path_search(state, graph, source, {target}, owner, mode, allowed).get(target)
+
+    def _python_supply_paths(self, state, owner, pairs):
+        """One search per origin and mode over a snapshot scoped to this read."""
+        targets = {}
+        for source, target in pairs:
+            if (source != target and source in state.cities and target in state.cities
+                    and state.cities[target].owner == owner):
+                targets.setdefault(source, set()).add(target)
+        graph = self._python_route_graph(state, scoped=({}, {}))
+        allowed = {}
+        answers = {(source, mode): self._python_path_search(state, graph, source, cities, owner, mode, allowed)
+                   for source, cities in targets.items() for mode in ('land', 'fastest')}
+        return {f'{source}:{target}:{mode}': answers.get((source, mode), {}).get(target)
+                for source, target in pairs for mode in ('land', 'fastest')}
+
+    def _python_path_search(self, state, graph, source, targets, owner, mode, allowed):
+        routes, adjoining, prepared = graph
         if mode not in adjoining:
             neighbors={}
             for route in routes:
@@ -199,26 +216,36 @@ class TravelCampaign:
         serial = count()
         queue = [(0,0,source,next(serial),[source],[])]
         seen = set()
+        remaining = targets.copy()
+        answers = {}
         while queue:
             days,distance,here,_,path,legs = heappop(queue)
             if here in seen:
                 continue
             seen.add(here)
-            if here == target and legs:
-                return self._quote(path,legs)
+            if here in remaining and legs:
+                answers[here] = self._quote(path, legs)
+                remaining.remove(here)
+                if not remaining:
+                    break
             for raw in neighbors.get(here, ()):
                 nxt = raw['to'] if here==raw['from'] else raw['from']
                 if nxt not in state.cities or nxt in seen:
                     continue
-                if adjacent and (here!=source or nxt!=target):
-                    continue
-                if not adjacent and not historical_campaigns.transit_allowed(state, owner, state.cities[nxt].owner):
-                    continue
+                if allowed is None:
+                    if here != source or nxt not in targets:
+                        continue
+                else:
+                    occupant = state.cities[nxt].owner
+                    if occupant not in allowed:
+                        allowed[occupant] = historical_campaigns.transit_allowed(state, owner, occupant)
+                    if not allowed[occupant]:
+                        continue
                 leg,duration=prepared(raw,here,nxt)
                 if leg is None:
                     continue
                 heappush(queue,(days+duration,distance+leg['distance_km'],nxt,next(serial),path+[nxt],legs+[leg]))
-        return None
+        return answers
 
     def _march_risks(self, quote, rng=None):
         """One storm for the complete voyage, fixed valley hazards per leg."""

@@ -970,6 +970,21 @@
         "save"
       ]
     },
+    "tests/test_remake_strategic_granary_v3021.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "logistics",
+        "save"
+      ]
+    },
+    "tests/test_remake_supply_route_batch.py": {
+      "tier": "related",
+      "groups": [
+        "logistics",
+        "map"
+      ]
+    },
     "tests/test_remake_retainer_audit.py": {
       "tier": "full",
       "groups": [

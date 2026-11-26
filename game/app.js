@@ -7,7 +7,7 @@ let campaignDifficulty='normal';
 let campaignLifespan='historical';
 let campaignWinter=false,campaignEmergency=false,weatherLayerVisible=false;
 let campaignRegional=false,campaignRegionalTrade=false;
-let campaignGranary=false,campaignGranaryDispatch=false,campaignGranaryWinter=false,campaignGranaryRelay=false;
+let campaignGranary=false,campaignGranaryCandidate=false,campaignGranaryDispatch=false,campaignGranaryWinter=false,campaignGranaryRelay=false;
 const lifespanLabels={historical:['史實','史実'],none:['無','なし']};
 let allocationDialogContext=null,allocationCloseEpoch=0;
 let battleDestination=null,battleViewKey='';
@@ -499,6 +499,7 @@ function selectFaction(){
   <label class="setup-winter"><input id="regional-market-option" type="checkbox" ${campaignRegional?'checked':''}> ${battleText('啟用區域市場 V3.0.1（實驗）','地域市場 V3.0.1 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="regional-auto-trade-option" type="checkbox" ${campaignRegionalTrade?'checked':''} ${campaignRegional?'':'disabled'}> ${battleText('啟用 AI 自動商業貿易（實驗）','AIの自動商業取引を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="strategic-granary-option" type="checkbox" ${campaignGranary?'checked':''}> ${battleText('啟用戰略糧倉 V3.0.2（實驗）','戦略備蓄 V3.0.2 を有効にする（実験）')}</label>
+  <label class="setup-winter"><input id="strategic-granary-candidate-option" type="checkbox" ${campaignGranaryCandidate?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('使用 V3.0.2.1 候選調糧規則','V3.0.2.1 の候補ルールを使用する')}</label>
   <label class="setup-winter"><input id="strategic-dispatch-option" type="checkbox" ${campaignGranaryDispatch?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用 AI 主動調糧','AIの事前輸送を有効にする')}</label>
   <label class="setup-winter"><input id="strategic-winter-option" type="checkbox" ${campaignGranaryWinter?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用冬季戰略儲備','冬季備蓄を有効にする')}</label>
   <label class="setup-winter"><input id="strategic-relay-option" type="checkbox" ${campaignGranaryRelay?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用單站中轉（實驗）','1都市での積み替えを有効にする（実験）')}</label>
@@ -538,8 +539,9 @@ function selectFaction(){
   $('#regional-auto-trade-option').onchange=event=>{campaignRegionalTrade=event.target.checked;};
   $('#strategic-granary-option').onchange=event=>{
    campaignGranary=event.target.checked;
-   for(const id of ['#strategic-dispatch-option','#strategic-winter-option','#strategic-relay-option'])$(id).disabled=!campaignGranary;
+   for(const id of ['#strategic-granary-candidate-option','#strategic-dispatch-option','#strategic-winter-option','#strategic-relay-option'])$(id).disabled=!campaignGranary;
   };
+  $('#strategic-granary-candidate-option').onchange=event=>{campaignGranaryCandidate=event.target.checked;};
   $('#strategic-dispatch-option').onchange=event=>{campaignGranaryDispatch=event.target.checked;};
   $('#strategic-winter-option').onchange=event=>{campaignGranaryWinter=event.target.checked;};
   $('#strategic-relay-option').onchange=event=>{campaignGranaryRelay=event.target.checked;};
@@ -554,12 +556,13 @@ function selectFaction(){
        ...(campaignEmergency?{transport_emergency_rules_version:222}:{}),
        ...(campaignRegional?{regional_market_rules_version:301}:{}),
        ...(campaignRegionalTrade?{regional_trade_automation:true}:{}),
-       ...(campaignGranary?{strategic_granary_rules_version:302,
-         strategic_granary_options:{proactive:campaignGranaryDispatch,winter:campaignGranaryWinter,relay:campaignGranaryRelay}}:{})})){
+       ...(campaignGranary?{strategic_granary_rules_version:campaignGranaryCandidate?3021:302,
+         strategic_granary_options:{proactive:campaignGranaryDispatch,winter:campaignGranaryWinter,relay:campaignGranaryRelay,
+          ...(campaignGranaryCandidate?{coordination:true,return_safety:true}:{})}}:{})})){
     campaignWinter=false;
     campaignEmergency=false;
     campaignRegional=campaignRegionalTrade=false;
-    campaignGranary=campaignGranaryDispatch=campaignGranaryWinter=campaignGranaryRelay=false;
+    campaignGranary=campaignGranaryCandidate=campaignGranaryDispatch=campaignGranaryWinter=campaignGranaryRelay=false;
     cityCommandGroups.clear();
     selectedCity=view.catalog.factions.find(x=>x.id===f)?.city||pending.focus;actor=target=null;mapMode='all';dialog.close();render();
     if(isObserver())setObserverPlaying(true);
@@ -1044,6 +1047,7 @@ function openStrategicGranary(id,back){
  if(!city||setupPreview)return;
  const t=battleText, title=['戰略糧倉','戦略備蓄'];
  const number=value=>Number.isFinite(value)?value.toLocaleString(GameI18n.locale):'—';
+ const arrivalDate=date=>Array.isArray(date)?`${date[0]}年${date[1]}月${date[2]}日`:'';
  const cityLabel=key=>t(GameI18n.t(cityName(key),'zh-Hant'),GameI18n.t(cityName(key),'ja'));
  const pathLabel=path=>path.map(cityLabel).join(' → ');
  const interactive=view.game.phase==='city';
@@ -1069,7 +1073,17 @@ function openStrategicGranary(id,back){
   ['戰略儲備','戦略備蓄',city.strategic],['儲備目標','備蓄目標',city.target],['儲備容量','備蓄容量',city.capacity],
   ['已承諾調出','輸送確保量',city.committed],['行軍預留','行軍の確保量',city.military],
   ['九旬內可靠到貨','9旬以内の到着見込み',city.inbound],['九旬內風險到貨','9旬以内の到着不確実分',city.inbound_risk],
-  ['冬季儲備目標增額','冬季備蓄の上積み',city.winter],['九旬預計缺口','9旬の見込み不足量',city.shortfall]];
+  ['冬季儲備目標增額','冬季備蓄の上積み',city.winter]];
+ if(city.demand){
+  facts.push(['到貨前九旬缺口','到着分を加える前の9旬の不足量',city.demand.baseline],
+   ['可靠到貨已覆蓋','到着見込みで補える量',city.demand.covered],
+   ['未覆蓋缺口','補給後も残る不足量',city.demand.uncovered],
+   ['視到貨條件可補','条件付きで補える量',city.demand.contingent_coverage],
+   ['未發運承諾','発送前の確保量',city.demand.committed_inbound]);
+ }else facts.push(['九旬預計缺口','9旬の見込み不足量',city.shortfall]);
+ const receipts=city.receipts||[];
+ const receiptStatus={reliable:['可靠到貨','到着見込み'],seasonal:['有延誤風險','遅延のおそれ'],
+  blocked:['暫無可靠抵達時間','到着時期は未定']};
  const orders=ledger.orders.filter(row=>row.source===id||row.target===id).toReversed();
  const relays=(ledger.relays||[]).filter(row=>[row.source,row.hub,row.target].includes(id));
  const options=Object.keys(ledger.cities).filter(key=>key!==id);
@@ -1084,6 +1098,11 @@ function openStrategicGranary(id,back){
   <div class="roster-scroll"><table class="roster-table"><thead><tr>
    ${[['旬','旬'],['產糧','生産'],['應付','消費'],['可靠到貨','到着'],['期末庫存','期末在庫'],['缺口','不足']].map(label=>`<th scope="col">${t(...label)}</th>`).join('')}
    </tr></thead><tbody>${city.forecast.map(row=>`<tr><th scope="row">${row.ahead}</th>${['harvest','due','reliable','ending','missing'].map(key=>`<td>${number(row[key])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+  ${receipts.length?`<h3>${t('在途到貨','輸送中の荷糧')}</h3><ul class="regional-market-list">
+   ${receipts.map(row=>`<li>${cityLabel(row.source)} · ${t(...receiptStatus[row.status])} ·
+    ${row.net?t(`預計淨到 ${number(row.net)} 糧`,`到着見込み ${number(row.net)} 糧`):
+     t(`在途載糧 ${number(row.cargo)}`,`積荷 ${number(row.cargo)} 糧`)}
+    ${row.expected_date?` · ${arrivalDate(row.expected_date)}`:''}</li>`).join('')}</ul>`:''}
   ${interactive?`<form id="granary-reserve-form"><fieldset><legend>${t('本城儲備管理','備蓄管理')}</legend><div class="granary-actions">
    <label class="field">${t('糧量','兵糧量')}${amountInput('granary-reserve-amount',city.capacity,0,0)}</label>
    <button type="submit" value="hold">${t('預留','備蓄に確保')}</button>

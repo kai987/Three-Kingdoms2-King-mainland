@@ -5,6 +5,8 @@ import path from 'node:path';
 import {chromium} from '../tools/browser-tests/node_modules/playwright/index.mjs';
 
 const [fixture,output]=process.argv.slice(2);
+const version=Number(process.env.TK2_GRANARY_TEST_VERSION||302);
+const candidate=version===3021;
 const url=`http://127.0.0.1:${Number(process.env.TK2_STATIC_TEST_PORT||18917)}/Three-Kingdoms2-King-mainland/`;
 const file=await readFile(fixture);
 await mkdir(output,{recursive:true});
@@ -58,16 +60,18 @@ try{
   assert.match(await page.title(),/三國·大陸戰役|三国志・大陸戦役/);
   const experiment=page.locator('#strategic-granary-option');
   assert.equal(await experiment.isChecked(),false);
-  for(const id of ['strategic-dispatch','strategic-winter','strategic-relay']){
+  for(const id of ['strategic-granary-candidate','strategic-dispatch','strategic-winter','strategic-relay']){
    assert.equal(await page.locator(`#${id}-option`).isDisabled(),true);
   }
   await experiment.check();
+  if(candidate)await page.locator('#strategic-granary-candidate-option').check();
   await page.locator('#strategic-dispatch-option').check();
   await page.locator('#begin').click();
   await experiment.waitFor({state:'hidden',timeout:120000});
   await idle(page);
+  assert.equal(await page.evaluate(()=>view.game.extension.strategic_granary_rules_version),version);
   assert.deepEqual(await page.evaluate(()=>view.game.extension.strategic_granary.features),
-    {proactive:true,relay:false,winter:false});
+    {proactive:true,relay:false,winter:false,...(candidate?{coordination:true,return_safety:true}:{})});
   assert.equal(await page.evaluate(()=>view.game.extension.regional_market_rules_version),undefined);
 
   await page.locator('#load').click();
@@ -81,6 +85,9 @@ try{
   await page.waitForFunction(lang=>document.documentElement.lang===lang,locale);
   assert.match(await dialog.locator('#dialog-title').innerText(),locale==='ja'?/戦略備蓄/:/戰略糧倉/);
   assert.equal(await panel.locator('tbody tr').count(),9);
+  if(candidate){
+   assert.match(await panel.innerText(),locale==='ja'?/補給後も残る不足量/:/未覆蓋缺口/);
+  }
   assert.equal(await dialog.evaluate(el=>el.scrollWidth<=el.clientWidth+3),true);
   await panel.locator('#granary-source').selectOption('wujun');
   await panel.locator('#granary-transfer-amount').fill('4000');
@@ -113,6 +120,7 @@ try{
   assert.equal(sent.sourceGold,before.sourceGold);
   assert.equal(sent.market,before.market);
   assert.equal(sent.books,before.books-1);
+  if(candidate)await panel.getByRole('heading',{name:locale==='ja'?'輸送中の荷糧':'在途到貨'}).waitFor();
   assert.equal(await dialog.evaluate(el=>el.scrollWidth<=el.clientWidth+3),true);
   await order.scrollIntoViewIfNeeded();
   await dialog.screenshot({path:path.join(output,`granary-${locale}-dispatched.png`)});
@@ -127,7 +135,7 @@ try{
   const overview=await page.locator('vite-error-overlay, #webpack-dev-server-client-overlay').count();
   assert.equal(overview,0);
   assert.deepEqual(errors,[]);
-  console.log(JSON.stringify({locale,viewport,url,title:await page.title(),forecastRows:9,realOrder:record,
+  console.log(JSON.stringify({locale,viewport,url,title:await page.title(),version,forecastRows:9,realOrder:record,
    turnWaitMilliseconds:Math.round(performance.now()-started),horizontalOverflow:false,
    phase:await page.evaluate(()=>view.game.phase),errors,warnings}));
   await page.close();

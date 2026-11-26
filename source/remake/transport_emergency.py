@@ -85,8 +85,11 @@ def stock(game, state, city):
     if strategic_granary.enabled(state):
         # Return custody outranks future city dispatch, after present army
         # bookings, the local ration installment and the explicit donor floor.
-        from . import granary_relay
-        granted = max(0, granted - strategic_granary.committed(state,city.id) - granary_relay.credit(state,city.id))
+        if strategic_granary.enabled(state, 'coordination'):
+            granted = city.grain - strategic_granary.protection(state, city)['committed']
+        else:
+            from . import granary_relay
+            granted = max(0, granted - strategic_granary.committed(state,city.id) - granary_relay.credit(state,city.id))
     return min(winter_transport.city_stock(game, state, city, granted),
                max(0, granted - policy['reserve_grain']))
 
@@ -297,12 +300,13 @@ def option_rank(option):
             tuple(leg['id'] for leg in option.quote.route['routes']))
 
 
-def note(game, state, event, row, *, at=None, **values):
+def note(game, state, event, row, *, at=None, event_tick=None, **values):
     if not winter_weather.observing():
         return
     supply = book(row)
     phase = row.get('emergency', {})
-    winter_weather.report(event, tick=supply['clock_tick'], convoy_id=row['id'], owner=row['owner'],
+    winter_weather.report(event, tick=supply['clock_tick'] if event_tick is None else event_tick,
+        convoy_id=row['id'], owner=row['owner'],
         actual_position=at if at is not None else march_supply.current_city(row['journeys'][-1]),
         current_phase=row['status'], initial_escort_troops=sum(row['journeys'][0]['departure_troops'].values()),
         current_escort_troops=sum(state.officers[i].troops for i in row['officers']),
@@ -330,6 +334,49 @@ def _take_local(game, state, row, city, amount):
             city=city.id, owner=row['owner'], grain=taken, reason='city')
         note(game, state, 'emergency_refill', row, at=city.id, amount=taken)
     return taken
+
+
+def review_return_node(game, state, row, tick):
+    """A delivered escort can replenish or dock at an actual friendly stop."""
+    if (row['status'] != 'returning' or not row['delivery_done'] or 'relief' in row
+            or 'convoy_relief' in row or row.get('return_leg') != len(row['journeys'])-1):
+        return False
+    journey = row['journeys'][-1]
+    supply, route = journey['supply'], journey['quote']
+    current = march_supply.current_city(journey)
+    position = winter_travel.work(supply)
+    if ('winter' not in supply or not current or not position
+            or position >= route['days']*winter_travel.QUANTA or supply['retreat_requested']
+            or state.cities[current].owner != row['owner']):
+        return False
+    remaining = route['path'][route['path'].index(current)+1:]
+    if (state.cities[route['path'][-1]].owner != row['owner'] or any(
+            not historical_campaigns.transit_allowed(state, row['owner'], state.cities[key].owner)
+            for key in remaining)):
+        return False
+    city = state.cities[current]
+    days, weight, ice = winter_travel.checkpoint_forecast(game,state,route,position=position)
+    if ice is not None:
+        return False
+    units, credit = convoy_units(state,row), supply['credit_units']
+    need = army_relief.ration_budget(units, weight, 0, 0, credit=credit).total
+    carried = available(row)
+    if carried >= need:
+        return False
+    lawful = stock(game,state,city)
+    if 0 < need-carried <= min(lawful, logistics.LIMIT-supply['remaining']):
+        _take_local(game,state,row,city,need-carried)
+        note(game,state,'emergency_plan',row,at=current,event_tick=tick,decision='fund_return_at_node',
+             days=days,available_local_supply=lawful,rejection_reason=None)
+        return False
+    end = winter_travel.next_checkpoint(route,position)
+    _, next_weight, _ = winter_travel.checkpoint_forecast(game,state,route,position=position,stop=end)
+    next_cost = army_relief.ration_budget(units,next_weight,0,0,credit=credit).total
+    if carried + lawful < next_cost and can_receive(game,state,row,city):
+        note(game,state,'emergency_decision',row,at=current,event_tick=tick,decision='dock_return_at_node',
+             rejection_reason=None, next_cost=next_cost, available_local_supply=lawful)
+        return logistics._dock(game,state,row,city,terminal_tick=tick)
+    return False
 
 
 def _signature(review, row, here, local_stock, receiving, reason):

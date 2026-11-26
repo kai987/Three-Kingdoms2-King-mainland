@@ -7,6 +7,7 @@ from . import (city_economy, climate_regions, command_books, domestic, facilitie
                historical_campaigns, logistics, logistics_rules, logistics_strategy, strategic_granary as reserve,
                winter_travel, winter_weather)
 from .errors import GameError
+from . import granary_demand
 
 
 def _plan(game, state, owner, *, except_order=None):
@@ -84,12 +85,13 @@ class Network:
         self.route_cache = {}
         self.rejected = defaultdict(Counter)
         self.temporal = {}
+        self.escort_exclusions = {}
         self.max_room = logistics.LIMIT
         self.target_pending = Counter()
         for row in reserve.commitments(state,except_id=except_id):
             self.target_pending[row['target']] += row['load']
 
-    def _donor(self, key, stock_credit):
+    def _donor(self, key, stock_credit, *, may_release=False):
         state, city = self.state, self.state.cities[key]
         ledger = state.extension['logistics']['cities'][key]
         policy = ledger['policy']
@@ -101,13 +103,9 @@ class Network:
         if (not policy['max_grain'] or not policy['max_officers']
                 or self.automatic and historical_campaigns.hold_longyou_garrison(self.game,state,city)):
             return None, 'no_transport_capacity'
-        present = [ident for ident in city.roster.officer_ids if ident not in self.absent
-                   and state.officers[ident].alive and state.officers[ident].faction_id == self.owner]
-        locked = self.restricted | self.war
-        escorts = [ident for ident in present if ident not in locked and state.officers[ident].health > 0
-                   and state.extension['logistics']['receipts'].get(str(ident),0)<=state.turn
-                   and state.extension['officer_actions'].get(str(ident)) != state.turn]
+        present, escorts, exclusions = self._eligible(city, policy)
         if len(present) <= policy['reserve_officers'] or not escorts:
+            self.escort_exclusions[key] = exclusions
             return None, 'no_eligible_escort'
         escort = min(escorts, key=lambda ident:(state.officers[ident].troops,logistics._key(ident)))
         if self.automatic and budget['threatened']:
@@ -116,14 +114,41 @@ class Network:
                                 get_settings(state)['min_guard_troops']):
                 return None, 'source_defence'
         forecast = self.plan.cities[key]
-        safe_floor = max(policy['reserve_grain'], budget['next_installment'], forecast.reserve,
-                         self.profiles[key]['target'], reserve.reserve_grain(state,city))
+        spec = self.profiles[key]
+        required = max(policy['reserve_grain'], budget['next_installment'], forecast.reserve)
         if budget['threatened']:
-            safe_floor = max(safe_floor, budget['safety_reserve'])
-        free = city.grain - budget['reserved_grain'] - safe_floor + stock_credit
+            required = max(required, budget['safety_reserve'])
+        safe_floor = max(required, spec['target'], reserve.reserve_grain(state,city))
+        urgent_floor = max(required, forecast.reserve + spec['winter']) if may_release else safe_floor
+        ceiling = city.grain - budget['reserved_grain'] + stock_credit
+        free = ceiling - min(safe_floor, urgent_floor)
         if free <= 0:
             return None, 'source_safety'
-        return (city,policy,escort,safe_floor,free), None
+        return (city, policy, escort, safe_floor, urgent_floor, ceiling), None
+
+    def _eligible(self, city, policy):
+        state = self.state
+        roster = [ident for ident in city.roster.officer_ids
+                  if state.officers[ident].alive and state.officers[ident].faction_id == self.owner]
+        present = [ident for ident in roster if ident not in self.absent]
+        if not present:
+            return present, [], dict(no_present_officer=1, officer_in_other_mission=len(roster))
+        if len(present) <= policy['reserve_officers']:
+            return present, [], dict(below_minimum_retained_officers=1)
+        counts, eligible = Counter(), []
+        ruler = state.extension['leaders'].get(self.owner)
+        for ident in present:
+            reason = ('restricted_ruler' if self.automatic and ident == ruler else
+                      'restricted_appointment' if ident in self.restricted else
+                      'assigned_to_war_plan' if ident in self.war else
+                      'officer_health_unavailable' if state.officers[ident].health <= 0 else
+                      'receipt_cooldown' if state.extension['logistics']['receipts'].get(str(ident),0)>state.turn else
+                      'officer_already_acted' if state.extension['officer_actions'].get(str(ident)) == state.turn else None)
+            if reason is None:
+                eligible.append(ident)
+            else:
+                counts[reason] += 1
+        return present, eligible, dict(counts)
 
     def _measure(self, quote, offset=0):
         key = (tuple(route['id'] for route in quote['routes']),tuple(quote['path']),offset)
@@ -134,15 +159,28 @@ class Network:
                 seasonal=reserve.enabled(self.state,'winter') or self.automatic)
         return self.temporal[key]
 
-    def collect(self, targets, sources=None, *, stock_credit=None):
+    def collect(self, targets, sources=None, *, stock_credit=None, urgent_targets=()):
         state = self.state
         if not command_books.can_spend(state,self.owner,'dispatch_transport'):
             for key in targets:
                 self.rejected[key]['no_command_books'] += 1
             return {}
         groups = defaultdict(list)
+        urgent_targets = frozenset(urgent_targets)
+        observed = reserve.observed() and reserve.candidate(state)
+        if observed:
+            self.stats['target_passes'] += len(targets)
         for source in sorted(self.plan.budgets if sources is None else sources):
-            donor, reason = self._donor(source,(stock_credit or {}).get(source,0))
+            self.stats['source_evaluations'] += 1
+            donor, reason = self._donor(source,(stock_credit or {}).get(source,0),
+                may_release=bool(urgent_targets))
+            if observed:
+                reserve.observe(state, 'source_eligibility', owner=self.owner, source=source,
+                    reason=reason, targets=len(targets)-int(source in targets),
+                    stock=state.cities[source].grain,
+                    exportable=self.plan.budgets[source]['exportable'],
+                    fixed=self.plan.budgets[source]['fixed'],
+                    exclusions=self.escort_exclusions[source] if reason == 'no_eligible_escort' else {})
             if reason:
                 for target in targets:
                     if source != target:
@@ -166,9 +204,14 @@ class Network:
                 self.stats['route_batches'] += 1
                 cached.update(logistics._supply_routes(self.game,state,self.owner,sorted(misses),donors[0][1]))
                 visited.update(misses)
-            for city,policy,escort,floor,free in donors:
+            for city,policy,escort,normal_floor,urgent_floor,ceiling in donors:
                 for key in targets:
                     if (city.id,key) not in pairs:
+                        continue
+                    floor = min(normal_floor, urgent_floor) if key in urgent_targets else normal_floor
+                    free = ceiling - floor
+                    if free <= 0:
+                        self.rejected[key]['source_safety'] += 1
                         continue
                     target = state.cities[key]
                     outward = logistics._safe_options(self.game,state,city,target,policy,quotes=cached)
@@ -198,13 +241,16 @@ class Network:
                         if limit <= 0:
                             self.rejected[key]['no_return_rations'] += 1
                             continue
-                        options[key].append(dict(source=city.id,target=target.id,escort=escort,
+                        values = dict(source=city.id,target=target.id,escort=escort,
                             mode=mode, route=route, path=route['path'], return_path=backward[0][1]['path'],
                             days=timing['days'], return_days=back['days'], risk=timing['risk']+back['risk'],
                             ice=sorted(set(timing['reaches']) | set(back['reaches'])), limit=limit,
                             rations=rations, outbound_rations=logistics._rations(self.game,state,route,[escort],logistics._empty_cargo()),
                             return_rations=logistics._rations(self.game,state,backward[0][1],[escort],logistics._empty_cargo()),
-                            floor=floor, free=free))
+                            floor=floor, free=free)
+                        if floor < normal_floor:
+                            values['release_floor'] = floor
+                        options[key].append(values)
         return options
 
     def shipment(self, option, needed, deadline, *, exact=None):
@@ -315,22 +361,35 @@ def dispatch(game,state,owner,plan):
             winter_shortages[key] = (due,missing)
     keys = list(dict.fromkeys([*keys,*sorted(winter_shortages,
                 key=lambda key:(winter_shortages[key][0],-winter_shortages[key][1],key))]))
+    candidate = reserve.candidate(state)
     commitments = {row['target'] for row in reserve.commitments(state)}
     active = {row['target'] for row in reserve.pool(state)['orders'].values()
               if row['owner']==owner and row['delivered_turn'] is None and row['status'] != 'reserved'}
     active.update(row['target'] for row in granary_relay.entries(state).values() if row['owner']==owner)
-    targets = [key for key in keys if key not in commitments | active]
+    demands = {key: granary_demand.for_city(game, state, plan, key) for key in keys} if candidate else {}
+    targets = ([key for key in keys if demands[key].first is not None or key in winter_shortages]
+               if candidate else [key for key in keys if key not in commitments | active])
+    urgent_targets = set()
+    if candidate and reserve.enabled(state, 'coordination'):
+        urgent_targets = {key for key in targets if demands[key].first in (2, 3)}
     for key in sorted(set(keys)-set(targets)):
-        reserve.observe(state,'dispatch_blocked',owner=owner,target=key,reason='already_committed')
+        reserve.observe(state,'dispatch_blocked',owner=owner,target=key,
+                        reason='covered' if candidate else 'already_committed')
     if not targets:
         return previous
-    choices = network.collect(targets)
+    choices = network.collect(targets, urgent_targets=urgent_targets)
     used, orders, unfilled = set(), list(previous), []
     for key in targets:
         forecast = plan.cities[key]
-        winter = forecast.zero_in is None and key in winter_shortages
-        deadline = state.turn+(winter_shortages[key][0] if winter else forecast.zero_in)
-        requested = winter_shortages[key][1] if winter else sum(gap for _,gap in forecast.gaps)
+        demand = demands.get(key)
+        first = forecast.zero_in if demand is None else demand.first
+        winter = first is None and key in winter_shortages
+        deadline = state.turn+(winter_shortages[key][0] if winter else first)
+        requested = winter_shortages[key][1] if winter else sum(gap for _,gap in (
+            forecast.gaps if demand is None else demand.remaining))
+        if candidate and winter:
+            due = winter_shortages[key][0]
+            requested = min(requested, max(0, network.profiles[key]['target']-demand.balance_at_end[due-1]))
         options = []
         rejections = network.rejected[key]
         for route in choices.get(key,()):
@@ -338,26 +397,38 @@ def dispatch(game,state,owner,plan):
                 rejections['already_committed'] += 1
                 continue
             eta = logistics_rules.ceil_div(route['days'],10)
+            quote_deadline = deadline
             if winter:
                 timely = route['days']+reserve.RULES['timely_buffer_days'] <= 10*(deadline-state.turn-1)
                 missing = requested if timely else 0
+            elif demand is not None:
+                due, missing = demand.after(eta)
+                if due is not None:
+                    quote_deadline = state.turn + due
             else:
                 missing = sum(gap for turn,gap in forecast.gaps if eta<turn)
             if not missing:
                 rejections['too_late'] += 1
                 continue
-            quote = network.shipment(route,max(reserve.RULES['minimum_load'],missing),deadline)
+            quote = network.shipment(route,max(reserve.RULES['minimum_load'],missing),quote_deadline)
             if (quote is None or quote['net'] < reserve.RULES['minimum_load']
                     or quote['rations']*100 > quote['net']*reserve.RULES['maximum_ration_percent']):
                 rejections['below_economic_load'] += 1
                 continue
             options.append(quote)
+        if candidate and reserve.observed():
+            best = min(options, key=_rank) if options else None
+            reserve.observe(state,'residual_demand', owner=owner,target=key, deadline=deadline,
+                demand_id=f'{owner}/{key}/{deadline}/{"winter" if winter else "consumption"}',
+                priority='winter' if winter else 'proactive', **granary_demand.describe(demand),
+                planned=None if best is None else best['net'], receipts=forecast.convoy_receipts,
+                pending_target=key in commitments, active_target=key in active)
         reserve.observe(state,'dispatch_requested',owner=owner,target=key,deadline=deadline,
             grain=requested, priority='winter' if winter else 'proactive', candidates=len(options),
             legal=bool(choices.get(key)), timely_net=max((q['net'] for q in options if q['timely']),default=0),
             delayed_receipts=sum(forecast.risky_receipts.values()), rejections=dict(rejections))
         if not options or not command_books.can_spend(state,owner,'dispatch_transport'):
-            if not winter and forecast.zero_in > 2:
+            if (not winter and first > 2 and (not candidate or key not in active | commitments)):
                 unfilled.append(key)
             continue
         quote = min(options,key=_rank)
@@ -382,13 +453,19 @@ def view(game,state):
     from . import granary_relay
     relays = [row for row in granary_relay.entries(state).values() if row['owner']==owner]
     entries = {}
+    coordinated = reserve.enabled(state,'coordination')
     for key, forecast in plan.cities.items():
         city, budget = state.cities[key],plan.budgets[key]
         spec = profile(game,state,city,budget,forecast)
         prior = reserve.reserve_row(state,city)
-        entries[key] = dict(spec,total=city.grain, available=reserve.available(state,city),
-            strategic=reserve.reserve_grain(state,city), committed=reserve.committed(state,key)+granary_relay.credit(state,key),
-            military=budget.get('staging_grain',0), stock_region=economic_regions.region(key),
+        if coordinated:
+            protected = reserve.protection(state,city,book=plan.commitments)
+            account = dict(available=protected['free'], strategic=protected['strategic'],
+                committed=protected['unshipped']+protected['relay'], military=protected['military'])
+        else:
+            account = dict(available=reserve.available(state,city), strategic=reserve.reserve_grain(state,city),
+                committed=reserve.committed(state,key)+granary_relay.credit(state,key), military=budget.get('staging_grain',0))
+        entries[key] = dict(spec,**account,total=city.grain,stock_region=economic_regions.region(key),
             inbound=sum(v for t,v in forecast.receipts.items() if t<=faction_economy.HORIZON),
             inbound_risk=sum(v for t,v in forecast.risky_receipts.items() if t<=faction_economy.HORIZON),
             shortfall=sum(missing for eta,missing in forecast.gaps), first=forecast.zero_in,
@@ -399,7 +476,13 @@ def view(game,state):
                            risky=forecast.risky_receipts.get(i,0),ending=min(logistics.LIMIT,ending+receipts),
                            missing=gap[1]) for i,((income,due,receipts),ending,gap) in
                            enumerate(zip(forecast.timeline,forecast.balances,forecast.gaps),1)])
-    return dict(version=reserve.VERSION,features=data['features'], cities=entries, relays=relays,
+        if reserve.candidate(state):
+            demand = granary_demand.for_city(game, state, plan, key)
+            receipts = [dict(item, expected_date=None if item['status']=='blocked' else
+                         winter_weather.date_at(game.catalog.data,(state.turn+item['eta']-1)*10+1))
+                        for item in forecast.convoy_receipts]
+            entries[key].update(demand=granary_demand.describe(demand), receipts=receipts)
+    return dict(version=state.extension[reserve.FIELD],features=data['features'], cities=entries, relays=relays,
                 order_costs=dict(set_target=0,hold=0,release=0,reserve=0,cancel=0,
                                  dispatch=command_books.cost('dispatch_transport')),
                 orders=[row for row in (*data['orders'].values(),*data['history']) if row['owner']==owner])
