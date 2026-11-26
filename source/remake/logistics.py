@@ -376,8 +376,7 @@ def _supply_routes(game, state, owner, pairs, policy):
                     if not _permitted_route(game, policy, r)]
         return ai_core.routes(game, state, owner, pairs, excluded=excluded)
     engine = _safe_engine(game, policy)
-    return {f'{a}:{b}:{mode}': engine._travel_path(state, a, b, owner, mode)
-            for a, b in pairs for mode in ('land', 'fastest')}
+    return engine._python_supply_paths(state, owner, pairs)
 
 
 def _safe_options(game, state, source, target, policy, *, quotes=None):
